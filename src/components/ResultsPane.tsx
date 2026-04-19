@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -30,6 +30,7 @@ type ResultsPaneProps = {
   shortlistKeys: Set<string>;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
+  scrollParent: HTMLElement | null;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -173,8 +174,11 @@ export function ResultsPane({
   shortlistKeys,
   onSelect,
   onToggleShortlist,
+  scrollParent,
 }: ResultsPaneProps) {
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
+  const listRef = useRef<HTMLDivElement>(null);
+  const [scrollMargin, setScrollMargin] = useState(0);
 
   const sortedBlocks = useMemo(() => {
     return [...blocks].sort((left, right) => {
@@ -182,19 +186,40 @@ export function ResultsPane({
     });
   }, [blocks, sortMode]);
 
-  const parentRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
     count: sortedBlocks.length,
-    getScrollElement: () => parentRef.current,
+    getScrollElement: () => scrollParent,
     estimateSize: () => 214,
     overscan: 6,
+    scrollMargin,
   });
+
+  useEffect(() => {
+    if (!scrollParent || !listRef.current) {
+      return;
+    }
+
+    const updateScrollMargin = () => {
+      const nextMargin =
+        listRef.current!.getBoundingClientRect().top -
+        scrollParent.getBoundingClientRect().top +
+        scrollParent.scrollTop;
+      setScrollMargin(nextMargin);
+    };
+
+    updateScrollMargin();
+    window.addEventListener("resize", updateScrollMargin);
+
+    return () => {
+      window.removeEventListener("resize", updateScrollMargin);
+    };
+  }, [scrollParent]);
 
   const virtualItems = virtualizer.getVirtualItems();
 
   return (
-    <section data-testid="results-pane" className="flex min-h-[18rem] flex-1 flex-col">
-      <Card className="flex min-h-[18rem] flex-1 flex-col bg-background">
+    <section data-testid="results-pane">
+      <Card className="bg-background">
         <CardHeader className="gap-4 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-2">
@@ -224,17 +249,14 @@ export function ResultsPane({
             </CardAction>
           </div>
         </CardHeader>
-        <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
+        <CardContent className="pt-4">
           {blocks.length === 0 ? (
             <div className="empty-state">
               No blocks match your current filters. Try broadening your search or resetting filters.
             </div>
           ) : (
-            <div className="flex min-h-0 flex-1 flex-col gap-4">
-              <div
-                ref={parentRef}
-                className="min-h-0 flex-1 overflow-auto pr-2"
-              >
+            <div className="flex flex-col gap-4">
+              <div ref={listRef} className="pr-2">
                 <ItemGroup
                   className="relative"
                   style={{ height: `${virtualizer.getTotalSize()}px` }}
@@ -248,7 +270,7 @@ export function ResultsPane({
                         ref={virtualizer.measureElement}
                         data-index={virtualRow.index}
                         className="absolute inset-x-0 top-0"
-                        style={{ transform: `translateY(${virtualRow.start}px)` }}
+                        style={{ transform: `translateY(${virtualRow.start - scrollMargin}px)` }}
                       >
                         <BlockCard
                           block={block}

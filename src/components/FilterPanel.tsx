@@ -1,6 +1,6 @@
 import { useId } from "react";
-import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
-import type { FilterState, Manifest } from "@/types/data";
+import { formatMonth } from "@/lib/format";
+import type { FilterState } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +9,6 @@ import {
   FieldContent,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field";
 import {
   InputGroup,
@@ -25,11 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+
 
 type FilterPanelProps = {
   filters: FilterState;
-  manifest: Manifest;
   options: {
     towns: string[];
     flatTypes: string[];
@@ -91,7 +89,6 @@ function SelectField({ label, allLabel, value, options, onChange }: SelectFieldP
 
 export function FilterPanel({
   filters,
-  manifest,
   options,
   minMonth,
   maxMonth,
@@ -114,7 +111,7 @@ export function FilterPanel({
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-6 pt-6">
+        <CardContent className="flex flex-col gap-4 pt-4">
         <Field>
           <FieldContent>
             <FieldLabel htmlFor="search">Search block or street</FieldLabel>
@@ -269,53 +266,46 @@ export function FilterPanel({
           </Field>
         </FieldGroup>
 
-        <Card size="sm" className="border-none bg-muted/50 shadow-none ring-0">
-          <CardHeader className="gap-2 border-b border-border/60 pb-5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex flex-col gap-1">
-                <CardTitle className="text-base">Transaction window</CardTitle>
-              </div>
-              <Badge variant="secondary">
-                {formatMonth(minMonth)} to {formatMonth(maxMonth)}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4 pt-5">
-            <FieldGroup>
-              <Field>
-                <FieldContent>
-                  <FieldLabel htmlFor="start-month">Start month</FieldLabel>
-                  <Input
-                    id="start-month"
-                    max={maxMonth}
-                    min={minMonth}
-                    type="month"
-                    value={filters.startMonth ?? ""}
-                    onChange={(event) =>
-                      onChange({ startMonth: event.target.value === "" ? null : event.target.value })
-                    }
-                  />
-                </FieldContent>
-              </Field>
-              <FieldSeparator>through</FieldSeparator>
-              <Field>
-                <FieldContent>
-                  <FieldLabel htmlFor="end-month">End month</FieldLabel>
-                  <Input
-                    id="end-month"
-                    max={maxMonth}
-                    min={minMonth}
-                    type="month"
-                    value={filters.endMonth ?? ""}
-                    onChange={(event) =>
-                      onChange({ endMonth: event.target.value === "" ? null : event.target.value })
-                    }
-                  />
-                </FieldContent>
-              </Field>
-            </FieldGroup>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
+            <span className="font-semibold text-sm">Transaction window</span>
+            <Badge variant="secondary" className="text-xs">
+              {formatMonth(minMonth)} to {formatMonth(maxMonth)}
+            </Badge>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2 pt-2">
+            <Field>
+              <FieldContent>
+                <FieldLabel htmlFor="start-month">Start month</FieldLabel>
+                <Input
+                  id="start-month"
+                  max={maxMonth}
+                  min={minMonth}
+                  type="month"
+                  value={filters.startMonth ?? ""}
+                  onChange={(event) =>
+                    onChange({ startMonth: event.target.value === "" ? null : event.target.value })
+                  }
+                />
+              </FieldContent>
+            </Field>
+            <Field>
+              <FieldContent>
+                <FieldLabel htmlFor="end-month">End month</FieldLabel>
+                <Input
+                  id="end-month"
+                  max={maxMonth}
+                  min={minMonth}
+                  type="month"
+                  value={filters.endMonth ?? ""}
+                  onChange={(event) =>
+                    onChange({ endMonth: event.target.value === "" ? null : event.target.value })
+                  }
+                />
+              </FieldContent>
+            </Field>
+          </div>
+        </div>
 
         <Field>
           <FieldContent>
@@ -340,54 +330,7 @@ export function FilterPanel({
           </FieldContent>
         </Field>
 
-        <Separator />
 
-        <Card size="sm" className="border-none bg-muted/50 shadow-none ring-0">
-          <CardHeader className="gap-2 border-b border-border/60 pb-5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex flex-col gap-1">
-                <span className="eyebrow">Data provenance</span>
-                <CardTitle className="text-base">What this tool shows</CardTitle>
-              </div>
-              <Badge>{formatNumber(manifest.counts.blocks)} blocks</Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-3 pt-5">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <article className="flex flex-col gap-2 border-b border-border pb-3">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Artifacts built</span>
-                <strong className="text-sm text-foreground">
-                  {formatDateTime(manifest.generatedAt)}
-                </strong>
-              </article>
-              <article className="flex flex-col gap-2 border-b border-border pb-3">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Market window</span>
-                <strong className="text-sm text-foreground">
-                  {formatMonth(manifest.dataWindow.minMonth)} to{" "}
-                  {formatMonth(manifest.dataWindow.maxMonth)}
-                </strong>
-              </article>
-              <article className="flex flex-col gap-2 border-b border-border pb-3 sm:border-b-0">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Transactions</span>
-                <strong className="text-sm text-foreground">
-                  {formatNumber(manifest.counts.transactions)}
-                </strong>
-              </article>
-              <article className="flex flex-col gap-2 border-b border-border pb-3 sm:border-b-0">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">MRT metric</span>
-                <strong className="text-sm text-foreground">
-                  Straight-line distance
-                </strong>
-              </article>
-            </div>
-
-            <p className="text-sm leading-6 text-muted-foreground">
-              Official HDB resale data, HDB property information, and LTA station exits.
-              This app helps compare real market evidence and does not predict future
-              prices.
-            </p>
-          </CardContent>
-        </Card>
         </CardContent>
       </Card>
     </aside>

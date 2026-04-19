@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
@@ -27,6 +27,7 @@ const ShortlistDrawer = lazy(() =>
 );
 
 function App() {
+  const middleColumnRef = useRef<HTMLElement | null>(null);
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -221,11 +222,10 @@ function App() {
         testId="stats-bar"
       />
 
-      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1">
+      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
         <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
           <FilterPanel
             filters={filters}
-            manifest={manifest}
             maxMonth={manifest.dataWindow.maxMonth}
             minMonth={manifest.dataWindow.minMonth}
             onChange={patchFilters}
@@ -234,7 +234,10 @@ function App() {
           />
         </div>
 
-        <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:pb-6 pr-1">
+        <section
+          ref={middleColumnRef}
+          className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
+        >
           <Card className="overflow-hidden bg-card shrink-0">
             <CardHeader className="gap-4 border-b border-border pb-4">
               <div className="flex flex-wrap items-start gap-4">
@@ -272,10 +275,11 @@ function App() {
             onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
             selectedAddressKey={filters.selectedAddressKey}
             shortlistKeys={shortlistKeySet}
+            scrollParent={middleColumnRef.current}
           />
         </section>
 
-        <section className="flex min-w-0 min-h-0 flex-col gap-4 pr-1 lg:pb-6">
+        <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
           <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
             <DetailDrawer
               detail={detail}
