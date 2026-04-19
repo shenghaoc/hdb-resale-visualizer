@@ -243,11 +243,11 @@ function App() {
                 <CardAction>
                   <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 bg-sky-400" />
+                      <span className="inline-block size-2.5 bg-[#d7d0c5]" />
                       Lower median
                     </span>
                     <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 bg-red-500" />
+                      <span className="inline-block size-2.5 bg-[#5a3e2d]" />
                       Higher median
                     </span>
                   </div>

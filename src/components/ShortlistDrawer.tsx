@@ -162,170 +162,170 @@ export function ShortlistDrawer({
                 Save up to four blocks to compare price, lease context, and MRT access side by side.
               </div>
             ) : (
-              <ScrollArea className="max-h-[72vh] pr-3">
-                <div className="flex flex-col gap-4">
-                  {rows.map((row) => {
-                    const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
-                    const remainingLeaseRange = getRemainingLeaseRange(
-                      row.summary.leaseCommenceRange,
-                    );
+              <ScrollArea className="h-[72vh] pr-3 border-r border-transparent">
+                <div className="flex flex-col gap-4 pb-4">
+                    {rows.map((row) => {
+                      const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
+                      const remainingLeaseRange = getRemainingLeaseRange(
+                        row.summary.leaseCommenceRange,
+                      );
 
-                    return (
-                      <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
-                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
-                          <div className="flex flex-wrap items-start gap-3">
-                            <div className="flex flex-1 flex-col gap-2">
-                              <CardTitle className="text-lg">
-                                {row.summary.block} {row.summary.streetName}
-                              </CardTitle>
-                              <CardDescription className="text-xs uppercase tracking-[0.18em]">
-                                {row.summary.town}
-                              </CardDescription>
+                      return (
+                        <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
+                          <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                            <div className="flex flex-wrap items-start gap-3">
+                              <div className="flex flex-1 flex-col gap-2">
+                                <CardTitle className="text-lg">
+                                  {row.summary.block} {row.summary.streetName}
+                                </CardTitle>
+                                <CardDescription className="text-xs uppercase tracking-[0.18em]">
+                                  {row.summary.town}
+                                </CardDescription>
+                              </div>
+                              <Button
+                                size="xs"
+                                variant="ghost"
+                                onClick={() => onRemove(row.item.addressKey)}
+                                type="button"
+                              >
+                                <X data-icon="inline-start" />
+                                Remove
+                              </Button>
                             </div>
-                            <Button
-                              size="xs"
-                              variant="ghost"
-                              onClick={() => onRemove(row.item.addressKey)}
-                              type="button"
-                            >
-                              <X data-icon="inline-start" />
-                              Remove
-                            </Button>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="flex flex-col gap-5 pt-5">
-                          <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                Market median
-                              </span>
-                              <strong className="font-heading text-2xl font-semibold">
-                                {formatCompactCurrency(row.summary.medianPrice)}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {formatCurrency(row.summary.medianPrice)}
-                              </span>
+                          </CardHeader>
+                          <CardContent className="flex flex-col gap-5 pt-5">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  Market median
+                                </span>
+                                <strong className="font-heading text-2xl font-semibold">
+                                  {formatCompactCurrency(row.summary.medianPrice)}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {formatCurrency(row.summary.medianPrice)}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  Price / sqft
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {row.summary.pricePerSqftMedian !== null
+                                    ? formatCurrency(row.summary.pricePerSqftMedian)
+                                    : "N/A"}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {formatNumber(row.summary.pricePerSqmMedian)} / sqm
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  Area range
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {formatNumber(row.summary.floorAreaRange[0], 1)} to{" "}
+                                  {formatNumber(row.summary.floorAreaRange[1], 1)} sqm
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {row.summary.flatTypes.join(", ")}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  Lease context
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  Commence {row.summary.leaseCommenceRange[0]} to{" "}
+                                  {row.summary.leaseCommenceRange[1]}
+                                </span>
+                              </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                Price / sqft
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {row.summary.pricePerSqftMedian !== null
-                                  ? formatCurrency(row.summary.pricePerSqftMedian)
-                                  : "N/A"}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {formatNumber(row.summary.pricePerSqmMedian)} / sqm
-                              </span>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                Area range
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {formatNumber(row.summary.floorAreaRange[0], 1)} to{" "}
-                                {formatNumber(row.summary.floorAreaRange[1], 1)} sqm
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {row.summary.flatTypes.join(", ")}
-                              </span>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                Lease context
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                Commence {row.summary.leaseCommenceRange[0]} to{" "}
-                                {row.summary.leaseCommenceRange[1]}
-                              </span>
-                            </div>
-                          </div>
 
-                          <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="flex flex-col gap-2">
-                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                <TrainFront className="size-3.5" />
-                                Nearest MRT
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {row.summary.nearestMrt
-                                  ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
-                                  : "No match"}
-                              </strong>
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              <div className="flex flex-col gap-2">
+                                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  <TrainFront className="size-3.5" />
+                                  Nearest MRT
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {row.summary.nearestMrt
+                                    ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
+                                    : "No match"}
+                                </strong>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  <Target className="size-3.5" />
+                                  Gap vs target
+                                </span>
+                                {gapInfo ? (
+                                  <>
+                                    <strong className={gapInfo.tone === "positive" ? "text-emerald-700" : "text-rose-700"}>
+                                      {formatCurrency(gapInfo.amount)}
+                                    </strong>
+                                    <span className="text-sm text-muted-foreground">{gapInfo.label}</span>
+                                  </>
+                                ) : (
+                                  <span className="text-sm text-muted-foreground">Enter a target to compare.</span>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                <Target className="size-3.5" />
-                                Gap vs target
-                              </span>
-                              {gapInfo ? (
-                                <>
-                                  <strong className={gapInfo.tone === "positive" ? "text-emerald-700" : "text-rose-700"}>
-                                    {formatCurrency(gapInfo.amount)}
-                                  </strong>
-                                  <span className="text-sm text-muted-foreground">{gapInfo.label}</span>
-                                </>
-                              ) : (
-                                <span className="text-sm text-muted-foreground">Enter a target to compare.</span>
-                              )}
-                            </div>
-                          </div>
 
-                          <FieldGroup>
-                            <Field>
-                              <FieldContent>
-                                <FieldLabel htmlFor={`target-${row.item.addressKey}`}>Your target price</FieldLabel>
-                                <FieldDescription>Your personal max or goal price.</FieldDescription>
-                                <InputGroup>
-                                  <InputGroupAddon align="inline-start">
-                                    <InputGroupText>SGD</InputGroupText>
-                                  </InputGroupAddon>
-                                  <InputGroupInput
-                                    id={`target-${row.item.addressKey}`}
-                                    inputMode="numeric"
-                                    placeholder="850000"
-                                    type="number"
-                                    value={row.item.targetPrice ?? ""}
+                            <FieldGroup>
+                              <Field>
+                                <FieldContent>
+                                  <FieldLabel htmlFor={`target-${row.item.addressKey}`}>Your target price</FieldLabel>
+                                  <FieldDescription>Your personal max or goal price.</FieldDescription>
+                                  <InputGroup>
+                                    <InputGroupAddon align="inline-start">
+                                      <InputGroupText>SGD</InputGroupText>
+                                    </InputGroupAddon>
+                                    <InputGroupInput
+                                      id={`target-${row.item.addressKey}`}
+                                      inputMode="numeric"
+                                      placeholder="850000"
+                                      type="number"
+                                      value={row.item.targetPrice ?? ""}
+                                      onChange={(event) =>
+                                        onUpdate(row.item.addressKey, {
+                                          targetPrice:
+                                            event.target.value === "" ? null : Number(event.target.value),
+                                        })
+                                      }
+                                    />
+                                  </InputGroup>
+                                </FieldContent>
+                              </Field>
+                              <Field>
+                                <FieldContent>
+                                  <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
+                                    Notes
+                                  </FieldLabel>
+                                  <FieldDescription>
+                                    Why this block stays in the running.
+                                  </FieldDescription>
+                                  <Textarea
+                                    id={`notes-${row.item.addressKey}`}
+                                    placeholder="Why this block stays in the running"
+                                    rows={3}
+                                    value={row.item.notes}
                                     onChange={(event) =>
                                       onUpdate(row.item.addressKey, {
-                                        targetPrice:
-                                          event.target.value === "" ? null : Number(event.target.value),
+                                        notes: event.target.value,
                                       })
                                     }
                                   />
-                                </InputGroup>
-                              </FieldContent>
-                            </Field>
-                            <Field>
-                              <FieldContent>
-                                <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
-                                  Notes
-                                </FieldLabel>
-                                <FieldDescription>
-                                  Why this block stays in the running.
-                                </FieldDescription>
-                                <Textarea
-                                  id={`notes-${row.item.addressKey}`}
-                                  placeholder="Why this block stays in the running"
-                                  rows={3}
-                                  value={row.item.notes}
-                                  onChange={(event) =>
-                                    onUpdate(row.item.addressKey, {
-                                      notes: event.target.value,
-                                    })
-                                  }
-                                />
-                              </FieldContent>
-                            </Field>
-                          </FieldGroup>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
+                                </FieldContent>
+                              </Field>
+                            </FieldGroup>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                 </div>
               </ScrollArea>
             )}

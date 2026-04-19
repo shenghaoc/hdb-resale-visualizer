@@ -176,28 +176,15 @@ export function ResultsPane({
 }: ResultsPaneProps) {
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
 
-  const { selectedBlock, remainingBlocks } = useMemo(() => {
-    let featured: BlockSummary | undefined;
-    const rest: BlockSummary[] = [];
-
-    for (const block of blocks) {
-      if (block.addressKey === selectedAddressKey) {
-        featured = block;
-      } else {
-        rest.push(block);
-      }
-    }
-
-    const sorted = [...rest].sort((left, right) => {
+  const sortedBlocks = useMemo(() => {
+    return [...blocks].sort((left, right) => {
       return getSortValue(left, sortMode) - getSortValue(right, sortMode);
     });
-
-    return { selectedBlock: featured, remainingBlocks: sorted };
-  }, [blocks, selectedAddressKey, sortMode]);
+  }, [blocks, sortMode]);
 
   const parentRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
-    count: remainingBlocks.length,
+    count: sortedBlocks.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 214,
     overscan: 6,
@@ -244,21 +231,6 @@ export function ResultsPane({
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              {selectedBlock ? (
-                <div className="flex flex-col gap-3">
-                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    Featured selection
-                  </span>
-                  <BlockCard
-                    block={selectedBlock}
-                    isFeatured
-                    isSaved={shortlistKeys.has(selectedBlock.addressKey)}
-                    onSelect={onSelect}
-                    onToggleShortlist={onToggleShortlist}
-                  />
-                </div>
-              ) : null}
-
               <div
                 ref={parentRef}
                 className="max-h-[70vh] overflow-auto pr-2"
@@ -268,16 +240,19 @@ export function ResultsPane({
                   style={{ height: `${virtualizer.getTotalSize()}px` }}
                 >
                   {virtualItems.map((virtualRow) => {
-                    const block = remainingBlocks[virtualRow.index];
+                    const block = sortedBlocks[virtualRow.index];
 
                     return (
                       <div
                         key={block.addressKey}
+                        ref={virtualizer.measureElement}
+                        data-index={virtualRow.index}
                         className="absolute inset-x-0 top-0"
                         style={{ transform: `translateY(${virtualRow.start}px)` }}
                       >
                         <BlockCard
                           block={block}
+                          isFeatured={block.addressKey === selectedAddressKey}
                           isSaved={shortlistKeys.has(block.addressKey)}
                           onSelect={onSelect}
                           onToggleShortlist={onToggleShortlist}

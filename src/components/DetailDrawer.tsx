@@ -32,7 +32,7 @@ export function DetailDrawer({
   const currentSummary = detail?.summary ?? selectedBlock;
 
   return (
-    <aside data-testid="detail-drawer">
+    <aside data-testid="detail-drawer" className="w-full min-w-0">
       <Card className="bg-background">
         <CardHeader className="gap-4 border-b border-border pb-6">
           <div className="flex flex-wrap items-start gap-4">
@@ -65,8 +65,8 @@ export function DetailDrawer({
           {isLoading ? <div className="empty-state">Loading block detail...</div> : null}
 
           {currentSummary ? (
-            <ScrollArea className="max-h-[72vh] pr-3">
-              <div className="flex flex-col gap-6">
+            <ScrollArea className="h-[72vh] pr-3">
+              <div className="flex flex-col gap-6 min-w-0 w-full">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <article className="flex flex-col gap-2">
                     <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
