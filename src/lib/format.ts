@@ -36,3 +36,10 @@ export function formatMonth(month: string): string {
     year: "numeric",
   }).format(date);
 }
+
+export function formatDateTime(value: string): string {
+  return new Intl.DateTimeFormat("en-SG", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(value));
+}

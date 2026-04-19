@@ -1,5 +1,5 @@
 import { useReactTable, getCoreRowModel, flexRender, createColumnHelper } from "@tanstack/react-table";
-import { formatCompactCurrency, formatMeters } from "@/lib/format";
+import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
 
 type ShortlistRow = {
@@ -30,8 +30,53 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.summary.medianPrice, {
     id: "median",
-    header: "Median",
-    cell: (info) => formatCompactCurrency(info.getValue()),
+    header: "Market median",
+    cell: (info) => (
+      <div className="metric-stack">
+        <strong>{formatCompactCurrency(info.getValue())}</strong>
+        <span>{formatCurrency(info.getValue())}</span>
+      </div>
+    ),
+  }),
+  columnHelper.accessor((row) => row.summary.pricePerSqftMedian, {
+    id: "ppsf",
+    header: "Price / sqft",
+    cell: (info) => {
+      const value = info.getValue();
+
+      return value !== null ? (
+        <div className="metric-stack">
+          <strong>{formatCurrency(value)}</strong>
+          <span>{formatNumber(info.row.original.summary.pricePerSqmMedian)} / sqm</span>
+        </div>
+      ) : (
+        "N/A"
+      );
+    },
+  }),
+  columnHelper.accessor((row) => row.summary.floorAreaRange, {
+    id: "area",
+    header: "Area range",
+    cell: (info) => (
+      <div className="metric-stack">
+        <strong>
+          {formatNumber(info.getValue()[0], 1)} to {formatNumber(info.getValue()[1], 1)} sqm
+        </strong>
+        <span>{info.row.original.summary.flatTypes.join(", ")}</span>
+      </div>
+    ),
+  }),
+  columnHelper.accessor((row) => row.summary.leaseCommenceRange, {
+    id: "lease",
+    header: "Lease years",
+    cell: (info) => (
+      <div className="metric-stack">
+        <strong>
+          {info.getValue()[0]} to {info.getValue()[1]}
+        </strong>
+        <span>Commence year range</span>
+      </div>
+    ),
   }),
   columnHelper.accessor((row) => row.summary.nearestMrt, {
     id: "mrt",
@@ -62,6 +107,10 @@ export function ShortlistDrawer({
         <div>
           <span className="eyebrow">Browser-only saved homes</span>
           <h2>Shortlist compare</h2>
+          <p className="shortlist-drawer__subtitle">
+            Your target price is your own buy threshold for the block. The gap
+            compares that number against the current market median.
+          </p>
         </div>
         <div className="shortlist-drawer__actions">
           <span className="pill">{rows.length}/4 saved</span>
@@ -84,7 +133,8 @@ export function ShortlistDrawer({
                         : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
-                  <th>Target</th>
+                  <th>Your target price</th>
+                  <th>Gap vs target</th>
                   <th>Notes</th>
                   <th />
                 </tr>
@@ -112,6 +162,28 @@ export function ShortlistDrawer({
                         })
                       }
                     />
+                    <p className="field__hint">Your personal max or goal price.</p>
+                  </td>
+                  <td>
+                    {row.original.item.targetPrice !== null ? (
+                      <div className="metric-stack">
+                        <strong>
+                          {formatCurrency(
+                            Math.abs(
+                              row.original.item.targetPrice -
+                                row.original.summary.medianPrice,
+                            ),
+                          )}
+                        </strong>
+                        <span>
+                          {row.original.item.targetPrice >= row.original.summary.medianPrice
+                            ? "Median is below your target"
+                            : "Median is above your target"}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="field__hint">Enter a target to compare.</span>
+                    )}
                   </td>
                   <td>
                     <textarea

@@ -180,6 +180,7 @@ function App() {
       <section className="workspace">
         <FilterPanel
           filters={filters}
+          manifest={manifest}
           maxMonth={manifest.dataWindow.maxMonth}
           minMonth={manifest.dataWindow.minMonth}
           onChange={patchFilters}
@@ -244,4 +245,3 @@ function App() {
 }
 
 export default App;
-

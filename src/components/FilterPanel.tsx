@@ -1,8 +1,10 @@
 import type { ChangeEvent } from "react";
-import type { FilterState } from "@/types/data";
+import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
+import type { FilterState, Manifest } from "@/types/data";
 
 type FilterPanelProps = {
   filters: FilterState;
+  manifest: Manifest;
   options: {
     towns: string[];
     flatTypes: string[];
@@ -20,6 +22,7 @@ function parseOptionalNumber(event: ChangeEvent<HTMLInputElement>) {
 
 export function FilterPanel({
   filters,
+  manifest,
   options,
   minMonth,
   maxMonth,
@@ -224,6 +227,44 @@ export function FilterPanel({
           onChange={(event) => onChange({ mrtMax: parseOptionalNumber(event) })}
         />
       </label>
+
+      <section className="provenance-card">
+        <div className="panel__header panel__header--compact">
+          <div>
+            <span className="eyebrow">Data provenance</span>
+            <h3>What this tool shows</h3>
+          </div>
+          <span className="pill">{formatNumber(manifest.counts.blocks)} blocks</span>
+        </div>
+
+        <div className="provenance-card__grid">
+          <article>
+            <span>Artifacts built</span>
+            <strong>{formatDateTime(manifest.generatedAt)}</strong>
+          </article>
+          <article>
+            <span>Market window</span>
+            <strong>
+              {formatMonth(manifest.dataWindow.minMonth)} to{" "}
+              {formatMonth(manifest.dataWindow.maxMonth)}
+            </strong>
+          </article>
+          <article>
+            <span>Transactions</span>
+            <strong>{formatNumber(manifest.counts.transactions)}</strong>
+          </article>
+          <article>
+            <span>MRT metric</span>
+            <strong>Straight-line distance</strong>
+          </article>
+        </div>
+
+        <p className="provenance-card__note">
+          Official HDB resale data, HDB property information, and LTA station exits.
+          This app helps compare real market evidence and does not predict future
+          prices.
+        </p>
+      </section>
     </aside>
   );
 }
