@@ -619,3 +619,64 @@ tbody tr.is-selected {
   background: var(--surface-muted);
   overflow: hidden;
 }
+
+/* MapLibre popup override */
+.map-popup .maplibregl-popup-content {
+  background: var(--surface-strong);
+  color: #f8fafc;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  max-width: 220px;
+}
+
+.map-popup .maplibregl-popup-tip {
+  border-top-color: var(--surface-strong);
+}
+
+/* Custom scrollbar for panels */
+.results-panel__table,
+.shortlist-drawer__body,
+.filters-panel,
+.detail-drawer {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.2) transparent;
+}
+
+.results-panel__table::-webkit-scrollbar,
+.shortlist-drawer__body::-webkit-scrollbar,
+.filters-panel::-webkit-scrollbar,
+.detail-drawer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.results-panel__table::-webkit-scrollbar-thumb,
+.shortlist-drawer__body::-webkit-scrollbar-thumb,
+.filters-panel::-webkit-scrollbar-thumb,
+.detail-drawer::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 999px;
+}
+
+/* Table divider between pinned and regular rows */
+.table-divider td {
+  border: 0 !important;
+}
+
+/* Improve row hover */
+tbody tr:not(.table-divider) {
+  transition: background 120ms ease, transform 60ms ease;
+}
+
+tbody tr:not(.table-divider):hover {
+  background: rgba(148, 163, 184, 0.07);
+}
+
+tbody tr.is-selected {
+  background: rgba(45, 212, 191, 0.1);
+  border-left: 3px solid var(--accent);
+}
+

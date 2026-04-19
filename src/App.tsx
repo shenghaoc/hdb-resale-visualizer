@@ -3,6 +3,7 @@ import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import type { AddressDetail, BlockSummary, FilterState, Manifest } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
@@ -114,9 +115,20 @@ function App() {
     };
   }, [filters.selectedAddressKey]);
 
+  // Debounce the search string so every keystroke doesn't trigger 10K-point
+  // map re-renders and GeoJSON source updates.
+  const debouncedSearch = useDebouncedValue(filters.search, 200);
+  const stableFilters = useMemo(
+    () => ({ ...filters, search: debouncedSearch }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
+     filters.budgetMin, filters.budgetMax, filters.areaMin, filters.areaMax,
+     filters.remainingLeaseMin, filters.startMonth, filters.endMonth,
+     filters.mrtMax, filters.selectedAddressKey],
+  );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, filters)),
-    [blocks, filters],
+    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
+    [blocks, stableFilters],
   );
   const filterOptions = useMemo(() => getFilterOptions(blocks), [blocks]);
   const shortlistKeySet = useMemo(

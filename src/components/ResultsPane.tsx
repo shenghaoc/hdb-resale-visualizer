@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useMemo, useState } from "react";
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender, createColumnHelper, type SortingState } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -56,10 +56,6 @@ const columns = [
   }),
 ];
 
-// Try to use the standard getVisibleCells if possible by calling the table API natively,
-// rendering the pinned row separately with `row.getVisibleCells()` is easy if we don't remove it from the table model,
-// we instead just find it in the `table.getRowModel().rows` and render it at the top.
-
 export function ResultsPane({
   blocks,
   selectedAddressKey,
@@ -68,14 +64,25 @@ export function ResultsPane({
   onToggleShortlist,
 }: ResultsPaneProps) {
   const [sorting, setSorting] = useState<SortingState>([
-    { id: "medianPrice", desc: false }
+    { id: "medianPrice", desc: false },
   ]);
 
-  const unselectedBlocks = blocks.filter((b) => b.addressKey !== selectedAddressKey);
-  const selectedBlock = blocks.find((b) => b.addressKey === selectedAddressKey);
+  // Separate selected block from the rest so it can be pinned at the top
+  const { selectedBlock, tableBlocks } = useMemo(() => {
+    let selected: BlockSummary | undefined;
+    const rest: BlockSummary[] = [];
+    for (const b of blocks) {
+      if (b.addressKey === selectedAddressKey) {
+        selected = b;
+      } else {
+        rest.push(b);
+      }
+    }
+    return { selectedBlock: selected, tableBlocks: rest };
+  }, [blocks, selectedAddressKey]);
 
   const table = useReactTable({
-    data: unselectedBlocks,
+    data: tableBlocks,
     columns,
     state: { sorting },
     onSortingChange: setSorting,
@@ -95,43 +102,39 @@ export function ResultsPane({
 
   const virtualItems = virtualizer.getVirtualItems();
 
-  // Helper to render any tanstack-table Row instance
-  const renderRow = (row: typeof rows[0], isPinned = false) => {
-    const isSaved = shortlistKeys.has(row.original.addressKey);
+  const renderRow = (block: BlockSummary, isPinned = false) => {
+    const isSaved = shortlistKeys.has(block.addressKey);
     return (
       <tr
-        key={isPinned ? `pinned-${row.id}` : row.id}
+        key={isPinned ? `pinned-${block.addressKey}` : block.addressKey}
         className={isPinned ? "is-selected" : undefined}
-        onClick={() => onSelect(row.original.addressKey)}
+        onClick={() => onSelect(block.addressKey)}
       >
-        {row.getVisibleCells().map((cell) => (
-          <td key={cell.id}>
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </td>
-        ))}
+        <td>
+          <div className="result-address">
+            <strong>{block.block} {block.streetName}</strong>
+            <span>{block.town}</span>
+          </div>
+        </td>
+        <td>{formatCompactCurrency(block.medianPrice)}</td>
+        <td>{formatRemainingLease(block.leaseCommenceRange)}</td>
+        <td>{block.nearestMrt ? formatMeters(block.nearestMrt.distanceMeters) : "—"}</td>
+        <td>{formatMonth(block.latestMonth)}</td>
         <td>
           <button
             className="button button--ghost button--compact"
             onClick={(event) => {
               event.stopPropagation();
-              onToggleShortlist(row.original.addressKey);
+              onToggleShortlist(block.addressKey);
             }}
             type="button"
           >
-            {isSaved ? "Saved" : "Save"}
+            {isSaved ? "★ Saved" : "☆ Save"}
           </button>
         </td>
       </tr>
     );
   };
-
-  // We need a dummy row instance for the selected block to render it
-  const selectedTable = useReactTable({
-    data: selectedBlock ? [selectedBlock] : [],
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-  const selectedRow = selectedTable.getRowModel().rows[0];
 
   return (
     <section className="panel results-panel" data-testid="results-pane">
@@ -144,61 +147,65 @@ export function ResultsPane({
       </div>
 
       <div ref={parentRef} className="results-panel__table">
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead style={{ position: "sticky", top: 0, zIndex: 2, background: "var(--surface)" }}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                    style={{ cursor: header.column.getCanSort() ? "pointer" : "default" }}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                    {header.column.getIsSorted() === "asc" ? " ↑" : ""}
-                    {header.column.getIsSorted() === "desc" ? " ↓" : ""}
-                  </th>
-                ))}
-                <th aria-label="Actions" />
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {selectedRow && (
-              <>
-                {renderRow(selectedRow, true)}
-                <tr className="table-divider">
-                  <td colSpan={columns.length + 1} style={{ padding: 0, height: "4px", background: "var(--border)" }} />
+        {blocks.length === 0 ? (
+          <div className="empty-state">
+            No blocks match your current filters. Try broadening your search or resetting filters.
+          </div>
+        ) : (
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead style={{ position: "sticky", top: 0, zIndex: 2, background: "var(--surface)" }}>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      onClick={header.column.getToggleSortingHandler()}
+                      style={{ cursor: header.column.getCanSort() ? "pointer" : "default" }}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      {header.column.getIsSorted() === "asc" ? " ↑" : ""}
+                      {header.column.getIsSorted() === "desc" ? " ↓" : ""}
+                    </th>
+                  ))}
+                  <th aria-label="Actions" />
                 </tr>
-              </>
-            )}
+              ))}
+            </thead>
+            <tbody>
+              {selectedBlock && (
+                <>
+                  {renderRow(selectedBlock, true)}
+                  <tr className="table-divider">
+                    <td colSpan={columns.length + 1} style={{ padding: 0, height: "2px", background: "var(--accent)", opacity: 0.5 }} />
+                  </tr>
+                </>
+              )}
 
-            {virtualItems.length > 0 && (
-              <tr style={{ height: `${virtualItems[0].start}px` }}>
-                <td colSpan={columns.length + 1} style={{ padding: 0 }} />
-              </tr>
-            )}
+              {virtualItems.length > 0 && (
+                <tr style={{ height: `${virtualItems[0].start}px` }}>
+                  <td colSpan={columns.length + 1} style={{ padding: 0 }} />
+                </tr>
+              )}
 
-            {virtualItems.map((virtualRow) => {
-              const row = rows[virtualRow.index];
-              return renderRow(row);
-            })}
+              {virtualItems.map((virtualRow) => {
+                const row = rows[virtualRow.index];
+                return renderRow(row.original);
+              })}
 
-            {virtualItems.length > 0 && (
-              <tr
-                style={{
-                  height: `${
-                    virtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end
-                  }px`,
-                }}
-              >
-                <td colSpan={columns.length + 1} style={{ padding: 0 }} />
-              </tr>
-            )}
-          </tbody>
-        </table>
+              {virtualItems.length > 0 && (
+                <tr
+                  style={{
+                    height: `${virtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end}px`,
+                  }}
+                >
+                  <td colSpan={columns.length + 1} style={{ padding: 0 }} />
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
     </section>
   );

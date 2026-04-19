@@ -126,7 +126,7 @@ export function DetailDrawer({
                     {transaction.storeyRange}
                   </p>
                   <p>
-                    {transaction.flatModel} • Lease {transaction.leaseCommenceDate}
+                    {transaction.flatModel} • {transaction.remainingLease} lease rem.
                   </p>
                 </article>
               ))}
