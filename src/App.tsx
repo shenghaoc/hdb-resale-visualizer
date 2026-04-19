@@ -134,7 +134,23 @@ function App() {
 
           return { item, summary };
         })
-        .filter((entry): entry is NonNullable<typeof entry> => entry !== null),
+        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+        .sort((left, right) => {
+          const leftGap =
+            left.item.targetPrice !== null
+              ? Math.abs(left.item.targetPrice - left.summary.medianPrice)
+              : Number.POSITIVE_INFINITY;
+          const rightGap =
+            right.item.targetPrice !== null
+              ? Math.abs(right.item.targetPrice - right.summary.medianPrice)
+              : Number.POSITIVE_INFINITY;
+
+          if (leftGap !== rightGap) {
+            return leftGap - rightGap;
+          }
+
+          return left.item.addedAt.localeCompare(right.item.addedAt);
+        }),
     [blocks, shortlist.items],
   );
   const selectedBlock = useMemo(

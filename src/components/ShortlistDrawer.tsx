@@ -15,6 +15,42 @@ type ShortlistDrawerProps = {
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
 };
 
+type GapInfo = {
+  amount: number;
+  label: string;
+  tone: "positive" | "negative";
+};
+
+function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | null {
+  if (targetPrice === null) {
+    return null;
+  }
+
+  const amount = Math.abs(targetPrice - medianPrice);
+
+  if (targetPrice >= medianPrice) {
+    return {
+      amount,
+      label: "Median is below your target",
+      tone: "positive",
+    };
+  }
+
+  return {
+    amount,
+    label: "Median is above your target",
+    tone: "negative",
+  };
+}
+
+function getRemainingLeaseRange(leaseCommenceRange: [number, number]) {
+  const currentYear = new Date().getFullYear();
+  const oldestRemaining = Math.max(0, 99 - (currentYear - leaseCommenceRange[0]));
+  const newestRemaining = Math.max(0, 99 - (currentYear - leaseCommenceRange[1]));
+
+  return [Math.min(oldestRemaining, newestRemaining), Math.max(oldestRemaining, newestRemaining)];
+}
+
 const columnHelper = createColumnHelper<ShortlistRow>();
 
 const columns = [
@@ -68,15 +104,21 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.summary.leaseCommenceRange, {
     id: "lease",
-    header: "Lease years",
-    cell: (info) => (
-      <div className="metric-stack">
-        <strong>
-          {info.getValue()[0]} to {info.getValue()[1]}
-        </strong>
-        <span>Commence year range</span>
-      </div>
-    ),
+    header: "Lease context",
+    cell: (info) => {
+      const remainingLeaseRange = getRemainingLeaseRange(info.getValue());
+
+      return (
+        <div className="metric-stack">
+          <strong>
+            {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
+          </strong>
+          <span>
+            Commence {info.getValue()[0]} to {info.getValue()[1]}
+          </span>
+        </div>
+      );
+    },
   }),
   columnHelper.accessor((row) => row.summary.nearestMrt, {
     id: "mrt",
@@ -113,6 +155,7 @@ export function ShortlistDrawer({
           </p>
         </div>
         <div className="shortlist-drawer__actions">
+          <span className="pill">Best fit first</span>
           <span className="pill">{rows.length}/4 saved</span>
           <button className="button button--ghost" onClick={onToggleOpen} type="button">
             {isOpen ? "Collapse" : "Expand"}
@@ -141,74 +184,74 @@ export function ShortlistDrawer({
               ))}
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              {table.getRowModel().rows.map((row) => {
+                const gapInfo = getGapInfo(
+                  row.original.item.targetPrice,
+                  row.original.summary.medianPrice,
+                );
+
+                return (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                    <td>
+                      <input
+                        className="field__input"
+                        inputMode="numeric"
+                        placeholder="850000"
+                        type="number"
+                        value={row.original.item.targetPrice ?? ""}
+                        onChange={(event) =>
+                          onUpdate(row.original.item.addressKey, {
+                            targetPrice:
+                              event.target.value === "" ? null : Number(event.target.value),
+                          })
+                        }
+                      />
+                      <p className="field__hint">Your personal max or goal price.</p>
                     </td>
-                  ))}
-                  <td>
-                    <input
-                      className="field__input"
-                      inputMode="numeric"
-                      placeholder="850000"
-                      type="number"
-                      value={row.original.item.targetPrice ?? ""}
-                      onChange={(event) =>
-                        onUpdate(row.original.item.addressKey, {
-                          targetPrice:
-                            event.target.value === "" ? null : Number(event.target.value),
-                        })
-                      }
-                    />
-                    <p className="field__hint">Your personal max or goal price.</p>
-                  </td>
-                  <td>
-                    {row.original.item.targetPrice !== null ? (
-                      <div className="metric-stack">
-                        <strong>
-                          {formatCurrency(
-                            Math.abs(
-                              row.original.item.targetPrice -
-                                row.original.summary.medianPrice,
-                            ),
-                          )}
-                        </strong>
-                        <span>
-                          {row.original.item.targetPrice >= row.original.summary.medianPrice
-                            ? "Median is below your target"
-                            : "Median is above your target"}
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="field__hint">Enter a target to compare.</span>
-                    )}
-                  </td>
-                  <td>
-                    <textarea
-                      className="field__input field__input--textarea"
-                      placeholder="Why this block stays in the running"
-                      rows={2}
-                      value={row.original.item.notes}
-                      onChange={(event) =>
-                        onUpdate(row.original.item.addressKey, {
-                          notes: event.target.value,
-                        })
-                      }
-                    />
-                  </td>
-                  <td>
-                    <button
-                      className="button button--ghost button--compact"
-                      onClick={() => onRemove(row.original.item.addressKey)}
-                      type="button"
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    <td>
+                      {gapInfo ? (
+                        <div className="metric-stack">
+                          <strong className={`gap-value gap-value--${gapInfo.tone}`}>
+                            {formatCurrency(gapInfo.amount)}
+                          </strong>
+                          <span className={`gap-badge gap-badge--${gapInfo.tone}`}>
+                            {gapInfo.label}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="field__hint">Enter a target to compare.</span>
+                      )}
+                    </td>
+                    <td>
+                      <textarea
+                        className="field__input field__input--textarea"
+                        placeholder="Why this block stays in the running"
+                        rows={2}
+                        value={row.original.item.notes}
+                        onChange={(event) =>
+                          onUpdate(row.original.item.addressKey, {
+                            notes: event.target.value,
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="button button--ghost button--compact"
+                        onClick={() => onRemove(row.original.item.addressKey)}
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
