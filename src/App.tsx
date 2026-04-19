@@ -248,6 +248,7 @@ function App() {
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
           detail={detail}
+          selectedBlock={selectedBlock}
           isLoading={isDetailLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
           onClose={() => patchFilters({ selectedAddressKey: null })}

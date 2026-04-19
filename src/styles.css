@@ -669,14 +669,22 @@ tbody tr.is-selected {
 /* Improve row hover */
 tbody tr:not(.table-divider) {
   transition: background 120ms ease, transform 60ms ease;
+  cursor: pointer;
 }
 
 tbody tr:not(.table-divider):hover {
   background: rgba(148, 163, 184, 0.07);
 }
 
+.results-panel tbody tr:not(.table-divider) td {
+  pointer-events: none;
+}
+
+.results-panel tbody tr:not(.table-divider) button {
+  pointer-events: auto;
+}
+
 tbody tr.is-selected {
   background: rgba(45, 212, 191, 0.1);
   border-left: 3px solid var(--accent);
 }
-

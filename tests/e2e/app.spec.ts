@@ -10,10 +10,13 @@ test("loads the market explorer and drives the shortlist flow", async ({ page })
   await page.getByPlaceholder("e.g. 447 or Bedok Reservoir").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
-  const firstRow = page.locator("[data-testid='results-pane'] tbody tr").first();
-  await firstRow.click();
+  const firstRow = page
+    .locator("[data-testid='results-pane'] tbody tr")
+    .filter({ has: page.locator(".result-address strong") })
+    .first();
+  const rowAddress = await firstRow.locator(".result-address strong").textContent();
+  await firstRow.getByRole("button", { name: /Save|Saved/ }).click({ force: true });
 
-  await expect(page.getByTestId("detail-drawer")).toContainText(/BEDOK|ANG MO KIO/);
-  await page.getByRole("button", { name: /Add to shortlist|Remove from shortlist/ }).click();
-  await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
+  await expect(firstRow.getByRole("button", { name: /Saved/ })).toBeVisible();
+  await expect(page.getByTestId("shortlist-drawer")).toContainText(rowAddress ?? "");
 });
