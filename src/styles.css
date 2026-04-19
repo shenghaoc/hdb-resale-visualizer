@@ -481,3 +481,55 @@ tbody tr.is-selected {
     min-height: 420px;
   }
 }
+
+/* Skeleton / shimmer placeholders for lazy-loaded chunks */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0) 0%,
+    rgba(148, 163, 184, 0.06) 40%,
+    rgba(148, 163, 184, 0.1) 50%,
+    rgba(148, 163, 184, 0.06) 60%,
+    rgba(15, 23, 42, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+.skeleton-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.04em;
+}
+
+.map-skeleton {
+  position: relative;
+  background: rgba(9, 16, 26, 0.7);
+  border: 1px solid var(--border);
+}
+
+.drawer-skeleton {
+  position: relative;
+  min-height: 6rem;
+  border-radius: 18px;
+  background: var(--surface-muted);
+  overflow: hidden;
+}
+

@@ -1,16 +1,27 @@
-import { startTransition, useEffect, useMemo, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useShortlist } from "@/hooks/useShortlist";
 import type { AddressDetail, BlockSummary, FilterState, Manifest } from "@/types/data";
-import { DetailDrawer } from "@/components/DetailDrawer";
+import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
-import { MapView } from "@/components/MapView";
+import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
-import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { StatsBar } from "@/components/StatsBar";
+
+const MapView = lazy(() =>
+  import("@/components/MapView").then((m) => ({ default: m.MapView })),
+);
+const DetailDrawer = lazy(() =>
+  import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
+);
+const ShortlistDrawer = lazy(() =>
+  import("@/components/ShortlistDrawer").then((m) => ({
+    default: m.ShortlistDrawer,
+  })),
+);
 
 function App() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -187,11 +198,13 @@ function App() {
               <span className="legend legend--warm">Higher median</span>
             </div>
           </div>
-          <MapView
-            blocks={filteredBlocks}
-            onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-            selectedAddressKey={filters.selectedAddressKey}
-          />
+          <Suspense fallback={<MapSkeleton />}>
+            <MapView
+              blocks={filteredBlocks}
+              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+              selectedAddressKey={filters.selectedAddressKey}
+            />
+          </Suspense>
         </section>
 
         <ResultsPane
@@ -203,27 +216,32 @@ function App() {
         />
       </section>
 
-      <DetailDrawer
-        detail={detail}
-        isLoading={isDetailLoading}
-        isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-        onClose={() => patchFilters({ selectedAddressKey: null })}
-        onToggleShortlist={() => {
-          if (selectedBlock) {
-            shortlist.toggle(selectedBlock.addressKey);
-          }
-        }}
-      />
+      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+        <DetailDrawer
+          detail={detail}
+          isLoading={isDetailLoading}
+          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+          onClose={() => patchFilters({ selectedAddressKey: null })}
+          onToggleShortlist={() => {
+            if (selectedBlock) {
+              shortlist.toggle(selectedBlock.addressKey);
+            }
+          }}
+        />
+      </Suspense>
 
-      <ShortlistDrawer
-        isOpen={isShortlistOpen}
-        onRemove={(addressKey) => shortlist.toggle(addressKey)}
-        onToggleOpen={() => setIsShortlistOpen((current) => !current)}
-        onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-        rows={shortlistRows}
-      />
+      <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
+        <ShortlistDrawer
+          isOpen={isShortlistOpen}
+          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onToggleOpen={() => setIsShortlistOpen((current) => !current)}
+          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+          rows={shortlistRows}
+        />
+      </Suspense>
     </main>
   );
 }
 
 export default App;
+
