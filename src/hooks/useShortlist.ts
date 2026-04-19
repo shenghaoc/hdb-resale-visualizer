@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { loadShortlist, parseShortlist, saveShortlist, toggleShortlistItem } from "@/lib/shortlist";
+import {
+  decodeShortlistFromUrl,
+  loadShortlist,
+  saveShortlist,
+  toggleShortlistItem,
+} from "@/lib/shortlist";
 import type { ShortlistItem } from "@/types/data";
 
 export function useShortlist() {
@@ -10,8 +15,7 @@ export function useShortlist() {
       const params = new URLSearchParams(window.location.search);
       const shortlistParam = params.get("shortlist");
       if (shortlistParam) {
-        const decoded: unknown = JSON.parse(atob(shortlistParam));
-        const parsed = parseShortlist(decoded);
+        const parsed = decodeShortlistFromUrl(shortlistParam);
         if (parsed.length > 0) {
           setItems(parsed);
           const newParams = new URLSearchParams(window.location.search);

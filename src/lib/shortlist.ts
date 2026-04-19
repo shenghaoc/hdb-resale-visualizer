@@ -23,6 +23,34 @@ export function parseShortlist(raw: unknown): ShortlistItem[] {
   return raw.filter(isShortlistItem);
 }
 
+function bytesToBase64(bytes: Uint8Array) {
+  return btoa(String.fromCharCode(...bytes));
+}
+
+function base64ToBytes(value: string) {
+  return Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+}
+
+export function encodeShortlistForUrl(items: ShortlistItem[]) {
+  const json = JSON.stringify(items);
+  return bytesToBase64(new TextEncoder().encode(json));
+}
+
+export function decodeShortlistFromUrl(value: string) {
+  try {
+    const decoded = new TextDecoder().decode(base64ToBytes(value));
+    const parsed: unknown = JSON.parse(decoded);
+    return parseShortlist(parsed);
+  } catch {
+    try {
+      const parsed: unknown = JSON.parse(atob(value));
+      return parseShortlist(parsed);
+    } catch {
+      return [];
+    }
+  }
+}
+
 export function loadShortlist(storage: Pick<Storage, "getItem">): ShortlistItem[] {
   const value = storage.getItem(SHORTLIST_STORAGE_KEY);
   if (!value) {

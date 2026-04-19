@@ -53,24 +53,6 @@ function parseOptionalNumberValue(value: string) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-/**
- * Returns an onFocus handler that seeds the field with `defaultNumber`
- * when the current value is empty. This ensures the native number spinner
- * starts from a sensible default instead of 0.
- */
-function makeSpinnerFocusHandler(
-  currentValue: number | null | undefined,
-  defaultNumber: number,
-  onChange: (patch: Partial<FilterState>) => void,
-  key: keyof FilterState,
-) {
-  return () => {
-    if (currentValue === null || currentValue === undefined) {
-      onChange({ [key]: defaultNumber } as Partial<FilterState>);
-    }
-  };
-}
-
 type SelectFieldProps = {
   label: string;
   allLabel: string;
@@ -195,12 +177,12 @@ export function FilterPanel({
                   </InputGroupAddon>
                   <InputGroupInput
                     id="budget-min"
+                    data-no-spinner="true"
                     inputMode="numeric"
                     min={0}
-                    placeholder="300000"
+                    placeholder="No minimum"
                     type="number"
                     value={filters.budgetMin ?? ""}
-                    onFocus={makeSpinnerFocusHandler(filters.budgetMin, 300000, onChange, "budgetMin")}
                     onChange={(event) =>
                       onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
                     }
@@ -212,12 +194,12 @@ export function FilterPanel({
                   </InputGroupAddon>
                   <InputGroupInput
                     id="budget-max"
+                    data-no-spinner="true"
                     inputMode="numeric"
                     min={0}
-                    placeholder="900000"
+                    placeholder="No maximum"
                     type="number"
                     value={filters.budgetMax ?? ""}
-                    onFocus={makeSpinnerFocusHandler(filters.budgetMax, 900000, onChange, "budgetMax")}
                     onChange={(event) =>
                       onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
                     }
@@ -238,12 +220,12 @@ export function FilterPanel({
                   </InputGroupAddon>
                   <InputGroupInput
                     id="area-min"
+                    data-no-spinner="true"
                     inputMode="decimal"
                     min={0}
-                    placeholder="60"
+                    placeholder="Min sqm"
                     type="number"
                     value={filters.areaMin ?? ""}
-                    onFocus={makeSpinnerFocusHandler(filters.areaMin, 60, onChange, "areaMin")}
                     onChange={(event) =>
                       onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
                     }
@@ -255,12 +237,12 @@ export function FilterPanel({
                   </InputGroupAddon>
                   <InputGroupInput
                     id="area-max"
+                    data-no-spinner="true"
                     inputMode="decimal"
                     min={0}
-                    placeholder="120"
+                    placeholder="Max sqm"
                     type="number"
                     value={filters.areaMax ?? ""}
-                    onFocus={makeSpinnerFocusHandler(filters.areaMax, 120, onChange, "areaMax")}
                     onChange={(event) =>
                       onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
                     }
@@ -277,13 +259,13 @@ export function FilterPanel({
               <InputGroup>
                 <InputGroupInput
                   id="remaining-lease"
+                  data-no-spinner="true"
                   inputMode="numeric"
                   max={99}
                   min={0}
-                  placeholder="e.g. 60"
+                  placeholder="Optional"
                   type="number"
                   value={filters.remainingLeaseMin ?? ""}
-                  onFocus={makeSpinnerFocusHandler(filters.remainingLeaseMin, 60, onChange, "remainingLeaseMin")}
                   onChange={(event) =>
                     onChange({
                       remainingLeaseMin: parseOptionalNumberValue(event.target.value),
@@ -354,12 +336,12 @@ export function FilterPanel({
             <InputGroup>
               <InputGroupInput
                 id="mrt-max"
+                data-no-spinner="true"
                 inputMode="numeric"
                 min={0}
-                placeholder="800"
+                placeholder="Optional"
                 type="number"
                 value={filters.mrtMax ?? ""}
-                onFocus={makeSpinnerFocusHandler(filters.mrtMax, 800, onChange, "mrtMax")}
                 onChange={(event) =>
                   onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
                 }

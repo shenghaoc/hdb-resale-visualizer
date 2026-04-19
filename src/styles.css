@@ -246,3 +246,13 @@
 [data-slot="scroll-area-scrollbar"][data-orientation="horizontal"] {
   height: 0.625rem;
 }
+
+input[data-no-spinner="true"] {
+  appearance: textfield;
+}
+
+input[data-no-spinner="true"]::-webkit-outer-spin-button,
+input[data-no-spinner="true"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}

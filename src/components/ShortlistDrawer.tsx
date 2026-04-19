@@ -1,5 +1,6 @@
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
+import { encodeShortlistForUrl } from "@/lib/shortlist";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -79,7 +80,7 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
-    params.set("shortlist", btoa(JSON.stringify(rows.map((r) => r.item))));
+    params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
     void navigator.clipboard.writeText(url);
     alert("Share URL copied to clipboard!");
