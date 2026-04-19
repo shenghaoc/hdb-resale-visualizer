@@ -1,8 +1,28 @@
-import { useRef, useMemo, useState } from "react";
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender, createColumnHelper, type SortingState } from "@tanstack/react-table";
+import { useMemo, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
 import type { BlockSummary } from "@/types/data";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
+  ItemGroup,
+  ItemHeader,
+} from "@/components/ui/item";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type ResultsPaneProps = {
   blocks: BlockSummary[];
@@ -12,49 +32,140 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
 };
 
-const columnHelper = createColumnHelper<BlockSummary>();
+type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
 
-const columns = [
-  columnHelper.accessor((row) => `${row.block} ${row.streetName}`, {
-    id: "address",
-    header: "Address",
-    cell: (info) => (
-      <div className="result-address">
-        <strong>{info.getValue()}</strong>
-        <span>{info.row.original.town}</span>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("medianPrice", {
-    header: "Median",
-    cell: (info) => formatCompactCurrency(info.getValue()),
-  }),
-  columnHelper.accessor((row) => row.leaseCommenceRange, {
-    id: "lease",
-    header: "Lease rem.",
-    sortingFn: (rowA, rowB) => {
-      const currentYear = new Date().getFullYear();
-      const leaseA = 99 - (currentYear - rowA.original.leaseCommenceRange[1]);
-      const leaseB = 99 - (currentYear - rowB.original.leaseCommenceRange[1]);
-      return leaseA - leaseB;
-    },
-    cell: (info) => formatRemainingLease(info.getValue()),
-  }),
-  columnHelper.accessor("nearestMrt", {
-    header: "MRT",
-    sortingFn: (rowA, rowB) => {
-      const distA = rowA.original.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const distB = rowB.original.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      return distA - distB;
-    },
-    cell: (info) =>
-      info.getValue() ? formatMeters(info.getValue()!.distanceMeters) : "—",
-  }),
-  columnHelper.accessor("latestMonth", {
-    header: "Latest",
-    cell: (info) => formatMonth(info.getValue()),
-  }),
+const SORT_OPTIONS: Array<{ value: SortMode; label: string }> = [
+  { value: "median-asc", label: "Lowest median first" },
+  { value: "median-desc", label: "Highest median first" },
+  { value: "lease-desc", label: "Longest lease first" },
+  { value: "mrt-asc", label: "Nearest MRT first" },
+  { value: "latest-desc", label: "Most recent activity" },
 ];
+
+function getSortValue(block: BlockSummary, mode: SortMode) {
+  const currentYear = new Date().getFullYear();
+
+  switch (mode) {
+    case "median-asc":
+      return block.medianPrice;
+    case "median-desc":
+      return -block.medianPrice;
+    case "lease-desc":
+      return -(99 - (currentYear - block.leaseCommenceRange[1]));
+    case "mrt-asc":
+      return block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+    case "latest-desc":
+      return -Number(block.latestMonth.replace("-", ""));
+    default:
+      return block.medianPrice;
+  }
+}
+
+function BlockCard({
+  block,
+  isFeatured = false,
+  isSaved,
+  onSelect,
+  onToggleShortlist,
+}: {
+  block: BlockSummary;
+  isFeatured?: boolean;
+  isSaved: boolean;
+  onSelect: (addressKey: string) => void;
+  onToggleShortlist: (addressKey: string) => void;
+}) {
+  return (
+    <Item
+      data-state={isFeatured ? "selected" : "idle"}
+      variant="outline"
+      className={cn(
+        "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
+        isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
+      )}
+      onClick={() => onSelect(block.addressKey)}
+    >
+      <ItemHeader>
+        <ItemContent>
+          <div className="result-address flex flex-col gap-1">
+            <strong className="font-heading text-xl font-semibold leading-none tracking-tight">
+              {block.block} {block.streetName}
+            </strong>
+            <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
+              {block.town}
+            </span>
+          </div>
+        </ItemContent>
+        <ItemActions className="flex-wrap justify-end">
+          {isFeatured ? <Badge>Selected</Badge> : null}
+          <Button
+            size="xs"
+            variant={isSaved ? "secondary" : "ghost"}
+            onClick={(event) => {
+              event.stopPropagation();
+              onToggleShortlist(block.addressKey);
+            }}
+            type="button"
+          >
+            <Bookmark data-icon="inline-start" />
+            {isSaved ? "Saved" : "Save"}
+          </Button>
+        </ItemActions>
+      </ItemHeader>
+
+      <div className="grid basis-full gap-4 border-t border-border/60 pt-4 sm:grid-cols-2">
+        <div className="flex flex-col gap-1">
+          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <WalletCards className="size-3.5" />
+            Median resale
+          </span>
+          <strong className="font-heading text-2xl font-semibold">
+            {formatCompactCurrency(block.medianPrice)}
+          </strong>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <TrainFront className="size-3.5" />
+            Nearest MRT
+          </span>
+          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            {block.nearestMrt
+              ? `${block.nearestMrt.stationName} • ${formatMeters(block.nearestMrt.distanceMeters)}`
+              : "No match"}
+          </strong>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <Coins className="size-3.5" />
+            Remaining lease
+          </span>
+          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            {formatRemainingLease(block.leaseCommenceRange)}
+          </strong>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <Clock3 className="size-3.5" />
+            Latest month
+          </span>
+          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            {formatMonth(block.latestMonth)}
+          </strong>
+        </div>
+      </div>
+
+      <ItemFooter className="flex-wrap gap-2 border-t border-border/60 pt-4">
+        {block.flatTypes.slice(0, 3).map((flatType) => (
+          <Badge key={flatType} variant="secondary">
+            {flatType}
+          </Badge>
+        ))}
+        <ItemDescription className="ml-auto text-right">
+          {block.transactionCount} recent transactions
+        </ItemDescription>
+      </ItemFooter>
+    </Item>
+  );
+}
 
 export function ResultsPane({
   blocks,
@@ -63,150 +174,123 @@ export function ResultsPane({
   onSelect,
   onToggleShortlist,
 }: ResultsPaneProps) {
-  const [sorting, setSorting] = useState<SortingState>([
-    { id: "medianPrice", desc: false },
-  ]);
+  const [sortMode, setSortMode] = useState<SortMode>("median-asc");
 
-  // Separate selected block from the rest so it can be pinned at the top
-  const { selectedBlock, tableBlocks } = useMemo(() => {
-    let selected: BlockSummary | undefined;
+  const { selectedBlock, remainingBlocks } = useMemo(() => {
+    let featured: BlockSummary | undefined;
     const rest: BlockSummary[] = [];
-    for (const b of blocks) {
-      if (b.addressKey === selectedAddressKey) {
-        selected = b;
+
+    for (const block of blocks) {
+      if (block.addressKey === selectedAddressKey) {
+        featured = block;
       } else {
-        rest.push(b);
+        rest.push(block);
       }
     }
-    return { selectedBlock: selected, tableBlocks: rest };
-  }, [blocks, selectedAddressKey]);
 
-  const table = useReactTable({
-    data: tableBlocks,
-    columns,
-    state: { sorting },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+    const sorted = [...rest].sort((left, right) => {
+      return getSortValue(left, sortMode) - getSortValue(right, sortMode);
+    });
 
-  const { rows } = table.getRowModel();
+    return { selectedBlock: featured, remainingBlocks: sorted };
+  }, [blocks, selectedAddressKey, sortMode]);
 
   const parentRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtualizer({
-    count: rows.length,
+    count: remainingBlocks.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 58,
-    overscan: 10,
+    estimateSize: () => 214,
+    overscan: 6,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
 
-  const renderRow = (block: BlockSummary, isPinned = false) => {
-    const isSaved = shortlistKeys.has(block.addressKey);
-    return (
-      <tr
-        key={isPinned ? `pinned-${block.addressKey}` : block.addressKey}
-        className={isPinned ? "is-selected" : undefined}
-        onClick={() => onSelect(block.addressKey)}
-      >
-        <td>
-          <div className="result-address">
-            <strong>{block.block} {block.streetName}</strong>
-            <span>{block.town}</span>
-          </div>
-        </td>
-        <td>{formatCompactCurrency(block.medianPrice)}</td>
-        <td>{formatRemainingLease(block.leaseCommenceRange)}</td>
-        <td>{block.nearestMrt ? formatMeters(block.nearestMrt.distanceMeters) : "—"}</td>
-        <td>{formatMonth(block.latestMonth)}</td>
-        <td>
-          <button
-            className="button button--ghost button--compact"
-            onClick={(event) => {
-              event.stopPropagation();
-              onToggleShortlist(block.addressKey);
-            }}
-            type="button"
-          >
-            {isSaved ? "★ Saved" : "☆ Save"}
-          </button>
-        </td>
-      </tr>
-    );
-  };
-
   return (
-    <section className="panel results-panel" data-testid="results-pane">
-      <div className="panel__header">
-        <div>
-          <span className="eyebrow">Current shortlist candidates</span>
-          <h2>Filtered blocks</h2>
-        </div>
-        <span className="pill">{blocks.length} shown</span>
-      </div>
-
-      <div ref={parentRef} className="results-panel__table">
-        {blocks.length === 0 ? (
-          <div className="empty-state">
-            No blocks match your current filters. Try broadening your search or resetting filters.
+    <section data-testid="results-pane">
+      <Card className="bg-background">
+        <CardHeader className="gap-4 border-b border-border pb-6">
+          <div className="flex flex-wrap items-start gap-4">
+            <div className="flex flex-1 flex-col gap-2">
+              <Badge variant="secondary">Current shortlist candidates</Badge>
+              <CardTitle className="text-2xl">Filtered blocks</CardTitle>
+            </div>
+            <CardAction className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
+              <Badge>{blocks.length} shown</Badge>
+              <div className="flex min-w-[14rem] items-center gap-3">
+                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <ArrowUpDown className="size-3.5" />
+                  Sort
+                </span>
+                <Select onValueChange={(value) => setSortMode(value as SortMode)} value={sortMode}>
+                  <SelectTrigger className="w-full sm:w-[15rem]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SORT_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardAction>
           </div>
-        ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead style={{ position: "sticky", top: 0, zIndex: 2, background: "var(--surface)" }}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      onClick={header.column.getToggleSortingHandler()}
-                      style={{ cursor: header.column.getCanSort() ? "pointer" : "default" }}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                      {header.column.getIsSorted() === "asc" ? " ↑" : ""}
-                      {header.column.getIsSorted() === "desc" ? " ↓" : ""}
-                    </th>
-                  ))}
-                  <th aria-label="Actions" />
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {selectedBlock && (
-                <>
-                  {renderRow(selectedBlock, true)}
-                  <tr className="table-divider">
-                    <td colSpan={columns.length + 1} style={{ padding: 0, height: "2px", background: "var(--accent)", opacity: 0.5 }} />
-                  </tr>
-                </>
-              )}
+        </CardHeader>
+        <CardContent className="pt-6">
+          {blocks.length === 0 ? (
+            <div className="empty-state">
+              No blocks match your current filters. Try broadening your search or resetting filters.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {selectedBlock ? (
+                <div className="flex flex-col gap-3">
+                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    Featured selection
+                  </span>
+                  <BlockCard
+                    block={selectedBlock}
+                    isFeatured
+                    isSaved={shortlistKeys.has(selectedBlock.addressKey)}
+                    onSelect={onSelect}
+                    onToggleShortlist={onToggleShortlist}
+                  />
+                </div>
+              ) : null}
 
-              {virtualItems.length > 0 && (
-                <tr style={{ height: `${virtualItems[0].start}px` }}>
-                  <td colSpan={columns.length + 1} style={{ padding: 0 }} />
-                </tr>
-              )}
-
-              {virtualItems.map((virtualRow) => {
-                const row = rows[virtualRow.index];
-                return renderRow(row.original);
-              })}
-
-              {virtualItems.length > 0 && (
-                <tr
-                  style={{
-                    height: `${virtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end}px`,
-                  }}
+              <div
+                ref={parentRef}
+                className="max-h-[70vh] overflow-auto pr-2"
+              >
+                <ItemGroup
+                  className="relative"
+                  style={{ height: `${virtualizer.getTotalSize()}px` }}
                 >
-                  <td colSpan={columns.length + 1} style={{ padding: 0 }} />
-                </tr>
-              )}
-            </tbody>
-          </table>
-        )}
-      </div>
+                  {virtualItems.map((virtualRow) => {
+                    const block = remainingBlocks[virtualRow.index];
+
+                    return (
+                      <div
+                        key={block.addressKey}
+                        className="absolute inset-x-0 top-0"
+                        style={{ transform: `translateY(${virtualRow.start}px)` }}
+                      >
+                        <BlockCard
+                          block={block}
+                          isSaved={shortlistKeys.has(block.addressKey)}
+                          onSelect={onSelect}
+                          onToggleShortlist={onToggleShortlist}
+                        />
+                      </div>
+                    );
+                  })}
+                </ItemGroup>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </section>
   );
 }

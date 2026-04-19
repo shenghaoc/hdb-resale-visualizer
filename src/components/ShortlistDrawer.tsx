@@ -1,6 +1,25 @@
-import { useReactTable, getCoreRowModel, flexRender, createColumnHelper } from "@tanstack/react-table";
+import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/input-group";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
 
 type ShortlistRow = {
   item: ShortlistItem;
@@ -51,85 +70,6 @@ function getRemainingLeaseRange(leaseCommenceRange: [number, number]) {
   return [Math.min(oldestRemaining, newestRemaining), Math.max(oldestRemaining, newestRemaining)];
 }
 
-const columnHelper = createColumnHelper<ShortlistRow>();
-
-const columns = [
-  columnHelper.accessor((row) => `${row.summary.block} ${row.summary.streetName}`, {
-    id: "address",
-    header: "Address",
-    cell: (info) => (
-      <div className="result-address">
-        <strong>{info.getValue()}</strong>
-        <span>{info.row.original.summary.town}</span>
-      </div>
-    ),
-  }),
-  columnHelper.accessor((row) => row.summary.medianPrice, {
-    id: "median",
-    header: "Market median",
-    cell: (info) => (
-      <div className="metric-stack">
-        <strong>{formatCompactCurrency(info.getValue())}</strong>
-        <span>{formatCurrency(info.getValue())}</span>
-      </div>
-    ),
-  }),
-  columnHelper.accessor((row) => row.summary.pricePerSqftMedian, {
-    id: "ppsf",
-    header: "Price / sqft",
-    cell: (info) => {
-      const value = info.getValue();
-
-      return value !== null ? (
-        <div className="metric-stack">
-          <strong>{formatCurrency(value)}</strong>
-          <span>{formatNumber(info.row.original.summary.pricePerSqmMedian)} / sqm</span>
-        </div>
-      ) : (
-        "N/A"
-      );
-    },
-  }),
-  columnHelper.accessor((row) => row.summary.floorAreaRange, {
-    id: "area",
-    header: "Area range",
-    cell: (info) => (
-      <div className="metric-stack">
-        <strong>
-          {formatNumber(info.getValue()[0], 1)} to {formatNumber(info.getValue()[1], 1)} sqm
-        </strong>
-        <span>{info.row.original.summary.flatTypes.join(", ")}</span>
-      </div>
-    ),
-  }),
-  columnHelper.accessor((row) => row.summary.leaseCommenceRange, {
-    id: "lease",
-    header: "Lease context",
-    cell: (info) => {
-      const remainingLeaseRange = getRemainingLeaseRange(info.getValue());
-
-      return (
-        <div className="metric-stack">
-          <strong>
-            {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
-          </strong>
-          <span>
-            Commence {info.getValue()[0]} to {info.getValue()[1]}
-          </span>
-        </div>
-      );
-    },
-  }),
-  columnHelper.accessor((row) => row.summary.nearestMrt, {
-    id: "mrt",
-    header: "Nearest MRT",
-    cell: (info) =>
-      info.getValue()
-        ? `${info.getValue()!.stationName} • ${formatMeters(info.getValue()!.distanceMeters)}`
-        : "No match",
-  }),
-];
-
 export function ShortlistDrawer({
   isOpen,
   rows,
@@ -137,12 +77,6 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
 }: ShortlistDrawerProps) {
-  const table = useReactTable({
-    data: rows,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", btoa(JSON.stringify(rows.map((r) => r.item))));
@@ -153,14 +87,14 @@ export function ShortlistDrawer({
 
   function handleExportCsv() {
     const headers = ["Address", "Median Price", "Target Price", "Notes"];
-    const csvRows = rows.map((row) => {
-      return [
+    const csvRows = rows.map((row) =>
+      [
         `"${row.summary.block} ${row.summary.streetName}"`,
         row.summary.medianPrice,
         row.item.targetPrice ?? "",
-        `"${(row.item.notes || "").replace(/"/g, '""')}"`
-      ].join(",");
-    });
+        `"${(row.item.notes || "").replace(/"/g, '""')}"`,
+      ].join(","),
+    );
     const csvContent = [headers.join(","), ...csvRows].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -183,124 +117,220 @@ export function ShortlistDrawer({
   }
 
   return (
-    <section className={`shortlist-drawer ${isOpen ? "shortlist-drawer--open" : ""}`}>
-      <div className="shortlist-drawer__header">
-        <div>
-          <span className="eyebrow">Browser-only saved homes</span>
-          <h2>Shortlist compare</h2>
-          <p className="shortlist-drawer__subtitle">
-            Your target price is your own buy threshold for the block. The gap
-            compares that number against the current market median.
-          </p>
-        </div>
-        <div className="shortlist-drawer__actions">
-          <span className="pill">{rows.length}/4 saved</span>
-          {rows.length > 0 && (
-            <>
-              <button className="button button--ghost button--compact" onClick={handleExportJson} type="button">JSON</button>
-              <button className="button button--ghost button--compact" onClick={handleExportCsv} type="button">CSV</button>
-              <button className="button button--compact" onClick={handleShare} type="button">Share link</button>
-            </>
-          )}
-          <button className="button button--ghost button--compact" onClick={onToggleOpen} type="button">
-            {isOpen ? "Collapse" : "Expand"}
-          </button>
-        </div>
-      </div>
+    <section data-testid="shortlist-drawer">
+      <Card className="bg-background">
+        <CardHeader className="gap-4 border-b border-border pb-6">
+          <div className="flex flex-wrap items-start gap-4">
+            <div className="flex flex-1 flex-col gap-2">
+              <Badge variant="secondary">Browser-only saved homes</Badge>
+              <CardTitle className="text-2xl">Shortlist compare</CardTitle>
+              <CardDescription>
+                Your target price is your own buy threshold for the block. The gap compares that
+                number against the current market median.
+              </CardDescription>
+            </div>
+            <CardAction className="flex flex-col items-end gap-3">
+              <Badge>{rows.length}/4 saved</Badge>
+              <Button onClick={onToggleOpen} size="sm" variant="ghost" type="button">
+                {isOpen ? "Collapse" : "Expand"}
+              </Button>
+            </CardAction>
+          </div>
+          {rows.length > 0 ? (
+            <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+              <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                <Download data-icon="inline-start" />
+                JSON
+              </Button>
+              <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                <Download data-icon="inline-start" />
+                CSV
+              </Button>
+              <Button variant="outline" size="xs" onClick={handleShare} type="button">
+                <Link2 data-icon="inline-start" />
+                Share link
+              </Button>
+            </ButtonGroup>
+          ) : null}
+        </CardHeader>
 
-      {isOpen ? (
-        <div className="shortlist-drawer__body" data-testid="shortlist-drawer">
-          <table>
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                  <th>Your target price</th>
-                  <th>Gap vs target</th>
-                  <th>Notes</th>
-                  <th />
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => {
-                const gapInfo = getGapInfo(
-                  row.original.item.targetPrice,
-                  row.original.summary.medianPrice,
-                );
+        {isOpen ? (
+          <CardContent className="pt-6">
+            {rows.length === 0 ? (
+              <div className="empty-state">
+                Save up to four blocks to compare price, lease context, and MRT access side by side.
+              </div>
+            ) : (
+              <ScrollArea className="max-h-[72vh] pr-3">
+                <div className="flex flex-col gap-4">
+                  {rows.map((row) => {
+                    const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
+                    const remainingLeaseRange = getRemainingLeaseRange(
+                      row.summary.leaseCommenceRange,
+                    );
 
-                return (
-                  <tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    ))}
-                    <td>
-                      <input
-                        className="field__input"
-                        inputMode="numeric"
-                        placeholder="850000"
-                        type="number"
-                        value={row.original.item.targetPrice ?? ""}
-                        onChange={(event) =>
-                          onUpdate(row.original.item.addressKey, {
-                            targetPrice:
-                              event.target.value === "" ? null : Number(event.target.value),
-                          })
-                        }
-                      />
-                      <p className="field__hint">Your personal max or goal price.</p>
-                    </td>
-                    <td>
-                      {gapInfo ? (
-                        <div className="metric-stack">
-                          <strong className={`gap-value gap-value--${gapInfo.tone}`}>
-                            {formatCurrency(gapInfo.amount)}
-                          </strong>
-                          <span className={`gap-badge gap-badge--${gapInfo.tone}`}>
-                            {gapInfo.label}
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="field__hint">Enter a target to compare.</span>
-                      )}
-                    </td>
-                    <td>
-                      <textarea
-                        className="field__input field__input--textarea"
-                        placeholder="Why this block stays in the running"
-                        rows={2}
-                        value={row.original.item.notes}
-                        onChange={(event) =>
-                          onUpdate(row.original.item.addressKey, {
-                            notes: event.target.value,
-                          })
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button
-                        className="button button--ghost button--compact"
-                        onClick={() => onRemove(row.original.item.addressKey)}
-                        type="button"
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      ) : null}
+                    return (
+                      <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
+                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                          <div className="flex flex-wrap items-start gap-3">
+                            <div className="flex flex-1 flex-col gap-2">
+                              <CardTitle className="text-lg">
+                                {row.summary.block} {row.summary.streetName}
+                              </CardTitle>
+                              <CardDescription className="text-xs uppercase tracking-[0.18em]">
+                                {row.summary.town}
+                              </CardDescription>
+                            </div>
+                            <Button
+                              size="xs"
+                              variant="ghost"
+                              onClick={() => onRemove(row.item.addressKey)}
+                              type="button"
+                            >
+                              <X data-icon="inline-start" />
+                              Remove
+                            </Button>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-5 pt-5">
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                Market median
+                              </span>
+                              <strong className="font-heading text-2xl font-semibold">
+                                {formatCompactCurrency(row.summary.medianPrice)}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {formatCurrency(row.summary.medianPrice)}
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                Price / sqft
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {row.summary.pricePerSqftMedian !== null
+                                  ? formatCurrency(row.summary.pricePerSqftMedian)
+                                  : "N/A"}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {formatNumber(row.summary.pricePerSqmMedian)} / sqm
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                Area range
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {formatNumber(row.summary.floorAreaRange[0], 1)} to{" "}
+                                {formatNumber(row.summary.floorAreaRange[1], 1)} sqm
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {row.summary.flatTypes.join(", ")}
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                Lease context
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                Commence {row.summary.leaseCommenceRange[0]} to{" "}
+                                {row.summary.leaseCommenceRange[1]}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="flex flex-col gap-2">
+                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                <TrainFront className="size-3.5" />
+                                Nearest MRT
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {row.summary.nearestMrt
+                                  ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
+                                  : "No match"}
+                              </strong>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                <Target className="size-3.5" />
+                                Gap vs target
+                              </span>
+                              {gapInfo ? (
+                                <>
+                                  <strong className={gapInfo.tone === "positive" ? "text-emerald-700" : "text-rose-700"}>
+                                    {formatCurrency(gapInfo.amount)}
+                                  </strong>
+                                  <span className="text-sm text-muted-foreground">{gapInfo.label}</span>
+                                </>
+                              ) : (
+                                <span className="text-sm text-muted-foreground">Enter a target to compare.</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <FieldGroup>
+                            <Field>
+                              <FieldContent>
+                                <FieldLabel htmlFor={`target-${row.item.addressKey}`}>Your target price</FieldLabel>
+                                <FieldDescription>Your personal max or goal price.</FieldDescription>
+                                <InputGroup>
+                                  <InputGroupAddon align="inline-start">
+                                    <InputGroupText>SGD</InputGroupText>
+                                  </InputGroupAddon>
+                                  <InputGroupInput
+                                    id={`target-${row.item.addressKey}`}
+                                    inputMode="numeric"
+                                    placeholder="850000"
+                                    type="number"
+                                    value={row.item.targetPrice ?? ""}
+                                    onChange={(event) =>
+                                      onUpdate(row.item.addressKey, {
+                                        targetPrice:
+                                          event.target.value === "" ? null : Number(event.target.value),
+                                      })
+                                    }
+                                  />
+                                </InputGroup>
+                              </FieldContent>
+                            </Field>
+                            <Field>
+                              <FieldContent>
+                                <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
+                                  Notes
+                                </FieldLabel>
+                                <FieldDescription>
+                                  Why this block stays in the running.
+                                </FieldDescription>
+                                <Textarea
+                                  id={`notes-${row.item.addressKey}`}
+                                  placeholder="Why this block stays in the running"
+                                  rows={3}
+                                  value={row.item.notes}
+                                  onChange={(event) =>
+                                    onUpdate(row.item.addressKey, {
+                                      notes: event.target.value,
+                                    })
+                                  }
+                                />
+                              </FieldContent>
+                            </Field>
+                          </FieldGroup>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            )}
+          </CardContent>
+        ) : null}
+      </Card>
     </section>
   );
 }

@@ -119,7 +119,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "#0d9488",
+          "circle-color": "#4b3b31",
           "circle-radius": [
             "step",
             ["get", "point_count"],
@@ -145,7 +145,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
           "text-size": 12,
         },
         paint: {
-          "text-color": "#f8fafc",
+          "text-color": "#fffdf8",
         },
       });
 
@@ -160,13 +160,13 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
             ["linear"],
             ["get", "median_price"],
             300000,
-            "#38bdf8",
+            "#d7d0c5",
             600000,
-            "#14b8a6",
+            "#b59f87",
             900000,
-            "#f59e0b",
+            "#8b694e",
             1200000,
-            "#ef4444",
+            "#5a3e2d",
           ],
           "circle-radius": [
             "interpolate",
@@ -180,7 +180,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
             16,
           ],
           "circle-stroke-width": 1.5,
-          "circle-stroke-color": "#e2e8f0",
+          "circle-stroke-color": "#fffdf8",
           "circle-opacity": 0.9,
         },
       });
@@ -194,7 +194,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
           "circle-radius": 22,
           "circle-color": "rgba(248,250,252,0)",
           "circle-stroke-width": 3,
-          "circle-stroke-color": "#f8fafc",
+          "circle-stroke-color": "#231914",
         },
       });
 

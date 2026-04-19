@@ -11,6 +11,8 @@ import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
 import { StatsBar } from "@/components/StatsBar";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const MapView = lazy(() =>
   import("@/components/MapView").then((m) => ({ default: m.MapView })),
@@ -178,97 +180,127 @@ function App() {
 
   if (error) {
     return (
-      <main className="app-shell app-shell--error">
-        <div className="panel">
-          <span className="eyebrow">Static data missing</span>
-          <h1>HDB Resale Visualizer</h1>
-          <p>{error}</p>
-          <p>Run `bun run sync-data` to generate the static data artifacts for the app.</p>
-        </div>
+      <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
+        <Card className="w-full bg-background">
+          <CardHeader className="gap-3">
+            <Badge variant="secondary">Static data missing</Badge>
+            <CardTitle className="text-3xl">HDB Resale Visualizer</CardTitle>
+            <CardDescription>{error}</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-2 text-sm text-muted-foreground">
+            Run `bun run sync-data` to generate the static data artifacts for the app.
+          </CardContent>
+        </Card>
       </main>
     );
   }
 
   if (!manifest) {
     return (
-      <main className="app-shell app-shell--loading">
-        <div className="panel">
-          <span className="eyebrow">Loading static data</span>
-          <h1>HDB Resale Visualizer</h1>
-          <p>Preparing block summaries, detail files, and the market map.</p>
-        </div>
+      <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
+        <Card className="w-full bg-background">
+          <CardHeader className="gap-3">
+            <Badge variant="secondary">Loading static data</Badge>
+            <CardTitle className="text-3xl">HDB Resale Visualizer</CardTitle>
+            <CardDescription>
+              Preparing block summaries, detail files, and the market map.
+            </CardDescription>
+          </CardHeader>
+        </Card>
       </main>
     );
   }
 
   return (
-    <main className="app-shell">
+    <main className="mx-auto flex min-h-screen w-full max-w-[1680px] flex-col gap-6 p-4 sm:p-6 lg:p-8">
       <StatsBar manifest={manifest} filteredCount={filteredBlocks.length} blocks={filteredBlocks} />
 
-      <section className="workspace">
-        <FilterPanel
-          filters={filters}
-          manifest={manifest}
-          maxMonth={manifest.dataWindow.maxMonth}
-          minMonth={manifest.dataWindow.minMonth}
-          onChange={patchFilters}
-          onReset={() => setFilters(DEFAULT_FILTERS)}
-          options={filterOptions}
-        />
+      <section className="grid gap-6 xl:grid-cols-[22rem_minmax(0,1fr)_26rem]">
+        <div className="xl:sticky xl:top-6 xl:self-start">
+          <FilterPanel
+            filters={filters}
+            manifest={manifest}
+            maxMonth={manifest.dataWindow.maxMonth}
+            minMonth={manifest.dataWindow.minMonth}
+            onChange={patchFilters}
+            onReset={() => setFilters(DEFAULT_FILTERS)}
+            options={filterOptions}
+          />
+        </div>
 
-        <section className="map-stage panel">
-          <div className="panel__header">
-            <div>
-              <span className="eyebrow">Map-first browsing</span>
-              <h2>Singapore resale map</h2>
-            </div>
-            <div className="map-stage__legend">
-              <span className="legend legend--cool">Lower median</span>
-              <span className="legend legend--warm">Higher median</span>
-            </div>
-          </div>
-          <Suspense fallback={<MapSkeleton />}>
-            <MapView
-              blocks={filteredBlocks}
-              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-              selectedAddressKey={filters.selectedAddressKey}
+        <section className="flex min-w-0 flex-col gap-6">
+          <Card className="overflow-hidden bg-card">
+            <CardHeader className="gap-4 border-b border-border pb-6">
+              <div className="flex flex-wrap items-start gap-4">
+                <div className="flex flex-1 flex-col gap-2">
+                  <Badge variant="secondary">Map-first browsing</Badge>
+                  <CardTitle className="text-2xl sm:text-3xl">Singapore resale map</CardTitle>
+                  <CardDescription className="max-w-2xl">
+                    Each point represents an HDB address summary. Color tracks median resale price,
+                    and marker size reflects recent transaction volume.
+                  </CardDescription>
+                </div>
+                <CardAction>
+                  <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    <span className="inline-flex items-center gap-2">
+                      <span className="inline-block size-2.5 bg-sky-400" />
+                      Lower median
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                      <span className="inline-block size-2.5 bg-red-500" />
+                      Higher median
+                    </span>
+                  </div>
+                </CardAction>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <Suspense fallback={<MapSkeleton />}>
+                <MapView
+                  blocks={filteredBlocks}
+                  onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                  selectedAddressKey={filters.selectedAddressKey}
+                />
+              </Suspense>
+            </CardContent>
+          </Card>
+
+          <ResultsPane
+            blocks={filteredBlocks}
+            onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+            onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+            selectedAddressKey={filters.selectedAddressKey}
+            shortlistKeys={shortlistKeySet}
+          />
+        </section>
+
+        <section className="flex min-w-0 flex-col gap-6">
+          <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+            <DetailDrawer
+              detail={detail}
+              selectedBlock={selectedBlock}
+              isLoading={isDetailLoading}
+              isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+              onClose={() => patchFilters({ selectedAddressKey: null })}
+              onToggleShortlist={() => {
+                if (selectedBlock) {
+                  shortlist.toggle(selectedBlock.addressKey);
+                }
+              }}
+            />
+          </Suspense>
+
+          <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
+            <ShortlistDrawer
+              isOpen={isShortlistOpen}
+              onRemove={(addressKey) => shortlist.toggle(addressKey)}
+              onToggleOpen={() => setIsShortlistOpen((current) => !current)}
+              onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+              rows={shortlistRows}
             />
           </Suspense>
         </section>
-
-        <ResultsPane
-          blocks={filteredBlocks}
-          onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-          onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-          selectedAddressKey={filters.selectedAddressKey}
-          shortlistKeys={shortlistKeySet}
-        />
       </section>
-
-      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
-        <DetailDrawer
-          detail={detail}
-          selectedBlock={selectedBlock}
-          isLoading={isDetailLoading}
-          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-          onClose={() => patchFilters({ selectedAddressKey: null })}
-          onToggleShortlist={() => {
-            if (selectedBlock) {
-              shortlist.toggle(selectedBlock.addressKey);
-            }
-          }}
-        />
-      </Suspense>
-
-      <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
-        <ShortlistDrawer
-          isOpen={isShortlistOpen}
-          onRemove={(addressKey) => shortlist.toggle(addressKey)}
-          onToggleOpen={() => setIsShortlistOpen((current) => !current)}
-          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-          rows={shortlistRows}
-        />
-      </Suspense>
     </main>
   );
 }
