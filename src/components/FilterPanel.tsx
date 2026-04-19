@@ -86,7 +86,7 @@ export function FilterPanel({
       </div>
 
       <label className="field">
-        <span>Flat model</span>
+        <span>Flat model (optional)</span>
         <select
           className="field__input"
           value={filters.flatModel}
@@ -99,6 +99,9 @@ export function FilterPanel({
             </option>
           ))}
         </select>
+        <p className="field__hint">
+          Useful when the model family matters. Placeholder values are hidden.
+        </p>
       </label>
 
       <div className="field-grid">
@@ -171,38 +174,50 @@ export function FilterPanel({
         </label>
       </div>
 
-      <div className="field-grid">
-        <label className="field">
-          <span>Start month</span>
-          <input
-            className="field__input"
-            max={maxMonth}
-            min={minMonth}
-            type="month"
-            value={filters.startMonth ?? ""}
-            onChange={(event) =>
-              onChange({
-                startMonth: event.target.value === "" ? null : event.target.value,
-              })
-            }
-          />
-        </label>
-        <label className="field">
-          <span>End month</span>
-          <input
-            className="field__input"
-            max={maxMonth}
-            min={minMonth}
-            type="month"
-            value={filters.endMonth ?? ""}
-            onChange={(event) =>
-              onChange({
-                endMonth: event.target.value === "" ? null : event.target.value,
-              })
-            }
-          />
-        </label>
-      </div>
+      <section className="filter-range">
+        <div className="filter-range__header">
+          <div>
+            <span className="eyebrow">Transaction window</span>
+            <h3>Date window</h3>
+          </div>
+          <span className="pill">
+            {formatMonth(minMonth)} to {formatMonth(maxMonth)}
+          </span>
+        </div>
+        <p className="field__hint">Leave both blank to scan the full history.</p>
+        <div className="filter-range__fields">
+          <label className="field">
+            <span>Start month</span>
+            <input
+              className="field__input"
+              max={maxMonth}
+              min={minMonth}
+              type="month"
+              value={filters.startMonth ?? ""}
+              onChange={(event) =>
+                onChange({
+                  startMonth: event.target.value === "" ? null : event.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="field">
+            <span>End month</span>
+            <input
+              className="field__input"
+              max={maxMonth}
+              min={minMonth}
+              type="month"
+              value={filters.endMonth ?? ""}
+              onChange={(event) =>
+                onChange({
+                  endMonth: event.target.value === "" ? null : event.target.value,
+                })
+              }
+            />
+          </label>
+        </div>
+      </section>
 
       <label className="field">
         <span>Maximum MRT distance (m)</span>

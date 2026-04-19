@@ -51,4 +51,17 @@ describe("matchesFilter", () => {
     const options = getFilterOptions(mutated);
     expect(options.flatTypes).toEqual(["4 ROOM", "5 ROOM", "MULTI-GENERATION"]);
   });
+
+  it("drops blank and placeholder flat model values from menu options", () => {
+    const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
+    if (mutated[0]) {
+      mutated[0].flatModels = ["", "MODEL A", "MAX FLOOR 12"];
+    }
+    if (mutated[1]) {
+      mutated[1].flatModels = ["N/A", "MODEL B", "UNKNOWN"];
+    }
+
+    const options = getFilterOptions(mutated);
+    expect(options.flatModels).toEqual(["MODEL A", "MODEL B"]);
+  });
 });

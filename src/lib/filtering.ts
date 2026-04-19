@@ -9,6 +9,24 @@ function canonicalFlatType(value: string): string {
   return normalized;
 }
 
+function normalizeFlatModel(value: string): string | null {
+  const normalized = value.trim().replace(/\s+/g, " ").toUpperCase();
+
+  if (!normalized) {
+    return null;
+  }
+
+  if (/^(?:-|N\/A|NA|UNKNOWN|NONE|NULL)$/.test(normalized)) {
+    return null;
+  }
+
+  if (/^MAX FLOOR \d+$/.test(normalized)) {
+    return null;
+  }
+
+  return normalized;
+}
+
 function sortFlatTypes(flatTypes: string[]): string[] {
   const order = [
     "1 ROOM",
@@ -119,7 +137,10 @@ export function getFilterOptions(blocks: BlockSummary[]) {
       flatTypes.add(canonicalFlatType(flatType));
     }
     for (const flatModel of block.flatModels) {
-      flatModels.add(flatModel);
+      const normalized = normalizeFlatModel(flatModel);
+      if (normalized) {
+        flatModels.add(normalized);
+      }
     }
   }
 

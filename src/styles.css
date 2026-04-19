@@ -220,6 +220,11 @@ a {
   flex-direction: column;
 }
 
+.results-panel {
+  max-height: min(46rem, calc(100vh - 15rem));
+  overflow: hidden;
+}
+
 .field,
 .field-grid {
   display: grid;
@@ -235,6 +240,37 @@ a {
   gap: 0.75rem;
 }
 
+.filter-range {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  padding: 0.95rem;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(15, 23, 42, 0.38);
+}
+
+.filter-range__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.filter-range__header h3 {
+  margin: 0.15rem 0 0;
+  font-size: 0.98rem;
+}
+
+.filter-range__fields {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.filter-range .field {
+  margin-bottom: 0;
+}
+
 .field span {
   font-size: 0.82rem;
   color: var(--text-subtle);
@@ -247,6 +283,17 @@ a {
   background: rgba(9, 16, 26, 0.88);
   color: #f8fafc;
   padding: 0.82rem 0.95rem;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.field__input:focus-visible {
+  outline: none;
+  border-color: rgba(45, 212, 191, 0.75);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.16);
+  background: rgba(9, 16, 26, 0.96);
 }
 
 .field__input--textarea {
@@ -302,6 +349,10 @@ a {
 .shortlist-drawer__body {
   overflow: auto;
   min-height: 0;
+}
+
+.results-panel__table {
+  flex: 1 1 auto;
 }
 
 table {
