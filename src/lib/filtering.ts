@@ -1,5 +1,46 @@
 import type { BlockSummary, FilterState } from "@/types/data";
 
+function canonicalFlatType(value: string): string {
+  const normalized = value.trim().toUpperCase();
+  if (normalized === "MULTI GENERATION") {
+    return "MULTI-GENERATION";
+  }
+
+  return normalized;
+}
+
+function sortFlatTypes(flatTypes: string[]): string[] {
+  const order = [
+    "1 ROOM",
+    "2 ROOM",
+    "3 ROOM",
+    "4 ROOM",
+    "5 ROOM",
+    "EXECUTIVE",
+    "MULTI-GENERATION",
+  ];
+
+  const rank = new Map(order.map((item, index) => [item, index]));
+  return [...flatTypes].sort((left, right) => {
+    const leftRank = rank.get(left);
+    const rightRank = rank.get(right);
+
+    if (leftRank !== undefined && rightRank !== undefined) {
+      return leftRank - rightRank;
+    }
+
+    if (leftRank !== undefined) {
+      return -1;
+    }
+
+    if (rightRank !== undefined) {
+      return 1;
+    }
+
+    return left.localeCompare(right);
+  });
+}
+
 export function matchesFilter(block: BlockSummary, filters: FilterState): boolean {
   const search = filters.search.trim().toLowerCase();
   const address = `${block.block} ${block.streetName}`.toLowerCase();
@@ -12,8 +53,12 @@ export function matchesFilter(block: BlockSummary, filters: FilterState): boolea
     return false;
   }
 
-  if (filters.flatType && !block.flatTypes.includes(filters.flatType)) {
-    return false;
+  if (filters.flatType) {
+    const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
+    const canonicalBlockFlatTypes = new Set(block.flatTypes.map(canonicalFlatType));
+    if (!canonicalBlockFlatTypes.has(canonicalSelectedFlatType)) {
+      return false;
+    }
   }
 
   if (filters.flatModel && !block.flatModels.includes(filters.flatModel)) {
@@ -71,7 +116,7 @@ export function getFilterOptions(blocks: BlockSummary[]) {
   for (const block of blocks) {
     towns.add(block.town);
     for (const flatType of block.flatTypes) {
-      flatTypes.add(flatType);
+      flatTypes.add(canonicalFlatType(flatType));
     }
     for (const flatModel of block.flatModels) {
       flatModels.add(flatModel);
@@ -80,7 +125,7 @@ export function getFilterOptions(blocks: BlockSummary[]) {
 
   return {
     towns: [...towns].sort(),
-    flatTypes: [...flatTypes].sort(),
+    flatTypes: sortFlatTypes([...flatTypes]),
     flatModels: [...flatModels].sort(),
   };
 }

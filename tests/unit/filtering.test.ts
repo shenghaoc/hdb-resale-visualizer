@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
-import { matchesFilter } from "@/lib/filtering";
+import { getFilterOptions, matchesFilter } from "@/lib/filtering";
 import { buildFixtureArtifacts } from "../fixtures/pipeline";
 
 describe("matchesFilter", () => {
@@ -37,5 +37,18 @@ describe("matchesFilter", () => {
         mrtMax: 700,
       }),
     ).toBe(true);
+  });
+
+  it("normalizes duplicate flat type labels in menu options", () => {
+    const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
+    if (mutated[0]) {
+      mutated[0].flatTypes = ["MULTI GENERATION", "4 ROOM"];
+    }
+    if (mutated[1]) {
+      mutated[1].flatTypes = ["MULTI-GENERATION", "5 ROOM"];
+    }
+
+    const options = getFilterOptions(mutated);
+    expect(options.flatTypes).toEqual(["4 ROOM", "5 ROOM", "MULTI-GENERATION"]);
   });
 });
