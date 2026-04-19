@@ -212,11 +212,11 @@ function App() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[1680px] flex-col gap-6 p-4 sm:p-6 lg:p-8">
+    <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 lg:p-6 lg:pb-0">
       <StatsBar manifest={manifest} filteredCount={filteredBlocks.length} blocks={filteredBlocks} />
 
-      <section className="grid gap-6 xl:grid-cols-[22rem_minmax(0,1fr)_26rem]">
-        <div className="xl:sticky xl:top-6 xl:self-start">
+      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_22rem] xl:grid-cols-[18rem_minmax(0,1fr)_24rem] lg:min-h-0 lg:flex-1">
+        <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
           <FilterPanel
             filters={filters}
             manifest={manifest}
@@ -228,17 +228,12 @@ function App() {
           />
         </div>
 
-        <section className="flex min-w-0 flex-col gap-6">
-          <Card className="overflow-hidden bg-card">
-            <CardHeader className="gap-4 border-b border-border pb-6">
+        <section className="flex min-w-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
+          <Card className="overflow-hidden bg-card shrink-0">
+            <CardHeader className="gap-4 border-b border-border pb-4">
               <div className="flex flex-wrap items-start gap-4">
-                <div className="flex flex-1 flex-col gap-2">
-                  <Badge variant="secondary">Map-first browsing</Badge>
-                  <CardTitle className="text-2xl sm:text-3xl">Singapore resale map</CardTitle>
-                  <CardDescription className="max-w-2xl">
-                    Each point represents an HDB address summary. Color tracks median resale price,
-                    and marker size reflects recent transaction volume.
-                  </CardDescription>
+                <div className="flex flex-1 flex-col gap-1">
+                  <CardTitle className="text-xl sm:text-2xl">Singapore resale map</CardTitle>
                 </div>
                 <CardAction>
                   <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -254,7 +249,7 @@ function App() {
                 </CardAction>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-4">
               <Suspense fallback={<MapSkeleton />}>
                 <MapView
                   blocks={filteredBlocks}
@@ -274,7 +269,7 @@ function App() {
           />
         </section>
 
-        <section className="flex min-w-0 flex-col gap-6">
+        <section className="flex min-w-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
           <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
             <DetailDrawer
               detail={detail}

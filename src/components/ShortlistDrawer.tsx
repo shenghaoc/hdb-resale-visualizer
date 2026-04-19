@@ -5,11 +5,10 @@ import type { BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Field,
   FieldContent,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
@@ -122,13 +121,8 @@ export function ShortlistDrawer({
       <Card className="bg-background">
         <CardHeader className="gap-4 border-b border-border pb-6">
           <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-2">
-              <Badge variant="secondary">Browser-only saved homes</Badge>
+            <div className="flex flex-1 flex-col gap-1">
               <CardTitle className="text-2xl">Shortlist compare</CardTitle>
-              <CardDescription>
-                Your target price is your own buy threshold for the block. The gap compares that
-                number against the current market median.
-              </CardDescription>
             </div>
             <CardAction className="flex flex-col items-end gap-3">
               <Badge>{rows.length}/4 saved</Badge>
@@ -159,7 +153,7 @@ export function ShortlistDrawer({
           <CardContent className="pt-6">
             {rows.length === 0 ? (
               <div className="empty-state">
-                Save up to four blocks to compare price, lease context, and MRT access side by side.
+                Save up to four blocks to compare.
               </div>
             ) : (
               <ScrollArea className="h-[72vh] pr-3 border-r border-transparent">
@@ -178,9 +172,6 @@ export function ShortlistDrawer({
                                 <CardTitle className="text-lg">
                                   {row.summary.block} {row.summary.streetName}
                                 </CardTitle>
-                                <CardDescription className="text-xs uppercase tracking-[0.18em]">
-                                  {row.summary.town}
-                                </CardDescription>
                               </div>
                               <Button
                                 size="xs"
@@ -279,7 +270,6 @@ export function ShortlistDrawer({
                               <Field>
                                 <FieldContent>
                                   <FieldLabel htmlFor={`target-${row.item.addressKey}`}>Your target price</FieldLabel>
-                                  <FieldDescription>Your personal max or goal price.</FieldDescription>
                                   <InputGroup>
                                     <InputGroupAddon align="inline-start">
                                       <InputGroupText>SGD</InputGroupText>
@@ -305,9 +295,6 @@ export function ShortlistDrawer({
                                   <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
                                     Notes
                                   </FieldLabel>
-                                  <FieldDescription>
-                                    Why this block stays in the running.
-                                  </FieldDescription>
                                   <Textarea
                                     id={`notes-${row.item.addressKey}`}
                                     placeholder="Why this block stays in the running"

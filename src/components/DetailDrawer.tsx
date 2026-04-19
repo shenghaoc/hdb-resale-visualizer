@@ -4,7 +4,7 @@ import { formatCompactCurrency, formatCurrency, formatMeters, formatMonth, forma
 import type { AddressDetail, BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
@@ -36,17 +36,12 @@ export function DetailDrawer({
       <Card className="bg-background">
         <CardHeader className="gap-4 border-b border-border pb-6">
           <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-2">
-              <Badge variant="secondary">Selected block</Badge>
-              <CardTitle className="text-2xl">
+            <div className="flex flex-1 flex-col gap-1">
+              <CardTitle className="text-xl">
                 {currentSummary
                   ? `${currentSummary.block} ${currentSummary.streetName}`
                   : "Choose a block from the map or results"}
               </CardTitle>
-              <CardDescription>
-                {currentSummary?.town ??
-                  "Block-level trend, transaction evidence, and local notes appear here once you select a candidate."}
-              </CardDescription>
             </div>
             {currentSummary ? (
               <CardAction className="flex flex-wrap items-center gap-2">
@@ -61,7 +56,7 @@ export function DetailDrawer({
           </div>
         </CardHeader>
 
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           {isLoading ? <div className="empty-state">Loading block detail...</div> : null}
 
           {currentSummary ? (
@@ -116,8 +111,8 @@ export function DetailDrawer({
 
                 <section className="flex flex-col gap-3 border-t border-border pt-6">
                   <div className="flex flex-wrap items-center gap-3">
-                    <Badge variant="secondary">
-                      <MapPinned data-icon="inline-start" />
+                    <Badge variant="secondary" className="text-xs">
+                      <MapPinned data-icon="inline-start" className="size-3" />
                       {currentSummary.town}
                     </Badge>
                     <Button asChild size="xs" variant="ghost">
@@ -139,9 +134,8 @@ export function DetailDrawer({
                       <Card size="sm" className="bg-muted/40 w-full">
                         <CardHeader className="gap-3 border-b border-border/60 pb-5">
                           <div className="flex flex-wrap items-start gap-3">
-                            <div className="flex flex-1 flex-col gap-2">
-                              <Badge variant="secondary">12 to 24 month trend</Badge>
-                              <CardTitle className="text-lg">Monthly median</CardTitle>
+                            <div className="flex flex-1 flex-col gap-1">
+                              <CardTitle className="text-base text-muted-foreground">Monthly median</CardTitle>
                             </div>
                             <CardAction>
                               <Badge>{detail.monthlyTrend.length} months</Badge>
@@ -158,9 +152,8 @@ export function DetailDrawer({
 
                     <Card size="sm" className="bg-muted/40">
                       <CardHeader className="gap-3 border-b border-border/60 pb-5">
-                        <div className="flex flex-col gap-2">
-                          <Badge variant="secondary">Recent evidence</Badge>
-                          <CardTitle className="text-lg">Latest transactions</CardTitle>
+                        <div className="flex flex-col gap-1">
+                          <CardTitle className="text-base text-muted-foreground">Latest transactions</CardTitle>
                         </div>
                       </CardHeader>
                       <CardContent className="pt-5">

@@ -1,8 +1,7 @@
 import { formatCompactCurrency, formatDateTime, formatMonth, formatNumber } from "@/lib/format";
 import type { BlockSummary, Manifest } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type StatsBarProps = {
   manifest: Manifest;
@@ -21,22 +20,15 @@ export function StatsBar({ manifest, filteredCount, blocks }: StatsBarProps) {
   return (
     <section data-testid="stats-bar">
       <Card className="overflow-visible bg-background">
-        <CardHeader className="gap-4 border-b border-border pb-8">
+        <CardHeader className="gap-4 border-b border-border pb-4">
           <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-3">
-              <Badge variant="secondary" className="text-[0.65rem]">
-                Current official data
-              </Badge>
-              <CardTitle className="text-3xl leading-none sm:text-4xl lg:text-5xl">
+            <div className="flex flex-1 flex-col gap-1">
+              <CardTitle className="text-2xl leading-none sm:text-3xl">
                 HDB Resale Visualizer
               </CardTitle>
-              <CardDescription className="max-w-3xl text-base text-muted-foreground sm:text-lg">
-                Open-data resale browsing for shortlist-first buying in Singapore. No prediction
-                model, just the market as it stands right now.
-              </CardDescription>
             </div>
             <CardAction className="min-w-fit">
-              <div className="flex flex-col items-end gap-2 text-right">
+              <div className="flex flex-row items-center gap-3 text-right">
                 <Badge variant="outline">Data through {formatMonth(manifest.dataWindow.maxMonth)}</Badge>
                 <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
                   Built {formatDateTime(manifest.generatedAt)}
@@ -45,7 +37,7 @@ export function StatsBar({ manifest, filteredCount, blocks }: StatsBarProps) {
             </CardAction>
           </div>
         </CardHeader>
-        <CardContent className="grid gap-4 pt-8 sm:grid-cols-2 xl:grid-cols-4">
+        <CardContent className="grid gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           <article className="flex flex-col gap-2">
             <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Visible blocks
@@ -79,11 +71,6 @@ export function StatsBar({ manifest, filteredCount, blocks }: StatsBarProps) {
             </strong>
           </article>
         </CardContent>
-        <Separator />
-        <div className="px-8 py-4 text-sm leading-relaxed text-muted-foreground">
-          The shortlist is local-only. Coordinates are resolved offline during data refresh, and
-          nearest MRT distance is a straight-line measure rather than route time.
-        </div>
       </Card>
     </section>
   );
