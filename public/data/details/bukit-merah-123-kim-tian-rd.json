@@ -1,0 +1,586 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-123-kim-tian-rd",
+    "town": "BUKIT MERAH",
+    "block": "123",
+    "streetName": "KIM TIAN RD",
+    "coordinates": {
+      "lat": 1.28385157947843,
+      "lng": 103.828964702534
+    },
+    "medianPrice": 830000,
+    "priceIqr": [
+      822500,
+      837500
+    ],
+    "pricePerSqmMedian": 7942.16,
+    "pricePerSqftMedian": 737.86,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      103,
+      138
+    ],
+    "leaseCommenceRange": [
+      1995,
+      1995
+    ],
+    "latestMonth": "2024-08",
+    "availableDateRange": [
+      "1999-04",
+      "2024-08"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 11"
+    ],
+    "nearestMrt": {
+      "stationName": "TIONG BAHRU MRT STATION",
+      "distanceMeters": 305
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-04",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3650.79
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4043.48
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3518.87
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 395000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3779.59
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4101.56
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 392000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3698.11
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 535000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4015.51
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3471.7
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 487500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3970.13
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 387000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3685.71
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4009.43
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 360868,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3404.42
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3495.15
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3396.23
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 367000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3462.26
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3928.57
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3828.13
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3443.4
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 372000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3509.43
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 376944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3573.38
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3396.23
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3281.25
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3141.51
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 608000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4567.42
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3883.5
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4710.14
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3883.5
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4666.67
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4843.75
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4906.25
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4245.28
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4985.51
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 648000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6113.21
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 650888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6140.45
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 808000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6312.5
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 838000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6546.88
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 828000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6468.75
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5631.07
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6521.74
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7047.62
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 772500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7325.02
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 968000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7562.5
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 775000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7311.32
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 845000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7971.7
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 815000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7912.62
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2024-08-174329",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "70 years",
+      "resalePrice": 815000,
+      "pricePerSqm": 7912.62,
+      "pricePerSqft": 735.11
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2024-06-174136",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 845000,
+      "pricePerSqm": 7971.7,
+      "pricePerSqft": 740.6
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2023-11-148417",
+      "month": "2023-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "70 years 10 months",
+      "resalePrice": 775000,
+      "pricePerSqm": 7311.32,
+      "pricePerSqft": 679.24
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2023-08-148180",
+      "month": "2023-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "71 years",
+      "resalePrice": 968000,
+      "pricePerSqm": 7562.5,
+      "pricePerSqft": 702.58
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2022-05-120799",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 715000,
+      "pricePerSqm": 6745.28,
+      "pricePerSqft": 626.66
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2022-05-120822",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 830000,
+      "pricePerSqm": 7904.76,
+      "pricePerSqft": 734.38
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2021-09-107063",
+      "month": "2021-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "73 years",
+      "resalePrice": 740000,
+      "pricePerSqm": 7047.62,
+      "pricePerSqft": 654.75
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2020-07-73403",
+      "month": "2020-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 138,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "74 years 02 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 6521.74,
+      "pricePerSqft": 605.89
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2019-12-62708",
+      "month": "2019-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2018-10-37145",
+      "month": "2018-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "75 years 10 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 5631.07,
+      "pricePerSqft": 523.14
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2017-11-17334",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "76 years 09 months",
+      "resalePrice": 828000,
+      "pricePerSqm": 6468.75,
+      "pricePerSqft": 600.97
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2017-09-13800",
+      "month": "2017-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "76 years 11 months",
+      "resalePrice": 838000,
+      "pricePerSqm": 6546.88,
+      "pricePerSqft": 608.23
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2017-02-1391",
+      "month": "2017-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "77 years 06 months",
+      "resalePrice": 808000,
+      "pricePerSqm": 6312.5,
+      "pricePerSqft": 586.45
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2014-03-637155",
+      "month": "2014-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 650888,
+      "pricePerSqm": 6140.45,
+      "pricePerSqft": 570.47
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2012-04-601473",
+      "month": "2012-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "06 TO 10",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 648000,
+      "pricePerSqm": 6113.21,
+      "pricePerSqft": 567.94
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2010-06-553489",
+      "month": "2010-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 138,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 688000,
+      "pricePerSqm": 4985.51,
+      "pricePerSqft": 463.17
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2009-09-526972",
+      "month": "2009-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 450000,
+      "pricePerSqm": 4245.28,
+      "pricePerSqft": 394.4
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2009-03-512191",
+      "month": "2009-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 628000,
+      "pricePerSqm": 4906.25,
+      "pricePerSqft": 455.81
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2008-12-506214",
+      "month": "2008-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 620000,
+      "pricePerSqm": 4843.75,
+      "pricePerSqft": 450
+    },
+    {
+      "id": "bukit-merah-123-kim-tian-rd-2008-07-494346",
+      "month": "2008-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 490000,
+      "pricePerSqm": 4666.67,
+      "pricePerSqft": 433.55
+    }
+  ]
+}

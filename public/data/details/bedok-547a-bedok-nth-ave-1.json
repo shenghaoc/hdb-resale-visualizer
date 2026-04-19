@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "addressKey": "bedok-547a-bedok-nth-ave-1",
+    "town": "BEDOK",
+    "block": "547A",
+    "streetName": "BEDOK NTH AVE 1",
+    "coordinates": {
+      "lat": 1.32993851289783,
+      "lng": 103.926093107187
+    },
+    "medianPrice": 635400,
+    "priceIqr": [
+      632100,
+      638700
+    ],
+    "pricePerSqmMedian": 9344.12,
+    "pricePerSqftMedian": 868.1,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      68,
+      68
+    ],
+    "leaseCommenceRange": [
+      2021,
+      2021
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2026-01",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "BEDOK MRT STATION",
+      "distanceMeters": 746
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2026-01",
+      "medianPrice": 628800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9247.06
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 642000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9441.18
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bedok-547a-bedok-nth-ave-1-2026-03-222323",
+      "month": "2026-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 05 months",
+      "resalePrice": 642000,
+      "pricePerSqm": 9441.18,
+      "pricePerSqft": 877.11
+    },
+    {
+      "id": "bedok-547a-bedok-nth-ave-1-2026-01-222318",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 06 months",
+      "resalePrice": 628800,
+      "pricePerSqm": 9247.06,
+      "pricePerSqft": 859.08
+    }
+  ]
+}

@@ -1,0 +1,712 @@
+{
+  "summary": {
+    "addressKey": "serangoon-552-serangoon-nth-ave-3",
+    "town": "SERANGOON",
+    "block": "552",
+    "streetName": "SERANGOON NTH AVE 3",
+    "coordinates": {
+      "lat": 1.37232463489768,
+      "lng": 103.871285200803
+    },
+    "medianPrice": 716500,
+    "priceIqr": [
+      682250,
+      750750
+    ],
+    "pricePerSqmMedian": 6510.84,
+    "pricePerSqftMedian": 604.88,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      100,
+      121
+    ],
+    "leaseCommenceRange": [
+      1997,
+      1997
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "2000-12",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "KOVAN MRT STATION",
+      "distanceMeters": 2012
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2000-12",
+      "medianPrice": 394500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3273.56
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 363000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3050.42
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 341500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3105.25
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 402500,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3382.35
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 362000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2991.74
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 356000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2991.6
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3319.33
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 377000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3115.7
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 380000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3166.67
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 335000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2768.6
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 284500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2576.66
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 246000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2460
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 284000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2549.3
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 287250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2580.49
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 357500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2979.17
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 366000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3075.63
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2733.33
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2650
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 322500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2665.29
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2815.13
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2644.63
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2791.67
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 329000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2764.71
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 239000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2390
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2756.3
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2491.67
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 247500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2475
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1983.47
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2537.82
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2546.22
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 261500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2352.07
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 244000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2440
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2756.3
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3319.33
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3181.82
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 367500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3050.28
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 355000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2971.99
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 412000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3462.18
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2520.66
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3100
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3429.75
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3445.38
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3529.41
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 432000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3630.25
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3801.65
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4041.67
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4291.67
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4150
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4545.45
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4297.52
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 507000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4225
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 443000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4430
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4083.33
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4300
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4504.13
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 532500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4474.79
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 525000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4411.76
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 388888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3888.88
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4421.49
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 572500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4790.61
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4545.45
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3867.77
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 695000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5743.8
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5206.61
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6541.67
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 648000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6480
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2026-01-227183",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 648000,
+      "pricePerSqm": 6480,
+      "pricePerSqft": 602.01
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2024-06-190094",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 06 months",
+      "resalePrice": 785000,
+      "pricePerSqm": 6541.67,
+      "pricePerSqft": 607.74
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2022-07-136790",
+      "month": "2022-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 5206.61,
+      "pricePerSqft": 483.71
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2022-04-136701",
+      "month": "2022-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 07 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 5743.8,
+      "pricePerSqft": 533.62
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2020-10-82241",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 02 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 3867.77,
+      "pricePerSqft": 359.33
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2020-03-69240",
+      "month": "2020-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 08 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 4545.45,
+      "pricePerSqft": 422.29
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2019-07-54047",
+      "month": "2019-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 4747.9,
+      "pricePerSqft": 441.09
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2019-07-54048",
+      "month": "2019-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 4833.33,
+      "pricePerSqft": 449.03
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2019-02-44603",
+      "month": "2019-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 09 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 4421.49,
+      "pricePerSqft": 410.77
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2018-10-38241",
+      "month": "2018-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 388888,
+      "pricePerSqm": 3888.88,
+      "pricePerSqft": 361.29
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2018-02-22478",
+      "month": "2018-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 09 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4285.71,
+      "pricePerSqft": 398.16
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2018-02-22481",
+      "month": "2018-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 09 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 4537.82,
+      "pricePerSqft": 421.58
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2017-03-3730",
+      "month": "2017-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "79 years 08 months",
+      "resalePrice": 532500,
+      "pricePerSqm": 4474.79,
+      "pricePerSqft": 415.72
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2017-02-1997",
+      "month": "2017-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "79 years 09 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 4504.13,
+      "pricePerSqft": 418.45
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2016-11-973457",
+      "month": "2016-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "80",
+      "resalePrice": 430000,
+      "pricePerSqm": 4300,
+      "pricePerSqft": 399.48
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2016-02-958028",
+      "month": "2016-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "80",
+      "resalePrice": 490000,
+      "pricePerSqm": 4083.33,
+      "pricePerSqft": 379.35
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2012-09-613025",
+      "month": "2012-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 443000,
+      "pricePerSqm": 4430,
+      "pricePerSqft": 411.56
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2012-04-602613",
+      "month": "2012-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 05",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 507000,
+      "pricePerSqm": 4225,
+      "pricePerSqft": 392.52
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2012-01-596636",
+      "month": "2012-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 520000,
+      "pricePerSqm": 4297.52,
+      "pricePerSqft": 399.25
+    },
+    {
+      "id": "serangoon-552-serangoon-nth-ave-3-2011-12-595065",
+      "month": "2011-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 550000,
+      "pricePerSqm": 4545.45,
+      "pricePerSqft": 422.29
+    }
+  ]
+}

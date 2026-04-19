@@ -1,0 +1,686 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-206-boon-lay-dr",
+    "town": "JURONG WEST",
+    "block": "206",
+    "streetName": "BOON LAY DR",
+    "coordinates": {
+      "lat": 1.34495240658985,
+      "lng": 103.715039943131
+    },
+    "medianPrice": 244000,
+    "priceIqr": [
+      218625,
+      317000
+    ],
+    "pricePerSqmMedian": 2069.37,
+    "pricePerSqftMedian": 192.25,
+    "transactionCount": 66,
+    "floorAreaRange": [
+      111,
+      120
+    ],
+    "leaseCommenceRange": [
+      1976,
+      1976
+    ],
+    "latestMonth": "2023-06",
+    "availableDateRange": [
+      "1990-04",
+      "2023-06"
+    ],
+    "flatTypes": [
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "STANDARD",
+      "MAX FLOOR 20"
+    ],
+    "nearestMrt": {
+      "stationName": "LAKESIDE MRT STATION",
+      "distanceMeters": 611
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-04",
+      "medianPrice": 84000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 756.76
+    },
+    {
+      "month": "1990-11",
+      "medianPrice": 96000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 800
+    },
+    {
+      "month": "1991-04",
+      "medianPrice": 85000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 765.77
+    },
+    {
+      "month": "1991-05",
+      "medianPrice": 78000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 702.7
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 86000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 716.67
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 115000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1036.04
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 218500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1820.83
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1458.33
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 204000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1837.84
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1791.67
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1639.64
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 237500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1979.16
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 261000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2175
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2400
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2916.67
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 307000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2558.33
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2491.67
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2025
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1975
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1983.33
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1916.67
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2025
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 244000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2033.33
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2041.67
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2072.07
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2141.67
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2162.16
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 248000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2066.67
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 259800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2165
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1875
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 226000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1883.33
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 219000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1825
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 206000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1716.67
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1983.33
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2000
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1801.8
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1808.33
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2150
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1500
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1801.8
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 245000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2041.66
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1958.33
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1916.67
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2414.41
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2729.73
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2708.33
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3566.67
+    },
+    {
+      "month": "2011-07",
+      "medianPrice": 441000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3675
+    },
+    {
+      "month": "2012-02",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3833.33
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4125
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4166.67
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3958.33
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 433000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3608.33
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2566.67
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 447500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3729.17
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4189.19
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3750
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-206-boon-lay-dr-2023-06-154384",
+      "month": "2023-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 01 month",
+      "resalePrice": 450000,
+      "pricePerSqm": 3750,
+      "pricePerSqft": 348.39
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2022-10-128407",
+      "month": "2022-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 111,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 09 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 4189.19,
+      "pricePerSqft": 389.19
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2022-01-127180",
+      "month": "2022-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 06 months",
+      "resalePrice": 447500,
+      "pricePerSqm": 3729.17,
+      "pricePerSqft": 346.45
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2020-09-78925",
+      "month": "2020-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 10 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 3000,
+      "pricePerSqft": 278.71
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2020-08-76486",
+      "month": "2020-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 10 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 3000,
+      "pricePerSqft": 278.71
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2020-02-66903",
+      "month": "2020-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 04 months",
+      "resalePrice": 308000,
+      "pricePerSqm": 2566.67,
+      "pricePerSqft": 238.45
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2018-08-33644",
+      "month": "2018-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "56 years 10 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 3333.33,
+      "pricePerSqft": 309.68
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2017-04-5031",
+      "month": "2017-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "58 years 02 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 3500,
+      "pricePerSqft": 325.16
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2016-12-974530",
+      "month": "2016-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "58",
+      "resalePrice": 433000,
+      "pricePerSqm": 3608.33,
+      "pricePerSqft": 335.23
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2016-09-969752",
+      "month": "2016-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "58",
+      "resalePrice": 475000,
+      "pricePerSqm": 3958.33,
+      "pricePerSqft": 367.74
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2013-07-627811",
+      "month": "2013-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 500000,
+      "pricePerSqm": 4166.67,
+      "pricePerSqft": 387.1
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2013-06-626437",
+      "month": "2013-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 495000,
+      "pricePerSqm": 4125,
+      "pricePerSqft": 383.23
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2012-02-597857",
+      "month": "2012-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 460000,
+      "pricePerSqm": 3833.33,
+      "pricePerSqft": 356.13
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2011-07-586035",
+      "month": "2011-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 441000,
+      "pricePerSqm": 3675,
+      "pricePerSqft": 341.42
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2010-11-570116",
+      "month": "2010-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 428000,
+      "pricePerSqm": 3566.67,
+      "pricePerSqft": 331.35
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2009-10-531012",
+      "month": "2009-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 325000,
+      "pricePerSqm": 2708.33,
+      "pricePerSqft": 251.61
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2009-07-522533",
+      "month": "2009-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 303000,
+      "pricePerSqm": 2729.73,
+      "pricePerSqft": 253.6
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2008-07-495130",
+      "month": "2008-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 268000,
+      "pricePerSqm": 2414.41,
+      "pricePerSqft": 224.31
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2008-03-486045",
+      "month": "2008-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 280000,
+      "pricePerSqm": 2333.33,
+      "pricePerSqft": 216.77
+    },
+    {
+      "id": "jurong-west-206-boon-lay-dr-2007-05-463391",
+      "month": "2007-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 230000,
+      "pricePerSqm": 1916.67,
+      "pricePerSqft": 178.06
+    }
+  ]
+}

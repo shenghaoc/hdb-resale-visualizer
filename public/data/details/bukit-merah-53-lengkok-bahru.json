@@ -1,0 +1,791 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-53-lengkok-bahru",
+    "town": "BUKIT MERAH",
+    "block": "53",
+    "streetName": "LENGKOK BAHRU",
+    "coordinates": {
+      "lat": 1.28884723459282,
+      "lng": 103.813450564855
+    },
+    "medianPrice": 630000,
+    "priceIqr": [
+      602500,
+      657500
+    ],
+    "pricePerSqmMedian": 7500,
+    "pricePerSqftMedian": 696.77,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      84,
+      122
+    ],
+    "leaseCommenceRange": [
+      1986,
+      1986
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "1991-06",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "SIMPLIFIED",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "REDHILL MRT STATION",
+      "distanceMeters": 398
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-06",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1393.44
+    },
+    {
+      "month": "1991-10",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1309.52
+    },
+    {
+      "month": "1993-03",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2008.2
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1869.05
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2166.67
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1967.21
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2336.07
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 382500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3135.25
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2142.86
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3426.23
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 228000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2714.29
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 422500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3463.11
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3178.57
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3154.76
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 370000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3533.38
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3869.05
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3988.1
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 344000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4095.24
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 348000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3811.48
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3964.29
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3357.14
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3392.86
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 337000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3271.84
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 283000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3369.05
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 356750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3452.58
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 261500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3113.1
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 253500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3017.86
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3178.57
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 285800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3402.38
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 382000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3395.75
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 279000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3321.43
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 296000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3523.81
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 422000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3459.02
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 422000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3459.02
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 276000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3285.71
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3508.2
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 269500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3208.33
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 391888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3212.2
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 242000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2880.95
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 319000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3111.64
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3016.39
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3059.52
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 317500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3117.88
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3452.38
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2857.14
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2868.85
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2950.82
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 257500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3065.48
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 263000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3130.95
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 277000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3297.62
+    },
+    {
+      "month": "2006-12",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2770.49
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2976.19
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2950.82
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4345.24
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4642.86
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 400000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4761.9
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 418500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4982.15
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 443000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5273.81
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5619.05
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 502000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5976.19
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 492000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5857.14
+    },
+    {
+      "month": "2014-05",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6428.57
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5573.77
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5631.07
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5728.16
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 483000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5750
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6190.48
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5809.52
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.93
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4940.48
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5214.29
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 486000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5785.71
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 604000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5877.83
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6428.57
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7476.19
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6147.54
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6845.24
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8154.76
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2026-01-223335",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 8154.76,
+      "pricePerSqft": 757.6
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2024-06-174115",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years 05 months",
+      "resalePrice": 575000,
+      "pricePerSqm": 6845.24,
+      "pricePerSqft": 635.94
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2023-09-148253",
+      "month": "2023-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 750000,
+      "pricePerSqm": 6147.54,
+      "pricePerSqft": 571.13
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2022-12-121343",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "62 years 11 months",
+      "resalePrice": 628000,
+      "pricePerSqm": 7476.19,
+      "pricePerSqft": 694.56
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2022-09-121130",
+      "month": "2022-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 02 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 6428.57,
+      "pricePerSqft": 597.23
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2021-07-101683",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 03 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 5952.38,
+      "pricePerSqft": 552.99
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2021-07-101710",
+      "month": "2021-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 04 months",
+      "resalePrice": 708000,
+      "pricePerSqm": 5803.28,
+      "pricePerSqft": 539.14
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2020-12-85529",
+      "month": "2020-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 11 months",
+      "resalePrice": 486000,
+      "pricePerSqm": 5785.71,
+      "pricePerSqft": 537.51
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2020-08-75848",
+      "month": "2020-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "65 years 02 months",
+      "resalePrice": 438000,
+      "pricePerSqm": 5214.29,
+      "pricePerSqft": 484.42
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2019-08-54858",
+      "month": "2019-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "66 years 02 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 4940.48,
+      "pricePerSqft": 458.99
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2019-04-46966",
+      "month": "2019-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "66 years 06 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 5163.93,
+      "pricePerSqft": 479.75
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2018-04-25010",
+      "month": "2018-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "67 years 07 months",
+      "resalePrice": 488000,
+      "pricePerSqm": 5809.52,
+      "pricePerSqft": 539.72
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2016-04-960315",
+      "month": "2016-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "69",
+      "resalePrice": 520000,
+      "pricePerSqm": 6190.48,
+      "pricePerSqft": 575.11
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2015-05-943746",
+      "month": "2015-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "70",
+      "resalePrice": 483000,
+      "pricePerSqm": 5750,
+      "pricePerSqft": 534.19
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2015-03-940778",
+      "month": "2015-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "70",
+      "resalePrice": 590000,
+      "pricePerSqm": 5728.16,
+      "pricePerSqft": 532.16
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2015-01-938337",
+      "month": "2015-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "70",
+      "resalePrice": 580000,
+      "pricePerSqm": 5631.07,
+      "pricePerSqft": 523.14
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2014-12-649863",
+      "month": "2014-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years",
+      "resalePrice": 560000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2014-10-646973",
+      "month": "2014-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years",
+      "resalePrice": 680000,
+      "pricePerSqm": 5573.77,
+      "pricePerSqft": 517.82
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2014-05-640122",
+      "month": "2014-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years",
+      "resalePrice": 540000,
+      "pricePerSqm": 6428.57,
+      "pricePerSqft": 597.23
+    },
+    {
+      "id": "bukit-merah-53-lengkok-bahru-2012-10-613890",
+      "month": "2012-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years",
+      "resalePrice": 492000,
+      "pricePerSqm": 5857.14,
+      "pricePerSqft": 544.15
+    }
+  ]
+}

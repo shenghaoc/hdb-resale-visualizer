@@ -1,0 +1,502 @@
+{
+  "summary": {
+    "addressKey": "jurong-east-107-jurong-east-st-13",
+    "town": "JURONG EAST",
+    "block": "107",
+    "streetName": "JURONG EAST ST 13",
+    "coordinates": {
+      "lat": 1.33775456847586,
+      "lng": 103.73809335212
+    },
+    "medianPrice": 750000,
+    "priceIqr": [
+      750000,
+      874500
+    ],
+    "pricePerSqmMedian": 5555.56,
+    "pricePerSqftMedian": 516.13,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      135,
+      173
+    ],
+    "leaseCommenceRange": [
+      1993,
+      1993
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "1996-05",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "MODEL A",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "JURONG EAST MRT STATION",
+      "distanceMeters": 584
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1996-05",
+      "medianPrice": 590000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3410.4
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3981.48
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3757.23
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3179.19
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2703.7
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2592.59
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 401000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2970.37
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 462000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2851.85
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2940.74
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2962.96
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 476000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2751.45
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2589.6
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2687.86
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2654.32
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 438800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2536.42
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2530.86
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2376.54
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2222.22
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.82
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3703.7
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3121.39
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4444.44
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4074.07
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 674000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4160.49
+    },
+    {
+      "month": "2012-02",
+      "medianPrice": 553000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4096.3
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 598888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4436.21
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4725.93
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 598000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4429.63
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4660.49
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5555.56
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 999000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5774.57
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5555.56
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2026-01-224801",
+      "month": "2026-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 05 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 5555.56,
+      "pricePerSqft": 516.13
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2025-07-206770",
+      "month": "2025-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 173,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 11 months",
+      "resalePrice": 999000,
+      "pricePerSqm": 5774.57,
+      "pricePerSqft": 536.48
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2024-10-180243",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "67 years 08 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 5555.56,
+      "pricePerSqft": 516.13
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2019-11-61200",
+      "month": "2019-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "72 years 07 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 4660.49,
+      "pricePerSqft": 432.97
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2014-01-635256",
+      "month": "2014-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 598000,
+      "pricePerSqm": 4429.63,
+      "pricePerSqft": 411.53
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2013-01-619328",
+      "month": "2013-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 638000,
+      "pricePerSqm": 4725.93,
+      "pricePerSqft": 439.05
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2012-10-614337",
+      "month": "2012-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 598888,
+      "pricePerSqm": 4436.21,
+      "pricePerSqft": 412.14
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2012-02-597710",
+      "month": "2012-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 553000,
+      "pricePerSqm": 4096.3,
+      "pricePerSqft": 380.56
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2011-04-579934",
+      "month": "2011-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 674000,
+      "pricePerSqm": 4160.49,
+      "pricePerSqft": 386.52
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2010-08-561328",
+      "month": "2010-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 660000,
+      "pricePerSqm": 4074.07,
+      "pricePerSqft": 378.49
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2010-07-557860",
+      "month": "2010-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 4444.44,
+      "pricePerSqft": 412.9
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2008-11-504477",
+      "month": "2008-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 173,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 540000,
+      "pricePerSqm": 3121.39,
+      "pricePerSqft": 289.99
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2008-10-502028",
+      "month": "2008-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 3703.7,
+      "pricePerSqft": 344.09
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2008-09-499598",
+      "month": "2008-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 173,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 620000,
+      "pricePerSqm": 3583.82,
+      "pricePerSqft": 332.95
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2006-05-436096",
+      "month": "2006-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 300000,
+      "pricePerSqm": 2222.22,
+      "pricePerSqft": 206.45
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2006-02-429210",
+      "month": "2006-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 385000,
+      "pricePerSqm": 2376.54,
+      "pricePerSqft": 220.79
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2005-01-397385",
+      "month": "2005-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 410000,
+      "pricePerSqm": 2530.86,
+      "pricePerSqft": 235.13
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2004-05-378394",
+      "month": "2004-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 173,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 438800,
+      "pricePerSqm": 2536.42,
+      "pricePerSqft": 235.64
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2002-11-333896",
+      "month": "2002-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 162,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 430000,
+      "pricePerSqm": 2654.32,
+      "pricePerSqft": 246.59
+    },
+    {
+      "id": "jurong-east-107-jurong-east-st-13-2002-09-327885",
+      "month": "2002-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 173,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 465000,
+      "pricePerSqm": 2687.86,
+      "pricePerSqft": 249.71
+    }
+  ]
+}

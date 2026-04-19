@@ -1,0 +1,843 @@
+{
+  "summary": {
+    "addressKey": "central-area-335a-smith-st",
+    "town": "CENTRAL AREA",
+    "block": "335A",
+    "streetName": "SMITH ST",
+    "coordinates": {
+      "lat": 1.28211630828089,
+      "lng": 103.842845624261
+    },
+    "medianPrice": 503000,
+    "priceIqr": [
+      501500,
+      511500
+    ],
+    "pricePerSqmMedian": 8383.33,
+    "pricePerSqftMedian": 778.84,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      60,
+      85
+    ],
+    "leaseCommenceRange": [
+      1984,
+      1984
+    ],
+    "latestMonth": "2025-07",
+    "availableDateRange": [
+      "1990-03",
+      "2025-07"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 21"
+    ],
+    "nearestMrt": {
+      "stationName": "MAXWELL MRT STATION",
+      "distanceMeters": 190
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-03",
+      "medianPrice": 70000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1166.67
+    },
+    {
+      "month": "1991-03",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1000
+    },
+    {
+      "month": "1992-09",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1333.33
+    },
+    {
+      "month": "1992-11",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1500
+    },
+    {
+      "month": "1993-04",
+      "medianPrice": 79000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1316.67
+    },
+    {
+      "month": "1993-07",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "1994-07",
+      "medianPrice": 98000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1633.33
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 147500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2458.33
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3100
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3142.86
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3916.67
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 237500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3636.9
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3666.67
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3416.67
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2883.33
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 169000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2816.67
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2579.71
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2916.67
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2966.67
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 161900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2698.34
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 203800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2911.43
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3033.33
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 211000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3207.99
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 227000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3152.78
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3533.33
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 228000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3454.23
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3466.67
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 231000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3850
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3250
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 205500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3425
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3300
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 226000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3766.67
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3750
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3866.67
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 224000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3733.33
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4083.33
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4300
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 312800,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4750
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5633.33
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 312000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5200
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 357000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5950
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 347500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5791.67
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6300
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5797.1
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8000
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7500
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7583.33
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7176.47
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6857.14
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5714.29
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 433000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7216.67
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7285.71
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7362.32
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6750
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7416.67
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7333.33
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6466.67
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 399000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6650
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6166.67
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6966.67
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6928.57
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7133.33
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6575.34
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7826.09
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8000
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8833.33
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 528000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7652.17
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7463.77
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7800
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8666.67
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8333.33
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8383.33
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-335a-smith-st-2025-07-202659",
+      "month": "2025-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 08 months",
+      "resalePrice": 503000,
+      "pricePerSqm": 8383.33,
+      "pricePerSqft": 778.84
+    },
+    {
+      "id": "central-area-335a-smith-st-2025-04-202658",
+      "month": "2025-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "58 years",
+      "resalePrice": 500000,
+      "pricePerSqm": 8333.33,
+      "pricePerSqft": 774.19
+    },
+    {
+      "id": "central-area-335a-smith-st-2024-06-175686",
+      "month": "2024-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "58 years 10 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 8666.67,
+      "pricePerSqft": 805.16
+    },
+    {
+      "id": "central-area-335a-smith-st-2024-02-175622",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 02 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 7800,
+      "pricePerSqft": 724.64
+    },
+    {
+      "id": "central-area-335a-smith-st-2024-01-175612",
+      "month": "2024-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 03 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 7463.77,
+      "pricePerSqft": 693.41
+    },
+    {
+      "id": "central-area-335a-smith-st-2023-11-149502",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 69,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 04 months",
+      "resalePrice": 528000,
+      "pricePerSqm": 7652.17,
+      "pricePerSqft": 710.91
+    },
+    {
+      "id": "central-area-335a-smith-st-2023-08-149456",
+      "month": "2023-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 08 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 8833.33,
+      "pricePerSqft": 820.64
+    },
+    {
+      "id": "central-area-335a-smith-st-2023-03-149376",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "60 years",
+      "resalePrice": 480000,
+      "pricePerSqm": 8000,
+      "pricePerSqft": 743.23
+    },
+    {
+      "id": "central-area-335a-smith-st-2022-07-122512",
+      "month": "2022-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "60 years 09 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 7826.09,
+      "pricePerSqft": 727.07
+    },
+    {
+      "id": "central-area-335a-smith-st-2022-06-122491",
+      "month": "2022-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 73,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "60 years 10 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 6575.34,
+      "pricePerSqft": 610.87
+    },
+    {
+      "id": "central-area-335a-smith-st-2022-03-122439",
+      "month": "2022-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "61 years",
+      "resalePrice": 428000,
+      "pricePerSqm": 7133.33,
+      "pricePerSqft": 662.71
+    },
+    {
+      "id": "central-area-335a-smith-st-2022-02-122420",
+      "month": "2022-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 70,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "61 years 02 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 6928.57,
+      "pricePerSqft": 643.69
+    },
+    {
+      "id": "central-area-335a-smith-st-2021-09-107198",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "61 years 07 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 5833.33,
+      "pricePerSqft": 541.93
+    },
+    {
+      "id": "central-area-335a-smith-st-2021-07-101864",
+      "month": "2021-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "61 years 09 months",
+      "resalePrice": 418000,
+      "pricePerSqm": 6966.67,
+      "pricePerSqft": 647.23
+    },
+    {
+      "id": "central-area-335a-smith-st-2020-09-78452",
+      "month": "2020-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "62 years 06 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    },
+    {
+      "id": "central-area-335a-smith-st-2020-03-68297",
+      "month": "2020-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years",
+      "resalePrice": 370000,
+      "pricePerSqm": 6166.67,
+      "pricePerSqft": 572.9
+    },
+    {
+      "id": "central-area-335a-smith-st-2019-12-62843",
+      "month": "2019-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years 04 months",
+      "resalePrice": 399000,
+      "pricePerSqm": 6650,
+      "pricePerSqft": 617.81
+    },
+    {
+      "id": "central-area-335a-smith-st-2019-05-48987",
+      "month": "2019-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years 10 months",
+      "resalePrice": 388000,
+      "pricePerSqm": 6466.67,
+      "pricePerSqft": 600.77
+    },
+    {
+      "id": "central-area-335a-smith-st-2018-10-37255",
+      "month": "2018-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 06 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 7333.33,
+      "pricePerSqft": 681.29
+    },
+    {
+      "id": "central-area-335a-smith-st-2018-08-33209",
+      "month": "2018-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 07 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    }
+  ]
+}

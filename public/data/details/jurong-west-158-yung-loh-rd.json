@@ -1,0 +1,802 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-158-yung-loh-rd",
+    "town": "JURONG WEST",
+    "block": "158",
+    "streetName": "YUNG LOH RD",
+    "coordinates": {
+      "lat": 1.32896082457078,
+      "lng": 103.722279551998
+    },
+    "medianPrice": 519000,
+    "priceIqr": [
+      495000,
+      619722
+    ],
+    "pricePerSqmMedian": 4764.86,
+    "pricePerSqftMedian": 442.68,
+    "transactionCount": 8,
+    "floorAreaRange": [
+      106,
+      128
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "2000-04",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "LAKESIDE MRT STATION",
+      "distanceMeters": 1683
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2000-04",
+      "medianPrice": 352500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2775.59
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 290000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2518.76
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 320000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2519.69
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 250000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 285500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2385.8
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 250000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2358.49
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 315000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2480.31
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 228000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2150.94
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 307500,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2421.88
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 317000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2476.56
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 213500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1968.31
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 310500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2435.28
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 201000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1878.5
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 286000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2325.2
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 209500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1967.07
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 206000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1872.73
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 294000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2342.1
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1981.13
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1828.83
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 201000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1887.32
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 210000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1971.7
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1863.64
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 223000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2103.77
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1915.09
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2365.08
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 253750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2159.93
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2122.64
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 272000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2125
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2148.44
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 271000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2150.79
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 204000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1924.53
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2169.81
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 277000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2252.03
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1845.45
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1846.85
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2188.98
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 291500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2277.34
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 256000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2415.09
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 296500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2797.17
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 302500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2750
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2728.97
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2952.76
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2849.06
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2747.97
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2880
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3504.67
+    },
+    {
+      "month": "2011-07",
+      "medianPrice": 387000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3616.82
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 419000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3952.83
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 409000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3822.43
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3780.49
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 429000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4047.17
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4112.15
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3906.25
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3867.19
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3443.4
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3515.63
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 336800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3177.36
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3471.7
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3136.36
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4024.39
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3181.82
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2971.7
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3301.89
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3606.3
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3188.68
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3242.19
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 382500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3314.53
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4007.94
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 406000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3830.18
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4609.38
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4724.41
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 463000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4209.09
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4292.45
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4687.5
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4433.96
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4800
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4626.17
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 678888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5388
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 722500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5873.98
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4729.73
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 513000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4839.62
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-158-yung-loh-rd-2026-01-225104",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 02 months",
+      "resalePrice": 513000,
+      "pricePerSqm": 4839.62,
+      "pricePerSqft": 449.62
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2025-11-207794",
+      "month": "2025-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 04 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 4729.73,
+      "pricePerSqft": 439.41
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2025-07-208249",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 08 months",
+      "resalePrice": 722500,
+      "pricePerSqm": 5873.98,
+      "pricePerSqft": 545.71
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2025-01-208247",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 678888,
+      "pricePerSqm": 5388,
+      "pricePerSqft": 500.56
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2024-10-181894",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 05 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4500,
+      "pricePerSqft": 418.06
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2024-08-181596",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 07 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4626.17,
+      "pricePerSqft": 429.79
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2024-06-181285",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 09 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 4800,
+      "pricePerSqft": 445.94
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2024-05-181073",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 10 months",
+      "resalePrice": 470000,
+      "pricePerSqm": 4433.96,
+      "pricePerSqft": 411.93
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2024-04-180984",
+      "month": "2024-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 4687.5,
+      "pricePerSqft": 435.48
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2023-10-154950",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 05 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 4292.45,
+      "pricePerSqft": 398.78
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2023-08-154646",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 07 months",
+      "resalePrice": 463000,
+      "pricePerSqm": 4209.09,
+      "pricePerSqft": 391.04
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2023-01-153860",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 02 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 4724.41,
+      "pricePerSqft": 438.91
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2022-06-127911",
+      "month": "2022-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 4609.38,
+      "pricePerSqft": 428.23
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2021-08-105020",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 06 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 3773.58,
+      "pricePerSqft": 350.58
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2021-08-105028",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 06 months",
+      "resalePrice": 412000,
+      "pricePerSqm": 3886.79,
+      "pricePerSqft": 361.1
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2020-12-86228",
+      "month": "2020-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 505000,
+      "pricePerSqm": 4007.94,
+      "pricePerSqft": 372.35
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2020-07-74089",
+      "month": "2020-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 355000,
+      "pricePerSqm": 3349.06,
+      "pricePerSqft": 311.14
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2020-07-74135",
+      "month": "2020-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 3280,
+      "pricePerSqft": 304.72
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2020-02-66936",
+      "month": "2020-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 415000,
+      "pricePerSqm": 3242.19,
+      "pricePerSqft": 301.21
+    },
+    {
+      "id": "jurong-west-158-yung-loh-rd-2019-08-55328",
+      "month": "2019-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 06 months",
+      "resalePrice": 338000,
+      "pricePerSqm": 3188.68,
+      "pricePerSqft": 296.24
+    }
+  ]
+}

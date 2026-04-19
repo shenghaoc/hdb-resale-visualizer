@@ -1,0 +1,107 @@
+{
+  "summary": {
+    "addressKey": "choa-chu-kang-308-choa-chu-kang-ave-4",
+    "town": "CHOA CHU KANG",
+    "block": "308",
+    "streetName": "CHOA CHU KANG AVE 4",
+    "coordinates": {
+      "lat": 1.38557729351054,
+      "lng": 103.742778536251
+    },
+    "medianPrice": 353000,
+    "priceIqr": [
+      349000,
+      476500
+    ],
+    "pricePerSqmMedian": 3080.36,
+    "pricePerSqftMedian": 286.17,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      112,
+      128
+    ],
+    "leaseCommenceRange": [
+      1993,
+      1993
+    ],
+    "latestMonth": "2022-12",
+    "availableDateRange": [
+      "1997-07",
+      "2022-12"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "CHOA CHU KANG MRT STATION",
+      "distanceMeters": 150
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1997-07",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3080.36
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2801.59
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4687.5
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "choa-chu-kang-308-choa-chu-kang-ave-4-2022-12-123997",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "69 years 07 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 4687.5,
+      "pricePerSqft": 435.48
+    },
+    {
+      "id": "choa-chu-kang-308-choa-chu-kang-ave-4-2000-09-252337",
+      "month": "2000-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 353000,
+      "pricePerSqm": 2801.59,
+      "pricePerSqft": 260.28
+    },
+    {
+      "id": "choa-chu-kang-308-choa-chu-kang-ave-4-1997-07-814692",
+      "month": "1997-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 112,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 345000,
+      "pricePerSqm": 3080.36,
+      "pricePerSqft": 286.17
+    }
+  ]
+}

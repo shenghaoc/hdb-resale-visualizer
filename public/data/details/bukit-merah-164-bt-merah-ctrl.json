@@ -1,0 +1,105 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-164-bt-merah-ctrl",
+    "town": "BUKIT MERAH",
+    "block": "164",
+    "streetName": "BT MERAH CTRL",
+    "coordinates": {
+      "lat": 1.28340675598635,
+      "lng": 103.816756914621
+    },
+    "medianPrice": 166000,
+    "priceIqr": [
+      148500,
+      185500
+    ],
+    "pricePerSqmMedian": 2305.56,
+    "pricePerSqftMedian": 214.19,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      72,
+      72
+    ],
+    "leaseCommenceRange": [
+      1980,
+      1980
+    ],
+    "latestMonth": "2003-01",
+    "availableDateRange": [
+      "1997-04",
+      "2003-01"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "REDHILL MRT STATION",
+      "distanceMeters": 664
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1997-04",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2847.22
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 166000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2305.56
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 131000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1819.44
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-164-bt-merah-ctrl-2003-01-338600",
+      "month": "2003-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 131000,
+      "pricePerSqm": 1819.44,
+      "pricePerSqft": 169.03
+    },
+    {
+      "id": "bukit-merah-164-bt-merah-ctrl-1999-12-935906",
+      "month": "1999-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 166000,
+      "pricePerSqm": 2305.56,
+      "pricePerSqft": 214.19
+    },
+    {
+      "id": "bukit-merah-164-bt-merah-ctrl-1997-04-805574",
+      "month": "1997-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 205000,
+      "pricePerSqm": 2847.22,
+      "pricePerSqft": 264.52
+    }
+  ]
+}

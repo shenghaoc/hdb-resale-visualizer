@@ -1,0 +1,520 @@
+{
+  "summary": {
+    "addressKey": "clementi-312c-clementi-ave-4",
+    "town": "CLEMENTI",
+    "block": "312C",
+    "streetName": "CLEMENTI AVE 4",
+    "coordinates": {
+      "lat": 1.31952267914453,
+      "lng": 103.764025116013
+    },
+    "medianPrice": 1102444,
+    "priceIqr": [
+      1037500,
+      1130166
+    ],
+    "pricePerSqmMedian": 11456.39,
+    "pricePerSqftMedian": 1064.34,
+    "transactionCount": 14,
+    "floorAreaRange": [
+      93,
+      113
+    ],
+    "leaseCommenceRange": [
+      2017,
+      2017
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2021-04",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 40"
+    ],
+    "nearestMrt": {
+      "stationName": "CLEMENTI MRT STATION",
+      "distanceMeters": 469
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2021-04",
+      "medianPrice": 828944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8913.38
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 823888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8859.01
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 824000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8860.22
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 858500,
+      "transactionCount": 8,
+      "medianPricePerSqm": 8838.1
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 841500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 8849.46
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 795000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8548.39
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 875444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9413.38
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 868888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8709.68
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 905500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 9075.26
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 890900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8592.99
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 974000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9464.46
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 853500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9177.42
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 860000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 9247.31
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 855000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8287.66
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 834444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8972.51
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 899800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9675.27
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 916944,
+      "transactionCount": 4,
+      "medianPricePerSqm": 9859.62
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 870000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9354.84
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8924.73
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9139.78
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 1240888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10981.31
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 975000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10483.87
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 882500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9489.24
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 870000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9354.84
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 1116000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10810.55
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 827000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8892.47
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 1068900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10380.22
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 945000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10161.29
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 1045000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11236.56
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 955000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10268.82
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 1115444,
+      "transactionCount": 4,
+      "medianPricePerSqm": 11365.31
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 1148000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 11855.81
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 1115000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11989.25
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 1104888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11880.52
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 1035000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11129.03
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "clementi-312c-clementi-ave-4-2026-02-224128",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 07 months",
+      "resalePrice": 1035000,
+      "pricePerSqm": 11129.03,
+      "pricePerSqft": 1033.92
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-11-204207",
+      "month": "2025-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 10 months",
+      "resalePrice": 1104888,
+      "pricePerSqm": 11880.52,
+      "pricePerSqft": 1103.74
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-07-204193",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 02 months",
+      "resalePrice": 1115000,
+      "pricePerSqm": 11989.25,
+      "pricePerSqft": 1113.84
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-05-204186",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 04 months",
+      "resalePrice": 1085888,
+      "pricePerSqm": 11676.22,
+      "pricePerSqft": 1084.76
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-05-204187",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 1128000,
+      "pricePerSqm": 12129.03,
+      "pricePerSqft": 1126.83
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-05-204337",
+      "month": "2025-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 04 months",
+      "resalePrice": 1360000,
+      "pricePerSqm": 12035.4,
+      "pricePerSqft": 1118.13
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-05-204338",
+      "month": "2025-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 1168000,
+      "pricePerSqm": 10336.28,
+      "pricePerSqft": 960.27
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-03-204174",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 06 months",
+      "resalePrice": 1100000,
+      "pricePerSqm": 11827.96,
+      "pricePerSqft": 1098.85
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-03-204181",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 05 months",
+      "resalePrice": 1130888,
+      "pricePerSqm": 12160.09,
+      "pricePerSqft": 1129.71
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-03-204335",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 06 months",
+      "resalePrice": 1232000,
+      "pricePerSqm": 10902.65,
+      "pricePerSqft": 1012.89
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2025-03-204336",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 06 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 8849.56,
+      "pricePerSqft": 822.15
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2024-12-177622",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 09 months",
+      "resalePrice": 955000,
+      "pricePerSqm": 10268.82,
+      "pricePerSqft": 954.01
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2024-09-177508",
+      "month": "2024-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years",
+      "resalePrice": 1045000,
+      "pricePerSqm": 11236.56,
+      "pricePerSqft": 1043.91
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2024-07-177405",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 02 months",
+      "resalePrice": 945000,
+      "pricePerSqm": 10161.29,
+      "pricePerSqft": 944.02
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2024-02-177157",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 06 months",
+      "resalePrice": 967800,
+      "pricePerSqm": 10406.45,
+      "pricePerSqft": 966.79
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2024-02-177162",
+      "month": "2024-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 1170000,
+      "pricePerSqm": 10353.98,
+      "pricePerSqft": 961.92
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2023-11-151180",
+      "month": "2023-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 10 months",
+      "resalePrice": 827000,
+      "pricePerSqm": 8892.47,
+      "pricePerSqft": 826.14
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2023-10-151136",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 10 months",
+      "resalePrice": 982000,
+      "pricePerSqm": 10559.14,
+      "pricePerSqft": 980.98
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2023-10-151142",
+      "month": "2023-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 11 months",
+      "resalePrice": 1250000,
+      "pricePerSqm": 11061.95,
+      "pricePerSqft": 1027.69
+    },
+    {
+      "id": "clementi-312c-clementi-ave-4-2023-09-151082",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years",
+      "resalePrice": 780000,
+      "pricePerSqm": 8387.1,
+      "pricePerSqft": 779.19
+    }
+  ]
+}

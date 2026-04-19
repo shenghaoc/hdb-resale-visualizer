@@ -1,0 +1,962 @@
+{
+  "summary": {
+    "addressKey": "marine-parade-1-marine-ter",
+    "town": "MARINE PARADE",
+    "block": "1",
+    "streetName": "MARINE TER",
+    "coordinates": {
+      "lat": 1.30482902187779,
+      "lng": 103.918614976369
+    },
+    "medianPrice": 925000,
+    "priceIqr": [
+      889000,
+      954000
+    ],
+    "pricePerSqmMedian": 7708.33,
+    "pricePerSqftMedian": 716.13,
+    "transactionCount": 7,
+    "floorAreaRange": [
+      117,
+      122
+    ],
+    "leaseCommenceRange": [
+      1975,
+      1975
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "1990-04",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "STANDARD",
+      "MAX FLOOR 25"
+    ],
+    "nearestMrt": {
+      "stationName": "MARINE TERRACE MRT STATION",
+      "distanceMeters": 310
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-04",
+      "medianPrice": 168000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1418.7
+    },
+    {
+      "month": "1990-08",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 916.67
+    },
+    {
+      "month": "1990-09",
+      "medianPrice": 148000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1233.33
+    },
+    {
+      "month": "1990-11",
+      "medianPrice": 190000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1583.34
+    },
+    {
+      "month": "1991-03",
+      "medianPrice": 171500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1405.74
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1750
+    },
+    {
+      "month": "1991-12",
+      "medianPrice": 109900,
+      "transactionCount": 1,
+      "medianPricePerSqm": 915.83
+    },
+    {
+      "month": "1992-03",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 916.67
+    },
+    {
+      "month": "1992-05",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 983.61
+    },
+    {
+      "month": "1992-12",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1500
+    },
+    {
+      "month": "1993-01",
+      "medianPrice": 259000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2158.33
+    },
+    {
+      "month": "1993-06",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1885.25
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2458.33
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 310000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2583.33
+    },
+    {
+      "month": "1993-12",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2868.85
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 336000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "1994-03",
+      "medianPrice": 357500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2979.16
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 413000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3441.67
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3401.64
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2458.33
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3376.07
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3166.67
+    },
+    {
+      "month": "1995-04",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2868.85
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3278.69
+    },
+    {
+      "month": "1995-06",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3250
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3975.41
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4166.67
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4166.67
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4416.67
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4750
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5566.67
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4083.33
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4666.67
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 606000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4967.22
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4385.25
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 580000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4833.34
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4098.36
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 524000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4366.67
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4166.67
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3900
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3625
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4385.25
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 457500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3812.5
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3958.33
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 483000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3990.16
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4416.67
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4250
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 441500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3618.85
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3650
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4191.67
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 460000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3833.34
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 468000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3836.07
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3931.62
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3811.48
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3625
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3208.33
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3833.33
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 376000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3133.33
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4066.67
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3400
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 443000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3691.67
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4375
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3958.33
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 552000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4524.59
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4666.67
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 671000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5543.85
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.93
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5083.33
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4833.33
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4833.33
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 720000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5901.64
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 648000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5400
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 728000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5967.21
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 745000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6208.33
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6750
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 801500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6626.57
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6721.31
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 865000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7090.16
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 788000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6654.27
+    },
+    {
+      "month": "2014-02",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5958.33
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 756000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6196.72
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6916.67
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 761000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6341.67
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 878000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7316.67
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 920000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7540.98
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 775000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6623.93
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6776.86
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 855000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7125
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 808000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6622.95
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6833.33
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 843000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7025
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6833.33
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 960000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7868.85
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7083.33
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 916500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7563.73
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 947500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7829.57
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 888000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7589.74
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 890000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7416.67
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 938000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7816.67
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 880000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7521.37
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8196.72
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "marine-parade-1-marine-ter-2025-09-209352",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 05 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 8196.72,
+      "pricePerSqft": 761.5
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2025-07-209349",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 117,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 07 months",
+      "resalePrice": 880000,
+      "pricePerSqm": 7521.37,
+      "pricePerSqft": 698.76
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2025-06-209348",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 08 months",
+      "resalePrice": 938000,
+      "pricePerSqm": 7816.67,
+      "pricePerSqft": 726.19
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2025-03-209344",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 11 months",
+      "resalePrice": 890000,
+      "pricePerSqm": 7416.67,
+      "pricePerSqft": 689.03
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2024-12-183347",
+      "month": "2024-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 117,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "49 years 02 months",
+      "resalePrice": 888000,
+      "pricePerSqm": 7589.74,
+      "pricePerSqft": 705.11
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2024-11-183329",
+      "month": "2024-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "49 years 03 months",
+      "resalePrice": 925000,
+      "pricePerSqm": 7708.33,
+      "pricePerSqft": 716.13
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2024-11-183331",
+      "month": "2024-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 122,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "49 years 03 months",
+      "resalePrice": 970000,
+      "pricePerSqm": 7950.82,
+      "pricePerSqft": 738.66
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2022-12-129888",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "51 years 03 months",
+      "resalePrice": 753000,
+      "pricePerSqm": 6275,
+      "pricePerSqft": 582.97
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2022-12-129891",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 122,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "51 years 03 months",
+      "resalePrice": 1080000,
+      "pricePerSqm": 8852.46,
+      "pricePerSqft": 822.42
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2022-01-129707",
+      "month": "2022-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "52 years 01 month",
+      "resalePrice": 850000,
+      "pricePerSqm": 7083.33,
+      "pricePerSqft": 658.06
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2021-10-110399",
+      "month": "2021-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 122,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "52 years 04 months",
+      "resalePrice": 960000,
+      "pricePerSqm": 7868.85,
+      "pricePerSqft": 731.04
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2021-05-97973",
+      "month": "2021-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "52 years 09 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 6833.33,
+      "pricePerSqft": 634.84
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2021-04-95820",
+      "month": "2021-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "52 years 10 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 6250,
+      "pricePerSqft": 580.64
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2020-10-81544",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "53 years 03 months",
+      "resalePrice": 843000,
+      "pricePerSqm": 7025,
+      "pricePerSqft": 652.64
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2020-06-71828",
+      "month": "2020-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "53 years 09 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 5833.33,
+      "pricePerSqft": 541.93
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2019-12-63323",
+      "month": "2019-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "54 years 01 month",
+      "resalePrice": 820000,
+      "pricePerSqm": 6833.33,
+      "pricePerSqft": 634.84
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2019-10-59391",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "54 years 04 months",
+      "resalePrice": 808000,
+      "pricePerSqm": 6622.95,
+      "pricePerSqft": 615.29
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2019-07-53538",
+      "month": "2019-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "54 years 06 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 5833.33,
+      "pricePerSqft": 541.93
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2019-06-51521",
+      "month": "2019-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 120,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "54 years 07 months",
+      "resalePrice": 855000,
+      "pricePerSqm": 7125,
+      "pricePerSqft": 661.93
+    },
+    {
+      "id": "marine-parade-1-marine-ter-2018-09-35826",
+      "month": "2018-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "55 years 05 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 6776.86,
+      "pricePerSqft": 629.59
+    }
+  ]
+}

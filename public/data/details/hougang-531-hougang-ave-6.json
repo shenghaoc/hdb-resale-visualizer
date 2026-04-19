@@ -1,0 +1,989 @@
+{
+  "summary": {
+    "addressKey": "hougang-531-hougang-ave-6",
+    "town": "HOUGANG",
+    "block": "531",
+    "streetName": "HOUGANG AVE 6",
+    "coordinates": {
+      "lat": 1.37575573049314,
+      "lng": 103.890287905548
+    },
+    "medianPrice": 648888,
+    "priceIqr": [
+      619888,
+      694444
+    ],
+    "pricePerSqmMedian": 6115.7,
+    "pricePerSqftMedian": 568.17,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      84,
+      121
+    ],
+    "leaseCommenceRange": [
+      1988,
+      1988
+    ],
+    "latestMonth": "2025-11",
+    "availableDateRange": [
+      "1991-10",
+      "2025-11"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "SIMPLIFIED",
+      "MAX FLOOR 10"
+    ],
+    "nearestMrt": {
+      "stationName": "HOUGANG MRT STATION",
+      "distanceMeters": 443
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-10",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 825.69
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 67100,
+      "transactionCount": 2,
+      "medianPricePerSqm": 798.81
+    },
+    {
+      "month": "1992-01",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 991.74
+    },
+    {
+      "month": "1992-03",
+      "medianPrice": 50000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 595.24
+    },
+    {
+      "month": "1992-06",
+      "medianPrice": 64000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 761.9
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 909.09
+    },
+    {
+      "month": "1992-08",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 952.38
+    },
+    {
+      "month": "1992-10",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 826.45
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1363.64
+    },
+    {
+      "month": "1993-06",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1487.6
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 222000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1834.71
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 147000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1750
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 143000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1702.38
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 137500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1636.91
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 139000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1654.76
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1666.67
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1747.57
+    },
+    {
+      "month": "1995-06",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2628.1
+    },
+    {
+      "month": "1995-07",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2355.37
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 183000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2178.57
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2357.14
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 286000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2709.46
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 294000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2815.63
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2321.43
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 233000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2773.81
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4008.26
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 355000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3407.13
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3388.43
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3280.99
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3095.24
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3035.71
+    },
+    {
+      "month": "1998-01",
+      "medianPrice": 246000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2928.57
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 239000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2845.24
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2619.05
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2561.98
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 280000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2685.36
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 218000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2595.24
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 275000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2629.47
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 274000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2643.06
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 206500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2458.34
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 254000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2463.2
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 196000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2202.25
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 191000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2273.81
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 196500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2339.29
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2958.68
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2975.21
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3206.61
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 376000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3107.44
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 215290,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2562.97
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 201000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2392.86
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 190500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2267.86
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 279000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2415.88
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 172000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2047.62
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2059.52
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 309000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2553.72
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 172000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2047.62
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 175200,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2085.71
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2233.01
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 179000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2130.95
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2261.9
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2380.95
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 200000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2380.95
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 171000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2035.71
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 196000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2214.29
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2504.13
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2165.29
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2202.38
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 184000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2190.48
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2231.4
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 234000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1933.88
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 219500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2148.96
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2285.71
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3059.52
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 324500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2681.82
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 342000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2826.45
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3357.14
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3140.5
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3809.52
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 337999,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4023.8
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3809.52
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 332500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3958.34
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3719.01
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 422000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3487.6
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 388500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4167.13
+    },
+    {
+      "month": "2011-06",
+      "medianPrice": 382000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4547.62
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 395000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4702.38
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4821.43
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4678.57
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5178.57
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5178.57
+    },
+    {
+      "month": "2014-06",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4049.59
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3928.57
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4404.76
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4297.52
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4440.48
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4446.28
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 468000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3867.77
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4107.14
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 492000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4066.11
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3666.67
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4107.14
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 518444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4284.66
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4049.59
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5714.29
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 478000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5690.48
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6115.7
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 648888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5362.71
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 590888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7034.38
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-531-hougang-ave-6-2025-11-205699",
+      "month": "2025-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 04 months",
+      "resalePrice": 590888,
+      "pricePerSqm": 7034.38,
+      "pricePerSqft": 653.52
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2025-01-206082",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "62 years 02 months",
+      "resalePrice": 648888,
+      "pricePerSqm": 5362.71,
+      "pricePerSqft": 498.21
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2024-07-179187",
+      "month": "2024-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "62 years 08 months",
+      "resalePrice": 740000,
+      "pricePerSqm": 6115.7,
+      "pricePerSqft": 568.17
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2023-10-152894",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "63 years 04 months",
+      "resalePrice": 478000,
+      "pricePerSqm": 5690.48,
+      "pricePerSqft": 528.66
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2023-02-152027",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "64 years 02 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 5714.29,
+      "pricePerSqft": 530.88
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2021-04-95528",
+      "month": "2021-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "65 years 11 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 4049.59,
+      "pricePerSqft": 376.22
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2020-11-83645",
+      "month": "2020-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "66 years 04 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 4280.99,
+      "pricePerSqft": 397.72
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2020-11-83646",
+      "month": "2020-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "66 years 04 months",
+      "resalePrice": 518888,
+      "pricePerSqm": 4288.33,
+      "pricePerSqft": 398.4
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2020-09-78707",
+      "month": "2020-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "66 years 06 months",
+      "resalePrice": 345000,
+      "pricePerSqm": 4107.14,
+      "pricePerSqft": 381.57
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2020-08-76266",
+      "month": "2020-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "66 years 07 months",
+      "resalePrice": 308000,
+      "pricePerSqm": 3666.67,
+      "pricePerSqft": 340.64
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2019-10-59087",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "67 years 05 months",
+      "resalePrice": 462000,
+      "pricePerSqm": 3818.18,
+      "pricePerSqft": 354.72
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2019-10-59094",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "67 years 05 months",
+      "resalePrice": 522000,
+      "pricePerSqm": 4314.05,
+      "pricePerSqft": 400.79
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2018-11-39413",
+      "month": "2018-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "68 years 03 months",
+      "resalePrice": 345000,
+      "pricePerSqm": 4107.14,
+      "pricePerSqft": 381.57
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2017-12-19501",
+      "month": "2017-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 02 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 3867.77,
+      "pricePerSqft": 359.33
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2017-12-19514",
+      "month": "2017-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 02 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 3867.77,
+      "pricePerSqft": 359.33
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2017-05-6758",
+      "month": "2017-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 09 months",
+      "resalePrice": 538000,
+      "pricePerSqm": 4446.28,
+      "pricePerSqft": 413.07
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2016-06-964334",
+      "month": "2016-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "70",
+      "resalePrice": 373000,
+      "pricePerSqm": 4440.48,
+      "pricePerSqft": 412.53
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2016-05-962543",
+      "month": "2016-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "70",
+      "resalePrice": 520000,
+      "pricePerSqm": 4297.52,
+      "pricePerSqft": 399.25
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2015-11-953536",
+      "month": "2015-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "71",
+      "resalePrice": 370000,
+      "pricePerSqm": 4404.76,
+      "pricePerSqft": 409.22
+    },
+    {
+      "id": "hougang-531-hougang-ave-6-2014-08-644328",
+      "month": "2014-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years",
+      "resalePrice": 330000,
+      "pricePerSqm": 3928.57,
+      "pricePerSqft": 364.98
+    }
+  ]
+}

@@ -1,0 +1,665 @@
+{
+  "summary": {
+    "addressKey": "geylang-35-eunos-cres",
+    "town": "GEYLANG",
+    "block": "35",
+    "streetName": "EUNOS CRES",
+    "coordinates": {
+      "lat": 1.32110753889088,
+      "lng": 103.901372601594
+    },
+    "medianPrice": 900000,
+    "priceIqr": [
+      785000,
+      902500
+    ],
+    "pricePerSqmMedian": 10647.06,
+    "pricePerSqftMedian": 989.15,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      60,
+      110
+    ],
+    "leaseCommenceRange": [
+      2006,
+      2006
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2008-09",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 19"
+    ],
+    "nearestMrt": {
+      "stationName": "EUNOS MRT STATION",
+      "distanceMeters": 218
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2008-09",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5764.71
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6235.29
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 538888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5987.64
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 597000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6633.33
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 495000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6828.43
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 738000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6709.09
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6941.18
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 665000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7333.33
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 596000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7011.76
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 778000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7072.73
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6636.36
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7588.24
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 589000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6983.34
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7444.44
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7666.67
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8058.82
+    },
+    {
+      "month": "2014-02",
+      "medianPrice": 696000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7733.33
+    },
+    {
+      "month": "2014-05",
+      "medianPrice": 668000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7858.82
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 618000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7270.59
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6636.36
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7333.33
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7411.76
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7588.24
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 624000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7126.15
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 545000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7539.22
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6727.27
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 652500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7464.05
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 646000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7600
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7529.41
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7588.24
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 649000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7635.29
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 675000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7444.44
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 418888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6981.47
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 582500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8000
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7666.67
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7764.71
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8000
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 663000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7800
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7882.35
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 675000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7411.76
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 675500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8015.91
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7916.67
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 858000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7800
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 780000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9058.82
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9411.76
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 751800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8353.33
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8383.33
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8882.35
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8444.44
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10000
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 782000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9200
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 905000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9377.01
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 835000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9823.53
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 949000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8627.27
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11166.67
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 905000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10647.06
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10000
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "geylang-35-eunos-cres-2026-03-224300",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "79 years 08 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 10000,
+      "pricePerSqft": 929.03
+    },
+    {
+      "id": "geylang-35-eunos-cres-2025-08-204806",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "80 years 04 months",
+      "resalePrice": 905000,
+      "pricePerSqm": 10647.06,
+      "pricePerSqft": 989.15
+    },
+    {
+      "id": "geylang-35-eunos-cres-2024-06-177888",
+      "month": "2024-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "81 years 06 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 11166.67,
+      "pricePerSqft": 1037.42
+    },
+    {
+      "id": "geylang-35-eunos-cres-2024-01-177670",
+      "month": "2024-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "81 years 10 months",
+      "resalePrice": 949000,
+      "pricePerSqm": 8627.27,
+      "pricePerSqft": 801.5
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-10-151756",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 01 month",
+      "resalePrice": 835000,
+      "pricePerSqm": 9823.53,
+      "pricePerSqft": 912.64
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-09-151703",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 02 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 10117.65,
+      "pricePerSqft": 939.96
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-09-151709",
+      "month": "2023-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 02 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 8636.36,
+      "pricePerSqft": 802.35
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-08-151648",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 05 months",
+      "resalePrice": 782000,
+      "pricePerSqm": 9200,
+      "pricePerSqft": 854.71
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-06-151540",
+      "month": "2023-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 06 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 10000,
+      "pricePerSqft": 929.03
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-05-151489",
+      "month": "2023-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 07 months",
+      "resalePrice": 760000,
+      "pricePerSqm": 8444.44,
+      "pricePerSqft": 784.52
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-04-151444",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "82 years 08 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 8882.35,
+      "pricePerSqft": 825.2
+    },
+    {
+      "id": "geylang-35-eunos-cres-2023-01-151271",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years",
+      "resalePrice": 503000,
+      "pricePerSqm": 8383.33,
+      "pricePerSqft": 778.84
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-12-125295",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years",
+      "resalePrice": 751800,
+      "pricePerSqm": 8353.33,
+      "pricePerSqft": 776.05
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-10-125171",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years 02 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 9411.76,
+      "pricePerSqft": 874.38
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-08-125063",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years 03 months",
+      "resalePrice": 770000,
+      "pricePerSqm": 9058.82,
+      "pricePerSqft": 841.59
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-08-125066",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years 03 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 9176.47,
+      "pricePerSqft": 852.52
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-08-125067",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years 04 months",
+      "resalePrice": 792000,
+      "pricePerSqm": 8800,
+      "pricePerSqft": 817.55
+    },
+    {
+      "id": "geylang-35-eunos-cres-2022-03-124801",
+      "month": "2022-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "83 years 09 months",
+      "resalePrice": 858000,
+      "pricePerSqm": 7800,
+      "pricePerSqft": 724.64
+    },
+    {
+      "id": "geylang-35-eunos-cres-2021-09-107436",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "84 years 03 months",
+      "resalePrice": 475000,
+      "pricePerSqm": 7916.67,
+      "pricePerSqft": 735.48
+    },
+    {
+      "id": "geylang-35-eunos-cres-2021-08-104768",
+      "month": "2021-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "84 years 04 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 8250,
+      "pricePerSqft": 766.45
+    }
+  ]
+}

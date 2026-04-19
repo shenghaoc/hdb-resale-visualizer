@@ -1,0 +1,611 @@
+{
+  "summary": {
+    "addressKey": "bukit-panjang-633d-senja-rd",
+    "town": "BUKIT PANJANG",
+    "block": "633D",
+    "streetName": "SENJA RD",
+    "coordinates": {
+      "lat": 1.38461189714551,
+      "lng": 103.759602675107
+    },
+    "medianPrice": 490000,
+    "priceIqr": [
+      410000,
+      530000
+    ],
+    "pricePerSqmMedian": 7910.45,
+    "pricePerSqftMedian": 734.91,
+    "transactionCount": 17,
+    "floorAreaRange": [
+      47,
+      93
+    ],
+    "leaseCommenceRange": [
+      2013,
+      2013
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2017-09",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "2-ROOM",
+      "MODEL A",
+      "MAX FLOOR 25"
+    ],
+    "nearestMrt": {
+      "stationName": "SENJA LRT STATION",
+      "distanceMeters": 359
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2017-09",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4677.42
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4895.52
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4925.37
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 271500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4687.36
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 290000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5122.26
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4924.73
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 393000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4930.99
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4552.24
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 222500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4734.04
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 278000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4930.45
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 337500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4970.83
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5425.53
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4425.53
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5319.15
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4731.18
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 383500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4753.73
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4569.89
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4731.18
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4408.6
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4838.71
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5531.91
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 304000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6468.09
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5531.91
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 289000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6148.94
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5957.45
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5483.87
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 290000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6170.21
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 402500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5959.16
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6716.42
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5860.22
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 316000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6723.4
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6716.42
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6268.66
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6686.57
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 451000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6731.34
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6268.66
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 386000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8212.77
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 522500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6640.59
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7537.31
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7910.45
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 495000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7388.06
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8510.64
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 320888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6827.4
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 512888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7655.04
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 410000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8723.4
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7096.77
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 540888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8072.96
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 461900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8100.76
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8723.4
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-panjang-633d-senja-rd-2026-03-223428",
+      "month": "2026-03",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 10 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 8723.4,
+      "pricePerSqft": 810.43
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2026-01-223426",
+      "month": "2026-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years",
+      "resalePrice": 380000,
+      "pricePerSqm": 8085.11,
+      "pricePerSqft": 751.13
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2026-01-223454",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 11 months",
+      "resalePrice": 543800,
+      "pricePerSqm": 8116.42,
+      "pricePerSqft": 754.04
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-09-201898",
+      "month": "2025-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 540888,
+      "pricePerSqm": 8072.96,
+      "pricePerSqft": 750
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-07-202241",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 06 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 7096.77,
+      "pricePerSqft": 659.31
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-06-201791",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 07 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 8723.4,
+      "pricePerSqft": 810.43
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-06-201792",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 07 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 8723.4,
+      "pricePerSqft": 810.43
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-05-201896",
+      "month": "2025-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 512888,
+      "pricePerSqm": 7655.04,
+      "pricePerSqft": 711.18
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-03-201788",
+      "month": "2025-03",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 10 months",
+      "resalePrice": 320888,
+      "pricePerSqm": 6827.4,
+      "pricePerSqft": 634.29
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2025-02-201787",
+      "month": "2025-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 11 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 8510.64,
+      "pricePerSqft": 790.66
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-12-175485",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 480000,
+      "pricePerSqm": 7164.18,
+      "pricePerSqft": 665.57
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-12-175489",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7611.94,
+      "pricePerSqft": 707.17
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-11-175425",
+      "month": "2024-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 7910.45,
+      "pricePerSqft": 734.91
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-08-175195",
+      "month": "2024-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 505000,
+      "pricePerSqm": 7537.31,
+      "pricePerSqft": 700.24
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-07-175116",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 7313.43,
+      "pricePerSqft": 679.44
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-07-175136",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 07 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 5967.74,
+      "pricePerSqft": 554.42
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2024-05-174963",
+      "month": "2024-05",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 386000,
+      "pricePerSqm": 8212.77,
+      "pricePerSqft": 762.99
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2023-09-149050",
+      "month": "2023-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 04 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6268.66,
+      "pricePerSqft": 582.38
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2023-06-148870",
+      "month": "2023-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 451000,
+      "pricePerSqm": 6731.34,
+      "pricePerSqft": 625.36
+    },
+    {
+      "id": "bukit-panjang-633d-senja-rd-2023-04-148728",
+      "month": "2023-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 6686.57,
+      "pricePerSqft": 621.2
+    }
+  ]
+}

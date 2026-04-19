@@ -1,0 +1,105 @@
+{
+  "summary": {
+    "addressKey": "bedok-10c-bedok-sth-ave-2",
+    "town": "BEDOK",
+    "block": "10C",
+    "streetName": "BEDOK STH AVE 2",
+    "coordinates": {
+      "lat": 1.32209423564282,
+      "lng": 103.936223586082
+    },
+    "medianPrice": 530000,
+    "priceIqr": [
+      505000,
+      651500
+    ],
+    "pricePerSqmMedian": 3732.39,
+    "pricePerSqftMedian": 346.75,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      142,
+      142
+    ],
+    "leaseCommenceRange": [
+      1995,
+      1995
+    ],
+    "latestMonth": "2013-02",
+    "availableDateRange": [
+      "1999-07",
+      "2013-02"
+    ],
+    "flatTypes": [
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "BEDOK MRT STATION",
+      "distanceMeters": 767
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-07",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3732.39
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3380.28
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 773000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5443.66
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bedok-10c-bedok-sth-ave-2-2013-02-620436",
+      "month": "2013-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 773000,
+      "pricePerSqm": 5443.66,
+      "pricePerSqft": 505.73
+    },
+    {
+      "id": "bedok-10c-bedok-sth-ave-2-2005-03-401589",
+      "month": "2005-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 480000,
+      "pricePerSqm": 3380.28,
+      "pricePerSqft": 314.04
+    },
+    {
+      "id": "bedok-10c-bedok-sth-ave-2-1999-07-914379",
+      "month": "1999-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 530000,
+      "pricePerSqm": 3732.39,
+      "pricePerSqft": 346.75
+    }
+  ]
+}

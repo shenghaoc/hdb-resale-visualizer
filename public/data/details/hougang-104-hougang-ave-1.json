@@ -1,0 +1,105 @@
+{
+  "summary": {
+    "addressKey": "hougang-104-hougang-ave-1",
+    "town": "HOUGANG",
+    "block": "104",
+    "streetName": "HOUGANG AVE 1",
+    "coordinates": {
+      "lat": 1.35478438666054,
+      "lng": 103.890318475929
+    },
+    "medianPrice": 240000,
+    "priceIqr": [
+      209500,
+      260000
+    ],
+    "pricePerSqmMedian": 2666.67,
+    "pricePerSqftMedian": 247.74,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      74,
+      90
+    ],
+    "leaseCommenceRange": [
+      1983,
+      1983
+    ],
+    "latestMonth": "2015-10",
+    "availableDateRange": [
+      "1997-10",
+      "2015-10"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "KOVAN MRT STATION",
+      "distanceMeters": 795
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1997-10",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 179000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1988.89
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3783.78
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-104-hougang-ave-1-2015-10-951886",
+      "month": "2015-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "67",
+      "resalePrice": 280000,
+      "pricePerSqm": 3783.78,
+      "pricePerSqft": 351.53
+    },
+    {
+      "id": "hougang-104-hougang-ave-1-2006-06-438366",
+      "month": "2006-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years",
+      "resalePrice": 179000,
+      "pricePerSqm": 1988.89,
+      "pricePerSqft": 184.77
+    },
+    {
+      "id": "hougang-104-hougang-ave-1-1997-10-822760",
+      "month": "1997-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years",
+      "resalePrice": 240000,
+      "pricePerSqm": 2666.67,
+      "pricePerSqft": 247.74
+    }
+  ]
+}

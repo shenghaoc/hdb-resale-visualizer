@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "addressKey": "bedok-25-new-upp-changi-rd",
+    "town": "BEDOK",
+    "block": "25",
+    "streetName": "NEW UPP CHANGI RD",
+    "coordinates": {
+      "lat": 1.3232501334952,
+      "lng": 103.933835585816
+    },
+    "medianPrice": 345000,
+    "priceIqr": [
+      345000,
+      345000
+    ],
+    "pricePerSqmMedian": 5227.27,
+    "pricePerSqftMedian": 485.63,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      66,
+      67
+    ],
+    "leaseCommenceRange": [
+      1974,
+      1974
+    ],
+    "latestMonth": "2024-08",
+    "availableDateRange": [
+      "2012-02",
+      "2024-08"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "BEDOK MRT STATION",
+      "distanceMeters": 476
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2012-02",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4805.97
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5227.27
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bedok-25-new-upp-changi-rd-2024-08-171039",
+      "month": "2024-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "48 years 11 months",
+      "resalePrice": 345000,
+      "pricePerSqm": 5227.27,
+      "pricePerSqft": 485.63
+    },
+    {
+      "id": "bedok-25-new-upp-changi-rd-2012-02-597132",
+      "month": "2012-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "47 years",
+      "resalePrice": 322000,
+      "pricePerSqm": 4805.97,
+      "pricePerSqft": 446.49
+    }
+  ]
+}

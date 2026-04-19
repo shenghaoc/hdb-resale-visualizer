@@ -1,0 +1,856 @@
+{
+  "summary": {
+    "addressKey": "clementi-101-clementi-st-14",
+    "town": "CLEMENTI",
+    "block": "101",
+    "streetName": "CLEMENTI ST 14",
+    "coordinates": {
+      "lat": 1.32208936757694,
+      "lng": 103.76893341249
+    },
+    "medianPrice": 850000,
+    "priceIqr": [
+      840000,
+      859000
+    ],
+    "pricePerSqmMedian": 6910.57,
+    "pricePerSqftMedian": 642.01,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      98,
+      126
+    ],
+    "leaseCommenceRange": [
+      1984,
+      1984
+    ],
+    "latestMonth": "2025-10",
+    "availableDateRange": [
+      "1990-02",
+      "2025-10"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "NEW GENERATION",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "CLEMENTI MRT STATION",
+      "distanceMeters": 846
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-02",
+      "medianPrice": 104000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 942.9
+    },
+    {
+      "month": "1990-07",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1198.35
+    },
+    {
+      "month": "1991-01",
+      "medianPrice": 172000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1365.08
+    },
+    {
+      "month": "1991-03",
+      "medianPrice": 122000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 976
+    },
+    {
+      "month": "1991-09",
+      "medianPrice": 164000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1301.59
+    },
+    {
+      "month": "1992-04",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1586.78
+    },
+    {
+      "month": "1992-09",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1528.93
+    },
+    {
+      "month": "1992-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1652.89
+    },
+    {
+      "month": "1992-11",
+      "medianPrice": 214000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1768.6
+    },
+    {
+      "month": "1993-01",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2214.88
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 172000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1755.1
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 285000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2280
+    },
+    {
+      "month": "1994-03",
+      "medianPrice": 312500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2536.36
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2193.88
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2876.03
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 355000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2933.89
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3471.07
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3719.01
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3884.3
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4338.84
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4462.81
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 486000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4016.53
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4080
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4200
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 419000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3757.55
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 492500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4070.25
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2938.78
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2755.1
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3388.43
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3223.14
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 391000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3231.4
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 391500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3235.53
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 387000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3198.35
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2991.87
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 370000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2948.57
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 360000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2869.05
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3140.5
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3360
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3206.61
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3595.04
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 406000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3355.37
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 432500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3447.14
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 473000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3909.09
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 417000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3446.28
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3055.56
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3305.79
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3305.79
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3140.5
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 363000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2904
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3082.64
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2817.46
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3223.14
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2738.1
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 346000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2801.65
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2224.49
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2793.39
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2561.98
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2685.95
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2581.63
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 341500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2822.31
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 342000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2736
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3966.94
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4132.23
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3775.51
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4404.76
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 522000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4176
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 612000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5057.85
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4920.63
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 603000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4862.9
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5306.12
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5765.31
+    },
+    {
+      "month": "2014-02",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6487.6
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 720000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5714.29
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5765.31
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 708000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5851.24
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6446.28
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5785.12
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5867.77
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4979.59
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 677000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5595.04
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 738000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5857.14
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6446.28
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 798000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6487.8
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6446.28
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5663.27
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 828000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6842.98
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6587.3
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 868000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7173.55
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6910.57
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "clementi-101-clementi-st-14-2025-10-204354",
+      "month": "2025-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "58 years 01 month",
+      "resalePrice": 850000,
+      "pricePerSqm": 6910.57,
+      "pricePerSqft": 642.01
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2025-04-204351",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "58 years 08 months",
+      "resalePrice": 868000,
+      "pricePerSqm": 7173.55,
+      "pricePerSqft": 666.45
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2024-05-177292",
+      "month": "2024-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 06 months",
+      "resalePrice": 830000,
+      "pricePerSqm": 6587.3,
+      "pricePerSqft": 611.98
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2024-04-177242",
+      "month": "2024-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 08 months",
+      "resalePrice": 828000,
+      "pricePerSqm": 6842.98,
+      "pricePerSqft": 635.73
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2021-02-90716",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "62 years 09 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 5663.27,
+      "pricePerSqft": 526.14
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2020-09-78596",
+      "month": "2020-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years 02 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 6446.28,
+      "pricePerSqft": 598.88
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2019-02-44071",
+      "month": "2019-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 09 months",
+      "resalePrice": 798000,
+      "pricePerSqm": 6487.8,
+      "pricePerSqft": 602.74
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2018-03-23348",
+      "month": "2018-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "65 years 08 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 6446.28,
+      "pricePerSqft": 598.88
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2017-10-15717",
+      "month": "2017-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66 years 01 month",
+      "resalePrice": 738000,
+      "pricePerSqm": 5857.14,
+      "pricePerSqft": 544.15
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2017-06-8531",
+      "month": "2017-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66 years 05 months",
+      "resalePrice": 677000,
+      "pricePerSqm": 5595.04,
+      "pricePerSqft": 519.8
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2017-04-4736",
+      "month": "2017-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66 years 07 months",
+      "resalePrice": 488000,
+      "pricePerSqm": 4979.59,
+      "pricePerSqft": 462.62
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2016-10-971178",
+      "month": "2016-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "67",
+      "resalePrice": 710000,
+      "pricePerSqm": 5867.77,
+      "pricePerSqft": 545.13
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2016-06-964219",
+      "month": "2016-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "67",
+      "resalePrice": 700000,
+      "pricePerSqm": 5785.12,
+      "pricePerSqft": 537.46
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2016-03-958902",
+      "month": "2016-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "67",
+      "resalePrice": 780000,
+      "pricePerSqm": 6446.28,
+      "pricePerSqft": 598.88
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2014-09-645652",
+      "month": "2014-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 708000,
+      "pricePerSqm": 5851.24,
+      "pricePerSqft": 543.6
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2014-07-642919",
+      "month": "2014-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 565000,
+      "pricePerSqm": 5765.31,
+      "pricePerSqft": 535.61
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2014-04-638777",
+      "month": "2014-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 720000,
+      "pricePerSqm": 5714.29,
+      "pricePerSqft": 530.88
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2014-02-636174",
+      "month": "2014-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 785000,
+      "pricePerSqm": 6487.6,
+      "pricePerSqft": 602.72
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2013-09-630347",
+      "month": "2013-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 565000,
+      "pricePerSqm": 5765.31,
+      "pricePerSqft": 535.61
+    },
+    {
+      "id": "clementi-101-clementi-st-14-2011-10-591063",
+      "month": "2011-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 520000,
+      "pricePerSqm": 5306.12,
+      "pricePerSqft": 492.96
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "addressKey": "woodlands-126-marsiling-rise",
+    "town": "WOODLANDS",
+    "block": "126",
+    "streetName": "MARSILING RISE",
+    "coordinates": {
+      "lat": 1.4381547085134,
+      "lng": 103.779841066241
+    },
+    "medianPrice": 855000,
+    "priceIqr": [
+      855000,
+      855000
+    ],
+    "pricePerSqmMedian": 5343.75,
+    "pricePerSqftMedian": 496.45,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      160,
+      170
+    ],
+    "leaseCommenceRange": [
+      1995,
+      1995
+    ],
+    "latestMonth": "2025-01",
+    "availableDateRange": [
+      "1999-08",
+      "2025-01"
+    ],
+    "flatTypes": [
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "WOODLANDS MRT STATION",
+      "distanceMeters": 675
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-08",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2093.75
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2294.12
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2437.5
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3147.06
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 855000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5343.75
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "woodlands-126-marsiling-rise-2025-01-220213",
+      "month": "2025-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 160,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "69 years 03 months",
+      "resalePrice": 855000,
+      "pricePerSqm": 5343.75,
+      "pricePerSqft": 496.45
+    },
+    {
+      "id": "woodlands-126-marsiling-rise-2020-11-84966",
+      "month": "2020-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 170,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "73 years 05 months",
+      "resalePrice": 595000,
+      "pricePerSqm": 3500,
+      "pricePerSqft": 325.16
+    },
+    {
+      "id": "woodlands-126-marsiling-rise-2011-12-595372",
+      "month": "2011-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 170,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 535000,
+      "pricePerSqm": 3147.06,
+      "pricePerSqft": 292.37
+    },
+    {
+      "id": "woodlands-126-marsiling-rise-2005-03-403978",
+      "month": "2005-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 160,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 390000,
+      "pricePerSqm": 2437.5,
+      "pricePerSqft": 226.45
+    },
+    {
+      "id": "woodlands-126-marsiling-rise-2002-11-335128",
+      "month": "2002-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 170,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 390000,
+      "pricePerSqm": 2294.12,
+      "pricePerSqft": 213.13
+    },
+    {
+      "id": "woodlands-126-marsiling-rise-1999-08-923885",
+      "month": "1999-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 160,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 335000,
+      "pricePerSqm": 2093.75,
+      "pricePerSqft": 194.52
+    }
+  ]
+}

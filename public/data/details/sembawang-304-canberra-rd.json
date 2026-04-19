@@ -1,0 +1,672 @@
+{
+  "summary": {
+    "addressKey": "sembawang-304-canberra-rd",
+    "town": "SEMBAWANG",
+    "block": "304",
+    "streetName": "CANBERRA RD",
+    "coordinates": {
+      "lat": 1.44511920743254,
+      "lng": 103.822259561569
+    },
+    "medianPrice": 619000,
+    "priceIqr": [
+      572000,
+      671250
+    ],
+    "pricePerSqmMedian": 5616.4,
+    "pricePerSqftMedian": 521.78,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      100,
+      141
+    ],
+    "leaseCommenceRange": [
+      1998,
+      1998
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2002-10",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "SEMBAWANG MRT STATION",
+      "distanceMeters": 471
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2002-10",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2541.67
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 248000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2248.34
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 217000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2170
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2730.5
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2765.96
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2835.71
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 297000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2414.63
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2625
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2250
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2400
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2373.98
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 271000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2221.31
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2468.09
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 335000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2375.89
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2397.16
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2056.74
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 292100,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2406.72
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 236000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2360
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2446.81
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2269.5
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "2006-12",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2607.14
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2397.16
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2571.43
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2765.96
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2907.8
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3191.49
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3016.67
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 442000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3134.75
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2872.34
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 450000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3439.72
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3226.95
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3541.67
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 529000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3751.77
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3642.28
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4113.48
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 578000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4099.29
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3723.58
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3546.1
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3089.43
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 524944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3723.01
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3700
+    },
+    {
+      "month": "2016-01",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3373.98
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3226.95
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3373.98
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3652.48
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3300
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3550
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 588000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4170.21
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 386888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3868.88
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4964.54
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4539.01
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5250
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5300
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 675000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5532.79
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 574000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5740
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5365.85
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 880000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6241.13
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sembawang-304-canberra-rd-2026-02-226647",
+      "month": "2026-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 880000,
+      "pricePerSqm": 6241.13,
+      "pricePerSqft": 579.82
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2026-01-226588",
+      "month": "2026-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years",
+      "resalePrice": 660000,
+      "pricePerSqm": 5365.85,
+      "pricePerSqft": 498.5
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2025-02-212519",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years 11 months",
+      "resalePrice": 578000,
+      "pricePerSqm": 5780,
+      "pricePerSqft": 536.98
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2025-02-212520",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years 11 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 5700,
+      "pricePerSqft": 529.55
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2024-10-187565",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 675000,
+      "pricePerSqm": 5532.79,
+      "pricePerSqft": 514.01
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2024-05-187128",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "73 years 08 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 5300,
+      "pricePerSqft": 492.39
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2023-10-160378",
+      "month": "2023-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 140,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 735000,
+      "pricePerSqm": 5250,
+      "pricePerSqft": 487.74
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2022-12-134249",
+      "month": "2022-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 640000,
+      "pricePerSqm": 4539.01,
+      "pricePerSqft": 421.69
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2022-11-134155",
+      "month": "2022-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "75 years 02 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 4964.54,
+      "pricePerSqft": 461.22
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2021-06-100497",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 386888,
+      "pricePerSqm": 3868.88,
+      "pricePerSqft": 359.43
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2021-01-89268",
+      "month": "2021-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years",
+      "resalePrice": 588000,
+      "pricePerSqm": 4170.21,
+      "pricePerSqft": 387.43
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2020-02-67197",
+      "month": "2020-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years 10 months",
+      "resalePrice": 355000,
+      "pricePerSqm": 3550,
+      "pricePerSqft": 329.81
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2018-10-38054",
+      "month": "2018-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "79 years 02 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 3300,
+      "pricePerSqft": 306.58
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2018-07-31905",
+      "month": "2018-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "79 years 05 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 3652.48,
+      "pricePerSqft": 339.33
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2018-06-29555",
+      "month": "2018-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "79 years 06 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 3373.98,
+      "pricePerSqft": 313.45
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2017-07-10907",
+      "month": "2017-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "80 years 06 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 3226.95,
+      "pricePerSqft": 299.79
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2017-04-5397",
+      "month": "2017-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "80 years 08 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 3333.33,
+      "pricePerSqft": 309.68
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2016-01-956699",
+      "month": "2016-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "81",
+      "resalePrice": 415000,
+      "pricePerSqm": 3373.98,
+      "pricePerSqft": 313.45
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2015-12-955398",
+      "month": "2015-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 140,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "82",
+      "resalePrice": 518000,
+      "pricePerSqm": 3700,
+      "pricePerSqft": 343.74
+    },
+    {
+      "id": "sembawang-304-canberra-rd-2015-09-950721",
+      "month": "2015-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "82",
+      "resalePrice": 519888,
+      "pricePerSqm": 3687.15,
+      "pricePerSqft": 342.55
+    }
+  ]
+}

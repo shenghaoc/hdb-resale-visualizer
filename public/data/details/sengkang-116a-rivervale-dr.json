@@ -1,0 +1,744 @@
+{
+  "summary": {
+    "addressKey": "sengkang-116a-rivervale-dr",
+    "town": "SENGKANG",
+    "block": "116A",
+    "streetName": "RIVERVALE DR",
+    "coordinates": {
+      "lat": 1.38246038121425,
+      "lng": 103.902238675198
+    },
+    "medianPrice": 700000,
+    "priceIqr": [
+      635000,
+      725000
+    ],
+    "pricePerSqmMedian": 6000,
+    "pricePerSqftMedian": 557.42,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      95,
+      130
+    ],
+    "leaseCommenceRange": [
+      2000,
+      2000
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "2004-01",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "KANGKAR LRT STATION",
+      "distanceMeters": 145
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2004-01",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2626.09
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 282500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2653.32
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2494.74
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2505.26
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 257194,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2450.66
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2505.26
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2705.26
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2417.39
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2434.78
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2368.42
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 280008,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2434.85
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 259000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2467.27
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2739.13
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2961.54
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2782.61
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3307.69
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3073.68
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 423000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3253.85
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3230.77
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 437000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3361.54
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 327500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3447.37
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 360000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3789.47
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3837.21
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 533000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4100
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3652.17
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 392000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4126.32
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 432000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3789.47
+    },
+    {
+      "month": "2011-06",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4104.35
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 419000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4410.53
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4346.15
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 544000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4184.62
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4173.91
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4473.68
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4224.81
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 487500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4239.13
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4692.31
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 603000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4638.46
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 466000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4052.17
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 382000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4021.05
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3947.37
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3947.37
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 372500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3921.05
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4076.92
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3913.04
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3846.15
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3808.7
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4138.46
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3837.21
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3565.22
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3521.74
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3521.74
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3842.11
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3789.47
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4384.62
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 422000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3669.57
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 438000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4188.56
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3894.74
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 493000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4286.96
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4368.42
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4907.69
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 605000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4689.92
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 428000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4505.26
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5105.26
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 583000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5069.57
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 578888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5033.81
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5769.23
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6086.96
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-116a-rivervale-dr-2025-09-214318",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2025-02-214982",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 6086.96,
+      "pricePerSqft": 565.5
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2024-06-188731",
+      "month": "2024-06",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "75 years 02 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 5769.23,
+      "pricePerSqft": 535.98
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2023-12-162406",
+      "month": "2023-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "75 years 08 months",
+      "resalePrice": 578888,
+      "pricePerSqm": 5033.81,
+      "pricePerSqft": 467.66
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2023-03-160908",
+      "month": "2023-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 04 months",
+      "resalePrice": 583000,
+      "pricePerSqm": 5069.57,
+      "pricePerSqft": 470.98
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2023-01-160574",
+      "month": "2023-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5105.26,
+      "pricePerSqft": 474.29
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2022-04-134845",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 408000,
+      "pricePerSqm": 4294.74,
+      "pricePerSqft": 398.99
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2022-04-134863",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 4715.79,
+      "pricePerSqft": 438.11
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2022-01-134426",
+      "month": "2022-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 129,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 06 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 4689.92,
+      "pricePerSqft": 435.71
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-12-116035",
+      "month": "2021-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 08 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 4907.69,
+      "pricePerSqft": 455.94
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-10-110852",
+      "month": "2021-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 10 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 4368.42,
+      "pricePerSqft": 405.84
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-08-105892",
+      "month": "2021-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years",
+      "resalePrice": 493000,
+      "pricePerSqm": 4286.96,
+      "pricePerSqft": 398.27
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-07-103063",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 370000,
+      "pricePerSqm": 3894.74,
+      "pricePerSqft": 361.83
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-06-100558",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 4368.42,
+      "pricePerSqft": 405.84
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2021-06-100610",
+      "month": "2021-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 461000,
+      "pricePerSqm": 4008.7,
+      "pricePerSqft": 372.42
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2020-08-77230",
+      "month": "2020-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "79 years",
+      "resalePrice": 422000,
+      "pricePerSqm": 3669.57,
+      "pricePerSqft": 340.91
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2020-06-72350",
+      "month": "2020-06",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 4384.62,
+      "pricePerSqft": 407.34
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2020-03-69137",
+      "month": "2020-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "79 years 04 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 3789.47,
+      "pricePerSqft": 352.05
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2019-01-43118",
+      "month": "2019-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "80 years 06 months",
+      "resalePrice": 365000,
+      "pricePerSqm": 3842.11,
+      "pricePerSqft": 356.94
+    },
+    {
+      "id": "sengkang-116a-rivervale-dr-2018-11-40090",
+      "month": "2018-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "80 years 08 months",
+      "resalePrice": 405000,
+      "pricePerSqm": 3521.74,
+      "pricePerSqft": 327.18
+    }
+  ]
+}

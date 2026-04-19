@@ -1,0 +1,634 @@
+{
+  "summary": {
+    "addressKey": "jurong-east-23-teban-gdns-rd",
+    "town": "JURONG EAST",
+    "block": "23",
+    "streetName": "TEBAN GDNS RD",
+    "coordinates": {
+      "lat": 1.32285773181424,
+      "lng": 103.73923873397
+    },
+    "medianPrice": 473000,
+    "priceIqr": [
+      368444,
+      503750
+    ],
+    "pricePerSqmMedian": 7222.22,
+    "pricePerSqftMedian": 670.97,
+    "transactionCount": 15,
+    "floorAreaRange": [
+      47,
+      87
+    ],
+    "leaseCommenceRange": [
+      2013,
+      2013
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2016-11",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 40"
+    ],
+    "nearestMrt": {
+      "stationName": "JURONG EAST MRT STATION",
+      "distanceMeters": 1140
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2016-11",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4861.11
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4893.62
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5694.44
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5458.33
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5057.47
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 340000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4984.1
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 370000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5138.89
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 320000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4541.67
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4655.17
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 231000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4914.89
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 315000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 4712.64
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4416.67
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 348500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 4909.87
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4375
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5172.41
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5425.53
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 280000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4775.41
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 412500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5232.27
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4930.56
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4513.89
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 222000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4723.4
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 246500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5244.68
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 253000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5382.97
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4787.23
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 380000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4735.63
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4722.22
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5402.3
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5170.21
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 370000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5646.86
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5632.18
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5763.89
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6127.66
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5944.44
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5069.44
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6063.83
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 350000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5969.27
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6777.78
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6702.13
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5531.91
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 478800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6650
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6805.56
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 313000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6659.57
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5689.66
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 445000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6569.44
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 339888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7231.66
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7430.56
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 429000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7206.85
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 512500,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7471.26
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6875
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 424444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7257.68
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7446.81
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2026-02-224708",
+      "month": "2026-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 08 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 7446.81,
+      "pricePerSqft": 691.83
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-12-206339",
+      "month": "2025-12",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 10 months",
+      "resalePrice": 368888,
+      "pricePerSqm": 7848.68,
+      "pricePerSqft": 729.17
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-12-206521",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 10 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-11-206516",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 11 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 6875,
+      "pricePerSqft": 638.71
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-09-206338",
+      "month": "2025-09",
+      "flatType": "2 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years",
+      "resalePrice": 370000,
+      "pricePerSqm": 7872.34,
+      "pricePerSqft": 731.37
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-09-206511",
+      "month": "2025-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years",
+      "resalePrice": 512500,
+      "pricePerSqm": 7118.06,
+      "pricePerSqft": 661.29
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-09-206623",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 01 month",
+      "resalePrice": 650000,
+      "pricePerSqm": 7471.26,
+      "pricePerSqft": 694.1
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-06-206337",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 04 months",
+      "resalePrice": 338000,
+      "pricePerSqm": 7191.49,
+      "pricePerSqft": 668.11
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-06-206495",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 04 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 7222.22,
+      "pricePerSqft": 670.97
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-04-206487",
+      "month": "2025-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 06 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 7430.56,
+      "pricePerSqft": 690.32
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2025-01-206336",
+      "month": "2025-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 09 months",
+      "resalePrice": 339888,
+      "pricePerSqm": 7231.66,
+      "pricePerSqft": 671.84
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-10-180203",
+      "month": "2024-10",
+      "flatType": "2 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years",
+      "resalePrice": 368000,
+      "pricePerSqm": 7829.79,
+      "pricePerSqft": 727.41
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-10-180217",
+      "month": "2024-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years",
+      "resalePrice": 445000,
+      "pricePerSqm": 6180.56,
+      "pricePerSqft": 574.19
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-10-180220",
+      "month": "2024-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years",
+      "resalePrice": 473000,
+      "pricePerSqm": 6569.44,
+      "pricePerSqft": 610.32
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-06-180029",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 04 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 5689.66,
+      "pricePerSqft": 528.59
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-04-179893",
+      "month": "2024-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 313000,
+      "pricePerSqm": 6659.57,
+      "pricePerSqft": 618.7
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-03-179877",
+      "month": "2024-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 07 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 6805.56,
+      "pricePerSqft": 632.26
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2024-01-179783",
+      "month": "2024-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 09 months",
+      "resalePrice": 478800,
+      "pricePerSqm": 6650,
+      "pricePerSqft": 617.81
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2023-08-153542",
+      "month": "2023-08",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 260000,
+      "pricePerSqm": 5531.91,
+      "pricePerSqft": 513.93
+    },
+    {
+      "id": "jurong-east-23-teban-gdns-rd-2023-07-153513",
+      "month": "2023-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    }
+  ]
+}

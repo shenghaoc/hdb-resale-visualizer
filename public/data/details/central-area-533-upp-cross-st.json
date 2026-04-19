@@ -1,0 +1,820 @@
+{
+  "summary": {
+    "addressKey": "central-area-533-upp-cross-st",
+    "town": "CENTRAL AREA",
+    "block": "533",
+    "streetName": "UPP CROSS ST",
+    "coordinates": {
+      "lat": 1.2845657545075,
+      "lng": 103.845379880925
+    },
+    "medianPrice": 566000,
+    "priceIqr": [
+      565000,
+      570000
+    ],
+    "pricePerSqmMedian": 9416.67,
+    "pricePerSqftMedian": 874.84,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      60,
+      120
+    ],
+    "leaseCommenceRange": [
+      1980,
+      1980
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "1990-03",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "CHINATOWN MRT STATION",
+      "distanceMeters": 34
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-03",
+      "medianPrice": 72000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1200
+    },
+    {
+      "month": "1991-06",
+      "medianPrice": 50000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 833.33
+    },
+    {
+      "month": "1991-07",
+      "medianPrice": 76500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1275
+    },
+    {
+      "month": "1991-09",
+      "medianPrice": 84500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1408.33
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1666.67
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2205.88
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1764.71
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 138500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2308.33
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 128000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2133.33
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3083.33
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4250
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3088.24
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 226800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3780
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 223000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3716.67
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3235.29
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2966.67
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2867.65
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2985.29
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 172500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2696.07
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 170888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2848.13
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 174000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2900
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 188500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2938.72
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 208500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3274.02
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 221000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3443.14
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 193000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3216.67
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3117.65
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 182000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3033.33
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 197000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2897.06
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3275
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 181900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3031.67
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3014.71
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3416.67
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 222288,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3704.8
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3235.29
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 222500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3477.94
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 214500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3575
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3533.33
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 216000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3600
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3720.59
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3666.67
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3916.67
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 226144,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3769.07
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 223888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3731.47
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5125
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 312500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5208.34
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 372000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5470.59
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 338500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5641.66
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5583.33
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 364000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5674.51
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5882.35
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6470.59
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 412800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6880
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6750
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7397.06
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6838.24
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 474500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6977.94
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8250
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7617.65
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8500
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8058.82
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8083.33
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7833.33
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 491500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8191.66
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7633.33
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 522500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8203.43
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7166.67
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6323.53
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8083.33
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 456000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7600
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8014.71
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6966.67
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8676.47
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9166.67
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 528000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8800
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8333.33
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8166.67
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 589444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9222.22
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9500
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 566000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9433.33
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-533-upp-cross-st-2026-01-223692",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 07 months",
+      "resalePrice": 566000,
+      "pricePerSqm": 9433.33,
+      "pricePerSqft": 876.39
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2025-11-202695",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 10 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 9500,
+      "pricePerSqft": 882.58
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2025-10-202693",
+      "month": "2025-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 11 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 9416.67,
+      "pricePerSqft": 874.84
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2025-10-202694",
+      "month": "2025-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 10 months",
+      "resalePrice": 613888,
+      "pricePerSqm": 9027.76,
+      "pricePerSqft": 838.71
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2024-12-175772",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "54 years 09 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 8166.67,
+      "pricePerSqft": 758.71
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2024-03-175637",
+      "month": "2024-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "55 years 06 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 8333.33,
+      "pricePerSqft": 774.19
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2023-02-149358",
+      "month": "2023-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "56 years 08 months",
+      "resalePrice": 528000,
+      "pricePerSqm": 8800,
+      "pricePerSqft": 817.55
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2022-11-122583",
+      "month": "2022-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "56 years 10 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 9166.67,
+      "pricePerSqft": 851.61
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2021-12-114763",
+      "month": "2021-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "57 years 09 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 8676.47,
+      "pricePerSqft": 806.07
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2021-06-99473",
+      "month": "2021-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 03 months",
+      "resalePrice": 418000,
+      "pricePerSqm": 6966.67,
+      "pricePerSqft": 647.23
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2020-11-83323",
+      "month": "2020-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 10 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 8014.71,
+      "pricePerSqft": 744.59
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2020-09-78454",
+      "month": "2020-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 11 months",
+      "resalePrice": 456000,
+      "pricePerSqm": 7600,
+      "pricePerSqft": 706.06
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2019-01-42435",
+      "month": "2019-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "60 years 07 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 8083.33,
+      "pricePerSqft": 750.97
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2018-07-30791",
+      "month": "2018-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "61 years 01 month",
+      "resalePrice": 430000,
+      "pricePerSqm": 6323.53,
+      "pricePerSqft": 587.48
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2018-01-20768",
+      "month": "2018-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 430000,
+      "pricePerSqm": 7166.67,
+      "pricePerSqft": 665.81
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2017-05-6496",
+      "month": "2017-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 7573.53,
+      "pricePerSqft": 703.6
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2017-05-6497",
+      "month": "2017-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 8833.33,
+      "pricePerSqft": 820.64
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2017-03-2707",
+      "month": "2017-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "62 years 05 months",
+      "resalePrice": 458000,
+      "pricePerSqm": 7633.33,
+      "pricePerSqft": 709.16
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2016-07-965872",
+      "month": "2016-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "63",
+      "resalePrice": 485000,
+      "pricePerSqm": 8083.33,
+      "pricePerSqft": 750.97
+    },
+    {
+      "id": "central-area-533-upp-cross-st-2016-07-965873",
+      "month": "2016-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "63",
+      "resalePrice": 498000,
+      "pricePerSqm": 8300,
+      "pricePerSqft": 771.1
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-526-jurong-west-st-52",
+    "town": "JURONG WEST",
+    "block": "526",
+    "streetName": "JURONG WEST ST 52",
+    "coordinates": {
+      "lat": 1.34767189554903,
+      "lng": 103.717048366015
+    },
+    "medianPrice": 300000,
+    "priceIqr": [
+      292500,
+      319000
+    ],
+    "pricePerSqmMedian": 4191.18,
+    "pricePerSqftMedian": 389.37,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      68,
+      93
+    ],
+    "leaseCommenceRange": [
+      1982,
+      1982
+    ],
+    "latestMonth": "2021-08",
+    "availableDateRange": [
+      "2015-07",
+      "2021-08"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "LAKESIDE MRT STATION",
+      "distanceMeters": 558
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2015-07",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4191.18
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3634.41
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4411.76
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-526-jurong-west-st-52-2021-08-104994",
+      "month": "2021-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "60 years 04 months",
+      "resalePrice": 300000,
+      "pricePerSqm": 4411.76,
+      "pricePerSqft": 409.87
+    },
+    {
+      "id": "jurong-west-526-jurong-west-st-52-2017-03-3065",
+      "month": "2017-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "64 years 10 months",
+      "resalePrice": 338000,
+      "pricePerSqm": 3634.41,
+      "pricePerSqft": 337.65
+    },
+    {
+      "id": "jurong-west-526-jurong-west-st-52-2015-07-947442",
+      "month": "2015-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "66",
+      "resalePrice": 285000,
+      "pricePerSqm": 4191.18,
+      "pricePerSqft": 389.37
+    }
+  ]
+}

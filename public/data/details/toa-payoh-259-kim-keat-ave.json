@@ -1,0 +1,766 @@
+{
+  "summary": {
+    "addressKey": "toa-payoh-259-kim-keat-ave",
+    "town": "TOA PAYOH",
+    "block": "259",
+    "streetName": "KIM KEAT AVE",
+    "coordinates": {
+      "lat": 1.33389588710225,
+      "lng": 103.857558824931
+    },
+    "medianPrice": 690000,
+    "priceIqr": [
+      680000,
+      787502
+    ],
+    "pricePerSqmMedian": 6538.46,
+    "pricePerSqftMedian": 607.44,
+    "transactionCount": 11,
+    "floorAreaRange": [
+      103,
+      128
+    ],
+    "leaseCommenceRange": [
+      1989,
+      1989
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "1993-10",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 13"
+    ],
+    "nearestMrt": {
+      "stationName": "TOA PAYOH MRT STATION",
+      "distanceMeters": 1106
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1993-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2663.93
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 157500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1514.42
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 275000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2367.18
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1875
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2254.1
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2582.68
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2711.54
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3237.7
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3388.43
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3961.17
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 438500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3843.95
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 553000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4532.78
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 506000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4147.54
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3461.54
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3076.92
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 330000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3203.88
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2961.54
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3099.17
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 309000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2971.15
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3165.05
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3221.31
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 349000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3388.35
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2884.62
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3085.94
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 346900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3078.41
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3192.31
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3254.1
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 397000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3193.6
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 316000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3038.46
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2796.12
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2718.45
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3028.85
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 278500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2691.05
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2788.46
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 271500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2635.92
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 328500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2905.36
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2884.62
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2865.38
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2692.31
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 277000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2663.46
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 270000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2479.34
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 333800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2736.07
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2515.63
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 284000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2730.77
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2740.38
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2567.31
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3653.85
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4271.84
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 461008,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3601.63
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4115.38
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 454000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4407.77
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4126.21
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 541500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4805.96
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 493000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4786.41
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5123.97
+    },
+    {
+      "month": "2016-01",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4921.26
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4326.92
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 498000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4834.95
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5245.9
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4230.77
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4326.92
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4615.38
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4805.83
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5040.98
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4807.69
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 608000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5902.91
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5865.38
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6434.43
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 680000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6538.46
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 888000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7278.69
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5702.48
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 820066,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6585.29
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6423.08
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6456.31
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6634.62
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 702000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6750
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2026-03-227914",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 702000,
+      "pricePerSqm": 6750,
+      "pricePerSqft": 627.1
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2026-01-227913",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 690000,
+      "pricePerSqm": 6634.62,
+      "pricePerSqft": 616.38
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-12-218131",
+      "month": "2025-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 02 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 6456.31,
+      "pricePerSqft": 599.81
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-11-218130",
+      "month": "2025-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 6423.08,
+      "pricePerSqft": 596.72
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-09-218460",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 06 months",
+      "resalePrice": 850128,
+      "pricePerSqm": 6641.63,
+      "pricePerSqft": 617.03
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-09-218461",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 05 months",
+      "resalePrice": 790003,
+      "pricePerSqm": 6528.95,
+      "pricePerSqft": 606.56
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-07-218458",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 07 months",
+      "resalePrice": 690000,
+      "pricePerSqm": 5702.48,
+      "pricePerSqft": 529.78
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2025-04-218456",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 11 months",
+      "resalePrice": 888000,
+      "pricePerSqm": 7278.69,
+      "pricePerSqft": 676.21
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2024-10-192935",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 05 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 6538.46,
+      "pricePerSqft": 607.44
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2024-10-192936",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 06 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 6538.46,
+      "pricePerSqft": 607.44
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2024-08-192814",
+      "month": "2024-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 07 months",
+      "resalePrice": 785000,
+      "pricePerSqm": 6434.43,
+      "pricePerSqft": 597.78
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2024-01-192331",
+      "month": "2024-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "64 years 02 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 5865.38,
+      "pricePerSqft": 544.91
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2023-02-164630",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "65 years",
+      "resalePrice": 608000,
+      "pricePerSqm": 5902.91,
+      "pricePerSqft": 548.4
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2021-04-96711",
+      "month": "2021-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years 11 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 4807.69,
+      "pricePerSqft": 446.65
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2019-12-63925",
+      "month": "2019-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 02 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 5040.98,
+      "pricePerSqft": 468.32
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2019-09-57958",
+      "month": "2019-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 05 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4805.83,
+      "pricePerSqft": 446.48
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2019-04-48185",
+      "month": "2019-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 11 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4615.38,
+      "pricePerSqft": 428.78
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2019-02-44700",
+      "month": "2019-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "69 years",
+      "resalePrice": 450000,
+      "pricePerSqm": 4326.92,
+      "pricePerSqft": 401.98
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2018-07-32362",
+      "month": "2018-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "69 years 07 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 4230.77,
+      "pricePerSqft": 393.05
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2017-11-18629",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 5245.9,
+      "pricePerSqft": 487.36
+    }
+  ]
+}

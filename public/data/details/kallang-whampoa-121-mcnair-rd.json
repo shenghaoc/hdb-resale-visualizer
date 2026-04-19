@@ -1,0 +1,910 @@
+{
+  "summary": {
+    "addressKey": "kallang-whampoa-121-mcnair-rd",
+    "town": "KALLANG/WHAMPOA",
+    "block": "121",
+    "streetName": "MCNAIR RD",
+    "coordinates": {
+      "lat": 1.31896793997824,
+      "lng": 103.856341994979
+    },
+    "medianPrice": 685000,
+    "priceIqr": [
+      668000,
+      735000
+    ],
+    "pricePerSqmMedian": 6586.54,
+    "pricePerSqftMedian": 611.91,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      103,
+      130
+    ],
+    "leaseCommenceRange": [
+      1987,
+      1987
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "1992-01",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "BOON KENG MRT STATION",
+      "distanceMeters": 499
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1992-01",
+      "medianPrice": 151200,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1453.85
+    },
+    {
+      "month": "1992-08",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1346.15
+    },
+    {
+      "month": "1993-04",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1456.31
+    },
+    {
+      "month": "1993-05",
+      "medianPrice": 185000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1559.09
+    },
+    {
+      "month": "1993-06",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1884.62
+    },
+    {
+      "month": "1993-07",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2076.92
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1941.75
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2330.1
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2692.31
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 248000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2384.62
+    },
+    {
+      "month": "1995-06",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2865.38
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3038.46
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 317000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3048.08
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 330000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 3173.08
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3615.38
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3509.62
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 423000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4067.31
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 454000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3887.63
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3640.78
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4029.13
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3798.08
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3942.31
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 384500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3697.11
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3461.54
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 314000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3048.54
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 311000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2990.38
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 296000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2873.79
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 291000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2825.24
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3461.54
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 407000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3363.64
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3221.15
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3173.08
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 381000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3275.85
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3057.69
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 319000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3067.31
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 327500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3149.04
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3125
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 343000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3298.08
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3192.31
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3201.92
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2875
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 338444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3016.51
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 289000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2778.85
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 284000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2730.77
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2941.75
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2596.15
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 360000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2791.47
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2836.54
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2495.15
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 252800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2430.77
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2558.14
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 267500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2572.12
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 262500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2524.04
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 264000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2563.11
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2752.07
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2876.03
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 286000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2776.7
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2875
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3557.69
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 374000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3613.89
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 367000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3563.11
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 379000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3679.61
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3942.31
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3692.31
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4663.46
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 583000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4818.18
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 487000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4682.69
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5269.23
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 519000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4990.38
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5384.62
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 517000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4971.15
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5230.77
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5825.24
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5192.31
+    },
+    {
+      "month": "2014-06",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5721.15
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5096.15
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4759.62
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4807.69
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4903.85
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4807.69
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4903.85
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4759.62
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 516000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4961.54
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5320.39
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4307.69
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5289.26
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 504000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4846.15
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4769.23
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 544000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5230.77
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5961.54
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5913.46
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6165.05
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5922.33
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 865000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7148.76
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6423.08
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6586.54
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7067.31
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2026-01-225391",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 06 months",
+      "resalePrice": 735000,
+      "pricePerSqm": 7067.31,
+      "pricePerSqft": 656.58
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2025-05-208901",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "61 years 01 month",
+      "resalePrice": 685000,
+      "pricePerSqm": 6586.54,
+      "pricePerSqft": 611.91
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2024-10-183055",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "61 years 09 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 6423.08,
+      "pricePerSqft": 596.72
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2024-07-182785",
+      "month": "2024-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "62 years",
+      "resalePrice": 865000,
+      "pricePerSqm": 7148.76,
+      "pricePerSqft": 664.14
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2024-06-182664",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 610000,
+      "pricePerSqm": 5922.33,
+      "pricePerSqft": 550.2
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2023-05-155624",
+      "month": "2023-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "63 years 02 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6250,
+      "pricePerSqft": 580.64
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2023-02-155423",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "63 years 05 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 6165.05,
+      "pricePerSqft": 572.75
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2021-11-112871",
+      "month": "2021-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "64 years 07 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 5913.46,
+      "pricePerSqft": 549.38
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2021-07-102551",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years",
+      "resalePrice": 620000,
+      "pricePerSqm": 5961.54,
+      "pricePerSqft": 553.85
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2021-02-91113",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 05 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 4980.77,
+      "pricePerSqft": 462.73
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2021-02-91115",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 05 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 5480.77,
+      "pricePerSqft": 509.18
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2021-01-88778",
+      "month": "2021-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 05 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 4769.23,
+      "pricePerSqft": 443.08
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2020-11-83916",
+      "month": "2020-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 08 months",
+      "resalePrice": 504000,
+      "pricePerSqm": 4846.15,
+      "pricePerSqft": 450.22
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2020-09-79051",
+      "month": "2020-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 10 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 5289.26,
+      "pricePerSqft": 491.39
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2020-06-71798",
+      "month": "2020-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "66 years",
+      "resalePrice": 448000,
+      "pricePerSqm": 4307.69,
+      "pricePerSqft": 400.2
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2020-03-68763",
+      "month": "2020-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "66 years 03 months",
+      "resalePrice": 548000,
+      "pricePerSqm": 5320.39,
+      "pricePerSqft": 494.28
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2019-06-51488",
+      "month": "2019-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "67 years 02 months",
+      "resalePrice": 516000,
+      "pricePerSqm": 4961.54,
+      "pricePerSqft": 460.94
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2019-03-45789",
+      "month": "2019-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "67 years 04 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4759.62,
+      "pricePerSqft": 442.18
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2018-12-41346",
+      "month": "2018-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "67 years 06 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4903.85,
+      "pricePerSqft": 455.58
+    },
+    {
+      "id": "kallang-whampoa-121-mcnair-rd-2018-03-23710",
+      "month": "2018-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "68 years 03 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 4807.69,
+      "pricePerSqft": 446.65
+    }
+  ]
+}

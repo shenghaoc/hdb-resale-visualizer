@@ -1,0 +1,124 @@
+{
+  "summary": {
+    "addressKey": "ang-mo-kio-338-ang-mo-kio-ave-1",
+    "town": "ANG MO KIO",
+    "block": "338",
+    "streetName": "ANG MO KIO AVE 1",
+    "coordinates": {
+      "lat": 1.36389570157547,
+      "lng": 103.848986957428
+    },
+    "medianPrice": 370000,
+    "priceIqr": [
+      370000,
+      370000
+    ],
+    "pricePerSqmMedian": 5606.06,
+    "pricePerSqftMedian": 520.82,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      66,
+      66
+    ],
+    "leaseCommenceRange": [
+      1981,
+      1981
+    ],
+    "latestMonth": "2024-12",
+    "availableDateRange": [
+      "2010-08",
+      "2024-12"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "ANG MO KIO MRT STATION",
+      "distanceMeters": 618
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2010-08",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4439.39
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4772.73
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3939.39
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5606.06
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "ang-mo-kio-338-ang-mo-kio-ave-1-2024-12-170135",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "55 years 08 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 5606.06,
+      "pricePerSqft": 520.82
+    },
+    {
+      "id": "ang-mo-kio-338-ang-mo-kio-ave-1-2019-03-44944",
+      "month": "2019-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "61 years 05 months",
+      "resalePrice": 260000,
+      "pricePerSqm": 3939.39,
+      "pricePerSqft": 365.98
+    },
+    {
+      "id": "ang-mo-kio-338-ang-mo-kio-ave-1-2013-07-627135",
+      "month": "2013-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 315000,
+      "pricePerSqm": 4772.73,
+      "pricePerSqft": 443.4
+    },
+    {
+      "id": "ang-mo-kio-338-ang-mo-kio-ave-1-2010-08-559911",
+      "month": "2010-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 293000,
+      "pricePerSqm": 4439.39,
+      "pricePerSqft": 412.43
+    }
+  ]
+}

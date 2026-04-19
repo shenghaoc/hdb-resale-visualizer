@@ -1,0 +1,916 @@
+{
+  "summary": {
+    "addressKey": "queenstown-163-stirling-rd",
+    "town": "QUEENSTOWN",
+    "block": "163",
+    "streetName": "STIRLING RD",
+    "coordinates": {
+      "lat": 1.29187643649549,
+      "lng": 103.802632277067
+    },
+    "medianPrice": 362500,
+    "priceIqr": [
+      354500,
+      372500
+    ],
+    "pricePerSqmMedian": 5492.43,
+    "pricePerSqftMedian": 510.26,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      66,
+      132
+    ],
+    "leaseCommenceRange": [
+      1970,
+      1970
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "1990-04",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "QUEENSTOWN MRT STATION",
+      "distanceMeters": 475
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-04",
+      "medianPrice": 40000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 606.06
+    },
+    {
+      "month": "1990-07",
+      "medianPrice": 40000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 606.06
+    },
+    {
+      "month": "1992-05",
+      "medianPrice": 40000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 606.06
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 37000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 560.61
+    },
+    {
+      "month": "1993-12",
+      "medianPrice": 82000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1242.42
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1363.64
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 100500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1421.05
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 103000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1560.61
+    },
+    {
+      "month": "1995-07",
+      "medianPrice": 113000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1712.12
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1666.67
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 129500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1831.54
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2348.48
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2651.52
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 158000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2393.94
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2368.42
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2424.24
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2106.06
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 142500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2159.09
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 141000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2136.36
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2065.79
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 134000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2030.3
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1969.7
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 143000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2166.67
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 148000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2242.42
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2121.21
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2121.21
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 141000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2136.36
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 136000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2060.61
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 137000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2075.76
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 131000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1984.85
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1973.68
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 136500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2068.19
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 129388,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1960.42
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 127000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1924.24
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 147000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1934.21
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 138750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2102.27
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1969.7
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 141000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2136.36
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 147000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2227.27
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 134000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2030.3
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2121.21
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 164000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2484.85
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 161388,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2445.27
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2631.58
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 161500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2446.97
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 168500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2553.03
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2424.24
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1628.79
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 157999,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2393.92
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 194000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2552.63
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 167500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2537.88
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 178500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2704.55
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 208880,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2748.42
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 193000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2924.24
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.21
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 185000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2803.03
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 188000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2848.48
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 189000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2863.64
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3590.91
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 248000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3757.57
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 264000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4342.11
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4242.42
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4696.97
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2575.76
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 342500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5189.4
+    },
+    {
+      "month": "2011-07",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5075.76
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5348.48
+    },
+    {
+      "month": "2012-02",
+      "medianPrice": 386600,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5857.58
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5909.09
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5878.79
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5651.52
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5757.58
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 368800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5587.88
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 359000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5439.39
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5530.3
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5378.79
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5303.03
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4393.94
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5263.16
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 343888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5210.42
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4848.48
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 294000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4454.55
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5303.03
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4393.94
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 470000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4590.91
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4015.15
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 308888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4680.12
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 357000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5409.09
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5227.27
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5681.82
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5065.79
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5454.55
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5530.3
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5984.85
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5121.21
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-163-stirling-rd-2026-02-226269",
+      "month": "2026-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "42 years 11 months",
+      "resalePrice": 338000,
+      "pricePerSqm": 5121.21,
+      "pricePerSqft": 475.78
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2025-11-211781",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "43 years 03 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 5984.85,
+      "pricePerSqft": 556.01
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2025-06-211774",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "43 years 07 months",
+      "resalePrice": 365000,
+      "pricePerSqm": 5530.3,
+      "pricePerSqft": 513.78
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2024-07-186400",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "44 years 06 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 5454.55,
+      "pricePerSqft": 506.74
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2023-10-159395",
+      "month": "2023-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "45 years 04 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 5065.79,
+      "pricePerSqft": 470.63
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2023-07-159253",
+      "month": "2023-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "45 years 07 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 5681.82,
+      "pricePerSqft": 527.86
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2023-01-158942",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "46 years 01 month",
+      "resalePrice": 345000,
+      "pricePerSqm": 5227.27,
+      "pricePerSqft": 485.63
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2022-12-133417",
+      "month": "2022-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "46 years 02 months",
+      "resalePrice": 355000,
+      "pricePerSqm": 5378.79,
+      "pricePerSqft": 499.71
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2022-12-133419",
+      "month": "2022-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "46 years 02 months",
+      "resalePrice": 359000,
+      "pricePerSqm": 5439.39,
+      "pricePerSqft": 505.34
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2021-09-108203",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "47 years 05 months",
+      "resalePrice": 308888,
+      "pricePerSqm": 4680.12,
+      "pricePerSqft": 434.8
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2020-10-81871",
+      "month": "2020-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "48 years 04 months",
+      "resalePrice": 265000,
+      "pricePerSqm": 4015.15,
+      "pricePerSqft": 373.02
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2020-08-76924",
+      "month": "2020-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "48 years 05 months",
+      "resalePrice": 272000,
+      "pricePerSqm": 4121.21,
+      "pricePerSqft": 382.87
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2020-08-76964",
+      "month": "2020-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 132,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "48 years 05 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 5060.61,
+      "pricePerSqft": 470.15
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2018-08-33976",
+      "month": "2018-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "50 years 06 months",
+      "resalePrice": 290000,
+      "pricePerSqm": 4393.94,
+      "pricePerSqft": 408.21
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2018-02-22303",
+      "month": "2018-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "50 years 11 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 5303.03,
+      "pricePerSqft": 492.67
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2017-06-9071",
+      "month": "2017-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "51 years 07 months",
+      "resalePrice": 294000,
+      "pricePerSqm": 4454.55,
+      "pricePerSqft": 413.84
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2016-11-973266",
+      "month": "2016-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "52",
+      "resalePrice": 320000,
+      "pricePerSqm": 4848.48,
+      "pricePerSqft": 450.44
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2016-05-962975",
+      "month": "2016-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "52",
+      "resalePrice": 343888,
+      "pricePerSqm": 5210.42,
+      "pricePerSqft": 484.06
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2016-02-957877",
+      "month": "2016-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "52",
+      "resalePrice": 330000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    },
+    {
+      "id": "queenstown-163-stirling-rd-2015-10-952354",
+      "month": "2015-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "53",
+      "resalePrice": 400000,
+      "pricePerSqm": 5263.16,
+      "pricePerSqft": 488.96
+    }
+  ]
+}

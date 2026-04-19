@@ -1,0 +1,706 @@
+{
+  "summary": {
+    "addressKey": "central-area-1a-cantonment-rd",
+    "town": "CENTRAL AREA",
+    "block": "1A",
+    "streetName": "CANTONMENT RD",
+    "coordinates": {
+      "lat": 1.27784271048219,
+      "lng": 103.840965923691
+    },
+    "medianPrice": 1370000,
+    "priceIqr": [
+      1329250,
+      1433750
+    ],
+    "pricePerSqmMedian": 14459.78,
+    "pricePerSqftMedian": 1343.36,
+    "transactionCount": 14,
+    "floorAreaRange": [
+      93,
+      108
+    ],
+    "leaseCommenceRange": [
+      2011,
+      2011
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "2015-01",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "TYPE S1",
+      "TYPE S2",
+      "MAX FLOOR 50"
+    ],
+    "nearestMrt": {
+      "stationName": "OUTRAM PARK MRT STATION",
+      "distanceMeters": 200
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2015-01",
+      "medianPrice": 844000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 8889.48
+    },
+    {
+      "month": "2015-02",
+      "medianPrice": 1030000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9626.17
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 920000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9250
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 1050000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9813.08
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 980000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9158.88
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 908000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9763.44
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 965000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9190.48
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 915000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9631.58
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 888000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9548.39
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 910000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9157.23
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 960000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10105.26
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 890000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8902.26
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9677.42
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 895000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9623.65
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 945000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10053.19
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 869500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8702.63
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9523.81
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 908444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9066.15
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 907000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8556.6
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 1064000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10083.92
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 930000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10000
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 999000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10627.66
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 1035000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9715.66
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 870000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9157.89
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 1099000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10271.02
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8829.79
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 948000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9978.95
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 916000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9744.68
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 1023801,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10776.85
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 1100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10476.19
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 918000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9870.97
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 1020000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10736.84
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 1086500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10154.2
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 1208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11396.23
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 1030000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11075.27
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 1170000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 11142.86
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 1050000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9722.22
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 940000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9690.72
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 938888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9677.42
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 1007500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10494.8
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 1008000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 10526.32
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 939000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9791.1
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 995000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9727.82
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 1107500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11134.41
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 885000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9414.89
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 1100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10476.19
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 1060000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10571.43
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 1021000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10747.37
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 1030000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11075.27
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 1140000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11244.47
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 1250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13440.86
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 1218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12957.45
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 1393939,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14829.14
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 1320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12336.45
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 1450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13809.52
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 1370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14123.71
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 1314500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 13836.84
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 1435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13666.67
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 1300000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 13541.67
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 1330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14148.94
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 1360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14315.79
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 1430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14742.27
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 1548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14603.77
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 1370000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 14731.18
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 1590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14859.81
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 1560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14716.98
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-1a-cantonment-rd-2026-01-223723",
+      "month": "2026-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 106,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 01 month",
+      "resalePrice": 1560000,
+      "pricePerSqm": 14716.98,
+      "pricePerSqft": 1367.25
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-09-202786",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "40 TO 42",
+      "floorAreaSqm": 107,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 04 months",
+      "resalePrice": 1590000,
+      "pricePerSqm": 14859.81,
+      "pricePerSqft": 1380.52
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-08-202747",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 93,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 06 months",
+      "resalePrice": 1380000,
+      "pricePerSqm": 14838.71,
+      "pricePerSqft": 1378.56
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-08-202748",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 93,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 05 months",
+      "resalePrice": 1360000,
+      "pricePerSqm": 14623.66,
+      "pricePerSqft": 1358.58
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-07-202784",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 106,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 06 months",
+      "resalePrice": 1548000,
+      "pricePerSqm": 14603.77,
+      "pricePerSqft": 1356.74
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-05-202736",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 97,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 08 months",
+      "resalePrice": 1430000,
+      "pricePerSqm": 14742.27,
+      "pricePerSqft": 1369.6
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-04-202731",
+      "month": "2025-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 95,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "84 years 10 months",
+      "resalePrice": 1360000,
+      "pricePerSqm": 14315.79,
+      "pricePerSqft": 1329.98
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2025-01-202723",
+      "month": "2025-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 94,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 01 month",
+      "resalePrice": 1330000,
+      "pricePerSqm": 14148.94,
+      "pricePerSqft": 1314.48
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-12-175778",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 02 months",
+      "resalePrice": 1250000,
+      "pricePerSqm": 13440.86,
+      "pricePerSqft": 1248.7
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-12-175779",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 96,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 02 months",
+      "resalePrice": 1300000,
+      "pricePerSqm": 13541.67,
+      "pricePerSqft": 1258.06
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-12-175784",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "40 TO 42",
+      "floorAreaSqm": 93,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 03 months",
+      "resalePrice": 1380000,
+      "pricePerSqm": 14838.71,
+      "pricePerSqft": 1378.56
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-09-175748",
+      "month": "2024-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 105,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 05 months",
+      "resalePrice": 1435000,
+      "pricePerSqm": 13666.67,
+      "pricePerSqft": 1269.68
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-06-175697",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 95,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 08 months",
+      "resalePrice": 1300000,
+      "pricePerSqm": 13684.21,
+      "pricePerSqft": 1271.31
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-06-175698",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 95,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 08 months",
+      "resalePrice": 1329000,
+      "pricePerSqm": 13989.47,
+      "pricePerSqft": 1299.67
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-03-175652",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "46 TO 48",
+      "floorAreaSqm": 97,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "85 years 10 months",
+      "resalePrice": 1370000,
+      "pricePerSqm": 14123.71,
+      "pricePerSqft": 1312.14
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2024-01-175618",
+      "month": "2024-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "46 TO 48",
+      "floorAreaSqm": 105,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "86 years 01 month",
+      "resalePrice": 1450000,
+      "pricePerSqm": 13809.52,
+      "pricePerSqft": 1282.95
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2023-12-149522",
+      "month": "2023-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 107,
+      "flatModel": "TYPE S2",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "86 years 01 month",
+      "resalePrice": 1320000,
+      "pricePerSqm": 12336.45,
+      "pricePerSqft": 1146.09
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2023-09-149482",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "49 TO 51",
+      "floorAreaSqm": 94,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "86 years 04 months",
+      "resalePrice": 1393939,
+      "pricePerSqm": 14829.14,
+      "pricePerSqft": 1377.67
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2023-05-149410",
+      "month": "2023-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 94,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "86 years 09 months",
+      "resalePrice": 1218000,
+      "pricePerSqm": 12957.45,
+      "pricePerSqft": 1203.79
+    },
+    {
+      "id": "central-area-1a-cantonment-rd-2023-04-149400",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "46 TO 48",
+      "floorAreaSqm": 93,
+      "flatModel": "TYPE S1",
+      "leaseCommenceDate": 2011,
+      "remainingLease": "86 years 09 months",
+      "resalePrice": 1250000,
+      "pricePerSqm": 13440.86,
+      "pricePerSqft": 1248.7
+    }
+  ]
+}

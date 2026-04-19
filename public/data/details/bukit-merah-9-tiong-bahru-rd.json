@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-9-tiong-bahru-rd",
+    "town": "BUKIT MERAH",
+    "block": "9",
+    "streetName": "TIONG BAHRU RD",
+    "coordinates": {
+      "lat": 1.28615970912446,
+      "lng": 103.830448149376
+    },
+    "medianPrice": 128000,
+    "priceIqr": [
+      115000,
+      155000
+    ],
+    "pricePerSqmMedian": 1533.33,
+    "pricePerSqftMedian": 142.45,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      75,
+      89
+    ],
+    "leaseCommenceRange": [
+      1976,
+      1976
+    ],
+    "latestMonth": "1999-04",
+    "availableDateRange": [
+      "1991-10",
+      "1999-04"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED"
+    ],
+    "nearestMrt": {
+      "stationName": "TIONG BAHRU MRT STATION",
+      "distanceMeters": 329
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-10",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1123.6
+    },
+    {
+      "month": "1992-06",
+      "medianPrice": 128000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1438.2
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1741.57
+    },
+    {
+      "month": "1993-12",
+      "medianPrice": 115000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1533.33
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3123.6
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-9-tiong-bahru-rd-1999-04-897702",
+      "month": "1999-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 278000,
+      "pricePerSqm": 3123.6,
+      "pricePerSqft": 290.19
+    },
+    {
+      "id": "bukit-merah-9-tiong-bahru-rd-1993-12-707234",
+      "month": "1993-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 75,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 115000,
+      "pricePerSqm": 1533.33,
+      "pricePerSqft": 142.45
+    },
+    {
+      "id": "bukit-merah-9-tiong-bahru-rd-1993-10-702777",
+      "month": "1993-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 155000,
+      "pricePerSqm": 1741.57,
+      "pricePerSqft": 161.8
+    },
+    {
+      "id": "bukit-merah-9-tiong-bahru-rd-1992-06-682073",
+      "month": "1992-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 128000,
+      "pricePerSqm": 1438.2,
+      "pricePerSqft": 133.61
+    },
+    {
+      "id": "bukit-merah-9-tiong-bahru-rd-1991-10-673052",
+      "month": "1991-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 100000,
+      "pricePerSqm": 1123.6,
+      "pricePerSqft": 104.39
+    }
+  ]
+}

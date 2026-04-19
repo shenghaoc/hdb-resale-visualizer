@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "addressKey": "toa-payoh-1-upp-aljunied-lane",
+    "town": "TOA PAYOH",
+    "block": "1",
+    "streetName": "UPP ALJUNIED LANE",
+    "coordinates": {
+      "lat": 1.33429242412799,
+      "lng": 103.878746207181
+    },
+    "medianPrice": 88500,
+    "priceIqr": [
+      84250,
+      92750
+    ],
+    "pricePerSqmMedian": 1783.76,
+    "pricePerSqftMedian": 165.72,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      47,
+      52
+    ],
+    "leaseCommenceRange": [
+      1968,
+      1968
+    ],
+    "latestMonth": "1996-11",
+    "availableDateRange": [
+      "1996-07",
+      "1996-11"
+    ],
+    "flatTypes": [
+      "2 ROOM"
+    ],
+    "flatModels": [
+      "STANDARD",
+      "MAX FLOOR 1"
+    ],
+    "nearestMrt": {
+      "stationName": "MATTAR MRT STATION",
+      "distanceMeters": 900
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1996-07",
+      "medianPrice": 97000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1865.38
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1702.13
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "toa-payoh-1-upp-aljunied-lane-1996-11-794129",
+      "month": "1996-11",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 47,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1968,
+      "remainingLease": "41 years",
+      "resalePrice": 80000,
+      "pricePerSqm": 1702.13,
+      "pricePerSqft": 158.13
+    },
+    {
+      "id": "toa-payoh-1-upp-aljunied-lane-1996-07-781916",
+      "month": "1996-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 52,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1968,
+      "remainingLease": "41 years",
+      "resalePrice": 97000,
+      "pricePerSqm": 1865.38,
+      "pricePerSqft": 173.3
+    }
+  ]
+}

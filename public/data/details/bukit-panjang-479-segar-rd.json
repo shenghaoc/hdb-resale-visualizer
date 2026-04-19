@@ -1,0 +1,622 @@
+{
+  "summary": {
+    "addressKey": "bukit-panjang-479-segar-rd",
+    "town": "BUKIT PANJANG",
+    "block": "479",
+    "streetName": "SEGAR RD",
+    "coordinates": {
+      "lat": 1.38965198363957,
+      "lng": 103.772710941574
+    },
+    "medianPrice": 700000,
+    "priceIqr": [
+      700000,
+      700000
+    ],
+    "pricePerSqmMedian": 5468.75,
+    "pricePerSqftMedian": 508.06,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      92,
+      128
+    ],
+    "leaseCommenceRange": [
+      2002,
+      2002
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "2006-07",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "PREMIUM APARTMENT",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "SEGAR LRT STATION",
+      "distanceMeters": 420
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2006-07",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2521.74
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 222000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2413.04
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2545.45
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 286250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2841.06
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 248000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2695.65
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 261000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2836.96
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2851.56
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 306000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2732.14
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2857.14
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2857.14
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3090.91
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 413000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3226.56
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3045.45
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 426500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3371.4
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 442000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3453.13
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 479000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3832
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4108.7
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3867.19
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 479000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3742.19
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 488000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4065.22
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3954.55
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3928.57
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4510.87
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3960
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3960
+    },
+    {
+      "month": "2013-04",
+      "medianPrice": 528000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4224
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4227.27
+    },
+    {
+      "month": "2013-11",
+      "medianPrice": 465500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4231.82
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 443888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3467.88
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3593.75
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3437.5
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3437.5
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 396888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3543.64
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3527.27
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3359.38
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3532.61
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3641.3
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 422500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3338.28
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3515.63
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 407500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3638.39
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 494444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3955.55
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4257.81
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4218.75
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4609.38
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5160
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4636.36
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 605000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4840
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4960.94
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4906.25
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4984.38
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5272.73
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5468.75
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-panjang-479-segar-rd-2025-12-202565",
+      "month": "2025-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 09 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 5468.75,
+      "pricePerSqft": 508.06
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2024-03-174858",
+      "month": "2024-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "77 years 07 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 5272.73,
+      "pricePerSqft": 489.85
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2024-02-174806",
+      "month": "2024-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "77 years 08 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 4984.38,
+      "pricePerSqft": 463.06
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2023-09-149090",
+      "month": "2023-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years",
+      "resalePrice": 628000,
+      "pricePerSqm": 4906.25,
+      "pricePerSqft": 455.81
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2023-08-149026",
+      "month": "2023-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 4960.94,
+      "pricePerSqft": 460.89
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2023-05-148839",
+      "month": "2023-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 4840,
+      "pricePerSqft": 449.65
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2023-02-148619",
+      "month": "2023-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years 08 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4636.36,
+      "pricePerSqft": 430.73
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2022-11-122239",
+      "month": "2022-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years",
+      "resalePrice": 645000,
+      "pricePerSqm": 5160,
+      "pricePerSqft": 479.38
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2022-01-121457",
+      "month": "2022-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years 09 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 4609.38,
+      "pricePerSqft": 428.23
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2021-12-114711",
+      "month": "2021-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years 10 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 4218.75,
+      "pricePerSqft": 391.94
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2021-08-104457",
+      "month": "2021-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "80 years 02 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 4257.81,
+      "pricePerSqft": 395.56
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2021-03-92727",
+      "month": "2021-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "80 years 08 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 3840,
+      "pricePerSqft": 356.75
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2021-03-92736",
+      "month": "2021-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "80 years 06 months",
+      "resalePrice": 508888,
+      "pricePerSqm": 4071.1,
+      "pricePerSqft": 378.22
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2020-10-80885",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "81 years",
+      "resalePrice": 407500,
+      "pricePerSqm": 3638.39,
+      "pricePerSqft": 338.02
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2020-06-71120",
+      "month": "2020-06",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "81 years 05 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 3515.63,
+      "pricePerSqft": 326.61
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2018-10-37235",
+      "month": "2018-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 11 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 3200,
+      "pricePerSqft": 297.29
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2018-10-37236",
+      "month": "2018-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 11 months",
+      "resalePrice": 445000,
+      "pricePerSqm": 3476.56,
+      "pricePerSqft": 322.98
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2017-02-1403",
+      "month": "2017-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "84 years 07 months",
+      "resalePrice": 335000,
+      "pricePerSqm": 3641.3,
+      "pricePerSqft": 338.29
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2016-07-965820",
+      "month": "2016-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "85",
+      "resalePrice": 325000,
+      "pricePerSqm": 3532.61,
+      "pricePerSqft": 328.19
+    },
+    {
+      "id": "bukit-panjang-479-segar-rd-2016-03-958740",
+      "month": "2016-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 128,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "85",
+      "resalePrice": 430000,
+      "pricePerSqm": 3359.38,
+      "pricePerSqft": 312.1
+    }
+  ]
+}

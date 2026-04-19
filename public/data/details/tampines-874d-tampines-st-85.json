@@ -1,0 +1,80 @@
+{
+  "summary": {
+    "addressKey": "tampines-874d-tampines-st-85",
+    "town": "TAMPINES",
+    "block": "874D",
+    "streetName": "TAMPINES ST 85",
+    "coordinates": {
+      "lat": 1.35462980931459,
+      "lng": 103.931272638324
+    },
+    "medianPrice": 773444,
+    "priceIqr": [
+      761722,
+      785166
+    ],
+    "pricePerSqmMedian": 8316.6,
+    "pricePerSqftMedian": 772.64,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      93,
+      93
+    ],
+    "leaseCommenceRange": [
+      2021,
+      2021
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "2026-04",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "TAMPINES WEST MRT STATION",
+      "distanceMeters": 1262
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2026-04",
+      "medianPrice": 773444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8316.6
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "tampines-874d-tampines-st-85-2026-04-227540",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 8064.52,
+      "pricePerSqft": 749.22
+    },
+    {
+      "id": "tampines-874d-tampines-st-85-2026-04-227543",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 796888,
+      "pricePerSqm": 8568.69,
+      "pricePerSqft": 796.06
+    }
+  ]
+}

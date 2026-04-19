@@ -1,0 +1,389 @@
+{
+  "summary": {
+    "addressKey": "sembawang-103a-canberra-st",
+    "town": "SEMBAWANG",
+    "block": "103A",
+    "streetName": "CANBERRA ST",
+    "coordinates": {
+      "lat": 1.45103006132424,
+      "lng": 103.830534008712
+    },
+    "medianPrice": 521500,
+    "priceIqr": [
+      359250,
+      620000
+    ],
+    "pricePerSqmMedian": 7305.99,
+    "pricePerSqftMedian": 678.75,
+    "transactionCount": 38,
+    "floorAreaRange": [
+      38,
+      93
+    ],
+    "leaseCommenceRange": [
+      2020,
+      2020
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2025-01",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "2-ROOM",
+      "MODEL A",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "CANBERRA MRT STATION",
+      "distanceMeters": 830
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2025-01",
+      "medianPrice": 359000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7225.81
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 525000,
+      "transactionCount": 7,
+      "medianPricePerSqm": 7954.9
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 608000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6537.63
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 626000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 7134.41
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 350000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 8684.21
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 370000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 7872.34
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 627500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 6935.49
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6720.43
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 579444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7199.26
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 440000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7631.82
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6851.06
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 502500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8204.58
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sembawang-103a-canberra-st-2026-03-226395",
+      "month": "2026-03",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 10 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 9473.68,
+      "pricePerSqft": 880.13
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2026-03-226493",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 10 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 6935.48,
+      "pricePerSqft": 644.33
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2026-02-226392",
+      "month": "2026-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 47,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 11 months",
+      "resalePrice": 322000,
+      "pricePerSqm": 6851.06,
+      "pricePerSqft": 636.49
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2026-01-226387",
+      "month": "2026-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years",
+      "resalePrice": 370000,
+      "pricePerSqm": 7872.34,
+      "pricePerSqft": 731.37
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2026-01-226420",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years",
+      "resalePrice": 510000,
+      "pricePerSqm": 7391.3,
+      "pricePerSqft": 686.68
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-11-212325",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 02 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 7507.25,
+      "pricePerSqft": 697.45
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-11-212724",
+      "month": "2025-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 02 months",
+      "resalePrice": 640888,
+      "pricePerSqm": 6891.27,
+      "pricePerSqft": 640.22
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-10-212716",
+      "month": "2025-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 03 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 6720.43,
+      "pricePerSqft": 624.35
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-09-212318",
+      "month": "2025-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 04 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 7246.38,
+      "pricePerSqft": 673.21
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-09-212706",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 04 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 6881.72,
+      "pricePerSqft": 639.33
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-09-212710",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 04 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 6612.9,
+      "pricePerSqft": 614.36
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-09-212711",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 04 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6989.25,
+      "pricePerSqft": 649.32
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-07-212203",
+      "month": "2025-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 06 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 7872.34,
+      "pricePerSqft": 731.37
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-07-212204",
+      "month": "2025-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 355000,
+      "pricePerSqm": 9342.11,
+      "pricePerSqft": 867.91
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-07-212205",
+      "month": "2025-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 05 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 9736.84,
+      "pricePerSqft": 904.58
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-07-212672",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 06 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-07-212685",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 05 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 6559.14,
+      "pricePerSqft": 609.36
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-06-212190",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 9210.53,
+      "pricePerSqft": 855.69
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-06-212191",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 8085.11,
+      "pricePerSqft": 751.13
+    },
+    {
+      "id": "sembawang-103a-canberra-st-2025-06-212192",
+      "month": "2025-06",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 9210.53,
+      "pricePerSqft": 855.69
+    }
+  ]
+}

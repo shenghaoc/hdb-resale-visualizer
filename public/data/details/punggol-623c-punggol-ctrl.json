@@ -1,0 +1,562 @@
+{
+  "summary": {
+    "addressKey": "punggol-623c-punggol-ctrl",
+    "town": "PUNGGOL",
+    "block": "623C",
+    "streetName": "PUNGGOL CTRL",
+    "coordinates": {
+      "lat": 1.39963286520916,
+      "lng": 103.911458504685
+    },
+    "medianPrice": 530000,
+    "priceIqr": [
+      447000,
+      647500
+    ],
+    "pricePerSqmMedian": 7362.32,
+    "pricePerSqftMedian": 683.98,
+    "transactionCount": 7,
+    "floorAreaRange": [
+      46,
+      95
+    ],
+    "leaseCommenceRange": [
+      2014,
+      2014
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2017-06",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "OASIS LRT STATION",
+      "distanceMeters": 310
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2017-06",
+      "medianPrice": 349000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5057.97
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 382500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4714.77
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 401500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 4878.34
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4505.26
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4811.59
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 300000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5271.74
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4421.05
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 263000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5717.39
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 429000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4563.83
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4787.23
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4202.13
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4840.43
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4631.58
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 420000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4445.69
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 463000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4925.53
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5217.39
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 379000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4660.19
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 465888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4956.26
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5188.41
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5326.09
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4627.66
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 438888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4669.02
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5326.09
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5191.49
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5579.71
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 383000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5550.73
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5473.68
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 553000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5821.05
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6086.96
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7086.96
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6739.13
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 425000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6159.42
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 482000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6985.51
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7565.22
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7608.7
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 605000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 6787.23
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7362.32
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7681.16
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7127.66
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6808.51
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7717.39
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 520500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7679.69
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "punggol-623c-punggol-ctrl-2026-03-225731",
+      "month": "2026-03",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 386000,
+      "pricePerSqm": 8391.3,
+      "pricePerSqft": 779.58
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2026-03-225872",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 6968.09,
+      "pricePerSqft": 647.36
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2026-02-225729",
+      "month": "2026-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 355000,
+      "pricePerSqm": 7717.39,
+      "pricePerSqft": 716.97
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2025-03-210441",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 6808.51,
+      "pricePerSqft": 632.53
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-11-185858",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 7127.66,
+      "pricePerSqft": 662.18
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-07-185051",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 7681.16,
+      "pricePerSqft": 713.6
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-05-184720",
+      "month": "2024-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years",
+      "resalePrice": 508000,
+      "pricePerSqm": 7362.32,
+      "pricePerSqft": 683.98
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-02-184208",
+      "month": "2024-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 315000,
+      "pricePerSqm": 6847.83,
+      "pricePerSqft": 636.18
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-02-184224",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 7028.99,
+      "pricePerSqft": 653.01
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-02-184272",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 6436.17,
+      "pricePerSqft": 597.94
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-02-184273",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 6436.17,
+      "pricePerSqft": 597.94
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2024-02-184306",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 6787.23,
+      "pricePerSqft": 630.56
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-12-158820",
+      "month": "2023-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 7608.7,
+      "pricePerSqft": 706.87
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-10-158456",
+      "month": "2023-10",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 348000,
+      "pricePerSqm": 7565.22,
+      "pricePerSqft": 702.83
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-06-157797",
+      "month": "2023-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 482000,
+      "pricePerSqm": 6985.51,
+      "pricePerSqft": 648.98
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-04-157407",
+      "month": "2023-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years",
+      "resalePrice": 343000,
+      "pricePerSqm": 7456.52,
+      "pricePerSqft": 692.73
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-04-157416",
+      "month": "2023-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years",
+      "resalePrice": 425000,
+      "pricePerSqm": 6159.42,
+      "pricePerSqft": 572.23
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-04-157471",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years",
+      "resalePrice": 550880,
+      "pricePerSqm": 5860.43,
+      "pricePerSqft": 544.45
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2023-03-157250",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 6739.13,
+      "pricePerSqft": 626.09
+    },
+    {
+      "id": "punggol-623c-punggol-ctrl-2022-12-132535",
+      "month": "2022-12",
+      "flatType": "2 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 46,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 326000,
+      "pricePerSqm": 7086.96,
+      "pricePerSqft": 658.4
+    }
+  ]
+}

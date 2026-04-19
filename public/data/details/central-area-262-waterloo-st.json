@@ -1,0 +1,596 @@
+{
+  "summary": {
+    "addressKey": "central-area-262-waterloo-st",
+    "town": "CENTRAL AREA",
+    "block": "262",
+    "streetName": "WATERLOO ST",
+    "coordinates": {
+      "lat": 1.29853916273521,
+      "lng": 103.851856012904
+    },
+    "medianPrice": 660000,
+    "priceIqr": [
+      660000,
+      660000
+    ],
+    "pricePerSqmMedian": 8048.78,
+    "pricePerSqftMedian": 747.76,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      82,
+      82
+    ],
+    "leaseCommenceRange": [
+      1978,
+      1978
+    ],
+    "latestMonth": "2024-06",
+    "availableDateRange": [
+      "1990-03",
+      "2024-06"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "BENCOOLEN MRT STATION",
+      "distanceMeters": 134
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-03",
+      "medianPrice": 85000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1036.59
+    },
+    {
+      "month": "1991-10",
+      "medianPrice": 86000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1048.78
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2219.51
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.95
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3292.68
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3268.29
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4121.95
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3841.46
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3963.41
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 337000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4109.76
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3390.24
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 266500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3250
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 731.71
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 272000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3317.07
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3048.78
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3390.24
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 259000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3158.54
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3195.12
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3536.59
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3414.63
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3573.17
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 272000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3317.07
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3414.63
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 283000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3451.22
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3634.15
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5731.71
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5182.93
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5060.98
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5975.61
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6646.34
+    },
+    {
+      "month": "2011-06",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6560.98
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6219.51
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 531000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6475.61
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 548000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6682.93
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 533000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7256.1
+    },
+    {
+      "month": "2013-11",
+      "medianPrice": 613800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7485.37
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7073.17
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 600088,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7318.15
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6524.39
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 605000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7378.05
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 588000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7170.73
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6097.56
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7743.9
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7317.07
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 640888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7815.71
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7780.49
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8048.78
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-262-waterloo-st-2024-06-175693",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "53 years 04 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 8048.78,
+      "pricePerSqft": 747.76
+    },
+    {
+      "id": "central-area-262-waterloo-st-2023-09-149478",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "54 years",
+      "resalePrice": 638000,
+      "pricePerSqm": 7780.49,
+      "pricePerSqft": 722.83
+    },
+    {
+      "id": "central-area-262-waterloo-st-2023-02-149363",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "54 years 08 months",
+      "resalePrice": 640888,
+      "pricePerSqm": 7815.71,
+      "pricePerSqft": 726.1
+    },
+    {
+      "id": "central-area-262-waterloo-st-2022-10-122568",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "55 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 7317.07,
+      "pricePerSqft": 679.78
+    },
+    {
+      "id": "central-area-262-waterloo-st-2022-08-122529",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "55 years 02 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 7743.9,
+      "pricePerSqft": 719.43
+    },
+    {
+      "id": "central-area-262-waterloo-st-2020-07-73572",
+      "month": "2020-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 6097.56,
+      "pricePerSqft": 566.48
+    },
+    {
+      "id": "central-area-262-waterloo-st-2020-06-71146",
+      "month": "2020-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "57 years 05 months",
+      "resalePrice": 588000,
+      "pricePerSqm": 7170.73,
+      "pricePerSqft": 666.18
+    },
+    {
+      "id": "central-area-262-waterloo-st-2019-03-45368",
+      "month": "2019-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "58 years 06 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 7378.05,
+      "pricePerSqft": 685.44
+    },
+    {
+      "id": "central-area-262-waterloo-st-2018-03-23229",
+      "month": "2018-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "59 years 06 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 6524.39,
+      "pricePerSqft": 606.14
+    },
+    {
+      "id": "central-area-262-waterloo-st-2016-05-962275",
+      "month": "2016-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "61",
+      "resalePrice": 600088,
+      "pricePerSqm": 7318.15,
+      "pricePerSqft": 679.88
+    },
+    {
+      "id": "central-area-262-waterloo-st-2014-09-645574",
+      "month": "2014-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 580000,
+      "pricePerSqm": 7073.17,
+      "pricePerSqft": 657.12
+    },
+    {
+      "id": "central-area-262-waterloo-st-2013-11-632901",
+      "month": "2013-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 613800,
+      "pricePerSqm": 7485.37,
+      "pricePerSqft": 695.41
+    },
+    {
+      "id": "central-area-262-waterloo-st-2012-10-614024",
+      "month": "2012-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 595000,
+      "pricePerSqm": 7256.1,
+      "pricePerSqft": 674.11
+    },
+    {
+      "id": "central-area-262-waterloo-st-2012-03-599266",
+      "month": "2012-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "11 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 533000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    },
+    {
+      "id": "central-area-262-waterloo-st-2012-01-595893",
+      "month": "2012-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 560000,
+      "pricePerSqm": 6829.27,
+      "pricePerSqft": 634.46
+    },
+    {
+      "id": "central-area-262-waterloo-st-2012-01-595894",
+      "month": "2012-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 536000,
+      "pricePerSqm": 6536.59,
+      "pricePerSqft": 607.27
+    },
+    {
+      "id": "central-area-262-waterloo-st-2011-09-589238",
+      "month": "2011-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 531000,
+      "pricePerSqm": 6475.61,
+      "pricePerSqft": 601.6
+    },
+    {
+      "id": "central-area-262-waterloo-st-2011-08-587518",
+      "month": "2011-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 510000,
+      "pricePerSqm": 6219.51,
+      "pricePerSqft": 577.81
+    },
+    {
+      "id": "central-area-262-waterloo-st-2011-06-583505",
+      "month": "2011-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 538000,
+      "pricePerSqm": 6560.98,
+      "pricePerSqft": 609.54
+    },
+    {
+      "id": "central-area-262-waterloo-st-2010-09-563957",
+      "month": "2010-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 545000,
+      "pricePerSqm": 6646.34,
+      "pricePerSqft": 617.47
+    }
+  ]
+}

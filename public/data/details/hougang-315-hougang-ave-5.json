@@ -1,0 +1,125 @@
+{
+  "summary": {
+    "addressKey": "hougang-315-hougang-ave-5",
+    "town": "HOUGANG",
+    "block": "315",
+    "streetName": "HOUGANG AVE 5",
+    "coordinates": {
+      "lat": 1.36487118219384,
+      "lng": 103.894979026095
+    },
+    "medianPrice": 555000,
+    "priceIqr": [
+      555000,
+      555000
+    ],
+    "pricePerSqmMedian": 6032.61,
+    "pricePerSqftMedian": 560.45,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      67,
+      92
+    ],
+    "leaseCommenceRange": [
+      1993,
+      1993
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "2021-10",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "HOUGANG MRT STATION",
+      "distanceMeters": 657
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2021-10",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4945.65
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4701.49
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 414000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6179.1
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6032.61
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-315-hougang-ave-5-2025-12-205684",
+      "month": "2025-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 05 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 6032.61,
+      "pricePerSqft": 560.45
+    },
+    {
+      "id": "hougang-315-hougang-ave-5-2024-02-178467",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "68 years 03 months",
+      "resalePrice": 414000,
+      "pricePerSqm": 6179.1,
+      "pricePerSqft": 574.06
+    },
+    {
+      "id": "hougang-315-hougang-ave-5-2022-01-125312",
+      "month": "2022-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 315000,
+      "pricePerSqm": 4701.49,
+      "pricePerSqft": 436.78
+    },
+    {
+      "id": "hougang-315-hougang-ave-5-2021-10-110068",
+      "month": "2021-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "70 years 07 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 4945.65,
+      "pricePerSqft": 459.47
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+{
+  "summary": {
+    "addressKey": "yishun-348b-yishun-ave-11",
+    "town": "YISHUN",
+    "block": "348B",
+    "streetName": "YISHUN AVE 11",
+    "coordinates": {
+      "lat": 1.42727813190218,
+      "lng": 103.841979979174
+    },
+    "medianPrice": 805000,
+    "priceIqr": [
+      753750,
+      878750
+    ],
+    "pricePerSqmMedian": 8236.61,
+    "pricePerSqftMedian": 765.2,
+    "transactionCount": 12,
+    "floorAreaRange": [
+      67,
+      112
+    ],
+    "leaseCommenceRange": [
+      2013,
+      2013
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "2019-01",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "DBSS",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "YISHUN MRT STATION",
+      "distanceMeters": 753
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2019-01",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6537.31
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 698000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6232.14
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6358.7
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5970.15
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 727500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6495.53
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 593000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6445.65
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 680000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 6391.3
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6413.04
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 580000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6304.34
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6304.35
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 532000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5782.61
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 644444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6257.55
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 598000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5760.87
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 655444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6445.05
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6826.09
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 632000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6869.57
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 590000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6521.74
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6684.78
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 555000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6985.73
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6716.42
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7119.57
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 875000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7812.5
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 694000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7543.48
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7313.43
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7611.94
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 477000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7119.4
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 868888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7757.93
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 738000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8021.74
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 528888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7893.85
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7910.45
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 720000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7826.09
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 920000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8214.29
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 845000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7723.21
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8695.65
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 980000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8750
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 846500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8303.38
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 765000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8315.22
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8804.35
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "yishun-348b-yishun-ave-11-2026-01-228715",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 09 months",
+      "resalePrice": 810000,
+      "pricePerSqm": 8804.35,
+      "pricePerSqft": 817.95
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-08-220987",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 765000,
+      "pricePerSqm": 8315.22,
+      "pricePerSqft": 772.51
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-07-220985",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 768000,
+      "pricePerSqm": 8347.83,
+      "pricePerSqft": 775.54
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-07-221755",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 925000,
+      "pricePerSqm": 8258.93,
+      "pricePerSqft": 767.28
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-06-221752",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 04 months",
+      "resalePrice": 980000,
+      "pricePerSqm": 8750,
+      "pricePerSqft": 812.9
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-03-220938",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 8695.65,
+      "pricePerSqft": 807.85
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-02-220440",
+      "month": "2025-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 09 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 8134.33,
+      "pricePerSqft": 755.7
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-02-221746",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 09 months",
+      "resalePrice": 865000,
+      "pricePerSqm": 7723.21,
+      "pricePerSqft": 717.51
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-02-221747",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 845000,
+      "pricePerSqm": 7544.64,
+      "pricePerSqft": 700.92
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2025-01-221743",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 10 months",
+      "resalePrice": 920000,
+      "pricePerSqm": 8214.29,
+      "pricePerSqft": 763.13
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2024-11-196839",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years",
+      "resalePrice": 720000,
+      "pricePerSqm": 7826.09,
+      "pricePerSqft": 727.07
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2024-06-196020",
+      "month": "2024-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 04 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 7910.45,
+      "pricePerSqft": 734.91
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2024-02-195416",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 528888,
+      "pricePerSqm": 7893.85,
+      "pricePerSqft": 733.36
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2024-01-195327",
+      "month": "2024-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 8021.74,
+      "pricePerSqft": 745.24
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2023-09-168745",
+      "month": "2023-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 11 months",
+      "resalePrice": 868888,
+      "pricePerSqm": 7757.93,
+      "pricePerSqft": 720.74
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2023-04-167922",
+      "month": "2023-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 477000,
+      "pricePerSqm": 7119.4,
+      "pricePerSqft": 661.41
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2023-01-167461",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7611.94,
+      "pricePerSqft": 707.17
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2022-12-143336",
+      "month": "2022-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 7313.43,
+      "pricePerSqft": 679.44
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2022-10-143060",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 694000,
+      "pricePerSqm": 7543.48,
+      "pricePerSqft": 700.81
+    },
+    {
+      "id": "yishun-348b-yishun-ave-11-2022-05-142194",
+      "month": "2022-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 875000,
+      "pricePerSqm": 7812.5,
+      "pricePerSqft": 725.81
+    }
+  ]
+}

@@ -1,0 +1,790 @@
+{
+  "summary": {
+    "addressKey": "sengkang-200a-sengkang-east-rd",
+    "town": "SENGKANG",
+    "block": "200A",
+    "streetName": "SENGKANG EAST RD",
+    "coordinates": {
+      "lat": 1.38700703200166,
+      "lng": 103.891964770037
+    },
+    "medianPrice": 550000,
+    "priceIqr": [
+      536944,
+      626000
+    ],
+    "pricePerSqmMedian": 6111.11,
+    "pricePerSqftMedian": 567.74,
+    "transactionCount": 7,
+    "floorAreaRange": [
+      90,
+      110
+    ],
+    "leaseCommenceRange": [
+      2001,
+      2001
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "2005-03",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "RENJONG LRT STATION",
+      "distanceMeters": 171
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2005-03",
+      "medianPrice": 302888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2753.53
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 242000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2688.89
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 257500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2861.11
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 238500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2650
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 233000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2588.89
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2545.45
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 269000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2445.45
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 229000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2544.44
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2654.55
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 285000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2716.67
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 273250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2729.04
+    },
+    {
+      "month": "2006-12",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2818.18
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2888.89
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3545.45
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3255.56
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3444.44
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 369000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3354.55
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3636.36
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3444.44
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 396000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3600
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 387500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3893.44
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 407000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3700
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3800
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 344000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3822.22
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4272.73
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 377000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4097.83
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4290.91
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4272.73
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4833.33
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4727.27
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 446000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4955.56
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4888.89
+    },
+    {
+      "month": "2013-04",
+      "medianPrice": 554000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5036.36
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.64
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4636.36
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4363.64
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4555.56
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 458528,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4571.35
+    },
+    {
+      "month": "2015-02",
+      "medianPrice": 469900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4716.27
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 476000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4327.27
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4272.73
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4163.64
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4227.27
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 453000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4118.18
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4277.78
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 451000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4100
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4181.82
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4163.64
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4333.33
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4181.82
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4072.73
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3772.73
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3611.11
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2020-05",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4363.64
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4166.67
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 437500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4366.16
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4444.44
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4772.73
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 492500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4941.92
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5363.64
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5055.56
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5090.91
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5444.44
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5363.64
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 662000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6018.18
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5722.22
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5709.09
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5318.18
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5666.67
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 533888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5932.09
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6111.11
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6363.64
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 718000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6527.27
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 552000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6133.33
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2025-09-214411",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 11 months",
+      "resalePrice": 552000,
+      "pricePerSqm": 6133.33,
+      "pricePerSqft": 569.81
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2025-07-215070",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 02 months",
+      "resalePrice": 718000,
+      "pricePerSqm": 6527.27,
+      "pricePerSqft": 606.4
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2025-01-214407",
+      "month": "2025-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 08 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-12-189832",
+      "month": "2024-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 10 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 6363.64,
+      "pricePerSqft": 591.2
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-11-189594",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 10 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 6111.11,
+      "pricePerSqft": 567.74
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-07-188797",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 02 months",
+      "resalePrice": 533888,
+      "pricePerSqm": 5932.09,
+      "pricePerSqft": 551.11
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-06-188622",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 03 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 5666.67,
+      "pricePerSqft": 526.45
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-04-188336",
+      "month": "2024-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 5318.18,
+      "pricePerSqft": 494.08
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2024-03-188207",
+      "month": "2024-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 06 months",
+      "resalePrice": 628000,
+      "pricePerSqm": 5709.09,
+      "pricePerSqft": 530.39
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2023-11-162223",
+      "month": "2023-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 10 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 5722.22,
+      "pricePerSqft": 531.61
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2023-08-161831",
+      "month": "2023-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years",
+      "resalePrice": 662000,
+      "pricePerSqm": 6018.18,
+      "pricePerSqft": 559.11
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2023-03-160912",
+      "month": "2023-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 05 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 5363.64,
+      "pricePerSqft": 498.3
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2023-01-160578",
+      "month": "2023-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 09 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 5444.44,
+      "pricePerSqft": 505.81
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2022-11-136287",
+      "month": "2022-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 10 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 5090.91,
+      "pricePerSqft": 472.96
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2022-08-135669",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 455000,
+      "pricePerSqm": 5055.56,
+      "pricePerSqft": 469.68
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2022-05-135185",
+      "month": "2022-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 03 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 5363.64,
+      "pricePerSqft": 498.3
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2022-03-134687",
+      "month": "2022-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 5111.11,
+      "pricePerSqft": 474.84
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2022-03-134747",
+      "month": "2022-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 4772.73,
+      "pricePerSqft": 443.4
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2021-07-103238",
+      "month": "2021-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 01 month",
+      "resalePrice": 525000,
+      "pricePerSqm": 4772.73,
+      "pricePerSqft": 443.4
+    },
+    {
+      "id": "sengkang-200a-sengkang-east-rd-2021-05-98367",
+      "month": "2021-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 04 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 4444.44,
+      "pricePerSqft": 412.9
+    }
+  ]
+}

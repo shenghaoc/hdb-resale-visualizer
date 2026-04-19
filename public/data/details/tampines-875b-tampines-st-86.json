@@ -1,0 +1,88 @@
+{
+  "summary": {
+    "addressKey": "tampines-875b-tampines-st-86",
+    "town": "TAMPINES",
+    "block": "875B",
+    "streetName": "TAMPINES ST 86",
+    "coordinates": {
+      "lat": 1.35291999213671,
+      "lng": 103.929501131497
+    },
+    "medianPrice": 871667,
+    "priceIqr": [
+      827500,
+      915833
+    ],
+    "pricePerSqmMedian": 8459.26,
+    "pricePerSqftMedian": 785.89,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      93,
+      113
+    ],
+    "leaseCommenceRange": [
+      2021,
+      2021
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2025-12",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 15"
+    ],
+    "nearestMrt": {
+      "stationName": "TAMPINES WEST MRT STATION",
+      "distanceMeters": 1261
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2025-12",
+      "medianPrice": 960000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8495.58
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 783333,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8422.94
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "tampines-875b-tampines-st-86-2026-02-227546",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 09 months",
+      "resalePrice": 783333,
+      "pricePerSqm": 8422.94,
+      "pricePerSqft": 782.52
+    },
+    {
+      "id": "tampines-875b-tampines-st-86-2025-12-217392",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 11 months",
+      "resalePrice": 960000,
+      "pricePerSqm": 8495.58,
+      "pricePerSqft": 789.27
+    }
+  ]
+}

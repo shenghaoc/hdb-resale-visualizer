@@ -1,0 +1,124 @@
+{
+  "summary": {
+    "addressKey": "ang-mo-kio-721-ang-mo-kio-ave-8",
+    "town": "ANG MO KIO",
+    "block": "721",
+    "streetName": "ANG MO KIO AVE 8",
+    "coordinates": {
+      "lat": 1.37234984781557,
+      "lng": 103.847899479721
+    },
+    "medianPrice": 219500,
+    "priceIqr": [
+      168750,
+      275000
+    ],
+    "pricePerSqmMedian": 3276.12,
+    "pricePerSqftMedian": 304.36,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      67,
+      67
+    ],
+    "leaseCommenceRange": [
+      1980,
+      1980
+    ],
+    "latestMonth": "2011-09",
+    "availableDateRange": [
+      "2001-03",
+      "2011-09"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "ANG MO KIO MRT STATION",
+      "distanceMeters": 348
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2001-03",
+      "medianPrice": 138000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2059.7
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 179000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2671.64
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3880.6
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4776.12
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "ang-mo-kio-721-ang-mo-kio-ave-8-2011-09-588841",
+      "month": "2011-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 320000,
+      "pricePerSqm": 4776.12,
+      "pricePerSqft": 443.72
+    },
+    {
+      "id": "ang-mo-kio-721-ang-mo-kio-ave-8-2009-06-518783",
+      "month": "2009-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 260000,
+      "pricePerSqm": 3880.6,
+      "pricePerSqft": 360.52
+    },
+    {
+      "id": "ang-mo-kio-721-ang-mo-kio-ave-8-2007-01-453698",
+      "month": "2007-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 179000,
+      "pricePerSqm": 2671.64,
+      "pricePerSqft": 248.2
+    },
+    {
+      "id": "ang-mo-kio-721-ang-mo-kio-ave-8-2001-03-269686",
+      "month": "2001-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 138000,
+      "pricePerSqm": 2059.7,
+      "pricePerSqft": 191.35
+    }
+  ]
+}

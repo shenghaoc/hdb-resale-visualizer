@@ -1,0 +1,538 @@
+{
+  "summary": {
+    "addressKey": "hougang-475b-upp-serangoon-cres",
+    "town": "HOUGANG",
+    "block": "475B",
+    "streetName": "UPP SERANGOON CRES",
+    "coordinates": {
+      "lat": 1.3757740461149,
+      "lng": 103.899965684738
+    },
+    "medianPrice": 787500,
+    "priceIqr": [
+      593500,
+      872500
+    ],
+    "pricePerSqmMedian": 8605.4,
+    "pricePerSqftMedian": 799.47,
+    "transactionCount": 12,
+    "floorAreaRange": [
+      67,
+      112
+    ],
+    "leaseCommenceRange": [
+      2014,
+      2014
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "2019-11",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "DBSS",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "HOUGANG MRT STATION",
+      "distanceMeters": 886
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2019-11",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6697.25
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6739.13
+    },
+    {
+      "month": "2020-05",
+      "medianPrice": 692500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6891.45
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 580000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 6805.36
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 723000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6633.03
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 557500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6982.48
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 450000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6716.42
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 610888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6640.09
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7431.19
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 701500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6974.02
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 718000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6587.16
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 801000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7242.95
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7388.06
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 668000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7238.81
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7008.93
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 740000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7199.15
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 636000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6913.04
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7142.86
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7164.18
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8477.61
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 781944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7762.9
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6521.74
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 855000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7844.04
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7835.82
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 875000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7812.5
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8035.71
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 945000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8437.5
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 790000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8586.96
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7798.17
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 580000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8532.61
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8507.46
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 939999,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8623.84
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 790000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8586.96
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 818000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8891.3
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 738000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8021.74
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 955000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8761.47
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 940000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8623.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 598000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8925.37
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2026-04-224448",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 598000,
+      "pricePerSqm": 8925.37,
+      "pricePerSqft": 829.2
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2025-12-206226",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 11 months",
+      "resalePrice": 940000,
+      "pricePerSqm": 8623.85,
+      "pricePerSqft": 801.18
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2025-10-206219",
+      "month": "2025-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 109,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 11 months",
+      "resalePrice": 955000,
+      "pricePerSqm": 8761.47,
+      "pricePerSqft": 813.97
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2025-09-205956",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 8021.74,
+      "pricePerSqft": 745.24
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2025-08-205952",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 818000,
+      "pricePerSqm": 8891.3,
+      "pricePerSqft": 826.03
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2025-06-205947",
+      "month": "2025-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 790000,
+      "pricePerSqm": 8586.96,
+      "pricePerSqft": 797.76
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-10-179560",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 109,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 939999,
+      "pricePerSqm": 8623.84,
+      "pricePerSqft": 801.18
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-09-179414",
+      "month": "2024-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 8507.46,
+      "pricePerSqft": 790.37
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-07-179123",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7611.94,
+      "pricePerSqft": 707.17
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-07-179148",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 8656.72,
+      "pricePerSqft": 804.24
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-07-179196",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 785000,
+      "pricePerSqm": 8532.61,
+      "pricePerSqft": 792.71
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-05-178950",
+      "month": "2024-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 109,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 7798.17,
+      "pricePerSqft": 724.47
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-03-178677",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 790000,
+      "pricePerSqm": 8586.96,
+      "pricePerSqft": 797.76
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-02-178576",
+      "month": "2024-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 945000,
+      "pricePerSqm": 8437.5,
+      "pricePerSqft": 783.87
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2024-01-178448",
+      "month": "2024-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 10 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 8035.71,
+      "pricePerSqft": 746.54
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2023-11-153125",
+      "month": "2023-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years",
+      "resalePrice": 875000,
+      "pricePerSqm": 7812.5,
+      "pricePerSqft": 725.81
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2023-07-152555",
+      "month": "2023-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 7835.82,
+      "pricePerSqft": 727.97
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2022-09-126344",
+      "month": "2022-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "91 years 02 months",
+      "resalePrice": 855000,
+      "pricePerSqm": 7844.04,
+      "pricePerSqft": 728.74
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2022-06-125963",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "91 years 05 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 6521.74,
+      "pricePerSqft": 605.89
+    },
+    {
+      "id": "hougang-475b-upp-serangoon-cres-2022-04-125771",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 7554.35,
+      "pricePerSqft": 701.82
+    }
+  ]
+}

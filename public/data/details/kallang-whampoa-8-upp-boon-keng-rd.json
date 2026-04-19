@@ -1,0 +1,622 @@
+{
+  "summary": {
+    "addressKey": "kallang-whampoa-8-upp-boon-keng-rd",
+    "town": "KALLANG/WHAMPOA",
+    "block": "8",
+    "streetName": "UPP BOON KENG RD",
+    "coordinates": {
+      "lat": 1.31270729475511,
+      "lng": 103.870690585664
+    },
+    "medianPrice": 139500,
+    "priceIqr": [
+      87750,
+      161625
+    ],
+    "pricePerSqmMedian": 2296.02,
+    "pricePerSqftMedian": 213.31,
+    "transactionCount": 56,
+    "floorAreaRange": [
+      60,
+      120
+    ],
+    "leaseCommenceRange": [
+      1981,
+      1981
+    ],
+    "latestMonth": "2001-04",
+    "availableDateRange": [
+      "1990-03",
+      "2001-04"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 6"
+    ],
+    "nearestMrt": {
+      "stationName": "KALLANG MRT STATION",
+      "distanceMeters": 143
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-03",
+      "medianPrice": 48000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 800
+    },
+    {
+      "month": "1990-07",
+      "medianPrice": 53000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 768.12
+    },
+    {
+      "month": "1991-01",
+      "medianPrice": 44000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 733.33
+    },
+    {
+      "month": "1991-02",
+      "medianPrice": 45500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 758.33
+    },
+    {
+      "month": "1991-06",
+      "medianPrice": 45500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 758.33
+    },
+    {
+      "month": "1991-10",
+      "medianPrice": 45500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 758.33
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 46000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 766.67
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 84000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1217.39
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1159.42
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 88000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1466.67
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 76000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1266.67
+    },
+    {
+      "month": "1994-03",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1333.33
+    },
+    {
+      "month": "1994-07",
+      "medianPrice": 85000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1416.67
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1500
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 96000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1494.57
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1739.13
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 107000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1783.33
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 92000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1533.33
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 87000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1450
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 85000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1416.67
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 115000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1916.67
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 141000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2179.35
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 121000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2016.67
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 166000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2405.8
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2826.09
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3166.67
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2753.62
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3166.67
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2942.03
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 187000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3116.67
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 162000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2700
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 148000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2466.67
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2616.67
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 161500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2340.58
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 163000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2716.67
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 143000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2383.33
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2316.67
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2333.33
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 134000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2233.33
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2316.67
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 143000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2220.29
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2616.67
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 164000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2733.34
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 169000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2816.67
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 156000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2600
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 141000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2350
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2001-04-274371",
+      "month": "2001-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 141000,
+      "pricePerSqm": 2350,
+      "pricePerSqft": 218.32
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2001-03-271290",
+      "month": "2001-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 320000,
+      "pricePerSqm": 2666.67,
+      "pricePerSqft": 247.74
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2000-07-246859",
+      "month": "2000-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 170000,
+      "pricePerSqm": 2833.33,
+      "pricePerSqft": 263.23
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2000-06-243808",
+      "month": "2000-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 156000,
+      "pricePerSqm": 2600,
+      "pricePerSqft": 241.55
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2000-05-240525",
+      "month": "2000-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 169000,
+      "pricePerSqm": 2816.67,
+      "pricePerSqft": 261.68
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2000-01-230364",
+      "month": "2000-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 159000,
+      "pricePerSqm": 2650,
+      "pricePerSqft": 246.19
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-2000-01-230365",
+      "month": "2000-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 169000,
+      "pricePerSqm": 2816.67,
+      "pricePerSqft": 261.68
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-10-930153",
+      "month": "1999-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 157000,
+      "pricePerSqm": 2616.67,
+      "pricePerSqft": 243.1
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-09-926405",
+      "month": "1999-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 136000,
+      "pricePerSqm": 2266.67,
+      "pricePerSqft": 210.58
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-09-926406",
+      "month": "1999-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 150000,
+      "pricePerSqm": 2173.91,
+      "pricePerSqft": 201.96
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-07-916612",
+      "month": "1999-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 139000,
+      "pricePerSqm": 2316.67,
+      "pricePerSqft": 215.23
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-05-905324",
+      "month": "1999-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 134000,
+      "pricePerSqm": 2233.33,
+      "pricePerSqft": 207.48
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-04-899666",
+      "month": "1999-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 140000,
+      "pricePerSqm": 2333.33,
+      "pricePerSqft": 216.77
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1999-03-893666",
+      "month": "1999-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 139000,
+      "pricePerSqm": 2316.67,
+      "pricePerSqft": 215.23
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-12-878177",
+      "month": "1998-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 143000,
+      "pricePerSqm": 2383.33,
+      "pricePerSqft": 221.42
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-11-873132",
+      "month": "1998-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 163000,
+      "pricePerSqm": 2716.67,
+      "pricePerSqft": 252.39
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-09-862502",
+      "month": "1998-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 140000,
+      "pricePerSqm": 2333.33,
+      "pricePerSqft": 216.77
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-07-853477",
+      "month": "1998-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 145000,
+      "pricePerSqm": 2416.67,
+      "pricePerSqft": 224.52
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-06-849236",
+      "month": "1998-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 69,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 161500,
+      "pricePerSqm": 2340.58,
+      "pricePerSqft": 217.45
+    },
+    {
+      "id": "kallang-whampoa-8-upp-boon-keng-rd-1998-05-845381",
+      "month": "1998-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years",
+      "resalePrice": 157000,
+      "pricePerSqm": 2616.67,
+      "pricePerSqft": 243.1
+    }
+  ]
+}

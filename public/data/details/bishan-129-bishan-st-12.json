@@ -1,0 +1,328 @@
+{
+  "summary": {
+    "addressKey": "bishan-129-bishan-st-12",
+    "town": "BISHAN",
+    "block": "129",
+    "streetName": "BISHAN ST 12",
+    "coordinates": {
+      "lat": 1.3456922669362,
+      "lng": 103.850399346338
+    },
+    "medianPrice": 255000,
+    "priceIqr": [
+      217000,
+      304000
+    ],
+    "pricePerSqmMedian": 2977.53,
+    "pricePerSqftMedian": 276.62,
+    "transactionCount": 15,
+    "floorAreaRange": [
+      63,
+      91
+    ],
+    "leaseCommenceRange": [
+      1987,
+      1987
+    ],
+    "latestMonth": "2020-11",
+    "availableDateRange": [
+      "1994-05",
+      "2020-11"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "SIMPLIFIED",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "BISHAN MRT STATION",
+      "distanceMeters": 591
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1994-05",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1571.43
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 224000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2516.85
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3348.31
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3846.15
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2977.53
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2906.25
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2802.2
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2556.82
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 220500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2901.99
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3281.25
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4843.75
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4523.81
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 398100,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4523.86
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5793.65
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bishan-129-bishan-st-12-2020-11-83021",
+      "month": "2020-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 63,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "65 years 04 months",
+      "resalePrice": 365000,
+      "pricePerSqm": 5793.65,
+      "pricePerSqft": 538.25
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2009-11-533056",
+      "month": "2009-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 398100,
+      "pricePerSqm": 4523.86,
+      "pricePerSqft": 420.28
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2009-06-518966",
+      "month": "2009-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 63,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 285000,
+      "pricePerSqm": 4523.81,
+      "pricePerSqft": 420.28
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2009-05-516725",
+      "month": "2009-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 310000,
+      "pricePerSqm": 4843.75,
+      "pricePerSqft": 450
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2007-05-462538",
+      "month": "2007-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 210000,
+      "pricePerSqm": 3281.25,
+      "pricePerSqft": 304.84
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2006-07-440243",
+      "month": "2006-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 186000,
+      "pricePerSqm": 2906.25,
+      "pricePerSqft": 270
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2006-07-440276",
+      "month": "2006-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 88,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 255000,
+      "pricePerSqm": 2897.73,
+      "pricePerSqft": 269.21
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2002-06-318071",
+      "month": "2002-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 225000,
+      "pricePerSqm": 2556.82,
+      "pricePerSqft": 237.54
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2001-05-276227",
+      "month": "2001-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 91,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 255000,
+      "pricePerSqm": 2802.2,
+      "pricePerSqft": 260.33
+    },
+    {
+      "id": "bishan-129-bishan-st-12-2000-12-261446",
+      "month": "2000-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 186000,
+      "pricePerSqm": 2906.25,
+      "pricePerSqft": 270
+    },
+    {
+      "id": "bishan-129-bishan-st-12-1999-06-908661",
+      "month": "1999-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 265000,
+      "pricePerSqm": 2977.53,
+      "pricePerSqft": 276.62
+    },
+    {
+      "id": "bishan-129-bishan-st-12-1996-07-779977",
+      "month": "1996-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 91,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 350000,
+      "pricePerSqm": 3846.15,
+      "pricePerSqft": 357.32
+    },
+    {
+      "id": "bishan-129-bishan-st-12-1995-12-760051",
+      "month": "1995-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 298000,
+      "pricePerSqm": 3348.31,
+      "pricePerSqft": 311.07
+    },
+    {
+      "id": "bishan-129-bishan-st-12-1994-09-727877",
+      "month": "1994-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 224000,
+      "pricePerSqm": 2516.85,
+      "pricePerSqft": 233.82
+    },
+    {
+      "id": "bishan-129-bishan-st-12-1994-05-719612",
+      "month": "1994-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 70,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 110000,
+      "pricePerSqm": 1571.43,
+      "pricePerSqft": 145.99
+    }
+  ]
+}

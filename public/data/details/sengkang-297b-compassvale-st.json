@@ -1,0 +1,802 @@
+{
+  "summary": {
+    "addressKey": "sengkang-297b-compassvale-st",
+    "town": "SENGKANG",
+    "block": "297B",
+    "streetName": "COMPASSVALE ST",
+    "coordinates": {
+      "lat": 1.39473706267062,
+      "lng": 103.900964937802
+    },
+    "medianPrice": 605000,
+    "priceIqr": [
+      583666,
+      619125
+    ],
+    "pricePerSqmMedian": 5991.43,
+    "pricePerSqftMedian": 556.62,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      92,
+      134
+    ],
+    "leaseCommenceRange": [
+      2001,
+      2001
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2004-12",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "PREMIUM APARTMENT",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "COMPASSVALE LRT STATION",
+      "distanceMeters": 37
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2004-12",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2840.43
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 245880,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2615.74
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2978.72
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 252000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2680.85
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 231500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2502.1
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 227500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2420.22
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2688.17
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2634.41
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 238000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2531.91
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2553.19
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2393.44
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 281000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2303.28
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 266500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2555.36
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2774.19
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 243000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2598.49
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 265000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2311.48
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2765.96
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2819.15
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 285000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3031.91
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3191.49
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3230.09
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 459500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3429.11
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3297.87
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 412500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3214.15
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 328500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3494.68
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3505.38
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3404.26
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 464000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3462.69
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 329500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3505.32
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 331000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3521.28
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 421500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3693.32
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 443000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3305.97
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3723.4
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3478.26
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 533000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3977.61
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3934.78
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 374000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4021.51
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3964.6
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4765.96
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4387.1
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4784.95
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 608000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4537.31
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4344.26
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4787.23
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 603000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 471750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5072.58
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 402500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4305.36
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 465888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4051.2
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3955.22
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4247.79
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4552.24
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 345888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3679.66
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3652.17
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3483.61
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4172.04
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 490000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3825.55
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 354000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3765.96
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3606.56
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4164.18
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3695.65
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 456500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3954.51
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3606.56
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 390000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3740.98
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3808.51
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3763.44
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3829.79
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4308.51
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 424444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4539.67
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4655.74
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4840.43
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5074.63
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4893.62
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5215.05
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5223.88
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5531.91
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 581500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5404.86
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 624000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5466.49
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 579888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6169.02
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 546500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5813.83
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 682500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6038.03
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 620500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5491.15
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6542.55
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-297b-compassvale-st-2026-03-226810",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 6542.55,
+      "pricePerSqft": 607.82
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2025-11-214812",
+      "month": "2025-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 10 months",
+      "resalePrice": 620500,
+      "pricePerSqm": 5491.15,
+      "pricePerSqft": 510.15
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2025-08-213998",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years",
+      "resalePrice": 595000,
+      "pricePerSqm": 6329.79,
+      "pricePerSqft": 588.06
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2025-08-215193",
+      "month": "2025-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 134,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 770000,
+      "pricePerSqm": 5746.27,
+      "pricePerSqft": 533.85
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2025-05-213994",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 04 months",
+      "resalePrice": 546500,
+      "pricePerSqm": 5813.83,
+      "pricePerSqft": 540.12
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2025-04-213990",
+      "month": "2025-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 05 months",
+      "resalePrice": 579888,
+      "pricePerSqm": 6169.02,
+      "pricePerSqft": 573.12
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2024-04-188286",
+      "month": "2024-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 5425.53,
+      "pricePerSqft": 504.05
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2024-04-188406",
+      "month": "2024-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 134,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 5507.46,
+      "pricePerSqft": 511.66
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2024-02-188014",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 06 months",
+      "resalePrice": 523000,
+      "pricePerSqm": 5563.83,
+      "pricePerSqft": 516.9
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2024-02-188091",
+      "month": "2024-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 122,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 5245.9,
+      "pricePerSqft": 487.36
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2023-05-161202",
+      "month": "2023-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 5531.91,
+      "pricePerSqft": 513.93
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2022-12-136537",
+      "month": "2022-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 134,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 09 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 5223.88,
+      "pricePerSqft": 485.31
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2022-11-136241",
+      "month": "2022-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 10 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5215.05,
+      "pricePerSqft": 484.49
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2022-10-136075",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 11 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 4893.62,
+      "pricePerSqft": 454.63
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2022-03-134821",
+      "month": "2022-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 134,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 5074.63,
+      "pricePerSqft": 471.45
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2022-02-134515",
+      "month": "2022-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 07 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 4840.43,
+      "pricePerSqft": 449.69
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2021-12-116005",
+      "month": "2021-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 09 months",
+      "resalePrice": 568000,
+      "pricePerSqm": 4655.74,
+      "pricePerSqft": 432.53
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2021-11-113383",
+      "month": "2021-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 10 months",
+      "resalePrice": 423888,
+      "pricePerSqm": 4509.45,
+      "pricePerSqft": 418.94
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2021-11-113386",
+      "month": "2021-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 10 months",
+      "resalePrice": 425000,
+      "pricePerSqm": 4569.89,
+      "pricePerSqft": 424.56
+    },
+    {
+      "id": "sengkang-297b-compassvale-st-2021-07-103081",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 02 months",
+      "resalePrice": 405000,
+      "pricePerSqm": 4308.51,
+      "pricePerSqft": 400.27
+    }
+  ]
+}

@@ -1,0 +1,938 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-113-bt-purmei-rd",
+    "town": "BUKIT MERAH",
+    "block": "113",
+    "streetName": "BT PURMEI RD",
+    "coordinates": {
+      "lat": 1.27477012536113,
+      "lng": 103.826932267703
+    },
+    "medianPrice": 650000,
+    "priceIqr": [
+      650000,
+      665000
+    ],
+    "pricePerSqmMedian": 6310.68,
+    "pricePerSqftMedian": 586.28,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      103,
+      110
+    ],
+    "leaseCommenceRange": [
+      1984,
+      1984
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "1990-01",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 14"
+    ],
+    "nearestMrt": {
+      "stationName": "HARBOURFRONT MRT STATION",
+      "distanceMeters": 1155
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 144000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1398.06
+    },
+    {
+      "month": "1990-10",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1456.31
+    },
+    {
+      "month": "1991-07",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1359.22
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1359.22
+    },
+    {
+      "month": "1993-01",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1456.31
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 150000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1456.31
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1941.75
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2028.3
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2047.17
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2572.82
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 255500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2480.59
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 229000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2160.38
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1941.75
+    },
+    {
+      "month": "1995-04",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2216.98
+    },
+    {
+      "month": "1995-07",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2766.99
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2572.82
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2735.85
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.36
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3252.43
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3330.19
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3495.15
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3203.88
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3883.5
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 405500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3936.89
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3786.41
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 402000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3902.91
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3864.08
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4126.21
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3398.06
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 340000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3300.97
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 344000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3127.27
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3160.38
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 332000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3223.3
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 352000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3320.75
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2834.95
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2990.29
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 311000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2977.52
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 319000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3097.09
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 335000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3252.43
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2815.53
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 323000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3135.92
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 317000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3031.78
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3349.06
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 323000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3135.92
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2716.98
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2961.17
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3184.47
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 303500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2905.8
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2718.45
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2893.2
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2815.53
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2902.91
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2796.12
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2815.53
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2783.02
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 297000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2883.5
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 290000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2815.53
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2844.66
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2592.23
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2864.08
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2924.53
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2528.3
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 284000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2757.28
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 296500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2878.64
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 306000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2970.87
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 280888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2649.89
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 286000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2776.7
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 312600,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2949.06
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2844.66
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3475.73
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4058.25
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 431000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4066.04
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 437000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4242.72
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 452000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4264.15
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4951.46
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 483000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4689.32
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4951.46
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5291.26
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 573000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5405.66
+    },
+    {
+      "month": "2012-02",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5436.89
+    },
+    {
+      "month": "2013-11",
+      "medianPrice": 586800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5697.09
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5631.07
+    },
+    {
+      "month": "2015-02",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5825.24
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5339.81
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5776.7
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5825.24
+    },
+    {
+      "month": "2016-01",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4792.45
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5776.7
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5283.02
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 550800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5347.57
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4932.04
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4905.66
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4660.19
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5141.51
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5485.44
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 532500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5096.13
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4805.83
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4563.11
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4818.18
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5436.89
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6310.68
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 678000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6582.52
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 657500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6383.5
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6262.14
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2026-04-223285",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 07 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 6262.14,
+      "pricePerSqft": 581.77
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223280",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 09 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6310.68,
+      "pricePerSqft": 586.28
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223282",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 08 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 6456.31,
+      "pricePerSqft": 599.81
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2025-03-201262",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "58 years 08 months",
+      "resalePrice": 678000,
+      "pricePerSqm": 6582.52,
+      "pricePerSqft": 611.54
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2024-05-174029",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 06 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6310.68,
+      "pricePerSqft": 586.28
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2024-02-173757",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 5436.89,
+      "pricePerSqft": 505.1
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2021-08-104324",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "62 years 03 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 4818.18,
+      "pricePerSqft": 447.62
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2021-07-101681",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 470000,
+      "pricePerSqm": 4563.11,
+      "pricePerSqft": 423.93
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2020-12-85510",
+      "month": "2020-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "62 years 11 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4805.83,
+      "pricePerSqft": 446.48
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2020-07-73381",
+      "month": "2020-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years 04 months",
+      "resalePrice": 528000,
+      "pricePerSqm": 5126.21,
+      "pricePerSqft": 476.24
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2020-07-73382",
+      "month": "2020-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "63 years 04 months",
+      "resalePrice": 537000,
+      "pricePerSqm": 5066.04,
+      "pricePerSqft": 470.65
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2019-11-60791",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years",
+      "resalePrice": 565000,
+      "pricePerSqm": 5485.44,
+      "pricePerSqft": 509.61
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2019-10-58665",
+      "month": "2019-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 01 month",
+      "resalePrice": 545000,
+      "pricePerSqm": 5141.51,
+      "pricePerSqft": 477.66
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2019-08-54865",
+      "month": "2019-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 02 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4660.19,
+      "pricePerSqft": 432.95
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2019-05-48835",
+      "month": "2019-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 05 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 4905.66,
+      "pricePerSqft": 455.75
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2017-10-15489",
+      "month": "2017-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66 years",
+      "resalePrice": 508000,
+      "pricePerSqm": 4932.04,
+      "pricePerSqft": 458.2
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2017-04-4507",
+      "month": "2017-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66 years 06 months",
+      "resalePrice": 550800,
+      "pricePerSqm": 5347.57,
+      "pricePerSqft": 496.81
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2016-12-974141",
+      "month": "2016-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "66",
+      "resalePrice": 560000,
+      "pricePerSqm": 5283.02,
+      "pricePerSqft": 490.81
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2016-05-962146",
+      "month": "2016-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "67",
+      "resalePrice": 595000,
+      "pricePerSqm": 5776.7,
+      "pricePerSqft": 536.67
+    },
+    {
+      "id": "bukit-merah-113-bt-purmei-rd-2016-01-956098",
+      "month": "2016-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "67",
+      "resalePrice": 508000,
+      "pricePerSqm": 4792.45,
+      "pricePerSqft": 445.23
+    }
+  ]
+}

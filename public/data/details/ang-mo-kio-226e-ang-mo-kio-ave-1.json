@@ -1,0 +1,86 @@
+{
+  "summary": {
+    "addressKey": "ang-mo-kio-226e-ang-mo-kio-ave-1",
+    "town": "ANG MO KIO",
+    "block": "226E",
+    "streetName": "ANG MO KIO AVE 1",
+    "coordinates": {
+      "lat": 1.36649244691811,
+      "lng": 103.839794925007
+    },
+    "medianPrice": 280900,
+    "priceIqr": [
+      278850,
+      282950
+    ],
+    "pricePerSqmMedian": 4256.06,
+    "pricePerSqftMedian": 395.4,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      66,
+      66
+    ],
+    "leaseCommenceRange": [
+      1994,
+      1994
+    ],
+    "latestMonth": "2016-09",
+    "availableDateRange": [
+      "2012-04",
+      "2016-09"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "MAYFLOWER MRT STATION",
+      "distanceMeters": 584
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2012-04",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4318.18
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 276800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4193.94
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "ang-mo-kio-226e-ang-mo-kio-ave-1-2016-09-968930",
+      "month": "2016-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "76",
+      "resalePrice": 276800,
+      "pricePerSqm": 4193.94,
+      "pricePerSqft": 389.63
+    },
+    {
+      "id": "ang-mo-kio-226e-ang-mo-kio-ave-1-2012-04-601040",
+      "month": "2012-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 05",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "67 years",
+      "resalePrice": 285000,
+      "pricePerSqm": 4318.18,
+      "pricePerSqft": 401.17
+    }
+  ]
+}

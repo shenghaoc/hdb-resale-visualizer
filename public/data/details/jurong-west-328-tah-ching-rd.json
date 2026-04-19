@@ -1,0 +1,646 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-328-tah-ching-rd",
+    "town": "JURONG WEST",
+    "block": "328",
+    "streetName": "TAH CHING RD",
+    "coordinates": {
+      "lat": 1.33663451315422,
+      "lng": 103.72260042207
+    },
+    "medianPrice": 645000,
+    "priceIqr": [
+      613750,
+      670000
+    ],
+    "pricePerSqmMedian": 5510.03,
+    "pricePerSqftMedian": 511.89,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      102,
+      124
+    ],
+    "leaseCommenceRange": [
+      1997,
+      1997
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "2000-12",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 21"
+    ],
+    "nearestMrt": {
+      "stationName": "LAKESIDE MRT STATION",
+      "distanceMeters": 845
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2000-12",
+      "medianPrice": 257000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 2495.15
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 237000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2300.97
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 276250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2443.37
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 233250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2221.55
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 313500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2612.58
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 295500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2412.15
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 280500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2517.7
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 302000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2435.48
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2274.19
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2322.58
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 229000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2245.1
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 222000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2155.34
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2420.17
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2421.49
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 239000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2320.39
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2603.31
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 297000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2454.55
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 314000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2595.04
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 297500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2427.99
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2644.63
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2205.88
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 312000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.85
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2184.47
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2087.38
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2338.71
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2545.45
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2521.01
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2504.13
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 321000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2652.89
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2766.99
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 287500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2791.26
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2766.99
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 392500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3165.32
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 426000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3579.83
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 436000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3516.13
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 372000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3611.65
+    },
+    {
+      "month": "2013-04",
+      "medianPrice": 510000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4214.88
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4446.6
+    },
+    {
+      "month": "2014-06",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3991.94
+    },
+    {
+      "month": "2014-09",
+      "medianPrice": 446000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4330.1
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3737.86
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4117.65
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4256.2
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3786.41
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 426000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3435.48
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3719.01
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4268.91
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 372000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3611.65
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4521.01
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 656888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5297.48
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5247.93
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4902.91
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 656000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5290.32
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5524.19
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5495.87
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 602500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5398.18
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-328-tah-ching-rd-2025-09-207752",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 5631.07,
+      "pricePerSqft": 523.14
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2025-09-208225",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 5165.29,
+      "pricePerSqft": 479.87
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2025-01-208214",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 09 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 5495.87,
+      "pricePerSqft": 510.58
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2024-10-181983",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 5524.19,
+      "pricePerSqft": 513.21
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2024-03-180822",
+      "month": "2024-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 06 months",
+      "resalePrice": 656000,
+      "pricePerSqm": 5290.32,
+      "pricePerSqft": 491.49
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2023-09-154819",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years",
+      "resalePrice": 505000,
+      "pricePerSqm": 4902.91,
+      "pricePerSqft": 455.5
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2023-04-154221",
+      "month": "2023-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years 04 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 5247.93,
+      "pricePerSqft": 487.55
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2022-11-128600",
+      "month": "2022-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 656888,
+      "pricePerSqm": 5297.48,
+      "pricePerSqft": 492.15
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2020-08-76536",
+      "month": "2020-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years",
+      "resalePrice": 538000,
+      "pricePerSqm": 4521.01,
+      "pricePerSqft": 420.02
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2020-02-66894",
+      "month": "2020-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 06 months",
+      "resalePrice": 372000,
+      "pricePerSqm": 3611.65,
+      "pricePerSqft": 335.53
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2020-01-65136",
+      "month": "2020-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 08 months",
+      "resalePrice": 508000,
+      "pricePerSqm": 4268.91,
+      "pricePerSqft": 396.59
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2019-10-59291",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 10 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 3719.01,
+      "pricePerSqft": 345.51
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2019-04-47458",
+      "month": "2019-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 426000,
+      "pricePerSqm": 3435.48,
+      "pricePerSqft": 319.17
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2019-03-45705",
+      "month": "2019-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 05 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 3786.41,
+      "pricePerSqft": 351.77
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2018-11-39625",
+      "month": "2018-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 09 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 4256.2,
+      "pricePerSqft": 395.41
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2016-08-967993",
+      "month": "2016-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "80",
+      "resalePrice": 490000,
+      "pricePerSqm": 4117.65,
+      "pricePerSqft": 382.54
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2015-06-945869",
+      "month": "2015-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "81",
+      "resalePrice": 385000,
+      "pricePerSqm": 3737.86,
+      "pricePerSqft": 347.26
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2014-09-645873",
+      "month": "2014-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 446000,
+      "pricePerSqm": 4330.1,
+      "pricePerSqft": 402.28
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2014-06-641920",
+      "month": "2014-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 495000,
+      "pricePerSqm": 3991.94,
+      "pricePerSqft": 370.86
+    },
+    {
+      "id": "jurong-west-328-tah-ching-rd-2014-03-637558",
+      "month": "2014-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 458000,
+      "pricePerSqm": 4446.6,
+      "pricePerSqft": 413.1
+    }
+  ]
+}

@@ -1,0 +1,676 @@
+{
+  "summary": {
+    "addressKey": "sengkang-308a-anchorvale-rd",
+    "town": "SENGKANG",
+    "block": "308A",
+    "streetName": "ANCHORVALE RD",
+    "coordinates": {
+      "lat": 1.38989490574426,
+      "lng": 103.885920239987
+    },
+    "medianPrice": 645000,
+    "priceIqr": [
+      627500,
+      677500
+    ],
+    "pricePerSqmMedian": 5863.64,
+    "pricePerSqftMedian": 544.75,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      90,
+      110
+    ],
+    "leaseCommenceRange": [
+      2002,
+      2002
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "2005-08",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "TONGKANG LRT STATION",
+      "distanceMeters": 60
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2005-08",
+      "medianPrice": 240008,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.76
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 246000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2733.33
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2722.22
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 291000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2645.45
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 241000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2677.78
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2555.56
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 301000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2736.36
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 262500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2623.74
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 292000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2654.55
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 270000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2633.33
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 322750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2934.09
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 275000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2827.78
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 303000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3020.2
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 348500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3168.18
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 382000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3472.73
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3272.73
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 329000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3655.56
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 391000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3554.55
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 321000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3566.67
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 374500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3404.55
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 383000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3481.82
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 382000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3472.73
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3545.45
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 418400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3803.64
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 442000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4018.18
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3909.09
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 411500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4117.67
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4090.91
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 427000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3881.82
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 493000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4481.82
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 453000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5033.33
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5388.89
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 514000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4672.73
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5333.33
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4454.55
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 477000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4336.36
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 356500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3961.11
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 448888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4080.8
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 392500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3916.66
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 401500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4461.11
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3454.55
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3681.82
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 420500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3822.72
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 356000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3955.56
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3572.73
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 375000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3762.63
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 395000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3636.35
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 410888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3735.35
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3772.73
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4088.89
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4222.22
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4045.45
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3981.82
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 560888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5098.98
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.64
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 521944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5234.85
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5136.36
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6454.55
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5863.64
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5545.45
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-308a-anchorvale-rd-2025-09-214637",
+      "month": "2025-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 06 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 5545.45,
+      "pricePerSqft": 515.19
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2025-04-214619",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 5863.64,
+      "pricePerSqft": 544.75
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2025-02-214613",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 710000,
+      "pricePerSqm": 6454.55,
+      "pricePerSqft": 599.65
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2023-09-161931",
+      "month": "2023-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "77 years 06 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 5136.36,
+      "pricePerSqft": 477.18
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2023-08-161698",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "77 years 07 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5388.89,
+      "pricePerSqft": 500.64
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2023-08-161744",
+      "month": "2023-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "77 years 06 months",
+      "resalePrice": 558888,
+      "pricePerSqm": 5080.8,
+      "pricePerSqft": 472.02
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2023-03-160891",
+      "month": "2023-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years",
+      "resalePrice": 568000,
+      "pricePerSqm": 5163.64,
+      "pricePerSqft": 479.72
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2022-12-136479",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "78 years 04 months",
+      "resalePrice": 560888,
+      "pricePerSqm": 5098.98,
+      "pricePerSqft": 473.71
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2021-08-105808",
+      "month": "2021-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years 07 months",
+      "resalePrice": 438000,
+      "pricePerSqm": 3981.82,
+      "pricePerSqft": 369.92
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2021-06-100585",
+      "month": "2021-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years 10 months",
+      "resalePrice": 445000,
+      "pricePerSqm": 4045.45,
+      "pricePerSqft": 375.84
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2021-05-98354",
+      "month": "2021-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "79 years 10 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 4222.22,
+      "pricePerSqft": 392.26
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2021-01-89283",
+      "month": "2021-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "80 years 02 months",
+      "resalePrice": 368000,
+      "pricePerSqm": 4088.89,
+      "pricePerSqft": 379.87
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2019-06-51901",
+      "month": "2019-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "81 years 08 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 3772.73,
+      "pricePerSqft": 350.5
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-08-34209",
+      "month": "2018-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 06 months",
+      "resalePrice": 410888,
+      "pricePerSqm": 3735.35,
+      "pricePerSqft": 347.03
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-07-31943",
+      "month": "2018-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 08 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 4000,
+      "pricePerSqft": 371.61
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-07-32026",
+      "month": "2018-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 08 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 3590.91,
+      "pricePerSqft": 333.61
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-07-32029",
+      "month": "2018-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 08 months",
+      "resalePrice": 399999,
+      "pricePerSqm": 3636.35,
+      "pricePerSqft": 337.83
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-03-24072",
+      "month": "2018-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 11 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 3888.89,
+      "pricePerSqft": 361.29
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-03-24131",
+      "month": "2018-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "82 years 11 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 3636.36,
+      "pricePerSqft": 337.83
+    },
+    {
+      "id": "sengkang-308a-anchorvale-rd-2018-01-21272",
+      "month": "2018-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "83 years 01 month",
+      "resalePrice": 393000,
+      "pricePerSqm": 3572.73,
+      "pricePerSqft": 331.92
+    }
+  ]
+}

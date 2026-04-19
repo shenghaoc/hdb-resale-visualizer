@@ -1,0 +1,267 @@
+{
+  "summary": {
+    "addressKey": "tampines-480-tampines-st-44",
+    "town": "TAMPINES",
+    "block": "480",
+    "streetName": "TAMPINES ST 44",
+    "coordinates": {
+      "lat": 1.36189869546209,
+      "lng": 103.953613062449
+    },
+    "medianPrice": 520000,
+    "priceIqr": [
+      500000,
+      650000
+    ],
+    "pricePerSqmMedian": 3939.39,
+    "pricePerSqftMedian": 365.98,
+    "transactionCount": 13,
+    "floorAreaRange": [
+      132,
+      168
+    ],
+    "leaseCommenceRange": [
+      1993,
+      1993
+    ],
+    "latestMonth": "2021-06",
+    "availableDateRange": [
+      "1996-07",
+      "2021-06"
+    ],
+    "flatTypes": [
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "MODEL A",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "TAMPINES EAST MRT STATION",
+      "distanceMeters": 596
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1996-07",
+      "medianPrice": 510000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3863.64
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 620000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4112.55
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 580000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3893.94
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 602000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4040.27
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4047.62
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 572500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3844.69
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3863.64
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "tampines-480-tampines-st-44-2021-06-100864",
+      "month": "2021-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "71 years 03 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 3863.64,
+      "pricePerSqft": 358.94
+    },
+    {
+      "id": "tampines-480-tampines-st-44-2020-08-77454",
+      "month": "2020-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "72 years",
+      "resalePrice": 495000,
+      "pricePerSqm": 3750,
+      "pricePerSqft": 348.39
+    },
+    {
+      "id": "tampines-480-tampines-st-44-2020-08-77486",
+      "month": "2020-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 165,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "72 years",
+      "resalePrice": 650000,
+      "pricePerSqm": 3939.39,
+      "pricePerSqft": 365.98
+    },
+    {
+      "id": "tampines-480-tampines-st-44-2017-10-16620",
+      "month": "2017-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 168,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "74 years 09 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 4047.62,
+      "pricePerSqft": 376.04
+    },
+    {
+      "id": "tampines-480-tampines-st-44-2007-09-473445",
+      "month": "2007-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 300000,
+      "pricePerSqm": 2272.73,
+      "pricePerSqft": 211.14
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1997-04-807183",
+      "month": "1997-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 149,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 602000,
+      "pricePerSqm": 4040.27,
+      "pricePerSqft": 375.35
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1997-02-801782",
+      "month": "1997-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 500000,
+      "pricePerSqm": 3787.88,
+      "pricePerSqft": 351.91
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1997-02-801785",
+      "month": "1997-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 165,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 660000,
+      "pricePerSqm": 4000,
+      "pricePerSqft": 371.61
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1996-10-791177",
+      "month": "1996-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 520000,
+      "pricePerSqm": 3939.39,
+      "pricePerSqft": 365.98
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1996-10-791187",
+      "month": "1996-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 168,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 720000,
+      "pricePerSqm": 4285.71,
+      "pricePerSqft": 398.16
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1996-07-781885",
+      "month": "1996-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 510000,
+      "pricePerSqm": 3863.64,
+      "pricePerSqft": 358.94
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1996-07-781886",
+      "month": "1996-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 490000,
+      "pricePerSqm": 3712.12,
+      "pricePerSqft": 344.87
+    },
+    {
+      "id": "tampines-480-tampines-st-44-1996-07-781898",
+      "month": "1996-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 149,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years",
+      "resalePrice": 630000,
+      "pricePerSqm": 4228.19,
+      "pricePerSqft": 392.81
+    }
+  ]
+}

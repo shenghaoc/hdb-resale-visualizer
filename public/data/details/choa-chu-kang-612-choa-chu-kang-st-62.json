@@ -1,0 +1,807 @@
+{
+  "summary": {
+    "addressKey": "choa-chu-kang-612-choa-chu-kang-st-62",
+    "town": "CHOA CHU KANG",
+    "block": "612",
+    "streetName": "CHOA CHU KANG ST 62",
+    "coordinates": {
+      "lat": 1.40000866051722,
+      "lng": 103.744352713589
+    },
+    "medianPrice": 703944,
+    "priceIqr": [
+      680972,
+      726916
+    ],
+    "pricePerSqmMedian": 5251.05,
+    "pricePerSqftMedian": 487.84,
+    "transactionCount": 2,
+    "floorAreaRange": [
+      108,
+      135
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "1999-10",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "YEW TEE MRT STATION",
+      "distanceMeters": 395
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-10",
+      "medianPrice": 411000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 3089.55
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 345000,
+      "transactionCount": 9,
+      "medianPricePerSqm": 2722.22
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 390000,
+      "transactionCount": 6,
+      "medianPricePerSqm": 2921.25
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 364500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2992.33
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 393000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2932.84
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 390000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2910.45
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 340000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2811.36
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 410000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3106.24
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 289250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2678.24
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 412500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3136.86
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 393500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2936.57
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 372000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2776.12
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2388.89
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 407500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3063.76
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 349000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2644.15
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 245144,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2269.86
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 345000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2574.63
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2009.26
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 351800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2605.93
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 211000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1953.7
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2129.63
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2488.55
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 239000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2212.96
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 323000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2410.45
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2129.63
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 247000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2287.04
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2485.07
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2414.81
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2442.75
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2519.08
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 244500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2263.89
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2037.04
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2305.34
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2313.43
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2361.11
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2390.98
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2379.63
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2268.52
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2201.49
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2314.81
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2251.91
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2857.14
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 403000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3007.46
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2977.1
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2761.19
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 427000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3234.85
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 354000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3277.78
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 393000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3270.78
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3675.93
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3694.03
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 496000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3701.49
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4120.37
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4274.81
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4253.73
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4274.81
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4060.15
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 466000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4314.81
+    },
+    {
+      "month": "2013-10",
+      "medianPrice": 507444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4192.82
+    },
+    {
+      "month": "2014-05",
+      "medianPrice": 412800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3822.22
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3564.81
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3059.7
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3696.97
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3246.27
+    },
+    {
+      "month": "2020-05",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3233.08
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3496.24
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 478000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3567.16
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 466000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3557.25
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3893.13
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3865.67
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3842.59
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 596800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4453.73
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4768.52
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4809.16
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4518.52
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4701.49
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4813.43
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4664.18
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4888.06
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 658000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4947.37
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 749888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5554.73
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2026-04-223981",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 03 months",
+      "resalePrice": 749888,
+      "pricePerSqm": 5554.73,
+      "pricePerSqft": 516.05
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2024-05-176317",
+      "month": "2024-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 133,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 02 months",
+      "resalePrice": 658000,
+      "pricePerSqm": 4947.37,
+      "pricePerSqft": 459.63
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2024-01-175879",
+      "month": "2024-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 05 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 4888.06,
+      "pricePerSqft": 454.12
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2023-05-150012",
+      "month": "2023-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 625000,
+      "pricePerSqm": 4664.18,
+      "pricePerSqft": 433.32
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2023-04-149916",
+      "month": "2023-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 4813.43,
+      "pricePerSqft": 447.18
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2023-01-149629",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 06 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 4701.49,
+      "pricePerSqft": 436.78
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2022-12-123943",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 07 months",
+      "resalePrice": 488000,
+      "pricePerSqm": 4518.52,
+      "pricePerSqft": 419.78
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2022-11-123869",
+      "month": "2022-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 131,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 4809.16,
+      "pricePerSqft": 446.79
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2022-10-123724",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 09 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 4768.52,
+      "pricePerSqft": 443.01
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2021-08-104653",
+      "month": "2021-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 596800,
+      "pricePerSqm": 4453.73,
+      "pricePerSqft": 413.77
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2021-04-95249",
+      "month": "2021-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 3842.59,
+      "pricePerSqft": 356.99
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2021-02-90667",
+      "month": "2021-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 3865.67,
+      "pricePerSqft": 359.13
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2021-01-88286",
+      "month": "2021-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 131,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 3893.13,
+      "pricePerSqft": 361.68
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2020-11-83411",
+      "month": "2020-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 131,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 466000,
+      "pricePerSqm": 3557.25,
+      "pricePerSqft": 330.48
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2020-10-81008",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 09 months",
+      "resalePrice": 478000,
+      "pricePerSqm": 3567.16,
+      "pricePerSqft": 331.4
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2020-07-73667",
+      "month": "2020-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 133,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 11 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 3496.24,
+      "pricePerSqft": 324.81
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2020-05-70291",
+      "month": "2020-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 133,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 03 months",
+      "resalePrice": 430000,
+      "pricePerSqm": 3233.08,
+      "pricePerSqft": 300.36
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2018-09-35349",
+      "month": "2018-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 09 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 3246.27,
+      "pricePerSqft": 301.59
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2018-07-30890",
+      "month": "2018-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years",
+      "resalePrice": 488000,
+      "pricePerSqm": 3696.97,
+      "pricePerSqft": 343.46
+    },
+    {
+      "id": "choa-chu-kang-612-choa-chu-kang-st-62-2018-06-28782",
+      "month": "2018-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 01 month",
+      "resalePrice": 410000,
+      "pricePerSqm": 3059.7,
+      "pricePerSqft": 284.26
+    }
+  ]
+}

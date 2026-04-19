@@ -1,0 +1,932 @@
+{
+  "summary": {
+    "addressKey": "queenstown-23-dover-cres",
+    "town": "QUEENSTOWN",
+    "block": "23",
+    "streetName": "DOVER CRES",
+    "coordinates": {
+      "lat": 1.30743646519275,
+      "lng": 103.78362947863
+    },
+    "medianPrice": 510194,
+    "priceIqr": [
+      510000,
+      517597
+    ],
+    "pricePerSqmMedian": 5797.65,
+    "pricePerSqftMedian": 538.63,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      88,
+      88
+    ],
+    "leaseCommenceRange": [
+      1976,
+      1976
+    ],
+    "latestMonth": "2025-05",
+    "availableDateRange": [
+      "1990-01",
+      "2025-05"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "DOVER MRT STATION",
+      "distanceMeters": 739
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 70000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 795.45
+    },
+    {
+      "month": "1990-07",
+      "medianPrice": 66000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 750
+    },
+    {
+      "month": "1990-11",
+      "medianPrice": 65000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 738.64
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 66000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 750
+    },
+    {
+      "month": "1992-05",
+      "medianPrice": 65000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 738.64
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2068.18
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 157000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1784.09
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 162500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1846.59
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1818.18
+    },
+    {
+      "month": "1994-07",
+      "medianPrice": 183500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2085.23
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2045.45
+    },
+    {
+      "month": "1995-06",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "1995-07",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2613.64
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2409.09
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 245800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2793.18
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2931.82
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3329.55
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3613.64
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3352.27
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3636.36
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 313500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3562.5
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 291000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3306.82
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3465.91
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3295.45
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2613.64
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2897.73
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 253750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2883.52
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2670.45
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 233000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2647.73
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 217500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2471.6
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 228500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2596.59
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 226000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2568.18
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 211000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2397.72
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 228000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2590.91
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3295.45
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 247000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2806.82
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3068.18
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 236000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2681.82
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 256000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2909.09
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 246800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2804.55
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2670.45
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2556.82
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2784.09
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2670.45
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2556.82
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2556.82
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 242000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2750
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3045.45
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2840.91
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2840.91
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2784.09
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 232000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2636.36
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2840.91
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2693.18
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 239500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2721.59
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 238998,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2715.89
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 249500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2835.23
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2875
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2954.55
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3522.73
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 336800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3827.27
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4034.09
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4181.82
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4465.91
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4375
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4318.18
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 392000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4454.55
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5090.91
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6136.36
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6136.36
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6590.91
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5852.27
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6193.18
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 497500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5653.41
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5454.55
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5852.27
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5454.55
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5204.55
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4886.36
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5227.27
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4659.09
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 409000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4647.73
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 413888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4703.27
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 418888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4760.09
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4113.64
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5113.64
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5113.64
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 429888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4885.09
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5113.64
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5681.82
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5511.36
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5511.36
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5568.18
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 510388,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5799.86
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5795.45
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5795.45
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5909.09
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5909.09
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-23-dover-cres-2025-05-211893",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 03 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 5909.09,
+      "pricePerSqft": 548.97
+    },
+    {
+      "id": "queenstown-23-dover-cres-2025-04-211892",
+      "month": "2025-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 03 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 5909.09,
+      "pricePerSqft": 548.97
+    },
+    {
+      "id": "queenstown-23-dover-cres-2025-03-211889",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 05 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 5795.45,
+      "pricePerSqft": 538.42
+    },
+    {
+      "id": "queenstown-23-dover-cres-2024-10-186624",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 11 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 5795.45,
+      "pricePerSqft": 538.42
+    },
+    {
+      "id": "queenstown-23-dover-cres-2024-06-186365",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 03 months",
+      "resalePrice": 510388,
+      "pricePerSqm": 5799.86,
+      "pricePerSqft": 538.83
+    },
+    {
+      "id": "queenstown-23-dover-cres-2024-05-186308",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 03 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 5568.18,
+      "pricePerSqft": 517.3
+    },
+    {
+      "id": "queenstown-23-dover-cres-2024-02-186143",
+      "month": "2024-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 05 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5511.36,
+      "pricePerSqft": 512.02
+    },
+    {
+      "id": "queenstown-23-dover-cres-2023-06-159218",
+      "month": "2023-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 02 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5511.36,
+      "pricePerSqft": 512.02
+    },
+    {
+      "id": "queenstown-23-dover-cres-2023-01-158958",
+      "month": "2023-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 07 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 5681.82,
+      "pricePerSqft": 527.86
+    },
+    {
+      "id": "queenstown-23-dover-cres-2022-07-133103",
+      "month": "2022-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 01 month",
+      "resalePrice": 450000,
+      "pricePerSqm": 5113.64,
+      "pricePerSqft": 475.07
+    },
+    {
+      "id": "queenstown-23-dover-cres-2022-06-133036",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 01 month",
+      "resalePrice": 429888,
+      "pricePerSqm": 4885.09,
+      "pricePerSqft": 453.84
+    },
+    {
+      "id": "queenstown-23-dover-cres-2021-10-110722",
+      "month": "2021-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 10 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    },
+    {
+      "id": "queenstown-23-dover-cres-2021-07-102939",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 01 month",
+      "resalePrice": 450000,
+      "pricePerSqm": 5113.64,
+      "pricePerSqft": 475.07
+    },
+    {
+      "id": "queenstown-23-dover-cres-2021-05-98244",
+      "month": "2021-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 03 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 5113.64,
+      "pricePerSqft": 475.07
+    },
+    {
+      "id": "queenstown-23-dover-cres-2020-11-84331",
+      "month": "2020-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 09 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    },
+    {
+      "id": "queenstown-23-dover-cres-2020-10-81891",
+      "month": "2020-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 10 months",
+      "resalePrice": 362000,
+      "pricePerSqm": 4113.64,
+      "pricePerSqft": 382.17
+    },
+    {
+      "id": "queenstown-23-dover-cres-2020-07-74548",
+      "month": "2020-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 01 month",
+      "resalePrice": 418888,
+      "pricePerSqm": 4760.09,
+      "pricePerSqft": 442.23
+    },
+    {
+      "id": "queenstown-23-dover-cres-2019-11-61586",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 08 months",
+      "resalePrice": 413888,
+      "pricePerSqm": 4703.27,
+      "pricePerSqft": 436.95
+    },
+    {
+      "id": "queenstown-23-dover-cres-2019-05-49756",
+      "month": "2019-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "56 years 02 months",
+      "resalePrice": 403000,
+      "pricePerSqm": 4579.55,
+      "pricePerSqft": 425.45
+    },
+    {
+      "id": "queenstown-23-dover-cres-2019-05-49757",
+      "month": "2019-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "56 years 03 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 4715.91,
+      "pricePerSqft": 438.12
+    }
+  ]
+}

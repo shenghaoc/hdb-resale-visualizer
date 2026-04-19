@@ -1,0 +1,796 @@
+{
+  "summary": {
+    "addressKey": "toa-payoh-36-lor-5-toa-payoh",
+    "town": "TOA PAYOH",
+    "block": "36",
+    "streetName": "LOR 5 TOA PAYOH",
+    "coordinates": {
+      "lat": 1.33482139850243,
+      "lng": 103.855272944611
+    },
+    "medianPrice": 977500,
+    "priceIqr": [
+      927575,
+      993750
+    ],
+    "pricePerSqmMedian": 8283.95,
+    "pricePerSqftMedian": 769.61,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      102,
+      120
+    ],
+    "leaseCommenceRange": [
+      1997,
+      1997
+    ],
+    "latestMonth": "2025-06",
+    "availableDateRange": [
+      "2001-05",
+      "2025-06"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 25"
+    ],
+    "nearestMrt": {
+      "stationName": "TOA PAYOH MRT STATION",
+      "distanceMeters": 882
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2001-05",
+      "medianPrice": 493800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4220.51
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 375000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3676.47
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 386000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 3725.49
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 482000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4119.66
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 418250,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3784.32
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 458000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3914.53
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 476000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4068.38
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 478000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4016.81
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 482500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4020.83
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 372000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3647.06
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3192.31
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 447500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3785.01
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3823.53
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 379500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3720.59
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 367000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3598.04
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3627.45
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3697.48
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 408000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3684.88
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 462000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3850
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 383800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3762.75
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3627.45
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3607.84
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 413000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3470.59
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3376.07
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 413000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3470.59
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 329000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3225.49
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3572.65
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 419000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3581.2
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3336.13
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3655.46
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 390500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3516.11
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 341000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3343.14
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 436000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3633.33
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 399000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3598.04
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 354000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3436.89
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 447000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3725
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3613.45
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3750
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3529.41
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 547000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4558.33
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4605.04
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4252.43
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 432888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4244
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4683.76
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5168.07
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4957.98
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 678000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5794.87
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 501250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4914.22
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5294.12
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 582000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5705.88
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 651500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5823.22
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 747500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6254.38
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6837.61
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6254.9
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 633000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6205.88
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5441.18
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5588.24
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6837.61
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5781.51
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4980.77
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6078.43
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5686.27
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 770000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6470.59
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5490.2
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 723888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6083.09
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 774000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6450
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 742800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6190
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6372.55
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6452.99
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5798.32
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 695000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6813.73
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6890.76
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6745.1
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 948888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7973.85
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 774444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7018.36
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7254.9
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 928888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7939.21
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6715.69
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 885150,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8068.34
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 985000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8277.31
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 1020000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8500
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2025-06-218544",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 04 months",
+      "resalePrice": 1020000,
+      "pricePerSqm": 8500,
+      "pricePerSqft": 789.68
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2025-04-218542",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 05 months",
+      "resalePrice": 985000,
+      "pricePerSqm": 8277.31,
+      "pricePerSqft": 768.99
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2024-07-192726",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 800299,
+      "pricePerSqm": 7846.07,
+      "pricePerSqft": 728.92
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2024-07-192745",
+      "month": "2024-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 117,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 970000,
+      "pricePerSqm": 8290.6,
+      "pricePerSqft": 770.22
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2023-12-165245",
+      "month": "2023-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 09 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 6715.69,
+      "pricePerSqft": 623.91
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2023-04-164786",
+      "month": "2023-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 117,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years 06 months",
+      "resalePrice": 928888,
+      "pricePerSqm": 7939.21,
+      "pricePerSqft": 737.58
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2022-09-139315",
+      "month": "2022-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 01 month",
+      "resalePrice": 740000,
+      "pricePerSqm": 7254.9,
+      "pricePerSqft": 674
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2022-06-139064",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 728888,
+      "pricePerSqm": 7145.96,
+      "pricePerSqft": 663.88
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2022-06-139071",
+      "month": "2022-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 6890.76,
+      "pricePerSqft": 640.17
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2022-05-139014",
+      "month": "2022-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 948888,
+      "pricePerSqm": 7973.85,
+      "pricePerSqft": 740.8
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2021-10-111360",
+      "month": "2021-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years",
+      "resalePrice": 688000,
+      "pricePerSqm": 6745.1,
+      "pricePerSqft": 626.64
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2021-05-98736",
+      "month": "2021-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 05 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 6890.76,
+      "pricePerSqft": 640.17
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2021-03-94363",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 06 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 6813.73,
+      "pricePerSqft": 633.02
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2020-11-84868",
+      "month": "2020-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 10 months",
+      "resalePrice": 690000,
+      "pricePerSqm": 5798.32,
+      "pricePerSqft": 538.68
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2020-07-75103",
+      "month": "2020-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 117,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 02 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 6452.99,
+      "pricePerSqft": 599.5
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2019-01-43340",
+      "month": "2019-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 08 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6372.55,
+      "pricePerSqft": 592.03
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2018-09-36505",
+      "month": "2018-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 742800,
+      "pricePerSqm": 6190,
+      "pricePerSqft": 575.07
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2018-08-34494",
+      "month": "2018-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 748000,
+      "pricePerSqm": 6233.33,
+      "pricePerSqft": 579.1
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2018-08-34495",
+      "month": "2018-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 800000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "toa-payoh-36-lor-5-toa-payoh-2018-07-32390",
+      "month": "2018-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 03 months",
+      "resalePrice": 723888,
+      "pricePerSqm": 6083.09,
+      "pricePerSqft": 565.14
+    }
+  ]
+}

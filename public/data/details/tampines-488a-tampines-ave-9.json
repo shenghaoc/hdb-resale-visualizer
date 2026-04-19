@@ -1,0 +1,844 @@
+{
+  "summary": {
+    "addressKey": "tampines-488a-tampines-ave-9",
+    "town": "TAMPINES",
+    "block": "488A",
+    "streetName": "TAMPINES AVE 9",
+    "coordinates": {
+      "lat": 1.36022206338794,
+      "lng": 103.956335998151
+    },
+    "medianPrice": 730888,
+    "priceIqr": [
+      675444,
+      735444
+    ],
+    "pricePerSqmMedian": 6040.4,
+    "pricePerSqftMedian": 561.17,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      104,
+      121
+    ],
+    "leaseCommenceRange": [
+      1989,
+      1989
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "1994-04",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "TAMPINES EAST MRT STATION",
+      "distanceMeters": 368
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1994-04",
+      "medianPrice": 246500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2173.64
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 288000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2380.17
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1983.47
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 220000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "1994-11",
+      "medianPrice": 215500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1896.5
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 291000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2404.96
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2165.29
+    },
+    {
+      "month": "1995-04",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2396.69
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 339500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2805.78
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 298000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2623.57
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3153.85
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3509.62
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 429000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3795.38
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3346.15
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3201.92
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3346.15
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3801.65
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2980.77
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3028.85
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3057.85
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3289.26
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 348000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2876.03
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 357000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2950.41
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2769.23
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 310000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2754.49
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 276000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2653.85
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 299500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2651.51
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2576.92
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 331000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2735.54
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2809.92
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2480.77
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 325000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2685.95
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3140.5
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 301000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2487.6
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2752.07
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 293000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2592.38
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 249000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2394.23
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 245000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2355.77
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2355.77
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2561.98
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2278.85
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2396.69
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2019.23
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2314.05
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 283000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2338.84
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2272.73
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 246000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2365.38
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 255000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2363.64
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 273000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2625
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 346000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2859.5
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 312000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2980.77
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2809.92
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3305.79
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2991.74
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 383000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3682.69
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3826.92
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4086.54
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 434000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4173.08
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 523000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4322.31
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 498000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4115.7
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 457000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4394.23
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4134.62
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4278.85
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3750
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4214.88
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3701.92
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3719.01
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 507000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4190.08
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3760.33
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3702.48
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3636.36
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3990.38
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3966.94
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 388888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3739.31
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4173.55
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 428888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4123.92
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5082.64
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 482000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4634.62
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5371.9
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5769.23
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 675444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6000.97
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6115.7
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "tampines-488a-tampines-ave-9-2025-12-216986",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 05 months",
+      "resalePrice": 740000,
+      "pricePerSqm": 6115.7,
+      "pricePerSqft": 568.17
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2025-02-216178",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 03 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 5961.54,
+      "pricePerSqft": 553.85
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2025-02-216971",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 03 months",
+      "resalePrice": 730888,
+      "pricePerSqm": 6040.4,
+      "pricePerSqft": 561.17
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2024-01-190406",
+      "month": "2024-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "64 years 04 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 5769.23,
+      "pricePerSqft": 535.98
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2022-08-138046",
+      "month": "2022-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "65 years 09 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 5371.9,
+      "pricePerSqft": 499.07
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2022-05-137597",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years",
+      "resalePrice": 482000,
+      "pricePerSqm": 4634.62,
+      "pricePerSqft": 430.57
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2021-10-111242",
+      "month": "2021-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years 07 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 5082.64,
+      "pricePerSqft": 472.19
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2021-08-106146",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years 09 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 4500,
+      "pricePerSqft": 418.06
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2021-05-98579",
+      "month": "2021-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "67 years",
+      "resalePrice": 428888,
+      "pricePerSqm": 4123.92,
+      "pricePerSqft": 383.13
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2020-11-84768",
+      "month": "2020-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "67 years 06 months",
+      "resalePrice": 505000,
+      "pricePerSqm": 4173.55,
+      "pricePerSqft": 387.74
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2020-10-82320",
+      "month": "2020-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "67 years 07 months",
+      "resalePrice": 388888,
+      "pricePerSqm": 3739.31,
+      "pricePerSqft": 347.39
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2019-10-60009",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 06 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 3966.94,
+      "pricePerSqft": 368.54
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2019-09-57853",
+      "month": "2019-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 07 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 3990.38,
+      "pricePerSqft": 370.72
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2019-04-48090",
+      "month": "2019-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "69 years",
+      "resalePrice": 440000,
+      "pricePerSqm": 3636.36,
+      "pricePerSqft": 337.83
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2018-12-41789",
+      "month": "2018-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "69 years 05 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 3702.48,
+      "pricePerSqft": 343.97
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2018-10-38349",
+      "month": "2018-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "69 years 07 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 3760.33,
+      "pricePerSqft": 349.35
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2015-10-952686",
+      "month": "2015-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "72",
+      "resalePrice": 507000,
+      "pricePerSqm": 4190.08,
+      "pricePerSqft": 389.27
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2015-08-949446",
+      "month": "2015-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "72",
+      "resalePrice": 450000,
+      "pricePerSqm": 3719.01,
+      "pricePerSqft": 345.51
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2015-07-947944",
+      "month": "2015-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "72",
+      "resalePrice": 385000,
+      "pricePerSqm": 3701.92,
+      "pricePerSqft": 343.92
+    },
+    {
+      "id": "tampines-488a-tampines-ave-9-2015-03-941600",
+      "month": "2015-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "73",
+      "resalePrice": 510000,
+      "pricePerSqm": 4214.88,
+      "pricePerSqft": 391.58
+    }
+  ]
+}

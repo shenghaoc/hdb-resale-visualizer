@@ -1,0 +1,616 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-683b-jurong-west-ctrl-1",
+    "town": "JURONG WEST",
+    "block": "683B",
+    "streetName": "JURONG WEST CTRL 1",
+    "coordinates": {
+      "lat": 1.34297156674521,
+      "lng": 103.704760487896
+    },
+    "medianPrice": 737500,
+    "priceIqr": [
+      629000,
+      848750
+    ],
+    "pricePerSqmMedian": 6038.6,
+    "pricePerSqftMedian": 561,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      93,
+      133
+    ],
+    "leaseCommenceRange": [
+      2000,
+      2000
+    ],
+    "latestMonth": "2025-09",
+    "availableDateRange": [
+      "2004-05",
+      "2025-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "PREMIUM APARTMENT",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "BOON LAY MRT STATION",
+      "distanceMeters": 489
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2004-05",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2787.23
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2659.57
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 245500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2626.06
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 279000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2731.47
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2903.23
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 235500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2505.32
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 221000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2351.06
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2612.61
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 296000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2606.38
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2553.19
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3297.87
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3513.51
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3548.39
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3783.78
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 414000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3729.73
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3738.74
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 423000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4500
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4075.76
+    },
+    {
+      "month": "2012-04",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4621.21
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4680.85
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4886.36
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 696800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5278.79
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4734.85
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5263.16
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4909.91
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 670000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5056.1
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4848.48
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4680.85
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4709.68
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 492000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4432.43
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 588000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4454.55
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4459.46
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4361.7
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 543944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4852.73
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4734.85
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 584000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4804.05
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4462.37
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5151.52
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4924.24
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 578000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5207.21
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 569000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5057.18
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 685000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5169.32
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5375.94
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 645500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5760.63
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5855.86
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6015.04
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5675.68
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6515.15
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 626000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5639.64
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 845000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6401.52
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2025-09-208278",
+      "month": "2025-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "74 years 02 months",
+      "resalePrice": 845000,
+      "pricePerSqm": 6401.52,
+      "pricePerSqft": 594.72
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2025-05-207868",
+      "month": "2025-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 626000,
+      "pricePerSqm": 5639.64,
+      "pricePerSqft": 523.94
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2024-08-181681",
+      "month": "2024-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "75 years 03 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 6515.15,
+      "pricePerSqft": 605.28
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2024-06-181297",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "75 years 05 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 5675.68,
+      "pricePerSqft": 527.29
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2023-08-154752",
+      "month": "2023-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 133,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 03 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 6015.04,
+      "pricePerSqft": 558.82
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2023-06-154444",
+      "month": "2023-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 5855.86,
+      "pricePerSqft": 544.03
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2023-03-154074",
+      "month": "2023-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 08 months",
+      "resalePrice": 548000,
+      "pricePerSqm": 5892.47,
+      "pricePerSqft": 547.43
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2023-03-154116",
+      "month": "2023-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 743000,
+      "pricePerSqm": 5628.79,
+      "pricePerSqft": 522.93
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2022-01-127260",
+      "month": "2022-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 133,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "77 years 10 months",
+      "resalePrice": 715000,
+      "pricePerSqm": 5375.94,
+      "pricePerSqft": 499.44
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-10-110308",
+      "month": "2021-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 665000,
+      "pricePerSqm": 5037.88,
+      "pricePerSqft": 468.03
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-10-110312",
+      "month": "2021-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 133,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 705000,
+      "pricePerSqm": 5300.75,
+      "pricePerSqft": 492.46
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-06-99960",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 470000,
+      "pricePerSqm": 5053.76,
+      "pricePerSqft": 469.51
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-06-100003",
+      "month": "2021-06",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 05 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 5060.61,
+      "pricePerSqft": 470.15
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-05-97882",
+      "month": "2021-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 06 months",
+      "resalePrice": 578000,
+      "pricePerSqm": 5207.21,
+      "pricePerSqft": 483.77
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2021-04-95746",
+      "month": "2021-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 06 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 4924.24,
+      "pricePerSqft": 457.48
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2020-12-86230",
+      "month": "2020-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "78 years 11 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 5151.52,
+      "pricePerSqft": 478.59
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2018-08-33621",
+      "month": "2018-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "81 years 03 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 4462.37,
+      "pricePerSqft": 414.57
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2017-09-14243",
+      "month": "2017-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "82 years 01 month",
+      "resalePrice": 530000,
+      "pricePerSqm": 4774.77,
+      "pricePerSqft": 443.59
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2017-09-14258",
+      "month": "2017-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "82 years 01 month",
+      "resalePrice": 638000,
+      "pricePerSqm": 4833.33,
+      "pricePerSqft": 449.03
+    },
+    {
+      "id": "jurong-west-683b-jurong-west-ctrl-1-2017-07-10573",
+      "month": "2017-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 132,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "82 years 03 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 4734.85,
+      "pricePerSqft": 439.88
+    }
+  ]
+}

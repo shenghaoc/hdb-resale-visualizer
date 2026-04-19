@@ -1,0 +1,145 @@
+{
+  "summary": {
+    "addressKey": "queenstown-45-holland-dr",
+    "town": "QUEENSTOWN",
+    "block": "45",
+    "streetName": "HOLLAND DR",
+    "coordinates": {
+      "lat": 1.30861790322771,
+      "lng": 103.792935900053
+    },
+    "medianPrice": 415000,
+    "priceIqr": [
+      140000,
+      592000
+    ],
+    "pricePerSqmMedian": 3051.47,
+    "pricePerSqftMedian": 283.49,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      59,
+      136
+    ],
+    "leaseCommenceRange": [
+      1975,
+      1975
+    ],
+    "latestMonth": "2015-06",
+    "availableDateRange": [
+      "1991-06",
+      "2015-06"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 4"
+    ],
+    "nearestMrt": {
+      "stationName": "BUONA VISTA MRT STATION",
+      "distanceMeters": 299
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-06",
+      "medianPrice": 42000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 711.86
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3051.47
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2372.88
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 592000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4352.94
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 893888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6572.71
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-45-holland-dr-2015-06-946165",
+      "month": "2015-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 136,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "59",
+      "resalePrice": 893888,
+      "pricePerSqm": 6572.71,
+      "pricePerSqft": 610.62
+    },
+    {
+      "id": "queenstown-45-holland-dr-2008-09-500097",
+      "month": "2008-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 136,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years",
+      "resalePrice": 592000,
+      "pricePerSqm": 4352.94,
+      "pricePerSqft": 404.4
+    },
+    {
+      "id": "queenstown-45-holland-dr-2002-02-306965",
+      "month": "2002-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years",
+      "resalePrice": 140000,
+      "pricePerSqm": 2372.88,
+      "pricePerSqft": 220.45
+    },
+    {
+      "id": "queenstown-45-holland-dr-2000-03-235411",
+      "month": "2000-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 136,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years",
+      "resalePrice": 415000,
+      "pricePerSqm": 3051.47,
+      "pricePerSqft": 283.49
+    },
+    {
+      "id": "queenstown-45-holland-dr-1991-06-668778",
+      "month": "1991-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years",
+      "resalePrice": 42000,
+      "pricePerSqm": 711.86,
+      "pricePerSqft": 66.13
+    }
+  ]
+}

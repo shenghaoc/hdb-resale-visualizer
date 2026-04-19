@@ -1,0 +1,986 @@
+{
+  "summary": {
+    "addressKey": "jurong-east-31-teban-gdns-rd",
+    "town": "JURONG EAST",
+    "block": "31",
+    "streetName": "TEBAN GDNS RD",
+    "coordinates": {
+      "lat": 1.32030814426975,
+      "lng": 103.738967733755
+    },
+    "medianPrice": 465000,
+    "priceIqr": [
+      458250,
+      466750
+    ],
+    "pricePerSqmMedian": 4696.97,
+    "pricePerSqftMedian": 436.36,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      99,
+      103
+    ],
+    "leaseCommenceRange": [
+      1981,
+      1981
+    ],
+    "latestMonth": "2025-03",
+    "availableDateRange": [
+      "1990-02",
+      "2025-03"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "JURONG EAST MRT STATION",
+      "distanceMeters": 1419
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-02",
+      "medianPrice": 71700,
+      "transactionCount": 2,
+      "medianPricePerSqm": 710.12
+    },
+    {
+      "month": "1990-03",
+      "medianPrice": 71600,
+      "transactionCount": 1,
+      "medianPricePerSqm": 723.23
+    },
+    {
+      "month": "1990-06",
+      "medianPrice": 45900,
+      "transactionCount": 1,
+      "medianPricePerSqm": 463.64
+    },
+    {
+      "month": "1991-03",
+      "medianPrice": 45900,
+      "transactionCount": 1,
+      "medianPricePerSqm": 463.64
+    },
+    {
+      "month": "1991-06",
+      "medianPrice": 50000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 505.05
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 45000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 454.55
+    },
+    {
+      "month": "1992-04",
+      "medianPrice": 88000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 888.89
+    },
+    {
+      "month": "1992-05",
+      "medianPrice": 91000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 919.19
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 64000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 646.46
+    },
+    {
+      "month": "1992-08",
+      "medianPrice": 102000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1030.3
+    },
+    {
+      "month": "1992-10",
+      "medianPrice": 48000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 484.85
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1515.15
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1515.15
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1585.86
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1464.65
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 151000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1525.26
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 161500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1631.31
+    },
+    {
+      "month": "1995-04",
+      "medianPrice": 167500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1691.92
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1969.7
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 194000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1959.6
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 198500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2005.05
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2171.72
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1844.66
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 213000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2151.52
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2222.22
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 233000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2353.54
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 256500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2590.91
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2979.8
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3060.61
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 275000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2777.78
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2525.25
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2777.78
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 208500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2061.93
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 199000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2010.1
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 205000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2070.7
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2020.2
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 207000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2090.91
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 205000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2070.71
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1939.39
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2310.68
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 196000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1979.8
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 199000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2010.1
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 206000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2080.81
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 191000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1929.29
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 183000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1848.48
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2020.2
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1838.38
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 177000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1787.88
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1666.67
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 171000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1727.27
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 168000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1696.97
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 168000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1696.97
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 167000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1686.87
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 183000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1848.48
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 174000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1757.58
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 177100,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1788.89
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1878.79
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 204000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2060.61
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 219500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2217.17
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 198400,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2004.04
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 190000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1919.19
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 198000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2000
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2424.24
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 174500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1762.63
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1818.18
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 177000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1787.88
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1797.98
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1767.68
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1717.17
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1777.78
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 189000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1909.09
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 202500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2045.45
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2575.76
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2424.24
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2222.22
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3080.81
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2929.29
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2777.78
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3383.84
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 283000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2858.59
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3313.13
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3181.82
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3717.17
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3737.37
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3636.36
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3787.88
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4040.4
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 373000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3767.68
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4090.91
+    },
+    {
+      "month": "2013-10",
+      "medianPrice": 379000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3828.28
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 367000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3707.07
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3838.38
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3939.39
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3737.37
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3383.84
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3888.89
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3939.39
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4141.41
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3888.89
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3585.86
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3535.35
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 370000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3737.37
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3434.34
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3834.95
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3484.85
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 347000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3505.05
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4292.93
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 436900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4413.13
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4242.42
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4696.97
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4424.24
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4696.97
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4767.68
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2025-03-206602",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "55 years 05 months",
+      "resalePrice": 472000,
+      "pricePerSqm": 4767.68,
+      "pricePerSqft": 442.93
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2024-11-180261",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "55 years 10 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 4696.97,
+      "pricePerSqft": 436.36
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2024-09-180178",
+      "month": "2024-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "55 years 11 months",
+      "resalePrice": 438000,
+      "pricePerSqm": 4424.24,
+      "pricePerSqft": 411.03
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2024-07-180061",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "56 years 01 month",
+      "resalePrice": 465000,
+      "pricePerSqm": 4696.97,
+      "pricePerSqft": 436.36
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2023-12-153707",
+      "month": "2023-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "56 years 07 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 4242.42,
+      "pricePerSqft": 394.13
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2023-04-153417",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 418000,
+      "pricePerSqm": 4222.22,
+      "pricePerSqft": 392.26
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2023-04-153420",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 455800,
+      "pricePerSqm": 4604.04,
+      "pricePerSqft": 427.73
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2022-11-127059",
+      "month": "2022-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 08 months",
+      "resalePrice": 425000,
+      "pricePerSqm": 4292.93,
+      "pricePerSqft": 398.83
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2021-09-107606",
+      "month": "2021-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "58 years 11 months",
+      "resalePrice": 347000,
+      "pricePerSqm": 3505.05,
+      "pricePerSqft": 325.63
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2021-07-102326",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years",
+      "resalePrice": 345000,
+      "pricePerSqm": 3484.85,
+      "pricePerSqft": 323.75
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2021-03-93192",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 04 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 3834.95,
+      "pricePerSqft": 356.28
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2020-08-76384",
+      "month": "2020-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 11 months",
+      "resalePrice": 340000,
+      "pricePerSqm": 3434.34,
+      "pricePerSqft": 319.06
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2018-06-29017",
+      "month": "2018-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 360000,
+      "pricePerSqm": 3636.36,
+      "pricePerSqft": 337.83
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2018-06-29019",
+      "month": "2018-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "62 years 02 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 3838.38,
+      "pricePerSqft": 356.6
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2017-07-10417",
+      "month": "2017-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "63 years",
+      "resalePrice": 350000,
+      "pricePerSqm": 3535.35,
+      "pricePerSqft": 328.45
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2017-06-8684",
+      "month": "2017-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "63 years 01 month",
+      "resalePrice": 355000,
+      "pricePerSqm": 3585.86,
+      "pricePerSqft": 333.14
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2016-10-971320",
+      "month": "2016-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "63",
+      "resalePrice": 385000,
+      "pricePerSqm": 3888.89,
+      "pricePerSqft": 361.29
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2016-08-967852",
+      "month": "2016-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "64",
+      "resalePrice": 410000,
+      "pricePerSqm": 4141.41,
+      "pricePerSqft": 384.75
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2015-11-953592",
+      "month": "2015-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "64",
+      "resalePrice": 390000,
+      "pricePerSqm": 3939.39,
+      "pricePerSqft": 365.98
+    },
+    {
+      "id": "jurong-east-31-teban-gdns-rd-2015-09-950348",
+      "month": "2015-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "64",
+      "resalePrice": 385000,
+      "pricePerSqm": 3888.89,
+      "pricePerSqft": 361.29
+    }
+  ]
+}

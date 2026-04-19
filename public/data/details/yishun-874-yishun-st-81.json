@@ -1,0 +1,832 @@
+{
+  "summary": {
+    "addressKey": "yishun-874-yishun-st-81",
+    "town": "YISHUN",
+    "block": "874",
+    "streetName": "YISHUN ST 81",
+    "coordinates": {
+      "lat": 1.41537030654282,
+      "lng": 103.836073515403
+    },
+    "medianPrice": 636844,
+    "priceIqr": [
+      582766,
+      691250
+    ],
+    "pricePerSqmMedian": 5634.06,
+    "pricePerSqftMedian": 523.42,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      104,
+      127
+    ],
+    "leaseCommenceRange": [
+      1988,
+      1988
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "1992-11",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "KHATIB MRT STATION",
+      "distanceMeters": 397
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1992-11",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 983.61
+    },
+    {
+      "month": "1992-12",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1065.57
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1393.44
+    },
+    {
+      "month": "1993-03",
+      "medianPrice": 150000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1181.1
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1885.25
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 184000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1769.23
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1692.31
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2067.31
+    },
+    {
+      "month": "1994-11",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2459.02
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "1995-07",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2211.54
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2336.54
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2211.54
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3509.62
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 431000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3532.79
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 416900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3596.13
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3442.62
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3688.52
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 323500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2841.03
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 330500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2911.18
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2897.64
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2576.92
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 272500,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2620.19
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2451.92
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 256000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2461.54
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 321000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2578.39
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 324000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2655.74
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 264500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2543.27
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 318725,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2612.5
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 306750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2642.17
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 266000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2557.69
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 269000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2586.54
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2692.31
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 309400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2718.36
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2278.85
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 271000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2340.21
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2704.92
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2067.31
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 297000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2434.43
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 223500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2149.04
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 302500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2430.3
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 272000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2141.73
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2704.92
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2336.54
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 229000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2201.92
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 316000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2488.19
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2934.43
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2576.92
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2131.15
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2067.31
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2403.85
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 243998,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2346.13
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3125
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3028.85
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3480.77
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 366000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3519.23
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3076.92
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3634.62
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 436000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4192.31
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 422000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4057.69
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4278.85
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3779.53
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4016.39
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3942.31
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3852.46
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 436000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4192.31
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3653.85
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3729.51
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4038.46
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4016.39
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3798.08
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4016.39
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3401.64
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3653.85
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3582.68
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4307.69
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5511.81
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4903.85
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5737.7
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5576.92
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5655.74
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 695000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5696.72
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 583688,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5612.38
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "yishun-874-yishun-st-81-2026-01-228925",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 02 months",
+      "resalePrice": 583688,
+      "pricePerSqm": 5612.38,
+      "pricePerSqft": 521.41
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2025-04-221985",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 11 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 5696.72,
+      "pricePerSqft": 529.24
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2024-12-196962",
+      "month": "2024-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "62 years 03 months",
+      "resalePrice": 690000,
+      "pricePerSqm": 5655.74,
+      "pricePerSqft": 525.44
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2024-07-196224",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "62 years 08 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 5576.92,
+      "pricePerSqft": 518.11
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2023-11-168995",
+      "month": "2023-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "63 years 03 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 5737.7,
+      "pricePerSqft": 533.05
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2023-10-168808",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "63 years 05 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4903.85,
+      "pricePerSqft": 455.58
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2023-02-167676",
+      "month": "2023-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "64 years 01 month",
+      "resalePrice": 700000,
+      "pricePerSqm": 5511.81,
+      "pricePerSqft": 512.06
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2021-06-101222",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "65 years 09 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 4307.69,
+      "pricePerSqft": 400.2
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2019-12-64244",
+      "month": "2019-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "67 years 03 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 3582.68,
+      "pricePerSqft": 332.84
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2019-11-62344",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "67 years 04 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 3653.85,
+      "pricePerSqft": 339.45
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2019-10-60459",
+      "month": "2019-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "67 years 04 months",
+      "resalePrice": 415000,
+      "pricePerSqm": 3401.64,
+      "pricePerSqft": 316.02
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2018-05-28216",
+      "month": "2018-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "68 years 09 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 4016.39,
+      "pricePerSqft": 373.14
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2018-02-22746",
+      "month": "2018-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 01 month",
+      "resalePrice": 395000,
+      "pricePerSqm": 3798.08,
+      "pricePerSqft": 352.85
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2017-11-18914",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 03 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 4016.39,
+      "pricePerSqft": 373.14
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2017-05-7970",
+      "month": "2017-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 09 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 4038.46,
+      "pricePerSqft": 375.19
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2017-03-4160",
+      "month": "2017-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "69 years 11 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 3729.51,
+      "pricePerSqft": 346.48
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2016-09-970563",
+      "month": "2016-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "70",
+      "resalePrice": 380000,
+      "pricePerSqm": 3653.85,
+      "pricePerSqft": 339.45
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2016-06-965452",
+      "month": "2016-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "70",
+      "resalePrice": 436000,
+      "pricePerSqm": 4192.31,
+      "pricePerSqft": 389.48
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2015-11-954442",
+      "month": "2015-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "71",
+      "resalePrice": 470000,
+      "pricePerSqm": 3852.46,
+      "pricePerSqft": 357.91
+    },
+    {
+      "id": "yishun-874-yishun-st-81-2015-09-951206",
+      "month": "2015-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "71",
+      "resalePrice": 410000,
+      "pricePerSqm": 3942.31,
+      "pricePerSqft": 366.25
+    }
+  ]
+}

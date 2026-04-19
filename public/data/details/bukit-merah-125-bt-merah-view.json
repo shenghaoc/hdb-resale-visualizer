@@ -1,0 +1,598 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-125-bt-merah-view",
+    "town": "BUKIT MERAH",
+    "block": "125",
+    "streetName": "BT MERAH VIEW",
+    "coordinates": {
+      "lat": 1.28506119216141,
+      "lng": 103.823812011597
+    },
+    "medianPrice": 489000,
+    "priceIqr": [
+      389750,
+      650750
+    ],
+    "pricePerSqmMedian": 3882.4,
+    "pricePerSqftMedian": 360.69,
+    "transactionCount": 52,
+    "floorAreaRange": [
+      107,
+      134
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2024-04",
+    "availableDateRange": [
+      "2000-09",
+      "2024-04"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "TIONG BAHRU MRT STATION",
+      "distanceMeters": 362
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2000-09",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3796.3
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3302.75
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 488000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3722.22
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 405500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3720.18
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3906.54
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 482000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3651.52
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 447500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3767.43
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4055.12
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3700.79
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 384000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3522.94
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2990.83
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3577.98
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3559.63
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 388999,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3635.5
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3858.27
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3559.63
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3376.15
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3446.97
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3165.14
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2897.2
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 478000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3567.16
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3242.42
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3409.09
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 367000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3382.9
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4212.6
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 623888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4726.42
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4700.93
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 563000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4433.07
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 539000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4944.95
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 583000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5398.15
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5568.18
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 641000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5880.73
+    },
+    {
+      "month": "2015-09",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5917.43
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5934.58
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 930888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7052.18
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6128.44
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 873000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6874.02
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6185.19
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 693000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6357.8
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6559.63
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 888000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6727.27
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 725000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6651.38
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 962888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7294.61
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 1058888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8021.88
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 870000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7981.65
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7663.55
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-125-bt-merah-view-2024-04-173954",
+      "month": "2024-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 7663.55,
+      "pricePerSqft": 711.97
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2023-07-148053",
+      "month": "2023-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 870000,
+      "pricePerSqm": 7981.65,
+      "pricePerSqft": 741.52
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2022-12-121376",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 10 months",
+      "resalePrice": 1058888,
+      "pricePerSqm": 8021.88,
+      "pricePerSqft": 745.26
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2022-01-120492",
+      "month": "2022-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 08 months",
+      "resalePrice": 962888,
+      "pricePerSqm": 7294.61,
+      "pricePerSqft": 677.69
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2021-11-112069",
+      "month": "2021-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 725000,
+      "pricePerSqm": 6651.38,
+      "pricePerSqft": 617.93
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2021-07-101737",
+      "month": "2021-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 888000,
+      "pricePerSqm": 6727.27,
+      "pricePerSqft": 624.98
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2021-03-92629",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 07 months",
+      "resalePrice": 715000,
+      "pricePerSqm": 6559.63,
+      "pricePerSqft": 609.41
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2020-03-68135",
+      "month": "2020-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 07 months",
+      "resalePrice": 693000,
+      "pricePerSqm": 6357.8,
+      "pricePerSqft": 590.66
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2018-06-28593",
+      "month": "2018-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 6185.19,
+      "pricePerSqft": 574.62
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2018-05-26791",
+      "month": "2018-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 873000,
+      "pricePerSqm": 6874.02,
+      "pricePerSqft": 638.62
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2017-10-15500",
+      "month": "2017-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 11 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 6128.44,
+      "pricePerSqft": 569.35
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2016-08-967419",
+      "month": "2016-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "79",
+      "resalePrice": 930888,
+      "pricePerSqm": 7052.18,
+      "pricePerSqft": 655.17
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2016-06-963968",
+      "month": "2016-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "79",
+      "resalePrice": 635000,
+      "pricePerSqm": 5934.58,
+      "pricePerSqft": 551.34
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2015-09-949994",
+      "month": "2015-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "80",
+      "resalePrice": 645000,
+      "pricePerSqm": 5917.43,
+      "pricePerSqft": 549.75
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2011-09-589109",
+      "month": "2011-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 641000,
+      "pricePerSqm": 5880.73,
+      "pricePerSqft": 546.34
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2011-05-581483",
+      "month": "2011-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 132,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 735000,
+      "pricePerSqm": 5568.18,
+      "pricePerSqft": 517.3
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2010-10-566740",
+      "month": "2010-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 583000,
+      "pricePerSqm": 5398.15,
+      "pricePerSqft": 501.5
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2009-10-529916",
+      "month": "2009-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 539000,
+      "pricePerSqm": 4944.95,
+      "pricePerSqft": 459.4
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2009-07-521705",
+      "month": "2009-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 563000,
+      "pricePerSqm": 4433.07,
+      "pricePerSqft": 411.85
+    },
+    {
+      "id": "bukit-merah-125-bt-merah-view-2009-02-510224",
+      "month": "2009-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 503000,
+      "pricePerSqm": 4700.93,
+      "pricePerSqft": 436.73
+    }
+  ]
+}

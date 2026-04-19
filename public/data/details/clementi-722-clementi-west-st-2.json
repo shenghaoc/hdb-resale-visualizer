@@ -1,0 +1,124 @@
+{
+  "summary": {
+    "addressKey": "clementi-722-clementi-west-st-2",
+    "town": "CLEMENTI",
+    "block": "722",
+    "streetName": "CLEMENTI WEST ST 2",
+    "coordinates": {
+      "lat": 1.30297959881951,
+      "lng": 103.76371403028
+    },
+    "medianPrice": 285000,
+    "priceIqr": [
+      270750,
+      308250
+    ],
+    "pricePerSqmMedian": 3845.59,
+    "pricePerSqftMedian": 357.26,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      68,
+      84
+    ],
+    "leaseCommenceRange": [
+      1985,
+      1985
+    ],
+    "latestMonth": "2020-07",
+    "availableDateRange": [
+      "2010-10",
+      "2020-07"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "CLEMENTI MRT STATION",
+      "distanceMeters": 1251
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2010-10",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3573.53
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 363000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4321.43
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4117.65
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3452.38
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "clementi-722-clementi-west-st-2-2020-07-73723",
+      "month": "2020-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "64 years 03 months",
+      "resalePrice": 290000,
+      "pricePerSqm": 3452.38,
+      "pricePerSqft": 320.74
+    },
+    {
+      "id": "clementi-722-clementi-west-st-2-2016-12-974316",
+      "month": "2016-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "67",
+      "resalePrice": 280000,
+      "pricePerSqm": 4117.65,
+      "pricePerSqft": 382.54
+    },
+    {
+      "id": "clementi-722-clementi-west-st-2-2012-12-617617",
+      "month": "2012-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years",
+      "resalePrice": 363000,
+      "pricePerSqm": 4321.43,
+      "pricePerSqft": 401.47
+    },
+    {
+      "id": "clementi-722-clementi-west-st-2-2010-10-567096",
+      "month": "2010-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years",
+      "resalePrice": 243000,
+      "pricePerSqm": 3573.53,
+      "pricePerSqft": 331.99
+    }
+  ]
+}

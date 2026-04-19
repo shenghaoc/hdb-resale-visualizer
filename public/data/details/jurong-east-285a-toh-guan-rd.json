@@ -1,0 +1,688 @@
+{
+  "summary": {
+    "addressKey": "jurong-east-285a-toh-guan-rd",
+    "town": "JURONG EAST",
+    "block": "285A",
+    "streetName": "TOH GUAN RD",
+    "coordinates": {
+      "lat": 1.33853822943852,
+      "lng": 103.746223402195
+    },
+    "medianPrice": 1060000,
+    "priceIqr": [
+      1008000,
+      1080000
+    ],
+    "pricePerSqmMedian": 7412.59,
+    "pricePerSqftMedian": 688.65,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      122,
+      144
+    ],
+    "leaseCommenceRange": [
+      1998,
+      1998
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2002-07",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "IMPROVED",
+      "MAX FLOOR 21"
+    ],
+    "nearestMrt": {
+      "stationName": "JURONG EAST MRT STATION",
+      "distanceMeters": 703
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2002-07",
+      "medianPrice": 477000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3371.18
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 445000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3111.89
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2902.1
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 442000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3079.98
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 377500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2833.79
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3146.85
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2986.11
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 423500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2951.89
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2638.89
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3202.8
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2673.61
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2708.33
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 394000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2774.65
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 378500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2628.47
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3035.71
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2902.1
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 389500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2704.86
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3661.97
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3750
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 535000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3741.26
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3784.72
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 572500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4035.22
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 568000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3973.35
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3715.28
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4335.66
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3811.19
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3916.08
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 608000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4342.86
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4225.35
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4090.91
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 642000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4489.51
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5104.17
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 840000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2013-10",
+      "medianPrice": 815000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5659.72
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 818000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5720.28
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5763.89
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 718000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4986.11
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 745000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5209.79
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 788888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5634.91
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5138.89
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4777.78
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 695000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4826.39
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5243.06
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 748000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5194.44
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5694.44
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 790000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5524.48
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5277.78
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5694.44
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 890000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6180.56
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 868000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6069.93
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 886000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6195.8
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 969000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6752.91
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5454.55
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6293.71
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 1060000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7412.59
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 1100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7638.89
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7042.25
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 1008000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 1080000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7714.29
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2026-03-224844",
+      "month": "2026-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 140,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 10 months",
+      "resalePrice": 1080000,
+      "pricePerSqm": 7714.29,
+      "pricePerSqft": 716.68
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2026-02-224843",
+      "month": "2026-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 1008000,
+      "pricePerSqm": 7000,
+      "pricePerSqft": 650.32
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2025-11-206809",
+      "month": "2025-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years 02 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 7042.25,
+      "pricePerSqft": 654.25
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2025-09-206807",
+      "month": "2025-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years 04 months",
+      "resalePrice": 1100000,
+      "pricePerSqm": 7638.89,
+      "pricePerSqft": 709.68
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2025-04-206800",
+      "month": "2025-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "72 years 09 months",
+      "resalePrice": 1060000,
+      "pricePerSqm": 7412.59,
+      "pricePerSqft": 688.65
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2024-04-179940",
+      "month": "2024-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "73 years 10 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 6293.71,
+      "pricePerSqft": 584.71
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2024-02-179848",
+      "month": "2024-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 5454.55,
+      "pricePerSqft": 506.74
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2023-08-153590",
+      "month": "2023-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 960000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2023-08-153591",
+      "month": "2023-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "74 years 04 months",
+      "resalePrice": 978000,
+      "pricePerSqm": 6839.16,
+      "pricePerSqft": 635.38
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2022-09-127008",
+      "month": "2022-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "75 years 04 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 5208.33,
+      "pricePerSqft": 483.87
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2022-08-126964",
+      "month": "2022-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "75 years 05 months",
+      "resalePrice": 886000,
+      "pricePerSqm": 6195.8,
+      "pricePerSqft": 575.61
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2022-04-126785",
+      "month": "2022-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "75 years 09 months",
+      "resalePrice": 868000,
+      "pricePerSqm": 6069.93,
+      "pricePerSqft": 563.92
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2021-12-115198",
+      "month": "2021-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 890000,
+      "pricePerSqm": 6180.56,
+      "pricePerSqft": 574.19
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2021-09-107639",
+      "month": "2021-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "76 years 03 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 5694.44,
+      "pricePerSqft": 529.03
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2021-05-97797",
+      "month": "2021-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "76 years 08 months",
+      "resalePrice": 760000,
+      "pricePerSqm": 5277.78,
+      "pricePerSqft": 490.32
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2021-04-95631",
+      "month": "2021-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "76 years 09 months",
+      "resalePrice": 790000,
+      "pricePerSqm": 5524.48,
+      "pricePerSqft": 513.24
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2020-12-86127",
+      "month": "2020-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years",
+      "resalePrice": 820000,
+      "pricePerSqm": 5694.44,
+      "pricePerSqft": 529.03
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2020-10-81317",
+      "month": "2020-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years 03 months",
+      "resalePrice": 748000,
+      "pricePerSqm": 5194.44,
+      "pricePerSqft": 482.58
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2020-07-74004",
+      "month": "2020-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years 06 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 5243.06,
+      "pricePerSqft": 487.1
+    },
+    {
+      "id": "jurong-east-285a-toh-guan-rd-2018-09-35618",
+      "month": "2018-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 4826.39,
+      "pricePerSqft": 448.39
+    }
+  ]
+}

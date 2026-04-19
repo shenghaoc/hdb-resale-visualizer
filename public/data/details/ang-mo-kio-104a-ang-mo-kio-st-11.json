@@ -1,0 +1,621 @@
+{
+  "summary": {
+    "addressKey": "ang-mo-kio-104a-ang-mo-kio-st-11",
+    "town": "ANG MO KIO",
+    "block": "104A",
+    "streetName": "ANG MO KIO ST 11",
+    "coordinates": {
+      "lat": 1.37182700854497,
+      "lng": 103.838803655863
+    },
+    "medianPrice": 1200944,
+    "priceIqr": [
+      1173722,
+      1207666
+    ],
+    "pricePerSqmMedian": 8276.26,
+    "pricePerSqftMedian": 768.89,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      139,
+      147
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "1999-12",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "MAISONETTE",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "MAYFLOWER MRT STATION",
+      "distanceMeters": 231
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-12",
+      "medianPrice": 573500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3954.58
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 546500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3850.55
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3732.88
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4081.63
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3795.92
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3875
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3938.36
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 587000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4020.55
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3843.54
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 527000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3711.27
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 533000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3625.85
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3472.22
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3521.13
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 504000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3452.05
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3163.27
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 433000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2986.21
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3287.67
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2922.54
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2881.94
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3034.48
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2887.32
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3068.49
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3133.8
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3253.42
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3732.88
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4178.08
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4075.34
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4014.08
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4006.85
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4251.7
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4452.05
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4689.66
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5376.71
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5547.95
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5616.44
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 815000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5659.72
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 805000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5551.72
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 845000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5787.67
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 795000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5520.83
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5442.18
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5850.34
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5985.92
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 920000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6344.83
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6551.72
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 1006888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7090.76
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 1120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7671.23
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 1138000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8014.08
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 1100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7638.89
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 1094888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7603.39
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 1200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8219.18
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 1201888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8346.44
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 1225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8333.33
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2026-03-222311",
+      "month": "2026-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 147,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 03 months",
+      "resalePrice": 1225000,
+      "pricePerSqm": 8333.33,
+      "pricePerSqft": 774.19
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2026-01-222310",
+      "month": "2026-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 144,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 04 months",
+      "resalePrice": 1201888,
+      "pricePerSqm": 8346.44,
+      "pricePerSqft": 775.41
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2024-10-170065",
+      "month": "2024-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 146,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 08 months",
+      "resalePrice": 1200000,
+      "pricePerSqm": 8219.18,
+      "pricePerSqft": 763.59
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2024-05-169565",
+      "month": "2024-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 01 month",
+      "resalePrice": 1094888,
+      "pricePerSqm": 7603.39,
+      "pricePerSqft": 706.38
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2023-11-144347",
+      "month": "2023-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 1100000,
+      "pricePerSqm": 7638.89,
+      "pricePerSqft": 709.68
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2023-01-143515",
+      "month": "2023-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 05 months",
+      "resalePrice": 1138000,
+      "pricePerSqm": 8014.08,
+      "pricePerSqft": 744.53
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2022-07-117280",
+      "month": "2022-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 146,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 10 months",
+      "resalePrice": 1120000,
+      "pricePerSqm": 7671.23,
+      "pricePerSqft": 712.68
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2021-12-114327",
+      "month": "2021-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 06 months",
+      "resalePrice": 1006888,
+      "pricePerSqm": 7090.76,
+      "pricePerSqft": 658.75
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2021-11-111771",
+      "month": "2021-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 145,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 07 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 6551.72,
+      "pricePerSqft": 608.68
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2021-05-97092",
+      "month": "2021-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 145,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 01 month",
+      "resalePrice": 920000,
+      "pricePerSqm": 6344.83,
+      "pricePerSqft": 589.45
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2021-02-90168",
+      "month": "2021-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 142,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 5985.92,
+      "pricePerSqft": 556.11
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2020-12-85197",
+      "month": "2020-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 147,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 05 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 5850.34,
+      "pricePerSqft": 543.51
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2020-09-77975",
+      "month": "2020-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 147,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 5442.18,
+      "pricePerSqft": 505.6
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2020-08-75546",
+      "month": "2020-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 09 months",
+      "resalePrice": 795000,
+      "pricePerSqm": 5520.83,
+      "pricePerSqft": 512.9
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2018-12-40714",
+      "month": "2018-12",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 845000,
+      "pricePerSqm": 5787.67,
+      "pricePerSqft": 537.69
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2018-07-30314",
+      "month": "2018-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 145,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 11 months",
+      "resalePrice": 805000,
+      "pricePerSqm": 5551.72,
+      "pricePerSqft": 515.77
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2018-05-26548",
+      "month": "2018-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years",
+      "resalePrice": 815000,
+      "pricePerSqm": 5659.72,
+      "pricePerSqft": 525.81
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2016-08-967128",
+      "month": "2016-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 146,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "78",
+      "resalePrice": 820000,
+      "pricePerSqm": 5616.44,
+      "pricePerSqft": 521.78
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2016-02-957195",
+      "month": "2016-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "79",
+      "resalePrice": 810000,
+      "pricePerSqm": 5547.95,
+      "pricePerSqft": 515.42
+    },
+    {
+      "id": "ang-mo-kio-104a-ang-mo-kio-st-11-2014-04-638367",
+      "month": "2014-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 785000,
+      "pricePerSqm": 5376.71,
+      "pricePerSqft": 499.51
+    }
+  ]
+}

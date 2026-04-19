@@ -1,0 +1,538 @@
+{
+  "summary": {
+    "addressKey": "sengkang-451b-sengkang-west-way",
+    "town": "SENGKANG",
+    "block": "451B",
+    "streetName": "SENGKANG WEST WAY",
+    "coordinates": {
+      "lat": 1.39429893366267,
+      "lng": 103.874547411666
+    },
+    "medianPrice": 642500,
+    "priceIqr": [
+      628750,
+      716250
+    ],
+    "pricePerSqmMedian": 6869.86,
+    "pricePerSqftMedian": 638.23,
+    "transactionCount": 8,
+    "floorAreaRange": [
+      92,
+      111
+    ],
+    "leaseCommenceRange": [
+      2015,
+      2015
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2019-01",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 24"
+    ],
+    "nearestMrt": {
+      "stationName": "FERNVALE LRT STATION",
+      "distanceMeters": 305
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2019-01",
+      "medianPrice": 507500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4986.05
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 400000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4347.82
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 490000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4891.3
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 572000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5153.15
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 417500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4538.05
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 410000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 4456.52
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 589344,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5309.41
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4782.61
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5045.05
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 407000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4423.91
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 586000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5279.28
+    },
+    {
+      "month": "2020-05",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4543.48
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4510.87
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 520000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4684.68
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 448888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4879.22
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 462000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5021.74
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4836.96
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5706.52
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 591500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5328.83
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5706.52
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5380.43
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 502500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5461.96
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5675.68
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5434.78
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5765.77
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6358.7
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6195.65
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 647500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6424.06
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7065.22
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6793.48
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6847.83
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 765000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6891.89
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 768000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6918.92
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6902.17
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 608000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6608.7
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6306.31
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-451b-sengkang-west-way-2026-03-227101",
+      "month": "2026-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 6306.31,
+      "pricePerSqft": 585.88
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2026-02-226948",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 608000,
+      "pricePerSqm": 6608.7,
+      "pricePerSqft": 613.97
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2025-08-214496",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 11 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 6902.17,
+      "pricePerSqft": 641.23
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2025-03-215135",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 04 months",
+      "resalePrice": 768000,
+      "pricePerSqm": 6918.92,
+      "pricePerSqft": 642.79
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-11-189696",
+      "month": "2024-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 765000,
+      "pricePerSqm": 6891.89,
+      "pricePerSqft": 640.28
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-10-189464",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 08 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 6847.83,
+      "pricePerSqft": 636.18
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-09-189281",
+      "month": "2024-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 6793.48,
+      "pricePerSqft": 631.14
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-08-189120",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 7065.22,
+      "pricePerSqft": 656.38
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-04-188373",
+      "month": "2024-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 6902.17,
+      "pricePerSqft": 641.23
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-04-188391",
+      "month": "2024-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 5945.95,
+      "pricePerSqft": 552.4
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2024-03-188171",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 03 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 6195.65,
+      "pricePerSqft": 575.6
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2023-10-162109",
+      "month": "2023-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 08 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 6358.7,
+      "pricePerSqft": 590.74
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2023-06-161468",
+      "month": "2023-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "91 years",
+      "resalePrice": 640000,
+      "pricePerSqm": 5765.77,
+      "pricePerSqft": 535.66
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2022-12-136420",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "91 years 06 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 5434.78,
+      "pricePerSqft": 504.91
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2022-11-136337",
+      "month": "2022-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 5675.68,
+      "pricePerSqft": 527.29
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2022-10-136093",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "91 years 08 months",
+      "resalePrice": 502500,
+      "pricePerSqm": 5461.96,
+      "pricePerSqft": 507.43
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2022-08-135693",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 5380.43,
+      "pricePerSqft": 499.86
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2022-05-135124",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "92 years 01 month",
+      "resalePrice": 525000,
+      "pricePerSqm": 5706.52,
+      "pricePerSqft": 530.15
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2021-11-113514",
+      "month": "2021-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "92 years 08 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 4819.82,
+      "pricePerSqft": 447.78
+    },
+    {
+      "id": "sengkang-451b-sengkang-west-way-2021-11-113581",
+      "month": "2021-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 111,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 648000,
+      "pricePerSqm": 5837.84,
+      "pricePerSqft": 542.35
+    }
+  ]
+}

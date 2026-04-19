@@ -1,0 +1,105 @@
+{
+  "summary": {
+    "addressKey": "ang-mo-kio-529-ang-mo-kio-ave-10",
+    "town": "ANG MO KIO",
+    "block": "529",
+    "streetName": "ANG MO KIO AVE 10",
+    "coordinates": {
+      "lat": 1.37234358233883,
+      "lng": 103.855455428073
+    },
+    "medianPrice": 238000,
+    "priceIqr": [
+      155500,
+      269000
+    ],
+    "pricePerSqmMedian": 2800,
+    "pricePerSqftMedian": 260.13,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      85,
+      85
+    ],
+    "leaseCommenceRange": [
+      1980,
+      1980
+    ],
+    "latestMonth": "2021-10",
+    "availableDateRange": [
+      "1992-06",
+      "2021-10"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "ANG MO KIO MRT STATION",
+      "distanceMeters": 683
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1992-06",
+      "medianPrice": 73000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 858.82
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3529.41
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "ang-mo-kio-529-ang-mo-kio-ave-10-2021-10-109195",
+      "month": "2021-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 85,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 300000,
+      "pricePerSqm": 3529.41,
+      "pricePerSqft": 327.89
+    },
+    {
+      "id": "ang-mo-kio-529-ang-mo-kio-ave-10-1997-07-813776",
+      "month": "1997-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 85,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 238000,
+      "pricePerSqm": 2800,
+      "pricePerSqft": 260.13
+    },
+    {
+      "id": "ang-mo-kio-529-ang-mo-kio-ave-10-1992-06-681748",
+      "month": "1992-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 85,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years",
+      "resalePrice": 73000,
+      "pricePerSqm": 858.82,
+      "pricePerSqft": 79.79
+    }
+  ]
+}

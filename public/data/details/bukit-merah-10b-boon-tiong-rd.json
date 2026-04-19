@@ -1,0 +1,561 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-10b-boon-tiong-rd",
+    "town": "BUKIT MERAH",
+    "block": "10B",
+    "streetName": "BOON TIONG RD",
+    "coordinates": {
+      "lat": 1.28633684743341,
+      "lng": 103.829204757258
+    },
+    "medianPrice": 1188888,
+    "priceIqr": [
+      1117000,
+      1200000
+    ],
+    "pricePerSqmMedian": 13678.16,
+    "pricePerSqftMedian": 1270.74,
+    "transactionCount": 15,
+    "floorAreaRange": [
+      62,
+      87
+    ],
+    "leaseCommenceRange": [
+      2016,
+      2016
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2019-10",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 30"
+    ],
+    "nearestMrt": {
+      "stationName": "TIONG BAHRU MRT STATION",
+      "distanceMeters": 190
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2019-10",
+      "medianPrice": 936750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10767.24
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 912000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10482.76
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 825000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11081.76
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11290.32
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 943500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10844.83
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10919.54
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 917000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10540.23
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 811500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10875.6
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 928000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10666.67
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 800000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10736.47
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 935000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10747.13
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 877944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10091.31
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 792000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10723.3
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11096.77
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 925000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10632.19
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 980000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11264.37
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 668800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10787.1
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 908000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10436.78
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 996000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11448.28
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 680888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10982.06
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 1158000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13310.34
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11290.32
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11451.61
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 960000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11034.48
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 1025000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11781.61
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11290.32
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11494.25
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10645.16
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10322.58
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 1010000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11609.2
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11494.25
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 1210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13908.05
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 1000688,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11502.16
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 1188888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13665.38
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 1180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13563.22
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 1157000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13298.85
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 1190000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 13678.16
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 1200000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 13793.1
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 1180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13563.22
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 1208888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13895.26
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 910000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 14677.42
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 1138500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 13086.2
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2026-03-223277",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "88 years 11 months",
+      "resalePrice": 1077000,
+      "pricePerSqm": 12379.31,
+      "pricePerSqft": 1150.08
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2026-03-223278",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 1200000,
+      "pricePerSqm": 13793.1,
+      "pricePerSqft": 1281.42
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2026-01-223173",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 62,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 01 month",
+      "resalePrice": 910000,
+      "pricePerSqm": 14677.42,
+      "pricePerSqft": 1363.58
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-10-201250",
+      "month": "2025-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 1208888,
+      "pricePerSqm": 13895.26,
+      "pricePerSqft": 1290.91
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-09-201245",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 1180000,
+      "pricePerSqm": 13563.22,
+      "pricePerSqft": 1260.07
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-08-201239",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 1200000,
+      "pricePerSqm": 13793.1,
+      "pricePerSqft": 1281.42
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-08-201241",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 1070000,
+      "pricePerSqm": 12298.85,
+      "pricePerSqft": 1142.6
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-08-201242",
+      "month": "2025-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 1230000,
+      "pricePerSqm": 14137.93,
+      "pricePerSqft": 1313.46
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-07-201236",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 1190000,
+      "pricePerSqm": 13678.16,
+      "pricePerSqft": 1270.74
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-07-201238",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 1190000,
+      "pricePerSqm": 13678.16,
+      "pricePerSqft": 1270.74
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-06-201234",
+      "month": "2025-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 08 months",
+      "resalePrice": 1157000,
+      "pricePerSqm": 13298.85,
+      "pricePerSqft": 1235.5
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2025-05-201233",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 1180000,
+      "pricePerSqm": 13563.22,
+      "pricePerSqft": 1260.07
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2024-11-174600",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "90 years 03 months",
+      "resalePrice": 1188888,
+      "pricePerSqm": 13665.38,
+      "pricePerSqft": 1269.56
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2024-10-174518",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "90 years 04 months",
+      "resalePrice": 1000688,
+      "pricePerSqm": 11502.16,
+      "pricePerSqft": 1068.59
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2024-07-174276",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "90 years 07 months",
+      "resalePrice": 1210000,
+      "pricePerSqm": 13908.05,
+      "pricePerSqft": 1292.1
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2023-12-148520",
+      "month": "2023-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 02 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 11494.25,
+      "pricePerSqft": 1067.85
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2023-07-148071",
+      "month": "2023-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 1010000,
+      "pricePerSqm": 11609.2,
+      "pricePerSqft": 1078.53
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2023-05-147887",
+      "month": "2023-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 62,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 08 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 10322.58,
+      "pricePerSqft": 959
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2023-04-147811",
+      "month": "2023-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 62,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 09 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 10645.16,
+      "pricePerSqft": 988.97
+    },
+    {
+      "id": "bukit-merah-10b-boon-tiong-rd-2023-03-147773",
+      "month": "2023-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 87,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 11494.25,
+      "pricePerSqft": 1067.85
+    }
+  ]
+}

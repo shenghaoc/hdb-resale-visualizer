@@ -1,0 +1,616 @@
+{
+  "summary": {
+    "addressKey": "woodlands-841-woodlands-st-82",
+    "town": "WOODLANDS",
+    "block": "841",
+    "streetName": "WOODLANDS ST 82",
+    "coordinates": {
+      "lat": 1.44350607508298,
+      "lng": 103.791708181364
+    },
+    "medianPrice": 510000,
+    "priceIqr": [
+      510000,
+      510000
+    ],
+    "pricePerSqmMedian": 4811.32,
+    "pricePerSqftMedian": 446.99,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      101,
+      137
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2024-09",
+    "availableDateRange": [
+      "1999-09",
+      "2024-09"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 12"
+    ],
+    "nearestMrt": {
+      "stationName": "WOODLANDS MRT STATION",
+      "distanceMeters": 781
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-09",
+      "medianPrice": 315000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 2520
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 358000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2742.42
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 318000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2772.28
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 289000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2500.95
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 349900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2642.68
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 292000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2453.11
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 251000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2485.15
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2475.25
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2178.22
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 232500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2248.27
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2561.54
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 220000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2127.55
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2238.81
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 240500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2075.28
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 209000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2069.31
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 281750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2147.7
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1886.79
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 207000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1934.58
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 273000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2184
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 303500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2334.62
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 215888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2056.08
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 254250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2183.82
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2102.19
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 269800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2645.1
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 254000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2000
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 204000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2019.8
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1990.2
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2215.38
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2267.72
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 263000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2603.96
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2722.77
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2673.27
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2641.51
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 351000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3116.91
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 379000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3186.99
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 403000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3224
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4138.61
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 432500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4099.32
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3921.57
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3360
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3615.38
+    },
+    {
+      "month": "2015-02",
+      "medianPrice": 381000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3628.57
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3762.38
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3038.46
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3168.32
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 350000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2994.51
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4124.09
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4669.81
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4509.8
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4532.71
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4811.32
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "woodlands-841-woodlands-st-82-2024-09-194527",
+      "month": "2024-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years",
+      "resalePrice": 510000,
+      "pricePerSqm": 4811.32,
+      "pricePerSqft": 446.99
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2024-04-193640",
+      "month": "2024-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 05 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 4532.71,
+      "pricePerSqft": 421.1
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2023-08-166576",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 460000,
+      "pricePerSqm": 4509.8,
+      "pricePerSqft": 418.97
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2023-07-166434",
+      "month": "2023-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 02 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4669.81,
+      "pricePerSqft": 433.84
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2023-01-165424",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 137,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 4124.09,
+      "pricePerSqft": 383.14
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2019-06-52229",
+      "month": "2019-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 02 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 3142.86,
+      "pricePerSqft": 291.98
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2019-06-52265",
+      "month": "2019-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 130,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 03 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 2846.15,
+      "pricePerSqft": 264.42
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2019-03-46362",
+      "month": "2019-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 320000,
+      "pricePerSqm": 3168.32,
+      "pricePerSqft": 294.35
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2017-11-18769",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 130,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 11 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 3038.46,
+      "pricePerSqft": 282.28
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2015-08-949593",
+      "month": "2015-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "80",
+      "resalePrice": 380000,
+      "pricePerSqm": 3762.38,
+      "pricePerSqft": 349.54
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2015-02-940380",
+      "month": "2015-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "80",
+      "resalePrice": 381000,
+      "pricePerSqm": 3628.57,
+      "pricePerSqft": 337.11
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2014-10-648114",
+      "month": "2014-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 470000,
+      "pricePerSqm": 3615.38,
+      "pricePerSqft": 335.88
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2014-08-645057",
+      "month": "2014-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 3360,
+      "pricePerSqft": 312.15
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2013-09-631022",
+      "month": "2013-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 400000,
+      "pricePerSqm": 3921.57,
+      "pricePerSqft": 364.33
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2012-11-617004",
+      "month": "2012-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 426000,
+      "pricePerSqm": 4057.14,
+      "pricePerSqft": 376.92
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2012-11-617013",
+      "month": "2012-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 439000,
+      "pricePerSqm": 4141.51,
+      "pricePerSqft": 384.76
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2012-03-600763",
+      "month": "2012-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 05",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 418000,
+      "pricePerSqm": 4138.61,
+      "pricePerSqft": 384.49
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2011-05-582858",
+      "month": "2011-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 403000,
+      "pricePerSqm": 3224,
+      "pricePerSqft": 299.52
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2010-09-565872",
+      "month": "2010-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 348000,
+      "pricePerSqm": 3314.29,
+      "pricePerSqft": 307.91
+    },
+    {
+      "id": "woodlands-841-woodlands-st-82-2010-09-565987",
+      "month": "2010-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 134,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 410000,
+      "pricePerSqm": 3059.7,
+      "pricePerSqft": 284.26
+    }
+  ]
+}

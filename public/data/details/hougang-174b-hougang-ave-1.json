@@ -1,0 +1,385 @@
+{
+  "summary": {
+    "addressKey": "hougang-174b-hougang-ave-1",
+    "town": "HOUGANG",
+    "block": "174B",
+    "streetName": "HOUGANG AVE 1",
+    "coordinates": {
+      "lat": 1.34955516910381,
+      "lng": 103.889276891994
+    },
+    "medianPrice": 475000,
+    "priceIqr": [
+      452500,
+      499750
+    ],
+    "pricePerSqmMedian": 7196.97,
+    "pricePerSqftMedian": 668.63,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      66,
+      66
+    ],
+    "leaseCommenceRange": [
+      2014,
+      2014
+    ],
+    "latestMonth": "2025-08",
+    "availableDateRange": [
+      "2019-05",
+      "2025-08"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 13"
+    ],
+    "nearestMrt": {
+      "stationName": "KOVAN MRT STATION",
+      "distanceMeters": 1240
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2019-05",
+      "medianPrice": 331500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5022.73
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 313000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4742.42
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 313000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4742.42
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5454.55
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 399000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6045.45
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 390000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5909.09
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 424000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6424.24
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6212.12
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 409000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6196.97
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6363.64
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 440000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6666.66
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6969.7
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7424.24
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 503000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7621.21
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7727.27
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-174b-hougang-ave-1-2025-08-205144",
+      "month": "2025-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 06 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7727.27,
+      "pricePerSqft": 717.89
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2025-06-205136",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 503000,
+      "pricePerSqm": 7621.21,
+      "pricePerSqft": 708.03
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2024-10-179505",
+      "month": "2024-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 04 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 7424.24,
+      "pricePerSqft": 689.74
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2024-08-179251",
+      "month": "2024-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6969.7,
+      "pricePerSqft": 647.51
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2024-05-178844",
+      "month": "2024-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 09 months",
+      "resalePrice": 430000,
+      "pricePerSqm": 6515.15,
+      "pricePerSqft": 605.28
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2024-05-178846",
+      "month": "2024-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "88 years 09 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 6818.18,
+      "pricePerSqft": 633.43
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2023-11-153024",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6363.64,
+      "pricePerSqft": 591.2
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2023-09-152763",
+      "month": "2023-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 409000,
+      "pricePerSqm": 6196.97,
+      "pricePerSqft": 575.72
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2023-02-152011",
+      "month": "2023-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years",
+      "resalePrice": 410000,
+      "pricePerSqm": 6212.12,
+      "pricePerSqft": 577.13
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2023-01-151889",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 424000,
+      "pricePerSqm": 6424.24,
+      "pricePerSqft": 596.83
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2022-08-126132",
+      "month": "2022-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 06 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 5681.82,
+      "pricePerSqft": 527.86
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2022-08-126136",
+      "month": "2022-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 06 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 5909.09,
+      "pricePerSqft": 548.97
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2022-08-126140",
+      "month": "2022-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "90 years 06 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6363.64,
+      "pricePerSqft": 591.2
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2021-12-115052",
+      "month": "2021-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "91 years 02 months",
+      "resalePrice": 399000,
+      "pricePerSqm": 6045.45,
+      "pricePerSqft": 561.64
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2021-06-99743",
+      "month": "2021-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "91 years 08 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 5454.55,
+      "pricePerSqft": 506.74
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2020-10-81144",
+      "month": "2020-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "92 years 03 months",
+      "resalePrice": 313000,
+      "pricePerSqm": 4742.42,
+      "pricePerSqft": 440.59
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2019-12-63005",
+      "month": "2019-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "93 years 01 month",
+      "resalePrice": 313000,
+      "pricePerSqm": 4742.42,
+      "pricePerSqft": 440.59
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2019-05-49200",
+      "month": "2019-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "93 years 08 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    },
+    {
+      "id": "hougang-174b-hougang-ave-1-2019-05-49201",
+      "month": "2019-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 66,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "93 years 09 months",
+      "resalePrice": 333000,
+      "pricePerSqm": 5045.45,
+      "pricePerSqft": 468.74
+    }
+  ]
+}

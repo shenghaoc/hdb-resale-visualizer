@@ -1,0 +1,491 @@
+{
+  "summary": {
+    "addressKey": "punggol-122a-edgedale-plains",
+    "town": "PUNGGOL",
+    "block": "122A",
+    "streetName": "EDGEDALE PLAINS",
+    "coordinates": {
+      "lat": 1.39350981217359,
+      "lng": 103.909106562659
+    },
+    "medianPrice": 590000,
+    "priceIqr": [
+      530000,
+      610000
+    ],
+    "pricePerSqmMedian": 6559.14,
+    "pricePerSqftMedian": 609.36,
+    "transactionCount": 9,
+    "floorAreaRange": [
+      68,
+      113
+    ],
+    "leaseCommenceRange": [
+      2017,
+      2017
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2021-01",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "MERIDIAN LRT STATION",
+      "distanceMeters": 353
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2021-01",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4838.71
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4892.47
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4946.24
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 415000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5173.94
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 460000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4946.24
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 438750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4717.74
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 457500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 4989.24
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5514.71
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 379000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5573.53
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 456000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5364.39
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 468500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5037.63
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 508093,
+      "transactionCount": 4,
+      "medianPricePerSqm": 5526.07
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5446.43
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5698.92
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 612000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5415.93
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5161.29
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5696.43
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6021.51
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6290.32
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5929.2
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 600888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6461.16
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 612000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5464.29
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6911.76
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 545000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6828.74
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 588000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6322.58
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 716000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6392.86
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7794.12
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6559.14
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6607.14
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6344.09
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "punggol-122a-edgedale-plains-2026-03-225814",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 6344.09,
+      "pricePerSqft": 589.39
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2026-01-226050",
+      "month": "2026-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 112,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 740000,
+      "pricePerSqm": 6607.14,
+      "pricePerSqft": 613.82
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2025-09-210318",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 09 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 6559.14,
+      "pricePerSqft": 609.36
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2025-07-210075",
+      "month": "2025-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 11 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 7794.12,
+      "pricePerSqft": 724.1
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2025-03-211059",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 716000,
+      "pricePerSqm": 6392.86,
+      "pricePerSqft": 593.92
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2024-12-185949",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 588000,
+      "pricePerSqm": 6322.58,
+      "pricePerSqft": 587.39
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2024-07-185031",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 11 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 7205.88,
+      "pricePerSqft": 669.45
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2024-07-185080",
+      "month": "2024-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 6451.61,
+      "pricePerSqft": 599.38
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2024-05-184708",
+      "month": "2024-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 01 month",
+      "resalePrice": 470000,
+      "pricePerSqm": 6911.76,
+      "pricePerSqft": 642.12
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2024-02-184279",
+      "month": "2024-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 112,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 04 months",
+      "resalePrice": 612000,
+      "pricePerSqm": 5464.29,
+      "pricePerSqft": 507.65
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2023-12-158865",
+      "month": "2023-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 06 months",
+      "resalePrice": 600888,
+      "pricePerSqm": 6461.16,
+      "pricePerSqft": 600.26
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2023-11-158757",
+      "month": "2023-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 5929.2,
+      "pricePerSqft": 550.84
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2023-09-158364",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "92 years 08 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 6290.32,
+      "pricePerSqft": 584.39
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2023-02-157119",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years 03 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 6021.51,
+      "pricePerSqft": 559.42
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2023-01-156998",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years 05 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 5696.43,
+      "pricePerSqft": 529.22
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2022-10-132230",
+      "month": "2022-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years 08 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 5161.29,
+      "pricePerSqft": 479.5
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2022-09-132155",
+      "month": "2022-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years 09 months",
+      "resalePrice": 612000,
+      "pricePerSqm": 5415.93,
+      "pricePerSqft": 503.16
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2022-07-131762",
+      "month": "2022-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "93 years 10 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 5698.92,
+      "pricePerSqft": 529.45
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2022-06-131661",
+      "month": "2022-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "94 years",
+      "resalePrice": 610000,
+      "pricePerSqm": 5446.43,
+      "pricePerSqft": 505.99
+    },
+    {
+      "id": "punggol-122a-edgedale-plains-2022-05-131405",
+      "month": "2022-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "94 years 01 month",
+      "resalePrice": 430000,
+      "pricePerSqm": 6323.53,
+      "pricePerSqft": 587.48
+    }
+  ]
+}

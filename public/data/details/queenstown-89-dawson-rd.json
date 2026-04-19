@@ -1,0 +1,545 @@
+{
+  "summary": {
+    "addressKey": "queenstown-89-dawson-rd",
+    "town": "QUEENSTOWN",
+    "block": "89",
+    "streetName": "DAWSON RD",
+    "coordinates": {
+      "lat": 1.29546316937491,
+      "lng": 103.811785236884
+    },
+    "medianPrice": 1127500,
+    "priceIqr": [
+      909000,
+      1255750
+    ],
+    "pricePerSqmMedian": 12378.08,
+    "pricePerSqftMedian": 1149.97,
+    "transactionCount": 12,
+    "floorAreaRange": [
+      65,
+      109
+    ],
+    "leaseCommenceRange": [
+      2016,
+      2016
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "2020-02",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "PREMIUM APARTMENT",
+      "PREMIUM APARTMENT LOFT",
+      "MAX FLOOR 43"
+    ],
+    "nearestMrt": {
+      "stationName": "QUEENSTOWN MRT STATION",
+      "distanceMeters": 621
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2020-02",
+      "medianPrice": 1038000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10484.85
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9156.63
+    },
+    {
+      "month": "2020-05",
+      "medianPrice": 820000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9110.05
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 865000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9105.26
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 782000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9759.04
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9846.15
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 880000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9036.17
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 848000,
+      "transactionCount": 6,
+      "medianPricePerSqm": 9611.48
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 715000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8969.86
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 788000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9493.98
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 735288,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9635.6
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8453.61
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 890000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9175.26
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 799400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9418.94
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 848000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 9819.28
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 935000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9540.25
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8762.89
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 798000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9614.46
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9638.55
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10584.62
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 959000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9337.27
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 685594,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10547.6
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 929000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10122.4
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 930000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9587.63
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 870000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10481.93
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 955000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 10344.83
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10461.54
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10461.54
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11445.78
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 938000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10781.61
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 1000000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12048.19
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 1155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12157.89
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 1111000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 13393.78
+    },
+    {
+      "month": "2025-09",
+      "medianPrice": 1245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11422.02
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 818888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12598.28
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 940000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11670.1
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 1180888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13573.43
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 1300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13684.21
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 13278.35
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-89-dawson-rd-2026-04-226312",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 01 month",
+      "resalePrice": 1288000,
+      "pricePerSqm": 13278.35,
+      "pricePerSqft": 1233.6
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2026-03-226310",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 95,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 01 month",
+      "resalePrice": 1300000,
+      "pricePerSqm": 13684.21,
+      "pricePerSqft": 1271.31
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2026-02-226301",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 87,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 1180888,
+      "pricePerSqm": 13573.43,
+      "pricePerSqft": 1261.01
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2026-01-226203",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 12000,
+      "pricePerSqft": 1114.84
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2026-01-226286",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 04 months",
+      "resalePrice": 1100000,
+      "pricePerSqm": 11340.21,
+      "pricePerSqft": 1053.54
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2025-11-211610",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 65,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 818888,
+      "pricePerSqm": 12598.28,
+      "pricePerSqft": 1170.42
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2025-09-211867",
+      "month": "2025-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 109,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 1245000,
+      "pricePerSqm": 11422.02,
+      "pricePerSqft": 1061.14
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2025-08-211606",
+      "month": "2025-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 65,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 08 months",
+      "resalePrice": 822000,
+      "pricePerSqm": 12646.15,
+      "pricePerSqft": 1174.87
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2025-08-212077",
+      "month": "2025-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 99,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 08 months",
+      "resalePrice": 1400000,
+      "pricePerSqm": 14141.41,
+      "pricePerSqft": 1313.78
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2025-05-211846",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 95,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "90 years",
+      "resalePrice": 1155000,
+      "pricePerSqm": 12157.89,
+      "pricePerSqft": 1129.51
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2024-11-186706",
+      "month": "2024-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 83,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "90 years 06 months",
+      "resalePrice": 1000000,
+      "pricePerSqm": 12048.19,
+      "pricePerSqft": 1119.31
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2024-05-186332",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "40 TO 42",
+      "floorAreaSqm": 87,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years",
+      "resalePrice": 938000,
+      "pricePerSqm": 10781.61,
+      "pricePerSqft": 1001.65
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2023-07-159279",
+      "month": "2023-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 83,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 11445.78,
+      "pricePerSqft": 1063.35
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2023-01-158965",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 65,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "92 years 04 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 10461.54,
+      "pricePerSqft": 971.91
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-09-133247",
+      "month": "2022-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 65,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "92 years 08 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 10461.54,
+      "pricePerSqft": 971.91
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-06-133069",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 87,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "92 years 11 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 10344.83,
+      "pricePerSqft": 961.07
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-06-133076",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 95,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "92 years 10 months",
+      "resalePrice": 955000,
+      "pricePerSqm": 10052.63,
+      "pricePerSqft": 933.92
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-06-133080",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "92 years 11 months",
+      "resalePrice": 1045000,
+      "pricePerSqm": 10773.2,
+      "pricePerSqft": 1000.86
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-04-132949",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 83,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "93 years 01 month",
+      "resalePrice": 870000,
+      "pricePerSqm": 10481.93,
+      "pricePerSqft": 973.8
+    },
+    {
+      "id": "queenstown-89-dawson-rd-2022-03-132904",
+      "month": "2022-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT LOFT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "93 years 01 month",
+      "resalePrice": 930000,
+      "pricePerSqm": 9587.63,
+      "pricePerSqft": 890.72
+    }
+  ]
+}

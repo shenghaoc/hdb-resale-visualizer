@@ -1,0 +1,67 @@
+{
+  "summary": {
+    "addressKey": "clementi-505-west-coast-dr",
+    "town": "CLEMENTI",
+    "block": "505",
+    "streetName": "WEST COAST DR",
+    "coordinates": {
+      "lat": 1.31228054125456,
+      "lng": 103.759981529056
+    },
+    "medianPrice": 285000,
+    "priceIqr": [
+      285000,
+      285000
+    ],
+    "pricePerSqmMedian": 4130.43,
+    "pricePerSqftMedian": 383.73,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      69,
+      69
+    ],
+    "leaseCommenceRange": [
+      1979,
+      1979
+    ],
+    "latestMonth": "2017-09",
+    "availableDateRange": [
+      "2017-09",
+      "2017-09"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "CLEMENTI MRT STATION",
+      "distanceMeters": 653
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2017-09",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4130.43
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "clementi-505-west-coast-dr-2017-09-13952",
+      "month": "2017-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 69,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "60 years 06 months",
+      "resalePrice": 285000,
+      "pricePerSqm": 4130.43,
+      "pricePerSqft": 383.73
+    }
+  ]
+}

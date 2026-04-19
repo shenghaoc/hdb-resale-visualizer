@@ -1,0 +1,772 @@
+{
+  "summary": {
+    "addressKey": "bukit-panjang-172-gangsa-rd",
+    "town": "BUKIT PANJANG",
+    "block": "172",
+    "streetName": "GANGSA RD",
+    "coordinates": {
+      "lat": 1.37944526563634,
+      "lng": 103.766667077399
+    },
+    "medianPrice": 726844,
+    "priceIqr": [
+      701672,
+      868500
+    ],
+    "pricePerSqmMedian": 7196.48,
+    "pricePerSqftMedian": 668.58,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      101,
+      121
+    ],
+    "leaseCommenceRange": [
+      1997,
+      1997
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "2002-02",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 22"
+    ],
+    "nearestMrt": {
+      "stationName": "PETIR LRT STATION",
+      "distanceMeters": 205
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2002-02",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2326.73
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 306750,
+      "transactionCount": 12,
+      "medianPricePerSqm": 2535.13
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 240000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 2376.24
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 311000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2570.25
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 219000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2168.32
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 228000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 2257.43
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 226000,
+      "transactionCount": 7,
+      "medianPricePerSqm": 2237.62
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 330338,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2730.07
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 268000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2390.8
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2603.31
+    },
+    {
+      "month": "2003-05",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2297.03
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2685.95
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2297.03
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2644.63
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2479.34
+    },
+    {
+      "month": "2004-11",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2079.21
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 231500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2292.08
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2544.55
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2356.44
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 229000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2267.33
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2356.44
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 250500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2480.2
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 312000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2578.51
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2504.95
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 326088,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2694.94
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 304000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2512.4
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 263150,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2605.45
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 324000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2677.68
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 304000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2752.15
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3366.34
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3643.56
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3267.33
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3223.14
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 382000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3157.02
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 390100,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3518.7
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 383250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3794.56
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 448889,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4444.44
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 431000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4267.33
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4132.23
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4207.92
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3663.37
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 602888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4982.55
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 613000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5066.12
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 492000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4871.29
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5330.58
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5041.32
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 632000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5223.14
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5396.04
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 507000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5019.8
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 481000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4762.38
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 469888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4652.36
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 468888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4642.46
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4421.49
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4673.27
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4702.97
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3861.39
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 583000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4818.18
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4455.45
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 478000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4732.67
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 426000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4217.82
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 428168,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4239.29
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5289.26
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4435.64
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 378888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3751.37
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4009.9
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5123.97
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 745000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6157.02
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 570888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5652.36
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6611.57
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 607000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6009.9
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 706688,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6996.91
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 909000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7512.4
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 747000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7396.04
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 940000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7768.6
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6930.69
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2026-03-223490",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 09 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 6930.69,
+      "pricePerSqft": 643.88
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2025-07-202348",
+      "month": "2025-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 940000,
+      "pricePerSqm": 7768.6,
+      "pricePerSqft": 721.73
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2025-03-201986",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 10 months",
+      "resalePrice": 747000,
+      "pricePerSqm": 7396.04,
+      "pricePerSqft": 687.12
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2025-02-202340",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 909000,
+      "pricePerSqm": 7512.4,
+      "pricePerSqft": 697.93
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2024-06-175077",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 07 months",
+      "resalePrice": 706688,
+      "pricePerSqm": 6996.91,
+      "pricePerSqft": 650.03
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2024-05-175002",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 607000,
+      "pricePerSqm": 6009.9,
+      "pricePerSqft": 558.34
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2023-05-148858",
+      "month": "2023-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years 08 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 6611.57,
+      "pricePerSqft": 614.24
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2022-06-121853",
+      "month": "2022-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 07 months",
+      "resalePrice": 570888,
+      "pricePerSqm": 5652.36,
+      "pricePerSqft": 525.12
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2022-05-121789",
+      "month": "2022-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 745000,
+      "pricePerSqm": 6157.02,
+      "pricePerSqft": 572.01
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2022-01-121436",
+      "month": "2022-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years",
+      "resalePrice": 505000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2020-12-85648",
+      "month": "2020-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 620000,
+      "pricePerSqm": 5123.97,
+      "pricePerSqft": 476.03
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2020-02-66493",
+      "month": "2020-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 10 months",
+      "resalePrice": 405000,
+      "pricePerSqm": 4009.9,
+      "pricePerSqft": 372.53
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2019-12-62758",
+      "month": "2019-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 01 month",
+      "resalePrice": 378888,
+      "pricePerSqm": 3751.37,
+      "pricePerSqft": 348.51
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2019-11-60865",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 01 month",
+      "resalePrice": 448000,
+      "pricePerSqm": 4435.64,
+      "pricePerSqft": 412.09
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2019-09-56877",
+      "month": "2019-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 03 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 5289.26,
+      "pricePerSqft": 491.39
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2019-07-52895",
+      "month": "2019-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 05 months",
+      "resalePrice": 428168,
+      "pricePerSqm": 4239.29,
+      "pricePerSqft": 393.84
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2019-06-50957",
+      "month": "2019-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 07 months",
+      "resalePrice": 426000,
+      "pricePerSqm": 4217.82,
+      "pricePerSqft": 391.85
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2018-11-39170",
+      "month": "2018-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 473888,
+      "pricePerSqm": 4691.96,
+      "pricePerSqft": 435.9
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2018-11-39171",
+      "month": "2018-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 478000,
+      "pricePerSqm": 4732.67,
+      "pricePerSqft": 439.68
+    },
+    {
+      "id": "bukit-panjang-172-gangsa-rd-2018-11-39197",
+      "month": "2018-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 635000,
+      "pricePerSqm": 5247.93,
+      "pricePerSqft": 487.55
+    }
+  ]
+}

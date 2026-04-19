@@ -1,0 +1,926 @@
+{
+  "summary": {
+    "addressKey": "queenstown-26-tanglin-halt-rd",
+    "town": "QUEENSTOWN",
+    "block": "26",
+    "streetName": "TANGLIN HALT RD",
+    "coordinates": {
+      "lat": 1.29810641144417,
+      "lng": 103.799781003593
+    },
+    "medianPrice": 124000,
+    "priceIqr": [
+      77000,
+      172500
+    ],
+    "pricePerSqmMedian": 2223.22,
+    "pricePerSqftMedian": 206.55,
+    "transactionCount": 126,
+    "floorAreaRange": [
+      46,
+      66
+    ],
+    "leaseCommenceRange": [
+      1973,
+      1973
+    ],
+    "latestMonth": "2013-04",
+    "availableDateRange": [
+      "1990-01",
+      "2013-04"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "STANDARD"
+    ],
+    "nearestMrt": {
+      "stationName": "COMMONWEALTH MRT STATION",
+      "distanceMeters": 450
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 19000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 413.04
+    },
+    {
+      "month": "1990-02",
+      "medianPrice": 20000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 357.14
+    },
+    {
+      "month": "1990-03",
+      "medianPrice": 15500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 336.96
+    },
+    {
+      "month": "1990-05",
+      "medianPrice": 23000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 410.71
+    },
+    {
+      "month": "1990-06",
+      "medianPrice": 23000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 410.71
+    },
+    {
+      "month": "1990-08",
+      "medianPrice": 23200,
+      "transactionCount": 1,
+      "medianPricePerSqm": 351.52
+    },
+    {
+      "month": "1991-08",
+      "medianPrice": 23000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 410.71
+    },
+    {
+      "month": "1991-09",
+      "medianPrice": 16500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 358.7
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 25000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 446.43
+    },
+    {
+      "month": "1991-12",
+      "medianPrice": 19000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 413.04
+    },
+    {
+      "month": "1992-01",
+      "medianPrice": 16000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 347.83
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 20000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 377.36
+    },
+    {
+      "month": "1992-03",
+      "medianPrice": 22000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 392.86
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 20000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 357.14
+    },
+    {
+      "month": "1992-08",
+      "medianPrice": 23000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 410.71
+    },
+    {
+      "month": "1992-09",
+      "medianPrice": 19000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 413.04
+    },
+    {
+      "month": "1992-11",
+      "medianPrice": 29500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 526.78
+    },
+    {
+      "month": "1993-01",
+      "medianPrice": 19000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 413.04
+    },
+    {
+      "month": "1993-03",
+      "medianPrice": 16000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 347.83
+    },
+    {
+      "month": "1993-04",
+      "medianPrice": 25000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 446.43
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1071.43
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 55000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1195.65
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1509.43
+    },
+    {
+      "month": "1994-07",
+      "medianPrice": 75000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1339.29
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 68000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1214.29
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 68000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1214.29
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1363.64
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 97000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1732.14
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 129000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1954.55
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 117500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1931.82
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 146500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2616.07
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 131500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2538.43
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1956.52
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 96500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2097.83
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2173.91
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 162500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2901.79
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3178.57
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 194000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3464.29
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 170500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3044.64
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.21
+    },
+    {
+      "month": "1998-01",
+      "medianPrice": 145000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2656
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 76000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1652.17
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 131000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2339.29
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 121000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1991.62
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 118000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2107.14
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2142.86
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 122000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2178.57
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 110000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1964.29
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 82000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1782.61
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 115000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2169.81
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 127000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2267.86
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 113500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2026.79
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 107000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1910.71
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 112500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2008.93
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 72000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1565.22
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 117800,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2103.57
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 85500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1652.95
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 72000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1565.22
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 138000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2090.91
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 111500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1991.07
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 119000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2125
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 151500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2295.45
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2321.43
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2321.43
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 125000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2206.85
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2321.43
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2857.14
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 84500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1836.96
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 171000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3053.57
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3303.57
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2767.86
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 135000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2410.71
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 107000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2326.09
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 116000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2521.74
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2767.86
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 143500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2562.5
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 153000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2732.14
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2678.57
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 158000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2821.43
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 138000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2697.2
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 159000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2839.28
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 188000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3357.14
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 224500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3689.66
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 213000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3803.57
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3571.43
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 219444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3918.64
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 229000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3859.92
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 223000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3982.14
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4456.52
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4347.83
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 250500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4880.83
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5142.86
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5232.14
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5339.29
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5392.86
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5750
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5678.57
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5652.17
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 333500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5955.35
+    },
+    {
+      "month": "2013-04",
+      "medianPrice": 335500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5991.07
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2013-04-623523",
+      "month": "2013-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 331000,
+      "pricePerSqm": 5910.71,
+      "pricePerSqft": 549.12
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2013-04-623526",
+      "month": "2013-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 340000,
+      "pricePerSqm": 6071.43,
+      "pricePerSqft": 564.05
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2013-01-619621",
+      "month": "2013-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 322000,
+      "pricePerSqm": 5750,
+      "pricePerSqft": 534.19
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2013-01-619629",
+      "month": "2013-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 345000,
+      "pricePerSqm": 6160.71,
+      "pricePerSqft": 572.35
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2012-08-610956",
+      "month": "2012-08",
+      "flatType": "2 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 46,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 260000,
+      "pricePerSqm": 5652.17,
+      "pricePerSqft": 525.1
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2012-05-604621",
+      "month": "2012-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 05",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 318000,
+      "pricePerSqm": 5678.57,
+      "pricePerSqft": 527.56
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2011-12-594899",
+      "month": "2011-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 322000,
+      "pricePerSqm": 5750,
+      "pricePerSqft": 534.19
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2011-10-591582",
+      "month": "2011-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 302000,
+      "pricePerSqm": 5392.86,
+      "pricePerSqft": 501.01
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2011-02-576404",
+      "month": "2011-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 299000,
+      "pricePerSqm": 5339.29,
+      "pricePerSqft": 496.04
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-12-572465",
+      "month": "2010-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 293000,
+      "pricePerSqm": 5232.14,
+      "pricePerSqft": 486.08
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-08-562005",
+      "month": "2010-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 288000,
+      "pricePerSqm": 5142.86,
+      "pricePerSqft": 477.79
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-07-558530",
+      "month": "2010-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 46,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 210000,
+      "pricePerSqm": 4565.22,
+      "pricePerSqft": 424.12
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-07-558577",
+      "month": "2010-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 291000,
+      "pricePerSqm": 5196.43,
+      "pricePerSqft": 482.76
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-05-551651",
+      "month": "2010-05",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 46,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 200000,
+      "pricePerSqm": 4347.83,
+      "pricePerSqft": 403.93
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2010-02-542684",
+      "month": "2010-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 46,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 205000,
+      "pricePerSqm": 4456.52,
+      "pricePerSqft": 414.02
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2009-07-522850",
+      "month": "2009-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 223000,
+      "pricePerSqm": 3982.14,
+      "pricePerSqft": 369.95
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2009-04-515613",
+      "month": "2009-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 66,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 248000,
+      "pricePerSqm": 3757.58,
+      "pricePerSqft": 349.09
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2009-04-515614",
+      "month": "2009-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 53,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 210000,
+      "pricePerSqm": 3962.26,
+      "pricePerSqft": 368.11
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2008-12-507121",
+      "month": "2008-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 225000,
+      "pricePerSqm": 4017.86,
+      "pricePerSqft": 373.27
+    },
+    {
+      "id": "queenstown-26-tanglin-halt-rd-2008-12-507122",
+      "month": "2008-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 56,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years",
+      "resalePrice": 213888,
+      "pricePerSqm": 3819.43,
+      "pricePerSqft": 354.84
+    }
+  ]
+}

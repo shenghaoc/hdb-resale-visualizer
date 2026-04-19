@@ -1,0 +1,574 @@
+{
+  "summary": {
+    "addressKey": "hougang-987b-buangkok-green",
+    "town": "HOUGANG",
+    "block": "987B",
+    "streetName": "BUANGKOK GREEN",
+    "coordinates": {
+      "lat": 1.37939224749513,
+      "lng": 103.878283914186
+    },
+    "medianPrice": 380000,
+    "priceIqr": [
+      359694,
+      471944
+    ],
+    "pricePerSqmMedian": 7647.06,
+    "pricePerSqftMedian": 710.44,
+    "transactionCount": 15,
+    "floorAreaRange": [
+      47,
+      68
+    ],
+    "leaseCommenceRange": [
+      2015,
+      2015
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2018-05",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "2-ROOM",
+      "MODEL A",
+      "MAX FLOOR 17"
+    ],
+    "nearestMrt": {
+      "stationName": "TONGKANG LRT STATION",
+      "distanceMeters": 1383
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2018-05",
+      "medianPrice": 317500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4669.11
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 315000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4632.35
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4558.82
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4735.29
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 337500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4963.24
+    },
+    {
+      "month": "2019-03",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4779.41
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4705.88
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 230000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4882.35
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4361.7
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4485.29
+    },
+    {
+      "month": "2020-02",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4705.88
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 219050,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4660.64
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 325000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5063.83
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 263250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4615.45
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5220.59
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5063.83
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4893.62
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 242000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5148.94
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 233000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4957.45
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5212.77
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 344000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5058.82
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5425.53
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 252000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5361.7
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5294.12
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 385000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5661.76
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 377000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5544.12
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6978.72
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 356000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7574.47
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7617.02
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 427000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6279.41
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7510.64
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 433950,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6381.62
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7234.04
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 351000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7468.09
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6691.18
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 488888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7189.53
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 446500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7798.18
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 363500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7734.04
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 355888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7572.09
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8255.32
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8085.11
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7647.06
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 372500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7925.53
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7647.06
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-987b-buangkok-green-2026-02-224382",
+      "month": "2026-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 520000,
+      "pricePerSqm": 7647.06,
+      "pricePerSqft": 710.44
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2026-01-224375",
+      "month": "2026-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 365000,
+      "pricePerSqm": 7765.96,
+      "pricePerSqft": 721.48
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2026-01-224376",
+      "month": "2026-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 380000,
+      "pricePerSqm": 8085.11,
+      "pricePerSqft": 751.13
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2025-08-205092",
+      "month": "2025-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 07 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 7647.06,
+      "pricePerSqft": 710.44
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2025-05-205037",
+      "month": "2025-05",
+      "flatType": "2 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 8085.11,
+      "pricePerSqft": 751.13
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2025-04-205036",
+      "month": "2025-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 11 months",
+      "resalePrice": 388000,
+      "pricePerSqm": 8255.32,
+      "pricePerSqft": 766.94
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2025-02-205035",
+      "month": "2025-02",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 01 month",
+      "resalePrice": 355888,
+      "pricePerSqm": 7572.09,
+      "pricePerSqft": 703.47
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2025-01-205034",
+      "month": "2025-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 363500,
+      "pricePerSqm": 7734.04,
+      "pricePerSqft": 718.52
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-12-179682",
+      "month": "2024-12",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 7978.72,
+      "pricePerSqft": 741.25
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-12-179704",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 7617.65,
+      "pricePerSqft": 707.7
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-10-179504",
+      "month": "2024-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 05 months",
+      "resalePrice": 488888,
+      "pricePerSqm": 7189.53,
+      "pricePerSqft": 667.93
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-09-179395",
+      "month": "2024-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 06 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 6691.18,
+      "pricePerSqft": 621.63
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-08-179224",
+      "month": "2024-08",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 348000,
+      "pricePerSqm": 7404.26,
+      "pricePerSqft": 687.88
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-08-179226",
+      "month": "2024-08",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 354000,
+      "pricePerSqm": 7531.91,
+      "pricePerSqft": 699.74
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-05-178832",
+      "month": "2024-05",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 340000,
+      "pricePerSqm": 7234.04,
+      "pricePerSqft": 672.07
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-01-178332",
+      "month": "2024-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 428000,
+      "pricePerSqm": 6294.12,
+      "pricePerSqft": 584.74
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2024-01-178336",
+      "month": "2024-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 439900,
+      "pricePerSqm": 6469.12,
+      "pricePerSqft": 601
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2023-11-153003",
+      "month": "2023-11",
+      "flatType": "2 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 03 months",
+      "resalePrice": 353000,
+      "pricePerSqm": 7510.64,
+      "pricePerSqft": 697.76
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2023-09-152765",
+      "month": "2023-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 06 months",
+      "resalePrice": 427000,
+      "pricePerSqm": 6279.41,
+      "pricePerSqft": 583.38
+    },
+    {
+      "id": "hougang-987b-buangkok-green-2023-05-152300",
+      "month": "2023-05",
+      "flatType": "2 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "90 years 09 months",
+      "resalePrice": 358000,
+      "pricePerSqm": 7617.02,
+      "pricePerSqft": 707.65
+    }
+  ]
+}

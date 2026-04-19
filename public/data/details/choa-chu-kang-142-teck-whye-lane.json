@@ -1,0 +1,562 @@
+{
+  "summary": {
+    "addressKey": "choa-chu-kang-142-teck-whye-lane",
+    "town": "CHOA CHU KANG",
+    "block": "142",
+    "streetName": "TECK WHYE LANE",
+    "coordinates": {
+      "lat": 1.38079049641025,
+      "lng": 103.75195441174
+    },
+    "medianPrice": 555000,
+    "priceIqr": [
+      498750,
+      625000
+    ],
+    "pricePerSqmMedian": 4901.61,
+    "pricePerSqftMedian": 455.38,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      103,
+      131
+    ],
+    "leaseCommenceRange": [
+      1989,
+      1989
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "1993-10",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 13"
+    ],
+    "nearestMrt": {
+      "stationName": "KEAT HONG LRT STATION",
+      "distanceMeters": 398
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1993-10",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 884.96
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 263800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2044.96
+    },
+    {
+      "month": "1994-11",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2047.24
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2009.26
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 352500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2981.36
+    },
+    {
+      "month": "1997-05",
+      "medianPrice": 354000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3019.82
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3016.53
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 259000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2514.56
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 261000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 301100,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2488.43
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 230500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2121.41
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 299000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2471.07
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2175.93
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2066.67
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2732.82
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 297300,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2457.02
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 252500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2337.96
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 307000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2417.32
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 323000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2669.42
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 259000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2398.15
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2184.47
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 214000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2077.67
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 277000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2289.26
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1983.47
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 177000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1638.89
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1619.05
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 201000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1778.76
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 178000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1728.16
+    },
+    {
+      "month": "2008-08",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2148.76
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 392000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3038.76
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3980.58
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3095.24
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2870.37
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2824.07
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3435.11
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3300.97
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 377000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3660.19
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4049.59
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3982.3
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5114.5
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 555000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4901.61
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4714.29
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2026-03-223896",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 4714.29,
+      "pricePerSqft": 437.97
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2026-02-223894",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 05 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 4761.9,
+      "pricePerSqft": 442.4
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2026-02-224000",
+      "month": "2026-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 5041.32,
+      "pricePerSqft": 468.35
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2025-06-203712",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 131,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "63 years 01 month",
+      "resalePrice": 670000,
+      "pricePerSqm": 5114.5,
+      "pricePerSqft": 475.15
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2022-11-123801",
+      "month": "2022-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "65 years 08 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 3982.3,
+      "pricePerSqft": 369.97
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2022-01-122674",
+      "month": "2022-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years 06 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 4049.59,
+      "pricePerSqft": 376.22
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2021-08-104517",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "66 years 11 months",
+      "resalePrice": 377000,
+      "pricePerSqm": 3660.19,
+      "pricePerSqft": 340.04
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2021-03-92805",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "67 years 03 months",
+      "resalePrice": 340000,
+      "pricePerSqm": 3300.97,
+      "pricePerSqft": 306.67
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2020-06-71253",
+      "month": "2020-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 131,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 02 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 3435.11,
+      "pricePerSqft": 319.13
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2019-11-60933",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "68 years 07 months",
+      "resalePrice": 305000,
+      "pricePerSqm": 2824.07,
+      "pricePerSqft": 262.37
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2018-07-30819",
+      "month": "2018-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "70 years 01 month",
+      "resalePrice": 310000,
+      "pricePerSqm": 2870.37,
+      "pricePerSqft": 266.67
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2015-07-947145",
+      "month": "2015-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "72",
+      "resalePrice": 325000,
+      "pricePerSqm": 3095.24,
+      "pricePerSqft": 287.56
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2013-01-619075",
+      "month": "2013-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 410000,
+      "pricePerSqm": 3980.58,
+      "pricePerSqft": 369.81
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2010-09-564077",
+      "month": "2010-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 129,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 392000,
+      "pricePerSqm": 3038.76,
+      "pricePerSqft": 282.31
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2008-08-496992",
+      "month": "2008-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 260000,
+      "pricePerSqm": 2148.76,
+      "pricePerSqft": 199.63
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2006-08-443115",
+      "month": "2006-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 178000,
+      "pricePerSqm": 1728.16,
+      "pricePerSqft": 160.55
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2005-04-404922",
+      "month": "2005-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 201000,
+      "pricePerSqm": 1778.76,
+      "pricePerSqft": 165.25
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2003-06-349969",
+      "month": "2003-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 170000,
+      "pricePerSqm": 1619.05,
+      "pricePerSqft": 150.41
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2002-08-324615",
+      "month": "2002-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 177000,
+      "pricePerSqm": 1638.89,
+      "pricePerSqft": 152.26
+    },
+    {
+      "id": "choa-chu-kang-142-teck-whye-lane-2001-11-296674",
+      "month": "2001-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years",
+      "resalePrice": 240000,
+      "pricePerSqm": 1983.47,
+      "pricePerSqft": 184.27
+    }
+  ]
+}

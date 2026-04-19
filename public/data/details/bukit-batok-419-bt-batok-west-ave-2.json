@@ -1,0 +1,886 @@
+{
+  "summary": {
+    "addressKey": "bukit-batok-419-bt-batok-west-ave-2",
+    "town": "BUKIT BATOK",
+    "block": "419",
+    "streetName": "BT BATOK WEST AVE 2",
+    "coordinates": {
+      "lat": 1.36194738218146,
+      "lng": 103.746196377992
+    },
+    "medianPrice": 662500,
+    "priceIqr": [
+      627500,
+      700000
+    ],
+    "pricePerSqmMedian": 5301.28,
+    "pricePerSqftMedian": 492.5,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      83,
+      130
+    ],
+    "leaseCommenceRange": [
+      1986,
+      1986
+    ],
+    "latestMonth": "2025-01",
+    "availableDateRange": [
+      "1991-11",
+      "2025-01"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "SIMPLIFIED",
+      "MAX FLOOR 10"
+    ],
+    "nearestMrt": {
+      "stationName": "BUKIT GOMBAK MRT STATION",
+      "distanceMeters": 693
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-11",
+      "medianPrice": 148000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1138.46
+    },
+    {
+      "month": "1992-01",
+      "medianPrice": 82000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 987.95
+    },
+    {
+      "month": "1992-04",
+      "medianPrice": 159500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1226.92
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 62000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 746.99
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 125000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1506.02
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2250
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 209500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2018.88
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1686.75
+    },
+    {
+      "month": "1994-03",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1692.31
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 125000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1506.02
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 135000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1626.51
+    },
+    {
+      "month": "1994-09",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1566.27
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 209000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1979.42
+    },
+    {
+      "month": "1995-02",
+      "medianPrice": 281000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2251.93
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 207500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1961.35
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2250
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 181800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2190.36
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 401000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3341.67
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 291500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2834.09
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3292.31
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 248750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2996.99
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 242500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2921.69
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2891.57
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2771.08
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2626.51
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3125
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 333000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2775
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 200000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2409.64
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 332500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2557.69
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2168.67
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 182500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2198.8
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 311000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2507.69
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2330.77
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1987.95
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 301800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2321.54
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2583.33
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 183500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2210.84
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2615.38
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 186000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2240.96
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2048.19
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 181000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2180.72
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2316.67
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 275000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2115.39
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 258000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2150
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 278000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2316.67
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1867.47
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 172000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2072.29
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1927.71
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2168.67
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2626.51
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2108.33
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1867.47
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 266800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2052.31
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 243000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2025
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2083.33
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 180000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2168.67
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 246000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2050
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2108.43
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 252500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2104.16
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2240.96
+    },
+    {
+      "month": "2007-09",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2168.67
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2240.96
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2269.23
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 184000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2216.87
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 207000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2493.98
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2349.4
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3156.63
+    },
+    {
+      "month": "2010-08",
+      "medianPrice": 332000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3349.9
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3855.42
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4216.87
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4819.28
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 366000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4409.64
+    },
+    {
+      "month": "2013-10",
+      "medianPrice": 470999,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3924.99
+    },
+    {
+      "month": "2014-01",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3730.77
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4277.11
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3384.62
+    },
+    {
+      "month": "2015-05",
+      "medianPrice": 452000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3766.67
+    },
+    {
+      "month": "2016-01",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3523.08
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 462000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3553.85
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 312000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3759.04
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 412000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3169.23
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4012.05
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3975.9
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3615.38
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3816.67
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3875
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3769.23
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 453944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4535.13
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5036.14
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4916.67
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5333.33
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 715000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5500
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2025-01-200618",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "60 years 09 months",
+      "resalePrice": 745000,
+      "pricePerSqm": 5730.77,
+      "pricePerSqft": 532.41
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2025-01-200619",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "60 years 08 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 5269.23,
+      "pricePerSqft": 489.53
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2024-10-173358",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years",
+      "resalePrice": 640000,
+      "pricePerSqm": 5333.33,
+      "pricePerSqft": 495.48
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2024-07-172872",
+      "month": "2024-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years 02 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 4916.67,
+      "pricePerSqft": 456.77
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2022-07-119971",
+      "month": "2022-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 02 months",
+      "resalePrice": 418000,
+      "pricePerSqm": 5036.14,
+      "pricePerSqft": 467.87
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2022-03-119690",
+      "month": "2022-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 05 months",
+      "resalePrice": 405000,
+      "pricePerSqm": 4879.52,
+      "pricePerSqft": 453.32
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2022-03-119708",
+      "month": "2022-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 05 months",
+      "resalePrice": 502888,
+      "pricePerSqm": 4190.73,
+      "pricePerSqft": 389.33
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2022-01-119576",
+      "month": "2022-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 08 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 3769.23,
+      "pricePerSqft": 350.17
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2021-08-104254",
+      "month": "2021-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years",
+      "resalePrice": 465000,
+      "pricePerSqm": 3875,
+      "pricePerSqft": 360
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2021-07-101624",
+      "month": "2021-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 02 months",
+      "resalePrice": 458000,
+      "pricePerSqm": 3816.67,
+      "pricePerSqft": 354.58
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2021-06-99265",
+      "month": "2021-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 03 months",
+      "resalePrice": 470000,
+      "pricePerSqm": 3615.38,
+      "pricePerSqft": 335.88
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2021-03-92536",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 07 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 3975.9,
+      "pricePerSqft": 369.37
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2021-02-90352",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 07 months",
+      "resalePrice": 333000,
+      "pricePerSqm": 4012.05,
+      "pricePerSqft": 372.73
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2018-03-23056",
+      "month": "2018-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "67 years 05 months",
+      "resalePrice": 412000,
+      "pricePerSqm": 3169.23,
+      "pricePerSqft": 294.43
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2017-07-9982",
+      "month": "2017-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "68 years 01 month",
+      "resalePrice": 312000,
+      "pricePerSqm": 3759.04,
+      "pricePerSqft": 349.23
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2017-03-2557",
+      "month": "2017-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "68 years 05 months",
+      "resalePrice": 462000,
+      "pricePerSqm": 3553.85,
+      "pricePerSqft": 330.16
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-07-965722",
+      "month": "2016-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "69",
+      "resalePrice": 455000,
+      "pricePerSqm": 3500,
+      "pricePerSqft": 325.16
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-01-956066",
+      "month": "2016-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "69",
+      "resalePrice": 458000,
+      "pricePerSqm": 3523.08,
+      "pricePerSqft": 327.3
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2015-05-943705",
+      "month": "2015-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "70",
+      "resalePrice": 452000,
+      "pricePerSqm": 3766.67,
+      "pricePerSqft": 349.94
+    },
+    {
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2014-12-649813",
+      "month": "2014-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years",
+      "resalePrice": 440000,
+      "pricePerSqm": 3384.62,
+      "pricePerSqft": 314.44
+    }
+  ]
+}

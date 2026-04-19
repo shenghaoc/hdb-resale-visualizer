@@ -1,0 +1,682 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-81-redhill-lane",
+    "town": "BUKIT MERAH",
+    "block": "81",
+    "streetName": "REDHILL LANE",
+    "coordinates": {
+      "lat": 1.28775818263836,
+      "lng": 103.819493616875
+    },
+    "medianPrice": 1175000,
+    "priceIqr": [
+      1160000,
+      1200000
+    ],
+    "pricePerSqmMedian": 9099.3,
+    "pricePerSqftMedian": 845.36,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      114,
+      139
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "2000-05",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 20"
+    ],
+    "nearestMrt": {
+      "stationName": "REDHILL MRT STATION",
+      "distanceMeters": 315
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2000-05",
+      "medianPrice": 582900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4682.62
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3928.57
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4044.12
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 556000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4183.71
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 361000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3166.67
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4044.12
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 501000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3976.19
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3664.12
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 451500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3604.71
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3587.79
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 452500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3591.27
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 506000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4015.87
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3449.61
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 523000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3845.59
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 501000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3815.71
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 442000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3683.33
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3791.67
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 476000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3777.78
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 485500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3946.63
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 512000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3764.71
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3308.82
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 433000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3436.51
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 457000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3715.45
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3571.43
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3455.88
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3555.56
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3529.41
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4674.8
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4558.82
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4911.76
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4889.71
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5593.5
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5500
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 725444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5334.15
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 705500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5879.07
+    },
+    {
+      "month": "2013-04",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6541.67
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 838000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6650.79
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6617.65
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 768000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5862.6
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 835000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6626.98
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6834.53
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6349.21
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6564.89
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 868000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6888.89
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6500
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 838000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6650.79
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6834.53
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 935000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6875
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 870000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6514.23
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7142.86
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 858000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6809.52
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6488.55
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 878000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6455.88
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 990000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7857.14
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 998000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8316.67
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 1160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8992.25
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 1160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9206.35
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 1190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8750
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 1230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9761.9
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-81-redhill-lane-2025-12-201735",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years",
+      "resalePrice": 1230000,
+      "pricePerSqm": 9761.9,
+      "pricePerSqft": 906.91
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2025-08-201733",
+      "month": "2025-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 136,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 04 months",
+      "resalePrice": 1190000,
+      "pricePerSqm": 8750,
+      "pricePerSqft": 812.9
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2025-02-201731",
+      "month": "2025-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 1160000,
+      "pricePerSqm": 9206.35,
+      "pricePerSqft": 855.3
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2024-10-174525",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 129,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 02 months",
+      "resalePrice": 1160000,
+      "pricePerSqm": 8992.25,
+      "pricePerSqft": 835.41
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2023-11-148444",
+      "month": "2023-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 998000,
+      "pricePerSqm": 8316.67,
+      "pricePerSqft": 772.64
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2023-06-148003",
+      "month": "2023-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 06 months",
+      "resalePrice": 990000,
+      "pricePerSqm": 7857.14,
+      "pricePerSqft": 729.95
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2023-01-147622",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 136,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 11 months",
+      "resalePrice": 878000,
+      "pricePerSqm": 6455.88,
+      "pricePerSqft": 599.77
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2022-04-120731",
+      "month": "2022-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 131,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 08 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 6488.55,
+      "pricePerSqft": 602.81
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2022-02-120556",
+      "month": "2022-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 10 months",
+      "resalePrice": 858000,
+      "pricePerSqm": 6809.52,
+      "pricePerSqft": 632.63
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2021-09-107092",
+      "month": "2021-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 02 months",
+      "resalePrice": 900000,
+      "pricePerSqm": 7142.86,
+      "pricePerSqft": 663.59
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2021-03-92651",
+      "month": "2021-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 131,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 835000,
+      "pricePerSqm": 6374.05,
+      "pricePerSqft": 592.17
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2021-03-92661",
+      "month": "2021-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 136,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 09 months",
+      "resalePrice": 905000,
+      "pricePerSqm": 6654.41,
+      "pricePerSqft": 618.22
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2021-02-90467",
+      "month": "2021-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 136,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 10 months",
+      "resalePrice": 935000,
+      "pricePerSqm": 6875,
+      "pricePerSqft": 638.71
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2019-11-60820",
+      "month": "2019-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 139,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years",
+      "resalePrice": 950000,
+      "pricePerSqm": 6834.53,
+      "pricePerSqft": 634.95
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2018-11-39126",
+      "month": "2018-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years",
+      "resalePrice": 800000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2018-09-35197",
+      "month": "2018-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 02 months",
+      "resalePrice": 838000,
+      "pricePerSqm": 6650.79,
+      "pricePerSqft": 617.88
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2018-07-30639",
+      "month": "2018-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 114,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 05 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 5833.33,
+      "pricePerSqft": 541.93
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2018-04-25044",
+      "month": "2018-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 08 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2018-03-23145",
+      "month": "2018-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 08 months",
+      "resalePrice": 868000,
+      "pricePerSqm": 6888.89,
+      "pricePerSqft": 640
+    },
+    {
+      "id": "bukit-merah-81-redhill-lane-2017-11-17337",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 131,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "78 years",
+      "resalePrice": 860000,
+      "pricePerSqm": 6564.89,
+      "pricePerSqft": 609.9
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "summary": {
+    "addressKey": "hougang-997b-buangkok-cres",
+    "town": "HOUGANG",
+    "block": "997B",
+    "streetName": "BUANGKOK CRES",
+    "coordinates": {
+      "lat": 1.38590156781199,
+      "lng": 103.8813870478
+    },
+    "medianPrice": 735000,
+    "priceIqr": [
+      704000,
+      792444
+    ],
+    "pricePerSqmMedian": 6858.41,
+    "pricePerSqftMedian": 637.17,
+    "transactionCount": 23,
+    "floorAreaRange": [
+      93,
+      120
+    ],
+    "leaseCommenceRange": [
+      2018,
+      2018
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "2023-01",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "3GEN",
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "TONGKANG LRT STATION",
+      "distanceMeters": 626
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2023-01",
+      "medianPrice": 722500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6393.81
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 745000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 6592.92
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5645.16
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 605000,
+      "transactionCount": 7,
+      "medianPricePerSqm": 6194.69
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 719000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6362.83
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 590000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6265.49
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 790000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6991.15
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 730000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6460.18
+    },
+    {
+      "month": "2023-10",
+      "medianPrice": 783888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6937.06
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5806.45
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 625000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6215.05
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 727500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6438.06
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 798000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7061.95
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5913.98
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6290.32
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6194.69
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5916.67
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 731000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 6349.56
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 765000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6769.91
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 660444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7101.55
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 728000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6066.67
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6725.66
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 767944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6795.97
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 802500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7101.77
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 666000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7161.29
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 818000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7238.94
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 793444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7021.63
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 672888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7235.35
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 828000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7327.43
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "hougang-997b-buangkok-cres-2026-02-224615",
+      "month": "2026-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 828000,
+      "pricePerSqm": 7327.43,
+      "pricePerSqft": 680.74
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2026-01-224458",
+      "month": "2026-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 11 months",
+      "resalePrice": 672888,
+      "pricePerSqm": 7235.35,
+      "pricePerSqft": 672.19
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-12-206027",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years",
+      "resalePrice": 811888,
+      "pricePerSqm": 7184.85,
+      "pricePerSqft": 667.5
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-12-206029",
+      "month": "2025-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years",
+      "resalePrice": 775000,
+      "pricePerSqm": 6858.41,
+      "pricePerSqft": 637.17
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-08-206020",
+      "month": "2025-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 04 months",
+      "resalePrice": 818000,
+      "pricePerSqm": 7238.94,
+      "pricePerSqft": 672.52
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-07-205440",
+      "month": "2025-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 04 months",
+      "resalePrice": 666000,
+      "pricePerSqm": 7161.29,
+      "pricePerSqft": 665.31
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-06-206013",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 06 months",
+      "resalePrice": 805000,
+      "pricePerSqm": 7123.89,
+      "pricePerSqft": 661.83
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-06-206014",
+      "month": "2025-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 05 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 7079.65,
+      "pricePerSqft": 657.72
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-05-206010",
+      "month": "2025-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 720000,
+      "pricePerSqm": 6371.68,
+      "pricePerSqft": 591.95
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-05-206012",
+      "month": "2025-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 06 months",
+      "resalePrice": 815888,
+      "pricePerSqm": 7220.25,
+      "pricePerSqft": 670.78
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-03-206009",
+      "month": "2025-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 09 months",
+      "resalePrice": 760000,
+      "pricePerSqm": 6725.66,
+      "pricePerSqft": 624.84
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2025-01-206003",
+      "month": "2025-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "3GEN",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "92 years 11 months",
+      "resalePrice": 728000,
+      "pricePerSqm": 6066.67,
+      "pricePerSqft": 563.61
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-12-179722",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years",
+      "resalePrice": 658000,
+      "pricePerSqm": 7075.27,
+      "pricePerSqft": 657.31
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-12-179724",
+      "month": "2024-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years",
+      "resalePrice": 662888,
+      "pricePerSqm": 7127.83,
+      "pricePerSqft": 662.2
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-10-179520",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 02 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 6451.61,
+      "pricePerSqft": 599.38
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-10-179548",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 03 months",
+      "resalePrice": 765000,
+      "pricePerSqm": 6769.91,
+      "pricePerSqft": 628.95
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-10-179550",
+      "month": "2024-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 02 months",
+      "resalePrice": 772000,
+      "pricePerSqm": 6831.86,
+      "pricePerSqft": 634.7
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-09-179449",
+      "month": "2024-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 03 months",
+      "resalePrice": 708000,
+      "pricePerSqm": 6265.49,
+      "pricePerSqft": 582.08
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-09-179455",
+      "month": "2024-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 03 months",
+      "resalePrice": 727000,
+      "pricePerSqm": 6433.63,
+      "pricePerSqft": 597.7
+    },
+    {
+      "id": "hougang-997b-buangkok-cres-2024-09-179457",
+      "month": "2024-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "3GEN",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "93 years 03 months",
+      "resalePrice": 735000,
+      "pricePerSqm": 6125,
+      "pricePerSqft": 569.03
+    }
+  ]
+}

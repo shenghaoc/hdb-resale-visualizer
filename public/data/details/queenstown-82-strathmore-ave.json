@@ -1,0 +1,634 @@
+{
+  "summary": {
+    "addressKey": "queenstown-82-strathmore-ave",
+    "town": "QUEENSTOWN",
+    "block": "82",
+    "streetName": "STRATHMORE AVE",
+    "coordinates": {
+      "lat": 1.29454525879508,
+      "lng": 103.808751073606
+    },
+    "medianPrice": 1055000,
+    "priceIqr": [
+      990000,
+      1180000
+    ],
+    "pricePerSqmMedian": 9440,
+    "pricePerSqftMedian": 877.01,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      102,
+      125
+    ],
+    "leaseCommenceRange": [
+      1997,
+      1997
+    ],
+    "latestMonth": "2025-02",
+    "availableDateRange": [
+      "2001-05",
+      "2025-02"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 24"
+    ],
+    "nearestMrt": {
+      "stationName": "QUEENSTOWN MRT STATION",
+      "distanceMeters": 272
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2001-05",
+      "medianPrice": 454250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3953.86
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 451500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3890.19
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 394000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 3752.65
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 426000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 4052.56
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4193.55
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 476000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4107.77
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 395500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3713.5
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3760
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 444500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3907.17
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3666.67
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 384000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3692.31
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 369500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3536.95
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 418888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3989.41
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3742.86
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 462500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3980.73
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 402750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3818.28
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3920
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3796.3
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 417500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3663.99
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3317.76
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 341000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3279.05
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 371000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3467.29
+    },
+    {
+      "month": "2006-02",
+      "medianPrice": 363000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3392.52
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3600
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3283.02
+    },
+    {
+      "month": "2006-12",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3317.76
+    },
+    {
+      "month": "2007-04",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3719.63
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 480000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4110.74
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 603000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4862.9
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4018.69
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 478500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4691.18
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5277.78
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5024
+    },
+    {
+      "month": "2009-08",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4761.9
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 525000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4964.49
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5825.24
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 810000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6532.26
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 873889,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7047.49
+    },
+    {
+      "month": "2014-08",
+      "medianPrice": 875000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 908000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7264
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6242.99
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 808000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6569.11
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 955000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7701.61
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 725000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7038.83
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6910.57
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7156.86
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 905000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7240
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 816500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7169.2
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 991000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9175.93
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 1260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10161.29
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 1180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9440
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 980000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9423.08
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 990000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9166.67
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 1055000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9768.52
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "queenstown-82-strathmore-ave-2025-02-211993",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 09 months",
+      "resalePrice": 1055000,
+      "pricePerSqm": 9768.52,
+      "pricePerSqft": 907.53
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2025-01-211991",
+      "month": "2025-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "71 years 10 months",
+      "resalePrice": 990000,
+      "pricePerSqm": 9166.67,
+      "pricePerSqft": 851.61
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2024-08-186538",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 980000,
+      "pricePerSqm": 9423.08,
+      "pricePerSqft": 875.43
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2024-07-186475",
+      "month": "2024-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 04 months",
+      "resalePrice": 1180000,
+      "pricePerSqm": 9440,
+      "pricePerSqft": 877.01
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2024-06-186388",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "72 years 05 months",
+      "resalePrice": 1260000,
+      "pricePerSqm": 10161.29,
+      "pricePerSqft": 944.02
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2023-01-158986",
+      "month": "2023-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 991000,
+      "pricePerSqm": 9175.93,
+      "pricePerSqft": 852.47
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2021-10-110744",
+      "month": "2021-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 715000,
+      "pricePerSqm": 6875,
+      "pricePerSqft": 638.71
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2021-10-110775",
+      "month": "2021-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 918000,
+      "pricePerSqm": 7463.41,
+      "pricePerSqft": 693.37
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2020-12-86718",
+      "month": "2020-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 905000,
+      "pricePerSqm": 7240,
+      "pricePerSqft": 672.62
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2020-10-81906",
+      "month": "2020-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 730000,
+      "pricePerSqm": 7156.86,
+      "pricePerSqft": 664.89
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2019-09-57568",
+      "month": "2019-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "77 years 01 month",
+      "resalePrice": 850000,
+      "pricePerSqm": 6910.57,
+      "pricePerSqft": 642.01
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2018-10-38024",
+      "month": "2018-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years",
+      "resalePrice": 725000,
+      "pricePerSqm": 7038.83,
+      "pricePerSqft": 653.93
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2018-09-36092",
+      "month": "2018-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 955000,
+      "pricePerSqm": 7701.61,
+      "pricePerSqft": 715.5
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2017-08-12766",
+      "month": "2017-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "79 years 02 months",
+      "resalePrice": 808000,
+      "pricePerSqm": 6569.11,
+      "pricePerSqft": 610.29
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2015-11-953931",
+      "month": "2015-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "80",
+      "resalePrice": 668000,
+      "pricePerSqm": 6242.99,
+      "pricePerSqft": 579.99
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2015-03-941362",
+      "month": "2015-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "81",
+      "resalePrice": 908000,
+      "pricePerSqm": 7264,
+      "pricePerSqft": 674.85
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2014-08-644679",
+      "month": "2014-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 875000,
+      "pricePerSqm": 7000,
+      "pricePerSqft": 650.32
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2012-10-614763",
+      "month": "2012-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 873888.88,
+      "pricePerSqm": 7047.49,
+      "pricePerSqft": 654.73
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2012-01-596483",
+      "month": "2012-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 124,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 810000,
+      "pricePerSqm": 6532.26,
+      "pricePerSqft": 606.87
+    },
+    {
+      "id": "queenstown-82-strathmore-ave-2010-09-565105",
+      "month": "2010-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 5825.24,
+      "pricePerSqft": 541.18
+    }
+  ]
+}

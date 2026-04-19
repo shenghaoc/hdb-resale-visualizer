@@ -1,0 +1,562 @@
+{
+  "summary": {
+    "addressKey": "jurong-west-183-yung-sheng-rd",
+    "town": "JURONG WEST",
+    "block": "183",
+    "streetName": "YUNG SHENG RD",
+    "coordinates": {
+      "lat": 1.3332396770301,
+      "lng": 103.722683916463
+    },
+    "medianPrice": 592000,
+    "priceIqr": [
+      592000,
+      592000
+    ],
+    "pricePerSqmMedian": 5103.45,
+    "pricePerSqftMedian": 474.13,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      95,
+      116
+    ],
+    "leaseCommenceRange": [
+      2001,
+      2001
+    ],
+    "latestMonth": "2024-06",
+    "availableDateRange": [
+      "2005-01",
+      "2024-06"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "LAKESIDE MRT STATION",
+      "distanceMeters": 1219
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2005-01",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2473.68
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 232250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2419.27
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 233000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2452.63
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 224500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2351.1
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 247000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2572.92
+    },
+    {
+      "month": "2005-12",
+      "medianPrice": 235000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2447.92
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 232000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 236000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2484.21
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 234000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2437.5
+    },
+    {
+      "month": "2007-08",
+      "medianPrice": 253000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2649.67
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 288000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3489.58
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3854.17
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 377000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3927.08
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4770.83
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4210.53
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 473000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4927.08
+    },
+    {
+      "month": "2013-03",
+      "medianPrice": 504250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4806.24
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4637.93
+    },
+    {
+      "month": "2013-09",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4137.93
+    },
+    {
+      "month": "2013-10",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4353.45
+    },
+    {
+      "month": "2014-12",
+      "medianPrice": 469800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4050
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3517.24
+    },
+    {
+      "month": "2015-02",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3836.21
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 442000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3810.34
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3387.93
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 478000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4120.69
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4062.5
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 472000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4068.97
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 363000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3781.25
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3965.52
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 452500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4297.77
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 417500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4370.61
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4427.08
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4375
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 533888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4602.48
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4913.79
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4842.11
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4896.55
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4612.07
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 592000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5103.45
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2024-06-181281",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 592000,
+      "pricePerSqm": 5103.45,
+      "pricePerSqft": 474.13
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2024-04-180954",
+      "month": "2024-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 535000,
+      "pricePerSqm": 4612.07,
+      "pricePerSqft": 428.48
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2024-03-180778",
+      "month": "2024-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 02 months",
+      "resalePrice": 568000,
+      "pricePerSqm": 4896.55,
+      "pricePerSqft": 454.9
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2023-09-154797",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "76 years 08 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 4842.11,
+      "pricePerSqft": 449.85
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2022-12-128736",
+      "month": "2022-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "77 years 05 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 4913.79,
+      "pricePerSqft": 456.51
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2022-03-127457",
+      "month": "2022-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 02 months",
+      "resalePrice": 533888,
+      "pricePerSqm": 4602.48,
+      "pricePerSqft": 427.59
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-07-102421",
+      "month": "2021-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "78 years 10 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 4375,
+      "pricePerSqft": 406.45
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-04-95685",
+      "month": "2021-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years",
+      "resalePrice": 425000,
+      "pricePerSqm": 4427.08,
+      "pricePerSqft": 411.29
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-02-91004",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 4157.89,
+      "pricePerSqft": 386.28
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-02-91029",
+      "month": "2021-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 02 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 4583.33,
+      "pricePerSqft": 425.81
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-01-88667",
+      "month": "2021-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 442000,
+      "pricePerSqm": 4604.17,
+      "pricePerSqft": 427.74
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2021-01-88677",
+      "month": "2021-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 463000,
+      "pricePerSqm": 3991.38,
+      "pricePerSqft": 370.81
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2018-06-29176",
+      "month": "2018-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "81 years 11 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 3965.52,
+      "pricePerSqft": 368.41
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2017-12-19630",
+      "month": "2017-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "82 years 04 months",
+      "resalePrice": 363000,
+      "pricePerSqm": 3781.25,
+      "pricePerSqft": 351.29
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2017-07-10550",
+      "month": "2017-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "82 years 09 months",
+      "resalePrice": 472000,
+      "pricePerSqm": 4068.97,
+      "pricePerSqft": 378.02
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2017-05-6877",
+      "month": "2017-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 96,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "82 years 11 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 4062.5,
+      "pricePerSqft": 377.42
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2016-12-974553",
+      "month": "2016-12",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "83",
+      "resalePrice": 478000,
+      "pricePerSqm": 4120.69,
+      "pricePerSqft": 382.82
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2015-10-952090",
+      "month": "2015-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "84",
+      "resalePrice": 393000,
+      "pricePerSqm": 3387.93,
+      "pricePerSqft": 314.75
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2015-06-945907",
+      "month": "2015-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "84",
+      "resalePrice": 442000,
+      "pricePerSqm": 3810.34,
+      "pricePerSqft": 353.99
+    },
+    {
+      "id": "jurong-west-183-yung-sheng-rd-2015-02-939891",
+      "month": "2015-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 116,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "85",
+      "resalePrice": 445000,
+      "pricePerSqm": 3836.21,
+      "pricePerSqft": 356.4
+    }
+  ]
+}

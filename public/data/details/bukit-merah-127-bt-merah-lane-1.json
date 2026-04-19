@@ -1,0 +1,143 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-127-bt-merah-lane-1",
+    "town": "BUKIT MERAH",
+    "block": "127",
+    "streetName": "BT MERAH LANE 1",
+    "coordinates": {
+      "lat": 1.28532858968794,
+      "lng": 103.803396774073
+    },
+    "medianPrice": 220000,
+    "priceIqr": [
+      140000,
+      252000
+    ],
+    "pricePerSqmMedian": 2682.93,
+    "pricePerSqftMedian": 249.25,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      67,
+      82
+    ],
+    "leaseCommenceRange": [
+      1979,
+      1979
+    ],
+    "latestMonth": "2014-05",
+    "availableDateRange": [
+      "1999-07",
+      "2014-05"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "NEW GENERATION",
+      "MAX FLOOR 2"
+    ],
+    "nearestMrt": {
+      "stationName": "QUEENSTOWN MRT STATION",
+      "distanceMeters": 1039
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1999-07",
+      "medianPrice": 137000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2044.78
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2089.55
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2682.93
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 252000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3761.19
+    },
+    {
+      "month": "2014-05",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5671.64
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-127-bt-merah-lane-1-2014-05-640110",
+      "month": "2014-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years",
+      "resalePrice": 380000,
+      "pricePerSqm": 5671.64,
+      "pricePerSqft": 526.91
+    },
+    {
+      "id": "bukit-merah-127-bt-merah-lane-1-2008-07-494309",
+      "month": "2008-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years",
+      "resalePrice": 252000,
+      "pricePerSqm": 3761.19,
+      "pricePerSqft": 349.43
+    },
+    {
+      "id": "bukit-merah-127-bt-merah-lane-1-2007-10-474377",
+      "month": "2007-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years",
+      "resalePrice": 220000,
+      "pricePerSqm": 2682.93,
+      "pricePerSqft": 249.25
+    },
+    {
+      "id": "bukit-merah-127-bt-merah-lane-1-2003-09-356409",
+      "month": "2003-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years",
+      "resalePrice": 140000,
+      "pricePerSqm": 2089.55,
+      "pricePerSqft": 194.13
+    },
+    {
+      "id": "bukit-merah-127-bt-merah-lane-1-1999-07-914820",
+      "month": "1999-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years",
+      "resalePrice": 137000,
+      "pricePerSqm": 2044.78,
+      "pricePerSqft": 189.97
+    }
+  ]
+}

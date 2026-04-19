@@ -1,0 +1,580 @@
+{
+  "summary": {
+    "addressKey": "bukit-panjang-524-jelapang-rd",
+    "town": "BUKIT PANJANG",
+    "block": "524",
+    "streetName": "JELAPANG RD",
+    "coordinates": {
+      "lat": 1.3861354959637,
+      "lng": 103.765863505451
+    },
+    "medianPrice": 530000,
+    "priceIqr": [
+      530000,
+      530000
+    ],
+    "pricePerSqmMedian": 5096.15,
+    "pricePerSqftMedian": 473.45,
+    "transactionCount": 1,
+    "floorAreaRange": [
+      102,
+      122
+    ],
+    "leaseCommenceRange": [
+      1998,
+      1998
+    ],
+    "latestMonth": "2024-06",
+    "availableDateRange": [
+      "2002-04",
+      "2024-06"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 9"
+    ],
+    "nearestMrt": {
+      "stationName": "JELAPANG LRT STATION",
+      "distanceMeters": 153
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2002-04",
+      "medianPrice": 234000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2083.98
+    },
+    {
+      "month": "2002-05",
+      "medianPrice": 204500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2004.9
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 281500,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2326.44
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 248500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2210.74
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 268000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2214.88
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1882.35
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 296500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2450.41
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 202000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1961.17
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 269000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2223.14
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 288500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2364.75
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2330.58
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2058.82
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 279000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2305.78
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 283000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2338.84
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2205.88
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2336.07
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2156.86
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 263000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2155.74
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 262000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2165.29
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 279500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2309.92
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2727.27
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 298000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2921.57
+    },
+    {
+      "month": "2009-02",
+      "medianPrice": 318500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2851.61
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 337000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2785.12
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3278.69
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3088.24
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3512.4
+    },
+    {
+      "month": "2011-05",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3725.49
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3801.65
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3966.94
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4033.06
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4068.63
+    },
+    {
+      "month": "2014-10",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3801.65
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3529.41
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 385500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3431.45
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3028.85
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3702.48
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3677.69
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 453000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3743.8
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3388.43
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4710.74
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4793.39
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5096.15
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2024-06-175051",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "73 years 01 month",
+      "resalePrice": 530000,
+      "pricePerSqm": 5096.15,
+      "pricePerSqft": 473.45
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2023-03-148698",
+      "month": "2023-03",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "74 years 04 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 4793.39,
+      "pricePerSqft": 445.32
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2022-11-122231",
+      "month": "2022-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "74 years 08 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 4710.74,
+      "pricePerSqft": 437.64
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2019-11-60879",
+      "month": "2019-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "77 years 07 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 3388.43,
+      "pricePerSqft": 314.8
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2019-06-50974",
+      "month": "2019-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "78 years",
+      "resalePrice": 453000,
+      "pricePerSqm": 3743.8,
+      "pricePerSqft": 347.81
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2019-02-43955",
+      "month": "2019-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "78 years 04 months",
+      "resalePrice": 445000,
+      "pricePerSqm": 3677.69,
+      "pricePerSqft": 341.67
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2018-09-35213",
+      "month": "2018-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "78 years 10 months",
+      "resalePrice": 340000,
+      "pricePerSqm": 3333.33,
+      "pricePerSqft": 309.68
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2017-10-15576",
+      "month": "2017-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "79 years 08 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 3702.48,
+      "pricePerSqft": 343.97
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2017-07-10115",
+      "month": "2017-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "80 years",
+      "resalePrice": 315000,
+      "pricePerSqm": 3028.85,
+      "pricePerSqft": 281.39
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2015-11-953311",
+      "month": "2015-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "81",
+      "resalePrice": 338000,
+      "pricePerSqm": 3313.73,
+      "pricePerSqft": 307.86
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2015-11-953337",
+      "month": "2015-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "81",
+      "resalePrice": 433000,
+      "pricePerSqm": 3549.18,
+      "pricePerSqft": 329.73
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2014-11-648522",
+      "month": "2014-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 360000,
+      "pricePerSqm": 3529.41,
+      "pricePerSqft": 327.89
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2014-10-647019",
+      "month": "2014-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 460000,
+      "pricePerSqm": 3801.65,
+      "pricePerSqft": 353.19
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2013-07-627439",
+      "month": "2013-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 415000,
+      "pricePerSqm": 4068.63,
+      "pricePerSqft": 377.99
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2012-06-605974",
+      "month": "2012-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 488000,
+      "pricePerSqm": 4033.06,
+      "pricePerSqft": 374.68
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2011-11-592591",
+      "month": "2011-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 480000,
+      "pricePerSqm": 3966.94,
+      "pricePerSqft": 368.54
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2011-10-590934",
+      "month": "2011-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 460000,
+      "pricePerSqm": 3801.65,
+      "pricePerSqft": 353.19
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2011-05-581500",
+      "month": "2011-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 380000,
+      "pricePerSqm": 3725.49,
+      "pricePerSqft": 346.11
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2010-09-563892",
+      "month": "2010-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 425000,
+      "pricePerSqm": 3512.4,
+      "pricePerSqft": 326.31
+    },
+    {
+      "id": "bukit-panjang-524-jelapang-rd-2010-06-553520",
+      "month": "2010-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 315000,
+      "pricePerSqm": 3088.24,
+      "pricePerSqft": 286.91
+    }
+  ]
+}

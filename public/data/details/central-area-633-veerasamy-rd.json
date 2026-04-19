@@ -1,0 +1,941 @@
+{
+  "summary": {
+    "addressKey": "central-area-633-veerasamy-rd",
+    "town": "CENTRAL AREA",
+    "block": "633",
+    "streetName": "VEERASAMY RD",
+    "coordinates": {
+      "lat": 1.30570669566476,
+      "lng": 103.854943243934
+    },
+    "medianPrice": 578000,
+    "priceIqr": [
+      562000,
+      689000
+    ],
+    "pricePerSqmMedian": 7583.33,
+    "pricePerSqftMedian": 704.52,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      72,
+      144
+    ],
+    "leaseCommenceRange": [
+      1985,
+      1985
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "1990-01",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "MODEL A",
+      "MAX FLOOR 10"
+    ],
+    "nearestMrt": {
+      "stationName": "JALAN BESAR MRT STATION",
+      "distanceMeters": 43
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1160.71
+    },
+    {
+      "month": "1990-05",
+      "medianPrice": 98000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1342.47
+    },
+    {
+      "month": "1991-04",
+      "medianPrice": 86000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1194.44
+    },
+    {
+      "month": "1991-07",
+      "medianPrice": 102000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1416.67
+    },
+    {
+      "month": "1991-08",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1428.57
+    },
+    {
+      "month": "1992-06",
+      "medianPrice": 87000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1208.33
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 74000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 840.91
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2276.79
+    },
+    {
+      "month": "1993-12",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2152.78
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 125000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1736.11
+    },
+    {
+      "month": "1994-03",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1780.82
+    },
+    {
+      "month": "1994-06",
+      "medianPrice": 128000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1777.78
+    },
+    {
+      "month": "1994-08",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1785.71
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 152000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2111.11
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2477.88
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2222.22
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2046.51
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 209000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2863.01
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3055.56
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 243000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3375
+    },
+    {
+      "month": "1996-09",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2964.6
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3291.67
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 234000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3250
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 229000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3180.56
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 230000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3172.09
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3125
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2944.44
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 206000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2861.11
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2831.86
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 169000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2331.05
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 172500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2187
+    },
+    {
+      "month": "1999-03",
+      "medianPrice": 168800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2312.33
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 163500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2270.83
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2361.11
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 168800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2344.44
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2444.44
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3008.85
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2328.77
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 172500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2395.83
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2361.11
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2444.44
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 174000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2383.56
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2011.63
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 171000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2375
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 173500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2409.72
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 177000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2458.33
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 184000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2555.56
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 294000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2625
+    },
+    {
+      "month": "2003-07",
+      "medianPrice": 200000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2777.78
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 205500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2854.16
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2267.44
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2750
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2005-02",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2433.63
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2777.78
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 193500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2687.5
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 203000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2819.44
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2847.22
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2708.33
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 214000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2972.22
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3402.78
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 216000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3402.78
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 238000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3305.56
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 528000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3666.67
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4583.33
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 342500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4756.94
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4611.11
+    },
+    {
+      "month": "2011-01",
+      "medianPrice": 363000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5041.67
+    },
+    {
+      "month": "2011-06",
+      "medianPrice": 361500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5020.83
+    },
+    {
+      "month": "2011-07",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4330.36
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 395000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5448.06
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5805.56
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 417000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5791.67
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5277.78
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5486.11
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5138.89
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5666.67
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 387500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5346.27
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5250
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5694.44
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2020-03",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5089.29
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5205.48
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 378000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5250
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5753.42
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5792.08
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6388.89
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6388.89
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5388.89
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 439000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6097.22
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 458888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6373.44
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7055.56
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 1118000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7763.89
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7083.33
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 454000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6305.56
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 519000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7208.34
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 508888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7067.89
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7194.44
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 546000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7583.33
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7079.65
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 578000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8027.78
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-633-veerasamy-rd-2025-12-202701",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 07 months",
+      "resalePrice": 578000,
+      "pricePerSqm": 8027.78,
+      "pricePerSqft": 745.81
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2025-05-202775",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "59 years 02 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 7079.65,
+      "pricePerSqft": 657.72
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2024-09-175742",
+      "month": "2024-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 546000,
+      "pricePerSqm": 7583.33,
+      "pricePerSqft": 704.52
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2024-03-175640",
+      "month": "2024-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 04 months",
+      "resalePrice": 518000,
+      "pricePerSqm": 7194.44,
+      "pricePerSqft": 668.39
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2024-02-175625",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 04 months",
+      "resalePrice": 508888,
+      "pricePerSqm": 7067.89,
+      "pricePerSqft": 656.63
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-12-149515",
+      "month": "2023-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 07 months",
+      "resalePrice": 503000,
+      "pricePerSqm": 6986.11,
+      "pricePerSqft": 649.03
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-12-149519",
+      "month": "2023-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 07 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 7430.56,
+      "pricePerSqft": 690.32
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-11-149496",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 08 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 6222.22,
+      "pricePerSqft": 578.06
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-11-149498",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 08 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6388.89,
+      "pricePerSqft": 593.55
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-08-149455",
+      "month": "2023-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 10 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7083.33,
+      "pricePerSqft": 658.06
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2023-07-149448",
+      "month": "2023-07",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 144,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "60 years 11 months",
+      "resalePrice": 1118000,
+      "pricePerSqm": 7763.89,
+      "pricePerSqft": 721.29
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-12-122601",
+      "month": "2022-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 508000,
+      "pricePerSqm": 7055.56,
+      "pricePerSqft": 655.48
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-07-122507",
+      "month": "2022-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years",
+      "resalePrice": 458888,
+      "pricePerSqm": 6373.44,
+      "pricePerSqft": 592.11
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-05-122470",
+      "month": "2022-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 02 months",
+      "resalePrice": 430000,
+      "pricePerSqm": 5972.22,
+      "pricePerSqft": 554.84
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-05-122471",
+      "month": "2022-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 02 months",
+      "resalePrice": 448000,
+      "pricePerSqm": 6222.22,
+      "pricePerSqft": 578.06
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-03-122435",
+      "month": "2022-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 388000,
+      "pricePerSqm": 5388.89,
+      "pricePerSqft": 500.64
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2022-02-122418",
+      "month": "2022-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6388.89,
+      "pricePerSqft": 593.55
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2021-12-114759",
+      "month": "2021-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 72,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 07 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6388.89,
+      "pricePerSqft": 593.55
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2021-09-107207",
+      "month": "2021-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 10 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 5792.08,
+      "pricePerSqft": 538.1
+    },
+    {
+      "id": "central-area-633-veerasamy-rd-2021-08-104491",
+      "month": "2021-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 73,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "63 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 5753.42,
+      "pricePerSqft": 534.51
+    }
+  ]
+}

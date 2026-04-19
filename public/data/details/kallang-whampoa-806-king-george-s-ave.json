@@ -1,0 +1,898 @@
+{
+  "summary": {
+    "addressKey": "kallang-whampoa-806-king-george-s-ave",
+    "town": "KALLANG/WHAMPOA",
+    "block": "806",
+    "streetName": "KING GEORGE'S AVE",
+    "coordinates": {
+      "lat": 1.3085267799688,
+      "lng": 103.861149049314
+    },
+    "medianPrice": 536000,
+    "priceIqr": [
+      495000,
+      545000
+    ],
+    "pricePerSqmMedian": 8014.71,
+    "pricePerSqftMedian": 744.59,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      59,
+      127
+    ],
+    "leaseCommenceRange": [
+      1981,
+      1981
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "1991-06",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 14"
+    ],
+    "nearestMrt": {
+      "stationName": "LAVENDER MRT STATION",
+      "distanceMeters": 195
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-06",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 882.35
+    },
+    {
+      "month": "1991-09",
+      "medianPrice": 56000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 949.15
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 48000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 813.56
+    },
+    {
+      "month": "1992-03",
+      "medianPrice": 65000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 955.88
+    },
+    {
+      "month": "1992-09",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1016.95
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 51000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 864.41
+    },
+    {
+      "month": "1993-10",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1694.92
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 95000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1610.17
+    },
+    {
+      "month": "1994-02",
+      "medianPrice": 95000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1610.17
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 103000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1745.76
+    },
+    {
+      "month": "1994-07",
+      "medianPrice": 135800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1997.06
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 133000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2254.24
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 143500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2432.2
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2796.61
+    },
+    {
+      "month": "1996-04",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2983.05
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 169400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2871.19
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2573.53
+    },
+    {
+      "month": "1996-08",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3161.76
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 204000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3457.63
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3058.82
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3382.35
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 168500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2477.94
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 153000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2593.22
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 149000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2525.42
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2457.63
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 152500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2405.28
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2796.61
+    },
+    {
+      "month": "1999-11",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2711.86
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 168000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2847.46
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 158000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2677.97
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 153000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2593.22
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2720.59
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2794.12
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2647.06
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 193000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2838.24
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 165000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2796.61
+    },
+    {
+      "month": "2002-04",
+      "medianPrice": 152000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2576.27
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 151400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2566.11
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 168000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2847.46
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2711.86
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2457.63
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 172000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2915.26
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 152000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2576.27
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2647.06
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3235.29
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 172500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2738.66
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 202500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2977.94
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3205.88
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3050.85
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 176000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2983.05
+    },
+    {
+      "month": "2005-10",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3088.24
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 187000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3169.49
+    },
+    {
+      "month": "2007-11",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4152.54
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3970.59
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 261000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4423.73
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 245000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4152.54
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4338.24
+    },
+    {
+      "month": "2008-10",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4576.27
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 296000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4671.49
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5423.73
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 293000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4966.1
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 361000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5308.82
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 322318,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5463.02
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5762.71
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 383000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6491.53
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 383000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6070.91
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6441.18
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5932.2
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5705.88
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5932.2
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6355.93
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5955.88
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6101.69
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6271.19
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 371000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6288.14
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 354000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6135.59
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 415000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6102.94
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6322.03
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 362800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6149.15
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5932.2
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5955.88
+    },
+    {
+      "month": "2018-10",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5508.47
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 366500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5768.82
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5661.76
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6237.29
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5728.81
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6299.21
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 384000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6059.82
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5882.35
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6745.76
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6029.41
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 392500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6652.54
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7118.64
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 435000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6838.24
+    },
+    {
+      "month": "2024-07",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7627.12
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8014.71
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 536000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8088.24
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2025-12-208620",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years 09 months",
+      "resalePrice": 536000,
+      "pricePerSqm": 7882.35,
+      "pricePerSqft": 732.3
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2025-12-208621",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years 09 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 8088.24,
+      "pricePerSqft": 751.42
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2025-12-208622",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years 09 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 8389.83,
+      "pricePerSqft": 779.44
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2025-05-208619",
+      "month": "2025-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "55 years 03 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 8014.71,
+      "pricePerSqft": 744.59
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2024-07-182752",
+      "month": "2024-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "56 years 03 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 7627.12,
+      "pricePerSqft": 708.58
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2023-03-155468",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 05 months",
+      "resalePrice": 412000,
+      "pricePerSqm": 6983.05,
+      "pricePerSqft": 648.75
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2023-03-155470",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 05 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 6397.06,
+      "pricePerSqft": 594.31
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2023-03-155472",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 06 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 6838.24,
+      "pricePerSqft": 635.29
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2023-01-155331",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 09 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 7118.64,
+      "pricePerSqft": 661.34
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2022-10-129514",
+      "month": "2022-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 392500,
+      "pricePerSqm": 6652.54,
+      "pricePerSqft": 618.04
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2021-09-107805",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years",
+      "resalePrice": 410000,
+      "pricePerSqm": 6029.41,
+      "pricePerSqft": 560.15
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2021-06-100041",
+      "month": "2021-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 03 months",
+      "resalePrice": 398000,
+      "pricePerSqm": 6745.76,
+      "pricePerSqft": 626.7
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2021-04-95777",
+      "month": "2021-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 07 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 5882.35,
+      "pricePerSqft": 546.49
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2020-11-83894",
+      "month": "2020-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 368000,
+      "pricePerSqm": 6237.29,
+      "pricePerSqft": 579.46
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2020-11-83896",
+      "month": "2020-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 5882.35,
+      "pricePerSqft": 546.49
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2020-10-81513",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 127,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "59 years 10 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 6299.21,
+      "pricePerSqft": 585.22
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2019-12-63268",
+      "month": "2019-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "60 years 09 months",
+      "resalePrice": 338000,
+      "pricePerSqm": 5728.81,
+      "pricePerSqft": 532.22
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2019-08-55440",
+      "month": "2019-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "61 years",
+      "resalePrice": 368000,
+      "pricePerSqm": 6237.29,
+      "pricePerSqft": 579.46
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2019-04-47523",
+      "month": "2019-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "61 years 04 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 5661.76,
+      "pricePerSqft": 526
+    },
+    {
+      "id": "kallang-whampoa-806-king-george-s-ave-2018-12-41324",
+      "month": "2018-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 5808.82,
+      "pricePerSqft": 539.66
+    }
+  ]
+}

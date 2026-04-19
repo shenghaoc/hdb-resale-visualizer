@@ -1,0 +1,714 @@
+{
+  "summary": {
+    "addressKey": "sembawang-333-sembawang-cl",
+    "town": "SEMBAWANG",
+    "block": "333",
+    "streetName": "SEMBAWANG CL",
+    "coordinates": {
+      "lat": 1.44699020882626,
+      "lng": 103.816416175536
+    },
+    "medianPrice": 672500,
+    "priceIqr": [
+      625000,
+      762750
+    ],
+    "pricePerSqmMedian": 5390.65,
+    "pricePerSqftMedian": 500.81,
+    "transactionCount": 6,
+    "floorAreaRange": [
+      100,
+      139
+    ],
+    "leaseCommenceRange": [
+      1999,
+      1999
+    ],
+    "latestMonth": "2025-10",
+    "availableDateRange": [
+      "2003-06",
+      "2025-10"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM",
+      "EXECUTIVE"
+    ],
+    "flatModels": [
+      "APARTMENT",
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "SEMBAWANG MRT STATION",
+      "distanceMeters": 424
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2003-06",
+      "medianPrice": 207000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2070
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 217500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2175
+    },
+    {
+      "month": "2003-12",
+      "medianPrice": 222500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2214.11
+    },
+    {
+      "month": "2004-01",
+      "medianPrice": 273888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2316.67
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 225000,
+      "transactionCount": 4,
+      "medianPricePerSqm": 2238.86
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2521.74
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2400
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 255000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2217.39
+    },
+    {
+      "month": "2004-12",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2518.52
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2347.83
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 323500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2695.83
+    },
+    {
+      "month": "2005-04",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2444.44
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2558.82
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2463.24
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2376.24
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2400
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 290000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2416.67
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 326000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2345.32
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 243300,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2408.91
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 342500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2518.38
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2782.61
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3050
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3125
+    },
+    {
+      "month": "2009-06",
+      "medianPrice": 320688,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3175.13
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3150
+    },
+    {
+      "month": "2009-12",
+      "medianPrice": 351800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3518
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 349000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3490
+    },
+    {
+      "month": "2010-07",
+      "medianPrice": 423000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3678.26
+    },
+    {
+      "month": "2012-05",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "2012-11",
+      "medianPrice": 463000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4026.09
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 463000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3858.33
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4411.76
+    },
+    {
+      "month": "2014-03",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3583.33
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3500
+    },
+    {
+      "month": "2014-07",
+      "medianPrice": 416000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4118.81
+    },
+    {
+      "month": "2014-11",
+      "medianPrice": 539368,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3965.94
+    },
+    {
+      "month": "2015-04",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3712.87
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "2015-11",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3625
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3712.87
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3705.04
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3633.09
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 347000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3435.64
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3345.32
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 346000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3460
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3416.67
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3566.67
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3639.71
+    },
+    {
+      "month": "2019-04",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3382.35
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3777.78
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3600
+    },
+    {
+      "month": "2021-04",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4629.63
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 428888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4246.42
+    },
+    {
+      "month": "2022-01",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4460.43
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 605000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4352.52
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4712.23
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4852.17
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4666.67
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4740.74
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4800
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 630000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5320.32
+    },
+    {
+      "month": "2024-11",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5434.78
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 777000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5755.56
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5208.33
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 825000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6066.18
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sembawang-333-sembawang-cl-2025-10-213299",
+      "month": "2025-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 136,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 09 months",
+      "resalePrice": 825000,
+      "pricePerSqm": 6066.18,
+      "pricePerSqft": 563.57
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2025-04-213172",
+      "month": "2025-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "73 years 04 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 5208.33,
+      "pricePerSqft": 483.87
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2025-03-213292",
+      "month": "2025-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "73 years 05 months",
+      "resalePrice": 777000,
+      "pricePerSqm": 5755.56,
+      "pricePerSqft": 534.71
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2024-11-187630",
+      "month": "2024-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "73 years 09 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 5434.78,
+      "pricePerSqft": 504.91
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2024-08-187357",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "74 years",
+      "resalePrice": 540000,
+      "pricePerSqm": 5346.53,
+      "pricePerSqft": 496.71
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2024-08-187411",
+      "month": "2024-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 136,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "74 years",
+      "resalePrice": 720000,
+      "pricePerSqm": 5294.12,
+      "pricePerSqft": 491.84
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2023-09-160223",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "74 years 11 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4800,
+      "pricePerSqft": 445.94
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2023-08-160191",
+      "month": "2023-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 135,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "75 years",
+      "resalePrice": 640000,
+      "pricePerSqm": 4740.74,
+      "pricePerSqft": 440.43
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2023-01-159587",
+      "month": "2023-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "75 years 07 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 4666.67,
+      "pricePerSqft": 433.55
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2022-09-133965",
+      "month": "2022-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 558000,
+      "pricePerSqm": 4852.17,
+      "pricePerSqft": 450.78
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2022-05-133740",
+      "month": "2022-05",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 139,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "76 years 03 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 4712.23,
+      "pricePerSqft": 437.78
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2022-03-133623",
+      "month": "2022-03",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 139,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "76 years 04 months",
+      "resalePrice": 605000,
+      "pricePerSqm": 4352.52,
+      "pricePerSqft": 404.36
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2022-01-133524",
+      "month": "2022-01",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 139,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "76 years 06 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 4460.43,
+      "pricePerSqft": 414.39
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2021-11-113322",
+      "month": "2021-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "76 years 09 months",
+      "resalePrice": 428888,
+      "pricePerSqm": 4246.42,
+      "pricePerSqft": 394.51
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2021-04-96214",
+      "month": "2021-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 135,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 625000,
+      "pricePerSqm": 4629.63,
+      "pricePerSqft": 430.11
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2020-09-79466",
+      "month": "2020-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "77 years 11 months",
+      "resalePrice": 360000,
+      "pricePerSqm": 3600,
+      "pricePerSqft": 334.45
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2019-08-55716",
+      "month": "2019-08",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 135,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "78 years 11 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 3777.78,
+      "pricePerSqft": 350.97
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2019-04-47832",
+      "month": "2019-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 136,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "79 years 03 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 3382.35,
+      "pricePerSqft": 314.23
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2018-09-36145",
+      "month": "2018-09",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 136,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "79 years 10 months",
+      "resalePrice": 495000,
+      "pricePerSqm": 3639.71,
+      "pricePerSqft": 338.14
+    },
+    {
+      "id": "sembawang-333-sembawang-cl-2018-04-25915",
+      "month": "2018-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "80 years 03 months",
+      "resalePrice": 428000,
+      "pricePerSqm": 3566.67,
+      "pricePerSqft": 331.35
+    }
+  ]
+}

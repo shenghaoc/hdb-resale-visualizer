@@ -1,0 +1,604 @@
+{
+  "summary": {
+    "addressKey": "sengkang-443c-fernvale-rd",
+    "town": "SENGKANG",
+    "block": "443C",
+    "streetName": "FERNVALE RD",
+    "coordinates": {
+      "lat": 1.39121766005235,
+      "lng": 103.873553181742
+    },
+    "medianPrice": 485500,
+    "priceIqr": [
+      379750,
+      598500
+    ],
+    "pricePerSqmMedian": 7797.87,
+    "pricePerSqftMedian": 724.45,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      47,
+      95
+    ],
+    "leaseCommenceRange": [
+      2012,
+      2012
+    ],
+    "latestMonth": "2026-01",
+    "availableDateRange": [
+      "2016-03",
+      "2026-01"
+    ],
+    "flatTypes": [
+      "2 ROOM",
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 27"
+    ],
+    "nearestMrt": {
+      "stationName": "FERNVALE LRT STATION",
+      "distanceMeters": 319
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2016-03",
+      "medianPrice": 372000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5552.24
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 265000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5638.3
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4468.09
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 435000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4734.04
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3989.36
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4659.57
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 387500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4122.34
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2016-11",
+      "medianPrice": 443000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4712.77
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5744.68
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 418500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4452.13
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5957.45
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 415000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 4414.89
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4234.04
+    },
+    {
+      "month": "2017-09",
+      "medianPrice": 390000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4831.1
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4574.47
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 278500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5925.53
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 404000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4273.35
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 393888,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4869.59
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 348444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4972.81
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3936.17
+    },
+    {
+      "month": "2018-07",
+      "medianPrice": 418000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4446.81
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 442500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4707.44
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3776.6
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 305000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4552.24
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4468.09
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4148.94
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5744.68
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4627.66
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 435888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4637.11
+    },
+    {
+      "month": "2021-07",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5319.15
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 286000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6085.11
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 285000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6063.83
+    },
+    {
+      "month": "2022-02",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4946.81
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5053.19
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 575000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6083.43
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 596000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6273.68
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 546000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5808.51
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 429000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6228.72
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 424388,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7515.12
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 595888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6339.23
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 335000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7127.66
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6526.32
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7106.38
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7021.28
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7234.04
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 578000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8626.87
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 393000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8361.7
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "sengkang-443c-fernvale-rd-2026-01-226661",
+      "month": "2026-01",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 11 months",
+      "resalePrice": 393000,
+      "pricePerSqm": 8361.7,
+      "pricePerSqft": 776.83
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2025-10-213507",
+      "month": "2025-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 01 month",
+      "resalePrice": 578000,
+      "pricePerSqm": 8626.87,
+      "pricePerSqft": 801.46
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2025-04-213364",
+      "month": "2025-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 07 months",
+      "resalePrice": 340000,
+      "pricePerSqm": 7234.04,
+      "pricePerSqft": 672.07
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2024-08-189127",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 05 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 7021.28,
+      "pricePerSqft": 652.3
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2024-03-188233",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 09 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 7106.38,
+      "pricePerSqft": 660.21
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2024-01-187897",
+      "month": "2024-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 11 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6526.32,
+      "pricePerSqft": 606.32
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-11-162200",
+      "month": "2023-11",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 335000,
+      "pricePerSqm": 7127.66,
+      "pricePerSqft": 662.18
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-09-161948",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 595888,
+      "pricePerSqm": 6339.23,
+      "pricePerSqft": 588.93
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-07-161501",
+      "month": "2023-07",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 371888,
+      "pricePerSqm": 7912.51,
+      "pricePerSqft": 735.1
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-07-161519",
+      "month": "2023-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 476888,
+      "pricePerSqm": 7117.73,
+      "pricePerSqft": 661.26
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-04-160981",
+      "month": "2023-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 313000,
+      "pricePerSqm": 6659.57,
+      "pricePerSqft": 618.7
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-04-161043",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 5797.87,
+      "pricePerSqft": 538.64
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-03-160873",
+      "month": "2023-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 546000,
+      "pricePerSqm": 5808.51,
+      "pricePerSqft": 539.63
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2023-02-160785",
+      "month": "2023-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 596000,
+      "pricePerSqm": 6273.68,
+      "pricePerSqft": 582.84
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2022-12-136464",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years",
+      "resalePrice": 550000,
+      "pricePerSqm": 5851.06,
+      "pricePerSqft": 543.58
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2022-12-136508",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years",
+      "resalePrice": 600000,
+      "pricePerSqm": 6315.79,
+      "pricePerSqft": 586.76
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2022-05-135081",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 475000,
+      "pricePerSqm": 5053.19,
+      "pricePerSqft": 469.46
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2022-02-134519",
+      "month": "2022-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 465000,
+      "pricePerSqm": 4946.81,
+      "pricePerSqft": 459.57
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2021-10-110827",
+      "month": "2021-10",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 285000,
+      "pricePerSqm": 6063.83,
+      "pricePerSqft": 563.35
+    },
+    {
+      "id": "sengkang-443c-fernvale-rd-2021-09-108353",
+      "month": "2021-09",
+      "flatType": "2 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "90 years 03 months",
+      "resalePrice": 286000,
+      "pricePerSqm": 6085.11,
+      "pricePerSqft": 565.33
+    }
+  ]
+}
