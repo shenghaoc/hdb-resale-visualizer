@@ -1,6 +1,28 @@
 import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
+function isShortlistItem(value: unknown): value is ShortlistItem {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const record = value as Record<string, unknown>;
+  return (
+    typeof record.addressKey === "string" &&
+    typeof record.notes === "string" &&
+    (record.targetPrice === null || typeof record.targetPrice === "number") &&
+    typeof record.addedAt === "string"
+  );
+}
+
+export function parseShortlist(raw: unknown): ShortlistItem[] {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+
+  return raw.filter(isShortlistItem);
+}
+
 export function loadShortlist(storage: Pick<Storage, "getItem">): ShortlistItem[] {
   const value = storage.getItem(SHORTLIST_STORAGE_KEY);
   if (!value) {
@@ -8,8 +30,8 @@ export function loadShortlist(storage: Pick<Storage, "getItem">): ShortlistItem[
   }
 
   try {
-    const parsed = JSON.parse(value) as ShortlistItem[];
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed: unknown = JSON.parse(value);
+    return parseShortlist(parsed);
   } catch {
     return [];
   }
