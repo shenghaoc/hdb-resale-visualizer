@@ -46,6 +46,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
       maxBounds: SINGAPORE_BOUNDS,
       style: {
         version: 8,
+        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
         sources: {
           onemap: {
             type: "raster",
