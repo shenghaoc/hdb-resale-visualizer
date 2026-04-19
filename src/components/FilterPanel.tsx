@@ -157,27 +157,16 @@ export function FilterPanel({
 
       <div className="field-grid">
         <label className="field">
-          <span>Lease commence year min</span>
+          <span>Remaining lease min (years)</span>
           <input
             className="field__input"
             inputMode="numeric"
-            min={1960}
-            placeholder="1985"
+            min={0}
+            max={99}
+            placeholder="e.g. 60"
             type="number"
-            value={filters.leaseMin ?? ""}
-            onChange={(event) => onChange({ leaseMin: parseOptionalNumber(event) })}
-          />
-        </label>
-        <label className="field">
-          <span>Lease commence year max</span>
-          <input
-            className="field__input"
-            inputMode="numeric"
-            min={1960}
-            placeholder="2020"
-            type="number"
-            value={filters.leaseMax ?? ""}
-            onChange={(event) => onChange({ leaseMax: parseOptionalNumber(event) })}
+            value={filters.remainingLeaseMin ?? ""}
+            onChange={(event) => onChange({ remainingLeaseMin: parseOptionalNumber(event) })}
           />
         </label>
       </div>

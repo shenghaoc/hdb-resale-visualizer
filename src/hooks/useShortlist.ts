@@ -6,6 +6,23 @@ export function useShortlist() {
   const [items, setItems] = useState<ShortlistItem[]>([]);
 
   useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const shortlistParam = params.get("shortlist");
+      if (shortlistParam) {
+        const decoded = JSON.parse(atob(shortlistParam));
+        if (Array.isArray(decoded)) {
+          setItems(decoded);
+          const newParams = new URLSearchParams(window.location.search);
+          newParams.delete("shortlist");
+          const newUrl = newParams.size ? `${window.location.pathname}?${newParams.toString()}` : window.location.pathname;
+          window.history.replaceState({}, "", newUrl);
+          return;
+        }
+      }
+    } catch {
+      // Ignore URL parsing errors
+    }
     setItems(loadShortlist(window.localStorage));
   }, []);
 

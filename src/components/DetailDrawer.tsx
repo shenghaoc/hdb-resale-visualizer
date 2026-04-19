@@ -1,6 +1,10 @@
-import { formatCurrency, formatMeters, formatMonth, formatNumber } from "@/lib/format";
+import { Suspense, lazy } from "react";
+import { formatCurrency, formatMeters, formatMonth, formatNumber, formatRemainingLease } from "@/lib/format";
 import type { AddressDetail } from "@/types/data";
-import { TrendChart } from "./TrendChart";
+
+const TrendChart = lazy(() =>
+  import("./TrendChart").then((m) => ({ default: m.TrendChart }))
+);
 
 type DetailDrawerProps = {
   detail: AddressDetail | null;
@@ -59,6 +63,12 @@ export function DetailDrawer({
               </strong>
             </article>
             <article>
+              <span>Remaining lease</span>
+              <strong>
+                {formatRemainingLease(detail.summary.leaseCommenceRange)}
+              </strong>
+            </article>
+            <article>
               <span>Nearest MRT</span>
               <strong>
                 {detail.summary.nearestMrt
@@ -92,7 +102,9 @@ export function DetailDrawer({
               </div>
               <span className="pill">{detail.monthlyTrend.length} months</span>
             </div>
-            <TrendChart points={detail.monthlyTrend.slice(-24)} />
+            <Suspense fallback={<div className="empty-state">Loading chart engine...</div>}>
+              <TrendChart points={detail.monthlyTrend.slice(-24)} />
+            </Suspense>
           </section>
 
           <section className="panel panel--inner">

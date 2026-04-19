@@ -37,6 +37,16 @@ export function formatMonth(month: string): string {
   }).format(date);
 }
 
+export function formatRemainingLease(leaseCommenceRange: [number, number]): string {
+  const currentYear = new Date().getFullYear();
+  const minLease = 99 - (currentYear - leaseCommenceRange[0]);
+  const maxLease = 99 - (currentYear - leaseCommenceRange[1]);
+  if (minLease === maxLease) {
+    return `${maxLease} yrs`;
+  }
+  return `${minLease} - ${maxLease} yrs`;
+}
+
 export function formatDateTime(value: string): string {
   return new Intl.DateTimeFormat("en-SG", {
     dateStyle: "medium",

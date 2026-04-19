@@ -225,7 +225,7 @@ function App() {
         </section>
 
         <ResultsPane
-          blocks={filteredBlocks.slice(0, 250)}
+          blocks={filteredBlocks}
           onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
           onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
           selectedAddressKey={filters.selectedAddressKey}

@@ -36,12 +36,12 @@ export function matchesFilter(block: BlockSummary, filters: FilterState): boolea
     return false;
   }
 
-  if (filters.leaseMin !== null && block.leaseCommenceRange[1] < filters.leaseMin) {
-    return false;
-  }
-
-  if (filters.leaseMax !== null && block.leaseCommenceRange[0] > filters.leaseMax) {
-    return false;
+  if (filters.remainingLeaseMin !== null) {
+    const currentYear = new Date().getFullYear();
+    const maxRemainingLease = 99 - (currentYear - block.leaseCommenceRange[1]);
+    if (maxRemainingLease < filters.remainingLeaseMin) {
+      return false;
+    }
   }
 
   if (filters.startMonth !== null && block.availableDateRange[1] < filters.startMonth) {

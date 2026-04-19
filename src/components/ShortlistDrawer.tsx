@@ -143,6 +143,45 @@ export function ShortlistDrawer({
     getCoreRowModel: getCoreRowModel(),
   });
 
+  function handleShare() {
+    const params = new URLSearchParams(window.location.search);
+    params.set("shortlist", btoa(JSON.stringify(rows.map((r) => r.item))));
+    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    void navigator.clipboard.writeText(url);
+    alert("Share URL copied to clipboard!");
+  }
+
+  function handleExportCsv() {
+    const headers = ["Address", "Median Price", "Target Price", "Notes"];
+    const csvRows = rows.map((row) => {
+      return [
+        `"${row.summary.block} ${row.summary.streetName}"`,
+        row.summary.medianPrice,
+        row.item.targetPrice ?? "",
+        `"${(row.item.notes || "").replace(/"/g, '""')}"`
+      ].join(",");
+    });
+    const csvContent = [headers.join(","), ...csvRows].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "hdb-shortlist.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleExportJson() {
+    const data = rows.map((r) => r.item);
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "hdb-shortlist.json";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <section className={`shortlist-drawer ${isOpen ? "shortlist-drawer--open" : ""}`}>
       <div className="shortlist-drawer__header">
@@ -155,9 +194,15 @@ export function ShortlistDrawer({
           </p>
         </div>
         <div className="shortlist-drawer__actions">
-          <span className="pill">Best fit first</span>
           <span className="pill">{rows.length}/4 saved</span>
-          <button className="button button--ghost" onClick={onToggleOpen} type="button">
+          {rows.length > 0 && (
+            <>
+              <button className="button button--ghost button--compact" onClick={handleExportJson} type="button">JSON</button>
+              <button className="button button--ghost button--compact" onClick={handleExportCsv} type="button">CSV</button>
+              <button className="button button--compact" onClick={handleShare} type="button">Share link</button>
+            </>
+          )}
+          <button className="button button--ghost button--compact" onClick={onToggleOpen} type="button">
             {isOpen ? "Collapse" : "Expand"}
           </button>
         </div>

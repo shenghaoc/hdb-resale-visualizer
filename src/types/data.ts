@@ -94,8 +94,7 @@ export type FilterState = {
   budgetMax: number | null;
   areaMin: number | null;
   areaMax: number | null;
-  leaseMin: number | null;
-  leaseMax: number | null;
+  remainingLeaseMin: number | null;
   startMonth: string | null;
   endMonth: string | null;
   mrtMax: number | null;
