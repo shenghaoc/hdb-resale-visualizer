@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
-import { MapPinned, MoveUpRight, TrainFront } from "lucide-react";
-import { formatCurrency, formatMeters, formatMonth, formatNumber, formatRemainingLease } from "@/lib/format";
+import { Clock3, Coins, MapPinned, MoveUpRight, TrainFront, WalletCards } from "lucide-react";
+import { formatCompactCurrency, formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
 import type { AddressDetail, BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -67,54 +67,22 @@ export function DetailDrawer({
           {currentSummary ? (
             <ScrollArea className="max-h-[72vh] pr-3">
               <div className="flex flex-col gap-6">
-                <section className="grid gap-4 sm:grid-cols-2">
-                  <article className="flex flex-col gap-2 border-b border-border pb-4 sm:pb-0">
-                    <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      Median price
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <article className="flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      <WalletCards className="size-3.5" />
+                      Median resale
                     </span>
-                    <strong className="font-heading text-3xl font-semibold">
-                      {detail ? formatCurrency(detail.summary.medianPrice) : "Loading..."}
+                    <strong className="font-heading text-2xl font-semibold">
+                      {detail ? formatCompactCurrency(detail.summary.medianPrice) : "Loading..."}
                     </strong>
                   </article>
-                  <article className="flex flex-col gap-2 border-b border-border pb-4 sm:pb-0">
-                    <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      Price IQR
-                    </span>
-                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                      {detail
-                        ? `${formatCurrency(detail.summary.priceIqr[0])} to ${formatCurrency(
-                            detail.summary.priceIqr[1],
-                          )}`
-                        : "Loading..."}
-                    </strong>
-                  </article>
-                  <article className="flex flex-col gap-2 border-b border-border pb-4 sm:border-b-0 sm:pb-0">
-                    <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      Floor area
+                  <article className="flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      <TrainFront className="size-3.5" />
+                      Nearest MRT
                     </span>
                     <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                      {detail
-                        ? `${formatNumber(detail.summary.floorAreaRange[0], 1)} to ${formatNumber(
-                            detail.summary.floorAreaRange[1],
-                            1,
-                          )} sqm`
-                        : "Loading..."}
-                    </strong>
-                  </article>
-                  <article className="flex flex-col gap-2 border-b border-border pb-4 sm:border-b-0 sm:pb-0">
-                    <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                      Remaining lease
-                    </span>
-                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                      {detail ? formatRemainingLease(detail.summary.leaseCommenceRange) : "Loading..."}
-                    </strong>
-                  </article>
-                </section>
-
-                <section className="flex flex-col gap-3 border-t border-border pt-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Badge variant="secondary">
-                      <TrainFront data-icon="inline-start" />
                       {detail?.summary.nearestMrt
                         ? `${detail.summary.nearestMrt.stationName} • ${formatMeters(
                             detail.summary.nearestMrt.distanceMeters,
@@ -123,8 +91,31 @@ export function DetailDrawer({
                           ? `${currentSummary.nearestMrt.stationName} • ${formatMeters(
                               currentSummary.nearestMrt.distanceMeters,
                             )}`
-                          : "No station match"}
-                    </Badge>
+                          : "No match"}
+                    </strong>
+                  </article>
+                  <article className="flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      <Coins className="size-3.5" />
+                      Remaining lease
+                    </span>
+                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                      {detail ? formatRemainingLease(detail.summary.leaseCommenceRange) : "Loading..."}
+                    </strong>
+                  </article>
+                  <article className="flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                      <Clock3 className="size-3.5" />
+                      Latest month
+                    </span>
+                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                      {detail ? formatMonth(detail.summary.latestMonth) : "Loading..."}
+                    </strong>
+                  </article>
+                </div>
+
+                <section className="flex flex-col gap-3 border-t border-border pt-6">
+                  <div className="flex flex-wrap items-center gap-3">
                     <Badge variant="secondary">
                       <MapPinned data-icon="inline-start" />
                       {currentSummary.town}
@@ -144,24 +135,26 @@ export function DetailDrawer({
 
                 {detail ? (
                   <>
-                    <Card size="sm" className="bg-muted/40">
-                      <CardHeader className="gap-3 border-b border-border/60 pb-5">
-                        <div className="flex flex-wrap items-start gap-3">
-                          <div className="flex flex-1 flex-col gap-2">
-                            <Badge variant="secondary">12 to 24 month trend</Badge>
-                            <CardTitle className="text-lg">Monthly median</CardTitle>
+                    <div className="col-span-2 md:col-span-1">
+                      <Card size="sm" className="bg-muted/40 w-full">
+                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                          <div className="flex flex-wrap items-start gap-3">
+                            <div className="flex flex-1 flex-col gap-2">
+                              <Badge variant="secondary">12 to 24 month trend</Badge>
+                              <CardTitle className="text-lg">Monthly median</CardTitle>
+                            </div>
+                            <CardAction>
+                              <Badge>{detail.monthlyTrend.length} months</Badge>
+                            </CardAction>
                           </div>
-                          <CardAction>
-                            <Badge>{detail.monthlyTrend.length} months</Badge>
-                          </CardAction>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="pt-5">
-                        <Suspense fallback={<div className="empty-state">Loading chart engine...</div>}>
-                          <TrendChart points={detail.monthlyTrend.slice(-24)} />
-                        </Suspense>
-                      </CardContent>
-                    </Card>
+                        </CardHeader>
+                        <CardContent className="pt-5">
+                          <Suspense fallback={<div className="empty-state">Loading chart engine...</div>}>
+                            <TrendChart points={detail.monthlyTrend.slice(-24)} />
+                          </Suspense>
+                        </CardContent>
+                      </Card>
+                    </div>
 
                     <Card size="sm" className="bg-muted/40">
                       <CardHeader className="gap-3 border-b border-border/60 pb-5">

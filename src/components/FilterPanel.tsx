@@ -53,6 +53,24 @@ function parseOptionalNumberValue(value: string) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+/**
+ * Returns an onFocus handler that seeds the field with `defaultNumber`
+ * when the current value is empty. This ensures the native number spinner
+ * starts from a sensible default instead of 0.
+ */
+function makeSpinnerFocusHandler(
+  currentValue: number | null | undefined,
+  defaultNumber: number,
+  onChange: (patch: Partial<FilterState>) => void,
+  key: keyof FilterState,
+) {
+  return () => {
+    if (currentValue === null || currentValue === undefined) {
+      onChange({ [key]: defaultNumber } as Partial<FilterState>);
+    }
+  };
+}
+
 type SelectFieldProps = {
   label: string;
   allLabel: string;
@@ -182,6 +200,7 @@ export function FilterPanel({
                     placeholder="300000"
                     type="number"
                     value={filters.budgetMin ?? ""}
+                    onFocus={makeSpinnerFocusHandler(filters.budgetMin, 300000, onChange, "budgetMin")}
                     onChange={(event) =>
                       onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
                     }
@@ -198,6 +217,7 @@ export function FilterPanel({
                     placeholder="900000"
                     type="number"
                     value={filters.budgetMax ?? ""}
+                    onFocus={makeSpinnerFocusHandler(filters.budgetMax, 900000, onChange, "budgetMax")}
                     onChange={(event) =>
                       onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
                     }
@@ -223,6 +243,7 @@ export function FilterPanel({
                     placeholder="60"
                     type="number"
                     value={filters.areaMin ?? ""}
+                    onFocus={makeSpinnerFocusHandler(filters.areaMin, 60, onChange, "areaMin")}
                     onChange={(event) =>
                       onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
                     }
@@ -239,6 +260,7 @@ export function FilterPanel({
                     placeholder="120"
                     type="number"
                     value={filters.areaMax ?? ""}
+                    onFocus={makeSpinnerFocusHandler(filters.areaMax, 120, onChange, "areaMax")}
                     onChange={(event) =>
                       onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
                     }
@@ -261,6 +283,7 @@ export function FilterPanel({
                   placeholder="e.g. 60"
                   type="number"
                   value={filters.remainingLeaseMin ?? ""}
+                  onFocus={makeSpinnerFocusHandler(filters.remainingLeaseMin, 60, onChange, "remainingLeaseMin")}
                   onChange={(event) =>
                     onChange({
                       remainingLeaseMin: parseOptionalNumberValue(event.target.value),
@@ -336,6 +359,7 @@ export function FilterPanel({
                 placeholder="800"
                 type="number"
                 value={filters.mrtMax ?? ""}
+                onFocus={makeSpinnerFocusHandler(filters.mrtMax, 800, onChange, "mrtMax")}
                 onChange={(event) =>
                   onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
                 }
