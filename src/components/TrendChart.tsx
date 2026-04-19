@@ -96,7 +96,7 @@ export function TrendChart({ points }: TrendChartProps) {
           },
         ],
       }}
-      style={{ height: 240, width: "100%" }}
+      style={{ height: 200, width: "100%" }}
     />
   );
 }

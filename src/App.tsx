@@ -213,9 +213,15 @@ function App() {
 
   return (
     <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 lg:p-6 lg:pb-0">
-      <StatsBar manifest={manifest} filteredCount={filteredBlocks.length} blocks={filteredBlocks} />
+      <StatsBar
+        manifest={manifest}
+        filteredCount={filteredBlocks.length}
+        blocks={filteredBlocks}
+        mode="header"
+        testId="stats-bar"
+      />
 
-      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_22rem] xl:grid-cols-[18rem_minmax(0,1fr)_24rem] lg:min-h-0 lg:flex-1">
+      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1">
         <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
           <FilterPanel
             filters={filters}
@@ -228,7 +234,7 @@ function App() {
           />
         </div>
 
-        <section className="flex min-w-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
+        <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:pb-6 pr-1">
           <Card className="overflow-hidden bg-card shrink-0">
             <CardHeader className="gap-4 border-b border-border pb-4">
               <div className="flex flex-wrap items-start gap-4">
@@ -269,7 +275,7 @@ function App() {
           />
         </section>
 
-        <section className="flex min-w-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
+        <section className="flex min-w-0 min-h-0 flex-col gap-4 pr-1 lg:pb-6">
           <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
             <DetailDrawer
               detail={detail}
@@ -296,6 +302,14 @@ function App() {
           </Suspense>
         </section>
       </section>
+
+      <StatsBar
+        manifest={manifest}
+        filteredCount={filteredBlocks.length}
+        blocks={filteredBlocks}
+        mode="summary"
+        testId="market-summary"
+      />
     </main>
   );
 }

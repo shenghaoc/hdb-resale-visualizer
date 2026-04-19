@@ -193,9 +193,9 @@ export function ResultsPane({
   const virtualItems = virtualizer.getVirtualItems();
 
   return (
-    <section data-testid="results-pane">
-      <Card className="bg-background">
-        <CardHeader className="gap-4 border-b border-border pb-6">
+    <section data-testid="results-pane" className="flex min-h-[18rem] flex-1 flex-col">
+      <Card className="flex min-h-[18rem] flex-1 flex-col bg-background">
+        <CardHeader className="gap-4 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-2">
               <Badge variant="secondary">Current shortlist candidates</Badge>
@@ -224,16 +224,16 @@ export function ResultsPane({
             </CardAction>
           </div>
         </CardHeader>
-        <CardContent className="pt-6">
+        <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
           {blocks.length === 0 ? (
             <div className="empty-state">
               No blocks match your current filters. Try broadening your search or resetting filters.
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
+            <div className="flex min-h-0 flex-1 flex-col gap-4">
               <div
                 ref={parentRef}
-                className="max-h-[70vh] overflow-auto pr-2"
+                className="min-h-0 flex-1 overflow-auto pr-2"
               >
                 <ItemGroup
                   className="relative"

@@ -117,9 +117,9 @@ export function ShortlistDrawer({
   }
 
   return (
-    <section data-testid="shortlist-drawer">
-      <Card className="bg-background">
-        <CardHeader className="gap-4 border-b border-border pb-6">
+    <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
+      <Card className="flex min-h-0 flex-1 flex-col bg-background">
+        <CardHeader className="gap-3 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-1">
               <CardTitle className="text-2xl">Shortlist compare</CardTitle>
@@ -150,13 +150,13 @@ export function ShortlistDrawer({
         </CardHeader>
 
         {isOpen ? (
-          <CardContent className="pt-6">
+          <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
             {rows.length === 0 ? (
               <div className="empty-state">
                 Save up to four blocks to compare.
               </div>
             ) : (
-              <ScrollArea className="h-[72vh] pr-3 border-r border-transparent">
+              <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
                 <div className="flex flex-col gap-4 pb-4">
                     {rows.map((row) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);

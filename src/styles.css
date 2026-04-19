@@ -145,6 +145,13 @@
   min-height: clamp(24rem, 52vh, 40rem);
 }
 
+@media (min-width: 1024px) {
+  .map-view,
+  .map-skeleton {
+    min-height: clamp(18rem, 36vh, 28rem);
+  }
+}
+
 .drawer-skeleton {
   min-height: 14rem;
 }

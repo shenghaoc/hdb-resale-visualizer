@@ -5,7 +5,6 @@ import type { AddressDetail, BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const TrendChart = lazy(() =>
@@ -33,18 +32,18 @@ export function DetailDrawer({
 
   return (
     <aside data-testid="detail-drawer" className="w-full min-w-0">
-      <Card className="bg-background">
-        <CardHeader className="gap-4 border-b border-border pb-6">
-          <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-1">
-              <CardTitle className="text-xl">
+      <Card size="sm" className="bg-background">
+        <CardHeader className="gap-2 border-b border-border pb-4">
+          <div className="flex flex-col gap-3">
+            <div className="flex min-w-0 flex-col gap-1">
+              <CardTitle className="text-lg">
                 {currentSummary
                   ? `${currentSummary.block} ${currentSummary.streetName}`
                   : "Choose a block from the map or results"}
               </CardTitle>
             </div>
             {currentSummary ? (
-              <CardAction className="flex flex-wrap items-center gap-2">
+              <CardAction className="col-start-auto row-span-1 row-start-auto flex flex-wrap items-center gap-2 self-start justify-self-auto">
                 <Button onClick={onToggleShortlist} size="sm" variant={isSaved ? "secondary" : "outline"} type="button">
                   {isSaved ? "Saved to shortlist" : "Add to shortlist"}
                 </Button>
@@ -56,28 +55,27 @@ export function DetailDrawer({
           </div>
         </CardHeader>
 
-        <CardContent className="pt-4">
+        <CardContent className="pt-3">
           {isLoading ? <div className="empty-state">Loading block detail...</div> : null}
 
           {currentSummary ? (
-            <ScrollArea className="h-[72vh] pr-3">
-              <div className="flex flex-col gap-6 min-w-0 w-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <article className="flex flex-col gap-2">
-                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <div className="flex flex-col gap-4 min-w-0 w-full">
+                <div className="grid grid-cols-2 gap-3">
+                  <article className="flex flex-col gap-1.5">
+                    <span className="inline-flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       <WalletCards className="size-3.5" />
                       Median resale
                     </span>
-                    <strong className="font-heading text-2xl font-semibold">
+                    <strong className="font-heading text-xl font-semibold">
                       {detail ? formatCompactCurrency(detail.summary.medianPrice) : "Loading..."}
                     </strong>
                   </article>
-                  <article className="flex flex-col gap-2">
-                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <article className="flex flex-col gap-1.5">
+                    <span className="inline-flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       <TrainFront className="size-3.5" />
                       Nearest MRT
                     </span>
-                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                    <strong className="text-xs font-semibold uppercase tracking-[0.1em]">
                       {detail?.summary.nearestMrt
                         ? `${detail.summary.nearestMrt.stationName} • ${formatMeters(
                             detail.summary.nearestMrt.distanceMeters,
@@ -89,27 +87,27 @@ export function DetailDrawer({
                           : "No match"}
                     </strong>
                   </article>
-                  <article className="flex flex-col gap-2">
-                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <article className="flex flex-col gap-1.5">
+                    <span className="inline-flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       <Coins className="size-3.5" />
                       Remaining lease
                     </span>
-                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                    <strong className="text-xs font-semibold uppercase tracking-[0.1em]">
                       {detail ? formatRemainingLease(detail.summary.leaseCommenceRange) : "Loading..."}
                     </strong>
                   </article>
-                  <article className="flex flex-col gap-2">
-                    <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <article className="flex flex-col gap-1.5">
+                    <span className="inline-flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                       <Clock3 className="size-3.5" />
                       Latest month
                     </span>
-                    <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                    <strong className="text-xs font-semibold uppercase tracking-[0.1em]">
                       {detail ? formatMonth(detail.summary.latestMonth) : "Loading..."}
                     </strong>
                   </article>
                 </div>
 
-                <section className="flex flex-col gap-3 border-t border-border pt-6">
+                <section className="flex flex-col gap-2 border-t border-border pt-4">
                   <div className="flex flex-wrap items-center gap-3">
                     <Badge variant="secondary" className="text-xs">
                       <MapPinned data-icon="inline-start" className="size-3" />
@@ -130,9 +128,9 @@ export function DetailDrawer({
 
                 {detail ? (
                   <>
-                    <div className="col-span-2 md:col-span-1">
+                    <div className="min-w-0">
                       <Card size="sm" className="bg-muted/40 w-full">
-                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                        <CardHeader className="gap-2 border-b border-border/60 pb-3">
                           <div className="flex flex-wrap items-start gap-3">
                             <div className="flex flex-1 flex-col gap-1">
                               <CardTitle className="text-base text-muted-foreground">Monthly median</CardTitle>
@@ -142,7 +140,7 @@ export function DetailDrawer({
                             </CardAction>
                           </div>
                         </CardHeader>
-                        <CardContent className="pt-5">
+                        <CardContent className="pt-3">
                           <Suspense fallback={<div className="empty-state">Loading chart engine...</div>}>
                             <TrendChart points={detail.monthlyTrend.slice(-24)} />
                           </Suspense>
@@ -151,12 +149,12 @@ export function DetailDrawer({
                     </div>
 
                     <Card size="sm" className="bg-muted/40">
-                      <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                      <CardHeader className="gap-2 border-b border-border/60 pb-3">
                         <div className="flex flex-col gap-1">
                           <CardTitle className="text-base text-muted-foreground">Latest transactions</CardTitle>
                         </div>
                       </CardHeader>
-                      <CardContent className="pt-5">
+                      <CardContent className="pt-3">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -167,7 +165,7 @@ export function DetailDrawer({
                             </TableRow>
                           </TableHeader>
                           <TableBody>
-                            {detail.recentTransactions.slice(0, 8).map((transaction) => (
+                            {detail.recentTransactions.slice(0, 4).map((transaction) => (
                               <TableRow key={transaction.id}>
                                 <TableCell>{formatCurrency(transaction.resalePrice)}</TableCell>
                                 <TableCell>{formatMonth(transaction.month)}</TableCell>
@@ -184,7 +182,6 @@ export function DetailDrawer({
                   </>
                 ) : null}
               </div>
-            </ScrollArea>
           ) : null}
         </CardContent>
       </Card>

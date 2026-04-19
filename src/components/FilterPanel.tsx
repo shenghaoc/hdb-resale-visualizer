@@ -3,11 +3,10 @@ import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
 import type { FilterState, Manifest } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Field,
   FieldContent,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
@@ -104,12 +103,8 @@ export function FilterPanel({
       <Card size="sm" className="bg-background">
         <CardHeader className="gap-3 border-b border-border pb-6">
           <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-2">
-              <Badge variant="secondary">Filter the market</Badge>
+            <div className="flex flex-1 flex-col gap-1">
               <CardTitle className="text-2xl">Live filters</CardTitle>
-              <CardDescription>
-                Keep the shortlist grounded in current resale evidence, not predictions.
-              </CardDescription>
             </div>
             <CardAction>
               <Button onClick={onReset} size="sm" variant="ghost">
@@ -161,15 +156,11 @@ export function FilterPanel({
           value={filters.flatModel}
           onChange={(flatModel) => onChange({ flatModel })}
         />
-        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-          Placeholder and synthetic values are hidden to keep the menu beginner-friendly.
-        </p>
 
         <FieldGroup>
           <Field>
             <FieldContent>
               <FieldLabel htmlFor="budget-min">Budget range</FieldLabel>
-              <FieldDescription>Use both ends to narrow the shortlist.</FieldDescription>
               <div className="grid gap-4 lg:grid-cols-2">
                 <InputGroup>
                   <InputGroupAddon align="inline-start">
@@ -212,7 +203,6 @@ export function FilterPanel({
           <Field>
             <FieldContent>
               <FieldLabel htmlFor="area-min">Floor area range</FieldLabel>
-              <FieldDescription>Metered in square metres.</FieldDescription>
               <div className="grid gap-4 lg:grid-cols-2">
                 <InputGroup>
                   <InputGroupAddon align="inline-end">
@@ -255,7 +245,6 @@ export function FilterPanel({
           <Field>
             <FieldContent>
               <FieldLabel htmlFor="remaining-lease">Remaining lease min</FieldLabel>
-              <FieldDescription>Use a target lease age if you care about runway.</FieldDescription>
               <InputGroup>
                 <InputGroupInput
                   id="remaining-lease"
@@ -285,7 +274,6 @@ export function FilterPanel({
             <div className="flex items-start justify-between gap-3">
               <div className="flex flex-col gap-1">
                 <CardTitle className="text-base">Transaction window</CardTitle>
-                <CardDescription>Leave both blank to scan the full history.</CardDescription>
               </div>
               <Badge variant="secondary">
                 {formatMonth(minMonth)} to {formatMonth(maxMonth)}
@@ -332,7 +320,6 @@ export function FilterPanel({
         <Field>
           <FieldContent>
             <FieldLabel htmlFor="mrt-max">Maximum MRT distance</FieldLabel>
-            <FieldDescription>Distance is measured in straight-line metres.</FieldDescription>
             <InputGroup>
               <InputGroupInput
                 id="mrt-max"
