@@ -72,6 +72,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
       center: [103.8198, 1.3521],
       zoom: 10.2,
       minZoom: 9,
+      maxZoom: 19,
       maxBounds: SINGAPORE_BOUNDS,
       style: {
         version: 8,
@@ -81,6 +82,9 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
             type: "raster",
             tiles: [ONEMAP_TILE_URL],
             tileSize: 256,
+            // OneMap tiles are only published up to zoom 18; MapLibre will
+            // upscale them for zoom 19 rather than fetching nonexistent tiles.
+            maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
           },
         },
