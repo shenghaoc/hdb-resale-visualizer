@@ -1,0 +1,938 @@
+{
+  "summary": {
+    "addressKey": "geylang-10-haig-rd",
+    "town": "GEYLANG",
+    "block": "10",
+    "streetName": "HAIG RD",
+    "coordinates": {
+      "lat": 1.31483950176268,
+      "lng": 103.895865169739
+    },
+    "medianPrice": 400000,
+    "priceIqr": [
+      390000,
+      420000
+    ],
+    "pricePerSqmMedian": 6153.85,
+    "pricePerSqftMedian": 571.71,
+    "transactionCount": 9,
+    "floorAreaRange": [
+      65,
+      76
+    ],
+    "leaseCommenceRange": [
+      1976,
+      1976
+    ],
+    "latestMonth": "2026-02",
+    "availableDateRange": [
+      "1990-03",
+      "2026-02"
+    ],
+    "flatTypes": [
+      "3 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 13"
+    ],
+    "nearestMrt": {
+      "stationName": "CC9",
+      "distanceMeters": 419
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-03",
+      "medianPrice": 36500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 561.54
+    },
+    {
+      "month": "1990-05",
+      "medianPrice": 37000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 569.23
+    },
+    {
+      "month": "1990-06",
+      "medianPrice": 40000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 615.38
+    },
+    {
+      "month": "1990-08",
+      "medianPrice": 46500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 611.84
+    },
+    {
+      "month": "1990-10",
+      "medianPrice": 41000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 630.77
+    },
+    {
+      "month": "1991-10",
+      "medianPrice": 62000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 887.05
+    },
+    {
+      "month": "1992-06",
+      "medianPrice": 40000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 615.38
+    },
+    {
+      "month": "1992-09",
+      "medianPrice": 48000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 738.46
+    },
+    {
+      "month": "1993-06",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1315.79
+    },
+    {
+      "month": "1993-09",
+      "medianPrice": 90000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1384.62
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 80000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 1230.77
+    },
+    {
+      "month": "1994-10",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2039.47
+    },
+    {
+      "month": "1995-04",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2000
+    },
+    {
+      "month": "1995-05",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2153.85
+    },
+    {
+      "month": "1995-06",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1846.15
+    },
+    {
+      "month": "1995-08",
+      "medianPrice": 133400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2052.31
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 142000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2184.62
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 146500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2253.85
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 185000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2846.15
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3076.92
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 197000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2802.53
+    },
+    {
+      "month": "1997-04",
+      "medianPrice": 208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3200
+    },
+    {
+      "month": "1997-12",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2692.31
+    },
+    {
+      "month": "1998-01",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3046.15
+    },
+    {
+      "month": "1998-02",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 158000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2430.77
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2368.42
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 153500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2361.54
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 132000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2030.77
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 147000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2261.54
+    },
+    {
+      "month": "1998-11",
+      "medianPrice": 135000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2076.92
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2138.46
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 128500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1976.92
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2138.46
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1973.68
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 139000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2138.46
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 165000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2461.54
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2384.62
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 136000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2092.31
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 155000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2384.62
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 142000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2184.62
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 136000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2092.31
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 134000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2061.54
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 151000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1986.84
+    },
+    {
+      "month": "2002-06",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 163000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2144.74
+    },
+    {
+      "month": "2002-11",
+      "medianPrice": 137500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2115.38
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 144025,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2215.77
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 151888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2336.74
+    },
+    {
+      "month": "2003-02",
+      "medianPrice": 150000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 168800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2221.05
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 171750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2447.47
+    },
+    {
+      "month": "2004-08",
+      "medianPrice": 173000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2661.54
+    },
+    {
+      "month": "2005-11",
+      "medianPrice": 163300,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2512.31
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 163000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2507.69
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 169000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2600
+    },
+    {
+      "month": "2006-10",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2605.26
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 187750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2673.58
+    },
+    {
+      "month": "2007-03",
+      "medianPrice": 178500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2746.15
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 175000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2692.31
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 188000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2892.31
+    },
+    {
+      "month": "2008-01",
+      "medianPrice": 217000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3338.46
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 221000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3400
+    },
+    {
+      "month": "2008-07",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3353.85
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3846.15
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4230.77
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 345250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5311.53
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 342000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5261.54
+    },
+    {
+      "month": "2011-08",
+      "medianPrice": 333000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5123.08
+    },
+    {
+      "month": "2011-09",
+      "medianPrice": 356000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5476.92
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6230.77
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 425888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6552.12
+    },
+    {
+      "month": "2015-01",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5923.08
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5923.08
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 302000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3973.68
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5384.62
+    },
+    {
+      "month": "2015-12",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5661.54
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5661.54
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5507.69
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5307.69
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 355000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4671.05
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4615.38
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 311000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4784.62
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4738.46
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4846.15
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4615.38
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4342.11
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 326900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5029.23
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5076.92
+    },
+    {
+      "month": "2022-05",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5769.23
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5846.15
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6123.08
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5661.54
+    },
+    {
+      "month": "2023-12",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5692.31
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 421000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6476.92
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6052.63
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 410888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6321.35
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6153.85
+    },
+    {
+      "month": "2026-01",
+      "medianPrice": 395000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6076.93
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6461.54
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "geylang-10-haig-rd-2026-02-224248",
+      "month": "2026-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 06 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6461.54,
+      "pricePerSqft": 600.3
+    },
+    {
+      "id": "geylang-10-haig-rd-2026-01-224245",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 07 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "geylang-10-haig-rd-2026-01-224246",
+      "month": "2026-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 06 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 6153.85,
+      "pricePerSqft": 571.71
+    },
+    {
+      "id": "geylang-10-haig-rd-2025-11-204642",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 09 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 6153.85,
+      "pricePerSqft": 571.71
+    },
+    {
+      "id": "geylang-10-haig-rd-2025-06-204639",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 01 month",
+      "resalePrice": 410888,
+      "pricePerSqm": 6321.35,
+      "pricePerSqft": 587.27
+    },
+    {
+      "id": "geylang-10-haig-rd-2025-03-204634",
+      "month": "2025-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 05 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6052.63,
+      "pricePerSqft": 562.31
+    },
+    {
+      "id": "geylang-10-haig-rd-2025-02-204632",
+      "month": "2025-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 06 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "geylang-10-haig-rd-2025-01-204630",
+      "month": "2025-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 07 months",
+      "resalePrice": 421000,
+      "pricePerSqm": 6476.92,
+      "pricePerSqft": 601.73
+    },
+    {
+      "id": "geylang-10-haig-rd-2024-08-178020",
+      "month": "2024-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years",
+      "resalePrice": 390000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "geylang-10-haig-rd-2023-12-151835",
+      "month": "2023-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 08 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 5692.31,
+      "pricePerSqft": 528.83
+    },
+    {
+      "id": "geylang-10-haig-rd-2023-03-151368",
+      "month": "2023-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 05 months",
+      "resalePrice": 368000,
+      "pricePerSqm": 5661.54,
+      "pricePerSqft": 525.97
+    },
+    {
+      "id": "geylang-10-haig-rd-2022-10-125155",
+      "month": "2022-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 09 months",
+      "resalePrice": 398000,
+      "pricePerSqm": 6123.08,
+      "pricePerSqft": 568.85
+    },
+    {
+      "id": "geylang-10-haig-rd-2022-09-125100",
+      "month": "2022-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "52 years 11 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 5846.15,
+      "pricePerSqft": 543.13
+    },
+    {
+      "id": "geylang-10-haig-rd-2022-05-124880",
+      "month": "2022-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 03 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 5769.23,
+      "pricePerSqft": 535.98
+    },
+    {
+      "id": "geylang-10-haig-rd-2021-10-109993",
+      "month": "2021-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 09 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 5076.92,
+      "pricePerSqft": 471.66
+    },
+    {
+      "id": "geylang-10-haig-rd-2021-01-88395",
+      "month": "2021-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 06 months",
+      "resalePrice": 320000,
+      "pricePerSqm": 4923.08,
+      "pricePerSqft": 457.37
+    },
+    {
+      "id": "geylang-10-haig-rd-2021-01-88396",
+      "month": "2021-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 06 months",
+      "resalePrice": 333800,
+      "pricePerSqm": 5135.38,
+      "pricePerSqft": 477.09
+    },
+    {
+      "id": "geylang-10-haig-rd-2020-12-85897",
+      "month": "2020-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 08 months",
+      "resalePrice": 330000,
+      "pricePerSqm": 4342.11,
+      "pricePerSqft": 403.4
+    },
+    {
+      "id": "geylang-10-haig-rd-2020-06-71353",
+      "month": "2020-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 02 months",
+      "resalePrice": 300000,
+      "pricePerSqm": 4615.38,
+      "pricePerSqft": 428.78
+    },
+    {
+      "id": "geylang-10-haig-rd-2019-09-57051",
+      "month": "2019-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 10 months",
+      "resalePrice": 315000,
+      "pricePerSqm": 4846.15,
+      "pricePerSqft": 450.22
+    }
+  ]
+}

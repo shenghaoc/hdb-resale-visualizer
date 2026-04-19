@@ -1,0 +1,802 @@
+{
+  "summary": {
+    "addressKey": "pasir-ris-753-pasir-ris-st-71",
+    "town": "PASIR RIS",
+    "block": "753",
+    "streetName": "PASIR RIS ST 71",
+    "coordinates": {
+      "lat": 1.37715617697613,
+      "lng": 103.934482322299
+    },
+    "medianPrice": 610000,
+    "priceIqr": [
+      570944,
+      677000
+    ],
+    "pricePerSqmMedian": 5754.72,
+    "pricePerSqftMedian": 534.63,
+    "transactionCount": 3,
+    "floorAreaRange": [
+      104,
+      128
+    ],
+    "leaseCommenceRange": [
+      1996,
+      1996
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "1995-10",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "4 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MODEL A",
+      "MAX FLOOR 16"
+    ],
+    "nearestMrt": {
+      "stationName": "PASIR RIS MRT STATION",
+      "distanceMeters": 1697
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1995-10",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2656.25
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 406750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3228.18
+    },
+    {
+      "month": "2000-02",
+      "medianPrice": 303000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2858.49
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2884.62
+    },
+    {
+      "month": "2000-04",
+      "medianPrice": 289000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2752.38
+    },
+    {
+      "month": "2000-05",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2783.02
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 394000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3101.87
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 280000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2641.51
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 360000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2834.65
+    },
+    {
+      "month": "2000-10",
+      "medianPrice": 278000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2673.08
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2738.1
+    },
+    {
+      "month": "2001-06",
+      "medianPrice": 266000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2509.43
+    },
+    {
+      "month": "2001-07",
+      "medianPrice": 309750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2667.97
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 343000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2679.69
+    },
+    {
+      "month": "2001-10",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2738.1
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 331800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2592.19
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 253000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2409.52
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 337000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2674.6
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 260000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 257000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2424.53
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2579.37
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 336000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 248500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2344.34
+    },
+    {
+      "month": "2004-03",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2598.43
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 283800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2677.36
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 282000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2238.1
+    },
+    {
+      "month": "2006-07",
+      "medianPrice": 261500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2466.98
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2307.69
+    },
+    {
+      "month": "2007-07",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2582.68
+    },
+    {
+      "month": "2007-12",
+      "medianPrice": 291000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2745.28
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 300000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2871.11
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3150.79
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2812.5
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2952.76
+    },
+    {
+      "month": "2009-07",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2976.19
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3110.24
+    },
+    {
+      "month": "2009-11",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3161.9
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 340000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3238.1
+    },
+    {
+      "month": "2010-03",
+      "medianPrice": 375000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3230.74
+    },
+    {
+      "month": "2010-04",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3509.62
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3503.94
+    },
+    {
+      "month": "2010-06",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3867.92
+    },
+    {
+      "month": "2010-11",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3622.05
+    },
+    {
+      "month": "2011-02",
+      "medianPrice": 486500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3800.78
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3085.94
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 402000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3865.38
+    },
+    {
+      "month": "2012-02",
+      "medianPrice": 484000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4168.25
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3968.25
+    },
+    {
+      "month": "2012-12",
+      "medianPrice": 433000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4163.46
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 433000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4163.46
+    },
+    {
+      "month": "2013-06",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4375
+    },
+    {
+      "month": "2013-08",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4292.45
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 529000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4165.35
+    },
+    {
+      "month": "2015-06",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3046.88
+    },
+    {
+      "month": "2015-07",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3904.76
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3452.38
+    },
+    {
+      "month": "2016-02",
+      "medianPrice": 387000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3650.94
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 386000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3676.19
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 397000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3745.28
+    },
+    {
+      "month": "2016-07",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3701.92
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3942.31
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3653.85
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 368000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3504.76
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3619.05
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4325.4
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 477000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3755.91
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3962.26
+    },
+    {
+      "month": "2018-11",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3809.52
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4015.75
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4150.94
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 451400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3860.27
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 458000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4320.75
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4101.56
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3962.26
+    },
+    {
+      "month": "2021-12",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4571.43
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5096.15
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5396.83
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5576.92
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 542000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5161.9
+    },
+    {
+      "month": "2024-05",
+      "medianPrice": 531888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5114.31
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 744000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5858.27
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5754.72
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2025-12-209638",
+      "month": "2025-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "70 years",
+      "resalePrice": 610000,
+      "pricePerSqm": 5754.72,
+      "pricePerSqft": 534.63
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2024-06-183681",
+      "month": "2024-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 744000,
+      "pricePerSqm": 5858.27,
+      "pricePerSqft": 544.25
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2024-05-183578",
+      "month": "2024-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "71 years 07 months",
+      "resalePrice": 531888,
+      "pricePerSqm": 5114.31,
+      "pricePerSqft": 475.14
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2023-11-156776",
+      "month": "2023-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years",
+      "resalePrice": 542000,
+      "pricePerSqm": 5161.9,
+      "pricePerSqft": 479.56
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2023-08-156638",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 05 months",
+      "resalePrice": 580000,
+      "pricePerSqm": 5576.92,
+      "pricePerSqft": 518.11
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2023-02-156325",
+      "month": "2023-02",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "72 years 10 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 5396.83,
+      "pricePerSqft": 501.38
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2022-09-130474",
+      "month": "2022-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 5096.15,
+      "pricePerSqft": 473.45
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2021-12-115435",
+      "month": "2021-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "73 years 11 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4571.43,
+      "pricePerSqft": 424.7
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2021-09-107871",
+      "month": "2021-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 02 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 3962.26,
+      "pricePerSqft": 368.11
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2021-06-100137",
+      "month": "2021-06",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 4101.56,
+      "pricePerSqft": 381.05
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2021-01-88837",
+      "month": "2021-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "74 years 11 months",
+      "resalePrice": 458000,
+      "pricePerSqm": 4320.75,
+      "pricePerSqft": 401.41
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2020-10-81579",
+      "month": "2020-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 02 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 3714.29,
+      "pricePerSqft": 345.07
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2020-10-81611",
+      "month": "2020-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "75 years 01 month",
+      "resalePrice": 512800,
+      "pricePerSqm": 4006.25,
+      "pricePerSqft": 372.19
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2019-11-61408",
+      "month": "2019-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 440000,
+      "pricePerSqm": 4150.94,
+      "pricePerSqft": 385.64
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2019-01-42897",
+      "month": "2019-01",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "76 years 10 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4015.75,
+      "pricePerSqft": 373.08
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2018-11-39747",
+      "month": "2018-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years",
+      "resalePrice": 480000,
+      "pricePerSqm": 3809.52,
+      "pricePerSqft": 353.92
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2017-12-19765",
+      "month": "2017-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 106,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "77 years 11 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 3962.26,
+      "pricePerSqft": 368.11
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2017-11-18003",
+      "month": "2017-11",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 127,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 477000,
+      "pricePerSqm": 3755.91,
+      "pricePerSqft": 348.94
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2017-04-5204",
+      "month": "2017-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "78 years 08 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 4325.4,
+      "pricePerSqft": 401.84
+    },
+    {
+      "id": "pasir-ris-753-pasir-ris-st-71-2017-03-3245",
+      "month": "2017-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "78 years 08 months",
+      "resalePrice": 380000,
+      "pricePerSqm": 3619.05,
+      "pricePerSqft": 336.22
+    }
+  ]
+}

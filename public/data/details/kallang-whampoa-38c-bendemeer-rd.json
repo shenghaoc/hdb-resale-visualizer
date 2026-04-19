@@ -1,0 +1,567 @@
+{
+  "summary": {
+    "addressKey": "kallang-whampoa-38c-bendemeer-rd",
+    "town": "KALLANG/WHAMPOA",
+    "block": "38C",
+    "streetName": "BENDEMEER RD",
+    "coordinates": {
+      "lat": 1.32112027780383,
+      "lng": 103.866786871368
+    },
+    "medianPrice": 735000,
+    "priceIqr": [
+      706500,
+      837500
+    ],
+    "pricePerSqmMedian": 10217.39,
+    "pricePerSqftMedian": 949.23,
+    "transactionCount": 7,
+    "floorAreaRange": [
+      69,
+      92
+    ],
+    "leaseCommenceRange": [
+      2012,
+      2012
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "2015-11",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "MODEL A",
+      "MAX FLOOR 25"
+    ],
+    "nearestMrt": {
+      "stationName": "GEYLANG BAHRU MRT STATION",
+      "distanceMeters": 532
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2015-11",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7640.45
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6910.11
+    },
+    {
+      "month": "2016-06",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7752.81
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7640.45
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 512000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7420.29
+    },
+    {
+      "month": "2016-10",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6304.35
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6853.93
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 667000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7362.32
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5579.71
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 728000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8179.78
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6516.85
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7246.38
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 653000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7337.08
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8033.71
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6956.52
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 686888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7717.84
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8426.97
+    },
+    {
+      "month": "2019-06",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6516.85
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6269.66
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7246.38
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6782.61
+    },
+    {
+      "month": "2020-08",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7246.38
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7717.39
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 678000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7369.57
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7977.53
+    },
+    {
+      "month": "2021-11",
+      "medianPrice": 486000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7043.48
+    },
+    {
+      "month": "2022-03",
+      "medianPrice": 723888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7868.35
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7865.17
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 567500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8224.64
+    },
+    {
+      "month": "2022-11",
+      "medianPrice": 840000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9130.43
+    },
+    {
+      "month": "2023-01",
+      "medianPrice": 645000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8118.39
+    },
+    {
+      "month": "2023-03",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7865.17
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8405.8
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 753000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9467.03
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 860088,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9663.91
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9275.36
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 940000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10561.8
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 708000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10260.87
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9971.01
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9550.56
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 825000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9269.66
+    },
+    {
+      "month": "2025-10",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10652.17
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 705000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10217.39
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2025-12-208462",
+      "month": "2025-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 06 months",
+      "resalePrice": 705000,
+      "pricePerSqm": 10217.39,
+      "pricePerSqft": 949.23
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2025-10-208454",
+      "month": "2025-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 07 months",
+      "resalePrice": 735000,
+      "pricePerSqm": 10652.17,
+      "pricePerSqft": 989.62
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2025-03-208753",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 03 months",
+      "resalePrice": 825000,
+      "pricePerSqm": 9269.66,
+      "pricePerSqft": 861.18
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2025-02-208750",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 05 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 9550.56,
+      "pricePerSqft": 887.28
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2024-10-183056",
+      "month": "2024-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 08 months",
+      "resalePrice": 688000,
+      "pricePerSqm": 9971.01,
+      "pricePerSqft": 926.34
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2024-09-182973",
+      "month": "2024-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 09 months",
+      "resalePrice": 708000,
+      "pricePerSqm": 10260.87,
+      "pricePerSqft": 953.27
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2024-08-182900",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "86 years 10 months",
+      "resalePrice": 940000,
+      "pricePerSqm": 10561.8,
+      "pricePerSqft": 981.22
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2024-04-182503",
+      "month": "2024-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 640000,
+      "pricePerSqm": 9275.36,
+      "pricePerSqft": 861.71
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2024-03-182449",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 860088,
+      "pricePerSqm": 9663.91,
+      "pricePerSqft": 897.81
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-11-155993",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 07 months",
+      "resalePrice": 618000,
+      "pricePerSqm": 8956.52,
+      "pricePerSqft": 832.09
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-11-156017",
+      "month": "2023-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "87 years 07 months",
+      "resalePrice": 888000,
+      "pricePerSqm": 9977.53,
+      "pricePerSqft": 926.94
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-04-155549",
+      "month": "2023-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 580000,
+      "pricePerSqm": 8405.8,
+      "pricePerSqft": 780.92
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-03-155486",
+      "month": "2023-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 7865.17,
+      "pricePerSqft": 730.7
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-01-155338",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 7753.62,
+      "pricePerSqft": 720.34
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2023-01-155364",
+      "month": "2023-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 8483.15,
+      "pricePerSqft": 788.11
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2022-11-129626",
+      "month": "2022-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 06 months",
+      "resalePrice": 840000,
+      "pricePerSqm": 9130.43,
+      "pricePerSqft": 848.25
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2022-08-129372",
+      "month": "2022-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 7826.09,
+      "pricePerSqft": 727.07
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2022-08-129378",
+      "month": "2022-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 69,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "88 years 11 months",
+      "resalePrice": 595000,
+      "pricePerSqm": 8623.19,
+      "pricePerSqft": 801.12
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2022-04-129050",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 7865.17,
+      "pricePerSqft": 730.7
+    },
+    {
+      "id": "kallang-whampoa-38c-bendemeer-rd-2022-03-128969",
+      "month": "2022-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "89 years 02 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 7608.7,
+      "pricePerSqft": 706.87
+    }
+  ]
+}

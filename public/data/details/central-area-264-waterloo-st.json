@@ -1,0 +1,934 @@
+{
+  "summary": {
+    "addressKey": "central-area-264-waterloo-st",
+    "town": "CENTRAL AREA",
+    "block": "264",
+    "streetName": "WATERLOO ST",
+    "coordinates": {
+      "lat": 1.29900941828595,
+      "lng": 103.852284903161
+    },
+    "medianPrice": 591500,
+    "priceIqr": [
+      563972,
+      623000
+    ],
+    "pricePerSqmMedian": 9235.3,
+    "pricePerSqftMedian": 857.99,
+    "transactionCount": 4,
+    "floorAreaRange": [
+      60,
+      120
+    ],
+    "leaseCommenceRange": [
+      1986,
+      1986
+    ],
+    "latestMonth": "2025-11",
+    "availableDateRange": [
+      "1990-01",
+      "2025-11"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "5 ROOM"
+    ],
+    "flatModels": [
+      "ADJOINED FLAT",
+      "IMPROVED",
+      "MAX FLOOR 18"
+    ],
+    "nearestMrt": {
+      "stationName": "BENCOOLEN MRT STATION",
+      "distanceMeters": 162
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 67500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 992.65
+    },
+    {
+      "month": "1990-03",
+      "medianPrice": 62000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1033.33
+    },
+    {
+      "month": "1990-07",
+      "medianPrice": 61000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 1016.67
+    },
+    {
+      "month": "1990-08",
+      "medianPrice": 69000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1014.71
+    },
+    {
+      "month": "1990-12",
+      "medianPrice": 44200,
+      "transactionCount": 1,
+      "medianPricePerSqm": 736.67
+    },
+    {
+      "month": "1991-04",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1000
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 62000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1033.33
+    },
+    {
+      "month": "1991-12",
+      "medianPrice": 65000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1083.33
+    },
+    {
+      "month": "1992-08",
+      "medianPrice": 60000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1000
+    },
+    {
+      "month": "1992-12",
+      "medianPrice": 48000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 800
+    },
+    {
+      "month": "1993-04",
+      "medianPrice": 55000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 916.67
+    },
+    {
+      "month": "1993-07",
+      "medianPrice": 86000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1433.33
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 108000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1588.24
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 95000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1583.33
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 113000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1883.33
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2166.67
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "1995-12",
+      "medianPrice": 169000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2816.67
+    },
+    {
+      "month": "1996-01",
+      "medianPrice": 144000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2400
+    },
+    {
+      "month": "1996-02",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "1996-05",
+      "medianPrice": 188000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3000
+    },
+    {
+      "month": "1996-06",
+      "medianPrice": 184000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3066.67
+    },
+    {
+      "month": "1996-11",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1996-12",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3333.33
+    },
+    {
+      "month": "1997-01",
+      "medianPrice": 234000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3441.18
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 196500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3275
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3308.82
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2833.33
+    },
+    {
+      "month": "1998-06",
+      "medianPrice": 183000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2691.18
+    },
+    {
+      "month": "1998-12",
+      "medianPrice": 160000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2666.67
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 145000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2132.35
+    },
+    {
+      "month": "1999-04",
+      "medianPrice": 170000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2664.7
+    },
+    {
+      "month": "1999-06",
+      "medianPrice": 149000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2483.34
+    },
+    {
+      "month": "1999-07",
+      "medianPrice": 162000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2382.35
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 158500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2641.67
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 200000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2941.18
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 179000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2983.33
+    },
+    {
+      "month": "2000-11",
+      "medianPrice": 168500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2808.33
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 179000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2081.13
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 168800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2813.33
+    },
+    {
+      "month": "2001-08",
+      "medianPrice": 168000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2800
+    },
+    {
+      "month": "2001-12",
+      "medianPrice": 174000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2900
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 183900,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2878.93
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 179500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2991.67
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3088.24
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 225000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3529.41
+    },
+    {
+      "month": "2003-06",
+      "medianPrice": 189000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3150
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 215500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3387.74
+    },
+    {
+      "month": "2003-09",
+      "medianPrice": 194000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3233.33
+    },
+    {
+      "month": "2003-10",
+      "medianPrice": 192000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3200
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 223000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3716.67
+    },
+    {
+      "month": "2004-07",
+      "medianPrice": 225000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3308.82
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 222500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3272.06
+    },
+    {
+      "month": "2005-01",
+      "medianPrice": 220000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3235.29
+    },
+    {
+      "month": "2005-03",
+      "medianPrice": 203000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3383.33
+    },
+    {
+      "month": "2005-07",
+      "medianPrice": 197000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3283.33
+    },
+    {
+      "month": "2006-01",
+      "medianPrice": 219500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3658.34
+    },
+    {
+      "month": "2006-04",
+      "medianPrice": 237000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3485.29
+    },
+    {
+      "month": "2007-01",
+      "medianPrice": 227000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3783.33
+    },
+    {
+      "month": "2007-02",
+      "medianPrice": 248000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4133.33
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3970.59
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 313000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5216.67
+    },
+    {
+      "month": "2008-09",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5333.33
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 332000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5533.33
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5750
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5588.24
+    },
+    {
+      "month": "2010-09",
+      "medianPrice": 375500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6258.33
+    },
+    {
+      "month": "2010-12",
+      "medianPrice": 388000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5705.88
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 389500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6491.67
+    },
+    {
+      "month": "2011-12",
+      "medianPrice": 433500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7225
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6764.71
+    },
+    {
+      "month": "2012-08",
+      "medianPrice": 462500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7708.34
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7833.33
+    },
+    {
+      "month": "2013-02",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8133.33
+    },
+    {
+      "month": "2013-05",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8250
+    },
+    {
+      "month": "2013-11",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8250
+    },
+    {
+      "month": "2014-04",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2015-03",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7916.67
+    },
+    {
+      "month": "2016-01",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7647.06
+    },
+    {
+      "month": "2016-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6833.33
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 416888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6948.13
+    },
+    {
+      "month": "2016-12",
+      "medianPrice": 448000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7466.67
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5882.35
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7133.33
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 468000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6882.35
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6764.71
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7500
+    },
+    {
+      "month": "2019-10",
+      "medianPrice": 457500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7154.41
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7800
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 440800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6482.35
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 507000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7455.88
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 452000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7533.33
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
+    },
+    {
+      "month": "2022-06",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7058.82
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 461500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7691.67
+    },
+    {
+      "month": "2022-09",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8083.33
+    },
+    {
+      "month": "2023-02",
+      "medianPrice": 438000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7300
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8833.33
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 515504,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8090.74
+    },
+    {
+      "month": "2024-12",
+      "medianPrice": 560888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8248.35
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 618000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9088.24
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9382.35
+    },
+    {
+      "month": "2025-11",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9416.67
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-264-waterloo-st-2025-11-202708",
+      "month": "2025-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 11 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 9416.67,
+      "pricePerSqft": 874.84
+    },
+    {
+      "id": "central-area-264-waterloo-st-2025-06-202706",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "60 years 04 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 9382.35,
+      "pricePerSqft": 871.65
+    },
+    {
+      "id": "central-area-264-waterloo-st-2025-05-202705",
+      "month": "2025-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "60 years 05 months",
+      "resalePrice": 618000,
+      "pricePerSqm": 9088.24,
+      "pricePerSqft": 844.33
+    },
+    {
+      "id": "central-area-264-waterloo-st-2024-12-175775",
+      "month": "2024-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "60 years 11 months",
+      "resalePrice": 560888,
+      "pricePerSqm": 8248.35,
+      "pricePerSqft": 766.3
+    },
+    {
+      "id": "central-area-264-waterloo-st-2024-03-175639",
+      "month": "2024-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years 07 months",
+      "resalePrice": 511008,
+      "pricePerSqm": 7514.82,
+      "pricePerSqft": 698.15
+    },
+    {
+      "id": "central-area-264-waterloo-st-2024-03-175641",
+      "month": "2024-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years 07 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 8666.67,
+      "pricePerSqft": 805.16
+    },
+    {
+      "id": "central-area-264-waterloo-st-2024-02-175628",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 8833.33,
+      "pricePerSqft": 820.64
+    },
+    {
+      "id": "central-area-264-waterloo-st-2023-02-149354",
+      "month": "2023-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "62 years 08 months",
+      "resalePrice": 438000,
+      "pricePerSqm": 7300,
+      "pricePerSqft": 678.19
+    },
+    {
+      "id": "central-area-264-waterloo-st-2022-09-122546",
+      "month": "2022-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 01 month",
+      "resalePrice": 485000,
+      "pricePerSqm": 8083.33,
+      "pricePerSqft": 750.97
+    },
+    {
+      "id": "central-area-264-waterloo-st-2022-07-122508",
+      "month": "2022-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 03 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 7666.67,
+      "pricePerSqft": 712.26
+    },
+    {
+      "id": "central-area-264-waterloo-st-2022-07-122509",
+      "month": "2022-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 03 months",
+      "resalePrice": 463000,
+      "pricePerSqm": 7716.67,
+      "pricePerSqft": 716.9
+    },
+    {
+      "id": "central-area-264-waterloo-st-2022-06-122492",
+      "month": "2022-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "63 years 04 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 7058.82,
+      "pricePerSqft": 655.79
+    },
+    {
+      "id": "central-area-264-waterloo-st-2021-09-107202",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 7000,
+      "pricePerSqft": 650.32
+    },
+    {
+      "id": "central-area-264-waterloo-st-2021-06-99474",
+      "month": "2021-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 04 months",
+      "resalePrice": 452000,
+      "pricePerSqm": 7533.33,
+      "pricePerSqft": 699.87
+    },
+    {
+      "id": "central-area-264-waterloo-st-2021-03-92780",
+      "month": "2021-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 07 months",
+      "resalePrice": 507000,
+      "pricePerSqm": 7455.88,
+      "pricePerSqft": 692.67
+    },
+    {
+      "id": "central-area-264-waterloo-st-2020-12-85693",
+      "month": "2020-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "64 years 10 months",
+      "resalePrice": 440800,
+      "pricePerSqm": 6482.35,
+      "pricePerSqft": 602.23
+    },
+    {
+      "id": "central-area-264-waterloo-st-2020-10-80922",
+      "month": "2020-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "65 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 7000,
+      "pricePerSqft": 650.32
+    },
+    {
+      "id": "central-area-264-waterloo-st-2020-09-78457",
+      "month": "2020-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "65 years 01 month",
+      "resalePrice": 468000,
+      "pricePerSqm": 7800,
+      "pricePerSqft": 724.64
+    },
+    {
+      "id": "central-area-264-waterloo-st-2019-10-58811",
+      "month": "2019-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "65 years 11 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 7250,
+      "pricePerSqft": 673.55
+    },
+    {
+      "id": "central-area-264-waterloo-st-2019-10-58813",
+      "month": "2019-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "65 years 11 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 7058.82,
+      "pricePerSqft": 655.79
+    }
+  ]
+}

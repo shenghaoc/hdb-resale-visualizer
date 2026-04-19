@@ -1,0 +1,938 @@
+{
+  "summary": {
+    "addressKey": "bedok-7-bedok-sth-ave-2",
+    "town": "BEDOK",
+    "block": "7",
+    "streetName": "BEDOK STH AVE 2",
+    "coordinates": {
+      "lat": 1.32281544267372,
+      "lng": 103.93545524391
+    },
+    "medianPrice": 475000,
+    "priceIqr": [
+      471444,
+      494000
+    ],
+    "pricePerSqmMedian": 5792.68,
+    "pricePerSqftMedian": 538.16,
+    "transactionCount": 7,
+    "floorAreaRange": [
+      82,
+      82
+    ],
+    "leaseCommenceRange": [
+      1976,
+      1976
+    ],
+    "latestMonth": "2025-12",
+    "availableDateRange": [
+      "1991-01",
+      "2025-12"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 14"
+    ],
+    "nearestMrt": {
+      "stationName": "BEDOK MRT STATION",
+      "distanceMeters": 663
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1991-01",
+      "medianPrice": 57000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 695.12
+    },
+    {
+      "month": "1991-04",
+      "medianPrice": 56000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 682.93
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 45000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 548.78
+    },
+    {
+      "month": "1992-02",
+      "medianPrice": 85000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1036.59
+    },
+    {
+      "month": "1992-06",
+      "medianPrice": 55000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 670.73
+    },
+    {
+      "month": "1992-07",
+      "medianPrice": 55000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 670.73
+    },
+    {
+      "month": "1992-10",
+      "medianPrice": 57000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 695.12
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 80000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 975.61
+    },
+    {
+      "month": "1993-08",
+      "medianPrice": 93000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1134.15
+    },
+    {
+      "month": "1994-01",
+      "medianPrice": 143000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1743.9
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 140000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1707.32
+    },
+    {
+      "month": "1994-05",
+      "medianPrice": 148000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1804.88
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 170000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2073.17
+    },
+    {
+      "month": "1995-03",
+      "medianPrice": 153000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1865.85
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2317.07
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 198000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2414.63
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "1996-10",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "1997-03",
+      "medianPrice": 268000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3268.29
+    },
+    {
+      "month": "1997-06",
+      "medianPrice": 270000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3292.68
+    },
+    {
+      "month": "1997-07",
+      "medianPrice": 275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3353.66
+    },
+    {
+      "month": "1997-08",
+      "medianPrice": 318000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3878.05
+    },
+    {
+      "month": "1997-09",
+      "medianPrice": 267000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3256.1
+    },
+    {
+      "month": "1997-10",
+      "medianPrice": 260000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3170.73
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 233000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2841.46
+    },
+    {
+      "month": "1998-04",
+      "medianPrice": 230000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2804.88
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 224000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2731.71
+    },
+    {
+      "month": "1998-07",
+      "medianPrice": 223000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2719.51
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 227500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2774.39
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 210000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2560.98
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 208000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2536.59
+    },
+    {
+      "month": "1999-02",
+      "medianPrice": 212000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2585.37
+    },
+    {
+      "month": "1999-05",
+      "medianPrice": 204250,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2490.85
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 209000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2548.78
+    },
+    {
+      "month": "1999-09",
+      "medianPrice": 209000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2548.78
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 223800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2729.27
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 221000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2695.12
+    },
+    {
+      "month": "2000-01",
+      "medianPrice": 213800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2607.32
+    },
+    {
+      "month": "2000-07",
+      "medianPrice": 229000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2792.68
+    },
+    {
+      "month": "2000-09",
+      "medianPrice": 210000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2560.98
+    },
+    {
+      "month": "2000-12",
+      "medianPrice": 218000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2658.54
+    },
+    {
+      "month": "2001-02",
+      "medianPrice": 216000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2634.15
+    },
+    {
+      "month": "2001-03",
+      "medianPrice": 200500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2445.12
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 201000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 2451.22
+    },
+    {
+      "month": "2001-05",
+      "medianPrice": 196500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2396.34
+    },
+    {
+      "month": "2001-09",
+      "medianPrice": 191000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2329.27
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 191750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2338.41
+    },
+    {
+      "month": "2002-01",
+      "medianPrice": 184000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2243.9
+    },
+    {
+      "month": "2002-03",
+      "medianPrice": 182000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2219.51
+    },
+    {
+      "month": "2002-07",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2317.07
+    },
+    {
+      "month": "2002-08",
+      "medianPrice": 177000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2158.54
+    },
+    {
+      "month": "2002-09",
+      "medianPrice": 187000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2280.49
+    },
+    {
+      "month": "2002-10",
+      "medianPrice": 183500,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2237.8
+    },
+    {
+      "month": "2003-01",
+      "medianPrice": 202000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2463.41
+    },
+    {
+      "month": "2004-04",
+      "medianPrice": 227000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2768.3
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2004-06",
+      "medianPrice": 215000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2621.95
+    },
+    {
+      "month": "2004-09",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3048.78
+    },
+    {
+      "month": "2004-10",
+      "medianPrice": 194000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2365.85
+    },
+    {
+      "month": "2005-05",
+      "medianPrice": 186000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2268.29
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 190000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2317.07
+    },
+    {
+      "month": "2006-05",
+      "medianPrice": 195000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2378.05
+    },
+    {
+      "month": "2006-08",
+      "medianPrice": 203000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2475.61
+    },
+    {
+      "month": "2006-11",
+      "medianPrice": 209000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2548.78
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 205000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2500
+    },
+    {
+      "month": "2007-06",
+      "medianPrice": 206000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2512.2
+    },
+    {
+      "month": "2007-10",
+      "medianPrice": 250000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3048.78
+    },
+    {
+      "month": "2008-04",
+      "medianPrice": 229000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 2792.68
+    },
+    {
+      "month": "2008-11",
+      "medianPrice": 276000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3365.85
+    },
+    {
+      "month": "2008-12",
+      "medianPrice": 292000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3560.97
+    },
+    {
+      "month": "2009-01",
+      "medianPrice": 295000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3597.56
+    },
+    {
+      "month": "2009-03",
+      "medianPrice": 273388,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3334
+    },
+    {
+      "month": "2009-05",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "2009-09",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3695.12
+    },
+    {
+      "month": "2010-02",
+      "medianPrice": 304000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3707.32
+    },
+    {
+      "month": "2010-05",
+      "medianPrice": 367000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4475.61
+    },
+    {
+      "month": "2010-10",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4634.15
+    },
+    {
+      "month": "2011-03",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4512.2
+    },
+    {
+      "month": "2011-04",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4695.12
+    },
+    {
+      "month": "2012-01",
+      "medianPrice": 404000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4926.83
+    },
+    {
+      "month": "2012-07",
+      "medianPrice": 432000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5268.29
+    },
+    {
+      "month": "2012-09",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5243.9
+    },
+    {
+      "month": "2012-10",
+      "medianPrice": 440000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5365.85
+    },
+    {
+      "month": "2013-07",
+      "medianPrice": 436000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5317.07
+    },
+    {
+      "month": "2013-12",
+      "medianPrice": 398888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4864.49
+    },
+    {
+      "month": "2015-10",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4756.1
+    },
+    {
+      "month": "2016-05",
+      "medianPrice": 352000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4292.68
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4365.85
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4365.85
+    },
+    {
+      "month": "2018-09",
+      "medianPrice": 362000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4414.63
+    },
+    {
+      "month": "2019-07",
+      "medianPrice": 325000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3963.41
+    },
+    {
+      "month": "2020-09",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3902.44
+    },
+    {
+      "month": "2020-11",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4243.9
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4695.12
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 428000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5219.51
+    },
+    {
+      "month": "2023-05",
+      "medianPrice": 368000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4487.8
+    },
+    {
+      "month": "2023-09",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5243.9
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5121.95
+    },
+    {
+      "month": "2024-08",
+      "medianPrice": 472888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5766.93
+    },
+    {
+      "month": "2024-09",
+      "medianPrice": 470000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5731.71
+    },
+    {
+      "month": "2024-10",
+      "medianPrice": 453888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5535.22
+    },
+    {
+      "month": "2025-04",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5792.68
+    },
+    {
+      "month": "2025-05",
+      "medianPrice": 494000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6024.39
+    },
+    {
+      "month": "2025-12",
+      "medianPrice": 512000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6243.9
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2025-12-198824",
+      "month": "2025-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 01 month",
+      "resalePrice": 512000,
+      "pricePerSqm": 6243.9,
+      "pricePerSqft": 580.08
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2025-05-198811",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 09 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 5853.66,
+      "pricePerSqft": 543.82
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2025-05-198812",
+      "month": "2025-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 08 months",
+      "resalePrice": 508000,
+      "pricePerSqm": 6195.12,
+      "pricePerSqft": 575.55
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2025-04-198809",
+      "month": "2025-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 10 months",
+      "resalePrice": 475000,
+      "pricePerSqm": 5792.68,
+      "pricePerSqft": 538.16
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2024-10-171294",
+      "month": "2024-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 04 months",
+      "resalePrice": 453888,
+      "pricePerSqm": 5535.22,
+      "pricePerSqft": 514.24
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2024-09-171196",
+      "month": "2024-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 05 months",
+      "resalePrice": 470000,
+      "pricePerSqm": 5731.71,
+      "pricePerSqft": 532.49
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2024-08-171093",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "50 years 07 months",
+      "resalePrice": 472888,
+      "pricePerSqm": 5766.93,
+      "pricePerSqft": 535.77
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2024-03-170462",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 5121.95,
+      "pricePerSqft": 475.85
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2023-09-145391",
+      "month": "2023-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 04 months",
+      "resalePrice": 430000,
+      "pricePerSqm": 5243.9,
+      "pricePerSqft": 487.17
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2023-05-144941",
+      "month": "2023-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "51 years 08 months",
+      "resalePrice": 368000,
+      "pricePerSqm": 4487.8,
+      "pricePerSqft": 416.93
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2021-08-104101",
+      "month": "2021-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 05 months",
+      "resalePrice": 428000,
+      "pricePerSqm": 5219.51,
+      "pricePerSqft": 484.91
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2021-06-99092",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "53 years 08 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 4695.12,
+      "pricePerSqft": 436.19
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2020-11-82971",
+      "month": "2020-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 03 months",
+      "resalePrice": 348000,
+      "pricePerSqm": 4243.9,
+      "pricePerSqft": 394.27
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2020-09-78071",
+      "month": "2020-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "54 years 04 months",
+      "resalePrice": 320000,
+      "pricePerSqm": 3902.44,
+      "pricePerSqft": 362.55
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2019-07-52586",
+      "month": "2019-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "55 years 06 months",
+      "resalePrice": 325000,
+      "pricePerSqm": 3963.41,
+      "pricePerSqft": 368.21
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2018-09-34943",
+      "month": "2018-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "56 years 05 months",
+      "resalePrice": 362000,
+      "pricePerSqm": 4414.63,
+      "pricePerSqft": 410.13
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2017-08-11647",
+      "month": "2017-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "57 years 05 months",
+      "resalePrice": 358000,
+      "pricePerSqm": 4365.85,
+      "pricePerSqft": 405.6
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2017-01-92",
+      "month": "2017-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "58 years",
+      "resalePrice": 358000,
+      "pricePerSqm": 4365.85,
+      "pricePerSqft": 405.6
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2016-05-961942",
+      "month": "2016-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "58",
+      "resalePrice": 352000,
+      "pricePerSqm": 4292.68,
+      "pricePerSqft": 398.8
+    },
+    {
+      "id": "bedok-7-bedok-sth-ave-2-2015-10-951388",
+      "month": "2015-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "59",
+      "resalePrice": 390000,
+      "pricePerSqm": 4756.1,
+      "pricePerSqft": 441.86
+    }
+  ]
+}

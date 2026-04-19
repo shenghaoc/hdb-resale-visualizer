@@ -1,0 +1,836 @@
+{
+  "summary": {
+    "addressKey": "central-area-232-bain-st",
+    "town": "CENTRAL AREA",
+    "block": "232",
+    "streetName": "BAIN ST",
+    "coordinates": {
+      "lat": 1.29685311080014,
+      "lng": 103.853347534791
+    },
+    "medianPrice": 800000,
+    "priceIqr": [
+      783000,
+      825000
+    ],
+    "pricePerSqmMedian": 9756.1,
+    "pricePerSqftMedian": 906.37,
+    "transactionCount": 5,
+    "floorAreaRange": [
+      82,
+      82
+    ],
+    "leaseCommenceRange": [
+      1980,
+      1980
+    ],
+    "latestMonth": "2026-03",
+    "availableDateRange": [
+      "1990-01",
+      "2026-03"
+    ],
+    "flatTypes": [
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "IMPROVED",
+      "MAX FLOOR 25"
+    ],
+    "nearestMrt": {
+      "stationName": "BRAS BASAH MRT STATION",
+      "distanceMeters": 225
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "1990-01",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1219.51
+    },
+    {
+      "month": "1991-04",
+      "medianPrice": 120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1463.41
+    },
+    {
+      "month": "1991-08",
+      "medianPrice": 78000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 951.22
+    },
+    {
+      "month": "1991-11",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1219.51
+    },
+    {
+      "month": "1992-04",
+      "medianPrice": 100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1219.51
+    },
+    {
+      "month": "1992-05",
+      "medianPrice": 130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 1585.37
+    },
+    {
+      "month": "1993-02",
+      "medianPrice": 180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2195.12
+    },
+    {
+      "month": "1993-11",
+      "medianPrice": 225000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2743.9
+    },
+    {
+      "month": "1994-04",
+      "medianPrice": 253500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3091.47
+    },
+    {
+      "month": "1994-12",
+      "medianPrice": 240000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2926.83
+    },
+    {
+      "month": "1995-01",
+      "medianPrice": 228000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 2780.49
+    },
+    {
+      "month": "1995-09",
+      "medianPrice": 280000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3414.63
+    },
+    {
+      "month": "1995-10",
+      "medianPrice": 317500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3871.95
+    },
+    {
+      "month": "1995-11",
+      "medianPrice": 315000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3841.47
+    },
+    {
+      "month": "1996-03",
+      "medianPrice": 323000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 3939.02
+    },
+    {
+      "month": "1996-07",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5182.93
+    },
+    {
+      "month": "1997-02",
+      "medianPrice": 430000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5243.9
+    },
+    {
+      "month": "1997-11",
+      "medianPrice": 380000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4634.15
+    },
+    {
+      "month": "1998-01",
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4451.22
+    },
+    {
+      "month": "1998-03",
+      "medianPrice": 313750,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3826.22
+    },
+    {
+      "month": "1998-05",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3841.46
+    },
+    {
+      "month": "1998-08",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4304.88
+    },
+    {
+      "month": "1998-09",
+      "medianPrice": 333000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4060.97
+    },
+    {
+      "month": "1998-10",
+      "medianPrice": 320000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3902.44
+    },
+    {
+      "month": "1999-01",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3841.46
+    },
+    {
+      "month": "1999-08",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "1999-10",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4268.29
+    },
+    {
+      "month": "1999-12",
+      "medianPrice": 323000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3939.02
+    },
+    {
+      "month": "2000-03",
+      "medianPrice": 322500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 3932.93
+    },
+    {
+      "month": "2000-06",
+      "medianPrice": 346000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4219.51
+    },
+    {
+      "month": "2000-08",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4268.29
+    },
+    {
+      "month": "2001-01",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4024.39
+    },
+    {
+      "month": "2001-04",
+      "medianPrice": 315000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3841.46
+    },
+    {
+      "month": "2001-11",
+      "medianPrice": 300000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3658.54
+    },
+    {
+      "month": "2002-02",
+      "medianPrice": 328000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4000
+    },
+    {
+      "month": "2002-12",
+      "medianPrice": 303000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3695.12
+    },
+    {
+      "month": "2003-03",
+      "medianPrice": 322000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3926.83
+    },
+    {
+      "month": "2003-04",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4207.32
+    },
+    {
+      "month": "2003-08",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4268.29
+    },
+    {
+      "month": "2003-11",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4207.32
+    },
+    {
+      "month": "2004-02",
+      "medianPrice": 338800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4131.71
+    },
+    {
+      "month": "2004-05",
+      "medianPrice": 346000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4219.51
+    },
+    {
+      "month": "2005-06",
+      "medianPrice": 310000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3780.49
+    },
+    {
+      "month": "2005-08",
+      "medianPrice": 360000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4390.24
+    },
+    {
+      "month": "2005-09",
+      "medianPrice": 330000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4024.39
+    },
+    {
+      "month": "2006-03",
+      "medianPrice": 338000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4121.95
+    },
+    {
+      "month": "2006-06",
+      "medianPrice": 353000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4304.88
+    },
+    {
+      "month": "2006-09",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4573.17
+    },
+    {
+      "month": "2007-05",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4878.05
+    },
+    {
+      "month": "2008-02",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6951.22
+    },
+    {
+      "month": "2008-03",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6341.46
+    },
+    {
+      "month": "2008-05",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6341.46
+    },
+    {
+      "month": "2008-06",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7073.17
+    },
+    {
+      "month": "2009-04",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6890.24
+    },
+    {
+      "month": "2009-10",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7317.07
+    },
+    {
+      "month": "2010-01",
+      "medianPrice": 585000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7134.15
+    },
+    {
+      "month": "2011-10",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8902.44
+    },
+    {
+      "month": "2011-11",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8719.51
+    },
+    {
+      "month": "2012-03",
+      "medianPrice": 728000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8878.05
+    },
+    {
+      "month": "2012-06",
+      "medianPrice": 689900,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8413.41
+    },
+    {
+      "month": "2013-01",
+      "medianPrice": 688000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8390.24
+    },
+    {
+      "month": "2015-08",
+      "medianPrice": 730000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8902.44
+    },
+    {
+      "month": "2016-03",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8146.34
+    },
+    {
+      "month": "2016-08",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7743.9
+    },
+    {
+      "month": "2016-09",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8170.73
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8353.66
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7804.88
+    },
+    {
+      "month": "2017-06",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7804.88
+    },
+    {
+      "month": "2017-07",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7987.8
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7317.07
+    },
+    {
+      "month": "2018-04",
+      "medianPrice": 698000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8512.2
+    },
+    {
+      "month": "2018-08",
+      "medianPrice": 653000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7963.41
+    },
+    {
+      "month": "2019-08",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7987.8
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7560.98
+    },
+    {
+      "month": "2020-12",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7743.9
+    },
+    {
+      "month": "2021-03",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8170.73
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 628000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7658.54
+    },
+    {
+      "month": "2022-08",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7439.02
+    },
+    {
+      "month": "2023-04",
+      "medianPrice": 788000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9609.76
+    },
+    {
+      "month": "2023-06",
+      "medianPrice": 758000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9243.9
+    },
+    {
+      "month": "2023-07",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9756.1
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7926.83
+    },
+    {
+      "month": "2024-03",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8536.59
+    },
+    {
+      "month": "2024-04",
+      "medianPrice": 765000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9329.27
+    },
+    {
+      "month": "2025-01",
+      "medianPrice": 815000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9939.03
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9756.1
+    },
+    {
+      "month": "2025-03",
+      "medianPrice": 825000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10060.98
+    },
+    {
+      "month": "2026-03",
+      "medianPrice": 783000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9548.78
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "central-area-232-bain-st-2026-03-223700",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 02 months",
+      "resalePrice": 783000,
+      "pricePerSqm": 9548.78,
+      "pricePerSqft": 887.11
+    },
+    {
+      "id": "central-area-232-bain-st-2025-03-202712",
+      "month": "2025-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "54 years 03 months",
+      "resalePrice": 825000,
+      "pricePerSqm": 10060.98,
+      "pricePerSqft": 934.7
+    },
+    {
+      "id": "central-area-232-bain-st-2025-02-202711",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "54 years 04 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 9756.1,
+      "pricePerSqft": 906.37
+    },
+    {
+      "id": "central-area-232-bain-st-2025-01-202709",
+      "month": "2025-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "54 years 06 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 10365.85,
+      "pricePerSqft": 963.02
+    },
+    {
+      "id": "central-area-232-bain-st-2025-01-202710",
+      "month": "2025-01",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "54 years 05 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 9512.2,
+      "pricePerSqft": 883.71
+    },
+    {
+      "id": "central-area-232-bain-st-2024-04-175667",
+      "month": "2024-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "55 years 02 months",
+      "resalePrice": 765000,
+      "pricePerSqm": 9329.27,
+      "pricePerSqft": 866.72
+    },
+    {
+      "id": "central-area-232-bain-st-2024-03-175646",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "55 years 03 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 8536.59,
+      "pricePerSqft": 793.08
+    },
+    {
+      "id": "central-area-232-bain-st-2023-08-149458",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "55 years 10 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 7926.83,
+      "pricePerSqft": 736.43
+    },
+    {
+      "id": "central-area-232-bain-st-2023-07-149447",
+      "month": "2023-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "55 years 11 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 9756.1,
+      "pricePerSqft": 906.37
+    },
+    {
+      "id": "central-area-232-bain-st-2023-06-149425",
+      "month": "2023-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "56 years",
+      "resalePrice": 758000,
+      "pricePerSqm": 9243.9,
+      "pricePerSqft": 858.79
+    },
+    {
+      "id": "central-area-232-bain-st-2023-04-149397",
+      "month": "2023-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "56 years 01 month",
+      "resalePrice": 788000,
+      "pricePerSqm": 9609.76,
+      "pricePerSqft": 892.78
+    },
+    {
+      "id": "central-area-232-bain-st-2022-08-122526",
+      "month": "2022-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "56 years 10 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 7439.02,
+      "pricePerSqft": 691.11
+    },
+    {
+      "id": "central-area-232-bain-st-2021-06-99479",
+      "month": "2021-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 01 month",
+      "resalePrice": 628000,
+      "pricePerSqm": 7658.54,
+      "pricePerSqft": 711.5
+    },
+    {
+      "id": "central-area-232-bain-st-2021-03-92787",
+      "month": "2021-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 02 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 8170.73,
+      "pricePerSqft": 759.09
+    },
+    {
+      "id": "central-area-232-bain-st-2020-12-85695",
+      "month": "2020-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "58 years 06 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 7743.9,
+      "pricePerSqft": 719.43
+    },
+    {
+      "id": "central-area-232-bain-st-2019-12-62850",
+      "month": "2019-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "59 years 05 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 7560.98,
+      "pricePerSqft": 702.44
+    },
+    {
+      "id": "central-area-232-bain-st-2019-08-54994",
+      "month": "2019-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "59 years 09 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 7987.8,
+      "pricePerSqft": 742.09
+    },
+    {
+      "id": "central-area-232-bain-st-2018-08-33218",
+      "month": "2018-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "60 years 10 months",
+      "resalePrice": 653000,
+      "pricePerSqm": 7963.41,
+      "pricePerSqft": 739.83
+    },
+    {
+      "id": "central-area-232-bain-st-2018-04-25136",
+      "month": "2018-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "61 years 01 month",
+      "resalePrice": 698000,
+      "pricePerSqm": 8512.2,
+      "pricePerSqft": 790.81
+    },
+    {
+      "id": "central-area-232-bain-st-2018-02-21839",
+      "month": "2018-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "61 years 03 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 7317.07,
+      "pricePerSqft": 679.78
+    }
+  ]
+}

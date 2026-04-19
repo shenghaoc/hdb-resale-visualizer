@@ -1,0 +1,597 @@
+{
+  "summary": {
+    "addressKey": "bukit-merah-80c-telok-blangah-st-31",
+    "town": "BUKIT MERAH",
+    "block": "80C",
+    "streetName": "TELOK BLANGAH ST 31",
+    "coordinates": {
+      "lat": 1.27349435644809,
+      "lng": 103.807229362471
+    },
+    "medianPrice": 765000,
+    "priceIqr": [
+      752500,
+      778750
+    ],
+    "pricePerSqmMedian": 11250,
+    "pricePerSqftMedian": 1045.16,
+    "transactionCount": 10,
+    "floorAreaRange": [
+      68,
+      93
+    ],
+    "leaseCommenceRange": [
+      2013,
+      2013
+    ],
+    "latestMonth": "2026-04",
+    "availableDateRange": [
+      "2016-12",
+      "2026-04"
+    ],
+    "flatTypes": [
+      "3 ROOM",
+      "4 ROOM"
+    ],
+    "flatModels": [
+      "PREMIUM APARTMENT",
+      "MAX FLOOR 38"
+    ],
+    "nearestMrt": {
+      "stationName": "TELOK BLANGAH MRT STATION",
+      "distanceMeters": 427
+    }
+  },
+  "monthlyTrend": [
+    {
+      "month": "2016-12",
+      "medianPrice": 510000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7500
+    },
+    {
+      "month": "2017-01",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8529.41
+    },
+    {
+      "month": "2017-02",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8382.35
+    },
+    {
+      "month": "2017-03",
+      "medianPrice": 587500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8639.7
+    },
+    {
+      "month": "2017-04",
+      "medianPrice": 652500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8132.9
+    },
+    {
+      "month": "2017-05",
+      "medianPrice": 700000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8132.35
+    },
+    {
+      "month": "2017-08",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8750
+    },
+    {
+      "month": "2017-10",
+      "medianPrice": 578800,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8455.88
+    },
+    {
+      "month": "2017-11",
+      "medianPrice": 585000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8602.94
+    },
+    {
+      "month": "2017-12",
+      "medianPrice": 572500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8419.11
+    },
+    {
+      "month": "2018-01",
+      "medianPrice": 715000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7688.17
+    },
+    {
+      "month": "2018-02",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8308.82
+    },
+    {
+      "month": "2018-03",
+      "medianPrice": 590000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8676.47
+    },
+    {
+      "month": "2018-05",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8823.53
+    },
+    {
+      "month": "2018-06",
+      "medianPrice": 775000,
+      "transactionCount": 5,
+      "medianPricePerSqm": 8382.35
+    },
+    {
+      "month": "2018-12",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8387.1
+    },
+    {
+      "month": "2019-01",
+      "medianPrice": 842000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9053.76
+    },
+    {
+      "month": "2019-02",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9117.65
+    },
+    {
+      "month": "2019-05",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8750
+    },
+    {
+      "month": "2019-09",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2019-11",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7941.18
+    },
+    {
+      "month": "2019-12",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7634.41
+    },
+    {
+      "month": "2020-01",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8455.88
+    },
+    {
+      "month": "2020-06",
+      "medianPrice": 614000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9029.42
+    },
+    {
+      "month": "2020-07",
+      "medianPrice": 580000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8529.41
+    },
+    {
+      "month": "2020-10",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9558.82
+    },
+    {
+      "month": "2021-01",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9191.18
+    },
+    {
+      "month": "2021-02",
+      "medianPrice": 709000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8726.59
+    },
+    {
+      "month": "2021-05",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9044.12
+    },
+    {
+      "month": "2021-06",
+      "medianPrice": 572000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8411.76
+    },
+    {
+      "month": "2021-08",
+      "medianPrice": 750000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9408.6
+    },
+    {
+      "month": "2021-09",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8308.82
+    },
+    {
+      "month": "2021-10",
+      "medianPrice": 658000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9676.47
+    },
+    {
+      "month": "2022-04",
+      "medianPrice": 815000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8763.44
+    },
+    {
+      "month": "2022-07",
+      "medianPrice": 658000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9676.47
+    },
+    {
+      "month": "2022-10",
+      "medianPrice": 658000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9676.47
+    },
+    {
+      "month": "2022-12",
+      "medianPrice": 910000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9784.95
+    },
+    {
+      "month": "2023-08",
+      "medianPrice": 862500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10746.75
+    },
+    {
+      "month": "2023-11",
+      "medianPrice": 720000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10588.24
+    },
+    {
+      "month": "2024-01",
+      "medianPrice": 756888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11130.71
+    },
+    {
+      "month": "2024-02",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11102.94
+    },
+    {
+      "month": "2024-06",
+      "medianPrice": 745000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10955.88
+    },
+    {
+      "month": "2025-02",
+      "medianPrice": 1090000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11720.43
+    },
+    {
+      "month": "2025-06",
+      "medianPrice": 752500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11066.17
+    },
+    {
+      "month": "2025-07",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11176.47
+    },
+    {
+      "month": "2025-08",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11176.47
+    },
+    {
+      "month": "2026-02",
+      "medianPrice": 780000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 11397.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11029.41
+    }
+  ],
+  "recentTransactions": [
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2026-04-223271",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 05 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 11029.41,
+      "pricePerSqft": 1024.67
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2026-02-223268",
+      "month": "2026-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 06 months",
+      "resalePrice": 770000,
+      "pricePerSqm": 11323.53,
+      "pricePerSqft": 1051.99
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2026-02-223269",
+      "month": "2026-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 06 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 11470.59,
+      "pricePerSqft": 1065.65
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2026-02-223367",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 07 months",
+      "resalePrice": 1060000,
+      "pricePerSqm": 11397.85,
+      "pricePerSqft": 1058.9
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2025-08-201211",
+      "month": "2025-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years",
+      "resalePrice": 760000,
+      "pricePerSqm": 11176.47,
+      "pricePerSqft": 1038.33
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2025-07-201208",
+      "month": "2025-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 01 month",
+      "resalePrice": 760000,
+      "pricePerSqm": 11176.47,
+      "pricePerSqft": 1038.33
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2025-06-201202",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 730000,
+      "pricePerSqm": 10735.29,
+      "pricePerSqft": 997.34
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2025-06-201204",
+      "month": "2025-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 775000,
+      "pricePerSqm": 11397.06,
+      "pricePerSqft": 1058.82
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2025-02-201557",
+      "month": "2025-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 1090000,
+      "pricePerSqm": 11720.43,
+      "pricePerSqft": 1088.86
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2024-06-174126",
+      "month": "2024-06",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 745000,
+      "pricePerSqm": 10955.88,
+      "pricePerSqft": 1017.84
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2024-02-173768",
+      "month": "2024-02",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 07 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 11102.94,
+      "pricePerSqft": 1031.5
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2024-01-173677",
+      "month": "2024-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 756888,
+      "pricePerSqm": 11130.71,
+      "pricePerSqft": 1034.08
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2023-11-148411",
+      "month": "2023-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 720000,
+      "pricePerSqm": 10588.24,
+      "pricePerSqft": 983.68
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2023-08-148133",
+      "month": "2023-08",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years",
+      "resalePrice": 745000,
+      "pricePerSqm": 10955.88,
+      "pricePerSqft": 1017.84
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2023-08-148184",
+      "month": "2023-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years",
+      "resalePrice": 980000,
+      "pricePerSqm": 10537.63,
+      "pricePerSqft": 978.98
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2022-12-121368",
+      "month": "2022-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 10 months",
+      "resalePrice": 910000,
+      "pricePerSqm": 9784.95,
+      "pricePerSqft": 909.05
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2022-10-121210",
+      "month": "2022-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 658000,
+      "pricePerSqm": 9676.47,
+      "pricePerSqft": 898.97
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2022-07-120976",
+      "month": "2022-07",
+      "flatType": "3 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 658000,
+      "pricePerSqm": 9676.47,
+      "pricePerSqft": 898.97
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2022-04-120724",
+      "month": "2022-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 815000,
+      "pricePerSqm": 8763.44,
+      "pricePerSqft": 814.15
+    },
+    {
+      "id": "bukit-merah-80c-telok-blangah-st-31-2021-10-109605",
+      "month": "2021-10",
+      "flatType": "3 ROOM",
+      "storeyRange": "34 TO 36",
+      "floorAreaSqm": 68,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "90 years 11 months",
+      "resalePrice": 658000,
+      "pricePerSqm": 9676.47,
+      "pricePerSqft": 898.97
+    }
+  ]
+}
