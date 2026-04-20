@@ -9,6 +9,7 @@ import type { BlockSummary } from "@/types/data";
 type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
+  townFilter?: string | null;
   onSelect: (addressKey: string) => void;
 };
 
@@ -51,7 +52,7 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
   );
 }
 
-export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) {
+export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
@@ -453,6 +454,35 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
       void mapInstance.once("load", updateData);
     }
   }, [blocks]);
+
+  // Fit bounds when townFilter changes
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || blocks.length === 0) return;
+
+    let minLng = Infinity, maxLng = -Infinity;
+    let minLat = Infinity, maxLat = -Infinity;
+    for (const b of blocks) {
+       minLng = Math.min(minLng, b.coordinates.lng);
+       maxLng = Math.max(maxLng, b.coordinates.lng);
+       minLat = Math.min(minLat, b.coordinates.lat);
+       maxLat = Math.max(maxLat, b.coordinates.lat);
+    }
+
+    // Default Singapore bounds if min/max collapsed or townFilter is missing
+    if (minLng === Infinity || !townFilter) {
+      map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
+      return;
+    }
+
+    map.fitBounds(
+      [
+        [minLng, minLat],
+        [maxLng, maxLat]
+      ],
+      { padding: 60, maxZoom: 15, duration: 1200 }
+    );
+  }, [townFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {

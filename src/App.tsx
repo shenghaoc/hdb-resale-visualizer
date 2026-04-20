@@ -260,6 +260,7 @@ function App() {
               blocks={filteredBlocks}
               onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
               selectedAddressKey={filters.selectedAddressKey}
+              townFilter={filters.town}
             />
           </Suspense>
         </div>
