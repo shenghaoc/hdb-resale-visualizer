@@ -6,6 +6,7 @@ import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import type { AddressDetail, BlockSummary, FilterState, Manifest } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
@@ -46,6 +47,7 @@ function App() {
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   type MobileTab = "map" | "filters" | "results" | "saved";
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
@@ -267,7 +269,7 @@ function App() {
   const resultsContent = (
     <ResultsPane
       blocks={filteredBlocks}
-      hasTownFilter={!!filters.town}
+      hasTownFilter={!!filters.town || !!filters.search}
       onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
       onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
       selectedAddressKey={filters.selectedAddressKey}
@@ -315,76 +317,82 @@ function App() {
           testId="stats-bar"
         />
 
-        {/* Desktop: 3-column grid (unchanged) */}
-        <section className="hidden lg:grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
-          <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
-            {filterContent}
-          </div>
+        {/* Desktop: 3-column grid */}
+        {isDesktop ? (
+          <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
+            <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
+              {filterContent}
+            </div>
 
-          <section
-            ref={middleColumnRef}
-            className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
-          >
-            {mapContent}
-            {resultsContent}
-          </section>
-
-          <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
-            {savedContent}
-          </section>
-        </section>
-
-        {/* Mobile: tab-switched content */}
-        <section className="flex flex-col gap-4 lg:hidden min-h-0 flex-1">
-          {mobileTab === "map" && (
-            <div className="flex flex-col gap-4">
+            <section
+              ref={middleColumnRef}
+              className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
+            >
               {mapContent}
-            </div>
-          )}
-          {mobileTab === "filters" && filterContent}
-          {mobileTab === "results" && (
-            <div className="flex flex-col gap-4 min-h-0 flex-1">
               {resultsContent}
-            </div>
-          )}
-          {mobileTab === "saved" && (
-            <div className="flex flex-col gap-4">
+            </section>
+
+            <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
               {savedContent}
-            </div>
-          )}
-        </section>
+            </section>
+          </section>
+        ) : (
+          <section className="flex flex-col gap-4 min-h-0 flex-1">
+            {/* Mobile: tab-switched content */}
+            {mobileTab === "map" && (
+              <div className="flex flex-col gap-4">
+                {mapContent}
+              </div>
+            )}
+            {mobileTab === "filters" && filterContent}
+            {mobileTab === "results" && (
+              <div className="flex flex-col gap-4 min-h-0 flex-1">
+                {resultsContent}
+              </div>
+            )}
+            {mobileTab === "saved" && (
+              <div className="flex flex-col gap-4">
+                {savedContent}
+              </div>
+            )}
+          </section>
+        )}
 
         {/* Desktop bottom stats (hidden on mobile — tab bar takes that space) */}
-        <div className="hidden lg:block">
-          <StatsBar
-            manifest={manifest}
-            filteredCount={filteredBlocks.length}
-            blocks={filteredBlocks}
-            mode="summary"
-            testId="market-summary"
-          />
-        </div>
+        {isDesktop && (
+          <div>
+            <StatsBar
+              manifest={manifest}
+              filteredCount={filteredBlocks.length}
+              blocks={filteredBlocks}
+              mode="summary"
+              testId="market-summary"
+            />
+          </div>
+        )}
       </main>
 
       {/* Mobile bottom tab bar */}
-      <nav className="mobile-tab-bar lg:hidden">
-        <button type="button" data-active={mobileTab === "map"} onClick={() => setMobileTab("map")}>
-          <MapIcon />
-          Map
-        </button>
-        <button type="button" data-active={mobileTab === "filters"} onClick={() => setMobileTab("filters")}>
-          <SlidersHorizontal />
-          Filters
-        </button>
-        <button type="button" data-active={mobileTab === "results"} onClick={() => setMobileTab("results")}>
-          <List />
-          Results
-        </button>
-        <button type="button" data-active={mobileTab === "saved"} onClick={() => setMobileTab("saved")}>
-          <Bookmark />
-          Saved{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
-        </button>
-      </nav>
+      {!isDesktop && (
+        <nav className="mobile-tab-bar">
+          <button type="button" data-active={mobileTab === "map"} onClick={() => setMobileTab("map")}>
+            <MapIcon />
+            Map
+          </button>
+          <button type="button" data-active={mobileTab === "filters"} onClick={() => setMobileTab("filters")}>
+            <SlidersHorizontal />
+            Filters
+          </button>
+          <button type="button" data-active={mobileTab === "results"} onClick={() => setMobileTab("results")}>
+            <List />
+            Results
+          </button>
+          <button type="button" data-active={mobileTab === "saved"} onClick={() => setMobileTab("saved")}>
+            <Bookmark />
+            Saved{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
+          </button>
+        </nav>
+      )}
     </>
   );
 }
