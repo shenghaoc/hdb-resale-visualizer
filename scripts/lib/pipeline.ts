@@ -1,4 +1,5 @@
 import type { AddressDetail, AddressDetailTransaction, BlockSummary, Manifest, TownFlatTypeTrendPoint } from "@/types/data";
+import { getStationDetails } from "./mrt";
 
 export type ResaleTransaction = {
   id: string;
@@ -41,6 +42,9 @@ export type MrtStationFeature = {
   };
   properties: {
     stationName: string;
+    color: string;
+    lines: string[];
+    isInterchange: boolean;
   };
 };
 
@@ -153,6 +157,36 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
   return `${remaining} years`;
 }
 
+function sanitizeDisplayName(
+  displayName: string | null,
+  block: string,
+  streetName: string,
+): string | null {
+  if (!displayName) {
+    return null;
+  }
+
+  const normalizedDisplayName = normalizeText(displayName);
+  if (normalizedDisplayName === "NIL") {
+    return null;
+  }
+
+  const normalizedAddress = normalizeText(`${block} ${streetName}`);
+  const normalizedDisplayNameWithoutBlockPrefix = normalizedDisplayName.replace(
+    /^(BLK|BLOCK)\s+/,
+    "",
+  );
+
+  if (
+    normalizedDisplayName === normalizedAddress ||
+    normalizedDisplayNameWithoutBlockPrefix === normalizedAddress
+  ) {
+    return null;
+  }
+
+  return normalizedDisplayName;
+}
+
 export function buildMrtStationsGeoJson(mrtExits: MrtExit[]): MrtStationFeatureCollection {
   const stations = new Map<
     string,
@@ -179,16 +213,22 @@ export function buildMrtStationsGeoJson(mrtExits: MrtExit[]): MrtStationFeatureC
     type: "FeatureCollection",
     features: [...stations.entries()]
       .sort(([left], [right]) => left.localeCompare(right))
-      .map(([stationName, station]) => ({
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [station.lngSum / station.count, station.latSum / station.count],
-        },
-        properties: {
-          stationName,
-        },
-      })),
+      .map(([stationName, station]) => {
+        const details = getStationDetails(stationName);
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [station.lngSum / station.count, station.latSum / station.count],
+          },
+          properties: {
+            stationName,
+            color: details.color,
+            lines: details.lines,
+            isInterchange: details.isInterchange,
+          },
+        };
+      }),
   };
 }
 
@@ -270,6 +310,7 @@ export function buildArtifacts({
       town: latest.town,
       block: latest.block,
       streetName: latest.streetName,
+      displayName: sanitizeDisplayName(geocode.displayName, latest.block, latest.streetName),
       coordinates: { lat: geocode.lat, lng: geocode.lng },
       medianPrice: Math.round(median(priceValues)),
       priceIqr: [Math.round(quantile(priceValues, 0.25)), Math.round(quantile(priceValues, 0.75))],

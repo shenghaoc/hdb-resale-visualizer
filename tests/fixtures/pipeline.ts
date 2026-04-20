@@ -106,7 +106,7 @@ export const fixtureGeocodes: Record<string, GeocodeEntry> = {
     lat: 1.3339,
     lng: 103.9372,
     postalCode: "460101",
-    displayName: "BLK 101 BEDOK NTH AVE 4",
+    displayName: "BEDOK NORTH GREEN",
     searchValue: "101 BEDOK NTH AVE 4 SINGAPORE",
   },
 };

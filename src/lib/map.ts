@@ -10,6 +10,7 @@ type GeoJsonFeature = {
     address_key: string;
     town: string;
     address: string;
+    display_name?: string | null;
     median_price: number;
     transaction_count: number;
     latest_month: string;
@@ -32,6 +33,7 @@ export function toGeoJson(blocks: BlockSummary[]) {
         median_price: block.medianPrice,
         transaction_count: block.transactionCount,
         latest_month: block.latestMonth,
+        ...(block.displayName ? { display_name: block.displayName } : {}),
       },
     })),
   };

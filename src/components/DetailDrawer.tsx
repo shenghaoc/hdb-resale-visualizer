@@ -36,11 +36,19 @@ export function DetailDrawer({
         <CardHeader className="gap-2 border-b border-border pb-4">
           <div className="flex flex-col gap-3">
             <div className="flex min-w-0 flex-col gap-1">
+              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                Selected block
+              </span>
               <CardTitle className="text-lg">
                 {currentSummary
                   ? `${currentSummary.block} ${currentSummary.streetName}`
                   : "Choose a block from the map or results"}
               </CardTitle>
+              {currentSummary?.displayName ? (
+                <p className="text-sm font-medium text-muted-foreground">
+                  {currentSummary.displayName}
+                </p>
+              ) : null}
             </div>
             {currentSummary ? (
               <CardAction className="col-start-auto row-span-1 row-start-auto flex flex-wrap items-center gap-2 self-start justify-self-auto">

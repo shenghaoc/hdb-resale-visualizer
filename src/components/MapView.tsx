@@ -19,6 +19,7 @@ const SINGAPORE_BOUNDS: LngLatBoundsLike = [
 
 type PopupProperties = {
   address?: string;
+  display_name?: string | null;
   town?: string;
   median_price?: number;
   transaction_count?: number;
@@ -119,10 +120,49 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
         type: "circle",
         source: "mrt-stations",
         paint: {
-          "circle-radius": 4,
-          "circle-color": "#2563eb",
-          "circle-stroke-width": 1,
-          "circle-stroke-color": "#fff",
+          "circle-radius": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            8,
+            7,
+          ],
+          "circle-color": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            "#fff",
+            ["coalesce", ["get", "color"], "#2563eb"]
+          ],
+          "circle-stroke-width": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            2.5,
+            1.5,
+          ],
+          "circle-stroke-color": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            ["coalesce", ["get", "color"], "#2563eb"],
+            "#fff"
+          ],
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-symbol",
+        type: "symbol",
+        source: "mrt-stations",
+        layout: {
+          "text-field": "M",
+          "text-size": 9,
+          "text-font": ["Noto Sans Bold"],
+        },
+        paint: {
+          "text-color": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            ["coalesce", ["get", "color"], "#2563eb"],
+            "#fff"
+          ],
         },
       });
 
@@ -138,9 +178,9 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
           "text-anchor": "top",
         },
         paint: {
-          "text-color": "#1e40af",
+          "text-color": ["coalesce", ["get", "color"], "#1e40af"],
           "text-halo-color": "#fff",
-          "text-halo-width": 1,
+          "text-halo-width": 1.5,
         },
       });
 
@@ -247,6 +287,35 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
         },
       });
 
+      map.addLayer({
+        id: "selected-point-label",
+        type: "symbol",
+        source: "blocks",
+        filter: ["==", ["get", "address_key"], ""],
+        layout: {
+          "text-field": [
+            "format",
+            ["get", "address"],
+            { "font-scale": 1 },
+            ["case", ["has", "display_name"], "\n", ""],
+            {},
+            ["coalesce", ["get", "display_name"], ""],
+            { "font-scale": 0.82 },
+          ],
+          "text-size": 12,
+          "text-offset": [0, -2.2],
+          "text-anchor": "bottom",
+          "text-max-width": 16,
+          "text-allow-overlap": true,
+          "text-ignore-placement": true,
+        },
+        paint: {
+          "text-color": "#231914",
+          "text-halo-color": "#fffdf8",
+          "text-halo-width": 2,
+        },
+      });
+
       map.on("click", "unclustered-point", (event) => {
         const feature = event.features?.[0];
         const properties = feature?.properties;
@@ -292,6 +361,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
 
         const props = feature.properties ?? {};
         const address = props.address ?? "";
+        const displayName = props.display_name ?? "";
         const town = props.town ?? "";
         const medianPrice = props.median_price ?? 0;
         const txnCount = props.transaction_count ?? 0;
@@ -301,7 +371,9 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
         popup
           .setLngLat([lng, lat])
           .setHTML(
-            `<strong>${address}</strong><br/>${town}<br/>${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`
+            `<strong>${address}</strong>${
+              displayName ? `<p>${displayName}</p>` : ""
+            }<p>${town}</p><p>${formatCompactCurrency(medianPrice)} median · ${txnCount} txns</p>`
           )
           .addTo(map);
       });
@@ -317,6 +389,35 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
 
       map.on("mouseleave", "clusters", () => {
         map.getCanvas().style.cursor = "";
+      });
+
+      map.on("mouseenter", "mrt-icons", (event) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = event.features?.[0];
+        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
+
+        const props = feature.properties ?? {};
+        const stationName = props.stationName ?? "MRT Station";
+        let linesHtml = "";
+        
+        try {
+          const lines = typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
+          if (Array.isArray(lines)) {
+            linesHtml = `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`;
+          }
+        } catch(e) {}
+
+        const [lng, lat] = feature.geometry.coordinates;
+
+        popup
+          .setLngLat([lng, lat])
+          .setHTML(`<strong>${stationName}</strong>${linesHtml}`)
+          .addTo(map);
+      });
+
+      map.on("mouseleave", "mrt-icons", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
       });
     });
 
@@ -353,7 +454,7 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
     }
   }, [blocks]);
 
-  // Update the selected-point filter when selection changes
+  // Update the selected-point filters when selection changes
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !map.getLayer("selected-point")) {
@@ -361,6 +462,11 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
     }
 
     map.setFilter("selected-point", [
+      "==",
+      ["get", "address_key"],
+      selectedAddressKey ?? "",
+    ]);
+    map.setFilter("selected-point-label", [
       "==",
       ["get", "address_key"],
       selectedAddressKey ?? "",

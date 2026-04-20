@@ -10,6 +10,10 @@ describe("pipeline artifacts", () => {
     expect(artifacts.blockSummaries[0]?.addressKey).toBe(
       makeAddressKey("BEDOK", "101", "BEDOK NTH AVE 4"),
     );
+    expect(artifacts.blockSummaries[0]?.displayName).toBe("BEDOK NORTH GREEN");
+    expect(
+      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.displayName,
+    ).toBeNull();
     expect(artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]).toBeTruthy();
     expect(artifacts.townFlatTypeTrend).toHaveLength(3);
   });

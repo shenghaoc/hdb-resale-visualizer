@@ -128,6 +128,7 @@
 
 .map-view {
   min-height: clamp(16rem, 55vh, 28rem);
+  height: 100%;
   width: 100%;
   overflow: hidden;
 }
@@ -147,7 +148,7 @@
 @media (min-width: 1024px) {
   .map-view,
   .map-skeleton {
-    min-height: clamp(18rem, 36vh, 28rem);
+    min-height: clamp(30rem, calc(100vh - 15rem), 56rem);
   }
 }
 

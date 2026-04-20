@@ -13,6 +13,7 @@ export type BlockSummary = {
   town: string;
   block: string;
   streetName: string;
+  displayName?: string | null;
   coordinates: Coordinates;
   medianPrice: number;
   priceIqr: [number, number];

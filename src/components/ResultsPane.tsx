@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -31,7 +30,7 @@ type ResultsPaneProps = {
   shortlistKeys: Set<string>;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
-  scrollParent: HTMLElement | null;
+  scrollParent?: HTMLElement | null;
   isCompact?: boolean;
 };
 
@@ -241,8 +240,8 @@ export function ResultsPane({
   isCompact = false,
 }: ResultsPaneProps) {
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
-  const listRef = useRef<HTMLDivElement>(null);
-  const [scrollMargin, setScrollMargin] = useState(0);
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const sortedBlocks = useMemo(() => {
     return [...blocks].sort((left, right) => {
@@ -250,40 +249,53 @@ export function ResultsPane({
     });
   }, [blocks, sortMode]);
 
-  const virtualizer = useVirtualizer({
-    count: sortedBlocks.length,
-    getScrollElement: () => scrollParent,
-    estimateSize: () => isCompact ? 94 : 214,
-    overscan: 6,
-    scrollMargin,
-  });
-
   useEffect(() => {
-    if (!scrollParent || !listRef.current) {
-      return;
+    setCurrentPage(1);
+  }, [blocks, sortMode]);
+
+  const totalPages = Math.ceil(sortedBlocks.length / ITEMS_PER_PAGE);
+  const currentBlocks = sortedBlocks.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + 4);
+    if (endPage - startPage < 4) {
+      startPage = Math.max(1, endPage - 4);
     }
+    const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-    const updateScrollMargin = () => {
-      const nextMargin =
-        listRef.current!.getBoundingClientRect().top -
-        scrollParent.getBoundingClientRect().top +
-        scrollParent.scrollTop;
-      setScrollMargin(nextMargin);
-    };
-
-    updateScrollMargin();
-    window.addEventListener("resize", updateScrollMargin);
-
-    return () => {
-      window.removeEventListener("resize", updateScrollMargin);
-    };
-  }, [scrollParent, blocks.length]);
-
-  const virtualItems = virtualizer.getVirtualItems();
+    return (
+      <div className="flex flex-wrap items-center justify-center gap-1.5 py-4 border-t border-border/40 mt-4">
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}>Prev</Button>
+        {startPage > 1 && (
+          <>
+            <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>1</Button>
+            {startPage > 2 && <span className="text-muted-foreground px-1">...</span>}
+          </>
+        )}
+        {pages.map(p => (
+          <Button key={p} variant={p === currentPage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
+            {p}
+          </Button>
+        ))}
+        {endPage < totalPages && (
+          <>
+            {endPage < totalPages - 1 && <span className="text-muted-foreground px-1">...</span>}
+            <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>{totalPages}</Button>
+          </>
+        )}
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}>Next</Button>
+      </div>
+    );
+  };
 
   return (
-    <section data-testid="results-pane">
-      <Card className="bg-background">
+    <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
+      <Card className="flex min-h-0 flex-1 flex-col bg-background">
         <CardHeader className="gap-4 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-2">
@@ -313,47 +325,38 @@ export function ResultsPane({
             </CardAction>
           </div>
         </CardHeader>
-        <CardContent className="pt-4">
+        <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
           {!hasTownFilter ? (
-            <div className="flex flex-col items-center gap-2 py-8 text-center text-muted-foreground">
+            <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
               <ArrowUpDown className="size-6 opacity-40" />
               <p className="text-sm font-medium">Select a town to browse blocks</p>
               <p className="text-xs">Use the Town filter on the left to narrow results.</p>
             </div>
           ) : blocks.length === 0 ? (
-            <div className="empty-state">
-              No blocks match your current filters. Try broadening your search or resetting filters.
+            <div className="flex flex-1 items-start">
+              <div className="empty-state w-full">
+                No blocks match your current filters. Try broadening your search or resetting filters.
+              </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-              <div ref={listRef} className="pr-2">
-                <ItemGroup
-                  className="relative"
-                  style={{ height: `${virtualizer.getTotalSize()}px` }}
-                >
-                  {virtualItems.map((virtualRow) => {
-                    const block = sortedBlocks[virtualRow.index];
-
-                    return (
-                      <div
+            <div className="flex min-h-0 flex-1 flex-col gap-4">
+              <div
+                className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}
+              >
+                  <ItemGroup className="flex flex-col gap-4">
+                    {currentBlocks.map((block) => (
+                      <BlockCard
                         key={block.addressKey}
-                        ref={virtualizer.measureElement}
-                        data-index={virtualRow.index}
-                        className="absolute inset-x-0 top-0"
-                        style={{ transform: `translateY(${virtualRow.start - scrollMargin}px)` }}
-                      >
-                        <BlockCard
-                          block={block}
-                          isFeatured={block.addressKey === selectedAddressKey}
-                          isSaved={shortlistKeys.has(block.addressKey)}
-                          isCompact={isCompact}
-                          onSelect={onSelect}
-                          onToggleShortlist={onToggleShortlist}
-                        />
-                      </div>
-                    );
-                  })}
-                </ItemGroup>
+                        block={block}
+                        isFeatured={block.addressKey === selectedAddressKey}
+                        isSaved={shortlistKeys.has(block.addressKey)}
+                        isCompact={isCompact}
+                        onSelect={onSelect}
+                        onToggleShortlist={onToggleShortlist}
+                      />
+                    ))}
+                  </ItemGroup>
+                  {renderPagination()}
               </div>
             </div>
           )}

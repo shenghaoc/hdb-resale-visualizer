@@ -7,7 +7,6 @@ import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/componen
 import {
   Field,
   FieldContent,
-  FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
 import {
@@ -154,90 +153,110 @@ export function FilterPanel({
           onChange={(flatModel) => onChange({ flatModel })}
         />
 
-        <FieldGroup>
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="budget-min">Budget range</FieldLabel>
-              <div className="grid gap-4 lg:grid-cols-2">
-                <InputGroup>
-                  <InputGroupAddon align="inline-start">
-                    <InputGroupText>SGD</InputGroupText>
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="budget-min"
-                    data-no-spinner="true"
-                    inputMode="numeric"
-                    min={0}
-                    placeholder="No minimum"
-                    type="number"
-                    value={filters.budgetMin ?? ""}
-                    onChange={(event) =>
-                      onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
-                    }
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <InputGroupAddon align="inline-start">
-                    <InputGroupText>SGD</InputGroupText>
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="budget-max"
-                    data-no-spinner="true"
-                    inputMode="numeric"
-                    min={0}
-                    placeholder="No maximum"
-                    type="number"
-                    value={filters.budgetMax ?? ""}
-                    onChange={(event) =>
-                      onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
-                    }
-                  />
-                </InputGroup>
-              </div>
-            </FieldContent>
-          </Field>
+        <div className="flex flex-col gap-6">
+          <fieldset className="flex flex-col gap-3">
+            <legend className="font-medium text-sm">Budget range</legend>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <Field>
+                <FieldContent>
+                  <FieldLabel htmlFor="budget-min" className="sr-only">Minimum budget</FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon align="inline-start">
+                      <InputGroupText>SGD</InputGroupText>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="budget-min"
+                      data-no-spinner="true"
+                      inputMode="numeric"
+                      min={0}
+                      placeholder="No minimum"
+                      type="number"
+                      value={filters.budgetMin ?? ""}
+                      onChange={(event) =>
+                        onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
+                      }
+                      aria-description="Enter the minimum budget in SGD"
+                    />
+                  </InputGroup>
+                </FieldContent>
+              </Field>
+              <Field>
+                <FieldContent>
+                  <FieldLabel htmlFor="budget-max" className="sr-only">Maximum budget</FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon align="inline-start">
+                      <InputGroupText>SGD</InputGroupText>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="budget-max"
+                      data-no-spinner="true"
+                      inputMode="numeric"
+                      min={0}
+                      placeholder="No maximum"
+                      type="number"
+                      value={filters.budgetMax ?? ""}
+                      onChange={(event) =>
+                        onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
+                      }
+                      aria-description="Enter the maximum budget in SGD"
+                    />
+                  </InputGroup>
+                </FieldContent>
+              </Field>
+            </div>
+          </fieldset>
 
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="area-min">Floor area range</FieldLabel>
-              <div className="grid gap-4 lg:grid-cols-2">
-                <InputGroup>
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupText>sqm</InputGroupText>
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="area-min"
-                    data-no-spinner="true"
-                    inputMode="decimal"
-                    min={0}
-                    placeholder="Min sqm"
-                    type="number"
-                    value={filters.areaMin ?? ""}
-                    onChange={(event) =>
-                      onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
-                    }
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupText>sqm</InputGroupText>
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    id="area-max"
-                    data-no-spinner="true"
-                    inputMode="decimal"
-                    min={0}
-                    placeholder="Max sqm"
-                    type="number"
-                    value={filters.areaMax ?? ""}
-                    onChange={(event) =>
-                      onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
-                    }
-                  />
-                </InputGroup>
-              </div>
-            </FieldContent>
-          </Field>
+          <fieldset className="flex flex-col gap-3">
+            <legend className="font-medium text-sm">Floor area range</legend>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <Field>
+                <FieldContent>
+                  <FieldLabel htmlFor="area-min" className="sr-only">Minimum floor area</FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon align="inline-end">
+                      <InputGroupText>sqm</InputGroupText>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="area-min"
+                      data-no-spinner="true"
+                      inputMode="decimal"
+                      min={0}
+                      placeholder="Min sqm"
+                      type="number"
+                      value={filters.areaMin ?? ""}
+                      onChange={(event) =>
+                        onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
+                      }
+                      aria-description="Enter the minimum floor area in square meters"
+                    />
+                  </InputGroup>
+                </FieldContent>
+              </Field>
+              <Field>
+                <FieldContent>
+                  <FieldLabel htmlFor="area-max" className="sr-only">Maximum floor area</FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon align="inline-end">
+                      <InputGroupText>sqm</InputGroupText>
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="area-max"
+                      data-no-spinner="true"
+                      inputMode="decimal"
+                      min={0}
+                      placeholder="Max sqm"
+                      type="number"
+                      value={filters.areaMax ?? ""}
+                      onChange={(event) =>
+                        onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
+                      }
+                      aria-description="Enter the maximum floor area in square meters"
+                    />
+                  </InputGroup>
+                </FieldContent>
+              </Field>
+            </div>
+          </fieldset>
 
           <Field>
             <FieldContent>
@@ -257,6 +276,7 @@ export function FilterPanel({
                       remainingLeaseMin: parseOptionalNumberValue(event.target.value),
                     })
                   }
+                  aria-description="Minimum remaining lease in years"
                 />
                 <InputGroupAddon align="inline-end">
                   <InputGroupText>yrs</InputGroupText>
@@ -264,11 +284,12 @@ export function FilterPanel({
               </InputGroup>
             </FieldContent>
           </Field>
-        </FieldGroup>
+        </div>
 
-        <div className="flex flex-col gap-2">
+        <fieldset className="flex flex-col gap-2">
+          <legend className="sr-only">Transaction window</legend>
           <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
-            <span className="font-semibold text-sm">Transaction window</span>
+            <span className="font-semibold text-sm" aria-hidden="true">Transaction window</span>
             <Badge variant="secondary" className="text-xs">
               {formatMonth(minMonth)} to {formatMonth(maxMonth)}
             </Badge>
@@ -286,6 +307,7 @@ export function FilterPanel({
                   onChange={(event) =>
                     onChange({ startMonth: event.target.value === "" ? null : event.target.value })
                   }
+                  aria-description="Start of the transaction window"
                 />
               </FieldContent>
             </Field>
@@ -301,11 +323,12 @@ export function FilterPanel({
                   onChange={(event) =>
                     onChange({ endMonth: event.target.value === "" ? null : event.target.value })
                   }
+                  aria-description="End of the transaction window"
                 />
               </FieldContent>
             </Field>
           </div>
-        </div>
+        </fieldset>
 
         <Field>
           <FieldContent>
