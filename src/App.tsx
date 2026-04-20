@@ -12,7 +12,7 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
-import { StatsBar } from "@/components/StatsBar";
+import { GlobalHeader } from "@/components/StatsBar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -297,26 +297,7 @@ function App() {
   return (
     <>
       <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-0">
-        <div className="flex flex-col gap-3">
-          <StatsBar
-            manifest={manifest}
-            filteredCount={filteredBlocks.length}
-            blocks={filteredBlocks}
-            mode="header"
-            testId="stats-bar"
-          />
-          {!isDesktop && (
-            <div className="px-1">
-              <StatsBar
-                manifest={manifest}
-                filteredCount={filteredBlocks.length}
-                blocks={filteredBlocks}
-                mode="discrete"
-                testId="mobile-stats"
-              />
-            </div>
-          )}
-        </div>
+        <GlobalHeader manifest={manifest} />
 
         {/* Desktop: 3-column grid */}
         {isDesktop ? (
@@ -377,18 +358,6 @@ function App() {
           </section>
         )}
 
-        {/* Desktop bottom stats (hidden on mobile — tab bar takes that space) */}
-        {isDesktop && (
-          <div>
-            <StatsBar
-              manifest={manifest}
-              filteredCount={filteredBlocks.length}
-              blocks={filteredBlocks}
-              mode="summary"
-              testId="market-summary"
-            />
-          </div>
-        )}
       </main>
 
       {/* Mobile bottom tab bar */}

@@ -1,111 +1,46 @@
-import { formatCompactCurrency, formatDateTime, formatMonth, formatNumber } from "@/lib/format";
-import type { BlockSummary, Manifest } from "@/types/data";
+import { formatDateTime, formatMonth } from "@/lib/format";
+import type { Manifest } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
+import { Info } from "lucide-react";
 
-type StatsBarProps = {
+type GlobalHeaderProps = {
   manifest: Manifest;
-  filteredCount: number;
-  blocks: BlockSummary[];
-  mode?: "header" | "summary" | "discrete";
   testId?: string;
 };
 
-export function StatsBar({
+export function GlobalHeader({
   manifest,
-  filteredCount,
-  blocks,
-  mode = "summary",
-  testId = "stats-bar",
-}: StatsBarProps) {
-  if (mode === "discrete") {
-    return (
-      <div data-testid={testId} className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-muted-foreground/80">
-        <span className="flex items-center gap-1.5">
-          <span className="text-foreground">{formatNumber(filteredCount)}</span>
-          Visible
-        </span>
-        <span className="flex items-center gap-1.5 border-l border-border/50 pl-4">
-          <span className="text-foreground">{formatNumber(manifest.counts.transactions)}</span>
-          Market txns
-        </span>
-        {blocks.length > 0 && (
-          <span className="flex items-center gap-1.5 border-l border-border/50 pl-4">
-             Top median:
-             <span className="text-foreground">{formatCompactCurrency(Math.max(...blocks.map(b => b.medianPrice)))}</span>
-          </span>
-        )}
-      </div>
-    );
-  }
-
-  const priciest = blocks.reduce((current, block) => {
-    if (!current || block.medianPrice > current.medianPrice) {
-      return block;
-    }
-    return current;
-  }, blocks[0]);
-
+  testId = "global-header",
+}: GlobalHeaderProps) {
   return (
-    <section data-testid={testId}>
-      <Card
-        size={mode === "summary" ? "sm" : "default"}
-        className={mode === "summary" ? "overflow-visible bg-background py-1" : "overflow-visible bg-background"}
-      >
-        {mode === "header" ? (
-          <CardHeader className="gap-2">
-            <div className="flex flex-wrap items-start gap-4">
-              <div className="flex flex-1 flex-col gap-1">
-                <CardTitle className="text-lg leading-none sm:text-xl">
-                  HDB Resale Visualizer
-                </CardTitle>
-              </div>
-              <CardAction className="min-w-fit">
-                <div className="flex flex-wrap items-center justify-end gap-3 text-right">
-                  <Badge variant="outline">Data through {formatMonth(manifest.dataWindow.maxMonth)}</Badge>
-                  <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                    Built {formatDateTime(manifest.generatedAt)}
-                  </p>
-                </div>
-              </CardAction>
+    <header data-testid={testId}>
+      <Card size="sm" className="overflow-visible border-none bg-background px-0 py-0 shadow-none">
+        <CardHeader className="flex-row items-center justify-between gap-4 px-1 py-1">
+          <div className="flex flex-col">
+            <CardTitle className="text-lg font-bold leading-tight tracking-tight sm:text-xl">
+              HDB Resale Visualizer
+            </CardTitle>
+            <div className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+              Data through {formatMonth(manifest.dataWindow.maxMonth)}
             </div>
-          </CardHeader>
-        ) : (
-          <CardContent className="flex flex-col gap-1 py-1">
-            <div className="grid gap-x-4 gap-y-2 sm:grid-cols-[repeat(3,minmax(0,1fr))_auto] sm:items-end">
-              <article className="flex flex-col gap-1">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  Visible blocks
-                </span>
-                <strong className="font-heading text-xl font-semibold leading-none">
-                  {formatNumber(filteredCount)}
-                </strong>
-              </article>
-              <article className="flex flex-col gap-1">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  Tracked transactions
-                </span>
-                <strong className="font-heading text-xl font-semibold leading-none">
-                  {formatNumber(manifest.counts.transactions)}
-                </strong>
-              </article>
-              <article className="flex flex-col gap-1">
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  Highest visible median
-                </span>
-                <strong className="font-heading text-xl font-semibold leading-none">
-                  {priciest ? formatCompactCurrency(priciest.medianPrice) : "N/A"}
-                </strong>
-              </article>
-              <div className="flex flex-wrap items-center gap-1.5 self-start sm:justify-end">
-                <Badge variant="outline">HDB</Badge>
-                <Badge variant="outline">LTA</Badge>
-                <Badge variant="outline">data.gov.sg</Badge>
-              </div>
+          </div>
+
+          <CardAction className="flex items-center gap-3">
+            <div className="hidden items-center gap-3 sm:flex">
+              <Badge variant="outline" className="h-5 border-border/50 text-[0.6rem]">
+                {manifest.counts.transactions.toLocaleString()} txns
+              </Badge>
+              <p className="text-[0.6rem] font-medium text-muted-foreground/50">
+                Built {formatDateTime(manifest.generatedAt)}
+              </p>
             </div>
-          </CardContent>
-        )}
+            <Badge variant="ghost" className="size-8 border border-border/40 p-0 sm:hidden">
+              <Info className="size-4 opacity-40" />
+            </Badge>
+          </CardAction>
+        </CardHeader>
       </Card>
-    </section>
+    </header>
   );
 }

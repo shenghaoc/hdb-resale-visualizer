@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("loads the market explorer and drives the shortlist flow", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByTestId("stats-bar")).toBeVisible();
+  await expect(page.getByTestId("global-header")).toBeVisible();
   await expect(page.getByTestId("map-view")).toBeVisible();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
