@@ -1,4 +1,5 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Bookmark, List, Map as MapIcon, SlidersHorizontal } from "lucide-react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
@@ -45,6 +46,9 @@ function App() {
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
+
+  type MobileTab = "map" | "filters" | "results" | "saved";
+  const [mobileTab, setMobileTab] = useState<MobileTab>("map");
 
   useEffect(() => {
     let isMounted = true;
@@ -177,6 +181,9 @@ function App() {
     startTransition(() => {
       setFilters((current) => ({ ...current, ...patch }));
     });
+    if (patch.selectedAddressKey) {
+      setMobileTab("saved");
+    }
   }
 
   if (error) {
@@ -212,110 +219,173 @@ function App() {
     );
   }
 
-  return (
-    <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 lg:p-6 lg:pb-0">
-      <StatsBar
-        manifest={manifest}
-        filteredCount={filteredBlocks.length}
-        blocks={filteredBlocks}
-        mode="header"
-        testId="stats-bar"
-      />
+  // Shared content blocks (rendered in both mobile tabs and desktop grid)
+  const filterContent = (
+    <FilterPanel
+      filters={filters}
+      maxMonth={manifest.dataWindow.maxMonth}
+      minMonth={manifest.dataWindow.minMonth}
+      onChange={patchFilters}
+      onReset={() => setFilters(DEFAULT_FILTERS)}
+      options={filterOptions}
+    />
+  );
 
-      <section className="grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
-        <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
-          <FilterPanel
-            filters={filters}
-            maxMonth={manifest.dataWindow.maxMonth}
-            minMonth={manifest.dataWindow.minMonth}
-            onChange={patchFilters}
-            onReset={() => setFilters(DEFAULT_FILTERS)}
-            options={filterOptions}
+  const mapContent = (
+    <Card className="overflow-hidden bg-card shrink-0">
+      <CardHeader className="gap-4 border-b border-border pb-4">
+        <div className="flex flex-wrap items-start gap-4">
+          <div className="flex flex-1 flex-col gap-1">
+            <CardTitle className="text-xl sm:text-2xl">Singapore resale map</CardTitle>
+          </div>
+          <CardAction>
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-block size-2.5 bg-[#d7d0c5]" />
+                Lower median
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="inline-block size-2.5 bg-[#5a3e2d]" />
+                Higher median
+              </span>
+            </div>
+          </CardAction>
+        </div>
+      </CardHeader>
+      <CardContent className="pt-4">
+        <Suspense fallback={<MapSkeleton />}>
+          <MapView
+            blocks={filteredBlocks}
+            onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+            selectedAddressKey={filters.selectedAddressKey}
+          />
+        </Suspense>
+      </CardContent>
+    </Card>
+  );
+
+  const resultsContent = (
+    <ResultsPane
+      blocks={filteredBlocks}
+      hasTownFilter={!!filters.town}
+      onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+      onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+      selectedAddressKey={filters.selectedAddressKey}
+      shortlistKeys={shortlistKeySet}
+      scrollParent={middleColumnRef.current}
+    />
+  );
+
+  const savedContent = (
+    <>
+      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+        <DetailDrawer
+          detail={detail}
+          selectedBlock={selectedBlock}
+          isLoading={isDetailLoading}
+          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+          onClose={() => patchFilters({ selectedAddressKey: null })}
+          onToggleShortlist={() => {
+            if (selectedBlock) {
+              shortlist.toggle(selectedBlock.addressKey);
+            }
+          }}
+        />
+      </Suspense>
+      <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
+        <ShortlistDrawer
+          isOpen={isShortlistOpen}
+          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onToggleOpen={() => setIsShortlistOpen((current) => !current)}
+          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+          rows={shortlistRows}
+        />
+      </Suspense>
+    </>
+  );
+
+  return (
+    <>
+      <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-0">
+        <StatsBar
+          manifest={manifest}
+          filteredCount={filteredBlocks.length}
+          blocks={filteredBlocks}
+          mode="header"
+          testId="stats-bar"
+        />
+
+        {/* Desktop: 3-column grid (unchanged) */}
+        <section className="hidden lg:grid gap-4 lg:grid-cols-[16rem_minmax(0,1fr)_30rem] xl:grid-cols-[18rem_minmax(0,1fr)_36rem] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
+          <div className="lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1">
+            {filterContent}
+          </div>
+
+          <section
+            ref={middleColumnRef}
+            className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
+          >
+            {mapContent}
+            {resultsContent}
+          </section>
+
+          <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
+            {savedContent}
+          </section>
+        </section>
+
+        {/* Mobile: tab-switched content */}
+        <section className="flex flex-col gap-4 lg:hidden min-h-0 flex-1">
+          {mobileTab === "map" && (
+            <div className="flex flex-col gap-4">
+              {mapContent}
+            </div>
+          )}
+          {mobileTab === "filters" && filterContent}
+          {mobileTab === "results" && (
+            <div className="flex flex-col gap-4 min-h-0 flex-1">
+              {resultsContent}
+            </div>
+          )}
+          {mobileTab === "saved" && (
+            <div className="flex flex-col gap-4">
+              {savedContent}
+            </div>
+          )}
+        </section>
+
+        {/* Desktop bottom stats (hidden on mobile — tab bar takes that space) */}
+        <div className="hidden lg:block">
+          <StatsBar
+            manifest={manifest}
+            filteredCount={filteredBlocks.length}
+            blocks={filteredBlocks}
+            mode="summary"
+            testId="market-summary"
           />
         </div>
+      </main>
 
-        <section
-          ref={middleColumnRef}
-          className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
-        >
-          <Card className="overflow-hidden bg-card shrink-0">
-            <CardHeader className="gap-4 border-b border-border pb-4">
-              <div className="flex flex-wrap items-start gap-4">
-                <div className="flex flex-1 flex-col gap-1">
-                  <CardTitle className="text-xl sm:text-2xl">Singapore resale map</CardTitle>
-                </div>
-                <CardAction>
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 bg-[#d7d0c5]" />
-                      Lower median
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 bg-[#5a3e2d]" />
-                      Higher median
-                    </span>
-                  </div>
-                </CardAction>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-4">
-              <Suspense fallback={<MapSkeleton />}>
-                <MapView
-                  blocks={filteredBlocks}
-                  onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                  selectedAddressKey={filters.selectedAddressKey}
-                />
-              </Suspense>
-            </CardContent>
-          </Card>
-
-          <ResultsPane
-            blocks={filteredBlocks}
-            hasTownFilter={!!filters.town}
-            onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-            onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-            selectedAddressKey={filters.selectedAddressKey}
-            shortlistKeys={shortlistKeySet}
-            scrollParent={middleColumnRef.current}
-          />
-        </section>
-
-        <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
-          <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
-            <DetailDrawer
-              detail={detail}
-              selectedBlock={selectedBlock}
-              isLoading={isDetailLoading}
-              isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-              onClose={() => patchFilters({ selectedAddressKey: null })}
-              onToggleShortlist={() => {
-                if (selectedBlock) {
-                  shortlist.toggle(selectedBlock.addressKey);
-                }
-              }}
-            />
-          </Suspense>
-
-          <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
-            <ShortlistDrawer
-              isOpen={isShortlistOpen}
-              onRemove={(addressKey) => shortlist.toggle(addressKey)}
-              onToggleOpen={() => setIsShortlistOpen((current) => !current)}
-              onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-              rows={shortlistRows}
-            />
-          </Suspense>
-        </section>
-      </section>
-
-      <StatsBar
-        manifest={manifest}
-        filteredCount={filteredBlocks.length}
-        blocks={filteredBlocks}
-        mode="summary"
-        testId="market-summary"
-      />
-    </main>
+      {/* Mobile bottom tab bar */}
+      <nav className="mobile-tab-bar lg:hidden">
+        <button type="button" data-active={mobileTab === "map"} onClick={() => setMobileTab("map")}>
+          <MapIcon />
+          Map
+        </button>
+        <button type="button" data-active={mobileTab === "filters"} onClick={() => setMobileTab("filters")}>
+          <SlidersHorizontal />
+          Filters
+        </button>
+        <button type="button" data-active={mobileTab === "results"} onClick={() => setMobileTab("results")}>
+          <List />
+          Results
+        </button>
+        <button type="button" data-active={mobileTab === "saved"} onClick={() => setMobileTab("saved")}>
+          <Bookmark />
+          Saved{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
+        </button>
+      </nav>
+    </>
   );
 }
 
