@@ -8,14 +8,14 @@
       "lat": 1.39242177196708,
       "lng": 103.870777707872
     },
-    "medianPrice": 531500,
+    "medianPrice": 525000,
     "priceIqr": [
       410000,
-      631250
+      625000
     ],
-    "pricePerSqmMedian": 7935.05,
-    "pricePerSqftMedian": 737.19,
-    "transactionCount": 20,
+    "pricePerSqmMedian": 7958.33,
+    "pricePerSqftMedian": 739.35,
+    "transactionCount": 21,
     "floorAreaRange": [
       38,
       93
@@ -24,10 +24,10 @@
       2020,
       2020
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2024-08",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -116,11 +116,30 @@
       "medianPrice": 410000,
       "transactionCount": 1,
       "medianPricePerSqm": 10789.47
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 345000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9078.95
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-457b-sengkang-west-rd-2026-01-226666",
+      "id": "sengkang-457b-sengkang-west-rd-2026-04-226752",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 38,
+      "flatModel": "2-ROOM",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 06 months",
+      "resalePrice": 345000,
+      "pricePerSqm": 9078.95,
+      "pricePerSqft": 843.46
+    },
+    {
+      "id": "sengkang-457b-sengkang-west-rd-2026-01-226748",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -365,19 +384,6 @@
       "resalePrice": 382000,
       "pricePerSqm": 7958.33,
       "pricePerSqft": 739.35
-    },
-    {
-      "id": "sengkang-457b-sengkang-west-rd-2024-08-189005",
-      "month": "2024-08",
-      "flatType": "2 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 38,
-      "flatModel": "2-ROOM",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "95 years 01 month",
-      "resalePrice": 360000,
-      "pricePerSqm": 9473.68,
-      "pricePerSqft": 880.13
     }
   ]
 }

@@ -8,14 +8,14 @@
       "lat": 1.33262542332889,
       "lng": 103.910160875435
     },
-    "medianPrice": 545000,
+    "medianPrice": 547500,
     "priceIqr": [
-      532500,
-      570000
+      538750,
+      561250
     ],
-    "pricePerSqmMedian": 6488.1,
-    "pricePerSqftMedian": 602.76,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 6517.86,
+    "pricePerSqftMedian": 605.52,
+    "transactionCount": 4,
     "floorAreaRange": [
       84,
       103
@@ -24,10 +24,10 @@
       1987,
       1987
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-02",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -606,9 +606,28 @@
       "medianPrice": 545000,
       "transactionCount": 1,
       "medianPricePerSqm": 6488.1
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6547.62
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-124-bedok-reservoir-rd-2026-04-222558",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 01 month",
+      "resalePrice": 550000,
+      "pricePerSqm": 6547.62,
+      "pricePerSqft": 608.29
+    },
     {
       "id": "bedok-124-bedok-reservoir-rd-2025-10-198758",
       "month": "2025-10",
@@ -844,7 +863,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "bedok-124-bedok-reservoir-rd-2016-08-967194",
+      "id": "bedok-124-bedok-reservoir-rd-2016-08-967312",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -855,19 +874,6 @@
       "resalePrice": 380000,
       "pricePerSqm": 4523.81,
       "pricePerSqft": 420.28
-    },
-    {
-      "id": "bedok-124-bedok-reservoir-rd-2016-05-961955",
-      "month": "2016-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "70",
-      "resalePrice": 382000,
-      "pricePerSqm": 4547.62,
-      "pricePerSqft": 422.49
     }
   ]
 }

@@ -10,12 +10,12 @@
     },
     "medianPrice": 450000,
     "priceIqr": [
-      445000,
-      470000
+      446250,
+      465000
     ],
-    "pricePerSqmMedian": 6953.13,
-    "pricePerSqftMedian": 645.97,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6992.19,
+    "pricePerSqftMedian": 649.6,
+    "transactionCount": 6,
     "floorAreaRange": [
       59,
       146
@@ -24,10 +24,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -919,11 +919,30 @@
       "medianPrice": 450000,
       "transactionCount": 1,
       "medianPricePerSqm": 7031.25
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7031.25
     }
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-2-lor-lew-lian-2026-03-227128",
+      "id": "serangoon-2-lor-lew-lian-2026-04-227226",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 64,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 03 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 7031.25,
+      "pricePerSqft": 653.23
+    },
+    {
+      "id": "serangoon-2-lor-lew-lian-2026-03-227225",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1168,19 +1187,6 @@
       "resalePrice": 340000,
       "pricePerSqm": 4657.53,
       "pricePerSqft": 432.7
-    },
-    {
-      "id": "serangoon-2-lor-lew-lian-2019-10-59869",
-      "month": "2019-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 64,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "62 years 08 months",
-      "resalePrice": 300000,
-      "pricePerSqm": 4687.5,
-      "pricePerSqft": 435.48
     }
   ]
 }

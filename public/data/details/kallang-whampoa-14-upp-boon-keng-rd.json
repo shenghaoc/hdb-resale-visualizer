@@ -8,14 +8,14 @@
       "lat": 1.31505420515826,
       "lng": 103.870303668462
     },
-    "medianPrice": 1049444,
+    "medianPrice": 1070000,
     "priceIqr": [
-      1021666,
-      1090000
+      1028888,
+      1070000
     ],
-    "pricePerSqmMedian": 8567.72,
-    "pricePerSqftMedian": 795.97,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 8770.49,
+    "pricePerSqftMedian": 814.81,
+    "transactionCount": 5,
     "floorAreaRange": [
       100,
       123
@@ -24,10 +24,10 @@
       1999,
       1999
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-05",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -373,11 +373,30 @@
       "medianPrice": 1028888,
       "transactionCount": 1,
       "medianPricePerSqm": 8364.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1070000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8770.49
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-03-225455",
+      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-04-225522",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 1070000,
+      "pricePerSqm": 8770.49,
+      "pricePerSqft": 814.81
+    },
+    {
+      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-03-225521",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -622,19 +641,6 @@
       "resalePrice": 645000,
       "pricePerSqm": 6386.14,
       "pricePerSqft": 593.29
-    },
-    {
-      "id": "kallang-whampoa-14-upp-boon-keng-rd-2016-03-959221",
-      "month": "2016-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "82",
-      "resalePrice": 615000,
-      "pricePerSqm": 6089.11,
-      "pricePerSqft": 565.7
     }
   ]
 }

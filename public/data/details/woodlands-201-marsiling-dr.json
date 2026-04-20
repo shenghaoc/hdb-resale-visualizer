@@ -8,14 +8,14 @@
       "lat": 1.44270022874362,
       "lng": 103.775436532502
     },
-    "medianPrice": 450750,
+    "medianPrice": 453888,
     "priceIqr": [
-      445125,
-      458750
+      446500,
+      455000
     ],
-    "pricePerSqmMedian": 4953.3,
-    "pricePerSqftMedian": 460.18,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 4987.78,
+    "pricePerSqftMedian": 463.38,
+    "transactionCount": 5,
     "floorAreaRange": [
       91,
       92
@@ -24,10 +24,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-08",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -755,9 +755,28 @@
       "medianPrice": 441000,
       "transactionCount": 1,
       "medianPricePerSqm": 4846.15
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 453888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4987.78
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-201-marsiling-dr-2026-04-228227",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 05 months",
+      "resalePrice": 453888,
+      "pricePerSqm": 4987.78,
+      "pricePerSqft": 463.38
+    },
     {
       "id": "woodlands-201-marsiling-dr-2025-12-218895",
       "month": "2025-12",
@@ -1004,19 +1023,6 @@
       "resalePrice": 265000,
       "pricePerSqm": 2880.43,
       "pricePerSqft": 267.6
-    },
-    {
-      "id": "woodlands-201-marsiling-dr-2018-10-38481",
-      "month": "2018-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "60 years 11 months",
-      "resalePrice": 270000,
-      "pricePerSqm": 2967.03,
-      "pricePerSqft": 275.65
     }
   ]
 }

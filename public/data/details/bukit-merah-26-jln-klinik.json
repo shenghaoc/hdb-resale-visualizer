@@ -8,14 +8,14 @@
       "lat": 1.2881713453856,
       "lng": 103.828454024092
     },
-    "medianPrice": 375500,
+    "medianPrice": 376000,
     "priceIqr": [
-      366750,
-      384472
+      368000,
+      383000
     ],
-    "pricePerSqmMedian": 6258.33,
-    "pricePerSqftMedian": 581.42,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 6266.67,
+    "pricePerSqftMedian": 582.19,
+    "transactionCount": 5,
     "floorAreaRange": [
       60,
       60
@@ -24,10 +24,10 @@
       1969,
       1969
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -593,11 +593,30 @@
       "medianPrice": 363000,
       "transactionCount": 1,
       "medianPricePerSqm": 6050
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 376000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6266.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-26-jln-klinik-2026-03-223223",
+      "id": "bukit-merah-26-jln-klinik-2026-04-223253",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 60,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1969,
+      "remainingLease": "42 years 04 months",
+      "resalePrice": 376000,
+      "pricePerSqm": 6266.67,
+      "pricePerSqft": 582.19
+    },
+    {
+      "id": "bukit-merah-26-jln-klinik-2026-03-223251",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -839,19 +858,6 @@
       "flatModel": "STANDARD",
       "leaseCommenceDate": 1969,
       "remainingLease": "49 years 11 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 5333.33,
-      "pricePerSqft": 495.48
-    },
-    {
-      "id": "bukit-merah-26-jln-klinik-2018-06-28560",
-      "month": "2018-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 60,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1969,
-      "remainingLease": "50 years 02 months",
       "resalePrice": 320000,
       "pricePerSqm": 5333.33,
       "pricePerSqft": 495.48

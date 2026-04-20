@@ -10,12 +10,12 @@
     },
     "medianPrice": 630000,
     "priceIqr": [
-      630000,
-      645000
+      600000,
+      641250
     ],
-    "pricePerSqmMedian": 5330.58,
-    "pricePerSqftMedian": 495.23,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5413.23,
+    "pricePerSqftMedian": 502.9,
+    "transactionCount": 6,
     "floorAreaRange": [
       84,
       128
@@ -24,10 +24,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-04",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -710,9 +710,28 @@
       "medianPrice": 590000,
       "transactionCount": 1,
       "medianPricePerSqm": 5673.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5714.29
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-785-yishun-ave-2-2026-04-228850",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 01 month",
+      "resalePrice": 480000,
+      "pricePerSqm": 5714.29,
+      "pricePerSqft": 530.88
+    },
     {
       "id": "yishun-785-yishun-ave-2-2025-08-221030",
       "month": "2025-08",
@@ -935,7 +954,7 @@
       "pricePerSqft": 382.36
     },
     {
-      "id": "yishun-785-yishun-ave-2-2016-06-965464",
+      "id": "yishun-785-yishun-ave-2-2016-06-965582",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -948,7 +967,7 @@
       "pricePerSqft": 360.86
     },
     {
-      "id": "yishun-785-yishun-ave-2-2016-01-957100",
+      "id": "yishun-785-yishun-ave-2-2016-01-957218",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -959,19 +978,6 @@
       "resalePrice": 370000,
       "pricePerSqm": 4404.76,
       "pricePerSqft": 409.22
-    },
-    {
-      "id": "yishun-785-yishun-ave-2-2013-12-634744",
-      "month": "2013-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "61 years",
-      "resalePrice": 390000,
-      "pricePerSqm": 4642.86,
-      "pricePerSqft": 431.34
     }
   ]
 }

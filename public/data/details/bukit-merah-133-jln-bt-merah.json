@@ -8,14 +8,14 @@
       "lat": 1.27955093259631,
       "lng": 103.82740093837
     },
-    "medianPrice": 380000,
+    "medianPrice": 375000,
     "priceIqr": [
-      366000,
-      387344
+      368000,
+      386616
     ],
-    "pricePerSqmMedian": 6440.68,
-    "pricePerSqftMedian": 598.36,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 6355.93,
+    "pricePerSqftMedian": 590.49,
+    "transactionCount": 8,
     "floorAreaRange": [
       59,
       68
@@ -24,10 +24,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -647,11 +647,30 @@
       "medianPrice": 380000,
       "transactionCount": 1,
       "medianPricePerSqm": 6440.68
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6271.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-133-jln-bt-merah-2026-03-223220",
+      "id": "bukit-merah-133-jln-bt-merah-2026-04-223249",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 05 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 6271.19,
+      "pricePerSqft": 582.61
+    },
+    {
+      "id": "bukit-merah-133-jln-bt-merah-2026-03-223247",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -664,7 +683,7 @@
       "pricePerSqft": 598.36
     },
     {
-      "id": "bukit-merah-133-jln-bt-merah-2026-01-223211",
+      "id": "bukit-merah-133-jln-bt-merah-2026-01-223238",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -896,19 +915,6 @@
       "resalePrice": 312000,
       "pricePerSqm": 5288.14,
       "pricePerSqft": 491.28
-    },
-    {
-      "id": "bukit-merah-133-jln-bt-merah-2015-12-954712",
-      "month": "2015-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 59,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "66",
-      "resalePrice": 282000,
-      "pricePerSqm": 4779.66,
-      "pricePerSqft": 444.05
     }
   ]
 }

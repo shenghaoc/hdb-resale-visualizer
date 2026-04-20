@@ -8,14 +8,14 @@
       "lat": 1.32760704104366,
       "lng": 103.859860478714
     },
-    "medianPrice": 792500,
+    "medianPrice": 780000,
     "priceIqr": [
-      686750,
-      845000
+      680000,
+      840000
     ],
     "pricePerSqmMedian": 8000,
     "pricePerSqftMedian": 743.23,
-    "transactionCount": 8,
+    "transactionCount": 9,
     "floorAreaRange": [
       85,
       105
@@ -24,10 +24,10 @@
       2004,
       2004
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2008-09",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -403,11 +403,30 @@
       "medianPrice": 840000,
       "transactionCount": 1,
       "medianPricePerSqm": 8000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 638000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7505.88
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-19-jln-tenteram-2026-01-225445",
+      "id": "kallang-whampoa-19-jln-tenteram-2026-04-225446",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2004,
+      "remainingLease": "77 years 04 months",
+      "resalePrice": 638000,
+      "pricePerSqm": 7505.88,
+      "pricePerSqft": 697.32
+    },
+    {
+      "id": "kallang-whampoa-19-jln-tenteram-2026-01-225510",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -652,19 +671,6 @@
       "resalePrice": 538000,
       "pricePerSqm": 5977.78,
       "pricePerSqft": 555.35
-    },
-    {
-      "id": "kallang-whampoa-19-jln-tenteram-2021-04-95780",
-      "month": "2021-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 85,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2004,
-      "remainingLease": "82 years 03 months",
-      "resalePrice": 470000,
-      "pricePerSqm": 5529.41,
-      "pricePerSqft": 513.7
     }
   ]
 }

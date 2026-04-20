@@ -8,14 +8,14 @@
       "lat": 1.35457631683511,
       "lng": 103.718900605151
     },
-    "medianPrice": 680000,
+    "medianPrice": 675000,
     "priceIqr": [
-      662916,
-      689500
+      656944,
+      689000
     ],
-    "pricePerSqmMedian": 4892.09,
-    "pricePerSqftMedian": 454.49,
-    "transactionCount": 10,
+    "pricePerSqmMedian": 4856.12,
+    "pricePerSqftMedian": 451.15,
+    "transactionCount": 11,
     "floorAreaRange": [
       104,
       152
@@ -24,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -853,11 +853,30 @@
       "medianPrice": 750000,
       "transactionCount": 1,
       "medianPricePerSqm": 5395.68
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4712.23
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-559-jurong-west-st-42-2026-03-225144",
+      "id": "jurong-west-559-jurong-west-st-42-2026-04-225205",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 139,
+      "flatModel": "MODEL A-MAISONETTE",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 03 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 4712.23,
+      "pricePerSqft": 437.78
+    },
+    {
+      "id": "jurong-west-559-jurong-west-st-42-2026-03-225203",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -870,7 +889,7 @@
       "pricePerSqft": 501.28
     },
     {
-      "id": "jurong-west-559-jurong-west-st-42-2026-02-225143",
+      "id": "jurong-west-559-jurong-west-st-42-2026-02-225202",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -1102,19 +1121,6 @@
       "resalePrice": 550000,
       "pricePerSqm": 3928.57,
       "pricePerSqft": 364.98
-    },
-    {
-      "id": "jurong-west-559-jurong-west-st-42-2020-06-71701",
-      "month": "2020-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 139,
-      "flatModel": "MODEL A-MAISONETTE",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "64 years",
-      "resalePrice": 480000,
-      "pricePerSqm": 3453.24,
-      "pricePerSqft": 320.82
     }
   ]
 }

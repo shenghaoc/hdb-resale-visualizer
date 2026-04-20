@@ -8,14 +8,14 @@
       "lat": 1.332464536405,
       "lng": 103.855237512058
     },
-    "medianPrice": 978888,
+    "medianPrice": 976944,
     "priceIqr": [
-      947000,
+      948000,
       1020000
     ],
-    "pricePerSqmMedian": 10525.68,
-    "pricePerSqftMedian": 977.87,
-    "transactionCount": 27,
+    "pricePerSqmMedian": 10504.78,
+    "pricePerSqftMedian": 975.92,
+    "transactionCount": 28,
     "floorAreaRange": [
       93,
       93
@@ -24,10 +24,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-12",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -149,9 +149,28 @@
       "medianPrice": 1068000,
       "transactionCount": 3,
       "medianPricePerSqm": 11483.87
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 968888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10418.15
     }
   ],
   "recentTransactions": [
+    {
+      "id": "toa-payoh-264-toa-payoh-east-2026-04-228088",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 08 months",
+      "resalePrice": 968888,
+      "pricePerSqm": 10418.15,
+      "pricePerSqft": 967.88
+    },
     {
       "id": "toa-payoh-264-toa-payoh-east-2025-09-218395",
       "month": "2025-09",
@@ -398,19 +417,6 @@
       "resalePrice": 968888,
       "pricePerSqm": 10418.15,
       "pricePerSqft": 967.88
-    },
-    {
-      "id": "toa-payoh-264-toa-payoh-east-2024-07-192746",
-      "month": "2024-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "25 TO 27",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 07 months",
-      "resalePrice": 975000,
-      "pricePerSqm": 10483.87,
-      "pricePerSqft": 973.98
     }
   ]
 }

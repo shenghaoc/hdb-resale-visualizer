@@ -8,14 +8,14 @@
       "lat": 1.28156873918268,
       "lng": 103.80773165728
     },
-    "medianPrice": 810888,
+    "medianPrice": 810444,
     "priceIqr": [
-      800000,
-      842944
+      776472,
+      834416
     ],
-    "pricePerSqmMedian": 7388.89,
-    "pricePerSqftMedian": 686.45,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 7592.94,
+    "pricePerSqftMedian": 705.41,
+    "transactionCount": 8,
     "floorAreaRange": [
       90,
       116
@@ -24,10 +24,10 @@
       2006,
       2006
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -349,9 +349,28 @@
       "medianPrice": 810888,
       "transactionCount": 1,
       "medianPricePerSqm": 7797
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 735888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8176.53
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-112b-depot-rd-2026-04-223329",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2006,
+      "remainingLease": "78 years 11 months",
+      "resalePrice": 735888,
+      "pricePerSqm": 8176.53,
+      "pricePerSqft": 759.63
+    },
     {
       "id": "bukit-merah-112b-depot-rd-2025-12-201329",
       "month": "2025-12",
@@ -598,19 +617,6 @@
       "resalePrice": 570000,
       "pricePerSqm": 5700,
       "pricePerSqft": 529.55
-    },
-    {
-      "id": "bukit-merah-112b-depot-rd-2017-09-13763",
-      "month": "2017-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2006,
-      "remainingLease": "87 years 05 months",
-      "resalePrice": 530000,
-      "pricePerSqm": 5096.15,
-      "pricePerSqft": 473.45
     }
   ]
 }

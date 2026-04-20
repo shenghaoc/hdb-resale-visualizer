@@ -8,14 +8,14 @@
       "lat": 1.44634275801164,
       "lng": 103.82081661201
     },
-    "medianPrice": 685000,
+    "medianPrice": 640000,
     "priceIqr": [
-      625000,
-      712000
+      587500,
+      698500
     ],
-    "pricePerSqmMedian": 5661.16,
-    "pricePerSqftMedian": 525.94,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5655.58,
+    "pricePerSqftMedian": 525.42,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       122
@@ -24,10 +24,10 @@
       1999,
       1999
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-09",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -463,9 +463,28 @@
       "medianPrice": 685000,
       "transactionCount": 1,
       "medianPricePerSqm": 5661.16
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 595000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4877.05
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sembawang-316-sembawang-vista-2026-04-226712",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 02 months",
+      "resalePrice": 595000,
+      "pricePerSqm": 4877.05,
+      "pricePerSqft": 453.09
+    },
     {
       "id": "sembawang-316-sembawang-vista-2025-07-213228",
       "month": "2025-07",
@@ -701,7 +720,7 @@
       "pricePerSqft": 312.22
     },
     {
-      "id": "sembawang-316-sembawang-vista-2016-05-963046",
+      "id": "sembawang-316-sembawang-vista-2016-05-963164",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -712,19 +731,6 @@
       "resalePrice": 390000,
       "pricePerSqm": 3196.72,
       "pricePerSqft": 296.99
-    },
-    {
-      "id": "sembawang-316-sembawang-vista-2016-05-963053",
-      "month": "2016-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "82",
-      "resalePrice": 410000,
-      "pricePerSqm": 3360.66,
-      "pricePerSqft": 312.22
     }
   ]
 }

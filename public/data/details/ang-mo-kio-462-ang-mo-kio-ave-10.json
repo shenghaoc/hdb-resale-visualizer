@@ -8,14 +8,14 @@
       "lat": 1.36695558620194,
       "lng": 103.858031320467
     },
-    "medianPrice": 385000,
+    "medianPrice": 405000,
     "priceIqr": [
-      383500,
-      447500
+      384250,
+      446250
     ],
-    "pricePerSqmMedian": 5617.65,
-    "pricePerSqftMedian": 521.9,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5639.7,
+    "pricePerSqftMedian": 523.95,
+    "transactionCount": 4,
     "floorAreaRange": [
       68,
       164
@@ -24,10 +24,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2024-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2024-10"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -842,9 +842,28 @@
       "medianPrice": 383500,
       "transactionCount": 2,
       "medianPricePerSqm": 5639.7
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-462-ang-mo-kio-ave-10-2026-04-222118",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "52 years 11 months",
+      "resalePrice": 425000,
+      "pricePerSqm": 6250,
+      "pricePerSqft": 580.64
+    },
     {
       "id": "ang-mo-kio-462-ang-mo-kio-ave-10-2024-10-169976",
       "month": "2024-10",
@@ -1091,19 +1110,6 @@
       "resalePrice": 328000,
       "pricePerSqm": 4823.53,
       "pricePerSqft": 448.12
-    },
-    {
-      "id": "ang-mo-kio-462-ang-mo-kio-ave-10-2020-12-85121",
-      "month": "2020-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "58 years 02 months",
-      "resalePrice": 285000,
-      "pricePerSqm": 4191.18,
-      "pricePerSqft": 389.37
     }
   ]
 }

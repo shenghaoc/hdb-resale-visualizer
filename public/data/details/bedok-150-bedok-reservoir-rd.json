@@ -8,14 +8,14 @@
       "lat": 1.33615375353551,
       "lng": 103.912672307759
     },
-    "medianPrice": 412500,
+    "medianPrice": 450000,
     "priceIqr": [
-      393750,
-      431250
+      412500,
+      453000
     ],
-    "pricePerSqmMedian": 6547.62,
-    "pricePerSqftMedian": 608.29,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 7142.86,
+    "pricePerSqftMedian": 663.59,
+    "transactionCount": 3,
     "floorAreaRange": [
       63,
       88
@@ -24,10 +24,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-03",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -660,9 +660,28 @@
       "medianPrice": 450000,
       "transactionCount": 1,
       "medianPricePerSqm": 7142.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 456000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7238.1
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-150-bedok-reservoir-rd-2026-04-222425",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 63,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 04 months",
+      "resalePrice": 456000,
+      "pricePerSqm": 7238.1,
+      "pricePerSqft": 672.44
+    },
     {
       "id": "bedok-150-bedok-reservoir-rd-2025-09-198325",
       "month": "2025-09",
@@ -909,19 +928,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 4285.71,
       "pricePerSqft": 398.16
-    },
-    {
-      "id": "bedok-150-bedok-reservoir-rd-2017-02-1263",
-      "month": "2017-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "70 years 05 months",
-      "resalePrice": 371000,
-      "pricePerSqm": 4416.67,
-      "pricePerSqft": 410.32
     }
   ]
 }

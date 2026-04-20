@@ -8,14 +8,14 @@
       "lat": 1.32036884714802,
       "lng": 103.868340795574
     },
-    "medianPrice": 388000,
+    "medianPrice": 388444,
     "priceIqr": [
       375000,
-      403500
+      405750
     ],
-    "pricePerSqmMedian": 5969.23,
-    "pricePerSqftMedian": 554.56,
-    "transactionCount": 15,
+    "pricePerSqmMedian": 5976.06,
+    "pricePerSqftMedian": 555.19,
+    "transactionCount": 16,
     "floorAreaRange": [
       65,
       130
@@ -24,10 +24,10 @@
       1974,
       1974
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1321,9 +1321,28 @@
       "medianPrice": 402000,
       "transactionCount": 1,
       "medianPricePerSqm": 6184.62
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 835000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6423.08
     }
   ],
   "recentTransactions": [
+    {
+      "id": "kallang-whampoa-64-kallang-bahru-2026-04-225512",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 130,
+      "flatModel": "ADJOINED FLAT",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "46 years 10 months",
+      "resalePrice": 835000,
+      "pricePerSqm": 6423.08,
+      "pricePerSqft": 596.72
+    },
     {
       "id": "kallang-whampoa-64-kallang-bahru-2025-12-208614",
       "month": "2025-12",
@@ -1570,19 +1589,6 @@
       "resalePrice": 370000,
       "pricePerSqm": 5692.31,
       "pricePerSqft": 528.83
-    },
-    {
-      "id": "kallang-whampoa-64-kallang-bahru-2024-02-182359",
-      "month": "2024-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "49 years",
-      "resalePrice": 373000,
-      "pricePerSqm": 5738.46,
-      "pricePerSqft": 533.12
     }
   ]
 }

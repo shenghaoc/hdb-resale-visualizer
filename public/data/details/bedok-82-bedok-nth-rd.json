@@ -8,14 +8,14 @@
       "lat": 1.32953680475668,
       "lng": 103.940406562732
     },
-    "medianPrice": 507000,
+    "medianPrice": 506000,
     "priceIqr": [
-      505000,
-      515000
+      501250,
+      513000
     ],
-    "pricePerSqmMedian": 5510.87,
-    "pricePerSqftMedian": 511.98,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5500,
+    "pricePerSqftMedian": 510.97,
+    "transactionCount": 6,
     "floorAreaRange": [
       92,
       92
@@ -24,10 +24,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -797,11 +797,30 @@
       "medianPrice": 560000,
       "transactionCount": 1,
       "medianPricePerSqm": 6086.96
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5434.78
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-82-bedok-nth-rd-2026-03-222488",
+      "id": "bedok-82-bedok-nth-rd-2026-04-222503",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 03 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 5434.78,
+      "pricePerSqft": 504.91
+    },
+    {
+      "id": "bedok-82-bedok-nth-rd-2026-03-222496",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1046,19 +1065,6 @@
       "resalePrice": 365000,
       "pricePerSqm": 3967.39,
       "pricePerSqft": 368.58
-    },
-    {
-      "id": "bedok-82-bedok-nth-rd-2019-10-58433",
-      "month": "2019-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 92,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "57 years 08 months",
-      "resalePrice": 350000,
-      "pricePerSqm": 3804.35,
-      "pricePerSqft": 353.44
     }
   ]
 }

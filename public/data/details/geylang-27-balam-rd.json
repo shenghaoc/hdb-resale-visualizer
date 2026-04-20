@@ -8,14 +8,14 @@
       "lat": 1.3303081156604,
       "lng": 103.8863082196
     },
-    "medianPrice": 897500,
+    "medianPrice": 788000,
     "priceIqr": [
-      837750,
-      957250
+      783000,
+      902500
     ],
-    "pricePerSqmMedian": 7671.23,
-    "pricePerSqftMedian": 712.68,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 7271.03,
+    "pricePerSqftMedian": 675.5,
+    "transactionCount": 3,
     "floorAreaRange": [
       107,
       126
@@ -24,10 +24,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2000-12",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -295,11 +295,30 @@
       "medianPrice": 1017000,
       "transactionCount": 1,
       "medianPricePerSqm": 8071.43
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 788000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6253.97
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-27-balam-rd-2026-01-224346",
+      "id": "geylang-27-balam-rd-2026-04-224396",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 04 months",
+      "resalePrice": 788000,
+      "pricePerSqm": 6253.97,
+      "pricePerSqft": 581.01
+    },
+    {
+      "id": "geylang-27-balam-rd-2026-01-224392",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -429,7 +448,7 @@
       "pricePerSqft": 508.76
     },
     {
-      "id": "geylang-27-balam-rd-2016-07-966014",
+      "id": "geylang-27-balam-rd-2016-07-966132",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -442,7 +461,7 @@
       "pricePerSqft": 481.88
     },
     {
-      "id": "geylang-27-balam-rd-2016-07-966026",
+      "id": "geylang-27-balam-rd-2016-07-966144",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -455,7 +474,7 @@
       "pricePerSqft": 457.14
     },
     {
-      "id": "geylang-27-balam-rd-2015-07-947317",
+      "id": "geylang-27-balam-rd-2015-07-947435",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -468,7 +487,7 @@
       "pricePerSqft": 442.4
     },
     {
-      "id": "geylang-27-balam-rd-2015-03-940983",
+      "id": "geylang-27-balam-rd-2015-03-941101",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -481,7 +500,7 @@
       "pricePerSqft": 442.4
     },
     {
-      "id": "geylang-27-balam-rd-2014-04-638813",
+      "id": "geylang-27-balam-rd-2014-04-638931",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -494,7 +513,7 @@
       "pricePerSqft": 461.04
     },
     {
-      "id": "geylang-27-balam-rd-2012-03-599506",
+      "id": "geylang-27-balam-rd-2012-03-599624",
       "month": "2012-03",
       "flatType": "4 ROOM",
       "storeyRange": "06 TO 10",
@@ -507,7 +526,7 @@
       "pricePerSqft": 438.47
     },
     {
-      "id": "geylang-27-balam-rd-2011-10-591097",
+      "id": "geylang-27-balam-rd-2011-10-591215",
       "month": "2011-10",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -520,7 +539,7 @@
       "pricePerSqft": 429.79
     },
     {
-      "id": "geylang-27-balam-rd-2011-08-587667",
+      "id": "geylang-27-balam-rd-2011-08-587785",
       "month": "2011-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -533,7 +552,7 @@
       "pricePerSqft": 402
     },
     {
-      "id": "geylang-27-balam-rd-2011-07-585729",
+      "id": "geylang-27-balam-rd-2011-07-585847",
       "month": "2011-07",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -544,19 +563,6 @@
       "resalePrice": 535000,
       "pricePerSqm": 5000,
       "pricePerSqft": 464.52
-    },
-    {
-      "id": "geylang-27-balam-rd-2010-09-564270",
-      "month": "2010-09",
-      "flatType": "5 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 126,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years",
-      "resalePrice": 545000,
-      "pricePerSqm": 4325.4,
-      "pricePerSqft": 401.84
     }
   ]
 }

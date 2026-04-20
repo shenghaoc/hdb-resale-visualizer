@@ -10,12 +10,12 @@
     },
     "medianPrice": 795000,
     "priceIqr": [
-      759950,
-      813750
+      780000,
+      810000
     ],
-    "pricePerSqmMedian": 7399,
-    "pricePerSqftMedian": 687.39,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 7800,
+    "pricePerSqftMedian": 724.64,
+    "transactionCount": 5,
     "floorAreaRange": [
       99,
       120
@@ -24,10 +24,10 @@
       1999,
       1999
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2004-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -331,11 +331,30 @@
       "medianPrice": 825000,
       "transactionCount": 1,
       "medianPricePerSqm": 8168.32
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 795000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8030.3
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-14a-telok-blangah-cres-2026-03-223350",
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-04-223384",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 07 months",
+      "resalePrice": 795000,
+      "pricePerSqm": 8030.3,
+      "pricePerSqft": 746.04
+    },
+    {
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-03-223381",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -348,7 +367,7 @@
       "pricePerSqft": 758.86
     },
     {
-      "id": "bukit-merah-14a-telok-blangah-cres-2026-01-223348",
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-01-223379",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -580,19 +599,6 @@
       "resalePrice": 570000,
       "pricePerSqm": 5700,
       "pricePerSqft": 529.55
-    },
-    {
-      "id": "bukit-merah-14a-telok-blangah-cres-2016-03-958646",
-      "month": "2016-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "82",
-      "resalePrice": 600000,
-      "pricePerSqm": 5940.59,
-      "pricePerSqft": 551.9
     }
   ]
 }

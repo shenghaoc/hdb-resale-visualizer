@@ -10,12 +10,12 @@
     },
     "medianPrice": 850000,
     "priceIqr": [
-      798750,
-      1009722
+      800000,
+      1020000
     ],
     "pricePerSqmMedian": 12903.23,
     "pricePerSqftMedian": 1198.75,
-    "transactionCount": 20,
+    "transactionCount": 21,
     "floorAreaRange": [
       62,
       87
@@ -24,10 +24,10 @@
       2020,
       2020
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-10",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -120,11 +120,30 @@
       "medianPrice": 1000000,
       "transactionCount": 1,
       "medianPricePerSqm": 12048.19
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1020000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12289.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-53-strathmore-ave-2026-03-226349",
+      "id": "queenstown-53-strathmore-ave-2026-04-226428",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 83,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 09 months",
+      "resalePrice": 1020000,
+      "pricePerSqm": 12289.16,
+      "pricePerSqft": 1141.7
+    },
+    {
+      "id": "queenstown-53-strathmore-ave-2026-03-226425",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "40 TO 42",
@@ -137,7 +156,7 @@
       "pricePerSqft": 1119.31
     },
     {
-      "id": "queenstown-53-strathmore-ave-2026-02-226276",
+      "id": "queenstown-53-strathmore-ave-2026-02-226352",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -150,7 +169,7 @@
       "pricePerSqft": 1198.75
     },
     {
-      "id": "queenstown-53-strathmore-ave-2026-02-226277",
+      "id": "queenstown-53-strathmore-ave-2026-02-226353",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -163,7 +182,7 @@
       "pricePerSqft": 1086.37
     },
     {
-      "id": "queenstown-53-strathmore-ave-2026-01-226275",
+      "id": "queenstown-53-strathmore-ave-2026-01-226351",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "40 TO 42",
@@ -369,19 +388,6 @@
       "resalePrice": 1155000,
       "pricePerSqm": 13915.66,
       "pricePerSqft": 1292.81
-    },
-    {
-      "id": "queenstown-53-strathmore-ave-2024-11-186691",
-      "month": "2024-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "25 TO 27",
-      "floorAreaSqm": 62,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "95 years 02 months",
-      "resalePrice": 800000,
-      "pricePerSqm": 12903.23,
-      "pricePerSqft": 1198.75
     }
   ]
 }

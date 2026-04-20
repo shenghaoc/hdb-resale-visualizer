@@ -8,14 +8,14 @@
       "lat": 1.31251696940456,
       "lng": 103.760867377122
     },
-    "medianPrice": 387500,
+    "medianPrice": 380000,
     "priceIqr": [
-      378000,
-      396000
+      378888,
+      395000
     ],
-    "pricePerSqmMedian": 5783.58,
-    "pricePerSqftMedian": 537.31,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5671.64,
+    "pricePerSqftMedian": 526.91,
+    "transactionCount": 5,
     "floorAreaRange": [
       67,
       155
@@ -24,10 +24,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -974,9 +974,28 @@
       "medianPrice": 372000,
       "transactionCount": 1,
       "medianPricePerSqm": 5552.24
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 378888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5655.04
     }
   ],
   "recentTransactions": [
+    {
+      "id": "clementi-506-west-coast-dr-2026-04-224132",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 05 months",
+      "resalePrice": 378888,
+      "pricePerSqm": 5655.04,
+      "pricePerSqft": 525.37
+    },
     {
       "id": "clementi-506-west-coast-dr-2025-03-204042",
       "month": "2025-03",
@@ -1223,19 +1242,6 @@
       "resalePrice": 293000,
       "pricePerSqm": 4373.13,
       "pricePerSqft": 406.28
-    },
-    {
-      "id": "clementi-506-west-coast-dr-2019-01-42542",
-      "month": "2019-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 82,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "58 years 07 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 3902.44,
-      "pricePerSqft": 362.55
     }
   ]
 }

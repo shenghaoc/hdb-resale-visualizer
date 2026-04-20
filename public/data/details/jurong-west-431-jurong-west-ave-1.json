@@ -8,14 +8,14 @@
       "lat": 1.35230306526458,
       "lng": 103.72463219774
     },
-    "medianPrice": 513000,
+    "medianPrice": 478000,
     "priceIqr": [
-      443000,
-      520000
+      426500,
+      518250
     ],
-    "pricePerSqmMedian": 5000,
-    "pricePerSqftMedian": 464.52,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5072.82,
+    "pricePerSqftMedian": 471.28,
+    "transactionCount": 6,
     "floorAreaRange": [
       75,
       119
@@ -24,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -768,11 +768,30 @@
       "medianPrice": 513000,
       "transactionCount": 1,
       "medianPricePerSqm": 4310.92
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 421000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5613.33
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-431-jurong-west-ave-1-2026-01-224958",
+      "id": "jurong-west-431-jurong-west-ave-1-2026-04-224948",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 75,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 10 months",
+      "resalePrice": 421000,
+      "pricePerSqm": 5613.33,
+      "pricePerSqft": 521.5
+    },
+    {
+      "id": "jurong-west-431-jurong-west-ave-1-2026-01-225015",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1017,19 +1036,6 @@
       "resalePrice": 385000,
       "pricePerSqm": 3737.86,
       "pricePerSqft": 347.26
-    },
-    {
-      "id": "jurong-west-431-jurong-west-ave-1-2017-04-5007",
-      "month": "2017-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "66 years 09 months",
-      "resalePrice": 385000,
-      "pricePerSqm": 3701.92,
-      "pricePerSqft": 343.92
     }
   ]
 }

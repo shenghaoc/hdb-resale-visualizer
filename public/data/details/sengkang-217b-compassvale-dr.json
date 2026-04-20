@@ -8,14 +8,14 @@
       "lat": 1.38928033604771,
       "lng": 103.894345637862
     },
-    "medianPrice": 773500,
+    "medianPrice": 785000,
     "priceIqr": [
-      739166,
-      835000
+      739444,
+      841500
     ],
-    "pricePerSqmMedian": 8407.61,
-    "pricePerSqftMedian": 781.1,
-    "transactionCount": 14,
+    "pricePerSqmMedian": 8532.61,
+    "pricePerSqftMedian": 792.71,
+    "transactionCount": 15,
     "floorAreaRange": [
       68,
       112
@@ -24,10 +24,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -205,11 +205,30 @@
       "medianPrice": 785000,
       "transactionCount": 1,
       "medianPricePerSqm": 8532.61
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 848000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9217.39
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-217b-compassvale-dr-2026-01-226773",
+      "id": "sengkang-217b-compassvale-dr-2026-04-226863",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 02 months",
+      "resalePrice": 848000,
+      "pricePerSqm": 9217.39,
+      "pricePerSqft": 856.32
+    },
+    {
+      "id": "sengkang-217b-compassvale-dr-2026-01-226859",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -454,19 +473,6 @@
       "resalePrice": 738000,
       "pricePerSqm": 8021.74,
       "pricePerSqft": 745.24
-    },
-    {
-      "id": "sengkang-217b-compassvale-dr-2023-04-161157",
-      "month": "2023-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 112,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 01 month",
-      "resalePrice": 900000,
-      "pricePerSqm": 8035.71,
-      "pricePerSqft": 746.54
     }
   ]
 }

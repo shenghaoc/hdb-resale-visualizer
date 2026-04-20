@@ -8,14 +8,14 @@
       "lat": 1.37162618163211,
       "lng": 103.9501138634
     },
-    "medianPrice": 775000,
+    "medianPrice": 795500,
     "priceIqr": [
-      754000,
+      756000,
       845000
     ],
-    "pricePerSqmMedian": 9076.92,
-    "pricePerSqftMedian": 843.27,
-    "transactionCount": 11,
+    "pricePerSqmMedian": 9269.23,
+    "pricePerSqftMedian": 861.14,
+    "transactionCount": 12,
     "floorAreaRange": [
       65,
       105
@@ -24,10 +24,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-06",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -229,11 +229,30 @@
       "medianPrice": 758000,
       "transactionCount": 1,
       "medianPricePerSqm": 8813.95
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 833800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9695.35
     }
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-530c-pasir-ris-dr-1-2026-01-225510",
+      "id": "pasir-ris-530c-pasir-ris-dr-1-2026-04-225580",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 86,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 833800,
+      "pricePerSqm": 9695.35,
+      "pricePerSqft": 900.73
+    },
+    {
+      "id": "pasir-ris-530c-pasir-ris-dr-1-2026-01-225577",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -478,19 +497,6 @@
       "resalePrice": 728000,
       "pricePerSqm": 8465.12,
       "pricePerSqft": 786.44
-    },
-    {
-      "id": "pasir-ris-530c-pasir-ris-dr-1-2022-07-130338",
-      "month": "2022-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 65,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "91 years 11 months",
-      "resalePrice": 538000,
-      "pricePerSqm": 8276.92,
-      "pricePerSqft": 768.95
     }
   ]
 }

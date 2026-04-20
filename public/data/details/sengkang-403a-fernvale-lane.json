@@ -8,14 +8,14 @@
       "lat": 1.3889306090651,
       "lng": 103.873208570293
     },
-    "medianPrice": 620000,
+    "medianPrice": 640000,
     "priceIqr": [
-      597500,
-      648222
+      600000,
+      645000
     ],
-    "pricePerSqmMedian": 6203.07,
-    "pricePerSqftMedian": 576.28,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 6062.05,
+    "pricePerSqftMedian": 563.18,
+    "transactionCount": 5,
     "floorAreaRange": [
       93,
       112
@@ -24,10 +24,10 @@
       2004,
       2004
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-08",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -348,9 +348,28 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 6382.98
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5758.93
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-403a-fernvale-lane-2026-04-227131",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2004,
+      "remainingLease": "77 years 01 month",
+      "resalePrice": 645000,
+      "pricePerSqm": 5758.93,
+      "pricePerSqft": 535.02
+    },
     {
       "id": "sengkang-403a-fernvale-lane-2025-09-214045",
       "month": "2025-09",
@@ -597,19 +616,6 @@
       "resalePrice": 500000,
       "pricePerSqm": 4504.5,
       "pricePerSqft": 418.48
-    },
-    {
-      "id": "sengkang-403a-fernvale-lane-2020-12-86819",
-      "month": "2020-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 94,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2004,
-      "remainingLease": "82 years 05 months",
-      "resalePrice": 408000,
-      "pricePerSqm": 4340.43,
-      "pricePerSqft": 403.24
     }
   ]
 }

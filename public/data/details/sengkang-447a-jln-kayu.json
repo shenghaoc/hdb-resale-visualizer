@@ -8,14 +8,14 @@
       "lat": 1.3921382852483,
       "lng": 103.872490556246
     },
-    "medianPrice": 535000,
+    "medianPrice": 452500,
     "priceIqr": [
       360000,
-      551888
+      549888
     ],
-    "pricePerSqmMedian": 7659.57,
-    "pricePerSqftMedian": 711.6,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 7765.95,
+    "pricePerSqftMedian": 721.49,
+    "transactionCount": 8,
     "floorAreaRange": [
       47,
       94
@@ -24,10 +24,10 @@
       2013,
       2013
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2017-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -241,11 +241,30 @@
       "medianPrice": 668000,
       "transactionCount": 1,
       "medianPricePerSqm": 7106.38
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7872.34
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-447a-jln-kayu-2026-03-226871",
+      "id": "sengkang-447a-jln-kayu-2026-04-226743",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 08 months",
+      "resalePrice": 370000,
+      "pricePerSqm": 7872.34,
+      "pricePerSqft": 731.37
+    },
+    {
+      "id": "sengkang-447a-jln-kayu-2026-03-226960",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -258,7 +277,7 @@
       "pricePerSqft": 660.21
     },
     {
-      "id": "sengkang-447a-jln-kayu-2026-02-226706",
+      "id": "sengkang-447a-jln-kayu-2026-02-226790",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -490,19 +509,6 @@
       "resalePrice": 245000,
       "pricePerSqm": 5212.77,
       "pricePerSqft": 484.28
-    },
-    {
-      "id": "sengkang-447a-jln-kayu-2020-11-84395",
-      "month": "2020-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "92 years 01 month",
-      "resalePrice": 355000,
-      "pricePerSqm": 5298.51,
-      "pricePerSqft": 492.25
     }
   ]
 }

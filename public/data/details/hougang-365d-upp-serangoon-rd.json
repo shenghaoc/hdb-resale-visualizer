@@ -8,14 +8,14 @@
       "lat": 1.3696172178659,
       "lng": 103.896612783518
     },
-    "medianPrice": 630088,
+    "medianPrice": 645044,
     "priceIqr": [
-      533000,
-      803888
+      557272,
+      767916
     ],
-    "pricePerSqmMedian": 8737.91,
-    "pricePerSqftMedian": 811.78,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 8988.52,
+    "pricePerSqftMedian": 835.06,
+    "transactionCount": 6,
     "floorAreaRange": [
       67,
       92
@@ -24,10 +24,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -150,11 +150,30 @@
       "medianPrice": 630088,
       "transactionCount": 1,
       "medianPricePerSqm": 9404.3
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9850.75
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-365d-upp-serangoon-rd-2026-02-224454",
+      "id": "hougang-365d-upp-serangoon-rd-2026-04-224504",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "90 years 11 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 9850.75,
+      "pricePerSqft": 915.17
+    },
+    {
+      "id": "hougang-365d-upp-serangoon-rd-2026-02-224503",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -399,19 +418,6 @@
       "resalePrice": 633000,
       "pricePerSqm": 6880.43,
       "pricePerSqft": 639.21
-    },
-    {
-      "id": "hougang-365d-upp-serangoon-rd-2022-01-125363",
-      "month": "2022-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "95 years 02 months",
-      "resalePrice": 460000,
-      "pricePerSqm": 6865.67,
-      "pricePerSqft": 637.84
     }
   ]
 }

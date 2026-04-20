@@ -8,14 +8,14 @@
       "lat": 1.43352424523671,
       "lng": 103.782516336037
     },
-    "medianPrice": 260000,
+    "medianPrice": 630000,
     "priceIqr": [
-      205750,
-      360000
+      630000,
+      630000
     ],
-    "pricePerSqmMedian": 2561.48,
-    "pricePerSqftMedian": 237.97,
-    "transactionCount": 120,
+    "pricePerSqmMedian": 5163.93,
+    "pricePerSqftMedian": 479.75,
+    "transactionCount": 1,
     "floorAreaRange": [
       84,
       122
@@ -24,10 +24,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2024-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-03",
-      "2024-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -662,9 +662,28 @@
       "medianPrice": 498000,
       "transactionCount": 1,
       "medianPricePerSqm": 5928.57
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.93
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-349-woodlands-ave-3-2026-04-228489",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 05 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 5163.93,
+      "pricePerSqft": 479.75
+    },
     {
       "id": "woodlands-349-woodlands-ave-3-2024-03-193497",
       "month": "2024-03",
@@ -874,7 +893,7 @@
       "pricePerSqft": 304.6
     },
     {
-      "id": "woodlands-349-woodlands-ave-3-2016-09-970420",
+      "id": "woodlands-349-woodlands-ave-3-2016-09-970538",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -887,7 +906,7 @@
       "pricePerSqft": 376.04
     },
     {
-      "id": "woodlands-349-woodlands-ave-3-2015-09-951110",
+      "id": "woodlands-349-woodlands-ave-3-2015-09-951228",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -900,7 +919,7 @@
       "pricePerSqft": 330.49
     },
     {
-      "id": "woodlands-349-woodlands-ave-3-2015-07-948066",
+      "id": "woodlands-349-woodlands-ave-3-2015-07-948184",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -911,19 +930,6 @@
       "resalePrice": 325000,
       "pricePerSqm": 3869.05,
       "pricePerSqft": 359.45
-    },
-    {
-      "id": "woodlands-349-woodlands-ave-3-2015-05-944864",
-      "month": "2015-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 103,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "72",
-      "resalePrice": 377000,
-      "pricePerSqm": 3660.19,
-      "pricePerSqft": 340.04
     }
   ]
 }

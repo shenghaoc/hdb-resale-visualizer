@@ -8,14 +8,14 @@
       "lat": 1.35426046045608,
       "lng": 103.739309747692
     },
-    "medianPrice": 589000,
+    "medianPrice": 598000,
     "priceIqr": [
-      474250,
-      639916
+      475000,
+      640000
     ],
-    "pricePerSqmMedian": 7014.1,
-    "pricePerSqftMedian": 651.63,
-    "transactionCount": 32,
+    "pricePerSqmMedian": 7029.41,
+    "pricePerSqftMedian": 653.05,
+    "transactionCount": 33,
     "floorAreaRange": [
       48,
       93
@@ -24,10 +24,10 @@
       2020,
       2020
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2024-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -158,11 +158,30 @@
       "medianPrice": 663888,
       "transactionCount": 1,
       "medianPricePerSqm": 7138.58
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 705000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7580.65
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-460a-bt-batok-west-ave-9-2026-01-223035",
+      "id": "bukit-batok-460a-bt-batok-west-ave-9-2026-04-223075",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 02 months",
+      "resalePrice": 705000,
+      "pricePerSqm": 7580.65,
+      "pricePerSqft": 704.27
+    },
+    {
+      "id": "bukit-batok-460a-bt-batok-west-ave-9-2026-01-223057",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -407,19 +426,6 @@
       "resalePrice": 639888,
       "pricePerSqm": 6880.52,
       "pricePerSqft": 639.22
-    },
-    {
-      "id": "bukit-batok-460a-bt-batok-west-ave-9-2024-08-173086",
-      "month": "2024-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 10 months",
-      "resalePrice": 640000,
-      "pricePerSqm": 6881.72,
-      "pricePerSqft": 639.33
     }
   ]
 }

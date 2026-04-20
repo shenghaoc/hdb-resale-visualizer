@@ -8,14 +8,14 @@
       "lat": 1.43328052675083,
       "lng": 103.844436750229
     },
-    "medianPrice": 477500,
+    "medianPrice": 480000,
     "priceIqr": [
-      466500,
-      494722
+      468000,
+      508888
     ],
-    "pricePerSqmMedian": 7037.31,
-    "pricePerSqftMedian": 653.79,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 6985.07,
+    "pricePerSqftMedian": 648.94,
+    "transactionCount": 9,
     "floorAreaRange": [
       67,
       92
@@ -24,10 +24,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -210,11 +210,30 @@
       "medianPrice": 508888,
       "transactionCount": 1,
       "medianPricePerSqm": 7595.34
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6032.61
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-335a-yishun-st-31-2026-03-228691",
+      "id": "yishun-335a-yishun-st-31-2026-04-228977",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 08 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 6032.61,
+      "pricePerSqft": 560.45
+    },
+    {
+      "id": "yishun-335a-yishun-st-31-2026-03-228805",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -227,7 +246,7 @@
       "pricePerSqft": 705.63
     },
     {
-      "id": "yishun-335a-yishun-st-31-2026-01-228690",
+      "id": "yishun-335a-yishun-st-31-2026-01-228804",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -459,19 +478,6 @@
       "resalePrice": 460000,
       "pricePerSqm": 5000,
       "pricePerSqft": 464.52
-    },
-    {
-      "id": "yishun-335a-yishun-st-31-2021-04-96966",
-      "month": "2021-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "93 years 08 months",
-      "resalePrice": 448000,
-      "pricePerSqm": 4869.57,
-      "pricePerSqft": 452.4
     }
   ]
 }

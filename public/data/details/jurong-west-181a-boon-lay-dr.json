@@ -8,14 +8,14 @@
       "lat": 1.34849083792572,
       "lng": 103.708097262621
     },
-    "medianPrice": 615000,
+    "medianPrice": 611500,
     "priceIqr": [
-      588000,
-      630000
+      552000,
+      629722
     ],
-    "pricePerSqmMedian": 6762.24,
-    "pricePerSqftMedian": 628.23,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 6768.22,
+    "pricePerSqftMedian": 628.79,
+    "transactionCount": 10,
     "floorAreaRange": [
       68,
       93
@@ -24,10 +24,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2017-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -294,11 +294,30 @@
       "medianPrice": 630000,
       "transactionCount": 1,
       "medianPricePerSqm": 6774.19
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6985.29
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-181a-boon-lay-dr-2026-03-224951",
+      "id": "jurong-west-181a-boon-lay-dr-2026-04-224919",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 475000,
+      "pricePerSqm": 6985.29,
+      "pricePerSqft": 648.96
+    },
+    {
+      "id": "jurong-west-181a-boon-lay-dr-2026-03-225008",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -311,7 +330,7 @@
       "pricePerSqft": 629.34
     },
     {
-      "id": "jurong-west-181a-boon-lay-dr-2026-01-224949",
+      "id": "jurong-west-181a-boon-lay-dr-2026-01-225006",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -543,19 +562,6 @@
       "resalePrice": 508000,
       "pricePerSqm": 5462.37,
       "pricePerSqft": 507.47
-    },
-    {
-      "id": "jurong-west-181a-boon-lay-dr-2021-10-110194",
-      "month": "2021-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "91 years 08 months",
-      "resalePrice": 370000,
-      "pricePerSqm": 5441.18,
-      "pricePerSqft": 505.5
     }
   ]
 }

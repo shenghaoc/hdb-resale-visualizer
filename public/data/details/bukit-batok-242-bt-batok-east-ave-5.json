@@ -8,14 +8,14 @@
       "lat": 1.35095950808957,
       "lng": 103.756233418128
     },
-    "medianPrice": 427000,
+    "medianPrice": 427500,
     "priceIqr": [
-      418000,
-      475000
+      419250,
+      478750
     ],
-    "pricePerSqmMedian": 6000,
-    "pricePerSqftMedian": 557.42,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 5863.01,
+    "pricePerSqftMedian": 544.69,
+    "transactionCount": 10,
     "floorAreaRange": [
       67,
       99
@@ -24,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1128,11 +1128,30 @@
       "medianPrice": 475000,
       "transactionCount": 1,
       "medianPricePerSqm": 5219.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5268.82
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-242-bt-batok-east-ave-5-2026-02-222903",
+      "id": "bukit-batok-242-bt-batok-east-ave-5-2026-04-222921",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 08 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 5268.82,
+      "pricePerSqft": 489.49
+    },
+    {
+      "id": "bukit-batok-242-bt-batok-east-ave-5-2026-02-222919",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1377,19 +1396,6 @@
       "resalePrice": 290000,
       "pricePerSqm": 4328.36,
       "pricePerSqft": 402.12
-    },
-    {
-      "id": "bukit-batok-242-bt-batok-east-ave-5-2020-11-83080",
-      "month": "2020-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 69,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "64 years 02 months",
-      "resalePrice": 282000,
-      "pricePerSqm": 4086.96,
-      "pricePerSqft": 379.69
     }
   ]
 }

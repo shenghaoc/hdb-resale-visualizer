@@ -8,14 +8,14 @@
       "lat": 1.38143384735951,
       "lng": 103.771366304235
     },
-    "medianPrice": 503000,
+    "medianPrice": 504000,
     "priceIqr": [
-      474000,
-      514000
+      479500,
+      512000
     ],
-    "pricePerSqmMedian": 7397.06,
-    "pricePerSqftMedian": 687.21,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 7411.77,
+    "pricePerSqftMedian": 688.58,
+    "transactionCount": 8,
     "floorAreaRange": [
       68,
       93
@@ -24,10 +24,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-08",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -192,11 +192,30 @@
       "medianPrice": 503000,
       "transactionCount": 1,
       "medianPricePerSqm": 7397.06
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7426.47
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-442b-fajar-rd-2026-01-223431",
+      "id": "bukit-panjang-442b-fajar-rd-2026-04-223468",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 09 months",
+      "resalePrice": 505000,
+      "pricePerSqm": 7426.47,
+      "pricePerSqft": 689.94
+    },
+    {
+      "id": "bukit-panjang-442b-fajar-rd-2026-01-223463",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -441,19 +460,6 @@
       "resalePrice": 368000,
       "pricePerSqm": 5411.76,
       "pricePerSqft": 502.77
-    },
-    {
-      "id": "bukit-panjang-442b-fajar-rd-2021-05-97384",
-      "month": "2021-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "94 years 08 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 4705.88,
-      "pricePerSqft": 437.19
     }
   ]
 }

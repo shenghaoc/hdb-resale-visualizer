@@ -8,14 +8,14 @@
       "lat": 1.3739808401432,
       "lng": 103.775028040256
     },
-    "medianPrice": 193000,
+    "medianPrice": 518000,
     "priceIqr": [
-      165000,
-      310000
+      518000,
+      518000
     ],
-    "pricePerSqmMedian": 2246.43,
-    "pricePerSqftMedian": 208.7,
-    "transactionCount": 105,
+    "pricePerSqmMedian": 4980.77,
+    "pricePerSqftMedian": 462.73,
+    "transactionCount": 1,
     "floorAreaRange": [
       84,
       104
@@ -24,10 +24,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2024-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-09",
-      "2024-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -612,9 +612,28 @@
       "medianPrice": 438000,
       "transactionCount": 1,
       "medianPricePerSqm": 5214.29
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 518000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4980.77
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-208-petir-rd-2026-04-223557",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years",
+      "resalePrice": 518000,
+      "pricePerSqm": 4980.77,
+      "pricePerSqft": 462.73
+    },
     {
       "id": "bukit-panjang-208-petir-rd-2024-03-174830",
       "month": "2024-03",
@@ -850,7 +869,7 @@
       "pricePerSqft": 308.5
     },
     {
-      "id": "bukit-panjang-208-petir-rd-2016-09-969313",
+      "id": "bukit-panjang-208-petir-rd-2016-09-969431",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -861,19 +880,6 @@
       "resalePrice": 298000,
       "pricePerSqm": 3547.62,
       "pricePerSqft": 329.58
-    },
-    {
-      "id": "bukit-panjang-208-petir-rd-2016-04-960365",
-      "month": "2016-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "71",
-      "resalePrice": 300000,
-      "pricePerSqm": 3571.43,
-      "pricePerSqft": 331.8
     }
   ]
 }

@@ -8,14 +8,14 @@
       "lat": 1.28790461781044,
       "lng": 103.83219770269
     },
-    "medianPrice": 350000,
+    "medianPrice": 349000,
     "priceIqr": [
-      350000,
-      350000
+      348500,
+      349500
     ],
-    "pricePerSqmMedian": 6481.48,
-    "pricePerSqftMedian": 602.15,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 6462.96,
+    "pricePerSqftMedian": 600.43,
+    "transactionCount": 2,
     "floorAreaRange": [
       43,
       66
@@ -24,10 +24,10 @@
       1970,
       1970
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-06",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -498,9 +498,28 @@
       "medianPrice": 350000,
       "transactionCount": 1,
       "medianPricePerSqm": 6481.48
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 348000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6444.44
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-14-taman-ho-swee-2026-04-223266",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 54,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "42 years 10 months",
+      "resalePrice": 348000,
+      "pricePerSqm": 6444.44,
+      "pricePerSqft": 598.71
+    },
     {
       "id": "bukit-merah-14-taman-ho-swee-2025-12-201094",
       "month": "2025-12",
@@ -710,7 +729,7 @@
       "pricePerSqft": 607.31
     },
     {
-      "id": "bukit-merah-14-taman-ho-swee-2016-10-970918",
+      "id": "bukit-merah-14-taman-ho-swee-2016-10-971036",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -723,7 +742,7 @@
       "pricePerSqft": 615.91
     },
     {
-      "id": "bukit-merah-14-taman-ho-swee-2015-10-951570",
+      "id": "bukit-merah-14-taman-ho-swee-2015-10-951688",
       "month": "2015-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -736,7 +755,7 @@
       "pricePerSqft": 653.76
     },
     {
-      "id": "bukit-merah-14-taman-ho-swee-2015-05-943728",
+      "id": "bukit-merah-14-taman-ho-swee-2015-05-943846",
       "month": "2015-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -747,19 +766,6 @@
       "resalePrice": 350000,
       "pricePerSqm": 6481.48,
       "pricePerSqft": 602.15
-    },
-    {
-      "id": "bukit-merah-14-taman-ho-swee-2014-09-645457",
-      "month": "2014-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 66,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1970,
-      "remainingLease": "43 years",
-      "resalePrice": 360000,
-      "pricePerSqm": 5454.55,
-      "pricePerSqft": 506.74
     }
   ]
 }
