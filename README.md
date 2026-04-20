@@ -1,3 +1,5 @@
+> **Note for AI Agents:** Please read `AGENTS.md` before proposing or making any changes to this repository to ensure architecture and data pipeline invariants are strictly preserved.
+
 # HDB Resale Visualizer
 
 Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction. The app uses official public datasets, precomputes static artifacts, and serves a fast client-only UI on Cloudflare Pages.
@@ -69,14 +71,14 @@ bun run sync-data
 2. Downloads the CSV and GEOJSON source files through the official dataset download API.
 3. Validates raw rows with `zod`.
 4. Normalizes addresses, prices, lease values, and monthly aggregates.
-5. Resolves block coordinates through OneMap and caches them in [data/cache/geocodes.json](/Users/shenghaochen/repos/hdb-resale-visualizer/data/cache/geocodes.json).
+5. Resolves block coordinates through OneMap and caches them in [data/cache/geocodes.json](data/cache/geocodes.json).
 6. Computes nearest MRT distance from LTA station exit points.
 7. Emits:
-   - [public/data/manifest.json](/Users/shenghaochen/repos/hdb-resale-visualizer/public/data/manifest.json)
-   - [public/data/block-summaries.json](/Users/shenghaochen/repos/hdb-resale-visualizer/public/data/block-summaries.json)
-   - [public/data/trends/town-flat-type.json](/Users/shenghaochen/repos/hdb-resale-visualizer/public/data/trends/town-flat-type.json)
-   - [public/data/mrt-exits.geojson](/Users/shenghaochen/repos/hdb-resale-visualizer/public/data/mrt-exits.geojson)
-   - [public/data/details](/Users/shenghaochen/repos/hdb-resale-visualizer/public/data/details)
+   - [public/data/manifest.json](public/data/manifest.json)
+   - [public/data/block-summaries.json](public/data/block-summaries.json)
+   - [public/data/trends/town-flat-type.json](public/data/trends/town-flat-type.json)
+   - [public/data/mrt-exits.geojson](public/data/mrt-exits.geojson)
+   - [public/data/details](public/data/details)
 
 ## Environment
 

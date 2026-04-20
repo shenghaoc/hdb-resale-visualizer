@@ -1,0 +1,14 @@
+{
+  "mcp": {
+    "servers": ["github", "playwright", "filesystem"],
+    "filesystem": {
+      "allowedPaths": [
+        "./src",
+        "./scripts",
+        "./public",
+        "./data",
+        "./.github"
+      ]
+    }
+  }
+}
