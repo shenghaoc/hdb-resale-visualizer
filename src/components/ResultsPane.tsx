@@ -32,6 +32,7 @@ type ResultsPaneProps = {
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
   scrollParent: HTMLElement | null;
+  isCompact?: boolean;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -67,15 +68,75 @@ function BlockCard({
   block,
   isFeatured = false,
   isSaved,
+  isCompact = false,
   onSelect,
   onToggleShortlist,
 }: {
   block: BlockSummary;
   isFeatured?: boolean;
   isSaved: boolean;
+  isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
 }) {
+  if (isCompact) {
+    return (
+      <Item
+        data-state={isFeatured ? "selected" : "idle"}
+        variant="outline"
+        className={cn(
+          "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
+          isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
+          "gap-2 px-3 py-2.5"
+        )}
+        onClick={() => onSelect(block.addressKey)}
+      >
+        <ItemHeader className="basis-full">
+          <ItemContent>
+            <div className="result-address flex flex-col">
+              <strong className="font-heading text-base font-semibold leading-tight">
+                {block.block} {block.streetName}
+              </strong>
+              <span className="text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
+                {block.town}
+              </span>
+            </div>
+          </ItemContent>
+          <ItemActions>
+            <Button
+              size="xs"
+              variant={isSaved ? "secondary" : "ghost"}
+              onClick={(event) => {
+                event.stopPropagation();
+                onToggleShortlist(block.addressKey);
+              }}
+              type="button"
+              className="size-7 p-0"
+            >
+              <Bookmark className={cn("size-3.5", isSaved && "fill-current")} />
+            </Button>
+          </ItemActions>
+        </ItemHeader>
+        <div className="flex w-full items-center justify-between border-t border-border/40 pt-2">
+           <div className="flex items-baseline gap-1.5">
+             <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">Median:</span>
+             <strong className="font-heading text-sm font-semibold">{formatCompactCurrency(block.medianPrice)}</strong>
+           </div>
+           <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="px-1.5 py-0 text-[0.6rem] h-4">
+                 {block.flatTypes[0]}
+              </Badge>
+              {block.nearestMrt && (
+                <span className="text-[0.65rem] font-medium text-muted-foreground">
+                   {formatMeters(block.nearestMrt.distanceMeters)} to MRT
+                </span>
+              )}
+           </div>
+        </div>
+      </Item>
+    );
+  }
+
   return (
     <Item
       data-state={isFeatured ? "selected" : "idle"}
@@ -177,6 +238,7 @@ export function ResultsPane({
   onSelect,
   onToggleShortlist,
   scrollParent,
+  isCompact = false,
 }: ResultsPaneProps) {
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
   const listRef = useRef<HTMLDivElement>(null);
@@ -191,7 +253,7 @@ export function ResultsPane({
   const virtualizer = useVirtualizer({
     count: sortedBlocks.length,
     getScrollElement: () => scrollParent,
-    estimateSize: () => 214,
+    estimateSize: () => isCompact ? 94 : 214,
     overscan: 6,
     scrollMargin,
   });
@@ -215,7 +277,7 @@ export function ResultsPane({
     return () => {
       window.removeEventListener("resize", updateScrollMargin);
     };
-  }, [scrollParent]);
+  }, [scrollParent, blocks.length]);
 
   const virtualItems = virtualizer.getVirtualItems();
 
@@ -284,6 +346,7 @@ export function ResultsPane({
                           block={block}
                           isFeatured={block.addressKey === selectedAddressKey}
                           isSaved={shortlistKeys.has(block.addressKey)}
+                          isCompact={isCompact}
                           onSelect={onSelect}
                           onToggleShortlist={onToggleShortlist}
                         />

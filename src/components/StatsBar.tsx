@@ -7,7 +7,7 @@ type StatsBarProps = {
   manifest: Manifest;
   filteredCount: number;
   blocks: BlockSummary[];
-  mode?: "header" | "summary";
+  mode?: "header" | "summary" | "discrete";
   testId?: string;
 };
 
@@ -18,6 +18,27 @@ export function StatsBar({
   mode = "summary",
   testId = "stats-bar",
 }: StatsBarProps) {
+  if (mode === "discrete") {
+    return (
+      <div data-testid={testId} className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-muted-foreground/80">
+        <span className="flex items-center gap-1.5">
+          <span className="text-foreground">{formatNumber(filteredCount)}</span>
+          Visible
+        </span>
+        <span className="flex items-center gap-1.5 border-l border-border/50 pl-4">
+          <span className="text-foreground">{formatNumber(manifest.counts.transactions)}</span>
+          Market txns
+        </span>
+        {blocks.length > 0 && (
+          <span className="flex items-center gap-1.5 border-l border-border/50 pl-4">
+             Top median:
+             <span className="text-foreground">{formatCompactCurrency(Math.max(...blocks.map(b => b.medianPrice)))}</span>
+          </span>
+        )}
+      </div>
+    );
+  }
+
   const priciest = blocks.reduce((current, block) => {
     if (!current || block.medianPrice > current.medianPrice) {
       return block;

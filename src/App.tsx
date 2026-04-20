@@ -266,18 +266,6 @@ function App() {
     </Card>
   );
 
-  const resultsContent = (
-    <ResultsPane
-      blocks={filteredBlocks}
-      hasTownFilter={!!filters.town || !!filters.search}
-      onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-      onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-      selectedAddressKey={filters.selectedAddressKey}
-      shortlistKeys={shortlistKeySet}
-      scrollParent={middleColumnRef.current}
-    />
-  );
-
   const savedContent = (
     <>
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
@@ -309,13 +297,26 @@ function App() {
   return (
     <>
       <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-0">
-        <StatsBar
-          manifest={manifest}
-          filteredCount={filteredBlocks.length}
-          blocks={filteredBlocks}
-          mode="header"
-          testId="stats-bar"
-        />
+        <div className="flex flex-col gap-3">
+          <StatsBar
+            manifest={manifest}
+            filteredCount={filteredBlocks.length}
+            blocks={filteredBlocks}
+            mode="header"
+            testId="stats-bar"
+          />
+          {!isDesktop && (
+            <div className="px-1">
+              <StatsBar
+                manifest={manifest}
+                filteredCount={filteredBlocks.length}
+                blocks={filteredBlocks}
+                mode="discrete"
+                testId="mobile-stats"
+              />
+            </div>
+          )}
+        </div>
 
         {/* Desktop: 3-column grid */}
         {isDesktop ? (
@@ -329,7 +330,16 @@ function App() {
               className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-y-auto lg:pb-6 pr-1"
             >
               {mapContent}
-              {resultsContent}
+              <ResultsPane
+                blocks={filteredBlocks}
+                hasTownFilter={!!filters.town || !!filters.search}
+                onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                selectedAddressKey={filters.selectedAddressKey}
+                shortlistKeys={shortlistKeySet}
+                scrollParent={middleColumnRef.current}
+                isCompact={false}
+              />
             </section>
 
             <section className="flex min-w-0 min-h-0 flex-col gap-4 lg:max-h-full lg:overflow-hidden pr-1 lg:pb-6">
@@ -347,7 +357,16 @@ function App() {
             {mobileTab === "filters" && filterContent}
             {mobileTab === "results" && (
               <div className="flex flex-col gap-4 min-h-0 flex-1">
-                {resultsContent}
+                <ResultsPane
+                  blocks={filteredBlocks}
+                  hasTownFilter={!!filters.town || !!filters.search}
+                  onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                  onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                  selectedAddressKey={filters.selectedAddressKey}
+                  shortlistKeys={shortlistKeySet}
+                  scrollParent={null}
+                  isCompact={true}
+                />
               </div>
             )}
             {mobileTab === "saved" && (
