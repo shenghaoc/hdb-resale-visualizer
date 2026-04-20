@@ -3,6 +3,7 @@ import path from "node:path";
 import Papa from "papaparse";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema } from "./lib/schemas";
 import {
+  buildMrtStationsGeoJson,
   buildArtifacts,
   makeAddressKey,
   normalizeText,
@@ -423,6 +424,7 @@ async function main() {
   await writeJson(path.join(PUBLIC_DATA_DIR, "block-summaries.json"), artifacts.blockSummaries);
   await writeJson(path.join(TRENDS_DIR, "town-flat-type.json"), artifacts.townFlatTypeTrend);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-exits.geojson"), mrtGeoJson);
+  await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-stations.geojson"), buildMrtStationsGeoJson(mrtExits));
 
   await fs.rm(DETAILS_DIR, { recursive: true, force: true });
   await fs.mkdir(DETAILS_DIR, { recursive: true });

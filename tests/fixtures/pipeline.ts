@@ -83,6 +83,11 @@ export const fixtureMrtExits: MrtExit[] = [
     lng: 103.8491,
   },
   {
+    stationName: "ANG MO KIO MRT STATION",
+    lat: 1.3705,
+    lng: 103.8506,
+  },
+  {
     stationName: "BEDOK NORTH MRT STATION",
     lat: 1.3347,
     lng: 103.9188,

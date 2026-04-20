@@ -109,6 +109,41 @@ export function MapView({ blocks, selectedAddressKey, onSelect }: MapViewProps) 
     popupRef.current = popup;
 
     map.on("load", () => {
+      map.addSource("mrt-stations", {
+        type: "geojson",
+        data: "/data/mrt-stations.geojson",
+      });
+
+      map.addLayer({
+        id: "mrt-icons",
+        type: "circle",
+        source: "mrt-stations",
+        paint: {
+          "circle-radius": 4,
+          "circle-color": "#2563eb",
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#fff",
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-labels",
+        type: "symbol",
+        source: "mrt-stations",
+        minzoom: 14,
+        layout: {
+          "text-field": ["get", "stationName"],
+          "text-size": 10,
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#1e40af",
+          "text-halo-color": "#fff",
+          "text-halo-width": 1,
+        },
+      });
+
       map.addSource("blocks", {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },

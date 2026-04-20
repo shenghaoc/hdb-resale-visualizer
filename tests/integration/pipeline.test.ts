@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { haversineDistanceMeters, makeAddressKey } from "../../scripts/lib/pipeline";
-import { buildFixtureArtifacts, fixtureGeocodes } from "../fixtures/pipeline";
+import { buildMrtStationsGeoJson, haversineDistanceMeters, makeAddressKey } from "../../scripts/lib/pipeline";
+import { buildFixtureArtifacts, fixtureGeocodes, fixtureMrtExits } from "../fixtures/pipeline";
 
 describe("pipeline artifacts", () => {
   it("builds summaries, detail files, and town trends", () => {
@@ -21,5 +21,23 @@ describe("pipeline artifacts", () => {
     );
 
     expect(distance).toBeLessThan(20);
+  });
+
+  it("aggregates MRT exits into station markers without changing nearest-station distance", () => {
+    const stations = buildMrtStationsGeoJson(fixtureMrtExits);
+    const angMoKioStation = stations.features.find(
+      (feature) => feature.properties.stationName === "ANG MO KIO MRT STATION",
+    );
+    const artifacts = buildFixtureArtifacts();
+    const nearestMrt =
+      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.nearestMrt;
+
+    expect(stations.features).toHaveLength(2);
+    expect(angMoKioStation?.geometry.coordinates[0]).toBeCloseTo(103.84985, 5);
+    expect(angMoKioStation?.geometry.coordinates[1]).toBeCloseTo(1.3698, 5);
+    expect(nearestMrt).toEqual({
+      stationName: "ANG MO KIO MRT STATION",
+      distanceMeters: 16,
+    });
   });
 });

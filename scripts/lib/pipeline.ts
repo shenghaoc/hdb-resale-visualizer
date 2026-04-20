@@ -33,6 +33,22 @@ export type MrtExit = {
   lng: number;
 };
 
+export type MrtStationFeature = {
+  type: "Feature";
+  geometry: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+  properties: {
+    stationName: string;
+  };
+};
+
+export type MrtStationFeatureCollection = {
+  type: "FeatureCollection";
+  features: MrtStationFeature[];
+};
+
 export type GeocodeEntry = {
   lat: number;
   lng: number;
@@ -135,6 +151,45 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
   const currentYear = new Date().getFullYear();
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
+}
+
+export function buildMrtStationsGeoJson(mrtExits: MrtExit[]): MrtStationFeatureCollection {
+  const stations = new Map<
+    string,
+    {
+      latSum: number;
+      lngSum: number;
+      count: number;
+    }
+  >();
+
+  for (const exit of mrtExits) {
+    const station = stations.get(exit.stationName) ?? {
+      latSum: 0,
+      lngSum: 0,
+      count: 0,
+    };
+    station.latSum += exit.lat;
+    station.lngSum += exit.lng;
+    station.count += 1;
+    stations.set(exit.stationName, station);
+  }
+
+  return {
+    type: "FeatureCollection",
+    features: [...stations.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([stationName, station]) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [station.lngSum / station.count, station.latSum / station.count],
+        },
+        properties: {
+          stationName,
+        },
+      })),
+  };
 }
 
 export function buildArtifacts({
