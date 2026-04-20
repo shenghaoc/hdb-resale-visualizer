@@ -1,6 +1,24 @@
-import ReactECharts from "echarts-for-react";
+import * as echarts from "echarts/core";
+import { LineChart, BarChart } from "echarts/charts";
+import {
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import ReactEChartsCore from "echarts-for-react/lib/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
+
+// Register the required components
+echarts.use([
+  LineChart,
+  BarChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  CanvasRenderer,
+]);
 
 type TrendChartProps = {
   points: AddressTrendPoint[];
@@ -8,7 +26,8 @@ type TrendChartProps = {
 
 export function TrendChart({ points }: TrendChartProps) {
   return (
-    <ReactECharts
+    <ReactEChartsCore
+      echarts={echarts}
       notMerge
       option={{
         animationDuration: 500,
