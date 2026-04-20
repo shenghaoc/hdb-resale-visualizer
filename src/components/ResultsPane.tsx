@@ -26,6 +26,7 @@ import {
 
 type ResultsPaneProps = {
   blocks: BlockSummary[];
+  hasTownFilter: boolean;
   selectedAddressKey: string | null;
   shortlistKeys: Set<string>;
   onSelect: (addressKey: string) => void;
@@ -170,6 +171,7 @@ function BlockCard({
 
 export function ResultsPane({
   blocks,
+  hasTownFilter,
   selectedAddressKey,
   shortlistKeys,
   onSelect,
@@ -250,7 +252,13 @@ export function ResultsPane({
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          {blocks.length === 0 ? (
+          {!hasTownFilter ? (
+            <div className="flex flex-col items-center gap-2 py-8 text-center text-muted-foreground">
+              <ArrowUpDown className="size-6 opacity-40" />
+              <p className="text-sm font-medium">Select a town to browse blocks</p>
+              <p className="text-xs">Use the Town filter on the left to narrow results.</p>
+            </div>
+          ) : blocks.length === 0 ? (
             <div className="empty-state">
               No blocks match your current filters. Try broadening your search or resetting filters.
             </div>

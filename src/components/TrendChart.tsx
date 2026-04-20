@@ -29,7 +29,6 @@ export function TrendChart({ points }: TrendChartProps) {
           textStyle: {
             color: "#2d2621",
           },
-          valueFormatter: (value: number) => formatCompactCurrency(value),
         },
         xAxis: {
           type: "category",
@@ -84,6 +83,9 @@ export function TrendChart({ points }: TrendChartProps) {
               opacity: 0.08,
             },
             data: points.map((point) => point.medianPrice),
+            tooltip: {
+              valueFormatter: (value: number) => formatCompactCurrency(value),
+            },
           },
           {
             name: "Transactions",
@@ -93,6 +95,9 @@ export function TrendChart({ points }: TrendChartProps) {
               opacity: 0.55,
             },
             data: points.map((point) => point.transactionCount),
+            tooltip: {
+              valueFormatter: (value: number) => `${value} txns`,
+            },
           },
         ],
       }}

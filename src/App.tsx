@@ -271,6 +271,7 @@ function App() {
 
           <ResultsPane
             blocks={filteredBlocks}
+            hasTownFilter={!!filters.town}
             onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
             onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
             selectedAddressKey={filters.selectedAddressKey}
