@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Clock3, Coins, MapPinned, MoveUpRight, TrainFront, WalletCards } from "lucide-react";
+import { ChevronLeft, Clock3, Coins, MapPinned, MoveUpRight, TrainFront, WalletCards } from "lucide-react";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
 import type { AddressDetail, BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
@@ -56,7 +56,8 @@ export function DetailDrawer({
                   {isSaved ? "Saved to shortlist" : "Add to shortlist"}
                 </Button>
                 <Button onClick={onClose} size="sm" variant="ghost" type="button">
-                  Clear
+                  <ChevronLeft className="size-4 mr-1" />
+                  Back
                 </Button>
               </CardAction>
             ) : null}

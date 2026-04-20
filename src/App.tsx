@@ -321,15 +321,17 @@ function App() {
                 <TabsContent value="results" className="mt-4 flex min-h-0 flex-1 flex-col pr-1">
                   <div className="flex min-h-0 flex-1 flex-col gap-4">
                     {selectedDetailContent}
-                    <ResultsPane
-                      blocks={filteredBlocks}
-                      hasTownFilter={!!filters.town || !!filters.search}
-                      onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                      onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                      selectedAddressKey={filters.selectedAddressKey}
-                      shortlistKeys={shortlistKeySet}
-                      isCompact={false}
-                    />
+                    <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                      <ResultsPane
+                        blocks={filteredBlocks}
+                        hasTownFilter={!!filters.town || !!filters.search}
+                        onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                        onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                        selectedAddressKey={filters.selectedAddressKey}
+                        shortlistKeys={shortlistKeySet}
+                        isCompact={false}
+                      />
+                    </div>
                   </div>
                 </TabsContent>
                 <TabsContent value="saved" className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
@@ -355,15 +357,17 @@ function App() {
             {mobileTab === "results" && (
               <div className="flex flex-col gap-4 min-h-0 flex-1">
                 {selectedDetailContent}
-                <ResultsPane
-                  blocks={filteredBlocks}
-                  hasTownFilter={!!filters.town || !!filters.search}
-                  onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                  onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                  selectedAddressKey={filters.selectedAddressKey}
-                  shortlistKeys={shortlistKeySet}
-                  isCompact={true}
-                />
+                <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                  <ResultsPane
+                    blocks={filteredBlocks}
+                    hasTownFilter={!!filters.town || !!filters.search}
+                    onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                    onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                    selectedAddressKey={filters.selectedAddressKey}
+                    shortlistKeys={shortlistKeySet}
+                    isCompact={true}
+                  />
+                </div>
               </div>
             )}
             {mobileTab === "saved" && (
