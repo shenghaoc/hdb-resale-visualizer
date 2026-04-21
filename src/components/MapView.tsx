@@ -26,6 +26,11 @@ type PopupProperties = {
   transaction_count?: number;
 };
 
+type MrtPopupProperties = {
+  stationName: string | null;
+  lines: unknown;
+};
+
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
@@ -50,6 +55,38 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
+}
+
+function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {
+      stationName: null,
+      lines: null,
+    };
+  }
+
+  const record = properties as Record<string, unknown>;
+  return {
+    stationName: typeof record.stationName === "string" ? record.stationName : null,
+    lines: record.lines ?? null,
+  };
+}
+
+function parseMrtLines(value: unknown): string[] {
+  let parsedValue: unknown = value;
+  if (typeof value === "string") {
+    try {
+      parsedValue = JSON.parse(value) as unknown;
+    } catch {
+      return [];
+    }
+  }
+
+  if (!Array.isArray(parsedValue)) {
+    return [];
+  }
+
+  return parsedValue.filter((line): line is string => typeof line === "string");
 }
 
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
@@ -397,20 +434,12 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const feature = event.features?.[0];
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
-        const props = feature.properties ?? {};
-        const stationName =
-          typeof props.stationName === "string" ? props.stationName : "MRT Station";
-        let linesHtml = "";
-
-        try {
-          const lines: unknown =
-            typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
-          if (Array.isArray(lines)) {
-            linesHtml = `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`;
-          }
-        } catch {
-          linesHtml = "";
-        }
+        const props = toMrtPopupProperties(feature.properties);
+        const stationName = props.stationName ?? "MRT Station";
+        const lines = parseMrtLines(props.lines);
+        const linesHtml = lines.length
+          ? `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`
+          : "";
 
         const [lng, lat] = feature.geometry.coordinates;
 

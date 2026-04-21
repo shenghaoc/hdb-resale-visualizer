@@ -254,14 +254,15 @@ export function ResultsPane({
   }, [blocks, sortMode]);
 
   const totalPages = Math.ceil(sortedBlocks.length / ITEMS_PER_PAGE);
+  const visiblePage = Math.min(currentPage, Math.max(totalPages, 1));
   const currentBlocks = sortedBlocks.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    (visiblePage - 1) * ITEMS_PER_PAGE,
+    visiblePage * ITEMS_PER_PAGE
   );
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
-    let startPage = Math.max(1, currentPage - 2);
+    let startPage = Math.max(1, visiblePage - 2);
     const endPage = Math.min(totalPages, startPage + 4);
     if (endPage - startPage < 4) {
       startPage = Math.max(1, endPage - 4);
@@ -270,7 +271,7 @@ export function ResultsPane({
 
     return (
       <div className="flex flex-wrap items-center justify-center gap-1.5 py-4 border-t border-border/40 mt-4">
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p - 1)} disabled={currentPage === 1}>Prev</Button>
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p - 1)} disabled={visiblePage === 1}>Prev</Button>
         {startPage > 1 && (
           <>
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>1</Button>
@@ -278,7 +279,7 @@ export function ResultsPane({
           </>
         )}
         {pages.map(p => (
-          <Button key={p} variant={p === currentPage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
+          <Button key={p} variant={p === visiblePage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
             {p}
           </Button>
         ))}
@@ -288,7 +289,7 @@ export function ResultsPane({
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>{totalPages}</Button>
           </>
         )}
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage === totalPages}>Next</Button>
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => p + 1)} disabled={visiblePage === totalPages}>Next</Button>
       </div>
     );
   };
