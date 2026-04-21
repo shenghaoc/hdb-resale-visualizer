@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -248,9 +248,11 @@ export function ResultsPane({
     });
   }, [blocks, sortMode]);
 
-  useEffect(() => {
+  const [prevBlocks, setPrevBlocks] = useState(blocks);
+  if (blocks !== prevBlocks) {
+    setPrevBlocks(blocks);
     setCurrentPage(1);
-  }, [blocks]);
+  }
 
   const totalPages = Math.max(1, Math.ceil(sortedBlocks.length / itemsPerPage));
   const visiblePage = Math.min(currentPage, totalPages);
