@@ -293,7 +293,7 @@ function App() {
                   onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 >
                   {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-                  {isDesktopPanelOpen ? t("tab.map") : t("tab.filters")}
+                  {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
                 </button>
               )}
               <Card className="w-fit border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
@@ -327,9 +327,15 @@ function App() {
           </div>
 
           {isDesktop ? (
-            <section className={`pointer-events-none grid min-h-0 flex-1 gap-4 ${isDesktopPanelOpen ? "grid-cols-[minmax(20rem,30rem)_minmax(0,1fr)]" : "grid-cols-[0_minmax(0,1fr)]"}`}>
-              {isDesktopPanelOpen ? (
-                <section className="pointer-events-auto flex min-h-0 flex-col gap-4">
+            <section className="pointer-events-none flex min-h-0 flex-1 gap-4">
+              <section
+                className={`min-h-0 shrink-0 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                  isDesktopPanelOpen
+                    ? "pointer-events-auto w-[min(30rem,42vw)] translate-x-0 opacity-100"
+                    : "pointer-events-none w-0 -translate-x-6 opacity-0"
+                }`}
+              >
+                <div className="flex min-h-0 h-full flex-col gap-4">
                   <Card className="border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
                     <CardContent className="p-3">
                       <GlobalHeader manifest={manifest} />
@@ -372,10 +378,8 @@ function App() {
                       </Tabs>
                     </CardContent>
                   </Card>
-                </section>
-              ) : (
-                <section />
-              )}
+                </div>
+              </section>
               <section />
             </section>
           ) : (
