@@ -303,24 +303,26 @@ export function ResultsPane({
             </div>
             <CardAction className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
               {hasTownFilter ? <Badge>{t("results.shown", { count: blocks.length })}</Badge> : null}
-              <div className="flex min-w-[14rem] items-center gap-3 data-[hidden=true]:hidden" data-hidden={!hasTownFilter}>
-                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  <ArrowUpDown className="size-3.5" />
-                  {t("results.sort")}
-                </span>
-                <Select onValueChange={(value) => setSortMode(value as SortMode)} value={sortMode}>
-                  <SelectTrigger className="w-full sm:w-[15rem]">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sortOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {hasTownFilter ? (
+                <div className="flex min-w-[14rem] items-center gap-3">
+                  <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    <ArrowUpDown className="size-3.5" />
+                    {t("results.sort")}
+                  </span>
+                  <Select onValueChange={(value) => setSortMode(value as SortMode)} value={sortMode}>
+                    <SelectTrigger className="w-full sm:w-[15rem]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sortOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ) : null}
             </CardAction>
           </div>
         </CardHeader>

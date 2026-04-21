@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
@@ -27,7 +27,7 @@ type ShortlistRow = {
   summary: BlockSummary;
 };
 
-type CompareMode = "added" | "median" | "lease" | "mrt" | "target-gap";
+type CompareMode = "median" | "lease" | "mrt" | "target-gap";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -121,7 +121,7 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
-  const rankedRows = [...rows].sort((left, right) => {
+  const rankedRows = useMemo(() => [...rows].sort((left, right) => {
     if (compareMode === "median") {
       return left.summary.medianPrice - right.summary.medianPrice;
     }
@@ -136,28 +136,32 @@ export function ShortlistDrawer({
       return leftDistance - rightDistance;
     }
 
-    if (compareMode === "target-gap") {
-      const leftGap =
-        left.item.targetPrice === null
-          ? Number.POSITIVE_INFINITY
-          : Math.abs(left.item.targetPrice - left.summary.medianPrice);
-      const rightGap =
-        right.item.targetPrice === null
-          ? Number.POSITIVE_INFINITY
-          : Math.abs(right.item.targetPrice - right.summary.medianPrice);
-      return leftGap - rightGap;
-    }
+    const leftGap =
+      left.item.targetPrice === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(left.item.targetPrice - left.summary.medianPrice);
+    const rightGap =
+      right.item.targetPrice === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(right.item.targetPrice - right.summary.medianPrice);
+    return leftGap - rightGap;
+  }), [compareMode, rows]);
 
-    return left.item.addedAt.localeCompare(right.item.addedAt);
-  });
+  const highlights = useMemo(() => {
+    const byMedian = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice);
+    const byLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1]);
+    const byMrt = [...rows].sort((left, right) => {
+      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      return leftDistance - rightDistance;
+    });
 
-  const cheapest = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice)[0] ?? null;
-  const newestLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1])[0] ?? null;
-  const nearestMrt = [...rows].sort((left, right) => {
-    const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-    const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-    return leftDistance - rightDistance;
-  })[0] ?? null;
+    return {
+      cheapest: byMedian[0] ?? null,
+      newestLease: byLease[0] ?? null,
+      nearestMrt: byMrt[0] ?? null,
+    };
+  }, [rows]);
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
@@ -221,15 +225,15 @@ export function ShortlistDrawer({
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Lowest median</span>
-                        <strong>{cheapest ? `${cheapest.summary.block} ${cheapest.summary.streetName}` : "N/A"}</strong>
+                        <strong>{highlights.cheapest ? `${highlights.cheapest.summary.block} ${highlights.cheapest.summary.streetName}` : "N/A"}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Newest lease</span>
-                        <strong>{newestLease ? `${newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                        <strong>{highlights.newestLease ? `${highlights.newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Closest MRT</span>
-                        <strong>{nearestMrt?.summary.nearestMrt ? `${nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                        <strong>{highlights.nearestMrt?.summary.nearestMrt ? `${highlights.nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
                       </div>
                     </CardContent>
                   </Card>

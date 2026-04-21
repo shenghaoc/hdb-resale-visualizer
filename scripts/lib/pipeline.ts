@@ -170,6 +170,19 @@ function getModeYear(values: number[]) {
   return mode;
 }
 
+function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | null | undefined) {
+  if (
+    typeof yearCompleted === "number" &&
+    Number.isFinite(yearCompleted) &&
+    yearCompleted >= 1900 &&
+    yearCompleted <= new Date().getFullYear()
+  ) {
+    return yearCompleted;
+  }
+
+  return getModeYear(leaseYears);
+}
+
 export function parseRemainingLease(value: string | undefined, leaseCommenceDate: number) {
   if (value && value.trim().length > 0) {
     return value.trim();
@@ -318,20 +331,18 @@ export function buildArtifacts({
         { lat: geocode.lat, lng: geocode.lng },
         { lat: exit.lat, lng: exit.lng },
       );
-      const roundedDistance = Math.round(distance);
       const currentDistance = nearestStations.get(exit.stationName);
-      if (currentDistance === undefined || roundedDistance < currentDistance) {
-        nearestStations.set(exit.stationName, roundedDistance);
+      if (currentDistance === undefined || distance < currentDistance) {
+        nearestStations.set(exit.stationName, distance);
       }
     }
     const nearbyMrts = [...nearestStations.entries()]
       .sort((left, right) => left[1] - right[1])
       .slice(0, 3)
-      .map(([stationName, distanceMeters]) => ({ stationName, distanceMeters }));
+      .map(([stationName, distanceMeters]) => ({ stationName, distanceMeters: Math.round(distanceMeters) }));
     const nearestMrt: BlockSummary["nearestMrt"] = nearbyMrts[0] ?? null;
-    const leaseCommenceYear = getModeYear(leaseYears);
-
     const property = propertyByAddress.get(addressKey);
+    const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears, property?.yearCompleted);
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
