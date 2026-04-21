@@ -13,7 +13,6 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
-import { GlobalHeader } from "@/components/StatsBar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -296,10 +295,10 @@ function App() {
                   {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
                 </button>
               )}
-              <Card className="w-fit border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
+              <Card className="max-w-[min(44rem,92vw)] border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
                 <CardHeader className="px-3 py-2">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    <span className="text-foreground">{t("app.mapTitle")}</span>
+                  <div className="flex flex-wrap items-center gap-3 text-xs font-semibold tracking-[0.08em] text-muted-foreground">
+                    <span className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground">{t("app.mapTitle")}</span>
                     <span className="inline-flex items-center gap-2">
                       <span className="inline-block size-2.5 rounded-full bg-[#a9ccff]" />
                       {t("app.lowerMedian")}
@@ -327,60 +326,50 @@ function App() {
           </div>
 
           {isDesktop ? (
-            <section className="pointer-events-none flex min-h-0 flex-1 gap-4">
-              <section
-                className={`min-h-0 shrink-0 overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-                  isDesktopPanelOpen
-                    ? "pointer-events-auto w-[min(30rem,42vw)] translate-x-0 opacity-100"
-                    : "pointer-events-none w-0 -translate-x-6 opacity-0"
+            <section className="pointer-events-none relative min-h-0 flex-1">
+              <aside
+                className={`pointer-events-auto absolute left-0 top-0 h-full w-[min(34rem,48vw)] max-w-[96vw] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                  isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"
                 }`}
               >
-                <div className="flex min-h-0 h-full flex-col gap-4">
-                  <Card className="border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
-                    <CardContent className="p-3">
-                      <GlobalHeader manifest={manifest} />
-                    </CardContent>
-                  </Card>
-                  <Card className="flex min-h-0 flex-1 flex-col border-border/70 bg-background/88 shadow-sm backdrop-blur-sm">
-                    <CardContent className="flex min-h-0 flex-1 flex-col p-3">
-                      <Tabs
-                        value={desktopTab}
-                        onValueChange={(value) => setDesktopTab(value as DesktopTab)}
-                        className="flex h-full flex-col overflow-hidden"
-                      >
-                        <TabsList className="grid w-full shrink-0 grid-cols-3">
-                          <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
-                          <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
-                          <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
-                          {filterContent}
-                        </TabsContent>
-                        <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
-                          <div className="flex min-h-0 flex-1 flex-col gap-4">
-                            {selectedDetailContent}
-                            <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
-                              <ResultsPane
-                                blocks={filteredBlocks}
-                                hasTownFilter={!!filters.town || !!filters.search}
-                                onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                                onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                                selectedAddressKey={filters.selectedAddressKey}
-                                shortlistKeys={shortlistKeySet}
-                                isCompact={false}
-                              />
-                            </div>
+                <Card className="flex h-full min-h-0 flex-col border-border/70 bg-background/88 shadow-sm backdrop-blur-sm">
+                  <CardContent className="flex min-h-0 flex-1 flex-col p-3">
+                    <Tabs
+                      value={desktopTab}
+                      onValueChange={(value) => setDesktopTab(value as DesktopTab)}
+                      className="flex h-full flex-col overflow-hidden"
+                    >
+                      <TabsList className="grid w-full shrink-0 grid-cols-3">
+                        <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
+                        <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
+                        <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                        {filterContent}
+                      </TabsContent>
+                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
+                        <div className="flex min-h-0 flex-1 flex-col gap-4">
+                          {selectedDetailContent}
+                          <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                            <ResultsPane
+                              blocks={filteredBlocks}
+                              hasTownFilter={!!filters.town || !!filters.search}
+                              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                              onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                              selectedAddressKey={filters.selectedAddressKey}
+                              shortlistKeys={shortlistKeySet}
+                              isCompact={false}
+                            />
                           </div>
-                        </TabsContent>
-                        <TabsContent value="saved" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
-                          {savedContent}
-                        </TabsContent>
-                      </Tabs>
-                    </CardContent>
-                  </Card>
-                </div>
-              </section>
-              <section />
+                        </div>
+                      </TabsContent>
+                      <TabsContent value="saved" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                        {savedContent}
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+              </aside>
             </section>
           ) : (
             <section className="pointer-events-none flex min-h-0 flex-1 flex-col">
