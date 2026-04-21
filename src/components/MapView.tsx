@@ -26,6 +26,11 @@ type PopupProperties = {
   transaction_count?: number;
 };
 
+type MrtPopupProperties = {
+  stationName?: string;
+  lines?: string | string[];
+};
+
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
@@ -50,6 +55,41 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
+}
+
+function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
+  if (Array.isArray(lines)) {
+    return lines.filter((line): line is string => typeof line === "string");
+  }
+
+  if (typeof lines !== "string") {
+    return [];
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(lines);
+    return Array.isArray(parsed)
+      ? parsed.filter((line): line is string => typeof line === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {};
+  }
+
+  const record = properties as Record<string, unknown>;
+  const stationName =
+    typeof record.stationName === "string" ? record.stationName : undefined;
+  const lines =
+    typeof record.lines === "string" || Array.isArray(record.lines)
+      ? record.lines
+      : undefined;
+
+  return { stationName, lines };
 }
 
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
@@ -397,16 +437,12 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const feature = event.features?.[0];
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
-        const props = feature.properties ?? {};
+        const props = toMrtPopupProperties(feature.properties);
         const stationName = props.stationName ?? "MRT Station";
-        let linesHtml = "";
-        
-        try {
-          const lines = typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
-          if (Array.isArray(lines)) {
-            linesHtml = `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`;
-          }
-        } catch(e) {}
+        const lines = parseMrtLines(props.lines);
+        const linesHtml = lines.length
+          ? `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`
+          : "";
 
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -482,7 +518,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       ],
       { padding: 60, maxZoom: 15, duration: 1200 }
     );
-  }, [townFilter]);
+  }, [blocks, townFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
