@@ -259,15 +259,12 @@ function App() {
             <CardTitle className="text-xl sm:text-2xl">{t("app.mapTitle")}</CardTitle>
           </div>
           <CardAction>
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block size-2.5 bg-[#d7d0c5]" />
-                {t("app.lowerMedian")}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block size-2.5 bg-[#5a3e2d]" />
-                {t("app.higherMedian")}
-              </span>
+            <div className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <span>{t("results.median")}</span>
+              <span
+                aria-hidden="true"
+                className="h-2 w-16 rounded-full bg-gradient-to-r from-[#d7d0c5] to-[#5a3e2d]"
+              />
             </div>
           </CardAction>
         </div>
@@ -289,20 +286,22 @@ function App() {
 
   const selectedDetailContent =
     selectedAddressKey || isDetailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
-        <DetailDrawer
-          detail={selectedDetail}
-          selectedBlock={selectedBlock}
-          isLoading={isDetailLoading}
-          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-          onClose={() => patchFilters({ selectedAddressKey: null })}
-          onToggleShortlist={() => {
-            if (selectedBlock) {
-              shortlist.toggle(selectedBlock.addressKey);
-            }
-          }}
-        />
-      </Suspense>
+      <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+          <DetailDrawer
+            detail={selectedDetail}
+            selectedBlock={selectedBlock}
+            isLoading={isDetailLoading}
+            isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+            onClose={() => patchFilters({ selectedAddressKey: null })}
+            onToggleShortlist={() => {
+              if (selectedBlock) {
+                shortlist.toggle(selectedBlock.addressKey);
+              }
+            }}
+          />
+        </Suspense>
+      </div>
     ) : null;
 
   const savedContent = (
