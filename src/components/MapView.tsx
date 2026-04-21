@@ -282,7 +282,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "#4b3b31",
+          "circle-color": "#2563eb",
           "circle-radius": [
             "step",
             ["get", "point_count"],
@@ -308,7 +308,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-size": 12,
         },
         paint: {
-          "text-color": "#fffdf8",
+          "text-color": "#eff6ff",
         },
       });
 
@@ -323,13 +323,13 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             ["linear"],
             ["get", "median_price"],
             300000,
-            "#d7d0c5",
+            "#a9ccff",
             600000,
-            "#b59f87",
+            "#60a5fa",
             900000,
-            "#8b694e",
+            "#3b82f6",
             1200000,
-            "#5a3e2d",
+            "#1d4ed8",
           ],
           "circle-radius": [
             "interpolate",
@@ -343,7 +343,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             16,
           ],
           "circle-stroke-width": 1.5,
-          "circle-stroke-color": "#fffdf8",
+          "circle-stroke-color": "#eff6ff",
           "circle-opacity": 0.9,
         },
       });
@@ -365,9 +365,9 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             18,
             36,
           ],
-          "circle-color": "rgba(35, 25, 20, 0.15)",
+          "circle-color": "rgba(29, 78, 216, 0.18)",
           "circle-stroke-width": 3,
-          "circle-stroke-color": "#231914",
+          "circle-stroke-color": "#1e3a8a",
         },
       });
 
@@ -394,8 +394,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-ignore-placement": true,
         },
         paint: {
-          "text-color": "#231914",
-          "text-halo-color": "#fffdf8",
+          "text-color": "#1e3a8a",
+          "text-halo-color": "#eff6ff",
           "text-halo-width": 2,
         },
       });
