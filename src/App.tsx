@@ -13,6 +13,7 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
+import { GlobalHeader } from "@/components/StatsBar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,6 +30,11 @@ const ShortlistDrawer = lazy(() =>
   })),
 );
 
+type LoadedDetail = {
+  addressKey: string;
+  data: AddressDetail | null;
+};
+
 function App() {
   const { locale, setLocale, t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -43,8 +49,8 @@ function App() {
       ...parseFilters(window.location.search),
     };
   });
-  const [detail, setDetail] = useState<AddressDetail | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [detail, setDetail] = useState<LoadedDetail | null>(null);
+  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
@@ -101,7 +107,6 @@ function App() {
     }
 
     let isMounted = true;
-    setIsDetailLoading(true);
 
     void fetchAddressDetail(selectedAddressKey)
       .then((nextDetail) => {
@@ -109,14 +114,14 @@ function App() {
           return;
         }
 
-        setDetail(nextDetail);
+        setDetail({ addressKey: selectedAddressKey, data: nextDetail });
       })
       .catch(() => {
         if (!isMounted) {
           return;
         }
 
-        setDetail(null);
+        setDetail({ addressKey: selectedAddressKey, data: null });
       })
       .finally(() => {
         if (isMounted) {
@@ -129,10 +134,10 @@ function App() {
     };
   }, [selectedAddressKey]);
 
-  // Debounce the search string so every keystroke doesn't trigger 10K-point
-  // map re-renders and GeoJSON source updates.
+  // Debounce search for the map only so list interactions stay in sync with
+  // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  const stableFilters = useMemo(
+  const mapFilters = useMemo(
     () => ({ ...filters, search: debouncedSearch }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
@@ -141,8 +146,12 @@ function App() {
      filters.mrtMax, selectedAddressKey],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
-    [blocks, stableFilters],
+    () => blocks.filter((block) => matchesFilter(block, filters)),
+    [blocks, filters],
+  );
+  const mapFilteredBlocks = useMemo(
+    () => blocks.filter((block) => matchesFilter(block, mapFilters)),
+    [blocks, mapFilters],
   );
   const filterOptions = useMemo(() => getFilterOptions(blocks), [blocks]);
   const shortlistKeySet = useMemo(
@@ -183,8 +192,14 @@ function App() {
     () => getSelectionByAddressKey(blocks, selectedAddressKey),
     [blocks, selectedAddressKey],
   );
+  const selectedDetail =
+    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
 
   function patchFilters(patch: Partial<FilterState>) {
+    if ("selectedAddressKey" in patch) {
+      setIsDetailLoading(Boolean(patch.selectedAddressKey));
+    }
+
     startTransition(() => {
       setFilters((current) => ({ ...current, ...patch }));
     });
@@ -230,7 +245,10 @@ function App() {
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
-      onReset={() => setFilters(DEFAULT_FILTERS)}
+      onReset={() => {
+        setIsDetailLoading(false);
+        setFilters(DEFAULT_FILTERS);
+      }}
       options={filterOptions}
     />
   );
@@ -238,7 +256,7 @@ function App() {
   const mapContent = (
     <Suspense fallback={<MapSkeleton />}>
       <MapView
-        blocks={filteredBlocks}
+        blocks={mapFilteredBlocks}
         onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
         selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
@@ -250,7 +268,7 @@ function App() {
     selectedAddressKey || isDetailLoading ? (
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
-          detail={detail}
+          detail={selectedDetail}
           selectedBlock={selectedBlock}
           isLoading={isDetailLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
@@ -311,6 +329,9 @@ function App() {
                   </div>
                 </CardHeader>
               </Card>
+              <div className="pointer-events-auto hidden lg:block">
+                <GlobalHeader manifest={manifest} />
+              </div>
             </div>
             <div className="pointer-events-auto flex items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
               <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>

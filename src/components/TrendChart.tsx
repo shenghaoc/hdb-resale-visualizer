@@ -10,7 +10,6 @@ import ReactEChartsCore from "echarts-for-react/lib/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
 
-// Register the required components
 echarts.use([
   LineChart,
   BarChart,

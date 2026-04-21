@@ -7,29 +7,55 @@ import {
 } from "@/lib/shortlist";
 import type { ShortlistItem } from "@/types/data";
 
+type InitialShortlistState = {
+  items: ShortlistItem[];
+  shouldClearUrlParam: boolean;
+};
+
+function readInitialShortlist(): InitialShortlistState {
+  if (typeof window === "undefined") {
+    return {
+      items: [],
+      shouldClearUrlParam: false,
+    };
+  }
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const shortlistParam = params.get("shortlist");
+    if (shortlistParam) {
+      const parsed = decodeShortlistFromUrl(shortlistParam);
+      if (parsed.length > 0) {
+        return {
+          items: parsed,
+          shouldClearUrlParam: true,
+        };
+      }
+    }
+  } catch {
+    // Ignore URL parsing errors
+  }
+
+  return {
+    items: loadShortlist(window.localStorage),
+    shouldClearUrlParam: false,
+  };
+}
+
 export function useShortlist() {
-  const [items, setItems] = useState<ShortlistItem[]>([]);
+  const [initialState] = useState(readInitialShortlist);
+  const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
 
   useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const shortlistParam = params.get("shortlist");
-      if (shortlistParam) {
-        const parsed = decodeShortlistFromUrl(shortlistParam);
-        if (parsed.length > 0) {
-          setItems(parsed);
-          const newParams = new URLSearchParams(window.location.search);
-          newParams.delete("shortlist");
-          const newUrl = newParams.size ? `${window.location.pathname}?${newParams.toString()}` : window.location.pathname;
-          window.history.replaceState({}, "", newUrl);
-          return;
-        }
-      }
-    } catch {
-      // Ignore URL parsing errors
+    if (!initialState.shouldClearUrlParam) {
+      return;
     }
-    setItems(loadShortlist(window.localStorage));
-  }, []);
+
+    const newParams = new URLSearchParams(window.location.search);
+    newParams.delete("shortlist");
+    const newUrl = newParams.size ? `${window.location.pathname}?${newParams.toString()}` : window.location.pathname;
+    window.history.replaceState({}, "", newUrl);
+  }, [initialState.shouldClearUrlParam]);
 
   useEffect(() => {
     saveShortlist(window.localStorage, items);
