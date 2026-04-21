@@ -1,21 +1,24 @@
 # GitHub Copilot Instructions
 
-For this repository, `AGENTS.md` is the canonical instruction file.
+Use `AGENTS.md` as the authoritative policy for this repository.
 
-## Mandatory constraints
+## Implementation rules
 
-- Bun-only workflows and scripts.
-- No backend mutation routes.
-- Keep data pipeline heavy lifting in `scripts/sync-data.ts`.
-- Frontend must consume precomputed artifacts from `public/data/`.
-- No runtime core-domain fetches from data.gov.sg or OneMap.
-- Keep OneMap attribution visible.
+- Use Bun only (`bun install`, `bun run ...`).
+- Do not add backend mutation routes or server-side write paths.
+- Keep core domain processing in `scripts/sync-data.ts`.
+- Frontend core data must come from precomputed artifacts in `public/data/`.
+- Do not add runtime core-domain fetching from data.gov.sg or OneMap.
+- Keep OneMap attribution visible whenever the map is rendered.
+- This is not a price prediction product; do not add forecasting features.
 
-## Validation expectations
+## Completion checks
 
-Run and pass:
+Run before submitting changes:
 
 - `bun run typecheck`
 - `bun run lint`
 - `bun run test`
-- `bun run test:e2e` when relevant.
+- `bun run test:e2e` for UI-impacting changes.
+
+If this file conflicts with `AGENTS.md`, follow `AGENTS.md`.
