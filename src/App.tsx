@@ -286,20 +286,22 @@ function App() {
 
   const selectedDetailContent =
     selectedAddressKey || isDetailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
-        <DetailDrawer
-          detail={selectedDetail}
-          selectedBlock={selectedBlock}
-          isLoading={isDetailLoading}
-          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-          onClose={() => patchFilters({ selectedAddressKey: null })}
-          onToggleShortlist={() => {
-            if (selectedBlock) {
-              shortlist.toggle(selectedBlock.addressKey);
-            }
-          }}
-        />
-      </Suspense>
+      <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+          <DetailDrawer
+            detail={selectedDetail}
+            selectedBlock={selectedBlock}
+            isLoading={isDetailLoading}
+            isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+            onClose={() => patchFilters({ selectedAddressKey: null })}
+            onToggleShortlist={() => {
+              if (selectedBlock) {
+                shortlist.toggle(selectedBlock.addressKey);
+              }
+            }}
+          />
+        </Suspense>
+      </div>
     ) : null;
 
   const savedContent = (
