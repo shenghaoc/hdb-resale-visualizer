@@ -27,8 +27,8 @@ type PopupProperties = {
 };
 
 type MrtPopupProperties = {
-  stationName: string | null;
-  lines: unknown;
+  stationName?: string;
+  lines?: string | string[];
 };
 
 type GeoJsonSourceLike = {
@@ -57,36 +57,39 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
   );
 }
 
-function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
-  if (!properties || typeof properties !== "object") {
-    return {
-      stationName: null,
-      lines: null,
-    };
+function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
+  if (Array.isArray(lines)) {
+    return lines.filter((line): line is string => typeof line === "string");
   }
 
-  const record = properties as Record<string, unknown>;
-  return {
-    stationName: typeof record.stationName === "string" ? record.stationName : null,
-    lines: record.lines ?? null,
-  };
-}
-
-function parseMrtLines(value: unknown): string[] {
-  let parsedValue: unknown = value;
-  if (typeof value === "string") {
-    try {
-      parsedValue = JSON.parse(value) as unknown;
-    } catch {
-      return [];
-    }
-  }
-
-  if (!Array.isArray(parsedValue)) {
+  if (typeof lines !== "string") {
     return [];
   }
 
-  return parsedValue.filter((line): line is string => typeof line === "string");
+  try {
+    const parsed: unknown = JSON.parse(lines);
+    return Array.isArray(parsed)
+      ? parsed.filter((line): line is string => typeof line === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {};
+  }
+
+  const record = properties as Record<string, unknown>;
+  const stationName =
+    typeof record.stationName === "string" ? record.stationName : undefined;
+  const lines =
+    typeof record.lines === "string" || Array.isArray(record.lines)
+      ? record.lines
+      : undefined;
+
+  return { stationName, lines };
 }
 
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
