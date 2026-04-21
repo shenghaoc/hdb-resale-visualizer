@@ -132,10 +132,10 @@ function App() {
     };
   }, [selectedAddressKey]);
 
-  // Debounce the search string so every keystroke doesn't trigger 10K-point
-  // map re-renders and GeoJSON source updates.
+  // Debounce search for the map only so list interactions stay in sync with
+  // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  const stableFilters = useMemo(
+  const mapFilters = useMemo(
     () => ({ ...filters, search: debouncedSearch }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
@@ -144,8 +144,12 @@ function App() {
      filters.mrtMax, filters.selectedAddressKey],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
-    [blocks, stableFilters],
+    () => blocks.filter((block) => matchesFilter(block, filters)),
+    [blocks, filters],
+  );
+  const mapFilteredBlocks = useMemo(
+    () => blocks.filter((block) => matchesFilter(block, mapFilters)),
+    [blocks, mapFilters],
   );
   const filterOptions = useMemo(() => getFilterOptions(blocks), [blocks]);
   const shortlistKeySet = useMemo(
@@ -272,7 +276,7 @@ function App() {
         <div className="flex min-h-0 flex-1">
           <Suspense fallback={<MapSkeleton />}>
             <MapView
-              blocks={filteredBlocks}
+              blocks={mapFilteredBlocks}
               onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
               selectedAddressKey={selectedAddressKey}
               townFilter={filters.town}
