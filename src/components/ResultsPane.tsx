@@ -250,7 +250,7 @@ export function ResultsPane({
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [blocks, sortMode]);
+  }, [blocks]);
 
   const totalPages = Math.ceil(sortedBlocks.length / itemsPerPage);
   const currentBlocks = sortedBlocks.slice(
@@ -309,7 +309,13 @@ export function ResultsPane({
                     <ArrowUpDown className="size-3.5" />
                     {t("results.sort")}
                   </span>
-                  <Select onValueChange={(value) => setSortMode(value as SortMode)} value={sortMode}>
+                  <Select
+                    onValueChange={(value) => {
+                      setSortMode(value as SortMode);
+                      setCurrentPage(1);
+                    }}
+                    value={sortMode}
+                  >
                     <SelectTrigger className="w-full sm:w-[15rem]">
                       <SelectValue />
                     </SelectTrigger>
