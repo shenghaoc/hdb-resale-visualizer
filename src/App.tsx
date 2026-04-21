@@ -301,19 +301,19 @@ function App() {
         </div>
 
         <div className="pointer-events-none relative z-10 flex min-h-screen flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-6">
-          <div className="flex items-center justify-between gap-3">
-            <div className="pointer-events-auto flex items-center gap-2">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
               {isDesktop && (
                 <button
                   type="button"
-                  className="inline-flex h-9 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                   onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 >
                   {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
                   {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
                 </button>
               )}
-              <Card className="max-w-[min(44rem,92vw)] border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
+              <Card className="min-w-0 flex-1 basis-full border-border/70 bg-background/85 shadow-sm backdrop-blur-sm sm:basis-[24rem]">
                 <CardHeader className="px-3 py-2">
                   <div className="flex flex-wrap items-center gap-3 text-xs font-semibold tracking-[0.08em] text-muted-foreground">
                     <span className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground">{t("app.mapTitle")}</span>
@@ -328,11 +328,11 @@ function App() {
                   </div>
                 </CardHeader>
               </Card>
-              <div className="pointer-events-auto hidden lg:block">
+              <div className="pointer-events-auto hidden min-w-0 flex-1 basis-[22rem] lg:block">
                 <GlobalHeader manifest={manifest} />
               </div>
             </div>
-            <div className="pointer-events-auto flex items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
+            <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
               <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
               <select
                 id="locale-select"

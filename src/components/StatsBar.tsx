@@ -17,10 +17,10 @@ export function GlobalHeader({
   const { locale, t } = useI18n();
 
   return (
-    <header data-testid={testId}>
-      <Card size="sm" className="overflow-visible border-none bg-background px-0 py-0 shadow-none">
+    <header data-testid={testId} className="w-full min-w-0">
+      <Card size="sm" className="w-full min-w-0 overflow-visible border-none bg-background px-0 py-0 shadow-none">
         <CardHeader className="flex-row items-center justify-between gap-4 px-1 py-1">
-          <div className="flex flex-col">
+          <div className="min-w-0 flex-1">
             <CardTitle className="text-lg font-bold leading-tight tracking-tight sm:text-xl">
               {t("app.title")}
             </CardTitle>
