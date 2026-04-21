@@ -15,7 +15,7 @@ import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
 import { GlobalHeader } from "@/components/StatsBar";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const MapView = lazy(() =>
@@ -235,39 +235,14 @@ function App() {
   );
 
   const mapContent = (
-    <Card className="flex min-h-0 flex-1 flex-col overflow-hidden bg-card">
-      <CardHeader className="gap-4 border-b border-border pb-4">
-        <div className="flex flex-wrap items-start gap-4">
-          <div className="flex flex-1 flex-col gap-1">
-            <CardTitle className="text-xl sm:text-2xl">{t("app.mapTitle")}</CardTitle>
-          </div>
-          <CardAction>
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block size-2.5 bg-[#a9ccff]" />
-                {t("app.lowerMedian")}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="inline-block size-2.5 bg-[#1d4ed8]" />
-                {t("app.higherMedian")}
-              </span>
-            </div>
-          </CardAction>
-        </div>
-      </CardHeader>
-      <CardContent className="flex min-h-0 flex-1 p-4">
-        <div className="flex min-h-0 flex-1">
-          <Suspense fallback={<MapSkeleton />}>
-            <MapView
-              blocks={filteredBlocks}
-              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-              selectedAddressKey={filters.selectedAddressKey}
-              townFilter={filters.town}
-            />
-          </Suspense>
-        </div>
-      </CardContent>
-    </Card>
+    <Suspense fallback={<MapSkeleton />}>
+      <MapView
+        blocks={filteredBlocks}
+        onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+        selectedAddressKey={filters.selectedAddressKey}
+        townFilter={filters.town}
+      />
+    </Suspense>
   );
 
   const selectedDetailContent =
@@ -302,97 +277,117 @@ function App() {
 
   return (
     <>
-      <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-0">
-        <div className="flex items-center justify-end gap-2 text-sm">
-          <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
-          <select
-            id="locale-select"
-            className="rounded-md border border-border bg-background px-2 py-1"
-            value={locale}
-            onChange={(event) => setLocale(event.target.value as typeof locale)}
-          >
-            <option value="en-SG">{t("language.en")}</option>
-            <option value="zh-SG">{t("language.zh")}</option>
-          </select>
+      <main className="relative min-h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          {mapContent}
         </div>
-        {/* Desktop: 2-column grid */}
-        {isDesktop ? (
-          <section className="grid gap-4 lg:grid-cols-[24rem_minmax(0,1fr)] xl:grid-cols-[28rem_minmax(0,1fr)] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
-            <section className="flex min-w-0 min-h-0 flex-col pr-1 pt-1 gap-4 lg:max-h-full lg:overflow-hidden lg:pb-6">
-              <GlobalHeader manifest={manifest} />
-              <Tabs 
-                value={desktopTab}
-                onValueChange={(value) => setDesktopTab(value as DesktopTab)}
-                className="flex flex-col h-full overflow-hidden"
-              >
-                <TabsList className="grid w-full grid-cols-3 shrink-0">
-                  <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
-                  <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
-                  <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
-                </TabsList>
-                <TabsContent value="filters" className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
-                  {filterContent}
-                </TabsContent>
-                <TabsContent value="results" className="mt-4 flex min-h-0 flex-1 flex-col pr-1">
-                  <div className="flex min-h-0 flex-1 flex-col gap-4">
-                    {selectedDetailContent}
-                    <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
-                      <ResultsPane
-                        blocks={filteredBlocks}
-                        hasTownFilter={!!filters.town || !!filters.search}
-                        onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                        onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                        selectedAddressKey={filters.selectedAddressKey}
-                        shortlistKeys={shortlistKeySet}
-                        isCompact={false}
-                      />
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="saved" className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
-                  {savedContent}
-                </TabsContent>
-              </Tabs>
-            </section>
 
-            <section className="flex min-w-0 min-h-0 flex-1 flex-col gap-4 lg:max-h-full lg:overflow-hidden lg:pb-6">
-              {mapContent}
-            </section>
-          </section>
-        ) : (
-          <section className="flex flex-col gap-4 min-h-0 flex-1">
-            <GlobalHeader manifest={manifest} />
-            {/* Mobile: tab-switched content */}
-            {mobileTab === "map" && (
-              <div className="flex flex-col gap-4">
-                {mapContent}
-              </div>
-            )}
-            {mobileTab === "filters" && filterContent}
-            {mobileTab === "results" && (
-              <div className="flex flex-col gap-4 min-h-0 flex-1">
-                {selectedDetailContent}
-                <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
-                  <ResultsPane
-                    blocks={filteredBlocks}
-                    hasTownFilter={!!filters.town || !!filters.search}
-                    onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-                    onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                    selectedAddressKey={filters.selectedAddressKey}
-                    shortlistKeys={shortlistKeySet}
-                    isCompact={true}
-                  />
+        <div className="pointer-events-none relative z-10 flex min-h-screen flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-6">
+          <div className="flex items-center justify-between gap-3">
+            <Card className="pointer-events-auto w-fit border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
+              <CardHeader className="px-3 py-2">
+                <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <span className="text-foreground">{t("app.mapTitle")}</span>
+                  <span className="inline-flex items-center gap-2">
+                    <span className="inline-block size-2.5 rounded-full bg-[#a9ccff]" />
+                    {t("app.lowerMedian")}
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <span className="inline-block size-2.5 rounded-full bg-[#1d4ed8]" />
+                    {t("app.higherMedian")}
+                  </span>
                 </div>
-              </div>
-            )}
-            {mobileTab === "saved" && (
-              <div className="flex flex-col gap-4">
-                {savedContent}
-              </div>
-            )}
-          </section>
-        )}
+              </CardHeader>
+            </Card>
+            <div className="pointer-events-auto flex items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
+              <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
+              <select
+                id="locale-select"
+                className="rounded-md border border-border bg-background px-2 py-1"
+                value={locale}
+                onChange={(event) => setLocale(event.target.value as typeof locale)}
+              >
+                <option value="en-SG">{t("language.en")}</option>
+                <option value="zh-SG">{t("language.zh")}</option>
+              </select>
+            </div>
+          </div>
 
+          {isDesktop ? (
+            <section className="pointer-events-none grid min-h-0 flex-1 grid-cols-[minmax(20rem,30rem)_minmax(0,1fr)] gap-4">
+              <section className="pointer-events-auto flex min-h-0 flex-col gap-4">
+                <Card className="border-border/70 bg-background/85 shadow-sm backdrop-blur-sm">
+                  <CardContent className="p-3">
+                    <GlobalHeader manifest={manifest} />
+                  </CardContent>
+                </Card>
+                <Card className="flex min-h-0 flex-1 flex-col border-border/70 bg-background/88 shadow-sm backdrop-blur-sm">
+                  <CardContent className="flex min-h-0 flex-1 flex-col p-3">
+                    <Tabs
+                      value={desktopTab}
+                      onValueChange={(value) => setDesktopTab(value as DesktopTab)}
+                      className="flex h-full flex-col overflow-hidden"
+                    >
+                      <TabsList className="grid w-full shrink-0 grid-cols-3">
+                        <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
+                        <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
+                        <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                        {filterContent}
+                      </TabsContent>
+                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
+                        <div className="flex min-h-0 flex-1 flex-col gap-4">
+                          {selectedDetailContent}
+                          <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                            <ResultsPane
+                              blocks={filteredBlocks}
+                              hasTownFilter={!!filters.town || !!filters.search}
+                              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                              onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                              selectedAddressKey={filters.selectedAddressKey}
+                              shortlistKeys={shortlistKeySet}
+                              isCompact={false}
+                            />
+                          </div>
+                        </div>
+                      </TabsContent>
+                      <TabsContent value="saved" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                        {savedContent}
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+              </section>
+              <section />
+            </section>
+          ) : (
+            <section className="pointer-events-none flex min-h-0 flex-1 flex-col">
+              {mobileTab !== "map" && (
+                <div className="pointer-events-auto max-h-[calc(100vh-10rem)] overflow-y-auto rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
+                  {mobileTab === "filters" && filterContent}
+                  {mobileTab === "results" && (
+                    <div className="flex flex-col gap-4">
+                      {selectedDetailContent}
+                      <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                        <ResultsPane
+                          blocks={filteredBlocks}
+                          hasTownFilter={!!filters.town || !!filters.search}
+                          onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                          onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+                          selectedAddressKey={filters.selectedAddressKey}
+                          shortlistKeys={shortlistKeySet}
+                          isCompact={true}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {mobileTab === "saved" && savedContent}
+                </div>
+              )}
+            </section>
+          )}
+        </div>
       </main>
 
       {/* Mobile bottom tab bar */}
