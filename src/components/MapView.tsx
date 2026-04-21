@@ -182,7 +182,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "circle-stroke-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
-            ["coalesce", ["get", "color"], "#2563eb"],
+            "#111827",
             "#fff"
           ],
         },
@@ -201,7 +201,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
-            ["coalesce", ["get", "color"], "#2563eb"],
+            "#111827",
             "#fff"
           ],
         },
@@ -219,7 +219,50 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-anchor": "top",
         },
         paint: {
-          "text-color": ["coalesce", ["get", "color"], "#1e40af"],
+          "text-color": [
+            "case",
+            ["==", ["get", "isInterchange"], true],
+            "#111827",
+            ["coalesce", ["get", "color"], "#1e40af"]
+          ],
+          "text-halo-color": "#fff",
+          "text-halo-width": 1.5,
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-interchange-lines",
+        type: "symbol",
+        source: "mrt-stations",
+        minzoom: 12,
+        filter: ["==", ["get", "isInterchange"], true],
+        layout: {
+          "text-field": [
+            "case",
+            [">=", ["length", ["get", "lines"]], 3],
+            [
+              "concat",
+              ["at", 0, ["get", "lines"]],
+              "/",
+              ["at", 1, ["get", "lines"]],
+              "/",
+              ["at", 2, ["get", "lines"]],
+            ],
+            [">=", ["length", ["get", "lines"]], 2],
+            [
+              "concat",
+              ["at", 0, ["get", "lines"]],
+              "/",
+              ["at", 1, ["get", "lines"]],
+            ],
+            ["at", 0, ["get", "lines"]],
+          ],
+          "text-size": 9,
+          "text-offset": [0, -1.3],
+          "text-anchor": "bottom",
+        },
+        paint: {
+          "text-color": "#111827",
           "text-halo-color": "#fff",
           "text-halo-width": 1.5,
         },
