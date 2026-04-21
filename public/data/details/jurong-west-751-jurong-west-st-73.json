@@ -4,18 +4,19 @@
     "town": "JURONG WEST",
     "block": "751",
     "streetName": "JURONG WEST ST 73",
+    "displayName": "GEK POH VILLE",
     "coordinates": {
       "lat": 1.34760958144611,
       "lng": 103.699227740175
     },
     "medianPrice": 523000,
     "priceIqr": [
-      518000,
-      570000
+      514000,
+      565000
     ],
-    "pricePerSqmMedian": 5028.85,
-    "pricePerSqftMedian": 467.2,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 4980.77,
+    "pricePerSqftMedian": 462.73,
+    "transactionCount": 7,
     "floorAreaRange": [
       104,
       122
@@ -24,10 +25,10 @@
       1992,
       1992
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -517,11 +518,43 @@
       "medianPrice": 575000,
       "transactionCount": 1,
       "medianPricePerSqm": 5528.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 535000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 4747.01
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-751-jurong-west-st-73-2026-02-225104",
+      "id": "jurong-west-751-jurong-west-st-73-2026-04-225160",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1992,
+      "remainingLease": "65 years 05 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 4903.85,
+      "pricePerSqft": 455.58
+    },
+    {
+      "id": "jurong-west-751-jurong-west-st-73-2026-04-225312",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1992,
+      "remainingLease": "65 years 05 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 4590.16,
+      "pricePerSqft": 426.44
+    },
+    {
+      "id": "jurong-west-751-jurong-west-st-73-2026-02-225158",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -753,32 +786,6 @@
       "resalePrice": 378000,
       "pricePerSqm": 3098.36,
       "pricePerSqft": 287.85
-    },
-    {
-      "id": "jurong-west-751-jurong-west-st-73-2019-04-47420",
-      "month": "2019-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1992,
-      "remainingLease": "72 years 04 months",
-      "resalePrice": 338000,
-      "pricePerSqm": 3250,
-      "pricePerSqft": 301.94
-    },
-    {
-      "id": "jurong-west-751-jurong-west-st-73-2019-02-44213",
-      "month": "2019-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1992,
-      "remainingLease": "72 years 07 months",
-      "resalePrice": 321000,
-      "pricePerSqm": 3086.54,
-      "pricePerSqft": 286.75
     }
   ]
 }

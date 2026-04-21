@@ -4,18 +4,19 @@
     "town": "BEDOK",
     "block": "724",
     "streetName": "BEDOK RESERVOIR RD",
+    "displayName": "RESERVOIR VIEW",
     "coordinates": {
       "lat": 1.33714403979137,
       "lng": 103.928433830286
     },
-    "medianPrice": 576000,
+    "medianPrice": 582000,
     "priceIqr": [
       570000,
-      603000
+      612500
     ],
-    "pricePerSqmMedian": 5539.53,
-    "pricePerSqftMedian": 514.64,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 5650.49,
+    "pricePerSqftMedian": 524.95,
+    "transactionCount": 7,
     "floorAreaRange": [
       103,
       108
@@ -728,14 +729,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 570000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5428.57
+      "medianPrice": 592500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5642.85
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-724-bedok-reservoir-rd-2026-04-222553",
+      "id": "bedok-724-bedok-reservoir-rd-2026-04-222559",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -748,7 +749,20 @@
       "pricePerSqft": 504.33
     },
     {
-      "id": "bedok-724-bedok-reservoir-rd-2026-03-222551",
+      "id": "bedok-724-bedok-reservoir-rd-2026-04-222566",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 04 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 5857.14,
+      "pricePerSqft": 544.15
+    },
+    {
+      "id": "bedok-724-bedok-reservoir-rd-2026-03-222557",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -980,19 +994,6 @@
       "resalePrice": 443288,
       "pricePerSqm": 4221.79,
       "pricePerSqft": 392.22
-    },
-    {
-      "id": "bedok-724-bedok-reservoir-rd-2019-09-56613",
-      "month": "2019-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 103,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "63 years 10 months",
-      "resalePrice": 410000,
-      "pricePerSqm": 3980.58,
-      "pricePerSqft": 369.81
     }
   ]
 }

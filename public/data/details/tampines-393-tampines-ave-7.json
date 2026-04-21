@@ -4,18 +4,19 @@
     "town": "TAMPINES",
     "block": "393",
     "streetName": "TAMPINES AVE 7",
+    "displayName": null,
     "coordinates": {
       "lat": 1.35519248677247,
       "lng": 103.956968778244
     },
-    "medianPrice": 768000,
+    "medianPrice": 788000,
     "priceIqr": [
-      740000,
-      830000
+      747000,
+      824500
     ],
-    "pricePerSqmMedian": 6380.95,
-    "pricePerSqftMedian": 592.81,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6458.19,
+    "pricePerSqftMedian": 599.98,
+    "transactionCount": 6,
     "floorAreaRange": [
       104,
       128
@@ -24,10 +25,10 @@
       1994,
       1994
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1998-09",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -379,9 +380,28 @@
       "medianPrice": 850000,
       "transactionCount": 1,
       "medianPricePerSqm": 6640.63
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 808000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6677.69
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-393-tampines-ave-7-2026-04-227781",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "67 years 08 months",
+      "resalePrice": 808000,
+      "pricePerSqm": 6677.69,
+      "pricePerSqft": 620.38
+    },
     {
       "id": "tampines-393-tampines-ave-7-2025-12-216965",
       "month": "2025-12",
@@ -513,7 +533,7 @@
       "pricePerSqft": 391.36
     },
     {
-      "id": "tampines-393-tampines-ave-7-2015-11-954283",
+      "id": "tampines-393-tampines-ave-7-2015-11-954410",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -526,7 +546,7 @@
       "pricePerSqft": 343.92
     },
     {
-      "id": "tampines-393-tampines-ave-7-2015-04-943271",
+      "id": "tampines-393-tampines-ave-7-2015-04-943398",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -539,7 +559,7 @@
       "pricePerSqft": 362.83
     },
     {
-      "id": "tampines-393-tampines-ave-7-2014-12-650759",
+      "id": "tampines-393-tampines-ave-7-2014-12-650886",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -552,7 +572,7 @@
       "pricePerSqft": 380.39
     },
     {
-      "id": "tampines-393-tampines-ave-7-2014-02-636726",
+      "id": "tampines-393-tampines-ave-7-2014-02-636853",
       "month": "2014-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -565,7 +585,7 @@
       "pricePerSqft": 398.16
     },
     {
-      "id": "tampines-393-tampines-ave-7-2013-05-625632",
+      "id": "tampines-393-tampines-ave-7-2013-05-625759",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -578,7 +598,7 @@
       "pricePerSqft": 416.97
     },
     {
-      "id": "tampines-393-tampines-ave-7-2012-09-613267",
+      "id": "tampines-393-tampines-ave-7-2012-09-613394",
       "month": "2012-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -591,7 +611,7 @@
       "pricePerSqft": 388.5
     },
     {
-      "id": "tampines-393-tampines-ave-7-2011-09-590309",
+      "id": "tampines-393-tampines-ave-7-2011-09-590436",
       "month": "2011-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -604,7 +624,7 @@
       "pricePerSqft": 373.08
     },
     {
-      "id": "tampines-393-tampines-ave-7-2010-06-555614",
+      "id": "tampines-393-tampines-ave-7-2010-06-555741",
       "month": "2010-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -617,7 +637,7 @@
       "pricePerSqft": 286.08
     },
     {
-      "id": "tampines-393-tampines-ave-7-2008-12-507566",
+      "id": "tampines-393-tampines-ave-7-2008-12-507693",
       "month": "2008-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -628,19 +648,6 @@
       "resalePrice": 383000,
       "pricePerSqm": 3015.75,
       "pricePerSqft": 280.17
-    },
-    {
-      "id": "tampines-393-tampines-ave-7-2008-01-482534",
-      "month": "2008-01",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 128,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1994,
-      "remainingLease": "67 years",
-      "resalePrice": 395000,
-      "pricePerSqm": 3085.94,
-      "pricePerSqft": 286.69
     }
   ]
 }

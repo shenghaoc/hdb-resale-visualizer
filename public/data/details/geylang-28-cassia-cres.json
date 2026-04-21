@@ -4,18 +4,19 @@
     "town": "GEYLANG",
     "block": "28",
     "streetName": "CASSIA CRES",
+    "displayName": null,
     "coordinates": {
       "lat": 1.30894452962256,
       "lng": 103.883530101124
     },
-    "medianPrice": 1050000,
+    "medianPrice": 1000000,
     "priceIqr": [
-      940000,
-      1130000
+      932500,
+      1122500
     ],
-    "pricePerSqmMedian": 9306.93,
-    "pricePerSqftMedian": 864.64,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 9236.8,
+    "pricePerSqftMedian": 858.13,
+    "transactionCount": 10,
     "floorAreaRange": [
       101,
       120
@@ -24,10 +25,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-04",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -529,9 +530,28 @@
       "medianPrice": 1057500,
       "transactionCount": 2,
       "medianPricePerSqm": 9467
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 930000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9117.65
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-28-cassia-cres-2026-04-224363",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 03 months",
+      "resalePrice": 930000,
+      "pricePerSqm": 9117.65,
+      "pricePerSqft": 847.06
+    },
     {
       "id": "geylang-28-cassia-cres-2025-10-204724",
       "month": "2025-10",
@@ -778,19 +798,6 @@
       "resalePrice": 790000,
       "pricePerSqm": 7821.78,
       "pricePerSqft": 726.67
-    },
-    {
-      "id": "geylang-28-cassia-cres-2021-10-110019",
-      "month": "2021-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 102,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "75 years 09 months",
-      "resalePrice": 758888,
-      "pricePerSqm": 7440.08,
-      "pricePerSqft": 691.21
     }
   ]
 }

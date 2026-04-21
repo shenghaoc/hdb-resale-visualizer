@@ -4,18 +4,19 @@
     "town": "BISHAN",
     "block": "153",
     "streetName": "BISHAN ST 13",
+    "displayName": null,
     "coordinates": {
       "lat": 1.34608595890118,
       "lng": 103.855078297214
     },
-    "medianPrice": 884000,
+    "medianPrice": 880000,
     "priceIqr": [
-      703000,
-      934500
+      646400,
+      919000
     ],
-    "pricePerSqmMedian": 7469.18,
-    "pricePerSqftMedian": 693.91,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 7476.19,
+    "pricePerSqftMedian": 694.56,
+    "transactionCount": 7,
     "floorAreaRange": [
       84,
       130
@@ -743,14 +744,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 954000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 7612.52
+      "medianPrice": 950000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7723.81
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-153-bishan-st-13-2026-04-222756",
+      "id": "bishan-153-bishan-st-13-2026-04-222724",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 07 months",
+      "resalePrice": 648800,
+      "pricePerSqm": 7723.81,
+      "pricePerSqft": 717.57
+    },
+    {
+      "id": "bishan-153-bishan-st-13-2026-04-222769",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -763,7 +777,7 @@
       "pricePerSqft": 735.55
     },
     {
-      "id": "bishan-153-bishan-st-13-2026-04-222757",
+      "id": "bishan-153-bishan-st-13-2026-04-222770",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -995,19 +1009,6 @@
       "resalePrice": 660000,
       "pricePerSqm": 5454.55,
       "pricePerSqft": 506.74
-    },
-    {
-      "id": "bishan-153-bishan-st-13-2020-11-83063",
-      "month": "2020-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "66 years",
-      "resalePrice": 627000,
-      "pricePerSqm": 5181.82,
-      "pricePerSqft": 481.41
     }
   ]
 }

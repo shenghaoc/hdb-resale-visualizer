@@ -4,18 +4,19 @@
     "town": "JURONG WEST",
     "block": "945",
     "streetName": "JURONG WEST ST 91",
+    "displayName": null,
     "coordinates": {
       "lat": 1.34423929257627,
       "lng": 103.690130101882
     },
     "medianPrice": 510000,
     "priceIqr": [
-      507000,
-      527500
+      510000,
+      535000
     ],
-    "pricePerSqmMedian": 4775.2,
-    "pricePerSqftMedian": 443.63,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 4715.45,
+    "pricePerSqftMedian": 438.08,
+    "transactionCount": 5,
     "floorAreaRange": [
       94,
       123
@@ -24,10 +25,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-02",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -614,9 +615,28 @@
       "medianPrice": 510000,
       "transactionCount": 2,
       "medianPricePerSqm": 4685.2
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 535000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4349.59
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-945-jurong-west-st-91-2026-04-225334",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 04 months",
+      "resalePrice": 535000,
+      "pricePerSqm": 4349.59,
+      "pricePerSqft": 404.09
+    },
     {
       "id": "jurong-west-945-jurong-west-st-91-2025-11-207685",
       "month": "2025-11",
@@ -800,7 +820,7 @@
       "pricePerSqft": 295.33
     },
     {
-      "id": "jurong-west-945-jurong-west-st-91-2016-06-964576",
+      "id": "jurong-west-945-jurong-west-st-91-2016-06-964703",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -813,7 +833,7 @@
       "pricePerSqft": 307.91
     },
     {
-      "id": "jurong-west-945-jurong-west-st-91-2015-11-953757",
+      "id": "jurong-west-945-jurong-west-st-91-2015-11-953884",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -826,7 +846,7 @@
       "pricePerSqft": 306.14
     },
     {
-      "id": "jurong-west-945-jurong-west-st-91-2015-11-953766",
+      "id": "jurong-west-945-jurong-west-st-91-2015-11-953893",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -839,7 +859,7 @@
       "pricePerSqft": 297.96
     },
     {
-      "id": "jurong-west-945-jurong-west-st-91-2015-11-953774",
+      "id": "jurong-west-945-jurong-west-st-91-2015-11-953901",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -852,7 +872,7 @@
       "pricePerSqft": 329.22
     },
     {
-      "id": "jurong-west-945-jurong-west-st-91-2015-08-949065",
+      "id": "jurong-west-945-jurong-west-st-91-2015-08-949192",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -863,19 +883,6 @@
       "resalePrice": 340000,
       "pricePerSqm": 3238.1,
       "pricePerSqft": 300.83
-    },
-    {
-      "id": "jurong-west-945-jurong-west-st-91-2015-05-944326",
-      "month": "2015-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 123,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "73",
-      "resalePrice": 406000,
-      "pricePerSqm": 3300.81,
-      "pricePerSqft": 306.66
     }
   ]
 }

@@ -4,18 +4,19 @@
     "town": "WOODLANDS",
     "block": "621",
     "streetName": "WOODLANDS DR 52",
+    "displayName": null,
     "coordinates": {
       "lat": 1.43411191997483,
       "lng": 103.798080046893
     },
-    "medianPrice": 592500,
+    "medianPrice": 615000,
     "priceIqr": [
-      562500,
-      622500
+      565000,
+      623944
     ],
-    "pricePerSqmMedian": 5286.33,
-    "pricePerSqftMedian": 491.12,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 5229.51,
+    "pricePerSqftMedian": 485.84,
+    "transactionCount": 7,
     "floorAreaRange": [
       101,
       122
@@ -556,14 +557,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 625000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5122.95
+      "medianPrice": 623944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5114.3
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-621-woodlands-dr-52-2026-04-228553",
+      "id": "woodlands-621-woodlands-dr-52-2026-04-228672",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -576,7 +577,20 @@
       "pricePerSqft": 475.94
     },
     {
-      "id": "woodlands-621-woodlands-dr-52-2026-02-228364",
+      "id": "woodlands-621-woodlands-dr-52-2026-04-228673",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 03 months",
+      "resalePrice": 622888,
+      "pricePerSqm": 5105.64,
+      "pricePerSqft": 474.33
+    },
+    {
+      "id": "woodlands-621-woodlands-dr-52-2026-02-228480",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -808,19 +822,6 @@
       "resalePrice": 418888,
       "pricePerSqm": 3433.51,
       "pricePerSqft": 318.98
-    },
-    {
-      "id": "woodlands-621-woodlands-dr-52-2019-03-46427",
-      "month": "2019-03",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "78 years 04 months",
-      "resalePrice": 398000,
-      "pricePerSqm": 3262.3,
-      "pricePerSqft": 303.08
     }
   ]
 }

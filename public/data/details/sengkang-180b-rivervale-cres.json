@@ -4,18 +4,19 @@
     "town": "SENGKANG",
     "block": "180B",
     "streetName": "RIVERVALE CRES",
+    "displayName": "RIVERVALE ARC",
     "coordinates": {
       "lat": 1.38994718706066,
       "lng": 103.909449885028
     },
-    "medianPrice": 406500,
+    "medianPrice": 445000,
     "priceIqr": [
-      359972,
-      460500
+      365000,
+      462000
     ],
-    "pricePerSqmMedian": 7131.19,
-    "pricePerSqftMedian": 662.51,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 7222.21,
+    "pricePerSqftMedian": 670.97,
+    "transactionCount": 9,
     "floorAreaRange": [
       47,
       67
@@ -24,10 +25,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2018-05",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -283,9 +284,28 @@
       "medianPrice": 368000,
       "transactionCount": 1,
       "medianPricePerSqm": 7829.79
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 516888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7714.75
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-180b-rivervale-cres-2026-04-226877",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years",
+      "resalePrice": 516888,
+      "pricePerSqm": 7714.75,
+      "pricePerSqft": 716.72
+    },
     {
       "id": "sengkang-180b-rivervale-cres-2025-10-213378",
       "month": "2025-10",
@@ -532,19 +552,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 7021.28,
       "pricePerSqft": 652.3
-    },
-    {
-      "id": "sengkang-180b-rivervale-cres-2023-02-160707",
-      "month": "2023-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "91 years 01 month",
-      "resalePrice": 435000,
-      "pricePerSqm": 6492.54,
-      "pricePerSqft": 603.18
     }
   ]
 }

@@ -4,18 +4,19 @@
     "town": "BUKIT BATOK",
     "block": "289D",
     "streetName": "BT BATOK ST 25",
+    "displayName": "NATURE VIEW",
     "coordinates": {
       "lat": 1.34340161151855,
       "lng": 103.759188534241
     },
-    "medianPrice": 735000,
+    "medianPrice": 745444,
     "priceIqr": [
-      735000,
-      735000
+      740222,
+      750666
     ],
-    "pricePerSqmMedian": 6074.38,
-    "pricePerSqftMedian": 564.33,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 6160.69,
+    "pricePerSqftMedian": 572.35,
+    "transactionCount": 2,
     "floorAreaRange": [
       119,
       165
@@ -24,10 +25,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-07",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM",
@@ -493,9 +494,28 @@
       "medianPrice": 735000,
       "transactionCount": 1,
       "medianPricePerSqm": 6074.38
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 755888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6247.01
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-batok-289d-bt-batok-st-25-2026-04-223120",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 09 months",
+      "resalePrice": 755888,
+      "pricePerSqm": 6247.01,
+      "pricePerSqft": 580.37
+    },
     {
       "id": "bukit-batok-289d-bt-batok-st-25-2025-10-200575",
       "month": "2025-10",
@@ -742,19 +762,6 @@
       "resalePrice": 528000,
       "pricePerSqm": 4363.64,
       "pricePerSqft": 405.4
-    },
-    {
-      "id": "bukit-batok-289d-bt-batok-st-25-2018-07-30569",
-      "month": "2018-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "78 years 05 months",
-      "resalePrice": 538000,
-      "pricePerSqm": 4446.28,
-      "pricePerSqft": 413.07
     }
   ]
 }

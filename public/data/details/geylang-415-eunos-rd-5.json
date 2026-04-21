@@ -4,18 +4,19 @@
     "town": "GEYLANG",
     "block": "415",
     "streetName": "EUNOS RD 5",
+    "displayName": null,
     "coordinates": {
       "lat": 1.31822661859534,
       "lng": 103.897854941374
     },
-    "medianPrice": 958888,
+    "medianPrice": 998444,
     "priceIqr": [
-      958888,
-      958888
+      978666,
+      1018222
     ],
-    "pricePerSqmMedian": 6849.2,
-    "pricePerSqftMedian": 636.31,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 7131.74,
+    "pricePerSqftMedian": 662.56,
+    "transactionCount": 2,
     "floorAreaRange": [
       102,
       142
@@ -24,10 +25,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -553,9 +554,28 @@
       "medianPrice": 958888,
       "transactionCount": 1,
       "medianPricePerSqm": 6849.2
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1038000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7414.29
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-415-eunos-rd-5-2026-04-224443",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 140,
+      "flatModel": "MODEL A-MAISONETTE",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 06 months",
+      "resalePrice": 1038000,
+      "pricePerSqm": 7414.29,
+      "pricePerSqft": 688.81
+    },
     {
       "id": "geylang-415-eunos-rd-5-2025-08-204950",
       "month": "2025-08",
@@ -802,19 +822,6 @@
       "resalePrice": 535000,
       "pricePerSqm": 5000,
       "pricePerSqft": 464.52
-    },
-    {
-      "id": "geylang-415-eunos-rd-5-2018-02-21952",
-      "month": "2018-02",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 142,
-      "flatModel": "MODEL A-MAISONETTE",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "65 years 08 months",
-      "resalePrice": 780000,
-      "pricePerSqm": 5492.96,
-      "pricePerSqft": 510.31
     }
   ]
 }

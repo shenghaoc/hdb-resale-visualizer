@@ -4,18 +4,19 @@
     "town": "SENGKANG",
     "block": "416A",
     "streetName": "FERNVALE LINK",
+    "displayName": "FERNVALE RIVERBOW",
     "coordinates": {
       "lat": 1.3906119627657,
       "lng": 103.879963560438
     },
-    "medianPrice": 723000,
+    "medianPrice": 780000,
     "priceIqr": [
-      647500,
+      650000,
       808000
     ],
-    "pricePerSqmMedian": 7060.99,
-    "pricePerSqftMedian": 655.99,
-    "transactionCount": 12,
+    "pricePerSqmMedian": 7079.65,
+    "pricePerSqftMedian": 657.72,
+    "transactionCount": 13,
     "floorAreaRange": [
       93,
       113
@@ -24,10 +25,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-02",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -259,11 +260,30 @@
       "medianPrice": 726900,
       "transactionCount": 2,
       "medianPricePerSqm": 7040.6
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7079.65
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-416a-fernvale-link-2026-03-226926",
+      "id": "sengkang-416a-fernvale-link-2026-04-227230",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "88 years 10 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 7079.65,
+      "pricePerSqft": 657.72
+    },
+    {
+      "id": "sengkang-416a-fernvale-link-2026-03-227009",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -276,7 +296,7 @@
       "pricePerSqft": 638.13
     },
     {
-      "id": "sengkang-416a-fernvale-link-2026-03-227140",
+      "id": "sengkang-416a-fernvale-link-2026-03-227227",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -508,19 +528,6 @@
       "resalePrice": 560000,
       "pricePerSqm": 6021.51,
       "pricePerSqft": 559.42
-    },
-    {
-      "id": "sengkang-416a-fernvale-link-2022-06-135388",
-      "month": "2022-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 113,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "92 years 08 months",
-      "resalePrice": 678000,
-      "pricePerSqm": 6000,
-      "pricePerSqft": 557.42
     }
   ]
 }
