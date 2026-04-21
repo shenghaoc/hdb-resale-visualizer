@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
@@ -25,6 +26,8 @@ type ShortlistRow = {
   item: ShortlistItem;
   summary: BlockSummary;
 };
+
+type CompareMode = "added" | "median" | "lease" | "mrt" | "target-gap";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -77,6 +80,8 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
 }: ShortlistDrawerProps) {
+  const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
@@ -116,6 +121,44 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
+  const rankedRows = [...rows].sort((left, right) => {
+    if (compareMode === "median") {
+      return left.summary.medianPrice - right.summary.medianPrice;
+    }
+
+    if (compareMode === "lease") {
+      return right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1];
+    }
+
+    if (compareMode === "mrt") {
+      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      return leftDistance - rightDistance;
+    }
+
+    if (compareMode === "target-gap") {
+      const leftGap =
+        left.item.targetPrice === null
+          ? Number.POSITIVE_INFINITY
+          : Math.abs(left.item.targetPrice - left.summary.medianPrice);
+      const rightGap =
+        right.item.targetPrice === null
+          ? Number.POSITIVE_INFINITY
+          : Math.abs(right.item.targetPrice - right.summary.medianPrice);
+      return leftGap - rightGap;
+    }
+
+    return left.item.addedAt.localeCompare(right.item.addedAt);
+  });
+
+  const cheapest = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice)[0] ?? null;
+  const newestLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1])[0] ?? null;
+  const nearestMrt = [...rows].sort((left, right) => {
+    const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+    const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+    return leftDistance - rightDistance;
+  })[0] ?? null;
+
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col bg-background">
@@ -132,20 +175,36 @@ export function ShortlistDrawer({
             </CardAction>
           </div>
           {rows.length > 0 ? (
-            <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-              <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
-                <Download data-icon="inline-start" />
-                JSON
-              </Button>
-              <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                <Download data-icon="inline-start" />
-                CSV
-              </Button>
-              <Button variant="outline" size="xs" onClick={handleShare} type="button">
-                <Link2 data-icon="inline-start" />
-                Share link
-              </Button>
-            </ButtonGroup>
+            <>
+              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+                <Button variant={compareMode === "target-gap" ? "secondary" : "outline"} size="xs" onClick={() => setCompareMode("target-gap")} type="button">
+                  Target fit
+                </Button>
+                <Button variant={compareMode === "median" ? "secondary" : "outline"} size="xs" onClick={() => setCompareMode("median")} type="button">
+                  Price
+                </Button>
+                <Button variant={compareMode === "lease" ? "secondary" : "outline"} size="xs" onClick={() => setCompareMode("lease")} type="button">
+                  Lease
+                </Button>
+                <Button variant={compareMode === "mrt" ? "secondary" : "outline"} size="xs" onClick={() => setCompareMode("mrt")} type="button">
+                  MRT
+                </Button>
+              </ButtonGroup>
+              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+                <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                  <Download data-icon="inline-start" />
+                  JSON
+                </Button>
+                <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                  <Download data-icon="inline-start" />
+                  CSV
+                </Button>
+                <Button variant="outline" size="xs" onClick={handleShare} type="button">
+                  <Link2 data-icon="inline-start" />
+                  Share link
+                </Button>
+              </ButtonGroup>
+            </>
           ) : null}
         </CardHeader>
 
@@ -158,7 +217,24 @@ export function ShortlistDrawer({
             ) : (
               <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
                 <div className="flex flex-col gap-4 pb-4">
-                    {rows.map((row) => {
+                  <Card size="sm" className="bg-muted/40">
+                    <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Lowest median</span>
+                        <strong>{cheapest ? `${cheapest.summary.block} ${cheapest.summary.streetName}` : "N/A"}</strong>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Newest lease</span>
+                        <strong>{newestLease ? `${newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Closest MRT</span>
+                        <strong>{nearestMrt?.summary.nearestMrt ? `${nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                    {rankedRows.map((row) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
                       const remainingLeaseRange = getRemainingLeaseRange(
                         row.summary.leaseCommenceRange,
@@ -227,11 +303,10 @@ export function ShortlistDrawer({
                                   Lease context
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
+                                  {remainingLeaseRange[1]} yrs left
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  Commence {row.summary.leaseCommenceRange[0]} to{" "}
-                                  {row.summary.leaseCommenceRange[1]}
+                                  Commence {row.summary.leaseCommenceRange[1]}
                                 </span>
                               </div>
                             </div>
@@ -247,6 +322,11 @@ export function ShortlistDrawer({
                                     ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
                                     : "No match"}
                                 </strong>
+                                {(row.summary.nearbyMrts?.length ?? 0) > 1 ? (
+                                  <span className="text-sm text-muted-foreground">
+                                    Also near {(row.summary.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                                  </span>
+                                ) : null}
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">

@@ -339,7 +339,7 @@ function App() {
                     <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                       <ResultsPane
                         blocks={filteredBlocks}
-                        hasTownFilter={!!filters.town || !!filters.search}
+                        hasTownFilter={!!filters.town}
                         onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                         onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
                         selectedAddressKey={filters.selectedAddressKey}
@@ -375,7 +375,7 @@ function App() {
                 <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                   <ResultsPane
                     blocks={filteredBlocks}
-                    hasTownFilter={!!filters.town || !!filters.search}
+                    hasTownFilter={!!filters.town}
                     onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                     onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
                     selectedAddressKey={filters.selectedAddressKey}
