@@ -1,10 +1,8 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import type { Locale } from "./types";
 
-export type Locale = "en-SG" | "zh-SG";
+export type Dictionary = Record<string, string>;
 
-type Dictionary = Record<string, string>;
-
-const dictionaries: Record<Locale, Dictionary> = {
+export const dictionaries: Record<Locale, Dictionary> = {
   "en-SG": {
     "language.label": "Language",
     "language.en": "English",
@@ -49,7 +47,33 @@ const dictionaries: Record<Locale, Dictionary> = {
     "results.selectTown": "Select a town to browse blocks",
     "results.useTownFilter": "Use the Town filter on the left to narrow results.",
     "results.noMatchFilters": "No blocks match your current filters. Try broadening your search or resetting filters.",
-
+    "filters.title": "Live filters",
+    "filters.reset": "Reset",
+    "filters.searchLabel": "Search block or street",
+    "filters.searchPlaceholder": "e.g. 447 or Bedok Reservoir",
+    "filters.search": "Search",
+    "filters.allTowns": "All towns",
+    "filters.town": "Town",
+    "filters.allTypes": "All types",
+    "filters.flatType": "Flat type",
+    "filters.allModels": "All models",
+    "filters.flatModel": "Flat model",
+    "filters.budgetRange": "Budget range",
+    "filters.minBudget": "Minimum budget",
+    "filters.maxBudget": "Maximum budget",
+    "filters.noMinimum": "No minimum",
+    "filters.noMaximum": "No maximum",
+    "filters.floorAreaRange": "Floor area range",
+    "filters.minFloorArea": "Minimum floor area",
+    "filters.maxFloorArea": "Maximum floor area",
+    "filters.minSqm": "Min sqm",
+    "filters.maxSqm": "Max sqm",
+    "filters.remainingLeaseMin": "Remaining lease min",
+    "filters.optional": "Optional",
+    "filters.transactionWindow": "Transaction window",
+    "filters.startMonth": "Start month",
+    "filters.endMonth": "End month",
+    "filters.maxMrtDistance": "Maximum MRT distance",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -95,68 +119,32 @@ const dictionaries: Record<Locale, Dictionary> = {
     "results.selectTown": "请选择城镇查看组屋",
     "results.useTownFilter": "使用左侧城镇筛选缩小结果范围。",
     "results.noMatchFilters": "当前筛选无匹配组屋。请放宽条件或重置筛选。",
-
+    "filters.title": "实时筛选",
+    "filters.reset": "重置",
+    "filters.searchLabel": "搜索楼栋或街道",
+    "filters.searchPlaceholder": "例如：447 或 Bedok Reservoir",
+    "filters.search": "搜索",
+    "filters.allTowns": "全部城镇",
+    "filters.town": "城镇",
+    "filters.allTypes": "全部户型",
+    "filters.flatType": "户型",
+    "filters.allModels": "全部模型",
+    "filters.flatModel": "房型模型",
+    "filters.budgetRange": "预算范围",
+    "filters.minBudget": "最低预算",
+    "filters.maxBudget": "最高预算",
+    "filters.noMinimum": "不限最低",
+    "filters.noMaximum": "不限最高",
+    "filters.floorAreaRange": "面积范围",
+    "filters.minFloorArea": "最小面积",
+    "filters.maxFloorArea": "最大面积",
+    "filters.minSqm": "最小 sqm",
+    "filters.maxSqm": "最大 sqm",
+    "filters.remainingLeaseMin": "最短剩余租期",
+    "filters.optional": "可选",
+    "filters.transactionWindow": "交易时间窗口",
+    "filters.startMonth": "开始月份",
+    "filters.endMonth": "结束月份",
+    "filters.maxMrtDistance": "最大地铁距离",
   },
 };
-
-type I18nContextValue = {
-  locale: Locale;
-  setLocale: (locale: Locale) => void;
-  t: (key: string, vars?: Record<string, string | number>) => string;
-};
-
-const I18nContext = createContext<I18nContextValue | null>(null);
-
-const LOCALE_STORAGE_KEY = "hdb-resale-locale";
-
-function interpolate(template: string, vars?: Record<string, string | number>) {
-  if (!vars) {
-    return template;
-  }
-
-  return Object.entries(vars).reduce(
-    (current, [key, value]) => current.replaceAll(`{${key}}`, String(value)),
-    template,
-  );
-}
-
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === "undefined") {
-      return "en-SG";
-    }
-
-    const saved = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-    if (saved === "zh-SG" || saved === "en-SG") {
-      return saved;
-    }
-
-    return window.navigator.language.toLowerCase().startsWith("zh") ? "zh-SG" : "en-SG";
-  });
-
-  const value = useMemo<I18nContextValue>(() => ({
-    locale,
-    setLocale: (nextLocale) => {
-      setLocale(nextLocale);
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale);
-      }
-    },
-    t: (key, vars) => {
-      const text = dictionaries[locale][key] ?? dictionaries["en-SG"][key] ?? key;
-      return interpolate(text, vars);
-    },
-  }), [locale]);
-
-  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
-}
-
-export function useI18n() {
-  const context = useContext(I18nContext);
-
-  if (!context) {
-    throw new Error("useI18n must be used inside I18nProvider");
-  }
-
-  return context;
-}
