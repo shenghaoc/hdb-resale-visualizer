@@ -4,6 +4,7 @@ import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
+import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -29,7 +30,13 @@ const ShortlistDrawer = lazy(() =>
   })),
 );
 
+type LoadedDetail = {
+  addressKey: string;
+  data: AddressDetail | null;
+};
+
 function App() {
+  const { locale, setLocale, t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -42,8 +49,8 @@ function App() {
       ...parseFilters(window.location.search),
     };
   });
-  const [detail, setDetail] = useState<AddressDetail | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [detail, setDetail] = useState<LoadedDetail | null>(null);
+  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
@@ -53,6 +60,7 @@ function App() {
   type MobileTab = "map" | "filters" | "results" | "saved";
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
+  const selectedAddressKey = filters.selectedAddressKey;
 
   useEffect(() => {
     let isMounted = true;
@@ -92,28 +100,26 @@ function App() {
   }, [filters]);
 
   useEffect(() => {
-    if (!filters.selectedAddressKey) {
-      setDetail(null);
+    if (!selectedAddressKey) {
       return;
     }
 
     let isMounted = true;
-    setIsDetailLoading(true);
 
-    void fetchAddressDetail(filters.selectedAddressKey)
+    void fetchAddressDetail(selectedAddressKey)
       .then((nextDetail) => {
         if (!isMounted) {
           return;
         }
 
-        setDetail(nextDetail);
+        setDetail({ addressKey: selectedAddressKey, data: nextDetail });
       })
       .catch(() => {
         if (!isMounted) {
           return;
         }
 
-        setDetail(null);
+        setDetail({ addressKey: selectedAddressKey, data: null });
       })
       .finally(() => {
         if (isMounted) {
@@ -124,12 +130,12 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [filters.selectedAddressKey]);
+  }, [selectedAddressKey]);
 
-  // Debounce the search string so every keystroke doesn't trigger 10K-point
-  // map re-renders and GeoJSON source updates.
+  // Debounce search for the map only so list interactions stay in sync with
+  // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  const stableFilters = useMemo(
+  const mapFilters = useMemo(
     () => ({ ...filters, search: debouncedSearch }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
@@ -138,8 +144,12 @@ function App() {
      filters.mrtMax, filters.selectedAddressKey],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
-    [blocks, stableFilters],
+    () => blocks.filter((block) => matchesFilter(block, filters)),
+    [blocks, filters],
+  );
+  const mapFilteredBlocks = useMemo(
+    () => blocks.filter((block) => matchesFilter(block, mapFilters)),
+    [blocks, mapFilters],
   );
   const filterOptions = useMemo(() => getFilterOptions(blocks), [blocks]);
   const shortlistKeySet = useMemo(
@@ -177,11 +187,17 @@ function App() {
     [blocks, shortlist.items],
   );
   const selectedBlock = useMemo(
-    () => getSelectionByAddressKey(blocks, filters.selectedAddressKey),
-    [blocks, filters.selectedAddressKey],
+    () => getSelectionByAddressKey(blocks, selectedAddressKey),
+    [blocks, selectedAddressKey],
   );
+  const selectedDetail =
+    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
 
   function patchFilters(patch: Partial<FilterState>) {
+    if ("selectedAddressKey" in patch) {
+      setIsDetailLoading(Boolean(patch.selectedAddressKey));
+    }
+
     startTransition(() => {
       setFilters((current) => ({ ...current, ...patch }));
     });
@@ -192,12 +208,12 @@ function App() {
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
         <Card className="w-full bg-background">
           <CardHeader className="gap-3">
-            <Badge variant="secondary">Static data missing</Badge>
-            <CardTitle className="text-3xl">HDB Resale Visualizer</CardTitle>
+            <Badge variant="secondary">{t("app.missingData")}</Badge>
+            <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>{error}</CardDescription>
           </CardHeader>
           <CardContent className="pt-2 text-sm text-muted-foreground">
-            Run `bun run sync-data` to generate the static data artifacts for the app.
+            {t("app.syncDataHint")}
           </CardContent>
         </Card>
       </main>
@@ -209,10 +225,10 @@ function App() {
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
         <Card className="w-full bg-background">
           <CardHeader className="gap-3">
-            <Badge variant="secondary">Loading static data</Badge>
-            <CardTitle className="text-3xl">HDB Resale Visualizer</CardTitle>
+            <Badge variant="secondary">{t("app.loadingData")}</Badge>
+            <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
-              Preparing block summaries, detail files, and the market map.
+              {t("app.loadingDescription")}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -227,7 +243,10 @@ function App() {
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
-      onReset={() => setFilters(DEFAULT_FILTERS)}
+      onReset={() => {
+        setIsDetailLoading(false);
+        setFilters(DEFAULT_FILTERS);
+      }}
       options={filterOptions}
     />
   );
@@ -237,17 +256,17 @@ function App() {
       <CardHeader className="gap-4 border-b border-border pb-4">
         <div className="flex flex-wrap items-start gap-4">
           <div className="flex flex-1 flex-col gap-1">
-            <CardTitle className="text-xl sm:text-2xl">Singapore resale map</CardTitle>
+            <CardTitle className="text-xl sm:text-2xl">{t("app.mapTitle")}</CardTitle>
           </div>
           <CardAction>
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               <span className="inline-flex items-center gap-2">
                 <span className="inline-block size-2.5 bg-[#d7d0c5]" />
-                Lower median
+                {t("app.lowerMedian")}
               </span>
               <span className="inline-flex items-center gap-2">
                 <span className="inline-block size-2.5 bg-[#5a3e2d]" />
-                Higher median
+                {t("app.higherMedian")}
               </span>
             </div>
           </CardAction>
@@ -257,9 +276,9 @@ function App() {
         <div className="flex min-h-0 flex-1">
           <Suspense fallback={<MapSkeleton />}>
             <MapView
-              blocks={filteredBlocks}
+              blocks={mapFilteredBlocks}
               onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-              selectedAddressKey={filters.selectedAddressKey}
+              selectedAddressKey={selectedAddressKey}
               townFilter={filters.town}
             />
           </Suspense>
@@ -269,10 +288,10 @@ function App() {
   );
 
   const selectedDetailContent =
-    filters.selectedAddressKey || isDetailLoading ? (
+    selectedAddressKey || isDetailLoading ? (
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
-          detail={detail}
+          detail={selectedDetail}
           selectedBlock={selectedBlock}
           isLoading={isDetailLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
@@ -301,6 +320,18 @@ function App() {
   return (
     <>
       <main className="mx-auto flex min-h-screen lg:h-screen lg:overflow-hidden w-full max-w-[1680px] flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-0">
+        <div className="flex items-center justify-end gap-2 text-sm">
+          <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
+          <select
+            id="locale-select"
+            className="rounded-md border border-border bg-background px-2 py-1"
+            value={locale}
+            onChange={(event) => setLocale(event.target.value as typeof locale)}
+          >
+            <option value="en-SG">{t("language.en")}</option>
+            <option value="zh-SG">{t("language.zh")}</option>
+          </select>
+        </div>
         {/* Desktop: 2-column grid */}
         {isDesktop ? (
           <section className="grid gap-4 lg:grid-cols-[24rem_minmax(0,1fr)] xl:grid-cols-[28rem_minmax(0,1fr)] lg:min-h-0 lg:flex-1 lg:[grid-template-rows:minmax(0,1fr)]">
@@ -312,9 +343,9 @@ function App() {
                 className="flex flex-col h-full overflow-hidden"
               >
                 <TabsList className="grid w-full grid-cols-3 shrink-0">
-                  <TabsTrigger value="filters">Filters</TabsTrigger>
-                  <TabsTrigger value="results">Results</TabsTrigger>
-                  <TabsTrigger value="saved">Saved</TabsTrigger>
+                  <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
+                  <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
+                  <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
                 </TabsList>
                 <TabsContent value="filters" className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
                   {filterContent}
@@ -322,13 +353,13 @@ function App() {
                 <TabsContent value="results" className="mt-4 flex min-h-0 flex-1 flex-col pr-1">
                   <div className="flex min-h-0 flex-1 flex-col gap-4">
                     {selectedDetailContent}
-                    <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                    <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                       <ResultsPane
                         blocks={filteredBlocks}
                         hasTownFilter={!!filters.town || !!filters.search}
                         onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                         onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                        selectedAddressKey={filters.selectedAddressKey}
+                        selectedAddressKey={selectedAddressKey}
                         shortlistKeys={shortlistKeySet}
                         isCompact={false}
                       />
@@ -358,13 +389,13 @@ function App() {
             {mobileTab === "results" && (
               <div className="flex flex-col gap-4 min-h-0 flex-1">
                 {selectedDetailContent}
-                <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                   <ResultsPane
                     blocks={filteredBlocks}
                     hasTownFilter={!!filters.town || !!filters.search}
                     onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                     onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                    selectedAddressKey={filters.selectedAddressKey}
+                    selectedAddressKey={selectedAddressKey}
                     shortlistKeys={shortlistKeySet}
                     isCompact={true}
                   />
@@ -386,19 +417,19 @@ function App() {
         <nav className="mobile-tab-bar">
           <button type="button" data-active={mobileTab === "map"} onClick={() => setMobileTab("map")}>
             <MapIcon />
-            Map
+            {t("tab.map")}
           </button>
           <button type="button" data-active={mobileTab === "filters"} onClick={() => setMobileTab("filters")}>
             <SlidersHorizontal />
-            Filters
+            {t("tab.filters")}
           </button>
           <button type="button" data-active={mobileTab === "results"} onClick={() => setMobileTab("results")}>
             <List />
-            Results
+            {t("tab.results")}
           </button>
           <button type="button" data-active={mobileTab === "saved"} onClick={() => setMobileTab("saved")}>
             <Bookmark />
-            Saved{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
+            {t("tab.saved")}{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
           </button>
         </nav>
       )}
