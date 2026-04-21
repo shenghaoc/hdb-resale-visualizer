@@ -398,15 +398,19 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
         const props = feature.properties ?? {};
-        const stationName = props.stationName ?? "MRT Station";
+        const stationName =
+          typeof props.stationName === "string" ? props.stationName : "MRT Station";
         let linesHtml = "";
-        
+
         try {
-          const lines = typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
+          const lines: unknown =
+            typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
           if (Array.isArray(lines)) {
             linesHtml = `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`;
           }
-        } catch(e) {}
+        } catch {
+          linesHtml = "";
+        }
 
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -482,7 +486,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       ],
       { padding: 60, maxZoom: 15, duration: 1200 }
     );
-  }, [townFilter]);
+  }, [blocks, townFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
