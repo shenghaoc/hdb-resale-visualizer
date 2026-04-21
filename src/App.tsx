@@ -55,6 +55,7 @@ function App() {
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
+  const selectedAddressKey = filters.selectedAddressKey;
 
   useEffect(() => {
     let isMounted = true;
@@ -94,7 +95,7 @@ function App() {
   }, [filters]);
 
   useEffect(() => {
-    if (!filters.selectedAddressKey) {
+    if (!selectedAddressKey) {
       setDetail(null);
       return;
     }
@@ -102,7 +103,7 @@ function App() {
     let isMounted = true;
     setIsDetailLoading(true);
 
-    void fetchAddressDetail(filters.selectedAddressKey)
+    void fetchAddressDetail(selectedAddressKey)
       .then((nextDetail) => {
         if (!isMounted) {
           return;
@@ -126,7 +127,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [filters.selectedAddressKey]);
+  }, [selectedAddressKey]);
 
   // Debounce the search string so every keystroke doesn't trigger 10K-point
   // map re-renders and GeoJSON source updates.
@@ -137,7 +138,7 @@ function App() {
     [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
      filters.budgetMin, filters.budgetMax, filters.areaMin, filters.areaMax,
      filters.remainingLeaseMin, filters.startMonth, filters.endMonth,
-     filters.mrtMax, filters.selectedAddressKey],
+     filters.mrtMax, selectedAddressKey],
   );
   const filteredBlocks = useMemo(
     () => blocks.filter((block) => matchesFilter(block, stableFilters)),
@@ -179,8 +180,8 @@ function App() {
     [blocks, shortlist.items],
   );
   const selectedBlock = useMemo(
-    () => getSelectionByAddressKey(blocks, filters.selectedAddressKey),
-    [blocks, filters.selectedAddressKey],
+    () => getSelectionByAddressKey(blocks, selectedAddressKey),
+    [blocks, selectedAddressKey],
   );
 
   function patchFilters(patch: Partial<FilterState>) {
@@ -239,14 +240,14 @@ function App() {
       <MapView
         blocks={filteredBlocks}
         onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-        selectedAddressKey={filters.selectedAddressKey}
+        selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
       />
     </Suspense>
   );
 
   const selectedDetailContent =
-    filters.selectedAddressKey || isDetailLoading ? (
+    selectedAddressKey || isDetailLoading ? (
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
           detail={detail}
@@ -350,13 +351,13 @@ function App() {
                       <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
-                          <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                          <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                             <ResultsPane
                               blocks={filteredBlocks}
                               hasTownFilter={!!filters.town || !!filters.search}
                               onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                               onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                              selectedAddressKey={filters.selectedAddressKey}
+                              selectedAddressKey={selectedAddressKey}
                               shortlistKeys={shortlistKeySet}
                               isCompact={false}
                             />
@@ -379,13 +380,13 @@ function App() {
                   {mobileTab === "results" && (
                     <div className="flex flex-col gap-4">
                       {selectedDetailContent}
-                      <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                      <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                         <ResultsPane
                           blocks={filteredBlocks}
                           hasTownFilter={!!filters.town || !!filters.search}
                           onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                           onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                          selectedAddressKey={filters.selectedAddressKey}
+                          selectedAddressKey={selectedAddressKey}
                           shortlistKeys={shortlistKeySet}
                           isCompact={true}
                         />
