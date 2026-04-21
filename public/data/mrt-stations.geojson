@@ -122,9 +122,10 @@
         "stationName": "BAYFRONT MRT STATION",
         "color": "#fca311",
         "lines": [
-          "CCL"
+          "CCL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -138,8 +139,10 @@
       },
       "properties": {
         "stationName": "BAYSHORE MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -190,12 +193,11 @@
       },
       "properties": {
         "stationName": "BEDOK NORTH MRT STATION",
-        "color": "#00a651",
+        "color": "#00539b",
         "lines": [
-          "EWL",
           "DTL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -209,12 +211,11 @@
       },
       "properties": {
         "stationName": "BEDOK RESERVOIR MRT STATION",
-        "color": "#00a651",
+        "color": "#00539b",
         "lines": [
-          "EWL",
           "DTL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -321,9 +322,10 @@
         "stationName": "BOTANIC GARDENS MRT STATION",
         "color": "#fca311",
         "lines": [
-          "CCL"
+          "CCL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -411,9 +413,10 @@
         "stationName": "BUGIS MRT STATION",
         "color": "#00a651",
         "lines": [
-          "EWL"
+          "EWL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -484,9 +487,10 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "color": "#00539b",
         "lines": [
-          "DTL"
+          "DTL",
+          "LRT"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -521,9 +525,10 @@
         "stationName": "CALDECOTT MRT STATION",
         "color": "#fca311",
         "lines": [
-          "CCL"
+          "CCL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -573,8 +578,10 @@
       },
       "properties": {
         "stationName": "CC9",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#fca311",
+        "lines": [
+          "CCL"
+        ],
         "isInterchange": false
       }
     },
@@ -589,8 +596,10 @@
       },
       "properties": {
         "stationName": "CHANGI AIRPORT MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#00a651",
+        "lines": [
+          "EWL"
+        ],
         "isInterchange": false
       }
     },
@@ -625,9 +634,10 @@
         "stationName": "CHINATOWN MRT STATION",
         "color": "#9b26b6",
         "lines": [
-          "NEL"
+          "NEL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -680,9 +690,10 @@
         "stationName": "CHOA CHU KANG MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "LRT"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -861,8 +872,8 @@
         "color": "#d11141",
         "lines": [
           "NSL",
-          "CCL",
-          "NEL"
+          "NEL",
+          "CCL"
         ],
         "isInterchange": true
       }
@@ -914,8 +925,10 @@
       },
       "properties": {
         "stationName": "DT18",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#00539b",
+        "lines": [
+          "DTL"
+        ],
         "isInterchange": false
       }
     },
@@ -930,8 +943,10 @@
       },
       "properties": {
         "stationName": "DT4",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#00539b",
+        "lines": [
+          "DTL"
+        ],
         "isInterchange": false
       }
     },
@@ -982,11 +997,12 @@
       },
       "properties": {
         "stationName": "EXPO MRT STATION",
-        "color": "#00539b",
+        "color": "#00a651",
         "lines": [
+          "EWL",
           "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1182,9 +1198,10 @@
         "stationName": "HARBOURFRONT MRT STATION",
         "color": "#9b26b6",
         "lines": [
-          "NEL"
+          "NEL",
+          "CCL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1344,9 +1361,10 @@
         "stationName": "JURONG EAST MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "EWL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1432,8 +1450,10 @@
       },
       "properties": {
         "stationName": "KATONG PARK MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -1684,9 +1704,10 @@
         "stationName": "LITTLE INDIA MRT STATION",
         "color": "#9b26b6",
         "lines": [
-          "NEL"
+          "NEL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1720,9 +1741,10 @@
         "stationName": "MACPHERSON MRT STATION",
         "color": "#fca311",
         "lines": [
-          "CCL"
+          "CCL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1738,9 +1760,11 @@
         "stationName": "MARINA BAY MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "CCL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -1774,10 +1798,9 @@
         "stationName": "MARINA SOUTH PIER MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL",
-          "TEL"
+          "NSL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -1791,8 +1814,10 @@
       },
       "properties": {
         "stationName": "MARINE PARADE MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -1807,8 +1832,10 @@
       },
       "properties": {
         "stationName": "MARINE TERRACE MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -1969,9 +1996,10 @@
         "stationName": "NEWTON MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2075,12 +2103,11 @@
       },
       "properties": {
         "stationName": "ORCHARD BOULEVARD MRT STATION",
-        "color": "#d11141",
+        "color": "#764c24",
         "lines": [
-          "NSL",
           "TEL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -2096,9 +2123,10 @@
         "stationName": "ORCHARD MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2114,9 +2142,11 @@
         "stationName": "OUTRAM PARK MRT STATION",
         "color": "#00a651",
         "lines": [
-          "EWL"
+          "EWL",
+          "NEL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2277,9 +2307,10 @@
         "stationName": "PROMENADE MRT STATION",
         "color": "#fca311",
         "lines": [
-          "CCL"
+          "CCL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2314,9 +2345,10 @@
         "stationName": "PUNGGOL MRT STATION",
         "color": "#9b26b6",
         "lines": [
-          "NEL"
+          "NEL",
+          "LRT"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2330,12 +2362,11 @@
       },
       "properties": {
         "stationName": "PUNGGOL POINT LRT STATION",
-        "color": "#9b26b6",
+        "color": "#7c878e",
         "lines": [
-          "NEL",
           "LRT"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -2567,9 +2598,10 @@
         "stationName": "SENGKANG MRT STATION",
         "color": "#9b26b6",
         "lines": [
-          "NEL"
+          "NEL",
+          "LRT"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2638,8 +2670,10 @@
       },
       "properties": {
         "stationName": "SIGLAP MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -2782,9 +2816,10 @@
         "stationName": "STEVENS MRT STATION",
         "color": "#00539b",
         "lines": [
-          "DTL"
+          "DTL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2834,12 +2869,11 @@
       },
       "properties": {
         "stationName": "TAMPINES EAST MRT STATION",
-        "color": "#00a651",
+        "color": "#00539b",
         "lines": [
-          "EWL",
           "DTL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -2855,9 +2889,10 @@
         "stationName": "TAMPINES MRT STATION",
         "color": "#00a651",
         "lines": [
-          "EWL"
+          "EWL",
+          "DTL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -2871,12 +2906,11 @@
       },
       "properties": {
         "stationName": "TAMPINES WEST MRT STATION",
-        "color": "#00a651",
+        "color": "#00539b",
         "lines": [
-          "EWL",
           "DTL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -2926,8 +2960,10 @@
       },
       "properties": {
         "stationName": "TANJONG KATONG MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -2960,8 +2996,10 @@
       },
       "properties": {
         "stationName": "TANJONG RHU MRT STATION",
-        "color": "#2563eb",
-        "lines": [],
+        "color": "#764c24",
+        "lines": [
+          "TEL"
+        ],
         "isInterchange": false
       }
     },
@@ -3230,9 +3268,10 @@
         "stationName": "WOODLANDS MRT STATION",
         "color": "#d11141",
         "lines": [
-          "NSL"
+          "NSL",
+          "TEL"
         ],
-        "isInterchange": false
+        "isInterchange": true
       }
     },
     {
@@ -3246,12 +3285,11 @@
       },
       "properties": {
         "stationName": "WOODLANDS NORTH MRT STATION",
-        "color": "#d11141",
+        "color": "#764c24",
         "lines": [
-          "NSL",
           "TEL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
@@ -3265,12 +3303,11 @@
       },
       "properties": {
         "stationName": "WOODLANDS SOUTH MRT STATION",
-        "color": "#d11141",
+        "color": "#764c24",
         "lines": [
-          "NSL",
           "TEL"
         ],
-        "isInterchange": true
+        "isInterchange": false
       }
     },
     {
