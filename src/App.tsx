@@ -30,6 +30,11 @@ const ShortlistDrawer = lazy(() =>
   })),
 );
 
+type LoadedDetail = {
+  addressKey: string;
+  data: AddressDetail | null;
+};
+
 function App() {
   const { locale, setLocale, t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -44,8 +49,8 @@ function App() {
       ...parseFilters(window.location.search),
     };
   });
-  const [detail, setDetail] = useState<AddressDetail | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
+  const [detail, setDetail] = useState<LoadedDetail | null>(null);
+  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
@@ -55,6 +60,7 @@ function App() {
   type MobileTab = "map" | "filters" | "results" | "saved";
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab>("map");
+  const selectedAddressKey = filters.selectedAddressKey;
 
   useEffect(() => {
     let isMounted = true;
@@ -94,28 +100,26 @@ function App() {
   }, [filters]);
 
   useEffect(() => {
-    if (!filters.selectedAddressKey) {
-      setDetail(null);
+    if (!selectedAddressKey) {
       return;
     }
 
     let isMounted = true;
-    setIsDetailLoading(true);
 
-    void fetchAddressDetail(filters.selectedAddressKey)
+    void fetchAddressDetail(selectedAddressKey)
       .then((nextDetail) => {
         if (!isMounted) {
           return;
         }
 
-        setDetail(nextDetail);
+        setDetail({ addressKey: selectedAddressKey, data: nextDetail });
       })
       .catch(() => {
         if (!isMounted) {
           return;
         }
 
-        setDetail(null);
+        setDetail({ addressKey: selectedAddressKey, data: null });
       })
       .finally(() => {
         if (isMounted) {
@@ -126,7 +130,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [filters.selectedAddressKey]);
+  }, [selectedAddressKey]);
 
   // Debounce the search string so every keystroke doesn't trigger 10K-point
   // map re-renders and GeoJSON source updates.
@@ -179,11 +183,17 @@ function App() {
     [blocks, shortlist.items],
   );
   const selectedBlock = useMemo(
-    () => getSelectionByAddressKey(blocks, filters.selectedAddressKey),
-    [blocks, filters.selectedAddressKey],
+    () => getSelectionByAddressKey(blocks, selectedAddressKey),
+    [blocks, selectedAddressKey],
   );
+  const selectedDetail =
+    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
 
   function patchFilters(patch: Partial<FilterState>) {
+    if ("selectedAddressKey" in patch) {
+      setIsDetailLoading(Boolean(patch.selectedAddressKey));
+    }
+
     startTransition(() => {
       setFilters((current) => ({ ...current, ...patch }));
     });
@@ -229,7 +239,10 @@ function App() {
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
-      onReset={() => setFilters(DEFAULT_FILTERS)}
+      onReset={() => {
+        setIsDetailLoading(false);
+        setFilters(DEFAULT_FILTERS);
+      }}
       options={filterOptions}
     />
   );
@@ -261,7 +274,7 @@ function App() {
             <MapView
               blocks={filteredBlocks}
               onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
-              selectedAddressKey={filters.selectedAddressKey}
+              selectedAddressKey={selectedAddressKey}
               townFilter={filters.town}
             />
           </Suspense>
@@ -271,10 +284,10 @@ function App() {
   );
 
   const selectedDetailContent =
-    filters.selectedAddressKey || isDetailLoading ? (
+    selectedAddressKey || isDetailLoading ? (
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
-          detail={detail}
+          detail={selectedDetail}
           selectedBlock={selectedBlock}
           isLoading={isDetailLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
@@ -336,13 +349,13 @@ function App() {
                 <TabsContent value="results" className="mt-4 flex min-h-0 flex-1 flex-col pr-1">
                   <div className="flex min-h-0 flex-1 flex-col gap-4">
                     {selectedDetailContent}
-                    <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                    <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                       <ResultsPane
                         blocks={filteredBlocks}
                         hasTownFilter={!!filters.town || !!filters.search}
                         onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                         onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                        selectedAddressKey={filters.selectedAddressKey}
+                        selectedAddressKey={selectedAddressKey}
                         shortlistKeys={shortlistKeySet}
                         isCompact={false}
                       />
@@ -372,13 +385,13 @@ function App() {
             {mobileTab === "results" && (
               <div className="flex flex-col gap-4 min-h-0 flex-1">
                 {selectedDetailContent}
-                <div className={`min-h-0 flex-1 flex-col ${filters.selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                   <ResultsPane
                     blocks={filteredBlocks}
                     hasTownFilter={!!filters.town || !!filters.search}
                     onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
                     onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                    selectedAddressKey={filters.selectedAddressKey}
+                    selectedAddressKey={selectedAddressKey}
                     shortlistKeys={shortlistKeySet}
                     isCompact={true}
                   />
