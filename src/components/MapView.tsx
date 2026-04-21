@@ -76,6 +76,22 @@ function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
   }
 }
 
+function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {};
+  }
+
+  const record = properties as Record<string, unknown>;
+  const stationName =
+    typeof record.stationName === "string" ? record.stationName : undefined;
+  const lines =
+    typeof record.lines === "string" || Array.isArray(record.lines)
+      ? record.lines
+      : undefined;
+
+  return { stationName, lines };
+}
+
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
@@ -421,7 +437,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const feature = event.features?.[0];
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
-        const props = (feature.properties ?? {}) as MrtPopupProperties;
+        const props = toMrtPopupProperties(feature.properties);
         const stationName = props.stationName ?? "MRT Station";
         const lines = parseMrtLines(props.lines);
         const linesHtml = lines.length
