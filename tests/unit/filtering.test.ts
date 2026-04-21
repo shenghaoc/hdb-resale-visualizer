@@ -56,6 +56,24 @@ describe("matchesFilter", () => {
     ).toBe(true);
   });
 
+  it("matches common street abbreviations and minor typos", () => {
+    expect(beta).toBeTruthy();
+
+    expect(
+      matchesFilter(beta!, {
+        ...DEFAULT_FILTERS,
+        search: "Bedok North Avenue 4",
+      }),
+    ).toBe(true);
+
+    expect(
+      matchesFilter(beta!, {
+        ...DEFAULT_FILTERS,
+        search: "Bedokk Nth Ave 4",
+      }),
+    ).toBe(true);
+  });
+
   it("normalizes duplicate flat type labels in menu options", () => {
     const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
     if (mutated[0]) {
