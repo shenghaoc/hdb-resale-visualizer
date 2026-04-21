@@ -102,7 +102,6 @@ function App() {
 
   useEffect(() => {
     if (!selectedAddressKey) {
-      setDetail(null);
       return;
     }
 
