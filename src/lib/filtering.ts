@@ -1,5 +1,51 @@
 import type { BlockSummary, FilterState } from "@/types/data";
 
+const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
+const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [["yew tee", "choa chu kang"]];
+
+function normalizeSearchText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function resolveSearchAliases(value: string): string {
+  let resolved = value;
+  for (const [alias, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
+    const aliasRegex = new RegExp(`\\b${alias}\\b`, "g");
+    resolved = resolved.replace(aliasRegex, canonical);
+  }
+  return resolved;
+}
+
+function tokenizeSearchText(value: string): string[] {
+  const resolvedValue = resolveSearchAliases(normalizeSearchText(value));
+  if (!resolvedValue) {
+    return [];
+  }
+
+  return resolvedValue
+    .split(" ")
+    .map((token) => token.trim())
+    .filter((token) => token.length > 0 && !SEARCH_STOP_WORDS.has(token));
+}
+
+function searchMatchesBlock(block: BlockSummary, query: string): boolean {
+  const searchTokens = tokenizeSearchText(query);
+  if (searchTokens.length === 0) {
+    return true;
+  }
+
+  const searchableText = tokenizeSearchText(
+    `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
+  );
+  return searchTokens.every((searchToken) =>
+    searchableText.some((candidate) => candidate.includes(searchToken)),
+  );
+}
+
 function canonicalFlatType(value: string): string {
   const normalized = value.trim().toUpperCase();
   if (normalized === "MULTI GENERATION") {
@@ -60,10 +106,7 @@ function sortFlatTypes(flatTypes: string[]): string[] {
 }
 
 export function matchesFilter(block: BlockSummary, filters: FilterState): boolean {
-  const search = filters.search.trim().toLowerCase();
-  const address = `${block.block} ${block.streetName}`.toLowerCase();
-
-  if (search && !address.includes(search) && !block.town.toLowerCase().includes(search)) {
+  if (!searchMatchesBlock(block, filters.search)) {
     return false;
   }
 

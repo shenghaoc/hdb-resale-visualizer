@@ -39,6 +39,23 @@ describe("matchesFilter", () => {
     ).toBe(true);
   });
 
+  it("supports out-of-order search terms and block number shorthand", () => {
+    const yewTeeLikeBlock = {
+      ...alpha!,
+      town: "CHOA CHU KANG",
+      block: "600A",
+      streetName: "CHOA CHU KANG STREET 62",
+      displayName: "YEW TEE RESIDENCES",
+    };
+
+    expect(
+      matchesFilter(yewTeeLikeBlock, {
+        ...DEFAULT_FILTERS,
+        search: "yew tee block 600 plus",
+      }),
+    ).toBe(true);
+  });
+
   it("normalizes duplicate flat type labels in menu options", () => {
     const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
     if (mutated[0]) {
