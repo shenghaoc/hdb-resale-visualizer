@@ -4,18 +4,19 @@
     "town": "TAMPINES",
     "block": "861A",
     "streetName": "TAMPINES AVE 5",
+    "displayName": "TAMPINES PARKVIEW",
     "coordinates": {
       "lat": 1.3546866830668,
       "lng": 103.937284489755
     },
-    "medianPrice": 690000,
+    "medianPrice": 685000,
     "priceIqr": [
-      685000,
-      705000
+      674500,
+      697500
     ],
-    "pricePerSqmMedian": 6634.62,
-    "pricePerSqftMedian": 616.38,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 6586.54,
+    "pricePerSqftMedian": 611.91,
+    "transactionCount": 4,
     "floorAreaRange": [
       104,
       127
@@ -24,10 +25,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-07",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -619,9 +620,28 @@
       "medianPrice": 720000,
       "transactionCount": 1,
       "medianPricePerSqm": 6923.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 658000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6326.92
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-861a-tampines-ave-5-2026-04-227550",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 06 months",
+      "resalePrice": 658000,
+      "pricePerSqm": 6326.92,
+      "pricePerSqft": 587.79
+    },
     {
       "id": "tampines-861a-tampines-ave-5-2025-10-216139",
       "month": "2025-10",
@@ -831,7 +851,7 @@
       "pricePerSqft": 406.45
     },
     {
-      "id": "tampines-861a-tampines-ave-5-2016-12-975070",
+      "id": "tampines-861a-tampines-ave-5-2016-12-975197",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -844,7 +864,7 @@
       "pricePerSqft": 415.38
     },
     {
-      "id": "tampines-861a-tampines-ave-5-2016-02-958225",
+      "id": "tampines-861a-tampines-ave-5-2016-02-958352",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -857,7 +877,7 @@
       "pricePerSqft": 424.92
     },
     {
-      "id": "tampines-861a-tampines-ave-5-2016-01-956988",
+      "id": "tampines-861a-tampines-ave-5-2016-01-957115",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -868,19 +888,6 @@
       "resalePrice": 404800,
       "pricePerSqm": 3892.31,
       "pricePerSqft": 361.61
-    },
-    {
-      "id": "tampines-861a-tampines-ave-5-2015-05-944824",
-      "month": "2015-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "72",
-      "resalePrice": 430000,
-      "pricePerSqm": 4134.62,
-      "pricePerSqft": 384.12
     }
   ]
 }

@@ -4,18 +4,19 @@
     "town": "ANG MO KIO",
     "block": "348",
     "streetName": "ANG MO KIO AVE 3",
+    "displayName": "SINGAPORE BUDDHIST FREE CLINIC ANG MO KIO BRANCH CLINIC",
     "coordinates": {
       "lat": 1.36619690818888,
       "lng": 103.847756649677
     },
-    "medianPrice": 450000,
+    "medianPrice": 492500,
     "priceIqr": [
-      438888,
-      535000
+      441666,
+      636250
     ],
-    "pricePerSqmMedian": 6079.55,
-    "pricePerSqftMedian": 564.81,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6121.97,
+    "pricePerSqftMedian": 568.75,
+    "transactionCount": 6,
     "floorAreaRange": [
       73,
       98
@@ -24,10 +25,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -960,9 +961,28 @@
       "medianPrice": 675000,
       "transactionCount": 1,
       "medianPricePerSqm": 6887.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 670000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6836.73
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-348-ang-mo-kio-ave-3-2026-04-222205",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 98,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 01 month",
+      "resalePrice": 670000,
+      "pricePerSqm": 6836.73,
+      "pricePerSqft": 635.15
+    },
     {
       "id": "ang-mo-kio-348-ang-mo-kio-ave-3-2025-09-197645",
       "month": "2025-09",
@@ -1209,19 +1229,6 @@
       "resalePrice": 480000,
       "pricePerSqm": 4897.96,
       "pricePerSqft": 455.04
-    },
-    {
-      "id": "ang-mo-kio-348-ang-mo-kio-ave-3-2018-12-40667",
-      "month": "2018-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 73,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "58 years 05 months",
-      "resalePrice": 290000,
-      "pricePerSqm": 3972.6,
-      "pricePerSqft": 369.07
     }
   ]
 }

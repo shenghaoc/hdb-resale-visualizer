@@ -53,7 +53,7 @@
   --mobile-tab-bar-height: 4rem;
   --mobile-map-attrib-height: 1.75rem;
   --font-sans: "Noto Sans", system-ui, sans-serif;
-  --font-heading: "Noto Sans", system-ui, sans-serif;
+  --font-heading: var(--font-sans);
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
   --background: oklch(0.985 0.004 248);
   --foreground: oklch(0.24 0.022 255);
@@ -81,13 +81,13 @@
   --chart-5: oklch(0.67 0.12 30);
   --radius: 0.625rem;
   --sidebar: oklch(0.98 0.005 248);
-  --sidebar-foreground: oklch(0.24 0.022 255);
-  --sidebar-primary: oklch(0.51 0.142 255);
-  --sidebar-primary-foreground: oklch(0.985 0.004 248);
-  --sidebar-accent: oklch(0.95 0.01 245);
-  --sidebar-accent-foreground: oklch(0.29 0.032 255);
-  --sidebar-border: oklch(0.9 0.012 246);
-  --sidebar-ring: oklch(0.68 0.11 255);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 @layer base {
@@ -267,7 +267,7 @@
 .map-popup .maplibregl-popup-content {
   background: var(--popover);
   color: var(--popover-foreground);
-  border-radius: calc(var(--radius) * 0.8);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   padding: 0.85rem 1rem;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);

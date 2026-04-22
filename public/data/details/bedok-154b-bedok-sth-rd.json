@@ -4,18 +4,19 @@
     "town": "BEDOK",
     "block": "154B",
     "streetName": "BEDOK STH RD",
+    "displayName": "BEDOK SOUTH HORIZON",
     "coordinates": {
       "lat": 1.31772321409025,
       "lng": 103.946902226539
     },
-    "medianPrice": 1120000,
+    "medianPrice": 1145000,
     "priceIqr": [
-      1120000,
-      1120000
+      1132500,
+      1157500
     ],
-    "pricePerSqmMedian": 12043.01,
-    "pricePerSqftMedian": 1118.83,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 12311.83,
+    "pricePerSqftMedian": 1143.8,
+    "transactionCount": 2,
     "floorAreaRange": [
       93,
       93
@@ -44,14 +45,14 @@
   "monthlyTrend": [
     {
       "month": "2026-04",
-      "medianPrice": 1120000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 12043.01
+      "medianPrice": 1145000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 12311.83
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-154b-bedok-sth-rd-2026-04-222584",
+      "id": "bedok-154b-bedok-sth-rd-2026-04-222591",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -62,6 +63,19 @@
       "resalePrice": 1120000,
       "pricePerSqm": 12043.01,
       "pricePerSqft": 1118.83
+    },
+    {
+      "id": "bedok-154b-bedok-sth-rd-2026-04-222592",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2022,
+      "remainingLease": "94 years 10 months",
+      "resalePrice": 1170000,
+      "pricePerSqm": 12580.65,
+      "pricePerSqft": 1168.78
     }
   ]
 }

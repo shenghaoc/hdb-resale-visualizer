@@ -95,6 +95,11 @@ export function DetailDrawer({
                             )}`
                           : "No match"}
                     </strong>
+                    {(currentSummary.nearbyMrts?.length ?? 0) > 1 ? (
+                      <span className="text-xs text-muted-foreground">
+                        Also near {(currentSummary.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                      </span>
+                    ) : null}
                   </article>
                   <article className="flex flex-col gap-1.5">
                     <span className="inline-flex items-center gap-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">

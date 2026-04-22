@@ -4,18 +4,19 @@
     "town": "SEMBAWANG",
     "block": "330",
     "streetName": "SEMBAWANG CL",
+    "displayName": null,
     "coordinates": {
       "lat": 1.44680507130646,
       "lng": 103.817811631963
     },
-    "medianPrice": 602500,
+    "medianPrice": 630000,
     "priceIqr": [
-      564041,
-      643500
+      570388,
+      650000
     ],
-    "pricePerSqmMedian": 5597.62,
-    "pricePerSqftMedian": 520.03,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 5547.83,
+    "pricePerSqftMedian": 515.41,
+    "transactionCount": 9,
     "floorAreaRange": [
       100,
       121
@@ -634,14 +635,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 675000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5869.57
+      "medianPrice": 662500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5665.88
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-330-sembawang-cl-2026-04-226694",
+      "id": "sembawang-330-sembawang-cl-2026-04-226774",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -654,7 +655,20 @@
       "pricePerSqft": 545.3
     },
     {
-      "id": "sembawang-330-sembawang-cl-2026-02-226689",
+      "id": "sembawang-330-sembawang-cl-2026-04-226776",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 04 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 5462.18,
+      "pricePerSqft": 507.45
+    },
+    {
+      "id": "sembawang-330-sembawang-cl-2026-02-226769",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -886,19 +900,6 @@
       "resalePrice": 440000,
       "pricePerSqm": 3697.48,
       "pricePerSqft": 343.51
-    },
-    {
-      "id": "sembawang-330-sembawang-cl-2021-02-91526",
-      "month": "2021-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "77 years 06 months",
-      "resalePrice": 415000,
-      "pricePerSqm": 4150,
-      "pricePerSqft": 385.55
     }
   ]
 }

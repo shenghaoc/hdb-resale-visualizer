@@ -4,18 +4,19 @@
     "town": "YISHUN",
     "block": "303",
     "streetName": "YISHUN CTRL",
+    "displayName": "YISHUN RIVERGREEN",
     "coordinates": {
       "lat": 1.43026863874417,
       "lng": 103.840067166013
     },
-    "medianPrice": 495444,
+    "medianPrice": 537000,
     "priceIqr": [
-      437500,
-      558666
+      440000,
+      550888
     ],
-    "pricePerSqmMedian": 5676.84,
-    "pricePerSqftMedian": 527.39,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5542.86,
+    "pricePerSqftMedian": 514.95,
+    "transactionCount": 5,
     "floorAreaRange": [
       74,
       108
@@ -24,10 +25,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-09",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -900,9 +901,28 @@
       "medianPrice": 440000,
       "transactionCount": 1,
       "medianPricePerSqm": 5945.95
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 537000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5163.46
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-303-yishun-ctrl-2026-04-229029",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 537000,
+      "pricePerSqm": 5163.46,
+      "pricePerSqft": 479.7
+    },
     {
       "id": "yishun-303-yishun-ctrl-2025-08-220598",
       "month": "2025-08",
@@ -1149,19 +1169,6 @@
       "resalePrice": 400000,
       "pricePerSqm": 3809.52,
       "pricePerSqft": 353.92
-    },
-    {
-      "id": "yishun-303-yishun-ctrl-2021-01-89985",
-      "month": "2021-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 74,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "66 years 11 months",
-      "resalePrice": 333000,
-      "pricePerSqm": 4500,
-      "pricePerSqft": 418.06
     }
   ]
 }

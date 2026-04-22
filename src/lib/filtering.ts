@@ -1,5 +1,163 @@
 import type { BlockSummary, FilterState } from "@/types/data";
 
+const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
+const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [
+  ["amk", "ang mo kio"],
+  ["yew tee", "choa chu kang"],
+];
+const TOKEN_NORMALIZATIONS = new Map<string, string>([
+  ["ave", "avenue"],
+  ["av", "avenue"],
+  ["rd", "road"],
+  ["st", "street"],
+  ["nth", "north"],
+  ["sth", "south"],
+  ["est", "east"],
+  ["wst", "west"],
+  ["bt", "bukit"],
+  ["ck", "choa chu kang"],
+]);
+
+type SearchToken = {
+  value: string;
+  isNumericPrefix: boolean;
+};
+
+function normalizeSearchText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9+]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function resolveSearchAliases(value: string): string {
+  let resolved = value;
+  for (const [alias, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
+    const aliasRegex = new RegExp(`\\b${alias}\\b`, "g");
+    resolved = resolved.replace(aliasRegex, canonical);
+  }
+  return resolved;
+}
+
+function normalizeToken(token: string): string {
+  return TOKEN_NORMALIZATIONS.get(token) ?? token;
+}
+
+function tokenizeSearchText(value: string): SearchToken[] {
+  const resolvedValue = resolveSearchAliases(normalizeSearchText(value));
+  if (!resolvedValue) {
+    return [];
+  }
+
+  return resolvedValue
+    .split(" ")
+    .map((token) => token.trim())
+    .filter((token) => token.length > 0 && !SEARCH_STOP_WORDS.has(token))
+    .map((token) => {
+      const numericPrefixMatch = token.match(/^(\d+)\+$/);
+      if (numericPrefixMatch) {
+        return {
+          value: numericPrefixMatch[1] ?? token,
+          isNumericPrefix: true,
+        };
+      }
+      return {
+        value: normalizeToken(token),
+        isNumericPrefix: false,
+      };
+    });
+}
+
+function isNearMatch(left: string, right: string): boolean {
+  if (left === right) {
+    return true;
+  }
+
+  if (left.length === right.length) {
+    for (let index = 0; index < left.length - 1; index += 1) {
+      if (
+        left[index] === right[index + 1] &&
+        left[index + 1] === right[index] &&
+        left.slice(0, index) === right.slice(0, index) &&
+        left.slice(index + 2) === right.slice(index + 2)
+      ) {
+        return true;
+      }
+    }
+  }
+
+  if (Math.abs(left.length - right.length) > 1) {
+    return false;
+  }
+
+  // Fast path for very short values where typo-tolerance is too noisy.
+  if (left.length < 3 || right.length < 3) {
+    return false;
+  }
+
+  let edits = 0;
+  let leftIndex = 0;
+  let rightIndex = 0;
+
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] === right[rightIndex]) {
+      leftIndex += 1;
+      rightIndex += 1;
+      continue;
+    }
+
+    edits += 1;
+    if (edits > 1) {
+      return false;
+    }
+
+    if (left.length > right.length) {
+      leftIndex += 1;
+      continue;
+    }
+
+    if (right.length > left.length) {
+      rightIndex += 1;
+      continue;
+    }
+
+    leftIndex += 1;
+    rightIndex += 1;
+  }
+
+  if (leftIndex < left.length || rightIndex < right.length) {
+    edits += 1;
+  }
+
+  return edits <= 1;
+}
+
+function searchMatchesBlock(block: BlockSummary, query: string): boolean {
+  const searchTokens = tokenizeSearchText(query);
+  if (searchTokens.length === 0) {
+    return true;
+  }
+
+  const searchableTokens = tokenizeSearchText(
+    `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
+  );
+  const blockTokenValues = searchableTokens.map((token) => token.value);
+
+  return searchTokens.every((searchToken) => {
+    if (searchToken.isNumericPrefix) {
+      return blockTokenValues.some((candidate) => candidate.startsWith(searchToken.value));
+    }
+
+    return blockTokenValues.some(
+      (candidate) =>
+        candidate.includes(searchToken.value) ||
+        searchToken.value.includes(candidate) ||
+        isNearMatch(candidate, searchToken.value),
+    );
+  });
+}
+
 function canonicalFlatType(value: string): string {
   const normalized = value.trim().toUpperCase();
   if (normalized === "MULTI GENERATION") {
@@ -60,10 +218,7 @@ function sortFlatTypes(flatTypes: string[]): string[] {
 }
 
 export function matchesFilter(block: BlockSummary, filters: FilterState): boolean {
-  const search = filters.search.trim().toLowerCase();
-  const address = `${block.block} ${block.streetName}`.toLowerCase();
-
-  if (search && !address.includes(search) && !block.town.toLowerCase().includes(search)) {
+  if (!searchMatchesBlock(block, filters.search)) {
     return false;
   }
 

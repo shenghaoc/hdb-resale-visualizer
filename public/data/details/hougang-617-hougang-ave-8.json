@@ -4,18 +4,19 @@
     "town": "HOUGANG",
     "block": "617",
     "streetName": "HOUGANG AVE 8",
+    "displayName": null,
     "coordinates": {
       "lat": 1.3692978923853,
       "lng": 103.883826832419
     },
-    "medianPrice": 519888,
+    "medianPrice": 474944,
     "priceIqr": [
-      430000,
-      580000
+      415000,
+      564972
     ],
-    "pricePerSqmMedian": 5841.44,
-    "pricePerSqftMedian": 542.69,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6108.22,
+    "pricePerSqftMedian": 567.48,
+    "transactionCount": 6,
     "floorAreaRange": [
       64,
       104
@@ -24,10 +25,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-12",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -877,9 +878,28 @@
       "medianPrice": 519888,
       "transactionCount": 1,
       "medianPricePerSqm": 5841.44
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6406.25
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-617-hougang-ave-8-2026-04-224534",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "58 years 10 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 6406.25,
+      "pricePerSqft": 595.16
+    },
     {
       "id": "hougang-617-hougang-ave-8-2025-11-205783",
       "month": "2025-11",
@@ -1126,19 +1146,6 @@
       "resalePrice": 315000,
       "pricePerSqm": 4921.88,
       "pricePerSqft": 457.26
-    },
-    {
-      "id": "hougang-617-hougang-ave-8-2021-02-90843",
-      "month": "2021-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "64 years",
-      "resalePrice": 430000,
-      "pricePerSqm": 4134.62,
-      "pricePerSqft": 384.12
     }
   ]
 }

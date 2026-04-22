@@ -4,18 +4,19 @@
     "town": "ANG MO KIO",
     "block": "509",
     "streetName": "ANG MO KIO AVE 8",
+    "displayName": "CHENG SAN CREST",
     "coordinates": {
       "lat": 1.37400086510074,
       "lng": 103.850139806283
     },
     "medianPrice": 465000,
     "priceIqr": [
-      452500,
-      480000
+      451250,
+      477500
     ],
-    "pricePerSqmMedian": 6031.74,
-    "pricePerSqftMedian": 560.37,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 6009.69,
+    "pricePerSqftMedian": 558.32,
+    "transactionCount": 8,
     "floorAreaRange": [
       67,
       155
@@ -24,10 +25,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1010,9 +1011,28 @@
       "medianPrice": 465000,
       "transactionCount": 1,
       "medianPricePerSqm": 6940.3
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5617.28
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-509-ang-mo-kio-ave-8-2026-04-222169",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 81,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 03 months",
+      "resalePrice": 455000,
+      "pricePerSqm": 5617.28,
+      "pricePerSqft": 521.86
+    },
     {
       "id": "ang-mo-kio-509-ang-mo-kio-ave-8-2025-12-197508",
       "month": "2025-12",
@@ -1259,19 +1279,6 @@
       "resalePrice": 290000,
       "pricePerSqm": 4328.36,
       "pricePerSqft": 402.12
-    },
-    {
-      "id": "ang-mo-kio-509-ang-mo-kio-ave-8-2020-06-70617",
-      "month": "2020-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "59 years 01 month",
-      "resalePrice": 318000,
-      "pricePerSqm": 4746.27,
-      "pricePerSqft": 440.94
     }
   ]
 }

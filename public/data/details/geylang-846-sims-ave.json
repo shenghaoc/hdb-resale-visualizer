@@ -4,18 +4,19 @@
     "town": "GEYLANG",
     "block": "846",
     "streetName": "SIMS AVE",
+    "displayName": null,
     "coordinates": {
       "lat": 1.317602618253,
       "lng": 103.90170722021
     },
-    "medianPrice": 517500,
+    "medianPrice": 1090000,
     "priceIqr": [
-      441100,
-      745972
+      1090000,
+      1090000
     ],
-    "pricePerSqmMedian": 3476.3,
-    "pricePerSqftMedian": 322.96,
-    "transactionCount": 98,
+    "pricePerSqmMedian": 7315.44,
+    "pricePerSqftMedian": 679.63,
+    "transactionCount": 1,
     "floorAreaRange": [
       142,
       160
@@ -24,10 +25,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2024-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2024-04"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -546,9 +547,28 @@
       "medianPrice": 1048888,
       "transactionCount": 1,
       "medianPricePerSqm": 7039.52
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1090000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7315.44
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-846-sims-ave-2026-04-224457",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 149,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 06 months",
+      "resalePrice": 1090000,
+      "pricePerSqm": 7315.44,
+      "pricePerSqft": 679.63
+    },
     {
       "id": "geylang-846-sims-ave-2024-04-177798",
       "month": "2024-04",
@@ -795,19 +815,6 @@
       "resalePrice": 890000,
       "pricePerSqm": 5973.15,
       "pricePerSqft": 554.92
-    },
-    {
-      "id": "geylang-846-sims-ave-2017-08-12156",
-      "month": "2017-08",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 149,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "67 years 02 months",
-      "resalePrice": 850000,
-      "pricePerSqm": 5704.7,
-      "pricePerSqft": 529.98
     }
   ]
 }

@@ -305,12 +305,12 @@ function App() {
 
   return (
     <>
-      <main className="relative min-h-screen w-full overflow-hidden">
+      <main className="relative min-h-dvh w-full overflow-hidden">
         <div className="absolute inset-0">
           {mapContent}
         </div>
 
-        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
+        <div className="pointer-events-none absolute inset-0 z-10 flex min-h-dvh flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
           {isDesktop && (
             <div className="pointer-events-auto absolute left-6 top-6 z-20">
               <button

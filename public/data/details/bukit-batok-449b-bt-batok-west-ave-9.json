@@ -4,18 +4,19 @@
     "town": "BUKIT BATOK",
     "block": "449B",
     "streetName": "BT BATOK WEST AVE 9",
+    "displayName": "WEST VALLEY @ BUKIT BATOK",
     "coordinates": {
       "lat": 1.35197886358706,
       "lng": 103.741081176999
     },
-    "medianPrice": 658888,
+    "medianPrice": 659888,
     "priceIqr": [
-      635000,
-      692944
+      637500,
+      691472
     ],
-    "pricePerSqmMedian": 7084.82,
-    "pricePerSqftMedian": 658.2,
-    "transactionCount": 31,
+    "pricePerSqmMedian": 7095.57,
+    "pricePerSqftMedian": 659.2,
+    "transactionCount": 32,
     "floorAreaRange": [
       93,
       93
@@ -242,14 +243,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 680000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7311.83
+      "medianPrice": 670444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7209.07
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-04-223072",
+      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-04-223088",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -262,7 +263,20 @@
       "pricePerSqft": 679.29
     },
     {
-      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-03-223068",
+      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-04-223092",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years",
+      "resalePrice": 660888,
+      "pricePerSqm": 7106.32,
+      "pricePerSqft": 660.2
+    },
+    {
+      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-03-223084",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -275,7 +289,7 @@
       "pricePerSqft": 639.33
     },
     {
-      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-01-223053",
+      "id": "bukit-batok-449b-bt-batok-west-ave-9-2026-01-223069",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -494,19 +508,6 @@
       "resalePrice": 655888,
       "pricePerSqm": 7052.56,
       "pricePerSqft": 655.2
-    },
-    {
-      "id": "bukit-batok-449b-bt-batok-west-ave-9-2024-10-173377",
-      "month": "2024-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "93 years 06 months",
-      "resalePrice": 695888,
-      "pricePerSqm": 7482.67,
-      "pricePerSqft": 695.16
     }
   ]
 }

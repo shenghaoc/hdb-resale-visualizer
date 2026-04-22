@@ -4,18 +4,19 @@
     "town": "SENGKANG",
     "block": "204A",
     "streetName": "COMPASSVALE DR",
+    "displayName": null,
     "coordinates": {
       "lat": 1.38785624696615,
       "lng": 103.894681035814
     },
-    "medianPrice": 720000,
+    "medianPrice": 645000,
     "priceIqr": [
-      720000,
-      720000
+      607500,
+      682500
     ],
-    "pricePerSqmMedian": 6545.45,
-    "pricePerSqftMedian": 608.09,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 6370.55,
+    "pricePerSqftMedian": 591.85,
+    "transactionCount": 2,
     "floorAreaRange": [
       90,
       110
@@ -24,10 +25,10 @@
       2000,
       2000
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2004-12",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -481,9 +482,28 @@
       "medianPrice": 720000,
       "transactionCount": 1,
       "medianPricePerSqm": 6545.45
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6195.65
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-204a-compassvale-dr-2026-04-226946",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 09 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 6195.65,
+      "pricePerSqft": 575.6
+    },
     {
       "id": "sengkang-204a-compassvale-dr-2025-12-214728",
       "month": "2025-12",
@@ -730,19 +750,6 @@
       "resalePrice": 368000,
       "pricePerSqm": 4088.89,
       "pricePerSqft": 379.87
-    },
-    {
-      "id": "sengkang-204a-compassvale-dr-2016-11-973474",
-      "month": "2016-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "83",
-      "resalePrice": 376500,
-      "pricePerSqm": 4183.33,
-      "pricePerSqft": 388.64
     }
   ]
 }

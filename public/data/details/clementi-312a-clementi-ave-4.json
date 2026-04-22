@@ -4,18 +4,19 @@
     "town": "CLEMENTI",
     "block": "312A",
     "streetName": "CLEMENTI AVE 4",
+    "displayName": "CLEMENTI RIDGES",
     "coordinates": {
       "lat": 1.31908894426179,
       "lng": 103.764441220265
     },
-    "medianPrice": 1128000,
+    "medianPrice": 1124000,
     "priceIqr": [
-      1020000,
-      1241500
+      1030000,
+      1232250
     ],
-    "pricePerSqmMedian": 11182.8,
-    "pricePerSqftMedian": 1038.92,
-    "transactionCount": 15,
+    "pricePerSqmMedian": 11183.35,
+    "pricePerSqftMedian": 1038.97,
+    "transactionCount": 16,
     "floorAreaRange": [
       69,
       113
@@ -24,10 +25,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-09",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -224,9 +225,28 @@
       "medianPrice": 1285000,
       "transactionCount": 1,
       "medianPricePerSqm": 11371.68
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 12043.01
     }
   ],
   "recentTransactions": [
+    {
+      "id": "clementi-312a-clementi-ave-4-2026-04-224220",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 1120000,
+      "pricePerSqm": 12043.01,
+      "pricePerSqft": 1118.83
+    },
     {
       "id": "clementi-312a-clementi-ave-4-2025-12-204344",
       "month": "2025-12",
@@ -470,19 +490,6 @@
       "flatModel": "MODEL A",
       "leaseCommenceDate": 2017,
       "remainingLease": "92 years 08 months",
-      "resalePrice": 988000,
-      "pricePerSqm": 10623.66,
-      "pricePerSqft": 986.97
-    },
-    {
-      "id": "clementi-312a-clementi-ave-4-2023-08-151045",
-      "month": "2023-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "37 TO 39",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years",
       "resalePrice": 988000,
       "pricePerSqm": 10623.66,
       "pricePerSqft": 986.97

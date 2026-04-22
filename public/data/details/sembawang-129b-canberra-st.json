@@ -4,18 +4,19 @@
     "town": "SEMBAWANG",
     "block": "129B",
     "streetName": "CANBERRA ST",
+    "displayName": "EASTCROWN @ CANBERRA",
     "coordinates": {
       "lat": 1.44487017343162,
       "lng": 103.832974164005
     },
-    "medianPrice": 491000,
+    "medianPrice": 492000,
     "priceIqr": [
-      411500,
-      553750
+      427000,
+      555000
     ],
-    "pricePerSqmMedian": 7359.47,
-    "pricePerSqftMedian": 683.71,
-    "transactionCount": 18,
+    "pricePerSqmMedian": 7483.65,
+    "pricePerSqftMedian": 695.25,
+    "transactionCount": 19,
     "floorAreaRange": [
       38,
       93
@@ -24,10 +25,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-07",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -229,11 +230,30 @@
       "medianPrice": 550000,
       "transactionCount": 1,
       "medianPricePerSqm": 8088.24
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 555000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8161.76
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-129b-canberra-st-2026-01-226499",
+      "id": "sembawang-129b-canberra-st-2026-04-226585",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 8161.76,
+      "pricePerSqft": 758.25
+    },
+    {
+      "id": "sembawang-129b-canberra-st-2026-01-226577",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -478,19 +498,6 @@
       "resalePrice": 342000,
       "pricePerSqm": 7276.6,
       "pricePerSqft": 676.02
-    },
-    {
-      "id": "sembawang-129b-canberra-st-2024-04-187035",
-      "month": "2024-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "93 years 08 months",
-      "resalePrice": 480000,
-      "pricePerSqm": 7058.82,
-      "pricePerSqft": 655.79
     }
   ]
 }

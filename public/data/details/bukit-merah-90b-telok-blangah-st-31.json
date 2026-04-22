@@ -4,18 +4,19 @@
     "town": "BUKIT MERAH",
     "block": "90B",
     "streetName": "TELOK BLANGAH ST 31",
+    "displayName": "TELOK BLANGAH PARCVIEW",
     "coordinates": {
       "lat": 1.27728367741324,
       "lng": 103.806916176715
     },
     "medianPrice": 940000,
     "priceIqr": [
-      938444,
-      989000
+      938000,
+      986000
     ],
     "pricePerSqmMedian": 10107.53,
     "pricePerSqftMedian": 939.02,
-    "transactionCount": 11,
+    "transactionCount": 12,
     "floorAreaRange": [
       93,
       93
@@ -24,10 +25,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-12",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -155,11 +156,30 @@
       "medianPrice": 999444,
       "transactionCount": 2,
       "medianPricePerSqm": 10746.7
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 938000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10086.02
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-90b-telok-blangah-st-31-2026-03-223400",
+      "id": "bukit-merah-90b-telok-blangah-st-31-2026-04-223430",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 09 months",
+      "resalePrice": 938000,
+      "pricePerSqm": 10086.02,
+      "pricePerSqft": 937.02
+    },
+    {
+      "id": "bukit-merah-90b-telok-blangah-st-31-2026-03-223424",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -172,7 +192,7 @@
       "pricePerSqft": 927.03
     },
     {
-      "id": "bukit-merah-90b-telok-blangah-st-31-2026-03-223403",
+      "id": "bukit-merah-90b-telok-blangah-st-31-2026-03-223427",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -404,19 +424,6 @@
       "resalePrice": 860888,
       "pricePerSqm": 9256.86,
       "pricePerSqft": 859.99
-    },
-    {
-      "id": "bukit-merah-90b-telok-blangah-st-31-2023-11-148442",
-      "month": "2023-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "25 TO 27",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 965000,
-      "pricePerSqm": 10376.34,
-      "pricePerSqft": 963.99
     }
   ]
 }

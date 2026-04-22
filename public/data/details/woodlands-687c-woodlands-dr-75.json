@@ -4,18 +4,19 @@
     "town": "WOODLANDS",
     "block": "687C",
     "streetName": "WOODLANDS DR 75",
+    "displayName": null,
     "coordinates": {
       "lat": 1.44180897954114,
       "lng": 103.806372444994
     },
-    "medianPrice": 630000,
+    "medianPrice": 631444,
     "priceIqr": [
-      608000,
-      640000
+      613500,
+      643000
     ],
-    "pricePerSqmMedian": 5526.32,
-    "pricePerSqftMedian": 513.41,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 5538.98,
+    "pricePerSqftMedian": 514.59,
+    "transactionCount": 10,
     "floorAreaRange": [
       113,
       115
@@ -590,14 +591,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 644000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5649.12
+      "medianPrice": 655000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5745.61
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-687c-woodlands-dr-75-2026-04-228585",
+      "id": "woodlands-687c-woodlands-dr-75-2026-04-228706",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -610,7 +611,20 @@
       "pricePerSqft": 524.82
     },
     {
-      "id": "woodlands-687c-woodlands-dr-75-2026-01-228575",
+      "id": "woodlands-687c-woodlands-dr-75-2026-04-228708",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 114,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 666000,
+      "pricePerSqm": 5842.11,
+      "pricePerSqft": 542.75
+    },
+    {
+      "id": "woodlands-687c-woodlands-dr-75-2026-01-228696",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -842,19 +856,6 @@
       "resalePrice": 480000,
       "pricePerSqm": 4210.53,
       "pricePerSqft": 391.17
-    },
-    {
-      "id": "woodlands-687c-woodlands-dr-75-2021-02-92084",
-      "month": "2021-02",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 114,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "81 years 01 month",
-      "resalePrice": 442000,
-      "pricePerSqm": 3877.19,
-      "pricePerSqft": 360.2
     }
   ]
 }
