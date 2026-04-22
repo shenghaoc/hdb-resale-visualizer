@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -242,16 +242,19 @@ export function ResultsPane({
     });
   }, [blocks, sortMode]);
 
-  const totalPages = Math.max(1, Math.ceil(sortedBlocks.length / itemsPerPage));
-  const visiblePage = Math.min(currentPage, totalPages);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [blocks, sortMode]);
+
+  const totalPages = Math.ceil(sortedBlocks.length / itemsPerPage);
   const currentBlocks = sortedBlocks.slice(
-    (visiblePage - 1) * itemsPerPage,
-    visiblePage * itemsPerPage,
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
   );
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
-    let startPage = Math.max(1, visiblePage - 2);
+    let startPage = Math.max(1, currentPage - 2);
     const endPage = Math.min(totalPages, startPage + 4);
     if (endPage - startPage < 4) {
       startPage = Math.max(1, endPage - 4);
@@ -260,7 +263,7 @@ export function ResultsPane({
 
     return (
       <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 border-t border-border/40 py-4">
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p - 1)} disabled={visiblePage === 1}>{t("results.prev")}</Button>
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p - 1)} disabled={currentPage === 1}>{t("results.prev")}</Button>
         {startPage > 1 && (
           <>
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>1</Button>
@@ -268,7 +271,7 @@ export function ResultsPane({
           </>
         )}
         {pages.map((p) => (
-          <Button key={p} variant={p === visiblePage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
+          <Button key={p} variant={p === currentPage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
             {p}
           </Button>
         ))}
@@ -278,7 +281,7 @@ export function ResultsPane({
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>{totalPages}</Button>
           </>
         )}
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p + 1)} disabled={visiblePage === totalPages}>{t("results.next")}</Button>
+        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p + 1)} disabled={currentPage === totalPages}>{t("results.next")}</Button>
       </div>
     );
   };
@@ -299,13 +302,7 @@ export function ResultsPane({
                   <ArrowUpDown className="size-3.5" />
                   {t("results.sort")}
                 </span>
-                <Select
-                  onValueChange={(value) => {
-                    setSortMode(value as SortMode);
-                    setCurrentPage(1);
-                  }}
-                  value={sortMode}
-                >
+                <Select onValueChange={(value) => setSortMode(value as SortMode)} value={sortMode}>
                   <SelectTrigger className="w-full sm:w-[15rem]">
                     <SelectValue />
                   </SelectTrigger>

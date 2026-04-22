@@ -26,11 +26,6 @@ type PopupProperties = {
   transaction_count?: number;
 };
 
-type MrtPopupProperties = {
-  stationName?: string;
-  lines?: string | string[];
-};
-
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
@@ -55,41 +50,6 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
-}
-
-function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
-  if (Array.isArray(lines)) {
-    return lines.filter((line): line is string => typeof line === "string");
-  }
-
-  if (typeof lines !== "string") {
-    return [];
-  }
-
-  try {
-    const parsed: unknown = JSON.parse(lines);
-    return Array.isArray(parsed)
-      ? parsed.filter((line): line is string => typeof line === "string")
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
-  if (!properties || typeof properties !== "object") {
-    return {};
-  }
-
-  const record = properties as Record<string, unknown>;
-  const stationName =
-    typeof record.stationName === "string" ? record.stationName : undefined;
-  const lines =
-    typeof record.lines === "string" || Array.isArray(record.lines)
-      ? record.lines
-      : undefined;
-
-  return { stationName, lines };
 }
 
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
@@ -182,7 +142,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "circle-stroke-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
-            "#111827",
+            ["coalesce", ["get", "color"], "#2563eb"],
             "#fff"
           ],
         },
@@ -201,7 +161,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
-            "#111827",
+            ["coalesce", ["get", "color"], "#2563eb"],
             "#fff"
           ],
         },
@@ -219,50 +179,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-anchor": "top",
         },
         paint: {
-          "text-color": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            "#111827",
-            ["coalesce", ["get", "color"], "#1e40af"]
-          ],
-          "text-halo-color": "#fff",
-          "text-halo-width": 1.5,
-        },
-      });
-
-      map.addLayer({
-        id: "mrt-interchange-lines",
-        type: "symbol",
-        source: "mrt-stations",
-        minzoom: 12,
-        filter: ["==", ["get", "isInterchange"], true],
-        layout: {
-          "text-field": [
-            "case",
-            [">=", ["length", ["get", "lines"]], 3],
-            [
-              "concat",
-              ["at", 0, ["get", "lines"]],
-              "/",
-              ["at", 1, ["get", "lines"]],
-              "/",
-              ["at", 2, ["get", "lines"]],
-            ],
-            [">=", ["length", ["get", "lines"]], 2],
-            [
-              "concat",
-              ["at", 0, ["get", "lines"]],
-              "/",
-              ["at", 1, ["get", "lines"]],
-            ],
-            ["at", 0, ["get", "lines"]],
-          ],
-          "text-size": 9,
-          "text-offset": [0, -1.3],
-          "text-anchor": "bottom",
-        },
-        paint: {
-          "text-color": "#111827",
+          "text-color": ["coalesce", ["get", "color"], "#1e40af"],
           "text-halo-color": "#fff",
           "text-halo-width": 1.5,
         },
@@ -480,12 +397,16 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const feature = event.features?.[0];
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
-        const props = toMrtPopupProperties(feature.properties);
+        const props = feature.properties ?? {};
         const stationName = props.stationName ?? "MRT Station";
-        const lines = parseMrtLines(props.lines);
-        const linesHtml = lines.length
-          ? `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`
-          : "";
+        let linesHtml = "";
+
+        try {
+          const lines = typeof props.lines === "string" ? JSON.parse(props.lines) : props.lines;
+          if (Array.isArray(lines)) {
+            linesHtml = `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`;
+          }
+        } catch(e) {}
 
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -561,7 +482,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       ],
       { padding: 60, maxZoom: 15, duration: 1200 }
     );
-  }, [blocks, townFilter]);
+  }, [townFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {

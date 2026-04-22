@@ -1,4 +1,5 @@
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
@@ -77,6 +78,7 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
 }: ShortlistDrawerProps) {
+  const { t } = useI18n();
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
@@ -122,10 +124,10 @@ export function ShortlistDrawer({
         <CardHeader className="gap-3 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-1">
-              <CardTitle className="text-2xl">Shortlist compare</CardTitle>
+              <CardTitle className="text-2xl">{t("shortlist.title")}</CardTitle>
             </div>
             <CardAction className="flex flex-col items-end gap-3">
-              <Badge>{rows.length}/4 saved</Badge>
+              <Badge>{t("shortlist.savedCount", { count: rows.length })}</Badge>
               <Button onClick={onToggleOpen} size="sm" variant="ghost" type="button">
                 {isOpen ? "Collapse" : "Expand"}
               </Button>
