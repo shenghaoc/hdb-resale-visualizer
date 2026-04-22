@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 291
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 291
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1754
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 3038
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -691,7 +705,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-432-clementi-ave-3-2026-03-224128",
+      "id": "clementi-432-clementi-ave-3-2026-03-224157",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

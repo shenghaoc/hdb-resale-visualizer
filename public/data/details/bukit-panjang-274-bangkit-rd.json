@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BANGKIT LRT STATION",
       "distanceMeters": 389
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 389
+      },
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 400
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 894
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -665,7 +679,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-274-bangkit-rd-2026-02-223522",
+      "id": "bukit-panjang-274-bangkit-rd-2026-02-223545",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -678,7 +692,7 @@
       "pricePerSqft": 499.91
     },
     {
-      "id": "bukit-panjang-274-bangkit-rd-2026-02-223525",
+      "id": "bukit-panjang-274-bangkit-rd-2026-02-223548",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

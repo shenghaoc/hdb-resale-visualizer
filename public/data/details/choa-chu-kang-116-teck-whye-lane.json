@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KEAT HONG LRT STATION",
       "distanceMeters": 290
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 290
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 352
+      },
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 721
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -444,7 +458,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2026-01-224074",
+      "id": "choa-chu-kang-116-teck-whye-lane-2026-01-224103",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -613,7 +627,7 @@
       "pricePerSqft": 274.87
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2016-10-971306",
+      "id": "choa-chu-kang-116-teck-whye-lane-2016-10-971428",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -626,7 +640,7 @@
       "pricePerSqft": 276.08
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2016-10-971351",
+      "id": "choa-chu-kang-116-teck-whye-lane-2016-10-971473",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -639,7 +653,7 @@
       "pricePerSqft": 307.12
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2016-08-967775",
+      "id": "choa-chu-kang-116-teck-whye-lane-2016-08-967897",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -652,7 +666,7 @@
       "pricePerSqft": 294.79
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2014-08-644454",
+      "id": "choa-chu-kang-116-teck-whye-lane-2014-08-644576",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -665,7 +679,7 @@
       "pricePerSqft": 347.39
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2013-09-630529",
+      "id": "choa-chu-kang-116-teck-whye-lane-2013-09-630651",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -678,7 +692,7 @@
       "pricePerSqft": 348.16
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2012-09-612473",
+      "id": "choa-chu-kang-116-teck-whye-lane-2012-09-612595",
       "month": "2012-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -691,7 +705,7 @@
       "pricePerSqft": 365.3
     },
     {
-      "id": "choa-chu-kang-116-teck-whye-lane-2012-04-601863",
+      "id": "choa-chu-kang-116-teck-whye-lane-2012-04-601985",
       "month": "2012-04",
       "flatType": "4 ROOM",
       "storeyRange": "06 TO 10",

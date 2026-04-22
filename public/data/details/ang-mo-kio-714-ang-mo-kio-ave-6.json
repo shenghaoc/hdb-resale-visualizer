@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 392
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 392
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 1012
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1171
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -556,7 +570,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2026-03-222293",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2026-03-222297",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -751,7 +765,7 @@
       "pricePerSqft": 495.74
     },
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2016-10-970918",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2016-10-971040",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -764,7 +778,7 @@
       "pricePerSqft": 498.09
     },
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2016-10-970922",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2016-10-971044",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -777,7 +791,7 @@
       "pricePerSqft": 534.78
     },
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2015-04-942157",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2015-04-942279",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -790,7 +804,7 @@
       "pricePerSqft": 530.88
     },
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2013-05-624536",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2013-05-624658",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -803,7 +817,7 @@
       "pricePerSqft": 523.07
     },
     {
-      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2011-08-587371",
+      "id": "ang-mo-kio-714-ang-mo-kio-ave-6-2011-08-587493",
       "month": "2011-08",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

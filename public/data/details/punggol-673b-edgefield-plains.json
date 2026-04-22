@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 313
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 313
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 528
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 733
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -209,7 +223,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-673b-edgefield-plains-2026-04-225974",
+      "id": "punggol-673b-edgefield-plains-2026-04-226032",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -222,7 +236,7 @@
       "pricePerSqft": 645.16
     },
     {
-      "id": "punggol-673b-edgefield-plains-2026-02-225964",
+      "id": "punggol-673b-edgefield-plains-2026-02-226022",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -235,7 +249,7 @@
       "pricePerSqft": 619.35
     },
     {
-      "id": "punggol-673b-edgefield-plains-2026-01-225960",
+      "id": "punggol-673b-edgefield-plains-2026-01-226018",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

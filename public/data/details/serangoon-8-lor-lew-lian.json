@@ -22,8 +22,8 @@
       44
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 288
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 288
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 649
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 1186
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -683,7 +697,7 @@
       "pricePerSqft": 485.63
     },
     {
-      "id": "serangoon-8-lor-lew-lian-2016-10-972108",
+      "id": "serangoon-8-lor-lew-lian-2016-10-972230",
       "month": "2016-10",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",

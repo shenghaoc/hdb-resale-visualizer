@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 740
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 740
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1111
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1286
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -611,7 +625,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-288-bishan-st-24-2026-04-222777",
+      "id": "bishan-288-bishan-st-24-2026-04-222791",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

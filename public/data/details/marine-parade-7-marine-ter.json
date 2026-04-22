@@ -22,8 +22,8 @@
       70
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1974,
+      1974
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 332
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 332
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 924
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1385
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -784,7 +798,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-7-marine-ter-2026-01-225607",
+      "id": "marine-parade-7-marine-ter-2026-01-225659",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

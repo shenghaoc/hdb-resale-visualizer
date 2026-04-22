@@ -22,8 +22,8 @@
       90
     ],
     "leaseCommenceRange": [
-      2006,
-      2006
+      2005,
+      2005
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 333
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 333
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1379
+      },
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 2693
+      }
+    ]
   },
   "monthlyTrend": [
     {

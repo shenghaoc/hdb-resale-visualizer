@@ -22,8 +22,8 @@
       78
     ],
     "leaseCommenceRange": [
-      1972,
-      1972
+      1970,
+      1970
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 83
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 83
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 537
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 1013
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -532,7 +546,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-24-bendemeer-rd-2026-03-225410",
+      "id": "kallang-whampoa-24-bendemeer-rd-2026-03-225457",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

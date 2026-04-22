@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      1982,
-      1982
+      1981,
+      1981
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 787
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 787
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 911
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1170
+      }
+    ]
   },
   "monthlyTrend": [
     {

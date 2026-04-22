@@ -22,8 +22,8 @@
       69
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1969,
+      1969
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1136
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1532
+      }
+    ]
   },
   "monthlyTrend": [
     {

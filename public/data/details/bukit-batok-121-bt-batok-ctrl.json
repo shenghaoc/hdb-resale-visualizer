@@ -22,8 +22,8 @@
       155
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 305
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 305
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 908
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1973
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -791,7 +805,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-121-bt-batok-ctrl-2026-01-223186",
+      "id": "bukit-batok-121-bt-batok-ctrl-2026-01-223205",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -999,7 +1013,7 @@
       "pricePerSqft": 413.26
     },
     {
-      "id": "bukit-batok-121-bt-batok-ctrl-2016-10-971154",
+      "id": "bukit-batok-121-bt-batok-ctrl-2016-10-971276",
       "month": "2016-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -1012,7 +1026,7 @@
       "pricePerSqft": 455.53
     },
     {
-      "id": "bukit-batok-121-bt-batok-ctrl-2015-12-954939",
+      "id": "bukit-batok-121-bt-batok-ctrl-2015-12-955061",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -1025,7 +1039,7 @@
       "pricePerSqft": 424.26
     },
     {
-      "id": "bukit-batok-121-bt-batok-ctrl-2015-10-951796",
+      "id": "bukit-batok-121-bt-batok-ctrl-2015-10-951918",
       "month": "2015-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -1038,7 +1052,7 @@
       "pricePerSqft": 408.02
     },
     {
-      "id": "bukit-batok-121-bt-batok-ctrl-2015-06-945586",
+      "id": "bukit-batok-121-bt-batok-ctrl-2015-06-945708",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

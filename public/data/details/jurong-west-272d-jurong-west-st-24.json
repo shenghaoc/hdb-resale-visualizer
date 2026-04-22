@@ -11,24 +11,24 @@
     },
     "medianPrice": 550000,
     "priceIqr": [
-      530000,
-      569500
+      535000,
+      569250
     ],
-    "pricePerSqmMedian": 5089.29,
-    "pricePerSqftMedian": 472.81,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 5018.56,
+    "pricePerSqftMedian": 466.24,
+    "transactionCount": 8,
     "floorAreaRange": [
       94,
       115
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2007-06",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BOON LAY MRT STATION",
       "distanceMeters": 1388
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1388
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 1688
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1948
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -355,11 +369,30 @@
       "medianPrice": 608000,
       "transactionCount": 1,
       "medianPricePerSqm": 5333.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4910.71
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-272d-jurong-west-st-24-2026-03-225249",
+      "id": "jurong-west-272d-jurong-west-st-24-2026-04-225295",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 112,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 4910.71,
+      "pricePerSqft": 456.22
+    },
+    {
+      "id": "jurong-west-272d-jurong-west-st-24-2026-03-225294",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -372,7 +405,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "jurong-west-272d-jurong-west-st-24-2026-02-225247",
+      "id": "jurong-west-272d-jurong-west-st-24-2026-02-225292",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -604,19 +637,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 3214.29,
       "pricePerSqft": 298.62
-    },
-    {
-      "id": "jurong-west-272d-jurong-west-st-24-2018-09-35723",
-      "month": "2018-09",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 112,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "84 years 01 month",
-      "resalePrice": 381800,
-      "pricePerSqm": 3408.93,
-      "pricePerSqft": 316.7
     }
   ]
 }

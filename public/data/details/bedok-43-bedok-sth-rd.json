@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 753
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 753
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 892
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1359
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -712,7 +726,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-43-bedok-sth-rd-2026-01-222586",
+      "id": "bedok-43-bedok-sth-rd-2026-01-222597",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

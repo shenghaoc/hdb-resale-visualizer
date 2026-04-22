@@ -22,8 +22,8 @@
       152
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 455
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 455
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 603
+      },
+      {
+        "stationName": "HILLVIEW MRT STATION",
+        "distanceMeters": 2019
+      }
+    ]
   },
   "monthlyTrend": [
     {

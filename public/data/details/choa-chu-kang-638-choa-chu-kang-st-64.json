@@ -22,8 +22,8 @@
       215
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "YEW TEE MRT STATION",
       "distanceMeters": 119
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YEW TEE MRT STATION",
+        "distanceMeters": 119
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 1409
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 1484
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -379,7 +393,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2026-01-223941",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2026-01-223965",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -574,7 +588,7 @@
       "pricePerSqft": 417.69
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2016-06-964373",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2016-06-964495",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -587,7 +601,7 @@
       "pricePerSqft": 438.5
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2015-03-941128",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2015-03-941250",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -600,7 +614,7 @@
       "pricePerSqft": 459.87
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2014-04-638979",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2014-04-639101",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -613,7 +627,7 @@
       "pricePerSqft": 481.89
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2013-02-620844",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2013-02-620966",
       "month": "2013-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -626,7 +640,7 @@
       "pricePerSqft": 463.01
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2012-10-614337",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2012-10-614459",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

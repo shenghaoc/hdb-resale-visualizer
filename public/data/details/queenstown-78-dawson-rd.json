@@ -22,8 +22,8 @@
       88
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 424
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 424
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 916
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1554
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -89,7 +103,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-78-dawson-rd-2026-01-226439",
+      "id": "queenstown-78-dawson-rd-2026-01-226502",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       99
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 832
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 832
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1046
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1461
+      }
+    ]
   },
   "monthlyTrend": [
     {

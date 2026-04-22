@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PETIR LRT STATION",
       "distanceMeters": 325
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 325
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 414
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 573
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -580,7 +594,7 @@
       "pricePerSqft": 421.43
     },
     {
-      "id": "bukit-panjang-153-gangsa-rd-2016-06-964293",
+      "id": "bukit-panjang-153-gangsa-rd-2016-06-964415",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -593,7 +607,7 @@
       "pricePerSqft": 408.38
     },
     {
-      "id": "bukit-panjang-153-gangsa-rd-2016-05-962489",
+      "id": "bukit-panjang-153-gangsa-rd-2016-05-962611",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

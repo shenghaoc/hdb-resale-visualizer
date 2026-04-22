@@ -22,8 +22,8 @@
       144
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 529
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 529
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 749
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 919
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -588,7 +602,7 @@
       "pricePerSqft": 419.04
     },
     {
-      "id": "hougang-559-hougang-st-51-2016-08-968072",
+      "id": "hougang-559-hougang-st-51-2016-08-968194",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -601,7 +615,7 @@
       "pricePerSqft": 432.26
     },
     {
-      "id": "hougang-559-hougang-st-51-2015-05-944326",
+      "id": "hougang-559-hougang-st-51-2015-05-944448",
       "month": "2015-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -614,7 +628,7 @@
       "pricePerSqft": 396.77
     },
     {
-      "id": "hougang-559-hougang-st-51-2014-11-648986",
+      "id": "hougang-559-hougang-st-51-2014-11-649108",
       "month": "2014-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -627,7 +641,7 @@
       "pricePerSqft": 435.28
     },
     {
-      "id": "hougang-559-hougang-st-51-2012-07-608643",
+      "id": "hougang-559-hougang-st-51-2012-07-608765",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -640,7 +654,7 @@
       "pricePerSqft": 444.44
     },
     {
-      "id": "hougang-559-hougang-st-51-2011-10-591453",
+      "id": "hougang-559-hougang-st-51-2011-10-591575",
       "month": "2011-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -653,7 +667,7 @@
       "pricePerSqft": 391.61
     },
     {
-      "id": "hougang-559-hougang-st-51-2010-07-558025",
+      "id": "hougang-559-hougang-st-51-2010-07-558147",
       "month": "2010-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

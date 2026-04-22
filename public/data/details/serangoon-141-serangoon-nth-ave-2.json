@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1468
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1468
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1980
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1985
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -546,7 +560,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-141-serangoon-nth-ave-2-2026-04-227371",
+      "id": "serangoon-141-serangoon-nth-ave-2-2026-04-227447",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -793,7 +807,7 @@
       "pricePerSqft": 364.67
     },
     {
-      "id": "serangoon-141-serangoon-nth-ave-2-2016-07-966931",
+      "id": "serangoon-141-serangoon-nth-ave-2-2016-07-967053",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

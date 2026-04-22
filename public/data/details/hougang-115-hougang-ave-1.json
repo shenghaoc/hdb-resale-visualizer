@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 851
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 851
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1433
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1540
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -883,7 +897,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-115-hougang-ave-1-2026-04-224492",
+      "id": "hougang-115-hougang-ave-1-2026-04-224523",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       100
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 1003
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1003
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1779
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 2023
+      }
+    ]
   },
   "monthlyTrend": [
     {

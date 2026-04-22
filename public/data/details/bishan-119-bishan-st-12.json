@@ -22,8 +22,8 @@
       151
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2023-10",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 413
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 413
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 818
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1166
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -648,7 +662,7 @@
       "pricePerSqft": 576.77
     },
     {
-      "id": "bishan-119-bishan-st-12-2016-10-971089",
+      "id": "bishan-119-bishan-st-12-2016-10-971211",
       "month": "2016-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -661,7 +675,7 @@
       "pricePerSqft": 600.95
     },
     {
-      "id": "bishan-119-bishan-st-12-2014-06-641704",
+      "id": "bishan-119-bishan-st-12-2014-06-641826",
       "month": "2014-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -674,7 +688,7 @@
       "pricePerSqft": 555.57
     },
     {
-      "id": "bishan-119-bishan-st-12-2014-04-638740",
+      "id": "bishan-119-bishan-st-12-2014-04-638862",
       "month": "2014-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -687,7 +701,7 @@
       "pricePerSqft": 508.81
     },
     {
-      "id": "bishan-119-bishan-st-12-2013-08-629049",
+      "id": "bishan-119-bishan-st-12-2013-08-629171",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -700,7 +714,7 @@
       "pricePerSqft": 584.71
     },
     {
-      "id": "bishan-119-bishan-st-12-2013-04-622958",
+      "id": "bishan-119-bishan-st-12-2013-04-623080",
       "month": "2013-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -713,7 +727,7 @@
       "pricePerSqft": 516.77
     },
     {
-      "id": "bishan-119-bishan-st-12-2013-03-621622",
+      "id": "bishan-119-bishan-st-12-2013-03-621744",
       "month": "2013-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -726,7 +740,7 @@
       "pricePerSqft": 529.03
     },
     {
-      "id": "bishan-119-bishan-st-12-2011-01-573756",
+      "id": "bishan-119-bishan-st-12-2011-01-573878",
       "month": "2011-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

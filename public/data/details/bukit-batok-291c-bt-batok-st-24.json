@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 901
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 901
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1772
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1778
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -672,7 +686,7 @@
       "pricePerSqft": 397.72
     },
     {
-      "id": "bukit-batok-291c-bt-batok-st-24-2016-03-958835",
+      "id": "bukit-batok-291c-bt-batok-st-24-2016-03-958957",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -685,7 +699,7 @@
       "pricePerSqft": 387.74
     },
     {
-      "id": "bukit-batok-291c-bt-batok-st-24-2015-08-948762",
+      "id": "bukit-batok-291c-bt-batok-st-24-2015-08-948884",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

@@ -9,26 +9,26 @@
       "lat": 1.27686784151249,
       "lng": 103.808148580097
     },
-    "medianPrice": 899000,
+    "medianPrice": 820000,
     "priceIqr": [
-      800660,
-      982666
+      800000,
+      980888
     ],
-    "pricePerSqmMedian": 8894.79,
-    "pricePerSqftMedian": 826.35,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 8890.91,
+    "pricePerSqftMedian": 825.99,
+    "transactionCount": 9,
     "floorAreaRange": [
       90,
       114
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-04",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TELOK BLANGAH MRT STATION",
       "distanceMeters": 710
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 710
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 834
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1703
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -428,11 +442,30 @@
       "medianPrice": 988000,
       "transactionCount": 1,
       "medianPricePerSqm": 8981.82
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7000
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-87-telok-blangah-hts-2026-03-223480",
+      "id": "bukit-merah-87-telok-blangah-hts-2026-04-223439",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years",
+      "resalePrice": 630000,
+      "pricePerSqm": 7000,
+      "pricePerSqft": 650.32
+    },
+    {
+      "id": "bukit-merah-87-telok-blangah-hts-2026-03-223503",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -677,19 +710,6 @@
       "resalePrice": 585000,
       "pricePerSqm": 6500,
       "pricePerSqft": 603.87
-    },
-    {
-      "id": "bukit-merah-87-telok-blangah-hts-2021-03-92610",
-      "month": "2021-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "81 years 02 months",
-      "resalePrice": 605000,
-      "pricePerSqm": 6722.22,
-      "pricePerSqft": 624.52
     }
   ]
 }

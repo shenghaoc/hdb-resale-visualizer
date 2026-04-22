@@ -22,8 +22,8 @@
       102
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 376
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 376
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1176
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1439
+      }
+    ]
   },
   "monthlyTrend": [
     {

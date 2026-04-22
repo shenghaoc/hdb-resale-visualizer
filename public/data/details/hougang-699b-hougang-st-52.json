@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 653
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 653
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 877
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 1136
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -358,7 +372,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-699b-hougang-st-52-2026-01-224678",
+      "id": "hougang-699b-hougang-st-52-2026-01-224713",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -553,7 +567,7 @@
       "pricePerSqft": 390.19
     },
     {
-      "id": "hougang-699b-hougang-st-52-2016-02-957862",
+      "id": "hougang-699b-hougang-st-52-2016-02-957984",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -566,7 +580,7 @@
       "pricePerSqft": 390.19
     },
     {
-      "id": "hougang-699b-hougang-st-52-2015-10-952186",
+      "id": "hougang-699b-hougang-st-52-2015-10-952308",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -579,7 +593,7 @@
       "pricePerSqft": 399.48
     },
     {
-      "id": "hougang-699b-hougang-st-52-2015-09-950535",
+      "id": "hougang-699b-hougang-st-52-2015-09-950657",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -592,7 +606,7 @@
       "pricePerSqft": 404.13
     },
     {
-      "id": "hougang-699b-hougang-st-52-2015-02-940024",
+      "id": "hougang-699b-hougang-st-52-2015-02-940146",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -605,7 +619,7 @@
       "pricePerSqft": 404.95
     },
     {
-      "id": "hougang-699b-hougang-st-52-2012-11-616358",
+      "id": "hougang-699b-hougang-st-52-2012-11-616480",
       "month": "2012-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

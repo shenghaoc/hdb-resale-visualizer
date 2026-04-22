@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 639
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 639
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 901
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1057
+      }
+    ]
   },
   "monthlyTrend": [
     {

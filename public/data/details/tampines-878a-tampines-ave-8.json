@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 1163
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1163
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1473
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1733
+      }
+    ]
   },
   "monthlyTrend": [
     {

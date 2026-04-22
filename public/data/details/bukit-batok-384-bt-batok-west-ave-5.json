@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2004,
+      2004
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 405
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 405
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1507
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1527
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -618,7 +632,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-03-223000",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-03-223016",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -631,7 +645,7 @@
       "pricePerSqft": 560.45
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-02-223132",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-02-223151",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -644,7 +658,7 @@
       "pricePerSqft": 590.49
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-222990",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223006",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -657,7 +671,7 @@
       "pricePerSqft": 614.87
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-222991",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223007",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

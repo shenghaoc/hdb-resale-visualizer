@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 40
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 40
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 437
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1713
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -688,7 +702,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-43-marine-cres-2026-02-225624",
+      "id": "marine-parade-43-marine-cres-2026-02-225676",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

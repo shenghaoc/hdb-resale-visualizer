@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 368
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 368
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1304
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1656
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -136,7 +150,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-520b-tampines-ctrl-8-2026-01-227809",
+      "id": "tampines-520b-tampines-ctrl-8-2026-01-227894",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

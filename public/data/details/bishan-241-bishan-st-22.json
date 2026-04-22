@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 1050
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1050
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1131
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 1358
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -524,7 +538,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-241-bishan-st-22-2026-03-222730",
+      "id": "bishan-241-bishan-st-22-2026-03-222742",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -537,7 +551,7 @@
       "pricePerSqft": 772.75
     },
     {
-      "id": "bishan-241-bishan-st-22-2026-02-222728",
+      "id": "bishan-241-bishan-st-22-2026-02-222740",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -771,7 +785,7 @@
       "pricePerSqft": 582.68
     },
     {
-      "id": "bishan-241-bishan-st-22-2013-03-621621",
+      "id": "bishan-241-bishan-st-22-2013-03-621743",
       "month": "2013-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

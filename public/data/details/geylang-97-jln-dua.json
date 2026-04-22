@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      1969,
-      1969
+      1962,
+      1962
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "DAKOTA MRT STATION",
       "distanceMeters": 103
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 103
+      },
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 656
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 943
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -654,7 +668,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-97-jln-dua-2026-02-224338",
+      "id": "geylang-97-jln-dua-2026-02-224368",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

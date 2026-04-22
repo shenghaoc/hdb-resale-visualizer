@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KEAT HONG LRT STATION",
       "distanceMeters": 370
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 370
+      },
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 512
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 771
+      }
+    ]
   },
   "monthlyTrend": [
     {

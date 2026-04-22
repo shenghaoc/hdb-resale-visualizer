@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2012,
+      2012
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL LRT STATION",
       "distanceMeters": 101
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 101
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 210
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 428
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       173
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1984,
+      1984
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 627
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 627
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 920
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1191
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -366,7 +380,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-118-marsiling-rise-2026-03-228756",
+      "id": "woodlands-118-marsiling-rise-2026-03-228868",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -561,7 +575,7 @@
       "pricePerSqft": 321.34
     },
     {
-      "id": "woodlands-118-marsiling-rise-2016-08-969064",
+      "id": "woodlands-118-marsiling-rise-2016-08-969186",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -574,7 +588,7 @@
       "pricePerSqft": 322.21
     },
     {
-      "id": "woodlands-118-marsiling-rise-2013-11-633911",
+      "id": "woodlands-118-marsiling-rise-2013-11-634033",
       "month": "2013-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -587,7 +601,7 @@
       "pricePerSqft": 332.79
     },
     {
-      "id": "woodlands-118-marsiling-rise-2012-03-601109",
+      "id": "woodlands-118-marsiling-rise-2012-03-601231",
       "month": "2012-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 05",
@@ -600,7 +614,7 @@
       "pricePerSqft": 316.84
     },
     {
-      "id": "woodlands-118-marsiling-rise-2011-11-594028",
+      "id": "woodlands-118-marsiling-rise-2011-11-594150",
       "month": "2011-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -613,7 +627,7 @@
       "pricePerSqft": 344.29
     },
     {
-      "id": "woodlands-118-marsiling-rise-2011-04-581178",
+      "id": "woodlands-118-marsiling-rise-2011-04-581300",
       "month": "2011-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

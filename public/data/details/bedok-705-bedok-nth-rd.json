@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 198
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 198
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1076
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1545
+      }
+    ]
   },
   "monthlyTrend": [
     {

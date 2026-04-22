@@ -9,26 +9,26 @@
       "lat": 1.39104986151367,
       "lng": 103.888846713825
     },
-    "medianPrice": 645888,
+    "medianPrice": 647944,
     "priceIqr": [
-      620944,
-      657500
+      632972,
+      668472
     ],
-    "pricePerSqmMedian": 5871.71,
-    "pricePerSqftMedian": 545.5,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 5890.4,
+    "pricePerSqftMedian": 547.24,
+    "transactionCount": 8,
     "floorAreaRange": [
       92,
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-04",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 359
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 503
+      },
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 677
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -361,9 +375,28 @@
       "medianPrice": 667500,
       "transactionCount": 2,
       "medianPricePerSqm": 6068.18
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 678888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6171.71
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-314b-anchorvale-link-2026-04-227231",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 110,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 05 months",
+      "resalePrice": 678888,
+      "pricePerSqm": 6171.71,
+      "pricePerSqft": 573.37
+    },
     {
       "id": "sengkang-314b-anchorvale-link-2025-07-214586",
       "month": "2025-07",
@@ -610,19 +643,6 @@
       "resalePrice": 455000,
       "pricePerSqm": 4136.36,
       "pricePerSqft": 384.28
-    },
-    {
-      "id": "sengkang-314b-anchorvale-link-2019-08-55845",
-      "month": "2019-08",
-      "flatType": "5 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 110,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "83 years 01 month",
-      "resalePrice": 464000,
-      "pricePerSqm": 4218.18,
-      "pricePerSqft": 391.88
     }
   ]
 }

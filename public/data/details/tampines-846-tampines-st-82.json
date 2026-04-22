@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 768
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 768
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 782
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1756
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -887,7 +901,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-846-tampines-st-82-2026-03-227511",
+      "id": "tampines-846-tampines-st-82-2026-03-227591",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

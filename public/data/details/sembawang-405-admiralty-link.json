@@ -22,8 +22,8 @@
       90
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 612
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 612
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1819
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2171
+      }
+    ]
   },
   "monthlyTrend": [
     {

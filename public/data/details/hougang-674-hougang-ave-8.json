@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 815
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 815
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1331
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1522
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -858,7 +872,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-674-hougang-ave-8-2026-02-224528",
+      "id": "hougang-674-hougang-ave-8-2026-02-224559",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

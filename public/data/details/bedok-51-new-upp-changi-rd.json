@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 547
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 547
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1102
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1403
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1156,7 +1170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-51-new-upp-changi-rd-2026-01-222607",
+      "id": "bedok-51-new-upp-changi-rd-2026-01-222619",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

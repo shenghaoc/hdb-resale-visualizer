@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1974,
+      1974
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 340
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 340
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 974
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1338
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -748,7 +762,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-3-marine-ter-2026-03-225628",
+      "id": "marine-parade-3-marine-ter-2026-03-225680",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -982,7 +996,7 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "marine-parade-3-marine-ter-2016-05-963069",
+      "id": "marine-parade-3-marine-ter-2016-05-963191",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -995,7 +1009,7 @@
       "pricePerSqft": 641.18
     },
     {
-      "id": "marine-parade-3-marine-ter-2016-04-961208",
+      "id": "marine-parade-3-marine-ter-2016-04-961330",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

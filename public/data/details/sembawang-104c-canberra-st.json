@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CANBERRA MRT STATION",
       "distanceMeters": 721
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 721
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1267
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2258
+      }
+    ]
   },
   "monthlyTrend": [
     {

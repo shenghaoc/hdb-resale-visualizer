@@ -9,21 +9,21 @@
       "lat": 1.31423937033551,
       "lng": 103.870914031459
     },
-    "medianPrice": 450444,
+    "medianPrice": 450000,
     "priceIqr": [
-      424000,
-      459722
+      423000,
+      459444
     ],
-    "pricePerSqmMedian": 6659.26,
-    "pricePerSqftMedian": 618.66,
-    "transactionCount": 10,
+    "pricePerSqmMedian": 6584.62,
+    "pricePerSqftMedian": 611.73,
+    "transactionCount": 11,
     "floorAreaRange": [
       64.8,
       130
     ],
     "leaseCommenceRange": [
-      1974,
-      1974
+      1973,
+      1973
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KALLANG MRT STATION",
       "distanceMeters": 283
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 283
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 770
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 860
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1295,14 +1309,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 458888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7059.82
+      "medianPrice": 443444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6822.22
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-04-225467",
+      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-04-225516",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1315,7 +1329,20 @@
       "pricePerSqft": 655.88
     },
     {
-      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-03-225464",
+      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-04-225517",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "46 years 10 months",
+      "resalePrice": 428000,
+      "pricePerSqm": 6584.62,
+      "pricePerSqft": 611.73
+    },
+    {
+      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-03-225513",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1328,7 +1355,7 @@
       "pricePerSqft": 633.43
     },
     {
-      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-03-225465",
+      "id": "kallang-whampoa-11-upp-boon-keng-rd-2026-03-225514",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1547,19 +1574,6 @@
       "resalePrice": 345000,
       "pricePerSqm": 5307.69,
       "pricePerSqft": 493.1
-    },
-    {
-      "id": "kallang-whampoa-11-upp-boon-keng-rd-2022-07-129254",
-      "month": "2022-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "50 years 06 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 4923.08,
-      "pricePerSqft": 457.37
     }
   ]
 }

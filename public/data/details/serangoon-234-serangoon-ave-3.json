@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 478
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 478
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 633
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1632
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -838,7 +852,7 @@
       "pricePerSqft": 534.71
     },
     {
-      "id": "serangoon-234-serangoon-ave-3-2016-06-965260",
+      "id": "serangoon-234-serangoon-ave-3-2016-06-965382",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -851,7 +865,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "serangoon-234-serangoon-ave-3-2015-07-948144",
+      "id": "serangoon-234-serangoon-ave-3-2015-07-948266",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -864,7 +878,7 @@
       "pricePerSqft": 518.11
     },
     {
-      "id": "serangoon-234-serangoon-ave-3-2015-02-940465",
+      "id": "serangoon-234-serangoon-ave-3-2015-02-940587",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

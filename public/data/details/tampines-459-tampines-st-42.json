@@ -22,8 +22,8 @@
       89
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 218
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 218
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1134
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1694
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -784,7 +798,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-459-tampines-st-42-2026-02-227663",
+      "id": "tampines-459-tampines-st-42-2026-02-227747",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -797,7 +811,7 @@
       "pricePerSqft": 611.61
     },
     {
-      "id": "tampines-459-tampines-st-42-2026-01-227662",
+      "id": "tampines-459-tampines-st-42-2026-01-227746",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -992,7 +1006,7 @@
       "pricePerSqft": 396.67
     },
     {
-      "id": "tampines-459-tampines-st-42-2016-09-970500",
+      "id": "tampines-459-tampines-st-42-2016-09-970622",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1005,7 +1019,7 @@
       "pricePerSqft": 403.69
     },
     {
-      "id": "tampines-459-tampines-st-42-2016-05-963526",
+      "id": "tampines-459-tampines-st-42-2016-05-963648",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1018,7 +1032,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "tampines-459-tampines-st-42-2016-02-958312",
+      "id": "tampines-459-tampines-st-42-2016-02-958434",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1031,7 +1045,7 @@
       "pricePerSqft": 442.4
     },
     {
-      "id": "tampines-459-tampines-st-42-2016-01-957109",
+      "id": "tampines-459-tampines-st-42-2016-01-957231",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

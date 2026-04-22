@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 653
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 653
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1267
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1292
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -245,7 +259,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-356-hougang-ave-7-2026-01-224516",
+      "id": "hougang-356-hougang-ave-7-2026-01-224547",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -297,7 +311,7 @@
       "pricePerSqft": 518.9
     },
     {
-      "id": "hougang-356-hougang-ave-7-2016-11-973087",
+      "id": "hougang-356-hougang-ave-7-2016-11-973209",
       "month": "2016-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -310,7 +324,7 @@
       "pricePerSqft": 457.58
     },
     {
-      "id": "hougang-356-hougang-ave-7-2015-11-953773",
+      "id": "hougang-356-hougang-ave-7-2015-11-953895",
       "month": "2015-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -323,7 +337,7 @@
       "pricePerSqft": 373.88
     },
     {
-      "id": "hougang-356-hougang-ave-7-2015-05-944257",
+      "id": "hougang-356-hougang-ave-7-2015-05-944379",
       "month": "2015-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -336,7 +350,7 @@
       "pricePerSqft": 429.85
     },
     {
-      "id": "hougang-356-hougang-ave-7-2014-03-637611",
+      "id": "hougang-356-hougang-ave-7-2014-03-637733",
       "month": "2014-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -349,7 +363,7 @@
       "pricePerSqft": 450.65
     },
     {
-      "id": "hougang-356-hougang-ave-7-2014-01-635427",
+      "id": "hougang-356-hougang-ave-7-2014-01-635549",
       "month": "2014-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -362,7 +376,7 @@
       "pricePerSqft": 424.86
     },
     {
-      "id": "hougang-356-hougang-ave-7-2013-11-633266",
+      "id": "hougang-356-hougang-ave-7-2013-11-633388",
       "month": "2013-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -375,7 +389,7 @@
       "pricePerSqft": 436.19
     },
     {
-      "id": "hougang-356-hougang-ave-7-2010-06-554275",
+      "id": "hougang-356-hougang-ave-7-2010-06-554397",
       "month": "2010-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -388,7 +402,7 @@
       "pricePerSqft": 318.92
     },
     {
-      "id": "hougang-356-hougang-ave-7-2010-06-554276",
+      "id": "hougang-356-hougang-ave-7-2010-06-554398",
       "month": "2010-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -401,7 +415,7 @@
       "pricePerSqft": 335.36
     },
     {
-      "id": "hougang-356-hougang-ave-7-2009-11-534028",
+      "id": "hougang-356-hougang-ave-7-2009-11-534150",
       "month": "2009-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -414,7 +428,7 @@
       "pricePerSqft": 305.06
     },
     {
-      "id": "hougang-356-hougang-ave-7-2009-05-517545",
+      "id": "hougang-356-hougang-ave-7-2009-05-517667",
       "month": "2009-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -427,7 +441,7 @@
       "pricePerSqft": 296.74
     },
     {
-      "id": "hougang-356-hougang-ave-7-2008-09-499688",
+      "id": "hougang-356-hougang-ave-7-2008-09-499810",
       "month": "2008-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -440,7 +454,7 @@
       "pricePerSqft": 277.58
     },
     {
-      "id": "hougang-356-hougang-ave-7-2008-08-497395",
+      "id": "hougang-356-hougang-ave-7-2008-08-497517",
       "month": "2008-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -453,7 +467,7 @@
       "pricePerSqft": 279.4
     },
     {
-      "id": "hougang-356-hougang-ave-7-2008-07-495010",
+      "id": "hougang-356-hougang-ave-7-2008-07-495132",
       "month": "2008-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -466,7 +480,7 @@
       "pricePerSqft": 274.55
     },
     {
-      "id": "hougang-356-hougang-ave-7-2007-06-465556",
+      "id": "hougang-356-hougang-ave-7-2007-06-465678",
       "month": "2007-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -479,7 +493,7 @@
       "pricePerSqft": 184.81
     },
     {
-      "id": "hougang-356-hougang-ave-7-2006-07-441147",
+      "id": "hougang-356-hougang-ave-7-2006-07-441269",
       "month": "2006-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -492,7 +506,7 @@
       "pricePerSqft": 194.13
     },
     {
-      "id": "hougang-356-hougang-ave-7-2006-01-427261",
+      "id": "hougang-356-hougang-ave-7-2006-01-427383",
       "month": "2006-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

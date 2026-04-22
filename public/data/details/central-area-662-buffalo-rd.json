@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1982,
-      1982
+      1981,
+      1981
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LITTLE INDIA MRT STATION",
       "distanceMeters": 30
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 30
+      },
+      {
+        "stationName": "ROCHOR MRT STATION",
+        "distanceMeters": 415
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 594
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -683,7 +697,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-662-buffalo-rd-2026-01-223769",
+      "id": "central-area-662-buffalo-rd-2026-01-223793",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -696,7 +710,7 @@
       "pricePerSqft": 662.78
     },
     {
-      "id": "central-area-662-buffalo-rd-2026-01-223770",
+      "id": "central-area-662-buffalo-rd-2026-01-223794",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

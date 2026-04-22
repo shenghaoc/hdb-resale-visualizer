@@ -22,8 +22,8 @@
       100
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEGAR LRT STATION",
       "distanceMeters": 54
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 54
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 395
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 486
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -784,7 +798,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-510-jelapang-rd-2026-03-223560",
+      "id": "bukit-panjang-510-jelapang-rd-2026-03-223583",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

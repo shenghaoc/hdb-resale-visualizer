@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SIMEI MRT STATION",
       "distanceMeters": 537
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 537
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 633
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1052
+      }
+    ]
   },
   "monthlyTrend": [
     {

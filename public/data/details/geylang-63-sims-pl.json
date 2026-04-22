@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ALJUNIED MRT STATION",
       "distanceMeters": 326
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 326
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 997
+      },
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 1034
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -190,7 +204,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-63-sims-pl-2026-03-224348",
+      "id": "geylang-63-sims-pl-2026-03-224378",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -203,7 +217,7 @@
       "pricePerSqft": 980.95
     },
     {
-      "id": "geylang-63-sims-pl-2026-03-224349",
+      "id": "geylang-63-sims-pl-2026-03-224379",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",
@@ -216,7 +230,7 @@
       "pricePerSqft": 1005.39
     },
     {
-      "id": "geylang-63-sims-pl-2026-01-224347",
+      "id": "geylang-63-sims-pl-2026-01-224377",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

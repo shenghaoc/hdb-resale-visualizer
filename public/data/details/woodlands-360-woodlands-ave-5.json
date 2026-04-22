@@ -22,8 +22,8 @@
       150
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 325
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 325
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1131
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1209
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -335,7 +349,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-360-woodlands-ave-5-2026-03-228770",
+      "id": "woodlands-360-woodlands-ave-5-2026-03-228882",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -517,7 +531,7 @@
       "pricePerSqft": 430.01
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2015-06-946866",
+      "id": "woodlands-360-woodlands-ave-5-2015-06-946988",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -530,7 +544,7 @@
       "pricePerSqft": 374.19
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2015-03-941981",
+      "id": "woodlands-360-woodlands-ave-5-2015-03-942103",
       "month": "2015-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -543,7 +557,7 @@
       "pricePerSqft": 369.72
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2014-07-643998",
+      "id": "woodlands-360-woodlands-ave-5-2014-07-644120",
       "month": "2014-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -556,7 +570,7 @@
       "pricePerSqft": 364.52
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2013-02-621377",
+      "id": "woodlands-360-woodlands-ave-5-2013-02-621499",
       "month": "2013-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -569,7 +583,7 @@
       "pricePerSqft": 384.62
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2011-12-595632",
+      "id": "woodlands-360-woodlands-ave-5-2011-12-595754",
       "month": "2011-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -582,7 +596,7 @@
       "pricePerSqft": 372.9
     },
     {
-      "id": "woodlands-360-woodlands-ave-5-2010-07-559908",
+      "id": "woodlands-360-woodlands-ave-5-2010-07-560030",
       "month": "2010-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

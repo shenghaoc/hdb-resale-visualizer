@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 623
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 623
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 997
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1351
+      }
+    ]
   },
   "monthlyTrend": [
     {

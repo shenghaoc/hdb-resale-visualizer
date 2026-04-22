@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 493
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 493
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 659
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 890
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -138,7 +152,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-995a-buangkok-cres-2026-04-224467",
+      "id": "hougang-995a-buangkok-cres-2026-04-224499",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -151,7 +165,7 @@
       "pricePerSqft": 762
     },
     {
-      "id": "hougang-995a-buangkok-cres-2026-03-224464",
+      "id": "hougang-995a-buangkok-cres-2026-03-224496",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -164,7 +178,7 @@
       "pricePerSqft": 761.02
     },
     {
-      "id": "hougang-995a-buangkok-cres-2026-01-224461",
+      "id": "hougang-995a-buangkok-cres-2026-01-224493",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",

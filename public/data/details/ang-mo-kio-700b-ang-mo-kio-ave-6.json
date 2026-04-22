@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 365
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 365
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 1045
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1355
+      }
+    ]
   },
   "monthlyTrend": [
     {

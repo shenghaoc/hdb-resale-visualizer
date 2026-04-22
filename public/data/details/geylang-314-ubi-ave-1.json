@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 424
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 424
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 876
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 1087
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -923,7 +937,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-314-ubi-ave-1-2026-02-224424",
+      "id": "geylang-314-ubi-ave-1-2026-02-224456",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

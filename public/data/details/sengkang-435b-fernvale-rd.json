@@ -9,21 +9,21 @@
       "lat": 1.39339364366596,
       "lng": 103.876644854346
     },
-    "medianPrice": 637500,
+    "medianPrice": 640000,
     "priceIqr": [
-      595222,
-      650916
+      600000,
+      645888
     ],
-    "pricePerSqmMedian": 6850.47,
-    "pricePerSqftMedian": 636.43,
-    "transactionCount": 12,
+    "pricePerSqmMedian": 6861.7,
+    "pricePerSqftMedian": 637.47,
+    "transactionCount": 13,
     "floorAreaRange": [
       68,
       94
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2011,
+      2011
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 144
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 144
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 413
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 436
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -340,14 +354,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 642000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6829.79
+      "medianPrice": 643500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6845.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-435b-fernvale-rd-2026-04-227035",
+      "id": "sengkang-435b-fernvale-rd-2026-04-227103",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -358,6 +372,19 @@
       "resalePrice": 642000,
       "pricePerSqm": 6829.79,
       "pricePerSqft": 634.51
+    },
+    {
+      "id": "sengkang-435b-fernvale-rd-2026-04-227105",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 03 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 6861.7,
+      "pricePerSqft": 637.47
     },
     {
       "id": "sengkang-435b-fernvale-rd-2025-05-213499",
@@ -592,19 +619,6 @@
       "resalePrice": 575000,
       "pricePerSqm": 6117.02,
       "pricePerSqft": 568.29
-    },
-    {
-      "id": "sengkang-435b-fernvale-rd-2022-10-136081",
-      "month": "2022-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "22 TO 24",
-      "floorAreaSqm": 68,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "89 years 09 months",
-      "resalePrice": 475000,
-      "pricePerSqm": 6985.29,
-      "pricePerSqft": 648.96
     }
   ]
 }

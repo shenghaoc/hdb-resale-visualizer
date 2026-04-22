@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 784
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 784
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1462
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 2258
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -467,7 +481,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-690c-woodlands-dr-75-2026-04-228707",
+      "id": "woodlands-690c-woodlands-dr-75-2026-04-228819",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -480,7 +494,7 @@
       "pricePerSqft": 544.75
     },
     {
-      "id": "woodlands-690c-woodlands-dr-75-2026-01-228515",
+      "id": "woodlands-690c-woodlands-dr-75-2026-01-228622",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

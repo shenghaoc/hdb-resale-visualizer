@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2021,
-      2021
+      2020,
+      2020
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 1125
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1125
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1247
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1969
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -114,7 +128,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223170",
+      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223189",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -127,7 +141,7 @@
       "pricePerSqft": 674.16
     },
     {
-      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223176",
+      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223196",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -140,7 +154,7 @@
       "pricePerSqft": 686.5
     },
     {
-      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223178",
+      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-03-223197",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -153,7 +167,7 @@
       "pricePerSqft": 707.87
     },
     {
-      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-02-223165",
+      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-02-223184",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -166,7 +180,7 @@
       "pricePerSqft": 730.07
     },
     {
-      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-01-223032",
+      "id": "bukit-batok-464a-bt-batok-west-ave-8-2026-01-223049",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -11,24 +11,24 @@
     },
     "medianPrice": 920000,
     "priceIqr": [
-      885000,
-      944000
+      898750,
+      932000
     ],
-    "pricePerSqmMedian": 10222.22,
-    "pricePerSqftMedian": 949.68,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 10138.58,
+    "pricePerSqftMedian": 941.91,
+    "transactionCount": 8,
     "floorAreaRange": [
       90,
       92
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-06",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 505
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 505
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1067
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1294
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -438,9 +452,28 @@
       "medianPrice": 920000,
       "transactionCount": 1,
       "medianPricePerSqm": 10222.22
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 915000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10054.95
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-118a-jln-membina-2026-04-223400",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 91,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "75 years 09 months",
+      "resalePrice": 915000,
+      "pricePerSqm": 10054.95,
+      "pricePerSqft": 934.14
+    },
     {
       "id": "bukit-merah-118a-jln-membina-2025-12-201423",
       "month": "2025-12",
@@ -687,19 +720,6 @@
       "resalePrice": 715000,
       "pricePerSqm": 7771.74,
       "pricePerSqft": 722.02
-    },
-    {
-      "id": "bukit-merah-118a-jln-membina-2020-06-70972",
-      "month": "2020-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 91,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "81 years 09 months",
-      "resalePrice": 668000,
-      "pricePerSqm": 7340.66,
-      "pricePerSqft": 681.97
     }
   ]
 }

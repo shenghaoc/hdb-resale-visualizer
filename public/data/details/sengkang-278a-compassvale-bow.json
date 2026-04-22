@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 334
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 334
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 536
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 809
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -186,7 +200,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-278a-compassvale-bow-2026-03-227164",
+      "id": "sengkang-278a-compassvale-bow-2026-03-227237",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

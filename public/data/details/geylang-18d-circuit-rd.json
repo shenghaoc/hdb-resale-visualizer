@@ -9,26 +9,26 @@
       "lat": 1.32940434763773,
       "lng": 103.889196979567
     },
-    "medianPrice": 944000,
+    "medianPrice": 920000,
     "priceIqr": [
-      739500,
+      740000,
       990000
     ],
-    "pricePerSqmMedian": 10791.05,
-    "pricePerSqftMedian": 1002.52,
-    "transactionCount": 12,
+    "pricePerSqmMedian": 10820.9,
+    "pricePerSqftMedian": 1005.3,
+    "transactionCount": 13,
     "floorAreaRange": [
       67,
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-07",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 310
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 310
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 590
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 688
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -265,11 +279,30 @@
       "medianPrice": 1014444,
       "transactionCount": 2,
       "medianPricePerSqm": 10908
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 755000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11268.66
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-18d-circuit-rd-2026-02-224370",
+      "id": "geylang-18d-circuit-rd-2026-04-224347",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 755000,
+      "pricePerSqm": 11268.66,
+      "pricePerSqft": 1046.89
+    },
+    {
+      "id": "geylang-18d-circuit-rd-2026-02-224400",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -282,7 +315,7 @@
       "pricePerSqft": 1006.95
     },
     {
-      "id": "geylang-18d-circuit-rd-2026-02-224371",
+      "id": "geylang-18d-circuit-rd-2026-02-224401",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -514,19 +547,6 @@
       "resalePrice": 612000,
       "pricePerSqm": 9134.33,
       "pricePerSqft": 848.61
-    },
-    {
-      "id": "geylang-18d-circuit-rd-2023-01-151282",
-      "month": "2023-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "92 years 11 months",
-      "resalePrice": 605000,
-      "pricePerSqm": 9029.85,
-      "pricePerSqft": 838.9
     }
   ]
 }

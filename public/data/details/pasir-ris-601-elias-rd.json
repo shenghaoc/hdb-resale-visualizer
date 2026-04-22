@@ -22,8 +22,8 @@
       154
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1994,
+      1994
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 835
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 835
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2449
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 2677
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -322,7 +336,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-601-elias-rd-2026-01-225796",
+      "id": "pasir-ris-601-elias-rd-2026-01-225851",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -491,7 +505,7 @@
       "pricePerSqft": 375.91
     },
     {
-      "id": "pasir-ris-601-elias-rd-2012-06-606920",
+      "id": "pasir-ris-601-elias-rd-2012-06-607042",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -504,7 +518,7 @@
       "pricePerSqft": 433.34
     },
     {
-      "id": "pasir-ris-601-elias-rd-2011-11-593416",
+      "id": "pasir-ris-601-elias-rd-2011-11-593538",
       "month": "2011-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -517,7 +531,7 @@
       "pricePerSqft": 377.81
     },
     {
-      "id": "pasir-ris-601-elias-rd-2011-01-574669",
+      "id": "pasir-ris-601-elias-rd-2011-01-574791",
       "month": "2011-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -530,7 +544,7 @@
       "pricePerSqft": 343.86
     },
     {
-      "id": "pasir-ris-601-elias-rd-2010-04-548852",
+      "id": "pasir-ris-601-elias-rd-2010-04-548974",
       "month": "2010-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -543,7 +557,7 @@
       "pricePerSqft": 392.12
     },
     {
-      "id": "pasir-ris-601-elias-rd-2009-01-509269",
+      "id": "pasir-ris-601-elias-rd-2009-01-509391",
       "month": "2009-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -556,7 +570,7 @@
       "pricePerSqft": 330.46
     },
     {
-      "id": "pasir-ris-601-elias-rd-2008-10-502616",
+      "id": "pasir-ris-601-elias-rd-2008-10-502738",
       "month": "2008-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -569,7 +583,7 @@
       "pricePerSqft": 299.29
     },
     {
-      "id": "pasir-ris-601-elias-rd-2008-09-500176",
+      "id": "pasir-ris-601-elias-rd-2008-09-500298",
       "month": "2008-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

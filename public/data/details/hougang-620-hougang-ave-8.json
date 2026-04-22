@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 917
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 917
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1108
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1746
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -952,7 +966,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-620-hougang-ave-8-2026-02-224525",
+      "id": "hougang-620-hougang-ave-8-2026-02-224556",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -965,7 +979,7 @@
       "pricePerSqft": 650.32
     },
     {
-      "id": "hougang-620-hougang-ave-8-2026-02-224526",
+      "id": "hougang-620-hougang-ave-8-2026-02-224557",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

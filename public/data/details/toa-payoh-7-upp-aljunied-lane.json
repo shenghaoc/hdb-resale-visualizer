@@ -9,26 +9,26 @@
       "lat": 1.33471455041652,
       "lng": 103.878708329058
     },
-    "medianPrice": 666666,
+    "medianPrice": 667333,
     "priceIqr": [
-      640000,
-      700000
+      642000,
+      775000
     ],
-    "pricePerSqmMedian": 9571.88,
-    "pricePerSqftMedian": 889.26,
-    "transactionCount": 13,
+    "pricePerSqmMedian": 9597.77,
+    "pricePerSqftMedian": 891.66,
+    "transactionCount": 14,
     "floorAreaRange": [
       68,
       93
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-12",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BARTLEY MRT STATION",
       "distanceMeters": 855
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 855
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 943
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 961
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -211,9 +225,28 @@
       "medianPrice": 803000,
       "transactionCount": 2,
       "medianPricePerSqm": 9954.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 895000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9623.66
     }
   ],
   "recentTransactions": [
+    {
+      "id": "toa-payoh-7-upp-aljunied-lane-2026-04-228300",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 895000,
+      "pricePerSqm": 9623.66,
+      "pricePerSqft": 894.07
+    },
     {
       "id": "toa-payoh-7-upp-aljunied-lane-2025-11-218000",
       "month": "2025-11",
@@ -460,19 +493,6 @@
       "resalePrice": 588000,
       "pricePerSqm": 8647.06,
       "pricePerSqft": 803.34
-    },
-    {
-      "id": "toa-payoh-7-upp-aljunied-lane-2023-05-164831",
-      "month": "2023-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "92 years 10 months",
-      "resalePrice": 612888,
-      "pricePerSqm": 9013.06,
-      "pricePerSqft": 837.34
     }
   ]
 }

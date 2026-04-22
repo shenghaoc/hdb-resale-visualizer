@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UPPER CHANGI MRT STATION",
       "distanceMeters": 218
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 218
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 599
+      },
+      {
+        "stationName": "EXPO MRT STATION",
+        "distanceMeters": 837
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -143,7 +157,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-167d-simei-lane-2026-03-227521",
+      "id": "tampines-167d-simei-lane-2026-03-227601",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -351,7 +365,7 @@
       "pricePerSqft": 597.94
     },
     {
-      "id": "tampines-167d-simei-lane-2016-06-965374",
+      "id": "tampines-167d-simei-lane-2016-06-965496",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

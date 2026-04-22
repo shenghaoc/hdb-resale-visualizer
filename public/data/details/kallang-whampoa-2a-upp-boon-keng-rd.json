@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KALLANG MRT STATION",
       "distanceMeters": 220
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 220
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 820
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 966
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 551
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 551
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1744
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1787
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -426,7 +440,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-365-tampines-st-34-2026-02-227654",
+      "id": "tampines-365-tampines-st-34-2026-02-227738",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

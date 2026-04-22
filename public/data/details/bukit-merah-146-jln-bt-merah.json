@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "OUTRAM PARK MRT STATION",
       "distanceMeters": 869
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 869
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 977
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1038
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1122,7 +1136,7 @@
       "pricePerSqft": 471.45
     },
     {
-      "id": "bukit-merah-146-jln-bt-merah-2016-12-974368",
+      "id": "bukit-merah-146-jln-bt-merah-2016-12-974490",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

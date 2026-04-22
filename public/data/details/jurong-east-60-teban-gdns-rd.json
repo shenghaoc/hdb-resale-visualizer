@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1173
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1173
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2172
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 3039
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -366,7 +380,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-60-teban-gdns-rd-2026-02-224895",
+      "id": "jurong-east-60-teban-gdns-rd-2026-02-224933",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -600,7 +614,7 @@
       "pricePerSqft": 345.98
     },
     {
-      "id": "jurong-east-60-teban-gdns-rd-2016-10-971573",
+      "id": "jurong-east-60-teban-gdns-rd-2016-10-971695",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -613,7 +627,7 @@
       "pricePerSqft": 344.38
     },
     {
-      "id": "jurong-east-60-teban-gdns-rd-2016-03-959304",
+      "id": "jurong-east-60-teban-gdns-rd-2016-03-959426",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

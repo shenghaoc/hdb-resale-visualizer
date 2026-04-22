@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2011,
+      2011
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 68
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 68
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 507
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 539
+      }
+    ]
   },
   "monthlyTrend": [
     {

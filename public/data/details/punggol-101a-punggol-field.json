@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2001,
+      2001
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 131
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 131
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 338
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 695
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 138
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 138
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 676
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -439,7 +453,7 @@
       "pricePerSqft": 358.22
     },
     {
-      "id": "punggol-175c-punggol-field-2016-06-964989",
+      "id": "punggol-175c-punggol-field-2016-06-965111",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -452,7 +466,7 @@
       "pricePerSqft": 377.43
     },
     {
-      "id": "punggol-175c-punggol-field-2016-05-963179",
+      "id": "punggol-175c-punggol-field-2016-05-963301",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -465,7 +479,7 @@
       "pricePerSqft": 336.14
     },
     {
-      "id": "punggol-175c-punggol-field-2015-06-946351",
+      "id": "punggol-175c-punggol-field-2015-06-946473",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -478,7 +492,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "punggol-175c-punggol-field-2015-02-940244",
+      "id": "punggol-175c-punggol-field-2015-02-940366",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -491,7 +505,7 @@
       "pricePerSqft": 397.42
     },
     {
-      "id": "punggol-175c-punggol-field-2013-04-623733",
+      "id": "punggol-175c-punggol-field-2013-04-623855",
       "month": "2013-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -504,7 +518,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "punggol-175c-punggol-field-2012-09-613016",
+      "id": "punggol-175c-punggol-field-2012-09-613138",
       "month": "2012-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -517,7 +531,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "punggol-175c-punggol-field-2012-02-598246",
+      "id": "punggol-175c-punggol-field-2012-02-598368",
       "month": "2012-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

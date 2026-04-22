@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 801
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 801
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1087
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1138
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -551,7 +565,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-140-lor-ah-soo-2026-03-224691",
+      "id": "hougang-140-lor-ah-soo-2026-03-224726",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -746,7 +760,7 @@
       "pricePerSqft": 358.14
     },
     {
-      "id": "hougang-140-lor-ah-soo-2016-05-962790",
+      "id": "hougang-140-lor-ah-soo-2016-05-962912",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -759,7 +773,7 @@
       "pricePerSqft": 382.96
     },
     {
-      "id": "hougang-140-lor-ah-soo-2016-04-960926",
+      "id": "hougang-140-lor-ah-soo-2016-04-961048",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -772,7 +786,7 @@
       "pricePerSqft": 392.36
     },
     {
-      "id": "hougang-140-lor-ah-soo-2015-10-952203",
+      "id": "hougang-140-lor-ah-soo-2015-10-952325",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -785,7 +799,7 @@
       "pricePerSqft": 382.96
     },
     {
-      "id": "hougang-140-lor-ah-soo-2015-04-942747",
+      "id": "hougang-140-lor-ah-soo-2015-04-942869",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -798,7 +812,7 @@
       "pricePerSqft": 384.19
     },
     {
-      "id": "hougang-140-lor-ah-soo-2012-06-606562",
+      "id": "hougang-140-lor-ah-soo-2012-06-606684",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

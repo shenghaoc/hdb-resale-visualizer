@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 347
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 347
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1290
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1329
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -192,7 +206,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-747a-bedok-reservoir-cres-2026-02-222628",
+      "id": "bedok-747a-bedok-reservoir-cres-2026-02-222640",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

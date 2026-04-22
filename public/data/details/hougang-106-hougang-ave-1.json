@@ -22,8 +22,8 @@
       95
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1982,
+      1982
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 913
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 913
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1722
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1846
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -269,7 +283,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-106-hougang-ave-1-2026-03-224593",
+      "id": "hougang-106-hougang-ave-1-2026-03-224625",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -438,7 +452,7 @@
       "pricePerSqft": 332.79
     },
     {
-      "id": "hougang-106-hougang-ave-1-2016-10-971469",
+      "id": "hougang-106-hougang-ave-1-2016-10-971591",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -451,7 +465,7 @@
       "pricePerSqft": 374.39
     },
     {
-      "id": "hougang-106-hougang-ave-1-2016-07-966282",
+      "id": "hougang-106-hougang-ave-1-2016-07-966404",
       "month": "2016-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -464,7 +478,7 @@
       "pricePerSqft": 395.18
     },
     {
-      "id": "hougang-106-hougang-ave-1-2015-10-952139",
+      "id": "hougang-106-hougang-ave-1-2015-10-952261",
       "month": "2015-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -477,7 +491,7 @@
       "pricePerSqft": 402.12
     },
     {
-      "id": "hougang-106-hougang-ave-1-2015-05-944256",
+      "id": "hougang-106-hougang-ave-1-2015-05-944378",
       "month": "2015-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -490,7 +504,7 @@
       "pricePerSqft": 355.56
     },
     {
-      "id": "hougang-106-hougang-ave-1-2015-04-942689",
+      "id": "hougang-106-hougang-ave-1-2015-04-942811",
       "month": "2015-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -503,7 +517,7 @@
       "pricePerSqft": 381.94
     },
     {
-      "id": "hougang-106-hougang-ave-1-2013-08-629366",
+      "id": "hougang-106-hougang-ave-1-2013-08-629488",
       "month": "2013-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -516,7 +530,7 @@
       "pricePerSqft": 456.49
     },
     {
-      "id": "hougang-106-hougang-ave-1-2013-05-625056",
+      "id": "hougang-106-hougang-ave-1-2013-05-625178",
       "month": "2013-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

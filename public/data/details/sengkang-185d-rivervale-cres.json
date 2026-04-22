@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 274
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 274
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 427
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 586
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -478,7 +492,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-185d-rivervale-cres-2026-01-227050",
+      "id": "sengkang-185d-rivervale-cres-2026-01-227119",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 256
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 256
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 308
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 764
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       86
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2001,
+      2001
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "YEW TEE MRT STATION",
       "distanceMeters": 759
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YEW TEE MRT STATION",
+        "distanceMeters": 759
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 2165
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 2242
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -454,7 +468,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-686c-choa-chu-kang-cres-2026-02-223900",
+      "id": "choa-chu-kang-686c-choa-chu-kang-cres-2026-02-223924",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -467,7 +481,7 @@
       "pricePerSqft": 535.56
     },
     {
-      "id": "choa-chu-kang-686c-choa-chu-kang-cres-2026-02-223901",
+      "id": "choa-chu-kang-686c-choa-chu-kang-cres-2026-02-223925",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

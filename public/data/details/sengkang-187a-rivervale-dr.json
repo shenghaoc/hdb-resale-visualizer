@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 268
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 268
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 475
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 573
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -402,7 +416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-187a-rivervale-dr-2026-01-227250",
+      "id": "sengkang-187a-rivervale-dr-2026-01-227325",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -649,7 +663,7 @@
       "pricePerSqft": 348.81
     },
     {
-      "id": "sengkang-187a-rivervale-dr-2016-08-968699",
+      "id": "sengkang-187a-rivervale-dr-2016-08-968821",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

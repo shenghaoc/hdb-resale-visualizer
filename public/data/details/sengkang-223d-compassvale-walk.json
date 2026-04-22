@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 313
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 313
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 545
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 687
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -438,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-223d-compassvale-walk-2026-02-226985",
+      "id": "sengkang-223d-compassvale-walk-2026-02-227053",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -451,7 +465,7 @@
       "pricePerSqft": 601.14
     },
     {
-      "id": "sengkang-223d-compassvale-walk-2026-02-226986",
+      "id": "sengkang-223d-compassvale-walk-2026-02-227054",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 849
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 849
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1899
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1921
+      }
+    ]
   },
   "monthlyTrend": [
     {

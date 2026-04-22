@@ -12,11 +12,11 @@
     "medianPrice": 338000,
     "priceIqr": [
       325000,
-      351000
+      348250
     ],
     "pricePerSqmMedian": 5121.21,
     "pricePerSqftMedian": 475.78,
-    "transactionCount": 25,
+    "transactionCount": 26,
     "floorAreaRange": [
       60,
       133
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 1064
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 1064
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 1162
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1293
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1925,14 +1939,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 338000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5121.21
+      "medianPrice": 331400,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5021.21
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-04-227988",
+      "id": "toa-payoh-195-kim-keat-ave-2026-04-228080",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1945,7 +1959,20 @@
       "pricePerSqft": 475.78
     },
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-02-227985",
+      "id": "toa-payoh-195-kim-keat-ave-2026-04-228081",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1973,
+      "remainingLease": "46 years 03 months",
+      "resalePrice": 324800,
+      "pricePerSqm": 4921.21,
+      "pricePerSqft": 457.2
+    },
+    {
+      "id": "toa-payoh-195-kim-keat-ave-2026-02-228077",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1958,7 +1985,7 @@
       "pricePerSqft": 506.74
     },
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-01-227980",
+      "id": "toa-payoh-195-kim-keat-ave-2026-01-228072",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1971,7 +1998,7 @@
       "pricePerSqft": 499.71
     },
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-01-227981",
+      "id": "toa-payoh-195-kim-keat-ave-2026-01-228073",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1984,7 +2011,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-01-227982",
+      "id": "toa-payoh-195-kim-keat-ave-2026-01-228074",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1997,7 +2024,7 @@
       "pricePerSqft": 513.78
     },
     {
-      "id": "toa-payoh-195-kim-keat-ave-2026-01-227983",
+      "id": "toa-payoh-195-kim-keat-ave-2026-01-228075",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -2177,19 +2204,6 @@
       "resalePrice": 335000,
       "pricePerSqm": 5075.76,
       "pricePerSqft": 471.55
-    },
-    {
-      "id": "toa-payoh-195-kim-keat-ave-2024-11-192968",
-      "month": "2024-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 66,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1973,
-      "remainingLease": "47 years 10 months",
-      "resalePrice": 326000,
-      "pricePerSqm": 4939.39,
-      "pricePerSqft": 458.89
     }
   ]
 }

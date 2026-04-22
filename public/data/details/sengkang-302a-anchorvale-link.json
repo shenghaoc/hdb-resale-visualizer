@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2024-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RENJONG LRT STATION",
       "distanceMeters": 120
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 120
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 498
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 578
+      }
+    ]
   },
   "monthlyTrend": [
     {

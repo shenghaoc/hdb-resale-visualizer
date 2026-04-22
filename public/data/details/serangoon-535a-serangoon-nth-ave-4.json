@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1868
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1868
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1945
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2076
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -508,7 +522,7 @@
       "pricePerSqft": 348.39
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2014-10-648044",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2014-10-648166",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -521,7 +535,7 @@
       "pricePerSqft": 374.61
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2014-04-639687",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2014-04-639809",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -534,7 +548,7 @@
       "pricePerSqft": 375.19
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2013-06-627012",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2013-06-627134",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -547,7 +561,7 @@
       "pricePerSqft": 404.66
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2012-10-615216",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2012-10-615338",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -560,7 +574,7 @@
       "pricePerSqft": 412.07
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2011-09-590345",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2011-09-590467",
       "month": "2011-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -573,7 +587,7 @@
       "pricePerSqft": 344.64
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2011-01-574988",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2011-01-575110",
       "month": "2011-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -586,7 +600,7 @@
       "pricePerSqft": 337.15
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2010-10-568497",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2010-10-568619",
       "month": "2010-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -599,7 +613,7 @@
       "pricePerSqft": 345.71
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2010-10-568498",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2010-10-568620",
       "month": "2010-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +626,7 @@
       "pricePerSqft": 373.4
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2009-12-537933",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2009-12-538055",
       "month": "2009-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +639,7 @@
       "pricePerSqft": 312.65
     },
     {
-      "id": "serangoon-535a-serangoon-nth-ave-4-2009-12-537966",
+      "id": "serangoon-535a-serangoon-nth-ave-4-2009-12-538088",
       "month": "2009-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

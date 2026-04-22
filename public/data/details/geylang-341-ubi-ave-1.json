@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 406
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 406
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 803
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 1215
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -887,7 +901,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-341-ubi-ave-1-2026-03-224431",
+      "id": "geylang-341-ubi-ave-1-2026-03-224463",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

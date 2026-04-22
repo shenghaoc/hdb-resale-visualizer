@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 44
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 44
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 964
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1020
+      }
+    ]
   },
   "monthlyTrend": [
     {

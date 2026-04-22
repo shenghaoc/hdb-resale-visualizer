@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RANGGUNG LRT STATION",
       "distanceMeters": 392
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 392
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 409
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 515
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -328,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-203d-compassvale-rd-2026-02-227293",
+      "id": "sengkang-203d-compassvale-rd-2026-02-227368",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

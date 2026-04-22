@@ -22,8 +22,8 @@
       137
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 658
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 658
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1018
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1807
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -599,7 +613,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-8-jln-rumah-tinggi-2026-02-223463",
+      "id": "bukit-merah-8-jln-rumah-tinggi-2026-02-223486",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

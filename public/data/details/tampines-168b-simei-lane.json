@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UPPER CHANGI MRT STATION",
       "distanceMeters": 253
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 253
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 550
+      },
+      {
+        "stationName": "EXPO MRT STATION",
+        "distanceMeters": 831
+      }
+    ]
   },
   "monthlyTrend": [
     {

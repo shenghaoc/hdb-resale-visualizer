@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BAYSHORE MRT STATION",
       "distanceMeters": 625
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 625
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 897
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1704
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -610,7 +624,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-67-bedok-sth-ave-3-2026-01-222646",
+      "id": "bedok-67-bedok-sth-ave-3-2026-01-222658",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -844,7 +858,7 @@
       "pricePerSqft": 481.89
     },
     {
-      "id": "bedok-67-bedok-sth-ave-3-2016-02-957518",
+      "id": "bedok-67-bedok-sth-ave-3-2016-02-957640",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -857,7 +871,7 @@
       "pricePerSqft": 528.72
     },
     {
-      "id": "bedok-67-bedok-sth-ave-3-2015-01-938466",
+      "id": "bedok-67-bedok-sth-ave-3-2015-01-938588",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

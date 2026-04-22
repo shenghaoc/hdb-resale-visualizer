@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 536
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 536
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 684
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 777
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -138,7 +152,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-233b-sumang-lane-2026-02-226303",
+      "id": "punggol-233b-sumang-lane-2026-02-226365",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

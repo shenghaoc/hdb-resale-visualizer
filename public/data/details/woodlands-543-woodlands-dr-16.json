@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS SOUTH MRT STATION",
       "distanceMeters": 87
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 87
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 888
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1518
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-04-228437",
+      "id": "woodlands-543-woodlands-dr-16-2026-04-228539",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -553,7 +567,7 @@
       "pricePerSqft": 540.86
     },
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-04-228649",
+      "id": "woodlands-543-woodlands-dr-16-2026-04-228758",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -566,7 +580,7 @@
       "pricePerSqft": 510.97
     },
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-01-228421",
+      "id": "woodlands-543-woodlands-dr-16-2026-01-228523",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

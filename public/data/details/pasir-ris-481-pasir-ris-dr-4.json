@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1073
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1073
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1916
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2701
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -514,7 +528,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-481-pasir-ris-dr-4-2026-02-225655",
+      "id": "pasir-ris-481-pasir-ris-dr-4-2026-02-225707",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -722,7 +736,7 @@
       "pricePerSqft": 353.92
     },
     {
-      "id": "pasir-ris-481-pasir-ris-dr-4-2016-11-973386",
+      "id": "pasir-ris-481-pasir-ris-dr-4-2016-11-973508",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -735,7 +749,7 @@
       "pricePerSqft": 386.37
     },
     {
-      "id": "pasir-ris-481-pasir-ris-dr-4-2016-11-973387",
+      "id": "pasir-ris-481-pasir-ris-dr-4-2016-11-973509",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -748,7 +762,7 @@
       "pricePerSqft": 411.43
     },
     {
-      "id": "pasir-ris-481-pasir-ris-dr-4-2016-09-970108",
+      "id": "pasir-ris-481-pasir-ris-dr-4-2016-09-970230",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -761,7 +775,7 @@
       "pricePerSqft": 360.11
     },
     {
-      "id": "pasir-ris-481-pasir-ris-dr-4-2016-02-958050",
+      "id": "pasir-ris-481-pasir-ris-dr-4-2016-02-958172",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

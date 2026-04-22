@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT PANJANG MRT STATION",
       "distanceMeters": 57
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 57
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 166
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 391
+      }
+    ]
   },
   "monthlyTrend": [
     {

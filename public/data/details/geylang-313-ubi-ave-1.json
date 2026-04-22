@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 458
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 458
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 875
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 1062
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -990,7 +1004,7 @@
       "pricePerSqft": 407.89
     },
     {
-      "id": "geylang-313-ubi-ave-1-2016-08-967941",
+      "id": "geylang-313-ubi-ave-1-2016-08-968063",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

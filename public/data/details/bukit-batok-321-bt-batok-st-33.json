@@ -22,8 +22,8 @@
       98
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1984,
+      1984
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 509
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 509
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1331
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1825
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -965,7 +979,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-321-bt-batok-st-33-2026-04-222865",
+      "id": "bukit-batok-321-bt-batok-st-33-2026-04-222881",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

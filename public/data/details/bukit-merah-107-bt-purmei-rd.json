@@ -22,8 +22,8 @@
       97
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HARBOURFRONT MRT STATION",
       "distanceMeters": 864
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 864
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1434
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1647
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -689,7 +703,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-107-bt-purmei-rd-2026-02-223229",
+      "id": "bukit-merah-107-bt-purmei-rd-2026-02-223248",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -702,7 +716,7 @@
       "pricePerSqft": 651.71
     },
     {
-      "id": "bukit-merah-107-bt-purmei-rd-2026-01-223332",
+      "id": "bukit-merah-107-bt-purmei-rd-2026-01-223351",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -936,7 +950,7 @@
       "pricePerSqft": 457.58
     },
     {
-      "id": "bukit-merah-107-bt-purmei-rd-2015-04-942373",
+      "id": "bukit-merah-107-bt-purmei-rd-2015-04-942495",
       "month": "2015-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2003,
+      2003
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 450
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 450
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1424
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2566
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -342,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-509a-wellington-circle-2026-01-226713",
+      "id": "sembawang-509a-wellington-circle-2026-01-226779",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

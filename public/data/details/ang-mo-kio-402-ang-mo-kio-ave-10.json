@@ -9,26 +9,26 @@
       "lat": 1.36147707782617,
       "lng": 103.855300420198
     },
-    "medianPrice": 380000,
+    "medianPrice": 710000,
     "priceIqr": [
-      352500,
-      498000
+      710000,
+      710000
     ],
-    "pricePerSqmMedian": 3193.28,
-    "pricePerSqftMedian": 296.67,
-    "transactionCount": 82,
+    "pricePerSqmMedian": 5966.39,
+    "pricePerSqftMedian": 554.3,
+    "transactionCount": 1,
     "floorAreaRange": [
       119,
       119
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
-    "latestMonth": "2023-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2023-10"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 1070
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1070
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1290
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1375
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -468,9 +482,28 @@
       "medianPrice": 612000,
       "transactionCount": 1,
       "medianPricePerSqm": 5142.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5966.39
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2026-04-222289",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 119,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 01 month",
+      "resalePrice": 710000,
+      "pricePerSqm": 5966.39,
+      "pricePerSqft": 554.3
+    },
     {
       "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2023-10-144215",
       "month": "2023-10",
@@ -667,7 +700,7 @@
       "pricePerSqft": 452.81
     },
     {
-      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2016-05-962131",
+      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2016-05-962253",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -680,7 +713,7 @@
       "pricePerSqft": 447.34
     },
     {
-      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2015-12-954751",
+      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2015-12-954873",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -693,7 +726,7 @@
       "pricePerSqft": 443.44
     },
     {
-      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2012-12-617501",
+      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2012-12-617623",
       "month": "2012-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -706,7 +739,7 @@
       "pricePerSqft": 490.28
     },
     {
-      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2009-12-535941",
+      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2009-12-536063",
       "month": "2009-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -717,19 +750,6 @@
       "resalePrice": 463000,
       "pricePerSqm": 3890.76,
       "pricePerSqft": 361.46
-    },
-    {
-      "id": "ang-mo-kio-402-ang-mo-kio-ave-10-2009-11-533078",
-      "month": "2009-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "22 TO 24",
-      "floorAreaSqm": 119,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "52 years",
-      "resalePrice": 502000,
-      "pricePerSqm": 4218.49,
-      "pricePerSqft": 391.91
     }
   ]
 }

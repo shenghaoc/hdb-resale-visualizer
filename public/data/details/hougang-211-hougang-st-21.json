@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 256
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 256
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1289
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1840
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -287,7 +301,7 @@
       "pricePerSqft": 430.36
     },
     {
-      "id": "hougang-211-hougang-st-21-2015-10-952155",
+      "id": "hougang-211-hougang-st-21-2015-10-952277",
       "month": "2015-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -300,7 +314,7 @@
       "pricePerSqft": 454.19
     },
     {
-      "id": "hougang-211-hougang-st-21-2015-08-949086",
+      "id": "hougang-211-hougang-st-21-2015-08-949208",
       "month": "2015-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -313,7 +327,7 @@
       "pricePerSqft": 436.19
     },
     {
-      "id": "hougang-211-hougang-st-21-2015-06-945916",
+      "id": "hougang-211-hougang-st-21-2015-06-946038",
       "month": "2015-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -326,7 +340,7 @@
       "pricePerSqft": 454.27
     },
     {
-      "id": "hougang-211-hougang-st-21-2015-04-942691",
+      "id": "hougang-211-hougang-st-21-2015-04-942813",
       "month": "2015-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -339,7 +353,7 @@
       "pricePerSqft": 459.05
     },
     {
-      "id": "hougang-211-hougang-st-21-2014-09-645947",
+      "id": "hougang-211-hougang-st-21-2014-09-646069",
       "month": "2014-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -352,7 +366,7 @@
       "pricePerSqft": 491.84
     },
     {
-      "id": "hougang-211-hougang-st-21-2014-04-639087",
+      "id": "hougang-211-hougang-st-21-2014-04-639209",
       "month": "2014-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -365,7 +379,7 @@
       "pricePerSqft": 478.18
     },
     {
-      "id": "hougang-211-hougang-st-21-2012-06-606504",
+      "id": "hougang-211-hougang-st-21-2012-06-606626",
       "month": "2012-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -378,7 +392,7 @@
       "pricePerSqft": 505.5
     },
     {
-      "id": "hougang-211-hougang-st-21-2012-02-597859",
+      "id": "hougang-211-hougang-st-21-2012-02-597981",
       "month": "2012-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -391,7 +405,7 @@
       "pricePerSqft": 491.84
     },
     {
-      "id": "hougang-211-hougang-st-21-2011-02-576187",
+      "id": "hougang-211-hougang-st-21-2011-02-576309",
       "month": "2011-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -404,7 +418,7 @@
       "pricePerSqft": 402.2
     },
     {
-      "id": "hougang-211-hougang-st-21-2011-02-576188",
+      "id": "hougang-211-hougang-st-21-2011-02-576310",
       "month": "2011-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -417,7 +431,7 @@
       "pricePerSqft": 387.67
     },
     {
-      "id": "hougang-211-hougang-st-21-2010-08-561353",
+      "id": "hougang-211-hougang-st-21-2010-08-561475",
       "month": "2010-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -430,7 +444,7 @@
       "pricePerSqft": 382.54
     },
     {
-      "id": "hougang-211-hougang-st-21-2010-05-551176",
+      "id": "hougang-211-hougang-st-21-2010-05-551298",
       "month": "2010-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -443,7 +457,7 @@
       "pricePerSqft": 338.35
     },
     {
-      "id": "hougang-211-hougang-st-21-2010-03-545079",
+      "id": "hougang-211-hougang-st-21-2010-03-545201",
       "month": "2010-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

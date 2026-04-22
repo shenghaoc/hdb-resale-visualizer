@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 346
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 346
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 839
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 932
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1698,7 +1712,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-03-225432",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-03-225480",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1711,7 +1725,7 @@
       "pricePerSqft": 564.57
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-02-225429",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-02-225477",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1724,7 +1738,7 @@
       "pricePerSqft": 586
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-02-225430",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-02-225478",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1737,7 +1751,7 @@
       "pricePerSqft": 583.15
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225421",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225469",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1750,7 +1764,7 @@
       "pricePerSqft": 593.15
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225422",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225470",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1763,7 +1777,7 @@
       "pricePerSqft": 540.27
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225424",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225472",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1776,7 +1790,7 @@
       "pricePerSqft": 517.4
     },
     {
-      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225426",
+      "id": "kallang-whampoa-57-geylang-bahru-2026-01-225474",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

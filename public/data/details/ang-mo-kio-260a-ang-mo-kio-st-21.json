@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2016,
+      2016
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 301
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 587
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1529
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -204,7 +218,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-260a-ang-mo-kio-st-21-2026-01-222235",
+      "id": "ang-mo-kio-260a-ang-mo-kio-st-21-2026-01-222238",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

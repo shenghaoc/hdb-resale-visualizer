@@ -22,8 +22,8 @@
       90
     ],
     "leaseCommenceRange": [
-      2007,
-      2007
+      2005,
+      2005
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 233
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 233
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 472
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 542
+      }
+    ]
   },
   "monthlyTrend": [
     {

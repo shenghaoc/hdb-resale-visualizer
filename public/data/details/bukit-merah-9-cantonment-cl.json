@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "OUTRAM PARK MRT STATION",
       "distanceMeters": 407
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 407
+      },
+      {
+        "stationName": "TANJONG PAGAR MRT STATION",
+        "distanceMeters": 637
+      },
+      {
+        "stationName": "MAXWELL MRT STATION",
+        "distanceMeters": 682
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -487,7 +501,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-9-cantonment-cl-2026-03-223234",
+      "id": "bukit-merah-9-cantonment-cl-2026-03-223253",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "25 TO 27",
@@ -500,7 +514,7 @@
       "pricePerSqft": 1114.84
     },
     {
-      "id": "bukit-merah-9-cantonment-cl-2026-03-223341",
+      "id": "bukit-merah-9-cantonment-cl-2026-03-223360",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

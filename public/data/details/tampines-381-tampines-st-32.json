@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 401
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 401
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1354
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1386
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -634,7 +648,7 @@
       "pricePerSqft": 409.69
     },
     {
-      "id": "tampines-381-tampines-st-32-2016-02-958342",
+      "id": "tampines-381-tampines-st-32-2016-02-958464",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -647,7 +661,7 @@
       "pricePerSqft": 381.19
     },
     {
-      "id": "tampines-381-tampines-st-32-2015-08-949717",
+      "id": "tampines-381-tampines-st-32-2015-08-949839",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +674,7 @@
       "pricePerSqft": 389.92
     },
     {
-      "id": "tampines-381-tampines-st-32-2014-08-645148",
+      "id": "tampines-381-tampines-st-32-2014-08-645270",
       "month": "2014-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -673,7 +687,7 @@
       "pricePerSqft": 379.04
     },
     {
-      "id": "tampines-381-tampines-st-32-2013-05-625740",
+      "id": "tampines-381-tampines-st-32-2013-05-625862",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

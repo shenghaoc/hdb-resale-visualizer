@@ -22,8 +22,8 @@
       114
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 751
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 751
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1310
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1722
+      }
+    ]
   },
   "monthlyTrend": [
     {

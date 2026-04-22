@@ -22,8 +22,8 @@
       154
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 548
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 548
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 919
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1482
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -725,7 +739,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-431-tampines-st-41-2026-02-227942",
+      "id": "tampines-431-tampines-st-41-2026-02-228032",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

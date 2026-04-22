@@ -22,8 +22,8 @@
       66
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2013,
+      2013
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1240
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1240
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1291
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 1528
+      }
+    ]
   },
   "monthlyTrend": [
     {

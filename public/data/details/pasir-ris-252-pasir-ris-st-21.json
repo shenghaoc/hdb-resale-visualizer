@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 1460
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1460
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1560
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2534
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -368,7 +382,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2026-01-225687",
+      "id": "pasir-ris-252-pasir-ris-st-21-2026-01-225739",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -563,7 +577,7 @@
       "pricePerSqft": 355.64
     },
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2016-12-974886",
+      "id": "pasir-ris-252-pasir-ris-st-21-2016-12-975008",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -576,7 +590,7 @@
       "pricePerSqft": 341.13
     },
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2016-07-966570",
+      "id": "pasir-ris-252-pasir-ris-st-21-2016-07-966692",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -589,7 +603,7 @@
       "pricePerSqft": 348.82
     },
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2016-01-956828",
+      "id": "pasir-ris-252-pasir-ris-st-21-2016-01-956950",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -602,7 +616,7 @@
       "pricePerSqft": 369.88
     },
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2015-06-946275",
+      "id": "pasir-ris-252-pasir-ris-st-21-2015-06-946397",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -615,7 +629,7 @@
       "pricePerSqft": 338.62
     },
     {
-      "id": "pasir-ris-252-pasir-ris-st-21-2014-04-639412",
+      "id": "pasir-ris-252-pasir-ris-st-21-2014-04-639534",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

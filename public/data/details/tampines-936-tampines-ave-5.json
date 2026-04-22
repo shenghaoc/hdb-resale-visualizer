@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 347
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 347
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 848
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1413
+      }
+    ]
   },
   "monthlyTrend": [
     {

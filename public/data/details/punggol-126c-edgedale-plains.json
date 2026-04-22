@@ -9,26 +9,26 @@
       "lat": 1.39397053057079,
       "lng": 103.910663559632
     },
-    "medianPrice": 588000,
+    "medianPrice": 583000,
     "priceIqr": [
-      551044,
-      631500
+      551522,
+      620750
     ],
-    "pricePerSqmMedian": 6411.76,
-    "pricePerSqftMedian": 595.67,
-    "transactionCount": 11,
+    "pricePerSqmMedian": 6441.69,
+    "pricePerSqftMedian": 598.45,
+    "transactionCount": 12,
     "floorAreaRange": [
       85,
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-07",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CORAL EDGE LRT STATION",
       "distanceMeters": 223
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 223
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 356
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 581
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -554,9 +568,28 @@
       "medianPrice": 668888,
       "transactionCount": 1,
       "medianPricePerSqm": 6080.8
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6764.71
     }
   ],
   "recentTransactions": [
+    {
+      "id": "punggol-126c-edgedale-plains-2026-04-226015",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 85,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "75 years 11 months",
+      "resalePrice": 575000,
+      "pricePerSqm": 6764.71,
+      "pricePerSqft": 628.46
+    },
     {
       "id": "punggol-126c-edgedale-plains-2025-11-211120",
       "month": "2025-11",
@@ -803,19 +836,6 @@
       "resalePrice": 492500,
       "pricePerSqm": 4477.27,
       "pricePerSqft": 415.95
-    },
-    {
-      "id": "punggol-126c-edgedale-plains-2021-11-113036",
-      "month": "2021-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 85,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "80 years 04 months",
-      "resalePrice": 408000,
-      "pricePerSqm": 4800,
-      "pricePerSqft": 445.94
     }
   ]
 }

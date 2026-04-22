@@ -22,8 +22,8 @@
       106
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1980,
+      1980
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 15
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 15
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 930
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1560
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1633,7 +1647,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222325",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222330",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -1646,7 +1660,7 @@
       "pricePerSqft": 681.29
     },
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222427",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222435",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1659,7 +1673,7 @@
       "pricePerSqft": 607.97
     },
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222428",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222436",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

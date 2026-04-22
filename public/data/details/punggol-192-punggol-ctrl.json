@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2003,
+      2003
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 303
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 375
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 444
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -359,7 +373,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-192-punggol-ctrl-2026-01-226242",
+      "id": "punggol-192-punggol-ctrl-2026-01-226304",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -593,7 +607,7 @@
       "pricePerSqft": 406.45
     },
     {
-      "id": "punggol-192-punggol-ctrl-2016-07-966649",
+      "id": "punggol-192-punggol-ctrl-2016-07-966771",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -606,7 +620,7 @@
       "pricePerSqft": 363.17
     },
     {
-      "id": "punggol-192-punggol-ctrl-2016-05-963208",
+      "id": "punggol-192-punggol-ctrl-2016-05-963330",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

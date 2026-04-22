@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 781
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 781
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 839
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1231
+      }
+    ]
   },
   "monthlyTrend": [
     {

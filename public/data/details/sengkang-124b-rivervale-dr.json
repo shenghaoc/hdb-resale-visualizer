@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2024-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 255
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 465
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 483
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -725,7 +739,7 @@
       "pricePerSqft": 335.48
     },
     {
-      "id": "sengkang-124b-rivervale-dr-2016-09-970318",
+      "id": "sengkang-124b-rivervale-dr-2016-09-970440",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 172
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 172
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 608
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 707
+      }
+    ]
   },
   "monthlyTrend": [
     {

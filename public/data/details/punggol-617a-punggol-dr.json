@@ -22,8 +22,8 @@
       95
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2011,
+      2011
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 95
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 95
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 466
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 581
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -220,7 +234,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-617a-punggol-dr-2026-04-226053",
+      "id": "punggol-617a-punggol-dr-2026-04-226111",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

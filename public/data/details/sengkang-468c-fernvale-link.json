@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "THANGGAM LRT STATION",
       "distanceMeters": 236
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 236
+      },
+      {
+        "stationName": "KUPANG LRT STATION",
+        "distanceMeters": 398
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 553
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -174,7 +188,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-468c-fernvale-link-2026-01-227222",
+      "id": "sengkang-468c-fernvale-link-2026-01-227296",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

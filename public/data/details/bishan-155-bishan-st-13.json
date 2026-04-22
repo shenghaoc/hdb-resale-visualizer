@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 831
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 831
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 992
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 1126
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -654,7 +668,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-155-bishan-st-13-2026-02-222765",
+      "id": "bishan-155-bishan-st-13-2026-02-222779",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BRIGHT HILL MRT STATION",
       "distanceMeters": 1132
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 1132
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1180
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1202
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -443,7 +457,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-246-bishan-st-22-2026-03-222731",
+      "id": "bishan-246-bishan-st-22-2026-03-222743",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -599,7 +613,7 @@
       "pricePerSqft": 508.09
     },
     {
-      "id": "bishan-246-bishan-st-22-2016-01-956258",
+      "id": "bishan-246-bishan-st-22-2016-01-956380",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +626,7 @@
       "pricePerSqft": 468.52
     },
     {
-      "id": "bishan-246-bishan-st-22-2015-11-953395",
+      "id": "bishan-246-bishan-st-22-2015-11-953517",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -625,7 +639,7 @@
       "pricePerSqft": 530.36
     },
     {
-      "id": "bishan-246-bishan-st-22-2014-07-642918",
+      "id": "bishan-246-bishan-st-22-2014-07-643040",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -638,7 +652,7 @@
       "pricePerSqft": 441.97
     },
     {
-      "id": "bishan-246-bishan-st-22-2014-07-642927",
+      "id": "bishan-246-bishan-st-22-2014-07-643049",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -651,7 +665,7 @@
       "pricePerSqft": 487.06
     },
     {
-      "id": "bishan-246-bishan-st-22-2013-11-632972",
+      "id": "bishan-246-bishan-st-22-2013-11-633094",
       "month": "2013-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -664,7 +678,7 @@
       "pricePerSqft": 540.53
     },
     {
-      "id": "bishan-246-bishan-st-22-2011-08-587497",
+      "id": "bishan-246-bishan-st-22-2011-08-587619",
       "month": "2011-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -677,7 +691,7 @@
       "pricePerSqft": 462.75
     },
     {
-      "id": "bishan-246-bishan-st-22-2011-02-575772",
+      "id": "bishan-246-bishan-st-22-2011-02-575894",
       "month": "2011-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -690,7 +704,7 @@
       "pricePerSqft": 448.1
     },
     {
-      "id": "bishan-246-bishan-st-22-2011-02-575792",
+      "id": "bishan-246-bishan-st-22-2011-02-575914",
       "month": "2011-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

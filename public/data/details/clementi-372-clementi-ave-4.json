@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1981,
+      1981
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 561
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 561
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1490
+      },
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 2414
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -522,7 +536,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-372-clementi-ave-4-2026-01-224248",
+      "id": "clementi-372-clementi-ave-4-2026-01-224277",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -730,7 +744,7 @@
       "pricePerSqft": 528.24
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-09-950442",
+      "id": "clementi-372-clementi-ave-4-2015-09-950564",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -743,7 +757,7 @@
       "pricePerSqft": 524.4
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-05-944193",
+      "id": "clementi-372-clementi-ave-4-2015-05-944315",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -756,7 +770,7 @@
       "pricePerSqft": 532.77
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-05-944199",
+      "id": "clementi-372-clementi-ave-4-2015-05-944321",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -769,7 +783,7 @@
       "pricePerSqft": 514.42
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-04-942609",
+      "id": "clementi-372-clementi-ave-4-2015-04-942731",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

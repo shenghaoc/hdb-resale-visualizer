@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 1024
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 1024
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1440
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2795
+      }
+    ]
   },
   "monthlyTrend": [
     {

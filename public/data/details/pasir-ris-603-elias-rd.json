@@ -22,8 +22,8 @@
       158
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1993,
+      1993
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 746
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 746
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2338
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 2567
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -352,7 +366,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-603-elias-rd-2026-04-225800",
+      "id": "pasir-ris-603-elias-rd-2026-04-225855",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -547,7 +561,7 @@
       "pricePerSqft": 392.81
     },
     {
-      "id": "pasir-ris-603-elias-rd-2016-08-968403",
+      "id": "pasir-ris-603-elias-rd-2016-08-968525",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -560,7 +574,7 @@
       "pricePerSqft": 420.87
     },
     {
-      "id": "pasir-ris-603-elias-rd-2013-05-625415",
+      "id": "pasir-ris-603-elias-rd-2013-05-625537",
       "month": "2013-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -573,7 +587,7 @@
       "pricePerSqft": 492.57
     },
     {
-      "id": "pasir-ris-603-elias-rd-2012-10-614875",
+      "id": "pasir-ris-603-elias-rd-2012-10-614997",
       "month": "2012-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -586,7 +600,7 @@
       "pricePerSqft": 439.74
     },
     {
-      "id": "pasir-ris-603-elias-rd-2011-01-574687",
+      "id": "pasir-ris-603-elias-rd-2011-01-574809",
       "month": "2011-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -599,7 +613,7 @@
       "pricePerSqft": 393.29
     },
     {
-      "id": "pasir-ris-603-elias-rd-2010-10-568114",
+      "id": "pasir-ris-603-elias-rd-2010-10-568236",
       "month": "2010-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

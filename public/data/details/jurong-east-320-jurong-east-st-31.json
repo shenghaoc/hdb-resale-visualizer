@@ -22,8 +22,8 @@
       135
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 722
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 722
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1116
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 2047
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -701,7 +715,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-320-jurong-east-st-31-2026-03-224926",
+      "id": "jurong-east-320-jurong-east-st-31-2026-03-224964",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEAUTY WORLD MRT STATION",
       "distanceMeters": 394
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 394
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 1230
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1837
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -708,7 +722,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-13-toh-yi-dr-2026-04-223737",
+      "id": "bukit-timah-13-toh-yi-dr-2026-04-223760",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

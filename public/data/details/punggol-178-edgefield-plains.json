@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 251
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 251
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 259
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 567
+      }
+    ]
   },
   "monthlyTrend": [
     {

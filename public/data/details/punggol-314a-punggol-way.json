@@ -9,26 +9,26 @@
       "lat": 1.40826187839775,
       "lng": 103.898017940475
     },
-    "medianPrice": 712688,
+    "medianPrice": 716344,
     "priceIqr": [
-      586500,
-      727944
+      587250,
+      728500
     ],
-    "pricePerSqmMedian": 7956.99,
-    "pricePerSqftMedian": 739.23,
-    "transactionCount": 11,
+    "pricePerSqmMedian": 7903.23,
+    "pricePerSqftMedian": 734.24,
+    "transactionCount": 12,
     "floorAreaRange": [
       68,
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-05",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SUMANG LRT STATION",
       "distanceMeters": 37
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 37
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 342
+      },
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 452
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -236,11 +250,30 @@
       "medianPrice": 659000,
       "transactionCount": 2,
       "medianPricePerSqm": 8248.26
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 728000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7827.96
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-314a-punggol-way-2026-03-225929",
+      "id": "punggol-314a-punggol-way-2026-04-226222",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 05 months",
+      "resalePrice": 728000,
+      "pricePerSqm": 7827.96,
+      "pricePerSqft": 727.24
+    },
+    {
+      "id": "punggol-314a-punggol-way-2026-03-225986",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -253,7 +286,7 @@
       "pricePerSqft": 803.34
     },
     {
-      "id": "punggol-314a-punggol-way-2026-03-226159",
+      "id": "punggol-314a-punggol-way-2026-03-226218",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -266,7 +299,7 @@
       "pricePerSqft": 729.24
     },
     {
-      "id": "punggol-314a-punggol-way-2026-01-226153",
+      "id": "punggol-314a-punggol-way-2026-01-226212",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -485,19 +518,6 @@
       "resalePrice": 591000,
       "pricePerSqm": 6354.84,
       "pricePerSqft": 590.38
-    },
-    {
-      "id": "punggol-314a-punggol-way-2023-04-157558",
-      "month": "2023-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 05 months",
-      "resalePrice": 695000,
-      "pricePerSqm": 7473.12,
-      "pricePerSqft": 694.28
     }
   ]
 }

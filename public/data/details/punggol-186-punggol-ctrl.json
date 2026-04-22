@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 295
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 295
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 435
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 541
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -293,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-186-punggol-ctrl-2026-02-226320",
+      "id": "punggol-186-punggol-ctrl-2026-02-226382",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

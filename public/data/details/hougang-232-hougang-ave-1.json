@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 379
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 379
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1368
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1848
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 254
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 254
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 639
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 666
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -467,7 +481,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-130-cashew-rd-2026-01-223708",
+      "id": "bukit-panjang-130-cashew-rd-2026-01-223731",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 175
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 175
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 692
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -731,7 +745,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-431-bt-panjang-ring-rd-2026-01-223533",
+      "id": "bukit-panjang-431-bt-panjang-ring-rd-2026-01-223556",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

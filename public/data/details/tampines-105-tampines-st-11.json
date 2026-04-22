@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 642
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 642
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 954
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 977
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -743,7 +757,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-105-tampines-st-11-2026-03-227434",
+      "id": "tampines-105-tampines-st-11-2026-03-227511",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -756,7 +770,7 @@
       "pricePerSqft": 588.39
     },
     {
-      "id": "tampines-105-tampines-st-11-2026-03-227616",
+      "id": "tampines-105-tampines-st-11-2026-03-227699",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1982,
-      1982
+      1981,
+      1981
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ALJUNIED MRT STATION",
       "distanceMeters": 318
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 318
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 775
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 874
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -749,7 +763,7 @@
       "pricePerSqft": 525.77
     },
     {
-      "id": "geylang-120-geylang-east-ctrl-2015-11-953747",
+      "id": "geylang-120-geylang-east-ctrl-2015-11-953869",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

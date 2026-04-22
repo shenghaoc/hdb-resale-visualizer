@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 179
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 179
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 464
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 533
+      }
+    ]
   },
   "monthlyTrend": [
     {

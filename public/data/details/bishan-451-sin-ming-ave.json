@@ -22,8 +22,8 @@
       187
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1988,
+      1988
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "UPPER THOMSON MRT STATION",
       "distanceMeters": 366
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 366
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 482
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1459
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -475,7 +489,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-451-sin-ming-ave-2026-01-222757",
+      "id": "bishan-451-sin-ming-ave-2026-01-222769",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -696,7 +710,7 @@
       "pricePerSqft": 519.64
     },
     {
-      "id": "bishan-451-sin-ming-ave-2016-08-967515",
+      "id": "bishan-451-sin-ming-ave-2016-08-967637",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -709,7 +723,7 @@
       "pricePerSqft": 478.15
     },
     {
-      "id": "bishan-451-sin-ming-ave-2015-06-945498",
+      "id": "bishan-451-sin-ming-ave-2015-06-945620",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -722,7 +736,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "bishan-451-sin-ming-ave-2014-10-647087",
+      "id": "bishan-451-sin-ming-ave-2014-10-647209",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1984,
+      1984
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 74
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 74
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1392
+      },
+      {
+        "stationName": "KRANJI MRT STATION",
+        "distanceMeters": 1542
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1013,7 +1027,7 @@
       "pricePerSqft": 356.34
     },
     {
-      "id": "woodlands-161-woodlands-st-13-2016-01-957223",
+      "id": "woodlands-161-woodlands-st-13-2016-01-957345",
       "month": "2016-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1026,7 +1040,7 @@
       "pricePerSqft": 375.43
     },
     {
-      "id": "woodlands-161-woodlands-st-13-2015-11-954576",
+      "id": "woodlands-161-woodlands-st-13-2015-11-954698",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 702
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 999
+      }
+    ]
   },
   "monthlyTrend": [
     {

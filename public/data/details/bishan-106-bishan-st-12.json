@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 500
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 500
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 581
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 888
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -803,7 +817,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-106-bishan-st-12-2026-02-222709",
+      "id": "bishan-106-bishan-st-12-2026-02-222721",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

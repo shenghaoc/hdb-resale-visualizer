@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARRER ROAD MRT STATION",
       "distanceMeters": 257
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER ROAD MRT STATION",
+        "distanceMeters": 257
+      },
+      {
+        "stationName": "TAN KAH KEE MRT STATION",
+        "distanceMeters": 1028
+      },
+      {
+        "stationName": "HOLLAND VILLAGE MRT STATION",
+        "distanceMeters": 1178
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1110,7 +1124,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-8-empress-rd-2026-01-223729",
+      "id": "bukit-timah-8-empress-rd-2026-01-223752",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BANGKIT LRT STATION",
       "distanceMeters": 357
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 357
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 402
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 491
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -204,7 +218,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-443b-fajar-rd-2026-04-223658",
+      "id": "bukit-panjang-443b-fajar-rd-2026-04-223681",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -217,7 +231,7 @@
       "pricePerSqft": 688.96
     },
     {
-      "id": "bukit-panjang-443b-fajar-rd-2026-01-223539",
+      "id": "bukit-panjang-443b-fajar-rd-2026-01-223562",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 573
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 573
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1476
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 1668
+      }
+    ]
   },
   "monthlyTrend": [
     {

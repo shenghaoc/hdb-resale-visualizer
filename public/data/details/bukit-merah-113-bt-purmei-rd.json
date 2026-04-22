@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HARBOURFRONT MRT STATION",
       "distanceMeters": 1155
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1155
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1222
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1375
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -676,7 +690,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2026-04-223338",
+      "id": "bukit-merah-113-bt-purmei-rd-2026-04-223357",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -689,7 +703,7 @@
       "pricePerSqft": 581.77
     },
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223333",
+      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223352",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -702,7 +716,7 @@
       "pricePerSqft": 586.28
     },
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223335",
+      "id": "bukit-merah-113-bt-purmei-rd-2026-02-223354",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -897,7 +911,7 @@
       "pricePerSqft": 496.81
     },
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2016-12-974386",
+      "id": "bukit-merah-113-bt-purmei-rd-2016-12-974508",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -910,7 +924,7 @@
       "pricePerSqft": 490.81
     },
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2016-05-962391",
+      "id": "bukit-merah-113-bt-purmei-rd-2016-05-962513",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -923,7 +937,7 @@
       "pricePerSqft": 536.67
     },
     {
-      "id": "bukit-merah-113-bt-purmei-rd-2016-01-956343",
+      "id": "bukit-merah-113-bt-purmei-rd-2016-01-956465",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

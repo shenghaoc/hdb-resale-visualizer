@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 535
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 535
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 662
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1002
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -594,7 +608,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-542-hougang-ave-8-2026-03-224749",
+      "id": "hougang-542-hougang-ave-8-2026-03-224785",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -607,7 +621,7 @@
       "pricePerSqft": 561.29
     },
     {
-      "id": "hougang-542-hougang-ave-8-2026-03-224751",
+      "id": "hougang-542-hougang-ave-8-2026-03-224787",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -776,7 +790,7 @@
       "pricePerSqft": 389.03
     },
     {
-      "id": "hougang-542-hougang-ave-8-2016-06-964598",
+      "id": "hougang-542-hougang-ave-8-2016-06-964720",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -789,7 +803,7 @@
       "pricePerSqft": 368
     },
     {
-      "id": "hougang-542-hougang-ave-8-2016-05-962755",
+      "id": "hougang-542-hougang-ave-8-2016-05-962877",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -802,7 +816,7 @@
       "pricePerSqft": 363.49
     },
     {
-      "id": "hougang-542-hougang-ave-8-2015-07-947627",
+      "id": "hougang-542-hougang-ave-8-2015-07-947749",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -815,7 +829,7 @@
       "pricePerSqft": 379.35
     },
     {
-      "id": "hougang-542-hougang-ave-8-2014-12-650344",
+      "id": "hougang-542-hougang-ave-8-2014-12-650466",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -828,7 +842,7 @@
       "pricePerSqft": 378.83
     },
     {
-      "id": "hougang-542-hougang-ave-8-2014-10-647454",
+      "id": "hougang-542-hougang-ave-8-2014-10-647576",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -841,7 +855,7 @@
       "pricePerSqft": 350.77
     },
     {
-      "id": "hougang-542-hougang-ave-8-2014-03-637652",
+      "id": "hougang-542-hougang-ave-8-2014-03-637774",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEAUTY WORLD MRT STATION",
       "distanceMeters": 414
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 414
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 1191
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1922
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -630,7 +644,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-11-toh-yi-dr-2026-04-223736",
+      "id": "bukit-timah-11-toh-yi-dr-2026-04-223759",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -643,7 +657,7 @@
       "pricePerSqft": 791.4
     },
     {
-      "id": "bukit-timah-11-toh-yi-dr-2026-03-223742",
+      "id": "bukit-timah-11-toh-yi-dr-2026-03-223765",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -656,7 +670,7 @@
       "pricePerSqft": 776.73
     },
     {
-      "id": "bukit-timah-11-toh-yi-dr-2026-02-223740",
+      "id": "bukit-timah-11-toh-yi-dr-2026-02-223763",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

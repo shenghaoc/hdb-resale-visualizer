@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 717
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 717
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1529
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1723
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1097,7 +1111,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-417-bt-batok-west-ave-4-2026-03-222987",
+      "id": "bukit-batok-417-bt-batok-west-ave-4-2026-03-223003",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

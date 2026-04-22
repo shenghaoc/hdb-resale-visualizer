@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 121
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 121
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 377
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 636
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -665,7 +679,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-232-pending-rd-2026-04-223575",
+      "id": "bukit-panjang-232-pending-rd-2026-04-223598",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -678,7 +692,7 @@
       "pricePerSqft": 505.1
     },
     {
-      "id": "bukit-panjang-232-pending-rd-2026-01-223500",
+      "id": "bukit-panjang-232-pending-rd-2026-01-223523",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

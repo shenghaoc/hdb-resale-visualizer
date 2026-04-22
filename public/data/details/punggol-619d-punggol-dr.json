@@ -22,8 +22,8 @@
       95
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2012,
+      2012
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 179
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 179
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 426
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 607
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -268,7 +282,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-619d-punggol-dr-2026-03-226043",
+      "id": "punggol-619d-punggol-dr-2026-03-226101",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

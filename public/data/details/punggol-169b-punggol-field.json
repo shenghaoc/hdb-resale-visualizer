@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2012,
+      2012
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CORAL EDGE LRT STATION",
       "distanceMeters": 165
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 165
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 685
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -220,7 +234,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-169b-punggol-field-2026-02-226081",
+      "id": "punggol-169b-punggol-field-2026-02-226139",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

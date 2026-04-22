@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 801
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 801
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1104
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1471
+      }
+    ]
   },
   "monthlyTrend": [
     {

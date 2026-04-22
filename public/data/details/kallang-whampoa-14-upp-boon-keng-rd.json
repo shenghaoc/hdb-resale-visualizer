@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KALLANG MRT STATION",
       "distanceMeters": 391
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 391
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 693
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 807
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -384,7 +398,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-04-225589",
+      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-04-225640",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -397,7 +411,7 @@
       "pricePerSqft": 814.81
     },
     {
-      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-03-225588",
+      "id": "kallang-whampoa-14-upp-boon-keng-rd-2026-03-225639",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

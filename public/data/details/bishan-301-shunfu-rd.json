@@ -22,8 +22,8 @@
       158
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARYMOUNT MRT STATION",
       "distanceMeters": 94
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 94
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 683
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1107
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -592,7 +606,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-301-shunfu-rd-2026-03-222795",
+      "id": "bishan-301-shunfu-rd-2026-03-222809",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       153
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1974,
+      1974
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 307
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 307
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 334
+      },
+      {
+        "stationName": "TANJONG KATONG MRT STATION",
+        "distanceMeters": 1574
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1188,7 +1202,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-31-marine-cres-2026-03-225598",
+      "id": "marine-parade-31-marine-cres-2026-03-225650",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1201,7 +1215,7 @@
       "pricePerSqft": 626.02
     },
     {
-      "id": "marine-parade-31-marine-cres-2026-01-225596",
+      "id": "marine-parade-31-marine-cres-2026-01-225648",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

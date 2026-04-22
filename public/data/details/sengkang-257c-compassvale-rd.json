@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 89
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 89
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 467
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 500
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -480,7 +494,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-257c-compassvale-rd-2026-02-227203",
+      "id": "sengkang-257c-compassvale-rd-2026-02-227276",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -493,7 +507,7 @@
       "pricePerSqft": 646.1
     },
     {
-      "id": "sengkang-257c-compassvale-rd-2026-02-227204",
+      "id": "sengkang-257c-compassvale-rd-2026-02-227277",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -506,7 +520,7 @@
       "pricePerSqft": 648.63
     },
     {
-      "id": "sengkang-257c-compassvale-rd-2026-01-227200",
+      "id": "sengkang-257c-compassvale-rd-2026-01-227273",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

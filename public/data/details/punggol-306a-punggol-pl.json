@@ -22,8 +22,8 @@
       147
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL MRT STATION",
       "distanceMeters": 327
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 327
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 376
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 403
+      }
+    ]
   },
   "monthlyTrend": [
     {

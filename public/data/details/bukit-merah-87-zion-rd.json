@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HAVELOCK MRT STATION",
       "distanceMeters": 164
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 164
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 246
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 743
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -664,7 +678,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-87-zion-rd-2026-03-223483",
+      "id": "bukit-merah-87-zion-rd-2026-03-223506",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -677,7 +691,7 @@
       "pricePerSqft": 792.46
     },
     {
-      "id": "bukit-merah-87-zion-rd-2026-02-223482",
+      "id": "bukit-merah-87-zion-rd-2026-02-223505",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

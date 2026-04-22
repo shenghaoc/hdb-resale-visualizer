@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 204
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 204
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 473
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 572
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       77
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1975,
+      1975
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CHANGI AIRPORT MRT STATION",
       "distanceMeters": 3484
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHANGI AIRPORT MRT STATION",
+        "distanceMeters": 3484
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 4619
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 5005
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -268,7 +282,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-1-changi-village-rd-2026-03-225633",
+      "id": "pasir-ris-1-changi-village-rd-2026-03-225685",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -476,7 +490,7 @@
       "pricePerSqft": 386.09
     },
     {
-      "id": "pasir-ris-1-changi-village-rd-2015-08-949312",
+      "id": "pasir-ris-1-changi-village-rd-2015-08-949434",
       "month": "2015-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -489,7 +503,7 @@
       "pricePerSqft": 394.13
     },
     {
-      "id": "pasir-ris-1-changi-village-rd-2014-03-637895",
+      "id": "pasir-ris-1-changi-village-rd-2014-03-638017",
       "month": "2014-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -502,7 +516,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "pasir-ris-1-changi-village-rd-2013-01-619775",
+      "id": "pasir-ris-1-changi-village-rd-2013-01-619897",
       "month": "2013-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -515,7 +529,7 @@
       "pricePerSqft": 461.7
     },
     {
-      "id": "pasir-ris-1-changi-village-rd-2012-12-618208",
+      "id": "pasir-ris-1-changi-village-rd-2012-12-618330",
       "month": "2012-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

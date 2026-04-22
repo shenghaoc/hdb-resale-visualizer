@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 249
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 249
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 454
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 700
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -292,7 +306,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-250b-compassvale-st-2026-02-227298",
+      "id": "sengkang-250b-compassvale-st-2026-02-227373",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -305,7 +319,7 @@
       "pricePerSqft": 601.39
     },
     {
-      "id": "sengkang-250b-compassvale-st-2026-01-227297",
+      "id": "sengkang-250b-compassvale-st-2026-01-227372",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -474,7 +488,7 @@
       "pricePerSqft": 398.56
     },
     {
-      "id": "sengkang-250b-compassvale-st-2016-12-975137",
+      "id": "sengkang-250b-compassvale-st-2016-12-975259",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -487,7 +501,7 @@
       "pricePerSqft": 408.49
     },
     {
-      "id": "sengkang-250b-compassvale-st-2016-09-970431",
+      "id": "sengkang-250b-compassvale-st-2016-09-970553",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -500,7 +514,7 @@
       "pricePerSqft": 390.05
     },
     {
-      "id": "sengkang-250b-compassvale-st-2016-03-959821",
+      "id": "sengkang-250b-compassvale-st-2016-03-959943",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -513,7 +527,7 @@
       "pricePerSqft": 386.51
     },
     {
-      "id": "sengkang-250b-compassvale-st-2015-08-949587",
+      "id": "sengkang-250b-compassvale-st-2015-08-949709",
       "month": "2015-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -526,7 +540,7 @@
       "pricePerSqft": 367.29
     },
     {
-      "id": "sengkang-250b-compassvale-st-2015-06-946561",
+      "id": "sengkang-250b-compassvale-st-2015-06-946683",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -539,7 +553,7 @@
       "pricePerSqft": 382.96
     },
     {
-      "id": "sengkang-250b-compassvale-st-2015-01-939252",
+      "id": "sengkang-250b-compassvale-st-2015-01-939374",
       "month": "2015-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

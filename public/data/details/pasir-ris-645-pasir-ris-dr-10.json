@@ -22,8 +22,8 @@
       167
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1994,
+      1994
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1403
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1403
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2567
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 2976
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -689,7 +703,7 @@
       "pricePerSqft": 363.51
     },
     {
-      "id": "pasir-ris-645-pasir-ris-dr-10-2016-06-964916",
+      "id": "pasir-ris-645-pasir-ris-dr-10-2016-06-965038",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1354
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1354
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1434
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1918
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -527,7 +541,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-648-hougang-ave-8-2026-04-224651",
+      "id": "hougang-648-hougang-ave-8-2026-04-224683",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -735,7 +749,7 @@
       "pricePerSqft": 403.69
     },
     {
-      "id": "hougang-648-hougang-ave-8-2016-09-969792",
+      "id": "hougang-648-hougang-ave-8-2016-09-969914",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -748,7 +762,7 @@
       "pricePerSqft": 376.04
     },
     {
-      "id": "hougang-648-hougang-ave-8-2014-09-645949",
+      "id": "hougang-648-hougang-ave-8-2014-09-646071",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -761,7 +775,7 @@
       "pricePerSqft": 414.75
     },
     {
-      "id": "hougang-648-hougang-ave-8-2014-08-644582",
+      "id": "hougang-648-hougang-ave-8-2014-08-644704",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -774,7 +788,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "hougang-648-hougang-ave-8-2014-04-639094",
+      "id": "hougang-648-hougang-ave-8-2014-04-639216",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

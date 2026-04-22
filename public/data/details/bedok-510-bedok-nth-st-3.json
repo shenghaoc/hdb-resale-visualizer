@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BEDOK RESERVOIR MRT STATION",
       "distanceMeters": 512
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 512
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 887
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1348
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -709,7 +723,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-510-bedok-nth-st-3-2026-01-222517",
+      "id": "bedok-510-bedok-nth-st-3-2026-01-222527",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -722,7 +736,7 @@
       "pricePerSqft": 555.35
     },
     {
-      "id": "bedok-510-bedok-nth-st-3-2026-01-222519",
+      "id": "bedok-510-bedok-nth-st-3-2026-01-222529",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

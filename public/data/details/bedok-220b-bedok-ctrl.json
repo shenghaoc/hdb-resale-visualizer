@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 537
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 537
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1220
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1277
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       147
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 709
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 709
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1359
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1698
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -427,7 +441,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-498j-tampines-st-45-2026-02-227946",
+      "id": "tampines-498j-tampines-st-45-2026-02-228036",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -635,7 +649,7 @@
       "pricePerSqft": 394.4
     },
     {
-      "id": "tampines-498j-tampines-st-45-2016-08-968851",
+      "id": "tampines-498j-tampines-st-45-2016-08-968973",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -648,7 +662,7 @@
       "pricePerSqft": 378.62
     },
     {
-      "id": "tampines-498j-tampines-st-45-2016-08-968856",
+      "id": "tampines-498j-tampines-st-45-2016-08-968978",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -661,7 +675,7 @@
       "pricePerSqft": 385.64
     },
     {
-      "id": "tampines-498j-tampines-st-45-2016-03-959935",
+      "id": "tampines-498j-tampines-st-45-2016-03-960057",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -674,7 +688,7 @@
       "pricePerSqft": 384.76
     },
     {
-      "id": "tampines-498j-tampines-st-45-2016-03-959964",
+      "id": "tampines-498j-tampines-st-45-2016-03-960086",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

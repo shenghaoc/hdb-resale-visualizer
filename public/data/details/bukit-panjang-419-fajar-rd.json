@@ -22,8 +22,8 @@
       129
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 131
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 131
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 431
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 563
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -690,7 +704,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-419-fajar-rd-2026-01-223653",
+      "id": "bukit-panjang-419-fajar-rd-2026-01-223676",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

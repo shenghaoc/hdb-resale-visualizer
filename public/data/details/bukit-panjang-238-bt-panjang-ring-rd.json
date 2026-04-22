@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2024-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BANGKIT LRT STATION",
       "distanceMeters": 214
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 214
+      },
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 396
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 494
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -743,7 +757,7 @@
       "pricePerSqft": 309.08
     },
     {
-      "id": "bukit-panjang-238-bt-panjang-ring-rd-2016-05-962476",
+      "id": "bukit-panjang-238-bt-panjang-ring-rd-2016-05-962598",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -756,7 +770,7 @@
       "pricePerSqft": 323.64
     },
     {
-      "id": "bukit-panjang-238-bt-panjang-ring-rd-2014-12-650129",
+      "id": "bukit-panjang-238-bt-panjang-ring-rd-2014-12-650251",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -769,7 +783,7 @@
       "pricePerSqft": 334.99
     },
     {
-      "id": "bukit-panjang-238-bt-panjang-ring-rd-2014-09-645767",
+      "id": "bukit-panjang-238-bt-panjang-ring-rd-2014-09-645889",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -9,26 +9,26 @@
       "lat": 1.43484925635895,
       "lng": 103.798922420494
     },
-    "medianPrice": 561500,
+    "medianPrice": 568000,
     "priceIqr": [
-      551250,
-      599500
+      552500,
+      600000
     ],
-    "pricePerSqmMedian": 5361.37,
-    "pricePerSqftMedian": 498.09,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 5330.58,
+    "pricePerSqftMedian": 495.23,
+    "transactionCount": 7,
     "floorAreaRange": [
       101,
       122
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-07",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 616
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 616
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 957
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1093
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -524,11 +538,30 @@
       "medianPrice": 555000,
       "transactionCount": 1,
       "medianPricePerSqm": 5441.18
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4836.07
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-623-woodlands-dr-52-2026-03-228482",
+      "id": "woodlands-623-woodlands-dr-52-2026-04-228785",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 4836.07,
+      "pricePerSqft": 449.29
+    },
+    {
+      "id": "woodlands-623-woodlands-dr-52-2026-03-228587",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -541,7 +574,7 @@
       "pricePerSqft": 505.5
     },
     {
-      "id": "woodlands-623-woodlands-dr-52-2026-01-228477",
+      "id": "woodlands-623-woodlands-dr-52-2026-01-228582",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -773,19 +806,6 @@
       "resalePrice": 430000,
       "pricePerSqm": 3524.59,
       "pricePerSqft": 327.45
-    },
-    {
-      "id": "woodlands-623-woodlands-dr-52-2018-06-29998",
-      "month": "2018-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 102,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "79 years 03 months",
-      "resalePrice": 332500,
-      "pricePerSqm": 3259.8,
-      "pricePerSqft": 302.85
     }
   ]
 }

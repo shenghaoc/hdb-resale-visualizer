@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1677
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1677
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1857
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2249
+      }
+    ]
   },
   "monthlyTrend": [
     {

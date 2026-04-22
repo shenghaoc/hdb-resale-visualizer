@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SIMEI MRT STATION",
       "distanceMeters": 343
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 343
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1126
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1366
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -744,7 +758,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-106-simei-st-1-2026-02-227532",
+      "id": "tampines-106-simei-st-1-2026-02-227612",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -757,7 +771,7 @@
       "pricePerSqft": 634.24
     },
     {
-      "id": "tampines-106-simei-st-1-2026-01-227526",
+      "id": "tampines-106-simei-st-1-2026-01-227606",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

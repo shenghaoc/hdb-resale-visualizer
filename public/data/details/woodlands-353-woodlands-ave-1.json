@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 432
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 432
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1008
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1200
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -468,7 +482,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-353-woodlands-ave-1-2026-02-228354",
+      "id": "woodlands-353-woodlands-ave-1-2026-02-228455",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

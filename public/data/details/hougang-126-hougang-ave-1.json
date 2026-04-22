@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 846
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 846
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1230
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1292
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -869,7 +883,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-126-hougang-ave-1-2026-03-224488",
+      "id": "hougang-126-hougang-ave-1-2026-03-224520",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -882,7 +896,7 @@
       "pricePerSqft": 517.6
     },
     {
-      "id": "hougang-126-hougang-ave-1-2026-02-224484",
+      "id": "hougang-126-hougang-ave-1-2026-02-224516",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -895,7 +909,7 @@
       "pricePerSqft": 551.61
     },
     {
-      "id": "hougang-126-hougang-ave-1-2026-01-224479",
+      "id": "hougang-126-hougang-ave-1-2026-01-224511",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

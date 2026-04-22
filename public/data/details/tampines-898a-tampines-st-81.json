@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 391
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 391
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1151
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1191
+      }
+    ]
   },
   "monthlyTrend": [
     {

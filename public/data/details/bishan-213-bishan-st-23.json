@@ -22,8 +22,8 @@
       139
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 680
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 680
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1359
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1370
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -754,7 +768,7 @@
       "pricePerSqft": 541.38
     },
     {
-      "id": "bishan-213-bishan-st-23-2016-07-965897",
+      "id": "bishan-213-bishan-st-23-2016-07-966019",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -767,7 +781,7 @@
       "pricePerSqft": 518.11
     },
     {
-      "id": "bishan-213-bishan-st-23-2015-07-947193",
+      "id": "bishan-213-bishan-st-23-2015-07-947315",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -780,7 +794,7 @@
       "pricePerSqft": 500.95
     },
     {
-      "id": "bishan-213-bishan-st-23-2014-10-647110",
+      "id": "bishan-213-bishan-st-23-2014-10-647232",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

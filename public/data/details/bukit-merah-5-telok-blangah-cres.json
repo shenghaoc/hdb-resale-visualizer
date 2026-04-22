@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1974,
+      1974
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 1165
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1165
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1209
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1367
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -828,7 +842,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-5-telok-blangah-cres-2026-02-223298",
+      "id": "bukit-merah-5-telok-blangah-cres-2026-02-223317",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

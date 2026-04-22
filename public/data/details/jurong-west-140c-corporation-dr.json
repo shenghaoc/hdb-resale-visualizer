@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 1859
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1859
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1873
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2071
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -174,7 +188,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-140c-corporation-dr-2026-03-224955",
+      "id": "jurong-west-140c-corporation-dr-2026-03-224995",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",

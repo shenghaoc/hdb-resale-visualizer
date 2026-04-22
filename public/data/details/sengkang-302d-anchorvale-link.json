@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RENJONG LRT STATION",
       "distanceMeters": 174
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 174
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 425
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 639
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -370,7 +384,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-302d-anchorvale-link-2026-01-227288",
+      "id": "sengkang-302d-anchorvale-link-2026-01-227363",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

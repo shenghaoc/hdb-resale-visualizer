@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2025-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 331
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 331
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 485
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 514
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -506,7 +520,7 @@
       "pricePerSqft": 316.68
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2016-12-975126",
+      "id": "sengkang-188a-rivervale-dr-2016-12-975248",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -519,7 +533,7 @@
       "pricePerSqft": 343.34
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2016-05-963401",
+      "id": "sengkang-188a-rivervale-dr-2016-05-963523",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -532,7 +546,7 @@
       "pricePerSqft": 332.84
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2015-02-940423",
+      "id": "sengkang-188a-rivervale-dr-2015-02-940545",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -545,7 +559,7 @@
       "pricePerSqft": 308.6
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2014-11-649363",
+      "id": "sengkang-188a-rivervale-dr-2014-11-649485",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -558,7 +572,7 @@
       "pricePerSqft": 362.9
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2014-05-641040",
+      "id": "sengkang-188a-rivervale-dr-2014-05-641162",
       "month": "2014-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -571,7 +585,7 @@
       "pricePerSqft": 389.22
     },
     {
-      "id": "sengkang-188a-rivervale-dr-2013-05-625562",
+      "id": "sengkang-188a-rivervale-dr-2013-05-625684",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

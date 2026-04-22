@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 901
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 901
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 977
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1053
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -336,7 +350,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-475d-upp-serangoon-cres-2026-04-224705",
+      "id": "hougang-475d-upp-serangoon-cres-2026-04-224740",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -349,7 +363,7 @@
       "pricePerSqft": 727.07
     },
     {
-      "id": "hougang-475d-upp-serangoon-cres-2026-01-224694",
+      "id": "hougang-475d-upp-serangoon-cres-2026-01-224729",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

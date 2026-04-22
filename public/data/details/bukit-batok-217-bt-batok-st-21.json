@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 609
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 609
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1362
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1791
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -941,7 +955,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-217-bt-batok-st-21-2026-04-222849",
+      "id": "bukit-batok-217-bt-batok-st-21-2026-04-222864",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -954,7 +968,7 @@
       "pricePerSqft": 561.58
     },
     {
-      "id": "bukit-batok-217-bt-batok-st-21-2026-01-222846",
+      "id": "bukit-batok-217-bt-batok-st-21-2026-01-222861",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -967,7 +981,7 @@
       "pricePerSqft": 554.65
     },
     {
-      "id": "bukit-batok-217-bt-batok-st-21-2026-01-222847",
+      "id": "bukit-batok-217-bt-batok-st-21-2026-01-222862",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

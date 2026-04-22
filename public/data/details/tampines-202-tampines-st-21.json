@@ -9,21 +9,21 @@
       "lat": 1.35290528862856,
       "lng": 103.952539174975
     },
-    "medianPrice": 459000,
+    "medianPrice": 463000,
     "priceIqr": [
-      451250,
-      472000
+      452500,
+      497500
     ],
-    "pricePerSqmMedian": 6006.33,
-    "pricePerSqftMedian": 558,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6012.66,
+    "pricePerSqftMedian": 558.59,
+    "transactionCount": 7,
     "floorAreaRange": [
       75,
       133
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 418
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 418
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 831
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1148
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -892,14 +906,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 455000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6066.67
+      "medianPrice": 487500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6500
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-202-tampines-st-21-2026-04-227458",
+      "id": "tampines-202-tampines-st-21-2026-04-227535",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -912,7 +926,20 @@
       "pricePerSqft": 563.61
     },
     {
-      "id": "tampines-202-tampines-st-21-2026-03-227452",
+      "id": "tampines-202-tampines-st-21-2026-04-227537",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 75,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 09 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 6933.33,
+      "pricePerSqft": 644.13
+    },
+    {
+      "id": "tampines-202-tampines-st-21-2026-03-227529",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1144,19 +1171,6 @@
       "resalePrice": 520000,
       "pricePerSqm": 3909.77,
       "pricePerSqft": 363.23
-    },
-    {
-      "id": "tampines-202-tampines-st-21-2019-11-61878",
-      "month": "2019-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 75,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "63 years 01 month",
-      "resalePrice": 305000,
-      "pricePerSqm": 4066.67,
-      "pricePerSqft": 377.81
     }
   ]
 }

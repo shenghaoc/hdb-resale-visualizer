@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 827
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 827
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 862
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1263
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -190,7 +204,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-180b-marsiling-rd-2026-03-228282",
+      "id": "woodlands-180b-marsiling-rd-2026-03-228383",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

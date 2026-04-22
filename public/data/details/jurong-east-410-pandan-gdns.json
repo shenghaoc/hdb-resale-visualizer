@@ -22,8 +22,8 @@
       172
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1595
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1595
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1992
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2954
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1038,7 +1052,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-410-pandan-gdns-2026-01-224853",
+      "id": "jurong-east-410-pandan-gdns-2026-01-224890",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

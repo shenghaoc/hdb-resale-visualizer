@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 185
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 185
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 936
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1173
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -773,7 +787,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-204-serangoon-ctrl-2026-02-227328",
+      "id": "serangoon-204-serangoon-ctrl-2026-02-227404",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -786,7 +800,7 @@
       "pricePerSqft": 747.58
     },
     {
-      "id": "serangoon-204-serangoon-ctrl-2026-02-227329",
+      "id": "serangoon-204-serangoon-ctrl-2026-02-227405",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -799,7 +813,7 @@
       "pricePerSqft": 812.9
     },
     {
-      "id": "serangoon-204-serangoon-ctrl-2026-01-227361",
+      "id": "serangoon-204-serangoon-ctrl-2026-01-227437",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

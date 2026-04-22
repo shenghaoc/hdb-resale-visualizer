@@ -22,8 +22,8 @@
       160
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 921
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 921
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1011
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -778,7 +792,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-145-lor-ah-soo-2026-02-224806",
+      "id": "hougang-145-lor-ah-soo-2026-02-224843",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

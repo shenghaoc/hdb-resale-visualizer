@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "DT4",
       "distanceMeters": 1082
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1082
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1098
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1219
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -961,7 +975,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-259-bt-batok-east-ave-4-2026-01-222931",
+      "id": "bukit-batok-259-bt-batok-east-ave-4-2026-01-222947",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

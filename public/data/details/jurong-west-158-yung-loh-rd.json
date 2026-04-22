@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1683
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1683
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1857
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 2079
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-158-yung-loh-rd-2026-01-225220",
+      "id": "jurong-west-158-yung-loh-rd-2026-01-225265",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

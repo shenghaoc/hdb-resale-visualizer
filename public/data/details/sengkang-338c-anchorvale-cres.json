@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 320
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 320
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 569
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 953
+      }
+    ]
   },
   "monthlyTrend": [
     {

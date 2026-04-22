@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 726
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 726
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 938
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 990
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -953,7 +967,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-521-bedok-nth-ave-1-2026-03-222331",
+      "id": "bedok-521-bedok-nth-ave-1-2026-03-222336",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

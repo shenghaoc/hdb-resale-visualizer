@@ -22,8 +22,8 @@
       87
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 333
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 333
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 372
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 580
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -388,7 +402,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-202-compassvale-dr-2026-01-226940",
+      "id": "sengkang-202-compassvale-dr-2026-01-227008",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -596,7 +610,7 @@
       "pricePerSqft": 443.16
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-11-973616",
+      "id": "sengkang-202-compassvale-dr-2016-11-973738",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -609,7 +623,7 @@
       "pricePerSqft": 425.95
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-09-970333",
+      "id": "sengkang-202-compassvale-dr-2016-09-970455",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -622,7 +636,7 @@
       "pricePerSqft": 421.8
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-07-966796",
+      "id": "sengkang-202-compassvale-dr-2016-07-966918",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -635,7 +649,7 @@
       "pricePerSqft": 389.77
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-06-965128",
+      "id": "sengkang-202-compassvale-dr-2016-06-965250",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

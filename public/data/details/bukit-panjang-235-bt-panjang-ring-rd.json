@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 211
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 211
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 237
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 500
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -463,7 +477,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2026-01-223532",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2026-01-223555",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -593,7 +607,7 @@
       "pricePerSqft": 326.05
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2016-10-971257",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2016-10-971379",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -606,7 +620,7 @@
       "pricePerSqft": 342.68
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2016-06-964264",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2016-06-964386",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -619,7 +633,7 @@
       "pricePerSqft": 332.31
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2015-09-950294",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2015-09-950416",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -632,7 +646,7 @@
       "pricePerSqft": 319.83
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2015-03-941059",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2015-03-941181",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -645,7 +659,7 @@
       "pricePerSqft": 340.35
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2012-04-601768",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2012-04-601890",
       "month": "2012-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -658,7 +672,7 @@
       "pricePerSqft": 357.32
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-12-594521",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-12-594643",
       "month": "2011-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -671,7 +685,7 @@
       "pricePerSqft": 354.64
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-09-589407",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-09-589529",
       "month": "2011-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -684,7 +698,7 @@
       "pricePerSqft": 344.81
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-05-581765",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-05-581887",
       "month": "2011-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -697,7 +711,7 @@
       "pricePerSqft": 329.73
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-02-575961",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2011-02-576083",
       "month": "2011-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -710,7 +724,7 @@
       "pricePerSqft": 310.87
     },
     {
-      "id": "bukit-panjang-235-bt-panjang-ring-rd-2010-08-560861",
+      "id": "bukit-panjang-235-bt-panjang-ring-rd-2010-08-560983",
       "month": "2010-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

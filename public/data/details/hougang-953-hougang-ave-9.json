@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1662
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1662
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1737
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1800
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-953-hougang-ave-9-2026-01-224654",
+      "id": "hougang-953-hougang-ave-9-2026-01-224687",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -612,7 +626,7 @@
       "pricePerSqft": 360.86
     },
     {
-      "id": "hougang-953-hougang-ave-9-2016-04-960933",
+      "id": "hougang-953-hougang-ave-9-2016-04-961055",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -625,7 +639,7 @@
       "pricePerSqft": 368.54
     },
     {
-      "id": "hougang-953-hougang-ave-9-2016-04-960938",
+      "id": "hougang-953-hougang-ave-9-2016-04-961060",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

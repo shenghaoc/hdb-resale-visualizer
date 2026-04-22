@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 652
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 652
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1379
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1557
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -484,7 +498,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-356-tampines-st-33-2026-03-227852",
+      "id": "tampines-356-tampines-st-33-2026-03-227937",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -497,7 +511,7 @@
       "pricePerSqft": 520.26
     },
     {
-      "id": "tampines-356-tampines-st-33-2026-01-227848",
+      "id": "tampines-356-tampines-st-33-2026-01-227933",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -510,7 +524,7 @@
       "pricePerSqft": 509.11
     },
     {
-      "id": "tampines-356-tampines-st-33-2026-01-227849",
+      "id": "tampines-356-tampines-st-33-2026-01-227934",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -705,7 +719,7 @@
       "pricePerSqft": 385.85
     },
     {
-      "id": "tampines-356-tampines-st-33-2016-12-975240",
+      "id": "tampines-356-tampines-st-33-2016-12-975362",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -718,7 +732,7 @@
       "pricePerSqft": 337.15
     },
     {
-      "id": "tampines-356-tampines-st-33-2016-07-967026",
+      "id": "tampines-356-tampines-st-33-2016-07-967148",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -731,7 +745,7 @@
       "pricePerSqft": 389.59
     },
     {
-      "id": "tampines-356-tampines-st-33-2015-10-952939",
+      "id": "tampines-356-tampines-st-33-2015-10-953061",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

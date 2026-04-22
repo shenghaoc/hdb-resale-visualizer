@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1989,
+      1989
     ],
     "latestMonth": "2022-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 464
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 464
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 582
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 850
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -475,7 +489,7 @@
       "pricePerSqft": 346.35
     },
     {
-      "id": "hougang-450-hougang-ave-10-2016-05-962736",
+      "id": "hougang-450-hougang-ave-10-2016-05-962858",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -488,7 +502,7 @@
       "pricePerSqft": 331.8
     },
     {
-      "id": "hougang-450-hougang-ave-10-2016-03-959246",
+      "id": "hougang-450-hougang-ave-10-2016-03-959368",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -501,7 +515,7 @@
       "pricePerSqft": 364.53
     },
     {
-      "id": "hougang-450-hougang-ave-10-2015-09-950539",
+      "id": "hougang-450-hougang-ave-10-2015-09-950661",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -514,7 +528,7 @@
       "pricePerSqft": 372.02
     },
     {
-      "id": "hougang-450-hougang-ave-10-2015-07-947624",
+      "id": "hougang-450-hougang-ave-10-2015-07-947746",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -527,7 +541,7 @@
       "pricePerSqft": 362.32
     },
     {
-      "id": "hougang-450-hougang-ave-10-2014-05-640629",
+      "id": "hougang-450-hougang-ave-10-2014-05-640751",
       "month": "2014-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -540,7 +554,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "hougang-450-hougang-ave-10-2012-05-604333",
+      "id": "hougang-450-hougang-ave-10-2012-05-604455",
       "month": "2012-05",
       "flatType": "4 ROOM",
       "storeyRange": "06 TO 10",
@@ -553,7 +567,7 @@
       "pricePerSqft": 407.69
     },
     {
-      "id": "hougang-450-hougang-ave-10-2011-01-574221",
+      "id": "hougang-450-hougang-ave-10-2011-01-574343",
       "month": "2011-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -566,7 +580,7 @@
       "pricePerSqft": 318.77
     },
     {
-      "id": "hougang-450-hougang-ave-10-2011-01-574222",
+      "id": "hougang-450-hougang-ave-10-2011-01-574344",
       "month": "2011-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -579,7 +593,7 @@
       "pricePerSqft": 332.68
     },
     {
-      "id": "hougang-450-hougang-ave-10-2010-12-572180",
+      "id": "hougang-450-hougang-ave-10-2010-12-572302",
       "month": "2010-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -592,7 +606,7 @@
       "pricePerSqft": 354.96
     },
     {
-      "id": "hougang-450-hougang-ave-10-2010-07-557890",
+      "id": "hougang-450-hougang-ave-10-2010-07-558012",
       "month": "2010-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -605,7 +619,7 @@
       "pricePerSqft": 322.53
     },
     {
-      "id": "hougang-450-hougang-ave-10-2010-03-545095",
+      "id": "hougang-450-hougang-ave-10-2010-03-545217",
       "month": "2010-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -618,7 +632,7 @@
       "pricePerSqft": 306.76
     },
     {
-      "id": "hougang-450-hougang-ave-10-2009-10-530775",
+      "id": "hougang-450-hougang-ave-10-2009-10-530897",
       "month": "2009-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -631,7 +645,7 @@
       "pricePerSqft": 296.41
     },
     {
-      "id": "hougang-450-hougang-ave-10-2008-02-483911",
+      "id": "hougang-450-hougang-ave-10-2008-02-484033",
       "month": "2008-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

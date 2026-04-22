@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BRIGHT HILL MRT STATION",
       "distanceMeters": 78
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 78
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 789
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 986
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -586,7 +600,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-402-sin-ming-ave-2026-01-222779",
+      "id": "bishan-402-sin-ming-ave-2026-01-222793",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -833,7 +847,7 @@
       "pricePerSqft": 564.3
     },
     {
-      "id": "bishan-402-sin-ming-ave-2016-05-962276",
+      "id": "bishan-402-sin-ming-ave-2016-05-962398",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

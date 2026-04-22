@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 335
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 602
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -300,7 +314,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-107c-edgefield-plains-2026-01-226219",
+      "id": "punggol-107c-edgefield-plains-2026-01-226281",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -495,7 +509,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-10-971829",
+      "id": "punggol-107c-edgefield-plains-2016-10-971951",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -508,7 +522,7 @@
       "pricePerSqft": 421.16
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-07-966658",
+      "id": "punggol-107c-edgefield-plains-2016-07-966780",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -521,7 +535,7 @@
       "pricePerSqft": 378.37
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-04-961268",
+      "id": "punggol-107c-edgefield-plains-2016-04-961390",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -534,7 +548,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "punggol-107c-edgefield-plains-2015-11-954106",
+      "id": "punggol-107c-edgefield-plains-2015-11-954228",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -547,7 +561,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "punggol-107c-edgefield-plains-2015-04-943044",
+      "id": "punggol-107c-edgefield-plains-2015-04-943166",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SUMANG LRT STATION",
       "distanceMeters": 176
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 176
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 400
+      },
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 491
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -215,7 +229,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-316d-punggol-way-2026-02-226297",
+      "id": "punggol-316d-punggol-way-2026-02-226359",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

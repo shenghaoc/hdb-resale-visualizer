@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 560
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 560
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 662
+      },
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 769
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1213,7 +1227,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-02-222157",
+      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-02-222160",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1226,7 +1240,7 @@
       "pricePerSqft": 558.46
     },
     {
-      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-01-222222",
+      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-01-222225",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

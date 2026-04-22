@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 400
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 400
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 819
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 1012
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1067,7 +1081,7 @@
       "pricePerSqft": 392.63
     },
     {
-      "id": "geylang-344-ubi-ave-1-2016-06-964511",
+      "id": "geylang-344-ubi-ave-1-2016-06-964633",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1080,7 +1094,7 @@
       "pricePerSqft": 373.4
     },
     {
-      "id": "geylang-344-ubi-ave-1-2016-03-959178",
+      "id": "geylang-344-ubi-ave-1-2016-03-959300",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

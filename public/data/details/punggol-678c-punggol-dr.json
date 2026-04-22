@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 122
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 122
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 550
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 619
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -203,7 +217,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-678c-punggol-dr-2026-03-226259",
+      "id": "punggol-678c-punggol-dr-2026-03-226321",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

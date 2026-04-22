@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2003,
+      2003
     ],
     "latestMonth": "2024-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "RIVIERA LRT STATION",
       "distanceMeters": 263
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 263
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 309
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 440
+      }
+    ]
   },
   "monthlyTrend": [
     {

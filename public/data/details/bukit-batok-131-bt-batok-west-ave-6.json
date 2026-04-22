@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 410
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 410
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1097
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1757
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -977,7 +991,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-131-bt-batok-west-ave-6-2026-03-223023",
+      "id": "bukit-batok-131-bt-batok-west-ave-6-2026-03-223039",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

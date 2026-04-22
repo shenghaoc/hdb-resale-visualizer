@@ -22,8 +22,8 @@
       103
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PHOENIX LRT STATION",
       "distanceMeters": 114
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 114
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 368
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 433
+      }
+    ]
   },
   "monthlyTrend": [
     {

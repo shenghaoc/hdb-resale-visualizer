@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 423
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 423
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1280
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1519
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1297,7 +1311,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-161-mei-ling-st-2026-03-226491",
+      "id": "queenstown-161-mei-ling-st-2026-03-226554",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

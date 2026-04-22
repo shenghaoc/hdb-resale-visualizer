@@ -11,19 +11,19 @@
     },
     "medianPrice": 1056444,
     "priceIqr": [
-      835000,
-      1127000
+      828750,
+      1130000
     ],
-    "pricePerSqmMedian": 11796.33,
-    "pricePerSqftMedian": 1095.91,
-    "transactionCount": 50,
+    "pricePerSqmMedian": 11848.86,
+    "pricePerSqftMedian": 1100.8,
+    "transactionCount": 52,
     "floorAreaRange": [
       68,
       97
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "WOODLEIGH MRT STATION",
       "distanceMeters": 387
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 387
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 674
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 964
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -119,13 +133,13 @@
     {
       "month": "2026-04",
       "medianPrice": 920000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 11572.58
+      "transactionCount": 4,
+      "medianPricePerSqm": 12177.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-118a-alkaff-cres-2026-04-227969",
+      "id": "toa-payoh-118a-alkaff-cres-2026-04-228060",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -138,7 +152,20 @@
       "pricePerSqft": 1161.29
     },
     {
-      "id": "toa-payoh-118a-alkaff-cres-2026-04-228089",
+      "id": "toa-payoh-118a-alkaff-cres-2026-04-228061",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 08 months",
+      "resalePrice": 808000,
+      "pricePerSqm": 11882.35,
+      "pricePerSqft": 1103.91
+    },
+    {
+      "id": "toa-payoh-118a-alkaff-cres-2026-04-228184",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -151,7 +178,20 @@
       "pricePerSqft": 988.97
     },
     {
-      "id": "toa-payoh-118a-alkaff-cres-2026-03-228088",
+      "id": "toa-payoh-118a-alkaff-cres-2026-04-228185",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 08 months",
+      "resalePrice": 1160000,
+      "pricePerSqm": 12473.12,
+      "pricePerSqft": 1158.79
+    },
+    {
+      "id": "toa-payoh-118a-alkaff-cres-2026-03-228183",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -357,32 +397,6 @@
       "resalePrice": 810000,
       "pricePerSqm": 11911.76,
       "pricePerSqft": 1106.64
-    },
-    {
-      "id": "toa-payoh-118a-alkaff-cres-2025-08-218033",
-      "month": "2025-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 04 months",
-      "resalePrice": 1176888,
-      "pricePerSqm": 12654.71,
-      "pricePerSqft": 1175.66
-    },
-    {
-      "id": "toa-payoh-118a-alkaff-cres-2025-07-217594",
-      "month": "2025-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 05 months",
-      "resalePrice": 820000,
-      "pricePerSqm": 12058.82,
-      "pricePerSqft": 1120.3
     }
   ]
 }

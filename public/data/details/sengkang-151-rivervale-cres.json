@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 72
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 72
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 430
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 620
+      }
+    ]
   },
   "monthlyTrend": [
     {

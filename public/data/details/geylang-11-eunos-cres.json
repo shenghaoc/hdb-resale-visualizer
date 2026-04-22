@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 286
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 286
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 945
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 1038
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -670,7 +684,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-11-eunos-cres-2026-01-224382",
+      "id": "geylang-11-eunos-cres-2026-01-224412",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

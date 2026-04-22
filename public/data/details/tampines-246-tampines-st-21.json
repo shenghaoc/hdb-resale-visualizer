@@ -22,8 +22,8 @@
       162
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 241
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 241
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 889
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1298
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -962,7 +976,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-246-tampines-st-21-2026-01-227447",
+      "id": "tampines-246-tampines-st-21-2026-01-227524",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

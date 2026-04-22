@@ -11,19 +11,19 @@
     },
     "medianPrice": 350000,
     "priceIqr": [
-      332500,
-      363000
+      333750,
+      362000
     ],
     "pricePerSqmMedian": 7187.5,
     "pricePerSqftMedian": 667.74,
-    "transactionCount": 23,
+    "transactionCount": 24,
     "floorAreaRange": [
       48,
       67
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2012,
+      2012
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KHATIB MRT STATION",
       "distanceMeters": 1498
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1498
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1527
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 3040
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -407,14 +421,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 352000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7333.33
+      "medianPrice": 351000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7312.5
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-459-yishun-ave-11-2026-04-228811",
+      "id": "yishun-459-yishun-ave-11-2026-04-228924",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -427,7 +441,20 @@
       "pricePerSqft": 681.29
     },
     {
-      "id": "yishun-459-yishun-ave-11-2026-03-228826",
+      "id": "yishun-459-yishun-ave-11-2026-04-228925",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 48,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 05 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 7291.67,
+      "pricePerSqft": 677.42
+    },
+    {
+      "id": "yishun-459-yishun-ave-11-2026-03-228940",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -440,7 +467,7 @@
       "pricePerSqft": 672.51
     },
     {
-      "id": "yishun-459-yishun-ave-11-2026-03-228827",
+      "id": "yishun-459-yishun-ave-11-2026-03-228941",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -453,7 +480,7 @@
       "pricePerSqft": 700.24
     },
     {
-      "id": "yishun-459-yishun-ave-11-2026-02-228810",
+      "id": "yishun-459-yishun-ave-11-2026-02-228923",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -466,7 +493,7 @@
       "pricePerSqft": 706.45
     },
     {
-      "id": "yishun-459-yishun-ave-11-2026-01-228806",
+      "id": "yishun-459-yishun-ave-11-2026-01-228919",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -479,7 +506,7 @@
       "pricePerSqft": 638.71
     },
     {
-      "id": "yishun-459-yishun-ave-11-2026-01-228808",
+      "id": "yishun-459-yishun-ave-11-2026-01-228921",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -659,19 +686,6 @@
       "resalePrice": 430000,
       "pricePerSqm": 6417.91,
       "pricePerSqft": 596.24
-    },
-    {
-      "id": "yishun-459-yishun-ave-11-2024-06-195941",
-      "month": "2024-06",
-      "flatType": "2 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 48,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "88 years 03 months",
-      "resalePrice": 310000,
-      "pricePerSqm": 6458.33,
-      "pricePerSqft": 600
     }
   ]
 }

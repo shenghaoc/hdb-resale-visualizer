@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 521
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 521
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 797
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 842
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -660,7 +674,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-553-hougang-st-51-2026-04-224676",
+      "id": "hougang-553-hougang-st-51-2026-04-224711",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -673,7 +687,7 @@
       "pricePerSqft": 482.38
     },
     {
-      "id": "hougang-553-hougang-st-51-2026-04-224677",
+      "id": "hougang-553-hougang-st-51-2026-04-224712",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

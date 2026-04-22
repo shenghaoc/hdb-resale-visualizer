@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 303
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 341
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 528
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -377,7 +391,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2026-02-224097",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2026-02-224126",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -546,7 +560,7 @@
       "pricePerSqft": 386.63
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2014-06-641909",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2014-06-642031",
       "month": "2014-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -559,7 +573,7 @@
       "pricePerSqft": 378.61
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2014-04-638975",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2014-04-639097",
       "month": "2014-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -572,7 +586,7 @@
       "pricePerSqft": 366.38
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2013-04-623228",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2013-04-623350",
       "month": "2013-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -585,7 +599,7 @@
       "pricePerSqft": 392.55
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2013-03-621831",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2013-03-621953",
       "month": "2013-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -598,7 +612,7 @@
       "pricePerSqft": 381.79
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2012-07-608419",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2012-07-608541",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -611,7 +625,7 @@
       "pricePerSqft": 361.96
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2009-10-530559",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2009-10-530681",
       "month": "2009-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -624,7 +638,7 @@
       "pricePerSqft": 284.6
     },
     {
-      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2009-05-517397",
+      "id": "choa-chu-kang-207-choa-chu-kang-ctrl-2009-05-517519",
       "month": "2009-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

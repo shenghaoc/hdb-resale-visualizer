@@ -22,8 +22,8 @@
       86
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1519
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1519
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 2042
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2878
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -904,7 +918,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-412-pandan-gdns-2026-04-224856",
+      "id": "jurong-east-412-pandan-gdns-2026-04-224893",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -917,7 +931,7 @@
       "pricePerSqft": 498.88
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-04-224857",
+      "id": "jurong-east-412-pandan-gdns-2026-04-224894",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -930,7 +944,7 @@
       "pricePerSqft": 474.84
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-03-224855",
+      "id": "jurong-east-412-pandan-gdns-2026-03-224892",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -943,7 +957,7 @@
       "pricePerSqft": 468.33
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-01-224852",
+      "id": "jurong-east-412-pandan-gdns-2026-01-224889",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

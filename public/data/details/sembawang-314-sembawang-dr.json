@@ -22,8 +22,8 @@
       96
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 584
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 584
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 896
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2181
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -436,7 +450,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-314-sembawang-dr-2026-03-226707",
+      "id": "sembawang-314-sembawang-dr-2026-03-226773",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

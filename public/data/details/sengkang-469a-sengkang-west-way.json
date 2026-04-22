@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "THANGGAM LRT STATION",
       "distanceMeters": 303
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "KUPANG LRT STATION",
+        "distanceMeters": 423
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 462
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -180,7 +194,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-469a-sengkang-west-way-2026-02-227123",
+      "id": "sengkang-469a-sengkang-west-way-2026-02-227195",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

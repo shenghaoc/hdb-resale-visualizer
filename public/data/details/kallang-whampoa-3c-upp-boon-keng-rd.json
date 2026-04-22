@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KALLANG MRT STATION",
       "distanceMeters": 279
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 279
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 826
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 1080
+      }
+    ]
   },
   "monthlyTrend": [
     {

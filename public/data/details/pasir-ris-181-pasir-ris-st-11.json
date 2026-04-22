@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 987
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 987
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1563
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2102
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -468,7 +482,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-181-pasir-ris-st-11-2026-03-225751",
+      "id": "pasir-ris-181-pasir-ris-st-11-2026-03-225804",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -481,7 +495,7 @@
       "pricePerSqft": 518.95
     },
     {
-      "id": "pasir-ris-181-pasir-ris-st-11-2026-02-225749",
+      "id": "pasir-ris-181-pasir-ris-st-11-2026-02-225802",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -689,7 +703,7 @@
       "pricePerSqft": 347.3
     },
     {
-      "id": "pasir-ris-181-pasir-ris-st-11-2016-08-968362",
+      "id": "pasir-ris-181-pasir-ris-st-11-2016-08-968484",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -702,7 +716,7 @@
       "pricePerSqft": 375.19
     },
     {
-      "id": "pasir-ris-181-pasir-ris-st-11-2016-01-956830",
+      "id": "pasir-ris-181-pasir-ris-st-11-2016-01-956952",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -715,7 +729,7 @@
       "pricePerSqft": 326.61
     },
     {
-      "id": "pasir-ris-181-pasir-ris-st-11-2014-10-647780",
+      "id": "pasir-ris-181-pasir-ris-st-11-2014-10-647902",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

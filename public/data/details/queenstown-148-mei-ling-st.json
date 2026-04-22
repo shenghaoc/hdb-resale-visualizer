@@ -22,8 +22,8 @@
       157
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1994,
+      1994
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 165
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 165
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1068
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1497
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -484,7 +498,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-148-mei-ling-st-2026-02-226536",
+      "id": "queenstown-148-mei-ling-st-2026-02-226599",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -497,7 +511,7 @@
       "pricePerSqft": 871.37
     },
     {
-      "id": "queenstown-148-mei-ling-st-2026-01-226535",
+      "id": "queenstown-148-mei-ling-st-2026-01-226598",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

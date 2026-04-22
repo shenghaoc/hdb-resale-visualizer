@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 202
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 202
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1196
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1373
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -466,7 +480,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-670-woodlands-dr-71-2026-01-228778",
+      "id": "woodlands-670-woodlands-dr-71-2026-01-228890",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

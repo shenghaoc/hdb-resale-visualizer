@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 847
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 847
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 872
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1237
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -988,7 +1002,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-19-chai-chee-rd-2026-04-222447",
+      "id": "bedok-19-chai-chee-rd-2026-04-222455",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1001,7 +1015,7 @@
       "pricePerSqft": 550.27
     },
     {
-      "id": "bedok-19-chai-chee-rd-2026-04-222448",
+      "id": "bedok-19-chai-chee-rd-2026-04-222456",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

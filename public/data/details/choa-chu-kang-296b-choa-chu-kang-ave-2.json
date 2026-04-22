@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 555
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 555
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 877
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 923
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -502,7 +516,7 @@
       "pricePerSqft": 342.62
     },
     {
-      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2016-08-967837",
+      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2016-08-967959",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -515,7 +529,7 @@
       "pricePerSqft": 323.61
     },
     {
-      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-12-955104",
+      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-12-955226",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -528,7 +542,7 @@
       "pricePerSqft": 294.19
     },
     {
-      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-12-955105",
+      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-12-955227",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -541,7 +555,7 @@
       "pricePerSqft": 350.71
     },
     {
-      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-10-952025",
+      "id": "choa-chu-kang-296b-choa-chu-kang-ave-2-2015-10-952147",
       "month": "2015-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

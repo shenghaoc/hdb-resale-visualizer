@@ -22,8 +22,8 @@
       60
     ],
     "leaseCommenceRange": [
-      1967,
-      1967
+      1965,
+      1965
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 461
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 461
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 499
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 588
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -922,7 +936,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-24-balam-rd-2026-03-224273",
+      "id": "geylang-24-balam-rd-2026-03-224302",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

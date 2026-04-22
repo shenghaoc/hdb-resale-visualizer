@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 689
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 689
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1061
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2545
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -660,7 +674,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-721-jurong-west-ave-5-2026-03-225075",
+      "id": "jurong-west-721-jurong-west-ave-5-2026-03-225119",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

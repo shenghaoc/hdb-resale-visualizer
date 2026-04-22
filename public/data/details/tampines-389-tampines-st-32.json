@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 250
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 250
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1429
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1437
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -318,7 +332,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-389-tampines-st-32-2026-02-227843",
+      "id": "tampines-389-tampines-st-32-2026-02-227928",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -422,7 +436,7 @@
       "pricePerSqft": 405.53
     },
     {
-      "id": "tampines-389-tampines-st-32-2016-11-973799",
+      "id": "tampines-389-tampines-st-32-2016-11-973921",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -435,7 +449,7 @@
       "pricePerSqft": 364.98
     },
     {
-      "id": "tampines-389-tampines-st-32-2016-03-959957",
+      "id": "tampines-389-tampines-st-32-2016-03-960079",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -448,7 +462,7 @@
       "pricePerSqft": 347.47
     },
     {
-      "id": "tampines-389-tampines-st-32-2015-07-948225",
+      "id": "tampines-389-tampines-st-32-2015-07-948347",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -461,7 +475,7 @@
       "pricePerSqft": 376.11
     },
     {
-      "id": "tampines-389-tampines-st-32-2015-06-946684",
+      "id": "tampines-389-tampines-st-32-2015-06-946806",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -474,7 +488,7 @@
       "pricePerSqft": 340.16
     },
     {
-      "id": "tampines-389-tampines-st-32-2015-03-941846",
+      "id": "tampines-389-tampines-st-32-2015-03-941968",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -487,7 +501,7 @@
       "pricePerSqft": 373.08
     },
     {
-      "id": "tampines-389-tampines-st-32-2014-09-646599",
+      "id": "tampines-389-tampines-st-32-2014-09-646721",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -500,7 +514,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "tampines-389-tampines-st-32-2014-05-641232",
+      "id": "tampines-389-tampines-st-32-2014-05-641354",
       "month": "2014-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -513,7 +527,7 @@
       "pricePerSqft": 393.56
     },
     {
-      "id": "tampines-389-tampines-st-32-2013-01-620185",
+      "id": "tampines-389-tampines-st-32-2013-01-620307",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -526,7 +540,7 @@
       "pricePerSqft": 406.83
     },
     {
-      "id": "tampines-389-tampines-st-32-2011-09-590442",
+      "id": "tampines-389-tampines-st-32-2011-09-590564",
       "month": "2011-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -539,7 +553,7 @@
       "pricePerSqft": 385.85
     },
     {
-      "id": "tampines-389-tampines-st-32-2011-07-586862",
+      "id": "tampines-389-tampines-st-32-2011-07-586984",
       "month": "2011-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -552,7 +566,7 @@
       "pricePerSqft": 358.34
     },
     {
-      "id": "tampines-389-tampines-st-32-2010-12-573040",
+      "id": "tampines-389-tampines-st-32-2010-12-573162",
       "month": "2010-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -565,7 +579,7 @@
       "pricePerSqft": 329.92
     },
     {
-      "id": "tampines-389-tampines-st-32-2010-05-552398",
+      "id": "tampines-389-tampines-st-32-2010-05-552520",
       "month": "2010-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 801
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 801
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 869
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1217
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -798,7 +812,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-123-marsiling-rise-2026-04-228600",
+      "id": "woodlands-123-marsiling-rise-2026-04-228708",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -811,7 +825,7 @@
       "pricePerSqft": 466.82
     },
     {
-      "id": "woodlands-123-marsiling-rise-2026-01-228598",
+      "id": "woodlands-123-marsiling-rise-2026-01-228706",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

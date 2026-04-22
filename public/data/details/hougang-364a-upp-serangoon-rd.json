@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2016,
+      2016
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 448
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 448
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1389
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1502
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -143,7 +157,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-364a-upp-serangoon-rd-2026-02-224707",
+      "id": "hougang-364a-upp-serangoon-rd-2026-02-224742",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       150
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1121
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1121
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1897
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 2662
+      }
+    ]
   },
   "monthlyTrend": [
     {

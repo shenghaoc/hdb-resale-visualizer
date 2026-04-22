@@ -39,7 +39,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 870
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 870
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 2018
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 3083
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -51,7 +65,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-516-west-coast-rd-2014-01-635349",
+      "id": "clementi-516-west-coast-rd-2014-01-635471",
       "month": "2014-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

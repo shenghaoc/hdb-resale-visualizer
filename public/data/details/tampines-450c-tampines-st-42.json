@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 265
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 265
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 891
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1619
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -694,7 +708,7 @@
       "pricePerSqft": 379.5
     },
     {
-      "id": "tampines-450c-tampines-st-42-2016-01-957131",
+      "id": "tampines-450c-tampines-st-42-2016-01-957253",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -707,7 +721,7 @@
       "pricePerSqft": 394.4
     },
     {
-      "id": "tampines-450c-tampines-st-42-2015-03-941840",
+      "id": "tampines-450c-tampines-st-42-2015-03-941962",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -720,7 +734,7 @@
       "pricePerSqft": 365.76
     },
     {
-      "id": "tampines-450c-tampines-st-42-2015-03-941852",
+      "id": "tampines-450c-tampines-st-42-2015-03-941974",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -733,7 +747,7 @@
       "pricePerSqft": 387.71
     },
     {
-      "id": "tampines-450c-tampines-st-42-2014-08-645163",
+      "id": "tampines-450c-tampines-st-42-2014-08-645285",
       "month": "2014-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

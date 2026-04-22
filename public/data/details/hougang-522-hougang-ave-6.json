@@ -22,8 +22,8 @@
       151
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 143
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 143
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1041
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1329
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -869,7 +883,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-522-hougang-ave-6-2026-03-224787",
+      "id": "hougang-522-hougang-ave-6-2026-03-224824",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -882,7 +896,7 @@
       "pricePerSqft": 607.39
     },
     {
-      "id": "hougang-522-hougang-ave-6-2026-01-224785",
+      "id": "hougang-522-hougang-ave-6-2026-01-224822",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

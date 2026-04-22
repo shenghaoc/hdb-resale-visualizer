@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1985,
+      1985
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 658
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 658
+      },
+      {
+        "stationName": "KRANJI MRT STATION",
+        "distanceMeters": 1174
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1810
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -695,7 +709,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-429-woodlands-st-41-2026-01-228568",
+      "id": "woodlands-429-woodlands-st-41-2026-01-228676",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

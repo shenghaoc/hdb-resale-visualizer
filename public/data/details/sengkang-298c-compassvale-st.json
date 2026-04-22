@@ -22,8 +22,8 @@
       134
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 195
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 195
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 635
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 729
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -546,7 +560,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-298c-compassvale-st-2026-01-227295",
+      "id": "sengkang-298c-compassvale-st-2026-01-227370",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

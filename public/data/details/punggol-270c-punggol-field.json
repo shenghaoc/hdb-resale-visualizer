@@ -22,8 +22,8 @@
       149
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2011,
+      2011
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 191
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 191
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 328
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 401
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -258,7 +272,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-270c-punggol-field-2026-02-226273",
+      "id": "punggol-270c-punggol-field-2026-02-226335",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -271,7 +285,7 @@
       "pricePerSqft": 872.48
     },
     {
-      "id": "punggol-270c-punggol-field-2026-01-226269",
+      "id": "punggol-270c-punggol-field-2026-01-226331",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

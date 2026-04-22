@@ -22,8 +22,8 @@
       59
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1963,
+      1963
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 218
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 218
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 691
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 790
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -684,7 +698,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-36-beo-cres-2026-03-223221",
+      "id": "bukit-merah-36-beo-cres-2026-03-223240",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -697,7 +711,7 @@
       "pricePerSqft": 595.21
     },
     {
-      "id": "bukit-merah-36-beo-cres-2026-02-223220",
+      "id": "bukit-merah-36-beo-cres-2026-02-223239",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -710,7 +724,7 @@
       "pricePerSqft": 579.46
     },
     {
-      "id": "bukit-merah-36-beo-cres-2026-01-223212",
+      "id": "bukit-merah-36-beo-cres-2026-01-223231",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",

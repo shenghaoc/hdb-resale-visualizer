@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2024-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 276
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 276
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1017
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 1038
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -481,7 +495,7 @@
       "pricePerSqft": 387.68
     },
     {
-      "id": "bedok-671-jln-damai-2016-10-971033",
+      "id": "bedok-671-jln-damai-2016-10-971155",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -494,7 +508,7 @@
       "pricePerSqft": 370.22
     },
     {
-      "id": "bedok-671-jln-damai-2016-05-962218",
+      "id": "bedok-671-jln-damai-2016-05-962340",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -507,7 +521,7 @@
       "pricePerSqft": 400
     },
     {
-      "id": "bedok-671-jln-damai-2015-10-951656",
+      "id": "bedok-671-jln-damai-2015-10-951778",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -520,7 +534,7 @@
       "pricePerSqft": 395.7
     },
     {
-      "id": "bedok-671-jln-damai-2013-02-620659",
+      "id": "bedok-671-jln-damai-2013-02-620781",
       "month": "2013-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -533,7 +547,7 @@
       "pricePerSqft": 397.66
     },
     {
-      "id": "bedok-671-jln-damai-2013-01-619089",
+      "id": "bedok-671-jln-damai-2013-01-619211",
       "month": "2013-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -546,7 +560,7 @@
       "pricePerSqft": 449.76
     },
     {
-      "id": "bedok-671-jln-damai-2012-12-617570",
+      "id": "bedok-671-jln-damai-2012-12-617692",
       "month": "2012-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -559,7 +573,7 @@
       "pricePerSqft": 415.48
     },
     {
-      "id": "bedok-671-jln-damai-2012-03-599151",
+      "id": "bedok-671-jln-damai-2012-03-599273",
       "month": "2012-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 05",

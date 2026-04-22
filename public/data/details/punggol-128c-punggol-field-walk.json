@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CORAL EDGE LRT STATION",
       "distanceMeters": 127
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 127
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 437
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 609
+      }
+    ]
   },
   "monthlyTrend": [
     {

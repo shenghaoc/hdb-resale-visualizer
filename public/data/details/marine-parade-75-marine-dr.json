@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARINE PARADE MRT STATION",
       "distanceMeters": 110
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 110
+      },
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 700
+      },
+      {
+        "stationName": "TANJONG KATONG MRT STATION",
+        "distanceMeters": 1136
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -526,7 +540,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-75-marine-dr-2026-02-225616",
+      "id": "marine-parade-75-marine-dr-2026-02-225668",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -539,7 +553,7 @@
       "pricePerSqft": 736.43
     },
     {
-      "id": "marine-parade-75-marine-dr-2026-01-225615",
+      "id": "marine-parade-75-marine-dr-2026-01-225667",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -747,7 +761,7 @@
       "pricePerSqft": 560.82
     },
     {
-      "id": "marine-parade-75-marine-dr-2014-03-637886",
+      "id": "marine-parade-75-marine-dr-2014-03-638008",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -760,7 +774,7 @@
       "pricePerSqft": 577.81
     },
     {
-      "id": "marine-parade-75-marine-dr-2014-02-636631",
+      "id": "marine-parade-75-marine-dr-2014-02-636753",
       "month": "2014-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -773,7 +787,7 @@
       "pricePerSqft": 623.13
     },
     {
-      "id": "marine-parade-75-marine-dr-2013-08-629616",
+      "id": "marine-parade-75-marine-dr-2013-08-629738",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

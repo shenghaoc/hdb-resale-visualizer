@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 899
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 899
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1707
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1883
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -305,7 +319,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-780a-woodlands-cres-2026-01-228295",
+      "id": "woodlands-780a-woodlands-cres-2026-01-228396",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

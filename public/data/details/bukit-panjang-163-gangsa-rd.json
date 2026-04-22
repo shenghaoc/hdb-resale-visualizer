@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT PANJANG LRT STATION",
       "distanceMeters": 227
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 227
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 387
+      }
+    ]
   },
   "monthlyTrend": [
     {

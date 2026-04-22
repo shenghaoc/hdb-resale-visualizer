@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 272
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 272
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1082
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1389
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -554,7 +568,7 @@
       "pricePerSqft": 610.29
     },
     {
-      "id": "queenstown-82-strathmore-ave-2015-11-954176",
+      "id": "queenstown-82-strathmore-ave-2015-11-954298",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -567,7 +581,7 @@
       "pricePerSqft": 579.99
     },
     {
-      "id": "queenstown-82-strathmore-ave-2015-03-941607",
+      "id": "queenstown-82-strathmore-ave-2015-03-941729",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -580,7 +594,7 @@
       "pricePerSqft": 674.85
     },
     {
-      "id": "queenstown-82-strathmore-ave-2014-08-644924",
+      "id": "queenstown-82-strathmore-ave-2014-08-645046",
       "month": "2014-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -593,7 +607,7 @@
       "pricePerSqft": 650.32
     },
     {
-      "id": "queenstown-82-strathmore-ave-2012-10-615008",
+      "id": "queenstown-82-strathmore-ave-2012-10-615130",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -606,7 +620,7 @@
       "pricePerSqft": 654.73
     },
     {
-      "id": "queenstown-82-strathmore-ave-2012-01-596728",
+      "id": "queenstown-82-strathmore-ave-2012-01-596850",
       "month": "2012-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -619,7 +633,7 @@
       "pricePerSqft": 606.87
     },
     {
-      "id": "queenstown-82-strathmore-ave-2010-09-565350",
+      "id": "queenstown-82-strathmore-ave-2010-09-565472",
       "month": "2010-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

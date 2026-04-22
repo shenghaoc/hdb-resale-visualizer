@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 121
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 121
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 399
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 506
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -682,7 +696,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-230-choa-chu-kang-ctrl-2026-03-223918",
+      "id": "choa-chu-kang-230-choa-chu-kang-ctrl-2026-03-223942",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -695,7 +709,7 @@
       "pricePerSqft": 512.32
     },
     {
-      "id": "choa-chu-kang-230-choa-chu-kang-ctrl-2026-02-223917",
+      "id": "choa-chu-kang-230-choa-chu-kang-ctrl-2026-02-223941",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       149
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 615
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 615
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 674
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 763
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -658,7 +672,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-455-hougang-ave-10-2026-04-224783",
+      "id": "hougang-455-hougang-ave-10-2026-04-224820",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

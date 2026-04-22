@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2003,
+      2003
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 734
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 734
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1197
+      },
+      {
+        "stationName": "CASHEW MRT STATION",
+        "distanceMeters": 1353
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -634,7 +648,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-391-bt-batok-west-ave-5-2026-02-222995",
+      "id": "bukit-batok-391-bt-batok-west-ave-5-2026-02-223011",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -647,7 +661,7 @@
       "pricePerSqft": 514
     },
     {
-      "id": "bukit-batok-391-bt-batok-west-ave-5-2026-02-222998",
+      "id": "bukit-batok-391-bt-batok-west-ave-5-2026-02-223014",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

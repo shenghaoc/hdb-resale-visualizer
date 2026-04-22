@@ -22,8 +22,8 @@
       66
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2013,
+      2013
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1216
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1216
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1249
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 1527
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -166,7 +180,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-174a-hougang-ave-1-2026-03-224490",
+      "id": "hougang-174a-hougang-ave-1-2026-03-224522",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -179,7 +193,7 @@
       "pricePerSqft": 689.74
     },
     {
-      "id": "hougang-174a-hougang-ave-1-2026-02-224482",
+      "id": "hougang-174a-hougang-ave-1-2026-02-224514",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2018,
+      2018
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 858
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 858
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1754
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1838
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -162,7 +176,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-601c-tampines-ave-9-2026-04-227796",
+      "id": "tampines-601c-tampines-ave-9-2026-04-227881",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -175,7 +189,7 @@
       "pricePerSqft": 729.95
     },
     {
-      "id": "tampines-601c-tampines-ave-9-2026-03-227581",
+      "id": "tampines-601c-tampines-ave-9-2026-03-227661",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -188,7 +202,7 @@
       "pricePerSqft": 828.05
     },
     {
-      "id": "tampines-601c-tampines-ave-9-2026-01-227576",
+      "id": "tampines-601c-tampines-ave-9-2026-01-227656",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 613
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 613
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 856
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2518
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -328,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-588a-montreal-dr-2026-04-226766",
+      "id": "sembawang-588a-montreal-dr-2026-04-226832",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -341,7 +355,7 @@
       "pricePerSqft": 532.83
     },
     {
-      "id": "sembawang-588a-montreal-dr-2026-01-226763",
+      "id": "sembawang-588a-montreal-dr-2026-01-226829",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -523,7 +537,7 @@
       "pricePerSqft": 378.37
     },
     {
-      "id": "sembawang-588a-montreal-dr-2016-10-971968",
+      "id": "sembawang-588a-montreal-dr-2016-10-972090",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -536,7 +550,7 @@
       "pricePerSqft": 354.72
     },
     {
-      "id": "sembawang-588a-montreal-dr-2016-08-968595",
+      "id": "sembawang-588a-montreal-dr-2016-08-968717",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -549,7 +563,7 @@
       "pricePerSqft": 375.84
     },
     {
-      "id": "sembawang-588a-montreal-dr-2015-06-946438",
+      "id": "sembawang-588a-montreal-dr-2015-06-946560",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -562,7 +576,7 @@
       "pricePerSqft": 358.94
     },
     {
-      "id": "sembawang-588a-montreal-dr-2014-11-649348",
+      "id": "sembawang-588a-montreal-dr-2014-11-649470",
       "month": "2014-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -575,7 +589,7 @@
       "pricePerSqft": 383.01
     },
     {
-      "id": "sembawang-588a-montreal-dr-2014-10-647918",
+      "id": "sembawang-588a-montreal-dr-2014-10-648040",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

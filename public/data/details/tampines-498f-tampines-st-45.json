@@ -22,8 +22,8 @@
       147
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 640
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 640
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1598
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1773
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -616,7 +630,7 @@
       "pricePerSqft": 359.63
     },
     {
-      "id": "tampines-498f-tampines-st-45-2016-04-961689",
+      "id": "tampines-498f-tampines-st-45-2016-04-961811",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -629,7 +643,7 @@
       "pricePerSqft": 385.64
     },
     {
-      "id": "tampines-498f-tampines-st-45-2016-03-959984",
+      "id": "tampines-498f-tampines-st-45-2016-03-960106",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -642,7 +656,7 @@
       "pricePerSqft": 406.05
     },
     {
-      "id": "tampines-498f-tampines-st-45-2015-05-944959",
+      "id": "tampines-498f-tampines-st-45-2015-05-945081",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -655,7 +669,7 @@
       "pricePerSqft": 392.65
     },
     {
-      "id": "tampines-498f-tampines-st-45-2014-08-645137",
+      "id": "tampines-498f-tampines-st-45-2014-08-645259",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -668,7 +682,7 @@
       "pricePerSqft": 410.18
     },
     {
-      "id": "tampines-498f-tampines-st-45-2013-07-628524",
+      "id": "tampines-498f-tampines-st-45-2013-07-628646",
       "month": "2013-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 43
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 43
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 984
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1480
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -396,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-365-woodlands-ave-5-2026-01-228364",
+      "id": "woodlands-365-woodlands-ave-5-2026-01-228465",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -539,7 +553,7 @@
       "pricePerSqft": 384.88
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2016-05-963720",
+      "id": "woodlands-365-woodlands-ave-5-2016-05-963842",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -552,7 +566,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2015-12-955974",
+      "id": "woodlands-365-woodlands-ave-5-2015-12-956096",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -565,7 +579,7 @@
       "pricePerSqft": 362.32
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2015-04-943586",
+      "id": "woodlands-365-woodlands-ave-5-2015-04-943708",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -578,7 +592,7 @@
       "pricePerSqft": 394.84
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2014-12-650964",
+      "id": "woodlands-365-woodlands-ave-5-2014-12-651086",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -591,7 +605,7 @@
       "pricePerSqft": 383.77
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2013-08-630096",
+      "id": "woodlands-365-woodlands-ave-5-2013-08-630218",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -604,7 +618,7 @@
       "pricePerSqft": 418.51
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2012-11-617295",
+      "id": "woodlands-365-woodlands-ave-5-2012-11-617417",
       "month": "2012-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -617,7 +631,7 @@
       "pricePerSqft": 437.19
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2012-11-617300",
+      "id": "woodlands-365-woodlands-ave-5-2012-11-617422",
       "month": "2012-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -630,7 +644,7 @@
       "pricePerSqft": 436.2
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2012-10-615573",
+      "id": "woodlands-365-woodlands-ave-5-2012-10-615695",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -643,7 +657,7 @@
       "pricePerSqft": 415.11
     },
     {
-      "id": "woodlands-365-woodlands-ave-5-2012-04-603259",
+      "id": "woodlands-365-woodlands-ave-5-2012-04-603381",
       "month": "2012-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 05",

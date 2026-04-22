@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 289
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 289
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 956
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 1034
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -746,7 +760,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-108-mcnair-rd-2026-01-225526",
+      "id": "kallang-whampoa-108-mcnair-rd-2026-01-225577",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1986,
+      1986
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 203
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 203
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1034
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1319
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -613,7 +627,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-824-woodlands-st-81-2026-01-228741",
+      "id": "woodlands-824-woodlands-st-81-2026-01-228853",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       103
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1987,
+      1987
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 125
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 125
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1057
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 1177
+      }
+    ]
   },
   "monthlyTrend": [
     {

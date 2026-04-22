@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KHATIB MRT STATION",
       "distanceMeters": 519
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 519
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1617
+      },
+      {
+        "stationName": "SPRINGLEAF MRT STATION",
+        "distanceMeters": 2750
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -762,7 +776,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-873-yishun-st-81-2026-01-229244",
+      "id": "yishun-873-yishun-st-81-2026-01-229365",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 183
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 183
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 403
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 685
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -414,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-5-boon-keng-rd-2026-02-225491",
+      "id": "kallang-whampoa-5-boon-keng-rd-2026-02-225542",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -635,7 +649,7 @@
       "pricePerSqft": 536.58
     },
     {
-      "id": "kallang-whampoa-5-boon-keng-rd-2016-03-959463",
+      "id": "kallang-whampoa-5-boon-keng-rd-2016-03-959585",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -648,7 +662,7 @@
       "pricePerSqft": 507.53
     },
     {
-      "id": "kallang-whampoa-5-boon-keng-rd-2015-12-955438",
+      "id": "kallang-whampoa-5-boon-keng-rd-2015-12-955560",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -661,7 +675,7 @@
       "pricePerSqft": 618.34
     },
     {
-      "id": "kallang-whampoa-5-boon-keng-rd-2015-10-952447",
+      "id": "kallang-whampoa-5-boon-keng-rd-2015-10-952569",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

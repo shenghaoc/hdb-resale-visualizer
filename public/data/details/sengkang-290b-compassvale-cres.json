@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHENG LIM LRT STATION",
       "distanceMeters": 357
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 357
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 495
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 539
+      }
+    ]
   },
   "monthlyTrend": [
     {

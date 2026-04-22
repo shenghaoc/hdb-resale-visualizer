@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENJA LRT STATION",
       "distanceMeters": 271
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 271
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 273
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 654
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -420,7 +434,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-534-jelapang-rd-2026-04-223666",
+      "id": "bukit-panjang-534-jelapang-rd-2026-04-223689",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

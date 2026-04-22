@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 374
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 374
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 375
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 669
+      }
+    ]
   },
   "monthlyTrend": [
     {

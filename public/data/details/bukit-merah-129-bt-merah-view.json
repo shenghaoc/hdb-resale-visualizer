@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 428
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 428
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 982
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1139
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1308,7 +1322,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-129-bt-merah-view-2026-01-223223",
+      "id": "bukit-merah-129-bt-merah-view-2026-01-223242",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

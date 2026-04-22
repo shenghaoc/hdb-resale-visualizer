@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 557
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 557
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 649
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 1194
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -406,7 +420,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-55-lor-5-toa-payoh-2026-03-227966",
+      "id": "toa-payoh-55-lor-5-toa-payoh-2026-03-228057",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",

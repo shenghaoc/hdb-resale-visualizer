@@ -9,21 +9,21 @@
       "lat": 1.36370339705173,
       "lng": 103.952575138742
     },
-    "medianPrice": 722500,
+    "medianPrice": 728000,
     "priceIqr": [
-      701250,
-      743750
+      704000,
+      746500
     ],
-    "pricePerSqmMedian": 5848.91,
-    "pricePerSqftMedian": 543.38,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 5824,
+    "pricePerSqftMedian": 541.07,
+    "transactionCount": 3,
     "floorAreaRange": [
       123,
       125
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 826
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 826
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1078
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1394
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -483,14 +497,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 680000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5528.46
+      "medianPrice": 704000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5676.23
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-494c-tampines-st-43-2026-04-227862",
+      "id": "tampines-494c-tampines-st-43-2026-04-227948",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -501,6 +515,19 @@
       "resalePrice": 680000,
       "pricePerSqm": 5528.46,
       "pricePerSqft": 513.61
+    },
+    {
+      "id": "tampines-494c-tampines-st-43-2026-04-227949",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 03 months",
+      "resalePrice": 728000,
+      "pricePerSqm": 5824,
+      "pricePerSqft": 541.07
     },
     {
       "id": "tampines-494c-tampines-st-43-2025-03-217274",
@@ -711,7 +738,7 @@
       "pricePerSqft": 339.89
     },
     {
-      "id": "tampines-494c-tampines-st-43-2016-01-957149",
+      "id": "tampines-494c-tampines-st-43-2016-01-957271",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -724,7 +751,7 @@
       "pricePerSqft": 361.04
     },
     {
-      "id": "tampines-494c-tampines-st-43-2015-11-954445",
+      "id": "tampines-494c-tampines-st-43-2015-11-954567",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -735,19 +762,6 @@
       "resalePrice": 480000,
       "pricePerSqm": 3870.97,
       "pricePerSqft": 359.63
-    },
-    {
-      "id": "tampines-494c-tampines-st-43-2015-10-952925",
-      "month": "2015-10",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 124,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1993,
-      "remainingLease": "76",
-      "resalePrice": 460000,
-      "pricePerSqm": 3709.68,
-      "pricePerSqft": 344.64
     }
   ]
 }

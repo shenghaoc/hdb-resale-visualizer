@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "HOLLAND VILLAGE MRT STATION",
       "distanceMeters": 305
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOLLAND VILLAGE MRT STATION",
+        "distanceMeters": 305
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 556
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 639
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1639,7 +1653,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-4-holland-cl-2026-03-226406",
+      "id": "queenstown-4-holland-cl-2026-03-226468",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1652,7 +1666,7 @@
       "pricePerSqft": 700.35
     },
     {
-      "id": "queenstown-4-holland-cl-2026-03-226487",
+      "id": "queenstown-4-holland-cl-2026-03-226550",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

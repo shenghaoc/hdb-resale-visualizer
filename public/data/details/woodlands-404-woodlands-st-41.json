@@ -22,8 +22,8 @@
       179
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1986,
+      1986
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -45,7 +45,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 293
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 293
+      },
+      {
+        "stationName": "KRANJI MRT STATION",
+        "distanceMeters": 1231
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1656
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -399,7 +413,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-404-woodlands-st-41-2026-04-228794",
+      "id": "woodlands-404-woodlands-st-41-2026-04-228907",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -412,7 +426,7 @@
       "pricePerSqft": 554.25
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2026-01-228570",
+      "id": "woodlands-404-woodlands-st-41-2026-01-228678",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -581,7 +595,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2016-09-970732",
+      "id": "woodlands-404-woodlands-st-41-2016-09-970854",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -594,7 +608,7 @@
       "pricePerSqft": 305.16
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2015-07-948411",
+      "id": "woodlands-404-woodlands-st-41-2015-07-948533",
       "month": "2015-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -607,7 +621,7 @@
       "pricePerSqft": 374.78
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2014-10-648279",
+      "id": "woodlands-404-woodlands-st-41-2014-10-648401",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -620,7 +634,7 @@
       "pricePerSqft": 359.63
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2014-02-637018",
+      "id": "woodlands-404-woodlands-st-41-2014-02-637140",
       "month": "2014-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -633,7 +647,7 @@
       "pricePerSqft": 396.28
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2012-06-607575",
+      "id": "woodlands-404-woodlands-st-41-2012-06-607697",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -646,7 +660,7 @@
       "pricePerSqft": 335.67
     },
     {
-      "id": "woodlands-404-woodlands-st-41-2012-04-603295",
+      "id": "woodlands-404-woodlands-st-41-2012-04-603417",
       "month": "2012-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "11 TO 15",

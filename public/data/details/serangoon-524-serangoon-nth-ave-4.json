@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1915
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1915
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 2126
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2197
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -552,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2026-01-227393",
+      "id": "serangoon-524-serangoon-nth-ave-4-2026-01-227469",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -734,7 +748,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2016-12-975169",
+      "id": "serangoon-524-serangoon-nth-ave-4-2016-12-975291",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -747,7 +761,7 @@
       "pricePerSqft": 392.17
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2016-08-968786",
+      "id": "serangoon-524-serangoon-nth-ave-4-2016-08-968908",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -760,7 +774,7 @@
       "pricePerSqft": 327.45
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2015-10-952802",
+      "id": "serangoon-524-serangoon-nth-ave-4-2015-10-952924",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -773,7 +787,7 @@
       "pricePerSqft": 374.29
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2015-06-946584",
+      "id": "serangoon-524-serangoon-nth-ave-4-2015-06-946706",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -786,7 +800,7 @@
       "pricePerSqft": 375.19
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2014-07-643723",
+      "id": "serangoon-524-serangoon-nth-ave-4-2014-07-643845",
       "month": "2014-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -799,7 +813,7 @@
       "pricePerSqft": 334.3
     },
     {
-      "id": "serangoon-524-serangoon-nth-ave-4-2013-08-629836",
+      "id": "serangoon-524-serangoon-nth-ave-4-2013-08-629958",
       "month": "2013-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

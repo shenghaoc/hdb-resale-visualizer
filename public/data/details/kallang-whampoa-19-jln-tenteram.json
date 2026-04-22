@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 854
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 854
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 1056
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1450
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -414,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-19-jln-tenteram-2026-04-225512",
+      "id": "kallang-whampoa-19-jln-tenteram-2026-04-225563",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -427,7 +441,7 @@
       "pricePerSqft": 697.32
     },
     {
-      "id": "kallang-whampoa-19-jln-tenteram-2026-01-225577",
+      "id": "kallang-whampoa-19-jln-tenteram-2026-01-225628",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

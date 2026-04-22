@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 661
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 661
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 694
+      },
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 963
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -372,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2026-02-225569",
+      "id": "kallang-whampoa-39-cambridge-rd-2026-02-225620",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -606,7 +620,7 @@
       "pricePerSqft": 449.03
     },
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2015-10-952446",
+      "id": "kallang-whampoa-39-cambridge-rd-2015-10-952568",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -619,7 +633,7 @@
       "pricePerSqft": 514.84
     },
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2015-03-941450",
+      "id": "kallang-whampoa-39-cambridge-rd-2015-03-941572",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

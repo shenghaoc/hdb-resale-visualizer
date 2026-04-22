@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 1170
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 1170
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1174
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 1260
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1120,7 +1134,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-03-227986",
+      "id": "toa-payoh-194-kim-keat-ave-2026-03-228078",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1133,7 +1147,7 @@
       "pricePerSqft": 450.44
     },
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-03-227987",
+      "id": "toa-payoh-194-kim-keat-ave-2026-03-228079",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1146,7 +1160,7 @@
       "pricePerSqft": 482.81
     },
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-01-227984",
+      "id": "toa-payoh-194-kim-keat-ave-2026-01-228076",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

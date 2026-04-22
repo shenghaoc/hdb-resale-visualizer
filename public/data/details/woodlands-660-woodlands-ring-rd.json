@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 507
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 507
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1071
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1159
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -480,7 +494,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-660-woodlands-ring-rd-2026-01-228712",
+      "id": "woodlands-660-woodlands-ring-rd-2026-01-228824",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

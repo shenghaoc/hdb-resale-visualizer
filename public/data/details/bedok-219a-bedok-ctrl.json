@@ -22,8 +22,8 @@
       97
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 417
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 417
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1228
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1397
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -221,7 +235,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-219a-bedok-ctrl-2026-02-222326",
+      "id": "bedok-219a-bedok-ctrl-2026-02-222331",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -442,7 +456,7 @@
       "pricePerSqft": 686.68
     },
     {
-      "id": "bedok-219a-bedok-ctrl-2016-09-969299",
+      "id": "bedok-219a-bedok-ctrl-2016-09-969421",
       "month": "2016-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -455,7 +469,7 @@
       "pricePerSqft": 651.82
     },
     {
-      "id": "bedok-219a-bedok-ctrl-2016-09-969300",
+      "id": "bedok-219a-bedok-ctrl-2016-09-969422",
       "month": "2016-09",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -468,7 +482,7 @@
       "pricePerSqft": 746.22
     },
     {
-      "id": "bedok-219a-bedok-ctrl-2016-04-960378",
+      "id": "bedok-219a-bedok-ctrl-2016-04-960500",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

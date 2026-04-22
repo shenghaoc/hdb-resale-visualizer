@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1655
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1655
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2480
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 2839
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -396,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225728",
+      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225781",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -409,7 +423,7 @@
       "pricePerSqft": 560.02
     },
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225787",
+      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225840",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -643,7 +657,7 @@
       "pricePerSqft": 328.2
     },
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2016-06-964893",
+      "id": "pasir-ris-765-pasir-ris-st-71-2016-06-965015",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

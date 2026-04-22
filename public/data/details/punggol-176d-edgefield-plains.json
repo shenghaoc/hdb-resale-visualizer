@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 112
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 112
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 394
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 571
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-176d-edgefield-plains-2026-03-225969",
+      "id": "punggol-176d-edgefield-plains-2026-03-226027",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -553,7 +567,7 @@
       "pricePerSqft": 621.15
     },
     {
-      "id": "punggol-176d-edgefield-plains-2026-02-226222",
+      "id": "punggol-176d-edgefield-plains-2026-02-226284",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 1990
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1990
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 2143
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 2240
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -570,7 +584,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-545-serangoon-nth-ave-3-2026-02-227373",
+      "id": "serangoon-545-serangoon-nth-ave-3-2026-02-227449",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 201
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 201
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 352
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 744
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -437,7 +451,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-158d-rivervale-cres-2026-03-227243",
+      "id": "sengkang-158d-rivervale-cres-2026-03-227318",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -450,7 +464,7 @@
       "pricePerSqft": 543.78
     },
     {
-      "id": "sengkang-158d-rivervale-cres-2026-02-227242",
+      "id": "sengkang-158d-rivervale-cres-2026-02-227317",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

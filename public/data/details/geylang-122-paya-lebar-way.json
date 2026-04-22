@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MATTAR MRT STATION",
       "distanceMeters": 453
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 453
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 680
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 724
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -640,7 +654,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-122-paya-lebar-way-2026-01-224410",
+      "id": "geylang-122-paya-lebar-way-2026-01-224441",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

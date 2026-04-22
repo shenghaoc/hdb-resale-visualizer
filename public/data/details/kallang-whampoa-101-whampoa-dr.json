@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1974,
-      1974
+      1973,
+      1973
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 772
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 772
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 815
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 1050
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -875,7 +889,7 @@
       "pricePerSqft": 426.74
     },
     {
-      "id": "kallang-whampoa-101-whampoa-dr-2016-12-974839",
+      "id": "kallang-whampoa-101-whampoa-dr-2016-12-974961",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

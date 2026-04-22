@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2024-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1584
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1584
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1727
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1825
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -579,7 +593,7 @@
       "pricePerSqft": 375.29
     },
     {
-      "id": "hougang-951-hougang-ave-9-2016-08-968030",
+      "id": "hougang-951-hougang-ave-9-2016-08-968152",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -592,7 +606,7 @@
       "pricePerSqft": 363.33
     },
     {
-      "id": "hougang-951-hougang-ave-9-2014-11-648976",
+      "id": "hougang-951-hougang-ave-9-2014-11-649098",
       "month": "2014-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -605,7 +619,7 @@
       "pricePerSqft": 399.25
     },
     {
-      "id": "hougang-951-hougang-ave-9-2014-04-639150",
+      "id": "hougang-951-hougang-ave-9-2014-04-639272",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -618,7 +632,7 @@
       "pricePerSqft": 406.93
     },
     {
-      "id": "hougang-951-hougang-ave-9-2013-08-629381",
+      "id": "hougang-951-hougang-ave-9-2013-08-629503",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -631,7 +645,7 @@
       "pricePerSqft": 423.12
     },
     {
-      "id": "hougang-951-hougang-ave-9-2013-07-627906",
+      "id": "hougang-951-hougang-ave-9-2013-07-628028",
       "month": "2013-07",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

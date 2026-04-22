@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 431
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 431
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1144
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1522
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -645,7 +659,7 @@
       "pricePerSqft": 550.2
     },
     {
-      "id": "bishan-204-bishan-st-23-2016-03-958769",
+      "id": "bishan-204-bishan-st-23-2016-03-958891",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -658,7 +672,7 @@
       "pricePerSqft": 522.58
     },
     {
-      "id": "bishan-204-bishan-st-23-2013-12-634161",
+      "id": "bishan-204-bishan-st-23-2013-12-634283",
       "month": "2013-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -671,7 +685,7 @@
       "pricePerSqft": 487.06
     },
     {
-      "id": "bishan-204-bishan-st-23-2012-05-603701",
+      "id": "bishan-204-bishan-st-23-2012-05-603823",
       "month": "2012-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 05",
@@ -684,7 +698,7 @@
       "pricePerSqft": 480.7
     },
     {
-      "id": "bishan-204-bishan-st-23-2011-09-589215",
+      "id": "bishan-204-bishan-st-23-2011-09-589337",
       "month": "2011-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

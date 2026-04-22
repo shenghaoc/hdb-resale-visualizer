@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HARBOURFRONT MRT STATION",
       "distanceMeters": 944
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 944
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1354
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1397
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -790,7 +804,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-27-telok-blangah-way-2026-01-223431",
+      "id": "bukit-merah-27-telok-blangah-way-2026-01-223454",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

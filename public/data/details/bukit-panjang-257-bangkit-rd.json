@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BANGKIT LRT STATION",
       "distanceMeters": 165
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 165
+      },
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 323
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 720
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -576,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-257-bangkit-rd-2026-02-223523",
+      "id": "bukit-panjang-257-bangkit-rd-2026-02-223546",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -810,7 +824,7 @@
       "pricePerSqft": 291.34
     },
     {
-      "id": "bukit-panjang-257-bangkit-rd-2016-10-971241",
+      "id": "bukit-panjang-257-bangkit-rd-2016-10-971363",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -823,7 +837,7 @@
       "pricePerSqft": 334.99
     },
     {
-      "id": "bukit-panjang-257-bangkit-rd-2016-07-966061",
+      "id": "bukit-panjang-257-bangkit-rd-2016-07-966183",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1164
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1164
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1295
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 1586
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -633,7 +647,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-12-974637",
+      "id": "hougang-173-hougang-ave-1-2016-12-974759",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -646,7 +660,7 @@
       "pricePerSqft": 366.09
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-10-971514",
+      "id": "hougang-173-hougang-ave-1-2016-10-971636",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -659,7 +673,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-06-964555",
+      "id": "hougang-173-hougang-ave-1-2016-06-964677",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -672,7 +686,7 @@
       "pricePerSqft": 306.58
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-01-956633",
+      "id": "hougang-173-hougang-ave-1-2016-01-956755",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -685,7 +699,7 @@
       "pricePerSqft": 403.6
     },
     {
-      "id": "hougang-173-hougang-ave-1-2015-05-944301",
+      "id": "hougang-173-hougang-ave-1-2015-05-944423",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

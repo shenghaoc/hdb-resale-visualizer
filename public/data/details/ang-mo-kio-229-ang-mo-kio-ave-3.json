@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1976,
+      1976
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 250
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 250
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 758
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1236
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -826,7 +840,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "ang-mo-kio-229-ang-mo-kio-ave-3-2016-12-974151",
+      "id": "ang-mo-kio-229-ang-mo-kio-ave-3-2016-12-974273",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -839,7 +853,7 @@
       "pricePerSqft": 416.53
     },
     {
-      "id": "ang-mo-kio-229-ang-mo-kio-ave-3-2016-03-958634",
+      "id": "ang-mo-kio-229-ang-mo-kio-ave-3-2016-03-958756",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

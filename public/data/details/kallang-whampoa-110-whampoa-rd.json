@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 973
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 973
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1098
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 1428
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -348,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2026-03-225592",
+      "id": "kallang-whampoa-110-whampoa-rd-2026-03-225644",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -582,7 +596,7 @@
       "pricePerSqft": 478.18
     },
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2016-02-958027",
+      "id": "kallang-whampoa-110-whampoa-rd-2016-02-958149",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -595,7 +609,7 @@
       "pricePerSqft": 519.16
     },
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2015-10-952431",
+      "id": "kallang-whampoa-110-whampoa-rd-2015-10-952553",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

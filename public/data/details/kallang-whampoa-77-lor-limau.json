@@ -22,8 +22,8 @@
       59
     ],
     "leaseCommenceRange": [
-      1973,
-      1973
+      1972,
+      1972
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 927
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 927
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1131
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 1239
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1156,7 +1170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-77-lor-limau-2026-03-225448",
+      "id": "kallang-whampoa-77-lor-limau-2026-03-225497",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

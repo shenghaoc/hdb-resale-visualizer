@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 422
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 422
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 708
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 752
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -598,7 +612,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-287-choa-chu-kang-ave-2-2026-03-224083",
+      "id": "choa-chu-kang-287-choa-chu-kang-ave-2-2026-03-224112",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

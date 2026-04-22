@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 78
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 78
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 980
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1521
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -383,7 +397,7 @@
       "pricePerSqft": 643.48
     },
     {
-      "id": "queenstown-183-stirling-rd-2015-01-939153",
+      "id": "queenstown-183-stirling-rd-2015-01-939275",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -396,7 +410,7 @@
       "pricePerSqft": 605.89
     },
     {
-      "id": "queenstown-183-stirling-rd-2012-10-614991",
+      "id": "queenstown-183-stirling-rd-2012-10-615113",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -409,7 +423,7 @@
       "pricePerSqft": 601.43
     },
     {
-      "id": "queenstown-183-stirling-rd-2012-08-611239",
+      "id": "queenstown-183-stirling-rd-2012-08-611361",
       "month": "2012-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -422,7 +436,7 @@
       "pricePerSqft": 565.5
     },
     {
-      "id": "queenstown-183-stirling-rd-2012-08-611243",
+      "id": "queenstown-183-stirling-rd-2012-08-611365",
       "month": "2012-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -435,7 +449,7 @@
       "pricePerSqft": 585.69
     },
     {
-      "id": "queenstown-183-stirling-rd-2012-05-604902",
+      "id": "queenstown-183-stirling-rd-2012-05-605024",
       "month": "2012-05",
       "flatType": "4 ROOM",
       "storeyRange": "06 TO 10",
@@ -448,7 +462,7 @@
       "pricePerSqft": 616.09
     },
     {
-      "id": "queenstown-183-stirling-rd-2012-05-604912",
+      "id": "queenstown-183-stirling-rd-2012-05-605034",
       "month": "2012-05",
       "flatType": "5 ROOM",
       "storeyRange": "11 TO 15",
@@ -461,7 +475,7 @@
       "pricePerSqft": 612.35
     },
     {
-      "id": "queenstown-183-stirling-rd-2011-09-590142",
+      "id": "queenstown-183-stirling-rd-2011-09-590264",
       "month": "2011-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -474,7 +488,7 @@
       "pricePerSqft": 596.2
     },
     {
-      "id": "queenstown-183-stirling-rd-2011-05-582540",
+      "id": "queenstown-183-stirling-rd-2011-05-582662",
       "month": "2011-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -487,7 +501,7 @@
       "pricePerSqft": 597.81
     },
     {
-      "id": "queenstown-183-stirling-rd-2011-02-576658",
+      "id": "queenstown-183-stirling-rd-2011-02-576780",
       "month": "2011-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

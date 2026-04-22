@@ -22,8 +22,8 @@
       114
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 34
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 34
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 600
+      },
+      {
+        "stationName": "STADIUM MRT STATION",
+        "distanceMeters": 826
+      }
+    ]
   },
   "monthlyTrend": [
     {

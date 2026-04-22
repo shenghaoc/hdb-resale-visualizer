@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 190
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 190
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 387
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 702
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -229,7 +243,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-256a-sumang-walk-2026-04-225886",
+      "id": "punggol-256a-sumang-walk-2026-04-225941",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -242,7 +256,7 @@
       "pricePerSqft": 761.02
     },
     {
-      "id": "punggol-256a-sumang-walk-2026-04-226196",
+      "id": "punggol-256a-sumang-walk-2026-04-226258",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -255,7 +269,7 @@
       "pricePerSqft": 714.26
     },
     {
-      "id": "punggol-256a-sumang-walk-2026-01-226182",
+      "id": "punggol-256a-sumang-walk-2026-01-226244",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -268,7 +282,7 @@
       "pricePerSqft": 659.31
     },
     {
-      "id": "punggol-256a-sumang-walk-2026-01-226184",
+      "id": "punggol-256a-sumang-walk-2026-01-226246",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

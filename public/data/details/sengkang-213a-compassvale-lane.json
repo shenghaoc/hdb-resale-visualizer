@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2011,
+      2011
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 290
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 290
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 369
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 628
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -245,7 +259,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-213a-compassvale-lane-2026-03-226953",
+      "id": "sengkang-213a-compassvale-lane-2026-03-227021",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

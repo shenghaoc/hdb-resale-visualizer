@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2012,
+      2012
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SENJA LRT STATION",
       "distanceMeters": 359
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 430
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 616
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -349,7 +363,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-633d-senja-rd-2026-03-223488",
+      "id": "bukit-panjang-633d-senja-rd-2026-03-223511",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -362,7 +376,7 @@
       "pricePerSqft": 810.43
     },
     {
-      "id": "bukit-panjang-633d-senja-rd-2026-01-223486",
+      "id": "bukit-panjang-633d-senja-rd-2026-01-223509",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -375,7 +389,7 @@
       "pricePerSqft": 751.13
     },
     {
-      "id": "bukit-panjang-633d-senja-rd-2026-01-223515",
+      "id": "bukit-panjang-633d-senja-rd-2026-01-223538",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

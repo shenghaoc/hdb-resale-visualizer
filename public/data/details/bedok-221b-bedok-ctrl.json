@@ -9,26 +9,26 @@
       "lat": 1.32500043309616,
       "lng": 103.934497810091
     },
-    "medianPrice": 904888,
+    "medianPrice": 905000,
     "priceIqr": [
-      886888,
-      922888
+      886944,
+      922944
     ],
-    "pricePerSqmMedian": 9471.68,
-    "pricePerSqftMedian": 879.95,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 9329.9,
+    "pricePerSqftMedian": 866.78,
+    "transactionCount": 3,
     "floorAreaRange": [
       69,
       97
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
-    "latestMonth": "2025-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2011-09",
-      "2025-04"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 542
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 542
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1269
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1274
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -259,9 +273,28 @@
       "medianPrice": 940888,
       "transactionCount": 1,
       "medianPricePerSqm": 9699.88
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 905000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9329.9
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-221b-bedok-ctrl-2026-04-222474",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 97,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2010,
+      "remainingLease": "83 years 02 months",
+      "resalePrice": 905000,
+      "pricePerSqm": 9329.9,
+      "pricePerSqft": 866.78
+    },
     {
       "id": "bedok-221b-bedok-ctrl-2025-04-198483",
       "month": "2025-04",
@@ -508,19 +541,6 @@
       "resalePrice": 670000,
       "pricePerSqm": 7127.66,
       "pricePerSqft": 662.18
-    },
-    {
-      "id": "bedok-221b-bedok-ctrl-2017-06-8122",
-      "month": "2017-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 69,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2010,
-      "remainingLease": "91 years 11 months",
-      "resalePrice": 442000,
-      "pricePerSqm": 6405.8,
-      "pricePerSqft": 595.12
     }
   ]
 }

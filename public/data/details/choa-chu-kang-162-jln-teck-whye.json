@@ -22,8 +22,8 @@
       124
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT PANJANG MRT STATION",
       "distanceMeters": 213
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 213
+      },
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 258
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 562
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -480,7 +494,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-162-jln-teck-whye-2026-03-224065",
+      "id": "choa-chu-kang-162-jln-teck-whye-2026-03-224094",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

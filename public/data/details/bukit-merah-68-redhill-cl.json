@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 298
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 298
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1225
+      },
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 1362
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -468,7 +482,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-68-redhill-cl-2026-03-223396",
+      "id": "bukit-merah-68-redhill-cl-2026-03-223417",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

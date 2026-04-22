@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RANGGUNG LRT STATION",
       "distanceMeters": 413
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 413
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 441
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 445
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -583,7 +597,7 @@
       "pricePerSqft": 401.17
     },
     {
-      "id": "sengkang-203b-compassvale-rd-2016-10-972073",
+      "id": "sengkang-203b-compassvale-rd-2016-10-972195",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

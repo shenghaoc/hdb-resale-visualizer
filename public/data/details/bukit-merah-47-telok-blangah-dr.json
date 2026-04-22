@@ -22,8 +22,8 @@
       79
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TELOK BLANGAH MRT STATION",
       "distanceMeters": 149
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 149
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 861
+      },
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1334
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -520,7 +534,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-47-telok-blangah-dr-2026-01-223307",
+      "id": "bukit-merah-47-telok-blangah-dr-2026-01-223326",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       71
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1981,
+      1981
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 612
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 612
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1186
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1944
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -160,7 +174,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-313-hougang-ave-5-2026-03-224512",
+      "id": "hougang-313-hougang-ave-5-2026-03-224543",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -173,7 +187,7 @@
       "pricePerSqft": 608.45
     },
     {
-      "id": "hougang-313-hougang-ave-5-2026-01-224510",
+      "id": "hougang-313-hougang-ave-5-2026-01-224541",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

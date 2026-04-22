@@ -22,8 +22,8 @@
       134
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1084
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1084
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 2064
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 2933
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -799,7 +813,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-705-clementi-west-st-2-2026-04-224232",
+      "id": "clementi-705-clementi-west-st-2-2026-04-224261",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

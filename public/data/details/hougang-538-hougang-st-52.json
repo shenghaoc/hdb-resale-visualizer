@@ -22,8 +22,8 @@
       155
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 640
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 640
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 658
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 987
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -766,7 +780,7 @@
       "pricePerSqft": 374.71
     },
     {
-      "id": "hougang-538-hougang-st-52-2016-08-968073",
+      "id": "hougang-538-hougang-st-52-2016-08-968195",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -779,7 +793,7 @@
       "pricePerSqft": 436.08
     },
     {
-      "id": "hougang-538-hougang-st-52-2015-10-952207",
+      "id": "hougang-538-hougang-st-52-2015-10-952329",
       "month": "2015-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

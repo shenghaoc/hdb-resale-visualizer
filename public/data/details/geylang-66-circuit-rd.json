@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1967,
-      1967
+      1965,
+      1965
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 111
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 111
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 436
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 901
+      }
+    ]
   },
   "monthlyTrend": [
     {

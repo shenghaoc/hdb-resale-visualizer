@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 705
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 705
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1356
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1958
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 306
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 306
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 572
+      },
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 655
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -419,7 +433,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-313b-anchorvale-rd-2026-03-226915",
+      "id": "sengkang-313b-anchorvale-rd-2026-03-226983",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -432,7 +446,7 @@
       "pricePerSqft": 593.77
     },
     {
-      "id": "sengkang-313b-anchorvale-rd-2026-02-226910",
+      "id": "sengkang-313b-anchorvale-rd-2026-02-226978",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 122
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 122
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 756
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 1127
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -463,7 +477,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-420-serangoon-ctrl-2026-04-227385",
+      "id": "serangoon-420-serangoon-ctrl-2026-04-227461",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -658,7 +672,7 @@
       "pricePerSqft": 534.87
     },
     {
-      "id": "serangoon-420-serangoon-ctrl-2016-10-972131",
+      "id": "serangoon-420-serangoon-ctrl-2016-10-972253",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -671,7 +685,7 @@
       "pricePerSqft": 530.14
     },
     {
-      "id": "serangoon-420-serangoon-ctrl-2016-10-972133",
+      "id": "serangoon-420-serangoon-ctrl-2016-10-972255",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -684,7 +698,7 @@
       "pricePerSqft": 576.44
     },
     {
-      "id": "serangoon-420-serangoon-ctrl-2015-01-939285",
+      "id": "serangoon-420-serangoon-ctrl-2015-01-939407",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -697,7 +711,7 @@
       "pricePerSqft": 546.8
     },
     {
-      "id": "serangoon-420-serangoon-ctrl-2014-10-648045",
+      "id": "serangoon-420-serangoon-ctrl-2014-10-648167",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -710,7 +724,7 @@
       "pricePerSqft": 477.79
     },
     {
-      "id": "serangoon-420-serangoon-ctrl-2014-09-646511",
+      "id": "serangoon-420-serangoon-ctrl-2014-09-646633",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2017,
+      2017
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SUMANG LRT STATION",
       "distanceMeters": 326
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 326
+      },
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 367
+      },
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 633
+      }
+    ]
   },
   "monthlyTrend": [
     {

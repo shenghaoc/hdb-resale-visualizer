@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 436
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 436
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 833
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1135
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -486,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-119d-kim-tian-rd-2026-04-223389",
+      "id": "bukit-merah-119d-kim-tian-rd-2026-04-223409",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -499,7 +513,7 @@
       "pricePerSqft": 880.56
     },
     {
-      "id": "bukit-merah-119d-kim-tian-rd-2026-02-223383",
+      "id": "bukit-merah-119d-kim-tian-rd-2026-02-223403",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

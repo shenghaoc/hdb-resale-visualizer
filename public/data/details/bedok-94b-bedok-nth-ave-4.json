@@ -22,8 +22,8 @@
       143
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 821
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 821
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1086
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1312
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -412,7 +426,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2026-04-222674",
+      "id": "bedok-94b-bedok-nth-ave-4-2026-04-222686",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -620,7 +634,7 @@
       "pricePerSqft": 428.28
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957525",
+      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957647",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -633,7 +647,7 @@
       "pricePerSqft": 487.25
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2014-12-649978",
+      "id": "bedok-94b-bedok-nth-ave-4-2014-12-650100",
       "month": "2014-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -646,7 +660,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634140",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634262",
       "month": "2013-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -659,7 +673,7 @@
       "pricePerSqft": 525.79
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-08-629024",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-08-629146",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

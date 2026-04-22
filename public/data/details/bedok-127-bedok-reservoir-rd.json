@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 322
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 322
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 759
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 1296
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -348,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-127-bedok-reservoir-rd-2026-02-222419",
+      "id": "bedok-127-bedok-reservoir-rd-2026-02-222427",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -517,7 +531,7 @@
       "pricePerSqft": 373.4
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2016-09-969326",
+      "id": "bedok-127-bedok-reservoir-rd-2016-09-969448",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -530,7 +544,7 @@
       "pricePerSqft": 366.25
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2016-08-967445",
+      "id": "bedok-127-bedok-reservoir-rd-2016-08-967567",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -543,7 +557,7 @@
       "pricePerSqft": 352.85
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2015-07-947087",
+      "id": "bedok-127-bedok-reservoir-rd-2015-07-947209",
       "month": "2015-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -556,7 +570,7 @@
       "pricePerSqft": 420.97
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2014-09-645518",
+      "id": "bedok-127-bedok-reservoir-rd-2014-09-645640",
       "month": "2014-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -569,7 +583,7 @@
       "pricePerSqft": 442.74
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2014-09-645531",
+      "id": "bedok-127-bedok-reservoir-rd-2014-09-645653",
       "month": "2014-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -582,7 +596,7 @@
       "pricePerSqft": 424.7
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2013-08-628931",
+      "id": "bedok-127-bedok-reservoir-rd-2013-08-629053",
       "month": "2013-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -595,7 +609,7 @@
       "pricePerSqft": 458.71
     },
     {
-      "id": "bedok-127-bedok-reservoir-rd-2011-07-585460",
+      "id": "bedok-127-bedok-reservoir-rd-2011-07-585582",
       "month": "2011-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

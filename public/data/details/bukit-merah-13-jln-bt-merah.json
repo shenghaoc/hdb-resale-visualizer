@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 736
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 736
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1095
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 1820
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -408,7 +422,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-13-jln-bt-merah-2026-02-223456",
+      "id": "bukit-merah-13-jln-bt-merah-2026-02-223479",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -642,7 +656,7 @@
       "pricePerSqft": 557.42
     },
     {
-      "id": "bukit-merah-13-jln-bt-merah-2014-03-637401",
+      "id": "bukit-merah-13-jln-bt-merah-2014-03-637523",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -655,7 +669,7 @@
       "pricePerSqft": 613.16
     },
     {
-      "id": "bukit-merah-13-jln-bt-merah-2013-09-630461",
+      "id": "bukit-merah-13-jln-bt-merah-2013-09-630583",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

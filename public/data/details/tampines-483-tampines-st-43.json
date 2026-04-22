@@ -22,8 +22,8 @@
       165
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1988,
+      1988
     ],
     "latestMonth": "2024-12",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 590
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 590
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1218
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1322
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -141,7 +155,7 @@
       "pricePerSqft": 516.88
     },
     {
-      "id": "tampines-483-tampines-st-43-2013-06-627117",
+      "id": "tampines-483-tampines-st-43-2013-06-627239",
       "month": "2013-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -154,7 +168,7 @@
       "pricePerSqft": 460.57
     },
     {
-      "id": "tampines-483-tampines-st-43-2009-11-535345",
+      "id": "tampines-483-tampines-st-43-2009-11-535467",
       "month": "2009-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -167,7 +181,7 @@
       "pricePerSqft": 270.26
     },
     {
-      "id": "tampines-483-tampines-st-43-2008-10-503180",
+      "id": "tampines-483-tampines-st-43-2008-10-503302",
       "month": "2008-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -180,7 +194,7 @@
       "pricePerSqft": 239.3
     },
     {
-      "id": "tampines-483-tampines-st-43-2002-05-317240",
+      "id": "tampines-483-tampines-st-43-2002-05-317362",
       "month": "2002-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -193,7 +207,7 @@
       "pricePerSqft": 265.2
     },
     {
-      "id": "tampines-483-tampines-st-43-2000-03-235933",
+      "id": "tampines-483-tampines-st-43-2000-03-236055",
       "month": "2000-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -206,7 +220,7 @@
       "pricePerSqft": 273.78
     },
     {
-      "id": "tampines-483-tampines-st-43-1999-03-895548",
+      "id": "tampines-483-tampines-st-43-1999-03-895670",
       "month": "1999-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -219,7 +233,7 @@
       "pricePerSqft": 278.71
     },
     {
-      "id": "tampines-483-tampines-st-43-1998-10-869541",
+      "id": "tampines-483-tampines-st-43-1998-10-869663",
       "month": "1998-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -232,7 +246,7 @@
       "pricePerSqft": 270.26
     },
     {
-      "id": "tampines-483-tampines-st-43-1998-08-858927",
+      "id": "tampines-483-tampines-st-43-1998-08-859049",
       "month": "1998-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -245,7 +259,7 @@
       "pricePerSqft": 213.92
     },
     {
-      "id": "tampines-483-tampines-st-43-1996-05-776180",
+      "id": "tampines-483-tampines-st-43-1996-05-776302",
       "month": "1996-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

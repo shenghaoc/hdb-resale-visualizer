@@ -1,7 +1,10 @@
 import type { BlockSummary, FilterState } from "@/types/data";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
-const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [["yew tee", "choa chu kang"]];
+const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [
+  ["amk", "ang mo kio"],
+  ["yew tee", "choa chu kang"],
+];
 const TOKEN_NORMALIZATIONS = new Map<string, string>([
   ["ave", "avenue"],
   ["av", "avenue"],
@@ -101,12 +104,25 @@ function isNearMatch(left: string, right: string): boolean {
     return true;
   }
 
+  if (left.length === right.length) {
+    for (let index = 0; index < left.length - 1; index += 1) {
+      if (
+        left[index] === right[index + 1] &&
+        left[index + 1] === right[index] &&
+        left.slice(0, index) === right.slice(0, index) &&
+        left.slice(index + 2) === right.slice(index + 2)
+      ) {
+        return true;
+      }
+    }
+  }
+
   if (Math.abs(left.length - right.length) > 1) {
     return false;
   }
 
-  // Fast path for short values where typo-tolerance is too noisy.
-  if (left.length < 5 || right.length < 5) {
+  // Fast path for very short values where typo-tolerance is too noisy.
+  if (left.length < 3 || right.length < 3) {
     return false;
   }
 

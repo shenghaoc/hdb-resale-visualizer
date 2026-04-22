@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 454
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 454
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1357
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2619
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -274,7 +288,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-508c-wellington-circle-2026-01-226715",
+      "id": "sembawang-508c-wellington-circle-2026-01-226781",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -508,7 +522,7 @@
       "pricePerSqft": 388.01
     },
     {
-      "id": "sembawang-508c-wellington-circle-2016-06-965074",
+      "id": "sembawang-508c-wellington-circle-2016-06-965196",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -521,7 +535,7 @@
       "pricePerSqft": 402.22
     },
     {
-      "id": "sembawang-508c-wellington-circle-2015-05-944717",
+      "id": "sembawang-508c-wellington-circle-2015-05-944839",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

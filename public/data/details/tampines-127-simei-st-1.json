@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SIMEI MRT STATION",
       "distanceMeters": 440
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 440
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 897
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1006
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -751,7 +765,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-127-simei-st-1-2026-02-227529",
+      "id": "tampines-127-simei-st-1-2026-02-227609",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

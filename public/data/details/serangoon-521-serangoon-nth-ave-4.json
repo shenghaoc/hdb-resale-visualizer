@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2023-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1941
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1941
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 2087
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2118
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -693,7 +707,7 @@
       "pricePerSqft": 368.11
     },
     {
-      "id": "serangoon-521-serangoon-nth-ave-4-2016-08-968788",
+      "id": "serangoon-521-serangoon-nth-ave-4-2016-08-968910",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -706,7 +720,7 @@
       "pricePerSqft": 400.31
     },
     {
-      "id": "serangoon-521-serangoon-nth-ave-4-2015-12-955743",
+      "id": "serangoon-521-serangoon-nth-ave-4-2015-12-955865",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -719,7 +733,7 @@
       "pricePerSqft": 366.35
     },
     {
-      "id": "serangoon-521-serangoon-nth-ave-4-2014-09-646494",
+      "id": "serangoon-521-serangoon-nth-ave-4-2014-09-646616",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -732,7 +746,7 @@
       "pricePerSqft": 376.87
     },
     {
-      "id": "serangoon-521-serangoon-nth-ave-4-2014-03-638146",
+      "id": "serangoon-521-serangoon-nth-ave-4-2014-03-638268",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -745,7 +759,7 @@
       "pricePerSqft": 382.57
     },
     {
-      "id": "serangoon-521-serangoon-nth-ave-4-2013-11-633694",
+      "id": "serangoon-521-serangoon-nth-ave-4-2013-11-633816",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

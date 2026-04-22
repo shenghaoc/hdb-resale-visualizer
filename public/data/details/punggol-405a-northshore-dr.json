@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2021,
-      2021
+      2020,
+      2020
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SAMUDERA LRT STATION",
       "distanceMeters": 73
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SAMUDERA LRT STATION",
+        "distanceMeters": 73
+      },
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 410
+      },
+      {
+        "stationName": "PUNGGOL POINT LRT STATION",
+        "distanceMeters": 606
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -83,7 +97,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-405a-northshore-dr-2026-03-225856",
+      "id": "punggol-405a-northshore-dr-2026-03-225911",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -96,7 +110,7 @@
       "pricePerSqft": 946.15
     },
     {
-      "id": "punggol-405a-northshore-dr-2026-03-225859",
+      "id": "punggol-405a-northshore-dr-2026-03-225914",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -109,7 +123,7 @@
       "pricePerSqft": 831.95
     },
     {
-      "id": "punggol-405a-northshore-dr-2026-03-225860",
+      "id": "punggol-405a-northshore-dr-2026-03-225915",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "16 TO 18",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 910
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 910
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1079
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 1111
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -612,7 +626,7 @@
       "pricePerSqft": 342.05
     },
     {
-      "id": "hougang-984c-buangkok-link-2016-08-968021",
+      "id": "hougang-984c-buangkok-link-2016-08-968143",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +639,7 @@
       "pricePerSqft": 395.35
     },
     {
-      "id": "hougang-984c-buangkok-link-2016-06-964581",
+      "id": "hougang-984c-buangkok-link-2016-06-964703",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

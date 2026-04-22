@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RANGGUNG LRT STATION",
       "distanceMeters": 268
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 268
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 351
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 646
+      }
+    ]
   },
   "monthlyTrend": [
     {

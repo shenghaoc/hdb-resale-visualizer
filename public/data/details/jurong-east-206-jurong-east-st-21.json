@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 425
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 425
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1044
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1420
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -641,7 +655,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-206-jurong-east-st-21-2026-03-224827",
+      "id": "jurong-east-206-jurong-east-st-21-2026-03-224864",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -654,7 +668,7 @@
       "pricePerSqft": 582.38
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2026-01-224819",
+      "id": "jurong-east-206-jurong-east-st-21-2026-01-224856",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -875,7 +889,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2015-06-946011",
+      "id": "jurong-east-206-jurong-east-st-21-2015-06-946133",
       "month": "2015-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -888,7 +902,7 @@
       "pricePerSqft": 458.81
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2015-05-944347",
+      "id": "jurong-east-206-jurong-east-st-21-2015-05-944469",
       "month": "2015-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

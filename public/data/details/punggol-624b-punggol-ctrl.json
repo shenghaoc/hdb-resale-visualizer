@@ -22,8 +22,8 @@
       96
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2012,
+      2012
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 191
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 191
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 512
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 529
+      }
+    ]
   },
   "monthlyTrend": [
     {

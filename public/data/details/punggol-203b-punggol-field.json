@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 298
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 298
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 498
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 608
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -420,7 +434,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-203b-punggol-field-2026-01-226270",
+      "id": "punggol-203b-punggol-field-2026-01-226332",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

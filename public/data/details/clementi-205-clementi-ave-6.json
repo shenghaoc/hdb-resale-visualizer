@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 693
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 693
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 2064
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2543
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -719,7 +733,7 @@
       "pricePerSqft": 491.49
     },
     {
-      "id": "clementi-205-clementi-ave-6-2016-11-973023",
+      "id": "clementi-205-clementi-ave-6-2016-11-973145",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

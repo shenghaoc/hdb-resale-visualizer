@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEGAR LRT STATION",
       "distanceMeters": 343
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 343
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 501
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 880
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -510,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-474-segar-rd-2026-01-223719",
+      "id": "bukit-panjang-474-segar-rd-2026-01-223742",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

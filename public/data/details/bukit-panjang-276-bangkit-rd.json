@@ -45,7 +45,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 486
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 486
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 531
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 1002
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -793,7 +807,7 @@
       "pricePerSqft": 335.06
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2016-12-974457",
+      "id": "bukit-panjang-276-bangkit-rd-2016-12-974579",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -806,7 +820,7 @@
       "pricePerSqft": 340.21
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-12-650125",
+      "id": "bukit-panjang-276-bangkit-rd-2014-12-650247",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -819,7 +833,7 @@
       "pricePerSqft": 317.12
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-08-644411",
+      "id": "bukit-panjang-276-bangkit-rd-2014-08-644533",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -832,7 +846,7 @@
       "pricePerSqft": 333.76
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-05-640444",
+      "id": "bukit-panjang-276-bangkit-rd-2014-05-640566",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

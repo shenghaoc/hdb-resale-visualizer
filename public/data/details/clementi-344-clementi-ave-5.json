@@ -22,8 +22,8 @@
       44
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 525
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 525
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1264
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 2480
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -238,7 +252,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-344-clementi-ave-5-2026-04-224112",
+      "id": "clementi-344-clementi-ave-5-2026-04-224141",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -251,7 +265,7 @@
       "pricePerSqft": 643.99
     },
     {
-      "id": "clementi-344-clementi-ave-5-2026-04-224113",
+      "id": "clementi-344-clementi-ave-5-2026-04-224142",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -381,7 +395,7 @@
       "pricePerSqft": 521.52
     },
     {
-      "id": "clementi-344-clementi-ave-5-2016-07-966187",
+      "id": "clementi-344-clementi-ave-5-2016-07-966309",
       "month": "2016-07",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -394,7 +408,7 @@
       "pricePerSqft": 565.86
     },
     {
-      "id": "clementi-344-clementi-ave-5-2015-08-948977",
+      "id": "clementi-344-clementi-ave-5-2015-08-949099",
       "month": "2015-08",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -407,7 +421,7 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "clementi-344-clementi-ave-5-2014-09-645871",
+      "id": "clementi-344-clementi-ave-5-2014-09-645993",
       "month": "2014-09",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -420,7 +434,7 @@
       "pricePerSqft": 555.31
     },
     {
-      "id": "clementi-344-clementi-ave-5-2014-08-644486",
+      "id": "clementi-344-clementi-ave-5-2014-08-644608",
       "month": "2014-08",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -433,7 +447,7 @@
       "pricePerSqft": 538.42
     },
     {
-      "id": "clementi-344-clementi-ave-5-2014-06-641910",
+      "id": "clementi-344-clementi-ave-5-2014-06-642032",
       "month": "2014-06",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -446,7 +460,7 @@
       "pricePerSqft": 546.86
     },
     {
-      "id": "clementi-344-clementi-ave-5-2014-03-637521",
+      "id": "clementi-344-clementi-ave-5-2014-03-637643",
       "month": "2014-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -459,7 +473,7 @@
       "pricePerSqft": 559.53
     },
     {
-      "id": "clementi-344-clementi-ave-5-2012-03-599635",
+      "id": "clementi-344-clementi-ave-5-2012-03-599757",
       "month": "2012-03",
       "flatType": "2 ROOM",
       "storeyRange": "06 TO 10",
@@ -472,7 +486,7 @@
       "pricePerSqft": 559.53
     },
     {
-      "id": "clementi-344-clementi-ave-5-2011-07-585886",
+      "id": "clementi-344-clementi-ave-5-2011-07-586008",
       "month": "2011-07",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -485,7 +499,7 @@
       "pricePerSqft": 540.53
     },
     {
-      "id": "clementi-344-clementi-ave-5-2011-05-581928",
+      "id": "clementi-344-clementi-ave-5-2011-05-582050",
       "month": "2011-05",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

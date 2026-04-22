@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HAVELOCK MRT STATION",
       "distanceMeters": 217
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 217
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 466
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 749
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -76,7 +90,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-5-tiong-bahru-rd-1999-10-929129",
+      "id": "bukit-merah-5-tiong-bahru-rd-1999-10-929251",
       "month": "1999-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -89,7 +103,7 @@
       "pricePerSqft": 247.74
     },
     {
-      "id": "bukit-merah-5-tiong-bahru-rd-1999-03-891678",
+      "id": "bukit-merah-5-tiong-bahru-rd-1999-03-891800",
       "month": "1999-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -102,7 +116,7 @@
       "pricePerSqft": 244.03
     },
     {
-      "id": "bukit-merah-5-tiong-bahru-rd-1995-03-739545",
+      "id": "bukit-merah-5-tiong-bahru-rd-1995-03-739667",
       "month": "1995-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -115,7 +129,7 @@
       "pricePerSqft": 158.55
     },
     {
-      "id": "bukit-merah-5-tiong-bahru-rd-1994-01-709886",
+      "id": "bukit-merah-5-tiong-bahru-rd-1994-01-710008",
       "month": "1994-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -128,7 +142,7 @@
       "pricePerSqft": 117.68
     },
     {
-      "id": "bukit-merah-5-tiong-bahru-rd-1992-10-687441",
+      "id": "bukit-merah-5-tiong-bahru-rd-1992-10-687563",
       "month": "1992-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

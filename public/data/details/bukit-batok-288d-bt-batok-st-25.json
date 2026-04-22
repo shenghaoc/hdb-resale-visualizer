@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 1110
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1110
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1448
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1640
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -556,7 +570,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-288d-bt-batok-st-25-2026-01-222960",
+      "id": "bukit-batok-288d-bt-batok-st-25-2026-01-222976",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

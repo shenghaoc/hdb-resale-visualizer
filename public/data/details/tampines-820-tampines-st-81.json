@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 344
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 344
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1006
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1298
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -491,7 +505,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-820-tampines-st-81-2026-04-227508",
+      "id": "tampines-820-tampines-st-81-2026-04-227588",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -608,7 +622,7 @@
       "pricePerSqft": 437.19
     },
     {
-      "id": "tampines-820-tampines-st-81-2016-06-965316",
+      "id": "tampines-820-tampines-st-81-2016-06-965438",
       "month": "2016-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -621,7 +635,7 @@
       "pricePerSqft": 402.2
     },
     {
-      "id": "tampines-820-tampines-st-81-2016-05-963517",
+      "id": "tampines-820-tampines-st-81-2016-05-963639",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -634,7 +648,7 @@
       "pricePerSqft": 424.86
     },
     {
-      "id": "tampines-820-tampines-st-81-2016-04-961625",
+      "id": "tampines-820-tampines-st-81-2016-04-961747",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -647,7 +661,7 @@
       "pricePerSqft": 409.87
     },
     {
-      "id": "tampines-820-tampines-st-81-2016-02-958285",
+      "id": "tampines-820-tampines-st-81-2016-02-958407",
       "month": "2016-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -660,7 +674,7 @@
       "pricePerSqft": 423.53
     },
     {
-      "id": "tampines-820-tampines-st-81-2015-01-939297",
+      "id": "tampines-820-tampines-st-81-2015-01-939419",
       "month": "2015-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -673,7 +687,7 @@
       "pricePerSqft": 420.8
     },
     {
-      "id": "tampines-820-tampines-st-81-2014-08-645084",
+      "id": "tampines-820-tampines-st-81-2014-08-645206",
       "month": "2014-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -686,7 +700,7 @@
       "pricePerSqft": 444.02
     },
     {
-      "id": "tampines-820-tampines-st-81-2014-03-638160",
+      "id": "tampines-820-tampines-st-81-2014-03-638282",
       "month": "2014-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -699,7 +713,7 @@
       "pricePerSqft": 450.85
     },
     {
-      "id": "tampines-820-tampines-st-81-2014-01-635855",
+      "id": "tampines-820-tampines-st-81-2014-01-635977",
       "month": "2014-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -712,7 +726,7 @@
       "pricePerSqft": 439.92
     },
     {
-      "id": "tampines-820-tampines-st-81-2013-03-622425",
+      "id": "tampines-820-tampines-st-81-2013-03-622547",
       "month": "2013-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -725,7 +739,7 @@
       "pricePerSqft": 450.85
     },
     {
-      "id": "tampines-820-tampines-st-81-2011-07-586793",
+      "id": "tampines-820-tampines-st-81-2011-07-586915",
       "month": "2011-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -738,7 +752,7 @@
       "pricePerSqft": 403.04
     },
     {
-      "id": "tampines-820-tampines-st-81-2011-03-578882",
+      "id": "tampines-820-tampines-st-81-2011-03-579004",
       "month": "2011-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

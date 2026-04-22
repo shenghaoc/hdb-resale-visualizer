@@ -22,8 +22,8 @@
       179
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1985,
+      1985
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 506
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 506
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 859
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1186
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -433,7 +447,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-818-woodlands-st-82-2026-02-228798",
+      "id": "woodlands-818-woodlands-st-82-2026-02-228911",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -628,7 +642,7 @@
       "pricePerSqft": 377.91
     },
     {
-      "id": "woodlands-818-woodlands-st-82-2015-05-945164",
+      "id": "woodlands-818-woodlands-st-82-2015-05-945286",
       "month": "2015-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -641,7 +655,7 @@
       "pricePerSqft": 404.15
     },
     {
-      "id": "woodlands-818-woodlands-st-82-2013-08-630030",
+      "id": "woodlands-818-woodlands-st-82-2013-08-630152",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -654,7 +668,7 @@
       "pricePerSqft": 362.13
     },
     {
-      "id": "woodlands-818-woodlands-st-82-2013-04-624334",
+      "id": "woodlands-818-woodlands-st-82-2013-04-624456",
       "month": "2013-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -667,7 +681,7 @@
       "pricePerSqft": 377.91
     },
     {
-      "id": "woodlands-818-woodlands-st-82-2013-01-620437",
+      "id": "woodlands-818-woodlands-st-82-2013-01-620559",
       "month": "2013-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -680,7 +694,7 @@
       "pricePerSqft": 392.39
     },
     {
-      "id": "woodlands-818-woodlands-st-82-2012-11-617183",
+      "id": "woodlands-818-woodlands-st-82-2012-11-617305",
       "month": "2012-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

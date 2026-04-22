@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CANBERRA MRT STATION",
       "distanceMeters": 657
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 657
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 925
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1777
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -877,7 +891,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-173-yishun-ave-7-2026-02-229012",
+      "id": "yishun-173-yishun-ave-7-2026-02-229131",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

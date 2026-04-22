@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 329
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 329
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 747
+      },
+      {
+        "stationName": "JOO KOON MRT STATION",
+        "distanceMeters": 2446
+      }
+    ]
   },
   "monthlyTrend": [
     {

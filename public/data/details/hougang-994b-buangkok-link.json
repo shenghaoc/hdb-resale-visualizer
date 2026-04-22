@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2021,
-      2021
+      2019,
+      2019
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 468
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 468
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 777
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 788
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -97,7 +111,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-994b-buangkok-link-2026-02-224581",
+      "id": "hougang-994b-buangkok-link-2026-02-224613",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

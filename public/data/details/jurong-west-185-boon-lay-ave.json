@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON LAY MRT STATION",
       "distanceMeters": 1007
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1108
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 1792
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -2112,7 +2126,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-185-boon-lay-ave-2026-03-224963",
+      "id": "jurong-west-185-boon-lay-ave-2026-03-225003",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -2125,7 +2139,7 @@
       "pricePerSqft": 441.29
     },
     {
-      "id": "jurong-west-185-boon-lay-ave-2026-03-224964",
+      "id": "jurong-west-185-boon-lay-ave-2026-03-225004",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",
@@ -2138,7 +2152,7 @@
       "pricePerSqft": 551.12
     },
     {
-      "id": "jurong-west-185-boon-lay-ave-2026-03-224966",
+      "id": "jurong-west-185-boon-lay-ave-2026-03-225006",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -2151,7 +2165,7 @@
       "pricePerSqft": 475.54
     },
     {
-      "id": "jurong-west-185-boon-lay-ave-2026-02-224961",
+      "id": "jurong-west-185-boon-lay-ave-2026-02-225001",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -2164,7 +2178,7 @@
       "pricePerSqft": 488.14
     },
     {
-      "id": "jurong-west-185-boon-lay-ave-2026-01-224960",
+      "id": "jurong-west-185-boon-lay-ave-2026-01-225000",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

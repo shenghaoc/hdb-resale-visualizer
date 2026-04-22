@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 470
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 470
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 738
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 1181
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 409
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 409
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 909
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1567
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-56-strathmore-ave-2026-01-226496",
+      "id": "queenstown-56-strathmore-ave-2026-01-226559",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

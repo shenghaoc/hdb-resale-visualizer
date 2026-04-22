@@ -22,8 +22,8 @@
       153
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2024-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1630
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1630
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 2744
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2958
+      }
+    ]
   },
   "monthlyTrend": [
     {

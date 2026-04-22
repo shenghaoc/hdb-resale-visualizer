@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 401
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 401
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 932
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1160
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -576,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-239-lor-1-toa-payoh-2026-01-228132",
+      "id": "toa-payoh-239-lor-1-toa-payoh-2026-01-228228",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

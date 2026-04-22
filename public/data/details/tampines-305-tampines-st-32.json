@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 350
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 350
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1108
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1205
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -695,7 +709,7 @@
       "pricePerSqft": 383.32
     },
     {
-      "id": "tampines-305-tampines-st-32-2015-08-949700",
+      "id": "tampines-305-tampines-st-32-2015-08-949822",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

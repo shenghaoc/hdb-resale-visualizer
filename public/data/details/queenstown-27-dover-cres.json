@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2025-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "DOVER MRT STATION",
       "distanceMeters": 746
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 746
+      },
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 925
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 1036
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -785,7 +799,7 @@
       "pricePerSqft": 566.71
     },
     {
-      "id": "queenstown-27-dover-cres-2015-09-950915",
+      "id": "queenstown-27-dover-cres-2015-09-951037",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

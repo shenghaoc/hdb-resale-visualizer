@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 447
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 447
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 451
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 462
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -510,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-188c-rivervale-dr-2026-02-227080",
+      "id": "sengkang-188c-rivervale-dr-2026-02-227150",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

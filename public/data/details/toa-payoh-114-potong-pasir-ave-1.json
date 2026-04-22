@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 769
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 769
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 825
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1641
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -851,7 +865,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-114-potong-pasir-ave-1-2026-01-228059",
+      "id": "toa-payoh-114-potong-pasir-ave-1-2026-01-228154",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

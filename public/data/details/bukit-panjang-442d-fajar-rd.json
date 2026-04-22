@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BANGKIT LRT STATION",
       "distanceMeters": 228
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 228
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 394
+      },
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 517
+      }
+    ]
   },
   "monthlyTrend": [
     {

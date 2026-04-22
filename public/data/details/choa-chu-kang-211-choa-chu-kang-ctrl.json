@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 359
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 412
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 484
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -395,7 +409,7 @@
       "pricePerSqft": 339.45
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2016-08-967807",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2016-08-967929",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -408,7 +422,7 @@
       "pricePerSqft": 330.52
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2013-02-620837",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2013-02-620959",
       "month": "2013-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -421,7 +435,7 @@
       "pricePerSqft": 392.17
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2012-06-606308",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2012-06-606430",
       "month": "2012-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -434,7 +448,7 @@
       "pricePerSqft": 404.66
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2012-03-599574",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2012-03-599696",
       "month": "2012-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -447,7 +461,7 @@
       "pricePerSqft": 372.5
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2011-04-579880",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2011-04-580002",
       "month": "2011-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -460,7 +474,7 @@
       "pricePerSqft": 334.45
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-10-530433",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-10-530555",
       "month": "2009-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -473,7 +487,7 @@
       "pricePerSqft": 276.92
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-09-527421",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-09-527543",
       "month": "2009-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -486,7 +500,7 @@
       "pricePerSqft": 252.17
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-03-512606",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2009-03-512728",
       "month": "2009-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -499,7 +513,7 @@
       "pricePerSqft": 276.92
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2007-05-463135",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2007-05-463257",
       "month": "2007-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -512,7 +526,7 @@
       "pricePerSqft": 194.65
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2007-04-461022",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2007-04-461144",
       "month": "2007-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -525,7 +539,7 @@
       "pricePerSqft": 193.92
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2006-05-435920",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2006-05-436042",
       "month": "2006-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -538,7 +552,7 @@
       "pricePerSqft": 190.23
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2005-11-422455",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2005-11-422577",
       "month": "2005-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -551,7 +565,7 @@
       "pricePerSqft": 190.23
     },
     {
-      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2004-12-394566",
+      "id": "choa-chu-kang-211-choa-chu-kang-ctrl-2004-12-394688",
       "month": "2004-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

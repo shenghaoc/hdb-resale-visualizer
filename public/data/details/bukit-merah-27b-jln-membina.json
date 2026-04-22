@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2008,
-      2008
+      2007,
+      2007
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 395
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 395
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1059
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1119
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -469,7 +483,7 @@
       "pricePerSqft": 774.19
     },
     {
-      "id": "bukit-merah-27b-jln-membina-2016-07-966051",
+      "id": "bukit-merah-27b-jln-membina-2016-07-966173",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

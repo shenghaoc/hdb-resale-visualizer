@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 326
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 326
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 750
+      },
+      {
+        "stationName": "HILLVIEW MRT STATION",
+        "distanceMeters": 1965
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -793,7 +807,7 @@
       "pricePerSqft": 324.71
     },
     {
-      "id": "bukit-batok-531-bt-batok-st-51-2016-01-956310",
+      "id": "bukit-batok-531-bt-batok-st-51-2016-01-956432",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -806,7 +820,7 @@
       "pricePerSqft": 327.45
     },
     {
-      "id": "bukit-batok-531-bt-batok-st-51-2015-07-947234",
+      "id": "bukit-batok-531-bt-batok-st-51-2015-07-947356",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       144
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "JALAN BESAR MRT STATION",
       "distanceMeters": 43
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 43
+      },
+      {
+        "stationName": "ROCHOR MRT STATION",
+        "distanceMeters": 263
+      },
+      {
+        "stationName": "BUGIS MRT STATION",
+        "distanceMeters": 512
+      }
+    ]
   },
   "monthlyTrend": [
     {

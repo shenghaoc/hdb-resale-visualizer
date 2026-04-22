@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LORONG CHUAN MRT STATION",
       "distanceMeters": 328
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 328
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 565
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 1579
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -858,7 +872,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-303-serangoon-ave-2-2026-03-227319",
+      "id": "serangoon-303-serangoon-ave-2-2026-03-227395",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

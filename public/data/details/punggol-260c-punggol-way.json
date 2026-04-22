@@ -9,21 +9,21 @@
       "lat": 1.40524575016039,
       "lng": 103.896410927147
     },
-    "medianPrice": 638000,
+    "medianPrice": 650000,
     "priceIqr": [
-      621500,
-      687500
+      623000,
+      689000
     ],
-    "pricePerSqmMedian": 6860.22,
-    "pricePerSqftMedian": 637.34,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6989.25,
+    "pricePerSqftMedian": 649.32,
+    "transactionCount": 7,
     "floorAreaRange": [
       93,
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2014,
+      2014
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 73
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 73
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 408
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 606
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -189,14 +203,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 718000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7720.43
+      "medianPrice": 698000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7505.38
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-260c-punggol-way-2026-04-226160",
+      "id": "punggol-260c-punggol-way-2026-04-226219",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -209,7 +223,20 @@
       "pricePerSqft": 717.25
     },
     {
-      "id": "punggol-260c-punggol-way-2026-01-226151",
+      "id": "punggol-260c-punggol-way-2026-04-226221",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 03 months",
+      "resalePrice": 678000,
+      "pricePerSqm": 7290.32,
+      "pricePerSqft": 677.29
+    },
+    {
+      "id": "punggol-260c-punggol-way-2026-01-226210",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -441,19 +468,6 @@
       "resalePrice": 490000,
       "pricePerSqm": 5268.82,
       "pricePerSqft": 489.49
-    },
-    {
-      "id": "punggol-260c-punggol-way-2021-02-91349",
-      "month": "2021-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "94 years 04 months",
-      "resalePrice": 510000,
-      "pricePerSqm": 5483.87,
-      "pricePerSqft": 509.47
     }
   ]
 }

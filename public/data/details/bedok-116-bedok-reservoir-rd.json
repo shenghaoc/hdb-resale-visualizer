@@ -22,8 +22,8 @@
       96
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 436
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 436
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 982
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1087
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1102,7 +1116,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "bedok-116-bedok-reservoir-rd-2016-12-974210",
+      "id": "bedok-116-bedok-reservoir-rd-2016-12-974332",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1115,7 +1129,7 @@
       "pricePerSqft": 429.85
     },
     {
-      "id": "bedok-116-bedok-reservoir-rd-2016-08-967404",
+      "id": "bedok-116-bedok-reservoir-rd-2016-08-967526",
       "month": "2016-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1128,7 +1142,7 @@
       "pricePerSqft": 420.14
     },
     {
-      "id": "bedok-116-bedok-reservoir-rd-2016-05-962210",
+      "id": "bedok-116-bedok-reservoir-rd-2016-05-962332",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

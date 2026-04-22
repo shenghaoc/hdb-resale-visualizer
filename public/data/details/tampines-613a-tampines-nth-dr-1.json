@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 1374
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1374
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1726
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 2265
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -121,7 +135,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227429",
+      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227506",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -134,7 +148,7 @@
       "pricePerSqft": 834.78
     },
     {
-      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227610",
+      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227690",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -147,7 +161,7 @@
       "pricePerSqft": 788.07
     },
     {
-      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227612",
+      "id": "tampines-613a-tampines-nth-dr-1-2026-03-227692",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -160,7 +174,7 @@
       "pricePerSqft": 704.27
     },
     {
-      "id": "tampines-613a-tampines-nth-dr-1-2026-02-227605",
+      "id": "tampines-613a-tampines-nth-dr-1-2026-02-227685",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -173,7 +187,7 @@
       "pricePerSqft": 779.19
     },
     {
-      "id": "tampines-613a-tampines-nth-dr-1-2026-02-227606",
+      "id": "tampines-613a-tampines-nth-dr-1-2026-02-227686",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

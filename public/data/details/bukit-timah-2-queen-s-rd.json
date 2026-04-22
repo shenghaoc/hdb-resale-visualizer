@@ -22,8 +22,8 @@
       89
     ],
     "leaseCommenceRange": [
-      1974,
-      1974
+      1973,
+      1973
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BOTANIC GARDENS MRT STATION",
       "distanceMeters": 440
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOTANIC GARDENS MRT STATION",
+        "distanceMeters": 440
+      },
+      {
+        "stationName": "TAN KAH KEE MRT STATION",
+        "distanceMeters": 456
+      },
+      {
+        "stationName": "FARRER ROAD MRT STATION",
+        "distanceMeters": 681
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -455,7 +469,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-2-queen-s-rd-2026-03-223732",
+      "id": "bukit-timah-2-queen-s-rd-2026-03-223755",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

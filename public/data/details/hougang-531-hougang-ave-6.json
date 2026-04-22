@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1986,
+      1986
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 443
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 443
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 844
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1207
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -935,7 +949,7 @@
       "pricePerSqft": 413.07
     },
     {
-      "id": "hougang-531-hougang-ave-6-2016-06-964579",
+      "id": "hougang-531-hougang-ave-6-2016-06-964701",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -948,7 +962,7 @@
       "pricePerSqft": 412.53
     },
     {
-      "id": "hougang-531-hougang-ave-6-2016-05-962788",
+      "id": "hougang-531-hougang-ave-6-2016-05-962910",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -961,7 +975,7 @@
       "pricePerSqft": 399.25
     },
     {
-      "id": "hougang-531-hougang-ave-6-2015-11-953781",
+      "id": "hougang-531-hougang-ave-6-2015-11-953903",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -974,7 +988,7 @@
       "pricePerSqft": 409.22
     },
     {
-      "id": "hougang-531-hougang-ave-6-2014-08-644573",
+      "id": "hougang-531-hougang-ave-6-2014-08-644695",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

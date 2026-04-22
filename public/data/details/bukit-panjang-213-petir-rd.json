@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2024-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 506
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 506
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 685
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 1028
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -931,7 +945,7 @@
       "pricePerSqft": 338.87
     },
     {
-      "id": "bukit-panjang-213-petir-rd-2016-08-967707",
+      "id": "bukit-panjang-213-petir-rd-2016-08-967829",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

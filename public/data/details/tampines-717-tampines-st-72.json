@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 898
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 898
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1505
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 2172
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -492,7 +506,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-717-tampines-st-72-2026-02-227709",
+      "id": "tampines-717-tampines-st-72-2026-02-227793",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -505,7 +519,7 @@
       "pricePerSqft": 566.71
     },
     {
-      "id": "tampines-717-tampines-st-72-2026-01-227706",
+      "id": "tampines-717-tampines-st-72-2026-01-227790",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

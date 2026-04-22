@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 364
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 364
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 519
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 594
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -446,7 +460,7 @@
       "pricePerSqft": 428.78
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2016-11-973654",
+      "id": "sengkang-322c-anchorvale-dr-2016-11-973776",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -459,7 +473,7 @@
       "pricePerSqft": 337.83
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2016-07-966885",
+      "id": "sengkang-322c-anchorvale-dr-2016-07-967007",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -472,7 +486,7 @@
       "pricePerSqft": 434.96
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2016-04-961539",
+      "id": "sengkang-322c-anchorvale-dr-2016-04-961661",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -485,7 +499,7 @@
       "pricePerSqft": 368.23
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2015-09-951050",
+      "id": "sengkang-322c-anchorvale-dr-2015-09-951172",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -498,7 +512,7 @@
       "pricePerSqft": 422.29
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2013-10-632341",
+      "id": "sengkang-322c-anchorvale-dr-2013-10-632463",
       "month": "2013-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -511,7 +525,7 @@
       "pricePerSqft": 460.43
     },
     {
-      "id": "sengkang-322c-anchorvale-dr-2013-01-619992",
+      "id": "sengkang-322c-anchorvale-dr-2013-01-620114",
       "month": "2013-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2003,
+      2003
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 184
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 184
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 562
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 612
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -508,7 +522,7 @@
       "pricePerSqft": 375.84
     },
     {
-      "id": "punggol-202b-punggol-field-2016-08-968414",
+      "id": "punggol-202b-punggol-field-2016-08-968536",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -521,7 +535,7 @@
       "pricePerSqft": 415.33
     },
     {
-      "id": "punggol-202b-punggol-field-2016-03-959572",
+      "id": "punggol-202b-punggol-field-2016-03-959694",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -534,7 +548,7 @@
       "pricePerSqft": 437.19
     },
     {
-      "id": "punggol-202b-punggol-field-2016-02-958103",
+      "id": "punggol-202b-punggol-field-2016-02-958225",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -547,7 +561,7 @@
       "pricePerSqft": 344.59
     },
     {
-      "id": "punggol-202b-punggol-field-2016-02-958105",
+      "id": "punggol-202b-punggol-field-2016-02-958227",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2003,
+      2003
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 746
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 746
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1191
+      },
+      {
+        "stationName": "CASHEW MRT STATION",
+        "distanceMeters": 1291
+      }
+    ]
   },
   "monthlyTrend": [
     {

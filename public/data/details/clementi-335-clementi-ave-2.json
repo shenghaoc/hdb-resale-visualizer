@@ -22,8 +22,8 @@
       149
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 406
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 406
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1253
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 2619
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -895,7 +909,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-335-clementi-ave-2-2026-02-224117",
+      "id": "clementi-335-clementi-ave-2-2026-02-224146",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

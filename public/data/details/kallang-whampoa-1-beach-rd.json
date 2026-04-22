@@ -22,8 +22,8 @@
       153
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1970,
+      1970
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "ESPLANADE MRT STATION",
       "distanceMeters": 151
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ESPLANADE MRT STATION",
+        "distanceMeters": 151
+      },
+      {
+        "stationName": "CITY HALL MRT STATION",
+        "distanceMeters": 237
+      },
+      {
+        "stationName": "BRAS BASAH MRT STATION",
+        "distanceMeters": 396
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -811,7 +825,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-1-beach-rd-2026-01-225401",
+      "id": "kallang-whampoa-1-beach-rd-2026-01-225448",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

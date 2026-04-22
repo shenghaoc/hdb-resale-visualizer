@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 186
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 186
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 343
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 598
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -342,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-173c-punggol-field-2026-03-226082",
+      "id": "punggol-173c-punggol-field-2026-03-226140",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 455
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 455
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 770
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1231
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -984,7 +998,7 @@
       "pricePerSqft": 369.52
     },
     {
-      "id": "geylang-339-ubi-ave-1-2016-06-964512",
+      "id": "geylang-339-ubi-ave-1-2016-06-964634",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       163
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1983,
+      1983
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 259
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 259
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 954
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1218
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -943,20 +957,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-157-tampines-st-12-2026-03-227441",
-      "month": "2026-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "57 years 11 months",
-      "resalePrice": 548888,
-      "pricePerSqm": 8071.88,
-      "pricePerSqft": 749.9
-    },
-    {
-      "id": "tampines-157-tampines-st-12-2026-03-227442",
+      "id": "tampines-157-tampines-st-12-2026-03-227518",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -969,7 +970,20 @@
       "pricePerSqft": 717.27
     },
     {
-      "id": "tampines-157-tampines-st-12-2026-03-227620",
+      "id": "tampines-157-tampines-st-12-2026-03-227519",
+      "month": "2026-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 548888,
+      "pricePerSqm": 8071.88,
+      "pricePerSqft": 749.9
+    },
+    {
+      "id": "tampines-157-tampines-st-12-2026-03-227703",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -982,7 +996,7 @@
       "pricePerSqft": 684.29
     },
     {
-      "id": "tampines-157-tampines-st-12-2026-01-227440",
+      "id": "tampines-157-tampines-st-12-2026-01-227517",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

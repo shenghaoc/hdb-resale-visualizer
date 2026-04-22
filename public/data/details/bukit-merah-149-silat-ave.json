@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "OUTRAM PARK MRT STATION",
       "distanceMeters": 794
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 794
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1065
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1065
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -553,7 +567,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-149-silat-ave-2026-02-223400",
+      "id": "bukit-merah-149-silat-ave-2026-02-223421",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -774,7 +788,7 @@
       "pricePerSqft": 526.91
     },
     {
-      "id": "bukit-merah-149-silat-ave-2016-10-971171",
+      "id": "bukit-merah-149-silat-ave-2016-10-971293",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -787,7 +801,7 @@
       "pricePerSqft": 473.58
     },
     {
-      "id": "bukit-merah-149-silat-ave-2013-04-623032",
+      "id": "bukit-merah-149-silat-ave-2013-04-623154",
       "month": "2013-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -800,7 +814,7 @@
       "pricePerSqft": 514.43
     },
     {
-      "id": "bukit-merah-149-silat-ave-2011-02-575905",
+      "id": "bukit-merah-149-silat-ave-2011-02-576027",
       "month": "2011-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

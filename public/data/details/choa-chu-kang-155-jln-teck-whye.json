@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PHOENIX LRT STATION",
       "distanceMeters": 126
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 126
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 337
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 455
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -402,7 +416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-155-jln-teck-whye-2026-03-224064",
+      "id": "choa-chu-kang-155-jln-teck-whye-2026-03-224093",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -649,7 +663,7 @@
       "pricePerSqft": 322.47
     },
     {
-      "id": "choa-chu-kang-155-jln-teck-whye-2016-10-971369",
+      "id": "choa-chu-kang-155-jln-teck-whye-2016-10-971491",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

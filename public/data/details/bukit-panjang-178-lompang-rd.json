@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT PANJANG LRT STATION",
       "distanceMeters": 301
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 349
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 366
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -570,7 +584,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-178-lompang-rd-2026-04-223571",
+      "id": "bukit-panjang-178-lompang-rd-2026-04-223594",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -583,7 +597,7 @@
       "pricePerSqft": 681.29
     },
     {
-      "id": "bukit-panjang-178-lompang-rd-2026-03-223670",
+      "id": "bukit-panjang-178-lompang-rd-2026-03-223693",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -596,7 +610,7 @@
       "pricePerSqft": 736.47
     },
     {
-      "id": "bukit-panjang-178-lompang-rd-2026-02-223570",
+      "id": "bukit-panjang-178-lompang-rd-2026-02-223593",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -609,7 +623,7 @@
       "pricePerSqft": 751.48
     },
     {
-      "id": "bukit-panjang-178-lompang-rd-2026-01-223569",
+      "id": "bukit-panjang-178-lompang-rd-2026-01-223592",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

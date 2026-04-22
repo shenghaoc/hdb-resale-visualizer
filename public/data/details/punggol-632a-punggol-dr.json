@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2007,
-      2007
+      2006,
+      2006
     ],
     "latestMonth": "2024-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 170
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 170
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 353
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 636
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -473,7 +487,7 @@
       "pricePerSqft": 372.63
     },
     {
-      "id": "punggol-632a-punggol-dr-2016-09-970165",
+      "id": "punggol-632a-punggol-dr-2016-09-970287",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 159
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 159
+      },
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 1247
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1272
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -474,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-75b-redhill-rd-2026-02-223398",
+      "id": "bukit-merah-75b-redhill-rd-2026-02-223419",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

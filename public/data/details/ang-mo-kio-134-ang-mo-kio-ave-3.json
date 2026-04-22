@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 557
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 557
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 840
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1097
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -976,7 +990,7 @@
       "pricePerSqft": 459.78
     },
     {
-      "id": "ang-mo-kio-134-ang-mo-kio-ave-3-2016-10-970902",
+      "id": "ang-mo-kio-134-ang-mo-kio-ave-3-2016-10-971024",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -989,7 +1003,7 @@
       "pricePerSqft": 457.88
     },
     {
-      "id": "ang-mo-kio-134-ang-mo-kio-ave-3-2016-06-963964",
+      "id": "ang-mo-kio-134-ang-mo-kio-ave-3-2016-06-964086",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

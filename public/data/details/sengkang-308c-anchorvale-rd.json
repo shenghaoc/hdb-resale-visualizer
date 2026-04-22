@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 86
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 86
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 481
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 806
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -438,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-308c-anchorvale-rd-2026-02-227161",
+      "id": "sengkang-308c-anchorvale-rd-2026-02-227234",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -451,7 +465,7 @@
       "pricePerSqft": 564.18
     },
     {
-      "id": "sengkang-308c-anchorvale-rd-2026-01-227159",
+      "id": "sengkang-308c-anchorvale-rd-2026-01-227232",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

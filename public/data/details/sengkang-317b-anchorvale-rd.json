@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 369
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 369
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 568
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 636
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 279
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 279
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 972
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1217
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -485,7 +499,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-193-bishan-st-13-2026-03-222723",
+      "id": "bishan-193-bishan-st-13-2026-03-222735",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -628,7 +642,7 @@
       "pricePerSqft": 544.35
     },
     {
-      "id": "bishan-193-bishan-st-13-2016-06-964098",
+      "id": "bishan-193-bishan-st-13-2016-06-964220",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -641,7 +655,7 @@
       "pricePerSqft": 590.74
     },
     {
-      "id": "bishan-193-bishan-st-13-2015-11-953388",
+      "id": "bishan-193-bishan-st-13-2015-11-953510",
       "month": "2015-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -654,7 +668,7 @@
       "pricePerSqft": 616.93
     },
     {
-      "id": "bishan-193-bishan-st-13-2015-06-945495",
+      "id": "bishan-193-bishan-st-13-2015-06-945617",
       "month": "2015-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -667,7 +681,7 @@
       "pricePerSqft": 609.68
     },
     {
-      "id": "bishan-193-bishan-st-13-2014-08-644274",
+      "id": "bishan-193-bishan-st-13-2014-08-644396",
       "month": "2014-08",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -680,7 +694,7 @@
       "pricePerSqft": 616.93
     },
     {
-      "id": "bishan-193-bishan-st-13-2014-03-637289",
+      "id": "bishan-193-bishan-st-13-2014-03-637411",
       "month": "2014-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -693,7 +707,7 @@
       "pricePerSqft": 647.42
     },
     {
-      "id": "bishan-193-bishan-st-13-2012-04-601522",
+      "id": "bishan-193-bishan-st-13-2012-04-601644",
       "month": "2012-04",
       "flatType": "4 ROOM",
       "storeyRange": "06 TO 10",
@@ -706,7 +720,7 @@
       "pricePerSqft": 566.16
     },
     {
-      "id": "bishan-193-bishan-st-13-2012-01-595931",
+      "id": "bishan-193-bishan-st-13-2012-01-596053",
       "month": "2012-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -719,7 +733,7 @@
       "pricePerSqft": 541.02
     },
     {
-      "id": "bishan-193-bishan-st-13-2010-12-571684",
+      "id": "bishan-193-bishan-st-13-2010-12-571806",
       "month": "2010-12",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -732,7 +746,7 @@
       "pricePerSqft": 537.1
     },
     {
-      "id": "bishan-193-bishan-st-13-2010-11-569522",
+      "id": "bishan-193-bishan-st-13-2010-11-569644",
       "month": "2010-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

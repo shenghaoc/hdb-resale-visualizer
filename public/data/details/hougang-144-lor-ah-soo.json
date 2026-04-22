@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 867
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 867
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1026
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1062
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -706,7 +720,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-144-lor-ah-soo-2026-03-224808",
+      "id": "hougang-144-lor-ah-soo-2026-03-224845",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

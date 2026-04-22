@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENJA LRT STATION",
       "distanceMeters": 193
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 193
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 337
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 398
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -444,7 +458,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-545-bt-panjang-ring-rd-2026-02-223645",
+      "id": "bukit-panjang-545-bt-panjang-ring-rd-2026-02-223668",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

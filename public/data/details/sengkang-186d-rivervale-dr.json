@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 236
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 236
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 533
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 541
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -513,7 +527,7 @@
       "pricePerSqft": 328.14
     },
     {
-      "id": "sengkang-186d-rivervale-dr-2016-12-975121",
+      "id": "sengkang-186d-rivervale-dr-2016-12-975243",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -526,7 +540,7 @@
       "pricePerSqft": 346.28
     },
     {
-      "id": "sengkang-186d-rivervale-dr-2015-08-949565",
+      "id": "sengkang-186d-rivervale-dr-2015-08-949687",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -539,7 +553,7 @@
       "pricePerSqft": 383.55
     },
     {
-      "id": "sengkang-186d-rivervale-dr-2015-04-943239",
+      "id": "sengkang-186d-rivervale-dr-2015-04-943361",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -552,7 +566,7 @@
       "pricePerSqft": 391.64
     },
     {
-      "id": "sengkang-186d-rivervale-dr-2015-01-939241",
+      "id": "sengkang-186d-rivervale-dr-2015-01-939363",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -565,7 +579,7 @@
       "pricePerSqft": 401.17
     },
     {
-      "id": "sengkang-186d-rivervale-dr-2013-09-631021",
+      "id": "sengkang-186d-rivervale-dr-2013-09-631143",
       "month": "2013-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

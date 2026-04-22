@@ -22,8 +22,8 @@
       150
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1993,
+      1993
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 690
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 690
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1155
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1347
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -573,7 +587,7 @@
       "pricePerSqft": 351.79
     },
     {
-      "id": "tampines-334-tampines-st-32-2014-04-639796",
+      "id": "tampines-334-tampines-st-32-2014-04-639918",
       "month": "2014-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -586,7 +600,7 @@
       "pricePerSqft": 403.21
     },
     {
-      "id": "tampines-334-tampines-st-32-2013-09-631184",
+      "id": "tampines-334-tampines-st-32-2013-09-631306",
       "month": "2013-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -599,7 +613,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "tampines-334-tampines-st-32-2011-02-576983",
+      "id": "tampines-334-tampines-st-32-2011-02-577105",
       "month": "2011-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

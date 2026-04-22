@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      1998,
+      1998
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 177
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 177
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 655
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 659
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CANBERRA MRT STATION",
       "distanceMeters": 655
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 655
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 925
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1840
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -930,7 +944,7 @@
       "pricePerSqft": 321.59
     },
     {
-      "id": "yishun-175-yishun-ave-7-2016-12-975467",
+      "id": "yishun-175-yishun-ave-7-2016-12-975589",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -943,7 +957,7 @@
       "pricePerSqft": 317.83
     },
     {
-      "id": "yishun-175-yishun-ave-7-2016-01-957357",
+      "id": "yishun-175-yishun-ave-7-2016-01-957479",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

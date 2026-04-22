@@ -22,8 +22,8 @@
       139
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 790
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 790
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1288
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1350
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -335,7 +349,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-227-bishan-st-23-2026-03-222744",
+      "id": "bishan-227-bishan-st-23-2026-03-222756",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -439,7 +453,7 @@
       "pricePerSqft": 548.06
     },
     {
-      "id": "bishan-227-bishan-st-23-2016-10-971056",
+      "id": "bishan-227-bishan-st-23-2016-10-971178",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -452,7 +466,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bishan-227-bishan-st-23-2016-05-962261",
+      "id": "bishan-227-bishan-st-23-2016-05-962383",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -465,7 +479,7 @@
       "pricePerSqft": 460.09
     },
     {
-      "id": "bishan-227-bishan-st-23-2015-08-948715",
+      "id": "bishan-227-bishan-st-23-2015-08-948837",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -478,7 +492,7 @@
       "pricePerSqft": 486.57
     },
     {
-      "id": "bishan-227-bishan-st-23-2015-01-938479",
+      "id": "bishan-227-bishan-st-23-2015-01-938601",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -491,7 +505,7 @@
       "pricePerSqft": 473.36
     },
     {
-      "id": "bishan-227-bishan-st-23-2014-06-641689",
+      "id": "bishan-227-bishan-st-23-2014-06-641811",
       "month": "2014-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -504,7 +518,7 @@
       "pricePerSqft": 477.79
     },
     {
-      "id": "bishan-227-bishan-st-23-2013-11-632968",
+      "id": "bishan-227-bishan-st-23-2013-11-633090",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -517,7 +531,7 @@
       "pricePerSqft": 544.15
     },
     {
-      "id": "bishan-227-bishan-st-23-2013-10-631615",
+      "id": "bishan-227-bishan-st-23-2013-10-631737",
       "month": "2013-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -530,7 +544,7 @@
       "pricePerSqft": 554.75
     },
     {
-      "id": "bishan-227-bishan-st-23-2013-08-629038",
+      "id": "bishan-227-bishan-st-23-2013-08-629160",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -543,7 +557,7 @@
       "pricePerSqft": 526.05
     },
     {
-      "id": "bishan-227-bishan-st-23-2010-10-566762",
+      "id": "bishan-227-bishan-st-23-2010-10-566884",
       "month": "2010-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -556,7 +570,7 @@
       "pricePerSqft": 404.92
     },
     {
-      "id": "bishan-227-bishan-st-23-2010-04-547459",
+      "id": "bishan-227-bishan-st-23-2010-04-547581",
       "month": "2010-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -569,7 +583,7 @@
       "pricePerSqft": 396.87
     },
     {
-      "id": "bishan-227-bishan-st-23-2010-01-538955",
+      "id": "bishan-227-bishan-st-23-2010-01-539077",
       "month": "2010-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -582,7 +596,7 @@
       "pricePerSqft": 370.94
     },
     {
-      "id": "bishan-227-bishan-st-23-2008-05-489896",
+      "id": "bishan-227-bishan-st-23-2008-05-490018",
       "month": "2008-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

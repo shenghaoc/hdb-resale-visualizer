@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 507
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 507
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 597
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 793
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -275,7 +289,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-39a-bendemeer-rd-2026-01-225480",
+      "id": "kallang-whampoa-39a-bendemeer-rd-2026-01-225530",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

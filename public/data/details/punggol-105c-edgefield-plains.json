@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 166
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 166
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 369
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 646
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -300,7 +314,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-105c-edgefield-plains-2026-04-226228",
+      "id": "punggol-105c-edgefield-plains-2026-04-226290",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

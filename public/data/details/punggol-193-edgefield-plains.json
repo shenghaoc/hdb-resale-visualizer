@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 317
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 317
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 324
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 479
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -425,7 +439,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-193-edgefield-plains-2026-03-225970",
+      "id": "punggol-193-edgefield-plains-2026-03-226028",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -438,7 +452,7 @@
       "pricePerSqft": 567.74
     },
     {
-      "id": "punggol-193-edgefield-plains-2026-03-226227",
+      "id": "punggol-193-edgefield-plains-2026-03-226289",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

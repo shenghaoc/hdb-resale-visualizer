@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SUMANG LRT STATION",
       "distanceMeters": 252
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 252
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 310
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 382
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -396,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-308a-punggol-walk-2026-04-226147",
+      "id": "punggol-308a-punggol-walk-2026-04-226206",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -409,7 +423,7 @@
       "pricePerSqft": 752.31
     },
     {
-      "id": "punggol-308a-punggol-walk-2026-03-225926",
+      "id": "punggol-308a-punggol-walk-2026-03-225983",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -422,7 +436,7 @@
       "pricePerSqft": 845.83
     },
     {
-      "id": "punggol-308a-punggol-walk-2026-02-226288",
+      "id": "punggol-308a-punggol-walk-2026-02-226350",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -435,7 +449,7 @@
       "pricePerSqft": 746.54
     },
     {
-      "id": "punggol-308a-punggol-walk-2026-01-226123",
+      "id": "punggol-308a-punggol-walk-2026-01-226182",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

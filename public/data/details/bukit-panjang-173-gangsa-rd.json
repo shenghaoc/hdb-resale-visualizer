@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PETIR LRT STATION",
       "distanceMeters": 259
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 259
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 444
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 541
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -474,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-173-gangsa-rd-2026-01-223550",
+      "id": "bukit-panjang-173-gangsa-rd-2026-01-223573",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -708,7 +722,7 @@
       "pricePerSqft": 399.79
     },
     {
-      "id": "bukit-panjang-173-gangsa-rd-2016-11-972894",
+      "id": "bukit-panjang-173-gangsa-rd-2016-11-973016",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -721,7 +735,7 @@
       "pricePerSqft": 409.69
     },
     {
-      "id": "bukit-panjang-173-gangsa-rd-2016-08-967699",
+      "id": "bukit-panjang-173-gangsa-rd-2016-08-967821",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

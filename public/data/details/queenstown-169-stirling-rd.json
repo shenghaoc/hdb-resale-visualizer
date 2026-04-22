@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 545
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 545
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1377
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1548
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1186,7 +1200,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-169-stirling-rd-2026-03-226422",
+      "id": "queenstown-169-stirling-rd-2026-03-226485",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1199,7 +1213,7 @@
       "pricePerSqft": 480
     },
     {
-      "id": "queenstown-169-stirling-rd-2026-03-226423",
+      "id": "queenstown-169-stirling-rd-2026-03-226486",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

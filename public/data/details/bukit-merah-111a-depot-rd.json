@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2006,
-      2006
+      2004,
+      2004
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TELOK BLANGAH MRT STATION",
       "distanceMeters": 1164
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1164
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 1225
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1301
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -390,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-111a-depot-rd-2026-03-223448",
+      "id": "bukit-merah-111a-depot-rd-2026-03-223471",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -403,7 +417,7 @@
       "pricePerSqft": 727.07
     },
     {
-      "id": "bukit-merah-111a-depot-rd-2026-02-223447",
+      "id": "bukit-merah-111a-depot-rd-2026-02-223470",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

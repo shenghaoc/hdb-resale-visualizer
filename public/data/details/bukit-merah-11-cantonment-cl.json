@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "OUTRAM PARK MRT STATION",
       "distanceMeters": 503
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 503
+      },
+      {
+        "stationName": "TANJONG PAGAR MRT STATION",
+        "distanceMeters": 615
+      },
+      {
+        "stationName": "MAXWELL MRT STATION",
+        "distanceMeters": 736
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 264
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 264
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 507
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 566
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -200,7 +214,7 @@
       "pricePerSqft": 320.94
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2013-01-619258",
+      "id": "bukit-panjang-414-saujana-rd-2013-01-619380",
       "month": "2013-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -213,7 +227,7 @@
       "pricePerSqft": 333.61
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2009-04-514971",
+      "id": "bukit-panjang-414-saujana-rd-2009-04-515093",
       "month": "2009-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -226,7 +240,7 @@
       "pricePerSqft": 205.61
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2008-04-487862",
+      "id": "bukit-panjang-414-saujana-rd-2008-04-487984",
       "month": "2008-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -239,7 +253,7 @@
       "pricePerSqft": 178.66
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2008-02-483623",
+      "id": "bukit-panjang-414-saujana-rd-2008-02-483745",
       "month": "2008-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -252,7 +266,7 @@
       "pricePerSqft": 196.53
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2007-05-463030",
+      "id": "bukit-panjang-414-saujana-rd-2007-05-463152",
       "month": "2007-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -265,7 +279,7 @@
       "pricePerSqft": 147.8
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2007-02-456586",
+      "id": "bukit-panjang-414-saujana-rd-2007-02-456708",
       "month": "2007-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -278,7 +292,7 @@
       "pricePerSqft": 160.79
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2004-03-373370",
+      "id": "bukit-panjang-414-saujana-rd-2004-03-373492",
       "month": "2004-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -291,7 +305,7 @@
       "pricePerSqft": 147.39
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2003-04-345681",
+      "id": "bukit-panjang-414-saujana-rd-2003-04-345803",
       "month": "2003-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -304,7 +318,7 @@
       "pricePerSqft": 181.24
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2002-06-318623",
+      "id": "bukit-panjang-414-saujana-rd-2002-06-318745",
       "month": "2002-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -317,7 +331,7 @@
       "pricePerSqft": 152.02
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2001-12-299907",
+      "id": "bukit-panjang-414-saujana-rd-2001-12-300029",
       "month": "2001-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -330,7 +344,7 @@
       "pricePerSqft": 173.33
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2001-08-286681",
+      "id": "bukit-panjang-414-saujana-rd-2001-08-286803",
       "month": "2001-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -343,7 +357,7 @@
       "pricePerSqft": 167.05
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-2001-08-286682",
+      "id": "bukit-panjang-414-saujana-rd-2001-08-286804",
       "month": "2001-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -356,7 +370,7 @@
       "pricePerSqft": 170.91
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1999-01-881854",
+      "id": "bukit-panjang-414-saujana-rd-1999-01-881976",
       "month": "1999-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -369,7 +383,7 @@
       "pricePerSqft": 187.59
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1998-09-861373",
+      "id": "bukit-panjang-414-saujana-rd-1998-09-861495",
       "month": "1998-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -382,7 +396,7 @@
       "pricePerSqft": 188.34
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1998-02-833336",
+      "id": "bukit-panjang-414-saujana-rd-1998-02-833458",
       "month": "1998-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -395,7 +409,7 @@
       "pricePerSqft": 257.39
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1997-11-825175",
+      "id": "bukit-panjang-414-saujana-rd-1997-11-825297",
       "month": "1997-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -408,7 +422,7 @@
       "pricePerSqft": 215.29
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1996-12-795768",
+      "id": "bukit-panjang-414-saujana-rd-1996-12-795890",
       "month": "1996-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -421,7 +435,7 @@
       "pricePerSqft": 223.32
     },
     {
-      "id": "bukit-panjang-414-saujana-rd-1995-02-738053",
+      "id": "bukit-panjang-414-saujana-rd-1995-02-738175",
       "month": "1995-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

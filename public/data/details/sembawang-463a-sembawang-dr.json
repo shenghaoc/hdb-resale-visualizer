@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 957
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 957
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 2160
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2189
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -317,7 +331,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-463a-sembawang-dr-2026-04-226602",
+      "id": "sembawang-463a-sembawang-dr-2026-04-226667",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -330,7 +344,7 @@
       "pricePerSqft": 693.31
     },
     {
-      "id": "sembawang-463a-sembawang-dr-2026-03-226566",
+      "id": "sembawang-463a-sembawang-dr-2026-03-226630",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",
@@ -343,7 +357,7 @@
       "pricePerSqft": 731.11
     },
     {
-      "id": "sembawang-463a-sembawang-dr-2026-03-226600",
+      "id": "sembawang-463a-sembawang-dr-2026-03-226665",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -356,7 +370,7 @@
       "pricePerSqft": 721.04
     },
     {
-      "id": "sembawang-463a-sembawang-dr-2026-01-226565",
+      "id": "sembawang-463a-sembawang-dr-2026-01-226629",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "22 TO 24",

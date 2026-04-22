@@ -22,8 +22,8 @@
       119
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 446
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 446
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1827
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1843
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -592,7 +606,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-437-ang-mo-kio-ave-10-2026-01-222280",
+      "id": "ang-mo-kio-437-ang-mo-kio-ave-10-2026-01-222283",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

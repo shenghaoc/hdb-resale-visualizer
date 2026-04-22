@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEGAR LRT STATION",
       "distanceMeters": 452
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 452
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 457
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 854
+      }
+    ]
   },
   "monthlyTrend": [
     {

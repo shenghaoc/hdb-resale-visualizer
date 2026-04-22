@@ -9,26 +9,26 @@
       "lat": 1.3129579815118,
       "lng": 103.850158739219
     },
-    "medianPrice": 482500,
+    "medianPrice": 480000,
     "priceIqr": [
-      464222,
-      510250
+      461888,
+      492000
     ],
-    "pricePerSqmMedian": 7017.07,
-    "pricePerSqftMedian": 651.91,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 6975.31,
+    "pricePerSqftMedian": 648.03,
+    "transactionCount": 9,
     "floorAreaRange": [
       68,
       102
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 302
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 302
+      },
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 615
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 1007
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -727,11 +741,30 @@
       "medianPrice": 725000,
       "transactionCount": 1,
       "medianPricePerSqm": 7107.84
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6764.71
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-49-dorset-rd-2026-03-225499",
+      "id": "kallang-whampoa-49-dorset-rd-2026-04-225462",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 03 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 6764.71,
+      "pricePerSqft": 628.46
+    },
+    {
+      "id": "kallang-whampoa-49-dorset-rd-2026-03-225550",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -976,19 +1009,6 @@
       "resalePrice": 335000,
       "pricePerSqm": 4926.47,
       "pricePerSqft": 457.68
-    },
-    {
-      "id": "kallang-whampoa-49-dorset-rd-2020-12-86256",
-      "month": "2020-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "57 years 07 months",
-      "resalePrice": 365000,
-      "pricePerSqm": 5367.65,
-      "pricePerSqft": 498.67
     }
   ]
 }

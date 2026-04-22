@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1242
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1242
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1508
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1544
+      }
+    ]
   },
   "monthlyTrend": [
     {

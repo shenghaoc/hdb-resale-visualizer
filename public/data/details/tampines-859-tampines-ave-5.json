@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 515
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 515
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1844
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -672,7 +686,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-859-tampines-ave-5-2026-03-227775",
+      "id": "tampines-859-tampines-ave-5-2026-03-227860",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -685,7 +699,7 @@
       "pricePerSqft": 619.1
     },
     {
-      "id": "tampines-859-tampines-ave-5-2026-02-227548",
+      "id": "tampines-859-tampines-ave-5-2026-02-227628",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -906,7 +920,7 @@
       "pricePerSqft": 406.9
     },
     {
-      "id": "tampines-859-tampines-ave-5-2016-12-975235",
+      "id": "tampines-859-tampines-ave-5-2016-12-975357",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -919,7 +933,7 @@
       "pricePerSqft": 409.69
     },
     {
-      "id": "tampines-859-tampines-ave-5-2016-08-968890",
+      "id": "tampines-859-tampines-ave-5-2016-08-969012",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

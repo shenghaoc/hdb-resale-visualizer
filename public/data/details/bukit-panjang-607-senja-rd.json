@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SENJA LRT STATION",
       "distanceMeters": 98
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 98
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 291
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 528
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -352,7 +366,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-607-senja-rd-2026-04-223728",
+      "id": "bukit-panjang-607-senja-rd-2026-04-223751",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -365,7 +379,7 @@
       "pricePerSqft": 628.88
     },
     {
-      "id": "bukit-panjang-607-senja-rd-2026-03-223727",
+      "id": "bukit-panjang-607-senja-rd-2026-03-223750",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",

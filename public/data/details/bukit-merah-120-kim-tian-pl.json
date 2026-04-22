@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 331
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 331
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 756
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1129
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -550,7 +564,7 @@
       "pricePerSqft": 688.94
     },
     {
-      "id": "bukit-merah-120-kim-tian-pl-2016-07-966033",
+      "id": "bukit-merah-120-kim-tian-pl-2016-07-966155",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -563,7 +577,7 @@
       "pricePerSqft": 643.35
     },
     {
-      "id": "bukit-merah-120-kim-tian-pl-2016-03-958899",
+      "id": "bukit-merah-120-kim-tian-pl-2016-03-959021",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -576,7 +590,7 @@
       "pricePerSqft": 667.04
     },
     {
-      "id": "bukit-merah-120-kim-tian-pl-2016-02-957642",
+      "id": "bukit-merah-120-kim-tian-pl-2016-02-957764",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -589,7 +603,7 @@
       "pricePerSqft": 662.44
     },
     {
-      "id": "bukit-merah-120-kim-tian-pl-2016-02-957647",
+      "id": "bukit-merah-120-kim-tian-pl-2016-02-957769",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

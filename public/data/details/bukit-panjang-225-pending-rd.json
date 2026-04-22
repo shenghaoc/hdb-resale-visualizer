@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 159
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 159
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 480
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 679
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -539,7 +553,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-225-pending-rd-2026-03-223574",
+      "id": "bukit-panjang-225-pending-rd-2026-03-223597",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -552,7 +566,7 @@
       "pricePerSqft": 524.24
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2026-02-223573",
+      "id": "bukit-panjang-225-pending-rd-2026-02-223596",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -565,7 +579,7 @@
       "pricePerSqft": 482.38
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2026-01-223572",
+      "id": "bukit-panjang-225-pending-rd-2026-01-223595",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -734,7 +748,7 @@
       "pricePerSqft": 351.7
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2016-09-969563",
+      "id": "bukit-panjang-225-pending-rd-2016-09-969685",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -747,7 +761,7 @@
       "pricePerSqft": 353.92
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2016-08-967678",
+      "id": "bukit-panjang-225-pending-rd-2016-08-967800",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -760,7 +774,7 @@
       "pricePerSqft": 353.92
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2016-02-957660",
+      "id": "bukit-panjang-225-pending-rd-2016-02-957782",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -773,7 +787,7 @@
       "pricePerSqft": 364.98
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2015-09-950271",
+      "id": "bukit-panjang-225-pending-rd-2015-09-950393",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -786,7 +800,7 @@
       "pricePerSqft": 363.87
     },
     {
-      "id": "bukit-panjang-225-pending-rd-2014-10-647235",
+      "id": "bukit-panjang-225-pending-rd-2014-10-647357",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 506
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 506
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 902
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1555
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -753,7 +767,7 @@
       "pricePerSqft": 456.44
     },
     {
-      "id": "bedok-411-bedok-nth-ave-2-2015-09-950104",
+      "id": "bedok-411-bedok-nth-ave-2-2015-09-950226",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -766,7 +780,7 @@
       "pricePerSqft": 444.32
     },
     {
-      "id": "bedok-411-bedok-nth-ave-2-2015-05-943848",
+      "id": "bedok-411-bedok-nth-ave-2-2015-05-943970",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -779,7 +793,7 @@
       "pricePerSqft": 453.29
     },
     {
-      "id": "bedok-411-bedok-nth-ave-2-2014-10-647054",
+      "id": "bedok-411-bedok-nth-ave-2-2014-10-647176",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

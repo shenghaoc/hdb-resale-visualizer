@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 249
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 249
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 372
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 625
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -708,7 +722,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-436-fajar-rd-2026-04-223548",
+      "id": "bukit-panjang-436-fajar-rd-2026-04-223571",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

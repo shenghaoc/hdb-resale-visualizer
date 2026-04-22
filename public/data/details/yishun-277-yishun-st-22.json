@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 930
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 930
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 960
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 2214
+      }
+    ]
   },
   "monthlyTrend": [
     {

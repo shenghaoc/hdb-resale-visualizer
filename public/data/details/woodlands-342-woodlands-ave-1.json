@@ -22,8 +22,8 @@
       179
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1984,
+      1984
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -45,7 +45,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 736
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 736
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 750
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1422
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -417,7 +431,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-342-woodlands-ave-1-2026-04-228762",
+      "id": "woodlands-342-woodlands-ave-1-2026-04-228874",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -612,7 +626,7 @@
       "pricePerSqft": 361.11
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-09-970749",
+      "id": "woodlands-342-woodlands-ave-1-2016-09-970871",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -625,7 +639,7 @@
       "pricePerSqft": 346.42
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-06-965619",
+      "id": "woodlands-342-woodlands-ave-1-2016-06-965741",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -638,7 +652,7 @@
       "pricePerSqft": 388.41
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-01-957292",
+      "id": "woodlands-342-woodlands-ave-1-2016-01-957414",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -651,7 +665,7 @@
       "pricePerSqft": 355.56
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2014-11-649711",
+      "id": "woodlands-342-woodlands-ave-1-2014-11-649833",
       "month": "2014-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -664,7 +678,7 @@
       "pricePerSqft": 377.91
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2013-08-630129",
+      "id": "woodlands-342-woodlands-ave-1-2013-08-630251",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

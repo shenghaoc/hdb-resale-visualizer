@@ -22,8 +22,8 @@
       90
     ],
     "leaseCommenceRange": [
-      2007,
-      2007
+      2005,
+      2005
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 159
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 159
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 930
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 980
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -389,7 +403,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-32-eunos-cres-2026-03-224385",
+      "id": "geylang-32-eunos-cres-2026-03-224415",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

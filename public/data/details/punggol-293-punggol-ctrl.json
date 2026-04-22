@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL LRT STATION",
       "distanceMeters": 343
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 343
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 351
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 441
+      }
+    ]
   },
   "monthlyTrend": [
     {

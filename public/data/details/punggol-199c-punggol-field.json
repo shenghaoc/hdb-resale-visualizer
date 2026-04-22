@@ -22,8 +22,8 @@
       114
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 151
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 151
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 505
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 569
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -340,7 +354,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-199c-punggol-field-2026-02-226271",
+      "id": "punggol-199c-punggol-field-2026-02-226333",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -587,7 +601,7 @@
       "pricePerSqft": 369.92
     },
     {
-      "id": "punggol-199c-punggol-field-2016-12-974962",
+      "id": "punggol-199c-punggol-field-2016-12-975084",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

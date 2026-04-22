@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2006,
-      2006
+      2004,
+      2004
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 213
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 213
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 627
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 705
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -444,7 +458,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-147-lor-2-toa-payoh-2026-03-228156",
+      "id": "toa-payoh-147-lor-2-toa-payoh-2026-03-228252",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -457,7 +471,7 @@
       "pricePerSqft": 1074.87
     },
     {
-      "id": "toa-payoh-147-lor-2-toa-payoh-2026-03-228227",
+      "id": "toa-payoh-147-lor-2-toa-payoh-2026-03-228326",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -470,7 +484,7 @@
       "pricePerSqft": 961.13
     },
     {
-      "id": "toa-payoh-147-lor-2-toa-payoh-2026-01-228147",
+      "id": "toa-payoh-147-lor-2-toa-payoh-2026-01-228243",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "37 TO 39",
@@ -483,7 +497,7 @@
       "pricePerSqft": 1037.06
     },
     {
-      "id": "toa-payoh-147-lor-2-toa-payoh-2026-01-228149",
+      "id": "toa-payoh-147-lor-2-toa-payoh-2026-01-228245",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",

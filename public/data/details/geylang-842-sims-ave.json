@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 209
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 209
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 932
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 981
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -655,7 +669,7 @@
       "pricePerSqft": 553.73
     },
     {
-      "id": "geylang-842-sims-ave-2015-06-945896",
+      "id": "geylang-842-sims-ave-2015-06-946018",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -668,7 +682,7 @@
       "pricePerSqft": 489.8
     },
     {
-      "id": "geylang-842-sims-ave-2012-10-614439",
+      "id": "geylang-842-sims-ave-2012-10-614561",
       "month": "2012-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -681,7 +695,7 @@
       "pricePerSqft": 511.28
     },
     {
-      "id": "geylang-842-sims-ave-2012-05-604253",
+      "id": "geylang-842-sims-ave-2012-05-604375",
       "month": "2012-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "06 TO 10",
@@ -694,7 +708,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "geylang-842-sims-ave-2011-09-589657",
+      "id": "geylang-842-sims-ave-2011-09-589779",
       "month": "2011-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "19 TO 21",
@@ -707,7 +721,7 @@
       "pricePerSqft": 441.29
     },
     {
-      "id": "geylang-842-sims-ave-2011-03-577990",
+      "id": "geylang-842-sims-ave-2011-03-578112",
       "month": "2011-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -720,7 +734,7 @@
       "pricePerSqft": 416.25
     },
     {
-      "id": "geylang-842-sims-ave-2009-02-510743",
+      "id": "geylang-842-sims-ave-2009-02-510865",
       "month": "2009-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

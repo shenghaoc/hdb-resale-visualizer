@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 515
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 515
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 1048
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1128
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -834,7 +848,7 @@
       "pricePerSqft": 482.79
     },
     {
-      "id": "bishan-177-bishan-st-13-2016-11-972682",
+      "id": "bishan-177-bishan-st-13-2016-11-972804",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -847,7 +861,7 @@
       "pricePerSqft": 593.24
     },
     {
-      "id": "bishan-177-bishan-st-13-2016-05-962263",
+      "id": "bishan-177-bishan-st-13-2016-05-962385",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -860,7 +874,7 @@
       "pricePerSqft": 585.4
     },
     {
-      "id": "bishan-177-bishan-st-13-2015-05-943882",
+      "id": "bishan-177-bishan-st-13-2015-05-944004",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

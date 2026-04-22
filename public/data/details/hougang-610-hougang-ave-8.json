@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 788
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 788
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1125
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1656
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -544,7 +558,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-610-hougang-ave-8-2026-02-224747",
+      "id": "hougang-610-hougang-ave-8-2026-02-224783",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -752,7 +766,7 @@
       "pricePerSqft": 365.52
     },
     {
-      "id": "hougang-610-hougang-ave-8-2015-05-944311",
+      "id": "hougang-610-hougang-ave-8-2015-05-944433",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -765,7 +779,7 @@
       "pricePerSqft": 376.94
     },
     {
-      "id": "hougang-610-hougang-ave-8-2014-03-637671",
+      "id": "hougang-610-hougang-ave-8-2014-03-637793",
       "month": "2014-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -778,7 +792,7 @@
       "pricePerSqft": 411.21
     },
     {
-      "id": "hougang-610-hougang-ave-8-2013-12-634440",
+      "id": "hougang-610-hougang-ave-8-2013-12-634562",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -791,7 +805,7 @@
       "pricePerSqft": 441.67
     },
     {
-      "id": "hougang-610-hougang-ave-8-2013-05-625109",
+      "id": "hougang-610-hougang-ave-8-2013-05-625231",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

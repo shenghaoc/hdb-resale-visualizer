@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2009,
+      2009
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 180
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 180
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 256
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 639
+      }
+    ]
   },
   "monthlyTrend": [
     {

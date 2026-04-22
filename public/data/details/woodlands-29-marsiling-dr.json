@@ -22,8 +22,8 @@
       98
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1976,
+      1976
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 1149
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1149
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1445
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1548
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -610,7 +624,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-29-marsiling-dr-2026-02-228331",
+      "id": "woodlands-29-marsiling-dr-2026-02-228432",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -857,7 +871,7 @@
       "pricePerSqft": 296.91
     },
     {
-      "id": "woodlands-29-marsiling-dr-2016-05-963661",
+      "id": "woodlands-29-marsiling-dr-2016-05-963783",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

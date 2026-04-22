@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 959
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 959
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1539
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1620
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -652,7 +666,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2026-04-222191",
+      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2026-04-222194",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -899,7 +913,7 @@
       "pricePerSqft": 439.27
     },
     {
-      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2016-03-958635",
+      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2016-03-958757",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

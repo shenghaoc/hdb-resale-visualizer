@@ -9,26 +9,26 @@
       "lat": 1.38528977819863,
       "lng": 103.891907359174
     },
-    "medianPrice": 817000,
+    "medianPrice": 817500,
     "priceIqr": [
-      785000,
-      825000
+      788750,
+      825750
     ],
-    "pricePerSqmMedian": 8880.43,
-    "pricePerSqftMedian": 825.02,
-    "transactionCount": 13,
+    "pricePerSqmMedian": 8885.86,
+    "pricePerSqftMedian": 825.52,
+    "transactionCount": 14,
     "floorAreaRange": [
       92,
       92
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-03",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RENJONG LRT STATION",
       "distanceMeters": 229
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 229
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 236
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 606
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -258,9 +272,28 @@
       "medianPrice": 831500,
       "transactionCount": 2,
       "medianPricePerSqm": 9038.04
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 826000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8978.26
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-282a-sengkang-east-ave-2026-04-227181",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 04 months",
+      "resalePrice": 826000,
+      "pricePerSqm": 8978.26,
+      "pricePerSqft": 834.11
+    },
     {
       "id": "sengkang-282a-sengkang-east-ave-2025-08-214396",
       "month": "2025-08",
@@ -507,19 +540,6 @@
       "resalePrice": 720000,
       "pricePerSqm": 7826.09,
       "pricePerSqft": 727.07
-    },
-    {
-      "id": "sengkang-282a-sengkang-east-ave-2021-12-115944",
-      "month": "2021-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 92,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "92 years 09 months",
-      "resalePrice": 508000,
-      "pricePerSqm": 5521.74,
-      "pricePerSqft": 512.99
     }
   ]
 }

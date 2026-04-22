@@ -22,8 +22,8 @@
       96
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 226
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 226
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 618
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 676
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -143,7 +157,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-83b-circuit-rd-2026-03-224372",
+      "id": "geylang-83b-circuit-rd-2026-03-224402",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -156,7 +170,7 @@
       "pricePerSqft": 956.99
     },
     {
-      "id": "geylang-83b-circuit-rd-2026-01-224281",
+      "id": "geylang-83b-circuit-rd-2026-01-224310",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -169,7 +183,7 @@
       "pricePerSqft": 1105.12
     },
     {
-      "id": "geylang-83b-circuit-rd-2026-01-224288",
+      "id": "geylang-83b-circuit-rd-2026-01-224317",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -182,7 +196,7 @@
       "pricePerSqft": 1099.81
     },
     {
-      "id": "geylang-83b-circuit-rd-2026-01-224365",
+      "id": "geylang-83b-circuit-rd-2026-01-224395",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -195,7 +209,7 @@
       "pricePerSqft": 1038.92
     },
     {
-      "id": "geylang-83b-circuit-rd-2026-01-224368",
+      "id": "geylang-83b-circuit-rd-2026-01-224398",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

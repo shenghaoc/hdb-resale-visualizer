@@ -22,8 +22,8 @@
       138
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 274
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 274
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 909
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1230
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -504,7 +518,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-660-jln-tenaga-2026-02-222667",
+      "id": "bedok-660-jln-tenaga-2026-02-222679",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -517,7 +531,7 @@
       "pricePerSqft": 621.91
     },
     {
-      "id": "bedok-660-jln-tenaga-2026-01-222603",
+      "id": "bedok-660-jln-tenaga-2026-01-222615",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

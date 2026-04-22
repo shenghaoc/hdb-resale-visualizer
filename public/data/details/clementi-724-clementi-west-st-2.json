@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1190
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1190
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1875
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 2564
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -550,7 +564,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-724-clementi-west-st-2-2026-04-224253",
+      "id": "clementi-724-clementi-west-st-2-2026-04-224282",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -563,7 +577,7 @@
       "pricePerSqft": 657.41
     },
     {
-      "id": "clementi-724-clementi-west-st-2-2026-02-224252",
+      "id": "clementi-724-clementi-west-st-2-2026-02-224281",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -576,7 +590,7 @@
       "pricePerSqft": 581.04
     },
     {
-      "id": "clementi-724-clementi-west-st-2-2026-01-224251",
+      "id": "clementi-724-clementi-west-st-2-2026-01-224280",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -797,7 +811,7 @@
       "pricePerSqft": 486.56
     },
     {
-      "id": "clementi-724-clementi-west-st-2-2016-09-969738",
+      "id": "clementi-724-clementi-west-st-2-2016-09-969860",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

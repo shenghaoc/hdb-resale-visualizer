@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 142
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 142
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 659
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -444,7 +458,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-142-rivervale-cres-2026-01-227054",
+      "id": "sengkang-142-rivervale-cres-2026-01-227123",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

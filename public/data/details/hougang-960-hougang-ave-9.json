@@ -22,8 +22,8 @@
       137
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 1580
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1580
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1598
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1670
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -358,7 +372,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-960-hougang-ave-9-2026-01-224794",
+      "id": "hougang-960-hougang-ave-9-2026-01-224831",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -605,7 +619,7 @@
       "pricePerSqft": 398.74
     },
     {
-      "id": "hougang-960-hougang-ave-9-2016-08-968068",
+      "id": "hougang-960-hougang-ave-9-2016-08-968190",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

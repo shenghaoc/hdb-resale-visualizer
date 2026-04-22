@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 346
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 346
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 720
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -252,7 +266,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-451a-sengkang-west-way-2026-01-227282",
+      "id": "sengkang-451a-sengkang-west-way-2026-01-227357",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

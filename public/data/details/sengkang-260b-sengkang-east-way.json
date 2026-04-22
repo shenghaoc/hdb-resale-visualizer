@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 149
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 149
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 321
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 599
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -276,7 +290,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-260b-sengkang-east-way-2026-01-227272",
+      "id": "sengkang-260b-sengkang-east-way-2026-01-227347",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -471,7 +485,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "sengkang-260b-sengkang-east-way-2016-07-966888",
+      "id": "sengkang-260b-sengkang-east-way-2016-07-967010",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -484,7 +498,7 @@
       "pricePerSqft": 450.06
     },
     {
-      "id": "sengkang-260b-sengkang-east-way-2016-06-965219",
+      "id": "sengkang-260b-sengkang-east-way-2016-06-965341",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -497,7 +511,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "sengkang-260b-sengkang-east-way-2016-05-963418",
+      "id": "sengkang-260b-sengkang-east-way-2016-05-963540",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -510,7 +524,7 @@
       "pricePerSqft": 384.28
     },
     {
-      "id": "sengkang-260b-sengkang-east-way-2015-06-946529",
+      "id": "sengkang-260b-sengkang-east-way-2015-06-946651",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -523,7 +537,7 @@
       "pricePerSqft": 384.28
     },
     {
-      "id": "sengkang-260b-sengkang-east-way-2015-05-944849",
+      "id": "sengkang-260b-sengkang-east-way-2015-05-944971",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

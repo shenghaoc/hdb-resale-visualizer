@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1145
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1145
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1604
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1706
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -252,7 +266,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-179-yung-sheng-rd-2026-03-225358",
+      "id": "jurong-west-179-yung-sheng-rd-2026-03-225405",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -265,7 +279,7 @@
       "pricePerSqft": 504.56
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2026-02-225357",
+      "id": "jurong-west-179-yung-sheng-rd-2026-02-225404",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -447,7 +461,7 @@
       "pricePerSqft": 353.23
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2016-09-969940",
+      "id": "jurong-west-179-yung-sheng-rd-2016-09-970062",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -460,7 +474,7 @@
       "pricePerSqft": 344.41
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2015-10-952349",
+      "id": "jurong-west-179-yung-sheng-rd-2015-10-952471",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -473,7 +487,7 @@
       "pricePerSqft": 349.19
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2014-12-650499",
+      "id": "jurong-west-179-yung-sheng-rd-2014-12-650621",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -486,7 +500,7 @@
       "pricePerSqft": 375.22
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2014-12-650500",
+      "id": "jurong-west-179-yung-sheng-rd-2014-12-650622",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -499,7 +513,7 @@
       "pricePerSqft": 352.39
     },
     {
-      "id": "jurong-west-179-yung-sheng-rd-2014-01-635544",
+      "id": "jurong-west-179-yung-sheng-rd-2014-01-635666",
       "month": "2014-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

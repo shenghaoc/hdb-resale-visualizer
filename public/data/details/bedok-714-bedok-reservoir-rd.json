@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 548
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 548
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1070
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1555
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -737,7 +751,7 @@
       "pricePerSqft": 410.77
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2015-04-942247",
+      "id": "bedok-714-bedok-reservoir-rd-2015-04-942369",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -750,7 +764,7 @@
       "pricePerSqft": 403.86
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2014-10-647050",
+      "id": "bedok-714-bedok-reservoir-rd-2014-10-647172",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -763,7 +777,7 @@
       "pricePerSqft": 412.38
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2014-04-638701",
+      "id": "bedok-714-bedok-reservoir-rd-2014-04-638823",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 1006
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 1006
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1142
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2392
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -793,7 +807,7 @@
       "pricePerSqft": 315.06
     },
     {
-      "id": "jurong-west-744-jurong-west-st-73-2016-04-961045",
+      "id": "jurong-west-744-jurong-west-st-73-2016-04-961167",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

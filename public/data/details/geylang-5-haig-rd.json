@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CC9",
       "distanceMeters": 639
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CC9",
+        "distanceMeters": 639
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 670
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 912
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -556,7 +570,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-5-haig-rd-2026-01-224404",
+      "id": "geylang-5-haig-rd-2026-01-224434",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

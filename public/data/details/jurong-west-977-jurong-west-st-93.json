@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 413
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 413
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1278
+      },
+      {
+        "stationName": "JOO KOON MRT STATION",
+        "distanceMeters": 2141
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -744,7 +758,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-977-jurong-west-st-93-2026-02-225196",
+      "id": "jurong-west-977-jurong-west-st-93-2026-02-225241",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

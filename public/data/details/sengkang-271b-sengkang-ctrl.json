@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 289
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 289
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 339
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 474
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -406,7 +420,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-271b-sengkang-ctrl-2026-03-227101",
+      "id": "sengkang-271b-sengkang-ctrl-2026-03-227172",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -419,7 +433,7 @@
       "pricePerSqft": 799.17
     },
     {
-      "id": "sengkang-271b-sengkang-ctrl-2026-03-227102",
+      "id": "sengkang-271b-sengkang-ctrl-2026-03-227173",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -432,7 +446,7 @@
       "pricePerSqft": 749.22
     },
     {
-      "id": "sengkang-271b-sengkang-ctrl-2026-02-227097",
+      "id": "sengkang-271b-sengkang-ctrl-2026-02-227168",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -445,7 +459,7 @@
       "pricePerSqft": 809.16
     },
     {
-      "id": "sengkang-271b-sengkang-ctrl-2026-01-227091",
+      "id": "sengkang-271b-sengkang-ctrl-2026-01-227162",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -458,7 +472,7 @@
       "pricePerSqft": 759.21
     },
     {
-      "id": "sengkang-271b-sengkang-ctrl-2026-01-227093",
+      "id": "sengkang-271b-sengkang-ctrl-2026-01-227164",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

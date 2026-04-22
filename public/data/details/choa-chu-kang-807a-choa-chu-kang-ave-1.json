@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 503
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 503
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 575
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 979
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -227,7 +241,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-03-223807",
+      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-03-223831",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -240,7 +254,7 @@
       "pricePerSqft": 704.4
     },
     {
-      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-03-223808",
+      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-03-223832",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -253,7 +267,7 @@
       "pricePerSqft": 679.44
     },
     {
-      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-02-223806",
+      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-02-223830",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -266,7 +280,7 @@
       "pricePerSqft": 662.8
     },
     {
-      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-01-223804",
+      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-01-223828",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -279,7 +293,7 @@
       "pricePerSqft": 697.47
     },
     {
-      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-01-223805",
+      "id": "choa-chu-kang-807a-choa-chu-kang-ave-1-2026-01-223829",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

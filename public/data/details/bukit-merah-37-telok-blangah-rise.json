@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HARBOURFRONT MRT STATION",
       "distanceMeters": 762
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 762
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1460
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1525
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -514,7 +528,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-37-telok-blangah-rise-2026-04-223481",
+      "id": "bukit-merah-37-telok-blangah-rise-2026-04-223504",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -735,7 +749,7 @@
       "pricePerSqft": 482.78
     },
     {
-      "id": "bukit-merah-37-telok-blangah-rise-2016-12-974413",
+      "id": "bukit-merah-37-telok-blangah-rise-2016-12-974535",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -748,7 +762,7 @@
       "pricePerSqft": 546.49
     },
     {
-      "id": "bukit-merah-37-telok-blangah-rise-2015-10-951847",
+      "id": "bukit-merah-37-telok-blangah-rise-2015-10-951969",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -761,7 +775,7 @@
       "pricePerSqft": 570.12
     },
     {
-      "id": "bukit-merah-37-telok-blangah-rise-2014-04-638854",
+      "id": "bukit-merah-37-telok-blangah-rise-2014-04-638976",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",

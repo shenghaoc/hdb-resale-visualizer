@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 681
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 681
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 885
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1498
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -708,7 +722,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-46-bedok-sth-ave-3-2004-08-384528",
+      "id": "bedok-46-bedok-sth-ave-3-2004-08-384650",
       "month": "2004-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -721,7 +735,7 @@
       "pricePerSqft": 192.6
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2004-06-380014",
+      "id": "bedok-46-bedok-sth-ave-3-2004-06-380136",
       "month": "2004-06",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -734,7 +748,7 @@
       "pricePerSqft": 232.95
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2004-03-372997",
+      "id": "bedok-46-bedok-sth-ave-3-2004-03-373119",
       "month": "2004-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -747,7 +761,7 @@
       "pricePerSqft": 219.13
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2004-02-370183",
+      "id": "bedok-46-bedok-sth-ave-3-2004-02-370305",
       "month": "2004-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -760,7 +774,7 @@
       "pricePerSqft": 235.72
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2004-02-370230",
+      "id": "bedok-46-bedok-sth-ave-3-2004-02-370352",
       "month": "2004-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -773,7 +787,7 @@
       "pricePerSqft": 282.75
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-10-358825",
+      "id": "bedok-46-bedok-sth-ave-3-2003-10-358947",
       "month": "2003-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -786,7 +800,7 @@
       "pricePerSqft": 235.72
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-09-356360",
+      "id": "bedok-46-bedok-sth-ave-3-2003-09-356482",
       "month": "2003-09",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -799,7 +813,7 @@
       "pricePerSqft": 220.47
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-08-354176",
+      "id": "bedok-46-bedok-sth-ave-3-2003-08-354298",
       "month": "2003-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -812,7 +826,7 @@
       "pricePerSqft": 233.28
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-07-351917",
+      "id": "bedok-46-bedok-sth-ave-3-2003-07-352039",
       "month": "2003-07",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -825,7 +839,7 @@
       "pricePerSqft": 228.79
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-03-343037",
+      "id": "bedok-46-bedok-sth-ave-3-2003-03-343159",
       "month": "2003-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -838,7 +852,7 @@
       "pricePerSqft": 237.11
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-02-341145",
+      "id": "bedok-46-bedok-sth-ave-3-2003-02-341267",
       "month": "2003-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -851,7 +865,7 @@
       "pricePerSqft": 194.13
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2003-01-338509",
+      "id": "bedok-46-bedok-sth-ave-3-2003-01-338631",
       "month": "2003-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -864,7 +878,7 @@
       "pricePerSqft": 227.13
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-12-335882",
+      "id": "bedok-46-bedok-sth-ave-3-2002-12-336004",
       "month": "2002-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -877,7 +891,7 @@
       "pricePerSqft": 225.88
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-11-333021",
+      "id": "bedok-46-bedok-sth-ave-3-2002-11-333143",
       "month": "2002-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -890,7 +904,7 @@
       "pricePerSqft": 198.29
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-10-329845",
+      "id": "bedok-46-bedok-sth-ave-3-2002-10-329967",
       "month": "2002-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -903,7 +917,7 @@
       "pricePerSqft": 213.54
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-09-327106",
+      "id": "bedok-46-bedok-sth-ave-3-2002-09-327228",
       "month": "2002-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -916,7 +930,7 @@
       "pricePerSqft": 229.23
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-08-324264",
+      "id": "bedok-46-bedok-sth-ave-3-2002-08-324386",
       "month": "2002-08",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -929,7 +943,7 @@
       "pricePerSqft": 206.61
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-07-321008",
+      "id": "bedok-46-bedok-sth-ave-3-2002-07-321130",
       "month": "2002-07",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -942,7 +956,7 @@
       "pricePerSqft": 207.99
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-07-321054",
+      "id": "bedok-46-bedok-sth-ave-3-2002-07-321176",
       "month": "2002-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -955,7 +969,7 @@
       "pricePerSqft": 202.97
     },
     {
-      "id": "bedok-46-bedok-sth-ave-3-2002-06-318152",
+      "id": "bedok-46-bedok-sth-ave-3-2002-06-318274",
       "month": "2002-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

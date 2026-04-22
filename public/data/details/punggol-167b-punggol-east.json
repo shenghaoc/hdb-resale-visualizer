@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2009,
-      2009
+      2007,
+      2007
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RIVIERA LRT STATION",
       "distanceMeters": 113
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 113
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 254
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 601
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -226,7 +240,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-167b-punggol-east-2026-01-226057",
+      "id": "punggol-167b-punggol-east-2026-01-226115",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -434,7 +448,7 @@
       "pricePerSqft": 393.83
     },
     {
-      "id": "punggol-167b-punggol-east-2016-07-966618",
+      "id": "punggol-167b-punggol-east-2016-07-966740",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -447,7 +461,7 @@
       "pricePerSqft": 414.02
     },
     {
-      "id": "punggol-167b-punggol-east-2016-04-961285",
+      "id": "punggol-167b-punggol-east-2016-04-961407",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -460,7 +474,7 @@
       "pricePerSqft": 432.2
     },
     {
-      "id": "punggol-167b-punggol-east-2016-02-958088",
+      "id": "punggol-167b-punggol-east-2016-02-958210",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -473,7 +487,7 @@
       "pricePerSqft": 434.22
     },
     {
-      "id": "punggol-167b-punggol-east-2015-02-940256",
+      "id": "punggol-167b-punggol-east-2015-02-940378",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

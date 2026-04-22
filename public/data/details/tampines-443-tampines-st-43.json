@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 395
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 395
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 959
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1583
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -589,7 +603,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-443-tampines-st-43-2026-01-227860",
+      "id": "tampines-443-tampines-st-43-2026-01-227946",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -810,7 +824,7 @@
       "pricePerSqft": 365.52
     },
     {
-      "id": "tampines-443-tampines-st-43-2016-03-959898",
+      "id": "tampines-443-tampines-st-43-2016-03-960020",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -823,7 +837,7 @@
       "pricePerSqft": 400.37
     },
     {
-      "id": "tampines-443-tampines-st-43-2015-04-943343",
+      "id": "tampines-443-tampines-st-43-2015-04-943465",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -836,7 +850,7 @@
       "pricePerSqft": 412.53
     },
     {
-      "id": "tampines-443-tampines-st-43-2015-04-943347",
+      "id": "tampines-443-tampines-st-43-2015-04-943469",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

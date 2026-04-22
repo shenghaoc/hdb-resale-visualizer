@@ -9,26 +9,26 @@
       "lat": 1.35987875096146,
       "lng": 103.74733565667
     },
-    "medianPrice": 440000,
+    "medianPrice": 425000,
     "priceIqr": [
-      423500,
-      515000
+      421944,
+      495000
     ],
-    "pricePerSqmMedian": 5987.24,
-    "pricePerSqftMedian": 556.24,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6029.41,
+    "pricePerSqftMedian": 560.15,
+    "transactionCount": 7,
     "floorAreaRange": [
       68,
       98
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 496
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 496
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1183
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1991
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -901,9 +915,28 @@
       "medianPrice": 439000,
       "transactionCount": 2,
       "medianPricePerSqm": 5556.53
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6029.41
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-batok-312-bt-batok-st-32-2026-04-222878",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 03 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 6029.41,
+      "pricePerSqft": 560.15
+    },
     {
       "id": "bukit-batok-312-bt-batok-st-32-2025-09-199750",
       "month": "2025-09",
@@ -1150,19 +1183,6 @@
       "resalePrice": 280000,
       "pricePerSqm": 4117.65,
       "pricePerSqft": 382.54
-    },
-    {
-      "id": "bukit-batok-312-bt-batok-st-32-2018-03-23022",
-      "month": "2018-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "66 years 04 months",
-      "resalePrice": 285000,
-      "pricePerSqm": 4191.18,
-      "pricePerSqft": 389.37
     }
   ]
 }

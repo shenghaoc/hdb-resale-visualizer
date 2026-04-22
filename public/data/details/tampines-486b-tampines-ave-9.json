@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 275
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 275
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1445
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1730
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -750,7 +764,7 @@
       "pricePerSqft": 364.67
     },
     {
-      "id": "tampines-486b-tampines-ave-9-2016-08-968857",
+      "id": "tampines-486b-tampines-ave-9-2016-08-968979",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -763,7 +777,7 @@
       "pricePerSqft": 390.71
     },
     {
-      "id": "tampines-486b-tampines-ave-9-2016-04-961726",
+      "id": "tampines-486b-tampines-ave-9-2016-04-961848",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

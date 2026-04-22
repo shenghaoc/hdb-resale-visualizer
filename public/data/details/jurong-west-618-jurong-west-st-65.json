@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 558
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 558
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 636
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2234
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -538,7 +552,7 @@
       "pricePerSqft": 426.51
     },
     {
-      "id": "jurong-west-618-jurong-west-st-65-2016-06-964781",
+      "id": "jurong-west-618-jurong-west-st-65-2016-06-964903",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -551,7 +565,7 @@
       "pricePerSqft": 432.42
     },
     {
-      "id": "jurong-west-618-jurong-west-st-65-2016-04-961055",
+      "id": "jurong-west-618-jurong-west-st-65-2016-04-961177",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -564,7 +578,7 @@
       "pricePerSqft": 392.03
     },
     {
-      "id": "jurong-west-618-jurong-west-st-65-2015-06-946155",
+      "id": "jurong-west-618-jurong-west-st-65-2015-06-946277",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -577,7 +591,7 @@
       "pricePerSqft": 377.95
     },
     {
-      "id": "jurong-west-618-jurong-west-st-65-2015-02-940093",
+      "id": "jurong-west-618-jurong-west-st-65-2015-02-940215",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

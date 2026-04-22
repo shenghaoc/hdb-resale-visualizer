@@ -22,8 +22,8 @@
       163
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 485
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 485
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 606
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 932
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -612,7 +626,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-102-bishan-st-12-2026-02-222761",
+      "id": "bishan-102-bishan-st-12-2026-02-222774",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -833,7 +847,7 @@
       "pricePerSqft": 560.49
     },
     {
-      "id": "bishan-102-bishan-st-12-2015-08-948720",
+      "id": "bishan-102-bishan-st-12-2015-08-948842",
       "month": "2015-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "22 TO 24",
@@ -846,7 +860,7 @@
       "pricePerSqft": 558.56
     },
     {
-      "id": "bishan-102-bishan-st-12-2014-09-645628",
+      "id": "bishan-102-bishan-st-12-2014-09-645750",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -859,7 +873,7 @@
       "pricePerSqft": 499.07
     },
     {
-      "id": "bishan-102-bishan-st-12-2013-10-631609",
+      "id": "bishan-102-bishan-st-12-2013-10-631731",
       "month": "2013-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

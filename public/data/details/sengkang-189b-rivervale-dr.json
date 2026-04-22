@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 354
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 354
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 450
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 560
+      }
+    ]
   },
   "monthlyTrend": [
     {

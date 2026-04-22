@@ -9,26 +9,26 @@
       "lat": 1.35114569449366,
       "lng": 103.959787722292
     },
-    "medianPrice": 620888,
+    "medianPrice": 655444,
     "priceIqr": [
-      600000,
-      690000
+      605222,
+      723750
     ],
-    "pricePerSqmMedian": 5504.59,
-    "pricePerSqftMedian": 511.39,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5489.52,
+    "pricePerSqftMedian": 509.99,
+    "transactionCount": 6,
     "floorAreaRange": [
       107,
       137
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1994,
+      1994
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1999-06",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 668
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 668
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1025
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1153
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -524,9 +538,28 @@
       "medianPrice": 750000,
       "transactionCount": 1,
       "medianPricePerSqm": 5474.45
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 735000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5364.96
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-340-tampines-st-33-2026-04-227939",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 137,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years 09 months",
+      "resalePrice": 735000,
+      "pricePerSqm": 5364.96,
+      "pricePerSqft": 498.42
+    },
     {
       "id": "tampines-340-tampines-st-33-2025-09-217235",
       "month": "2025-09",
@@ -773,19 +806,6 @@
       "resalePrice": 413888,
       "pricePerSqm": 3868.11,
       "pricePerSqft": 359.36
-    },
-    {
-      "id": "tampines-340-tampines-st-33-2018-06-29827",
-      "month": "2018-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 137,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "76 years 06 months",
-      "resalePrice": 483000,
-      "pricePerSqm": 3525.55,
-      "pricePerSqft": 327.53
     }
   ]
 }

@@ -22,8 +22,8 @@
       99
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MARYMOUNT MRT STATION",
       "distanceMeters": 180
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 180
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 595
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1142
+      }
+    ]
   },
   "monthlyTrend": [
     {

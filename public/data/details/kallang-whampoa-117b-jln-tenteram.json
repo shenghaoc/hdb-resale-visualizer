@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 899
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 899
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 936
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 1403
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -293,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225441",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225490",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "22 TO 24",
@@ -306,7 +320,7 @@
       "pricePerSqft": 901.3
     },
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225511",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225562",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -319,7 +333,7 @@
       "pricePerSqft": 902.06
     },
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-01-225438",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-01-225487",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

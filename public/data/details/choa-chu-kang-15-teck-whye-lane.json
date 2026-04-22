@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TECK WHYE LRT STATION",
       "distanceMeters": 303
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 395
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 569
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -796,7 +810,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-15-teck-whye-lane-2026-03-223974",
+      "id": "choa-chu-kang-15-teck-whye-lane-2026-03-223998",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

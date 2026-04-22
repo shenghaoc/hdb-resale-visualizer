@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 1256
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 1256
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1274
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 1292
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -703,7 +717,7 @@
       "pricePerSqft": 531.51
     },
     {
-      "id": "toa-payoh-14-lor-7-toa-payoh-2016-11-973875",
+      "id": "toa-payoh-14-lor-7-toa-payoh-2016-11-973997",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",

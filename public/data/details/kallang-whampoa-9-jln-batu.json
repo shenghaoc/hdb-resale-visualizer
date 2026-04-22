@@ -22,8 +22,8 @@
       58
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1963,
+      1963
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 359
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "KATONG PARK MRT STATION",
+        "distanceMeters": 547
+      },
+      {
+        "stationName": "STADIUM MRT STATION",
+        "distanceMeters": 753
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -958,7 +972,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-9-jln-batu-2026-02-225398",
+      "id": "kallang-whampoa-9-jln-batu-2026-02-225445",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",

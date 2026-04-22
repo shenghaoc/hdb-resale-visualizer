@@ -22,8 +22,8 @@
       119
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "GREAT WORLD MRT STATION",
       "distanceMeters": 458
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 458
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 639
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 647
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -526,7 +540,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-1-delta-ave-2026-03-223443",
+      "id": "bukit-merah-1-delta-ave-2026-03-223466",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -760,7 +774,7 @@
       "pricePerSqft": 640.17
     },
     {
-      "id": "bukit-merah-1-delta-ave-2015-11-953534",
+      "id": "bukit-merah-1-delta-ave-2015-11-953656",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -773,7 +787,7 @@
       "pricePerSqft": 505.89
     },
     {
-      "id": "bukit-merah-1-delta-ave-2015-11-953539",
+      "id": "bukit-merah-1-delta-ave-2015-11-953661",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

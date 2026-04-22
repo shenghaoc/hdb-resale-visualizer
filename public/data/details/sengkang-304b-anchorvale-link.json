@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RENJONG LRT STATION",
       "distanceMeters": 245
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 245
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 357
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 711
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -396,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-304b-anchorvale-link-2026-01-227147",
+      "id": "sengkang-304b-anchorvale-link-2026-01-227219",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -409,7 +423,7 @@
       "pricePerSqft": 564.93
     },
     {
-      "id": "sengkang-304b-anchorvale-link-2026-01-227150",
+      "id": "sengkang-304b-anchorvale-link-2026-01-227222",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -422,7 +436,7 @@
       "pricePerSqft": 533.77
     },
     {
-      "id": "sengkang-304b-anchorvale-link-2026-01-227152",
+      "id": "sengkang-304b-anchorvale-link-2026-01-227224",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 678
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 678
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1242
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1345
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -479,7 +493,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-895a-tampines-st-81-2026-02-227952",
+      "id": "tampines-895a-tampines-st-81-2026-02-228042",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -687,7 +701,7 @@
       "pricePerSqft": 381.79
     },
     {
-      "id": "tampines-895a-tampines-st-81-2016-05-963608",
+      "id": "tampines-895a-tampines-st-81-2016-05-963730",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -700,7 +714,7 @@
       "pricePerSqft": 472.37
     },
     {
-      "id": "tampines-895a-tampines-st-81-2015-11-954481",
+      "id": "tampines-895a-tampines-st-81-2015-11-954603",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -713,7 +727,7 @@
       "pricePerSqft": 435.07
     },
     {
-      "id": "tampines-895a-tampines-st-81-2014-08-645170",
+      "id": "tampines-895a-tampines-st-81-2014-08-645292",
       "month": "2014-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -726,7 +740,7 @@
       "pricePerSqft": 423.15
     },
     {
-      "id": "tampines-895a-tampines-st-81-2013-11-633785",
+      "id": "tampines-895a-tampines-st-81-2013-11-633907",
       "month": "2013-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
