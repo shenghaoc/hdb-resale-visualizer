@@ -4,19 +4,18 @@
     "town": "TAMPINES",
     "block": "419",
     "streetName": "TAMPINES ST 41",
-    "displayName": "SUN PLAZA GARDENS",
     "coordinates": {
       "lat": 1.35783252178817,
       "lng": 103.946726918914
     },
-    "medianPrice": 428000,
+    "medianPrice": 426500,
     "priceIqr": [
-      425000,
-      440000
+      422500,
+      438750
     ],
-    "pricePerSqmMedian": 6687.5,
-    "pricePerSqftMedian": 621.29,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 6664.07,
+    "pricePerSqftMedian": 619.11,
+    "transactionCount": 8,
     "floorAreaRange": [
       64,
       89
@@ -25,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "1990-04",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1063,30 +1062,11 @@
       "medianPrice": 415000,
       "transactionCount": 1,
       "medianPricePerSqm": 6484.38
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 440000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6875
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-419-tampines-st-41-2026-04-227486",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 64,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years 09 months",
-      "resalePrice": 440000,
-      "pricePerSqm": 6875,
-      "pricePerSqft": 638.71
-    },
-    {
-      "id": "tampines-419-tampines-st-41-2026-03-227482",
+      "id": "tampines-419-tampines-st-41-2026-03-227390",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1099,7 +1079,7 @@
       "pricePerSqft": 602.42
     },
     {
-      "id": "tampines-419-tampines-st-41-2026-02-227481",
+      "id": "tampines-419-tampines-st-41-2026-02-227389",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1331,6 +1311,19 @@
       "resalePrice": 408000,
       "pricePerSqm": 4584.27,
       "pricePerSqft": 425.89
+    },
+    {
+      "id": "tampines-419-tampines-st-41-2020-11-84727",
+      "month": "2020-11",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 89,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "64 years 02 months",
+      "resalePrice": 440000,
+      "pricePerSqm": 4943.82,
+      "pricePerSqft": 459.3
     }
   ]
 }

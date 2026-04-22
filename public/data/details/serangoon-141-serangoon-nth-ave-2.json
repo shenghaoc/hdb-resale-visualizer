@@ -4,19 +4,18 @@
     "town": "SERANGOON",
     "block": "141",
     "streetName": "SERANGOON NTH AVE 2",
-    "displayName": null,
     "coordinates": {
       "lat": 1.36859421304209,
       "lng": 103.874523243764
     },
-    "medianPrice": 680000,
+    "medianPrice": 693444,
     "priceIqr": [
-      650444,
-      723000
+      657166,
+      729722
     ],
-    "pricePerSqmMedian": 6278.69,
-    "pricePerSqftMedian": 583.31,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 6153.36,
+    "pricePerSqftMedian": 571.66,
+    "transactionCount": 2,
     "floorAreaRange": [
       103,
       122
@@ -25,10 +24,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2024-08",
     "availableDateRange": [
       "1994-01",
-      "2026-04"
+      "2024-08"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -536,28 +535,9 @@
       "medianPrice": 620888,
       "transactionCount": 1,
       "medianPricePerSqm": 6028.04
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 680000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6476.19
     }
   ],
   "recentTransactions": [
-    {
-      "id": "serangoon-141-serangoon-nth-ave-2-2026-04-227371",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years 02 months",
-      "resalePrice": 680000,
-      "pricePerSqm": 6476.19,
-      "pricePerSqft": 601.66
-    },
     {
       "id": "serangoon-141-serangoon-nth-ave-2-2024-08-190189",
       "month": "2024-08",
@@ -793,7 +773,7 @@
       "pricePerSqft": 364.67
     },
     {
-      "id": "serangoon-141-serangoon-nth-ave-2-2016-07-966931",
+      "id": "serangoon-141-serangoon-nth-ave-2-2016-07-966804",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -804,6 +784,19 @@
       "resalePrice": 472000,
       "pricePerSqm": 3868.85,
       "pricePerSqft": 359.43
+    },
+    {
+      "id": "serangoon-141-serangoon-nth-ave-2-2016-04-961476",
+      "month": "2016-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "72",
+      "resalePrice": 420000,
+      "pricePerSqm": 3716.81,
+      "pricePerSqft": 345.3
     }
   ]
 }

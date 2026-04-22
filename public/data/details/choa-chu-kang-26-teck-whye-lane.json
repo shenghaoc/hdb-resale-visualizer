@@ -4,19 +4,18 @@
     "town": "CHOA CHU KANG",
     "block": "26",
     "streetName": "TECK WHYE LANE",
-    "displayName": "TECK WHYE HEIGHTS II",
     "coordinates": {
       "lat": 1.37762112372223,
       "lng": 103.755740001262
     },
-    "medianPrice": 396500,
+    "medianPrice": 395000,
     "priceIqr": [
-      376250,
-      400166
+      370000,
+      398000
     ],
-    "pricePerSqmMedian": 5168.92,
-    "pricePerSqftMedian": 480.21,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 5000,
+    "pricePerSqftMedian": 464.52,
+    "transactionCount": 5,
     "floorAreaRange": [
       74,
       99
@@ -25,10 +24,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-09",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2025-09"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1117,28 +1116,9 @@
       "medianPrice": 398000,
       "transactionCount": 1,
       "medianPricePerSqm": 5378.38
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 408000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5513.51
     }
   ],
   "recentTransactions": [
-    {
-      "id": "choa-chu-kang-26-teck-whye-lane-2026-04-223830",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 74,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "52 years",
-      "resalePrice": 408000,
-      "pricePerSqm": 5513.51,
-      "pricePerSqft": 512.22
-    },
     {
       "id": "choa-chu-kang-26-teck-whye-lane-2025-09-202868",
       "month": "2025-09",
@@ -1385,6 +1365,19 @@
       "resalePrice": 330000,
       "pricePerSqm": 3707.87,
       "pricePerSqft": 344.47
+    },
+    {
+      "id": "choa-chu-kang-26-teck-whye-lane-2021-04-95230",
+      "month": "2021-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "56 years 11 months",
+      "resalePrice": 345000,
+      "pricePerSqm": 3484.85,
+      "pricePerSqft": 323.75
     }
   ]
 }

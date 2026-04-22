@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "179",
     "streetName": "TOA PAYOH CTRL",
-    "displayName": "TOA PAYOH CENTRAL",
     "coordinates": {
       "lat": 1.3339009997633,
       "lng": 103.850092878516
     },
-    "medianPrice": 625000,
+    "medianPrice": 630000,
     "priceIqr": [
-      603500,
-      641250
+      598000,
+      645000
     ],
-    "pricePerSqmMedian": 7440.48,
-    "pricePerSqftMedian": 691.24,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 7500,
+    "pricePerSqftMedian": 696.77,
+    "transactionCount": 5,
     "floorAreaRange": [
       84,
       84
@@ -585,14 +584,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 590000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 7023.81
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-179-toa-payoh-ctrl-2026-04-228192",
+      "id": "toa-payoh-179-toa-payoh-ctrl-2026-04-228084",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -605,20 +604,7 @@
       "pricePerSqft": 619.35
     },
     {
-      "id": "toa-payoh-179-toa-payoh-ctrl-2026-04-228193",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 84,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "47 years 04 months",
-      "resalePrice": 620000,
-      "pricePerSqm": 7380.95,
-      "pricePerSqft": 685.71
-    },
-    {
-      "id": "toa-payoh-179-toa-payoh-ctrl-2026-03-228190",
+      "id": "toa-payoh-179-toa-payoh-ctrl-2026-03-228082",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -850,6 +836,19 @@
       "resalePrice": 450000,
       "pricePerSqm": 5357.14,
       "pricePerSqft": 497.7
+    },
+    {
+      "id": "toa-payoh-179-toa-payoh-ctrl-2017-05-7676",
+      "month": "2017-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "56 years 03 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 5571.43,
+      "pricePerSqft": 517.6
     }
   ]
 }

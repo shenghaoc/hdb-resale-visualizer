@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "34",
     "streetName": "LOR 5 TOA PAYOH",
-    "displayName": "EAST PAYOH SPRING",
     "coordinates": {
       "lat": 1.33479973301368,
       "lng": 103.854155463
     },
-    "medianPrice": 367500,
+    "medianPrice": 365000,
     "priceIqr": [
-      362750,
+      360500,
       372500
     ],
-    "pricePerSqmMedian": 5485.08,
-    "pricePerSqftMedian": 509.58,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5447.76,
+    "pricePerSqftMedian": 506.11,
+    "transactionCount": 3,
     "floorAreaRange": [
       66,
       67
@@ -1053,14 +1052,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 367500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5485.08
+      "medianPrice": 365000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5447.76
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-34-lor-5-toa-payoh-2026-04-228035",
+      "id": "toa-payoh-34-lor-5-toa-payoh-2026-04-227930",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1071,19 +1070,6 @@
       "resalePrice": 365000,
       "pricePerSqm": 5447.76,
       "pricePerSqft": 506.11
-    },
-    {
-      "id": "toa-payoh-34-lor-5-toa-payoh-2026-04-228036",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1970,
-      "remainingLease": "42 years 10 months",
-      "resalePrice": 370000,
-      "pricePerSqm": 5522.39,
-      "pricePerSqft": 513.05
     },
     {
       "id": "toa-payoh-34-lor-5-toa-payoh-2025-12-217795",
@@ -1318,6 +1304,19 @@
       "resalePrice": 283000,
       "pricePerSqm": 4223.88,
       "pricePerSqft": 392.41
+    },
+    {
+      "id": "toa-payoh-34-lor-5-toa-payoh-2020-12-87265",
+      "month": "2020-12",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "48 years 02 months",
+      "resalePrice": 275000,
+      "pricePerSqm": 4104.48,
+      "pricePerSqft": 381.32
     }
   ]
 }

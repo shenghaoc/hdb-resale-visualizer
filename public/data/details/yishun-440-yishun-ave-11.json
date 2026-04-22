@@ -4,19 +4,18 @@
     "town": "YISHUN",
     "block": "440",
     "streetName": "YISHUN AVE 11",
-    "displayName": null,
     "coordinates": {
       "lat": 1.42233139600502,
       "lng": 103.84613305852
     },
-    "medianPrice": 462000,
+    "medianPrice": 461000,
     "priceIqr": [
-      460000,
-      487000
+      454250,
+      477750
     ],
-    "pricePerSqmMedian": 5476.19,
-    "pricePerSqftMedian": 508.76,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5339.28,
+    "pricePerSqftMedian": 496.04,
+    "transactionCount": 4,
     "floorAreaRange": [
       84,
       104
@@ -25,10 +24,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-07",
     "availableDateRange": [
       "1992-08",
-      "2026-04"
+      "2025-07"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -811,28 +810,9 @@
       "medianPrice": 460000,
       "transactionCount": 1,
       "medianPricePerSqm": 5476.19
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 487000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5797.62
     }
   ],
   "recentTransactions": [
-    {
-      "id": "yishun-440-yishun-ave-11-2026-04-228972",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "61 years 08 months",
-      "resalePrice": 487000,
-      "pricePerSqm": 5797.62,
-      "pricePerSqft": 538.62
-    },
     {
       "id": "yishun-440-yishun-ave-11-2025-07-220980",
       "month": "2025-07",
@@ -1055,7 +1035,7 @@
       "pricePerSqft": 315.21
     },
     {
-      "id": "yishun-440-yishun-ave-11-2016-02-958545",
+      "id": "yishun-440-yishun-ave-11-2016-02-958418",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1068,7 +1048,7 @@
       "pricePerSqft": 340.64
     },
     {
-      "id": "yishun-440-yishun-ave-11-2015-07-948447",
+      "id": "yishun-440-yishun-ave-11-2015-07-948320",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1079,6 +1059,19 @@
       "resalePrice": 307000,
       "pricePerSqm": 3654.76,
       "pricePerSqft": 339.54
+    },
+    {
+      "id": "yishun-440-yishun-ave-11-2015-05-945101",
+      "month": "2015-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "72",
+      "resalePrice": 360000,
+      "pricePerSqm": 3461.54,
+      "pricePerSqft": 321.59
     }
   ]
 }

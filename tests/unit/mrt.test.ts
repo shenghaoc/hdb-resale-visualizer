@@ -16,11 +16,4 @@ describe("getStationDetails", () => {
     expect(details.lines).toEqual(expect.arrayContaining(["EWL", "NEL", "TEL"]));
     expect(details.isInterchange).toBe(true);
   });
-
-  it("keeps explicit interchange mappings for tampines", () => {
-    const details = getStationDetails("TAMPINES MRT STATION");
-
-    expect(details.lines).toEqual(expect.arrayContaining(["EWL", "DTL"]));
-    expect(details.isInterchange).toBe(true);
-  });
 });

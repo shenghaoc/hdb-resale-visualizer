@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "249",
     "streetName": "KIM KEAT LINK",
-    "displayName": null,
     "coordinates": {
       "lat": 1.33131573283592,
       "lng": 103.85665702204
     },
-    "medianPrice": 655000,
+    "medianPrice": 647500,
     "priceIqr": [
       640000,
-      780000
+      700000
     ],
-    "pricePerSqmMedian": 6298.08,
-    "pricePerSqftMedian": 585.11,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6225.97,
+    "pricePerSqftMedian": 578.41,
+    "transactionCount": 4,
     "floorAreaRange": [
       103,
       122
@@ -395,14 +394,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 717500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6372.18
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6298.08
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-249-kim-keat-link-2026-04-228130",
+      "id": "toa-payoh-249-kim-keat-link-2026-04-228022",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -413,19 +412,6 @@
       "resalePrice": 655000,
       "pricePerSqm": 6298.08,
       "pricePerSqft": 585.11
-    },
-    {
-      "id": "toa-payoh-249-kim-keat-link-2026-04-228210",
-      "month": "2026-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "61 years 09 months",
-      "resalePrice": 780000,
-      "pricePerSqm": 6446.28,
-      "pricePerSqft": 598.88
     },
     {
       "id": "toa-payoh-249-kim-keat-link-2025-07-218138",
@@ -571,7 +557,7 @@
       "pricePerSqft": 437.97
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2013-09-631221",
+      "id": "toa-payoh-249-kim-keat-link-2013-09-631094",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -584,7 +570,7 @@
       "pricePerSqft": 485.95
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2013-08-629991",
+      "id": "toa-payoh-249-kim-keat-link-2013-08-629864",
       "month": "2013-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -597,7 +583,7 @@
       "pricePerSqft": 460.68
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2012-10-615388",
+      "id": "toa-payoh-249-kim-keat-link-2012-10-615261",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -610,7 +596,7 @@
       "pricePerSqft": 482.38
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2012-07-609594",
+      "id": "toa-payoh-249-kim-keat-link-2012-07-609467",
       "month": "2012-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -623,7 +609,7 @@
       "pricePerSqft": 422.63
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2011-11-593873",
+      "id": "toa-payoh-249-kim-keat-link-2011-11-593746",
       "month": "2011-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -636,7 +622,7 @@
       "pricePerSqft": 394.84
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2011-06-584953",
+      "id": "toa-payoh-249-kim-keat-link-2011-06-584826",
       "month": "2011-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -649,7 +635,7 @@
       "pricePerSqft": 368.04
     },
     {
-      "id": "toa-payoh-249-kim-keat-link-2011-03-578994",
+      "id": "toa-payoh-249-kim-keat-link-2011-03-578867",
       "month": "2011-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -660,6 +646,19 @@
       "resalePrice": 422000,
       "pricePerSqm": 4057.69,
       "pricePerSqft": 376.97
+    },
+    {
+      "id": "toa-payoh-249-kim-keat-link-2010-06-555767",
+      "month": "2010-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years",
+      "resalePrice": 380000,
+      "pricePerSqm": 3619.05,
+      "pricePerSqft": 336.22
     }
   ]
 }

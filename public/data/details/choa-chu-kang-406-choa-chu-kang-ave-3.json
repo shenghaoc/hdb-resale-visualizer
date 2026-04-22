@@ -4,19 +4,18 @@
     "town": "CHOA CHU KANG",
     "block": "406",
     "streetName": "CHOA CHU KANG AVE 3",
-    "displayName": "KEAT HONG LAUREL",
     "coordinates": {
       "lat": 1.38037389462046,
       "lng": 103.740209588608
     },
-    "medianPrice": 565000,
+    "medianPrice": 560000,
     "priceIqr": [
-      552500,
-      591250
+      545000,
+      565000
     ],
-    "pricePerSqmMedian": 5354.91,
-    "pricePerSqftMedian": 497.49,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5384.62,
+    "pricePerSqftMedian": 500.25,
+    "transactionCount": 3,
     "floorAreaRange": [
       103,
       123
@@ -25,10 +24,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-08",
     "availableDateRange": [
       "1995-03",
-      "2026-04"
+      "2025-08"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -678,28 +677,9 @@
       "medianPrice": 560000,
       "transactionCount": 1,
       "medianPricePerSqm": 5384.62
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 655000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5325.2
     }
   ],
   "recentTransactions": [
-    {
-      "id": "choa-chu-kang-406-choa-chu-kang-ave-3-2026-04-223846",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 123,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1993,
-      "remainingLease": "66 years 03 months",
-      "resalePrice": 655000,
-      "pricePerSqm": 5325.2,
-      "pricePerSqft": 494.73
-    },
     {
       "id": "choa-chu-kang-406-choa-chu-kang-ave-3-2025-08-202947",
       "month": "2025-08",
@@ -946,6 +926,19 @@
       "resalePrice": 340000,
       "pricePerSqm": 3269.23,
       "pricePerSqft": 303.72
+    },
+    {
+      "id": "choa-chu-kang-406-choa-chu-kang-ave-3-2016-12-974365",
+      "month": "2016-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "75",
+      "resalePrice": 370000,
+      "pricePerSqm": 3557.69,
+      "pricePerSqft": 330.52
     }
   ]
 }

@@ -4,19 +4,18 @@
     "town": "JURONG WEST",
     "block": "671C",
     "streetName": "JURONG WEST ST 65",
-    "displayName": null,
     "coordinates": {
       "lat": 1.34387298937558,
       "lng": 103.701429855417
     },
-    "medianPrice": 740000,
+    "medianPrice": 705000,
     "priceIqr": [
-      705000,
-      770000
+      687500,
+      722500
     ],
-    "pricePerSqmMedian": 5873.02,
-    "pricePerSqftMedian": 545.62,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5616.51,
+    "pricePerSqftMedian": 521.79,
+    "transactionCount": 2,
     "floorAreaRange": [
       125,
       127
@@ -25,10 +24,10 @@
       2002,
       2002
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-08",
     "availableDateRange": [
       "2008-08",
-      "2026-04"
+      "2025-08"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -300,28 +299,9 @@
       "medianPrice": 740000,
       "transactionCount": 1,
       "medianPricePerSqm": 5873.02
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 800000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6349.21
     }
   ],
   "recentTransactions": [
-    {
-      "id": "jurong-west-671c-jurong-west-st-65-2026-04-225383",
-      "month": "2026-04",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 126,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 2002,
-      "remainingLease": "75 years 04 months",
-      "resalePrice": 800000,
-      "pricePerSqm": 6349.21,
-      "pricePerSqft": 589.86
-    },
     {
       "id": "jurong-west-671c-jurong-west-st-65-2025-08-208344",
       "month": "2025-08",
@@ -568,6 +548,19 @@
       "resalePrice": 520000,
       "pricePerSqm": 4126.98,
       "pricePerSqft": 383.41
+    },
+    {
+      "id": "jurong-west-671c-jurong-west-st-65-2017-10-16040",
+      "month": "2017-10",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 127,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "83 years 09 months",
+      "resalePrice": 553000,
+      "pricePerSqm": 4354.33,
+      "pricePerSqft": 404.53
     }
   ]
 }

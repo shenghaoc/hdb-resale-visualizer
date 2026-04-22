@@ -4,19 +4,18 @@
     "town": "HOUGANG",
     "block": "248",
     "streetName": "HOUGANG AVE 3",
-    "displayName": null,
     "coordinates": {
       "lat": 1.35937034964577,
       "lng": 103.892587549209
     },
-    "medianPrice": 425000,
+    "medianPrice": 422500,
     "priceIqr": [
-      420000,
-      425000
+      418750,
+      458750
     ],
-    "pricePerSqmMedian": 6194.03,
-    "pricePerSqftMedian": 575.44,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6107.77,
+    "pricePerSqftMedian": 567.43,
+    "transactionCount": 4,
     "floorAreaRange": [
       67,
       99
@@ -25,10 +24,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-11",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2025-11"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1039,28 +1038,9 @@
       "medianPrice": 415000,
       "transactionCount": 1,
       "medianPricePerSqm": 6194.03
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 425000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6343.28
     }
   ],
   "recentTransactions": [
-    {
-      "id": "hougang-248-hougang-ave-3-2026-04-224507",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "57 years 07 months",
-      "resalePrice": 425000,
-      "pricePerSqm": 6343.28,
-      "pricePerSqft": 589.31
-    },
     {
       "id": "hougang-248-hougang-ave-3-2025-11-205224",
       "month": "2025-11",
@@ -1307,6 +1287,19 @@
       "resalePrice": 260000,
       "pricePerSqm": 3880.6,
       "pricePerSqft": 360.52
+    },
+    {
+      "id": "hougang-248-hougang-ave-3-2018-11-39389",
+      "month": "2018-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 71,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "64 years 11 months",
+      "resalePrice": 237000,
+      "pricePerSqm": 3338.03,
+      "pricePerSqft": 310.11
     }
   ]
 }

@@ -4,19 +4,18 @@
     "town": "JURONG WEST",
     "block": "847",
     "streetName": "JURONG WEST ST 81",
-    "displayName": "NANYANG PEARL",
     "coordinates": {
       "lat": 1.34537150466414,
       "lng": 103.691869630974
     },
-    "medianPrice": 600000,
+    "medianPrice": 660000,
     "priceIqr": [
-      560000,
-      660000
+      630000,
+      690000
     ],
-    "pricePerSqmMedian": 4814.81,
-    "pricePerSqftMedian": 447.31,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5052.85,
+    "pricePerSqftMedian": 469.43,
+    "transactionCount": 2,
     "floorAreaRange": [
       108,
       132
@@ -25,10 +24,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-12",
     "availableDateRange": [
       "1999-06",
-      "2026-04"
+      "2025-12"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -368,28 +367,9 @@
       "medianPrice": 720000,
       "transactionCount": 1,
       "medianPricePerSqm": 5454.55
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 520000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 4814.81
     }
   ],
   "recentTransactions": [
-    {
-      "id": "jurong-west-847-jurong-west-st-81-2026-04-225178",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 108,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "69 years",
-      "resalePrice": 520000,
-      "pricePerSqm": 4814.81,
-      "pricePerSqft": 447.31
-    },
     {
       "id": "jurong-west-847-jurong-west-st-81-2025-12-208155",
       "month": "2025-12",
@@ -560,7 +540,7 @@
       "pricePerSqft": 302.8
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2016-07-966463",
+      "id": "jurong-west-847-jurong-west-st-81-2016-07-966336",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -573,7 +553,7 @@
       "pricePerSqft": 308.27
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2016-03-959393",
+      "id": "jurong-west-847-jurong-west-st-81-2016-03-959266",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -586,7 +566,7 @@
       "pricePerSqft": 295.27
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2014-11-649052",
+      "id": "jurong-west-847-jurong-west-st-81-2014-11-648925",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -599,7 +579,7 @@
       "pricePerSqft": 313.98
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2014-07-643375",
+      "id": "jurong-west-847-jurong-west-st-81-2014-07-643248",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +592,7 @@
       "pricePerSqft": 345.81
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2013-12-634540",
+      "id": "jurong-west-847-jurong-west-st-81-2013-12-634413",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +605,7 @@
       "pricePerSqft": 326.61
     },
     {
-      "id": "jurong-west-847-jurong-west-st-81-2013-08-629517",
+      "id": "jurong-west-847-jurong-west-st-81-2013-08-629390",
       "month": "2013-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -636,6 +616,19 @@
       "resalePrice": 470000,
       "pricePerSqm": 3671.88,
       "pricePerSqft": 341.13
+    },
+    {
+      "id": "jurong-west-847-jurong-west-st-81-2013-07-627915",
+      "month": "2013-07",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 129,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years",
+      "resalePrice": 475000,
+      "pricePerSqm": 3682.17,
+      "pricePerSqft": 342.09
     }
   ]
 }

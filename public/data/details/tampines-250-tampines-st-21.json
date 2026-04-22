@@ -4,19 +4,18 @@
     "town": "TAMPINES",
     "block": "250",
     "streetName": "TAMPINES ST 21",
-    "displayName": null,
     "coordinates": {
       "lat": 1.35231862292149,
       "lng": 103.948457987374
     },
-    "medianPrice": 489000,
+    "medianPrice": 544500,
     "priceIqr": [
-      475000,
-      600000
+      485500,
+      615000
     ],
-    "pricePerSqmMedian": 6351.35,
-    "pricePerSqftMedian": 590.06,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6122.08,
+    "pricePerSqftMedian": 568.76,
+    "transactionCount": 4,
     "floorAreaRange": [
       74,
       117
@@ -25,10 +24,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-11",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2025-11"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -793,28 +792,9 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 5825.24
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 470000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6351.35
     }
   ],
   "recentTransactions": [
-    {
-      "id": "tampines-250-tampines-st-21-2026-04-227459",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 74,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "57 years 09 months",
-      "resalePrice": 470000,
-      "pricePerSqm": 6351.35,
-      "pricePerSqft": 590.06
-    },
     {
       "id": "tampines-250-tampines-st-21-2025-11-216491",
       "month": "2025-11",
@@ -1061,6 +1041,19 @@
       "resalePrice": 345000,
       "pricePerSqm": 4662.16,
       "pricePerSqft": 433.13
+    },
+    {
+      "id": "tampines-250-tampines-st-21-2018-04-26126",
+      "month": "2018-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "65 years 08 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4705.88,
+      "pricePerSqft": 437.19
     }
   ]
 }

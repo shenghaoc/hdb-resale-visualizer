@@ -147,42 +147,6 @@ function quantile(values: number[], percentile: number) {
   return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
 }
 
-function getModeYear(values: number[]) {
-  if (values.length === 0) {
-    return new Date().getFullYear();
-  }
-
-  const counts = new Map<number, number>();
-  for (const value of values) {
-    counts.set(value, (counts.get(value) ?? 0) + 1);
-  }
-
-  let mode = values[0];
-  let highestCount = 0;
-
-  for (const [value, count] of counts.entries()) {
-    if (count > highestCount || (count === highestCount && value > mode)) {
-      mode = value;
-      highestCount = count;
-    }
-  }
-
-  return mode;
-}
-
-function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | null | undefined) {
-  if (
-    typeof yearCompleted === "number" &&
-    Number.isFinite(yearCompleted) &&
-    yearCompleted >= 1900 &&
-    yearCompleted <= new Date().getFullYear()
-  ) {
-    return yearCompleted;
-  }
-
-  return getModeYear(leaseYears);
-}
-
 export function parseRemainingLease(value: string | undefined, leaseCommenceDate: number) {
   if (value && value.trim().length > 0) {
     return value.trim();
@@ -325,24 +289,22 @@ export function buildArtifacts({
     const floorAreas = sortedTransactions.map((transaction) => transaction.floorAreaSqm);
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
 
-    const nearestStations = new Map<string, number>();
+    let nearestMrt: BlockSummary["nearestMrt"] = null;
     for (const exit of mrtExits) {
       const distance = haversineDistanceMeters(
         { lat: geocode.lat, lng: geocode.lng },
         { lat: exit.lat, lng: exit.lng },
       );
-      const currentDistance = nearestStations.get(exit.stationName);
-      if (currentDistance === undefined || distance < currentDistance) {
-        nearestStations.set(exit.stationName, distance);
+
+      if (!nearestMrt || distance < nearestMrt.distanceMeters) {
+        nearestMrt = {
+          stationName: exit.stationName,
+          distanceMeters: Math.round(distance),
+        };
       }
     }
-    const nearbyMrts = [...nearestStations.entries()]
-      .sort((left, right) => left[1] - right[1])
-      .slice(0, 3)
-      .map(([stationName, distanceMeters]) => ({ stationName, distanceMeters: Math.round(distanceMeters) }));
-    const nearestMrt: BlockSummary["nearestMrt"] = nearbyMrts[0] ?? null;
+
     const property = propertyByAddress.get(addressKey);
-    const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears, property?.yearCompleted);
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
@@ -357,7 +319,7 @@ export function buildArtifacts({
         pricePerSqftValues.length > 0 ? Number(median(pricePerSqftValues).toFixed(2)) : null,
       transactionCount: sourceWindow.length,
       floorAreaRange: [Math.min(...floorAreas), Math.max(...floorAreas)],
-      leaseCommenceRange: [leaseCommenceYear, leaseCommenceYear],
+      leaseCommenceRange: [Math.min(...leaseYears), Math.max(...leaseYears)],
       latestMonth: latest.month,
       availableDateRange: [
         sortedTransactions[sortedTransactions.length - 1].month,
@@ -366,7 +328,6 @@ export function buildArtifacts({
       flatTypes: [...new Set(sortedTransactions.map((transaction) => transaction.flatType))].sort(),
       flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
       nearestMrt,
-      nearbyMrts,
     };
 
     const trendByMonth = new Map<string, ResaleTransaction[]>();

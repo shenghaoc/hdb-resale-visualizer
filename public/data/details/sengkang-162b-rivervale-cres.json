@@ -4,19 +4,18 @@
     "town": "SENGKANG",
     "block": "162B",
     "streetName": "RIVERVALE CRES",
-    "displayName": "RIVERVALE DELTA",
     "coordinates": {
       "lat": 1.39035967745112,
       "lng": 103.908076555691
     },
-    "medianPrice": 649444,
+    "medianPrice": 650000,
     "priceIqr": [
-      618222,
-      665666
+      648888,
+      670888
     ],
-    "pricePerSqmMedian": 6757.46,
-    "pricePerSqftMedian": 627.79,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6977.29,
+    "pricePerSqftMedian": 648.21,
+    "transactionCount": 5,
     "floorAreaRange": [
       93,
       113
@@ -25,10 +24,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "2021-02",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -182,30 +181,11 @@
       "medianPrice": 650000,
       "transactionCount": 1,
       "medianPricePerSqm": 6989.25
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 608000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6537.63
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-162b-rivervale-cres-2026-04-227074",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "90 years 02 months",
-      "resalePrice": 608000,
-      "pricePerSqm": 6537.63,
-      "pricePerSqft": 607.37
-    },
-    {
-      "id": "sengkang-162b-rivervale-cres-2026-03-227069",
+      "id": "sengkang-162b-rivervale-cres-2026-03-226985",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -218,7 +198,7 @@
       "pricePerSqft": 649.32
     },
     {
-      "id": "sengkang-162b-rivervale-cres-2026-02-227056",
+      "id": "sengkang-162b-rivervale-cres-2026-02-226972",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -450,6 +430,19 @@
       "resalePrice": 445000,
       "pricePerSqm": 4784.95,
       "pricePerSqft": 444.54
+    },
+    {
+      "id": "sengkang-162b-rivervale-cres-2021-10-111007",
+      "month": "2021-10",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "94 years 08 months",
+      "resalePrice": 606888,
+      "pricePerSqm": 5370.69,
+      "pricePerSqft": 498.95
     }
   ]
 }

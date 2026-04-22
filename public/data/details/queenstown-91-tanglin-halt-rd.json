@@ -4,19 +4,18 @@
     "town": "QUEENSTOWN",
     "block": "91",
     "streetName": "TANGLIN HALT RD",
-    "displayName": "COMMONWEALTH VIEW",
     "coordinates": {
       "lat": 1.30072792288033,
       "lng": 103.799417284922
     },
-    "medianPrice": 1000000,
+    "medianPrice": 1000500,
     "priceIqr": [
-      971944,
-      1072944
+      971916,
+      1076472
     ],
-    "pricePerSqmMedian": 11198.91,
-    "pricePerSqftMedian": 1040.41,
-    "transactionCount": 23,
+    "pricePerSqmMedian": 11199.45,
+    "pricePerSqftMedian": 1040.47,
+    "transactionCount": 22,
     "floorAreaRange": [
       85,
       110
@@ -25,10 +24,10 @@
       2008,
       2008
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "2010-05",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -704,30 +703,11 @@
       "medianPrice": 1001278,
       "transactionCount": 4,
       "medianPricePerSqm": 11125.31
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 999000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 11100
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-04-226511",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "31 TO 33",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2008,
-      "remainingLease": "81 years 05 months",
-      "resalePrice": 999000,
-      "pricePerSqm": 11100,
-      "pricePerSqft": 1031.22
-    },
-    {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226508",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226432",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -740,7 +720,7 @@
       "pricePerSqft": 1020.79
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226509",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226433",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -753,7 +733,7 @@
       "pricePerSqft": 1046.37
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226510",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226434",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -766,7 +746,7 @@
       "pricePerSqft": 1003.24
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226533",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226456",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "31 TO 33",
@@ -972,6 +952,19 @@
       "resalePrice": 1001000,
       "pricePerSqm": 11122.22,
       "pricePerSqft": 1033.29
+    },
+    {
+      "id": "queenstown-91-tanglin-halt-rd-2024-06-186381",
+      "month": "2024-06",
+      "flatType": "4 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2008,
+      "remainingLease": "83 years 03 months",
+      "resalePrice": 972000,
+      "pricePerSqm": 10800,
+      "pricePerSqft": 1003.35
     }
   ]
 }

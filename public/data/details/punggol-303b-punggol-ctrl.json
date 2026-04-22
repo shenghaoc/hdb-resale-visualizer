@@ -4,19 +4,18 @@
     "town": "PUNGGOL",
     "block": "303B",
     "streetName": "PUNGGOL CTRL",
-    "displayName": "CORALINUS",
     "coordinates": {
       "lat": 1.40391687264544,
       "lng": 103.905531342934
     },
-    "medianPrice": 691000,
+    "medianPrice": 708000,
     "priceIqr": [
-      665500,
-      708000
+      699500,
+      716500
     ],
-    "pricePerSqmMedian": 7430.11,
-    "pricePerSqftMedian": 690.28,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 7612.9,
+    "pricePerSqftMedian": 707.26,
+    "transactionCount": 2,
     "floorAreaRange": [
       93,
       94
@@ -25,10 +24,10 @@
       2010,
       2010
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "2012-06",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -228,30 +227,11 @@
       "medianPrice": 725000,
       "transactionCount": 1,
       "medianPricePerSqm": 7795.7
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 640000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6808.51
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-303b-punggol-ctrl-2026-04-226019",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 94,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2010,
-      "remainingLease": "83 years 04 months",
-      "resalePrice": 640000,
-      "pricePerSqm": 6808.51,
-      "pricePerSqft": 632.53
-    },
-    {
-      "id": "punggol-303b-punggol-ctrl-2026-03-226015",
+      "id": "punggol-303b-punggol-ctrl-2026-03-225945",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -485,7 +465,7 @@
       "pricePerSqft": 489.22
     },
     {
-      "id": "punggol-303b-punggol-ctrl-2016-12-974904",
+      "id": "punggol-303b-punggol-ctrl-2016-12-974777",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -496,6 +476,19 @@
       "resalePrice": 445000,
       "pricePerSqm": 4784.95,
       "pricePerSqft": 444.54
+    },
+    {
+      "id": "punggol-303b-punggol-ctrl-2016-08-968327",
+      "month": "2016-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2010,
+      "remainingLease": "92",
+      "resalePrice": 478000,
+      "pricePerSqm": 5139.78,
+      "pricePerSqft": 477.5
     }
   ]
 }

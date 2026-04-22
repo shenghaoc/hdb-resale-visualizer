@@ -4,19 +4,18 @@
     "town": "KALLANG/WHAMPOA",
     "block": "813",
     "streetName": "JELLICOE RD",
-    "displayName": "LAVENDER GARDENS",
     "coordinates": {
       "lat": 1.3072976722983,
       "lng": 103.86211057095
     },
-    "medianPrice": 964000,
+    "medianPrice": 950000,
     "priceIqr": [
-      930000,
-      1003500
+      910000,
+      964000
     ],
-    "pricePerSqmMedian": 10653.11,
-    "pricePerSqftMedian": 989.71,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 10439.56,
+    "pricePerSqftMedian": 969.87,
+    "transactionCount": 3,
     "floorAreaRange": [
       90,
       110
@@ -25,10 +24,10 @@
       2003,
       2003
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-01",
     "availableDateRange": [
       "2006-12",
-      "2026-04"
+      "2026-01"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -308,30 +307,11 @@
       "medianPrice": 950000,
       "transactionCount": 1,
       "medianPricePerSqm": 10439.56
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 1080000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 11868.13
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2026-04-225505",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "28 TO 30",
-      "floorAreaSqm": 91,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "76 years",
-      "resalePrice": 1080000,
-      "pricePerSqm": 11868.13,
-      "pricePerSqft": 1102.59
-    },
-    {
-      "id": "kallang-whampoa-813-jellicoe-rd-2026-01-225504",
+      "id": "kallang-whampoa-813-jellicoe-rd-2026-01-225439",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -513,7 +493,7 @@
       "pricePerSqft": 796.31
     },
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2016-10-971762",
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-10-971635",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -526,7 +506,7 @@
       "pricePerSqft": 727.91
     },
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2016-09-970061",
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-09-969934",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -539,7 +519,7 @@
       "pricePerSqft": 691.61
     },
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2016-07-966547",
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-07-966420",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -552,7 +532,7 @@
       "pricePerSqft": 658.77
     },
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2016-04-961179",
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-04-961052",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -565,7 +545,7 @@
       "pricePerSqft": 753.43
     },
     {
-      "id": "kallang-whampoa-813-jellicoe-rd-2016-04-961191",
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-04-961064",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -576,6 +556,19 @@
       "resalePrice": 805000,
       "pricePerSqm": 7318.18,
       "pricePerSqft": 679.88
+    },
+    {
+      "id": "kallang-whampoa-813-jellicoe-rd-2016-03-959340",
+      "month": "2016-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 91,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "86",
+      "resalePrice": 695000,
+      "pricePerSqm": 7637.36,
+      "pricePerSqft": 709.53
     }
   ]
 }

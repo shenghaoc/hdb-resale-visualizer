@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "27",
     "streetName": "TOA PAYOH EAST",
-    "displayName": null,
     "coordinates": {
       "lat": 1.33227000712346,
       "lng": 103.856360426029
     },
-    "medianPrice": 374000,
+    "medianPrice": 375000,
     "priceIqr": [
-      367250,
-      381250
+      374000,
+      387500
     ],
-    "pricePerSqmMedian": 5582.09,
-    "pricePerSqftMedian": 518.6,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5597.01,
+    "pricePerSqftMedian": 519.98,
+    "transactionCount": 3,
     "floorAreaRange": [
       66,
       67
@@ -1041,14 +1040,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 375000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5636.59
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5970.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-27-toa-payoh-east-2026-04-228075",
+      "id": "toa-payoh-27-toa-payoh-east-2026-04-227969",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1059,19 +1058,6 @@
       "resalePrice": 400000,
       "pricePerSqm": 5970.15,
       "pricePerSqft": 554.65
-    },
-    {
-      "id": "toa-payoh-27-toa-payoh-east-2026-04-228077",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 66,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1971,
-      "remainingLease": "43 years 10 months",
-      "resalePrice": 350000,
-      "pricePerSqm": 5303.03,
-      "pricePerSqft": 492.67
     },
     {
       "id": "toa-payoh-27-toa-payoh-east-2025-07-217960",
@@ -1306,6 +1292,19 @@
       "resalePrice": 235000,
       "pricePerSqm": 3507.46,
       "pricePerSqft": 325.85
+    },
+    {
+      "id": "toa-payoh-27-toa-payoh-east-2018-11-40305",
+      "month": "2018-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1971,
+      "remainingLease": "51 years 02 months",
+      "resalePrice": 220000,
+      "pricePerSqm": 3283.58,
+      "pricePerSqft": 305.06
     }
   ]
 }

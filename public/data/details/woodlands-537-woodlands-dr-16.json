@@ -4,19 +4,18 @@
     "town": "WOODLANDS",
     "block": "537",
     "streetName": "WOODLANDS DR 16",
-    "displayName": null,
     "coordinates": {
       "lat": 1.42965785733974,
       "lng": 103.792582930193
     },
-    "medianPrice": 637000,
+    "medianPrice": 617500,
     "priceIqr": [
-      613500,
-      641000
+      603750,
+      631250
     ],
-    "pricePerSqmMedian": 5608.7,
-    "pricePerSqftMedian": 521.07,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5754.35,
+    "pricePerSqftMedian": 534.6,
+    "transactionCount": 2,
     "floorAreaRange": [
       100,
       121
@@ -25,10 +24,10 @@
       2000,
       2000
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-12",
     "availableDateRange": [
       "2003-12",
-      "2026-04"
+      "2025-12"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -506,28 +505,9 @@
       "medianPrice": 590000,
       "transactionCount": 1,
       "medianPricePerSqm": 5900
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 637000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5264.46
     }
   ],
   "recentTransactions": [
-    {
-      "id": "woodlands-537-woodlands-dr-16-2026-04-228650",
-      "month": "2026-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "73 years 05 months",
-      "resalePrice": 637000,
-      "pricePerSqm": 5264.46,
-      "pricePerSqft": 489.09
-    },
     {
       "id": "woodlands-537-woodlands-dr-16-2025-12-219199",
       "month": "2025-12",
@@ -774,6 +754,19 @@
       "resalePrice": 355000,
       "pricePerSqm": 3514.85,
       "pricePerSqft": 326.54
+    },
+    {
+      "id": "woodlands-537-woodlands-dr-16-2019-08-56242",
+      "month": "2019-08",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "80 years 01 month",
+      "resalePrice": 405000,
+      "pricePerSqm": 3347.11,
+      "pricePerSqft": 310.96
     }
   ]
 }

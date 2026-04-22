@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "261",
     "streetName": "TOA PAYOH EAST",
-    "displayName": "TOA PAYOH APEX",
     "coordinates": {
       "lat": 1.33350386216852,
       "lng": 103.855237846252
     },
-    "medianPrice": 971594,
+    "medianPrice": 975188,
     "priceIqr": [
-      958000,
-      998250
+      958594,
+      1001500
     ],
-    "pricePerSqmMedian": 10447.24,
-    "pricePerSqftMedian": 970.58,
-    "transactionCount": 28,
+    "pricePerSqmMedian": 10485.89,
+    "pricePerSqftMedian": 974.17,
+    "transactionCount": 27,
     "floorAreaRange": [
       93,
       93
@@ -25,10 +24,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-01",
     "availableDateRange": [
       "2023-11",
-      "2026-04"
+      "2026-01"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -168,30 +167,11 @@
       "medianPrice": 975188,
       "transactionCount": 1,
       "medianPricePerSqm": 10485.89
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 910000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9784.95
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-261-toa-payoh-east-2026-04-228198",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "92 years 09 months",
-      "resalePrice": 910000,
-      "pricePerSqm": 9784.95,
-      "pricePerSqft": 909.05
-    },
-    {
-      "id": "toa-payoh-261-toa-payoh-east-2026-01-228194",
+      "id": "toa-payoh-261-toa-payoh-east-2026-01-228085",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -436,6 +416,19 @@
       "resalePrice": 958000,
       "pricePerSqm": 10301.08,
       "pricePerSqft": 957
+    },
+    {
+      "id": "toa-payoh-261-toa-payoh-east-2024-08-192826",
+      "month": "2024-08",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "94 years 05 months",
+      "resalePrice": 962888,
+      "pricePerSqm": 10353.63,
+      "pricePerSqft": 961.89
     }
   ]
 }

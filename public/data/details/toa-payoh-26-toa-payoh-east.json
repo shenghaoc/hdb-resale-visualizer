@@ -4,19 +4,18 @@
     "town": "TOA PAYOH",
     "block": "26",
     "streetName": "TOA PAYOH EAST",
-    "displayName": null,
     "coordinates": {
       "lat": 1.33291837032644,
       "lng": 103.856763112528
     },
-    "medianPrice": 365000,
+    "medianPrice": 370000,
     "priceIqr": [
-      356250,
-      371722
+      355000,
+      372000
     ],
-    "pricePerSqmMedian": 5447.76,
-    "pricePerSqftMedian": 506.12,
-    "transactionCount": 10,
+    "pricePerSqmMedian": 5522.39,
+    "pricePerSqftMedian": 513.05,
+    "transactionCount": 9,
     "floorAreaRange": [
       66,
       67
@@ -25,10 +24,10 @@
       1971,
       1971
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-02",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2026-02"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -1200,30 +1199,11 @@
       "medianPrice": 370000,
       "transactionCount": 1,
       "medianPricePerSqm": 5522.39
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 360000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5373.13
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-04-228076",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1971,
-      "remainingLease": "43 years 10 months",
-      "resalePrice": 360000,
-      "pricePerSqm": 5373.13,
-      "pricePerSqft": 499.18
-    },
-    {
-      "id": "toa-payoh-26-toa-payoh-east-2026-02-228072",
+      "id": "toa-payoh-26-toa-payoh-east-2026-02-227966",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1236,7 +1216,7 @@
       "pricePerSqft": 513.05
     },
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-01-228071",
+      "id": "toa-payoh-26-toa-payoh-east-2026-01-227965",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1468,6 +1448,19 @@
       "resalePrice": 268000,
       "pricePerSqm": 4000,
       "pricePerSqft": 371.61
+    },
+    {
+      "id": "toa-payoh-26-toa-payoh-east-2021-05-98693",
+      "month": "2021-05",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1971,
+      "remainingLease": "48 years 08 months",
+      "resalePrice": 270000,
+      "pricePerSqm": 4029.85,
+      "pricePerSqft": 374.39
     }
   ]
 }

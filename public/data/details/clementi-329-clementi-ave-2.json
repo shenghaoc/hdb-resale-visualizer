@@ -4,19 +4,18 @@
     "town": "CLEMENTI",
     "block": "329",
     "streetName": "CLEMENTI AVE 2",
-    "displayName": null,
     "coordinates": {
       "lat": 1.31306718149221,
       "lng": 103.767339299757
     },
-    "medianPrice": 435000,
+    "medianPrice": 430500,
     "priceIqr": [
-      419000,
-      548944
+      418500,
+      571972
     ],
-    "pricePerSqmMedian": 6358.21,
-    "pricePerSqftMedian": 590.7,
-    "transactionCount": 11,
+    "pricePerSqmMedian": 6313.43,
+    "pricePerSqftMedian": 586.54,
+    "transactionCount": 10,
     "floorAreaRange": [
       67,
       139
@@ -25,10 +24,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-02",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2026-02"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1155,30 +1154,11 @@
       "medianPrice": 595000,
       "transactionCount": 1,
       "medianPricePerSqm": 6467.39
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 458888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6849.07
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-329-clementi-ave-2-2026-04-224122",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "51 years 04 months",
-      "resalePrice": 458888,
-      "pricePerSqm": 6849.07,
-      "pricePerSqft": 636.3
-    },
-    {
-      "id": "clementi-329-clementi-ave-2-2026-02-224186",
+      "id": "clementi-329-clementi-ave-2-2026-02-224146",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1191,7 +1171,7 @@
       "pricePerSqft": 600.84
     },
     {
-      "id": "clementi-329-clementi-ave-2-2026-01-224115",
+      "id": "clementi-329-clementi-ave-2-2026-01-224079",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1423,6 +1403,19 @@
       "resalePrice": 505000,
       "pricePerSqm": 5489.13,
       "pricePerSqft": 509.96
+    },
+    {
+      "id": "clementi-329-clementi-ave-2-2021-11-112394",
+      "month": "2021-11",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "55 years 09 months",
+      "resalePrice": 348000,
+      "pricePerSqm": 5194.03,
+      "pricePerSqft": 482.54
     }
   ]
 }

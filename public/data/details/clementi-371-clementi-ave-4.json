@@ -4,19 +4,18 @@
     "town": "CLEMENTI",
     "block": "371",
     "streetName": "CLEMENTI AVE 4",
-    "displayName": null,
     "coordinates": {
       "lat": 1.32057465713359,
       "lng": 103.768211873157
     },
-    "medianPrice": 422888,
+    "medianPrice": 420444,
     "priceIqr": [
-      400000,
-      450000
+      397000,
+      435000
     ],
-    "pricePerSqmMedian": 6218.94,
-    "pricePerSqftMedian": 577.76,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 6183,
+    "pricePerSqftMedian": 574.42,
+    "transactionCount": 8,
     "floorAreaRange": [
       68,
       163
@@ -25,10 +24,10 @@
       1981,
       1981
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-02",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2026-02"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -1077,30 +1076,11 @@
       "medianPrice": 422888,
       "transactionCount": 1,
       "medianPricePerSqm": 6218.94
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 450000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6617.65
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-371-clementi-ave-4-2026-04-224145",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "54 years 06 months",
-      "resalePrice": 450000,
-      "pricePerSqm": 6617.65,
-      "pricePerSqft": 614.8
-    },
-    {
-      "id": "clementi-371-clementi-ave-4-2026-02-224136",
+      "id": "clementi-371-clementi-ave-4-2026-02-224098",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1345,6 +1325,19 @@
       "resalePrice": 425000,
       "pricePerSqm": 6250,
       "pricePerSqft": 580.64
+    },
+    {
+      "id": "clementi-371-clementi-ave-4-2022-05-124273",
+      "month": "2022-05",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "58 years 05 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 5806.45,
+      "pricePerSqft": 539.44
     }
   ]
 }

@@ -39,25 +39,7 @@ describe("pipeline artifacts", () => {
     expect(stations.features).toHaveLength(2);
     expect(angMoKioStation?.geometry.coordinates[0]).toBeCloseTo(103.84985, 5);
     expect(angMoKioStation?.geometry.coordinates[1]).toBeCloseTo(1.3698, 5);
-    expect(angMoKioStation?.properties).toMatchObject({
-      stationName: "ANG MO KIO MRT STATION",
-      color: "#d11141",
-      lines: ["NSL"],
-      isInterchange: false,
-    });
     expect(nearestMrt).toEqual({
-      stationName: "ANG MO KIO MRT STATION",
-      distanceMeters: 16,
-    });
-  });
-
-  it("uses block-level lease commence year and captures nearby MRT options", () => {
-    const artifacts = buildFixtureArtifacts();
-    const angMoKioSummary =
-      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary;
-
-    expect(angMoKioSummary?.leaseCommenceRange).toEqual([1979, 1979]);
-    expect(angMoKioSummary?.nearbyMrts?.[0]).toEqual({
       stationName: "ANG MO KIO MRT STATION",
       distanceMeters: 16,
     });

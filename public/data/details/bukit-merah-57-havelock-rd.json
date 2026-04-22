@@ -4,19 +4,18 @@
     "town": "BUKIT MERAH",
     "block": "57",
     "streetName": "HAVELOCK RD",
-    "displayName": "HAVELOCK VIEW",
     "coordinates": {
       "lat": 1.29013858517146,
       "lng": 103.828453293371
     },
     "medianPrice": 840000,
     "priceIqr": [
-      835000,
-      1030000
+      826250,
+      1042500
     ],
-    "pricePerSqmMedian": 11594.2,
-    "pricePerSqftMedian": 1077.14,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 11847.83,
+    "pricePerSqftMedian": 1100.7,
+    "transactionCount": 8,
     "floorAreaRange": [
       69,
       96
@@ -25,10 +24,10 @@
       2013,
       2013
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-01",
     "availableDateRange": [
       "2016-09",
-      "2026-04"
+      "2026-01"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -301,30 +300,11 @@
       "medianPrice": 995000,
       "transactionCount": 2,
       "medianPricePerSqm": 12547.63
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 989888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 10530.72
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-57-havelock-rd-2026-04-223362",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 94,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "86 years 02 months",
-      "resalePrice": 989888,
-      "pricePerSqm": 10530.72,
-      "pricePerSqft": 978.34
-    },
-    {
-      "id": "bukit-merah-57-havelock-rd-2026-01-223241",
+      "id": "bukit-merah-57-havelock-rd-2026-01-223218",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "22 TO 24",
@@ -337,7 +317,7 @@
       "pricePerSqft": 1130.99
     },
     {
-      "id": "bukit-merah-57-havelock-rd-2026-01-223353",
+      "id": "bukit-merah-57-havelock-rd-2026-01-223330",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -569,6 +549,19 @@
       "resalePrice": 848000,
       "pricePerSqm": 9528.09,
       "pricePerSqft": 885.19
+    },
+    {
+      "id": "bukit-merah-57-havelock-rd-2020-10-80736",
+      "month": "2020-10",
+      "flatType": "4 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 828000,
+      "pricePerSqm": 9303.37,
+      "pricePerSqft": 864.31
     }
   ]
 }

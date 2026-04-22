@@ -4,19 +4,18 @@
     "town": "BISHAN",
     "block": "262",
     "streetName": "BISHAN ST 22",
-    "displayName": null,
     "coordinates": {
       "lat": 1.3592501119015,
       "lng": 103.842623959859
     },
-    "medianPrice": 810000,
+    "medianPrice": 821444,
     "priceIqr": [
-      765000,
-      836888
+      791250,
+      838888
     ],
-    "pricePerSqmMedian": 7548.08,
-    "pricePerSqftMedian": 701.24,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 7703.43,
+    "pricePerSqftMedian": 715.67,
+    "transactionCount": 6,
     "floorAreaRange": [
       103,
       133
@@ -25,10 +24,10 @@
       1992,
       1992
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "1996-06",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -511,30 +510,11 @@
       "medianPrice": 810000,
       "transactionCount": 1,
       "medianPricePerSqm": 7232.14
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 745000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7163.46
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-262-bishan-st-22-2026-04-222738",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1992,
-      "remainingLease": "65 years 04 months",
-      "resalePrice": 745000,
-      "pricePerSqm": 7163.46,
-      "pricePerSqft": 665.51
-    },
-    {
-      "id": "bishan-262-bishan-st-22-2026-03-222734",
+      "id": "bishan-262-bishan-st-22-2026-03-222723",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -779,6 +759,19 @@
       "resalePrice": 555000,
       "pricePerSqm": 5336.54,
       "pricePerSqft": 495.78
+    },
+    {
+      "id": "bishan-262-bishan-st-22-2016-04-960323",
+      "month": "2016-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1992,
+      "remainingLease": "75",
+      "resalePrice": 535000,
+      "pricePerSqm": 5144.23,
+      "pricePerSqft": 477.92
     }
   ]
 }

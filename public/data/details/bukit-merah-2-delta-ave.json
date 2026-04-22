@@ -4,19 +4,18 @@
     "town": "BUKIT MERAH",
     "block": "2",
     "streetName": "DELTA AVE",
-    "displayName": null,
     "coordinates": {
       "lat": 1.29173412228908,
       "lng": 103.82802613443
     },
-    "medianPrice": 1091900,
+    "medianPrice": 1080000,
     "priceIqr": [
-      1067500,
-      1115350
+      1055000,
+      1115000
     ],
-    "pricePerSqmMedian": 8950,
-    "pricePerSqftMedian": 831.48,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 8852.46,
+    "pricePerSqftMedian": 822.42,
+    "transactionCount": 3,
     "floorAreaRange": [
       122,
       122
@@ -25,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-12",
     "availableDateRange": [
       "1990-10",
-      "2026-04"
+      "2025-12"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -510,28 +509,9 @@
       "medianPrice": 1150000,
       "transactionCount": 1,
       "medianPricePerSqm": 9426.23
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 1103800,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9047.54
     }
   ],
   "recentTransactions": [
-    {
-      "id": "bukit-merah-2-delta-ave-2026-04-223444",
-      "month": "2026-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years 06 months",
-      "resalePrice": 1103800,
-      "pricePerSqm": 9047.54,
-      "pricePerSqft": 840.54
-    },
     {
       "id": "bukit-merah-2-delta-ave-2025-12-201637",
       "month": "2025-12",
@@ -767,7 +747,7 @@
       "pricePerSqft": 624.43
     },
     {
-      "id": "bukit-merah-2-delta-ave-2016-10-971206",
+      "id": "bukit-merah-2-delta-ave-2016-10-971079",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -778,6 +758,19 @@
       "resalePrice": 778000,
       "pricePerSqm": 6377.05,
       "pricePerSqft": 592.45
+    },
+    {
+      "id": "bukit-merah-2-delta-ave-2016-09-969410",
+      "month": "2016-09",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "68",
+      "resalePrice": 660000,
+      "pricePerSqm": 5409.84,
+      "pricePerSqft": 502.59
     }
   ]
 }

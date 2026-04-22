@@ -4,19 +4,18 @@
     "town": "TAMPINES",
     "block": "722",
     "streetName": "TAMPINES ST 72",
-    "displayName": "TAMPINES STARLIGHT",
     "coordinates": {
       "lat": 1.35989254496234,
       "lng": 103.935859341782
     },
-    "medianPrice": 650000,
+    "medianPrice": 693500,
     "priceIqr": [
-      625999,
-      761000
+      624499,
+      775250
     ],
-    "pricePerSqmMedian": 6341.67,
-    "pricePerSqftMedian": 589.16,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6332.44,
+    "pricePerSqftMedian": 588.31,
+    "transactionCount": 4,
     "floorAreaRange": [
       99,
       120
@@ -521,27 +520,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 705500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6453.66
+      "medianPrice": 761000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6341.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-722-tampines-st-72-2026-04-227711",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 99,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years 01 month",
-      "resalePrice": 650000,
-      "pricePerSqm": 6565.66,
-      "pricePerSqft": 609.97
-    },
-    {
-      "id": "tampines-722-tampines-st-72-2026-04-227891",
+      "id": "tampines-722-tampines-st-72-2026-04-227790",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -786,6 +772,19 @@
       "resalePrice": 560000,
       "pricePerSqm": 4666.67,
       "pricePerSqft": 433.55
+    },
+    {
+      "id": "tampines-722-tampines-st-72-2018-03-24289",
+      "month": "2018-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "78 years 01 month",
+      "resalePrice": 435000,
+      "pricePerSqm": 4393.94,
+      "pricePerSqft": 408.21
     }
   ]
 }

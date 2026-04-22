@@ -4,19 +4,18 @@
     "town": "JURONG WEST",
     "block": "333",
     "streetName": "KANG CHING RD",
-    "displayName": null,
     "coordinates": {
       "lat": 1.33927933228555,
       "lng": 103.723441613129
     },
-    "medianPrice": 865000,
+    "medianPrice": 850000,
     "priceIqr": [
-      842500,
-      895000
+      840000,
+      880000
     ],
-    "pricePerSqmMedian": 6223.02,
-    "pricePerSqftMedian": 578.13,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6115.11,
+    "pricePerSqftMedian": 568.11,
+    "transactionCount": 5,
     "floorAreaRange": [
       139,
       143
@@ -376,14 +375,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 905000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6419.23
+      "medianPrice": 900000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6474.82
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-333-kang-ching-rd-2026-04-225388",
+      "id": "jurong-west-333-kang-ching-rd-2026-04-225325",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -394,19 +393,6 @@
       "resalePrice": 900000,
       "pricePerSqm": 6474.82,
       "pricePerSqft": 601.53
-    },
-    {
-      "id": "jurong-west-333-kang-ching-rd-2026-04-225389",
-      "month": "2026-04",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 143,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "69 years 10 months",
-      "resalePrice": 910000,
-      "pricePerSqm": 6363.64,
-      "pricePerSqft": 591.2
     },
     {
       "id": "jurong-west-333-kang-ching-rd-2025-06-208386",
@@ -578,7 +564,7 @@
       "pricePerSqft": 406.05
     },
     {
-      "id": "jurong-west-333-kang-ching-rd-2016-04-961135",
+      "id": "jurong-west-333-kang-ching-rd-2016-04-961008",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -591,7 +577,7 @@
       "pricePerSqft": 427.76
     },
     {
-      "id": "jurong-west-333-kang-ching-rd-2016-04-961136",
+      "id": "jurong-west-333-kang-ching-rd-2016-04-961009",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -604,7 +590,7 @@
       "pricePerSqft": 425.54
     },
     {
-      "id": "jurong-west-333-kang-ching-rd-2015-12-955401",
+      "id": "jurong-west-333-kang-ching-rd-2015-12-955274",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -617,7 +603,7 @@
       "pricePerSqft": 406.37
     },
     {
-      "id": "jurong-west-333-kang-ching-rd-2014-10-647679",
+      "id": "jurong-west-333-kang-ching-rd-2014-10-647552",
       "month": "2014-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -630,7 +616,7 @@
       "pricePerSqft": 451.75
     },
     {
-      "id": "jurong-west-333-kang-ching-rd-2012-11-616594",
+      "id": "jurong-west-333-kang-ching-rd-2012-11-616467",
       "month": "2012-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -641,6 +627,19 @@
       "resalePrice": 640000,
       "pricePerSqm": 4475.52,
       "pricePerSqft": 415.79
+    },
+    {
+      "id": "jurong-west-333-kang-ching-rd-2012-02-597979",
+      "month": "2012-02",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 139,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 610000,
+      "pricePerSqm": 4388.49,
+      "pricePerSqft": 407.7
     }
   ]
 }

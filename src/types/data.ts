@@ -27,7 +27,6 @@ export type BlockSummary = {
   flatTypes: string[];
   flatModels: string[];
   nearestMrt: NearestMrt | null;
-  nearbyMrts?: NearestMrt[];
 };
 
 export type AddressDetailTransaction = {

@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
@@ -28,8 +27,6 @@ type ShortlistRow = {
   summary: BlockSummary;
 };
 
-type CompareMode = "median" | "lease" | "mrt" | "target-gap";
-
 type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
@@ -40,7 +37,7 @@ type ShortlistDrawerProps = {
 
 type GapInfo = {
   amount: number;
-  labelKey: "shortlist.gap.belowTarget" | "shortlist.gap.aboveTarget";
+  label: string;
   tone: "positive" | "negative";
 };
 
@@ -54,14 +51,14 @@ function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | 
   if (targetPrice >= medianPrice) {
     return {
       amount,
-      labelKey: "shortlist.gap.belowTarget",
+      label: "Median is below your target",
       tone: "positive",
     };
   }
 
   return {
     amount,
-    labelKey: "shortlist.gap.aboveTarget",
+    label: "Median is above your target",
     tone: "negative",
   };
 }
@@ -82,23 +79,16 @@ export function ShortlistDrawer({
   onUpdate,
 }: ShortlistDrawerProps) {
   const { t } = useI18n();
-  const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
-
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
     void navigator.clipboard.writeText(url);
-    alert(t("shortlist.shareCopied"));
+    alert("Share URL copied to clipboard!");
   }
 
   function handleExportCsv() {
-    const headers = [
-      t("shortlist.export.address"),
-      t("shortlist.export.medianPrice"),
-      t("shortlist.export.targetPrice"),
-      t("shortlist.export.notes"),
-    ];
+    const headers = ["Address", "Median Price", "Target Price", "Notes"];
     const csvRows = rows.map((row) =>
       [
         `"${row.summary.block} ${row.summary.streetName}"`,
@@ -128,48 +118,6 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
-  const rankedRows = useMemo(() => [...rows].sort((left, right) => {
-    if (compareMode === "median") {
-      return left.summary.medianPrice - right.summary.medianPrice;
-    }
-
-    if (compareMode === "lease") {
-      return right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1];
-    }
-
-    if (compareMode === "mrt") {
-      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      return leftDistance - rightDistance;
-    }
-
-    const leftGap =
-      left.item.targetPrice === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(left.item.targetPrice - left.summary.medianPrice);
-    const rightGap =
-      right.item.targetPrice === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(right.item.targetPrice - right.summary.medianPrice);
-    return leftGap - rightGap;
-  }), [compareMode, rows]);
-
-  const highlights = useMemo(() => {
-    const byMedian = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice);
-    const byLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1]);
-    const byMrt = [...rows].sort((left, right) => {
-      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      return leftDistance - rightDistance;
-    });
-
-    return {
-      cheapest: byMedian[0] ?? null,
-      newestLease: byLease[0] ?? null,
-      nearestMrt: byMrt[0] ?? null,
-    };
-  }, [rows]);
-
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col bg-background">
@@ -181,61 +129,25 @@ export function ShortlistDrawer({
             <CardAction className="flex flex-col items-end gap-3">
               <Badge>{t("shortlist.savedCount", { count: rows.length })}</Badge>
               <Button onClick={onToggleOpen} size="sm" variant="ghost" type="button">
-                {isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
+                {isOpen ? "Collapse" : "Expand"}
               </Button>
             </CardAction>
           </div>
           {rows.length > 0 ? (
-            <>
-              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-                <Button
-                  variant={compareMode === "target-gap" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("target-gap")}
-                  type="button"
-                >
-                  Target fit
-                </Button>
-                <Button
-                  variant={compareMode === "median" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("median")}
-                  type="button"
-                >
-                  Price
-                </Button>
-                <Button
-                  variant={compareMode === "lease" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("lease")}
-                  type="button"
-                >
-                  Lease
-                </Button>
-                <Button
-                  variant={compareMode === "mrt" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("mrt")}
-                  type="button"
-                >
-                  MRT
-                </Button>
-              </ButtonGroup>
-              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-                <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
-                  <Download data-icon="inline-start" />
-                  {t("shortlist.export.json")}
-                </Button>
-                <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                  <Download data-icon="inline-start" />
-                  {t("shortlist.export.csv")}
-                </Button>
-                <Button variant="outline" size="xs" onClick={handleShare} type="button">
-                  <Link2 data-icon="inline-start" />
-                  {t("shortlist.shareLink")}
-                </Button>
-              </ButtonGroup>
-            </>
+            <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+              <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                <Download data-icon="inline-start" />
+                JSON
+              </Button>
+              <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                <Download data-icon="inline-start" />
+                CSV
+              </Button>
+              <Button variant="outline" size="xs" onClick={handleShare} type="button">
+                <Link2 data-icon="inline-start" />
+                Share link
+              </Button>
+            </ButtonGroup>
           ) : null}
         </CardHeader>
 
@@ -243,29 +155,12 @@ export function ShortlistDrawer({
           <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
             {rows.length === 0 ? (
               <div className="empty-state">
-                {t("shortlist.emptyState")}
+                Save up to four blocks to compare.
               </div>
             ) : (
               <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
                 <div className="flex flex-col gap-4 pb-4">
-                  <Card size="sm" className="bg-muted/40">
-                    <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Lowest median</span>
-                        <strong>{highlights.cheapest ? `${highlights.cheapest.summary.block} ${highlights.cheapest.summary.streetName}` : "N/A"}</strong>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Newest lease</span>
-                        <strong>{highlights.newestLease ? `${highlights.newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Closest MRT</span>
-                        <strong>{highlights.nearestMrt?.summary.nearestMrt ? `${highlights.nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                    {rankedRows.map((row) => {
+                    {rows.map((row) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
                       const remainingLeaseRange = getRemainingLeaseRange(
                         row.summary.leaseCommenceRange,
@@ -287,7 +182,7 @@ export function ShortlistDrawer({
                                 type="button"
                               >
                                 <X data-icon="inline-start" />
-                                {t("shortlist.remove")}
+                                Remove
                               </Button>
                             </div>
                           </CardHeader>
@@ -295,7 +190,7 @@ export function ShortlistDrawer({
                             <div className="grid gap-4 sm:grid-cols-2">
                               <div className="flex flex-col gap-2">
                                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.marketMedian")}
+                                  Market median
                                 </span>
                                 <strong className="font-heading text-2xl font-semibold">
                                   {formatCompactCurrency(row.summary.medianPrice)}
@@ -306,28 +201,24 @@ export function ShortlistDrawer({
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.pricePerSqft")}
+                                  Price / sqft
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
                                   {row.summary.pricePerSqftMedian !== null
                                     ? formatCurrency(row.summary.pricePerSqftMedian)
-                                    : t("shortlist.na")}
+                                    : "N/A"}
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.pricePerSqm", {
-                                    value: formatNumber(row.summary.pricePerSqmMedian),
-                                  })}
+                                  {formatNumber(row.summary.pricePerSqmMedian)} / sqm
                                 </span>
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.areaRange")}
+                                  Area range
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.areaRangeValue", {
-                                    min: formatNumber(row.summary.floorAreaRange[0], 1),
-                                    max: formatNumber(row.summary.floorAreaRange[1], 1),
-                                  })}
+                                  {formatNumber(row.summary.floorAreaRange[0], 1)} to{" "}
+                                  {formatNumber(row.summary.floorAreaRange[1], 1)} sqm
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
                                   {row.summary.flatTypes.join(", ")}
@@ -335,19 +226,14 @@ export function ShortlistDrawer({
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.leaseContext")}
+                                  Lease context
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.leaseLeftRange", {
-                                    min: remainingLeaseRange[0],
-                                    max: remainingLeaseRange[1],
-                                  })}
+                                  {remainingLeaseRange[0]} to {remainingLeaseRange[1]} yrs left
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.leaseCommenceRange", {
-                                    start: row.summary.leaseCommenceRange[0],
-                                    end: row.summary.leaseCommenceRange[1],
-                                  })}
+                                  Commence {row.summary.leaseCommenceRange[0]} to{" "}
+                                  {row.summary.leaseCommenceRange[1]}
                                 </span>
                               </div>
                             </div>
@@ -356,33 +242,28 @@ export function ShortlistDrawer({
                               <div className="flex flex-col gap-2">
                                 <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                   <TrainFront className="size-3.5" />
-                                  {t("results.nearestMrt")}
+                                  Nearest MRT
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
                                   {row.summary.nearestMrt
                                     ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
-                                    : t("results.noMatch")}
+                                    : "No match"}
                                 </strong>
-                                {(row.summary.nearbyMrts?.length ?? 0) > 1 ? (
-                                  <span className="text-sm text-muted-foreground">
-                                    Also near {(row.summary.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
-                                  </span>
-                                ) : null}
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                   <Target className="size-3.5" />
-                                  {t("shortlist.gapVsTarget")}
+                                  Gap vs target
                                 </span>
                                 {gapInfo ? (
                                   <>
                                     <strong className={gapInfo.tone === "positive" ? "text-emerald-700" : "text-rose-700"}>
                                       {formatCurrency(gapInfo.amount)}
                                     </strong>
-                                    <span className="text-sm text-muted-foreground">{t(gapInfo.labelKey)}</span>
+                                    <span className="text-sm text-muted-foreground">{gapInfo.label}</span>
                                   </>
                                 ) : (
-                                  <span className="text-sm text-muted-foreground">{t("shortlist.enterTargetToCompare")}</span>
+                                  <span className="text-sm text-muted-foreground">Enter a target to compare.</span>
                                 )}
                               </div>
                             </div>
@@ -390,15 +271,15 @@ export function ShortlistDrawer({
                             <FieldGroup>
                               <Field>
                                 <FieldContent>
-                                  <FieldLabel htmlFor={`target-${row.item.addressKey}`}>{t("shortlist.yourTargetPrice")}</FieldLabel>
+                                  <FieldLabel htmlFor={`target-${row.item.addressKey}`}>Your target price</FieldLabel>
                                   <InputGroup>
                                     <InputGroupAddon align="inline-start">
-                                      <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
+                                      <InputGroupText>SGD</InputGroupText>
                                     </InputGroupAddon>
                                     <InputGroupInput
                                       id={`target-${row.item.addressKey}`}
                                       inputMode="numeric"
-                                      placeholder={t("shortlist.targetPricePlaceholder")}
+                                      placeholder="850000"
                                       type="number"
                                       value={row.item.targetPrice ?? ""}
                                       onChange={(event) =>
@@ -414,11 +295,11 @@ export function ShortlistDrawer({
                               <Field>
                                 <FieldContent>
                                   <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
-                                    {t("shortlist.notes")}
+                                    Notes
                                   </FieldLabel>
                                   <Textarea
                                     id={`notes-${row.item.addressKey}`}
-                                    placeholder={t("shortlist.notesPlaceholder")}
+                                    placeholder="Why this block stays in the running"
                                     rows={3}
                                     value={row.item.notes}
                                     onChange={(event) =>

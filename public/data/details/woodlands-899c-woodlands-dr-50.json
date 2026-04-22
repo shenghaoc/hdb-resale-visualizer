@@ -4,19 +4,18 @@
     "town": "WOODLANDS",
     "block": "899C",
     "streetName": "WOODLANDS DR 50",
-    "displayName": null,
     "coordinates": {
       "lat": 1.43656985578908,
       "lng": 103.795261266334
     },
-    "medianPrice": 615000,
+    "medianPrice": 621944,
     "priceIqr": [
-      559000,
-      636944
+      583500,
+      640972
     ],
-    "pricePerSqmMedian": 5450,
-    "pricePerSqftMedian": 506.32,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 5458.05,
+    "pricePerSqftMedian": 507.07,
+    "transactionCount": 6,
     "floorAreaRange": [
       97,
       123
@@ -521,27 +520,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 594000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5448.05
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5466.1
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-899c-woodlands-dr-50-2026-04-228474",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years 06 months",
-      "resalePrice": 543000,
-      "pricePerSqm": 5430,
-      "pricePerSqft": 504.46
-    },
-    {
-      "id": "woodlands-899c-woodlands-dr-50-2026-04-228667",
+      "id": "woodlands-899c-woodlands-dr-50-2026-04-228548",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -554,7 +540,7 @@
       "pricePerSqft": 507.82
     },
     {
-      "id": "woodlands-899c-woodlands-dr-50-2026-01-228453",
+      "id": "woodlands-899c-woodlands-dr-50-2026-01-228338",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -567,7 +553,7 @@
       "pricePerSqft": 532.33
     },
     {
-      "id": "woodlands-899c-woodlands-dr-50-2026-01-228656",
+      "id": "woodlands-899c-woodlands-dr-50-2026-01-228537",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -786,6 +772,19 @@
       "resalePrice": 410000,
       "pricePerSqm": 3474.58,
       "pricePerSqft": 322.8
+    },
+    {
+      "id": "woodlands-899c-woodlands-dr-50-2017-07-11324",
+      "month": "2017-07",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 97,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "79 years 02 months",
+      "resalePrice": 348888,
+      "pricePerSqm": 3596.78,
+      "pricePerSqft": 334.15
     }
   ]
 }

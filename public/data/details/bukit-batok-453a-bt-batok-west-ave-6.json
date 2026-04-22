@@ -4,7 +4,6 @@
     "town": "BUKIT BATOK",
     "block": "453A",
     "streetName": "BT BATOK WEST AVE 6",
-    "displayName": "WEST TERRA @ BUKIT BATOK",
     "coordinates": {
       "lat": 1.35227488305445,
       "lng": 103.742253260513
@@ -12,11 +11,11 @@
     "medianPrice": 678888,
     "priceIqr": [
       640000,
-      820000
+      822500
     ],
-    "pricePerSqmMedian": 7130.43,
-    "pricePerSqftMedian": 662.44,
-    "transactionCount": 21,
+    "pricePerSqmMedian": 7113.6,
+    "pricePerSqftMedian": 660.88,
+    "transactionCount": 20,
     "floorAreaRange": [
       93,
       115
@@ -25,10 +24,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "2023-04",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -200,30 +199,11 @@
       "medianPrice": 830000,
       "transactionCount": 1,
       "medianPricePerSqm": 7217.39
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 718888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7729.98
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-04-223026",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "92 years",
-      "resalePrice": 718888,
-      "pricePerSqm": 7729.98,
-      "pricePerSqft": 718.14
-    },
-    {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-03-223151",
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-03-223129",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -236,7 +216,7 @@
       "pricePerSqft": 670.52
     },
     {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-01-223139",
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-01-223117",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -468,6 +448,19 @@
       "resalePrice": 640000,
       "pricePerSqm": 6881.72,
       "pricePerSqft": 639.33
+    },
+    {
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2024-05-172631",
+      "month": "2024-05",
+      "flatType": "5 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "93 years 11 months",
+      "resalePrice": 870000,
+      "pricePerSqm": 7565.22,
+      "pricePerSqft": 702.83
     }
   ]
 }

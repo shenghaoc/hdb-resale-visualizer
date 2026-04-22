@@ -4,19 +4,18 @@
     "town": "TAMPINES",
     "block": "324",
     "streetName": "TAMPINES ST 32",
-    "displayName": null,
     "coordinates": {
       "lat": 1.35238834231733,
       "lng": 103.959443360689
     },
-    "medianPrice": 945000,
+    "medianPrice": 478000,
     "priceIqr": [
-      945000,
-      945000
+      445000,
+      544000
     ],
-    "pricePerSqmMedian": 6428.57,
-    "pricePerSqftMedian": 597.23,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 3251.7,
+    "pricePerSqftMedian": 302.09,
+    "transactionCount": 69,
     "floorAreaRange": [
       147,
       150
@@ -25,10 +24,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2022-10",
     "availableDateRange": [
       "1996-02",
-      "2026-04"
+      "2022-10"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -360,28 +359,9 @@
       "medianPrice": 800000,
       "transactionCount": 1,
       "medianPricePerSqm": 5405.41
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 945000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6428.57
     }
   ],
   "recentTransactions": [
-    {
-      "id": "tampines-324-tampines-st-32-2026-04-227939",
-      "month": "2026-04",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 147,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "68 years 09 months",
-      "resalePrice": 945000,
-      "pricePerSqm": 6428.57,
-      "pricePerSqft": 597.23
-    },
     {
       "id": "tampines-324-tampines-st-32-2022-10-138368",
       "month": "2022-10",
@@ -500,7 +480,7 @@
       "pricePerSqft": 392.81
     },
     {
-      "id": "tampines-324-tampines-st-32-2016-04-961746",
+      "id": "tampines-324-tampines-st-32-2016-04-961619",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -513,7 +493,7 @@
       "pricePerSqft": 414.3
     },
     {
-      "id": "tampines-324-tampines-st-32-2016-04-961747",
+      "id": "tampines-324-tampines-st-32-2016-04-961620",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -526,7 +506,7 @@
       "pricePerSqft": 434.81
     },
     {
-      "id": "tampines-324-tampines-st-32-2015-08-949721",
+      "id": "tampines-324-tampines-st-32-2015-08-949594",
       "month": "2015-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -539,7 +519,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "tampines-324-tampines-st-32-2014-09-646619",
+      "id": "tampines-324-tampines-st-32-2014-09-646492",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -552,7 +532,7 @@
       "pricePerSqft": 398.16
     },
     {
-      "id": "tampines-324-tampines-st-32-2013-09-631187",
+      "id": "tampines-324-tampines-st-32-2013-09-631060",
       "month": "2013-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -565,7 +545,7 @@
       "pricePerSqft": 436.01
     },
     {
-      "id": "tampines-324-tampines-st-32-2012-07-609527",
+      "id": "tampines-324-tampines-st-32-2012-07-609400",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -578,7 +558,7 @@
       "pricePerSqft": 410.8
     },
     {
-      "id": "tampines-324-tampines-st-32-2011-06-584884",
+      "id": "tampines-324-tampines-st-32-2011-06-584757",
       "month": "2011-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -591,7 +571,7 @@
       "pricePerSqft": 386.58
     },
     {
-      "id": "tampines-324-tampines-st-32-2011-01-575139",
+      "id": "tampines-324-tampines-st-32-2011-01-575012",
       "month": "2011-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -604,7 +584,7 @@
       "pricePerSqft": 343.8
     },
     {
-      "id": "tampines-324-tampines-st-32-2010-09-565908",
+      "id": "tampines-324-tampines-st-32-2010-09-565781",
       "month": "2010-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -617,7 +597,7 @@
       "pricePerSqft": 307.78
     },
     {
-      "id": "tampines-324-tampines-st-32-2010-01-540876",
+      "id": "tampines-324-tampines-st-32-2010-01-540749",
       "month": "2010-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -628,6 +608,19 @@
       "resalePrice": 488000,
       "pricePerSqm": 3297.3,
       "pricePerSqft": 306.33
+    },
+    {
+      "id": "tampines-324-tampines-st-32-2009-11-535214",
+      "month": "2009-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 149,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years",
+      "resalePrice": 465000,
+      "pricePerSqm": 3120.81,
+      "pricePerSqft": 289.93
     }
   ]
 }

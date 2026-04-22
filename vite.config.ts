@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1100,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -27,5 +27,15 @@ export default defineConfig({
   },
   preview: {
     port: 4173,
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./tests/setup.ts",
+    include: ["tests/unit/**/*.test.ts", "tests/integration/**/*.test.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+    },
   },
 });

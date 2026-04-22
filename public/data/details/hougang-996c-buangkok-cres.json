@@ -4,19 +4,18 @@
     "town": "HOUGANG",
     "block": "996C",
     "streetName": "BUANGKOK CRES",
-    "displayName": "BUANGKOK TROPICA",
     "coordinates": {
       "lat": 1.38576793194266,
       "lng": 103.882466565347
     },
-    "medianPrice": 640000,
+    "medianPrice": 641000,
     "priceIqr": [
-      608000,
-      650000
+      609500,
+      651250
     ],
-    "pricePerSqmMedian": 6956.52,
-    "pricePerSqftMedian": 646.28,
-    "transactionCount": 17,
+    "pricePerSqmMedian": 6967.39,
+    "pricePerSqftMedian": 647.29,
+    "transactionCount": 16,
     "floorAreaRange": [
       92,
       93
@@ -25,10 +24,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-02",
     "availableDateRange": [
       "2023-10",
-      "2026-04"
+      "2026-02"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -138,30 +137,11 @@
       "medianPrice": 642000,
       "transactionCount": 1,
       "medianPricePerSqm": 6978.26
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 600000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6451.61
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-996c-buangkok-cres-2026-04-224570",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "92 years 06 months",
-      "resalePrice": 600000,
-      "pricePerSqm": 6451.61,
-      "pricePerSqft": 599.38
-    },
-    {
-      "id": "hougang-996c-buangkok-cres-2026-02-224564",
+      "id": "hougang-996c-buangkok-cres-2026-02-224516",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -406,6 +386,19 @@
       "resalePrice": 655000,
       "pricePerSqm": 7043.01,
       "pricePerSqft": 654.32
+    },
+    {
+      "id": "hougang-996c-buangkok-cres-2024-03-178643",
+      "month": "2024-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 573000,
+      "pricePerSqm": 6228.26,
+      "pricePerSqft": 578.62
     }
   ]
 }

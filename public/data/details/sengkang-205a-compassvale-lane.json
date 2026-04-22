@@ -4,19 +4,18 @@
     "town": "SENGKANG",
     "block": "205A",
     "streetName": "COMPASSVALE LANE",
-    "displayName": "COMPASSVALE PLACE",
     "coordinates": {
       "lat": 1.38603998418639,
       "lng": 103.896966680116
     },
-    "medianPrice": 1070000,
+    "medianPrice": 1010000,
     "priceIqr": [
-      1010000,
-      1070000
+      980000,
+      1040000
     ],
-    "pricePerSqmMedian": 7430.56,
-    "pricePerSqftMedian": 690.32,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 7036.96,
+    "pricePerSqftMedian": 653.76,
+    "transactionCount": 2,
     "floorAreaRange": [
       141,
       144
@@ -25,10 +24,10 @@
       1999,
       1999
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-02",
     "availableDateRange": [
       "2003-04",
-      "2026-04"
+      "2026-02"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -319,30 +318,11 @@
       "medianPrice": 1070000,
       "transactionCount": 1,
       "medianPricePerSqm": 7430.56
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 1070000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7482.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-205a-compassvale-lane-2026-04-227292",
-      "month": "2026-04",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 143,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "72 years 04 months",
-      "resalePrice": 1070000,
-      "pricePerSqm": 7482.52,
-      "pricePerSqft": 695.15
-    },
-    {
-      "id": "sengkang-205a-compassvale-lane-2026-02-227291",
+      "id": "sengkang-205a-compassvale-lane-2026-02-227203",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -587,6 +567,19 @@
       "resalePrice": 650000,
       "pricePerSqm": 4513.89,
       "pricePerSqft": 419.35
+    },
+    {
+      "id": "sengkang-205a-compassvale-lane-2017-11-18391",
+      "month": "2017-11",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 142,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "80 years 08 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 4718.31,
+      "pricePerSqft": 438.35
     }
   ]
 }

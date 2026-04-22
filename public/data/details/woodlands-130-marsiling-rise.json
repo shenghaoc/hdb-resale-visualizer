@@ -4,19 +4,18 @@
     "town": "WOODLANDS",
     "block": "130",
     "streetName": "MARSILING RISE",
-    "displayName": null,
     "coordinates": {
       "lat": 1.43812644143688,
       "lng": 103.778700479218
     },
-    "medianPrice": 358000,
+    "medianPrice": 356500,
     "priceIqr": [
       355000,
-      362500
+      363250
     ],
-    "pricePerSqmMedian": 5833.33,
-    "pricePerSqftMedian": 541.93,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 5815.22,
+    "pricePerSqftMedian": 540.25,
+    "transactionCount": 6,
     "floorAreaRange": [
       60,
       138
@@ -25,10 +24,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-10",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2025-10"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -776,28 +775,9 @@
       "medianPrice": 357500,
       "transactionCount": 2,
       "medianPricePerSqm": 5561.59
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 360000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6000
     }
   ],
   "recentTransactions": [
-    {
-      "id": "woodlands-130-marsiling-rise-2026-04-228284",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 60,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "57 years 10 months",
-      "resalePrice": 360000,
-      "pricePerSqm": 6000,
-      "pricePerSqft": 557.42
-    },
     {
       "id": "woodlands-130-marsiling-rise-2025-10-218741",
       "month": "2025-10",
@@ -1044,6 +1024,19 @@
       "resalePrice": 267000,
       "pricePerSqm": 3869.57,
       "pricePerSqft": 359.49
+    },
+    {
+      "id": "woodlands-130-marsiling-rise-2021-03-94401",
+      "month": "2021-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "62 years 11 months",
+      "resalePrice": 295000,
+      "pricePerSqm": 4916.67,
+      "pricePerSqft": 456.77
     }
   ]
 }

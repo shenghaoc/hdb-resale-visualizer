@@ -4,19 +4,18 @@
     "town": "CHOA CHU KANG",
     "block": "5",
     "streetName": "TECK WHYE AVE",
-    "displayName": "TECK WHYE HEIGHTS I",
     "coordinates": {
       "lat": 1.38211439144289,
       "lng": 103.75356509712
     },
-    "medianPrice": 408000,
+    "medianPrice": 401500,
     "priceIqr": [
       395000,
-      415888
+      409972
     ],
-    "pricePerSqmMedian": 5337.84,
-    "pricePerSqftMedian": 495.9,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5425.68,
+    "pricePerSqftMedian": 504.06,
+    "transactionCount": 4,
     "floorAreaRange": [
       74,
       105
@@ -25,10 +24,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2025-07",
     "availableDateRange": [
       "1990-07",
-      "2026-04"
+      "2025-07"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -847,28 +846,9 @@
       "medianPrice": 408000,
       "transactionCount": 1,
       "medianPricePerSqm": 5513.51
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 470000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 4607.84
     }
   ],
   "recentTransactions": [
-    {
-      "id": "choa-chu-kang-5-teck-whye-ave-2026-04-223964",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 102,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "57 years",
-      "resalePrice": 470000,
-      "pricePerSqm": 4607.84,
-      "pricePerSqft": 428.08
-    },
     {
       "id": "choa-chu-kang-5-teck-whye-ave-2025-07-202855",
       "month": "2025-07",
@@ -1115,6 +1095,19 @@
       "resalePrice": 265000,
       "pricePerSqm": 3581.08,
       "pricePerSqft": 332.69
+    },
+    {
+      "id": "choa-chu-kang-5-teck-whye-ave-2017-09-13910",
+      "month": "2017-09",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "65 years 06 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 3365.38,
+      "pricePerSqft": 312.65
     }
   ]
 }
