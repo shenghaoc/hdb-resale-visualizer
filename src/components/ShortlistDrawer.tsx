@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
@@ -26,6 +27,8 @@ type ShortlistRow = {
   item: ShortlistItem;
   summary: BlockSummary;
 };
+
+type CompareMode = "median" | "lease" | "mrt" | "target-gap";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -79,6 +82,8 @@ export function ShortlistDrawer({
   onUpdate,
 }: ShortlistDrawerProps) {
   const { t } = useI18n();
+  const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
@@ -123,6 +128,48 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
+  const rankedRows = useMemo(() => [...rows].sort((left, right) => {
+    if (compareMode === "median") {
+      return left.summary.medianPrice - right.summary.medianPrice;
+    }
+
+    if (compareMode === "lease") {
+      return right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1];
+    }
+
+    if (compareMode === "mrt") {
+      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      return leftDistance - rightDistance;
+    }
+
+    const leftGap =
+      left.item.targetPrice === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(left.item.targetPrice - left.summary.medianPrice);
+    const rightGap =
+      right.item.targetPrice === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(right.item.targetPrice - right.summary.medianPrice);
+    return leftGap - rightGap;
+  }), [compareMode, rows]);
+
+  const highlights = useMemo(() => {
+    const byMedian = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice);
+    const byLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1]);
+    const byMrt = [...rows].sort((left, right) => {
+      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      return leftDistance - rightDistance;
+    });
+
+    return {
+      cheapest: byMedian[0] ?? null,
+      newestLease: byLease[0] ?? null,
+      nearestMrt: byMrt[0] ?? null,
+    };
+  }, [rows]);
+
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col bg-background">
@@ -139,20 +186,56 @@ export function ShortlistDrawer({
             </CardAction>
           </div>
           {rows.length > 0 ? (
-            <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-              <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
-                <Download data-icon="inline-start" />
-                {t("shortlist.export.json")}
-              </Button>
-              <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                <Download data-icon="inline-start" />
-                {t("shortlist.export.csv")}
-              </Button>
-              <Button variant="outline" size="xs" onClick={handleShare} type="button">
-                <Link2 data-icon="inline-start" />
-                {t("shortlist.shareLink")}
-              </Button>
-            </ButtonGroup>
+            <>
+              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+                <Button
+                  variant={compareMode === "target-gap" ? "secondary" : "outline"}
+                  size="xs"
+                  onClick={() => setCompareMode("target-gap")}
+                  type="button"
+                >
+                  Target fit
+                </Button>
+                <Button
+                  variant={compareMode === "median" ? "secondary" : "outline"}
+                  size="xs"
+                  onClick={() => setCompareMode("median")}
+                  type="button"
+                >
+                  Price
+                </Button>
+                <Button
+                  variant={compareMode === "lease" ? "secondary" : "outline"}
+                  size="xs"
+                  onClick={() => setCompareMode("lease")}
+                  type="button"
+                >
+                  Lease
+                </Button>
+                <Button
+                  variant={compareMode === "mrt" ? "secondary" : "outline"}
+                  size="xs"
+                  onClick={() => setCompareMode("mrt")}
+                  type="button"
+                >
+                  MRT
+                </Button>
+              </ButtonGroup>
+              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
+                <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                  <Download data-icon="inline-start" />
+                  {t("shortlist.export.json")}
+                </Button>
+                <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                  <Download data-icon="inline-start" />
+                  {t("shortlist.export.csv")}
+                </Button>
+                <Button variant="outline" size="xs" onClick={handleShare} type="button">
+                  <Link2 data-icon="inline-start" />
+                  {t("shortlist.shareLink")}
+                </Button>
+              </ButtonGroup>
+            </>
           ) : null}
         </CardHeader>
 
@@ -165,7 +248,24 @@ export function ShortlistDrawer({
             ) : (
               <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
                 <div className="flex flex-col gap-4 pb-4">
-                    {rows.map((row) => {
+                  <Card size="sm" className="bg-muted/40">
+                    <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Lowest median</span>
+                        <strong>{highlights.cheapest ? `${highlights.cheapest.summary.block} ${highlights.cheapest.summary.streetName}` : "N/A"}</strong>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Newest lease</span>
+                        <strong>{highlights.newestLease ? `${highlights.newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-muted-foreground">Closest MRT</span>
+                        <strong>{highlights.nearestMrt?.summary.nearestMrt ? `${highlights.nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                    {rankedRows.map((row) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
                       const remainingLeaseRange = getRemainingLeaseRange(
                         row.summary.leaseCommenceRange,
@@ -263,6 +363,11 @@ export function ShortlistDrawer({
                                     ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
                                     : t("results.noMatch")}
                                 </strong>
+                                {(row.summary.nearbyMrts?.length ?? 0) > 1 ? (
+                                  <span className="text-sm text-muted-foreground">
+                                    Also near {(row.summary.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                                  </span>
+                                ) : null}
                               </div>
                               <div className="flex flex-col gap-2">
                                 <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">

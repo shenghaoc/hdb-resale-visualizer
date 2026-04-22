@@ -4,18 +4,19 @@
     "town": "BUKIT PANJANG",
     "block": "651",
     "streetName": "SENJA LINK",
+    "displayName": null,
     "coordinates": {
       "lat": 1.38661244316801,
       "lng": 103.763652921172
     },
-    "medianPrice": 675000,
+    "medianPrice": 685000,
     "priceIqr": [
-      612500,
-      737500
+      617500,
+      742500
     ],
-    "pricePerSqmMedian": 6098.91,
-    "pricePerSqftMedian": 566.61,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 6153.85,
+    "pricePerSqftMedian": 571.71,
+    "transactionCount": 3,
     "floorAreaRange": [
       91,
       130
@@ -24,10 +25,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2025-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-04",
-      "2025-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -379,9 +380,28 @@
       "medianPrice": 550000,
       "transactionCount": 1,
       "medianPricePerSqm": 6043.96
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6227.27
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-651-senja-link-2026-04-223693",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 110,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 6227.27,
+      "pricePerSqft": 578.53
+    },
     {
       "id": "bukit-panjang-651-senja-link-2025-01-202198",
       "month": "2025-01",
@@ -628,19 +648,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 3626.37,
       "pricePerSqft": 336.9
-    },
-    {
-      "id": "bukit-panjang-651-senja-link-2018-07-30746",
-      "month": "2018-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 110,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "82 years 03 months",
-      "resalePrice": 488888,
-      "pricePerSqm": 4444.44,
-      "pricePerSqft": 412.9
     }
   ]
 }

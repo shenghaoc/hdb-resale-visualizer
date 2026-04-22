@@ -4,18 +4,19 @@
     "town": "BUKIT PANJANG",
     "block": "427",
     "streetName": "BT PANJANG RING RD",
+    "displayName": null,
     "coordinates": {
       "lat": 1.38637062116916,
       "lng": 103.76981124939
     },
-    "medianPrice": 618000,
+    "medianPrice": 661500,
     "priceIqr": [
-      618000,
-      618000
+      639750,
+      683250
     ],
-    "pricePerSqmMedian": 5065.57,
-    "pricePerSqftMedian": 470.61,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 5422.13,
+    "pricePerSqftMedian": 503.74,
+    "transactionCount": 2,
     "floorAreaRange": [
       122,
       133
@@ -24,10 +25,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-03",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -395,11 +396,30 @@
       "medianPrice": 618000,
       "transactionCount": 1,
       "medianPricePerSqm": 5065.57
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 705000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5778.69
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2026-02-223619",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2026-04-223651",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "61 years 11 months",
+      "resalePrice": 705000,
+      "pricePerSqm": 5778.69,
+      "pricePerSqft": 536.86
+    },
+    {
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2026-02-223647",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -490,7 +510,7 @@
       "pricePerSqft": 328.3
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2016-10-971126",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2016-10-971253",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -503,7 +523,7 @@
       "pricePerSqft": 323.64
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2015-07-947215",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2015-07-947342",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -516,7 +536,7 @@
       "pricePerSqft": 294.78
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2015-02-939719",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2015-02-939846",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -529,7 +549,7 @@
       "pricePerSqft": 312.22
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-11-632986",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-11-633113",
       "month": "2013-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -542,7 +562,7 @@
       "pricePerSqft": 350.29
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-04-623005",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-04-623132",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -555,7 +575,7 @@
       "pricePerSqft": 376.94
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-01-619155",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2013-01-619282",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -568,7 +588,7 @@
       "pricePerSqft": 357.91
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-07-585614",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-07-585741",
       "month": "2011-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -581,7 +601,7 @@
       "pricePerSqft": 340.26
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-05-581639",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-05-581766",
       "month": "2011-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -594,7 +614,7 @@
       "pricePerSqft": 304.6
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-03-577637",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-03-577764",
       "month": "2011-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -607,7 +627,7 @@
       "pricePerSqft": 296.99
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-02-575855",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2011-02-575982",
       "month": "2011-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -620,7 +640,7 @@
       "pricePerSqft": 304.6
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2010-07-557238",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2010-07-557365",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -633,7 +653,7 @@
       "pricePerSqft": 318.31
     },
     {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2010-03-544481",
+      "id": "bukit-panjang-427-bt-panjang-ring-rd-2010-03-544608",
       "month": "2010-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -644,19 +664,6 @@
       "resalePrice": 328000,
       "pricePerSqm": 2688.52,
       "pricePerSqft": 249.77
-    },
-    {
-      "id": "bukit-panjang-427-bt-panjang-ring-rd-2010-01-539126",
-      "month": "2010-01",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years",
-      "resalePrice": 300000,
-      "pricePerSqm": 2459.02,
-      "pricePerSqft": 228.45
     }
   ]
 }

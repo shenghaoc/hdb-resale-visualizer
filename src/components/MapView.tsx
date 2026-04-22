@@ -97,6 +97,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
   const popupRef = useRef<Popup | null>(null);
+  const hasInitialFitRef = useRef(false);
+  const previousTownFilterRef = useRef<string | null>(null);
 
   // Keep onSelect ref fresh without triggering map recreation
   useEffect(() => {
@@ -114,7 +116,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       center: [103.8198, 1.3521],
       zoom: 10.2,
       minZoom: 9,
-      maxZoom: 19,
+      maxZoom: 20,
       maxBounds: SINGAPORE_BOUNDS,
       style: {
         version: 8,
@@ -282,7 +284,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "#4b3b31",
+          "circle-color": "#2563eb",
           "circle-radius": [
             "step",
             ["get", "point_count"],
@@ -308,7 +310,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-size": 12,
         },
         paint: {
-          "text-color": "#fffdf8",
+          "text-color": "#eff6ff",
         },
       });
 
@@ -323,13 +325,13 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             ["linear"],
             ["get", "median_price"],
             300000,
-            "#d7d0c5",
+            "#a9ccff",
             600000,
-            "#b59f87",
+            "#60a5fa",
             900000,
-            "#8b694e",
+            "#3b82f6",
             1200000,
-            "#5a3e2d",
+            "#1d4ed8",
           ],
           "circle-radius": [
             "interpolate",
@@ -343,7 +345,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             16,
           ],
           "circle-stroke-width": 1.5,
-          "circle-stroke-color": "#fffdf8",
+          "circle-stroke-color": "#eff6ff",
           "circle-opacity": 0.9,
         },
       });
@@ -365,9 +367,9 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             18,
             36,
           ],
-          "circle-color": "rgba(35, 25, 20, 0.15)",
+          "circle-color": "rgba(29, 78, 216, 0.18)",
           "circle-stroke-width": 3,
-          "circle-stroke-color": "#231914",
+          "circle-stroke-color": "#1e3a8a",
         },
       });
 
@@ -394,8 +396,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-ignore-placement": true,
         },
         paint: {
-          "text-color": "#231914",
-          "text-halo-color": "#fffdf8",
+          "text-color": "#1e3a8a",
+          "text-halo-color": "#eff6ff",
           "text-halo-width": 2,
         },
       });
@@ -452,13 +454,29 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
         const [lng, lat] = feature.geometry.coordinates;
 
+        const container = document.createElement("div");
+
+        const addressEl = document.createElement("strong");
+        addressEl.textContent = address;
+        container.appendChild(addressEl);
+
+        if (displayName) {
+          const nameEl = document.createElement("p");
+          nameEl.textContent = displayName;
+          container.appendChild(nameEl);
+        }
+
+        const townEl = document.createElement("p");
+        townEl.textContent = town;
+        container.appendChild(townEl);
+
+        const infoEl = document.createElement("p");
+        infoEl.textContent = `${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`;
+        container.appendChild(infoEl);
+
         popup
           .setLngLat([lng, lat])
-          .setHTML(
-            `<strong>${address}</strong>${
-              displayName ? `<p>${displayName}</p>` : ""
-            }<p>${town}</p><p>${formatCompactCurrency(medianPrice)} median · ${txnCount} txns</p>`
-          )
+          .setDOMContent(container)
           .addTo(map);
       });
 
@@ -483,15 +501,24 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const props = toMrtPopupProperties(feature.properties);
         const stationName = props.stationName ?? "MRT Station";
         const lines = parseMrtLines(props.lines);
-        const linesHtml = lines.length
-          ? `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`
-          : "";
-
         const [lng, lat] = feature.geometry.coordinates;
+
+        const container = document.createElement("div");
+
+        const nameEl = document.createElement("strong");
+        nameEl.textContent = stationName;
+        container.appendChild(nameEl);
+
+        if (lines.length) {
+          const linesEl = document.createElement("p");
+          linesEl.className = "whitespace-nowrap opacity-80 mt-1";
+          linesEl.textContent = lines.join(" • ");
+          container.appendChild(linesEl);
+        }
 
         popup
           .setLngLat([lng, lat])
-          .setHTML(`<strong>${stationName}</strong>${linesHtml}`)
+          .setDOMContent(container)
           .addTo(map);
       });
 
@@ -538,6 +565,18 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   useEffect(() => {
     const map = mapRef.current;
     if (!map || blocks.length === 0) return;
+
+    const nextTownFilter = townFilter ?? null;
+    const shouldFit =
+      !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+
+    previousTownFilterRef.current = nextTownFilter;
+
+    if (!shouldFit) {
+      return;
+    }
+
+    hasInitialFitRef.current = true;
 
     let minLng = Infinity, maxLng = -Infinity;
     let minLat = Infinity, maxLat = -Infinity;

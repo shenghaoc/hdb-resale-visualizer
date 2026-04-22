@@ -4,18 +4,19 @@
     "town": "BEDOK",
     "block": "94B",
     "streetName": "BEDOK NTH AVE 4",
+    "displayName": null,
     "coordinates": {
       "lat": 1.33387673357825,
       "lng": 103.942883460977
     },
-    "medianPrice": 938000,
+    "medianPrice": 984000,
     "priceIqr": [
-      938000,
-      938000
+      961000,
+      1007000
     ],
-    "pricePerSqmMedian": 6652.48,
-    "pricePerSqftMedian": 618.04,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 6927.64,
+    "pricePerSqftMedian": 643.6,
+    "transactionCount": 2,
     "floorAreaRange": [
       141,
       143
@@ -24,10 +25,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-08",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -401,9 +402,28 @@
       "medianPrice": 938000,
       "transactionCount": 1,
       "medianPricePerSqm": 6652.48
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1030000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7202.8
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-94b-bedok-nth-ave-4-2026-04-222674",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 01 month",
+      "resalePrice": 1030000,
+      "pricePerSqm": 7202.8,
+      "pricePerSqft": 669.16
+    },
     {
       "id": "bedok-94b-bedok-nth-ave-4-2025-06-199101",
       "month": "2025-06",
@@ -600,7 +620,7 @@
       "pricePerSqft": 428.28
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957398",
+      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957525",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -613,7 +633,7 @@
       "pricePerSqft": 487.25
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2014-12-649851",
+      "id": "bedok-94b-bedok-nth-ave-4-2014-12-649978",
       "month": "2014-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -626,7 +646,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634013",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634140",
       "month": "2013-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -639,7 +659,7 @@
       "pricePerSqft": 525.79
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-08-628897",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-08-629024",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -650,19 +670,6 @@
       "resalePrice": 765000,
       "pricePerSqm": 5349.65,
       "pricePerSqft": 497
-    },
-    {
-      "id": "bedok-94b-bedok-nth-ave-4-2012-09-612095",
-      "month": "2012-09",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 143,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1993,
-      "remainingLease": "66 years",
-      "resalePrice": 780000,
-      "pricePerSqm": 5454.55,
-      "pricePerSqft": 506.74
     }
   ]
 }

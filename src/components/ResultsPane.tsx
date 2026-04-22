@@ -72,6 +72,7 @@ function BlockCard({
   onToggleShortlist: (addressKey: string) => void;
 }) {
   const { locale, t } = useI18n();
+  const nearbyStations = (block.nearbyMrts ?? []).slice(0, 2);
 
   if (isCompact) {
     return (
@@ -106,6 +107,8 @@ function BlockCard({
               }}
               type="button"
               className="size-7 p-0"
+              aria-label={isSaved ? t("results.saved") : t("results.save")}
+              title={isSaved ? t("results.saved") : t("results.save")}
             >
               <Bookmark className={cn("size-3.5", isSaved && "fill-current")} />
             </Button>
@@ -185,6 +188,11 @@ function BlockCard({
               ? `${block.nearestMrt.stationName} • ${formatMeters(block.nearestMrt.distanceMeters, locale)}`
               : t("results.noMatch")}
           </strong>
+          {nearbyStations.length > 1 ? (
+            <span className="text-xs text-muted-foreground">
+              Also near {nearbyStations.slice(1).map((station) => station.stationName).join(", ")}
+            </span>
+          ) : null}
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -242,6 +250,12 @@ export function ResultsPane({
     });
   }, [blocks, sortMode]);
 
+  const [prevBlocks, setPrevBlocks] = useState(blocks);
+  if (blocks !== prevBlocks) {
+    setPrevBlocks(blocks);
+    setCurrentPage(1);
+  }
+
   const totalPages = Math.max(1, Math.ceil(sortedBlocks.length / itemsPerPage));
   const visiblePage = Math.min(currentPage, totalPages);
   const currentBlocks = sortedBlocks.slice(
@@ -260,7 +274,14 @@ export function ResultsPane({
 
     return (
       <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 border-t border-border/40 py-4">
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p - 1)} disabled={visiblePage === 1}>{t("results.prev")}</Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setCurrentPage((p) => p - 1)}
+          disabled={visiblePage === 1}
+        >
+          {t("results.prev")}
+        </Button>
         {startPage > 1 && (
           <>
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>1</Button>
@@ -278,7 +299,14 @@ export function ResultsPane({
             <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>{totalPages}</Button>
           </>
         )}
-        <Button variant="outline" size="sm" onClick={() => setCurrentPage((p) => p + 1)} disabled={visiblePage === totalPages}>{t("results.next")}</Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setCurrentPage((p) => p + 1)}
+          disabled={visiblePage === totalPages}
+        >
+          {t("results.next")}
+        </Button>
       </div>
     );
   };
@@ -293,31 +321,33 @@ export function ResultsPane({
               <CardTitle className="text-2xl">{t("results.filteredBlocks")}</CardTitle>
             </div>
             <CardAction className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
-              <Badge>{t("results.shown", { count: blocks.length })}</Badge>
-              <div className="flex min-w-[14rem] items-center gap-3">
-                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  <ArrowUpDown className="size-3.5" />
-                  {t("results.sort")}
-                </span>
-                <Select
-                  onValueChange={(value) => {
-                    setSortMode(value as SortMode);
-                    setCurrentPage(1);
-                  }}
-                  value={sortMode}
-                >
-                  <SelectTrigger className="w-full sm:w-[15rem]">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sortOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {hasTownFilter ? <Badge>{t("results.shown", { count: blocks.length })}</Badge> : null}
+              {hasTownFilter ? (
+                <div className="flex min-w-[14rem] items-center gap-3">
+                  <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    <ArrowUpDown className="size-3.5" />
+                    {t("results.sort")}
+                  </span>
+                  <Select
+                    onValueChange={(value) => {
+                      setSortMode(value as SortMode);
+                      setCurrentPage(1);
+                    }}
+                    value={sortMode}
+                  >
+                    <SelectTrigger className="w-full sm:w-[15rem]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sortOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ) : null}
             </CardAction>
           </div>
         </CardHeader>

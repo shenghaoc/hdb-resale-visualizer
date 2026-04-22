@@ -39,6 +39,41 @@ describe("matchesFilter", () => {
     ).toBe(true);
   });
 
+  it("supports out-of-order search terms and block number shorthand", () => {
+    const yewTeeLikeBlock = {
+      ...alpha!,
+      town: "CHOA CHU KANG",
+      block: "600A",
+      streetName: "CHOA CHU KANG STREET 62",
+      displayName: "YEW TEE RESIDENCES",
+    };
+
+    expect(
+      matchesFilter(yewTeeLikeBlock, {
+        ...DEFAULT_FILTERS,
+        search: "yew tee block 600 plus",
+      }),
+    ).toBe(true);
+  });
+
+  it("matches common street abbreviations and minor typos", () => {
+    expect(beta).toBeTruthy();
+
+    expect(
+      matchesFilter(beta!, {
+        ...DEFAULT_FILTERS,
+        search: "Bedok North Avenue 4",
+      }),
+    ).toBe(true);
+
+    expect(
+      matchesFilter(beta!, {
+        ...DEFAULT_FILTERS,
+        search: "Bedokk Nth Ave 4",
+      }),
+    ).toBe(true);
+  });
+
   it("normalizes duplicate flat type labels in menu options", () => {
     const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
     if (mutated[0]) {

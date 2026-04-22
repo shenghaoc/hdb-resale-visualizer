@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import * as echarts from "echarts/core";
-import type { EChartsType } from "echarts/core";
 import { LineChart, BarChart } from "echarts/charts";
 import {
   GridComponent,
@@ -8,6 +7,7 @@ import {
   LegendComponent,
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import ReactEChartsCore from "echarts-for-react/lib/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
 
@@ -25,8 +25,6 @@ type TrendChartProps = {
 };
 
 export function TrendChart({ points }: TrendChartProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const chartRef = useRef<EChartsType | null>(null);
   const option = useMemo(
     () => ({
       animationDuration: 500,
@@ -122,37 +120,12 @@ export function TrendChart({ points }: TrendChartProps) {
     [points],
   );
 
-  useEffect(() => {
-    if (!containerRef.current) {
-      return;
-    }
-
-    const chart = echarts.init(containerRef.current);
-    chartRef.current = chart;
-
-    const resizeObserver = new ResizeObserver(() => {
-      chart.resize();
-    });
-    resizeObserver.observe(containerRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-      chart.dispose();
-      chartRef.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    const chart = chartRef.current;
-    if (!chart) {
-      return;
-    }
-
-    chart.setOption(
-      option,
-      { notMerge: true },
-    );
-  }, [option]);
-
-  return <div ref={containerRef} style={{ height: 200, width: "100%" }} />;
+  return (
+    <ReactEChartsCore
+      echarts={echarts}
+      notMerge
+      option={option}
+      style={{ height: 200, width: "100%" }}
+    />
+  );
 }

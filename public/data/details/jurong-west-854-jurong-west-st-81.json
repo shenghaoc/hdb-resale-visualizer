@@ -4,18 +4,19 @@
     "town": "JURONG WEST",
     "block": "854",
     "streetName": "JURONG WEST ST 81",
+    "displayName": null,
     "coordinates": {
       "lat": 1.34731625275917,
       "lng": 103.69606144333
     },
-    "medianPrice": 501500,
+    "medianPrice": 500000,
     "priceIqr": [
-      497750,
-      527666
+      493500,
+      519444
     ],
-    "pricePerSqmMedian": 4762.72,
-    "pricePerSqftMedian": 442.47,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 4717.74,
+    "pricePerSqftMedian": 438.29,
+    "transactionCount": 7,
     "floorAreaRange": [
       102,
       130
@@ -24,10 +25,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1999-11",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -535,11 +536,30 @@
       "medianPrice": 497000,
       "transactionCount": 1,
       "medianPricePerSqm": 4644.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 480000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4485.98
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-854-jurong-west-st-81-2026-02-225117",
+      "id": "jurong-west-854-jurong-west-st-81-2026-04-225179",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 05 months",
+      "resalePrice": 480000,
+      "pricePerSqm": 4485.98,
+      "pricePerSqft": 416.76
+    },
+    {
+      "id": "jurong-west-854-jurong-west-st-81-2026-02-225172",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -784,19 +804,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 3364.49,
       "pricePerSqft": 312.57
-    },
-    {
-      "id": "jurong-west-854-jurong-west-st-81-2017-08-12351",
-      "month": "2017-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 106,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "78 years",
-      "resalePrice": 345000,
-      "pricePerSqm": 3254.72,
-      "pricePerSqft": 302.37
     }
   ]
 }

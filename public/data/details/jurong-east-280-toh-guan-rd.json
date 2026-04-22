@@ -4,18 +4,19 @@
     "town": "JURONG EAST",
     "block": "280",
     "streetName": "TOH GUAN RD",
+    "displayName": "TOH GUAN VIEW",
     "coordinates": {
       "lat": 1.34046486754645,
       "lng": 103.747294159262
     },
-    "medianPrice": 550000,
+    "medianPrice": 555000,
     "priceIqr": [
-      512000,
-      560000
+      521500,
+      586250
     ],
-    "pricePerSqmMedian": 6043.96,
-    "pricePerSqftMedian": 561.5,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6133.09,
+    "pricePerSqftMedian": 569.78,
+    "transactionCount": 6,
     "floorAreaRange": [
       90,
       92
@@ -464,14 +465,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 620000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6813.19
+      "medianPrice": 607500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6712.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-280-toh-guan-rd-2026-04-224854",
+      "id": "jurong-east-280-toh-guan-rd-2026-04-224905",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -482,6 +483,19 @@
       "resalePrice": 620000,
       "pricePerSqm": 6813.19,
       "pricePerSqft": 632.97
+    },
+    {
+      "id": "jurong-east-280-toh-guan-rd-2026-04-224906",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A2",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 595000,
+      "pricePerSqm": 6611.11,
+      "pricePerSqft": 614.19
     },
     {
       "id": "jurong-east-280-toh-guan-rd-2025-08-206654",
@@ -716,19 +730,6 @@
       "resalePrice": 425000,
       "pricePerSqm": 4670.33,
       "pricePerSqft": 433.89
-    },
-    {
-      "id": "jurong-east-280-toh-guan-rd-2015-11-953713",
-      "month": "2015-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 91,
-      "flatModel": "MODEL A2",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "81",
-      "resalePrice": 430000,
-      "pricePerSqm": 4725.27,
-      "pricePerSqft": 438.99
     }
   ]
 }

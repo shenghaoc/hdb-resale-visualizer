@@ -4,18 +4,19 @@
     "town": "PUNGGOL",
     "block": "268B",
     "streetName": "PUNGGOL FIELD",
+    "displayName": "PUNGGOL SAPPHIRE",
     "coordinates": {
       "lat": 1.40378241604129,
       "lng": 103.897300084671
     },
-    "medianPrice": 706944,
+    "medianPrice": 713888,
     "priceIqr": [
-      655000,
-      725972
+      670000,
+      734000
     ],
-    "pricePerSqmMedian": 7364.05,
-    "pricePerSqftMedian": 684.14,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 7368.42,
+    "pricePerSqftMedian": 684.55,
+    "transactionCount": 7,
     "floorAreaRange": [
       93,
       149
@@ -24,10 +25,10 @@
       2013,
       2013
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2016-12",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -283,11 +284,30 @@
       "medianPrice": 800000,
       "transactionCount": 1,
       "medianPricePerSqm": 8247.42
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 738000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7608.25
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-268b-punggol-field-2026-01-225998",
+      "id": "punggol-268b-punggol-field-2026-04-226093",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "85 years 10 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 7608.25,
+      "pricePerSqft": 706.83
+    },
+    {
+      "id": "punggol-268b-punggol-field-2026-01-226071",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -532,19 +552,6 @@
       "resalePrice": 555000,
       "pricePerSqm": 5721.65,
       "pricePerSqft": 531.56
-    },
-    {
-      "id": "punggol-268b-punggol-field-2022-04-131343",
-      "month": "2022-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 99,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "89 years 10 months",
-      "resalePrice": 606888,
-      "pricePerSqm": 6130.18,
-      "pricePerSqft": 569.51
     }
   ]
 }
