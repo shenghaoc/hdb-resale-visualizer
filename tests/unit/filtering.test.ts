@@ -1,12 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
-import { getFilterOptions, matchesFilter } from "@/lib/filtering";
+import { getFilterOptions, matchesFilter, resetFilteringCachesForTests } from "@/lib/filtering";
 import { buildFixtureArtifacts } from "../fixtures/pipeline";
 
 describe("matchesFilter", () => {
   const artifact = buildFixtureArtifacts();
   const alpha = artifact.blockSummaries.find((block) => block.town === "ANG MO KIO");
   const beta = artifact.blockSummaries.find((block) => block.town === "BEDOK");
+
+  beforeEach(() => {
+    resetFilteringCachesForTests();
+  });
 
   it("filters by budget and town", () => {
     expect(beta).toBeTruthy();
@@ -98,5 +102,40 @@ describe("matchesFilter", () => {
 
     const options = getFilterOptions(mutated);
     expect(options.flatModels).toEqual(["MODEL A", "MODEL B"]);
+  });
+
+  it("rebuilds block tokens after cache reset", () => {
+    const cachedBlock = {
+      ...alpha!,
+      addressKey: "cache-reset-demo",
+      displayName: "ALPHA COURT",
+    };
+
+    expect(
+      matchesFilter(cachedBlock, {
+        ...DEFAULT_FILTERS,
+        search: "alpha",
+      }),
+    ).toBe(true);
+
+    resetFilteringCachesForTests();
+
+    const updatedBlock = {
+      ...cachedBlock,
+      displayName: "BETA COURT",
+    };
+
+    expect(
+      matchesFilter(updatedBlock, {
+        ...DEFAULT_FILTERS,
+        search: "alpha",
+      }),
+    ).toBe(false);
+    expect(
+      matchesFilter(updatedBlock, {
+        ...DEFAULT_FILTERS,
+        search: "beta",
+      }),
+    ).toBe(true);
   });
 });

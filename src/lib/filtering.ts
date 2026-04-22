@@ -41,6 +41,20 @@ function normalizeToken(token: string): string {
   return TOKEN_NORMALIZATIONS.get(token) ?? token;
 }
 
+const TOKENIZATION_CACHE_LIMIT = 10_000;
+const BLOCK_TOKENS_CACHE_LIMIT = 20_000;
+
+function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
+  if (cache.size < limit) {
+    return;
+  }
+
+  const oldestKey = cache.keys().next().value;
+  if (oldestKey !== undefined) {
+    cache.delete(oldestKey);
+  }
+}
+
 // Memoize tokenization since it's called repeatedly during filtering
 // for the same block strings and search queries.
 const tokenizationCache = new Map<string, SearchToken[]>();
@@ -53,6 +67,8 @@ function tokenizeSearchText(value: string): SearchToken[] {
 
   const resolvedValue = resolveSearchAliases(normalizeSearchText(value));
   if (!resolvedValue) {
+    evictCacheIfNeeded(tokenizationCache, TOKENIZATION_CACHE_LIMIT);
+    tokenizationCache.set(value, []);
     return [];
   }
 
@@ -74,10 +90,8 @@ function tokenizeSearchText(value: string): SearchToken[] {
       };
     });
 
-  // Limit cache size to prevent memory leaks from arbitrary search inputs
-  if (tokenizationCache.size > 10000) {
-    tokenizationCache.clear();
-  }
+  // Limit cache size to prevent memory leaks from arbitrary search inputs.
+  evictCacheIfNeeded(tokenizationCache, TOKENIZATION_CACHE_LIMIT);
   tokenizationCache.set(value, tokens);
 
   return tokens;
@@ -150,6 +164,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
       `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
     );
     blockTokenValues = searchableTokens.map((token) => token.value);
+    evictCacheIfNeeded(blockTokensCache, BLOCK_TOKENS_CACHE_LIMIT);
     blockTokensCache.set(block.addressKey, blockTokenValues);
   }
 
@@ -165,6 +180,11 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
         isNearMatch(candidate, searchToken.value),
     );
   });
+}
+
+export function resetFilteringCachesForTests(): void {
+  tokenizationCache.clear();
+  blockTokensCache.clear();
 }
 
 function canonicalFlatType(value: string): string {
