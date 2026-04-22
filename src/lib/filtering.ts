@@ -41,13 +41,22 @@ function normalizeToken(token: string): string {
   return TOKEN_NORMALIZATIONS.get(token) ?? token;
 }
 
+// Memoize tokenization since it's called repeatedly during filtering
+// for the same block strings and search queries.
+const tokenizationCache = new Map<string, SearchToken[]>();
+
 function tokenizeSearchText(value: string): SearchToken[] {
+  const cached = tokenizationCache.get(value);
+  if (cached) {
+    return cached;
+  }
+
   const resolvedValue = resolveSearchAliases(normalizeSearchText(value));
   if (!resolvedValue) {
     return [];
   }
 
-  return resolvedValue
+  const tokens = resolvedValue
     .split(" ")
     .map((token) => token.trim())
     .filter((token) => token.length > 0 && !SEARCH_STOP_WORDS.has(token))
@@ -64,6 +73,14 @@ function tokenizeSearchText(value: string): SearchToken[] {
         isNumericPrefix: false,
       };
     });
+
+  // Limit cache size to prevent memory leaks from arbitrary search inputs
+  if (tokenizationCache.size > 10000) {
+    tokenizationCache.clear();
+  }
+  tokenizationCache.set(value, tokens);
+
+  return tokens;
 }
 
 function isNearMatch(left: string, right: string): boolean {
@@ -117,16 +134,24 @@ function isNearMatch(left: string, right: string): boolean {
   return edits <= 1;
 }
 
+// Cache block token values independently since block references might change
+// but their underlying string values are stable.
+const blockTokensCache = new Map<string, string[]>();
+
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
   if (searchTokens.length === 0) {
     return true;
   }
 
-  const searchableTokens = tokenizeSearchText(
-    `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
-  );
-  const blockTokenValues = searchableTokens.map((token) => token.value);
+  let blockTokenValues = blockTokensCache.get(block.addressKey);
+  if (!blockTokenValues) {
+    const searchableTokens = tokenizeSearchText(
+      `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
+    );
+    blockTokenValues = searchableTokens.map((token) => token.value);
+    blockTokensCache.set(block.addressKey, blockTokenValues);
+  }
 
   return searchTokens.every((searchToken) => {
     if (searchToken.isNumericPrefix) {
