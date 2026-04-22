@@ -42,7 +42,6 @@ function normalizeToken(token: string): string {
 }
 
 const TOKENIZATION_CACHE_LIMIT = 10_000;
-const BLOCK_TOKENS_CACHE_LIMIT = 20_000;
 
 function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
   if (cache.size < limit) {
@@ -150,7 +149,7 @@ function isNearMatch(left: string, right: string): boolean {
 
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
-const blockTokensCache = new Map<string, string[]>();
+let blockTokensCache = new WeakMap<BlockSummary, string[]>();
 
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
@@ -158,14 +157,13 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
     return true;
   }
 
-  let blockTokenValues = blockTokensCache.get(block.addressKey);
+  let blockTokenValues = blockTokensCache.get(block);
   if (!blockTokenValues) {
     const searchableTokens = tokenizeSearchText(
       `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
     );
     blockTokenValues = searchableTokens.map((token) => token.value);
-    evictCacheIfNeeded(blockTokensCache, BLOCK_TOKENS_CACHE_LIMIT);
-    blockTokensCache.set(block.addressKey, blockTokenValues);
+    blockTokensCache.set(block, blockTokenValues);
   }
 
   return searchTokens.every((searchToken) => {
@@ -184,7 +182,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
 
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
-  blockTokensCache.clear();
+  blockTokensCache = new WeakMap<BlockSummary, string[]>();
 }
 
 function canonicalFlatType(value: string): string {
