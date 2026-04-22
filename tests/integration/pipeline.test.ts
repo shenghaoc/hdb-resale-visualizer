@@ -39,6 +39,12 @@ describe("pipeline artifacts", () => {
     expect(stations.features).toHaveLength(2);
     expect(angMoKioStation?.geometry.coordinates[0]).toBeCloseTo(103.84985, 5);
     expect(angMoKioStation?.geometry.coordinates[1]).toBeCloseTo(1.3698, 5);
+    expect(angMoKioStation?.properties).toMatchObject({
+      stationName: "ANG MO KIO MRT STATION",
+      color: "#d11141",
+      lines: ["NSL"],
+      isInterchange: false,
+    });
     expect(nearestMrt).toEqual({
       stationName: "ANG MO KIO MRT STATION",
       distanceMeters: 16,

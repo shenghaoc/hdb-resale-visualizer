@@ -135,17 +135,31 @@ function App() {
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  const mapFilters = useMemo(
-    () => ({ ...filters, search: debouncedSearch }),
+  const stableFilters = useMemo(
+    () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
-     filters.budgetMin, filters.budgetMax, filters.areaMin, filters.areaMax,
-     filters.remainingLeaseMin, filters.startMonth, filters.endMonth,
-     filters.mrtMax, selectedAddressKey],
+    [
+      filters.search,
+      filters.town,
+      filters.flatType,
+      filters.flatModel,
+      filters.budgetMin,
+      filters.budgetMax,
+      filters.areaMin,
+      filters.areaMax,
+      filters.remainingLeaseMin,
+      filters.startMonth,
+      filters.endMonth,
+      filters.mrtMax,
+    ],
+  );
+  const mapFilters = useMemo(
+    () => ({ ...stableFilters, search: debouncedSearch }),
+    [debouncedSearch, stableFilters],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, filters)),
-    [blocks, filters],
+    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
+    [blocks, stableFilters],
   );
   const mapFilteredBlocks = useMemo(
     () => blocks.filter((block) => matchesFilter(block, mapFilters)),
@@ -190,6 +204,8 @@ function App() {
     () => getSelectionByAddressKey(blocks, selectedAddressKey),
     [blocks, selectedAddressKey],
   );
+  const detailVisible = Boolean(selectedAddressKey);
+  const detailLoading = detailVisible && isDetailLoading;
   const selectedDetail =
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
 
@@ -207,6 +223,9 @@ function App() {
   function patchFilters(patch: Partial<FilterState>) {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
+      if (!patch.selectedAddressKey) {
+        setDetail(null);
+      }
     }
 
     startTransition(() => {
@@ -255,6 +274,7 @@ function App() {
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
       onReset={() => {
+        setDetail(null);
         setIsDetailLoading(false);
         setFilters(DEFAULT_FILTERS);
       }}
@@ -274,12 +294,12 @@ function App() {
   );
 
   const selectedDetailContent =
-    selectedAddressKey || isDetailLoading ? (
+    detailVisible || detailLoading ? (
       <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
         <DetailDrawer
           detail={selectedDetail}
           selectedBlock={selectedBlock}
-          isLoading={isDetailLoading}
+          isLoading={detailLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
           onClose={() => patchFilters({ selectedAddressKey: null })}
           onToggleShortlist={() => {
@@ -369,7 +389,7 @@ function App() {
                       <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
-                          <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                          <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
                             <ResultsPane
                               blocks={filteredBlocks}
                               hasTownFilter={!!filters.town || !!filters.search}
@@ -402,7 +422,7 @@ function App() {
                   {mobileTab === "results" && (
                     <div className="flex h-full min-h-0 flex-col gap-4">
                       {selectedDetailContent}
-                      <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
+                      <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
                         <ResultsPane
                           blocks={filteredBlocks}
                           hasTownFilter={!!filters.town || !!filters.search}
