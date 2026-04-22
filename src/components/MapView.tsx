@@ -97,6 +97,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
   const popupRef = useRef<Popup | null>(null);
+  const hasInitialFitRef = useRef(false);
+  const previousTownFilterRef = useRef<string | null>(null);
 
   // Keep onSelect ref fresh without triggering map recreation
   useEffect(() => {
@@ -114,7 +116,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       center: [103.8198, 1.3521],
       zoom: 10.2,
       minZoom: 9,
-      maxZoom: 19,
+      maxZoom: 20,
       maxBounds: SINGAPORE_BOUNDS,
       style: {
         version: 8,
@@ -538,6 +540,18 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   useEffect(() => {
     const map = mapRef.current;
     if (!map || blocks.length === 0) return;
+
+    const nextTownFilter = townFilter ?? null;
+    const shouldFit =
+      !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+
+    previousTownFilterRef.current = nextTownFilter;
+
+    if (!shouldFit) {
+      return;
+    }
+
+    hasInitialFitRef.current = true;
 
     let minLng = Infinity, maxLng = -Infinity;
     let minLat = Infinity, maxLat = -Infinity;

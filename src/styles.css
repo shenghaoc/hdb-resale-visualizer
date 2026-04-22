@@ -50,6 +50,8 @@
 }
 
 :root {
+  --mobile-tab-bar-height: 4rem;
+  --mobile-map-attrib-height: 1.75rem;
   --font-sans: "Noto Sans", system-ui, sans-serif;
   --font-heading: "Noto Sans", system-ui, sans-serif;
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
@@ -95,13 +97,18 @@
   }
 
   html {
+    height: 100%;
     scroll-behavior: smooth;
+    overflow: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
     margin: 0;
     min-height: 100vh;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
     background-image: linear-gradient(
       180deg,
       color-mix(in oklab, var(--background) 78%, var(--muted)) 0%,
@@ -123,6 +130,8 @@
 
 #root {
   min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 .eyebrow {
@@ -296,6 +305,39 @@
 
 .maplibregl-ctrl button .maplibregl-ctrl-icon {
   opacity: 0.72;
+}
+
+@media (max-width: 1023px) {
+  .maplibregl-ctrl-bottom-left,
+  .maplibregl-ctrl-bottom-right {
+    bottom: calc(var(--mobile-tab-bar-height) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .maplibregl-ctrl-bottom-right {
+    right: 0.5rem;
+  }
+
+  .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib {
+    margin: 0;
+    max-width: min(70vw, 22rem);
+    border-radius: 0.375rem;
+    background: color-mix(in oklab, var(--background) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .maplibregl-ctrl-top-right {
+    top: auto;
+    right: 0.5rem;
+    bottom: calc(
+      var(--mobile-tab-bar-height) + var(--mobile-map-attrib-height) + env(safe-area-inset-bottom, 0px) + 0.75rem
+    );
+  }
+
+  .maplibregl-ctrl-top-right .maplibregl-ctrl {
+    margin: 0;
+  }
 }
 
 [data-slot="scroll-area-scrollbar"][data-orientation="vertical"] {

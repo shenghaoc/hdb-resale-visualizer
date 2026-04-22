@@ -118,7 +118,7 @@ export function ShortlistDrawer({
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col bg-background">
+      <Card className="flex min-h-0 flex-1 flex-col overflow-hidden bg-background">
         <CardHeader className="gap-3 border-b border-border pb-5">
           <div className="flex flex-wrap items-start gap-4">
             <div className="flex flex-1 flex-col gap-1">

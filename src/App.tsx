@@ -1,5 +1,5 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
-import { Bookmark, List, Map as MapIcon, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
+import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
@@ -14,7 +14,6 @@ import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { ResultsPane } from "@/components/ResultsPane";
 import { GlobalHeader } from "@/components/StatsBar";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -57,9 +56,9 @@ function App() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   type DesktopTab = "filters" | "results" | "saved";
-  type MobileTab = "map" | "filters" | "results" | "saved";
+  type MobileTab = "filters" | "results" | "saved";
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
-  const [mobileTab, setMobileTab] = useState<MobileTab>("map");
+  const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
   const selectedAddressKey = filters.selectedAddressKey;
 
@@ -194,6 +193,17 @@ function App() {
   const selectedDetail =
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
 
+  function handleSelectAddress(addressKey: string) {
+    if (isDesktop) {
+      setIsDesktopPanelOpen(true);
+      setDesktopTab("results");
+    } else {
+      setMobileTab("results");
+    }
+
+    patchFilters({ selectedAddressKey: addressKey });
+  }
+
   function patchFilters(patch: Partial<FilterState>) {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
@@ -209,9 +219,10 @@ function App() {
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
         <Card className="w-full bg-background">
           <CardHeader className="gap-3">
-            <Badge variant="secondary">{t("app.missingData")}</Badge>
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
-            <CardDescription>{error}</CardDescription>
+            <CardDescription>
+              {t("app.missingData")} · {error}
+            </CardDescription>
           </CardHeader>
           <CardContent className="pt-2 text-sm text-muted-foreground">
             {t("app.syncDataHint")}
@@ -226,10 +237,9 @@ function App() {
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
         <Card className="w-full bg-background">
           <CardHeader className="gap-3">
-            <Badge variant="secondary">{t("app.loadingData")}</Badge>
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
-              {t("app.loadingDescription")}
+              {t("app.loadingData")} · {t("app.loadingDescription")}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -256,7 +266,7 @@ function App() {
     <Suspense fallback={<MapSkeleton />}>
       <MapView
         blocks={mapFilteredBlocks}
-        onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+        onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
       />
@@ -300,49 +310,37 @@ function App() {
           {mapContent}
         </div>
 
-        <div className="pointer-events-none relative z-10 flex min-h-screen flex-col gap-4 p-4 pb-20 lg:p-6 lg:pb-6">
-          <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
+          {isDesktop && (
+            <div className="pointer-events-auto absolute left-6 top-6 z-20">
+              <button
+                type="button"
+                className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+                onClick={() => setIsDesktopPanelOpen((current) => !current)}
+              >
+                {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
+                {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
+              </button>
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-start gap-3 lg:pl-36">
             <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-              {isDesktop && (
-                <button
-                  type="button"
-                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
-                  onClick={() => setIsDesktopPanelOpen((current) => !current)}
+              <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
+                <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
+                <select
+                  id="locale-select"
+                  className="rounded-md border border-border bg-background px-2 py-1"
+                  value={locale}
+                  onChange={(event) => setLocale(event.target.value as typeof locale)}
                 >
-                  {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-                  {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
-                </button>
-              )}
-              <Card className="min-w-0 flex-1 basis-full border-border/70 bg-background/85 shadow-sm backdrop-blur-sm sm:basis-[24rem]">
-                <CardHeader className="px-3 py-2">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-semibold tracking-[0.08em] text-muted-foreground">
-                    <span className="text-sm font-semibold uppercase tracking-[0.14em] text-foreground">{t("app.mapTitle")}</span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 rounded-full bg-[#a9ccff]" />
-                      {t("app.lowerMedian")}
-                    </span>
-                    <span className="inline-flex items-center gap-2">
-                      <span className="inline-block size-2.5 rounded-full bg-[#1d4ed8]" />
-                      {t("app.higherMedian")}
-                    </span>
-                  </div>
-                </CardHeader>
-              </Card>
-              <div className="pointer-events-auto hidden min-w-0 flex-1 basis-[22rem] lg:block">
+                  <option value="en-SG">{t("language.en")}</option>
+                  <option value="zh-SG">{t("language.zh")}</option>
+                </select>
+              </div>
+              <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
                 <GlobalHeader manifest={manifest} />
               </div>
-            </div>
-            <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
-              <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
-              <select
-                id="locale-select"
-                className="rounded-md border border-border bg-background px-2 py-1"
-                value={locale}
-                onChange={(event) => setLocale(event.target.value as typeof locale)}
-              >
-                <option value="en-SG">{t("language.en")}</option>
-                <option value="zh-SG">{t("language.zh")}</option>
-              </select>
             </div>
           </div>
 
@@ -375,7 +373,7 @@ function App() {
                             <ResultsPane
                               blocks={filteredBlocks}
                               hasTownFilter={!!filters.town || !!filters.search}
-                              onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                              onSelect={handleSelectAddress}
                               onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
                               selectedAddressKey={selectedAddressKey}
                               shortlistKeys={shortlistKeySet}
@@ -384,7 +382,7 @@ function App() {
                           </div>
                         </div>
                       </TabsContent>
-                      <TabsContent value="saved" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                      <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1">
                         {savedContent}
                       </TabsContent>
                     </Tabs>
@@ -393,18 +391,22 @@ function App() {
               </aside>
             </section>
           ) : (
-            <section className="pointer-events-none flex min-h-0 flex-1 flex-col">
-              {mobileTab !== "map" && (
-                <div className="pointer-events-auto max-h-[calc(100vh-10rem)] overflow-y-auto rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
-                  {mobileTab === "filters" && filterContent}
+            <section className="pointer-events-none relative min-h-0 flex-1">
+              {mobileTab && (
+                <div className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
+                  {mobileTab === "filters" && (
+                    <div className="h-full overflow-y-auto pr-1">
+                      {filterContent}
+                    </div>
+                  )}
                   {mobileTab === "results" && (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex h-full min-h-0 flex-col gap-4">
                       {selectedDetailContent}
                       <div className={`min-h-0 flex-1 flex-col ${selectedAddressKey || isDetailLoading ? "hidden" : "flex"}`}>
                         <ResultsPane
                           blocks={filteredBlocks}
                           hasTownFilter={!!filters.town || !!filters.search}
-                          onSelect={(addressKey) => patchFilters({ selectedAddressKey: addressKey })}
+                          onSelect={handleSelectAddress}
                           onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
                           selectedAddressKey={selectedAddressKey}
                           shortlistKeys={shortlistKeySet}
@@ -413,7 +415,11 @@ function App() {
                       </div>
                     </div>
                   )}
-                  {mobileTab === "saved" && savedContent}
+                  {mobileTab === "saved" && (
+                    <div className="h-full min-h-0 overflow-hidden">
+                      {savedContent}
+                    </div>
+                  )}
                 </div>
               )}
             </section>
@@ -424,19 +430,27 @@ function App() {
       {/* Mobile bottom tab bar */}
       {!isDesktop && (
         <nav className="mobile-tab-bar">
-          <button type="button" data-active={mobileTab === "map"} onClick={() => setMobileTab("map")}>
-            <MapIcon />
-            {t("tab.map")}
-          </button>
-          <button type="button" data-active={mobileTab === "filters"} onClick={() => setMobileTab("filters")}>
+          <button
+            type="button"
+            data-active={mobileTab === "filters"}
+            onClick={() => setMobileTab((current) => (current === "filters" ? null : "filters"))}
+          >
             <SlidersHorizontal />
             {t("tab.filters")}
           </button>
-          <button type="button" data-active={mobileTab === "results"} onClick={() => setMobileTab("results")}>
+          <button
+            type="button"
+            data-active={mobileTab === "results"}
+            onClick={() => setMobileTab((current) => (current === "results" ? null : "results"))}
+          >
             <List />
             {t("tab.results")}
           </button>
-          <button type="button" data-active={mobileTab === "saved"} onClick={() => setMobileTab("saved")}>
+          <button
+            type="button"
+            data-active={mobileTab === "saved"}
+            onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
+          >
             <Bookmark />
             {t("tab.saved")}{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
           </button>
