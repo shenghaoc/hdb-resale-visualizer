@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 389
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 389
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 806
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 1095
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -743,7 +757,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-343-ubi-ave-1-2026-03-224430",
+      "id": "geylang-343-ubi-ave-1-2026-03-224462",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

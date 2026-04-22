@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2021,
-      2021
+      2020,
+      2020
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SAMUDERA LRT STATION",
       "distanceMeters": 213
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SAMUDERA LRT STATION",
+        "distanceMeters": 213
+      },
+      {
+        "stationName": "PUNGGOL POINT LRT STATION",
+        "distanceMeters": 435
+      },
+      {
+        "stationName": "TECK LEE LRT STATION",
+        "distanceMeters": 666
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -67,7 +81,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-409c-northshore-dr-2026-02-225985",
+      "id": "punggol-409c-northshore-dr-2026-02-226043",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -80,7 +94,7 @@
       "pricePerSqft": 728.4
     },
     {
-      "id": "punggol-409c-northshore-dr-2026-02-225987",
+      "id": "punggol-409c-northshore-dr-2026-02-226045",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -93,7 +107,7 @@
       "pricePerSqft": 709.62
     },
     {
-      "id": "punggol-409c-northshore-dr-2026-02-226232",
+      "id": "punggol-409c-northshore-dr-2026-02-226294",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -106,7 +120,7 @@
       "pricePerSqft": 736.59
     },
     {
-      "id": "punggol-409c-northshore-dr-2026-01-225901",
+      "id": "punggol-409c-northshore-dr-2026-01-225956",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -119,7 +133,7 @@
       "pricePerSqft": 787.6
     },
     {
-      "id": "punggol-409c-northshore-dr-2026-01-225981",
+      "id": "punggol-409c-northshore-dr-2026-01-226039",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -132,7 +146,7 @@
       "pricePerSqft": 711.6
     },
     {
-      "id": "punggol-409c-northshore-dr-2026-01-225984",
+      "id": "punggol-409c-northshore-dr-2026-01-226042",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

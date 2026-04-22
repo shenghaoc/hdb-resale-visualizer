@@ -22,8 +22,8 @@
       76
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "JALAN BESAR MRT STATION",
       "distanceMeters": 182
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 182
+      },
+      {
+        "stationName": "ROCHOR MRT STATION",
+        "distanceMeters": 442
+      },
+      {
+        "stationName": "BUGIS MRT STATION",
+        "distanceMeters": 486
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -628,7 +642,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-30-kelantan-rd-2026-01-223746",
+      "id": "central-area-30-kelantan-rd-2026-01-223769",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHENG LIM LRT STATION",
       "distanceMeters": 338
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 338
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 675
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 683
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -209,7 +223,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-287a-compassvale-cres-2026-02-226933",
+      "id": "sengkang-287a-compassvale-cres-2026-02-227001",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

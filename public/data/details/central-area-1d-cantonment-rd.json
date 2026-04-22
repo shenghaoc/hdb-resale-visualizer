@@ -22,8 +22,8 @@
       108
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2009,
+      2009
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "OUTRAM PARK MRT STATION",
       "distanceMeters": 312
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 312
+      },
+      {
+        "stationName": "TANJONG PAGAR MRT STATION",
+        "distanceMeters": 377
+      },
+      {
+        "stationName": "MAXWELL MRT STATION",
+        "distanceMeters": 397
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -438,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-1d-cantonment-rd-2026-04-223782",
+      "id": "central-area-1d-cantonment-rd-2026-04-223806",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -451,7 +465,7 @@
       "pricePerSqft": 1436.5
     },
     {
-      "id": "central-area-1d-cantonment-rd-2026-04-223783",
+      "id": "central-area-1d-cantonment-rd-2026-04-223807",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -464,7 +478,7 @@
       "pricePerSqft": 1166.23
     },
     {
-      "id": "central-area-1d-cantonment-rd-2026-03-223777",
+      "id": "central-area-1d-cantonment-rd-2026-03-223801",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "37 TO 39",

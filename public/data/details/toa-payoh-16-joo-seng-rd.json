@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BARTLEY MRT STATION",
       "distanceMeters": 642
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 642
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 812
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 1060
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -533,7 +547,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-16-joo-seng-rd-2026-03-228207",
+      "id": "toa-payoh-16-joo-seng-rd-2026-03-228305",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

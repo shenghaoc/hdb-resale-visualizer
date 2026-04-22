@@ -22,8 +22,8 @@
       142
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 131
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 131
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 470
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 674
+      }
+    ]
   },
   "monthlyTrend": [
     {

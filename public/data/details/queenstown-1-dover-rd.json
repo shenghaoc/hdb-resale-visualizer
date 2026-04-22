@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ONE-NORTH MRT STATION",
       "distanceMeters": 561
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 561
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 922
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 949
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -834,7 +848,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-1-dover-rd-2026-03-226373",
+      "id": "queenstown-1-dover-rd-2026-03-226435",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -847,7 +861,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "queenstown-1-dover-rd-2026-01-226372",
+      "id": "queenstown-1-dover-rd-2026-01-226434",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

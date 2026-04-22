@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2008,
-      2008
+      2007,
+      2007
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 270
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 270
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 900
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1198
+      }
+    ]
   },
   "monthlyTrend": [
     {

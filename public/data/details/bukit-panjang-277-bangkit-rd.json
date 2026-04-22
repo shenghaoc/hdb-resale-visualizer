@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 410
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 410
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 500
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 929
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -511,7 +525,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-277-bangkit-rd-2026-03-223526",
+      "id": "bukit-panjang-277-bangkit-rd-2026-03-223549",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -706,7 +720,7 @@
       "pricePerSqft": 317.42
     },
     {
-      "id": "bukit-panjang-277-bangkit-rd-2016-09-969568",
+      "id": "bukit-panjang-277-bangkit-rd-2016-09-969690",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -719,7 +733,7 @@
       "pricePerSqft": 299.26
     },
     {
-      "id": "bukit-panjang-277-bangkit-rd-2015-11-953584",
+      "id": "bukit-panjang-277-bangkit-rd-2015-11-953706",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -732,7 +746,7 @@
       "pricePerSqft": 344.65
     },
     {
-      "id": "bukit-panjang-277-bangkit-rd-2015-09-950279",
+      "id": "bukit-panjang-277-bangkit-rd-2015-09-950401",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -745,7 +759,7 @@
       "pricePerSqft": 324.27
     },
     {
-      "id": "bukit-panjang-277-bangkit-rd-2014-09-645771",
+      "id": "bukit-panjang-277-bangkit-rd-2014-09-645893",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -758,7 +772,7 @@
       "pricePerSqft": 342.13
     },
     {
-      "id": "bukit-panjang-277-bangkit-rd-2014-04-638904",
+      "id": "bukit-panjang-277-bangkit-rd-2014-04-639026",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

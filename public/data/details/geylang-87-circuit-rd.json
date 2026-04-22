@@ -22,8 +22,8 @@
       60
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1969,
+      1969
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 382
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 382
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 414
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 827
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -490,7 +504,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-87-circuit-rd-2026-04-224317",
+      "id": "geylang-87-circuit-rd-2026-04-224346",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -724,7 +738,7 @@
       "pricePerSqft": 356.13
     },
     {
-      "id": "geylang-87-circuit-rd-2015-12-955170",
+      "id": "geylang-87-circuit-rd-2015-12-955292",
       "month": "2015-12",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -737,7 +751,7 @@
       "pricePerSqft": 405.68
     },
     {
-      "id": "geylang-87-circuit-rd-2015-12-955174",
+      "id": "geylang-87-circuit-rd-2015-12-955296",
       "month": "2015-12",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 523
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 523
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 875
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 978
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -371,7 +385,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-403b-fernvale-lane-2026-03-226991",
+      "id": "sengkang-403b-fernvale-lane-2026-03-227059",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

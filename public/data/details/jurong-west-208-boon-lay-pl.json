@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 770
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 770
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1299
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2065
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -2058,7 +2072,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-208-boon-lay-pl-2026-03-224978",
+      "id": "jurong-west-208-boon-lay-pl-2026-03-225018",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -2071,7 +2085,7 @@
       "pricePerSqft": 447.36
     },
     {
-      "id": "jurong-west-208-boon-lay-pl-2026-03-224979",
+      "id": "jurong-west-208-boon-lay-pl-2026-03-225019",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -2084,7 +2098,7 @@
       "pricePerSqft": 471.66
     },
     {
-      "id": "jurong-west-208-boon-lay-pl-2026-02-224975",
+      "id": "jurong-west-208-boon-lay-pl-2026-02-225015",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -2097,7 +2111,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "jurong-west-208-boon-lay-pl-2026-01-224973",
+      "id": "jurong-west-208-boon-lay-pl-2026-01-225013",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

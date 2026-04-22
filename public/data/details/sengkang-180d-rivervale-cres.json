@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 529
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 529
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 542
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 566
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -281,7 +295,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-180d-rivervale-cres-2026-01-226873",
+      "id": "sengkang-180d-rivervale-cres-2026-01-226940",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

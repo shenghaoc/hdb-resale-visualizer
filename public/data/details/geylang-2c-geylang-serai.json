@@ -22,8 +22,8 @@
       95
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2010,
+      2010
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 538
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 538
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 560
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 608
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -274,7 +288,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-2c-geylang-serai-2026-04-224402",
+      "id": "geylang-2c-geylang-serai-2026-04-224432",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -287,7 +301,7 @@
       "pricePerSqft": 987.71
     },
     {
-      "id": "geylang-2c-geylang-serai-2026-02-224398",
+      "id": "geylang-2c-geylang-serai-2026-02-224428",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -300,7 +314,7 @@
       "pricePerSqft": 963.26
     },
     {
-      "id": "geylang-2c-geylang-serai-2026-01-224395",
+      "id": "geylang-2c-geylang-serai-2026-01-224425",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

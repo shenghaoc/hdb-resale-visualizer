@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 230
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 230
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1211
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1333
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -599,7 +613,7 @@
       "pricePerSqft": 377.13
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2016-04-961852",
+      "id": "woodlands-651-woodlands-ring-rd-2016-04-961974",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +626,7 @@
       "pricePerSqft": 321.94
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2015-07-948347",
+      "id": "woodlands-651-woodlands-ring-rd-2015-07-948469",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +639,7 @@
       "pricePerSqft": 353.03
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2015-04-943584",
+      "id": "woodlands-651-woodlands-ring-rd-2015-04-943706",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

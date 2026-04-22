@@ -22,8 +22,8 @@
       156
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LORONG CHUAN MRT STATION",
       "distanceMeters": 293
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 293
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 521
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 1506
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -779,7 +793,7 @@
       "pricePerSqft": 578.88
     },
     {
-      "id": "serangoon-318-serangoon-ave-2-2016-03-959860",
+      "id": "serangoon-318-serangoon-ave-2-2016-03-959982",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -792,7 +806,7 @@
       "pricePerSqft": 495.28
     },
     {
-      "id": "serangoon-318-serangoon-ave-2-2015-09-951103",
+      "id": "serangoon-318-serangoon-ave-2-2015-09-951225",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

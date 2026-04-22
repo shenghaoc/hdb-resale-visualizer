@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 908
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 908
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1334
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 1476
+      }
+    ]
   },
   "monthlyTrend": [
     {

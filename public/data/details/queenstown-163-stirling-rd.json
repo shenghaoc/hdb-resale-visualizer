@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1969,
+      1969
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 475
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 475
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1208
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1621
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -654,7 +668,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-163-stirling-rd-2026-02-226420",
+      "id": "queenstown-163-stirling-rd-2026-02-226483",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -862,7 +876,7 @@
       "pricePerSqft": 413.84
     },
     {
-      "id": "queenstown-163-stirling-rd-2016-11-973511",
+      "id": "queenstown-163-stirling-rd-2016-11-973633",
       "month": "2016-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -875,7 +889,7 @@
       "pricePerSqft": 450.44
     },
     {
-      "id": "queenstown-163-stirling-rd-2016-05-963220",
+      "id": "queenstown-163-stirling-rd-2016-05-963342",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -888,7 +902,7 @@
       "pricePerSqft": 484.06
     },
     {
-      "id": "queenstown-163-stirling-rd-2016-02-958122",
+      "id": "queenstown-163-stirling-rd-2016-02-958244",
       "month": "2016-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -901,7 +915,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "queenstown-163-stirling-rd-2015-10-952599",
+      "id": "queenstown-163-stirling-rd-2015-10-952721",
       "month": "2015-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

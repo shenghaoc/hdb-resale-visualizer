@@ -22,8 +22,8 @@
       215
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "YEW TEE MRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YEW TEE MRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 1497
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 1572
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -475,7 +489,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2026-03-224060",
+      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2026-03-224089",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -683,7 +697,7 @@
       "pricePerSqft": 380.9
     },
     {
-      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2016-12-974539",
+      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2016-12-974661",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -696,7 +710,7 @@
       "pricePerSqft": 392.76
     },
     {
-      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2016-05-962616",
+      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2016-05-962738",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -709,7 +723,7 @@
       "pricePerSqft": 396.54
     },
     {
-      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2015-09-950400",
+      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2015-09-950522",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -722,7 +736,7 @@
       "pricePerSqft": 382.94
     },
     {
-      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2015-08-948947",
+      "id": "choa-chu-kang-643-choa-chu-kang-st-64-2015-08-949069",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

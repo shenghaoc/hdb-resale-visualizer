@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 664
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 664
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1167
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1604
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -64,7 +78,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-2003-01-338845",
+      "id": "bukit-merah-164-bt-merah-ctrl-2003-01-338967",
       "month": "2003-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -77,7 +91,7 @@
       "pricePerSqft": 169.03
     },
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-1999-12-936151",
+      "id": "bukit-merah-164-bt-merah-ctrl-1999-12-936273",
       "month": "1999-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -90,7 +104,7 @@
       "pricePerSqft": 214.19
     },
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-1997-04-805819",
+      "id": "bukit-merah-164-bt-merah-ctrl-1997-04-805941",
       "month": "1997-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

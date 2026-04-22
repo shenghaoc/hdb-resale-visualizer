@@ -22,8 +22,8 @@
       147
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 332
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 332
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 381
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 397
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -313,7 +327,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-306c-punggol-pl-2026-04-226109",
+      "id": "punggol-306c-punggol-pl-2026-04-226167",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -326,7 +340,7 @@
       "pricePerSqft": 692.46
     },
     {
-      "id": "punggol-306c-punggol-pl-2026-02-226282",
+      "id": "punggol-306c-punggol-pl-2026-02-226344",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

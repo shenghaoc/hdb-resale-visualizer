@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 831
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 831
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1133
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1137
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -581,7 +595,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-139-lor-ah-soo-2026-02-224767",
+      "id": "hougang-139-lor-ah-soo-2026-02-224804",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -815,7 +829,7 @@
       "pricePerSqft": 417.61
     },
     {
-      "id": "hougang-139-lor-ah-soo-2016-10-971526",
+      "id": "hougang-139-lor-ah-soo-2016-10-971648",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -828,7 +842,7 @@
       "pricePerSqft": 387.85
     },
     {
-      "id": "hougang-139-lor-ah-soo-2016-01-956604",
+      "id": "hougang-139-lor-ah-soo-2016-01-956726",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

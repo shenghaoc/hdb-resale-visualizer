@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "NIBONG LRT STATION",
       "distanceMeters": 128
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 128
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 441
+      },
+      {
+        "stationName": "SAMUDERA LRT STATION",
+        "distanceMeters": 491
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -186,7 +200,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-327a-sumang-walk-2026-04-225940",
+      "id": "punggol-327a-sumang-walk-2026-04-225997",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -199,7 +213,7 @@
       "pricePerSqft": 767.82
     },
     {
-      "id": "punggol-327a-sumang-walk-2026-03-225885",
+      "id": "punggol-327a-sumang-walk-2026-03-225940",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -212,7 +226,7 @@
       "pricePerSqft": 891.37
     },
     {
-      "id": "punggol-327a-sumang-walk-2026-03-225939",
+      "id": "punggol-327a-sumang-walk-2026-03-225996",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

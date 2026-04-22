@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 586
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 586
+      },
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1475
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1989
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -570,7 +584,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-322-yishun-ctrl-2026-03-229026",
+      "id": "yishun-322-yishun-ctrl-2026-03-229145",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -726,7 +740,7 @@
       "pricePerSqft": 364.67
     },
     {
-      "id": "yishun-322-yishun-ctrl-2016-07-967262",
+      "id": "yishun-322-yishun-ctrl-2016-07-967384",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -739,7 +753,7 @@
       "pricePerSqft": 354.96
     },
     {
-      "id": "yishun-322-yishun-ctrl-2016-05-963843",
+      "id": "yishun-322-yishun-ctrl-2016-05-963965",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -752,7 +766,7 @@
       "pricePerSqft": 324.28
     },
     {
-      "id": "yishun-322-yishun-ctrl-2016-01-957335",
+      "id": "yishun-322-yishun-ctrl-2016-01-957457",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -765,7 +779,7 @@
       "pricePerSqft": 297.99
     },
     {
-      "id": "yishun-322-yishun-ctrl-2015-07-948469",
+      "id": "yishun-322-yishun-ctrl-2015-07-948591",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -778,7 +792,7 @@
       "pricePerSqft": 311.14
     },
     {
-      "id": "yishun-322-yishun-ctrl-2015-02-940711",
+      "id": "yishun-322-yishun-ctrl-2015-02-940833",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -791,7 +805,7 @@
       "pricePerSqft": 335.06
     },
     {
-      "id": "yishun-322-yishun-ctrl-2015-01-939567",
+      "id": "yishun-322-yishun-ctrl-2015-01-939689",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -804,7 +818,7 @@
       "pricePerSqft": 344.2
     },
     {
-      "id": "yishun-322-yishun-ctrl-2014-02-637081",
+      "id": "yishun-322-yishun-ctrl-2014-02-637203",
       "month": "2014-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -817,7 +831,7 @@
       "pricePerSqft": 359.43
     },
     {
-      "id": "yishun-322-yishun-ctrl-2012-06-607735",
+      "id": "yishun-322-yishun-ctrl-2012-06-607857",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 1120
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1120
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1206
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1284
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -400,7 +414,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-985b-buangkok-cres-2026-04-224719",
+      "id": "hougang-985b-buangkok-cres-2026-04-224754",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -413,7 +427,7 @@
       "pricePerSqft": 574.31
     },
     {
-      "id": "hougang-985b-buangkok-cres-2026-01-224714",
+      "id": "hougang-985b-buangkok-cres-2026-01-224749",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

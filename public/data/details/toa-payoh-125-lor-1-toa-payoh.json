@@ -9,26 +9,26 @@
       "lat": 1.33833133395207,
       "lng": 103.845737117132
     },
-    "medianPrice": 384000,
+    "medianPrice": 380000,
     "priceIqr": [
-      354250,
-      411250
+      358000,
+      410000
     ],
-    "pricePerSqmMedian": 5731.34,
-    "pricePerSqftMedian": 532.46,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 5671.64,
+    "pricePerSqftMedian": 526.91,
+    "transactionCount": 9,
     "floorAreaRange": [
       67,
       67
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1969,
+      1969
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 278
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 278
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 568
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 589
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1038,11 +1052,30 @@
       "medianPrice": 343000,
       "transactionCount": 1,
       "medianPricePerSqm": 5119.4
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5597.01
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-125-lor-1-toa-payoh-2026-02-228000",
+      "id": "toa-payoh-125-lor-1-toa-payoh-2026-04-228112",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "42 years 10 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 5597.01,
+      "pricePerSqft": 519.98
+    },
+    {
+      "id": "toa-payoh-125-lor-1-toa-payoh-2026-02-228093",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1287,19 +1320,6 @@
       "resalePrice": 333000,
       "pricePerSqm": 4970.15,
       "pricePerSqft": 461.74
-    },
-    {
-      "id": "toa-payoh-125-lor-1-toa-payoh-2022-01-138706",
-      "month": "2022-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1970,
-      "remainingLease": "47 years 01 month",
-      "resalePrice": 323000,
-      "pricePerSqm": 4820.9,
-      "pricePerSqft": 447.88
     }
   ]
 }

@@ -22,8 +22,8 @@
       97
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2011,
+      2011
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 238
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 238
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 648
+      }
+    ]
   },
   "monthlyTrend": [
     {

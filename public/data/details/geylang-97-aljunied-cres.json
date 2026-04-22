@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1974,
+      1974
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 528
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 528
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 613
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 643
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -876,7 +890,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-97-aljunied-cres-2026-02-224262",
+      "id": "geylang-97-aljunied-cres-2026-02-224291",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

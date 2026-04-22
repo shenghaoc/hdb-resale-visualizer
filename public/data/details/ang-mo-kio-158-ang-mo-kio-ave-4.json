@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1981,
+      1981
     ],
     "latestMonth": "2010-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 220
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 220
+      },
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 1001
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1002
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -76,7 +90,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2010-12-571488",
+      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2010-12-571610",
       "month": "2010-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -89,7 +103,7 @@
       "pricePerSqft": 350.07
     },
     {
-      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2008-06-491878",
+      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2008-06-492000",
       "month": "2008-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -102,7 +116,7 @@
       "pricePerSqft": 241.32
     },
     {
-      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2004-10-389038",
+      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2004-10-389160",
       "month": "2004-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -115,7 +129,7 @@
       "pricePerSqft": 296.21
     },
     {
-      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2003-03-342906",
+      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2003-03-343028",
       "month": "2003-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -128,7 +142,7 @@
       "pricePerSqft": 215.43
     },
     {
-      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2001-08-285969",
+      "id": "ang-mo-kio-158-ang-mo-kio-ave-4-2001-08-286091",
       "month": "2001-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

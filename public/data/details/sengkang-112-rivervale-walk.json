@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 105
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 105
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 459
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 667
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -414,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-112-rivervale-walk-2026-01-227267",
+      "id": "sengkang-112-rivervale-walk-2026-01-227342",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "NIBONG LRT STATION",
       "distanceMeters": 35
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 35
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 421
+      },
+      {
+        "stationName": "SAMUDERA LRT STATION",
+        "distanceMeters": 474
+      }
+    ]
   },
   "monthlyTrend": [
     {

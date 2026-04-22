@@ -22,8 +22,8 @@
       98
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2010,
+      2010
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 631
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 631
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 742
+      },
+      {
+        "stationName": "NAPIER MRT STATION",
+        "distanceMeters": 1633
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 199
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 199
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 858
+      },
+      {
+        "stationName": "HILLVIEW MRT STATION",
+        "distanceMeters": 1858
+      }
+    ]
   },
   "monthlyTrend": [
     {

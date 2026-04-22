@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAVENDER MRT STATION",
       "distanceMeters": 129
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAVENDER MRT STATION",
+        "distanceMeters": 129
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 737
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 747
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -342,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-815-jellicoe-rd-2026-01-225503",
+      "id": "kallang-whampoa-815-jellicoe-rd-2026-01-225554",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -576,7 +590,7 @@
       "pricePerSqft": 679.88
     },
     {
-      "id": "kallang-whampoa-815-jellicoe-rd-2015-06-946241",
+      "id": "kallang-whampoa-815-jellicoe-rd-2015-06-946363",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -589,7 +603,7 @@
       "pricePerSqft": 632.97
     },
     {
-      "id": "kallang-whampoa-815-jellicoe-rd-2014-12-650538",
+      "id": "kallang-whampoa-815-jellicoe-rd-2014-12-650660",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

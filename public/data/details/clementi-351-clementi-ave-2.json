@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 583
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 583
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 936
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 2354
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1247,7 +1261,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-351-clementi-ave-2-2026-01-224184",
+      "id": "clementi-351-clementi-ave-2-2026-01-224213",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

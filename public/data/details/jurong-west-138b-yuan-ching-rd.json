@@ -9,14 +9,14 @@
       "lat": 1.32841510984309,
       "lng": 103.724304147765
     },
-    "medianPrice": 690000,
+    "medianPrice": 632500,
     "priceIqr": [
-      548000,
-      800000
+      551000,
+      777500
     ],
-    "pricePerSqmMedian": 8028.57,
-    "pricePerSqftMedian": 745.88,
-    "transactionCount": 9,
+    "pricePerSqmMedian": 8081.45,
+    "pricePerSqftMedian": 750.79,
+    "transactionCount": 10,
     "floorAreaRange": [
       67,
       108
@@ -25,10 +25,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-12",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 1776
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1776
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1779
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2037
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -260,9 +274,28 @@
       "medianPrice": 950000,
       "transactionCount": 1,
       "medianPricePerSqm": 8796.3
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8358.21
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-138b-yuan-ching-rd-2026-04-225091",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 06 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 8358.21,
+      "pricePerSqft": 776.5
+    },
     {
       "id": "jurong-west-138b-yuan-ching-rd-2025-10-208233",
       "month": "2025-10",
@@ -509,19 +542,6 @@
       "resalePrice": 730000,
       "pricePerSqm": 6952.38,
       "pricePerSqft": 645.9
-    },
-    {
-      "id": "jurong-west-138b-yuan-ching-rd-2022-04-127608",
-      "month": "2022-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 91,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "91 years 06 months",
-      "resalePrice": 620000,
-      "pricePerSqm": 6813.19,
-      "pricePerSqft": 632.97
     }
   ]
 }

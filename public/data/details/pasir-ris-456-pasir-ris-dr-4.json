@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1061
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1061
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1701
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2538
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -418,7 +432,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2026-03-225814",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2026-03-225869",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -600,7 +614,7 @@
       "pricePerSqft": 363.51
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2016-12-974892",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2016-12-975014",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -613,7 +627,7 @@
       "pricePerSqft": 343.48
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2016-08-968386",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2016-08-968508",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -626,7 +640,7 @@
       "pricePerSqft": 330.89
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2015-09-950815",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2015-09-950937",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -639,7 +653,7 @@
       "pricePerSqft": 366.38
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2015-04-943032",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2015-04-943154",
       "month": "2015-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -652,7 +666,7 @@
       "pricePerSqft": 372.92
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2014-03-637930",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2014-03-638052",
       "month": "2014-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -665,7 +679,7 @@
       "pricePerSqft": 389.28
     },
     {
-      "id": "pasir-ris-456-pasir-ris-dr-4-2011-09-590042",
+      "id": "pasir-ris-456-pasir-ris-dr-4-2011-09-590164",
       "month": "2011-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

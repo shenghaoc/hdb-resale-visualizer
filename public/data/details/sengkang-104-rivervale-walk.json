@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 196
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 196
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 437
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 769
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -623,7 +637,7 @@
       "pricePerSqft": 346.11
     },
     {
-      "id": "sengkang-104-rivervale-walk-2016-10-972030",
+      "id": "sengkang-104-rivervale-walk-2016-10-972152",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -636,7 +650,7 @@
       "pricePerSqft": 366.25
     },
     {
-      "id": "sengkang-104-rivervale-walk-2016-05-963353",
+      "id": "sengkang-104-rivervale-walk-2016-05-963475",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -649,7 +663,7 @@
       "pricePerSqft": 373.43
     },
     {
-      "id": "sengkang-104-rivervale-walk-2016-04-961467",
+      "id": "sengkang-104-rivervale-walk-2016-04-961589",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

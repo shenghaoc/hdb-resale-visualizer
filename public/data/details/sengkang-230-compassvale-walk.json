@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 464
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 464
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 486
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 624
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -504,7 +518,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-230-compassvale-walk-2026-04-227216",
+      "id": "sengkang-230-compassvale-walk-2026-04-227290",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

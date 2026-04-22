@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-06",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 2050
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 2050
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2283
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 2346
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -681,7 +695,7 @@
       "pricePerSqft": 394.84
     },
     {
-      "id": "serangoon-551-serangoon-nth-ave-3-2016-04-961604",
+      "id": "serangoon-551-serangoon-nth-ave-3-2016-04-961726",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -694,7 +708,7 @@
       "pricePerSqft": 390.19
     },
     {
-      "id": "serangoon-551-serangoon-nth-ave-3-2015-02-940460",
+      "id": "serangoon-551-serangoon-nth-ave-3-2015-02-940582",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -707,7 +721,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "serangoon-551-serangoon-nth-ave-3-2013-04-623998",
+      "id": "serangoon-551-serangoon-nth-ave-3-2013-04-624120",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -720,7 +734,7 @@
       "pricePerSqft": 456.84
     },
     {
-      "id": "serangoon-551-serangoon-nth-ave-3-2012-09-613288",
+      "id": "serangoon-551-serangoon-nth-ave-3-2012-09-613410",
       "month": "2012-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -733,7 +747,7 @@
       "pricePerSqft": 434.85
     },
     {
-      "id": "serangoon-551-serangoon-nth-ave-3-2012-07-609377",
+      "id": "serangoon-551-serangoon-nth-ave-3-2012-07-609499",
       "month": "2012-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SIMEI MRT STATION",
       "distanceMeters": 359
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 485
+      },
+      {
+        "stationName": "EXPO MRT STATION",
+        "distanceMeters": 1033
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -777,7 +791,7 @@
       "pricePerSqft": 420.62
     },
     {
-      "id": "tampines-231-simei-st-4-2016-12-975231",
+      "id": "tampines-231-simei-st-4-2016-12-975353",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -790,7 +804,7 @@
       "pricePerSqft": 418.83
     },
     {
-      "id": "tampines-231-simei-st-4-2016-11-973813",
+      "id": "tampines-231-simei-st-4-2016-11-973935",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -803,7 +817,7 @@
       "pricePerSqft": 430.25
     },
     {
-      "id": "tampines-231-simei-st-4-2015-01-939334",
+      "id": "tampines-231-simei-st-4-2015-01-939456",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -816,7 +830,7 @@
       "pricePerSqft": 373.4
     },
     {
-      "id": "tampines-231-simei-st-4-2013-05-625738",
+      "id": "tampines-231-simei-st-4-2013-05-625860",
       "month": "2013-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -829,7 +843,7 @@
       "pricePerSqft": 468.98
     },
     {
-      "id": "tampines-231-simei-st-4-2012-04-603004",
+      "id": "tampines-231-simei-st-4-2012-04-603126",
       "month": "2012-04",
       "flatType": "5 ROOM",
       "storeyRange": "06 TO 10",

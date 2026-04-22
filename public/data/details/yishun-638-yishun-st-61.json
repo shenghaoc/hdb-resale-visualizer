@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KHATIB MRT STATION",
       "distanceMeters": 650
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 650
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1058
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 2694
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -815,7 +829,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-638-yishun-st-61-2026-02-229145",
+      "id": "yishun-638-yishun-st-61-2026-02-229266",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

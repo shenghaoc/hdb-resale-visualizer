@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2010,
+      2010
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 569
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 569
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 833
+      },
+      {
+        "stationName": "NAPIER MRT STATION",
+        "distanceMeters": 1605
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -312,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-62a-strathmore-ave-2026-03-226530",
+      "id": "queenstown-62a-strathmore-ave-2026-03-226593",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -325,7 +339,7 @@
       "pricePerSqft": 1047.13
     },
     {
-      "id": "queenstown-62a-strathmore-ave-2026-03-226531",
+      "id": "queenstown-62a-strathmore-ave-2026-03-226594",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "HOLLAND VILLAGE MRT STATION",
       "distanceMeters": 153
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOLLAND VILLAGE MRT STATION",
+        "distanceMeters": 153
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 595
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 784
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1567,7 +1581,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-2-holland-ave-2026-01-226398",
+      "id": "queenstown-2-holland-ave-2026-01-226460",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

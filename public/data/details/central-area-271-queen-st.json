@@ -22,8 +22,8 @@
       139
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUGIS MRT STATION",
       "distanceMeters": 215
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUGIS MRT STATION",
+        "distanceMeters": 215
+      },
+      {
+        "stationName": "ROCHOR MRT STATION",
+        "distanceMeters": 328
+      },
+      {
+        "stationName": "BENCOOLEN MRT STATION",
+        "distanceMeters": 400
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -852,7 +866,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-271-queen-st-2026-03-223753",
+      "id": "central-area-271-queen-st-2026-03-223776",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -865,7 +879,7 @@
       "pricePerSqft": 789.68
     },
     {
-      "id": "central-area-271-queen-st-2026-01-223750",
+      "id": "central-area-271-queen-st-2026-01-223773",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -878,7 +892,7 @@
       "pricePerSqft": 771.1
     },
     {
-      "id": "central-area-271-queen-st-2026-01-223751",
+      "id": "central-area-271-queen-st-2026-01-223774",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

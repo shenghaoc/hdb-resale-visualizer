@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 210
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 210
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 449
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 494
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -496,7 +510,7 @@
       "pricePerSqft": 406.45
     },
     {
-      "id": "punggol-184-edgefield-plains-2016-10-971898",
+      "id": "punggol-184-edgefield-plains-2016-10-972020",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -509,7 +523,7 @@
       "pricePerSqft": 385.13
     },
     {
-      "id": "punggol-184-edgefield-plains-2016-08-968500",
+      "id": "punggol-184-edgefield-plains-2016-08-968622",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -522,7 +536,7 @@
       "pricePerSqft": 405
     },
     {
-      "id": "punggol-184-edgefield-plains-2016-06-965007",
+      "id": "punggol-184-edgefield-plains-2016-06-965129",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

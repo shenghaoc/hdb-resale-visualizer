@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 1162
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1162
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1641
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 2356
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -292,7 +306,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-740-tampines-st-72-2026-03-227949",
+      "id": "tampines-740-tampines-st-72-2026-03-228039",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -448,7 +462,7 @@
       "pricePerSqft": 411.8
     },
     {
-      "id": "tampines-740-tampines-st-72-2016-11-973822",
+      "id": "tampines-740-tampines-st-72-2016-11-973944",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -461,7 +475,7 @@
       "pricePerSqft": 372.27
     },
     {
-      "id": "tampines-740-tampines-st-72-2012-12-618621",
+      "id": "tampines-740-tampines-st-72-2012-12-618743",
       "month": "2012-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -474,7 +488,7 @@
       "pricePerSqft": 385.45
     },
     {
-      "id": "tampines-740-tampines-st-72-2012-08-611610",
+      "id": "tampines-740-tampines-st-72-2012-08-611732",
       "month": "2012-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -487,7 +501,7 @@
       "pricePerSqft": 431.57
     },
     {
-      "id": "tampines-740-tampines-st-72-2012-06-607369",
+      "id": "tampines-740-tampines-st-72-2012-06-607491",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -500,7 +514,7 @@
       "pricePerSqft": 395.33
     },
     {
-      "id": "tampines-740-tampines-st-72-2010-10-568699",
+      "id": "tampines-740-tampines-st-72-2010-10-568821",
       "month": "2010-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -513,7 +527,7 @@
       "pricePerSqft": 395.33
     },
     {
-      "id": "tampines-740-tampines-st-72-2009-07-523629",
+      "id": "tampines-740-tampines-st-72-2009-07-523751",
       "month": "2009-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -526,7 +540,7 @@
       "pricePerSqft": 331.42
     },
     {
-      "id": "tampines-740-tampines-st-72-2009-05-518554",
+      "id": "tampines-740-tampines-st-72-2009-05-518676",
       "month": "2009-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -539,7 +553,7 @@
       "pricePerSqft": 299.79
     },
     {
-      "id": "tampines-740-tampines-st-72-2008-04-489228",
+      "id": "tampines-740-tampines-st-72-2008-04-489350",
       "month": "2008-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

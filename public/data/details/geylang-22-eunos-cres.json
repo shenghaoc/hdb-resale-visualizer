@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 580
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 580
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 628
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 1221
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -750,7 +764,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-22-eunos-cres-2026-01-224381",
+      "id": "geylang-22-eunos-cres-2026-01-224411",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -997,7 +1011,7 @@
       "pricePerSqft": 377.65
     },
     {
-      "id": "geylang-22-eunos-cres-2015-11-953752",
+      "id": "geylang-22-eunos-cres-2015-11-953874",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

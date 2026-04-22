@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 206
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 206
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 359
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 556
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -513,7 +527,7 @@
       "pricePerSqft": 314.18
     },
     {
-      "id": "punggol-109b-edgedale-plains-2016-12-974941",
+      "id": "punggol-109b-edgedale-plains-2016-12-975063",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -526,7 +540,7 @@
       "pricePerSqft": 400.23
     },
     {
-      "id": "punggol-109b-edgedale-plains-2016-10-971880",
+      "id": "punggol-109b-edgedale-plains-2016-10-972002",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -539,7 +553,7 @@
       "pricePerSqft": 337.83
     },
     {
-      "id": "punggol-109b-edgedale-plains-2016-06-964985",
+      "id": "punggol-109b-edgedale-plains-2016-06-965107",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -552,7 +566,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "punggol-109b-edgedale-plains-2016-06-964986",
+      "id": "punggol-109b-edgedale-plains-2016-06-965108",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -565,7 +579,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "punggol-109b-edgedale-plains-2016-03-959611",
+      "id": "punggol-109b-edgedale-plains-2016-03-959733",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

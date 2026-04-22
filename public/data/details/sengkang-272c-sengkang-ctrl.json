@@ -22,8 +22,8 @@
       90
     ],
     "leaseCommenceRange": [
-      2009,
-      2009
+      2008,
+      2008
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BUANGKOK MRT STATION",
       "distanceMeters": 142
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 142
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 379
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 465
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -352,7 +366,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-272c-sengkang-ctrl-2026-03-227100",
+      "id": "sengkang-272c-sengkang-ctrl-2026-03-227171",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

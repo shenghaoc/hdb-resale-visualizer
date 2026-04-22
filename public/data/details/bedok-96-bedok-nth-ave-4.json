@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK RESERVOIR MRT STATION",
       "distanceMeters": 845
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 845
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 914
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1314
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -822,7 +836,7 @@
       "pricePerSqft": 419.2
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2016-06-964070",
+      "id": "bedok-96-bedok-nth-ave-4-2016-06-964192",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -835,7 +849,7 @@
       "pricePerSqft": 406.36
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2016-05-962237",
+      "id": "bedok-96-bedok-nth-ave-4-2016-05-962359",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -848,7 +862,7 @@
       "pricePerSqft": 397.16
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2015-09-950115",
+      "id": "bedok-96-bedok-nth-ave-4-2015-09-950237",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -861,7 +875,7 @@
       "pricePerSqft": 379.04
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2015-04-942242",
+      "id": "bedok-96-bedok-nth-ave-4-2015-04-942364",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -874,7 +888,7 @@
       "pricePerSqft": 373.88
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2015-04-942243",
+      "id": "bedok-96-bedok-nth-ave-4-2015-04-942365",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -887,7 +901,7 @@
       "pricePerSqft": 373.88
     },
     {
-      "id": "bedok-96-bedok-nth-ave-4-2014-08-644254",
+      "id": "bedok-96-bedok-nth-ave-4-2014-08-644376",
       "month": "2014-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

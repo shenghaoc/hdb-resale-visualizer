@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 886
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 886
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 925
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 975
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -276,7 +290,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-475b-upp-serangoon-cres-2026-04-224545",
+      "id": "hougang-475b-upp-serangoon-cres-2026-04-224577",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

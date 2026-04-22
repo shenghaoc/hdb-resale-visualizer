@@ -9,14 +9,14 @@
       "lat": 1.35240984227777,
       "lng": 103.886491570367
     },
-    "medianPrice": 460000,
+    "medianPrice": 461750,
     "priceIqr": [
-      415000,
-      471750
+      452500,
+      475875
     ],
-    "pricePerSqmMedian": 5879.12,
-    "pricePerSqftMedian": 546.19,
-    "transactionCount": 7,
+    "pricePerSqmMedian": 6297.77,
+    "pricePerSqftMedian": 585.09,
+    "transactionCount": 6,
     "floorAreaRange": [
       67,
       91
@@ -25,10 +25,10 @@
       1981,
       1981
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "1990-01",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 847
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 847
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1301
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1381
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -889,30 +903,11 @@
       "medianPrice": 463500,
       "transactionCount": 1,
       "medianPricePerSqm": 6917.91
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 380000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5671.64
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-125-hougang-ave-1-2026-04-224491",
-      "month": "2026-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "54 years 05 months",
-      "resalePrice": 380000,
-      "pricePerSqm": 5671.64,
-      "pricePerSqft": 526.91
-    },
-    {
-      "id": "hougang-125-hougang-ave-1-2026-03-224487",
+      "id": "hougang-125-hougang-ave-1-2026-03-224519",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1157,6 +1152,19 @@
       "resalePrice": 273000,
       "pricePerSqm": 4074.63,
       "pricePerSqft": 378.55
+    },
+    {
+      "id": "hougang-125-hougang-ave-1-2020-03-68475",
+      "month": "2020-03",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "60 years 06 months",
+      "resalePrice": 280000,
+      "pricePerSqm": 3414.63,
+      "pricePerSqft": 317.23
     }
   ]
 }

@@ -22,8 +22,8 @@
       96
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 754
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 754
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1351
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 2160
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -953,7 +967,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-244-hougang-st-22-2026-04-224537",
+      "id": "hougang-244-hougang-st-22-2026-04-224569",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -966,7 +980,7 @@
       "pricePerSqft": 568.51
     },
     {
-      "id": "hougang-244-hougang-st-22-2026-04-224667",
+      "id": "hougang-244-hougang-st-22-2026-04-224702",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

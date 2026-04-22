@@ -22,8 +22,8 @@
       152
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1585
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1585
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1838
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1967
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -437,7 +451,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-161-yung-ping-rd-2026-04-225397",
+      "id": "jurong-west-161-yung-ping-rd-2026-04-225444",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -671,7 +685,7 @@
       "pricePerSqft": 284.4
     },
     {
-      "id": "jurong-west-161-yung-ping-rd-2015-12-955402",
+      "id": "jurong-west-161-yung-ping-rd-2015-12-955524",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -684,7 +698,7 @@
       "pricePerSqft": 355.07
     },
     {
-      "id": "jurong-west-161-yung-ping-rd-2014-08-644762",
+      "id": "jurong-west-161-yung-ping-rd-2014-08-644884",
       "month": "2014-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

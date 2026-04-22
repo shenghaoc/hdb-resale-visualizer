@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 257
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 257
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 432
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 468
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -322,7 +336,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-115-edgefield-plains-2026-04-226319",
+      "id": "punggol-115-edgefield-plains-2026-04-226381",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

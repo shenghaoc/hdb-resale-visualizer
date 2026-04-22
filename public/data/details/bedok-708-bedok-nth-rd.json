@@ -9,14 +9,14 @@
       "lat": 1.33503645745879,
       "lng": 103.919311961318
     },
-    "medianPrice": 600000,
+    "medianPrice": 598000,
     "priceIqr": [
-      596000,
-      635000
+      584000,
+      626250
     ],
-    "pricePerSqmMedian": 6593.41,
-    "pricePerSqftMedian": 612.55,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 6571.43,
+    "pricePerSqftMedian": 610.5,
+    "transactionCount": 6,
     "floorAreaRange": [
       91,
       92
@@ -25,10 +25,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 76
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 76
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1102
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1516
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -678,9 +692,28 @@
       "medianPrice": 580000,
       "transactionCount": 1,
       "medianPricePerSqm": 6373.63
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6241.76
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-708-bedok-nth-rd-2026-04-222519",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 07 months",
+      "resalePrice": 568000,
+      "pricePerSqm": 6241.76,
+      "pricePerSqft": 579.88
+    },
     {
       "id": "bedok-708-bedok-nth-rd-2025-12-198609",
       "month": "2025-12",
@@ -890,7 +923,7 @@
       "pricePerSqft": 444.1
     },
     {
-      "id": "bedok-708-bedok-nth-rd-2016-12-974233",
+      "id": "bedok-708-bedok-nth-rd-2016-12-974355",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -903,7 +936,7 @@
       "pricePerSqft": 426.74
     },
     {
-      "id": "bedok-708-bedok-nth-rd-2016-10-971010",
+      "id": "bedok-708-bedok-nth-rd-2016-10-971132",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -916,7 +949,7 @@
       "pricePerSqft": 426.74
     },
     {
-      "id": "bedok-708-bedok-nth-rd-2016-10-971015",
+      "id": "bedok-708-bedok-nth-rd-2016-10-971137",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -927,19 +960,6 @@
       "resalePrice": 435000,
       "pricePerSqm": 4780.22,
       "pricePerSqft": 444.1
-    },
-    {
-      "id": "bedok-708-bedok-nth-rd-2015-12-954815",
-      "month": "2015-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "63",
-      "resalePrice": 380000,
-      "pricePerSqm": 4175.82,
-      "pricePerSqft": 387.95
     }
   ]
 }

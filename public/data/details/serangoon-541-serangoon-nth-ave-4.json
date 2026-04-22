@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 2028
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2028
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 2070
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 2145
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS NORTH MRT STATION",
       "distanceMeters": 920
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 920
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 963
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1043
+      }
+    ]
   },
   "monthlyTrend": [
     {

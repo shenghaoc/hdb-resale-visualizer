@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 243
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 243
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 517
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 1518
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -767,7 +781,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-108-potong-pasir-ave-1-2026-03-228176",
+      "id": "toa-payoh-108-potong-pasir-ave-1-2026-03-228272",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

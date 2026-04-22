@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 397
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 397
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1624
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2032
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -426,7 +440,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-474-sembawang-dr-2026-04-226710",
+      "id": "sembawang-474-sembawang-dr-2026-04-226776",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -621,7 +635,7 @@
       "pricePerSqft": 347.11
     },
     {
-      "id": "sembawang-474-sembawang-dr-2016-07-966763",
+      "id": "sembawang-474-sembawang-dr-2016-07-966885",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -634,7 +648,7 @@
       "pricePerSqft": 359.91
     },
     {
-      "id": "sembawang-474-sembawang-dr-2015-05-944724",
+      "id": "sembawang-474-sembawang-dr-2015-05-944846",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -647,7 +661,7 @@
       "pricePerSqft": 312.49
     },
     {
-      "id": "sembawang-474-sembawang-dr-2015-01-939159",
+      "id": "sembawang-474-sembawang-dr-2015-01-939281",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +674,7 @@
       "pricePerSqft": 350.97
     },
     {
-      "id": "sembawang-474-sembawang-dr-2014-11-649309",
+      "id": "sembawang-474-sembawang-dr-2014-11-649431",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -673,7 +687,7 @@
       "pricePerSqft": 347.87
     },
     {
-      "id": "sembawang-474-sembawang-dr-2014-06-642330",
+      "id": "sembawang-474-sembawang-dr-2014-06-642452",
       "month": "2014-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

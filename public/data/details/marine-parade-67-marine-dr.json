@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARINE PARADE MRT STATION",
       "distanceMeters": 137
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 137
+      },
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 432
+      },
+      {
+        "stationName": "TANJONG KATONG MRT STATION",
+        "distanceMeters": 1403
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1164,7 +1178,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-67-marine-dr-2026-04-225605",
+      "id": "marine-parade-67-marine-dr-2026-04-225657",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1177,7 +1191,7 @@
       "pricePerSqft": 600.3
     },
     {
-      "id": "marine-parade-67-marine-dr-2026-02-225602",
+      "id": "marine-parade-67-marine-dr-2026-02-225654",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -9,26 +9,26 @@
       "lat": 1.34912317741666,
       "lng": 103.72898614528
     },
-    "medianPrice": 842888,
+    "medianPrice": 821444,
     "priceIqr": [
-      821444,
-      854444
+      800000,
+      848666
     ],
-    "pricePerSqmMedian": 5812.08,
-    "pricePerSqftMedian": 539.96,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5590.6,
+    "pricePerSqftMedian": 519.38,
+    "transactionCount": 4,
     "floorAreaRange": [
       141,
       155
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 826
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 826
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 970
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2202
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -613,9 +627,28 @@
       "medianPrice": 800000,
       "transactionCount": 1,
       "medianPricePerSqm": 5161.29
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5369.13
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-east-327-jurong-east-st-31-2026-04-224984",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 149,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years",
+      "resalePrice": 800000,
+      "pricePerSqm": 5369.13,
+      "pricePerSqft": 498.81
+    },
     {
       "id": "jurong-east-327-jurong-east-st-31-2025-11-206789",
       "month": "2025-11",
@@ -862,19 +895,6 @@
       "resalePrice": 608000,
       "pricePerSqm": 4312.06,
       "pricePerSqft": 400.6
-    },
-    {
-      "id": "jurong-east-327-jurong-east-st-31-2018-11-39503",
-      "month": "2018-11",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 147,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "65 years 05 months",
-      "resalePrice": 570000,
-      "pricePerSqm": 3877.55,
-      "pricePerSqft": 360.24
     }
   ]
 }

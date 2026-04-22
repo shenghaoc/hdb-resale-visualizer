@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAVENDER MRT STATION",
       "distanceMeters": 229
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAVENDER MRT STATION",
+        "distanceMeters": 229
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 506
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 660
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -442,7 +456,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-807-king-george-s-ave-2026-02-225580",
+      "id": "kallang-whampoa-807-king-george-s-ave-2026-02-225631",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -663,7 +677,7 @@
       "pricePerSqft": 615.42
     },
     {
-      "id": "kallang-whampoa-807-king-george-s-ave-2016-12-974844",
+      "id": "kallang-whampoa-807-king-george-s-ave-2016-12-974966",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -676,7 +690,7 @@
       "pricePerSqft": 593.77
     },
     {
-      "id": "kallang-whampoa-807-king-george-s-ave-2015-12-955444",
+      "id": "kallang-whampoa-807-king-george-s-ave-2015-12-955566",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -689,7 +703,7 @@
       "pricePerSqft": 638.11
     },
     {
-      "id": "kallang-whampoa-807-king-george-s-ave-2015-09-950762",
+      "id": "kallang-whampoa-807-king-george-s-ave-2015-09-950884",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

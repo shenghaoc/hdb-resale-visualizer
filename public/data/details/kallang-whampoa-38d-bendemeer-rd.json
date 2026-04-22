@@ -9,26 +9,26 @@
       "lat": 1.32163647015368,
       "lng": 103.866767328257
     },
-    "medianPrice": 910000,
+    "medianPrice": 905000,
     "priceIqr": [
-      900000,
-      945000
+      839166,
+      936250
     ],
-    "pricePerSqmMedian": 10271.74,
-    "pricePerSqftMedian": 954.28,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 10192.05,
+    "pricePerSqftMedian": 946.88,
+    "transactionCount": 6,
     "floorAreaRange": [
       69,
       92
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2015-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 532
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 532
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 603
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 958
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -343,11 +357,30 @@
       "medianPrice": 945000,
       "transactionCount": 1,
       "medianPricePerSqm": 10271.74
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 818888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9200.99
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-38d-bendemeer-rd-2026-01-225478",
+      "id": "kallang-whampoa-38d-bendemeer-rd-2026-04-225536",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 01 month",
+      "resalePrice": 818888,
+      "pricePerSqm": 9200.99,
+      "pricePerSqft": 854.8
+    },
+    {
+      "id": "kallang-whampoa-38d-bendemeer-rd-2026-01-225528",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -592,19 +625,6 @@
       "resalePrice": 640888,
       "pricePerSqm": 7200.99,
       "pricePerSqft": 668.99
-    },
-    {
-      "id": "kallang-whampoa-38d-bendemeer-rd-2021-05-97940",
-      "month": "2021-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 89,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "90 years",
-      "resalePrice": 705000,
-      "pricePerSqm": 7921.35,
-      "pricePerSqft": 735.92
     }
   ]
 }

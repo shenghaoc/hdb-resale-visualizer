@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 523
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 523
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 527
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1899
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -324,7 +338,7 @@
       "pricePerSqft": 340.64
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2009-06-519362",
+      "id": "bukit-batok-541-bt-batok-st-52-2009-06-519484",
       "month": "2009-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -337,7 +351,7 @@
       "pricePerSqft": 268.76
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2008-08-496953",
+      "id": "bukit-batok-541-bt-batok-st-52-2008-08-497075",
       "month": "2008-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -350,7 +364,7 @@
       "pricePerSqft": 269.86
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2008-03-485526",
+      "id": "bukit-batok-541-bt-batok-st-52-2008-03-485648",
       "month": "2008-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -363,7 +377,7 @@
       "pricePerSqft": 237.79
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2006-06-438120",
+      "id": "bukit-batok-541-bt-batok-st-52-2006-06-438242",
       "month": "2006-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -376,7 +390,7 @@
       "pricePerSqft": 179.17
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2005-08-414666",
+      "id": "bukit-batok-541-bt-batok-st-52-2005-08-414788",
       "month": "2005-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -389,7 +403,7 @@
       "pricePerSqft": 171.43
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2005-04-404920",
+      "id": "bukit-batok-541-bt-batok-st-52-2005-04-405042",
       "month": "2005-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -402,7 +416,7 @@
       "pricePerSqft": 182.49
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2004-06-380231",
+      "id": "bukit-batok-541-bt-batok-st-52-2004-06-380353",
       "month": "2004-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -415,7 +429,7 @@
       "pricePerSqft": 245.31
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2004-05-378077",
+      "id": "bukit-batok-541-bt-batok-st-52-2004-05-378199",
       "month": "2004-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -428,7 +442,7 @@
       "pricePerSqft": 180.28
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2003-05-347703",
+      "id": "bukit-batok-541-bt-batok-st-52-2003-05-347825",
       "month": "2003-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -441,7 +455,7 @@
       "pricePerSqft": 185.81
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2003-02-341343",
+      "id": "bukit-batok-541-bt-batok-st-52-2003-02-341465",
       "month": "2003-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -454,7 +468,7 @@
       "pricePerSqft": 190.38
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-2002-01-302796",
+      "id": "bukit-batok-541-bt-batok-st-52-2002-01-302918",
       "month": "2002-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -467,7 +481,7 @@
       "pricePerSqft": 169.22
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-1999-10-929081",
+      "id": "bukit-batok-541-bt-batok-st-52-1999-10-929203",
       "month": "1999-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -480,7 +494,7 @@
       "pricePerSqft": 180.28
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-1999-05-903482",
+      "id": "bukit-batok-541-bt-batok-st-52-1999-05-903604",
       "month": "1999-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -493,7 +507,7 @@
       "pricePerSqft": 189.12
     },
     {
-      "id": "bukit-batok-541-bt-batok-st-52-1997-07-814643",
+      "id": "bukit-batok-541-bt-batok-st-52-1997-07-814765",
       "month": "1997-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

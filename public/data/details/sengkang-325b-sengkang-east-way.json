@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 498
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 498
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 510
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 539
+      }
+    ]
   },
   "monthlyTrend": [
     {

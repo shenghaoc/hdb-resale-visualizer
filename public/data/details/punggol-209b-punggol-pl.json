@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2013,
+      2013
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL LRT STATION",
       "distanceMeters": 525
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 525
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 559
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 578
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -293,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-209b-punggol-pl-2026-03-226108",
+      "id": "punggol-209b-punggol-pl-2026-03-226166",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

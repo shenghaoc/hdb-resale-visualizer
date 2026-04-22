@@ -22,8 +22,8 @@
       149
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BEDOK RESERVOIR MRT STATION",
       "distanceMeters": 566
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 566
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1156
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1290
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -943,7 +957,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-103-bedok-nth-ave-4-2026-02-222347",
+      "id": "bedok-103-bedok-nth-ave-4-2026-02-222353",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

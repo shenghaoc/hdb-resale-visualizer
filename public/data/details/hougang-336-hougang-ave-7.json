@@ -22,8 +22,8 @@
       103
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 664
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 664
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1580
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 1651
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -682,7 +696,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-336-hougang-ave-7-2026-03-224625",
+      "id": "hougang-336-hougang-ave-7-2026-03-224657",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -695,7 +709,7 @@
       "pricePerSqft": 557.3
     },
     {
-      "id": "hougang-336-hougang-ave-7-2026-03-224626",
+      "id": "hougang-336-hougang-ave-7-2026-03-224658",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -708,7 +722,7 @@
       "pricePerSqft": 547.1
     },
     {
-      "id": "hougang-336-hougang-ave-7-2026-03-224629",
+      "id": "hougang-336-hougang-ave-7-2026-03-224661",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -721,7 +735,7 @@
       "pricePerSqft": 539.44
     },
     {
-      "id": "hougang-336-hougang-ave-7-2026-01-224622",
+      "id": "hougang-336-hougang-ave-7-2026-01-224654",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

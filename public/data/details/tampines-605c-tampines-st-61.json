@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2018,
+      2018
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 1035
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1035
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1830
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1943
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -156,7 +170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-605c-tampines-st-61-2026-02-227690",
+      "id": "tampines-605c-tampines-st-61-2026-02-227774",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -169,7 +183,7 @@
       "pricePerSqft": 737.17
     },
     {
-      "id": "tampines-605c-tampines-st-61-2026-02-227691",
+      "id": "tampines-605c-tampines-st-61-2026-02-227775",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -182,7 +196,7 @@
       "pricePerSqft": 757.36
     },
     {
-      "id": "tampines-605c-tampines-st-61-2026-01-227687",
+      "id": "tampines-605c-tampines-st-61-2026-01-227771",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -195,7 +209,7 @@
       "pricePerSqft": 797.76
     },
     {
-      "id": "tampines-605c-tampines-st-61-2026-01-227688",
+      "id": "tampines-605c-tampines-st-61-2026-01-227772",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -208,7 +222,7 @@
       "pricePerSqft": 732.12
     },
     {
-      "id": "tampines-605c-tampines-st-61-2026-01-227689",
+      "id": "tampines-605c-tampines-st-61-2026-01-227773",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

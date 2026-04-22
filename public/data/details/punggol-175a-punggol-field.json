@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 33
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 33
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 376
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 564
+      }
+    ]
   },
   "monthlyTrend": [
     {

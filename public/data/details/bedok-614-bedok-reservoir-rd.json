@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 251
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 251
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 882
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1324
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -791,7 +805,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-614-bedok-reservoir-rd-2026-03-222430",
+      "id": "bedok-614-bedok-reservoir-rd-2026-03-222438",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -804,7 +818,7 @@
       "pricePerSqft": 582.38
     },
     {
-      "id": "bedok-614-bedok-reservoir-rd-2026-01-222415",
+      "id": "bedok-614-bedok-reservoir-rd-2026-01-222423",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1012,7 +1026,7 @@
       "pricePerSqft": 457.58
     },
     {
-      "id": "bedok-614-bedok-reservoir-rd-2016-12-974240",
+      "id": "bedok-614-bedok-reservoir-rd-2016-12-974362",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1025,7 +1039,7 @@
       "pricePerSqft": 430.83
     },
     {
-      "id": "bedok-614-bedok-reservoir-rd-2016-10-970984",
+      "id": "bedok-614-bedok-reservoir-rd-2016-10-971106",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1038,7 +1052,7 @@
       "pricePerSqft": 408.31
     },
     {
-      "id": "bedok-614-bedok-reservoir-rd-2016-09-969333",
+      "id": "bedok-614-bedok-reservoir-rd-2016-09-969455",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

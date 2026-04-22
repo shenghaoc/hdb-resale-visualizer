@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 423
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 423
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1396
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1853
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -672,7 +686,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-234-hougang-ave-1-2026-04-224595",
+      "id": "hougang-234-hougang-ave-1-2026-04-224627",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

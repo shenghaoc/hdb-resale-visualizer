@@ -22,8 +22,8 @@
       150
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BARTLEY MRT STATION",
       "distanceMeters": 1108
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1108
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1141
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1388
+      }
+    ]
   },
   "monthlyTrend": [
     {

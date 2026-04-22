@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 664
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 664
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 875
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1791
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -583,7 +597,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-171-bedok-sth-rd-2026-03-222589",
+      "id": "bedok-171-bedok-sth-rd-2026-03-222600",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -778,7 +792,7 @@
       "pricePerSqft": 430.25
     },
     {
-      "id": "bedok-171-bedok-sth-rd-2016-12-974244",
+      "id": "bedok-171-bedok-sth-rd-2016-12-974366",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -791,7 +805,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "bedok-171-bedok-sth-rd-2016-05-962193",
+      "id": "bedok-171-bedok-sth-rd-2016-05-962315",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -804,7 +818,7 @@
       "pricePerSqft": 404.79
     },
     {
-      "id": "bedok-171-bedok-sth-rd-2015-10-951623",
+      "id": "bedok-171-bedok-sth-rd-2015-10-951745",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -817,7 +831,7 @@
       "pricePerSqft": 407.99
     },
     {
-      "id": "bedok-171-bedok-sth-rd-2013-05-624635",
+      "id": "bedok-171-bedok-sth-rd-2013-05-624757",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -830,7 +844,7 @@
       "pricePerSqft": 468.32
     },
     {
-      "id": "bedok-171-bedok-sth-rd-2013-03-621569",
+      "id": "bedok-171-bedok-sth-rd-2013-03-621691",
       "month": "2013-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

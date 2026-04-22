@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 558
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 558
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1584
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1784
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -91,7 +105,7 @@
       "pricePerSqft": 337.65
     },
     {
-      "id": "jurong-west-526-jurong-west-st-52-2015-07-947687",
+      "id": "jurong-west-526-jurong-west-st-52-2015-07-947809",
       "month": "2015-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

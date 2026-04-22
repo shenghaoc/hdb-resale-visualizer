@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 73
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 73
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 375
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 615
+      }
+    ]
   },
   "monthlyTrend": [
     {

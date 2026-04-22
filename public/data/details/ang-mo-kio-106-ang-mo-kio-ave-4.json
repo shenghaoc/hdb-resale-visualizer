@@ -9,26 +9,26 @@
       "lat": 1.37193370323489,
       "lng": 103.837486061851
     },
-    "medianPrice": 470000,
+    "medianPrice": 460000,
     "priceIqr": [
-      470000,
-      470000
+      455000,
+      465000
     ],
-    "pricePerSqmMedian": 6351.35,
-    "pricePerSqftMedian": 590.06,
-    "transactionCount": 1,
+    "pricePerSqmMedian": 6216.22,
+    "pricePerSqftMedian": 577.5,
+    "transactionCount": 2,
     "floorAreaRange": [
       67,
       99
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 106
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 106
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 977
+      },
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 1300
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -949,9 +963,28 @@
       "medianPrice": 470000,
       "transactionCount": 1,
       "medianPricePerSqm": 6351.35
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6081.08
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-106-ang-mo-kio-ave-4-2026-04-222154",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 74,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 01 month",
+      "resalePrice": 450000,
+      "pricePerSqm": 6081.08,
+      "pricePerSqft": 564.95
+    },
     {
       "id": "ang-mo-kio-106-ang-mo-kio-ave-4-2025-07-197357",
       "month": "2025-07",
@@ -1187,7 +1220,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "ang-mo-kio-106-ang-mo-kio-ave-4-2016-12-974127",
+      "id": "ang-mo-kio-106-ang-mo-kio-ave-4-2016-12-974249",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1198,19 +1231,6 @@
       "resalePrice": 285000,
       "pricePerSqm": 3851.35,
       "pricePerSqft": 357.8
-    },
-    {
-      "id": "ang-mo-kio-106-ang-mo-kio-ave-4-2016-08-967331",
-      "month": "2016-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 74,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "60",
-      "resalePrice": 360000,
-      "pricePerSqm": 4864.86,
-      "pricePerSqft": 451.96
     }
   ]
 }

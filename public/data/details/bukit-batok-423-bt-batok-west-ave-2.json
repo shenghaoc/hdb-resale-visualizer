@@ -22,8 +22,8 @@
       99
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1985,
+      1985
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 828
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 828
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1504
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 1875
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -881,7 +895,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2026-02-222885",
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2026-02-222901",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1115,7 +1129,7 @@
       "pricePerSqft": 340.97
     },
     {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-11-972747",
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-11-972869",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1128,7 +1142,7 @@
       "pricePerSqft": 326.15
     },
     {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-10-971096",
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-10-971218",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

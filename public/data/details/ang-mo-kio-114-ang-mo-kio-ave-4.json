@@ -22,8 +22,8 @@
       99
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 57
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 57
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 992
+      },
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 1235
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -749,7 +763,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-114-ang-mo-kio-ave-4-2026-03-222145",
+      "id": "ang-mo-kio-114-ang-mo-kio-ave-4-2026-03-222147",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

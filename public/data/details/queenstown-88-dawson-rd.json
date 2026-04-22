@@ -22,8 +22,8 @@
       108
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 366
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 366
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1117
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1359
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -359,7 +373,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-88-dawson-rd-2026-03-226456",
+      "id": "queenstown-88-dawson-rd-2026-03-226519",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -372,7 +386,7 @@
       "pricePerSqft": 1138.22
     },
     {
-      "id": "queenstown-88-dawson-rd-2026-03-226458",
+      "id": "queenstown-88-dawson-rd-2026-03-226521",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "34 TO 36",
@@ -385,7 +399,7 @@
       "pricePerSqft": 1315.19
     },
     {
-      "id": "queenstown-88-dawson-rd-2026-01-226440",
+      "id": "queenstown-88-dawson-rd-2026-01-226503",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

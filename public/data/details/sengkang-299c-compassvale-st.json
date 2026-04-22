@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 234
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 234
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 555
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 730
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -449,7 +463,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-299c-compassvale-st-2026-04-227300",
+      "id": "sengkang-299c-compassvale-st-2026-04-227375",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -462,7 +476,7 @@
       "pricePerSqft": 587.48
     },
     {
-      "id": "sengkang-299c-compassvale-st-2026-01-227294",
+      "id": "sengkang-299c-compassvale-st-2026-01-227369",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -475,7 +489,7 @@
       "pricePerSqft": 540.21
     },
     {
-      "id": "sengkang-299c-compassvale-st-2026-01-227296",
+      "id": "sengkang-299c-compassvale-st-2026-01-227371",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

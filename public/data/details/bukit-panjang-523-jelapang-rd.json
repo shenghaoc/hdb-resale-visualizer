@@ -22,8 +22,8 @@
       144
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "JELAPANG LRT STATION",
       "distanceMeters": 115
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 115
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 423
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 590
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -464,7 +478,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-523-jelapang-rd-2026-02-223554",
+      "id": "bukit-panjang-523-jelapang-rd-2026-02-223577",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 385
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 385
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 530
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 630
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -552,7 +566,7 @@
       "pricePerSqft": 398.88
     },
     {
-      "id": "sengkang-318a-anchorvale-link-2016-09-970411",
+      "id": "sengkang-318a-anchorvale-link-2016-09-970533",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1969,
-      1969
+      1963,
+      1963
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 188
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 188
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 584
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 740
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -943,7 +957,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-28-jln-klinik-2026-04-223275",
+      "id": "bukit-merah-28-jln-klinik-2026-04-223294",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

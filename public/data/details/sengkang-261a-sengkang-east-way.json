@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2024-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CHENG LIM LRT STATION",
       "distanceMeters": 239
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 239
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 239
+      },
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 656
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -554,7 +568,7 @@
       "pricePerSqft": 434.96
     },
     {
-      "id": "sengkang-261a-sengkang-east-way-2016-07-966884",
+      "id": "sengkang-261a-sengkang-east-way-2016-07-967006",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -567,7 +581,7 @@
       "pricePerSqft": 432.42
     },
     {
-      "id": "sengkang-261a-sengkang-east-way-2016-06-965220",
+      "id": "sengkang-261a-sengkang-east-way-2016-06-965342",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -580,7 +594,7 @@
       "pricePerSqft": 420.6
     },
     {
-      "id": "sengkang-261a-sengkang-east-way-2016-01-957034",
+      "id": "sengkang-261a-sengkang-east-way-2016-01-957156",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -593,7 +607,7 @@
       "pricePerSqft": 429.04
     },
     {
-      "id": "sengkang-261a-sengkang-east-way-2015-06-946557",
+      "id": "sengkang-261a-sengkang-east-way-2015-06-946679",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

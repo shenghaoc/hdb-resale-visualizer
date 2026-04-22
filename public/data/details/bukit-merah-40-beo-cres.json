@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1963,
+      1963
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 651
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 709
+      }
+    ]
   },
   "monthlyTrend": [
     {

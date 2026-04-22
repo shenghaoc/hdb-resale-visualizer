@@ -22,8 +22,8 @@
       89
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1985,
+      1985
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 556
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 556
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1044
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1617
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -340,7 +354,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-329-woodlands-st-32-2026-01-228563",
+      "id": "woodlands-329-woodlands-st-32-2026-01-228671",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -405,7 +419,7 @@
       "pricePerSqft": 276.5
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2015-11-954545",
+      "id": "woodlands-329-woodlands-st-32-2015-11-954667",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -418,7 +432,7 @@
       "pricePerSqft": 348.39
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2015-05-945089",
+      "id": "woodlands-329-woodlands-st-32-2015-05-945211",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -431,7 +445,7 @@
       "pricePerSqft": 355.95
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2014-12-650993",
+      "id": "woodlands-329-woodlands-st-32-2014-12-651115",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -444,7 +458,7 @@
       "pricePerSqft": 342.86
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2013-11-633848",
+      "id": "woodlands-329-woodlands-st-32-2013-11-633970",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -457,7 +471,7 @@
       "pricePerSqft": 400.37
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2013-09-631253",
+      "id": "woodlands-329-woodlands-st-32-2013-09-631375",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -470,7 +484,7 @@
       "pricePerSqft": 400.37
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2012-11-617209",
+      "id": "woodlands-329-woodlands-st-32-2012-11-617331",
       "month": "2012-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -483,7 +497,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2012-08-611720",
+      "id": "woodlands-329-woodlands-st-32-2012-08-611842",
       "month": "2012-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -496,7 +510,7 @@
       "pricePerSqft": 404.79
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2010-12-573260",
+      "id": "woodlands-329-woodlands-st-32-2010-12-573382",
       "month": "2010-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -509,7 +523,7 @@
       "pricePerSqft": 339.25
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2010-04-549819",
+      "id": "woodlands-329-woodlands-st-32-2010-04-549941",
       "month": "2010-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -522,7 +536,7 @@
       "pricePerSqft": 299.59
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2008-07-496333",
+      "id": "woodlands-329-woodlands-st-32-2008-07-496455",
       "month": "2008-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -535,7 +549,7 @@
       "pricePerSqft": 200.18
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2007-02-457898",
+      "id": "woodlands-329-woodlands-st-32-2007-02-458020",
       "month": "2007-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -548,7 +562,7 @@
       "pricePerSqft": 176.96
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2007-01-455935",
+      "id": "woodlands-329-woodlands-st-32-2007-01-456057",
       "month": "2007-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -561,7 +575,7 @@
       "pricePerSqft": 178.62
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2006-07-442376",
+      "id": "woodlands-329-woodlands-st-32-2006-07-442498",
       "month": "2006-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -574,7 +588,7 @@
       "pricePerSqft": 165.9
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2006-04-435029",
+      "id": "woodlands-329-woodlands-st-32-2006-04-435151",
       "month": "2006-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -587,7 +601,7 @@
       "pricePerSqft": 182.49
     },
     {
-      "id": "woodlands-329-woodlands-st-32-2005-05-409021",
+      "id": "woodlands-329-woodlands-st-32-2005-05-409143",
       "month": "2005-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

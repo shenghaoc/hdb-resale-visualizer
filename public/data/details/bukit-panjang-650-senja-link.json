@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JELAPANG LRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 462
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 685
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -348,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-650-senja-link-2026-02-223692",
+      "id": "bukit-panjang-650-senja-link-2026-02-223715",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

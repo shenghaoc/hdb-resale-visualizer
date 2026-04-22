@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2004,
-      2004
+      2002,
+      2002
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CORAL EDGE LRT STATION",
       "distanceMeters": 121
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 121
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 279
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 540
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -486,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-171c-edgedale-plains-2026-03-226209",
+      "id": "punggol-171c-edgedale-plains-2026-03-226271",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

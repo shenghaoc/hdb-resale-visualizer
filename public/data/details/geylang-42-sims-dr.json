@@ -9,26 +9,26 @@
       "lat": 1.31700019582001,
       "lng": 103.875994635636
     },
-    "medianPrice": 642500,
+    "medianPrice": 650000,
     "priceIqr": [
-      638750,
-      646250
+      642500,
+      658000
     ],
-    "pricePerSqmMedian": 6120.28,
-    "pricePerSqftMedian": 568.59,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 6250,
+    "pricePerSqftMedian": 580.64,
+    "transactionCount": 3,
     "floorAreaRange": [
       104,
       109
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1989,
+      1989
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-02",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 653
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 653
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 722
+      },
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 759
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -396,9 +410,28 @@
       "medianPrice": 650000,
       "transactionCount": 1,
       "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 666000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6403.85
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-42-sims-dr-2026-04-224450",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1990,
+      "remainingLease": "63 years",
+      "resalePrice": 666000,
+      "pricePerSqm": 6403.85,
+      "pricePerSqft": 594.94
+    },
     {
       "id": "geylang-42-sims-dr-2025-06-204873",
       "month": "2025-06",
@@ -504,7 +537,7 @@
       "pricePerSqft": 433.25
     },
     {
-      "id": "geylang-42-sims-dr-2015-08-949052",
+      "id": "geylang-42-sims-dr-2015-08-949174",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -517,7 +550,7 @@
       "pricePerSqft": 433.25
     },
     {
-      "id": "geylang-42-sims-dr-2014-04-639056",
+      "id": "geylang-42-sims-dr-2014-04-639178",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -530,7 +563,7 @@
       "pricePerSqft": 455.58
     },
     {
-      "id": "geylang-42-sims-dr-2013-10-631927",
+      "id": "geylang-42-sims-dr-2013-10-632049",
       "month": "2013-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -543,7 +576,7 @@
       "pricePerSqft": 474.07
     },
     {
-      "id": "geylang-42-sims-dr-2013-08-629331",
+      "id": "geylang-42-sims-dr-2013-08-629453",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -556,7 +589,7 @@
       "pricePerSqft": 431.02
     },
     {
-      "id": "geylang-42-sims-dr-2013-06-626514",
+      "id": "geylang-42-sims-dr-2013-06-626636",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -569,7 +602,7 @@
       "pricePerSqft": 428.05
     },
     {
-      "id": "geylang-42-sims-dr-2010-10-567443",
+      "id": "geylang-42-sims-dr-2010-10-567565",
       "month": "2010-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -582,7 +615,7 @@
       "pricePerSqft": 394.4
     },
     {
-      "id": "geylang-42-sims-dr-2010-08-561289",
+      "id": "geylang-42-sims-dr-2010-08-561411",
       "month": "2010-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -595,7 +628,7 @@
       "pricePerSqft": 339.45
     },
     {
-      "id": "geylang-42-sims-dr-2010-07-557776",
+      "id": "geylang-42-sims-dr-2010-07-557898",
       "month": "2010-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -608,7 +641,7 @@
       "pricePerSqft": 325.6
     },
     {
-      "id": "geylang-42-sims-dr-2009-10-530701",
+      "id": "geylang-42-sims-dr-2009-10-530823",
       "month": "2009-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -621,7 +654,7 @@
       "pricePerSqft": 330.52
     },
     {
-      "id": "geylang-42-sims-dr-2008-06-492618",
+      "id": "geylang-42-sims-dr-2008-06-492740",
       "month": "2008-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -634,7 +667,7 @@
       "pricePerSqft": 280.46
     },
     {
-      "id": "geylang-42-sims-dr-2006-02-429283",
+      "id": "geylang-42-sims-dr-2006-02-429405",
       "month": "2006-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -645,19 +678,6 @@
       "resalePrice": 260000,
       "pricePerSqm": 2429.91,
       "pricePerSqft": 225.75
-    },
-    {
-      "id": "geylang-42-sims-dr-2005-09-417645",
-      "month": "2005-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 107,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1990,
-      "remainingLease": "63 years",
-      "resalePrice": 278000,
-      "pricePerSqm": 2598.13,
-      "pricePerSqft": 241.37
     }
   ]
 }

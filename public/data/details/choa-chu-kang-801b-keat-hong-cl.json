@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2016,
+      2016
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 560
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 560
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 770
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 993
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -199,7 +213,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-801b-keat-hong-cl-2026-04-223817",
+      "id": "choa-chu-kang-801b-keat-hong-cl-2026-04-223841",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

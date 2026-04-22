@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK RESERVOIR MRT STATION",
       "distanceMeters": 501
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 501
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1228
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1265
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1091,7 +1105,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-104-bedok-nth-ave-4-2026-04-222479",
+      "id": "bedok-104-bedok-nth-ave-4-2026-04-222488",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1104,7 +1118,7 @@
       "pricePerSqft": 490.04
     },
     {
-      "id": "bedok-104-bedok-nth-ave-4-2026-01-222344",
+      "id": "bedok-104-bedok-nth-ave-4-2026-01-222350",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

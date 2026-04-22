@@ -22,8 +22,8 @@
       128
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEGAR LRT STATION",
       "distanceMeters": 283
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 283
+      },
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 458
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 820
+      }
+    ]
   },
   "monthlyTrend": [
     {

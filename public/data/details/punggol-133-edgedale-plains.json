@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CORAL EDGE LRT STATION",
       "distanceMeters": 245
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 245
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 466
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 526
+      }
+    ]
   },
   "monthlyTrend": [
     {

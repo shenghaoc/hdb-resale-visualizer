@@ -9,26 +9,26 @@
       "lat": 1.35045319598788,
       "lng": 103.712256991806
     },
-    "medianPrice": 528888,
+    "medianPrice": 558694,
     "priceIqr": [
-      476000,
-      618000
+      479000,
+      630750
     ],
-    "pricePerSqmMedian": 6893.62,
-    "pricePerSqftMedian": 640.44,
-    "transactionCount": 13,
+    "pricePerSqmMedian": 6902.69,
+    "pricePerSqftMedian": 641.28,
+    "transactionCount": 14,
     "floorAreaRange": [
       68,
       94
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-05",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1161
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1161
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1479
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 2190
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -157,11 +171,30 @@
       "medianPrice": 528888,
       "transactionCount": 1,
       "medianPricePerSqm": 7777.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7021.28
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-216b-boon-lay-ave-2026-01-224958",
+      "id": "jurong-west-216b-boon-lay-ave-2026-04-225102",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 7021.28,
+      "pricePerSqft": 652.3
+    },
+    {
+      "id": "jurong-west-216b-boon-lay-ave-2026-01-224998",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -406,19 +439,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 6617.65,
       "pricePerSqft": 614.8
-    },
-    {
-      "id": "jurong-west-216b-boon-lay-ave-2023-05-154326",
-      "month": "2023-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 94,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 588000,
-      "pricePerSqm": 6255.32,
-      "pricePerSqft": 581.14
     }
   ]
 }

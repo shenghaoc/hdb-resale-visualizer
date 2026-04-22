@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 819
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 819
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 931
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2336
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -815,7 +829,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-489-jurong-west-ave-1-2026-01-224993",
+      "id": "jurong-west-489-jurong-west-ave-1-2026-01-225033",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "NOVENA MRT STATION",
       "distanceMeters": 722
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 722
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 764
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 1139
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -845,7 +859,7 @@
       "pricePerSqft": 589.49
     },
     {
-      "id": "kallang-whampoa-69-moulmein-rd-2016-10-971754",
+      "id": "kallang-whampoa-69-moulmein-rd-2016-10-971876",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

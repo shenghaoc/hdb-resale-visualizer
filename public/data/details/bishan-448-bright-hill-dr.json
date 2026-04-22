@@ -22,8 +22,8 @@
       193
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1988,
+      1988
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -45,7 +45,21 @@
     "nearestMrt": {
       "stationName": "UPPER THOMSON MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 433
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1350
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -759,7 +773,7 @@
       "pricePerSqft": 528.72
     },
     {
-      "id": "bishan-448-bright-hill-dr-2016-06-964094",
+      "id": "bishan-448-bright-hill-dr-2016-06-964216",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -772,7 +786,7 @@
       "pricePerSqft": 478.05
     },
     {
-      "id": "bishan-448-bright-hill-dr-2013-11-632956",
+      "id": "bishan-448-bright-hill-dr-2013-11-633078",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

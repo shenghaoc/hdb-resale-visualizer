@@ -22,8 +22,8 @@
       121
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 348
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 348
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1088
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1518
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -534,7 +548,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-710-woodlands-dr-70-2026-03-228500",
+      "id": "woodlands-710-woodlands-dr-70-2026-03-228606",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -742,7 +756,7 @@
       "pricePerSqft": 331.14
     },
     {
-      "id": "woodlands-710-woodlands-dr-70-2016-08-969040",
+      "id": "woodlands-710-woodlands-dr-70-2016-08-969162",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -755,7 +769,7 @@
       "pricePerSqft": 339.6
     },
     {
-      "id": "woodlands-710-woodlands-dr-70-2016-05-963739",
+      "id": "woodlands-710-woodlands-dr-70-2016-05-963861",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -768,7 +782,7 @@
       "pricePerSqft": 327.89
     },
     {
-      "id": "woodlands-710-woodlands-dr-70-2015-01-939447",
+      "id": "woodlands-710-woodlands-dr-70-2015-01-939569",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -781,7 +795,7 @@
       "pricePerSqft": 335.74
     },
     {
-      "id": "woodlands-710-woodlands-dr-70-2014-06-642634",
+      "id": "woodlands-710-woodlands-dr-70-2014-06-642756",
       "month": "2014-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

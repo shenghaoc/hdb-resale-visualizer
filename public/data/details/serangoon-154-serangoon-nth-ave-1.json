@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1698
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1698
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 2108
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 2141
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -767,7 +781,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-154-serangoon-nth-ave-1-2026-01-227365",
+      "id": "serangoon-154-serangoon-nth-ave-1-2026-01-227441",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KUPANG LRT STATION",
       "distanceMeters": 35
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KUPANG LRT STATION",
+        "distanceMeters": 35
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 621
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 647
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -148,7 +162,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-473a-fernvale-st-2026-04-226870",
+      "id": "sengkang-473a-fernvale-st-2026-04-226937",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

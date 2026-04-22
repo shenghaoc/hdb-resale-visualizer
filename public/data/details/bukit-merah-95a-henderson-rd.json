@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 572
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 572
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 623
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1342
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -211,7 +225,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-95a-henderson-rd-2026-01-223248",
+      "id": "bukit-merah-95a-henderson-rd-2026-01-223267",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -9,21 +9,21 @@
       "lat": 1.39049049629367,
       "lng": 103.902688503849
     },
-    "medianPrice": 618000,
+    "medianPrice": 601500,
     "priceIqr": [
-      589000,
-      624000
+      578750,
+      621000
     ],
-    "pricePerSqmMedian": 5600,
-    "pricePerSqftMedian": 520.26,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 5725,
+    "pricePerSqftMedian": 531.87,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 382
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 382
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 400
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 485
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -437,14 +451,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 630000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5250
+      "medianPrice": 607500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5550
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-128-rivervale-st-2026-04-227266",
+      "id": "sengkang-128-rivervale-st-2026-04-227160",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 5850,
+      "pricePerSqft": 543.48
+    },
+    {
+      "id": "sengkang-128-rivervale-st-2026-04-227341",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -457,7 +484,7 @@
       "pricePerSqft": 487.74
     },
     {
-      "id": "sengkang-128-rivervale-st-2026-02-227088",
+      "id": "sengkang-128-rivervale-st-2026-02-227158",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -689,19 +716,6 @@
       "resalePrice": 425000,
       "pricePerSqm": 3541.67,
       "pricePerSqft": 329.03
-    },
-    {
-      "id": "sengkang-128-rivervale-st-2017-10-16381",
-      "month": "2017-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "80 years 08 months",
-      "resalePrice": 355000,
-      "pricePerSqm": 3550,
-      "pricePerSqft": 329.81
     }
   ]
 }

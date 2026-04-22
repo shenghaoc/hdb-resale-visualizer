@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1193
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1193
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1318
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1962
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1138,7 +1152,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-114-ho-ching-rd-2026-02-224989",
+      "id": "jurong-west-114-ho-ching-rd-2026-02-225029",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

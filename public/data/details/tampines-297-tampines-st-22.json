@@ -22,8 +22,8 @@
       108
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2024-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 495
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 495
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 950
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1111
+      }
+    ]
   },
   "monthlyTrend": [
     {

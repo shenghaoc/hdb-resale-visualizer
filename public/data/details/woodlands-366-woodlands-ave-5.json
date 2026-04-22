@@ -22,8 +22,8 @@
       129
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 107
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 107
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 952
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1446
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -642,7 +656,7 @@
       "pricePerSqft": 336.22
     },
     {
-      "id": "woodlands-366-woodlands-ave-5-2016-06-965602",
+      "id": "woodlands-366-woodlands-ave-5-2016-06-965724",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -655,7 +669,7 @@
       "pricePerSqft": 383.23
     },
     {
-      "id": "woodlands-366-woodlands-ave-5-2014-01-636029",
+      "id": "woodlands-366-woodlands-ave-5-2014-01-636151",
       "month": "2014-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

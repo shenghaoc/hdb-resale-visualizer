@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2009,
+      2009
     ],
     "latestMonth": "2025-06",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL MRT STATION",
       "distanceMeters": 326
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 326
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 355
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 385
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -424,7 +438,7 @@
       "pricePerSqft": 459.52
     },
     {
-      "id": "punggol-303c-punggol-ctrl-2015-02-940248",
+      "id": "punggol-303c-punggol-ctrl-2015-02-940370",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -437,7 +451,7 @@
       "pricePerSqft": 401.58
     },
     {
-      "id": "punggol-303c-punggol-ctrl-2015-01-939082",
+      "id": "punggol-303c-punggol-ctrl-2015-01-939204",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

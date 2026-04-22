@@ -9,21 +9,21 @@
       "lat": 1.41905392093084,
       "lng": 103.903939265877
     },
-    "medianPrice": 425000,
+    "medianPrice": 442500,
     "priceIqr": [
-      410000,
-      460000
+      413750,
+      505000
     ],
-    "pricePerSqmMedian": 9787.23,
-    "pricePerSqftMedian": 909.26,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 9414.89,
+    "pricePerSqftMedian": 874.67,
+    "transactionCount": 6,
     "floorAreaRange": [
       38,
-      47
+      68
     ],
     "leaseCommenceRange": [
-      2021,
-      2021
+      2020,
+      2020
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -31,16 +31,32 @@
       "2026-04"
     ],
     "flatTypes": [
-      "2 ROOM"
+      "2 ROOM",
+      "3 ROOM"
     ],
     "flatModels": [
       "2-ROOM",
+      "MODEL A",
       "MAX FLOOR 26"
     ],
     "nearestMrt": {
       "stationName": "SAMUDERA LRT STATION",
       "distanceMeters": 392
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SAMUDERA LRT STATION",
+        "distanceMeters": 392
+      },
+      {
+        "stationName": "PUNGGOL POINT LRT STATION",
+        "distanceMeters": 399
+      },
+      {
+        "stationName": "TECK LEE LRT STATION",
+        "distanceMeters": 739
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -63,14 +79,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 460000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9787.23
+      "medianPrice": 513500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9062.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-421a-northshore-dr-2026-04-225861",
+      "id": "punggol-421a-northshore-dr-2026-04-225916",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",
@@ -83,7 +99,20 @@
       "pricePerSqft": 909.26
     },
     {
-      "id": "punggol-421a-northshore-dr-2026-03-225858",
+      "id": "punggol-421a-northshore-dr-2026-04-225958",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 07 months",
+      "resalePrice": 567000,
+      "pricePerSqm": 8338.24,
+      "pricePerSqft": 774.65
+    },
+    {
+      "id": "punggol-421a-northshore-dr-2026-03-225913",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -96,7 +125,7 @@
       "pricePerSqft": 840.08
     },
     {
-      "id": "punggol-421a-northshore-dr-2026-02-225854",
+      "id": "punggol-421a-northshore-dr-2026-02-225909",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -109,7 +138,7 @@
       "pricePerSqft": 1027.86
     },
     {
-      "id": "punggol-421a-northshore-dr-2026-02-225855",
+      "id": "punggol-421a-northshore-dr-2026-02-225910",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -122,7 +151,7 @@
       "pricePerSqft": 916.81
     },
     {
-      "id": "punggol-421a-northshore-dr-2026-01-225850",
+      "id": "punggol-421a-northshore-dr-2026-01-225905",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 850
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 850
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1391
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2115
+      }
+    ]
   },
   "monthlyTrend": [
     {

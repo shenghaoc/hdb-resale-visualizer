@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 282
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 282
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 496
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 734
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -324,7 +338,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-240-compassvale-walk-2026-01-226984",
+      "id": "sengkang-240-compassvale-walk-2026-01-227052",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -506,7 +520,7 @@
       "pricePerSqft": 400.44
     },
     {
-      "id": "sengkang-240-compassvale-walk-2016-12-975074",
+      "id": "sengkang-240-compassvale-walk-2016-12-975196",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -519,7 +533,7 @@
       "pricePerSqft": 391.87
     },
     {
-      "id": "sengkang-240-compassvale-walk-2016-06-965224",
+      "id": "sengkang-240-compassvale-walk-2016-06-965346",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -532,7 +546,7 @@
       "pricePerSqft": 436.24
     },
     {
-      "id": "sengkang-240-compassvale-walk-2016-05-963363",
+      "id": "sengkang-240-compassvale-walk-2016-05-963485",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -545,7 +559,7 @@
       "pricePerSqft": 394.84
     },
     {
-      "id": "sengkang-240-compassvale-walk-2016-05-963415",
+      "id": "sengkang-240-compassvale-walk-2016-05-963537",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -558,7 +572,7 @@
       "pricePerSqft": 360.4
     },
     {
-      "id": "sengkang-240-compassvale-walk-2016-03-959757",
+      "id": "sengkang-240-compassvale-walk-2016-03-959879",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -571,7 +585,7 @@
       "pricePerSqft": 390.19
     },
     {
-      "id": "sengkang-240-compassvale-walk-2015-08-949578",
+      "id": "sengkang-240-compassvale-walk-2015-08-949700",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

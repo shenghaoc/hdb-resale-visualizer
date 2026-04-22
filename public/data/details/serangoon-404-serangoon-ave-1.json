@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2024-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 312
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 312
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 820
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 820
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -603,7 +617,7 @@
       "pricePerSqft": 517.96
     },
     {
-      "id": "serangoon-404-serangoon-ave-1-2016-09-970460",
+      "id": "serangoon-404-serangoon-ave-1-2016-09-970582",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -616,7 +630,7 @@
       "pricePerSqft": 455.67
     },
     {
-      "id": "serangoon-404-serangoon-ave-1-2015-04-943305",
+      "id": "serangoon-404-serangoon-ave-1-2015-04-943427",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -629,7 +643,7 @@
       "pricePerSqft": 483.71
     },
     {
-      "id": "serangoon-404-serangoon-ave-1-2013-06-627022",
+      "id": "serangoon-404-serangoon-ave-1-2013-06-627144",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -642,7 +656,7 @@
       "pricePerSqft": 497.25
     },
     {
-      "id": "serangoon-404-serangoon-ave-1-2013-06-627024",
+      "id": "serangoon-404-serangoon-ave-1-2013-06-627146",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -655,7 +669,7 @@
       "pricePerSqft": 533.97
     },
     {
-      "id": "serangoon-404-serangoon-ave-1-2013-03-622419",
+      "id": "serangoon-404-serangoon-ave-1-2013-03-622541",
       "month": "2013-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

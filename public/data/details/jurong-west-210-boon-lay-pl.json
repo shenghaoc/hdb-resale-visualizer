@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 917
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 917
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1285
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 2096
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1998,7 +2012,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-210-boon-lay-pl-2026-03-224977",
+      "id": "jurong-west-210-boon-lay-pl-2026-03-225017",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

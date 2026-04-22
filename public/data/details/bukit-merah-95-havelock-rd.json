@@ -22,8 +22,8 @@
       118
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HAVELOCK MRT STATION",
       "distanceMeters": 71
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 71
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 489
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 640
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -719,7 +733,7 @@
       "pricePerSqft": 535.37
     },
     {
-      "id": "bukit-merah-95-havelock-rd-2015-01-938598",
+      "id": "bukit-merah-95-havelock-rd-2015-01-938720",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

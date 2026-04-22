@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 334
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 334
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1050
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2644
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -512,7 +526,7 @@
       "pricePerSqft": 340.64
     },
     {
-      "id": "sembawang-503c-canberra-link-2016-11-973567",
+      "id": "sembawang-503c-canberra-link-2016-11-973689",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -525,7 +539,7 @@
       "pricePerSqft": 341.11
     },
     {
-      "id": "sembawang-503c-canberra-link-2016-07-966767",
+      "id": "sembawang-503c-canberra-link-2016-07-966889",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -538,7 +552,7 @@
       "pricePerSqft": 377.52
     },
     {
-      "id": "sembawang-503c-canberra-link-2015-10-952663",
+      "id": "sembawang-503c-canberra-link-2015-10-952785",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -551,7 +565,7 @@
       "pricePerSqft": 378.37
     },
     {
-      "id": "sembawang-503c-canberra-link-2013-11-633613",
+      "id": "sembawang-503c-canberra-link-2013-11-633735",
       "month": "2013-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -564,7 +578,7 @@
       "pricePerSqft": 405.4
     },
     {
-      "id": "sembawang-503c-canberra-link-2013-10-632311",
+      "id": "sembawang-503c-canberra-link-2013-10-632433",
       "month": "2013-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -577,7 +591,7 @@
       "pricePerSqft": 436.64
     },
     {
-      "id": "sembawang-503c-canberra-link-2013-08-629743",
+      "id": "sembawang-503c-canberra-link-2013-08-629865",
       "month": "2013-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

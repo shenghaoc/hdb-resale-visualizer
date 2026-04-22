@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 573
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 573
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 809
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1481
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -190,7 +204,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2026-01-224822",
+      "id": "jurong-east-217a-jurong-east-st-21-2026-01-224859",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -268,7 +282,7 @@
       "pricePerSqft": 366.76
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2014-07-643297",
+      "id": "jurong-east-217a-jurong-east-st-21-2014-07-643419",
       "month": "2014-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -281,7 +295,7 @@
       "pricePerSqft": 440.94
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2014-04-639170",
+      "id": "jurong-east-217a-jurong-east-st-21-2014-04-639292",
       "month": "2014-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -294,7 +308,7 @@
       "pricePerSqft": 422.92
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2012-08-610778",
+      "id": "jurong-east-217a-jurong-east-st-21-2012-08-610900",
       "month": "2012-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -307,7 +321,7 @@
       "pricePerSqft": 457.58
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2011-06-584090",
+      "id": "jurong-east-217a-jurong-east-st-21-2011-06-584212",
       "month": "2011-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -320,7 +334,7 @@
       "pricePerSqft": 404.89
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2010-03-545241",
+      "id": "jurong-east-217a-jurong-east-st-21-2010-03-545363",
       "month": "2010-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -333,7 +347,7 @@
       "pricePerSqft": 315.21
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2009-03-512973",
+      "id": "jurong-east-217a-jurong-east-st-21-2009-03-513095",
       "month": "2009-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -346,7 +360,7 @@
       "pricePerSqft": 314.76
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2008-12-506896",
+      "id": "jurong-east-217a-jurong-east-st-21-2008-12-507018",
       "month": "2008-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -359,7 +373,7 @@
       "pricePerSqft": 298.12
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2008-05-490536",
+      "id": "jurong-east-217a-jurong-east-st-21-2008-05-490658",
       "month": "2008-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -372,7 +386,7 @@
       "pricePerSqft": 292.58
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2006-02-429413",
+      "id": "jurong-east-217a-jurong-east-st-21-2006-02-429535",
       "month": "2006-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -385,7 +399,7 @@
       "pricePerSqft": 217.7
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2005-12-425160",
+      "id": "jurong-east-217a-jurong-east-st-21-2005-12-425282",
       "month": "2005-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -398,7 +412,7 @@
       "pricePerSqft": 194.13
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2005-06-410459",
+      "id": "jurong-east-217a-jurong-east-st-21-2005-06-410581",
       "month": "2005-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -411,7 +425,7 @@
       "pricePerSqft": 209.38
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2004-04-376469",
+      "id": "jurong-east-217a-jurong-east-st-21-2004-04-376591",
       "month": "2004-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -424,7 +438,7 @@
       "pricePerSqft": 168.11
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2001-03-271202",
+      "id": "jurong-east-217a-jurong-east-st-21-2001-03-271324",
       "month": "2001-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -437,7 +451,7 @@
       "pricePerSqft": 179.17
     },
     {
-      "id": "jurong-east-217a-jurong-east-st-21-2001-01-265409",
+      "id": "jurong-east-217a-jurong-east-st-21-2001-01-265531",
       "month": "2001-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

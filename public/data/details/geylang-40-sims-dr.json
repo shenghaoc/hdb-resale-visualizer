@@ -22,8 +22,8 @@
       124
     ],
     "leaseCommenceRange": [
-      1990,
-      1990
+      1989,
+      1989
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 648
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 648
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 689
+      },
+      {
+        "stationName": "KALLANG MRT STATION",
+        "distanceMeters": 826
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -648,7 +662,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-40-sims-dr-2026-01-224417",
+      "id": "geylang-40-sims-dr-2026-01-224448",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 594
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 594
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 603
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 742
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -598,7 +612,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-3-delta-ave-2026-02-223343",
+      "id": "bukit-merah-3-delta-ave-2026-02-223362",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -819,7 +833,7 @@
       "pricePerSqft": 607.44
     },
     {
-      "id": "bukit-merah-3-delta-ave-2015-11-953518",
+      "id": "bukit-merah-3-delta-ave-2015-11-953640",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -832,7 +846,7 @@
       "pricePerSqft": 607.44
     },
     {
-      "id": "bukit-merah-3-delta-ave-2015-07-947285",
+      "id": "bukit-merah-3-delta-ave-2015-07-947407",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -845,7 +859,7 @@
       "pricePerSqft": 515.01
     },
     {
-      "id": "bukit-merah-3-delta-ave-2014-11-648739",
+      "id": "bukit-merah-3-delta-ave-2014-11-648861",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

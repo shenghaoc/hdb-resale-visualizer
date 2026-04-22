@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 718
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 718
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1409
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1410
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -659,7 +673,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-142-bt-batok-st-11-2026-01-223192",
+      "id": "bukit-batok-142-bt-batok-st-11-2026-01-223211",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",

@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 261
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 261
+      },
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 527
+      }
+    ]
   },
   "monthlyTrend": [
     {

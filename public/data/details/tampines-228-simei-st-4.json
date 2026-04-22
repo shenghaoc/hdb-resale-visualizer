@@ -22,8 +22,8 @@
       129
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SIMEI MRT STATION",
       "distanceMeters": 247
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 247
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 550
+      },
+      {
+        "stationName": "EXPO MRT STATION",
+        "distanceMeters": 1001
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -552,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-228-simei-st-4-2026-02-227536",
+      "id": "tampines-228-simei-st-4-2026-02-227616",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

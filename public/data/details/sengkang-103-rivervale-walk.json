@@ -9,26 +9,26 @@
       "lat": 1.3829114767018,
       "lng": 103.901208581138
     },
-    "medianPrice": 865000,
+    "medianPrice": 860000,
     "priceIqr": [
-      842500,
-      872500
+      860000,
+      870000
     ],
-    "pricePerSqmMedian": 6178.57,
-    "pricePerSqftMedian": 574.01,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 6142.86,
+    "pricePerSqftMedian": 570.69,
+    "transactionCount": 5,
     "floorAreaRange": [
       140,
       150
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
-    "latestMonth": "2024-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-05",
-      "2024-09"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 454
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 725
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -451,9 +465,28 @@
       "medianPrice": 880000,
       "transactionCount": 1,
       "medianPricePerSqm": 6241.13
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5972.22
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-103-rivervale-walk-2026-04-227387",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 144,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 5972.22,
+      "pricePerSqft": 554.84
+    },
     {
       "id": "sengkang-103-rivervale-walk-2024-09-189398",
       "month": "2024-09",
@@ -700,19 +733,6 @@
       "resalePrice": 565000,
       "pricePerSqm": 3923.61,
       "pricePerSqft": 364.52
-    },
-    {
-      "id": "sengkang-103-rivervale-walk-2020-05-70451",
-      "month": "2020-05",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 141,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "77 years 11 months",
-      "resalePrice": 585000,
-      "pricePerSqm": 4148.94,
-      "pricePerSqft": 385.45
     }
   ]
 }

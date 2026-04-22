@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2024-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 459
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 459
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1087
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1590
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -692,7 +706,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "tampines-409-tampines-st-41-2016-09-970541",
+      "id": "tampines-409-tampines-st-41-2016-09-970663",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -705,7 +719,7 @@
       "pricePerSqft": 446.48
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-12-650860",
+      "id": "tampines-409-tampines-st-41-2014-12-650982",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -718,7 +732,7 @@
       "pricePerSqft": 444.86
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-05-641171",
+      "id": "tampines-409-tampines-st-41-2014-05-641293",
       "month": "2014-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -731,7 +745,7 @@
       "pricePerSqft": 442.4
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-03-638195",
+      "id": "tampines-409-tampines-st-41-2014-03-638317",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -744,7 +758,7 @@
       "pricePerSqft": 431.34
     },
     {
-      "id": "tampines-409-tampines-st-41-2011-03-578889",
+      "id": "tampines-409-tampines-st-41-2011-03-579011",
       "month": "2011-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

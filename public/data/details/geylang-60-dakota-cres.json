@@ -22,8 +22,8 @@
       152
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "DAKOTA MRT STATION",
       "distanceMeters": 108
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 108
+      },
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 600
+      },
+      {
+        "stationName": "KATONG PARK MRT STATION",
+        "distanceMeters": 1061
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1068,7 +1082,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-60-dakota-cres-2026-04-224442",
+      "id": "geylang-60-dakota-cres-2026-04-224474",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -1081,7 +1095,7 @@
       "pricePerSqft": 834.09
     },
     {
-      "id": "geylang-60-dakota-cres-2026-01-224441",
+      "id": "geylang-60-dakota-cres-2026-01-224473",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

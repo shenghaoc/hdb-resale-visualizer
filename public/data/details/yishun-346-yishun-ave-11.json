@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 891
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 891
+      },
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1645
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 2209
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -955,7 +969,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-346-yishun-ave-11-2026-01-229187",
+      "id": "yishun-346-yishun-ave-11-2026-01-229308",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

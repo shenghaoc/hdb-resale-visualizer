@@ -22,8 +22,8 @@
       144
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 627
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 627
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1173
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1263
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -715,7 +729,7 @@
       "pricePerSqft": 506.74
     },
     {
-      "id": "jurong-east-286c-toh-guan-rd-2016-10-971585",
+      "id": "jurong-east-286c-toh-guan-rd-2016-10-971707",
       "month": "2016-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

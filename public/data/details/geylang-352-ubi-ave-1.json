@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 520
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 520
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 722
+      },
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 973
+      }
+    ]
   },
   "monthlyTrend": [
     {

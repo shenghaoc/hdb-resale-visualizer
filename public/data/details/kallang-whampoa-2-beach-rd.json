@@ -22,8 +22,8 @@
       148
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1970,
+      1970
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAVENDER MRT STATION",
       "distanceMeters": 407
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAVENDER MRT STATION",
+        "distanceMeters": 407
+      },
+      {
+        "stationName": "NICOLL HIGHWAY MRT STATION",
+        "distanceMeters": 458
+      },
+      {
+        "stationName": "BUGIS MRT STATION",
+        "distanceMeters": 1021
+      }
+    ]
   },
   "monthlyTrend": [
     {

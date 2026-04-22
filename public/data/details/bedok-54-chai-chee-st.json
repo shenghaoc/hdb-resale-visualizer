@@ -22,8 +22,8 @@
       101
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 569
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 569
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1101
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1300
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1469,7 +1483,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-54-chai-chee-st-2026-02-222452",
+      "id": "bedok-54-chai-chee-st-2026-02-222460",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

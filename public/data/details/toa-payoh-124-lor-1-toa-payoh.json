@@ -22,8 +22,8 @@
       156
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1969,
+      1969
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 306
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 306
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 472
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 633
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -792,7 +806,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-124-lor-1-toa-payoh-2026-03-228012",
+      "id": "toa-payoh-124-lor-1-toa-payoh-2026-03-228105",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

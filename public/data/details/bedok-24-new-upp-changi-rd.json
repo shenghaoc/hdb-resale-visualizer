@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 417
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 417
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1389
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1405
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -785,7 +799,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-24-new-upp-changi-rd-2026-01-222459",
+      "id": "bedok-24-new-upp-changi-rd-2026-01-222467",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

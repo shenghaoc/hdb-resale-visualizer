@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 645
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 645
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 710
+      },
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 993
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-38-cambridge-rd-2026-02-225570",
+      "id": "kallang-whampoa-38-cambridge-rd-2026-02-225621",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1916
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1916
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 2212
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 2266
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -233,7 +247,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2026-03-227333",
+      "id": "serangoon-102-serangoon-nth-ave-1-2026-03-227409",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -324,7 +338,7 @@
       "pricePerSqft": 353.59
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2014-06-642426",
+      "id": "serangoon-102-serangoon-nth-ave-1-2014-06-642548",
       "month": "2014-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -337,7 +351,7 @@
       "pricePerSqft": 429.85
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2008-06-493450",
+      "id": "serangoon-102-serangoon-nth-ave-1-2008-06-493572",
       "month": "2008-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -350,7 +364,7 @@
       "pricePerSqft": 273.16
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2008-06-493451",
+      "id": "serangoon-102-serangoon-nth-ave-1-2008-06-493573",
       "month": "2008-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -363,7 +377,7 @@
       "pricePerSqft": 259.08
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2004-04-377057",
+      "id": "serangoon-102-serangoon-nth-ave-1-2004-04-377179",
       "month": "2004-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -376,7 +390,7 @@
       "pricePerSqft": 186.56
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2002-07-322876",
+      "id": "serangoon-102-serangoon-nth-ave-1-2002-07-322998",
       "month": "2002-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -389,7 +403,7 @@
       "pricePerSqft": 167.49
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2002-06-319839",
+      "id": "serangoon-102-serangoon-nth-ave-1-2002-06-319961",
       "month": "2002-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -402,7 +416,7 @@
       "pricePerSqft": 157.02
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2001-11-297996",
+      "id": "serangoon-102-serangoon-nth-ave-1-2001-11-298118",
       "month": "2001-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -415,7 +429,7 @@
       "pricePerSqft": 158.91
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2001-06-281256",
+      "id": "serangoon-102-serangoon-nth-ave-1-2001-06-281378",
       "month": "2001-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -428,7 +442,7 @@
       "pricePerSqft": 170.1
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-2000-07-247527",
+      "id": "serangoon-102-serangoon-nth-ave-1-2000-07-247649",
       "month": "2000-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -441,7 +455,7 @@
       "pricePerSqft": 231.56
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-1998-08-858717",
+      "id": "serangoon-102-serangoon-nth-ave-1-1998-08-858839",
       "month": "1998-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -454,7 +468,7 @@
       "pricePerSqft": 189.73
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-1998-08-858769",
+      "id": "serangoon-102-serangoon-nth-ave-1-1998-08-858891",
       "month": "1998-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -467,7 +481,7 @@
       "pricePerSqft": 242.53
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-1998-05-846131",
+      "id": "serangoon-102-serangoon-nth-ave-1-1998-05-846253",
       "month": "1998-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -480,7 +494,7 @@
       "pricePerSqft": 260.7
     },
     {
-      "id": "serangoon-102-serangoon-nth-ave-1-1997-03-804242",
+      "id": "serangoon-102-serangoon-nth-ave-1-1997-03-804364",
       "month": "1997-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

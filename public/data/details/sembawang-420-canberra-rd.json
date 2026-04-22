@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 403
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 403
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1539
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2370
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -372,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-420-canberra-rd-2026-04-226752",
+      "id": "sembawang-420-canberra-rd-2026-04-226818",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

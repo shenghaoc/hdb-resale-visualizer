@@ -22,8 +22,8 @@
       139
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 910
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 910
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1306
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -953,7 +967,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-172-bt-batok-west-ave-8-2026-01-223034",
+      "id": "bukit-batok-172-bt-batok-west-ave-8-2026-01-223051",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

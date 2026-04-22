@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 878
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 878
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1136
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1842
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -684,7 +698,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-118-pasir-ris-st-11-2026-01-225675",
+      "id": "pasir-ris-118-pasir-ris-st-11-2026-01-225727",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -892,7 +906,7 @@
       "pricePerSqft": 333.05
     },
     {
-      "id": "pasir-ris-118-pasir-ris-st-11-2016-12-974871",
+      "id": "pasir-ris-118-pasir-ris-st-11-2016-12-974993",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -905,7 +919,7 @@
       "pricePerSqft": 337.08
     },
     {
-      "id": "pasir-ris-118-pasir-ris-st-11-2016-06-964876",
+      "id": "pasir-ris-118-pasir-ris-st-11-2016-06-964998",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -918,7 +932,7 @@
       "pricePerSqft": 369.81
     },
     {
-      "id": "pasir-ris-118-pasir-ris-st-11-2015-09-950793",
+      "id": "pasir-ris-118-pasir-ris-st-11-2015-09-950915",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -931,7 +945,7 @@
       "pricePerSqft": 384.88
     },
     {
-      "id": "pasir-ris-118-pasir-ris-st-11-2015-04-943002",
+      "id": "pasir-ris-118-pasir-ris-st-11-2015-04-943124",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

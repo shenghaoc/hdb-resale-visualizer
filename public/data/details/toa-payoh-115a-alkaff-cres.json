@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "WOODLEIGH MRT STATION",
       "distanceMeters": 305
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 305
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 585
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1040
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -101,7 +115,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-115a-alkaff-cres-2026-01-228084",
+      "id": "toa-payoh-115a-alkaff-cres-2026-01-228179",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

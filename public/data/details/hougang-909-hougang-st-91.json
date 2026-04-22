@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1233
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1233
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1242
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 1243
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -492,7 +506,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-909-hougang-st-91-2026-01-224686",
+      "id": "hougang-909-hougang-st-91-2026-01-224721",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -726,7 +740,7 @@
       "pricePerSqft": 357.68
     },
     {
-      "id": "hougang-909-hougang-st-91-2016-12-974653",
+      "id": "hougang-909-hougang-st-91-2016-12-974775",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -739,7 +753,7 @@
       "pricePerSqft": 348.84
     },
     {
-      "id": "hougang-909-hougang-st-91-2016-08-968029",
+      "id": "hougang-909-hougang-st-91-2016-08-968151",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

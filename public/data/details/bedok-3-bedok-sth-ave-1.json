@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 470
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 470
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1251
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1278
+      }
+    ]
   },
   "monthlyTrend": [
     {

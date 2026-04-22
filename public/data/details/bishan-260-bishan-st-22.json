@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BRIGHT HILL MRT STATION",
       "distanceMeters": 1047
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 1047
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1102
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1169
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -695,7 +709,7 @@
       "pricePerSqft": 537.63
     },
     {
-      "id": "bishan-260-bishan-st-22-2015-08-948716",
+      "id": "bishan-260-bishan-st-22-2015-08-948838",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -708,7 +722,7 @@
       "pricePerSqft": 513.41
     },
     {
-      "id": "bishan-260-bishan-st-22-2013-06-626233",
+      "id": "bishan-260-bishan-st-22-2013-06-626355",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

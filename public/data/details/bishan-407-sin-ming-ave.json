@@ -22,8 +22,8 @@
       89
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BRIGHT HILL MRT STATION",
       "distanceMeters": 81
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 81
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 860
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 898
+      }
+    ]
   },
   "monthlyTrend": [
     {

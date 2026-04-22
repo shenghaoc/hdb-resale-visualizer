@@ -22,8 +22,8 @@
       148
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1979,
+      1979
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 1167
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 1167
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1341
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1565
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1076,7 +1090,7 @@
       "pricePerSqft": 549.49
     },
     {
-      "id": "ang-mo-kio-474-ang-mo-kio-ave-10-2026-01-222183",
+      "id": "ang-mo-kio-474-ang-mo-kio-ave-10-2026-01-222186",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 914
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1107
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -651,7 +665,7 @@
       "pricePerSqft": 342.52
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2016-04-961868",
+      "id": "woodlands-895b-woodlands-dr-50-2016-04-961990",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -664,7 +678,7 @@
       "pricePerSqft": 342.52
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2016-02-958462",
+      "id": "woodlands-895b-woodlands-dr-50-2016-02-958584",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -677,7 +691,7 @@
       "pricePerSqft": 357.54
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2015-12-955948",
+      "id": "woodlands-895b-woodlands-dr-50-2015-12-956070",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -690,7 +704,7 @@
       "pricePerSqft": 352.84
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2015-10-953077",
+      "id": "woodlands-895b-woodlands-dr-50-2015-10-953199",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -703,7 +717,7 @@
       "pricePerSqft": 359.41
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2015-09-951313",
+      "id": "woodlands-895b-woodlands-dr-50-2015-09-951435",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HARBOURFRONT MRT STATION",
       "distanceMeters": 930
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 930
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1391
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1597
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -875,7 +889,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-108-bt-purmei-rd-2026-03-223336",
+      "id": "bukit-merah-108-bt-purmei-rd-2026-03-223355",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -888,7 +902,7 @@
       "pricePerSqft": 643.18
     },
     {
-      "id": "bukit-merah-108-bt-purmei-rd-2026-01-223226",
+      "id": "bukit-merah-108-bt-purmei-rd-2026-01-223245",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

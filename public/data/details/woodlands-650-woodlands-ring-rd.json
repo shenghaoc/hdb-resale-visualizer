@@ -9,26 +9,26 @@
       "lat": 1.43828467863174,
       "lng": 103.800646271906
     },
-    "medianPrice": 860000,
+    "medianPrice": 880000,
     "priceIqr": [
-      836916,
+      837944,
       895000
     ],
-    "pricePerSqmMedian": 6037.23,
-    "pricePerSqftMedian": 560.88,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 6180.56,
+    "pricePerSqftMedian": 574.19,
+    "transactionCount": 7,
     "floorAreaRange": [
       141,
       144
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-06",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 208
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 208
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1327
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1384
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -439,9 +453,28 @@
       "medianPrice": 840000,
       "transactionCount": 1,
       "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 890000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6180.56
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-650-woodlands-ring-rd-2026-04-228900",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 144,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 03 months",
+      "resalePrice": 890000,
+      "pricePerSqm": 6180.56,
+      "pricePerSqft": 574.19
+    },
     {
       "id": "woodlands-650-woodlands-ring-rd-2025-10-220298",
       "month": "2025-10",
@@ -688,19 +721,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 3706.29,
       "pricePerSqft": 344.33
-    },
-    {
-      "id": "woodlands-650-woodlands-ring-rd-2019-02-44829",
-      "month": "2019-02",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 144,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "78 years 04 months",
-      "resalePrice": 588000,
-      "pricePerSqm": 4083.33,
-      "pricePerSqft": 379.35
     }
   ]
 }

@@ -9,26 +9,26 @@
       "lat": 1.40358925655806,
       "lng": 103.892958748314
     },
-    "medianPrice": 669000,
+    "medianPrice": 668500,
     "priceIqr": [
-      668500,
-      674500
+      662472,
+      671750
     ],
-    "pricePerSqmMedian": 7193.55,
-    "pricePerSqftMedian": 668.3,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 7188.18,
+    "pricePerSqftMedian": 667.8,
+    "transactionCount": 4,
     "floorAreaRange": [
       92,
       114
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2016,
+      2016
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-11",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 480
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 480
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 800
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 806
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -151,11 +165,30 @@
       "medianPrice": 669000,
       "transactionCount": 1,
       "medianPricePerSqm": 7193.55
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 645888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7020.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-227a-sumang-lane-2026-01-226162",
+      "id": "punggol-227a-sumang-lane-2026-04-226239",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "90 years 11 months",
+      "resalePrice": 645888,
+      "pricePerSqm": 7020.52,
+      "pricePerSqft": 652.23
+    },
+    {
+      "id": "punggol-227a-sumang-lane-2026-01-226223",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -400,19 +433,6 @@
       "resalePrice": 518000,
       "pricePerSqm": 5630.43,
       "pricePerSqft": 523.09
-    },
-    {
-      "id": "punggol-227a-sumang-lane-2022-05-131493",
-      "month": "2022-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 92,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 10 months",
-      "resalePrice": 570000,
-      "pricePerSqm": 6195.65,
-      "pricePerSqft": 575.6
     }
   ]
 }

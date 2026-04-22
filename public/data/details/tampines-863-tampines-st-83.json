@@ -9,26 +9,26 @@
       "lat": 1.35545983628464,
       "lng": 103.935614377579
     },
-    "medianPrice": 1045000,
+    "medianPrice": 1040000,
     "priceIqr": [
-      1008750,
-      1059500
+      1015000,
+      1050000
     ],
-    "pricePerSqmMedian": 7157.53,
-    "pricePerSqftMedian": 664.96,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 7123.29,
+    "pricePerSqftMedian": 661.78,
+    "transactionCount": 5,
     "floorAreaRange": [
       146,
       154
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-08",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 784
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 784
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1130
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 2107
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -666,9 +680,28 @@
       "medianPrice": 1050000,
       "transactionCount": 1,
       "medianPricePerSqm": 7191.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1015000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6952.05
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-863-tampines-st-83-2026-04-228047",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years",
+      "resalePrice": 1015000,
+      "pricePerSqm": 6952.05,
+      "pricePerSqft": 645.87
+    },
     {
       "id": "tampines-863-tampines-st-83-2025-12-217546",
       "month": "2025-12",
@@ -915,19 +948,6 @@
       "resalePrice": 820000,
       "pricePerSqm": 5616.44,
       "pricePerSqft": 521.78
-    },
-    {
-      "id": "tampines-863-tampines-st-83-2020-06-72562",
-      "month": "2020-06",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 146,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "66 years 11 months",
-      "resalePrice": 720000,
-      "pricePerSqm": 4931.51,
-      "pricePerSqft": 458.15
     }
   ]
 }

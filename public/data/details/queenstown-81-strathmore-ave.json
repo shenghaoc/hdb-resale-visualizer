@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 331
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 331
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1038
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1432
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -355,7 +369,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-81-strathmore-ave-2026-01-226495",
+      "id": "queenstown-81-strathmore-ave-2026-01-226558",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -498,7 +512,7 @@
       "pricePerSqft": 636.03
     },
     {
-      "id": "queenstown-81-strathmore-ave-2015-10-952624",
+      "id": "queenstown-81-strathmore-ave-2015-10-952746",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -511,7 +525,7 @@
       "pricePerSqft": 628.88
     },
     {
-      "id": "queenstown-81-strathmore-ave-2014-09-646345",
+      "id": "queenstown-81-strathmore-ave-2014-09-646467",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -524,7 +538,7 @@
       "pricePerSqft": 633.43
     },
     {
-      "id": "queenstown-81-strathmore-ave-2012-08-611231",
+      "id": "queenstown-81-strathmore-ave-2012-08-611353",
       "month": "2012-08",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -537,7 +551,7 @@
       "pricePerSqft": 428.78
     },
     {
-      "id": "queenstown-81-strathmore-ave-2012-07-609146",
+      "id": "queenstown-81-strathmore-ave-2012-07-609268",
       "month": "2012-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -550,7 +564,7 @@
       "pricePerSqft": 588.39
     },
     {
-      "id": "queenstown-81-strathmore-ave-2011-10-591839",
+      "id": "queenstown-81-strathmore-ave-2011-10-591961",
       "month": "2011-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -563,7 +577,7 @@
       "pricePerSqft": 568.68
     },
     {
-      "id": "queenstown-81-strathmore-ave-2011-01-574805",
+      "id": "queenstown-81-strathmore-ave-2011-01-574927",
       "month": "2011-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -576,7 +590,7 @@
       "pricePerSqft": 488.96
     },
     {
-      "id": "queenstown-81-strathmore-ave-2010-07-558859",
+      "id": "queenstown-81-strathmore-ave-2010-07-558981",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -589,7 +603,7 @@
       "pricePerSqft": 521.69
     },
     {
-      "id": "queenstown-81-strathmore-ave-2010-07-558871",
+      "id": "queenstown-81-strathmore-ave-2010-07-558993",
       "month": "2010-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "22 TO 24",
@@ -602,7 +616,7 @@
       "pricePerSqft": 430.64
     },
     {
-      "id": "queenstown-81-strathmore-ave-2010-04-549056",
+      "id": "queenstown-81-strathmore-ave-2010-04-549178",
       "month": "2010-04",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

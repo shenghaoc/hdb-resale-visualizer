@@ -22,8 +22,8 @@
       102
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 383
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 383
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 426
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 766
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -587,7 +601,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-34-cassia-cres-2026-01-224360",
+      "id": "geylang-34-cassia-cres-2026-01-224390",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

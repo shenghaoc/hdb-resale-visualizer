@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "OASIS LRT STATION",
       "distanceMeters": 346
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 346
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 572
+      },
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 673
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -269,7 +283,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-670c-edgefield-plains-2026-04-225897",
+      "id": "punggol-670c-edgefield-plains-2026-04-225952",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -282,7 +296,7 @@
       "pricePerSqft": 710.44
     },
     {
-      "id": "punggol-670c-edgefield-plains-2026-04-225898",
+      "id": "punggol-670c-edgefield-plains-2026-04-225953",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -295,7 +309,7 @@
       "pricePerSqft": 776.5
     },
     {
-      "id": "punggol-670c-edgefield-plains-2026-03-225896",
+      "id": "punggol-670c-edgefield-plains-2026-03-225951",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

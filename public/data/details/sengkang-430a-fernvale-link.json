@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAYAR LRT STATION",
       "distanceMeters": 264
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 264
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 315
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 485
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -294,7 +308,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-430a-fernvale-link-2026-02-227006",
+      "id": "sengkang-430a-fernvale-link-2026-02-227074",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

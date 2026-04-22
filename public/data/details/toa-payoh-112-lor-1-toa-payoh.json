@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 118
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 118
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 675
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 926
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -792,7 +806,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-112-lor-1-toa-payoh-2026-02-228004",
+      "id": "toa-payoh-112-lor-1-toa-payoh-2026-02-228097",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -805,7 +819,7 @@
       "pricePerSqft": 597.44
     },
     {
-      "id": "toa-payoh-112-lor-1-toa-payoh-2026-01-227994",
+      "id": "toa-payoh-112-lor-1-toa-payoh-2026-01-228087",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

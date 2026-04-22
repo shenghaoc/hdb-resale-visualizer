@@ -22,8 +22,8 @@
       84
     ],
     "leaseCommenceRange": [
-      1977,
-      1977
+      1976,
+      1976
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 468
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 468
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1201
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1418
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -754,7 +768,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-53-new-upp-changi-rd-2026-04-222611",
+      "id": "bedok-53-new-upp-changi-rd-2026-04-222623",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

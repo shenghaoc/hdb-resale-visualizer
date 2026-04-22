@@ -22,8 +22,8 @@
       103
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1987,
+      1987
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 245
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 245
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 928
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 1239
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -348,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-301-ubi-ave-1-2026-02-224352",
+      "id": "geylang-301-ubi-ave-1-2026-02-224382",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

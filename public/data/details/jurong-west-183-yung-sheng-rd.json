@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2024-06",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1219
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1219
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1473
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1927
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -508,7 +522,7 @@
       "pricePerSqft": 377.42
     },
     {
-      "id": "jurong-west-183-yung-sheng-rd-2016-12-974798",
+      "id": "jurong-west-183-yung-sheng-rd-2016-12-974920",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -521,7 +535,7 @@
       "pricePerSqft": 382.82
     },
     {
-      "id": "jurong-west-183-yung-sheng-rd-2015-10-952335",
+      "id": "jurong-west-183-yung-sheng-rd-2015-10-952457",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -534,7 +548,7 @@
       "pricePerSqft": 314.75
     },
     {
-      "id": "jurong-west-183-yung-sheng-rd-2015-06-946152",
+      "id": "jurong-west-183-yung-sheng-rd-2015-06-946274",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -547,7 +561,7 @@
       "pricePerSqft": 353.99
     },
     {
-      "id": "jurong-west-183-yung-sheng-rd-2015-02-940136",
+      "id": "jurong-west-183-yung-sheng-rd-2015-02-940258",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

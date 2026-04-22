@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUONA VISTA MRT STATION",
       "distanceMeters": 644
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 644
+      },
+      {
+        "stationName": "HOLLAND VILLAGE MRT STATION",
+        "distanceMeters": 849
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1100
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1206,7 +1220,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-5-ghim-moh-rd-2026-02-226388",
+      "id": "queenstown-5-ghim-moh-rd-2026-02-226450",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

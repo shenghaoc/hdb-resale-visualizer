@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1984,
+      1984
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 260
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 260
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1083
+      },
+      {
+        "stationName": "KRANJI MRT STATION",
+        "distanceMeters": 1807
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -834,7 +848,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-168-woodlands-st-11-2026-04-228537",
+      "id": "woodlands-168-woodlands-st-11-2026-04-228645",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -847,7 +861,7 @@
       "pricePerSqft": 474.4
     },
     {
-      "id": "woodlands-168-woodlands-st-11-2026-03-228536",
+      "id": "woodlands-168-woodlands-st-11-2026-03-228644",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -860,7 +874,7 @@
       "pricePerSqft": 511.47
     },
     {
-      "id": "woodlands-168-woodlands-st-11-2026-03-228727",
+      "id": "woodlands-168-woodlands-st-11-2026-03-228839",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -873,7 +887,7 @@
       "pricePerSqft": 468.35
     },
     {
-      "id": "woodlands-168-woodlands-st-11-2026-03-228728",
+      "id": "woodlands-168-woodlands-st-11-2026-03-228840",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -886,7 +900,7 @@
       "pricePerSqft": 476.03
     },
     {
-      "id": "woodlands-168-woodlands-st-11-2026-01-228534",
+      "id": "woodlands-168-woodlands-st-11-2026-01-228642",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

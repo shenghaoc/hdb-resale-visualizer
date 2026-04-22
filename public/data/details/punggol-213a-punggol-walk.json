@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 536
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 536
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 618
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 651
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -330,7 +344,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-213a-punggol-walk-2026-02-226289",
+      "id": "punggol-213a-punggol-walk-2026-02-226351",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

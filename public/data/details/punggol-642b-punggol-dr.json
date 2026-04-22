@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2002,
+      2002
     ],
     "latestMonth": "2025-06",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KADALOOR LRT STATION",
       "distanceMeters": 129
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 129
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 416
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 576
+      }
+    ]
   },
   "monthlyTrend": [
     {

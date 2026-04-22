@@ -22,8 +22,8 @@
       125
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 433
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 433
+      },
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 577
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 592
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -544,7 +558,7 @@
       "pricePerSqft": 400.52
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-08-968741",
+      "id": "sengkang-315a-anchorvale-rd-2016-08-968863",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -557,7 +571,7 @@
       "pricePerSqft": 412.49
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-05-963414",
+      "id": "sengkang-315a-anchorvale-rd-2016-05-963536",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -570,7 +584,7 @@
       "pricePerSqft": 375.84
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-04-961533",
+      "id": "sengkang-315a-anchorvale-rd-2016-04-961655",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

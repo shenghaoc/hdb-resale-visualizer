@@ -22,8 +22,8 @@
       161
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1546
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1546
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 2039
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 3015
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -591,7 +605,7 @@
       "pricePerSqft": 347.6
     },
     {
-      "id": "pasir-ris-238-pasir-ris-st-21-2014-06-642264",
+      "id": "pasir-ris-238-pasir-ris-st-21-2014-06-642386",
       "month": "2014-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -604,7 +618,7 @@
       "pricePerSqft": 388.68
     },
     {
-      "id": "pasir-ris-238-pasir-ris-st-21-2013-03-622224",
+      "id": "pasir-ris-238-pasir-ris-st-21-2013-03-622346",
       "month": "2013-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -617,7 +631,7 @@
       "pricePerSqft": 402.77
     },
     {
-      "id": "pasir-ris-238-pasir-ris-st-21-2012-06-606903",
+      "id": "pasir-ris-238-pasir-ris-st-21-2012-06-607025",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

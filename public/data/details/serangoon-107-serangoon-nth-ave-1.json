@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1933
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1933
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 2112
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 2135
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -9,26 +9,26 @@
       "lat": 1.38949150176116,
       "lng": 103.90966042653
     },
-    "medianPrice": 610000,
+    "medianPrice": 615000,
     "priceIqr": [
-      604444,
-      629444
+      606666,
+      630000
     ],
-    "pricePerSqmMedian": 6559.14,
-    "pricePerSqftMedian": 609.36,
-    "transactionCount": 11,
+    "pricePerSqmMedian": 6612.91,
+    "pricePerSqftMedian": 614.36,
+    "transactionCount": 12,
     "floorAreaRange": [
       93,
       93
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2018-06",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 449
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 449
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 491
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 573
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -342,11 +356,30 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 6451.61
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6774.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-180c-rivervale-cres-2026-03-227064",
+      "id": "sengkang-180c-rivervale-cres-2026-04-227144",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years",
+      "resalePrice": 630000,
+      "pricePerSqm": 6774.19,
+      "pricePerSqft": 629.34
+    },
+    {
+      "id": "sengkang-180c-rivervale-cres-2026-03-227133",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -359,7 +392,7 @@
       "pricePerSqft": 599.38
     },
     {
-      "id": "sengkang-180c-rivervale-cres-2026-01-227045",
+      "id": "sengkang-180c-rivervale-cres-2026-01-227114",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -372,7 +405,7 @@
       "pricePerSqft": 628.23
     },
     {
-      "id": "sengkang-180c-rivervale-cres-2026-01-227053",
+      "id": "sengkang-180c-rivervale-cres-2026-01-227122",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -591,19 +624,6 @@
       "resalePrice": 540000,
       "pricePerSqm": 5806.45,
       "pricePerSqft": 539.44
-    },
-    {
-      "id": "sengkang-180c-rivervale-cres-2023-05-161222",
-      "month": "2023-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "90 years 11 months",
-      "resalePrice": 552000,
-      "pricePerSqm": 5935.48,
-      "pricePerSqft": 551.43
     }
   ]
 }

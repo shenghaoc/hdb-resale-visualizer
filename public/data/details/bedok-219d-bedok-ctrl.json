@@ -22,8 +22,8 @@
       97
     ],
     "leaseCommenceRange": [
-      2010,
-      2010
+      2008,
+      2008
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 463
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 463
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1281
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1349
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -197,7 +211,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-219d-bedok-ctrl-2026-03-222327",
+      "id": "bedok-219d-bedok-ctrl-2026-03-222332",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -392,7 +406,7 @@
       "pricePerSqft": 572.23
     },
     {
-      "id": "bedok-219d-bedok-ctrl-2016-11-972652",
+      "id": "bedok-219d-bedok-ctrl-2016-11-972774",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -405,7 +419,7 @@
       "pricePerSqft": 679.97
     },
     {
-      "id": "bedok-219d-bedok-ctrl-2016-06-964062",
+      "id": "bedok-219d-bedok-ctrl-2016-06-964184",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -418,7 +432,7 @@
       "pricePerSqft": 637.47
     },
     {
-      "id": "bedok-219d-bedok-ctrl-2016-06-964063",
+      "id": "bedok-219d-bedok-ctrl-2016-06-964185",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -431,7 +445,7 @@
       "pricePerSqft": 637.47
     },
     {
-      "id": "bedok-219d-bedok-ctrl-2016-04-960377",
+      "id": "bedok-219d-bedok-ctrl-2016-04-960499",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -444,7 +458,7 @@
       "pricePerSqft": 636.86
     },
     {
-      "id": "bedok-219d-bedok-ctrl-2016-02-957502",
+      "id": "bedok-219d-bedok-ctrl-2016-02-957624",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

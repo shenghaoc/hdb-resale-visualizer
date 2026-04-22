@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1735
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1735
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1797
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 2120
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -618,7 +632,7 @@
       "pricePerSqft": 438.89
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2016-03-959858",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2016-03-959980",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -631,7 +645,7 @@
       "pricePerSqft": 439.06
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2015-07-948156",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2015-07-948278",
       "month": "2015-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -644,7 +658,7 @@
       "pricePerSqft": 419.27
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2015-03-941763",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2015-03-941885",
       "month": "2015-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -657,7 +671,7 @@
       "pricePerSqft": 423.72
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2013-12-634778",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2013-12-634900",
       "month": "2013-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -670,7 +684,7 @@
       "pricePerSqft": 426.34
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2013-10-632431",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2013-10-632553",
       "month": "2013-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -683,7 +697,7 @@
       "pricePerSqft": 444.15
     },
     {
-      "id": "serangoon-506a-serangoon-nth-ave-4-2013-05-625673",
+      "id": "serangoon-506a-serangoon-nth-ave-4-2013-05-625795",
       "month": "2013-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

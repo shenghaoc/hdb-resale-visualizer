@@ -22,8 +22,8 @@
       137
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PAYA LEBAR MRT STATION",
       "distanceMeters": 441
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 441
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 567
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 621
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -798,7 +812,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-128-geylang-east-ave-1-2026-01-224444",
+      "id": "geylang-128-geylang-east-ave-1-2026-01-224476",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2002,
+      2002
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 391
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 391
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 397
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 408
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -419,7 +433,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-299-punggol-ctrl-2026-04-226018",
+      "id": "punggol-299-punggol-ctrl-2026-04-226076",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

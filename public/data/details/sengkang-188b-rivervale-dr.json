@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 355
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 355
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 457
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 512
+      }
+    ]
   },
   "monthlyTrend": [
     {

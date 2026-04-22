@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 350
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 350
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 478
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 805
+      }
+    ]
   },
   "monthlyTrend": [
     {

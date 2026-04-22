@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      1977,
+      1977
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 575
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 575
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1947
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 3041
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -845,7 +859,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-507-west-coast-dr-2026-01-224168",
+      "id": "clementi-507-west-coast-dr-2026-01-224197",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -858,7 +872,7 @@
       "pricePerSqft": 575.44
     },
     {
-      "id": "clementi-507-west-coast-dr-2026-01-224233",
+      "id": "clementi-507-west-coast-dr-2026-01-224262",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

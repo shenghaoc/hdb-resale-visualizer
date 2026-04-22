@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 520
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 520
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1112
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2766
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -328,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-506a-wellington-circle-2026-01-226816",
+      "id": "sembawang-506a-wellington-circle-2026-01-226882",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

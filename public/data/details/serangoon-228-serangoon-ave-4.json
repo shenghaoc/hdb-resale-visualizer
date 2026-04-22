@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 617
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 617
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 807
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1605
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -760,7 +774,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-228-serangoon-ave-4-2026-03-227359",
+      "id": "serangoon-228-serangoon-ave-4-2026-03-227435",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

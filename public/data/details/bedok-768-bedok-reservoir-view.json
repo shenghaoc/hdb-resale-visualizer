@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK RESERVOIR MRT STATION",
       "distanceMeters": 438
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 438
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1054
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1337
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -433,7 +447,7 @@
       "pricePerSqft": 460.05
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2016-08-967469",
+      "id": "bedok-768-bedok-reservoir-view-2016-08-967591",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -446,7 +460,7 @@
       "pricePerSqft": 473.45
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2015-03-940879",
+      "id": "bedok-768-bedok-reservoir-view-2015-03-941001",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -459,7 +473,7 @@
       "pricePerSqft": 480.6
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2015-01-938449",
+      "id": "bedok-768-bedok-reservoir-view-2015-01-938571",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -472,7 +486,7 @@
       "pricePerSqft": 468.94
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2014-08-644245",
+      "id": "bedok-768-bedok-reservoir-view-2014-08-644367",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -485,7 +499,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2014-02-636236",
+      "id": "bedok-768-bedok-reservoir-view-2014-02-636358",
       "month": "2014-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

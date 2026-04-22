@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "EUNOS MRT STATION",
       "distanceMeters": 614
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 614
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 711
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 752
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -653,7 +667,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-4-joo-chiat-rd-2026-01-224340",
+      "id": "geylang-4-joo-chiat-rd-2026-01-224370",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       139
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 575
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 575
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1111
+      },
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1908
+      }
+    ]
   },
   "monthlyTrend": [
     {

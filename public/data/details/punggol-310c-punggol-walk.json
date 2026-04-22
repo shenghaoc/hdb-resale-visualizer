@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SUMANG LRT STATION",
       "distanceMeters": 186
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 186
+      },
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 230
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 544
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 905
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 905
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1967
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 2969
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1193,7 +1207,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-702-west-coast-rd-2026-01-224174",
+      "id": "clementi-702-west-coast-rd-2026-01-224203",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

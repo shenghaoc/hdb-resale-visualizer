@@ -9,14 +9,14 @@
       "lat": 1.33629391354583,
       "lng": 103.921242294579
     },
-    "medianPrice": 837500,
+    "medianPrice": 825000,
     "priceIqr": [
-      767250,
-      880000
+      709000,
+      870000
     ],
-    "pricePerSqmMedian": 9517.5,
-    "pricePerSqftMedian": 884.2,
-    "transactionCount": 10,
+    "pricePerSqmMedian": 9552.24,
+    "pricePerSqftMedian": 887.43,
+    "transactionCount": 11,
     "floorAreaRange": [
       67,
       105
@@ -25,10 +25,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 317
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 317
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1294
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 1320
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -212,11 +226,30 @@
       "medianPrice": 978888,
       "transactionCount": 1,
       "medianPricePerSqm": 11251.59
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9970.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-748b-bedok-reservoir-cres-2026-02-222540",
+      "id": "bedok-748b-bedok-reservoir-cres-2026-04-222416",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 05 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 9970.15,
+      "pricePerSqft": 926.26
+    },
+    {
+      "id": "bedok-748b-bedok-reservoir-cres-2026-02-222550",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -229,7 +262,7 @@
       "pricePerSqft": 1045.31
     },
     {
-      "id": "bedok-748b-bedok-reservoir-cres-2026-01-222539",
+      "id": "bedok-748b-bedok-reservoir-cres-2026-01-222549",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -461,19 +494,6 @@
       "resalePrice": 590000,
       "pricePerSqm": 8805.97,
       "pricePerSqft": 818.1
-    },
-    {
-      "id": "bedok-748b-bedok-reservoir-cres-2022-11-118930",
-      "month": "2022-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "90 years 11 months",
-      "resalePrice": 532000,
-      "pricePerSqm": 7940.3,
-      "pricePerSqft": 737.68
     }
   ]
 }

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 284
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 284
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 524
+      },
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 583
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -635,7 +649,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-416-saujana-rd-2026-04-223587",
+      "id": "bukit-panjang-416-saujana-rd-2026-04-223610",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -648,7 +662,7 @@
       "pricePerSqft": 530.88
     },
     {
-      "id": "bukit-panjang-416-saujana-rd-2026-02-223586",
+      "id": "bukit-panjang-416-saujana-rd-2026-02-223609",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

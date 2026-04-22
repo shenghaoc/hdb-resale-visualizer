@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 195
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 195
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 634
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 863
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -539,7 +553,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-12-pine-cl-2026-03-224412",
+      "id": "geylang-12-pine-cl-2026-03-224443",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

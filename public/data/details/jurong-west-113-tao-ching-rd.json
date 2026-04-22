@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1265
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1265
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1350
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1937
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1078,7 +1092,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-113-tao-ching-rd-2026-02-225045",
+      "id": "jurong-west-113-tao-ching-rd-2026-02-225086",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

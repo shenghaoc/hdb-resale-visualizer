@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 236
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 236
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 570
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 655
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -755,7 +769,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-132-cashew-rd-2026-02-223490",
+      "id": "bukit-panjang-132-cashew-rd-2026-02-223513",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

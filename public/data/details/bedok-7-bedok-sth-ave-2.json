@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 663
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 663
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1183
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 1234
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -910,7 +924,7 @@
       "pricePerSqft": 405.6
     },
     {
-      "id": "bedok-7-bedok-sth-ave-2-2016-05-962187",
+      "id": "bedok-7-bedok-sth-ave-2-2016-05-962309",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -923,7 +937,7 @@
       "pricePerSqft": 398.8
     },
     {
-      "id": "bedok-7-bedok-sth-ave-2-2015-10-951633",
+      "id": "bedok-7-bedok-sth-ave-2-2015-10-951755",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

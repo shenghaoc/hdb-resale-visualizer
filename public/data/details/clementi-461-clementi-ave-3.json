@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2006,
-      2006
+      2005,
+      2005
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 344
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 344
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1324
+      },
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 2646
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -390,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-461-clementi-ave-3-2026-02-224200",
+      "id": "clementi-461-clementi-ave-3-2026-02-224229",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -403,7 +417,7 @@
       "pricePerSqft": 938.21
     },
     {
-      "id": "clementi-461-clementi-ave-3-2026-01-224241",
+      "id": "clementi-461-clementi-ave-3-2026-01-224270",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

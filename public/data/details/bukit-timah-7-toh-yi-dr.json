@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEAUTY WORLD MRT STATION",
       "distanceMeters": 301
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 911
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 2067
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -719,7 +733,7 @@
       "pricePerSqft": 579.05
     },
     {
-      "id": "bukit-timah-7-toh-yi-dr-2015-09-950319",
+      "id": "bukit-timah-7-toh-yi-dr-2015-09-950441",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -732,7 +746,7 @@
       "pricePerSqft": 641.16
     },
     {
-      "id": "bukit-timah-7-toh-yi-dr-2015-08-948886",
+      "id": "bukit-timah-7-toh-yi-dr-2015-08-949008",
       "month": "2015-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

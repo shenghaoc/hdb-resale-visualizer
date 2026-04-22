@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "KADALOOR LRT STATION",
       "distanceMeters": 110
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 110
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 569
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 606
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -313,7 +327,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-664a-punggol-dr-2026-04-225914",
+      "id": "punggol-664a-punggol-dr-2026-04-225970",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -326,7 +340,7 @@
       "pricePerSqft": 757.52
     },
     {
-      "id": "punggol-664a-punggol-dr-2026-03-226256",
+      "id": "punggol-664a-punggol-dr-2026-03-226318",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -339,7 +353,7 @@
       "pricePerSqft": 682.42
     },
     {
-      "id": "punggol-664a-punggol-dr-2026-02-226036",
+      "id": "punggol-664a-punggol-dr-2026-02-226094",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -352,7 +366,7 @@
       "pricePerSqft": 701.93
     },
     {
-      "id": "punggol-664a-punggol-dr-2026-01-226025",
+      "id": "punggol-664a-punggol-dr-2026-01-226083",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

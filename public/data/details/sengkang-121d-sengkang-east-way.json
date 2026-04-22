@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 228
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 228
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 410
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 620
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -468,7 +482,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-121d-sengkang-east-way-2026-02-227112",
+      "id": "sengkang-121d-sengkang-east-way-2026-02-227184",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

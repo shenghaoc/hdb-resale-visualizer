@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 218
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 218
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 489
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 689
+      }
+    ]
   },
   "monthlyTrend": [
     {

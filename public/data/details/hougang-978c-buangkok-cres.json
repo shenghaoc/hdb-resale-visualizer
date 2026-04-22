@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 1297
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1297
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1345
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1378
+      }
+    ]
   },
   "monthlyTrend": [
     {

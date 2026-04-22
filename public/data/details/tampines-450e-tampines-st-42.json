@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 209
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 209
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 989
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1660
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -549,7 +563,7 @@
       "pricePerSqft": 378.69
     },
     {
-      "id": "tampines-450e-tampines-st-42-2016-07-967030",
+      "id": "tampines-450e-tampines-st-42-2016-07-967152",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -562,7 +576,7 @@
       "pricePerSqft": 393.34
     },
     {
-      "id": "tampines-450e-tampines-st-42-2016-05-963566",
+      "id": "tampines-450e-tampines-st-42-2016-05-963688",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -575,7 +589,7 @@
       "pricePerSqft": 397.66
     },
     {
-      "id": "tampines-450e-tampines-st-42-2015-01-939351",
+      "id": "tampines-450e-tampines-st-42-2015-01-939473",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -588,7 +602,7 @@
       "pricePerSqft": 406.34
     },
     {
-      "id": "tampines-450e-tampines-st-42-2013-07-628542",
+      "id": "tampines-450e-tampines-st-42-2013-07-628664",
       "month": "2013-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -601,7 +615,7 @@
       "pricePerSqft": 439.34
     },
     {
-      "id": "tampines-450e-tampines-st-42-2012-08-611551",
+      "id": "tampines-450e-tampines-st-42-2012-08-611673",
       "month": "2012-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

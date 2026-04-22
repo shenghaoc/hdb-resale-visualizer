@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 200
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 200
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 634
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 852
+      }
+    ]
   },
   "monthlyTrend": [
     {

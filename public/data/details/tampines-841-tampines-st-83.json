@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 782
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 782
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 951
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1678
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -961,7 +975,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-841-tampines-st-83-2026-04-227731",
+      "id": "tampines-841-tampines-st-83-2026-04-227815",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -974,7 +988,7 @@
       "pricePerSqft": 564.05
     },
     {
-      "id": "tampines-841-tampines-st-83-2026-04-227732",
+      "id": "tampines-841-tampines-st-83-2026-04-227816",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -987,7 +1001,7 @@
       "pricePerSqft": 541.18
     },
     {
-      "id": "tampines-841-tampines-st-83-2026-04-227901",
+      "id": "tampines-841-tampines-st-83-2026-04-227989",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -1000,7 +1014,7 @@
       "pricePerSqft": 569.6
     },
     {
-      "id": "tampines-841-tampines-st-83-2026-03-227729",
+      "id": "tampines-841-tampines-st-83-2026-03-227813",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1013,7 +1027,7 @@
       "pricePerSqft": 629.09
     },
     {
-      "id": "tampines-841-tampines-st-83-2026-01-227724",
+      "id": "tampines-841-tampines-st-83-2026-01-227808",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 1206
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1206
+      },
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1922
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 2403
+      }
+    ]
   },
   "monthlyTrend": [
     {

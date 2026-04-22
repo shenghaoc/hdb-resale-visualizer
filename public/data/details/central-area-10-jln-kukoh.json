@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1970,
+      1970
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CHINATOWN MRT STATION",
       "distanceMeters": 488
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINATOWN MRT STATION",
+        "distanceMeters": 488
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 528
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 583
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -894,7 +908,7 @@
       "pricePerSqft": 420.69
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-10-971281",
+      "id": "central-area-10-jln-kukoh-2016-10-971403",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -907,7 +921,7 @@
       "pricePerSqft": 513.41
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-03-958998",
+      "id": "central-area-10-jln-kukoh-2016-03-959120",
       "month": "2016-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -920,7 +934,7 @@
       "pricePerSqft": 473.28
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-01-956415",
+      "id": "central-area-10-jln-kukoh-2016-01-956537",
       "month": "2016-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

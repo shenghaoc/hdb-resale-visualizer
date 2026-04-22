@@ -22,8 +22,8 @@
       126
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLEIGH MRT STATION",
       "distanceMeters": 448
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 448
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 701
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 877
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -486,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-464-upp-serangoon-rd-2026-02-224708",
+      "id": "hougang-464-upp-serangoon-rd-2026-02-224743",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -499,7 +513,7 @@
       "pricePerSqft": 620.84
     },
     {
-      "id": "hougang-464-upp-serangoon-rd-2026-02-224776",
+      "id": "hougang-464-upp-serangoon-rd-2026-02-224813",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -512,7 +526,7 @@
       "pricePerSqft": 648.85
     },
     {
-      "id": "hougang-464-upp-serangoon-rd-2026-01-224706",
+      "id": "hougang-464-upp-serangoon-rd-2026-01-224741",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -733,7 +747,7 @@
       "pricePerSqft": 427.05
     },
     {
-      "id": "hougang-464-upp-serangoon-rd-2016-09-969847",
+      "id": "hougang-464-upp-serangoon-rd-2016-09-969969",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

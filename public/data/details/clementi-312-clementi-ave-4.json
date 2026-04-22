@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1978,
-      1978
+      2016,
+      2016
     ],
     "latestMonth": "2000-10",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 422
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 422
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1807
+      },
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 2670
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -443,7 +457,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-312-clementi-ave-4-2000-10-255869",
+      "id": "clementi-312-clementi-ave-4-2000-10-255991",
       "month": "2000-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -456,7 +470,7 @@
       "pricePerSqft": 271.56
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-09-252662",
+      "id": "clementi-312-clementi-ave-4-2000-09-252784",
       "month": "2000-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -469,7 +483,7 @@
       "pricePerSqft": 228.79
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-08-249559",
+      "id": "clementi-312-clementi-ave-4-2000-08-249681",
       "month": "2000-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -482,7 +496,7 @@
       "pricePerSqft": 217.7
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-07-246453",
+      "id": "clementi-312-clementi-ave-4-2000-07-246575",
       "month": "2000-07",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -495,7 +509,7 @@
       "pricePerSqft": 222.55
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-07-246454",
+      "id": "clementi-312-clementi-ave-4-2000-07-246576",
       "month": "2000-07",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -508,7 +522,7 @@
       "pricePerSqft": 270.39
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-06-243297",
+      "id": "clementi-312-clementi-ave-4-2000-06-243419",
       "month": "2000-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -521,7 +535,7 @@
       "pricePerSqft": 219.08
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-04-237258",
+      "id": "clementi-312-clementi-ave-4-2000-04-237380",
       "month": "2000-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -534,7 +548,7 @@
       "pricePerSqft": 253.75
     },
     {
-      "id": "clementi-312-clementi-ave-4-2000-03-234776",
+      "id": "clementi-312-clementi-ave-4-2000-03-234898",
       "month": "2000-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -547,7 +561,7 @@
       "pricePerSqft": 242.66
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-11-933298",
+      "id": "clementi-312-clementi-ave-4-1999-11-933420",
       "month": "1999-11",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -560,7 +574,7 @@
       "pricePerSqft": 230.54
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-09-925895",
+      "id": "clementi-312-clementi-ave-4-1999-09-926017",
       "month": "1999-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -573,7 +587,7 @@
       "pricePerSqft": 260.33
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-09-925896",
+      "id": "clementi-312-clementi-ave-4-1999-09-926018",
       "month": "1999-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -586,7 +600,7 @@
       "pricePerSqft": 276.67
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-07-915679",
+      "id": "clementi-312-clementi-ave-4-1999-07-915801",
       "month": "1999-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -599,7 +613,7 @@
       "pricePerSqft": 202.45
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-06-909901",
+      "id": "clementi-312-clementi-ave-4-1999-06-910023",
       "month": "1999-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -612,7 +626,7 @@
       "pricePerSqft": 189.97
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-06-909902",
+      "id": "clementi-312-clementi-ave-4-1999-06-910024",
       "month": "1999-06",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +639,7 @@
       "pricePerSqft": 196.21
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904255",
+      "id": "clementi-312-clementi-ave-4-1999-05-904377",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -638,7 +652,7 @@
       "pricePerSqft": 202.86
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904256",
+      "id": "clementi-312-clementi-ave-4-1999-05-904378",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -651,7 +665,7 @@
       "pricePerSqft": 191.35
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904257",
+      "id": "clementi-312-clementi-ave-4-1999-05-904379",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -664,7 +678,7 @@
       "pricePerSqft": 206.54
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904258",
+      "id": "clementi-312-clementi-ave-4-1999-05-904380",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -677,7 +691,7 @@
       "pricePerSqft": 207.33
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904259",
+      "id": "clementi-312-clementi-ave-4-1999-05-904381",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -690,7 +704,7 @@
       "pricePerSqft": 214.93
     },
     {
-      "id": "clementi-312-clementi-ave-4-1999-05-904260",
+      "id": "clementi-312-clementi-ave-4-1999-05-904382",
       "month": "1999-05",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

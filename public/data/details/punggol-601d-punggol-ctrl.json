@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 247
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 247
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 448
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 536
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -306,7 +320,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-601d-punggol-ctrl-2026-04-225909",
+      "id": "punggol-601d-punggol-ctrl-2026-04-225965",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

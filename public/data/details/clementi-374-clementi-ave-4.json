@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 453
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 453
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1521
+      },
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 2516
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1087,7 +1101,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-374-clementi-ave-4-2026-02-224135",
+      "id": "clementi-374-clementi-ave-4-2026-02-224164",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1100,7 +1114,7 @@
       "pricePerSqft": 640.61
     },
     {
-      "id": "clementi-374-clementi-ave-4-2026-02-224137",
+      "id": "clementi-374-clementi-ave-4-2026-02-224166",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

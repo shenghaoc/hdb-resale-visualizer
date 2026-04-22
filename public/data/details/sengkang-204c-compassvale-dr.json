@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 371
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 371
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 468
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 494
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -342,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-204c-compassvale-dr-2026-01-227181",
+      "id": "sengkang-204c-compassvale-dr-2026-01-227254",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -576,7 +590,7 @@
       "pricePerSqft": 412.9
     },
     {
-      "id": "sengkang-204c-compassvale-dr-2016-07-966875",
+      "id": "sengkang-204c-compassvale-dr-2016-07-966997",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -589,7 +603,7 @@
       "pricePerSqft": 402.86
     },
     {
-      "id": "sengkang-204c-compassvale-dr-2016-03-959751",
+      "id": "sengkang-204c-compassvale-dr-2016-03-959873",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -9,14 +9,14 @@
       "lat": 1.36984770803551,
       "lng": 103.883701202398
     },
-    "medianPrice": 451444,
+    "medianPrice": 442888,
     "priceIqr": [
-      397500,
-      460500
+      398000,
+      460000
     ],
-    "pricePerSqmMedian": 6583.34,
-    "pricePerSqftMedian": 611.61,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 6633.33,
+    "pricePerSqftMedian": 616.26,
+    "transactionCount": 9,
     "floorAreaRange": [
       60,
       69
@@ -25,10 +25,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-11",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 954
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 954
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1078
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1790
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1008,9 +1022,28 @@
       "medianPrice": 468000,
       "transactionCount": 1,
       "medianPricePerSqm": 6782.61
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6633.33
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-619-hougang-ave-8-2026-04-224566",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 60,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 06 months",
+      "resalePrice": 398000,
+      "pricePerSqm": 6633.33,
+      "pricePerSqft": 616.26
+    },
     {
       "id": "hougang-619-hougang-ave-8-2025-09-205339",
       "month": "2025-09",
@@ -1257,19 +1290,6 @@
       "resalePrice": 305000,
       "pricePerSqm": 4420.29,
       "pricePerSqft": 410.66
-    },
-    {
-      "id": "hougang-619-hougang-ave-8-2021-10-110032",
-      "month": "2021-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 60,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "63 years",
-      "resalePrice": 298000,
-      "pricePerSqm": 4966.67,
-      "pricePerSqft": 461.42
     }
   ]
 }

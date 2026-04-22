@@ -22,8 +22,8 @@
       83
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TANJONG PAGAR MRT STATION",
       "distanceMeters": 207
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANJONG PAGAR MRT STATION",
+        "distanceMeters": 207
+      },
+      {
+        "stationName": "MAXWELL MRT STATION",
+        "distanceMeters": 342
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 446
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -586,7 +600,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-7-tg-pagar-plaza-2026-01-223789",
+      "id": "central-area-7-tg-pagar-plaza-2026-01-223813",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

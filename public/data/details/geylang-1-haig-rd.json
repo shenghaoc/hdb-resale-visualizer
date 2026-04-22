@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      1982,
-      1982
+      1976,
+      1976
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CC9",
       "distanceMeters": 829
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CC9",
+        "distanceMeters": 829
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 859
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 973
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1192,7 +1206,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-1-haig-rd-2026-03-224336",
+      "id": "geylang-1-haig-rd-2026-03-224366",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1205,7 +1219,7 @@
       "pricePerSqft": 711.73
     },
     {
-      "id": "geylang-1-haig-rd-2026-03-224337",
+      "id": "geylang-1-haig-rd-2026-03-224367",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1218,7 +1232,7 @@
       "pricePerSqft": 639.3
     },
     {
-      "id": "geylang-1-haig-rd-2026-02-224334",
+      "id": "geylang-1-haig-rd-2026-02-224364",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

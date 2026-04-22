@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 106
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 106
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 472
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 567
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -358,7 +372,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-150-rivervale-cres-2026-01-227047",
+      "id": "sengkang-150-rivervale-cres-2026-01-227116",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -371,7 +385,7 @@
       "pricePerSqft": 609.03
     },
     {
-      "id": "sengkang-150-rivervale-cres-2026-01-227048",
+      "id": "sengkang-150-rivervale-cres-2026-01-227117",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -384,7 +398,7 @@
       "pricePerSqft": 619.35
     },
     {
-      "id": "sengkang-150-rivervale-cres-2026-01-227055",
+      "id": "sengkang-150-rivervale-cres-2026-01-227124",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

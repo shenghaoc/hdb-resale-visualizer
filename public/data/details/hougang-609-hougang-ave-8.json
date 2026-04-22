@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 747
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 747
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1120
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1637
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -273,7 +287,7 @@
       "pricePerSqft": 374.03
     },
     {
-      "id": "hougang-609-hougang-ave-8-2016-09-969855",
+      "id": "hougang-609-hougang-ave-8-2016-09-969977",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -286,7 +300,7 @@
       "pricePerSqft": 383.61
     },
     {
-      "id": "hougang-609-hougang-ave-8-2015-04-942751",
+      "id": "hougang-609-hougang-ave-8-2015-04-942873",
       "month": "2015-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -299,7 +313,7 @@
       "pricePerSqft": 366.79
     },
     {
-      "id": "hougang-609-hougang-ave-8-2010-08-561498",
+      "id": "hougang-609-hougang-ave-8-2010-08-561620",
       "month": "2010-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -312,7 +326,7 @@
       "pricePerSqft": 306.46
     },
     {
-      "id": "hougang-609-hougang-ave-8-2010-06-554404",
+      "id": "hougang-609-hougang-ave-8-2010-06-554526",
       "month": "2010-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -325,7 +339,7 @@
       "pricePerSqft": 272.52
     },
     {
-      "id": "hougang-609-hougang-ave-8-2008-01-481798",
+      "id": "hougang-609-hougang-ave-8-2008-01-481920",
       "month": "2008-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -338,7 +352,7 @@
       "pricePerSqft": 286.55
     },
     {
-      "id": "hougang-609-hougang-ave-8-2002-07-322128",
+      "id": "hougang-609-hougang-ave-8-2002-07-322250",
       "month": "2002-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -351,7 +365,7 @@
       "pricePerSqft": 250.36
     },
     {
-      "id": "hougang-609-hougang-ave-8-2001-04-274293",
+      "id": "hougang-609-hougang-ave-8-2001-04-274415",
       "month": "2001-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -364,7 +378,7 @@
       "pricePerSqft": 278.71
     },
     {
-      "id": "hougang-609-hougang-ave-8-1999-11-933660",
+      "id": "hougang-609-hougang-ave-8-1999-11-933782",
       "month": "1999-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -377,7 +391,7 @@
       "pricePerSqft": 267.1
     },
     {
-      "id": "hougang-609-hougang-ave-8-1999-09-926220",
+      "id": "hougang-609-hougang-ave-8-1999-09-926342",
       "month": "1999-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -390,7 +404,7 @@
       "pricePerSqft": 277.47
     },
     {
-      "id": "hougang-609-hougang-ave-8-1999-09-926221",
+      "id": "hougang-609-hougang-ave-8-1999-09-926343",
       "month": "1999-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -403,7 +417,7 @@
       "pricePerSqft": 276.2
     },
     {
-      "id": "hougang-609-hougang-ave-8-1999-06-910525",
+      "id": "hougang-609-hougang-ave-8-1999-06-910647",
       "month": "1999-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -416,7 +430,7 @@
       "pricePerSqft": 254.23
     },
     {
-      "id": "hougang-609-hougang-ave-8-1998-07-853233",
+      "id": "hougang-609-hougang-ave-8-1998-07-853355",
       "month": "1998-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -429,7 +443,7 @@
       "pricePerSqft": 307.67
     },
     {
-      "id": "hougang-609-hougang-ave-8-1997-06-812454",
+      "id": "hougang-609-hougang-ave-8-1997-06-812576",
       "month": "1997-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -442,7 +456,7 @@
       "pricePerSqft": 338.97
     },
     {
-      "id": "hougang-609-hougang-ave-8-1997-03-803709",
+      "id": "hougang-609-hougang-ave-8-1997-03-803831",
       "month": "1997-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -455,7 +469,7 @@
       "pricePerSqft": 334.45
     },
     {
-      "id": "hougang-609-hougang-ave-8-1997-01-798902",
+      "id": "hougang-609-hougang-ave-8-1997-01-799024",
       "month": "1997-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

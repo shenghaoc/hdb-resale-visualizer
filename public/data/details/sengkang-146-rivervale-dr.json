@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 95
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 95
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 269
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 749
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-146-rivervale-dr-2026-01-227248",
+      "id": "sengkang-146-rivervale-dr-2026-01-227323",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -573,7 +587,7 @@
       "pricePerSqft": 340.85
     },
     {
-      "id": "sengkang-146-rivervale-dr-2016-07-966864",
+      "id": "sengkang-146-rivervale-dr-2016-07-966986",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -586,7 +600,7 @@
       "pricePerSqft": 356.4
     },
     {
-      "id": "sengkang-146-rivervale-dr-2016-06-965136",
+      "id": "sengkang-146-rivervale-dr-2016-06-965258",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -599,7 +613,7 @@
       "pricePerSqft": 353.03
     },
     {
-      "id": "sengkang-146-rivervale-dr-2016-06-965199",
+      "id": "sengkang-146-rivervale-dr-2016-06-965321",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -612,7 +626,7 @@
       "pricePerSqft": 354.79
     },
     {
-      "id": "sengkang-146-rivervale-dr-2016-03-959803",
+      "id": "sengkang-146-rivervale-dr-2016-03-959925",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -625,7 +639,7 @@
       "pricePerSqft": 376.42
     },
     {
-      "id": "sengkang-146-rivervale-dr-2016-01-957029",
+      "id": "sengkang-146-rivervale-dr-2016-01-957151",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

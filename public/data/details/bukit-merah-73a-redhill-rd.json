@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2004,
+      2004
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 161
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 161
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1159
+      },
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 1365
+      }
+    ]
   },
   "monthlyTrend": [
     {

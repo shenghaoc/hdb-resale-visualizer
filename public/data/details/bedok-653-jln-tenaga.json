@@ -22,8 +22,8 @@
       129
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 293
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 293
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 905
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 1162
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -388,7 +402,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-653-jln-tenaga-2026-01-222663",
+      "id": "bedok-653-jln-tenaga-2026-01-222675",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -531,7 +545,7 @@
       "pricePerSqft": 431.07
     },
     {
-      "id": "bedok-653-jln-tenaga-2014-11-648612",
+      "id": "bedok-653-jln-tenaga-2014-11-648734",
       "month": "2014-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -544,7 +558,7 @@
       "pricePerSqft": 449.53
     },
     {
-      "id": "bedok-653-jln-tenaga-2013-05-624637",
+      "id": "bedok-653-jln-tenaga-2013-05-624759",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -557,7 +571,7 @@
       "pricePerSqft": 468.26
     },
     {
-      "id": "bedok-653-jln-tenaga-2013-04-622928",
+      "id": "bedok-653-jln-tenaga-2013-04-623050",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -570,7 +584,7 @@
       "pricePerSqft": 442.57
     },
     {
-      "id": "bedok-653-jln-tenaga-2012-06-605951",
+      "id": "bedok-653-jln-tenaga-2012-06-606073",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -583,7 +597,7 @@
       "pricePerSqft": 409.07
     },
     {
-      "id": "bedok-653-jln-tenaga-2011-01-573701",
+      "id": "bedok-653-jln-tenaga-2011-01-573823",
       "month": "2011-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -596,7 +610,7 @@
       "pricePerSqft": 373.79
     },
     {
-      "id": "bedok-653-jln-tenaga-2010-11-569478",
+      "id": "bedok-653-jln-tenaga-2010-11-569600",
       "month": "2010-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -609,7 +623,7 @@
       "pricePerSqft": 373.08
     },
     {
-      "id": "bedok-653-jln-tenaga-2010-07-556859",
+      "id": "bedok-653-jln-tenaga-2010-07-556981",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -622,7 +636,7 @@
       "pricePerSqft": 315.73
     },
     {
-      "id": "bedok-653-jln-tenaga-2010-07-556860",
+      "id": "bedok-653-jln-tenaga-2010-07-556982",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -635,7 +649,7 @@
       "pricePerSqft": 328.06
     },
     {
-      "id": "bedok-653-jln-tenaga-2010-07-556861",
+      "id": "bedok-653-jln-tenaga-2010-07-556983",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

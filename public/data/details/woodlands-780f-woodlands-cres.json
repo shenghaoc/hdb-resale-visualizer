@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 801
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 801
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1747
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1852
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -269,7 +283,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-780f-woodlands-cres-2026-03-228244",
+      "id": "woodlands-780f-woodlands-cres-2026-03-228345",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -282,7 +296,7 @@
       "pricePerSqft": 731.37
     },
     {
-      "id": "woodlands-780f-woodlands-cres-2026-02-228296",
+      "id": "woodlands-780f-woodlands-cres-2026-02-228397",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -295,7 +309,7 @@
       "pricePerSqft": 693.31
     },
     {
-      "id": "woodlands-780f-woodlands-cres-2026-02-228297",
+      "id": "woodlands-780f-woodlands-cres-2026-02-228398",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -308,7 +322,7 @@
       "pricePerSqft": 700.24
     },
     {
-      "id": "woodlands-780f-woodlands-cres-2026-01-228243",
+      "id": "woodlands-780f-woodlands-cres-2026-01-228344",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -321,7 +335,7 @@
       "pricePerSqft": 699.74
     },
     {
-      "id": "woodlands-780f-woodlands-cres-2026-01-228294",
+      "id": "woodlands-780f-woodlands-cres-2026-01-228395",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

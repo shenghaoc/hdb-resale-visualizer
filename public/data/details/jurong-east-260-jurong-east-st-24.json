@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 796
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 796
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1096
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1118
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -576,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-260-jurong-east-st-24-2026-04-224925",
+      "id": "jurong-east-260-jurong-east-st-24-2026-04-224963",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -589,7 +603,7 @@
       "pricePerSqft": 483.71
     },
     {
-      "id": "jurong-east-260-jurong-east-st-24-2026-03-224924",
+      "id": "jurong-east-260-jurong-east-st-24-2026-03-224962",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -823,7 +837,7 @@
       "pricePerSqft": 390.04
     },
     {
-      "id": "jurong-east-260-jurong-east-st-24-2016-09-969886",
+      "id": "jurong-east-260-jurong-east-st-24-2016-09-970008",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

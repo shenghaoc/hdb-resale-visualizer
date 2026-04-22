@@ -22,8 +22,8 @@
       123
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 624
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 624
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 841
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 875
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -486,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-898a-woodlands-dr-50-2026-03-228468",
+      "id": "woodlands-898a-woodlands-dr-50-2026-03-228573",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -499,7 +513,7 @@
       "pricePerSqft": 529.64
     },
     {
-      "id": "woodlands-898a-woodlands-dr-50-2026-01-228458",
+      "id": "woodlands-898a-woodlands-dr-50-2026-01-228562",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -512,7 +526,7 @@
       "pricePerSqft": 544.28
     },
     {
-      "id": "woodlands-898a-woodlands-dr-50-2026-01-228658",
+      "id": "woodlands-898a-woodlands-dr-50-2026-01-228767",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -525,7 +539,7 @@
       "pricePerSqft": 480.26
     },
     {
-      "id": "woodlands-898a-woodlands-dr-50-2026-01-228659",
+      "id": "woodlands-898a-woodlands-dr-50-2026-01-228768",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -720,7 +734,7 @@
       "pricePerSqft": 349.58
     },
     {
-      "id": "woodlands-898a-woodlands-dr-50-2016-11-973920",
+      "id": "woodlands-898a-woodlands-dr-50-2016-11-974042",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -733,7 +747,7 @@
       "pricePerSqft": 332.13
     },
     {
-      "id": "woodlands-898a-woodlands-dr-50-2016-04-961911",
+      "id": "woodlands-898a-woodlands-dr-50-2016-04-962033",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

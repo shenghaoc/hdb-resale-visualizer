@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1974,
+      1974
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 255
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 255
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 791
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1496
+      }
+    ]
   },
   "monthlyTrend": [
     {

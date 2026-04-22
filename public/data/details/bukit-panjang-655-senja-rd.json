@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2024-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JELAPANG LRT STATION",
       "distanceMeters": 65
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 65
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 537
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 571
+      }
+    ]
   },
   "monthlyTrend": [
     {

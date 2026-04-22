@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 383
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 383
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 680
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 1052
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -738,7 +752,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-168-lor-1-toa-payoh-2026-04-228014",
+      "id": "toa-payoh-168-lor-1-toa-payoh-2026-04-228107",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -751,7 +765,7 @@
       "pricePerSqft": 532.41
     },
     {
-      "id": "toa-payoh-168-lor-1-toa-payoh-2026-03-228006",
+      "id": "toa-payoh-168-lor-1-toa-payoh-2026-03-228099",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 385
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 385
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 548
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 647
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -372,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-237-compassvale-walk-2026-01-226983",
+      "id": "sengkang-237-compassvale-walk-2026-01-227051",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -580,7 +594,7 @@
       "pricePerSqft": 357.91
     },
     {
-      "id": "sengkang-237-compassvale-walk-2016-08-968659",
+      "id": "sengkang-237-compassvale-walk-2016-08-968781",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -593,7 +607,7 @@
       "pricePerSqft": 397.42
     },
     {
-      "id": "sengkang-237-compassvale-walk-2016-05-963377",
+      "id": "sengkang-237-compassvale-walk-2016-05-963499",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -606,7 +620,7 @@
       "pricePerSqft": 409.13
     },
     {
-      "id": "sengkang-237-compassvale-walk-2016-02-958182",
+      "id": "sengkang-237-compassvale-walk-2016-02-958304",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -619,7 +633,7 @@
       "pricePerSqft": 354.89
     },
     {
-      "id": "sengkang-237-compassvale-walk-2016-02-958195",
+      "id": "sengkang-237-compassvale-walk-2016-02-958317",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

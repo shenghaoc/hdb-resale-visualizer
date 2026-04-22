@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 172
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 172
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 505
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 517
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -360,7 +374,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-184b-rivervale-cres-2026-03-227244",
+      "id": "sengkang-184b-rivervale-cres-2026-03-227319",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

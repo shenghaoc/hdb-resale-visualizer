@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 487
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 487
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 752
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 876
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -893,7 +907,7 @@
       "pricePerSqft": 469.28
     },
     {
-      "id": "kallang-whampoa-53-geylang-bahru-2016-06-964846",
+      "id": "kallang-whampoa-53-geylang-bahru-2016-06-964968",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

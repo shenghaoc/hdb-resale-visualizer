@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 270
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 270
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1321
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1719
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -581,7 +595,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2026-04-222967",
+      "id": "bukit-batok-358-bt-batok-st-31-2026-04-222983",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -776,7 +790,7 @@
       "pricePerSqft": 360
     },
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2016-12-974331",
+      "id": "bukit-batok-358-bt-batok-st-31-2016-12-974453",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -789,7 +803,7 @@
       "pricePerSqft": 373.82
     },
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2015-11-953443",
+      "id": "bukit-batok-358-bt-batok-st-31-2015-11-953565",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -802,7 +816,7 @@
       "pricePerSqft": 395.94
     },
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2015-03-940975",
+      "id": "bukit-batok-358-bt-batok-st-31-2015-03-941097",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -815,7 +829,7 @@
       "pricePerSqft": 387.25
     },
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2012-12-617644",
+      "id": "bukit-batok-358-bt-batok-st-31-2012-12-617766",
       "month": "2012-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -828,7 +842,7 @@
       "pricePerSqft": 431.34
     },
     {
-      "id": "bukit-batok-358-bt-batok-st-31-2012-09-612297",
+      "id": "bukit-batok-358-bt-batok-st-31-2012-09-612419",
       "month": "2012-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

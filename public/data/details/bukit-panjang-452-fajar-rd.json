@@ -22,8 +22,8 @@
       142
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FAJAR LRT STATION",
       "distanceMeters": 199
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FAJAR LRT STATION",
+        "distanceMeters": 199
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 394
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 632
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -628,7 +642,7 @@
       "pricePerSqft": 295.6
     },
     {
-      "id": "bukit-panjang-452-fajar-rd-2016-05-962477",
+      "id": "bukit-panjang-452-fajar-rd-2016-05-962599",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -641,7 +655,7 @@
       "pricePerSqft": 326.31
     },
     {
-      "id": "bukit-panjang-452-fajar-rd-2013-05-624833",
+      "id": "bukit-panjang-452-fajar-rd-2013-05-624955",
       "month": "2013-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -654,7 +668,7 @@
       "pricePerSqft": 363.76
     },
     {
-      "id": "bukit-panjang-452-fajar-rd-2012-05-603961",
+      "id": "bukit-panjang-452-fajar-rd-2012-05-604083",
       "month": "2012-05",
       "flatType": "5 ROOM",
       "storeyRange": "11 TO 15",
@@ -667,7 +681,7 @@
       "pricePerSqft": 347.04
     },
     {
-      "id": "bukit-panjang-452-fajar-rd-2012-05-603984",
+      "id": "bukit-panjang-452-fajar-rd-2012-05-604106",
       "month": "2012-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "06 TO 10",

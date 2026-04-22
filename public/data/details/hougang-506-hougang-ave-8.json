@@ -22,8 +22,8 @@
       104
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1985,
+      1985
     ],
     "latestMonth": "2025-06",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 489
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 489
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1277
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1433
+      }
+    ]
   },
   "monthlyTrend": [
     {

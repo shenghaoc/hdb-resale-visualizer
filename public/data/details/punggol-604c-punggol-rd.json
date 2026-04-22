@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 195
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 195
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 508
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 574
+      }
+    ]
   },
   "monthlyTrend": [
     {

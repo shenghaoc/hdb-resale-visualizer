@@ -22,8 +22,8 @@
       192
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1985,
+      1985
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 435
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 435
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1313
+      },
+      {
+        "stationName": "KRANJI MRT STATION",
+        "distanceMeters": 1621
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -493,7 +507,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-307-woodlands-ave-1-2026-02-228758",
+      "id": "woodlands-307-woodlands-ave-1-2026-02-228870",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -506,7 +520,7 @@
       "pricePerSqft": 512.02
     },
     {
-      "id": "woodlands-307-woodlands-ave-1-2026-02-228759",
+      "id": "woodlands-307-woodlands-ave-1-2026-02-228871",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -740,7 +754,7 @@
       "pricePerSqft": 367.74
     },
     {
-      "id": "woodlands-307-woodlands-ave-1-2016-06-965610",
+      "id": "woodlands-307-woodlands-ave-1-2016-06-965732",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

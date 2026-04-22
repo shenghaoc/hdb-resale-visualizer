@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 386
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 386
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1054
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1537
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -803,7 +817,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-225a-jurong-east-st-21-2026-02-224874",
+      "id": "jurong-east-225a-jurong-east-st-21-2026-02-224911",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

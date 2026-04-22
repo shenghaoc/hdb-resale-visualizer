@@ -22,8 +22,8 @@
       150
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 614
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 614
+      },
+      {
+        "stationName": "UPPER CHANGI MRT STATION",
+        "distanceMeters": 1241
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1396
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -520,7 +534,7 @@
       "pricePerSqft": 392.81
     },
     {
-      "id": "tampines-332-tampines-st-32-2016-11-973827",
+      "id": "tampines-332-tampines-st-32-2016-11-973949",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -533,7 +547,7 @@
       "pricePerSqft": 420.87
     },
     {
-      "id": "tampines-332-tampines-st-32-2014-10-648195",
+      "id": "tampines-332-tampines-st-32-2014-10-648317",
       "month": "2014-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -546,7 +560,7 @@
       "pricePerSqft": 433.34
     },
     {
-      "id": "tampines-332-tampines-st-32-2014-06-642547",
+      "id": "tampines-332-tampines-st-32-2014-06-642669",
       "month": "2014-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -559,7 +573,7 @@
       "pricePerSqft": 436.46
     },
     {
-      "id": "tampines-332-tampines-st-32-2013-06-627112",
+      "id": "tampines-332-tampines-st-32-2013-06-627234",
       "month": "2013-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -572,7 +586,7 @@
       "pricePerSqft": 424.26
     },
     {
-      "id": "tampines-332-tampines-st-32-2012-10-615347",
+      "id": "tampines-332-tampines-st-32-2012-10-615469",
       "month": "2012-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -585,7 +599,7 @@
       "pricePerSqft": 395.63
     },
     {
-      "id": "tampines-332-tampines-st-32-2012-10-615349",
+      "id": "tampines-332-tampines-st-32-2012-10-615471",
       "month": "2012-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -598,7 +612,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "tampines-332-tampines-st-32-2011-09-590456",
+      "id": "tampines-332-tampines-st-32-2011-09-590578",
       "month": "2011-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -611,7 +625,7 @@
       "pricePerSqft": 405.11
     },
     {
-      "id": "tampines-332-tampines-st-32-2010-06-555788",
+      "id": "tampines-332-tampines-st-32-2010-06-555910",
       "month": "2010-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

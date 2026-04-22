@@ -22,8 +22,8 @@
       174
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1993,
+      1993
     ],
     "latestMonth": "2023-12",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS MRT STATION",
       "distanceMeters": 432
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 432
+      },
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 1028
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1173
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -595,7 +609,7 @@
       "pricePerSqft": 383.83
     },
     {
-      "id": "woodlands-111-woodlands-st-13-2016-12-975390",
+      "id": "woodlands-111-woodlands-st-13-2016-12-975512",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -608,7 +622,7 @@
       "pricePerSqft": 374.22
     },
     {
-      "id": "woodlands-111-woodlands-st-13-2015-11-954633",
+      "id": "woodlands-111-woodlands-st-13-2015-11-954755",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -621,7 +635,7 @@
       "pricePerSqft": 373.75
     },
     {
-      "id": "woodlands-111-woodlands-st-13-2014-08-645340",
+      "id": "woodlands-111-woodlands-st-13-2014-08-645462",
       "month": "2014-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

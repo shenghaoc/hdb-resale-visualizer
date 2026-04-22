@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2001,
+      2001
     ],
     "latestMonth": "2024-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 135
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 135
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 277
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 744
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -569,7 +583,7 @@
       "pricePerSqft": 366.5
     },
     {
-      "id": "punggol-101c-punggol-field-2016-12-974955",
+      "id": "punggol-101c-punggol-field-2016-12-975077",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

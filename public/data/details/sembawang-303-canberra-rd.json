@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 523
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 523
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 769
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2170
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -452,7 +466,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-303-canberra-rd-2026-03-226810",
+      "id": "sembawang-303-canberra-rd-2026-03-226876",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

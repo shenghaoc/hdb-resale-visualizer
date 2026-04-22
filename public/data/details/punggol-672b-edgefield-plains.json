@@ -22,8 +22,8 @@
       65
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAMAI LRT STATION",
       "distanceMeters": 420
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 420
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 462
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 877
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -185,7 +199,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-672b-edgefield-plains-2026-02-225845",
+      "id": "punggol-672b-edgefield-plains-2026-02-225900",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

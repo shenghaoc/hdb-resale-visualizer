@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 326
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 326
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 360
+      },
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 577
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -504,7 +518,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-196-rivervale-dr-2026-03-227260",
+      "id": "sengkang-196-rivervale-dr-2026-03-227335",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 88
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 88
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 470
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 629
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-199b-punggol-field-2026-01-226070",
+      "id": "punggol-199b-punggol-field-2026-01-226128",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DAKOTA MRT STATION",
       "distanceMeters": 168
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 168
+      },
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 697
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 1074
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -749,7 +763,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-58-dakota-cres-2026-01-224318",
+      "id": "geylang-58-dakota-cres-2026-01-224348",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

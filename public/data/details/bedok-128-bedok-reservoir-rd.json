@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 301
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 729
+      },
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 1330
+      }
+    ]
   },
   "monthlyTrend": [
     {

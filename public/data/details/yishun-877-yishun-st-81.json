@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KHATIB MRT STATION",
       "distanceMeters": 450
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 450
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1692
+      },
+      {
+        "stationName": "SPRINGLEAF MRT STATION",
+        "distanceMeters": 2567
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -611,7 +625,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-877-yishun-st-81-2026-03-229270",
+      "id": "yishun-877-yishun-st-81-2026-03-229392",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -624,7 +638,7 @@
       "pricePerSqft": 641.16
     },
     {
-      "id": "yishun-877-yishun-st-81-2026-03-229272",
+      "id": "yishun-877-yishun-st-81-2026-03-229394",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

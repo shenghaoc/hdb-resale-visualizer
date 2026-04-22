@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 575
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 575
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1159
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1663
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -995,7 +1009,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-135-bt-batok-west-ave-6-2026-02-222892",
+      "id": "bukit-batok-135-bt-batok-west-ave-6-2026-02-222908",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

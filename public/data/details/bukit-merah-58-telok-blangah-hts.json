@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TELOK BLANGAH MRT STATION",
       "distanceMeters": 610
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 610
+      },
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1264
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 1268
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -586,7 +600,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-58-telok-blangah-hts-2026-03-223415",
+      "id": "bukit-merah-58-telok-blangah-hts-2026-03-223436",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -599,7 +613,7 @@
       "pricePerSqft": 571.71
     },
     {
-      "id": "bukit-merah-58-telok-blangah-hts-2026-02-223413",
+      "id": "bukit-merah-58-telok-blangah-hts-2026-02-223434",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +626,7 @@
       "pricePerSqft": 541.08
     },
     {
-      "id": "bukit-merah-58-telok-blangah-hts-2026-01-223412",
+      "id": "bukit-merah-58-telok-blangah-hts-2026-01-223433",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -833,7 +847,7 @@
       "pricePerSqft": 459.41
     },
     {
-      "id": "bukit-merah-58-telok-blangah-hts-2016-06-964199",
+      "id": "bukit-merah-58-telok-blangah-hts-2016-06-964321",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

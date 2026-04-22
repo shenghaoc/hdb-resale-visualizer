@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1969,
-      1969
+      1964,
+      1964
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 169
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 169
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 376
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 990
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -996,7 +1010,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-61-circuit-rd-2026-04-224311",
+      "id": "geylang-61-circuit-rd-2026-04-224340",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1009,7 +1023,7 @@
       "pricePerSqft": 530
     },
     {
-      "id": "geylang-61-circuit-rd-2026-02-224299",
+      "id": "geylang-61-circuit-rd-2026-02-224328",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1022,7 +1036,7 @@
       "pricePerSqft": 490.41
     },
     {
-      "id": "geylang-61-circuit-rd-2026-01-224287",
+      "id": "geylang-61-circuit-rd-2026-01-224316",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       158
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 556
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 556
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 848
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1035
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1591,7 +1605,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-267-tampines-st-21-2026-04-227454",
+      "id": "tampines-267-tampines-st-21-2026-04-227531",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

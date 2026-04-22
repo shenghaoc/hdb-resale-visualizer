@@ -22,8 +22,8 @@
       130
     ],
     "leaseCommenceRange": [
-      1974,
-      1974
+      1973,
+      1973
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON KENG MRT STATION",
       "distanceMeters": 833
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 833
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 896
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 1086
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1374,7 +1388,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-98-whampoa-dr-2026-02-225470",
+      "id": "kallang-whampoa-98-whampoa-dr-2026-02-225520",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

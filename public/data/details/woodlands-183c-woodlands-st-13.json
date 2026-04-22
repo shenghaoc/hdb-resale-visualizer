@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 333
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 333
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1027
+      },
+      {
+        "stationName": "WOODLANDS NORTH MRT STATION",
+        "distanceMeters": 1765
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -186,7 +200,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-183c-woodlands-st-13-2026-03-228548",
+      "id": "woodlands-183c-woodlands-st-13-2026-03-228656",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -199,7 +213,7 @@
       "pricePerSqft": 729.24
     },
     {
-      "id": "woodlands-183c-woodlands-st-13-2026-01-228538",
+      "id": "woodlands-183c-woodlands-st-13-2026-01-228646",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

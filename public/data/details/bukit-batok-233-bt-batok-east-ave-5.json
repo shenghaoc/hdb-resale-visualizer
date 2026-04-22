@@ -22,8 +22,8 @@
       134
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 579
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 579
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1148
+      },
+      {
+        "stationName": "DT4",
+        "distanceMeters": 1645
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1039,7 +1053,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-233-bt-batok-east-ave-5-2026-03-222843",
+      "id": "bukit-batok-233-bt-batok-east-ave-5-2026-03-222858",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1052,7 +1066,7 @@
       "pricePerSqft": 554.65
     },
     {
-      "id": "bukit-batok-233-bt-batok-east-ave-5-2026-02-222842",
+      "id": "bukit-batok-233-bt-batok-east-ave-5-2026-02-222857",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

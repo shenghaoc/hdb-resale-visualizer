@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 704
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 704
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1546
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1941
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -719,7 +733,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-240-hougang-st-22-2026-03-224666",
+      "id": "hougang-240-hougang-st-22-2026-03-224701",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -732,7 +746,7 @@
       "pricePerSqft": 560
     },
     {
-      "id": "hougang-240-hougang-st-22-2026-02-224665",
+      "id": "hougang-240-hougang-st-22-2026-02-224700",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       69
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1980,
+      1980
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 74
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 74
+      },
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 1075
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 1151
+      }
+    ]
   },
   "monthlyTrend": [
     {

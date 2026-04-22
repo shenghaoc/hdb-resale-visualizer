@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SOUTH VIEW LRT STATION",
       "distanceMeters": 701
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 701
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 940
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 1099
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -143,7 +157,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-490a-choa-chu-kang-ave-5-2026-01-223876",
+      "id": "choa-chu-kang-490a-choa-chu-kang-ave-5-2026-01-223900",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

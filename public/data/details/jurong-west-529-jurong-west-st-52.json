@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 683
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 683
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1566
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1902
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -586,7 +600,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-529-jurong-west-st-52-2026-02-225264",
+      "id": "jurong-west-529-jurong-west-st-52-2026-02-225310",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

@@ -39,7 +39,21 @@
     "nearestMrt": {
       "stationName": "SIGLAP MRT STATION",
       "distanceMeters": 621
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 621
+      },
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 828
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1486
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -207,7 +221,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-3-east-coast-rd-2011-06-583355",
+      "id": "bedok-3-east-coast-rd-2011-06-583477",
       "month": "2011-06",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -220,7 +234,7 @@
       "pricePerSqft": 478.89
     },
     {
-      "id": "bedok-3-east-coast-rd-2010-12-571551",
+      "id": "bedok-3-east-coast-rd-2010-12-571673",
       "month": "2010-12",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -233,7 +247,7 @@
       "pricePerSqft": 519.82
     },
     {
-      "id": "bedok-3-east-coast-rd-2010-11-569343",
+      "id": "bedok-3-east-coast-rd-2010-11-569465",
       "month": "2010-11",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -246,7 +260,7 @@
       "pricePerSqft": 530.88
     },
     {
-      "id": "bedok-3-east-coast-rd-2008-08-496697",
+      "id": "bedok-3-east-coast-rd-2008-08-496819",
       "month": "2008-08",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -259,7 +273,7 @@
       "pricePerSqft": 360.68
     },
     {
-      "id": "bedok-3-east-coast-rd-2007-07-467026",
+      "id": "bedok-3-east-coast-rd-2007-07-467148",
       "month": "2007-07",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -272,7 +286,7 @@
       "pricePerSqft": 276.5
     },
     {
-      "id": "bedok-3-east-coast-rd-2005-06-409425",
+      "id": "bedok-3-east-coast-rd-2005-06-409547",
       "month": "2005-06",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -285,7 +299,7 @@
       "pricePerSqft": 203.09
     },
     {
-      "id": "bedok-3-east-coast-rd-2004-04-375599",
+      "id": "bedok-3-east-coast-rd-2004-04-375721",
       "month": "2004-04",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -298,7 +312,7 @@
       "pricePerSqft": 168.52
     },
     {
-      "id": "bedok-3-east-coast-rd-2003-05-347409",
+      "id": "bedok-3-east-coast-rd-2003-05-347531",
       "month": "2003-05",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -311,7 +325,7 @@
       "pricePerSqft": 196.87
     },
     {
-      "id": "bedok-3-east-coast-rd-2003-02-341091",
+      "id": "bedok-3-east-coast-rd-2003-02-341213",
       "month": "2003-02",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -324,7 +338,7 @@
       "pricePerSqft": 169.22
     },
     {
-      "id": "bedok-3-east-coast-rd-2001-08-286062",
+      "id": "bedok-3-east-coast-rd-2001-08-286184",
       "month": "2001-08",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -337,7 +351,7 @@
       "pricePerSqft": 157.72
     },
     {
-      "id": "bedok-3-east-coast-rd-2000-12-261463",
+      "id": "bedok-3-east-coast-rd-2000-12-261585",
       "month": "2000-12",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -350,7 +364,7 @@
       "pricePerSqft": 230.05
     },
     {
-      "id": "bedok-3-east-coast-rd-2000-12-261464",
+      "id": "bedok-3-east-coast-rd-2000-12-261586",
       "month": "2000-12",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -363,7 +377,7 @@
       "pricePerSqft": 161.47
     },
     {
-      "id": "bedok-3-east-coast-rd-2000-09-251841",
+      "id": "bedok-3-east-coast-rd-2000-09-251963",
       "month": "2000-09",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -376,7 +390,7 @@
       "pricePerSqft": 242.28
     },
     {
-      "id": "bedok-3-east-coast-rd-1999-01-880864",
+      "id": "bedok-3-east-coast-rd-1999-01-880986",
       "month": "1999-01",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -389,7 +403,7 @@
       "pricePerSqft": 172.53
     },
     {
-      "id": "bedok-3-east-coast-rd-1998-10-865224",
+      "id": "bedok-3-east-coast-rd-1998-10-865346",
       "month": "1998-10",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -402,7 +416,7 @@
       "pricePerSqft": 189.12
     },
     {
-      "id": "bedok-3-east-coast-rd-1997-09-819545",
+      "id": "bedok-3-east-coast-rd-1997-09-819667",
       "month": "1997-09",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -415,7 +429,7 @@
       "pricePerSqft": 264.14
     },
     {
-      "id": "bedok-3-east-coast-rd-1997-04-805265",
+      "id": "bedok-3-east-coast-rd-1997-04-805387",
       "month": "1997-04",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -428,7 +442,7 @@
       "pricePerSqft": 298.62
     },
     {
-      "id": "bedok-3-east-coast-rd-1996-11-792292",
+      "id": "bedok-3-east-coast-rd-1996-11-792414",
       "month": "1996-11",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -441,7 +455,7 @@
       "pricePerSqft": 261.01
     },
     {
-      "id": "bedok-3-east-coast-rd-1996-05-774061",
+      "id": "bedok-3-east-coast-rd-1996-05-774183",
       "month": "1996-05",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -454,7 +468,7 @@
       "pricePerSqft": 212.35
     },
     {
-      "id": "bedok-3-east-coast-rd-1995-10-753716",
+      "id": "bedok-3-east-coast-rd-1995-10-753838",
       "month": "1995-10",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

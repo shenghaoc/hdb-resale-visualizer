@@ -22,8 +22,8 @@
       95
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2018,
+      2018
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CANBERRA MRT STATION",
       "distanceMeters": 202
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 202
+      },
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 1140
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 1831
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -132,7 +146,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-116a-canberra-cres-2026-02-226618",
+      "id": "sembawang-116a-canberra-cres-2026-02-226683",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

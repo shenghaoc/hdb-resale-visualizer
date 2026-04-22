@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2012,
+      2012
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FERNVALE LRT STATION",
       "distanceMeters": 419
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 419
+      },
+      {
+        "stationName": "THANGGAM LRT STATION",
+        "distanceMeters": 658
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 851
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -252,7 +266,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-447a-jln-kayu-2026-04-226824",
+      "id": "sengkang-447a-jln-kayu-2026-04-226890",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -265,7 +279,7 @@
       "pricePerSqft": 731.37
     },
     {
-      "id": "sengkang-447a-jln-kayu-2026-03-227044",
+      "id": "sengkang-447a-jln-kayu-2026-03-227113",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -278,7 +292,7 @@
       "pricePerSqft": 660.21
     },
     {
-      "id": "sengkang-447a-jln-kayu-2026-02-226871",
+      "id": "sengkang-447a-jln-kayu-2026-02-226938",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

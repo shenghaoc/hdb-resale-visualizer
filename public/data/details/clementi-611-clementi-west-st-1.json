@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1233
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1233
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1304
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 1966
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1199,7 +1213,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-611-clementi-west-st-1-2026-01-224157",
+      "id": "clementi-611-clementi-west-st-1-2026-01-224186",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1996,
+      1996
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 303
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 303
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 635
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 753
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -324,7 +338,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-9-pine-cl-2026-01-224450",
+      "id": "geylang-9-pine-cl-2026-01-224482",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

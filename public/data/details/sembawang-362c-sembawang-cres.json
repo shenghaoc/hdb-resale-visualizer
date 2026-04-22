@@ -9,26 +9,26 @@
       "lat": 1.44668372388674,
       "lng": 103.813225771052
     },
-    "medianPrice": 621500,
+    "medianPrice": 623000,
     "priceIqr": [
-      579500,
-      640450
+      580000,
+      647800
     ],
-    "pricePerSqmMedian": 6736.56,
-    "pricePerSqftMedian": 625.85,
-    "transactionCount": 24,
+    "pricePerSqmMedian": 6774.19,
+    "pricePerSqftMedian": 629.34,
+    "transactionCount": 25,
     "floorAreaRange": [
       68,
       93
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 766
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 766
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1485
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1816
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -175,11 +189,30 @@
       "medianPrice": 665000,
       "transactionCount": 1,
       "medianPricePerSqm": 7150.54
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 668000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7182.8
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-362c-sembawang-cres-2026-01-226691",
+      "id": "sembawang-362c-sembawang-cres-2026-04-226763",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 02 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 7182.8,
+      "pricePerSqft": 667.3
+    },
+    {
+      "id": "sembawang-362c-sembawang-cres-2026-01-226756",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -424,19 +457,6 @@
       "resalePrice": 560100,
       "pricePerSqm": 6022.58,
       "pricePerSqft": 559.52
-    },
-    {
-      "id": "sembawang-362c-sembawang-cres-2024-07-187292",
-      "month": "2024-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "93 years 11 months",
-      "resalePrice": 604000,
-      "pricePerSqm": 6494.62,
-      "pricePerSqft": 603.37
     }
   ]
 }

@@ -22,8 +22,8 @@
       89
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 623
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 623
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1251
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1727
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -233,7 +247,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-339c-kang-ching-rd-2026-04-225043",
+      "id": "jurong-west-339c-kang-ching-rd-2026-04-225084",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -246,7 +260,7 @@
       "pricePerSqft": 658.64
     },
     {
-      "id": "jurong-west-339c-kang-ching-rd-2026-03-225042",
+      "id": "jurong-west-339c-kang-ching-rd-2026-03-225083",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -259,7 +273,7 @@
       "pricePerSqft": 707.26
     },
     {
-      "id": "jurong-west-339c-kang-ching-rd-2026-02-225041",
+      "id": "jurong-west-339c-kang-ching-rd-2026-02-225082",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -272,7 +286,7 @@
       "pricePerSqft": 662.8
     },
     {
-      "id": "jurong-west-339c-kang-ching-rd-2026-01-225040",
+      "id": "jurong-west-339c-kang-ching-rd-2026-01-225081",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

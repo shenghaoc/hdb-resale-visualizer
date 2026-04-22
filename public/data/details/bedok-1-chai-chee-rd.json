@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 800
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 800
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 860
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1329
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -934,7 +948,7 @@
       "pricePerSqft": 358.94
     },
     {
-      "id": "bedok-1-chai-chee-rd-2016-08-967482",
+      "id": "bedok-1-chai-chee-rd-2016-08-967604",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -947,7 +961,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "bedok-1-chai-chee-rd-2016-02-957510",
+      "id": "bedok-1-chai-chee-rd-2016-02-957632",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -960,7 +974,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "bedok-1-chai-chee-rd-2015-08-948687",
+      "id": "bedok-1-chai-chee-rd-2015-08-948809",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

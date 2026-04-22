@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 797
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 797
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1135
+      },
+      {
+        "stationName": "CASHEW MRT STATION",
+        "distanceMeters": 1338
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -516,7 +530,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-394-bt-batok-west-ave-5-2026-01-222994",
+      "id": "bukit-batok-394-bt-batok-west-ave-5-2026-01-223010",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

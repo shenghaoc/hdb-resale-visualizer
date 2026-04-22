@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 256
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 256
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 415
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 511
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -223,7 +237,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-120b-edgedale-plains-2026-01-225943",
+      "id": "punggol-120b-edgedale-plains-2026-01-226000",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

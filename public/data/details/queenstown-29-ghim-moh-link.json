@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "DOVER MRT STATION",
       "distanceMeters": 705
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 705
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 728
+      },
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 1022
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -191,7 +205,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-29-ghim-moh-link-2026-02-226480",
+      "id": "queenstown-29-ghim-moh-link-2026-02-226543",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -204,7 +218,7 @@
       "pricePerSqft": 1118.83
     },
     {
-      "id": "queenstown-29-ghim-moh-link-2026-01-226377",
+      "id": "queenstown-29-ghim-moh-link-2026-01-226439",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -217,7 +231,7 @@
       "pricePerSqft": 1024.67
     },
     {
-      "id": "queenstown-29-ghim-moh-link-2026-01-226479",
+      "id": "queenstown-29-ghim-moh-link-2026-01-226542",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "37 TO 39",

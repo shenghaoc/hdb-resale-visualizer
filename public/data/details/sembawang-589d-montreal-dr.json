@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 454
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 454
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 889
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2531
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -613,7 +627,7 @@
       "pricePerSqft": 314.84
     },
     {
-      "id": "sembawang-589d-montreal-dr-2015-10-952640",
+      "id": "sembawang-589d-montreal-dr-2015-10-952762",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

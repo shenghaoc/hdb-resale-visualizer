@@ -22,8 +22,8 @@
       152
     ],
     "leaseCommenceRange": [
-      1986,
-      1986
+      1985,
+      1985
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BAYSHORE MRT STATION",
       "distanceMeters": 697
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 697
+      },
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 847
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1814
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -569,7 +583,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-160-bedok-sth-ave-3-2026-01-222682",
+      "id": "bedok-160-bedok-sth-ave-3-2026-01-222694",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -777,7 +791,7 @@
       "pricePerSqft": 426.34
     },
     {
-      "id": "bedok-160-bedok-sth-ave-3-2016-11-972673",
+      "id": "bedok-160-bedok-sth-ave-3-2016-11-972795",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -790,7 +804,7 @@
       "pricePerSqft": 456.88
     },
     {
-      "id": "bedok-160-bedok-sth-ave-3-2016-02-957520",
+      "id": "bedok-160-bedok-sth-ave-3-2016-02-957642",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -803,7 +817,7 @@
       "pricePerSqft": 398.16
     },
     {
-      "id": "bedok-160-bedok-sth-ave-3-2016-01-956244",
+      "id": "bedok-160-bedok-sth-ave-3-2016-01-956366",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -816,7 +830,7 @@
       "pricePerSqft": 432.7
     },
     {
-      "id": "bedok-160-bedok-sth-ave-3-2015-11-953382",
+      "id": "bedok-160-bedok-sth-ave-3-2015-11-953504",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

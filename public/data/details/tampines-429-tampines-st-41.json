@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 606
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 606
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 807
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1530
+      }
+    ]
   },
   "monthlyTrend": [
     {

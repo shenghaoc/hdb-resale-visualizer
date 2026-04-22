@@ -22,8 +22,8 @@
       119
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 891
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 891
+      },
+      {
+        "stationName": "OUTRAM PARK MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 1062
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -538,7 +552,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-140-jln-bt-merah-2026-01-223454",
+      "id": "bukit-merah-140-jln-bt-merah-2026-01-223477",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

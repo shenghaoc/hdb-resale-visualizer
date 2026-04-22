@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 199
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 199
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 465
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 699
+      }
+    ]
   },
   "monthlyTrend": [
     {

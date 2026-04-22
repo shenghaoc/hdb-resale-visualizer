@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 236
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 236
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 873
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 1057
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -900,7 +914,7 @@
       "pricePerSqft": 489.11
     },
     {
-      "id": "kallang-whampoa-96-geylang-bahru-2016-11-973345",
+      "id": "kallang-whampoa-96-geylang-bahru-2016-11-973467",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

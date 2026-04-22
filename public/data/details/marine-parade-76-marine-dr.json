@@ -22,8 +22,8 @@
       82
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2025-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MARINE PARADE MRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 690
+      },
+      {
+        "stationName": "TANJONG KATONG MRT STATION",
+        "distanceMeters": 1154
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -819,7 +833,7 @@
       "pricePerSqft": 651.45
     },
     {
-      "id": "marine-parade-76-marine-dr-2016-07-966557",
+      "id": "marine-parade-76-marine-dr-2016-07-966679",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -832,7 +846,7 @@
       "pricePerSqft": 651.45
     },
     {
-      "id": "marine-parade-76-marine-dr-2016-03-959490",
+      "id": "marine-parade-76-marine-dr-2016-03-959612",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -845,7 +859,7 @@
       "pricePerSqft": 634.46
     },
     {
-      "id": "marine-parade-76-marine-dr-2015-07-947830",
+      "id": "marine-parade-76-marine-dr-2015-07-947952",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

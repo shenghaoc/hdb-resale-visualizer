@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2018,
+      2018
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 416
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 416
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 532
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 786
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -144,7 +158,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-351b-anchorvale-rd-2026-02-226820",
+      "id": "sengkang-351b-anchorvale-rd-2026-02-226886",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",

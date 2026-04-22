@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1015
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1015
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 2130
+      },
+      {
+        "stationName": "KENT RIDGE MRT STATION",
+        "distanceMeters": 3108
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -898,7 +912,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-520-west-coast-rd-2016-05-962633",
+      "id": "clementi-520-west-coast-rd-2016-05-962755",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -911,7 +925,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "clementi-520-west-coast-rd-2016-03-959122",
+      "id": "clementi-520-west-coast-rd-2016-03-959244",
       "month": "2016-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -924,7 +938,7 @@
       "pricePerSqft": 422.92
     },
     {
-      "id": "clementi-520-west-coast-rd-2016-03-959124",
+      "id": "clementi-520-west-coast-rd-2016-03-959246",
       "month": "2016-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -937,7 +951,7 @@
       "pricePerSqft": 438.17
     },
     {
-      "id": "clementi-520-west-coast-rd-2016-02-957783",
+      "id": "clementi-520-west-coast-rd-2016-02-957905",
       "month": "2016-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -950,7 +964,7 @@
       "pricePerSqft": 409.05
     },
     {
-      "id": "clementi-520-west-coast-rd-2016-02-957785",
+      "id": "clementi-520-west-coast-rd-2016-02-957907",
       "month": "2016-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -963,7 +977,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "clementi-520-west-coast-rd-2015-11-953695",
+      "id": "clementi-520-west-coast-rd-2015-11-953817",
       "month": "2015-11",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -976,7 +990,7 @@
       "pricePerSqft": 402.12
     },
     {
-      "id": "clementi-520-west-coast-rd-2015-08-948984",
+      "id": "clementi-520-west-coast-rd-2015-08-949106",
       "month": "2015-08",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -989,7 +1003,7 @@
       "pricePerSqft": 406.28
     },
     {
-      "id": "clementi-520-west-coast-rd-2015-08-948991",
+      "id": "clementi-520-west-coast-rd-2015-08-949113",
       "month": "2015-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1002,7 +1016,7 @@
       "pricePerSqft": 385.21
     },
     {
-      "id": "clementi-520-west-coast-rd-2015-04-942567",
+      "id": "clementi-520-west-coast-rd-2015-04-942689",
       "month": "2015-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1015,7 +1029,7 @@
       "pricePerSqft": 409.05
     },
     {
-      "id": "clementi-520-west-coast-rd-2014-09-645887",
+      "id": "clementi-520-west-coast-rd-2014-09-646009",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1028,7 +1042,7 @@
       "pricePerSqft": 442.3
     },
     {
-      "id": "clementi-520-west-coast-rd-2014-05-640516",
+      "id": "clementi-520-west-coast-rd-2014-05-640638",
       "month": "2014-05",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1041,7 +1055,7 @@
       "pricePerSqft": 468.68
     },
     {
-      "id": "clementi-520-west-coast-rd-2013-11-633201",
+      "id": "clementi-520-west-coast-rd-2013-11-633323",
       "month": "2013-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1054,7 +1068,7 @@
       "pricePerSqft": 427.13
     },
     {
-      "id": "clementi-520-west-coast-rd-2013-10-631857",
+      "id": "clementi-520-west-coast-rd-2013-10-631979",
       "month": "2013-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1067,7 +1081,7 @@
       "pricePerSqft": 471.45
     },
     {
-      "id": "clementi-520-west-coast-rd-2013-08-629253",
+      "id": "clementi-520-west-coast-rd-2013-08-629375",
       "month": "2013-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1080,7 +1094,7 @@
       "pricePerSqft": 446.49
     },
     {
-      "id": "clementi-520-west-coast-rd-2013-03-621840",
+      "id": "clementi-520-west-coast-rd-2013-03-621962",
       "month": "2013-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1093,7 +1107,7 @@
       "pricePerSqft": 481.16
     },
     {
-      "id": "clementi-520-west-coast-rd-2012-10-614342",
+      "id": "clementi-520-west-coast-rd-2012-10-614464",
       "month": "2012-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1106,7 +1120,7 @@
       "pricePerSqft": 450.65
     },
     {
-      "id": "clementi-520-west-coast-rd-2012-07-608450",
+      "id": "clementi-520-west-coast-rd-2012-07-608572",
       "month": "2012-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1119,7 +1133,7 @@
       "pricePerSqft": 437.25
     },
     {
-      "id": "clementi-520-west-coast-rd-2012-03-599638",
+      "id": "clementi-520-west-coast-rd-2012-03-599760",
       "month": "2012-03",
       "flatType": "3 ROOM",
       "storeyRange": "06 TO 10",
@@ -1132,7 +1146,7 @@
       "pricePerSqft": 439.56
     },
     {
-      "id": "clementi-520-west-coast-rd-2012-02-597771",
+      "id": "clementi-520-west-coast-rd-2012-02-597893",
       "month": "2012-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1145,7 +1159,7 @@
       "pricePerSqft": 432.62
     },
     {
-      "id": "clementi-520-west-coast-rd-2012-01-596222",
+      "id": "clementi-520-west-coast-rd-2012-01-596344",
       "month": "2012-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

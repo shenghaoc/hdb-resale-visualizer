@@ -9,26 +9,26 @@
       "lat": 1.42955731375385,
       "lng": 103.794807794419
     },
-    "medianPrice": 575000,
+    "medianPrice": 548000,
     "priceIqr": [
-      529722,
-      620750
+      530000,
+      620000
     ],
-    "pricePerSqmMedian": 5737.8,
-    "pricePerSqftMedian": 533.06,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 5811.96,
+    "pricePerSqftMedian": 539.95,
+    "transactionCount": 5,
     "floorAreaRange": [
       91,
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-01",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "WOODLANDS SOUTH MRT STATION",
       "distanceMeters": 238
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 238
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 864
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 1339
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -392,9 +406,28 @@
       "medianPrice": 528888,
       "transactionCount": 1,
       "medianPricePerSqm": 5811.96
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 548000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6021.98
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-584-woodlands-dr-16-2026-04-228541",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 91,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 04 months",
+      "resalePrice": 548000,
+      "pricePerSqm": 6021.98,
+      "pricePerSqft": 559.46
+    },
     {
       "id": "woodlands-584-woodlands-dr-16-2025-10-219192",
       "month": "2025-10",
@@ -641,19 +674,6 @@
       "resalePrice": 325000,
       "pricePerSqm": 3571.43,
       "pricePerSqft": 331.8
-    },
-    {
-      "id": "woodlands-584-woodlands-dr-16-2017-11-18737",
-      "month": "2017-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 91,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "82 years 08 months",
-      "resalePrice": 368000,
-      "pricePerSqm": 4043.96,
-      "pricePerSqft": 375.7
     }
   ]
 }

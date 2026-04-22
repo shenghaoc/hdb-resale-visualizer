@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 334
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 334
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 536
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 749
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -738,7 +752,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-91-paya-lebar-way-2026-03-224344",
+      "id": "geylang-91-paya-lebar-way-2026-03-224374",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

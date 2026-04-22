@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KADALOOR LRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KADALOOR LRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "OASIS LRT STATION",
+        "distanceMeters": 446
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 886
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -191,7 +205,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-661b-edgedale-plains-2026-02-225948",
+      "id": "punggol-661b-edgedale-plains-2026-02-226005",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

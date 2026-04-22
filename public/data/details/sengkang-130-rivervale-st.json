@@ -22,8 +22,8 @@
       119
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 341
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 341
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 429
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 588
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -623,7 +637,7 @@
       "pricePerSqft": 317.34
     },
     {
-      "id": "sengkang-130-rivervale-st-2016-10-972064",
+      "id": "sengkang-130-rivervale-st-2016-10-972186",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -636,7 +650,7 @@
       "pricePerSqft": 327.89
     },
     {
-      "id": "sengkang-130-rivervale-st-2016-06-965216",
+      "id": "sengkang-130-rivervale-st-2016-06-965338",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -649,7 +663,7 @@
       "pricePerSqft": 380.98
     },
     {
-      "id": "sengkang-130-rivervale-st-2015-07-948033",
+      "id": "sengkang-130-rivervale-st-2015-07-948155",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

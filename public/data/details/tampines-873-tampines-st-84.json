@@ -9,14 +9,14 @@
       "lat": 1.35394540555523,
       "lng": 103.932198728257
     },
-    "medianPrice": 597000,
+    "medianPrice": 612000,
     "priceIqr": [
-      575000,
-      627000
+      580500,
+      629250
     ],
-    "pricePerSqmMedian": 5740.38,
-    "pricePerSqftMedian": 533.3,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 5849.53,
+    "pricePerSqftMedian": 543.44,
+    "transactionCount": 6,
     "floorAreaRange": [
       104,
       121
@@ -25,10 +25,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 1140
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1140
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1163
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1939
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -656,11 +670,30 @@
       "medianPrice": 627000,
       "transactionCount": 1,
       "medianPricePerSqm": 6028.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6057.69
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-873-tampines-st-84-2026-02-227734",
+      "id": "tampines-873-tampines-st-84-2026-04-227819",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 6057.69,
+      "pricePerSqft": 562.78
+    },
+    {
+      "id": "tampines-873-tampines-st-84-2026-02-227818",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -905,19 +938,6 @@
       "resalePrice": 495000,
       "pricePerSqm": 4090.91,
       "pricePerSqft": 380.06
-    },
-    {
-      "id": "tampines-873-tampines-st-84-2018-04-26142",
-      "month": "2018-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "69 years 08 months",
-      "resalePrice": 500000,
-      "pricePerSqm": 4132.23,
-      "pricePerSqft": 383.9
     }
   ]
 }

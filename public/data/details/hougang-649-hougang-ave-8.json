@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1273
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1273
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1430
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1837
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -449,7 +463,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "hougang-649-hougang-ave-8-2016-09-969840",
+      "id": "hougang-649-hougang-ave-8-2016-09-969962",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -462,7 +476,7 @@
       "pricePerSqft": 397.16
     },
     {
-      "id": "hougang-649-hougang-ave-8-2015-09-950551",
+      "id": "hougang-649-hougang-ave-8-2015-09-950673",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -475,7 +489,7 @@
       "pricePerSqft": 363.87
     },
     {
-      "id": "hougang-649-hougang-ave-8-2014-04-639148",
+      "id": "hougang-649-hougang-ave-8-2014-04-639270",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -488,7 +502,7 @@
       "pricePerSqft": 406.45
     },
     {
-      "id": "hougang-649-hougang-ave-8-2013-02-620936",
+      "id": "hougang-649-hougang-ave-8-2013-02-621058",
       "month": "2013-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -501,7 +515,7 @@
       "pricePerSqft": 433.55
     },
     {
-      "id": "hougang-649-hougang-ave-8-2012-07-608631",
+      "id": "hougang-649-hougang-ave-8-2012-07-608753",
       "month": "2012-07",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -514,7 +528,7 @@
       "pricePerSqft": 424.26
     },
     {
-      "id": "hougang-649-hougang-ave-8-2010-12-572228",
+      "id": "hougang-649-hougang-ave-8-2010-12-572350",
       "month": "2010-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -527,7 +541,7 @@
       "pricePerSqft": 360
     },
     {
-      "id": "hougang-649-hougang-ave-8-2010-06-554371",
+      "id": "hougang-649-hougang-ave-8-2010-06-554493",
       "month": "2010-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -540,7 +554,7 @@
       "pricePerSqft": 325.16
     },
     {
-      "id": "hougang-649-hougang-ave-8-2009-09-527806",
+      "id": "hougang-649-hougang-ave-8-2009-09-527928",
       "month": "2009-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -553,7 +567,7 @@
       "pricePerSqft": 309.68
     },
     {
-      "id": "hougang-649-hougang-ave-8-2008-05-490502",
+      "id": "hougang-649-hougang-ave-8-2008-05-490624",
       "month": "2008-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -566,7 +580,7 @@
       "pricePerSqft": 265.55
     },
     {
-      "id": "hougang-649-hougang-ave-8-2007-07-467813",
+      "id": "hougang-649-hougang-ave-8-2007-07-467935",
       "month": "2007-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -579,7 +593,7 @@
       "pricePerSqft": 228.39
     },
     {
-      "id": "hougang-649-hougang-ave-8-2006-09-446045",
+      "id": "hougang-649-hougang-ave-8-2006-09-446167",
       "month": "2006-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -592,7 +606,7 @@
       "pricePerSqft": 223.82
     },
     {
-      "id": "hougang-649-hougang-ave-8-2006-05-436240",
+      "id": "hougang-649-hougang-ave-8-2006-05-436362",
       "month": "2006-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -605,7 +619,7 @@
       "pricePerSqft": 214.45
     },
     {
-      "id": "hougang-649-hougang-ave-8-2006-04-434022",
+      "id": "hougang-649-hougang-ave-8-2006-04-434144",
       "month": "2006-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

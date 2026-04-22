@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARINE TERRACE MRT STATION",
       "distanceMeters": 101
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARINE TERRACE MRT STATION",
+        "distanceMeters": 101
+      },
+      {
+        "stationName": "MARINE PARADE MRT STATION",
+        "distanceMeters": 401
+      },
+      {
+        "stationName": "TANJONG KATONG MRT STATION",
+        "distanceMeters": 1748
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -762,7 +776,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-46-marine-cres-2026-01-225597",
+      "id": "marine-parade-46-marine-cres-2026-01-225649",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -9,26 +9,26 @@
       "lat": 1.32038884581716,
       "lng": 103.945093904498
     },
-    "medianPrice": 600000,
+    "medianPrice": 565000,
     "priceIqr": [
-      550000,
-      647444
+      522500,
+      623722
     ],
-    "pricePerSqmMedian": 6024.1,
-    "pricePerSqftMedian": 559.66,
-    "transactionCount": 3,
+    "pricePerSqmMedian": 6204.82,
+    "pricePerSqftMedian": 576.45,
+    "transactionCount": 4,
     "floorAreaRange": [
       83,
       105
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
-    "latestMonth": "2025-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TANAH MERAH MRT STATION",
       "distanceMeters": 724
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TANAH MERAH MRT STATION",
+        "distanceMeters": 724
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 809
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1768
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -577,9 +591,28 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 5714.29
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6385.54
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-169-bedok-sth-ave-3-2026-04-222595",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years",
+      "resalePrice": 530000,
+      "pricePerSqm": 6385.54,
+      "pricePerSqft": 593.24
+    },
     {
       "id": "bedok-169-bedok-sth-ave-3-2025-02-198825",
       "month": "2025-02",
@@ -789,7 +822,7 @@
       "pricePerSqft": 453.32
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2016-09-969321",
+      "id": "bedok-169-bedok-sth-ave-3-2016-09-969443",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -802,7 +835,7 @@
       "pricePerSqft": 447.73
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2015-03-940870",
+      "id": "bedok-169-bedok-sth-ave-3-2015-03-940992",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -815,7 +848,7 @@
       "pricePerSqft": 380.46
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2014-12-649952",
+      "id": "bedok-169-bedok-sth-ave-3-2014-12-650074",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -826,19 +859,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 4939.76,
       "pricePerSqft": 458.92
-    },
-    {
-      "id": "bedok-169-bedok-sth-ave-3-2014-10-647029",
-      "month": "2014-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 83,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years",
-      "resalePrice": 384000,
-      "pricePerSqm": 4626.51,
-      "pricePerSqft": 429.82
     }
   ]
 }

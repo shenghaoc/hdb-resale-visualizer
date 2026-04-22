@@ -22,8 +22,8 @@
       68
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAVENDER MRT STATION",
       "distanceMeters": 244
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAVENDER MRT STATION",
+        "distanceMeters": 244
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 618
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 699
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -634,7 +648,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-801-french-rd-2026-04-225420",
+      "id": "kallang-whampoa-801-french-rd-2026-04-225468",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -647,7 +661,7 @@
       "pricePerSqft": 680.38
     },
     {
-      "id": "kallang-whampoa-801-french-rd-2026-02-225419",
+      "id": "kallang-whampoa-801-french-rd-2026-02-225467",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +674,7 @@
       "pricePerSqft": 692.84
     },
     {
-      "id": "kallang-whampoa-801-french-rd-2026-01-225418",
+      "id": "kallang-whampoa-801-french-rd-2026-01-225466",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

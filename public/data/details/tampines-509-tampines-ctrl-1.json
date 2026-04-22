@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 181
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 181
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1016
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1340
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -164,7 +178,7 @@
       "pricePerSqft": 406.93
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2011-04-580863",
+      "id": "tampines-509-tampines-ctrl-1-2011-04-580985",
       "month": "2011-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -177,7 +191,7 @@
       "pricePerSqft": 408.08
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2010-05-552390",
+      "id": "tampines-509-tampines-ctrl-1-2010-05-552512",
       "month": "2010-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -190,7 +204,7 @@
       "pricePerSqft": 359.33
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2009-09-528871",
+      "id": "tampines-509-tampines-ctrl-1-2009-09-528993",
       "month": "2009-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -203,7 +217,7 @@
       "pricePerSqft": 312.57
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2005-11-423623",
+      "id": "tampines-509-tampines-ctrl-1-2005-11-423745",
       "month": "2005-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -216,7 +230,7 @@
       "pricePerSqft": 224.44
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2003-09-357935",
+      "id": "tampines-509-tampines-ctrl-1-2003-09-358057",
       "month": "2003-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -229,7 +243,7 @@
       "pricePerSqft": 240.86
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-2000-08-250816",
+      "id": "tampines-509-tampines-ctrl-1-2000-08-250938",
       "month": "2000-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -242,7 +256,7 @@
       "pricePerSqft": 257.79
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1999-08-923455",
+      "id": "tampines-509-tampines-ctrl-1-1999-08-923577",
       "month": "1999-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -255,7 +269,7 @@
       "pricePerSqft": 297.9
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1999-06-912428",
+      "id": "tampines-509-tampines-ctrl-1-1999-06-912550",
       "month": "1999-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -268,7 +282,7 @@
       "pricePerSqft": 244.89
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1999-04-901077",
+      "id": "tampines-509-tampines-ctrl-1-1999-04-901199",
       "month": "1999-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -281,7 +295,7 @@
       "pricePerSqft": 258.74
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1999-04-901232",
+      "id": "tampines-509-tampines-ctrl-1-1999-04-901354",
       "month": "1999-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -294,7 +308,7 @@
       "pricePerSqft": 268.73
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1998-04-842641",
+      "id": "tampines-509-tampines-ctrl-1-1998-04-842763",
       "month": "1998-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -307,7 +321,7 @@
       "pricePerSqft": 297.9
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1997-02-801958",
+      "id": "tampines-509-tampines-ctrl-1-1997-02-802080",
       "month": "1997-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -320,7 +334,7 @@
       "pricePerSqft": 328.86
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1996-10-791314",
+      "id": "tampines-509-tampines-ctrl-1-1996-10-791436",
       "month": "1996-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -333,7 +347,7 @@
       "pricePerSqft": 347.3
     },
     {
-      "id": "tampines-509-tampines-ctrl-1-1996-09-788049",
+      "id": "tampines-509-tampines-ctrl-1-1996-09-788171",
       "month": "1996-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

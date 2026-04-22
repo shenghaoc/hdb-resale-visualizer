@@ -22,8 +22,8 @@
       126
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1993,
+      1993
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 52
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 52
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1245
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1489
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-395-tampines-ave-7-2026-03-227551",
+      "id": "tampines-395-tampines-ave-7-2026-03-227631",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -391,7 +405,7 @@
       "pricePerSqft": 566.1
     },
     {
-      "id": "tampines-395-tampines-ave-7-2026-02-227778",
+      "id": "tampines-395-tampines-ave-7-2026-02-227863",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -521,7 +535,7 @@
       "pricePerSqft": 383.9
     },
     {
-      "id": "tampines-395-tampines-ave-7-2016-01-957161",
+      "id": "tampines-395-tampines-ave-7-2016-01-957283",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -534,7 +548,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "tampines-395-tampines-ave-7-2015-10-952871",
+      "id": "tampines-395-tampines-ave-7-2015-10-952993",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -547,7 +561,7 @@
       "pricePerSqft": 349.04
     },
     {
-      "id": "tampines-395-tampines-ave-7-2015-09-951144",
+      "id": "tampines-395-tampines-ave-7-2015-09-951266",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -560,7 +574,7 @@
       "pricePerSqft": 347.3
     },
     {
-      "id": "tampines-395-tampines-ave-7-2015-05-944929",
+      "id": "tampines-395-tampines-ave-7-2015-05-945051",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -573,7 +587,7 @@
       "pricePerSqft": 342.96
     },
     {
-      "id": "tampines-395-tampines-ave-7-2013-04-624095",
+      "id": "tampines-395-tampines-ave-7-2013-04-624217",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -586,7 +600,7 @@
       "pricePerSqft": 406.27
     },
     {
-      "id": "tampines-395-tampines-ave-7-2012-08-611534",
+      "id": "tampines-395-tampines-ave-7-2012-08-611656",
       "month": "2012-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -599,7 +613,7 @@
       "pricePerSqft": 399.4
     },
     {
-      "id": "tampines-395-tampines-ave-7-2010-09-565771",
+      "id": "tampines-395-tampines-ave-7-2010-09-565893",
       "month": "2010-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -612,7 +626,7 @@
       "pricePerSqft": 342.09
     },
     {
-      "id": "tampines-395-tampines-ave-7-2010-07-559331",
+      "id": "tampines-395-tampines-ave-7-2010-07-559453",
       "month": "2010-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -625,7 +639,7 @@
       "pricePerSqft": 303.89
     },
     {
-      "id": "tampines-395-tampines-ave-7-2010-06-555628",
+      "id": "tampines-395-tampines-ave-7-2010-06-555750",
       "month": "2010-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

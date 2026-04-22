@@ -9,26 +9,26 @@
       "lat": 1.37715825014895,
       "lng": 103.87752355745
     },
-    "medianPrice": 647500,
+    "medianPrice": 620000,
     "priceIqr": [
-      633750,
-      661250
+      575000,
+      647500
     ],
-    "pricePerSqmMedian": 5889.26,
-    "pricePerSqftMedian": 547.13,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 5578.51,
+    "pricePerSqftMedian": 518.26,
+    "transactionCount": 3,
     "floorAreaRange": [
       100,
       121
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
-    "latestMonth": "2025-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-07",
-      "2025-04"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 1633
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1633
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1674
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1679
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -422,9 +436,28 @@
       "medianPrice": 620000,
       "transactionCount": 1,
       "medianPricePerSqm": 6200
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5247.52
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-964-hougang-ave-9-2026-04-224692",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 05 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 5247.52,
+      "pricePerSqft": 487.51
+    },
     {
       "id": "hougang-964-hougang-ave-9-2025-04-205794",
       "month": "2025-04",
@@ -660,7 +693,7 @@
       "pricePerSqft": 367.69
     },
     {
-      "id": "hougang-964-hougang-ave-9-2016-12-974648",
+      "id": "hougang-964-hougang-ave-9-2016-12-974770",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -671,19 +704,6 @@
       "resalePrice": 388888,
       "pricePerSqm": 3888.88,
       "pricePerSqft": 361.29
-    },
-    {
-      "id": "hougang-964-hougang-ave-9-2016-05-962732",
-      "month": "2016-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "82",
-      "resalePrice": 360000,
-      "pricePerSqm": 3600,
-      "pricePerSqft": 334.45
     }
   ]
 }

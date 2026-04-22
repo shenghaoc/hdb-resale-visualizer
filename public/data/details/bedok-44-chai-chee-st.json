@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 689
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 689
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 931
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1144
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1163,7 +1177,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-44-chai-chee-st-2026-02-222453",
+      "id": "bedok-44-chai-chee-st-2026-02-222461",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

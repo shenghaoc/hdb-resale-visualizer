@@ -22,8 +22,8 @@
       56
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1962,
+      1962
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HAVELOCK MRT STATION",
       "distanceMeters": 176
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 176
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 519
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 598
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -616,7 +630,7 @@
       "pricePerSqft": 511.81
     },
     {
-      "id": "bukit-merah-8-jln-bt-ho-swee-2015-01-938560",
+      "id": "bukit-merah-8-jln-bt-ho-swee-2015-01-938682",
       "month": "2015-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -629,7 +643,7 @@
       "pricePerSqft": 572.35
     },
     {
-      "id": "bukit-merah-8-jln-bt-ho-swee-2014-05-640345",
+      "id": "bukit-merah-8-jln-bt-ho-swee-2014-05-640467",
       "month": "2014-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

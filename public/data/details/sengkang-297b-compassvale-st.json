@@ -22,8 +22,8 @@
       134
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COMPASSVALE LRT STATION",
       "distanceMeters": 37
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 37
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 641
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 677
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-297b-compassvale-st-2026-03-226980",
+      "id": "sengkang-297b-compassvale-st-2026-03-227048",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

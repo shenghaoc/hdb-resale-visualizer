@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 405
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 405
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1373
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 2582
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -947,7 +961,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-379-clementi-ave-5-2026-04-224153",
+      "id": "clementi-379-clementi-ave-5-2026-04-224182",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

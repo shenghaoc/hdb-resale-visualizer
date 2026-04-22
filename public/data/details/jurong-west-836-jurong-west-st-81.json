@@ -9,26 +9,26 @@
       "lat": 1.3427083627467,
       "lng": 103.693576643138
     },
-    "medianPrice": 533000,
+    "medianPrice": 561500,
     "priceIqr": [
-      500000,
-      640000
+      508250,
+      627500
     ],
-    "pricePerSqmMedian": 4672.9,
-    "pricePerSqftMedian": 434.13,
-    "transactionCount": 5,
+    "pricePerSqmMedian": 4655.29,
+    "pricePerSqftMedian": 432.5,
+    "transactionCount": 6,
     "floorAreaRange": [
       107,
       138
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PIONEER MRT STATION",
       "distanceMeters": 671
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 671
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1390
+      },
+      {
+        "stationName": "JOO KOON MRT STATION",
+        "distanceMeters": 2334
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -566,11 +580,30 @@
       "medianPrice": 640000,
       "transactionCount": 1,
       "medianPricePerSqm": 4637.68
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4275.36
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-836-jurong-west-st-81-2026-03-225324",
+      "id": "jurong-west-836-jurong-west-st-81-2026-04-225377",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 138,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 02 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 4275.36,
+      "pricePerSqft": 397.19
+    },
+    {
+      "id": "jurong-west-836-jurong-west-st-81-2026-03-225370",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -804,7 +837,7 @@
       "pricePerSqft": 267.94
     },
     {
-      "id": "jurong-west-836-jurong-west-st-81-2016-01-956731",
+      "id": "jurong-west-836-jurong-west-st-81-2016-01-956853",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -815,19 +848,6 @@
       "resalePrice": 380000,
       "pricePerSqm": 3040,
       "pricePerSqft": 282.43
-    },
-    {
-      "id": "jurong-west-836-jurong-west-st-81-2015-04-942902",
-      "month": "2015-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 135,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1993,
-      "remainingLease": "77",
-      "resalePrice": 460000,
-      "pricePerSqm": 3407.41,
-      "pricePerSqft": 316.56
     }
   ]
 }

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "YISHUN MRT STATION",
       "distanceMeters": 262
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 262
+      },
+      {
+        "stationName": "KHATIB MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1835
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -827,7 +841,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-754-yishun-st-72-2026-01-229155",
+      "id": "yishun-754-yishun-st-72-2026-01-229276",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -840,7 +854,7 @@
       "pricePerSqft": 541.93
     },
     {
-      "id": "yishun-754-yishun-st-72-2026-01-229156",
+      "id": "yishun-754-yishun-st-72-2026-01-229277",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -853,7 +867,7 @@
       "pricePerSqft": 509.18
     },
     {
-      "id": "yishun-754-yishun-st-72-2026-01-229157",
+      "id": "yishun-754-yishun-st-72-2026-01-229278",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1048,7 +1062,7 @@
       "pricePerSqft": 351.7
     },
     {
-      "id": "yishun-754-yishun-st-72-2016-07-967254",
+      "id": "yishun-754-yishun-st-72-2016-07-967376",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1061,7 +1075,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "yishun-754-yishun-st-72-2016-05-963869",
+      "id": "yishun-754-yishun-st-72-2016-05-963991",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1074,7 +1088,7 @@
       "pricePerSqft": 415.38
     },
     {
-      "id": "yishun-754-yishun-st-72-2015-04-943666",
+      "id": "yishun-754-yishun-st-72-2015-04-943788",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

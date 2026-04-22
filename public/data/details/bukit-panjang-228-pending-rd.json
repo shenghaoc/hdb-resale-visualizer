@@ -22,8 +22,8 @@
       151
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 114
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 114
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 526
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 533
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -413,7 +427,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-228-pending-rd-2026-02-223717",
+      "id": "bukit-panjang-228-pending-rd-2026-02-223740",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -608,7 +622,7 @@
       "pricePerSqft": 347.62
     },
     {
-      "id": "bukit-panjang-228-pending-rd-2015-10-951921",
+      "id": "bukit-panjang-228-pending-rd-2015-10-952043",
       "month": "2015-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -621,7 +635,7 @@
       "pricePerSqft": 346.8
     },
     {
-      "id": "bukit-panjang-228-pending-rd-2014-05-640442",
+      "id": "bukit-panjang-228-pending-rd-2014-05-640564",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -634,7 +648,7 @@
       "pricePerSqft": 344.54
     },
     {
-      "id": "bukit-panjang-228-pending-rd-2014-05-640443",
+      "id": "bukit-panjang-228-pending-rd-2014-05-640565",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -647,7 +661,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "bukit-panjang-228-pending-rd-2012-11-616121",
+      "id": "bukit-panjang-228-pending-rd-2012-11-616243",
       "month": "2012-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -660,7 +674,7 @@
       "pricePerSqft": 374.07
     },
     {
-      "id": "bukit-panjang-228-pending-rd-2012-01-596121",
+      "id": "bukit-panjang-228-pending-rd-2012-01-596243",
       "month": "2012-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

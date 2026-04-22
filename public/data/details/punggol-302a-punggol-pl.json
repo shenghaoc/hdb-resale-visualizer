@@ -22,8 +22,8 @@
       94
     ],
     "leaseCommenceRange": [
-      2011,
-      2011
+      2009,
+      2009
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL MRT STATION",
       "distanceMeters": 222
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 222
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 259
+      },
+      {
+        "stationName": "DAMAI LRT STATION",
+        "distanceMeters": 469
+      }
+    ]
   },
   "monthlyTrend": [
     {

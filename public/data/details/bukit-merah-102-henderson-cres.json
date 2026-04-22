@@ -22,8 +22,8 @@
       80
     ],
     "leaseCommenceRange": [
-      1970,
-      1970
+      1967,
+      1967
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 491
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 491
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 790
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 1260
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -820,7 +834,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-102-henderson-cres-2026-03-223365",
+      "id": "bukit-merah-102-henderson-cres-2026-03-223384",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -833,7 +847,7 @@
       "pricePerSqft": 589.93
     },
     {
-      "id": "bukit-merah-102-henderson-cres-2026-01-223363",
+      "id": "bukit-merah-102-henderson-cres-2026-01-223382",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -846,7 +860,7 @@
       "pricePerSqft": 578.32
     },
     {
-      "id": "bukit-merah-102-henderson-cres-2026-01-223364",
+      "id": "bukit-merah-102-henderson-cres-2026-01-223383",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

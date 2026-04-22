@@ -9,26 +9,26 @@
       "lat": 1.40094119675936,
       "lng": 103.901144550587
     },
-    "medianPrice": 528444,
+    "medianPrice": 535888,
     "priceIqr": [
-      511500,
-      659472
+      515000,
+      655000
     ],
-    "pricePerSqmMedian": 7471.89,
-    "pricePerSqftMedian": 694.16,
-    "transactionCount": 8,
+    "pricePerSqmMedian": 7466.17,
+    "pricePerSqftMedian": 693.63,
+    "transactionCount": 9,
     "floorAreaRange": [
       67,
       92
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2012,
+      2012
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2017-11",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL LRT STATION",
       "distanceMeters": 389
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 389
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 499
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 569
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -223,11 +237,30 @@
       "medianPrice": 593944,
       "transactionCount": 2,
       "medianPricePerSqm": 7500.28
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6739.13
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-208c-punggol-pl-2026-01-225917",
+      "id": "punggol-208c-punggol-pl-2026-04-226170",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 02 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6739.13,
+      "pricePerSqft": 626.09
+    },
+    {
+      "id": "punggol-208c-punggol-pl-2026-01-225974",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -240,7 +273,7 @@
       "pricePerSqft": 714.11
     },
     {
-      "id": "punggol-208c-punggol-pl-2026-01-226100",
+      "id": "punggol-208c-punggol-pl-2026-01-226158",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -472,19 +505,6 @@
       "resalePrice": 345000,
       "pricePerSqm": 5149.25,
       "pricePerSqft": 478.38
-    },
-    {
-      "id": "punggol-208c-punggol-pl-2020-02-67063",
-      "month": "2020-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "93 years 04 months",
-      "resalePrice": 350000,
-      "pricePerSqm": 5223.88,
-      "pricePerSqft": 485.31
     }
   ]
 }

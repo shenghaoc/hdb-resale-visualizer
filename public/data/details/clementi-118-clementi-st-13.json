@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 1288
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 1288
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1642
+      },
+      {
+        "stationName": "KING ALBERT PARK MRT STATION",
+        "distanceMeters": 1711
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -844,7 +858,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-118-clementi-st-13-2026-01-224226",
+      "id": "clementi-118-clementi-st-13-2026-01-224255",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -857,7 +871,7 @@
       "pricePerSqft": 714.64
     },
     {
-      "id": "clementi-118-clementi-st-13-2026-01-224227",
+      "id": "clementi-118-clementi-st-13-2026-01-224256",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

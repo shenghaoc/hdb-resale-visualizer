@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "FARMWAY LRT STATION",
       "distanceMeters": 263
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 263
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 558
+      },
+      {
+        "stationName": "KUPANG LRT STATION",
+        "distanceMeters": 971
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -199,7 +213,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-338b-anchorvale-cres-2026-03-226891",
+      "id": "sengkang-338b-anchorvale-cres-2026-03-226958",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -212,7 +226,7 @@
       "pricePerSqft": 687.28
     },
     {
-      "id": "sengkang-338b-anchorvale-cres-2026-02-227130",
+      "id": "sengkang-338b-anchorvale-cres-2026-02-227202",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -225,7 +239,7 @@
       "pricePerSqft": 656.52
     },
     {
-      "id": "sengkang-338b-anchorvale-cres-2026-02-227131",
+      "id": "sengkang-338b-anchorvale-cres-2026-02-227203",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1987,
+      1987
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TECK WHYE LRT STATION",
       "distanceMeters": 152
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 152
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 428
+      },
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 594
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -917,7 +931,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-105-teck-whye-lane-2026-04-223829",
+      "id": "choa-chu-kang-105-teck-whye-lane-2026-04-223853",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1164,7 +1178,7 @@
       "pricePerSqft": 347.43
     },
     {
-      "id": "choa-chu-kang-105-teck-whye-lane-2016-10-971296",
+      "id": "choa-chu-kang-105-teck-whye-lane-2016-10-971418",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

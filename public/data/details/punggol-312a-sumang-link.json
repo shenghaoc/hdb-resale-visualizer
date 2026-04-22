@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "NIBONG LRT STATION",
       "distanceMeters": 111
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "NIBONG LRT STATION",
+        "distanceMeters": 111
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 315
+      },
+      {
+        "stationName": "SAM KEE LRT STATION",
+        "distanceMeters": 504
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -281,7 +295,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-312a-sumang-link-2026-01-225935",
+      "id": "punggol-312a-sumang-link-2026-01-225992",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

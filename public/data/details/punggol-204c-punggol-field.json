@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "COVE LRT STATION",
       "distanceMeters": 340
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 340
+      },
+      {
+        "stationName": "COMPASSVALE LRT STATION",
+        "distanceMeters": 470
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 652
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -312,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-204c-punggol-field-2026-02-226272",
+      "id": "punggol-204c-punggol-field-2026-02-226334",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -325,7 +339,7 @@
       "pricePerSqft": 548.97
     },
     {
-      "id": "punggol-204c-punggol-field-2026-02-226274",
+      "id": "punggol-204c-punggol-field-2026-02-226336",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -533,7 +547,7 @@
       "pricePerSqft": 369.92
     },
     {
-      "id": "punggol-204c-punggol-field-2016-05-963178",
+      "id": "punggol-204c-punggol-field-2016-05-963300",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -546,7 +560,7 @@
       "pricePerSqft": 325.16
     },
     {
-      "id": "punggol-204c-punggol-field-2016-04-961334",
+      "id": "punggol-204c-punggol-field-2016-04-961456",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -559,7 +573,7 @@
       "pricePerSqft": 396.95
     },
     {
-      "id": "punggol-204c-punggol-field-2015-05-944648",
+      "id": "punggol-204c-punggol-field-2015-05-944770",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

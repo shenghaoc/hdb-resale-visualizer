@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "TELOK BLANGAH MRT STATION",
       "distanceMeters": 647
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 647
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 1176
+      },
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1451
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1207,7 +1221,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-60-telok-blangah-hts-2026-04-223316",
+      "id": "bukit-merah-60-telok-blangah-hts-2026-04-223335",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1220,7 +1234,7 @@
       "pricePerSqft": 596.42
     },
     {
-      "id": "bukit-merah-60-telok-blangah-hts-2026-03-223315",
+      "id": "bukit-merah-60-telok-blangah-hts-2026-03-223334",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

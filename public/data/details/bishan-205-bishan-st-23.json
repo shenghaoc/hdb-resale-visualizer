@@ -22,8 +22,8 @@
       138
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1990,
+      1990
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 477
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 477
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 1186
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1537
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -371,7 +385,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-205-bishan-st-23-2026-03-222746",
+      "id": "bishan-205-bishan-st-23-2026-03-222758",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -384,7 +398,7 @@
       "pricePerSqft": 649.46
     },
     {
-      "id": "bishan-205-bishan-st-23-2026-02-222742",
+      "id": "bishan-205-bishan-st-23-2026-02-222754",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -488,7 +502,7 @@
       "pricePerSqft": 447.19
     },
     {
-      "id": "bishan-205-bishan-st-23-2016-09-969392",
+      "id": "bishan-205-bishan-st-23-2016-09-969514",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -501,7 +515,7 @@
       "pricePerSqft": 566.44
     },
     {
-      "id": "bishan-205-bishan-st-23-2015-05-943888",
+      "id": "bishan-205-bishan-st-23-2015-05-944010",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -514,7 +528,7 @@
       "pricePerSqft": 492.79
     },
     {
-      "id": "bishan-205-bishan-st-23-2011-12-594356",
+      "id": "bishan-205-bishan-st-23-2011-12-594478",
       "month": "2011-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -527,7 +541,7 @@
       "pricePerSqft": 496.08
     },
     {
-      "id": "bishan-205-bishan-st-23-2010-05-550460",
+      "id": "bishan-205-bishan-st-23-2010-05-550582",
       "month": "2010-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -540,7 +554,7 @@
       "pricePerSqft": 423.93
     },
     {
-      "id": "bishan-205-bishan-st-23-2010-05-550461",
+      "id": "bishan-205-bishan-st-23-2010-05-550583",
       "month": "2010-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -553,7 +567,7 @@
       "pricePerSqft": 423.93
     },
     {
-      "id": "bishan-205-bishan-st-23-2009-09-526980",
+      "id": "bishan-205-bishan-st-23-2009-09-527102",
       "month": "2009-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -566,7 +580,7 @@
       "pricePerSqft": 360.17
     },
     {
-      "id": "bishan-205-bishan-st-23-2009-07-521678",
+      "id": "bishan-205-bishan-st-23-2009-07-521800",
       "month": "2009-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -579,7 +593,7 @@
       "pricePerSqft": 377.63
     },
     {
-      "id": "bishan-205-bishan-st-23-2009-06-519221",
+      "id": "bishan-205-bishan-st-23-2009-06-519343",
       "month": "2009-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -592,7 +606,7 @@
       "pricePerSqft": 380.63
     },
     {
-      "id": "bishan-205-bishan-st-23-2009-05-516980",
+      "id": "bishan-205-bishan-st-23-2009-05-517102",
       "month": "2009-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -605,7 +619,7 @@
       "pricePerSqft": 374.32
     },
     {
-      "id": "bishan-205-bishan-st-23-2009-05-516981",
+      "id": "bishan-205-bishan-st-23-2009-05-517103",
       "month": "2009-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -618,7 +632,7 @@
       "pricePerSqft": 353.57
     },
     {
-      "id": "bishan-205-bishan-st-23-2008-03-485404",
+      "id": "bishan-205-bishan-st-23-2008-03-485526",
       "month": "2008-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 826
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 826
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 993
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1105
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -413,7 +427,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-275a-bishan-st-24-2026-02-222775",
+      "id": "bishan-275a-bishan-st-24-2026-02-222789",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -426,7 +440,7 @@
       "pricePerSqft": 1065.13
     },
     {
-      "id": "bishan-275a-bishan-st-24-2026-01-222773",
+      "id": "bishan-275a-bishan-st-24-2026-01-222787",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -439,7 +453,7 @@
       "pricePerSqft": 1099.35
     },
     {
-      "id": "bishan-275a-bishan-st-24-2026-01-222774",
+      "id": "bishan-275a-bishan-st-24-2026-01-222788",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",

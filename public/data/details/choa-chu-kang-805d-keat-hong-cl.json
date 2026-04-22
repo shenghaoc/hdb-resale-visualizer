@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KEAT HONG LRT STATION",
       "distanceMeters": 837
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 837
+      },
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 879
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1110
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -258,7 +272,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-223957",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-223981",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -271,7 +285,7 @@
       "pricePerSqft": 635.23
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-224070",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-224099",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -284,7 +298,7 @@
       "pricePerSqft": 583.73
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-03-224069",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-03-224098",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -297,7 +311,7 @@
       "pricePerSqft": 567.28
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-01-224066",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-01-224095",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

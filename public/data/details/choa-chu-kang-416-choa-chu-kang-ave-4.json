@@ -22,8 +22,8 @@
       133
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1991,
+      1991
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHOA CHU KANG MRT STATION",
       "distanceMeters": 300
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 300
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 333
+      },
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 475
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -621,7 +635,7 @@
       "pricePerSqft": 312.65
     },
     {
-      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2016-12-974500",
+      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2016-12-974622",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -634,7 +648,7 @@
       "pricePerSqft": 342.13
     },
     {
-      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2015-09-950396",
+      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2015-09-950518",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -647,7 +661,7 @@
       "pricePerSqft": 365.52
     },
     {
-      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2015-04-942518",
+      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2015-04-942640",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +674,7 @@
       "pricePerSqft": 330.52
     },
     {
-      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2012-10-614291",
+      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2012-10-614413",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -673,7 +687,7 @@
       "pricePerSqft": 367.39
     },
     {
-      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2010-08-560993",
+      "id": "choa-chu-kang-416-choa-chu-kang-ave-4-2010-08-561115",
       "month": "2010-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2015,
+      2015
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "RUMBIA LRT STATION",
       "distanceMeters": 376
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 376
+      },
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 400
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 407
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -210,7 +224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-121b-edgedale-plains-2026-02-225949",
+      "id": "punggol-121b-edgedale-plains-2026-02-226006",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

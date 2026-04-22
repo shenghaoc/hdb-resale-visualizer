@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2013,
-      2013
+      2011,
+      2011
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PUNGGOL LRT STATION",
       "distanceMeters": 237
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 237
+      },
+      {
+        "stationName": "PUNGGOL MRT STATION",
+        "distanceMeters": 316
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 484
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -239,7 +253,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-288a-punggol-pl-2026-02-226107",
+      "id": "punggol-288a-punggol-pl-2026-02-226165",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -252,7 +266,7 @@
       "pricePerSqft": 752.03
     },
     {
-      "id": "punggol-288a-punggol-pl-2026-01-226101",
+      "id": "punggol-288a-punggol-pl-2026-01-226159",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -265,7 +279,7 @@
       "pricePerSqft": 669.09
     },
     {
-      "id": "punggol-288a-punggol-pl-2026-01-226279",
+      "id": "punggol-288a-punggol-pl-2026-01-226341",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

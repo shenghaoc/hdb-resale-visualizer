@@ -22,8 +22,8 @@
       148
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1992,
+      1992
     ],
     "latestMonth": "2025-06",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 867
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 867
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1037
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1409
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -601,7 +615,7 @@
       "pricePerSqft": 388.68
     },
     {
-      "id": "tampines-495e-tampines-st-43-2016-06-965422",
+      "id": "tampines-495e-tampines-st-43-2016-06-965544",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -614,7 +628,7 @@
       "pricePerSqft": 376.63
     },
     {
-      "id": "tampines-495e-tampines-st-43-2016-03-959987",
+      "id": "tampines-495e-tampines-st-43-2016-03-960109",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -627,7 +641,7 @@
       "pricePerSqft": 413.96
     },
     {
-      "id": "tampines-495e-tampines-st-43-2016-01-957176",
+      "id": "tampines-495e-tampines-st-43-2016-01-957298",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -640,7 +654,7 @@
       "pricePerSqft": 388.68
     },
     {
-      "id": "tampines-495e-tampines-st-43-2016-01-957179",
+      "id": "tampines-495e-tampines-st-43-2016-01-957301",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -653,7 +667,7 @@
       "pricePerSqft": 394.52
     },
     {
-      "id": "tampines-495e-tampines-st-43-2015-12-955866",
+      "id": "tampines-495e-tampines-st-43-2015-12-955988",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

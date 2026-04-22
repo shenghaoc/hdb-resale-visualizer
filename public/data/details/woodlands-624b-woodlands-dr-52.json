@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ADMIRALTY MRT STATION",
       "distanceMeters": 602
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 602
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1013
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1207
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -691,7 +705,7 @@
       "pricePerSqft": 285.15
     },
     {
-      "id": "woodlands-624b-woodlands-dr-52-2016-12-975321",
+      "id": "woodlands-624b-woodlands-dr-52-2016-12-975443",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

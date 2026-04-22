@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1982,
+      1982
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 901
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 901
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 939
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1096
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -485,7 +499,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-63-chai-chee-rd-2026-02-222656",
+      "id": "bedok-63-chai-chee-rd-2026-02-222668",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -628,7 +642,7 @@
       "pricePerSqft": 370.22
     },
     {
-      "id": "bedok-63-chai-chee-rd-2016-05-962240",
+      "id": "bedok-63-chai-chee-rd-2016-05-962362",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -641,7 +655,7 @@
       "pricePerSqft": 370.22
     },
     {
-      "id": "bedok-63-chai-chee-rd-2014-04-638702",
+      "id": "bedok-63-chai-chee-rd-2014-04-638824",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -654,7 +668,7 @@
       "pricePerSqft": 373.71
     },
     {
-      "id": "bedok-63-chai-chee-rd-2014-04-638703",
+      "id": "bedok-63-chai-chee-rd-2014-04-638825",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -667,7 +681,7 @@
       "pricePerSqft": 373.71
     },
     {
-      "id": "bedok-63-chai-chee-rd-2013-09-630348",
+      "id": "bedok-63-chai-chee-rd-2013-09-630470",
       "month": "2013-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -680,7 +694,7 @@
       "pricePerSqft": 394.66
     },
     {
-      "id": "bedok-63-chai-chee-rd-2012-04-601490",
+      "id": "bedok-63-chai-chee-rd-2012-04-601612",
       "month": "2012-04",
       "flatType": "5 ROOM",
       "storeyRange": "06 TO 10",
@@ -693,7 +707,7 @@
       "pricePerSqft": 370.22
     },
     {
-      "id": "bedok-63-chai-chee-rd-2011-12-594340",
+      "id": "bedok-63-chai-chee-rd-2011-12-594462",
       "month": "2011-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -706,7 +720,7 @@
       "pricePerSqft": 363.23
     },
     {
-      "id": "bedok-63-chai-chee-rd-2011-12-594341",
+      "id": "bedok-63-chai-chee-rd-2011-12-594463",
       "month": "2011-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -719,7 +733,7 @@
       "pricePerSqft": 363.23
     },
     {
-      "id": "bedok-63-chai-chee-rd-2010-11-569480",
+      "id": "bedok-63-chai-chee-rd-2010-11-569602",
       "month": "2010-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -732,7 +746,7 @@
       "pricePerSqft": 338.78
     },
     {
-      "id": "bedok-63-chai-chee-rd-2010-05-550426",
+      "id": "bedok-63-chai-chee-rd-2010-05-550548",
       "month": "2010-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

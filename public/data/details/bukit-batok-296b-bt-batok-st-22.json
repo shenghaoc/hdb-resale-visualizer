@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2018,
-      2018
+      2017,
+      2017
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 559
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 559
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1246
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1570
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -234,7 +248,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-296b-bt-batok-st-22-2026-03-222952",
+      "id": "bukit-batok-296b-bt-batok-st-22-2026-03-222968",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -247,7 +261,7 @@
       "pricePerSqft": 866.42
     },
     {
-      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222850",
+      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222865",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "25 TO 27",
@@ -260,7 +274,7 @@
       "pricePerSqft": 819.73
     },
     {
-      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222851",
+      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222866",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -273,7 +287,7 @@
       "pricePerSqft": 737.76
     },
     {
-      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222949",
+      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-222965",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -286,7 +300,7 @@
       "pricePerSqft": 807.85
     },
     {
-      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-223115",
+      "id": "bukit-batok-296b-bt-batok-st-22-2026-01-223133",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "28 TO 30",

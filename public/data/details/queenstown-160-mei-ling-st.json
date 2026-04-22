@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 323
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 323
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1261
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1451
+      }
+    ]
   },
   "monthlyTrend": [
     {

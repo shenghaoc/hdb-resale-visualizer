@@ -22,8 +22,8 @@
       111
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BOON LAY MRT STATION",
       "distanceMeters": 1507
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1507
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 1790
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2006
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-274d-jurong-west-ave-3-2026-04-225238",
+      "id": "jurong-west-274d-jurong-west-ave-3-2026-04-225283",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

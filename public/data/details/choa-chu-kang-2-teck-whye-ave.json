@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KEAT HONG LRT STATION",
       "distanceMeters": 482
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 482
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 637
+      },
+      {
+        "stationName": "SOUTH VIEW LRT STATION",
+        "distanceMeters": 770
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1091,7 +1105,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-2-teck-whye-ave-2026-01-223962",
+      "id": "choa-chu-kang-2-teck-whye-ave-2026-01-223986",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

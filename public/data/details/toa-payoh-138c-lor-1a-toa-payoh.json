@@ -9,14 +9,14 @@
       "lat": 1.33626413671063,
       "lng": 103.844907413472
     },
-    "medianPrice": 1270000,
+    "medianPrice": 1275000,
     "priceIqr": [
-      1071000,
-      1437500
+      1089000,
+      1415000
     ],
-    "pricePerSqmMedian": 11963.32,
-    "pricePerSqftMedian": 1111.43,
-    "transactionCount": 14,
+    "pricePerSqmMedian": 11909.09,
+    "pricePerSqftMedian": 1106.39,
+    "transactionCount": 15,
     "floorAreaRange": [
       70,
       117
@@ -25,10 +25,10 @@
       2012,
       2012
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2017-07",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 377
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 377
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 524
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 525
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -422,11 +436,30 @@
       "medianPrice": 1480000,
       "transactionCount": 1,
       "medianPricePerSqm": 12982.46
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1275000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11283.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-138c-lor-1a-toa-payoh-2026-02-228215",
+      "id": "toa-payoh-138c-lor-1a-toa-payoh-2026-04-228321",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 113,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 01 month",
+      "resalePrice": 1275000,
+      "pricePerSqm": 11283.19,
+      "pricePerSqft": 1048.24
+    },
+    {
+      "id": "toa-payoh-138c-lor-1a-toa-payoh-2026-02-228313",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "37 TO 39",
@@ -439,7 +472,7 @@
       "pricePerSqft": 1206.11
     },
     {
-      "id": "toa-payoh-138c-lor-1a-toa-payoh-2026-01-228143",
+      "id": "toa-payoh-138c-lor-1a-toa-payoh-2026-01-228239",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -671,19 +704,6 @@
       "resalePrice": 907000,
       "pricePerSqm": 9967.03,
       "pricePerSqft": 925.97
-    },
-    {
-      "id": "toa-payoh-138c-lor-1a-toa-payoh-2023-07-164968",
-      "month": "2023-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "37 TO 39",
-      "floorAreaSqm": 117,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "87 years 10 months",
-      "resalePrice": 1328000,
-      "pricePerSqm": 11350.43,
-      "pricePerSqft": 1054.49
     }
   ]
 }

@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1283
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1283
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1588
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1732
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -681,7 +695,7 @@
       "pricePerSqft": 342.18
     },
     {
-      "id": "hougang-943-hougang-st-92-2016-11-973115",
+      "id": "hougang-943-hougang-st-92-2016-11-973237",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -694,7 +708,7 @@
       "pricePerSqft": 354.14
     },
     {
-      "id": "hougang-943-hougang-st-92-2016-06-964617",
+      "id": "hougang-943-hougang-st-92-2016-06-964739",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -707,7 +721,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "hougang-943-hougang-st-92-2016-02-957861",
+      "id": "hougang-943-hougang-st-92-2016-02-957983",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -720,7 +734,7 @@
       "pricePerSqft": 377.13
     },
     {
-      "id": "hougang-943-hougang-st-92-2015-11-953808",
+      "id": "hougang-943-hougang-st-92-2015-11-953930",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -733,7 +747,7 @@
       "pricePerSqft": 402.58
     },
     {
-      "id": "hougang-943-hougang-st-92-2015-06-945928",
+      "id": "hougang-943-hougang-st-92-2015-06-946050",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

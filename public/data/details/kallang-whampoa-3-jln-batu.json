@@ -22,8 +22,8 @@
       60
     ],
     "leaseCommenceRange": [
-      1969,
-      1969
+      1963,
+      1963
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 360
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 360
+      },
+      {
+        "stationName": "KATONG PARK MRT STATION",
+        "distanceMeters": 516
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 734
+      }
+    ]
   },
   "monthlyTrend": [
     {

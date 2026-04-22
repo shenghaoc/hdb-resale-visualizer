@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1754
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1754
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 2115
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 2199
+      }
+    ]
   },
   "monthlyTrend": [
     {

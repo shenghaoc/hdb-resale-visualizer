@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 589
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 589
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1123
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1174
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1104,7 +1118,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-1-bedok-sth-ave-1-2026-03-222437",
+      "id": "bedok-1-bedok-sth-ave-1-2026-03-222445",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

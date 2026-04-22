@@ -22,8 +22,8 @@
       136
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1995,
+      1995
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 200
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 200
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 953
+      },
+      {
+        "stationName": "SIMEI MRT STATION",
+        "distanceMeters": 1613
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -609,7 +623,7 @@
       "pricePerSqft": 439.05
     },
     {
-      "id": "tampines-450d-tampines-st-42-2016-07-966986",
+      "id": "tampines-450d-tampines-st-42-2016-07-967108",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -622,7 +636,7 @@
       "pricePerSqft": 352.93
     },
     {
-      "id": "tampines-450d-tampines-st-42-2016-07-967004",
+      "id": "tampines-450d-tampines-st-42-2016-07-967126",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -635,7 +649,7 @@
       "pricePerSqft": 390.71
     },
     {
-      "id": "tampines-450d-tampines-st-42-2015-08-949683",
+      "id": "tampines-450d-tampines-st-42-2015-08-949805",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -648,7 +662,7 @@
       "pricePerSqft": 398.16
     },
     {
-      "id": "tampines-450d-tampines-st-42-2015-08-949714",
+      "id": "tampines-450d-tampines-st-42-2015-08-949836",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -661,7 +675,7 @@
       "pricePerSqft": 422.97
     },
     {
-      "id": "tampines-450d-tampines-st-42-2014-12-650861",
+      "id": "tampines-450d-tampines-st-42-2014-12-650983",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

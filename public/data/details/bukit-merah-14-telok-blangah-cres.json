@@ -22,8 +22,8 @@
       122
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 1179
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1179
+      },
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1266
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1386
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -330,7 +344,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-14-telok-blangah-cres-2026-04-223407",
+      "id": "bukit-merah-14-telok-blangah-cres-2026-04-223428",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -343,7 +357,7 @@
       "pricePerSqft": 648.48
     },
     {
-      "id": "bukit-merah-14-telok-blangah-cres-2026-03-223406",
+      "id": "bukit-merah-14-telok-blangah-cres-2026-03-223427",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -551,7 +565,7 @@
       "pricePerSqft": 437.42
     },
     {
-      "id": "bukit-merah-14-telok-blangah-cres-2016-08-967647",
+      "id": "bukit-merah-14-telok-blangah-cres-2016-08-967769",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -564,7 +578,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bukit-merah-14-telok-blangah-cres-2016-07-966044",
+      "id": "bukit-merah-14-telok-blangah-cres-2016-07-966166",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -577,7 +591,7 @@
       "pricePerSqft": 525.41
     },
     {
-      "id": "bukit-merah-14-telok-blangah-cres-2016-07-966046",
+      "id": "bukit-merah-14-telok-blangah-cres-2016-07-966168",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

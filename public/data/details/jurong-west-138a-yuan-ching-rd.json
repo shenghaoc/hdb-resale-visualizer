@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1828
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1828
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1829
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 2067
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -276,7 +290,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-138a-yuan-ching-rd-2026-03-225346",
+      "id": "jurong-west-138a-yuan-ching-rd-2026-03-225393",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

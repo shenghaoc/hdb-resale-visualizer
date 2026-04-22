@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT PANJANG LRT STATION",
       "distanceMeters": 137
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 137
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 266
+      },
+      {
+        "stationName": "BUKIT PANJANG MRT STATION",
+        "distanceMeters": 294
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -588,7 +602,7 @@
       "pricePerSqft": 437.42
     },
     {
-      "id": "bukit-panjang-168-petir-rd-2016-12-974440",
+      "id": "bukit-panjang-168-petir-rd-2016-12-974562",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -601,7 +615,7 @@
       "pricePerSqft": 455.41
     },
     {
-      "id": "bukit-panjang-168-petir-rd-2015-11-953574",
+      "id": "bukit-panjang-168-petir-rd-2015-11-953696",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -14,21 +14,21 @@
       430000,
       460000
     ],
-    "pricePerSqmMedian": 4731.18,
-    "pricePerSqftMedian": 439.54,
-    "transactionCount": 2,
+    "pricePerSqmMedian": 4836.96,
+    "pricePerSqftMedian": 449.37,
+    "transactionCount": 3,
     "floorAreaRange": [
       91,
       95
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1980,
+      1980
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TECK WHYE LRT STATION",
       "distanceMeters": 293
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 293
+      },
+      {
+        "stationName": "PHOENIX LRT STATION",
+        "distanceMeters": 484
+      },
+      {
+        "stationName": "KEAT HONG LRT STATION",
+        "distanceMeters": 530
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -702,9 +716,28 @@
       "medianPrice": 475000,
       "transactionCount": 1,
       "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4836.96
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-17-teck-whye-lane-2026-04-224001",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years 06 months",
+      "resalePrice": 445000,
+      "pricePerSqm": 4836.96,
+      "pricePerSqft": 449.37
+    },
     {
       "id": "choa-chu-kang-17-teck-whye-lane-2025-08-203344",
       "month": "2025-08",
@@ -927,7 +960,7 @@
       "pricePerSqft": 309.68
     },
     {
-      "id": "choa-chu-kang-17-teck-whye-lane-2016-03-959040",
+      "id": "choa-chu-kang-17-teck-whye-lane-2016-03-959162",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -940,7 +973,7 @@
       "pricePerSqft": 347.11
     },
     {
-      "id": "choa-chu-kang-17-teck-whye-lane-2015-05-944108",
+      "id": "choa-chu-kang-17-teck-whye-lane-2015-05-944230",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -951,19 +984,6 @@
       "resalePrice": 308000,
       "pricePerSqm": 3311.83,
       "pricePerSqft": 307.68
-    },
-    {
-      "id": "choa-chu-kang-17-teck-whye-lane-2014-09-645824",
-      "month": "2014-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "54 years",
-      "resalePrice": 345000,
-      "pricePerSqm": 3791.21,
-      "pricePerSqft": 352.22
     }
   ]
 }

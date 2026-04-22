@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 113
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 113
+      },
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 775
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 1106
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -432,7 +446,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-23-jln-membina-2026-04-223462",
+      "id": "bukit-merah-23-jln-membina-2026-04-223485",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -445,7 +459,7 @@
       "pricePerSqft": 1005.04
     },
     {
-      "id": "bukit-merah-23-jln-membina-2026-02-223380",
+      "id": "bukit-merah-23-jln-membina-2026-02-223399",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -458,7 +472,7 @@
       "pricePerSqft": 805.16
     },
     {
-      "id": "bukit-merah-23-jln-membina-2026-01-223457",
+      "id": "bukit-merah-23-jln-membina-2026-01-223480",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "28 TO 30",

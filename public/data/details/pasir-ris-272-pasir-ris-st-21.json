@@ -9,26 +9,26 @@
       "lat": 1.36465718880936,
       "lng": 103.964721788076
     },
-    "medianPrice": 338500,
+    "medianPrice": 610000,
     "priceIqr": [
-      280500,
-      400000
+      610000,
+      610000
     ],
-    "pricePerSqmMedian": 2701.49,
-    "pricePerSqftMedian": 250.98,
-    "transactionCount": 86,
+    "pricePerSqmMedian": 5700.93,
+    "pricePerSqftMedian": 529.63,
+    "transactionCount": 1,
     "floorAreaRange": [
       106,
       134
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1993,
+      1993
     ],
-    "latestMonth": "2024-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1998-10",
-      "2024-04"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 1316
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1316
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1938
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2508
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -422,9 +436,28 @@
       "medianPrice": 635000,
       "transactionCount": 1,
       "medianPricePerSqm": 5000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5700.93
     }
   ],
   "recentTransactions": [
+    {
+      "id": "pasir-ris-272-pasir-ris-st-21-2026-04-225743",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "67 years 01 month",
+      "resalePrice": 610000,
+      "pricePerSqm": 5700.93,
+      "pricePerSqft": 529.63
+    },
     {
       "id": "pasir-ris-272-pasir-ris-st-21-2024-04-183545",
       "month": "2024-04",
@@ -582,7 +615,7 @@
       "pricePerSqft": 346.65
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2016-12-974885",
+      "id": "pasir-ris-272-pasir-ris-st-21-2016-12-975007",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -595,7 +628,7 @@
       "pricePerSqft": 341.62
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2015-02-940225",
+      "id": "pasir-ris-272-pasir-ris-st-21-2015-02-940347",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -608,7 +641,7 @@
       "pricePerSqft": 377.69
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2013-04-623683",
+      "id": "pasir-ris-272-pasir-ris-st-21-2013-04-623805",
       "month": "2013-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -621,7 +654,7 @@
       "pricePerSqft": 408.08
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2013-04-623690",
+      "id": "pasir-ris-272-pasir-ris-st-21-2013-04-623812",
       "month": "2013-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -634,7 +667,7 @@
       "pricePerSqft": 414.3
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2013-03-622208",
+      "id": "pasir-ris-272-pasir-ris-st-21-2013-03-622330",
       "month": "2013-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -647,7 +680,7 @@
       "pricePerSqft": 396.68
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2013-03-622217",
+      "id": "pasir-ris-272-pasir-ris-st-21-2013-03-622339",
       "month": "2013-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +693,7 @@
       "pricePerSqft": 418.8
     },
     {
-      "id": "pasir-ris-272-pasir-ris-st-21-2013-01-619784",
+      "id": "pasir-ris-272-pasir-ris-st-21-2013-01-619906",
       "month": "2013-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -671,19 +704,6 @@
       "resalePrice": 454000,
       "pricePerSqm": 4242.99,
       "pricePerSqft": 394.19
-    },
-    {
-      "id": "pasir-ris-272-pasir-ris-st-21-2012-08-611075",
-      "month": "2012-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 107,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1994,
-      "remainingLease": "67 years",
-      "resalePrice": 448000,
-      "pricePerSqm": 4186.92,
-      "pricePerSqft": 388.98
     }
   ]
 }

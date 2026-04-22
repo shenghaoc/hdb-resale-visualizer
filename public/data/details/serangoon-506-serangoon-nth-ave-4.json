@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1684
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1684
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1740
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 2111
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -436,7 +450,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2026-01-227402",
+      "id": "serangoon-506-serangoon-nth-ave-4-2026-01-227478",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -592,7 +606,7 @@
       "pricePerSqft": 410.06
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2016-07-966940",
+      "id": "serangoon-506-serangoon-nth-ave-4-2016-07-967062",
       "month": "2016-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -605,7 +619,7 @@
       "pricePerSqft": 407.25
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2015-12-955750",
+      "id": "serangoon-506-serangoon-nth-ave-4-2015-12-955872",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -618,7 +632,7 @@
       "pricePerSqft": 430.56
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2015-12-955751",
+      "id": "serangoon-506-serangoon-nth-ave-4-2015-12-955873",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -631,7 +645,7 @@
       "pricePerSqft": 437.79
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2015-07-948154",
+      "id": "serangoon-506-serangoon-nth-ave-4-2015-07-948276",
       "month": "2015-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -644,7 +658,7 @@
       "pricePerSqft": 408.77
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2014-12-650810",
+      "id": "serangoon-506-serangoon-nth-ave-4-2014-12-650932",
       "month": "2014-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -657,7 +671,7 @@
       "pricePerSqft": 411.52
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2014-09-646510",
+      "id": "serangoon-506-serangoon-nth-ave-4-2014-09-646632",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -670,7 +684,7 @@
       "pricePerSqft": 394.52
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2014-08-645077",
+      "id": "serangoon-506-serangoon-nth-ave-4-2014-08-645199",
       "month": "2014-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -683,7 +697,7 @@
       "pricePerSqft": 431.43
     },
     {
-      "id": "serangoon-506-serangoon-nth-ave-4-2013-04-624008",
+      "id": "serangoon-506-serangoon-nth-ave-4-2013-04-624130",
       "month": "2013-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

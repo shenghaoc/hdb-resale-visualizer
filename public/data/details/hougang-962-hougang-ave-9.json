@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1998,
+      1998
     ],
     "latestMonth": "2025-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TONGKANG LRT STATION",
       "distanceMeters": 1525
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1525
+      },
+      {
+        "stationName": "LAYAR LRT STATION",
+        "distanceMeters": 1600
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 1620
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -528,7 +542,7 @@
       "pricePerSqft": 309.14
     },
     {
-      "id": "hougang-962-hougang-ave-9-2016-11-973134",
+      "id": "hougang-962-hougang-ave-9-2016-11-973256",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -541,7 +555,7 @@
       "pricePerSqft": 390.83
     },
     {
-      "id": "hougang-962-hougang-ave-9-2016-04-960934",
+      "id": "hougang-962-hougang-ave-9-2016-04-961056",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -554,7 +568,7 @@
       "pricePerSqft": 392.44
     },
     {
-      "id": "hougang-962-hougang-ave-9-2015-12-955253",
+      "id": "hougang-962-hougang-ave-9-2015-12-955375",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -567,7 +581,7 @@
       "pricePerSqft": 380.42
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-04-623389",
+      "id": "hougang-962-hougang-ave-9-2013-04-623511",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -580,7 +594,7 @@
       "pricePerSqft": 411.66
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-04-623394",
+      "id": "hougang-962-hougang-ave-9-2013-04-623516",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -593,7 +607,7 @@
       "pricePerSqft": 436.24
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-01-619514",
+      "id": "hougang-962-hougang-ave-9-2013-01-619636",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

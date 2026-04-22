@@ -22,8 +22,8 @@
       69
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1970,
+      1970
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 615
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 615
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 1401
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1601
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -880,7 +894,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-167-stirling-rd-2026-02-226421",
+      "id": "queenstown-167-stirling-rd-2026-02-226484",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

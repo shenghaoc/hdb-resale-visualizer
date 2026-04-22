@@ -22,8 +22,8 @@
       192
     ],
     "leaseCommenceRange": [
-      1994,
-      1994
+      1985,
+      1985
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 606
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 606
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 1125
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1608
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -710,7 +724,7 @@
       "pricePerSqft": 376.04
     },
     {
-      "id": "woodlands-331-woodlands-ave-1-2016-11-973999",
+      "id": "woodlands-331-woodlands-ave-1-2016-11-974121",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 226
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 226
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1240
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2057
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -363,7 +377,7 @@
       "pricePerSqft": 381.39
     },
     {
-      "id": "sembawang-341-sembawang-cl-2016-03-959701",
+      "id": "sembawang-341-sembawang-cl-2016-03-959823",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -376,7 +390,7 @@
       "pricePerSqft": 351.05
     },
     {
-      "id": "sembawang-341-sembawang-cl-2016-01-956954",
+      "id": "sembawang-341-sembawang-cl-2016-01-957076",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -389,7 +403,7 @@
       "pricePerSqft": 379.41
     },
     {
-      "id": "sembawang-341-sembawang-cl-2015-04-943162",
+      "id": "sembawang-341-sembawang-cl-2015-04-943284",
       "month": "2015-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -402,7 +416,7 @@
       "pricePerSqft": 379.41
     },
     {
-      "id": "sembawang-341-sembawang-cl-2013-09-630982",
+      "id": "sembawang-341-sembawang-cl-2013-09-631104",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -415,7 +429,7 @@
       "pricePerSqft": 427.35
     },
     {
-      "id": "sembawang-341-sembawang-cl-2013-07-628348",
+      "id": "sembawang-341-sembawang-cl-2013-07-628470",
       "month": "2013-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -428,7 +442,7 @@
       "pricePerSqft": 411.33
     },
     {
-      "id": "sembawang-341-sembawang-cl-2010-08-562317",
+      "id": "sembawang-341-sembawang-cl-2010-08-562439",
       "month": "2010-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -441,7 +455,7 @@
       "pricePerSqft": 372.59
     },
     {
-      "id": "sembawang-341-sembawang-cl-2010-07-558965",
+      "id": "sembawang-341-sembawang-cl-2010-07-559087",
       "month": "2010-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -454,7 +468,7 @@
       "pricePerSqft": 360.27
     },
     {
-      "id": "sembawang-341-sembawang-cl-2010-05-551998",
+      "id": "sembawang-341-sembawang-cl-2010-05-552120",
       "month": "2010-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -467,7 +481,7 @@
       "pricePerSqft": 369.66
     },
     {
-      "id": "sembawang-341-sembawang-cl-2010-01-540451",
+      "id": "sembawang-341-sembawang-cl-2010-01-540573",
       "month": "2010-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -480,7 +494,7 @@
       "pricePerSqft": 334.45
     },
     {
-      "id": "sembawang-341-sembawang-cl-2009-10-531792",
+      "id": "sembawang-341-sembawang-cl-2009-10-531914",
       "month": "2009-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BOON LAY MRT STATION",
       "distanceMeters": 717
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 717
+      },
+      {
+        "stationName": "PIONEER MRT STATION",
+        "distanceMeters": 863
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 2062
+      }
+    ]
   },
   "monthlyTrend": [
     {

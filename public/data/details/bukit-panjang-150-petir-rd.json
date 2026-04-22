@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1988,
-      1988
+      1987,
+      1987
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PETIR LRT STATION",
       "distanceMeters": 63
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 63
+      },
+      {
+        "stationName": "BUKIT PANJANG LRT STATION",
+        "distanceMeters": 418
+      },
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 501
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -701,7 +715,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-150-petir-rd-2026-01-223577",
+      "id": "bukit-panjang-150-petir-rd-2026-01-223600",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -909,7 +923,7 @@
       "pricePerSqft": 312.98
     },
     {
-      "id": "bukit-panjang-150-petir-rd-2016-12-974417",
+      "id": "bukit-panjang-150-petir-rd-2016-12-974539",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -922,7 +936,7 @@
       "pricePerSqft": 388.16
     },
     {
-      "id": "bukit-panjang-150-petir-rd-2016-06-964265",
+      "id": "bukit-panjang-150-petir-rd-2016-06-964387",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -935,7 +949,7 @@
       "pricePerSqft": 344.55
     },
     {
-      "id": "bukit-panjang-150-petir-rd-2016-04-960608",
+      "id": "bukit-panjang-150-petir-rd-2016-04-960730",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -948,7 +962,7 @@
       "pricePerSqft": 404.7
     },
     {
-      "id": "bukit-panjang-150-petir-rd-2015-09-950263",
+      "id": "bukit-panjang-150-petir-rd-2015-09-950385",
       "month": "2015-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

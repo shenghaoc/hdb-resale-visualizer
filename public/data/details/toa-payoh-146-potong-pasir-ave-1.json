@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1985,
+      1985
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 182
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 182
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 837
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 1235
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -420,7 +434,7 @@
       "pricePerSqft": 563.23
     },
     {
-      "id": "toa-payoh-146-potong-pasir-ave-1-2015-07-948288",
+      "id": "toa-payoh-146-potong-pasir-ave-1-2015-07-948410",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

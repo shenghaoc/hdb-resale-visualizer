@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 458
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 458
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 530
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 538
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -336,7 +350,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-29-balam-rd-2026-03-224356",
+      "id": "geylang-29-balam-rd-2026-03-224385",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -544,7 +558,7 @@
       "pricePerSqft": 462.32
     },
     {
-      "id": "geylang-29-balam-rd-2016-06-964526",
+      "id": "geylang-29-balam-rd-2016-06-964648",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -557,7 +571,7 @@
       "pricePerSqft": 490.12
     },
     {
-      "id": "geylang-29-balam-rd-2015-12-955198",
+      "id": "geylang-29-balam-rd-2015-12-955320",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -570,7 +584,7 @@
       "pricePerSqft": 397.87
     },
     {
-      "id": "geylang-29-balam-rd-2015-07-947546",
+      "id": "geylang-29-balam-rd-2015-07-947668",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -583,7 +597,7 @@
       "pricePerSqft": 448.74
     },
     {
-      "id": "geylang-29-balam-rd-2015-07-947563",
+      "id": "geylang-29-balam-rd-2015-07-947685",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       132
     ],
     "leaseCommenceRange": [
-      1981,
-      1981
+      1978,
+      1978
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHANGI AIRPORT MRT STATION",
       "distanceMeters": 3518
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHANGI AIRPORT MRT STATION",
+        "distanceMeters": 3518
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 4534
+      },
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 4954
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       127
     ],
     "leaseCommenceRange": [
-      1996,
-      1996
+      1994,
+      1994
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "PASIR RIS MRT STATION",
       "distanceMeters": 1742
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1742
+      },
+      {
+        "stationName": "RIVIERA LRT STATION",
+        "distanceMeters": 2621
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2917
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -456,7 +470,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-725-pasir-ris-st-72-2026-02-225794",
+      "id": "pasir-ris-725-pasir-ris-st-72-2026-02-225849",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -664,7 +678,7 @@
       "pricePerSqft": 333.4
     },
     {
-      "id": "pasir-ris-725-pasir-ris-st-72-2016-12-974889",
+      "id": "pasir-ris-725-pasir-ris-st-72-2016-12-975011",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -677,7 +691,7 @@
       "pricePerSqft": 344.64
     },
     {
-      "id": "pasir-ris-725-pasir-ris-st-72-2016-07-966589",
+      "id": "pasir-ris-725-pasir-ris-st-72-2016-07-966711",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -690,7 +704,7 @@
       "pricePerSqft": 337.15
     },
     {
-      "id": "pasir-ris-725-pasir-ris-st-72-2015-11-954073",
+      "id": "pasir-ris-725-pasir-ris-st-72-2015-11-954195",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -703,7 +717,7 @@
       "pricePerSqft": 374.61
     },
     {
-      "id": "pasir-ris-725-pasir-ris-st-72-2015-05-944589",
+      "id": "pasir-ris-725-pasir-ris-st-72-2015-05-944711",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

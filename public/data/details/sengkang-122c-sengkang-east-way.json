@@ -22,8 +22,8 @@
       131
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1999,
+      1999
     ],
     "latestMonth": "2024-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BAKAU LRT STATION",
       "distanceMeters": 82
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BAKAU LRT STATION",
+        "distanceMeters": 82
+      },
+      {
+        "stationName": "RUMBIA LRT STATION",
+        "distanceMeters": 426
+      },
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 586
+      }
+    ]
   },
   "monthlyTrend": [
     {

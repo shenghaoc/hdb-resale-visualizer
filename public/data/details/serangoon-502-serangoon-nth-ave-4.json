@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1744
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1744
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1834
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1945
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -540,7 +554,7 @@
       "pricePerSqft": 369.36
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2016-10-972136",
+      "id": "serangoon-502-serangoon-nth-ave-4-2016-10-972258",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -553,7 +567,7 @@
       "pricePerSqft": 380.6
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2016-07-966932",
+      "id": "serangoon-502-serangoon-nth-ave-4-2016-07-967054",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -566,7 +580,7 @@
       "pricePerSqft": 367.9
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2015-08-949610",
+      "id": "serangoon-502-serangoon-nth-ave-4-2015-08-949732",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -579,7 +593,7 @@
       "pricePerSqft": 367.12
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2014-04-639696",
+      "id": "serangoon-502-serangoon-nth-ave-4-2014-04-639818",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -592,7 +606,7 @@
       "pricePerSqft": 401.34
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2013-07-628477",
+      "id": "serangoon-502-serangoon-nth-ave-4-2013-07-628599",
       "month": "2013-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -605,7 +619,7 @@
       "pricePerSqft": 471.95
     },
     {
-      "id": "serangoon-502-serangoon-nth-ave-4-2011-06-584757",
+      "id": "serangoon-502-serangoon-nth-ave-4-2011-06-584879",
       "month": "2011-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

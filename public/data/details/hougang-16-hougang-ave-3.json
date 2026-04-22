@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 695
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 695
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 836
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 2221
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -460,7 +474,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-16-hougang-ave-3-2026-02-224733",
+      "id": "hougang-16-hougang-ave-3-2026-02-224769",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -681,7 +695,7 @@
       "pricePerSqft": 364.18
     },
     {
-      "id": "hougang-16-hougang-ave-3-2016-09-969841",
+      "id": "hougang-16-hougang-ave-3-2016-09-969963",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -694,7 +708,7 @@
       "pricePerSqft": 392.76
     },
     {
-      "id": "hougang-16-hougang-ave-3-2016-04-960941",
+      "id": "hougang-16-hougang-ave-3-2016-04-961063",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -707,7 +721,7 @@
       "pricePerSqft": 429.68
     },
     {
-      "id": "hougang-16-hougang-ave-3-2014-04-639158",
+      "id": "hougang-16-hougang-ave-3-2014-04-639280",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

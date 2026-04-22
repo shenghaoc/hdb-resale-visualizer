@@ -22,8 +22,8 @@
       119
     ],
     "leaseCommenceRange": [
-      1976,
-      1976
+      1975,
+      1975
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BEDOK MRT STATION",
       "distanceMeters": 586
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 586
+      },
+      {
+        "stationName": "SIGLAP MRT STATION",
+        "distanceMeters": 1084
+      },
+      {
+        "stationName": "BAYSHORE MRT STATION",
+        "distanceMeters": 1114
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -716,7 +730,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "bedok-21-bedok-sth-rd-2016-12-974261",
+      "id": "bedok-21-bedok-sth-rd-2016-12-974383",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -729,7 +743,7 @@
       "pricePerSqft": 524.07
     },
     {
-      "id": "bedok-21-bedok-sth-rd-2016-11-972665",
+      "id": "bedok-21-bedok-sth-rd-2016-11-972787",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -742,7 +756,7 @@
       "pricePerSqft": 536.34
     },
     {
-      "id": "bedok-21-bedok-sth-rd-2015-06-945478",
+      "id": "bedok-21-bedok-sth-rd-2015-06-945600",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -755,7 +769,7 @@
       "pricePerSqft": 528.04
     },
     {
-      "id": "bedok-21-bedok-sth-rd-2014-12-649971",
+      "id": "bedok-21-bedok-sth-rd-2014-12-650093",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

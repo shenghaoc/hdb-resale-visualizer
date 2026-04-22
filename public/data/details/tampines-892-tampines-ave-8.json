@@ -22,8 +22,8 @@
       144
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2025-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 1064
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 1064
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1463
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1598
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -605,7 +619,7 @@
       "pricePerSqft": 414.49
     },
     {
-      "id": "tampines-892-tampines-ave-8-2015-07-948244",
+      "id": "tampines-892-tampines-ave-8-2015-07-948366",
       "month": "2015-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -618,7 +632,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "tampines-892-tampines-ave-8-2013-06-627116",
+      "id": "tampines-892-tampines-ave-8-2013-06-627238",
       "month": "2013-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

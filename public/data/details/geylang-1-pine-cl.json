@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2000,
-      2000
+      1998,
+      1998
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MOUNTBATTEN MRT STATION",
       "distanceMeters": 141
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 141
+      },
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 533
+      },
+      {
+        "stationName": "STADIUM MRT STATION",
+        "distanceMeters": 922
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -552,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-1-pine-cl-2026-03-224453",
+      "id": "geylang-1-pine-cl-2026-03-224485",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -565,7 +579,7 @@
       "pricePerSqft": 1121.59
     },
     {
-      "id": "geylang-1-pine-cl-2026-02-224451",
+      "id": "geylang-1-pine-cl-2026-02-224483",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

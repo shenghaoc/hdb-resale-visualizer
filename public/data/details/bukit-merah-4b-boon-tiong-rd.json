@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2003,
+      2003
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HAVELOCK MRT STATION",
       "distanceMeters": 176
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HAVELOCK MRT STATION",
+        "distanceMeters": 176
+      },
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 496
+      },
+      {
+        "stationName": "GREAT WORLD MRT STATION",
+        "distanceMeters": 702
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -324,7 +338,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-4b-boon-tiong-rd-2026-02-223435",
+      "id": "bukit-merah-4b-boon-tiong-rd-2026-02-223458",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

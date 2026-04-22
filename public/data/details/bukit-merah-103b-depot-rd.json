@@ -22,8 +22,8 @@
       116
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      1999,
+      1999
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "REDHILL MRT STATION",
       "distanceMeters": 1052
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1052
+      },
+      {
+        "stationName": "TELOK BLANGAH MRT STATION",
+        "distanceMeters": 1171
+      },
+      {
+        "stationName": "LABRADOR PARK MRT STATION",
+        "distanceMeters": 1535
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -288,7 +302,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-103b-depot-rd-2026-04-223351",
+      "id": "bukit-merah-103b-depot-rd-2026-04-223370",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -483,7 +497,7 @@
       "pricePerSqft": 585.69
     },
     {
-      "id": "bukit-merah-103b-depot-rd-2015-11-953516",
+      "id": "bukit-merah-103b-depot-rd-2015-11-953638",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -496,7 +510,7 @@
       "pricePerSqft": 527.69
     },
     {
-      "id": "bukit-merah-103b-depot-rd-2014-10-647201",
+      "id": "bukit-merah-103b-depot-rd-2014-10-647323",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -509,7 +523,7 @@
       "pricePerSqft": 483.1
     },
     {
-      "id": "bukit-merah-103b-depot-rd-2013-09-630463",
+      "id": "bukit-merah-103b-depot-rd-2013-09-630585",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -522,7 +536,7 @@
       "pricePerSqft": 583.43
     },
     {
-      "id": "bukit-merah-103b-depot-rd-2012-10-614150",
+      "id": "bukit-merah-103b-depot-rd-2012-10-614272",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -535,7 +549,7 @@
       "pricePerSqft": 529.14
     },
     {
-      "id": "bukit-merah-103b-depot-rd-2012-05-603882",
+      "id": "bukit-merah-103b-depot-rd-2012-05-604004",
       "month": "2012-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 05",

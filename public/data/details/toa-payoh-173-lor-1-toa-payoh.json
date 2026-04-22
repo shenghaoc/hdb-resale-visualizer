@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 573
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 573
+      },
+      {
+        "stationName": "CALDECOTT MRT STATION",
+        "distanceMeters": 806
+      },
+      {
+        "stationName": "NOVENA MRT STATION",
+        "distanceMeters": 1012
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1306,7 +1320,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-173-lor-1-toa-payoh-2026-03-228005",
+      "id": "toa-payoh-173-lor-1-toa-payoh-2026-03-228098",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1319,7 +1333,7 @@
       "pricePerSqft": 485.63
     },
     {
-      "id": "toa-payoh-173-lor-1-toa-payoh-2026-01-227997",
+      "id": "toa-payoh-173-lor-1-toa-payoh-2026-01-228090",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

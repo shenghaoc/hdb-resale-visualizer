@@ -22,8 +22,8 @@
       135
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "YEW TEE MRT STATION",
       "distanceMeters": 248
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YEW TEE MRT STATION",
+        "distanceMeters": 248
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 1087
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 1160
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -402,7 +416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2026-01-224032",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2026-01-224061",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -571,7 +585,7 @@
       "pricePerSqft": 324.82
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2016-12-974509",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2016-12-974631",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -584,7 +598,7 @@
       "pricePerSqft": 363.87
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2016-08-967804",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2016-08-967926",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -597,7 +611,7 @@
       "pricePerSqft": 310.8
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2014-04-638960",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2014-04-639082",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -610,7 +624,7 @@
       "pricePerSqft": 363.17
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2014-04-638968",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2014-04-639090",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -623,7 +637,7 @@
       "pricePerSqft": 352.89
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-08-610534",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-08-610656",
       "month": "2012-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -636,7 +650,7 @@
       "pricePerSqft": 385.38
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-06-606306",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-06-606428",
       "month": "2012-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -649,7 +663,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-05-604061",
+      "id": "choa-chu-kang-785-choa-chu-kang-dr-2012-05-604183",
       "month": "2012-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",

@@ -22,8 +22,8 @@
       91
     ],
     "leaseCommenceRange": [
-      1980,
-      1980
+      1979,
+      1979
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LENTOR MRT STATION",
       "distanceMeters": 378
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LENTOR MRT STATION",
+        "distanceMeters": 378
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 841
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1062
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1205,7 +1219,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-601-ang-mo-kio-ave-5-2026-04-222163",
+      "id": "ang-mo-kio-601-ang-mo-kio-ave-5-2026-04-222166",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1218,7 +1232,7 @@
       "pricePerSqft": 564.22
     },
     {
-      "id": "ang-mo-kio-601-ang-mo-kio-ave-5-2026-02-222160",
+      "id": "ang-mo-kio-601-ang-mo-kio-ave-5-2026-02-222163",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -22,8 +22,8 @@
       145
     ],
     "leaseCommenceRange": [
-      1999,
-      1999
+      1997,
+      1997
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "JELAPANG LRT STATION",
       "distanceMeters": 151
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JELAPANG LRT STATION",
+        "distanceMeters": 151
+      },
+      {
+        "stationName": "SENJA LRT STATION",
+        "distanceMeters": 366
+      },
+      {
+        "stationName": "SEGAR LRT STATION",
+        "distanceMeters": 628
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -374,7 +388,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-531-jelapang-rd-2026-03-223561",
+      "id": "bukit-panjang-531-jelapang-rd-2026-03-223584",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -387,7 +401,7 @@
       "pricePerSqft": 516.83
     },
     {
-      "id": "bukit-panjang-531-jelapang-rd-2026-01-223553",
+      "id": "bukit-panjang-531-jelapang-rd-2026-01-223576",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -608,7 +622,7 @@
       "pricePerSqft": 397.24
     },
     {
-      "id": "bukit-panjang-531-jelapang-rd-2016-08-967727",
+      "id": "bukit-panjang-531-jelapang-rd-2016-08-967849",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -621,7 +635,7 @@
       "pricePerSqft": 416.46
     },
     {
-      "id": "bukit-panjang-531-jelapang-rd-2015-12-955024",
+      "id": "bukit-panjang-531-jelapang-rd-2015-12-955146",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "ONE-NORTH MRT STATION",
       "distanceMeters": 716
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ONE-NORTH MRT STATION",
+        "distanceMeters": 716
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 970
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 973
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -850,7 +864,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-3-dover-rd-2026-04-226375",
+      "id": "queenstown-3-dover-rd-2026-04-226437",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -863,7 +877,7 @@
       "pricePerSqft": 478.81
     },
     {
-      "id": "queenstown-3-dover-rd-2026-03-226374",
+      "id": "queenstown-3-dover-rd-2026-03-226436",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

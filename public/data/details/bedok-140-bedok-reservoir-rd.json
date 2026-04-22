@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "KAKI BUKIT MRT STATION",
       "distanceMeters": 445
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 445
+      },
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 495
+      },
+      {
+        "stationName": "KEMBANGAN MRT STATION",
+        "distanceMeters": 1529
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -883,7 +897,7 @@
       "pricePerSqft": 373.14
     },
     {
-      "id": "bedok-140-bedok-reservoir-rd-2016-07-965877",
+      "id": "bedok-140-bedok-reservoir-rd-2016-07-965999",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -896,7 +910,7 @@
       "pricePerSqft": 392.17
     },
     {
-      "id": "bedok-140-bedok-reservoir-rd-2015-12-954826",
+      "id": "bedok-140-bedok-reservoir-rd-2015-12-954948",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

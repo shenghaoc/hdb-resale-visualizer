@@ -22,8 +22,8 @@
       69
     ],
     "leaseCommenceRange": [
-      1974,
-      1974
+      1971,
+      1971
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 952
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 952
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1174
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1988
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -466,7 +480,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-122-yuan-ching-rd-2026-02-225049",
+      "id": "jurong-west-122-yuan-ching-rd-2026-02-225090",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

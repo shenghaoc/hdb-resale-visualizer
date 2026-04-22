@@ -22,8 +22,8 @@
       71
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1983,
+      1983
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 553
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 553
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1082
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1359
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -280,7 +294,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-252-jurong-east-st-24-2026-03-224840",
+      "id": "jurong-east-252-jurong-east-st-24-2026-03-224877",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

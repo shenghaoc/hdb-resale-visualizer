@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      1998,
-      1998
+      1997,
+      1997
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1304
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1304
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1560
+      },
+      {
+        "stationName": "TONGKANG LRT STATION",
+        "distanceMeters": 1561
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -510,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-926-hougang-st-91-2026-01-224685",
+      "id": "hougang-926-hougang-st-91-2026-01-224720",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

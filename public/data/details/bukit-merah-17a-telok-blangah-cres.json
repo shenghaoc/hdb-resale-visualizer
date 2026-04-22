@@ -22,8 +22,8 @@
       120
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "TIONG BAHRU MRT STATION",
       "distanceMeters": 1107
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TIONG BAHRU MRT STATION",
+        "distanceMeters": 1107
+      },
+      {
+        "stationName": "HARBOURFRONT MRT STATION",
+        "distanceMeters": 1268
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 1428
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -516,7 +530,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-17a-telok-blangah-cres-2026-02-223404",
+      "id": "bukit-merah-17a-telok-blangah-cres-2026-02-223425",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -529,7 +543,7 @@
       "pricePerSqft": 755.42
     },
     {
-      "id": "bukit-merah-17a-telok-blangah-cres-2026-01-223401",
+      "id": "bukit-merah-17a-telok-blangah-cres-2026-01-223422",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -542,7 +556,7 @@
       "pricePerSqft": 715.35
     },
     {
-      "id": "bukit-merah-17a-telok-blangah-cres-2026-01-223402",
+      "id": "bukit-merah-17a-telok-blangah-cres-2026-01-223423",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

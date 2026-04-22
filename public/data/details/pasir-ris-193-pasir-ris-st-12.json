@@ -22,8 +22,8 @@
       126
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES EAST MRT STATION",
       "distanceMeters": 1089
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES EAST MRT STATION",
+        "distanceMeters": 1089
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1349
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 2112
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -370,7 +384,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2026-02-225756",
+      "id": "pasir-ris-193-pasir-ris-st-12-2026-02-225809",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -539,7 +553,7 @@
       "pricePerSqft": 294.93
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2016-10-971801",
+      "id": "pasir-ris-193-pasir-ris-st-12-2016-10-971923",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -552,7 +566,7 @@
       "pricePerSqft": 344.33
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2016-06-964883",
+      "id": "pasir-ris-193-pasir-ris-st-12-2016-06-965005",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -565,7 +579,7 @@
       "pricePerSqft": 317.05
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2014-05-640897",
+      "id": "pasir-ris-193-pasir-ris-st-12-2014-05-641019",
       "month": "2014-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -578,7 +592,7 @@
       "pricePerSqft": 364.98
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2013-09-630896",
+      "id": "pasir-ris-193-pasir-ris-st-12-2013-09-631018",
       "month": "2013-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -591,7 +605,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2013-06-626798",
+      "id": "pasir-ris-193-pasir-ris-st-12-2013-06-626920",
       "month": "2013-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -604,7 +618,7 @@
       "pricePerSqft": 376.04
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2011-07-586411",
+      "id": "pasir-ris-193-pasir-ris-st-12-2011-07-586533",
       "month": "2011-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -617,7 +631,7 @@
       "pricePerSqft": 368.66
     },
     {
-      "id": "pasir-ris-193-pasir-ris-st-12-2011-03-578445",
+      "id": "pasir-ris-193-pasir-ris-st-12-2011-03-578567",
       "month": "2011-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

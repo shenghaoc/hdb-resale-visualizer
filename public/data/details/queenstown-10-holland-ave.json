@@ -22,8 +22,8 @@
       88
     ],
     "leaseCommenceRange": [
-      1975,
-      1975
+      1973,
+      1973
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOLLAND VILLAGE MRT STATION",
       "distanceMeters": 329
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOLLAND VILLAGE MRT STATION",
+        "distanceMeters": 329
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 416
+      },
+      {
+        "stationName": "COMMONWEALTH MRT STATION",
+        "distanceMeters": 733
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -723,7 +737,7 @@
       "pricePerSqft": 572.2
     },
     {
-      "id": "queenstown-10-holland-ave-2016-11-973532",
+      "id": "queenstown-10-holland-ave-2016-11-973654",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -736,7 +750,7 @@
       "pricePerSqft": 607.04
     },
     {
-      "id": "queenstown-10-holland-ave-2016-03-959645",
+      "id": "queenstown-10-holland-ave-2016-03-959767",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -749,7 +763,7 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "queenstown-10-holland-ave-2014-03-638008",
+      "id": "queenstown-10-holland-ave-2014-03-638130",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

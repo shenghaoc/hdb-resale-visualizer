@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1475
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1475
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 2040
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2842
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -717,7 +731,7 @@
       "pricePerSqft": 383.11
     },
     {
-      "id": "jurong-east-414-pandan-gdns-2015-09-950590",
+      "id": "jurong-east-414-pandan-gdns-2015-09-950712",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -730,7 +744,7 @@
       "pricePerSqft": 359.16
     },
     {
-      "id": "jurong-east-414-pandan-gdns-2013-11-633330",
+      "id": "jurong-east-414-pandan-gdns-2013-11-633452",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -743,7 +757,7 @@
       "pricePerSqft": 375.44
     },
     {
-      "id": "jurong-east-414-pandan-gdns-2013-09-630704",
+      "id": "jurong-east-414-pandan-gdns-2013-09-630826",
       "month": "2013-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

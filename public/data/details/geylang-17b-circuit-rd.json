@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "MACPHERSON MRT STATION",
       "distanceMeters": 369
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MACPHERSON MRT STATION",
+        "distanceMeters": 369
+      },
+      {
+        "stationName": "TAI SENG MRT STATION",
+        "distanceMeters": 532
+      },
+      {
+        "stationName": "MATTAR MRT STATION",
+        "distanceMeters": 718
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -250,7 +264,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-17b-circuit-rd-2026-04-224378",
+      "id": "geylang-17b-circuit-rd-2026-04-224408",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -263,7 +277,7 @@
       "pricePerSqft": 978.98
     },
     {
-      "id": "geylang-17b-circuit-rd-2026-03-224373",
+      "id": "geylang-17b-circuit-rd-2026-03-224403",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

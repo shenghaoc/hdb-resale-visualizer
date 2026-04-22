@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 469
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 469
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1166
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 2579
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -862,7 +876,7 @@
       "pricePerSqft": 507.45
     },
     {
-      "id": "clementi-336-clementi-ave-2-2015-08-949014",
+      "id": "clementi-336-clementi-ave-2-2015-08-949136",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -875,7 +889,7 @@
       "pricePerSqft": 562.1
     },
     {
-      "id": "clementi-336-clementi-ave-2-2014-09-645896",
+      "id": "clementi-336-clementi-ave-2-2014-09-646018",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

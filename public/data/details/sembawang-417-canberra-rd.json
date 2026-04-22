@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      1999,
+      1999
     ],
     "latestMonth": "2025-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 318
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 318
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1440
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2383
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -621,7 +635,7 @@
       "pricePerSqft": 346.28
     },
     {
-      "id": "sembawang-417-canberra-rd-2016-08-968584",
+      "id": "sembawang-417-canberra-rd-2016-08-968706",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -634,7 +648,7 @@
       "pricePerSqft": 330.98
     },
     {
-      "id": "sembawang-417-canberra-rd-2016-07-966749",
+      "id": "sembawang-417-canberra-rd-2016-07-966871",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -647,7 +661,7 @@
       "pricePerSqft": 329.38
     },
     {
-      "id": "sembawang-417-canberra-rd-2016-06-965082",
+      "id": "sembawang-417-canberra-rd-2016-06-965204",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -660,7 +674,7 @@
       "pricePerSqft": 327.69
     },
     {
-      "id": "sembawang-417-canberra-rd-2016-05-963265",
+      "id": "sembawang-417-canberra-rd-2016-05-963387",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -673,7 +687,7 @@
       "pricePerSqft": 358.19
     },
     {
-      "id": "sembawang-417-canberra-rd-2016-01-956928",
+      "id": "sembawang-417-canberra-rd-2016-01-957050",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

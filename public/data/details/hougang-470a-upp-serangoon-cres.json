@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "KANGKAR LRT STATION",
       "distanceMeters": 525
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KANGKAR LRT STATION",
+        "distanceMeters": 525
+      },
+      {
+        "stationName": "RANGGUNG LRT STATION",
+        "distanceMeters": 766
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1022
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -312,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-470a-upp-serangoon-cres-2026-03-224699",
+      "id": "hougang-470a-upp-serangoon-cres-2026-03-224734",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -325,7 +339,7 @@
       "pricePerSqft": 699.27
     },
     {
-      "id": "hougang-470a-upp-serangoon-cres-2026-03-224700",
+      "id": "hougang-470a-upp-serangoon-cres-2026-03-224735",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -338,7 +352,7 @@
       "pricePerSqft": 639.33
     },
     {
-      "id": "hougang-470a-upp-serangoon-cres-2026-03-224772",
+      "id": "hougang-470a-upp-serangoon-cres-2026-03-224809",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -351,7 +365,7 @@
       "pricePerSqft": 720.74
     },
     {
-      "id": "hougang-470a-upp-serangoon-cres-2026-02-224697",
+      "id": "hougang-470a-upp-serangoon-cres-2026-02-224732",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -364,7 +378,7 @@
       "pricePerSqft": 629.34
     },
     {
-      "id": "hougang-470a-upp-serangoon-cres-2026-02-224698",
+      "id": "hougang-470a-upp-serangoon-cres-2026-02-224733",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

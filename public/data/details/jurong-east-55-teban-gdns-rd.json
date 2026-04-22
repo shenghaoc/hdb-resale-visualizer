@@ -22,8 +22,8 @@
       92
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1311
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1311
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2236
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 3051
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -221,7 +235,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-55-teban-gdns-rd-2026-03-224896",
+      "id": "jurong-east-55-teban-gdns-rd-2026-03-224934",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -234,7 +248,7 @@
       "pricePerSqft": 706.87
     },
     {
-      "id": "jurong-east-55-teban-gdns-rd-2026-01-224859",
+      "id": "jurong-east-55-teban-gdns-rd-2026-01-224896",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",

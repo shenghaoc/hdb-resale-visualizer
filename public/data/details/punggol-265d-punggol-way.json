@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SOO TECK LRT STATION",
       "distanceMeters": 110
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SOO TECK LRT STATION",
+        "distanceMeters": 110
+      },
+      {
+        "stationName": "PUNGGOL LRT STATION",
+        "distanceMeters": 391
+      },
+      {
+        "stationName": "SUMANG LRT STATION",
+        "distanceMeters": 394
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -228,7 +242,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-265d-punggol-way-2026-03-226158",
+      "id": "punggol-265d-punggol-way-2026-03-226217",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

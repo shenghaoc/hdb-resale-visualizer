@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2001,
-      2001
+      2000,
+      2000
     ],
     "latestMonth": "2024-12",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 242
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 242
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 1367
+      },
+      {
+        "stationName": "ADMIRALTY MRT STATION",
+        "distanceMeters": 2372
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -600,7 +614,7 @@
       "pricePerSqft": 409.62
     },
     {
-      "id": "sembawang-351c-canberra-rd-2016-08-968601",
+      "id": "sembawang-351c-canberra-rd-2016-08-968723",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -613,7 +627,7 @@
       "pricePerSqft": 390.52
     },
     {
-      "id": "sembawang-351c-canberra-rd-2016-06-965096",
+      "id": "sembawang-351c-canberra-rd-2016-06-965218",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

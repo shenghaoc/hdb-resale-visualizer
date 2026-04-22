@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 975
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 975
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 1313
+      },
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 1484
+      }
+    ]
   },
   "monthlyTrend": [
     {

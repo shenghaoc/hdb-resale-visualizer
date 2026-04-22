@@ -22,8 +22,8 @@
       109
     ],
     "leaseCommenceRange": [
-      2016,
-      2016
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "QUEENSTOWN MRT STATION",
       "distanceMeters": 706
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "QUEENSTOWN MRT STATION",
+        "distanceMeters": 706
+      },
+      {
+        "stationName": "REDHILL MRT STATION",
+        "distanceMeters": 825
+      },
+      {
+        "stationName": "NAPIER MRT STATION",
+        "distanceMeters": 1445
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -241,7 +255,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-91-dawson-rd-2026-03-226514",
+      "id": "queenstown-91-dawson-rd-2026-03-226577",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "40 TO 42",
@@ -254,7 +268,7 @@
       "pricePerSqft": 1454.54
     },
     {
-      "id": "queenstown-91-dawson-rd-2026-02-226448",
+      "id": "queenstown-91-dawson-rd-2026-02-226511",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

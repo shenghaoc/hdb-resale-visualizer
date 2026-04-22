@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2000,
+      2000
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 496
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 496
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 933
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2585
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -394,7 +408,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-588c-montreal-dr-2026-04-226767",
+      "id": "sembawang-588c-montreal-dr-2026-04-226833",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -407,7 +421,7 @@
       "pricePerSqft": 515.19
     },
     {
-      "id": "sembawang-588c-montreal-dr-2026-03-226765",
+      "id": "sembawang-588c-montreal-dr-2026-03-226831",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

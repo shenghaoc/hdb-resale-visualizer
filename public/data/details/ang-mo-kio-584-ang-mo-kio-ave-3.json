@@ -22,8 +22,8 @@
       149
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 419
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 419
+      },
+      {
+        "stationName": "YIO CHU KANG MRT STATION",
+        "distanceMeters": 1535
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 1810
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -853,7 +867,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-584-ang-mo-kio-ave-3-2026-03-222131",
+      "id": "ang-mo-kio-584-ang-mo-kio-ave-3-2026-03-222132",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

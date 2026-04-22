@@ -22,8 +22,8 @@
       135
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 397
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 397
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1168
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1716
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1001,7 +1015,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-316-jurong-east-st-32-2026-02-224882",
+      "id": "jurong-east-316-jurong-east-st-32-2026-02-224920",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

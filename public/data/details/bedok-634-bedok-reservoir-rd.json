@@ -22,8 +22,8 @@
       145
     ],
     "leaseCommenceRange": [
-      1993,
-      1993
+      1992,
+      1992
     ],
     "latestMonth": "2025-07",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "UBI MRT STATION",
       "distanceMeters": 553
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UBI MRT STATION",
+        "distanceMeters": 553
+      },
+      {
+        "stationName": "KAKI BUKIT MRT STATION",
+        "distanceMeters": 713
+      },
+      {
+        "stationName": "EUNOS MRT STATION",
+        "distanceMeters": 1197
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -600,7 +614,7 @@
       "pricePerSqft": 477.6
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2013-04-622937",
+      "id": "bedok-634-bedok-reservoir-rd-2013-04-623059",
       "month": "2013-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -613,7 +627,7 @@
       "pricePerSqft": 480.77
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2013-01-619107",
+      "id": "bedok-634-bedok-reservoir-rd-2013-01-619229",
       "month": "2013-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -626,7 +640,7 @@
       "pricePerSqft": 487.1
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2012-05-603675",
+      "id": "bedok-634-bedok-reservoir-rd-2012-05-603797",
       "month": "2012-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "06 TO 10",
@@ -639,7 +653,7 @@
       "pricePerSqft": 448.27
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2012-04-601504",
+      "id": "bedok-634-bedok-reservoir-rd-2012-04-601626",
       "month": "2012-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 05",
@@ -652,7 +666,7 @@
       "pricePerSqft": 426.07
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2011-12-594348",
+      "id": "bedok-634-bedok-reservoir-rd-2011-12-594470",
       "month": "2011-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -665,7 +679,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "bedok-634-bedok-reservoir-rd-2011-05-581513",
+      "id": "bedok-634-bedok-reservoir-rd-2011-05-581635",
       "month": "2011-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

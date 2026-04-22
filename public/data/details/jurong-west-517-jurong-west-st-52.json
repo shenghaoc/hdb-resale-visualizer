@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 223
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 223
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1440
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1721
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -286,7 +300,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-517-jurong-west-st-52-2026-01-225023",
+      "id": "jurong-west-517-jurong-west-st-52-2026-01-225064",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -351,7 +365,7 @@
       "pricePerSqft": 364.08
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2014-12-650425",
+      "id": "jurong-west-517-jurong-west-st-52-2014-12-650547",
       "month": "2014-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -364,7 +378,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2012-07-608740",
+      "id": "jurong-west-517-jurong-west-st-52-2012-07-608862",
       "month": "2012-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -377,7 +391,7 @@
       "pricePerSqft": 487.11
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2011-08-588080",
+      "id": "jurong-west-517-jurong-west-st-52-2011-08-588202",
       "month": "2011-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -390,7 +404,7 @@
       "pricePerSqft": 439.41
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2010-06-554553",
+      "id": "jurong-west-517-jurong-west-st-52-2010-06-554675",
       "month": "2010-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -403,7 +417,7 @@
       "pricePerSqft": 361.57
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2009-11-534252",
+      "id": "jurong-west-517-jurong-west-st-52-2009-11-534374",
       "month": "2009-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -416,7 +430,7 @@
       "pricePerSqft": 338.97
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2009-09-527907",
+      "id": "jurong-west-517-jurong-west-st-52-2009-09-528029",
       "month": "2009-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -429,7 +443,7 @@
       "pricePerSqft": 343.86
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2009-03-513057",
+      "id": "jurong-west-517-jurong-west-st-52-2009-03-513179",
       "month": "2009-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -442,7 +456,7 @@
       "pricePerSqft": 332.69
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2009-01-508995",
+      "id": "jurong-west-517-jurong-west-st-52-2009-01-509117",
       "month": "2009-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -455,7 +469,7 @@
       "pricePerSqft": 332.69
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2009-01-508996",
+      "id": "jurong-west-517-jurong-west-st-52-2009-01-509118",
       "month": "2009-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -468,7 +482,7 @@
       "pricePerSqft": 335.42
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2008-03-486164",
+      "id": "jurong-west-517-jurong-west-st-52-2008-03-486286",
       "month": "2008-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -481,7 +495,7 @@
       "pricePerSqft": 284.99
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2007-03-459202",
+      "id": "jurong-west-517-jurong-west-st-52-2007-03-459324",
       "month": "2007-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -494,7 +508,7 @@
       "pricePerSqft": 207.15
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2006-12-452837",
+      "id": "jurong-west-517-jurong-west-st-52-2006-12-452959",
       "month": "2006-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -507,7 +521,7 @@
       "pricePerSqft": 204.64
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2006-11-450685",
+      "id": "jurong-west-517-jurong-west-st-52-2006-11-450807",
       "month": "2006-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -520,7 +534,7 @@
       "pricePerSqft": 199.62
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2005-04-405632",
+      "id": "jurong-west-517-jurong-west-st-52-2005-04-405754",
       "month": "2005-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -533,7 +547,7 @@
       "pricePerSqft": 190.63
     },
     {
-      "id": "jurong-west-517-jurong-west-st-52-2003-09-357355",
+      "id": "jurong-west-517-jurong-west-st-52-2003-09-357477",
       "month": "2003-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

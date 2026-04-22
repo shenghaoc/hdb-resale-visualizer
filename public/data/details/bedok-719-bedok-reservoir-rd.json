@@ -22,8 +22,8 @@
       154
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BEDOK NORTH MRT STATION",
       "distanceMeters": 673
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BEDOK NORTH MRT STATION",
+        "distanceMeters": 673
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 895
+      },
+      {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 1454
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -929,7 +943,7 @@
       "pricePerSqft": 446.25
     },
     {
-      "id": "bedok-719-bedok-reservoir-rd-2016-05-962253",
+      "id": "bedok-719-bedok-reservoir-rd-2016-05-962375",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -942,7 +956,7 @@
       "pricePerSqft": 433.13
     },
     {
-      "id": "bedok-719-bedok-reservoir-rd-2015-12-954857",
+      "id": "bedok-719-bedok-reservoir-rd-2015-12-954979",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

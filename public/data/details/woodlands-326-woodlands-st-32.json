@@ -22,8 +22,8 @@
       164
     ],
     "leaseCommenceRange": [
-      1995,
-      1995
+      1993,
+      1993
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "MARSILING MRT STATION",
       "distanceMeters": 631
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARSILING MRT STATION",
+        "distanceMeters": 631
+      },
+      {
+        "stationName": "WOODLANDS MRT STATION",
+        "distanceMeters": 977
+      },
+      {
+        "stationName": "WOODLANDS SOUTH MRT STATION",
+        "distanceMeters": 1534
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -482,7 +496,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-326-woodlands-st-32-2026-04-228738",
+      "id": "woodlands-326-woodlands-st-32-2026-04-228850",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -729,7 +743,7 @@
       "pricePerSqft": 337.06
     },
     {
-      "id": "woodlands-326-woodlands-st-32-2016-05-963651",
+      "id": "woodlands-326-woodlands-st-32-2016-05-963773",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

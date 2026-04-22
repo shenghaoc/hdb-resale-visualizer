@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "BRADDELL MRT STATION",
       "distanceMeters": 257
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 257
+      },
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 979
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1016
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -790,7 +804,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-202-toa-payoh-nth-2026-03-228202",
+      "id": "toa-payoh-202-toa-payoh-nth-2026-03-228299",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -803,7 +817,7 @@
       "pricePerSqft": 531.79
     },
     {
-      "id": "toa-payoh-202-toa-payoh-nth-2026-01-228201",
+      "id": "toa-payoh-202-toa-payoh-nth-2026-01-228298",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

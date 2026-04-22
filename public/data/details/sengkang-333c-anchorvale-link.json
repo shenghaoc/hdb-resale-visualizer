@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2014,
+      2014
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CHENG LIM LRT STATION",
       "distanceMeters": 304
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 304
+      },
+      {
+        "stationName": "FARMWAY LRT STATION",
+        "distanceMeters": 406
+      },
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 493
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -234,7 +248,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-333c-anchorvale-link-2026-01-226903",
+      "id": "sengkang-333c-anchorvale-link-2026-01-226970",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -247,7 +261,7 @@
       "pricePerSqft": 735.15
     },
     {
-      "id": "sengkang-333c-anchorvale-link-2026-01-226905",
+      "id": "sengkang-333c-anchorvale-link-2026-01-226972",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

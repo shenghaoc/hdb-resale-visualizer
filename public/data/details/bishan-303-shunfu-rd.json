@@ -22,8 +22,8 @@
       126
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1984,
+      1984
     ],
     "latestMonth": "2025-05",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MARYMOUNT MRT STATION",
       "distanceMeters": 111
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 111
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 666
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1086
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -813,7 +827,7 @@
       "pricePerSqft": 583.52
     },
     {
-      "id": "bishan-303-shunfu-rd-2016-10-971072",
+      "id": "bishan-303-shunfu-rd-2016-10-971194",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -826,7 +840,7 @@
       "pricePerSqft": 462.98
     },
     {
-      "id": "bishan-303-shunfu-rd-2016-09-969403",
+      "id": "bishan-303-shunfu-rd-2016-09-969525",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -839,7 +853,7 @@
       "pricePerSqft": 579.68
     },
     {
-      "id": "bishan-303-shunfu-rd-2015-12-954887",
+      "id": "bishan-303-shunfu-rd-2015-12-955009",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -852,7 +866,7 @@
       "pricePerSqft": 497.53
     },
     {
-      "id": "bishan-303-shunfu-rd-2014-09-645634",
+      "id": "bishan-303-shunfu-rd-2014-09-645756",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -865,7 +879,7 @@
       "pricePerSqft": 533
     },
     {
-      "id": "bishan-303-shunfu-rd-2012-02-597486",
+      "id": "bishan-303-shunfu-rd-2012-02-597608",
       "month": "2012-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

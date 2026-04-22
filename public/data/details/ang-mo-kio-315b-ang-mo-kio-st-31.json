@@ -22,8 +22,8 @@
       110
     ],
     "leaseCommenceRange": [
-      2006,
-      2006
+      2004,
+      2004
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "ANG MO KIO MRT STATION",
       "distanceMeters": 637
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 637
+      },
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 1408
+      },
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 1444
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -318,7 +332,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-315b-ang-mo-kio-st-31-2026-01-222308",
+      "id": "ang-mo-kio-315b-ang-mo-kio-st-31-2026-01-222313",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -331,7 +345,7 @@
       "pricePerSqft": 961.13
     },
     {
-      "id": "ang-mo-kio-315b-ang-mo-kio-st-31-2026-01-222309",
+      "id": "ang-mo-kio-315b-ang-mo-kio-st-31-2026-01-222314",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",

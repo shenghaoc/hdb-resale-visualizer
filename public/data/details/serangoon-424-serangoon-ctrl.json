@@ -22,8 +22,8 @@
       154
     ],
     "leaseCommenceRange": [
-      1989,
-      1989
+      1988,
+      1988
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 234
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 234
+      },
+      {
+        "stationName": "BARTLEY MRT STATION",
+        "distanceMeters": 635
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 1050
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -520,7 +534,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-424-serangoon-ctrl-2026-03-227398",
+      "id": "serangoon-424-serangoon-ctrl-2026-03-227474",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

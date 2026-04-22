@@ -9,26 +9,26 @@
       "lat": 1.30888261835169,
       "lng": 103.885424848249
     },
-    "medianPrice": 909000,
+    "medianPrice": 920000,
     "priceIqr": [
-      894750,
-      925000
+      898000,
+      930000
     ],
-    "pricePerSqmMedian": 9774.19,
-    "pricePerSqftMedian": 908.05,
-    "transactionCount": 4,
+    "pricePerSqmMedian": 9892.47,
+    "pricePerSqftMedian": 919.04,
+    "transactionCount": 5,
     "floorAreaRange": [
       85,
       93
     ],
     "leaseCommenceRange": [
-      2005,
-      2005
+      2003,
+      2003
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2009-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "DAKOTA MRT STATION",
       "distanceMeters": 297
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "DAKOTA MRT STATION",
+        "distanceMeters": 297
+      },
+      {
+        "stationName": "MOUNTBATTEN MRT STATION",
+        "distanceMeters": 394
+      },
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 880
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -240,11 +254,30 @@
       "medianPrice": 940000,
       "transactionCount": 1,
       "medianPricePerSqm": 10107.53
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 930000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10000
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-49-jln-tiga-2026-01-224407",
+      "id": "geylang-49-jln-tiga-2026-04-224440",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2005,
+      "remainingLease": "78 years",
+      "resalePrice": 930000,
+      "pricePerSqm": 10000,
+      "pricePerSqft": 929.03
+    },
+    {
+      "id": "geylang-49-jln-tiga-2026-01-224437",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -489,19 +522,6 @@
       "resalePrice": 728000,
       "pricePerSqm": 7827.96,
       "pricePerSqft": 727.24
-    },
-    {
-      "id": "geylang-49-jln-tiga-2016-10-971460",
-      "month": "2016-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2005,
-      "remainingLease": "87",
-      "resalePrice": 738000,
-      "pricePerSqm": 7935.48,
-      "pricePerSqft": 737.23
     }
   ]
 }

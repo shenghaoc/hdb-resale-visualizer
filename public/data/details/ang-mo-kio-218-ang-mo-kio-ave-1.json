@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "MAYFLOWER MRT STATION",
       "distanceMeters": 838
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MAYFLOWER MRT STATION",
+        "distanceMeters": 838
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 909
+      },
+      {
+        "stationName": "ANG MO KIO MRT STATION",
+        "distanceMeters": 972
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1037,7 +1051,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-218-ang-mo-kio-ave-1-2026-04-222182",
+      "id": "ang-mo-kio-218-ang-mo-kio-ave-1-2026-04-222185",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

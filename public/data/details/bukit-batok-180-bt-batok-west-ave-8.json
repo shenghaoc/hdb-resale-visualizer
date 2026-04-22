@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 766
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 766
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1140
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1292
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -965,7 +979,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-180-bt-batok-west-ave-8-2026-04-222912",
+      "id": "bukit-batok-180-bt-batok-west-ave-8-2026-04-222928",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

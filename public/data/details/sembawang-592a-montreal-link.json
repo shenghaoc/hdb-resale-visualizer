@@ -22,8 +22,8 @@
       93
     ],
     "leaseCommenceRange": [
-      2015,
-      2015
+      2013,
+      2013
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SEMBAWANG MRT STATION",
       "distanceMeters": 776
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SEMBAWANG MRT STATION",
+        "distanceMeters": 776
+      },
+      {
+        "stationName": "CANBERRA MRT STATION",
+        "distanceMeters": 857
+      },
+      {
+        "stationName": "YISHUN MRT STATION",
+        "distanceMeters": 2522
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -215,7 +229,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-592a-montreal-link-2026-03-226679",
+      "id": "sembawang-592a-montreal-link-2026-03-226744",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -228,7 +242,7 @@
       "pricePerSqft": 617.36
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-03-226681",
+      "id": "sembawang-592a-montreal-link-2026-03-226746",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -241,7 +255,7 @@
       "pricePerSqft": 679.29
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-02-226677",
+      "id": "sembawang-592a-montreal-link-2026-02-226742",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -254,7 +268,7 @@
       "pricePerSqft": 569.41
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-01-226589",
+      "id": "sembawang-592a-montreal-link-2026-01-226654",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

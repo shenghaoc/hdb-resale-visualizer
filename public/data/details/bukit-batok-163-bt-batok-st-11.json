@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      1985,
-      1985
+      1983,
+      1983
     ],
     "latestMonth": "2025-08",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 719
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 719
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1264
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1573
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1014,7 +1028,7 @@
       "pricePerSqft": 381.79
     },
     {
-      "id": "bukit-batok-163-bt-batok-st-11-2016-10-971111",
+      "id": "bukit-batok-163-bt-batok-st-11-2016-10-971233",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

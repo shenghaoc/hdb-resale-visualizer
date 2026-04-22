@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "BISHAN MRT STATION",
       "distanceMeters": 775
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BISHAN MRT STATION",
+        "distanceMeters": 775
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 927
+      },
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 1083
+      }
+    ]
   },
   "monthlyTrend": [
     {

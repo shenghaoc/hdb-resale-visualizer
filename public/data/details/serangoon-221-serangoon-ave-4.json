@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "SERANGOON MRT STATION",
       "distanceMeters": 912
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SERANGOON MRT STATION",
+        "distanceMeters": 912
+      },
+      {
+        "stationName": "LORONG CHUAN MRT STATION",
+        "distanceMeters": 1148
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1391
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1099,7 +1113,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-221-serangoon-ave-4-2026-01-227322",
+      "id": "serangoon-221-serangoon-ave-4-2026-01-227398",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

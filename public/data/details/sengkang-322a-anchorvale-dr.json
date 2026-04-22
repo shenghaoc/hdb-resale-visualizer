@@ -22,8 +22,8 @@
       86
     ],
     "leaseCommenceRange": [
-      2002,
-      2002
+      2000,
+      2000
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 330
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 330
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 549
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 563
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -454,7 +468,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-322a-anchorvale-dr-2026-01-226895",
+      "id": "sengkang-322a-anchorvale-dr-2026-01-226962",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -701,7 +715,7 @@
       "pricePerSqft": 429.95
     },
     {
-      "id": "sengkang-322a-anchorvale-dr-2016-09-970337",
+      "id": "sengkang-322a-anchorvale-dr-2016-09-970459",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

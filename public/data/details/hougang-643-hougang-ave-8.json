@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "HOUGANG MRT STATION",
       "distanceMeters": 1264
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 1264
+      },
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1341
+      },
+      {
+        "stationName": "BUANGKOK MRT STATION",
+        "distanceMeters": 1888
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -618,7 +632,7 @@
       "pricePerSqft": 323.61
     },
     {
-      "id": "hougang-643-hougang-ave-8-2016-08-968050",
+      "id": "hougang-643-hougang-ave-8-2016-08-968172",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -631,7 +645,7 @@
       "pricePerSqft": 362.32
     },
     {
-      "id": "hougang-643-hougang-ave-8-2016-03-959266",
+      "id": "hougang-643-hougang-ave-8-2016-03-959388",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -644,7 +658,7 @@
       "pricePerSqft": 367.74
     },
     {
-      "id": "hougang-643-hougang-ave-8-2012-08-610747",
+      "id": "hougang-643-hougang-ave-8-2012-08-610869",
       "month": "2012-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -657,7 +671,7 @@
       "pricePerSqft": 408.77
     },
     {
-      "id": "hougang-643-hougang-ave-8-2011-06-584052",
+      "id": "hougang-643-hougang-ave-8-2011-06-584174",
       "month": "2011-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -670,7 +684,7 @@
       "pricePerSqft": 367.74
     },
     {
-      "id": "hougang-643-hougang-ave-8-2011-02-576249",
+      "id": "hougang-643-hougang-ave-8-2011-02-576371",
       "month": "2011-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -683,7 +697,7 @@
       "pricePerSqft": 329.03
     },
     {
-      "id": "hougang-643-hougang-ave-8-2010-04-548298",
+      "id": "hougang-643-hougang-ave-8-2010-04-548420",
       "month": "2010-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

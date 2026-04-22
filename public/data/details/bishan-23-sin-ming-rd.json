@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "UPPER THOMSON MRT STATION",
       "distanceMeters": 212
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "UPPER THOMSON MRT STATION",
+        "distanceMeters": 212
+      },
+      {
+        "stationName": "MARYMOUNT MRT STATION",
+        "distanceMeters": 699
+      },
+      {
+        "stationName": "BRIGHT HILL MRT STATION",
+        "distanceMeters": 951
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -748,7 +762,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-23-sin-ming-rd-2026-03-222699",
+      "id": "bishan-23-sin-ming-rd-2026-03-222711",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -761,7 +775,7 @@
       "pricePerSqft": 624.59
     },
     {
-      "id": "bishan-23-sin-ming-rd-2026-01-222695",
+      "id": "bishan-23-sin-ming-rd-2026-01-222707",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -774,7 +788,7 @@
       "pricePerSqft": 428.78
     },
     {
-      "id": "bishan-23-sin-ming-rd-2026-01-222697",
+      "id": "bishan-23-sin-ming-rd-2026-01-222709",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

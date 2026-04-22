@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 301
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 301
+      },
+      {
+        "stationName": "BOON LAY MRT STATION",
+        "distanceMeters": 1510
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1610
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1343,7 +1357,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-518-jurong-west-st-52-2026-04-225116",
+      "id": "jurong-west-518-jurong-west-st-52-2026-04-225160",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1356,7 +1370,7 @@
       "pricePerSqft": 531.51
     },
     {
-      "id": "jurong-west-518-jurong-west-st-52-2026-03-225115",
+      "id": "jurong-west-518-jurong-west-st-52-2026-03-225159",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1369,7 +1383,7 @@
       "pricePerSqft": 562.78
     },
     {
-      "id": "jurong-west-518-jurong-west-st-52-2026-01-225022",
+      "id": "jurong-west-518-jurong-west-st-52-2026-01-225063",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

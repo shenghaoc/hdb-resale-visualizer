@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2017,
-      2017
+      2016,
+      2016
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "SENGKANG MRT STATION",
       "distanceMeters": 176
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "SENGKANG MRT STATION",
+        "distanceMeters": 176
+      },
+      {
+        "stationName": "RENJONG LRT STATION",
+        "distanceMeters": 546
+      },
+      {
+        "stationName": "CHENG LIM LRT STATION",
+        "distanceMeters": 631
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -233,7 +247,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-216b-compassvale-dr-2026-03-227185",
+      "id": "sengkang-216b-compassvale-dr-2026-03-227258",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

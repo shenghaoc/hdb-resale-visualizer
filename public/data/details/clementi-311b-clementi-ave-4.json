@@ -22,8 +22,8 @@
       105
     ],
     "leaseCommenceRange": [
-      2014,
-      2014
+      2015,
+      2015
     ],
     "latestMonth": "2026-03",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 445
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 445
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1665
+      },
+      {
+        "stationName": "BEAUTY WORLD MRT STATION",
+        "distanceMeters": 2545
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -378,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-311b-clementi-ave-4-2026-03-224142",
+      "id": "clementi-311b-clementi-ave-4-2026-03-224171",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "34 TO 36",
@@ -391,7 +405,7 @@
       "pricePerSqft": 1097.63
     },
     {
-      "id": "clementi-311b-clementi-ave-4-2026-02-224215",
+      "id": "clementi-311b-clementi-ave-4-2026-02-224244",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -404,7 +418,7 @@
       "pricePerSqft": 1148.38
     },
     {
-      "id": "clementi-311b-clementi-ave-4-2026-01-224205",
+      "id": "clementi-311b-clementi-ave-4-2026-01-224234",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",

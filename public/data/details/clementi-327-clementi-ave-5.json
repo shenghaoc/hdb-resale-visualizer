@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CLEMENTI MRT STATION",
       "distanceMeters": 89
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 89
+      },
+      {
+        "stationName": "DOVER MRT STATION",
+        "distanceMeters": 1339
+      },
+      {
+        "stationName": "BUONA VISTA MRT STATION",
+        "distanceMeters": 2760
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -941,7 +955,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-327-clementi-ave-5-2026-03-224151",
+      "id": "clementi-327-clementi-ave-5-2026-03-224180",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

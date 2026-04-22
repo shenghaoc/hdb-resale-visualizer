@@ -22,8 +22,8 @@
       74
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1970,
+      1970
     ],
     "latestMonth": "2025-11",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "ESPLANADE MRT STATION",
       "distanceMeters": 130
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ESPLANADE MRT STATION",
+        "distanceMeters": 130
+      },
+      {
+        "stationName": "CITY HALL MRT STATION",
+        "distanceMeters": 238
+      },
+      {
+        "stationName": "BRAS BASAH MRT STATION",
+        "distanceMeters": 417
+      }
+    ]
   },
   "monthlyTrend": [
     {

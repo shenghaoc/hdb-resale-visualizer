@@ -44,7 +44,21 @@
     "nearestMrt": {
       "stationName": "ALJUNIED MRT STATION",
       "distanceMeters": 513
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "ALJUNIED MRT STATION",
+        "distanceMeters": 513
+      },
+      {
+        "stationName": "PAYA LEBAR MRT STATION",
+        "distanceMeters": 562
+      },
+      {
+        "stationName": "CC9",
+        "distanceMeters": 685
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -998,7 +1012,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-124-geylang-east-ave-1-2026-02-224445",
+      "id": "geylang-124-geylang-east-ave-1-2026-02-224477",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

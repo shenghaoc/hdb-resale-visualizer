@@ -22,8 +22,8 @@
       67
     ],
     "leaseCommenceRange": [
-      1971,
-      1971
+      1970,
+      1970
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TOA PAYOH MRT STATION",
       "distanceMeters": 1007
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TOA PAYOH MRT STATION",
+        "distanceMeters": 1007
+      },
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 1343
+      },
+      {
+        "stationName": "BRADDELL MRT STATION",
+        "distanceMeters": 1348
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -1210,7 +1224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-04-228076",
+      "id": "toa-payoh-26-toa-payoh-east-2026-04-228171",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1223,7 +1237,7 @@
       "pricePerSqft": 499.18
     },
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-02-228072",
+      "id": "toa-payoh-26-toa-payoh-east-2026-02-228167",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1236,7 +1250,7 @@
       "pricePerSqft": 513.05
     },
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-01-228071",
+      "id": "toa-payoh-26-toa-payoh-east-2026-01-228166",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

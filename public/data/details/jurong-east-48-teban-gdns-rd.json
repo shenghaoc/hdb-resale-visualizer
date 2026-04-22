@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1370
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1370
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2454
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 2839
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -707,7 +721,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-48-teban-gdns-rd-2026-01-224889",
+      "id": "jurong-east-48-teban-gdns-rd-2026-01-224927",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -889,7 +903,7 @@
       "pricePerSqft": 344.64
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2015-06-945996",
+      "id": "jurong-east-48-teban-gdns-rd-2015-06-946118",
       "month": "2015-06",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -902,7 +916,7 @@
       "pricePerSqft": 366.15
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2015-02-940046",
+      "id": "jurong-east-48-teban-gdns-rd-2015-02-940168",
       "month": "2015-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -915,7 +929,7 @@
       "pricePerSqft": 393.47
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2015-02-940059",
+      "id": "jurong-east-48-teban-gdns-rd-2015-02-940181",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -928,7 +942,7 @@
       "pricePerSqft": 369.72
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2014-09-645990",
+      "id": "jurong-east-48-teban-gdns-rd-2014-09-646112",
       "month": "2014-09",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -941,7 +955,7 @@
       "pricePerSqft": 392.11
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2014-05-640646",
+      "id": "jurong-east-48-teban-gdns-rd-2014-05-640768",
       "month": "2014-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -954,7 +968,7 @@
       "pricePerSqft": 389.37
     },
     {
-      "id": "jurong-east-48-teban-gdns-rd-2012-11-616390",
+      "id": "jurong-east-48-teban-gdns-rd-2012-11-616512",
       "month": "2012-11",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

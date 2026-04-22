@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "YEW TEE MRT STATION",
       "distanceMeters": 5433
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "YEW TEE MRT STATION",
+        "distanceMeters": 5433
+      },
+      {
+        "stationName": "CHOA CHU KANG MRT STATION",
+        "distanceMeters": 5957
+      },
+      {
+        "stationName": "CHOA CHU KANG LRT STATION",
+        "distanceMeters": 6042
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -220,7 +234,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-12-878519",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-12-878641",
       "month": "1998-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -233,7 +247,7 @@
       "pricePerSqft": 105.5
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-11-873469",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-11-873591",
       "month": "1998-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -246,7 +260,7 @@
       "pricePerSqft": 111.93
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-09-862814",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-09-862936",
       "month": "1998-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -259,7 +273,7 @@
       "pricePerSqft": 109.79
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-09-862815",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-09-862937",
       "month": "1998-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -272,7 +286,7 @@
       "pricePerSqft": 103.93
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-05-845694",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-05-845816",
       "month": "1998-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -285,7 +299,7 @@
       "pricePerSqft": 121.25
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-04-841822",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-04-841944",
       "month": "1998-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -298,7 +312,7 @@
       "pricePerSqft": 112.81
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-01-831189",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1998-01-831311",
       "month": "1998-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -311,7 +325,7 @@
       "pricePerSqft": 114.14
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1997-04-806853",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1997-04-806975",
       "month": "1997-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -324,7 +338,7 @@
       "pricePerSqft": 174.61
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-12-796598",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-12-796720",
       "month": "1996-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -337,7 +351,7 @@
       "pricePerSqft": 138.57
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-12-796599",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-12-796721",
       "month": "1996-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -350,7 +364,7 @@
       "pricePerSqft": 145.99
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-10-790758",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-10-790880",
       "month": "1996-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -363,7 +377,7 @@
       "pricePerSqft": 164.54
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-07-781516",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-07-781638",
       "month": "1996-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -376,7 +390,7 @@
       "pricePerSqft": 134.32
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-06-778474",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-06-778596",
       "month": "1996-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -389,7 +403,7 @@
       "pricePerSqft": 135.42
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-02-767510",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1996-02-767632",
       "month": "1996-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -402,7 +416,7 @@
       "pricePerSqft": 101.35
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-07-747566",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-07-747688",
       "month": "1995-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -415,7 +429,7 @@
       "pricePerSqft": 111.93
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-03-740137",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-03-740259",
       "month": "1995-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -428,7 +442,7 @@
       "pricePerSqft": 106.33
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-01-736776",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1995-01-736898",
       "month": "1995-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -441,7 +455,7 @@
       "pricePerSqft": 81.88
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-11-732535",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-11-732657",
       "month": "1994-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -454,7 +468,7 @@
       "pricePerSqft": 99.99
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-09-728908",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-09-729030",
       "month": "1994-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -467,7 +481,7 @@
       "pricePerSqft": 76.98
     },
     {
-      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-07-724907",
+      "id": "lim-chu-kang-4-lim-chu-kang-rd-1994-07-725029",
       "month": "1994-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

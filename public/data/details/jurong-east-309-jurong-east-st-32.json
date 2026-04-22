@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "CHINESE GARDEN MRT STATION",
       "distanceMeters": 602
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 602
+      },
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1416
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1680
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -948,7 +962,7 @@
       "pricePerSqft": 348.84
     },
     {
-      "id": "jurong-east-309-jurong-east-st-32-2016-02-957908",
+      "id": "jurong-east-309-jurong-east-st-32-2016-02-958030",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

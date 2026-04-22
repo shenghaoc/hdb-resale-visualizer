@@ -22,8 +22,8 @@
       101
     ],
     "leaseCommenceRange": [
-      1997,
-      1997
+      1995,
+      1995
     ],
     "latestMonth": "2023-03",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES WEST MRT STATION",
       "distanceMeters": 874
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 874
+      },
+      {
+        "stationName": "BEDOK RESERVOIR MRT STATION",
+        "distanceMeters": 1380
+      },
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1435
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -595,7 +609,7 @@
       "pricePerSqft": 432.32
     },
     {
-      "id": "tampines-891a-tampines-ave-8-2016-10-972190",
+      "id": "tampines-891a-tampines-ave-8-2016-10-972312",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -608,7 +622,7 @@
       "pricePerSqft": 400.13
     },
     {
-      "id": "tampines-891a-tampines-ave-8-2015-12-955788",
+      "id": "tampines-891a-tampines-ave-8-2015-12-955910",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -621,7 +635,7 @@
       "pricePerSqft": 395.77
     },
     {
-      "id": "tampines-891a-tampines-ave-8-2015-06-946671",
+      "id": "tampines-891a-tampines-ave-8-2015-06-946793",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -634,7 +648,7 @@
       "pricePerSqft": 406.57
     },
     {
-      "id": "tampines-891a-tampines-ave-8-2015-05-944964",
+      "id": "tampines-891a-tampines-ave-8-2015-05-945086",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -647,7 +661,7 @@
       "pricePerSqft": 421.28
     },
     {
-      "id": "tampines-891a-tampines-ave-8-2015-04-943377",
+      "id": "tampines-891a-tampines-ave-8-2015-04-943499",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

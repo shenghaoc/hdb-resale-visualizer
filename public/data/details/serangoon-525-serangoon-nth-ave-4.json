@@ -22,8 +22,8 @@
       156
     ],
     "leaseCommenceRange": [
-      1992,
-      1992
+      1991,
+      1991
     ],
     "latestMonth": "2025-10",
     "availableDateRange": [
@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "KOVAN MRT STATION",
       "distanceMeters": 1881
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "KOVAN MRT STATION",
+        "distanceMeters": 1881
+      },
+      {
+        "stationName": "HOUGANG MRT STATION",
+        "distanceMeters": 2139
+      },
+      {
+        "stationName": "FERNVALE LRT STATION",
+        "distanceMeters": 2260
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -693,7 +707,7 @@
       "pricePerSqft": 437.72
     },
     {
-      "id": "serangoon-525-serangoon-nth-ave-4-2016-07-966943",
+      "id": "serangoon-525-serangoon-nth-ave-4-2016-07-967065",
       "month": "2016-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -706,7 +720,7 @@
       "pricePerSqft": 449.63
     },
     {
-      "id": "serangoon-525-serangoon-nth-ave-4-2015-11-954386",
+      "id": "serangoon-525-serangoon-nth-ave-4-2015-11-954508",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -719,7 +733,7 @@
       "pricePerSqft": 440.37
     },
     {
-      "id": "serangoon-525-serangoon-nth-ave-4-2015-06-946607",
+      "id": "serangoon-525-serangoon-nth-ave-4-2015-06-946729",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

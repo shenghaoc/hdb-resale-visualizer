@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "JURONG EAST MRT STATION",
       "distanceMeters": 1412
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1412
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 2491
+      },
+      {
+        "stationName": "CLEMENTI MRT STATION",
+        "distanceMeters": 2839
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -911,7 +925,7 @@
       "pricePerSqft": 383.1
     },
     {
-      "id": "jurong-east-47-teban-gdns-rd-2016-07-966358",
+      "id": "jurong-east-47-teban-gdns-rd-2016-07-966480",
       "month": "2016-07",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -924,7 +938,7 @@
       "pricePerSqft": 366.15
     },
     {
-      "id": "jurong-east-47-teban-gdns-rd-2015-08-949138",
+      "id": "jurong-east-47-teban-gdns-rd-2015-08-949260",
       "month": "2015-08",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

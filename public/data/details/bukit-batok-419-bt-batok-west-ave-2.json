@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT GOMBAK MRT STATION",
       "distanceMeters": 693
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 693
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 1438
+      },
+      {
+        "stationName": "TECK WHYE LRT STATION",
+        "distanceMeters": 1833
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -832,7 +846,7 @@
       "pricePerSqft": 330.16
     },
     {
-      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-07-965967",
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-07-966089",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -845,7 +859,7 @@
       "pricePerSqft": 325.16
     },
     {
-      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-01-956311",
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2016-01-956433",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -858,7 +872,7 @@
       "pricePerSqft": 327.3
     },
     {
-      "id": "bukit-batok-419-bt-batok-west-ave-2-2015-05-943950",
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2015-05-944072",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -871,7 +885,7 @@
       "pricePerSqft": 349.94
     },
     {
-      "id": "bukit-batok-419-bt-batok-west-ave-2-2014-12-650058",
+      "id": "bukit-batok-419-bt-batok-west-ave-2-2014-12-650180",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

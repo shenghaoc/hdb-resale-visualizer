@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 687
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 687
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 865
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 1719
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -833,7 +847,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-120-potong-pasir-ave-1-2026-03-228064",
+      "id": "toa-payoh-120-potong-pasir-ave-1-2026-03-228159",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -846,7 +860,7 @@
       "pricePerSqft": 589.31
     },
     {
-      "id": "toa-payoh-120-potong-pasir-ave-1-2026-01-228173",
+      "id": "toa-payoh-120-potong-pasir-ave-1-2026-01-228269",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "CHINATOWN MRT STATION",
       "distanceMeters": 110
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "CHINATOWN MRT STATION",
+        "distanceMeters": 110
+      },
+      {
+        "stationName": "CLARKE QUAY MRT STATION",
+        "distanceMeters": 190
+      },
+      {
+        "stationName": "DT18",
+        "distanceMeters": 339
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -754,7 +768,7 @@
       "pricePerSqft": 655.79
     },
     {
-      "id": "central-area-538-upp-cross-st-2016-10-971284",
+      "id": "central-area-538-upp-cross-st-2016-10-971406",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -767,7 +781,7 @@
       "pricePerSqft": 727.74
     },
     {
-      "id": "central-area-538-upp-cross-st-2016-03-959003",
+      "id": "central-area-538-upp-cross-st-2016-03-959125",
       "month": "2016-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

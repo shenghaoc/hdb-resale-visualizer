@@ -22,8 +22,8 @@
       112
     ],
     "leaseCommenceRange": [
-      2003,
-      2003
+      2001,
+      2001
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "MERIDIAN LRT STATION",
       "distanceMeters": 205
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "MERIDIAN LRT STATION",
+        "distanceMeters": 205
+      },
+      {
+        "stationName": "CORAL EDGE LRT STATION",
+        "distanceMeters": 372
+      },
+      {
+        "stationName": "COVE LRT STATION",
+        "distanceMeters": 589
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -541,7 +555,7 @@
       "pricePerSqft": 367.39
     },
     {
-      "id": "punggol-174b-edgedale-plains-2016-11-973484",
+      "id": "punggol-174b-edgedale-plains-2016-11-973606",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

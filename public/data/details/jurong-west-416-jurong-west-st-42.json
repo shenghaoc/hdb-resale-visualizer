@@ -22,8 +22,8 @@
       137
     ],
     "leaseCommenceRange": [
-      1984,
-      1984
+      1983,
+      1983
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "LAKESIDE MRT STATION",
       "distanceMeters": 1017
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "LAKESIDE MRT STATION",
+        "distanceMeters": 1017
+      },
+      {
+        "stationName": "CHINESE GARDEN MRT STATION",
+        "distanceMeters": 1313
+      },
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 2617
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -828,7 +842,7 @@
       "pricePerSqft": 293.38
     },
     {
-      "id": "jurong-west-416-jurong-west-st-42-2015-06-946153",
+      "id": "jurong-west-416-jurong-west-st-42-2015-06-946275",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

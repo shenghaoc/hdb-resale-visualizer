@@ -9,26 +9,26 @@
       "lat": 1.36387005013131,
       "lng": 103.93738830427
     },
-    "medianPrice": 618500,
+    "medianPrice": 620000,
     "priceIqr": [
-      604250,
-      747500
+      608500,
+      785000
     ],
-    "pricePerSqmMedian": 8777.35,
-    "pricePerSqftMedian": 815.44,
-    "transactionCount": 6,
+    "pricePerSqmMedian": 8731.17,
+    "pricePerSqftMedian": 811.15,
+    "transactionCount": 7,
     "floorAreaRange": [
       68,
       93
     ],
     "leaseCommenceRange": [
-      2020,
-      2020
+      2019,
+      2019
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2024-11",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "TAMPINES MRT STATION",
       "distanceMeters": 1067
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "TAMPINES MRT STATION",
+        "distanceMeters": 1067
+      },
+      {
+        "stationName": "PASIR RIS MRT STATION",
+        "distanceMeters": 1646
+      },
+      {
+        "stationName": "TAMPINES WEST MRT STATION",
+        "distanceMeters": 2030
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -73,9 +87,28 @@
       "medianPrice": 811999,
       "transactionCount": 1,
       "medianPricePerSqm": 8731.17
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8387.1
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-609d-tampines-nth-dr-1-2026-04-227695",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 07 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 8387.1,
+      "pricePerSqft": 779.19
+    },
     {
       "id": "tampines-609d-tampines-nth-dr-1-2025-10-216399",
       "month": "2025-10",

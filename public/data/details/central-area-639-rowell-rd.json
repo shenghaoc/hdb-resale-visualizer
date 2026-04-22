@@ -22,8 +22,8 @@
       141
     ],
     "leaseCommenceRange": [
-      1983,
-      1983
+      1982,
+      1982
     ],
     "latestMonth": "2026-02",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "JALAN BESAR MRT STATION",
       "distanceMeters": 254
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 254
+      },
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 451
+      },
+      {
+        "stationName": "ROCHOR MRT STATION",
+        "distanceMeters": 457
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -498,7 +512,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-639-rowell-rd-2026-02-223788",
+      "id": "central-area-639-rowell-rd-2026-02-223812",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -745,7 +759,7 @@
       "pricePerSqft": 511.39
     },
     {
-      "id": "central-area-639-rowell-rd-2014-07-643092",
+      "id": "central-area-639-rowell-rd-2014-07-643214",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

@@ -22,8 +22,8 @@
       163
     ],
     "leaseCommenceRange": [
-      1979,
-      1979
+      1978,
+      1978
     ],
     "latestMonth": "2026-01",
     "availableDateRange": [
@@ -43,7 +43,21 @@
     "nearestMrt": {
       "stationName": "FARRER PARK MRT STATION",
       "distanceMeters": 240
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "FARRER PARK MRT STATION",
+        "distanceMeters": 240
+      },
+      {
+        "stationName": "LITTLE INDIA MRT STATION",
+        "distanceMeters": 640
+      },
+      {
+        "stationName": "JALAN BESAR MRT STATION",
+        "distanceMeters": 981
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -943,7 +957,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-50-dorset-rd-2026-01-225414",
+      "id": "kallang-whampoa-50-dorset-rd-2026-01-225461",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

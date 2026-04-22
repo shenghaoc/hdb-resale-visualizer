@@ -40,7 +40,21 @@
     "nearestMrt": {
       "stationName": "POTONG PASIR MRT STATION",
       "distanceMeters": 76
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "POTONG PASIR MRT STATION",
+        "distanceMeters": 76
+      },
+      {
+        "stationName": "WOODLEIGH MRT STATION",
+        "distanceMeters": 648
+      },
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 1337
+      }
+    ]
   },
   "monthlyTrend": [
     {

@@ -22,8 +22,8 @@
       113
     ],
     "leaseCommenceRange": [
-      2019,
-      2019
+      2017,
+      2017
     ],
     "latestMonth": "2026-04",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "BUKIT BATOK MRT STATION",
       "distanceMeters": 673
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "BUKIT BATOK MRT STATION",
+        "distanceMeters": 673
+      },
+      {
+        "stationName": "BUKIT GOMBAK MRT STATION",
+        "distanceMeters": 1561
+      },
+      {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 1798
+      }
+    ]
   },
   "monthlyTrend": [
     {
@@ -234,20 +248,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222938",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "91 years 09 months",
-      "resalePrice": 798000,
-      "pricePerSqm": 8580.65,
-      "pricePerSqft": 797.17
-    },
-    {
-      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222939",
+      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222954",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -258,6 +259,19 @@
       "resalePrice": 750000,
       "pricePerSqm": 8064.52,
       "pricePerSqft": 749.22
+    },
+    {
+      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222955",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "91 years 09 months",
+      "resalePrice": 798000,
+      "pricePerSqm": 8580.65,
+      "pricePerSqft": 797.17
     },
     {
       "id": "bukit-batok-292b-bt-batok-east-ave-6-2025-12-200018",

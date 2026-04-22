@@ -22,8 +22,8 @@
       107
     ],
     "leaseCommenceRange": [
-      1987,
-      1987
+      1986,
+      1986
     ],
     "latestMonth": "2025-12",
     "availableDateRange": [
@@ -41,7 +41,21 @@
     "nearestMrt": {
       "stationName": "PENDING LRT STATION",
       "distanceMeters": 136
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "PENDING LRT STATION",
+        "distanceMeters": 136
+      },
+      {
+        "stationName": "BANGKIT LRT STATION",
+        "distanceMeters": 375
+      },
+      {
+        "stationName": "PETIR LRT STATION",
+        "distanceMeters": 415
+      }
+    ]
   },
   "monthlyTrend": [
     {

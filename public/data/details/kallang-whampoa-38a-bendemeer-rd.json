@@ -22,8 +22,8 @@
       115
     ],
     "leaseCommenceRange": [
-      2012,
-      2012
+      2010,
+      2010
     ],
     "latestMonth": "2025-09",
     "availableDateRange": [
@@ -42,7 +42,21 @@
     "nearestMrt": {
       "stationName": "GEYLANG BAHRU MRT STATION",
       "distanceMeters": 540
-    }
+    },
+    "nearbyMrts": [
+      {
+        "stationName": "GEYLANG BAHRU MRT STATION",
+        "distanceMeters": 540
+      },
+      {
+        "stationName": "BOON KENG MRT STATION",
+        "distanceMeters": 567
+      },
+      {
+        "stationName": "BENDEMEER MRT STATION",
+        "distanceMeters": 813
+      }
+    ]
   },
   "monthlyTrend": [
     {
