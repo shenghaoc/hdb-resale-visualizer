@@ -452,13 +452,29 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
         const [lng, lat] = feature.geometry.coordinates;
 
+        const container = document.createElement("div");
+
+        const addressEl = document.createElement("strong");
+        addressEl.textContent = address;
+        container.appendChild(addressEl);
+
+        if (displayName) {
+          const nameEl = document.createElement("p");
+          nameEl.textContent = displayName;
+          container.appendChild(nameEl);
+        }
+
+        const townEl = document.createElement("p");
+        townEl.textContent = town;
+        container.appendChild(townEl);
+
+        const infoEl = document.createElement("p");
+        infoEl.textContent = `${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`;
+        container.appendChild(infoEl);
+
         popup
           .setLngLat([lng, lat])
-          .setHTML(
-            `<strong>${address}</strong>${
-              displayName ? `<p>${displayName}</p>` : ""
-            }<p>${town}</p><p>${formatCompactCurrency(medianPrice)} median · ${txnCount} txns</p>`
-          )
+          .setDOMContent(container)
           .addTo(map);
       });
 
@@ -483,15 +499,24 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const props = toMrtPopupProperties(feature.properties);
         const stationName = props.stationName ?? "MRT Station";
         const lines = parseMrtLines(props.lines);
-        const linesHtml = lines.length
-          ? `<p class="whitespace-nowrap opacity-80 mt-1">${lines.join(" • ")}</p>`
-          : "";
-
         const [lng, lat] = feature.geometry.coordinates;
+
+        const container = document.createElement("div");
+
+        const nameEl = document.createElement("strong");
+        nameEl.textContent = stationName;
+        container.appendChild(nameEl);
+
+        if (lines.length) {
+          const linesEl = document.createElement("p");
+          linesEl.className = "whitespace-nowrap opacity-80 mt-1";
+          linesEl.textContent = lines.join(" • ");
+          container.appendChild(linesEl);
+        }
 
         popup
           .setLngLat([lng, lat])
-          .setHTML(`<strong>${stationName}</strong>${linesHtml}`)
+          .setDOMContent(container)
           .addTo(map);
       });
 
