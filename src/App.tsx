@@ -135,17 +135,21 @@ function App() {
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  const mapFilters = useMemo(
-    () => ({ ...filters, search: debouncedSearch }),
+  const stableFilters = useMemo(
+    () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [debouncedSearch, filters.town, filters.flatType, filters.flatModel,
+    [filters.search, filters.town, filters.flatType, filters.flatModel,
      filters.budgetMin, filters.budgetMax, filters.areaMin, filters.areaMax,
      filters.remainingLeaseMin, filters.startMonth, filters.endMonth,
-     filters.mrtMax, filters.selectedAddressKey],
+     filters.mrtMax],
+  );
+  const mapFilters = useMemo(
+    () => ({ ...stableFilters, search: debouncedSearch }),
+    [debouncedSearch, stableFilters],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, filters)),
-    [blocks, filters],
+    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
+    [blocks, stableFilters],
   );
   const mapFilteredBlocks = useMemo(
     () => blocks.filter((block) => matchesFilter(block, mapFilters)),
@@ -196,6 +200,9 @@ function App() {
   function patchFilters(patch: Partial<FilterState>) {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
+      if (!patch.selectedAddressKey) {
+        setDetail(null);
+      }
     }
 
     startTransition(() => {
@@ -244,6 +251,7 @@ function App() {
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
       onReset={() => {
+        setDetail(null);
         setIsDetailLoading(false);
         setFilters(DEFAULT_FILTERS);
       }}
