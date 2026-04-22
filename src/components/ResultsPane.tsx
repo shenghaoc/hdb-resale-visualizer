@@ -107,7 +107,7 @@ function BlockCard({
               }}
               type="button"
               className="size-7 p-0"
-              aria-label={isSaved ? t("results.saved") : t("results.save")}
+              aria-label={`${isSaved ? t("results.saved") : t("results.save")} ${block.block} ${block.streetName}`}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
               <Bookmark className={cn("size-3.5", isSaved && "fill-current")} />
