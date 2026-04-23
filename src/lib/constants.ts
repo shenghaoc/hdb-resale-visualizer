@@ -6,6 +6,7 @@ export const QUERY_VERSION = "1";
 export const ONEMAP_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/GreyLite/{z}/{x}/{y}.png";
 export const ONEMAP_ATTRIBUTION =
   '&copy; <a href="https://www.onemap.gov.sg/home">OneMap</a> contributors';
+export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1200;
 
 export const DEFAULT_FILTERS: FilterState = {
   search: "",

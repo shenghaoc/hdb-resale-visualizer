@@ -11,6 +11,7 @@ type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
   townFilter?: string | null;
+  autoFitKey?: string | null;
   onSelect: (addressKey: string) => void;
 };
 
@@ -93,13 +94,20 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
   return { stationName, lines };
 }
 
-export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
+export function MapView({
+  blocks,
+  selectedAddressKey,
+  townFilter,
+  autoFitKey,
+  onSelect,
+}: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
   const popupRef = useRef<Popup | null>(null);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
+  const previousAutoFitKeyRef = useRef<string | null>(null);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -519,9 +527,14 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
     if (!map || blocks.length === 0) return;
 
     const nextTownFilter = debouncedTownFilter ?? null;
-    const shouldFit = !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+    const nextAutoFitKey = autoFitKey ?? null;
+    const shouldFit =
+      !hasInitialFitRef.current ||
+      previousTownFilterRef.current !== nextTownFilter ||
+      previousAutoFitKeyRef.current !== nextAutoFitKey;
 
     previousTownFilterRef.current = nextTownFilter;
+    previousAutoFitKeyRef.current = nextAutoFitKey;
 
     if (!shouldFit) {
       return;
@@ -553,7 +566,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       ],
       { padding: 60, maxZoom: 15, duration: 1200 },
     );
-  }, [blocks, debouncedTownFilter]);
+  }, [autoFitKey, blocks, debouncedTownFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
@@ -568,4 +581,3 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }
-
