@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -87,22 +87,22 @@ function BlockCard({
         className={cn(
           "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
           isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
-          "gap-2 px-3 py-2.5",
+          "h-[86px] min-h-[86px] max-h-[86px] gap-2 px-3 py-2.5",
         )}
         onClick={() => onSelect(block.addressKey)}
       >
-        <ItemHeader className="basis-full">
-          <ItemContent>
-            <div className="result-address flex flex-col">
-              <strong className="font-heading text-base font-semibold leading-tight">
+        <ItemHeader className="basis-full min-w-0">
+          <ItemContent className="min-w-0">
+            <div className="result-address flex min-w-0 flex-col">
+              <strong className="truncate font-heading text-base font-semibold leading-tight">
                 {block.block} {block.streetName}
               </strong>
-              <span className="text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="truncate text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
                 {block.town}
               </span>
             </div>
           </ItemContent>
-          <ItemActions>
+          <ItemActions className="shrink-0">
             <Button
               size="xs"
               variant={isSaved ? "secondary" : "ghost"}
@@ -119,16 +119,16 @@ function BlockCard({
             </Button>
           </ItemActions>
         </ItemHeader>
-        <div className="flex w-full items-center justify-between border-t border-border/40 pt-2">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+        <div className="flex w-full min-w-0 items-center justify-between border-t border-border/40 pt-2">
+          <div className="flex min-w-0 items-baseline gap-1.5">
+            <span className="shrink-0 text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
               {t("results.median")}:{" "}
             </span>
-            <strong className="font-heading text-sm font-semibold">
+            <strong className="truncate font-heading text-sm font-semibold">
               {formatCompactCurrency(block.medianPrice, locale)}
             </strong>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.6rem]">
               {block.flatTypes[0]}
             </Badge>
@@ -260,14 +260,55 @@ export function ResultsPane({
     { value: "latest-desc", label: t("results.sort.recentActivity") },
   ];
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
+  const listContainerRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const compactRowHeight = 86;
+  const compactRowGap = 8;
+  const compactRowStride = compactRowHeight + compactRowGap;
 
   const sortedBlocks = useMemo(() => {
     return [...blocks].sort((left, right) => {
       return getSortValue(left, sortMode) - getSortValue(right, sortMode);
     });
   }, [blocks, sortMode]);
+  const shouldVirtualize = isCompact && sortedBlocks.length > 80;
+
+  useEffect(() => {
+    if (!isCompact || !hasTownFilter) {
+      return;
+    }
+
+    const container = listContainerRef.current;
+    const scroller = scrollParent ?? container;
+    if (!container || !scroller) {
+      return;
+    }
+
+    const updateViewport = () => {
+      setViewportHeight(scroller.clientHeight);
+    };
+
+    const handleScroll = () => {
+      const currentScrollTop =
+        scroller === container
+          ? container.scrollTop
+          : Math.max(0, scroller.getBoundingClientRect().top - container.getBoundingClientRect().top);
+      setScrollTop(currentScrollTop);
+    };
+
+    updateViewport();
+    handleScroll();
+    scroller.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", updateViewport);
+
+    return () => {
+      scroller.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateViewport);
+    };
+  }, [hasTownFilter, isCompact, scrollParent, sortedBlocks.length]);
 
   const [prevBlocks, setPrevBlocks] = useState(blocks);
   if (blocks !== prevBlocks) {
@@ -281,6 +322,14 @@ export function ResultsPane({
     (visiblePage - 1) * itemsPerPage,
     visiblePage * itemsPerPage,
   );
+  const overscan = 8;
+  const virtualStartIndex = Math.max(0, Math.floor(scrollTop / compactRowStride) - overscan);
+  const virtualVisibleRows =
+    Math.ceil((viewportHeight || compactRowStride * 8) / compactRowStride) + overscan * 2;
+  const virtualEndIndex = Math.min(sortedBlocks.length, virtualStartIndex + virtualVisibleRows);
+  const virtualBlocks = sortedBlocks.slice(virtualStartIndex, virtualEndIndex);
+  const virtualTopPadding = virtualStartIndex * compactRowStride;
+  const virtualBottomPadding = Math.max(0, (sortedBlocks.length - virtualEndIndex) * compactRowStride);
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
@@ -392,9 +441,22 @@ export function ResultsPane({
             </div>
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">
-              <div className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}>
-                <ItemGroup className="flex flex-col gap-4">
-                  {currentBlocks.map((block) => (
+              <div
+                ref={listContainerRef}
+                className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}
+              >
+                <ItemGroup
+                  className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
+                  style={
+                    shouldVirtualize
+                      ? {
+                          paddingTop: virtualTopPadding,
+                          paddingBottom: virtualBottomPadding,
+                        }
+                      : undefined
+                  }
+                >
+                  {(shouldVirtualize ? virtualBlocks : isCompact ? sortedBlocks : currentBlocks).map((block) => (
                     <BlockCard
                       key={block.addressKey}
                       block={block}
@@ -406,7 +468,7 @@ export function ResultsPane({
                     />
                   ))}
                 </ItemGroup>
-                {renderPagination()}
+                {!isCompact ? renderPagination() : null}
               </div>
             </div>
           )}
