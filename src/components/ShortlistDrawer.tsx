@@ -1,9 +1,14 @@
 import { useMemo, useState } from "react";
+import * as echarts from "echarts/core";
+import { LineChart } from "echarts/charts";
+import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import ReactEChartsCore from "echarts-for-react/lib/core";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
-import type { AddressDetailSummary, BlockSummary, ShortlistItem } from "@/types/data";
+import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -27,6 +32,7 @@ type ShortlistRow = {
   item: ShortlistItem;
   block: BlockSummary;
   detailSummary: AddressDetailSummary | null;
+  monthlyTrend: AddressTrendPoint[];
 };
 
 type CompareMode = "median" | "lease" | "mrt" | "target-gap";
@@ -44,6 +50,8 @@ type GapInfo = {
   labelKey: "shortlist.gap.belowTarget" | "shortlist.gap.aboveTarget";
   tone: "positive" | "negative";
 };
+
+echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
 
 function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | null {
   if (targetPrice === null) {
@@ -171,6 +179,64 @@ export function ShortlistDrawer({
     };
   }, [rows]);
 
+  const comparisonRows = useMemo(
+    () => rows.filter((row) => row.monthlyTrend.length > 0),
+    [rows],
+  );
+  const compareOption = useMemo(() => {
+    if (comparisonRows.length < 2) {
+      return null;
+    }
+
+    const monthSet = new Set<string>();
+    for (const row of comparisonRows) {
+      for (const point of row.monthlyTrend) {
+        monthSet.add(point.month);
+      }
+    }
+    const months = [...monthSet].sort((left, right) => left.localeCompare(right));
+    const series = comparisonRows.map((row) => {
+      const monthToPrice = new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice]));
+      return {
+        name: `${row.block.block} ${row.block.streetName}`,
+        type: "line",
+        smooth: true,
+        showSymbol: false,
+        lineStyle: { width: 2.5 },
+        data: months.map((month) => monthToPrice.get(month) ?? null),
+      };
+    });
+
+    return {
+      animationDuration: 400,
+      backgroundColor: "transparent",
+      grid: { left: 8, right: 12, top: 56, bottom: 30, containLabel: true },
+      tooltip: {
+        trigger: "axis",
+        valueFormatter: (value: number | null) =>
+          value === null ? t("shortlist.na") : formatCompactCurrency(value),
+      },
+      legend: {
+        type: "scroll",
+        top: 8,
+      },
+      xAxis: {
+        type: "category",
+        data: months,
+        axisLabel: {
+          formatter: (value: string) => value.slice(2),
+        },
+      },
+      yAxis: {
+        type: "value",
+        axisLabel: {
+          formatter: (value: number) => formatCompactCurrency(value),
+        },
+      },
+      series,
+    };
+  }, [comparisonRows, t]);
+
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col bg-background">
@@ -265,6 +331,22 @@ export function ShortlistDrawer({
                       </div>
                     </CardContent>
                   </Card>
+                  {compareOption ? (
+                    <Card size="sm" className="bg-muted/40">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base">{t("shortlist.compareTrendsTitle")}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p className="pb-3 text-xs text-muted-foreground">{t("shortlist.compareTrendsHint")}</p>
+                        <ReactEChartsCore
+                          echarts={echarts}
+                          notMerge
+                          option={compareOption}
+                          style={{ height: 260, width: "100%" }}
+                        />
+                      </CardContent>
+                    </Card>
+                  ) : null}
 
                     {rankedRows.map((row) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);

@@ -10,7 +10,6 @@ import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import type {
   AddressDetail,
-  AddressDetailSummary,
   BlockSummary,
   FilterState,
   Manifest,
@@ -59,9 +58,7 @@ function App() {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
-  const [shortlistDetailSummaries, setShortlistDetailSummaries] = useState<
-    Record<string, AddressDetailSummary | null>
-  >({});
+  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -211,10 +208,15 @@ function App() {
             item,
             block,
             detailSummary:
-              shortlistDetailSummaries[item.addressKey] ??
+              shortlistDetails[item.addressKey]?.summary ??
               (selectedDetail?.summary.addressKey === item.addressKey
                 ? selectedDetail.summary
                 : null),
+            monthlyTrend:
+              shortlistDetails[item.addressKey]?.monthlyTrend ??
+              (selectedDetail?.summary.addressKey === item.addressKey
+                ? selectedDetail.monthlyTrend
+                : []),
           };
         })
         .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
@@ -235,7 +237,7 @@ function App() {
           return left.item.addedAt.localeCompare(right.item.addedAt);
         });
     },
-    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetailSummaries],
+    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetails],
   );
 
   useEffect(() => {
@@ -245,7 +247,7 @@ function App() {
 
     const missingAddressKeys = shortlist.items
       .map((item) => item.addressKey)
-      .filter((addressKey) => !(addressKey in shortlistDetailSummaries));
+      .filter((addressKey) => !(addressKey in shortlistDetails));
 
     if (missingAddressKeys.length === 0) {
       return;
@@ -257,7 +259,7 @@ function App() {
       missingAddressKeys.map(async (addressKey) => {
         try {
           const nextDetail = await fetchAddressDetail(addressKey);
-          return [addressKey, nextDetail.summary] as const;
+          return [addressKey, nextDetail] as const;
         } catch {
           return [addressKey, null] as const;
         }
@@ -267,10 +269,10 @@ function App() {
         return;
       }
 
-      setShortlistDetailSummaries((current) => {
+      setShortlistDetails((current) => {
         const next = { ...current };
-        for (const [addressKey, summary] of entries) {
-          next[addressKey] = summary;
+        for (const [addressKey, detailData] of entries) {
+          next[addressKey] = detailData;
         }
 
         return next;
@@ -280,7 +282,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetailSummaries]);
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
 
   function handleSelectAddress(addressKey: string) {
     if (isDesktop) {
