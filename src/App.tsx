@@ -43,7 +43,7 @@ type LoadedDetail = {
 };
 
 function App() {
-  const { locale, setLocale, t } = useI18n();
+  const { t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -362,13 +362,14 @@ function App() {
         onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
+        t={t}
       />
     </Suspense>
   );
 
   const selectedDetailContent =
     detailVisible || detailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
         <DetailDrawer
           detail={selectedDetail}
           selectedBlock={selectedBlock}
@@ -385,7 +386,7 @@ function App() {
     ) : null;
 
   const resultsPaneContent = resultsVisible ? (
-    <Suspense fallback={<DrawerSkeleton label="Loading results…" />}>
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
       <ResultsPane
         blocks={filteredBlocks}
         hasTownFilter={!!filters.town || !!filters.search}
@@ -398,7 +399,7 @@ function App() {
     </Suspense>
   ) : null;
   const savedContent = savedVisible ? (
-    <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
         onRemove={(addressKey) => shortlist.toggle(addressKey)}
@@ -412,9 +413,7 @@ function App() {
   return (
     <>
       <main className="relative min-h-dvh w-full overflow-hidden">
-        <div className="absolute inset-0">
-          {mapContent}
-        </div>
+        <div className="absolute inset-0">{mapContent}</div>
 
         <div className="pointer-events-none absolute inset-0 z-10 flex min-h-dvh flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
           {isDesktop && (
@@ -424,26 +423,18 @@ function App() {
                 className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
               >
-                {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-                {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
+                {isDesktopPanelOpen ? (
+                  <PanelLeftClose className="size-4" />
+                ) : (
+                  <PanelLeftOpen className="size-4" />
+                )}
+                {isDesktopPanelOpen ? t("app.hidePanel") : t("app.showPanel")}
               </button>
             </div>
           )}
 
           <div className="flex flex-wrap items-start gap-3 lg:pl-36">
             <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-              <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
-                <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
-                <select
-                  id="locale-select"
-                  className="rounded-md border border-border bg-background px-2 py-1"
-                  value={locale}
-                  onChange={(event) => setLocale(event.target.value as typeof locale)}
-                >
-                  <option value="en-SG">{t("language.en")}</option>
-                  <option value="zh-SG">{t("language.zh")}</option>
-                </select>
-              </div>
               <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
                 <GlobalHeader manifest={manifest} />
               </div>
@@ -469,18 +460,28 @@ function App() {
                         <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
                         <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                      <TabsContent
+                        value="filters"
+                        className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1"
+                      >
                         {filterContent}
                       </TabsContent>
                       <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
-                          <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
+                          <div
+                            className={`min-h-0 flex-1 flex-col ${
+                              detailVisible || detailLoading ? "hidden" : "flex"
+                            }`}
+                          >
                             {resultsPaneContent}
                           </div>
                         </div>
                       </TabsContent>
-                      <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1">
+                      <TabsContent
+                        value="saved"
+                        className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1"
+                      >
                         {savedContent}
                       </TabsContent>
                     </Tabs>
@@ -493,22 +494,22 @@ function App() {
               {mobileTab && (
                 <div className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
                   {mobileTab === "filters" && (
-                    <div className="h-full overflow-y-auto pr-1">
-                      {filterContent}
-                    </div>
+                    <div className="h-full overflow-y-auto pr-1">{filterContent}</div>
                   )}
                   {mobileTab === "results" && (
                     <div className="flex h-full min-h-0 flex-col gap-4">
                       {selectedDetailContent}
-                      <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
+                      <div
+                        className={`min-h-0 flex-1 flex-col ${
+                          detailVisible || detailLoading ? "hidden" : "flex"
+                        }`}
+                      >
                         {resultsPaneContent}
                       </div>
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div className="h-full min-h-0 overflow-hidden">
-                      {savedContent}
-                    </div>
+                    <div className="h-full min-h-0 overflow-hidden">{savedContent}</div>
                   )}
                 </div>
               )}
@@ -542,7 +543,8 @@ function App() {
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
             <Bookmark />
-            {t("tab.saved")}{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
+            {t("tab.saved")}
+            {shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
           </button>
         </nav>
       )}

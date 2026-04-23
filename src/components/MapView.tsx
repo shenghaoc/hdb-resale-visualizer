@@ -6,12 +6,14 @@ import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary } from "@/types/data";
+import type { Translator } from "@/lib/i18n";
 
 type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
   townFilter?: string | null;
   onSelect: (addressKey: string) => void;
+  t: Translator;
 };
 
 const SINGAPORE_BOUNDS: LngLatBoundsLike = [
@@ -93,10 +95,11 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
   return { stationName, lines };
 }
 
-export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
+export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
+  const tRef = useRef(t);
   const popupRef = useRef<Popup | null>(null);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
@@ -107,10 +110,14 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
 
-  // Keep onSelect ref fresh without triggering map recreation
+  // Keep onSelect and t refs fresh without triggering map recreation
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
 
   // Create the map ONCE on mount
   useEffect(() => {
@@ -429,7 +436,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         container.appendChild(townEl);
 
         const infoEl = document.createElement("p");
-        infoEl.textContent = `${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`;
+        infoEl.textContent = `${tRef.current("map.median", { value: formatCompactCurrency(medianPrice) })} · ${tRef.current("map.txns", { count: txnCount })}`;
         container.appendChild(infoEl);
 
         popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
@@ -454,7 +461,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
         const props = toMrtPopupProperties(feature.properties);
-        const stationName = props.stationName ?? "MRT Station";
+        const stationName = props.stationName ?? tRef.current("map.mrtStation");
         const lines = parseMrtLines(props.lines);
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -568,4 +575,3 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }
-

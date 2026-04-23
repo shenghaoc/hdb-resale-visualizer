@@ -1,7 +1,12 @@
 import { useMemo, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
+import {
+  formatCompactCurrency,
+  formatMeters,
+  formatMonth,
+  formatRemainingLease,
+} from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
@@ -116,8 +121,12 @@ function BlockCard({
         </ItemHeader>
         <div className="flex w-full items-center justify-between border-t border-border/40 pt-2">
           <div className="flex items-baseline gap-1.5">
-            <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">{t("results.median")}: </span>
-            <strong className="font-heading text-sm font-semibold">{formatCompactCurrency(block.medianPrice, locale)}</strong>
+            <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+              {t("results.median")}:{" "}
+            </span>
+            <strong className="font-heading text-sm font-semibold">
+              {formatCompactCurrency(block.medianPrice, locale)}
+            </strong>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.6rem]">
@@ -125,7 +134,7 @@ function BlockCard({
             </Badge>
             {block.nearestMrt && (
               <span className="text-[0.65rem] font-medium text-muted-foreground">
-                {formatMeters(block.nearestMrt.distanceMeters, locale)} {t("results.toMrt")}
+                {formatMeters(block.nearestMrt.distanceMeters, t, locale)} {t("results.toMrt")}
               </span>
             )}
           </div>
@@ -150,7 +159,9 @@ function BlockCard({
             <strong className="font-heading text-xl font-semibold leading-none tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">{block.town}</span>
+            <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
+              {block.town}
+            </span>
           </div>
         </ItemContent>
         <ItemActions className="flex-wrap justify-end">
@@ -176,7 +187,9 @@ function BlockCard({
             <WalletCards className="size-3.5" />
             {t("results.medianResale")}
           </span>
-          <strong className="font-heading text-2xl font-semibold">{formatCompactCurrency(block.medianPrice, locale)}</strong>
+          <strong className="font-heading text-2xl font-semibold">
+            {formatCompactCurrency(block.medianPrice, locale)}
+          </strong>
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -185,7 +198,7 @@ function BlockCard({
           </span>
           <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
             {block.nearestMrt
-              ? `${block.nearestMrt.stationName} • ${formatMeters(block.nearestMrt.distanceMeters, locale)}`
+              ? `${block.nearestMrt.stationName} • ${formatMeters(block.nearestMrt.distanceMeters, t, locale)}`
               : t("results.noMatch")}
           </strong>
           {nearbyStations.length > 1 ? (
@@ -199,14 +212,18 @@ function BlockCard({
             <Coins className="size-3.5" />
             {t("results.remainingLease")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">{formatRemainingLease(block.leaseCommenceRange)}</strong>
+          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            {formatRemainingLease(block.leaseCommenceRange, t)}
+          </strong>
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             <Clock3 className="size-3.5" />
             {t("results.latestMonth")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">{formatMonth(block.latestMonth, locale)}</strong>
+          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            {formatMonth(block.latestMonth, locale)}
+          </strong>
         </div>
       </div>
 
@@ -216,7 +233,9 @@ function BlockCard({
             {flatType}
           </Badge>
         ))}
-        <ItemDescription className="ml-auto text-right">{t("results.transactions", { count: block.transactionCount })}</ItemDescription>
+        <ItemDescription className="ml-auto text-right">
+          {t("results.transactions", { count: block.transactionCount })}
+        </ItemDescription>
       </ItemFooter>
     </Item>
   );
@@ -284,19 +303,28 @@ export function ResultsPane({
         </Button>
         {startPage > 1 && (
           <>
-            <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>1</Button>
+            <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>
+              1
+            </Button>
             {startPage > 2 && <span className="px-1 text-muted-foreground">...</span>}
           </>
         )}
         {pages.map((p) => (
-          <Button key={p} variant={p === visiblePage ? "default" : "outline"} size="sm" onClick={() => setCurrentPage(p)}>
+          <Button
+            key={p}
+            variant={p === visiblePage ? "default" : "outline"}
+            size="sm"
+            onClick={() => setCurrentPage(p)}
+          >
             {p}
           </Button>
         ))}
         {endPage < totalPages && (
           <>
             {endPage < totalPages - 1 && <span className="px-1 text-muted-foreground">...</span>}
-            <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>{totalPages}</Button>
+            <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>
+              {totalPages}
+            </Button>
           </>
         )}
         <Button
