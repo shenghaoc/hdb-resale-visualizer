@@ -412,8 +412,7 @@ export function matchesFilter(
 
   if (filters.flatType) {
     const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
-    const canonicalBlockFlatTypes = new Set(block.flatTypes.map(canonicalFlatType));
-    if (!canonicalBlockFlatTypes.has(canonicalSelectedFlatType)) {
+    if (!block.flatTypes.some((type) => canonicalFlatType(type) === canonicalSelectedFlatType)) {
       return false;
     }
   }

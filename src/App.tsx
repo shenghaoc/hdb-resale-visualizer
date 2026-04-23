@@ -161,7 +161,6 @@ function App() {
     () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      filters.search,
       filters.town,
       filters.flatType,
       filters.flatModel,
