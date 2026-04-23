@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import maplibregl, { LngLatBoundsLike, Map, Popup } from "maplibre-gl";
+import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { ONEMAP_ATTRIBUTION, ONEMAP_TILE_URL } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
@@ -32,10 +32,284 @@ type MrtPopupProperties = {
   lines?: string | string[];
 };
 
+type MrtExitPopupProperties = {
+  STATION_NA?: string;
+  EXIT_CODE?: string;
+};
+
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
 };
+
+type GeoJsonDataSourceLike = {
+  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
+};
+
+type MrtStationsGeoJson = GeoJSON.FeatureCollection<
+  GeoJSON.Point,
+  { stationName?: string; lines?: string[] }
+>;
+
+const MRT_LINE_SEQUENCES: Record<string, string[][]> = {
+  NSL: [
+    [
+      "JURONG EAST",
+      "BUKIT BATOK",
+      "BUKIT GOMBAK",
+      "CHOA CHU KANG",
+      "YEW TEE",
+      "KRANJI",
+      "MARSILING",
+      "WOODLANDS",
+      "ADMIRALTY",
+      "SEMBAWANG",
+      "CANBERRA",
+      "YISHUN",
+      "KHATIB",
+      "YIO CHU KANG",
+      "ANG MO KIO",
+      "BISHAN",
+      "BRADDELL",
+      "TOA PAYOH",
+      "NOVENA",
+      "NEWTON",
+      "ORCHARD",
+      "SOMERSET",
+      "DHOBY GHAUT",
+      "CITY HALL",
+      "RAFFLES PLACE",
+      "MARINA BAY",
+      "MARINA SOUTH PIER",
+    ],
+  ],
+  EWL: [
+    [
+      "PASIR RIS",
+      "TAMPINES",
+      "SIMEI",
+      "TANAH MERAH",
+      "BEDOK",
+      "KEMBANGAN",
+      "EUNOS",
+      "PAYA LEBAR",
+      "ALJUNIED",
+      "KALLANG",
+      "LAVENDER",
+      "BUGIS",
+      "TANJONG PAGAR",
+      "OUTRAM PARK",
+      "TIONG BAHRU",
+      "REDHILL",
+      "QUEENSTOWN",
+      "COMMONWEALTH",
+      "BUONA VISTA",
+      "DOVER",
+      "CLEMENTI",
+      "JURONG EAST",
+      "CHINESE GARDEN",
+      "LAKESIDE",
+      "BOON LAY",
+      "PIONEER",
+      "JOO KOON",
+      "GUL CIRCLE",
+      "TUAS CRESCENT",
+      "TUAS WEST ROAD",
+      "TUAS LINK",
+    ],
+    ["TANAH MERAH", "EXPO", "CHANGI AIRPORT"],
+  ],
+  NEL: [
+    [
+      "HARBOURFRONT",
+      "OUTRAM PARK",
+      "CHINATOWN",
+      "CLARKE QUAY",
+      "DHOBY GHAUT",
+      "LITTLE INDIA",
+      "FARRER PARK",
+      "BOON KENG",
+      "POTONG PASIR",
+      "WOODLEIGH",
+      "SERANGOON",
+      "KOVAN",
+      "HOUGANG",
+      "BUANGKOK",
+      "SENGKANG",
+      "PUNGGOL",
+    ],
+  ],
+  CCL: [
+    [
+      "DHOBY GHAUT",
+      "BRAS BASAH",
+      "ESPLANADE",
+      "PROMENADE",
+      "NICOLL HIGHWAY",
+      "STADIUM",
+      "MOUNTBATTEN",
+      "DAKOTA",
+      "PAYA LEBAR",
+      "MACPHERSON",
+      "TAI SENG",
+      "BARTLEY",
+      "SERANGOON",
+      "LORONG CHUAN",
+      "BISHAN",
+      "MARYMOUNT",
+      "CALDECOTT",
+      "BOTANIC GARDENS",
+      "FARRER ROAD",
+      "HOLLAND VILLAGE",
+      "BUONA VISTA",
+      "ONE-NORTH",
+      "KENT RIDGE",
+      "HAW PAR VILLA",
+      "PASIR PANJANG",
+      "LABRADOR PARK",
+      "TELOK BLANGAH",
+      "HARBOURFRONT",
+    ],
+    ["PROMENADE", "BAYFRONT", "MARINA BAY"],
+  ],
+  DTL: [
+    [
+      "BUKIT PANJANG",
+      "CASHEW",
+      "HILLVIEW",
+      "BEAUTY WORLD",
+      "KING ALBERT PARK",
+      "SIXTH AVENUE",
+      "TAN KAH KEE",
+      "BOTANIC GARDENS",
+      "STEVENS",
+      "NEWTON",
+      "LITTLE INDIA",
+      "ROCHOR",
+      "BUGIS",
+      "PROMENADE",
+      "BAYFRONT",
+      "DOWNTOWN",
+      "TELOK AYER",
+      "CHINATOWN",
+      "FORT CANNING",
+      "BENCOOLEN",
+      "JALAN BESAR",
+      "BENDEMEER",
+      "GEYLANG BAHRU",
+      "MATTAR",
+      "MACPHERSON",
+      "UBI",
+      "KAKI BUKIT",
+      "BEDOK NORTH",
+      "BEDOK RESERVOIR",
+      "TAMPINES WEST",
+      "TAMPINES",
+      "TAMPINES EAST",
+      "UPPER CHANGI",
+      "EXPO",
+    ],
+  ],
+  TEL: [
+    [
+      "WOODLANDS NORTH",
+      "WOODLANDS",
+      "WOODLANDS SOUTH",
+      "SPRINGLEAF",
+      "LENTOR",
+      "MAYFLOWER",
+      "BRIGHT HILL",
+      "UPPER THOMSON",
+      "CALDECOTT",
+      "STEVENS",
+      "NAPIER",
+      "ORCHARD BOULEVARD",
+      "ORCHARD",
+      "GREAT WORLD",
+      "HAVELOCK",
+      "OUTRAM PARK",
+      "MAXWELL",
+      "SHENTON WAY",
+      "MARINA BAY",
+      "MARINA SOUTH",
+      "GARDENS BY THE BAY",
+      "TANJONG RHU",
+      "KATONG PARK",
+      "TANJONG KATONG",
+      "MARINE PARADE",
+      "MARINE TERRACE",
+      "SIGLAP",
+      "BAYSHORE",
+      "SUNGEI BEDOK",
+    ],
+  ],
+};
+
+function normalizeStationName(stationName: string): string {
+  return stationName
+    .toUpperCase()
+    .replace(/\s+(MRT|LRT)\s+STATION$/u, "")
+    .trim();
+}
+
+function toMrtExitPopupProperties(properties: unknown): MrtExitPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {};
+  }
+
+  const record = properties as Record<string, unknown>;
+  return {
+    STATION_NA: typeof record.STATION_NA === "string" ? record.STATION_NA : undefined,
+    EXIT_CODE: typeof record.EXIT_CODE === "string" ? record.EXIT_CODE : undefined,
+  };
+}
+
+function buildMrtLineFeatures(
+  stationsGeoJson: MrtStationsGeoJson,
+): GeoJSON.FeatureCollection<GeoJSON.LineString, { lineCode: string }> {
+  const stationCoordinates = new Map<string, [number, number]>();
+  for (const feature of stationsGeoJson.features) {
+    if (!feature.geometry || feature.geometry.type !== "Point") {
+      continue;
+    }
+
+    const stationName = feature.properties?.stationName;
+    if (!stationName) {
+      continue;
+    }
+
+    const [lng, lat] = feature.geometry.coordinates;
+    if (typeof lng !== "number" || typeof lat !== "number") {
+      continue;
+    }
+
+    stationCoordinates.set(normalizeStationName(stationName), [lng, lat]);
+  }
+
+  const features: GeoJSON.Feature<GeoJSON.LineString, { lineCode: string }>[] = [];
+  for (const [lineCode, branches] of Object.entries(MRT_LINE_SEQUENCES)) {
+    for (const branch of branches) {
+      for (let index = 0; index < branch.length - 1; index += 1) {
+        const from = stationCoordinates.get(branch[index]);
+        const to = stationCoordinates.get(branch[index + 1]);
+        if (!from || !to) {
+          continue;
+        }
+
+        features.push({
+          type: "Feature",
+          properties: { lineCode },
+          geometry: {
+            type: "LineString",
+            coordinates: [from, to],
+          },
+        });
+      }
+    }
+  }
+
+  return { type: "FeatureCollection", features };
+}
 
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
   GeoJSON.Point,
@@ -56,6 +330,10 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
+}
+
+function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
+  return !!source && typeof source === "object" && "setData" in source;
 }
 
 function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
@@ -95,7 +373,7 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
 
 export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<Map | null>(null);
+  const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const popupRef = useRef<Popup | null>(null);
   const hasInitialFitRef = useRef(false);
@@ -163,6 +441,58 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         data: "/data/mrt-stations.geojson",
       });
 
+      map.addSource("mrt-lines", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addSource("mrt-exits", {
+        type: "geojson",
+        data: "/data/mrt-exits.geojson",
+      });
+
+      void fetch("/data/mrt-stations.geojson")
+        .then((response) => response.json() as Promise<MrtStationsGeoJson>)
+        .then((stationsGeoJson) => {
+        const source = map.getSource("mrt-lines");
+        if (!isGeoJsonDataSourceLike(source)) {
+          return;
+        }
+
+        source.setData(buildMrtLineFeatures(stationsGeoJson));
+      });
+
+      map.addLayer({
+        id: "mrt-lines",
+        type: "line",
+        source: "mrt-lines",
+        layout: {
+          "line-cap": "round",
+          "line-join": "round",
+        },
+        paint: {
+          "line-color": [
+            "match",
+            ["get", "lineCode"],
+            "NSL",
+            "#d11141",
+            "EWL",
+            "#00a651",
+            "NEL",
+            "#9b26b6",
+            "CCL",
+            "#fca311",
+            "DTL",
+            "#00539b",
+            "TEL",
+            "#764c24",
+            "#64748b",
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 14, 4, 18, 6],
+          "line-opacity": 0.75,
+        },
+      });
+
       map.addLayer({
         id: "mrt-icons",
         type: "circle",
@@ -182,6 +512,38 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             "#111827",
             "#fff",
           ],
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-exits",
+        type: "circle",
+        source: "mrt-exits",
+        minzoom: 16,
+        paint: {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 16, 2.5, 18, 4.5],
+          "circle-color": "#ffffff",
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": "#0f172a",
+          "circle-opacity": 0.95,
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-exit-labels",
+        type: "symbol",
+        source: "mrt-exits",
+        minzoom: 17,
+        layout: {
+          "text-field": ["get", "EXIT_CODE"],
+          "text-size": 10,
+          "text-offset": [0, 1],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#0f172a",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 1.25,
         },
       });
 
@@ -478,6 +840,36 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         map.getCanvas().style.cursor = "";
         popup.remove();
       });
+
+      map.on("mouseenter", "mrt-exits", (event) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = event.features?.[0];
+        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
+
+        const props = toMrtExitPopupProperties(feature.properties);
+        const stationName = props.STATION_NA ?? "MRT Station";
+        const exitCode = props.EXIT_CODE;
+        const [lng, lat] = feature.geometry.coordinates;
+
+        const container = document.createElement("div");
+        const nameEl = document.createElement("strong");
+        nameEl.textContent = stationName;
+        container.appendChild(nameEl);
+
+        if (exitCode) {
+          const exitEl = document.createElement("p");
+          exitEl.className = "opacity-80 mt-1";
+          exitEl.textContent = exitCode;
+          container.appendChild(exitEl);
+        }
+
+        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
+      });
+
+      map.on("mouseleave", "mrt-exits", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
     });
 
     mapRef.current = map;
@@ -568,4 +960,3 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }
-
