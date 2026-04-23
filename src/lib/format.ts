@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/i18n";
+import type { Locale, Translator } from "@/lib/i18n";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 
@@ -27,12 +27,16 @@ export function formatNumber(value: number, maximumFractionDigits = 0, locale?: 
   return new Intl.NumberFormat(resolveLocale(locale), { maximumFractionDigits }).format(value);
 }
 
-export function formatMeters(value: number, locale?: Locale): string {
+export function formatMeters(value: number, t: Translator, locale?: Locale): string {
   if (value >= 1000) {
-    return `${formatNumber(value / 1000, 1, locale)} km`;
+    return t("unit.km", { value: formatNumber(value / 1000, 1, locale) });
   }
 
-  return `${formatNumber(value, 0, locale)} m`;
+  return t("unit.m", { value: formatNumber(value, 0, locale) });
+}
+
+export function formatSqm(value: number, t: Translator, locale?: Locale): string {
+  return t("unit.sqm", { value: formatNumber(value, 0, locale) });
 }
 
 export function formatMonth(month: string, locale?: Locale): string {
@@ -45,14 +49,14 @@ export function formatMonth(month: string, locale?: Locale): string {
   }).format(date);
 }
 
-export function formatRemainingLease(leaseCommenceRange: [number, number]): string {
+export function formatRemainingLease(leaseCommenceRange: [number, number], t: Translator): string {
   const currentYear = new Date().getFullYear();
   const minLease = 99 - (currentYear - leaseCommenceRange[0]);
   const maxLease = 99 - (currentYear - leaseCommenceRange[1]);
   if (minLease === maxLease) {
-    return `${maxLease} yrs`;
+    return t("unit.years", { value: maxLease });
   }
-  return `${minLease} - ${maxLease} yrs`;
+  return t("unit.yearsRange", { min: minLease, max: maxLease });
 }
 
 export function formatDateTime(value: string, locale?: Locale): string {
