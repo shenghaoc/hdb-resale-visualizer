@@ -58,6 +58,7 @@ export function DetailDrawer({
   return (
     <Drawer open={Boolean(selectedBlock)} onClose={onClose} dismissible={false}>
       <DrawerContent
+        data-testid="detail-drawer"
         className="h-[85vh] sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
         hideHandle={true}
       >

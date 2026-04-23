@@ -14,6 +14,7 @@ function Drawer({
   dismissible = true,
   className,
   children,
+  onKeyDown,
   ...props
 }: DrawerProps) {
   if (!open) {
@@ -23,17 +24,16 @@ function Drawer({
   return (
     <div
       data-slot="drawer"
-      className={cn("fixed inset-0 z-50 pointer-events-none", className)}
+      data-dismissible={dismissible}
+      className={cn("flex h-full min-h-0 flex-col", className)}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (dismissible && event.key === "Escape") {
+          onClose?.();
+        }
+      }}
       {...props}
     >
-      {dismissible ? (
-        <button
-          type="button"
-          aria-label="Close drawer"
-          className="absolute inset-0 bg-background/30"
-          onClick={onClose}
-        />
-      ) : null}
       {children}
     </div>
   )
@@ -48,10 +48,10 @@ function DrawerContent({ className, hideHandle = false, children, ...props }: Dr
     <div
       data-slot="drawer-content"
       role="dialog"
-      aria-modal="true"
+      aria-modal="false"
       className={cn(
-        "pointer-events-auto fixed inset-x-0 bottom-0 flex max-h-dvh flex-col border border-border bg-background shadow-lg outline-none",
-        "rounded-t-xl lg:inset-x-auto lg:left-4 lg:top-4 lg:bottom-4 lg:w-[32rem] lg:rounded-xl",
+        "flex min-h-0 flex-col overflow-hidden border border-border bg-background shadow-lg outline-none",
+        "rounded-xl",
         className,
       )}
       {...props}

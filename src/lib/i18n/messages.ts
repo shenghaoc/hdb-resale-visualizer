@@ -144,7 +144,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.recentTransactions": "Recent Transactions",
     "detail.totalCount": "{count} total",
     "detail.saved": "Saved to Shortlist",
-    "detail.save": "Save to Shortlist",
+    "detail.save": "Add to shortlist",
     "detail.directions": "Directions",
   },
   "zh-SG": {

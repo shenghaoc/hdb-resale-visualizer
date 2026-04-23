@@ -1,8 +1,16 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
 import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+import {
+  DEFAULT_FILTERS,
+  DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+} from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
-import { getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
+import {
+  getSelectionByAddressKey,
+  matchesFilter,
+  matchesGeographicSearchIntent,
+  resolveGeographicSearchIntent,
+} from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -174,13 +182,49 @@ function App() {
     () => ({ ...stableFilters, search: debouncedSearch }),
     [debouncedSearch, stableFilters],
   );
+  const geographicIntent = useMemo(
+    () =>
+      resolveGeographicSearchIntent(
+        filters.search,
+        blocks,
+        filters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+      ),
+    [blocks, filters.mrtMax, filters.search],
+  );
+  const mapGeographicIntent = useMemo(
+    () =>
+      resolveGeographicSearchIntent(
+        mapFilters.search,
+        blocks,
+        mapFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+      ),
+    [blocks, mapFilters.mrtMax, mapFilters.search],
+  );
   const filteredBlocks = useMemo(
-    () => (resultsVisible ? blocks.filter((block) => matchesFilter(block, stableFilters)) : []),
-    [blocks, resultsVisible, stableFilters],
+    () =>
+      resultsVisible
+        ? blocks.filter((block) => {
+            if (!matchesFilter(block, stableFilters, geographicIntent)) {
+              return false;
+            }
+            return geographicIntent
+              ? matchesGeographicSearchIntent(block, geographicIntent)
+              : true;
+          })
+        : [],
+    [blocks, geographicIntent, resultsVisible, stableFilters],
   );
   const mapFilteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, mapFilters)),
-    [blocks, mapFilters],
+    () =>
+      blocks.filter((block) => {
+        if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
+          return false;
+        }
+        return mapGeographicIntent
+          ? matchesGeographicSearchIntent(block, mapGeographicIntent)
+          : true;
+      }),
+    [blocks, mapFilters, mapGeographicIntent],
   );
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
@@ -361,7 +405,12 @@ function App() {
         blocks={mapFilteredBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
-        townFilter={filters.town}
+        townFilter={mapFilters.town}
+        autoFitKey={
+          mapGeographicIntent
+            ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
+            : null
+        }
         t={t}
       />
     </Suspense>

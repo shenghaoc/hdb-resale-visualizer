@@ -12,6 +12,7 @@ type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
   townFilter?: string | null;
+  autoFitKey?: string | null;
   onSelect: (addressKey: string) => void;
   t: Translator;
 };
@@ -95,7 +96,14 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
   return { stationName, lines };
 }
 
-export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }: MapViewProps) {
+export function MapView({
+  blocks,
+  selectedAddressKey,
+  townFilter,
+  autoFitKey,
+  onSelect,
+  t,
+}: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
@@ -103,6 +111,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }:
   const popupRef = useRef<Popup | null>(null);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
+  const previousAutoFitKeyRef = useRef<string | null>(null);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -526,9 +535,14 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }:
     if (!map || blocks.length === 0) return;
 
     const nextTownFilter = debouncedTownFilter ?? null;
-    const shouldFit = !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+    const nextAutoFitKey = autoFitKey ?? null;
+    const shouldFit =
+      !hasInitialFitRef.current ||
+      previousTownFilterRef.current !== nextTownFilter ||
+      previousAutoFitKeyRef.current !== nextAutoFitKey;
 
     previousTownFilterRef.current = nextTownFilter;
+    previousAutoFitKeyRef.current = nextAutoFitKey;
 
     if (!shouldFit) {
       return;
@@ -547,8 +561,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }:
       maxLat = Math.max(maxLat, b.coordinates.lat);
     }
 
-    // Default Singapore bounds if min/max collapsed or townFilter is missing
-    if (minLng === Infinity || !debouncedTownFilter) {
+    // Default Singapore bounds if min/max collapsed or neither townFilter nor autoFitKey is present
+    if (minLng === Infinity || (!debouncedTownFilter && !autoFitKey)) {
       map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
       return;
     }
@@ -560,7 +574,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, t }:
       ],
       { padding: 60, maxZoom: 15, duration: 1200 },
     );
-  }, [blocks, debouncedTownFilter]);
+  }, [autoFitKey, blocks, debouncedTownFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
