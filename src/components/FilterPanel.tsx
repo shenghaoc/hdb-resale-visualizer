@@ -64,7 +64,8 @@ function SelectField({ label, allLabel, value, options, onChange }: SelectFieldP
   );
 }
 
-export function FilterPanel({ filters, options, minMonth, maxMonth, onChange, onReset }: FilterPanelProps) {
+export function FilterPanel(props: FilterPanelProps) {
+  const { filters, options, minMonth, maxMonth, onChange, onReset } = props;
   const { locale, t } = useI18n();
 
   return (
