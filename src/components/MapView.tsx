@@ -553,8 +553,8 @@ export function MapView({
       maxLat = Math.max(maxLat, b.coordinates.lat);
     }
 
-    // Default Singapore bounds if min/max collapsed or townFilter is missing
-    if (minLng === Infinity || !debouncedTownFilter) {
+    // Default Singapore bounds if min/max collapsed or neither townFilter nor autoFitKey is present
+    if (minLng === Infinity || (!debouncedTownFilter && !autoFitKey)) {
       map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
       return;
     }

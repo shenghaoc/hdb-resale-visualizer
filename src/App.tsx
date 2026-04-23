@@ -204,7 +204,7 @@ function App() {
     () =>
       resultsVisible
         ? blocks.filter((block) => {
-            if (!matchesFilter(block, stableFilters)) {
+            if (!matchesFilter(block, stableFilters, geographicIntent)) {
               return false;
             }
             return geographicIntent
@@ -217,7 +217,7 @@ function App() {
   const mapFilteredBlocks = useMemo(
     () =>
       blocks.filter((block) => {
-        if (!matchesFilter(block, mapFilters)) {
+        if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
           return false;
         }
         return mapGeographicIntent

@@ -182,6 +182,7 @@ function isNearMatch(left: string, right: string): boolean {
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
 let blockTokensCache = new WeakMap<BlockSummary, string[]>();
+let stationNamesCache: string[] | null = null;
 
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
@@ -218,6 +219,10 @@ function normalizeStationName(stationName: string): string {
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
+  if (stationNamesCache) {
+    return stationNamesCache;
+  }
+
   const stationNames = new Set<string>();
 
   for (const block of blocks) {
@@ -230,7 +235,8 @@ function collectStationNames(blocks: BlockSummary[]): string[] {
     }
   }
 
-  return Array.from(stationNames);
+  stationNamesCache = Array.from(stationNames);
+  return stationNamesCache;
 }
 
 function matchStationName(query: string, stationNames: string[]): string | null {
@@ -388,10 +394,15 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, string[]>();
+  stationNamesCache = null;
 }
 
-export function matchesFilter(block: BlockSummary, filters: FilterState): boolean {
-  if (!searchMatchesBlock(block, filters.search)) {
+export function matchesFilter(
+  block: BlockSummary,
+  filters: FilterState,
+  geographicIntent?: GeographicSearchIntent | null,
+): boolean {
+  if (!geographicIntent && !searchMatchesBlock(block, filters.search)) {
     return false;
   }
 
