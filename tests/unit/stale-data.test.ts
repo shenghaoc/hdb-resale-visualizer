@@ -16,6 +16,11 @@ interface Manifest {
     mrtDatasetId: string;
     lastUpdatedAt: string;
   };
+  filterOptions: {
+    towns: string[];
+    flatTypes: string[];
+    flatModels: string[];
+  };
   counts: {
     blocks: number;
     transactions: number;
@@ -71,6 +76,7 @@ describe("Stale Data Artifacts", () => {
     expect(manifest.dataWindow.minMonth).toBeDefined();
     expect(manifest.dataWindow.maxMonth).toBeDefined();
     expect(manifest.sources.lastUpdatedAt).toBeDefined();
+    expect(manifest.filterOptions.towns.length).toBeGreaterThan(0);
     expect(manifest.counts.blocks).toBe(9702);
   });
 

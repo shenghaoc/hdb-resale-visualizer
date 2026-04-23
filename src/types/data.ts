@@ -16,9 +16,6 @@ export type BlockSummary = {
   displayName?: string | null;
   coordinates: Coordinates;
   medianPrice: number;
-  priceIqr: [number, number];
-  pricePerSqmMedian: number;
-  pricePerSqftMedian: number | null;
   transactionCount: number;
   floorAreaRange: [number, number];
   leaseCommenceRange: [number, number];
@@ -28,6 +25,12 @@ export type BlockSummary = {
   flatModels: string[];
   nearestMrt: NearestMrt | null;
   nearbyMrts?: NearestMrt[];
+};
+
+export type AddressDetailSummary = BlockSummary & {
+  priceIqr: [number, number];
+  pricePerSqmMedian: number;
+  pricePerSqftMedian: number | null;
 };
 
 export type AddressDetailTransaction = {
@@ -52,7 +55,7 @@ export type AddressTrendPoint = {
 };
 
 export type AddressDetail = {
-  summary: BlockSummary;
+  summary: AddressDetailSummary;
   recentTransactions: AddressDetailTransaction[];
   monthlyTrend: AddressTrendPoint[];
 };
@@ -63,6 +66,12 @@ export type TownFlatTypeTrendPoint = {
   month: string;
   medianPrice: number;
   transactionCount: number;
+};
+
+export type FilterOptions = {
+  towns: string[];
+  flatTypes: string[];
+  flatModels: string[];
 };
 
 export type Manifest = {
@@ -79,6 +88,7 @@ export type Manifest = {
     mrtDatasetId: string;
     lastUpdatedAt: string;
   };
+  filterOptions: FilterOptions;
   counts: {
     blocks: number;
     transactions: number;

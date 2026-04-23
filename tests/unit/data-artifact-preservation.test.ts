@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
-import type { BlockSummary, Manifest } from "@/types/data";
+import type { AddressDetail, BlockSummary, Manifest } from "@/types/data";
 
 function parseJson<T>(content: string): T {
   return JSON.parse(content) as T;
@@ -25,6 +25,7 @@ describe("Data Artifact Schema Preservation", () => {
     expect(manifest.generatedAt).toBeDefined();
     expect(manifest.dataWindow).toBeDefined();
     expect(manifest.sources).toBeDefined();
+    expect(manifest.filterOptions).toBeDefined();
     expect(manifest.counts).toBeDefined();
   });
 
@@ -35,6 +36,9 @@ describe("Data Artifact Schema Preservation", () => {
     expect(manifest.dataWindow.minMonth).toMatch(/^\d{4}-\d{2}$/);
     expect(manifest.dataWindow.maxMonth).toMatch(/^\d{4}-\d{2}$/);
     expect(Array.isArray(manifest.sources.resaleDatasetIds)).toBe(true);
+    expect(Array.isArray(manifest.filterOptions.towns)).toBe(true);
+    expect(Array.isArray(manifest.filterOptions.flatTypes)).toBe(true);
+    expect(Array.isArray(manifest.filterOptions.flatModels)).toBe(true);
     expect(Number.isInteger(manifest.counts.blocks)).toBe(true);
     expect(Number.isInteger(manifest.counts.transactions)).toBe(true);
     expect(Number.isInteger(manifest.counts.towns)).toBe(true);
@@ -69,10 +73,12 @@ describe("Data Artifact Schema Preservation", () => {
     expect(firstBlock.streetName).toBeDefined();
     expect(firstBlock.coordinates).toBeDefined();
     expect(firstBlock.medianPrice).toBeDefined();
-    expect(firstBlock.priceIqr).toBeDefined();
     expect(firstBlock.transactionCount).toBeDefined();
     expect(firstBlock.flatTypes).toBeDefined();
     expect(firstBlock.nearestMrt).toBeDefined();
+    expect("priceIqr" in firstBlock).toBe(false);
+    expect("pricePerSqmMedian" in firstBlock).toBe(false);
+    expect("pricePerSqftMedian" in firstBlock).toBe(false);
   });
 
   it("keeps block coordinates within Singapore bounds", () => {
@@ -97,6 +103,24 @@ describe("Data Artifact Schema Preservation", () => {
     expect(sampleBlock).toBeTruthy();
     expect(sampleBlock?.nearestMrt?.stationName).toBeTruthy();
     expect(typeof sampleBlock?.nearestMrt?.distanceMeters).toBe("number");
+  });
+
+  it("keeps detail summary metrics available outside the startup summary artifact", () => {
+    const blockSummaries = parseJson<BlockSummary[]>(
+      readFileSync(blockSummariesPath, "utf-8"),
+    );
+    const firstBlock = blockSummaries[0];
+    const detailPath = join(
+      process.cwd(),
+      "public/data/details",
+      `${firstBlock.addressKey}.json`,
+    );
+    const detail = parseJson<AddressDetail>(readFileSync(detailPath, "utf-8"));
+
+    expect(detail.summary.addressKey).toBe(firstBlock.addressKey);
+    expect(detail.summary.priceIqr).toBeDefined();
+    expect(detail.summary.pricePerSqmMedian).toBeDefined();
+    expect("priceIqr" in firstBlock).toBe(false);
   });
 
   it("keeps details and trend artifact directories present", () => {

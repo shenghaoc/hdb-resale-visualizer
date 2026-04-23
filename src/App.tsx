@@ -2,17 +2,22 @@ import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "r
 import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
-import { getFilterOptions, getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
+import { getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import type { AddressDetail, BlockSummary, FilterState, Manifest } from "@/types/data";
+import type {
+  AddressDetail,
+  AddressDetailSummary,
+  BlockSummary,
+  FilterState,
+  Manifest,
+} from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
-import { ResultsPane } from "@/components/ResultsPane";
 import { GlobalHeader } from "@/components/StatsBar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,6 +32,9 @@ const ShortlistDrawer = lazy(() =>
   import("@/components/ShortlistDrawer").then((m) => ({
     default: m.ShortlistDrawer,
   })),
+);
+const ResultsPane = lazy(() =>
+  import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),
 );
 
 type LoadedDetail = {
@@ -51,6 +59,9 @@ function App() {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
+  const [shortlistDetailSummaries, setShortlistDetailSummaries] = useState<
+    Record<string, AddressDetailSummary | null>
+  >({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -61,6 +72,12 @@ function App() {
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
   const selectedAddressKey = filters.selectedAddressKey;
+  const resultsVisible = isDesktop
+    ? isDesktopPanelOpen && desktopTab === "results"
+    : mobileTab === "results";
+  const savedVisible = isDesktop
+    ? isDesktopPanelOpen && desktopTab === "saved"
+    : mobileTab === "saved";
 
   useEffect(() => {
     let isMounted = true;
@@ -158,47 +175,16 @@ function App() {
     [debouncedSearch, stableFilters],
   );
   const filteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, stableFilters)),
-    [blocks, stableFilters],
+    () => (resultsVisible ? blocks.filter((block) => matchesFilter(block, stableFilters)) : []),
+    [blocks, resultsVisible, stableFilters],
   );
   const mapFilteredBlocks = useMemo(
     () => blocks.filter((block) => matchesFilter(block, mapFilters)),
     [blocks, mapFilters],
   );
-  const filterOptions = useMemo(() => getFilterOptions(blocks), [blocks]);
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
     [shortlist.items],
-  );
-  const shortlistRows = useMemo(
-    () =>
-      shortlist.items
-        .map((item) => {
-          const summary = blocks.find((block) => block.addressKey === item.addressKey);
-          if (!summary) {
-            return null;
-          }
-
-          return { item, summary };
-        })
-        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
-        .sort((left, right) => {
-          const leftGap =
-            left.item.targetPrice !== null
-              ? Math.abs(left.item.targetPrice - left.summary.medianPrice)
-              : Number.POSITIVE_INFINITY;
-          const rightGap =
-            right.item.targetPrice !== null
-              ? Math.abs(right.item.targetPrice - right.summary.medianPrice)
-              : Number.POSITIVE_INFINITY;
-
-          if (leftGap !== rightGap) {
-            return leftGap - rightGap;
-          }
-
-          return left.item.addedAt.localeCompare(right.item.addedAt);
-        }),
-    [blocks, shortlist.items],
   );
   const selectedBlock = useMemo(
     () => getSelectionByAddressKey(blocks, selectedAddressKey),
@@ -208,6 +194,93 @@ function App() {
   const detailLoading = detailVisible && isDetailLoading;
   const selectedDetail =
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
+  const shortlistRows = useMemo(
+    () => {
+      if (!savedVisible) {
+        return [];
+      }
+
+      return shortlist.items
+        .map((item) => {
+          const block = blocks.find((candidate) => candidate.addressKey === item.addressKey);
+          if (!block) {
+            return null;
+          }
+
+          return {
+            item,
+            block,
+            detailSummary:
+              shortlistDetailSummaries[item.addressKey] ??
+              (selectedDetail?.summary.addressKey === item.addressKey
+                ? selectedDetail.summary
+                : null),
+          };
+        })
+        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+        .sort((left, right) => {
+          const leftGap =
+            left.item.targetPrice !== null
+              ? Math.abs(left.item.targetPrice - left.block.medianPrice)
+              : Number.POSITIVE_INFINITY;
+          const rightGap =
+            right.item.targetPrice !== null
+              ? Math.abs(right.item.targetPrice - right.block.medianPrice)
+              : Number.POSITIVE_INFINITY;
+
+          if (leftGap !== rightGap) {
+            return leftGap - rightGap;
+          }
+
+          return left.item.addedAt.localeCompare(right.item.addedAt);
+        });
+    },
+    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetailSummaries],
+  );
+
+  useEffect(() => {
+    if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
+      return;
+    }
+
+    const missingAddressKeys = shortlist.items
+      .map((item) => item.addressKey)
+      .filter((addressKey) => !(addressKey in shortlistDetailSummaries));
+
+    if (missingAddressKeys.length === 0) {
+      return;
+    }
+
+    let isMounted = true;
+
+    void Promise.all(
+      missingAddressKeys.map(async (addressKey) => {
+        try {
+          const nextDetail = await fetchAddressDetail(addressKey);
+          return [addressKey, nextDetail.summary] as const;
+        } catch {
+          return [addressKey, null] as const;
+        }
+      }),
+    ).then((entries) => {
+      if (!isMounted) {
+        return;
+      }
+
+      setShortlistDetailSummaries((current) => {
+        const next = { ...current };
+        for (const [addressKey, summary] of entries) {
+          next[addressKey] = summary;
+        }
+
+        return next;
+      });
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetailSummaries]);
 
   function handleSelectAddress(addressKey: string) {
     if (isDesktop) {
@@ -278,7 +351,7 @@ function App() {
         setIsDetailLoading(false);
         setFilters(DEFAULT_FILTERS);
       }}
-      options={filterOptions}
+      options={manifest.filterOptions}
     />
   );
 
@@ -311,7 +384,20 @@ function App() {
       </Suspense>
     ) : null;
 
-  const savedContent = (
+  const resultsPaneContent = resultsVisible ? (
+    <Suspense fallback={<DrawerSkeleton label="Loading results…" />}>
+      <ResultsPane
+        blocks={filteredBlocks}
+        hasTownFilter={!!filters.town || !!filters.search}
+        onSelect={handleSelectAddress}
+        onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+        selectedAddressKey={selectedAddressKey}
+        shortlistKeys={shortlistKeySet}
+        isCompact={!isDesktop}
+      />
+    </Suspense>
+  ) : null;
+  const savedContent = savedVisible ? (
     <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
@@ -321,7 +407,7 @@ function App() {
         rows={shortlistRows}
       />
     </Suspense>
-  );
+  ) : null;
 
   return (
     <>
@@ -390,15 +476,7 @@ function App() {
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
                           <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
-                            <ResultsPane
-                              blocks={filteredBlocks}
-                              hasTownFilter={!!filters.town || !!filters.search}
-                              onSelect={handleSelectAddress}
-                              onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                              selectedAddressKey={selectedAddressKey}
-                              shortlistKeys={shortlistKeySet}
-                              isCompact={false}
-                            />
+                            {resultsPaneContent}
                           </div>
                         </div>
                       </TabsContent>
@@ -423,15 +501,7 @@ function App() {
                     <div className="flex h-full min-h-0 flex-col gap-4">
                       {selectedDetailContent}
                       <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
-                        <ResultsPane
-                          blocks={filteredBlocks}
-                          hasTownFilter={!!filters.town || !!filters.search}
-                          onSelect={handleSelectAddress}
-                          onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
-                          selectedAddressKey={selectedAddressKey}
-                          shortlistKeys={shortlistKeySet}
-                          isCompact={true}
-                        />
+                        {resultsPaneContent}
                       </div>
                     </div>
                   )}

@@ -3,7 +3,7 @@ import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
-import type { BlockSummary, ShortlistItem } from "@/types/data";
+import type { AddressDetailSummary, BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -25,7 +25,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 type ShortlistRow = {
   item: ShortlistItem;
-  summary: BlockSummary;
+  block: BlockSummary;
+  detailSummary: AddressDetailSummary | null;
 };
 
 type CompareMode = "median" | "lease" | "mrt" | "target-gap";
@@ -101,8 +102,8 @@ export function ShortlistDrawer({
     ];
     const csvRows = rows.map((row) =>
       [
-        `"${row.summary.block} ${row.summary.streetName}"`,
-        row.summary.medianPrice,
+        `"${row.block.block} ${row.block.streetName}"`,
+        row.block.medianPrice,
         row.item.targetPrice ?? "",
         `"${(row.item.notes || "").replace(/"/g, '""')}"`,
       ].join(","),
@@ -130,36 +131,36 @@ export function ShortlistDrawer({
 
   const rankedRows = useMemo(() => [...rows].sort((left, right) => {
     if (compareMode === "median") {
-      return left.summary.medianPrice - right.summary.medianPrice;
+      return left.block.medianPrice - right.block.medianPrice;
     }
 
     if (compareMode === "lease") {
-      return right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1];
+      return right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1];
     }
 
     if (compareMode === "mrt") {
-      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
       return leftDistance - rightDistance;
     }
 
     const leftGap =
       left.item.targetPrice === null
         ? Number.POSITIVE_INFINITY
-        : Math.abs(left.item.targetPrice - left.summary.medianPrice);
+        : Math.abs(left.item.targetPrice - left.block.medianPrice);
     const rightGap =
       right.item.targetPrice === null
         ? Number.POSITIVE_INFINITY
-        : Math.abs(right.item.targetPrice - right.summary.medianPrice);
+        : Math.abs(right.item.targetPrice - right.block.medianPrice);
     return leftGap - rightGap;
   }), [compareMode, rows]);
 
   const highlights = useMemo(() => {
-    const byMedian = [...rows].sort((left, right) => left.summary.medianPrice - right.summary.medianPrice);
-    const byLease = [...rows].sort((left, right) => right.summary.leaseCommenceRange[1] - left.summary.leaseCommenceRange[1]);
+    const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
+    const byLease = [...rows].sort((left, right) => right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1]);
     const byMrt = [...rows].sort((left, right) => {
-      const leftDistance = left.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.summary.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
       return leftDistance - rightDistance;
     });
 
@@ -252,23 +253,23 @@ export function ShortlistDrawer({
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Lowest median</span>
-                        <strong>{highlights.cheapest ? `${highlights.cheapest.summary.block} ${highlights.cheapest.summary.streetName}` : "N/A"}</strong>
+                        <strong>{highlights.cheapest ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}` : "N/A"}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Newest lease</span>
-                        <strong>{highlights.newestLease ? `${highlights.newestLease.summary.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                        <strong>{highlights.newestLease ? `${highlights.newestLease.block.leaseCommenceRange[1]} commence` : "N/A"}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">Closest MRT</span>
-                        <strong>{highlights.nearestMrt?.summary.nearestMrt ? `${highlights.nearestMrt.summary.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.summary.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                        <strong>{highlights.nearestMrt?.block.nearestMrt ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters)}` : "N/A"}</strong>
                       </div>
                     </CardContent>
                   </Card>
 
                     {rankedRows.map((row) => {
-                      const gapInfo = getGapInfo(row.item.targetPrice, row.summary.medianPrice);
+                      const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
                       const remainingLeaseRange = getRemainingLeaseRange(
-                        row.summary.leaseCommenceRange,
+                        row.block.leaseCommenceRange,
                       );
 
                       return (
@@ -277,7 +278,7 @@ export function ShortlistDrawer({
                             <div className="flex flex-wrap items-start gap-3">
                               <div className="flex flex-1 flex-col gap-2">
                                 <CardTitle className="text-lg">
-                                  {row.summary.block} {row.summary.streetName}
+                                  {row.block.block} {row.block.streetName}
                                 </CardTitle>
                               </div>
                               <Button
@@ -298,10 +299,10 @@ export function ShortlistDrawer({
                                   {t("shortlist.marketMedian")}
                                 </span>
                                 <strong className="font-heading text-2xl font-semibold">
-                                  {formatCompactCurrency(row.summary.medianPrice)}
+                                  {formatCompactCurrency(row.block.medianPrice)}
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {formatCurrency(row.summary.medianPrice)}
+                                  {formatCurrency(row.block.medianPrice)}
                                 </span>
                               </div>
                               <div className="flex flex-col gap-2">
@@ -309,14 +310,18 @@ export function ShortlistDrawer({
                                   {t("shortlist.pricePerSqft")}
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {row.summary.pricePerSqftMedian !== null
-                                    ? formatCurrency(row.summary.pricePerSqftMedian)
-                                    : t("shortlist.na")}
+                                  {row.detailSummary
+                                    ? row.detailSummary.pricePerSqftMedian !== null
+                                      ? formatCurrency(row.detailSummary.pricePerSqftMedian)
+                                      : t("shortlist.na")
+                                    : t("shortlist.loadingMetrics")}
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.pricePerSqm", {
-                                    value: formatNumber(row.summary.pricePerSqmMedian),
-                                  })}
+                                  {row.detailSummary
+                                    ? t("shortlist.pricePerSqm", {
+                                        value: formatNumber(row.detailSummary.pricePerSqmMedian),
+                                      })
+                                    : t("shortlist.loadingMetrics")}
                                 </span>
                               </div>
                               <div className="flex flex-col gap-2">
@@ -325,12 +330,12 @@ export function ShortlistDrawer({
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
                                   {t("shortlist.areaRangeValue", {
-                                    min: formatNumber(row.summary.floorAreaRange[0], 1),
-                                    max: formatNumber(row.summary.floorAreaRange[1], 1),
+                                    min: formatNumber(row.block.floorAreaRange[0], 1),
+                                    max: formatNumber(row.block.floorAreaRange[1], 1),
                                   })}
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {row.summary.flatTypes.join(", ")}
+                                  {row.block.flatTypes.join(", ")}
                                 </span>
                               </div>
                               <div className="flex flex-col gap-2">
@@ -345,8 +350,8 @@ export function ShortlistDrawer({
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
                                   {t("shortlist.leaseCommenceRange", {
-                                    start: row.summary.leaseCommenceRange[0],
-                                    end: row.summary.leaseCommenceRange[1],
+                                    start: row.block.leaseCommenceRange[0],
+                                    end: row.block.leaseCommenceRange[1],
                                   })}
                                 </span>
                               </div>
@@ -359,13 +364,13 @@ export function ShortlistDrawer({
                                   {t("results.nearestMrt")}
                                 </span>
                                 <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {row.summary.nearestMrt
-                                    ? `${row.summary.nearestMrt.stationName} • ${formatMeters(row.summary.nearestMrt.distanceMeters)}`
+                                  {row.block.nearestMrt
+                                    ? `${row.block.nearestMrt.stationName} • ${formatMeters(row.block.nearestMrt.distanceMeters)}`
                                     : t("results.noMatch")}
                                 </strong>
-                                {(row.summary.nearbyMrts?.length ?? 0) > 1 ? (
+                                {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
                                   <span className="text-sm text-muted-foreground">
-                                    Also near {(row.summary.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                                    Also near {(row.block.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
                                   </span>
                                 ) : null}
                               </div>

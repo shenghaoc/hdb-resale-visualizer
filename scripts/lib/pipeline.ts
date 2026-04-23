@@ -1,4 +1,12 @@
-import type { AddressDetail, AddressDetailTransaction, BlockSummary, Manifest, TownFlatTypeTrendPoint } from "@/types/data";
+import type {
+  AddressDetail,
+  AddressDetailSummary,
+  AddressDetailTransaction,
+  BlockSummary,
+  Manifest,
+  TownFlatTypeTrendPoint,
+} from "@/types/data";
+import { buildFilterOptions } from "../../src/lib/filterOptions";
 import { getStationDetails } from "./mrt";
 
 export type ResaleTransaction = {
@@ -277,12 +285,10 @@ export function buildArtifacts({
 }: BuildArtifactsInput): GeneratedArtifacts {
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
-  const towns = new Set<string>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
 
   for (const transaction of transactions) {
     allMonths.add(transaction.month);
-    towns.add(transaction.town);
     const list = grouped.get(transaction.addressKey) ?? [];
     list.push(transaction);
     grouped.set(transaction.addressKey, list);
@@ -351,10 +357,6 @@ export function buildArtifacts({
       displayName: sanitizeDisplayName(geocode.displayName, latest.block, latest.streetName),
       coordinates: { lat: geocode.lat, lng: geocode.lng },
       medianPrice: Math.round(median(priceValues)),
-      priceIqr: [Math.round(quantile(priceValues, 0.25)), Math.round(quantile(priceValues, 0.75))],
-      pricePerSqmMedian: Number(median(pricePerSqmValues).toFixed(2)),
-      pricePerSqftMedian:
-        pricePerSqftValues.length > 0 ? Number(median(pricePerSqftValues).toFixed(2)) : null,
       transactionCount: sourceWindow.length,
       floorAreaRange: [Math.min(...floorAreas), Math.max(...floorAreas)],
       leaseCommenceRange: [leaseCommenceYear, leaseCommenceYear],
@@ -367,6 +369,13 @@ export function buildArtifacts({
       flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
       nearestMrt,
       nearbyMrts,
+    };
+    const detailSummary: AddressDetailSummary = {
+      ...summary,
+      priceIqr: [Math.round(quantile(priceValues, 0.25)), Math.round(quantile(priceValues, 0.75))],
+      pricePerSqmMedian: Number(median(pricePerSqmValues).toFixed(2)),
+      pricePerSqftMedian:
+        pricePerSqftValues.length > 0 ? Number(median(pricePerSqftValues).toFixed(2)) : null,
     };
 
     const trendByMonth = new Map<string, ResaleTransaction[]>();
@@ -405,10 +414,10 @@ export function buildArtifacts({
 
     details[addressKey] = {
       summary: {
-        ...summary,
+        ...detailSummary,
         flatModels: property?.maxFloorLevel
-          ? [...summary.flatModels, `MAX FLOOR ${property.maxFloorLevel}`]
-          : summary.flatModels,
+          ? [...detailSummary.flatModels, `MAX FLOOR ${property.maxFloorLevel}`]
+          : detailSummary.flatModels,
       },
       monthlyTrend,
       recentTransactions,
@@ -447,19 +456,21 @@ export function buildArtifacts({
 
     return right.transactionCount - left.transactionCount;
   });
+  const filterOptions = buildFilterOptions(blockSummaries);
 
   const manifest: Manifest = {
-    schemaVersion: "1.0.0",
+    schemaVersion: "2.0.0",
     generatedAt: new Date().toISOString(),
     dataWindow: {
       minMonth: sortedMonths[0],
       maxMonth,
     },
     sources: metadata,
+    filterOptions,
     counts: {
       blocks: blockSummaries.length,
       transactions: transactions.length,
-      towns: towns.size,
+      towns: filterOptions.towns.length,
       mrtStations: new Set(mrtExits.map((exit) => exit.stationName)).size,
     },
   };

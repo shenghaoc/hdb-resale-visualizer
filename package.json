@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && bun run check:bundle",
+    "check:bundle": "tsx scripts/check-bundle.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
@@ -31,8 +32,7 @@
     "maplibre-gl": "^5.23.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "tailwind-merge": "^3.3.1",
-    "zod": "^4.0.0"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -58,6 +58,7 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.0",
     "vite": "^7.3.2",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "zod": "^4.0.0"
   }
 }

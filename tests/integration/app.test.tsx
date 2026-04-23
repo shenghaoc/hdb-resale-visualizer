@@ -68,7 +68,7 @@ vi.mock("@/components/StatsBar", () => ({
 }));
 
 const manifest: Manifest = {
-  schemaVersion: "1.0.0",
+  schemaVersion: "2.0.0",
   generatedAt: "2026-04-22T00:00:00.000Z",
   dataWindow: {
     minMonth: "2025-01",
@@ -80,6 +80,11 @@ const manifest: Manifest = {
     propertyDatasetId: "fixture-property",
     mrtDatasetId: "fixture-mrt",
     lastUpdatedAt: "2026-04-22T02:10:21+08:00",
+  },
+  filterOptions: {
+    towns: ["BEDOK"],
+    flatTypes: ["4 ROOM"],
+    flatModels: ["MODEL A"],
   },
   counts: {
     blocks: 1,
@@ -98,9 +103,6 @@ const blocks: BlockSummary[] = [
     displayName: "BEDOK NORTH GREEN",
     coordinates: { lat: 1.3339, lng: 103.9372 },
     medianPrice: 545000,
-    priceIqr: [530000, 560000],
-    pricePerSqmMedian: 5923.91,
-    pricePerSqftMedian: 550.35,
     transactionCount: 1,
     floorAreaRange: [92, 92],
     leaseCommenceRange: [1983, 1983],

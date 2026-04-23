@@ -6,11 +6,18 @@ describe("pipeline artifacts", () => {
   it("builds summaries, detail files, and town trends", () => {
     const artifacts = buildFixtureArtifacts();
 
+    expect(artifacts.manifest.schemaVersion).toBe("2.0.0");
     expect(artifacts.manifest.counts.blocks).toBe(2);
+    expect(artifacts.manifest.filterOptions).toEqual({
+      towns: ["ANG MO KIO", "BEDOK"],
+      flatTypes: ["3 ROOM", "4 ROOM"],
+      flatModels: ["IMPROVED", "MODEL A"],
+    });
     expect(artifacts.blockSummaries[0]?.addressKey).toBe(
       makeAddressKey("BEDOK", "101", "BEDOK NTH AVE 4"),
     );
     expect(artifacts.blockSummaries[0]?.displayName).toBe("BEDOK NORTH GREEN");
+    expect("priceIqr" in (artifacts.blockSummaries[0] ?? {})).toBe(false);
     expect(
       artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.displayName,
     ).toBeNull();
@@ -57,6 +64,9 @@ describe("pipeline artifacts", () => {
       artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary;
 
     expect(angMoKioSummary?.leaseCommenceRange).toEqual([1979, 1979]);
+    expect(angMoKioSummary?.priceIqr).toEqual([374000, 378000]);
+    expect(angMoKioSummary?.pricePerSqmMedian).toBeCloseTo(5611.94, 2);
+    expect(angMoKioSummary?.pricePerSqftMedian).toBeCloseTo(521.37, 2);
     expect(angMoKioSummary?.nearbyMrts?.[0]).toEqual({
       stationName: "ANG MO KIO MRT STATION",
       distanceMeters: 16,

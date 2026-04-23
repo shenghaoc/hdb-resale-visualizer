@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
-import type { FilterState } from "@/types/data";
+import type { FilterOptions, FilterState } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,11 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 type FilterPanelProps = {
   filters: FilterState;
-  options: {
-    towns: string[];
-    flatTypes: string[];
-    flatModels: string[];
-  };
+  options: FilterOptions;
   minMonth: string;
   maxMonth: string;
   onChange: (patch: Partial<FilterState>) => void;
