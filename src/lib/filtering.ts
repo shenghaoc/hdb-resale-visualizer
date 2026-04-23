@@ -213,14 +213,7 @@ export function matchesFilter(block: BlockSummary, filters: FilterState): boolea
 
   if (filters.flatType) {
     const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
-    let hasMatch = false;
-    for (let i = 0; i < block.flatTypes.length; i++) {
-      if (canonicalFlatType(block.flatTypes[i]) === canonicalSelectedFlatType) {
-        hasMatch = true;
-        break;
-      }
-    }
-    if (!hasMatch) {
+    if (!block.flatTypes.some((type) => canonicalFlatType(type) === canonicalSelectedFlatType)) {
       return false;
     }
   }
