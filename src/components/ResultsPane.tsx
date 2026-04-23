@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -241,14 +241,51 @@ export function ResultsPane({
     { value: "latest-desc", label: t("results.sort.recentActivity") },
   ];
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
+  const listContainerRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
 
   const sortedBlocks = useMemo(() => {
     return [...blocks].sort((left, right) => {
       return getSortValue(left, sortMode) - getSortValue(right, sortMode);
     });
   }, [blocks, sortMode]);
+
+  useEffect(() => {
+    if (!isCompact) {
+      return;
+    }
+
+    const container = listContainerRef.current;
+    const scroller = scrollParent ?? container;
+    if (!container || !scroller) {
+      return;
+    }
+
+    const updateViewport = () => {
+      setViewportHeight(scroller.clientHeight);
+    };
+
+    const handleScroll = () => {
+      const currentScrollTop =
+        scroller === container
+          ? container.scrollTop
+          : Math.max(0, container.getBoundingClientRect().top - scroller.getBoundingClientRect().top);
+      setScrollTop(currentScrollTop);
+    };
+
+    updateViewport();
+    handleScroll();
+    scroller.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", updateViewport);
+
+    return () => {
+      scroller.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateViewport);
+    };
+  }, [isCompact, scrollParent, sortedBlocks.length]);
 
   const [prevBlocks, setPrevBlocks] = useState(blocks);
   if (blocks !== prevBlocks) {
@@ -262,6 +299,14 @@ export function ResultsPane({
     (visiblePage - 1) * itemsPerPage,
     visiblePage * itemsPerPage,
   );
+  const compactRowHeight = 86;
+  const overscan = 8;
+  const virtualStartIndex = Math.max(0, Math.floor(scrollTop / compactRowHeight) - overscan);
+  const virtualVisibleRows = Math.ceil((viewportHeight || compactRowHeight * 8) / compactRowHeight) + overscan * 2;
+  const virtualEndIndex = Math.min(sortedBlocks.length, virtualStartIndex + virtualVisibleRows);
+  const virtualBlocks = sortedBlocks.slice(virtualStartIndex, virtualEndIndex);
+  const virtualTopPadding = virtualStartIndex * compactRowHeight;
+  const virtualBottomPadding = Math.max(0, (sortedBlocks.length - virtualEndIndex) * compactRowHeight);
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
@@ -364,21 +409,42 @@ export function ResultsPane({
             </div>
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">
-              <div className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}>
-                <ItemGroup className="flex flex-col gap-4">
-                  {currentBlocks.map((block) => (
-                    <BlockCard
-                      key={block.addressKey}
-                      block={block}
-                      isFeatured={block.addressKey === selectedAddressKey}
-                      isSaved={shortlistKeys.has(block.addressKey)}
-                      isCompact={isCompact}
-                      onSelect={onSelect}
-                      onToggleShortlist={onToggleShortlist}
-                    />
-                  ))}
+              <div
+                ref={listContainerRef}
+                className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}
+              >
+                <ItemGroup className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}>
+                  {isCompact && sortedBlocks.length > 80 ? (
+                    <>
+                      <div style={{ height: virtualTopPadding }} aria-hidden />
+                      {virtualBlocks.map((block) => (
+                        <BlockCard
+                          key={block.addressKey}
+                          block={block}
+                          isFeatured={block.addressKey === selectedAddressKey}
+                          isSaved={shortlistKeys.has(block.addressKey)}
+                          isCompact
+                          onSelect={onSelect}
+                          onToggleShortlist={onToggleShortlist}
+                        />
+                      ))}
+                      <div style={{ height: virtualBottomPadding }} aria-hidden />
+                    </>
+                  ) : (
+                    (isCompact ? sortedBlocks : currentBlocks).map((block) => (
+                      <BlockCard
+                        key={block.addressKey}
+                        block={block}
+                        isFeatured={block.addressKey === selectedAddressKey}
+                        isSaved={shortlistKeys.has(block.addressKey)}
+                        isCompact={isCompact}
+                        onSelect={onSelect}
+                        onToggleShortlist={onToggleShortlist}
+                      />
+                    ))
+                  )}
                 </ItemGroup>
-                {renderPagination()}
+                {!isCompact ? renderPagination() : null}
               </div>
             </div>
           )}
