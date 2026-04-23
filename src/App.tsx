@@ -1,6 +1,6 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
 import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+import { DEFAULT_FILTERS, HEADER_DISMISSED_STORAGE_KEY } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import { getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
@@ -71,7 +71,13 @@ function App() {
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    return window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY) !== "1";
+  });
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -116,6 +122,10 @@ function App() {
     const nextSearch = serializeFilters(filters);
     window.history.replaceState({}, "", `${window.location.pathname}${nextSearch}`);
   }, [filters]);
+
+  useEffect(() => {
+    window.localStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
+  }, [isHeaderVisible]);
 
   useEffect(() => {
     if (!selectedAddressKey) {

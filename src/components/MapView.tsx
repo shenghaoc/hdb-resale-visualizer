@@ -100,6 +100,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
   const onSelectRef = useRef(onSelect);
   const onMapInteractRef = useRef(onMapInteract);
   const popupRef = useRef<Popup | null>(null);
+  const prefersReducedMotionRef = useRef(false);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
 
@@ -123,6 +124,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
       return;
     }
 
+    prefersReducedMotionRef.current = prefersReducedMotion;
     const map = new maplibregl.Map({
       container: containerRef.current,
       center: [103.8198, 1.3521],
@@ -556,7 +558,10 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
 
     // Default Singapore bounds if min/max collapsed or townFilter is missing
     if (minLng === Infinity || !debouncedTownFilter) {
-      map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
+      map.fitBounds(SINGAPORE_BOUNDS, {
+        padding: 40,
+        duration: prefersReducedMotionRef.current ? 0 : 1200,
+      });
       return;
     }
 
@@ -565,7 +570,11 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
         [minLng, minLat],
         [maxLng, maxLat],
       ],
-      { padding: 60, maxZoom: 15, duration: 1200 },
+      {
+        padding: 60,
+        maxZoom: 15,
+        duration: prefersReducedMotionRef.current ? 0 : 1200,
+      },
     );
   }, [blocks, debouncedTownFilter]);
 

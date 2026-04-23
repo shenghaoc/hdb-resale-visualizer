@@ -2,6 +2,7 @@ import type { FilterState } from "@/types/data";
 
 export const DATA_BASE_PATH = "/data";
 export const SHORTLIST_STORAGE_KEY = "hdb-resale-visualizer.shortlist.v1";
+export const HEADER_DISMISSED_STORAGE_KEY = "hdb-resale-visualizer.header-dismissed.v1";
 export const QUERY_VERSION = "1";
 export const ONEMAP_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/GreyLite/{z}/{x}/{y}.png";
 export const ONEMAP_ATTRIBUTION =
