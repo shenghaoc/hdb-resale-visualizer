@@ -82,22 +82,22 @@ function BlockCard({
         className={cn(
           "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
           isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
-          "gap-2 px-3 py-2.5",
+          "h-[86px] min-h-[86px] max-h-[86px] gap-2 px-3 py-2.5",
         )}
         onClick={() => onSelect(block.addressKey)}
       >
-        <ItemHeader className="basis-full">
-          <ItemContent>
-            <div className="result-address flex flex-col">
-              <strong className="font-heading text-base font-semibold leading-tight">
+        <ItemHeader className="basis-full min-w-0">
+          <ItemContent className="min-w-0">
+            <div className="result-address flex min-w-0 flex-col">
+              <strong className="truncate font-heading text-base font-semibold leading-tight">
                 {block.block} {block.streetName}
               </strong>
-              <span className="text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="truncate text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
                 {block.town}
               </span>
             </div>
           </ItemContent>
-          <ItemActions>
+          <ItemActions className="shrink-0">
             <Button
               size="xs"
               variant={isSaved ? "secondary" : "ghost"}
@@ -114,12 +114,12 @@ function BlockCard({
             </Button>
           </ItemActions>
         </ItemHeader>
-        <div className="flex w-full items-center justify-between border-t border-border/40 pt-2">
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">{t("results.median")}: </span>
-            <strong className="font-heading text-sm font-semibold">{formatCompactCurrency(block.medianPrice, locale)}</strong>
+        <div className="flex w-full min-w-0 items-center justify-between border-t border-border/40 pt-2">
+          <div className="flex min-w-0 items-baseline gap-1.5">
+            <span className="shrink-0 text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">{t("results.median")}: </span>
+            <strong className="truncate font-heading text-sm font-semibold">{formatCompactCurrency(block.medianPrice, locale)}</strong>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.6rem]">
               {block.flatTypes[0]}
             </Badge>
