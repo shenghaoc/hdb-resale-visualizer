@@ -6,9 +6,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/input-group";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FilterPanelProps = {
   filters: FilterState;
@@ -46,7 +57,10 @@ function SelectField({ label, allLabel, value, options, onChange }: SelectFieldP
     <Field>
       <FieldContent>
         <FieldLabel id={labelId}>{label}</FieldLabel>
-        <Select onValueChange={(nextValue) => onChange(nextValue === ALL_VALUE ? "" : nextValue)} value={triggerValue}>
+        <Select
+          onValueChange={(nextValue) => onChange(nextValue === ALL_VALUE ? "" : nextValue)}
+          value={triggerValue}
+        >
           <SelectTrigger aria-labelledby={labelId}>
             <SelectValue placeholder={allLabel} />
           </SelectTrigger>
@@ -133,7 +147,9 @@ export function FilterPanel(props: FilterPanelProps) {
               <div className="grid gap-4 lg:grid-cols-2">
                 <Field>
                   <FieldContent>
-                    <FieldLabel htmlFor="budget-min" className="sr-only">{t("filters.minBudget")}</FieldLabel>
+                    <FieldLabel htmlFor="budget-min" className="sr-only">
+                      {t("filters.minBudget")}
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupAddon align="inline-start">
                         <InputGroupText>SGD</InputGroupText>
@@ -146,7 +162,9 @@ export function FilterPanel(props: FilterPanelProps) {
                         placeholder={t("filters.noMinimum")}
                         type="number"
                         value={filters.budgetMin ?? ""}
-                        onChange={(event) => onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })}
+                        onChange={(event) =>
+                          onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
+                        }
                         aria-description="Enter the minimum budget in SGD"
                       />
                     </InputGroup>
@@ -154,7 +172,9 @@ export function FilterPanel(props: FilterPanelProps) {
                 </Field>
                 <Field>
                   <FieldContent>
-                    <FieldLabel htmlFor="budget-max" className="sr-only">{t("filters.maxBudget")}</FieldLabel>
+                    <FieldLabel htmlFor="budget-max" className="sr-only">
+                      {t("filters.maxBudget")}
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupAddon align="inline-start">
                         <InputGroupText>SGD</InputGroupText>
@@ -167,7 +187,9 @@ export function FilterPanel(props: FilterPanelProps) {
                         placeholder={t("filters.noMaximum")}
                         type="number"
                         value={filters.budgetMax ?? ""}
-                        onChange={(event) => onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })}
+                        onChange={(event) =>
+                          onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
+                        }
                         aria-description="Enter the maximum budget in SGD"
                       />
                     </InputGroup>
@@ -181,10 +203,12 @@ export function FilterPanel(props: FilterPanelProps) {
               <div className="grid gap-4 lg:grid-cols-2">
                 <Field>
                   <FieldContent>
-                    <FieldLabel htmlFor="area-min" className="sr-only">{t("filters.minFloorArea")}</FieldLabel>
+                    <FieldLabel htmlFor="area-min" className="sr-only">
+                      {t("filters.minFloorArea")}
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupAddon align="inline-end">
-                        <InputGroupText>sqm</InputGroupText>
+                        <InputGroupText>{t("unit.sqm", { value: "" }).trim()}</InputGroupText>
                       </InputGroupAddon>
                       <InputGroupInput
                         id="area-min"
@@ -194,7 +218,9 @@ export function FilterPanel(props: FilterPanelProps) {
                         placeholder={t("filters.minSqm")}
                         type="number"
                         value={filters.areaMin ?? ""}
-                        onChange={(event) => onChange({ areaMin: parseOptionalNumberValue(event.target.value) })}
+                        onChange={(event) =>
+                          onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
+                        }
                         aria-description="Enter the minimum floor area in square meters"
                       />
                     </InputGroup>
@@ -202,10 +228,12 @@ export function FilterPanel(props: FilterPanelProps) {
                 </Field>
                 <Field>
                   <FieldContent>
-                    <FieldLabel htmlFor="area-max" className="sr-only">{t("filters.maxFloorArea")}</FieldLabel>
+                    <FieldLabel htmlFor="area-max" className="sr-only">
+                      {t("filters.maxFloorArea")}
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupAddon align="inline-end">
-                        <InputGroupText>sqm</InputGroupText>
+                        <InputGroupText>{t("unit.sqm", { value: "" }).trim()}</InputGroupText>
                       </InputGroupAddon>
                       <InputGroupInput
                         id="area-max"
@@ -215,7 +243,9 @@ export function FilterPanel(props: FilterPanelProps) {
                         placeholder={t("filters.maxSqm")}
                         type="number"
                         value={filters.areaMax ?? ""}
-                        onChange={(event) => onChange({ areaMax: parseOptionalNumberValue(event.target.value) })}
+                        onChange={(event) =>
+                          onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
+                        }
                         aria-description="Enter the maximum floor area in square meters"
                       />
                     </InputGroup>
@@ -237,11 +267,13 @@ export function FilterPanel(props: FilterPanelProps) {
                     placeholder={t("filters.optional")}
                     type="number"
                     value={filters.remainingLeaseMin ?? ""}
-                    onChange={(event) => onChange({ remainingLeaseMin: parseOptionalNumberValue(event.target.value) })}
+                    onChange={(event) =>
+                      onChange({ remainingLeaseMin: parseOptionalNumberValue(event.target.value) })
+                    }
                     aria-description="Minimum remaining lease in years"
                   />
                   <InputGroupAddon align="inline-end">
-                    <InputGroupText>yrs</InputGroupText>
+                    <InputGroupText>{t("unit.years", { value: "" }).trim()}</InputGroupText>
                   </InputGroupAddon>
                 </InputGroup>
               </FieldContent>
@@ -251,7 +283,9 @@ export function FilterPanel(props: FilterPanelProps) {
           <fieldset className="flex flex-col gap-2">
             <legend className="sr-only">{t("filters.transactionWindow")}</legend>
             <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
-              <span className="text-sm font-semibold" aria-hidden="true">{t("filters.transactionWindow")}</span>
+              <span className="text-sm font-semibold" aria-hidden="true">
+                {t("filters.transactionWindow")}
+              </span>
               <Badge variant="secondary" className="text-xs">
                 {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
               </Badge>
@@ -266,7 +300,9 @@ export function FilterPanel(props: FilterPanelProps) {
                     min={minMonth}
                     type="month"
                     value={filters.startMonth ?? ""}
-                    onChange={(event) => onChange({ startMonth: event.target.value === "" ? null : event.target.value })}
+                    onChange={(event) =>
+                      onChange({ startMonth: event.target.value === "" ? null : event.target.value })
+                    }
                     aria-description="Start of the transaction window"
                   />
                 </FieldContent>
@@ -280,7 +316,9 @@ export function FilterPanel(props: FilterPanelProps) {
                     min={minMonth}
                     type="month"
                     value={filters.endMonth ?? ""}
-                    onChange={(event) => onChange({ endMonth: event.target.value === "" ? null : event.target.value })}
+                    onChange={(event) =>
+                      onChange({ endMonth: event.target.value === "" ? null : event.target.value })
+                    }
                     aria-description="End of the transaction window"
                   />
                 </FieldContent>
@@ -300,10 +338,12 @@ export function FilterPanel(props: FilterPanelProps) {
                   placeholder={t("filters.optional")}
                   type="number"
                   value={filters.mrtMax ?? ""}
-                  onChange={(event) => onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })}
+                  onChange={(event) =>
+                    onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
+                  }
                 />
                 <InputGroupAddon align="inline-end">
-                  <InputGroupText>m</InputGroupText>
+                  <InputGroupText>{t("unit.m", { value: "" }).trim()}</InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
             </FieldContent>
