@@ -10,12 +10,6 @@
       "lng": 103.742253260513
     },
     "medianPrice": 678888,
-    "priceIqr": [
-      640000,
-      820000
-    ],
-    "pricePerSqmMedian": 7130.43,
-    "pricePerSqftMedian": 662.44,
     "transactionCount": 21,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1545
       }
-    ]
+    ],
+    "priceIqr": [
+      640000,
+      820000
+    ],
+    "pricePerSqmMedian": 7130.43,
+    "pricePerSqftMedian": 662.44
   },
   "monthlyTrend": [
     {
@@ -224,7 +224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-04-223042",
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-04-223057",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -237,7 +237,7 @@
       "pricePerSqft": 718.14
     },
     {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-03-223170",
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-03-223188",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -250,7 +250,7 @@
       "pricePerSqft": 670.52
     },
     {
-      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-01-223158",
+      "id": "bukit-batok-453a-bt-batok-west-ave-6-2026-01-223176",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

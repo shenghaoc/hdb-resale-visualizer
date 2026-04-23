@@ -10,12 +10,6 @@
       "lng": 103.886489261901
     },
     "medianPrice": 643500,
-    "priceIqr": [
-      634250,
-      652750
-    ],
-    "pricePerSqmMedian": 5850,
-    "pricePerSqftMedian": 543.49,
     "transactionCount": 2,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 729
       }
-    ]
+    ],
+    "priceIqr": [
+      634250,
+      652750
+    ],
+    "pricePerSqmMedian": 5850,
+    "pricePerSqftMedian": 543.49
   },
   "monthlyTrend": [
     {
@@ -613,7 +613,7 @@
       "pricePerSqft": 375.84
     },
     {
-      "id": "sengkang-307d-anchorvale-rd-2016-12-975228",
+      "id": "sengkang-307d-anchorvale-rd-2016-12-975344",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -626,7 +626,7 @@
       "pricePerSqft": 327.69
     },
     {
-      "id": "sengkang-307d-anchorvale-rd-2016-06-965316",
+      "id": "sengkang-307d-anchorvale-rd-2016-06-965432",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -639,7 +639,7 @@
       "pricePerSqft": 365.7
     },
     {
-      "id": "sengkang-307d-anchorvale-rd-2016-03-959913",
+      "id": "sengkang-307d-anchorvale-rd-2016-03-960029",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

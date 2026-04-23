@@ -10,12 +10,6 @@
       "lng": 103.768982944262
     },
     "medianPrice": 559000,
-    "priceIqr": [
-      540000,
-      568125
-    ],
-    "pricePerSqmMedian": 5934.07,
-    "pricePerSqftMedian": 551.29,
     "transactionCount": 10,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "JELAPANG LRT STATION",
         "distanceMeters": 486
       }
-    ]
+    ],
+    "priceIqr": [
+      540000,
+      568125
+    ],
+    "pricePerSqmMedian": 5934.07,
+    "pricePerSqftMedian": 551.29
   },
   "monthlyTrend": [
     {
@@ -798,7 +798,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-510-jelapang-rd-2026-03-223583",
+      "id": "bukit-panjang-510-jelapang-rd-2026-03-223609",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

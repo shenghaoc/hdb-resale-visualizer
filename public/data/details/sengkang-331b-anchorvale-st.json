@@ -10,12 +10,6 @@
       "lng": 103.890125430899
     },
     "medianPrice": 677333,
-    "priceIqr": [
-      647500,
-      738749
-    ],
-    "pricePerSqmMedian": 7306.22,
-    "pricePerSqftMedian": 678.77,
     "transactionCount": 12,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "SENGKANG MRT STATION",
         "distanceMeters": 721
       }
-    ]
+    ],
+    "priceIqr": [
+      647500,
+      738749
+    ],
+    "pricePerSqmMedian": 7306.22,
+    "pricePerSqftMedian": 678.77
   },
   "monthlyTrend": [
     {
@@ -260,7 +260,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-331b-anchorvale-st-2026-02-226985",
+      "id": "sengkang-331b-anchorvale-st-2026-02-227065",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

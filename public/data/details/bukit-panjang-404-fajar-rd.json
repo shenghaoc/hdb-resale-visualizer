@@ -10,12 +10,6 @@
       "lng": 103.767550485267
     },
     "medianPrice": 530000,
-    "priceIqr": [
-      507888,
-      530000
-    ],
-    "pricePerSqmMedian": 4953.27,
-    "pricePerSqftMedian": 460.17,
     "transactionCount": 5,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG LRT STATION",
         "distanceMeters": 559
       }
-    ]
+    ],
+    "priceIqr": [
+      507888,
+      530000
+    ],
+    "pricePerSqmMedian": 4953.27,
+    "pricePerSqftMedian": 460.17
   },
   "monthlyTrend": [
     {
@@ -614,7 +614,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-404-fajar-rd-2026-04-223570",
+      "id": "bukit-panjang-404-fajar-rd-2026-04-223595",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -627,7 +627,7 @@
       "pricePerSqft": 478.05
     },
     {
-      "id": "bukit-panjang-404-fajar-rd-2026-01-223563",
+      "id": "bukit-panjang-404-fajar-rd-2026-01-223588",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -835,7 +835,7 @@
       "pricePerSqft": 306.4
     },
     {
-      "id": "bukit-panjang-404-fajar-rd-2016-11-972973",
+      "id": "bukit-panjang-404-fajar-rd-2016-11-973089",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -848,7 +848,7 @@
       "pricePerSqft": 290.32
     },
     {
-      "id": "bukit-panjang-404-fajar-rd-2016-08-967801",
+      "id": "bukit-panjang-404-fajar-rd-2016-08-967917",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -861,7 +861,7 @@
       "pricePerSqft": 282.18
     },
     {
-      "id": "bukit-panjang-404-fajar-rd-2016-07-966202",
+      "id": "bukit-panjang-404-fajar-rd-2016-07-966318",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

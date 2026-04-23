@@ -10,12 +10,6 @@
       "lng": 103.777318569996
     },
     "medianPrice": 560000,
-    "priceIqr": [
-      547500,
-      572000
-    ],
-    "pricePerSqmMedian": 4515.87,
-    "pricePerSqftMedian": 419.54,
     "transactionCount": 7,
     "floorAreaRange": [
       123,
@@ -54,7 +48,13 @@
         "stationName": "WOODLANDS NORTH MRT STATION",
         "distanceMeters": 1201
       }
-    ]
+    ],
+    "priceIqr": [
+      547500,
+      572000
+    ],
+    "pricePerSqmMedian": 4515.87,
+    "pricePerSqftMedian": 419.54
   },
   "monthlyTrend": [
     {
@@ -636,7 +636,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-10-marsiling-dr-2026-03-228701",
+      "id": "woodlands-10-marsiling-dr-2026-03-228805",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -883,7 +883,7 @@
       "pricePerSqft": 272.81
     },
     {
-      "id": "woodlands-10-marsiling-dr-2016-12-975464",
+      "id": "woodlands-10-marsiling-dr-2016-12-975580",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

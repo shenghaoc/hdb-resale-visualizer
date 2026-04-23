@@ -10,12 +10,6 @@
       "lng": 103.880509545623
     },
     "medianPrice": 668000,
-    "priceIqr": [
-      646500,
-      789144
-    ],
-    "pricePerSqmMedian": 6991.15,
-    "pricePerSqftMedian": 649.5,
     "transactionCount": 11,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "TONGKANG LRT STATION",
         "distanceMeters": 623
       }
-    ]
+    ],
+    "priceIqr": [
+      646500,
+      789144
+    ],
+    "pricePerSqmMedian": 6991.15,
+    "pricePerSqftMedian": 649.5
   },
   "monthlyTrend": [
     {
@@ -278,7 +278,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-416b-fernvale-link-2026-04-227087",
+      "id": "sengkang-416b-fernvale-link-2026-04-227169",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -291,7 +291,7 @@
       "pricePerSqft": 669.3
     },
     {
-      "id": "sengkang-416b-fernvale-link-2026-02-227073",
+      "id": "sengkang-416b-fernvale-link-2026-02-227156",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -304,7 +304,7 @@
       "pricePerSqft": 667.3
     },
     {
-      "id": "sengkang-416b-fernvale-link-2026-01-227063",
+      "id": "sengkang-416b-fernvale-link-2026-01-227145",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

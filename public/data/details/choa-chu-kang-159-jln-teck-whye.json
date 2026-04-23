@@ -10,12 +10,6 @@
       "lng": 103.756463742103
     },
     "medianPrice": 693388,
-    "priceIqr": [
-      688000,
-      695000
-    ],
-    "pricePerSqmMedian": 5696.72,
-    "pricePerSqftMedian": 529.24,
     "transactionCount": 5,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 501
       }
-    ]
+    ],
+    "priceIqr": [
+      688000,
+      695000
+    ],
+    "pricePerSqmMedian": 5696.72,
+    "pricePerSqftMedian": 529.24
   },
   "monthlyTrend": [
     {
@@ -506,7 +506,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-159-jln-teck-whye-2026-01-224090",
+      "id": "choa-chu-kang-159-jln-teck-whye-2026-01-224124",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -519,7 +519,7 @@
       "pricePerSqft": 529.24
     },
     {
-      "id": "choa-chu-kang-159-jln-teck-whye-2026-01-224092",
+      "id": "choa-chu-kang-159-jln-teck-whye-2026-01-224126",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -753,7 +753,7 @@
       "pricePerSqft": 341.67
     },
     {
-      "id": "choa-chu-kang-159-jln-teck-whye-2016-07-966298",
+      "id": "choa-chu-kang-159-jln-teck-whye-2016-07-966414",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

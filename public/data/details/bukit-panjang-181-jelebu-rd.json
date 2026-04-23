@@ -10,12 +10,6 @@
       "lng": 103.762997101416
     },
     "medianPrice": 865000,
-    "priceIqr": [
-      823500,
-      939000
-    ],
-    "pricePerSqmMedian": 8776.6,
-    "pricePerSqftMedian": 815.37,
     "transactionCount": 7,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "SENJA LRT STATION",
         "distanceMeters": 409
       }
-    ]
+    ],
+    "priceIqr": [
+      823500,
+      939000
+    ],
+    "pricePerSqmMedian": 8776.6,
+    "pricePerSqftMedian": 815.37
   },
   "monthlyTrend": [
     {
@@ -566,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-181-jelebu-rd-2026-01-223589",
+      "id": "bukit-panjang-181-jelebu-rd-2026-01-223616",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

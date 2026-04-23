@@ -10,12 +10,6 @@
       "lng": 103.741997788111
     },
     "medianPrice": 420000,
-    "priceIqr": [
-      408888,
-      428000
-    ],
-    "pricePerSqmMedian": 6102.81,
-    "pricePerSqftMedian": 566.97,
     "transactionCount": 5,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "BUKIT BATOK MRT STATION",
         "distanceMeters": 1420
       }
-    ]
+    ],
+    "priceIqr": [
+      408888,
+      428000
+    ],
+    "pricePerSqmMedian": 6102.81,
+    "pricePerSqftMedian": 566.97
   },
   "monthlyTrend": [
     {
@@ -655,7 +655,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-206-jurong-east-st-21-2026-03-224864",
+      "id": "jurong-east-206-jurong-east-st-21-2026-03-224916",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -668,7 +668,7 @@
       "pricePerSqft": 582.38
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2026-01-224856",
+      "id": "jurong-east-206-jurong-east-st-21-2026-01-224908",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -889,7 +889,7 @@
       "pricePerSqft": 415.98
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2015-06-946133",
+      "id": "jurong-east-206-jurong-east-st-21-2015-06-946249",
       "month": "2015-06",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -902,7 +902,7 @@
       "pricePerSqft": 458.81
     },
     {
-      "id": "jurong-east-206-jurong-east-st-21-2015-05-944469",
+      "id": "jurong-east-206-jurong-east-st-21-2015-05-944585",
       "month": "2015-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

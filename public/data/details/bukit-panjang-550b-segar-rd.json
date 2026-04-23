@@ -10,12 +10,6 @@
       "lng": 103.767447013104
     },
     "medianPrice": 672500,
-    "priceIqr": [
-      583472,
-      745222
-    ],
-    "pricePerSqmMedian": 6440.65,
-    "pricePerSqftMedian": 598.36,
     "transactionCount": 12,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "FAJAR LRT STATION",
         "distanceMeters": 674
       }
-    ]
+    ],
+    "priceIqr": [
+      583472,
+      745222
+    ],
+    "pricePerSqmMedian": 6440.65,
+    "pricePerSqftMedian": 598.36
   },
   "monthlyTrend": [
     {
@@ -260,7 +260,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-550b-segar-rd-2026-03-223627",
+      "id": "bukit-panjang-550b-segar-rd-2026-03-223654",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

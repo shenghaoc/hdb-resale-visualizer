@@ -10,12 +10,6 @@
       "lng": 103.723795893377
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      576250,
-      788822
-    ],
-    "pricePerSqmMedian": 8004.62,
-    "pricePerSqftMedian": 743.65,
     "transactionCount": 12,
     "floorAreaRange": [
       67,
@@ -56,7 +50,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 2090
       }
-    ]
+    ],
+    "priceIqr": [
+      576250,
+      788822
+    ],
+    "pricePerSqmMedian": 8004.62,
+    "pricePerSqftMedian": 743.65
   },
   "monthlyTrend": [
     {
@@ -278,7 +278,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-138c-yuan-ching-rd-2026-03-225256",
+      "id": "jurong-west-138c-yuan-ching-rd-2026-03-225314",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

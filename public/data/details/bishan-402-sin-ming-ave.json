@@ -9,14 +9,8 @@
       "lat": 1.36276886630643,
       "lng": 103.832758890176
     },
-    "medianPrice": 981944,
-    "priceIqr": [
-      941250,
-      1028666
-    ],
-    "pricePerSqmMedian": 8182.86,
-    "pricePerSqftMedian": 760.21,
-    "transactionCount": 4,
+    "medianPrice": 955000,
+    "transactionCount": 5,
     "floorAreaRange": [
       120,
       120
@@ -25,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-11",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 986
       }
-    ]
+    ],
+    "priceIqr": [
+      900000,
+      1008888
+    ],
+    "pricePerSqmMedian": 7958.33,
+    "pricePerSqftMedian": 739.35
   },
   "monthlyTrend": [
     {
@@ -596,11 +596,30 @@
       "medianPrice": 900000,
       "transactionCount": 1,
       "medianPricePerSqm": 7500
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7166.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-402-sin-ming-ave-2026-01-222793",
+      "id": "bishan-402-sin-ming-ave-2026-04-222811",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "58 years 09 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 7166.67,
+      "pricePerSqft": 665.81
+    },
+    {
+      "id": "bishan-402-sin-ming-ave-2026-01-222805",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -845,19 +864,6 @@
       "resalePrice": 728888,
       "pricePerSqm": 6074.07,
       "pricePerSqft": 564.3
-    },
-    {
-      "id": "bishan-402-sin-ming-ave-2016-05-962398",
-      "month": "2016-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 120,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "68",
-      "resalePrice": 680000,
-      "pricePerSqm": 5666.67,
-      "pricePerSqft": 526.45
     }
   ]
 }

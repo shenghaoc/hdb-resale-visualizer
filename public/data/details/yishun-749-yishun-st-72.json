@@ -9,14 +9,8 @@
       "lat": 1.42837595256793,
       "lng": 103.834113498541
     },
-    "medianPrice": 580000,
-    "priceIqr": [
-      560000,
-      590000
-    ],
-    "pricePerSqmMedian": 6373.63,
-    "pricePerSqftMedian": 592.13,
-    "transactionCount": 4,
+    "medianPrice": 570000,
+    "transactionCount": 5,
     "floorAreaRange": [
       91,
       92
@@ -25,10 +19,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 1678
       }
-    ]
+    ],
+    "priceIqr": [
+      530000,
+      590000
+    ],
+    "pricePerSqmMedian": 6263.74,
+    "pricePerSqftMedian": 581.92
   },
   "monthlyTrend": [
     {
@@ -560,9 +560,28 @@
       "medianPrice": 560000,
       "transactionCount": 2,
       "medianPricePerSqm": 6153.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 515000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5659.34
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-749-yishun-st-72-2026-04-229402",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 5659.34,
+      "pricePerSqft": 525.77
+    },
     {
       "id": "yishun-749-yishun-st-72-2025-10-221699",
       "month": "2025-10",
@@ -809,19 +828,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 4456.52,
       "pricePerSqft": 414.02
-    },
-    {
-      "id": "yishun-749-yishun-st-72-2015-12-956199",
-      "month": "2015-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "67",
-      "resalePrice": 428000,
-      "pricePerSqm": 4703.3,
-      "pricePerSqft": 436.95
     }
   ]
 }

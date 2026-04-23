@@ -9,14 +9,8 @@
       "lat": 1.32977632869248,
       "lng": 103.721585931129
     },
-    "medianPrice": 813500,
-    "priceIqr": [
-      811750,
-      815250
-    ],
-    "pricePerSqmMedian": 5553.05,
-    "pricePerSqftMedian": 515.9,
-    "transactionCount": 2,
+    "medianPrice": 817000,
+    "transactionCount": 3,
     "floorAreaRange": [
       143,
       152
@@ -55,7 +49,13 @@
         "stationName": "BOON LAY MRT STATION",
         "distanceMeters": 1967
       }
-    ]
+    ],
+    "priceIqr": [
+      813500,
+      848500
+    ],
+    "pricePerSqmMedian": 5595.89,
+    "pricePerSqftMedian": 519.88
   },
   "monthlyTrend": [
     {
@@ -444,14 +444,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 810000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5510.2
+      "medianPrice": 845000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5649.84
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-161-yung-ping-rd-2026-04-225444",
+      "id": "jurong-west-161-yung-ping-rd-2026-04-225504",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -462,6 +462,19 @@
       "resalePrice": 810000,
       "pricePerSqm": 5510.2,
       "pricePerSqft": 511.92
+    },
+    {
+      "id": "jurong-west-161-yung-ping-rd-2026-04-225505",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 152,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "69 years 09 months",
+      "resalePrice": 880000,
+      "pricePerSqm": 5789.47,
+      "pricePerSqft": 537.86
     },
     {
       "id": "jurong-west-161-yung-ping-rd-2024-05-181183",
@@ -685,7 +698,7 @@
       "pricePerSqft": 284.4
     },
     {
-      "id": "jurong-west-161-yung-ping-rd-2015-12-955524",
+      "id": "jurong-west-161-yung-ping-rd-2015-12-955640",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -696,19 +709,6 @@
       "resalePrice": 558000,
       "pricePerSqm": 3821.92,
       "pricePerSqft": 355.07
-    },
-    {
-      "id": "jurong-west-161-yung-ping-rd-2014-08-644884",
-      "month": "2014-08",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 147,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years",
-      "resalePrice": 650000,
-      "pricePerSqm": 4421.77,
-      "pricePerSqft": 410.8
     }
   ]
 }

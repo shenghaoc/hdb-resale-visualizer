@@ -10,12 +10,6 @@
       "lng": 103.76535460069
     },
     "medianPrice": 776500,
-    "priceIqr": [
-      735750,
-      815000
-    ],
-    "pricePerSqmMedian": 7318.18,
-    "pricePerSqftMedian": 679.88,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 411
       }
-    ]
+    ],
+    "priceIqr": [
+      735750,
+      815000
+    ],
+    "pricePerSqmMedian": 7318.18,
+    "pricePerSqftMedian": 679.88
   },
   "monthlyTrend": [
     {
@@ -614,7 +614,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-177-lompang-rd-2026-03-223692",
+      "id": "bukit-panjang-177-lompang-rd-2026-03-223719",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

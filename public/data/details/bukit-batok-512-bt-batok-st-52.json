@@ -10,12 +10,6 @@
       "lng": 103.752778228297
     },
     "medianPrice": 799444,
-    "priceIqr": [
-      785500,
-      801250
-    ],
-    "pricePerSqmMedian": 5475.65,
-    "pricePerSqftMedian": 508.71,
     "transactionCount": 8,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "DT4",
         "distanceMeters": 1767
       }
-    ]
+    ],
+    "priceIqr": [
+      785500,
+      801250
+    ],
+    "pricePerSqmMedian": 5475.65,
+    "pricePerSqftMedian": 508.71
   },
   "monthlyTrend": [
     {
@@ -750,7 +750,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-512-bt-batok-st-52-2026-03-223223",
+      "id": "bukit-batok-512-bt-batok-st-52-2026-03-223243",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -763,7 +763,7 @@
       "pricePerSqft": 512.24
     },
     {
-      "id": "bukit-batok-512-bt-batok-st-52-2026-02-223222",
+      "id": "bukit-batok-512-bt-batok-st-52-2026-02-223242",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

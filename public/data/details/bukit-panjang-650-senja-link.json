@@ -10,12 +10,6 @@
       "lng": 103.763310183378
     },
     "medianPrice": 785000,
-    "priceIqr": [
-      695944,
-      790000
-    ],
-    "pricePerSqmMedian": 6216.22,
-    "pricePerSqftMedian": 577.51,
     "transactionCount": 7,
     "floorAreaRange": [
       91,
@@ -56,7 +50,13 @@
         "stationName": "SEGAR LRT STATION",
         "distanceMeters": 685
       }
-    ]
+    ],
+    "priceIqr": [
+      695944,
+      790000
+    ],
+    "pricePerSqmMedian": 6216.22,
+    "pricePerSqftMedian": 577.51
   },
   "monthlyTrend": [
     {
@@ -362,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-650-senja-link-2026-02-223715",
+      "id": "bukit-panjang-650-senja-link-2026-02-223742",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

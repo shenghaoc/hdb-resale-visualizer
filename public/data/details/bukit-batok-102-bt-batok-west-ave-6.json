@@ -10,12 +10,6 @@
       "lng": 103.747473341114
     },
     "medianPrice": 812500,
-    "priceIqr": [
-      806250,
-      818750
-    ],
-    "pricePerSqmMedian": 5416.66,
-    "pricePerSqftMedian": 503.23,
     "transactionCount": 2,
     "floorAreaRange": [
       76,
@@ -56,7 +50,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 1627
       }
-    ]
+    ],
+    "priceIqr": [
+      806250,
+      818750
+    ],
+    "pricePerSqmMedian": 5416.66,
+    "pricePerSqftMedian": 503.23
   },
   "monthlyTrend": [
     {

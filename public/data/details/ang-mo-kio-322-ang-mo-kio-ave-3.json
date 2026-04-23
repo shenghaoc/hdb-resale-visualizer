@@ -10,12 +10,6 @@
       "lng": 103.847745828569
     },
     "medianPrice": 448000,
-    "priceIqr": [
-      440600,
-      480000
-    ],
-    "pricePerSqmMedian": 6094.57,
-    "pricePerSqftMedian": 566.2,
     "transactionCount": 6,
     "floorAreaRange": [
       73,
@@ -57,7 +51,13 @@
         "stationName": "YIO CHU KANG MRT STATION",
         "distanceMeters": 1499
       }
-    ]
+    ],
+    "priceIqr": [
+      440600,
+      480000
+    ],
+    "pricePerSqmMedian": 6094.57,
+    "pricePerSqftMedian": 566.2
   },
   "monthlyTrend": [
     {
@@ -621,7 +621,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-322-ang-mo-kio-ave-3-2026-03-222130",
+      "id": "ang-mo-kio-322-ang-mo-kio-ave-3-2026-03-222132",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -868,7 +868,7 @@
       "pricePerSqft": 472.96
     },
     {
-      "id": "ang-mo-kio-322-ang-mo-kio-ave-3-2016-07-965890",
+      "id": "ang-mo-kio-322-ang-mo-kio-ave-3-2016-07-966006",
       "month": "2016-07",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

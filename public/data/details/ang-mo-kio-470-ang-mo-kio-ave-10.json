@@ -10,12 +10,6 @@
       "lng": 103.856694220704
     },
     "medianPrice": 505944,
-    "priceIqr": [
-      496416,
-      534700
-    ],
-    "pricePerSqmMedian": 5499.39,
-    "pricePerSqftMedian": 510.91,
     "transactionCount": 4,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "BISHAN MRT STATION",
         "distanceMeters": 1620
       }
-    ]
+    ],
+    "priceIqr": [
+      496416,
+      534700
+    ],
+    "pricePerSqmMedian": 5499.39,
+    "pricePerSqftMedian": 510.91
   },
   "monthlyTrend": [
     {
@@ -666,7 +666,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2026-04-222194",
+      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2026-04-222200",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -913,7 +913,7 @@
       "pricePerSqft": 439.27
     },
     {
-      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2016-03-958757",
+      "id": "ang-mo-kio-470-ang-mo-kio-ave-10-2016-03-958873",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.765406585364
     },
     "medianPrice": 686666,
-    "priceIqr": [
-      613333,
-      703333
-    ],
-    "pricePerSqmMedian": 5674.93,
-    "pricePerSqftMedian": 527.22,
     "transactionCount": 3,
     "floorAreaRange": [
       102,
@@ -58,7 +52,13 @@
         "stationName": "SENJA LRT STATION",
         "distanceMeters": 537
       }
-    ]
+    ],
+    "priceIqr": [
+      613333,
+      703333
+    ],
+    "pricePerSqmMedian": 5674.93,
+    "pricePerSqftMedian": 527.22
   },
   "monthlyTrend": [
     {
@@ -388,7 +388,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-525-jelapang-rd-2026-02-223686",
+      "id": "bukit-panjang-525-jelapang-rd-2026-02-223713",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -622,7 +622,7 @@
       "pricePerSqft": 322.91
     },
     {
-      "id": "bukit-panjang-525-jelapang-rd-2016-02-957790",
+      "id": "bukit-panjang-525-jelapang-rd-2016-02-957906",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -635,7 +635,7 @@
       "pricePerSqft": 320.2
     },
     {
-      "id": "bukit-panjang-525-jelapang-rd-2015-11-953708",
+      "id": "bukit-panjang-525-jelapang-rd-2015-11-953824",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

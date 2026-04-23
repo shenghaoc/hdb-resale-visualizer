@@ -10,12 +10,6 @@
       "lng": 103.792601366744
     },
     "medianPrice": 990000,
-    "priceIqr": [
-      974500,
-      1062500
-    ],
-    "pricePerSqmMedian": 10940.53,
-    "pricePerSqftMedian": 1016.41,
     "transactionCount": 4,
     "floorAreaRange": [
       87,
@@ -56,7 +50,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 1007
       }
-    ]
+    ],
+    "priceIqr": [
+      974500,
+      1062500
+    ],
+    "pricePerSqmMedian": 10940.53,
+    "pricePerSqftMedian": 1016.41
   },
   "monthlyTrend": [
     {
@@ -302,7 +302,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-18d-holland-dr-2026-01-226552",
+      "id": "queenstown-18d-holland-dr-2026-01-226629",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

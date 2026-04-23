@@ -10,12 +10,6 @@
       "lng": 103.883192164927
     },
     "medianPrice": 935000,
-    "priceIqr": [
-      910000,
-      1003800
-    ],
-    "pricePerSqmMedian": 9842.11,
-    "pricePerSqftMedian": 914.36,
     "transactionCount": 5,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "STADIUM MRT STATION",
         "distanceMeters": 922
       }
-    ]
+    ],
+    "priceIqr": [
+      910000,
+      1003800
+    ],
+    "pricePerSqmMedian": 9842.11,
+    "pricePerSqftMedian": 914.36
   },
   "monthlyTrend": [
     {
@@ -566,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-1-pine-cl-2026-03-224485",
+      "id": "geylang-1-pine-cl-2026-03-224530",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -579,7 +579,7 @@
       "pricePerSqft": 1121.59
     },
     {
-      "id": "geylang-1-pine-cl-2026-02-224483",
+      "id": "geylang-1-pine-cl-2026-02-224528",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

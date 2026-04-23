@@ -10,12 +10,6 @@
       "lng": 103.879383694154
     },
     "medianPrice": 720000,
-    "priceIqr": [
-      700000,
-      730000
-    ],
-    "pricePerSqmMedian": 6260.87,
-    "pricePerSqftMedian": 581.65,
     "transactionCount": 5,
     "floorAreaRange": [
       115,
@@ -54,7 +48,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 1660
       }
-    ]
+    ],
+    "priceIqr": [
+      700000,
+      730000
+    ],
+    "pricePerSqmMedian": 6260.87,
+    "pricePerSqftMedian": 581.65
   },
   "monthlyTrend": [
     {
@@ -507,7 +507,7 @@
       "pricePerSqft": 387.77
     },
     {
-      "id": "hougang-957-hougang-st-91-2015-12-955380",
+      "id": "hougang-957-hougang-st-91-2015-12-955496",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -520,7 +520,7 @@
       "pricePerSqft": 392.44
     },
     {
-      "id": "hougang-957-hougang-st-91-2013-05-625223",
+      "id": "hougang-957-hougang-st-91-2013-05-625339",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -533,7 +533,7 @@
       "pricePerSqft": 429.28
     },
     {
-      "id": "hougang-957-hougang-st-91-2012-06-606672",
+      "id": "hougang-957-hougang-st-91-2012-06-606788",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -546,7 +546,7 @@
       "pricePerSqft": 402.31
     },
     {
-      "id": "hougang-957-hougang-st-91-2011-08-588129",
+      "id": "hougang-957-hougang-st-91-2011-08-588245",
       "month": "2011-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -559,7 +559,7 @@
       "pricePerSqft": 409.25
     },
     {
-      "id": "hougang-957-hougang-st-91-2010-12-572362",
+      "id": "hougang-957-hougang-st-91-2010-12-572478",
       "month": "2010-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

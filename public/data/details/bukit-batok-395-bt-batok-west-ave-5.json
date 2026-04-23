@@ -10,12 +10,6 @@
       "lng": 103.752287629198
     },
     "medianPrice": 570000,
-    "priceIqr": [
-      560000,
-      600000
-    ],
-    "pricePerSqmMedian": 6333.33,
-    "pricePerSqftMedian": 588.39,
     "transactionCount": 5,
     "floorAreaRange": [
       86,
@@ -54,7 +48,13 @@
         "stationName": "CASHEW MRT STATION",
         "distanceMeters": 1384
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      600000
+    ],
+    "pricePerSqmMedian": 6333.33,
+    "pricePerSqftMedian": 588.39
   },
   "monthlyTrend": [
     {
@@ -636,7 +636,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-395-bt-batok-west-ave-5-2026-02-223013",
+      "id": "bukit-batok-395-bt-batok-west-ave-5-2026-02-223028",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

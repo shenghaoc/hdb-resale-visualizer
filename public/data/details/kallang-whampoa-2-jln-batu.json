@@ -10,12 +10,6 @@
       "lng": 103.883912023247
     },
     "medianPrice": 347500,
-    "priceIqr": [
-      337666,
-      358750
-    ],
-    "pricePerSqmMedian": 5791.67,
-    "pricePerSqftMedian": 538.07,
     "transactionCount": 6,
     "floorAreaRange": [
       54,
@@ -56,7 +50,13 @@
         "stationName": "DAKOTA MRT STATION",
         "distanceMeters": 712
       }
-    ]
+    ],
+    "priceIqr": [
+      337666,
+      358750
+    ],
+    "pricePerSqmMedian": 5791.67,
+    "pricePerSqftMedian": 538.07
   },
   "monthlyTrend": [
     {
@@ -788,7 +788,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-2-jln-batu-2026-02-225486",
+      "id": "kallang-whampoa-2-jln-batu-2026-02-225548",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

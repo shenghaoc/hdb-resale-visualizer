@@ -10,12 +10,6 @@
       "lng": 103.955871285534
     },
     "medianPrice": 725000,
-    "priceIqr": [
-      692000,
-      788000
-    ],
-    "pricePerSqmMedian": 5800,
-    "pricePerSqftMedian": 538.84,
     "transactionCount": 5,
     "floorAreaRange": [
       124,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES MRT STATION",
         "distanceMeters": 1205
       }
-    ]
+    ],
+    "priceIqr": [
+      692000,
+      788000
+    ],
+    "pricePerSqmMedian": 5800,
+    "pricePerSqftMedian": 538.84
   },
   "monthlyTrend": [
     {
@@ -709,7 +709,7 @@
       "pricePerSqft": 383.32
     },
     {
-      "id": "tampines-305-tampines-st-32-2015-08-949822",
+      "id": "tampines-305-tampines-st-32-2015-08-949938",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

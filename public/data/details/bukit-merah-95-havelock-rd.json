@@ -10,12 +10,6 @@
       "lng": 103.832848165751
     },
     "medianPrice": 1110000,
-    "priceIqr": [
-      1040000,
-      1128000
-    ],
-    "pricePerSqmMedian": 9406.78,
-    "pricePerSqftMedian": 873.92,
     "transactionCount": 5,
     "floorAreaRange": [
       118,
@@ -54,7 +48,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 640
       }
-    ]
+    ],
+    "priceIqr": [
+      1040000,
+      1128000
+    ],
+    "pricePerSqmMedian": 9406.78,
+    "pricePerSqftMedian": 873.92
   },
   "monthlyTrend": [
     {
@@ -733,7 +733,7 @@
       "pricePerSqft": 535.37
     },
     {
-      "id": "bukit-merah-95-havelock-rd-2015-01-938720",
+      "id": "bukit-merah-95-havelock-rd-2015-01-938836",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

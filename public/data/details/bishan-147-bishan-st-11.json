@@ -10,12 +10,6 @@
       "lng": 103.855106377701
     },
     "medianPrice": 552500,
-    "priceIqr": [
-      546250,
-      558750
-    ],
-    "pricePerSqmMedian": 6577.38,
-    "pricePerSqftMedian": 611.06,
     "transactionCount": 2,
     "floorAreaRange": [
       84,
@@ -57,7 +51,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1232
       }
-    ]
+    ],
+    "priceIqr": [
+      546250,
+      558750
+    ],
+    "pricePerSqmMedian": 6577.38,
+    "pricePerSqftMedian": 611.06
   },
   "monthlyTrend": [
     {
@@ -809,7 +809,7 @@
       "pricePerSqft": 506.54
     },
     {
-      "id": "bishan-147-bishan-st-11-2016-06-964212",
+      "id": "bishan-147-bishan-st-11-2016-06-964328",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -822,7 +822,7 @@
       "pricePerSqft": 422.49
     },
     {
-      "id": "bishan-147-bishan-st-11-2015-10-951814",
+      "id": "bishan-147-bishan-st-11-2015-10-951930",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -835,7 +835,7 @@
       "pricePerSqft": 514.29
     },
     {
-      "id": "bishan-147-bishan-st-11-2014-11-648761",
+      "id": "bishan-147-bishan-st-11-2014-11-648877",
       "month": "2014-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -848,7 +848,7 @@
       "pricePerSqft": 479.75
     },
     {
-      "id": "bishan-147-bishan-st-11-2014-10-647213",
+      "id": "bishan-147-bishan-st-11-2014-10-647329",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -861,7 +861,7 @@
       "pricePerSqft": 473.54
     },
     {
-      "id": "bishan-147-bishan-st-11-2014-03-637412",
+      "id": "bishan-147-bishan-st-11-2014-03-637528",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -874,7 +874,7 @@
       "pricePerSqft": 505.44
     },
     {
-      "id": "bishan-147-bishan-st-11-2013-07-627667",
+      "id": "bishan-147-bishan-st-11-2013-07-627783",
       "month": "2013-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

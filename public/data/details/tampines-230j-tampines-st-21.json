@@ -9,14 +9,8 @@
       "lat": 1.3561953607168,
       "lng": 103.949663054432
     },
-    "medianPrice": 495000,
-    "priceIqr": [
-      460000,
-      590000
-    ],
-    "pricePerSqmMedian": 3322.15,
-    "pricePerSqftMedian": 308.64,
-    "transactionCount": 57,
+    "medianPrice": 910000,
+    "transactionCount": 1,
     "floorAreaRange": [
       149,
       155
@@ -25,10 +19,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2022-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-03",
-      "2022-01"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -54,7 +48,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1574
       }
-    ]
+    ],
+    "priceIqr": [
+      910000,
+      910000
+    ],
+    "pricePerSqmMedian": 6026.49,
+    "pricePerSqftMedian": 559.88
   },
   "monthlyTrend": [
     {
@@ -344,9 +344,28 @@
       "medianPrice": 740000,
       "transactionCount": 2,
       "medianPricePerSqm": 4870.31
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 910000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6026.49
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-230j-tampines-st-21-2026-04-228115",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 151,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1993,
+      "remainingLease": "66 years 03 months",
+      "resalePrice": 910000,
+      "pricePerSqm": 6026.49,
+      "pricePerSqft": 559.88
+    },
     {
       "id": "tampines-230j-tampines-st-21-2022-01-137138",
       "month": "2022-01",
@@ -491,7 +510,7 @@
       "pricePerSqft": 339.81
     },
     {
-      "id": "tampines-230j-tampines-st-21-2016-04-961866",
+      "id": "tampines-230j-tampines-st-21-2016-04-961982",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -504,7 +523,7 @@
       "pricePerSqft": 367.87
     },
     {
-      "id": "tampines-230j-tampines-st-21-2016-03-960105",
+      "id": "tampines-230j-tampines-st-21-2016-03-960221",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -517,7 +536,7 @@
       "pricePerSqft": 386.58
     },
     {
-      "id": "tampines-230j-tampines-st-21-2014-03-638414",
+      "id": "tampines-230j-tampines-st-21-2014-03-638530",
       "month": "2014-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -530,7 +549,7 @@
       "pricePerSqft": 421.45
     },
     {
-      "id": "tampines-230j-tampines-st-21-2011-08-588816",
+      "id": "tampines-230j-tampines-st-21-2011-08-588932",
       "month": "2011-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -543,7 +562,7 @@
       "pricePerSqft": 391.56
     },
     {
-      "id": "tampines-230j-tampines-st-21-2011-06-585005",
+      "id": "tampines-230j-tampines-st-21-2011-06-585121",
       "month": "2011-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -556,7 +575,7 @@
       "pricePerSqft": 374.11
     },
     {
-      "id": "tampines-230j-tampines-st-21-2010-09-566028",
+      "id": "tampines-230j-tampines-st-21-2010-09-566144",
       "month": "2010-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -569,7 +588,7 @@
       "pricePerSqft": 320.83
     },
     {
-      "id": "tampines-230j-tampines-st-21-2010-01-540996",
+      "id": "tampines-230j-tampines-st-21-2010-01-541112",
       "month": "2010-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -582,7 +601,7 @@
       "pricePerSqft": 328.59
     },
     {
-      "id": "tampines-230j-tampines-st-21-2009-08-526329",
+      "id": "tampines-230j-tampines-st-21-2009-08-526445",
       "month": "2009-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -593,19 +612,6 @@
       "resalePrice": 470000,
       "pricePerSqm": 3112.58,
       "pricePerSqft": 289.17
-    },
-    {
-      "id": "tampines-230j-tampines-st-21-2008-05-491508",
-      "month": "2008-05",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 150,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1993,
-      "remainingLease": "66 years",
-      "resalePrice": 485000,
-      "pricePerSqm": 3233.33,
-      "pricePerSqft": 300.39
     }
   ]
 }

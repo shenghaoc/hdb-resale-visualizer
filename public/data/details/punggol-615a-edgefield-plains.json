@@ -10,12 +10,6 @@
       "lng": 103.909541012348
     },
     "medianPrice": 660000,
-    "priceIqr": [
-      640000,
-      675000
-    ],
-    "pricePerSqmMedian": 7105.26,
-    "pricePerSqftMedian": 660.1,
     "transactionCount": 9,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "COVE LRT STATION",
         "distanceMeters": 630
       }
-    ]
+    ],
+    "priceIqr": [
+      640000,
+      675000
+    ],
+    "pricePerSqmMedian": 7105.26,
+    "pricePerSqftMedian": 660.1
   },
   "monthlyTrend": [
     {
@@ -330,7 +330,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-615a-edgefield-plains-2026-02-226025",
+      "id": "punggol-615a-edgefield-plains-2026-02-226094",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -343,7 +343,7 @@
       "pricePerSqft": 646.28
     },
     {
-      "id": "punggol-615a-edgefield-plains-2026-01-226017",
+      "id": "punggol-615a-edgefield-plains-2026-01-226086",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

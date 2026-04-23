@@ -9,14 +9,8 @@
       "lat": 1.30915239429834,
       "lng": 103.882242524292
     },
-    "medianPrice": 550000,
-    "priceIqr": [
-      530000,
-      620500
-    ],
-    "pricePerSqmMedian": 7526.97,
-    "pricePerSqftMedian": 699.28,
-    "transactionCount": 7,
+    "medianPrice": 559000,
+    "transactionCount": 8,
     "floorAreaRange": [
       68,
       102
@@ -55,7 +49,13 @@
         "stationName": "ALJUNIED MRT STATION",
         "distanceMeters": 788
       }
-    ]
+    ],
+    "priceIqr": [
+      535000,
+      633250
+    ],
+    "pricePerSqmMedian": 7543.98,
+    "pricePerSqftMedian": 700.86
   },
   "monthlyTrend": [
     {
@@ -582,14 +582,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 673000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7236.56
+      "medianPrice": 646500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7398.77
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-10-pine-cl-2026-04-224446",
+      "id": "geylang-10-pine-cl-2026-04-224417",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 82,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "54 years 03 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 7560.98,
+      "pricePerSqft": 702.44
+    },
+    {
+      "id": "geylang-10-pine-cl-2026-04-224490",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -602,7 +615,7 @@
       "pricePerSqft": 672.3
     },
     {
-      "id": "geylang-10-pine-cl-2026-01-224375",
+      "id": "geylang-10-pine-cl-2026-01-224416",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -834,19 +847,6 @@
       "resalePrice": 405000,
       "pricePerSqm": 5955.88,
       "pricePerSqft": 553.32
-    },
-    {
-      "id": "geylang-10-pine-cl-2020-02-66686",
-      "month": "2020-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 82,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "60 years 05 months",
-      "resalePrice": 410000,
-      "pricePerSqm": 5000,
-      "pricePerSqft": 464.52
     }
   ]
 }

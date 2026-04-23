@@ -10,12 +10,6 @@
       "lng": 103.950733897054
     },
     "medianPrice": 654000,
-    "priceIqr": [
-      642000,
-      687000
-    ],
-    "pricePerSqmMedian": 5887.85,
-    "pricePerSqftMedian": 547,
     "transactionCount": 3,
     "floorAreaRange": [
       107,
@@ -56,7 +50,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1457
       }
-    ]
+    ],
+    "priceIqr": [
+      642000,
+      687000
+    ],
+    "pricePerSqmMedian": 5887.85,
+    "pricePerSqftMedian": 547
   },
   "monthlyTrend": [
     {
@@ -416,7 +416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-230b-tampines-st-24-2026-03-227727",
+      "id": "tampines-230b-tampines-st-24-2026-03-227819",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -611,7 +611,7 @@
       "pricePerSqft": 363.44
     },
     {
-      "id": "tampines-230b-tampines-st-24-2015-05-945090",
+      "id": "tampines-230b-tampines-st-24-2015-05-945206",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -624,7 +624,7 @@
       "pricePerSqft": 404.3
     },
     {
-      "id": "tampines-230b-tampines-st-24-2015-01-939467",
+      "id": "tampines-230b-tampines-st-24-2015-01-939583",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -637,7 +637,7 @@
       "pricePerSqft": 391.4
     },
     {
-      "id": "tampines-230b-tampines-st-24-2011-02-577080",
+      "id": "tampines-230b-tampines-st-24-2011-02-577196",
       "month": "2011-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -650,7 +650,7 @@
       "pricePerSqft": 353.03
     },
     {
-      "id": "tampines-230b-tampines-st-24-2010-07-559567",
+      "id": "tampines-230b-tampines-st-24-2010-07-559683",
       "month": "2010-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -663,7 +663,7 @@
       "pricePerSqft": 337.7
     },
     {
-      "id": "tampines-230b-tampines-st-24-2009-10-532355",
+      "id": "tampines-230b-tampines-st-24-2009-10-532471",
       "month": "2009-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

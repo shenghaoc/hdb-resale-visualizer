@@ -10,12 +10,6 @@
       "lng": 103.801916448458
     },
     "medianPrice": 352500,
-    "priceIqr": [
-      349250,
-      356500
-    ],
-    "pricePerSqmMedian": 5875,
-    "pricePerSqftMedian": 545.8,
     "transactionCount": 4,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1683
       }
-    ]
+    ],
+    "priceIqr": [
+      349250,
+      356500
+    ],
+    "pricePerSqmMedian": 5875,
+    "pricePerSqftMedian": 545.8
   },
   "monthlyTrend": [
     {

@@ -10,12 +10,6 @@
       "lng": 103.867119538611
     },
     "medianPrice": 450000,
-    "priceIqr": [
-      450000,
-      460000
-    ],
-    "pricePerSqmMedian": 7500,
-    "pricePerSqftMedian": 696.77,
     "transactionCount": 5,
     "floorAreaRange": [
       60,
@@ -56,7 +50,13 @@
         "stationName": "WOODLEIGH MRT STATION",
         "distanceMeters": 1544
       }
-    ]
+    ],
+    "priceIqr": [
+      450000,
+      460000
+    ],
+    "pricePerSqmMedian": 7500,
+    "pricePerSqftMedian": 696.77
   },
   "monthlyTrend": [
     {

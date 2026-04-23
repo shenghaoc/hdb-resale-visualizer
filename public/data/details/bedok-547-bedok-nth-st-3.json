@@ -9,14 +9,8 @@
       "lat": 1.33033113628205,
       "lng": 103.925432072872
     },
-    "medianPrice": 512500,
-    "priceIqr": [
-      496250,
-      526250
-    ],
-    "pricePerSqmMedian": 5489.13,
-    "pricePerSqftMedian": 509.95,
-    "transactionCount": 4,
+    "medianPrice": 525000,
+    "transactionCount": 5,
     "floorAreaRange": [
       92,
       95
@@ -25,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "BEDOK RESERVOIR MRT STATION",
         "distanceMeters": 1065
       }
-    ]
+    ],
+    "priceIqr": [
+      500000,
+      530000
+    ],
+    "pricePerSqmMedian": 5706.52,
+    "pricePerSqftMedian": 530.15
   },
   "monthlyTrend": [
     {
@@ -1142,11 +1142,30 @@
       "medianPrice": 525000,
       "transactionCount": 1,
       "medianPricePerSqm": 5706.52
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 540088,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5870.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-547-bedok-nth-st-3-2026-03-222531",
+      "id": "bedok-547-bedok-nth-st-3-2026-04-222539",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 01 month",
+      "resalePrice": 540088,
+      "pricePerSqm": 5870.52,
+      "pricePerSqft": 545.39
+    },
+    {
+      "id": "bedok-547-bedok-nth-st-3-2026-03-222538",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1159,7 +1178,7 @@
       "pricePerSqft": 530.15
     },
     {
-      "id": "bedok-547-bedok-nth-st-3-2026-01-222530",
+      "id": "bedok-547-bedok-nth-st-3-2026-01-222537",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1389,19 +1408,6 @@
       "leaseCommenceDate": 1980,
       "remainingLease": "58 years 09 months",
       "resalePrice": 380000,
-      "pricePerSqm": 4000,
-      "pricePerSqft": 371.61
-    },
-    {
-      "id": "bedok-547-bedok-nth-st-3-2020-09-78053",
-      "month": "2020-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 92,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "58 years 09 months",
-      "resalePrice": 368000,
       "pricePerSqm": 4000,
       "pricePerSqft": 371.61
     }

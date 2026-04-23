@@ -10,12 +10,6 @@
       "lng": 103.855541044499
     },
     "medianPrice": 930000,
-    "priceIqr": [
-      908888,
-      960000
-    ],
-    "pricePerSqmMedian": 10000,
-    "pricePerSqftMedian": 929.03,
     "transactionCount": 21,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 1263
       }
-    ]
+    ],
+    "priceIqr": [
+      908888,
+      960000
+    ],
+    "pricePerSqmMedian": 10000,
+    "pricePerSqftMedian": 929.03
   },
   "monthlyTrend": [
     {
@@ -258,7 +258,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-78-lor-limau-2026-04-225568",
+      "id": "kallang-whampoa-78-lor-limau-2026-04-225632",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "34 TO 36",
@@ -271,7 +271,7 @@
       "pricePerSqft": 982.86
     },
     {
-      "id": "kallang-whampoa-78-lor-limau-2026-03-225567",
+      "id": "kallang-whampoa-78-lor-limau-2026-03-225631",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -284,7 +284,7 @@
       "pricePerSqft": 949.01
     },
     {
-      "id": "kallang-whampoa-78-lor-limau-2026-02-225566",
+      "id": "kallang-whampoa-78-lor-limau-2026-02-225630",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -297,7 +297,7 @@
       "pricePerSqft": 929.03
     },
     {
-      "id": "kallang-whampoa-78-lor-limau-2026-01-225565",
+      "id": "kallang-whampoa-78-lor-limau-2026-01-225629",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

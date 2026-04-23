@@ -10,12 +10,6 @@
       "lng": 103.868159565036
     },
     "medianPrice": 700000,
-    "priceIqr": [
-      690000,
-      750000
-    ],
-    "pricePerSqmMedian": 6140.35,
-    "pricePerSqftMedian": 570.46,
     "transactionCount": 9,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "BOON KENG MRT STATION",
         "distanceMeters": 876
       }
-    ]
+    ],
+    "priceIqr": [
+      690000,
+      750000
+    ],
+    "pricePerSqmMedian": 6140.35,
+    "pricePerSqftMedian": 570.46
   },
   "monthlyTrend": [
     {
@@ -907,7 +907,7 @@
       "pricePerSqft": 469.28
     },
     {
-      "id": "kallang-whampoa-53-geylang-bahru-2016-06-964968",
+      "id": "kallang-whampoa-53-geylang-bahru-2016-06-965084",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

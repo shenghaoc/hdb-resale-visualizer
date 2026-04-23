@@ -10,12 +10,6 @@
       "lng": 103.771819242148
     },
     "medianPrice": 563944,
-    "priceIqr": [
-      527916,
-      603000
-    ],
-    "pricePerSqmMedian": 5044.53,
-    "pricePerSqftMedian": 468.65,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 517
       }
-    ]
+    ],
+    "priceIqr": [
+      527916,
+      603000
+    ],
+    "pricePerSqmMedian": 5044.53,
+    "pricePerSqftMedian": 468.65
   },
   "monthlyTrend": [
     {
@@ -860,7 +860,7 @@
       "pricePerSqft": 304.6
     },
     {
-      "id": "bukit-panjang-244-bt-panjang-ring-rd-2016-12-974573",
+      "id": "bukit-panjang-244-bt-panjang-ring-rd-2016-12-974689",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -873,7 +873,7 @@
       "pricePerSqft": 325.92
     },
     {
-      "id": "bukit-panjang-244-bt-panjang-ring-rd-2016-11-973013",
+      "id": "bukit-panjang-244-bt-panjang-ring-rd-2016-11-973129",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

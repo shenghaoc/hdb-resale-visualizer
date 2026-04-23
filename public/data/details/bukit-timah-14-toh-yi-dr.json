@@ -10,12 +10,6 @@
       "lng": 103.772569349944
     },
     "medianPrice": 969000,
-    "priceIqr": [
-      953500,
-      1022222
-    ],
-    "pricePerSqmMedian": 9317.31,
-    "pricePerSqftMedian": 865.61,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "DT4",
         "distanceMeters": 1804
       }
-    ]
+    ],
+    "priceIqr": [
+      953500,
+      1022222
+    ],
+    "pricePerSqmMedian": 9317.31,
+    "pricePerSqftMedian": 865.61
   },
   "monthlyTrend": [
     {
@@ -704,7 +704,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-03-223757",
+      "id": "bukit-timah-14-toh-yi-dr-2026-03-223784",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -717,7 +717,7 @@
       "pricePerSqft": 864.71
     },
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-03-223758",
+      "id": "bukit-timah-14-toh-yi-dr-2026-03-223785",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -730,7 +730,7 @@
       "pricePerSqft": 812.9
     },
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-01-223756",
+      "id": "bukit-timah-14-toh-yi-dr-2026-01-223783",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

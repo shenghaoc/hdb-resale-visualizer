@@ -10,12 +10,6 @@
       "lng": 103.8866756731
     },
     "medianPrice": 880000,
-    "priceIqr": [
-      512444,
-      897500
-    ],
-    "pricePerSqmMedian": 6714.7,
-    "pricePerSqftMedian": 623.82,
     "transactionCount": 7,
     "floorAreaRange": [
       74,
@@ -58,7 +52,13 @@
         "stationName": "CC9",
         "distanceMeters": 685
       }
-    ]
+    ],
+    "priceIqr": [
+      512444,
+      897500
+    ],
+    "pricePerSqmMedian": 6714.7,
+    "pricePerSqftMedian": 623.82
   },
   "monthlyTrend": [
     {
@@ -1012,7 +1012,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-124-geylang-east-ave-1-2026-02-224477",
+      "id": "geylang-124-geylang-east-ave-1-2026-02-224522",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

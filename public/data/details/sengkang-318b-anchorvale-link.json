@@ -10,12 +10,6 @@
       "lng": 103.888915861917
     },
     "medianPrice": 676500,
-    "priceIqr": [
-      655750,
-      697250
-    ],
-    "pricePerSqmMedian": 6150,
-    "pricePerSqftMedian": 571.35,
     "transactionCount": 2,
     "floorAreaRange": [
       92,
@@ -55,7 +49,13 @@
         "stationName": "CHENG LIM LRT STATION",
         "distanceMeters": 601
       }
-    ]
+    ],
+    "priceIqr": [
+      655750,
+      697250
+    ],
+    "pricePerSqmMedian": 6150,
+    "pricePerSqftMedian": 571.35
   },
   "monthlyTrend": [
     {

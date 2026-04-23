@@ -10,12 +10,6 @@
       "lng": 103.883813276017
     },
     "medianPrice": 608888,
-    "priceIqr": [
-      571944,
-      654444
-    ],
-    "pricePerSqmMedian": 5785.12,
-    "pricePerSqftMedian": 537.46,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 1256
       }
-    ]
+    ],
+    "priceIqr": [
+      571944,
+      654444
+    ],
+    "pricePerSqmMedian": 5785.12,
+    "pricePerSqftMedian": 537.46
   },
   "monthlyTrend": [
     {
@@ -530,7 +530,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-915-hougang-st-91-2026-01-224718",
+      "id": "hougang-915-hougang-st-91-2026-01-224767",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

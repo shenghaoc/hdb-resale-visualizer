@@ -10,12 +10,6 @@
       "lng": 103.902330351336
     },
     "medianPrice": 360888,
-    "priceIqr": [
-      358000,
-      370000
-    ],
-    "pricePerSqmMedian": 6116.75,
-    "pricePerSqftMedian": 568.26,
     "transactionCount": 5,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "CC9",
         "distanceMeters": 1181
       }
-    ]
+    ],
+    "priceIqr": [
+      358000,
+      370000
+    ],
+    "pricePerSqmMedian": 6116.75,
+    "pricePerSqftMedian": 568.26
   },
   "monthlyTrend": [
     {

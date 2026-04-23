@@ -9,14 +9,8 @@
       "lat": 1.31251696940456,
       "lng": 103.760867377122
     },
-    "medianPrice": 380000,
-    "priceIqr": [
-      378888,
-      395000
-    ],
-    "pricePerSqmMedian": 5671.64,
-    "pricePerSqftMedian": 526.91,
-    "transactionCount": 5,
+    "medianPrice": 379444,
+    "transactionCount": 6,
     "floorAreaRange": [
       67,
       155
@@ -57,7 +51,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 3009
       }
-    ]
+    ],
+    "priceIqr": [
+      373722,
+      391250
+    ],
+    "pricePerSqmMedian": 5663.34,
+    "pricePerSqftMedian": 526.14
   },
   "monthlyTrend": [
     {
@@ -992,14 +992,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 378888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5655.04
+      "medianPrice": 373444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5573.79
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-506-west-coast-dr-2026-04-224200",
+      "id": "clementi-506-west-coast-dr-2026-04-224235",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1010,6 +1010,19 @@
       "resalePrice": 378888,
       "pricePerSqm": 5655.04,
       "pricePerSqft": 525.37
+    },
+    {
+      "id": "clementi-506-west-coast-dr-2026-04-224236",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 04 months",
+      "resalePrice": 368000,
+      "pricePerSqm": 5492.54,
+      "pricePerSqft": 510.27
     },
     {
       "id": "clementi-506-west-coast-dr-2025-03-204042",
@@ -1244,19 +1257,6 @@
       "resalePrice": 250000,
       "pricePerSqm": 3731.34,
       "pricePerSqft": 346.65
-    },
-    {
-      "id": "clementi-506-west-coast-dr-2019-10-58924",
-      "month": "2019-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "57 years 10 months",
-      "resalePrice": 293000,
-      "pricePerSqm": 4373.13,
-      "pricePerSqft": 406.28
     }
   ]
 }

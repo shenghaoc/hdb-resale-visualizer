@@ -10,12 +10,6 @@
       "lng": 103.935509731277
     },
     "medianPrice": 560000,
-    "priceIqr": [
-      530000,
-      610000
-    ],
-    "pricePerSqmMedian": 5641.03,
-    "pricePerSqftMedian": 524.07,
     "transactionCount": 3,
     "floorAreaRange": [
       89,
@@ -56,7 +50,13 @@
         "stationName": "TANAH MERAH MRT STATION",
         "distanceMeters": 1152
       }
-    ]
+    ],
+    "priceIqr": [
+      530000,
+      610000
+    ],
+    "pricePerSqmMedian": 5641.03,
+    "pricePerSqftMedian": 524.07
   },
   "monthlyTrend": [
     {
@@ -662,7 +662,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-137-bedok-nth-ave-3-2026-03-222482",
+      "id": "bedok-137-bedok-nth-ave-3-2026-03-222489",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -675,7 +675,7 @@
       "pricePerSqft": 571.71
     },
     {
-      "id": "bedok-137-bedok-nth-ave-3-2026-02-222630",
+      "id": "bedok-137-bedok-nth-ave-3-2026-02-222641",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -870,7 +870,7 @@
       "pricePerSqft": 440.69
     },
     {
-      "id": "bedok-137-bedok-nth-ave-3-2016-12-974371",
+      "id": "bedok-137-bedok-nth-ave-3-2016-12-974487",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -883,7 +883,7 @@
       "pricePerSqft": 426.24
     },
     {
-      "id": "bedok-137-bedok-nth-ave-3-2016-11-972779",
+      "id": "bedok-137-bedok-nth-ave-3-2016-11-972895",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -896,7 +896,7 @@
       "pricePerSqft": 420.84
     },
     {
-      "id": "bedok-137-bedok-nth-ave-3-2015-12-954962",
+      "id": "bedok-137-bedok-nth-ave-3-2015-12-955078",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -909,7 +909,7 @@
       "pricePerSqft": 409.73
     },
     {
-      "id": "bedok-137-bedok-nth-ave-3-2014-10-647193",
+      "id": "bedok-137-bedok-nth-ave-3-2014-10-647309",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

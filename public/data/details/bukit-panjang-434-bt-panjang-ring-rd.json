@@ -10,12 +10,6 @@
       "lng": 103.77050511557
     },
     "medianPrice": 690888,
-    "priceIqr": [
-      690888,
-      690888
-    ],
-    "pricePerSqmMedian": 5663.02,
-    "pricePerSqftMedian": 526.11,
     "transactionCount": 1,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "BANGKIT LRT STATION",
         "distanceMeters": 665
       }
-    ]
+    ],
+    "priceIqr": [
+      690888,
+      690888
+    ],
+    "pricePerSqmMedian": 5663.02,
+    "pricePerSqftMedian": 526.11
   },
   "monthlyTrend": [
     {
@@ -735,7 +735,7 @@
       "pricePerSqft": 321.59
     },
     {
-      "id": "bukit-panjang-434-bt-panjang-ring-rd-2016-10-971371",
+      "id": "bukit-panjang-434-bt-panjang-ring-rd-2016-10-971487",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

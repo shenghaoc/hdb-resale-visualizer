@@ -10,12 +10,6 @@
       "lng": 103.767787535116
     },
     "medianPrice": 828000,
-    "priceIqr": [
-      714000,
-      889000
-    ],
-    "pricePerSqmMedian": 6842.98,
-    "pricePerSqftMedian": 635.73,
     "transactionCount": 3,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "BEAUTY WORLD MRT STATION",
         "distanceMeters": 2414
       }
-    ]
+    ],
+    "priceIqr": [
+      714000,
+      889000
+    ],
+    "pricePerSqmMedian": 6842.98,
+    "pricePerSqftMedian": 635.73
   },
   "monthlyTrend": [
     {
@@ -536,7 +536,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-372-clementi-ave-4-2026-01-224277",
+      "id": "clementi-372-clementi-ave-4-2026-01-224315",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -744,7 +744,7 @@
       "pricePerSqft": 528.24
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-09-950564",
+      "id": "clementi-372-clementi-ave-4-2015-09-950680",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -757,7 +757,7 @@
       "pricePerSqft": 524.4
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-05-944315",
+      "id": "clementi-372-clementi-ave-4-2015-05-944431",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -770,7 +770,7 @@
       "pricePerSqft": 532.77
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-05-944321",
+      "id": "clementi-372-clementi-ave-4-2015-05-944437",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -783,7 +783,7 @@
       "pricePerSqft": 514.42
     },
     {
-      "id": "clementi-372-clementi-ave-4-2015-04-942731",
+      "id": "clementi-372-clementi-ave-4-2015-04-942847",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

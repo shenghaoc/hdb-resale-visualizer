@@ -10,12 +10,6 @@
       "lng": 103.855872559307
     },
     "medianPrice": 470000,
-    "priceIqr": [
-      462000,
-      476500
-    ],
-    "pricePerSqmMedian": 5731.71,
-    "pricePerSqftMedian": 532.49,
     "transactionCount": 7,
     "floorAreaRange": [
       82,
@@ -54,7 +48,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1269
       }
-    ]
+    ],
+    "priceIqr": [
+      462000,
+      476500
+    ],
+    "pricePerSqmMedian": 5731.71,
+    "pricePerSqftMedian": 532.49
   },
   "monthlyTrend": [
     {
@@ -918,7 +918,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-219-lor-8-toa-payoh-2026-03-228265",
+      "id": "toa-payoh-219-lor-8-toa-payoh-2026-03-228364",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

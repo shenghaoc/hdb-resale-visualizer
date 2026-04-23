@@ -10,12 +10,6 @@
       "lng": 103.89777455271
     },
     "medianPrice": 958888,
-    "priceIqr": [
-      953000,
-      960000
-    ],
-    "pricePerSqmMedian": 10093.56,
-    "pricePerSqftMedian": 937.72,
     "transactionCount": 5,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 586
       }
-    ]
+    ],
+    "priceIqr": [
+      953000,
+      960000
+    ],
+    "pricePerSqmMedian": 10093.56,
+    "pricePerSqftMedian": 937.72
   },
   "monthlyTrend": [
     {
@@ -276,7 +276,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-2b-geylang-serai-2026-04-224433",
+      "id": "geylang-2b-geylang-serai-2026-04-224477",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -289,7 +289,7 @@
       "pricePerSqft": 931.97
     },
     {
-      "id": "geylang-2b-geylang-serai-2026-03-224430",
+      "id": "geylang-2b-geylang-serai-2026-03-224474",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -302,7 +302,7 @@
       "pricePerSqft": 938.81
     },
     {
-      "id": "geylang-2b-geylang-serai-2026-02-224429",
+      "id": "geylang-2b-geylang-serai-2026-02-224473",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -315,7 +315,7 @@
       "pricePerSqft": 822.33
     },
     {
-      "id": "geylang-2b-geylang-serai-2026-01-224427",
+      "id": "geylang-2b-geylang-serai-2026-01-224471",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

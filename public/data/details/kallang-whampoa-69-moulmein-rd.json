@@ -10,12 +10,6 @@
       "lng": 103.850517972593
     },
     "medianPrice": 618000,
-    "priceIqr": [
-      600000,
-      622000
-    ],
-    "pricePerSqmMedian": 7357.14,
-    "pricePerSqftMedian": 683.5,
     "transactionCount": 5,
     "floorAreaRange": [
       84,
@@ -54,7 +48,13 @@
         "stationName": "BOON KENG MRT STATION",
         "distanceMeters": 1139
       }
-    ]
+    ],
+    "priceIqr": [
+      600000,
+      622000
+    ],
+    "pricePerSqmMedian": 7357.14,
+    "pricePerSqftMedian": 683.5
   },
   "monthlyTrend": [
     {
@@ -859,7 +859,7 @@
       "pricePerSqft": 589.49
     },
     {
-      "id": "kallang-whampoa-69-moulmein-rd-2016-10-971876",
+      "id": "kallang-whampoa-69-moulmein-rd-2016-10-971992",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

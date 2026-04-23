@@ -10,12 +10,6 @@
       "lng": 103.74371089301
     },
     "medianPrice": 645444,
-    "priceIqr": [
-      633722,
-      657166
-    ],
-    "pricePerSqmMedian": 6363.85,
-    "pricePerSqftMedian": 591.22,
     "transactionCount": 2,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1155
       }
-    ]
+    ],
+    "priceIqr": [
+      633722,
+      657166
+    ],
+    "pricePerSqmMedian": 6363.85,
+    "pricePerSqftMedian": 591.22
   },
   "monthlyTrend": [
     {
@@ -326,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-288e-jurong-east-st-21-2026-03-224912",
+      "id": "jurong-east-288e-jurong-east-st-21-2026-03-224965",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -560,7 +560,7 @@
       "pricePerSqft": 483.1
     },
     {
-      "id": "jurong-east-288e-jurong-east-st-21-2016-09-970002",
+      "id": "jurong-east-288e-jurong-east-st-21-2016-09-970118",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -573,7 +573,7 @@
       "pricePerSqft": 466.32
     },
     {
-      "id": "jurong-east-288e-jurong-east-st-21-2015-11-953965",
+      "id": "jurong-east-288e-jurong-east-st-21-2015-11-954081",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

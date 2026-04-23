@@ -10,12 +10,6 @@
       "lng": 103.839075823483
     },
     "medianPrice": 320000,
-    "priceIqr": [
-      319444,
-      320000
-    ],
-    "pricePerSqmMedian": 6037.74,
-    "pricePerSqftMedian": 560.92,
     "transactionCount": 3,
     "floorAreaRange": [
       48,
@@ -57,7 +51,13 @@
         "stationName": "HAVELOCK MRT STATION",
         "distanceMeters": 583
       }
-    ]
+    ],
+    "priceIqr": [
+      319444,
+      320000
+    ],
+    "pricePerSqmMedian": 6037.74,
+    "pricePerSqftMedian": 560.92
   },
   "monthlyTrend": [
     {
@@ -908,7 +908,7 @@
       "pricePerSqft": 420.69
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-10-971403",
+      "id": "central-area-10-jln-kukoh-2016-10-971519",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -921,7 +921,7 @@
       "pricePerSqft": 513.41
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-03-959120",
+      "id": "central-area-10-jln-kukoh-2016-03-959236",
       "month": "2016-03",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -934,7 +934,7 @@
       "pricePerSqft": 473.28
     },
     {
-      "id": "central-area-10-jln-kukoh-2016-01-956537",
+      "id": "central-area-10-jln-kukoh-2016-01-956653",
       "month": "2016-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

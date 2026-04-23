@@ -10,12 +10,6 @@
       "lng": 103.855915402039
     },
     "medianPrice": 950000,
-    "priceIqr": [
-      926000,
-      975000
-    ],
-    "pricePerSqmMedian": 8403.36,
-    "pricePerSqftMedian": 780.7,
     "transactionCount": 3,
     "floorAreaRange": [
       102,
@@ -56,7 +50,13 @@
         "stationName": "POTONG PASIR MRT STATION",
         "distanceMeters": 1463
       }
-    ]
+    ],
+    "priceIqr": [
+      926000,
+      975000
+    ],
+    "pricePerSqmMedian": 8403.36,
+    "pricePerSqftMedian": 780.7
   },
   "monthlyTrend": [
     {
@@ -590,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-37-lor-5-toa-payoh-2026-01-228259",
+      "id": "toa-payoh-37-lor-5-toa-payoh-2026-01-228358",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

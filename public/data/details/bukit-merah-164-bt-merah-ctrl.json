@@ -10,12 +10,6 @@
       "lng": 103.816756914621
     },
     "medianPrice": 166000,
-    "priceIqr": [
-      148500,
-      185500
-    ],
-    "pricePerSqmMedian": 2305.56,
-    "pricePerSqftMedian": 214.19,
     "transactionCount": 3,
     "floorAreaRange": [
       72,
@@ -54,7 +48,13 @@
         "stationName": "TELOK BLANGAH MRT STATION",
         "distanceMeters": 1604
       }
-    ]
+    ],
+    "priceIqr": [
+      148500,
+      185500
+    ],
+    "pricePerSqmMedian": 2305.56,
+    "pricePerSqftMedian": 214.19
   },
   "monthlyTrend": [
     {
@@ -78,7 +78,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-2003-01-338967",
+      "id": "bukit-merah-164-bt-merah-ctrl-2003-01-339083",
       "month": "2003-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -91,7 +91,7 @@
       "pricePerSqft": 169.03
     },
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-1999-12-936273",
+      "id": "bukit-merah-164-bt-merah-ctrl-1999-12-936389",
       "month": "1999-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -104,7 +104,7 @@
       "pricePerSqft": 214.19
     },
     {
-      "id": "bukit-merah-164-bt-merah-ctrl-1997-04-805941",
+      "id": "bukit-merah-164-bt-merah-ctrl-1997-04-806057",
       "month": "1997-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

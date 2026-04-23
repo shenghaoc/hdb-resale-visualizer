@@ -10,12 +10,6 @@
       "lng": 103.880940476912
     },
     "medianPrice": 582500,
-    "priceIqr": [
-      581250,
-      583750
-    ],
-    "pricePerSqmMedian": 5881.31,
-    "pricePerSqftMedian": 546.39,
     "transactionCount": 2,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 1285
       }
-    ]
+    ],
+    "priceIqr": [
+      581250,
+      583750
+    ],
+    "pricePerSqmMedian": 5881.31,
+    "pricePerSqftMedian": 546.39
   },
   "monthlyTrend": [
     {

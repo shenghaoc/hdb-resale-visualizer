@@ -10,12 +10,6 @@
       "lng": 103.888783549259
     },
     "medianPrice": 618888,
-    "priceIqr": [
-      618888,
-      960000
-    ],
-    "pricePerSqmMedian": 6008.62,
-    "pricePerSqftMedian": 558.22,
     "transactionCount": 5,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "SERANGOON MRT STATION",
         "distanceMeters": 1853
       }
-    ]
+    ],
+    "priceIqr": [
+      618888,
+      960000
+    ],
+    "pricePerSqmMedian": 6008.62,
+    "pricePerSqftMedian": 558.22
   },
   "monthlyTrend": [
     {
@@ -686,7 +686,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-234-hougang-ave-1-2026-04-224627",
+      "id": "hougang-234-hougang-ave-1-2026-04-224674",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

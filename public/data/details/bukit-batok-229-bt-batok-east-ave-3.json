@@ -10,12 +10,6 @@
       "lng": 103.754680867021
     },
     "medianPrice": 410000,
-    "priceIqr": [
-      405000,
-      488888
-    ],
-    "pricePerSqmMedian": 5970.15,
-    "pricePerSqftMedian": 554.65,
     "transactionCount": 9,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "DT4",
         "distanceMeters": 1715
       }
-    ]
+    ],
+    "priceIqr": [
+      405000,
+      488888
+    ],
+    "pricePerSqmMedian": 5970.15,
+    "pricePerSqftMedian": 554.65
   },
   "monthlyTrend": [
     {
@@ -1111,7 +1111,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-229-bt-batok-east-ave-3-2026-03-222850",
+      "id": "bukit-batok-229-bt-batok-east-ave-3-2026-03-222863",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1124,7 +1124,7 @@
       "pricePerSqft": 561.58
     },
     {
-      "id": "bukit-batok-229-bt-batok-east-ave-3-2026-02-222945",
+      "id": "bukit-batok-229-bt-batok-east-ave-3-2026-02-222960",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

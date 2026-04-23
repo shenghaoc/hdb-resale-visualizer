@@ -10,12 +10,6 @@
       "lng": 103.855203622089
     },
     "medianPrice": 980000,
-    "priceIqr": [
-      860000,
-      1008000
-    ],
-    "pricePerSqmMedian": 7251.8,
-    "pricePerSqftMedian": 673.71,
     "transactionCount": 5,
     "floorAreaRange": [
       74,
@@ -56,7 +50,13 @@
         "stationName": "ROCHOR MRT STATION",
         "distanceMeters": 457
       }
-    ]
+    ],
+    "priceIqr": [
+      860000,
+      1008000
+    ],
+    "pricePerSqmMedian": 7251.8,
+    "pricePerSqftMedian": 673.71
   },
   "monthlyTrend": [
     {
@@ -512,7 +512,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-639-rowell-rd-2026-02-223812",
+      "id": "central-area-639-rowell-rd-2026-02-223839",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -759,7 +759,7 @@
       "pricePerSqft": 511.39
     },
     {
-      "id": "central-area-639-rowell-rd-2014-07-643214",
+      "id": "central-area-639-rowell-rd-2014-07-643330",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

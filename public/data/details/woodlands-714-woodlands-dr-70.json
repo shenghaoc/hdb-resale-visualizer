@@ -10,12 +10,6 @@
       "lng": 103.798789070341
     },
     "medianPrice": 580000,
-    "priceIqr": [
-      570000,
-      620000
-    ],
-    "pricePerSqmMedian": 5600,
-    "pricePerSqftMedian": 520.26,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS NORTH MRT STATION",
         "distanceMeters": 1623
       }
-    ]
+    ],
+    "priceIqr": [
+      570000,
+      620000
+    ],
+    "pricePerSqmMedian": 5600,
+    "pricePerSqftMedian": 520.26
   },
   "monthlyTrend": [
     {

@@ -10,12 +10,6 @@
       "lng": 103.930041392882
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      700000,
-      725000
-    ],
-    "pricePerSqmMedian": 6008.41,
-    "pricePerSqftMedian": 558.2,
     "transactionCount": 8,
     "floorAreaRange": [
       119,
@@ -54,7 +48,13 @@
         "stationName": "BEDOK NORTH MRT STATION",
         "distanceMeters": 1267
       }
-    ]
+    ],
+    "priceIqr": [
+      700000,
+      725000
+    ],
+    "pricePerSqmMedian": 6008.41,
+    "pricePerSqftMedian": 558.2
   },
   "monthlyTrend": [
     {
@@ -576,7 +576,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-516-bedok-nth-ave-2-2026-04-222628",
+      "id": "bedok-516-bedok-nth-ave-2-2026-04-222639",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -797,7 +797,7 @@
       "pricePerSqft": 441.09
     },
     {
-      "id": "bedok-516-bedok-nth-ave-2-2016-12-974370",
+      "id": "bedok-516-bedok-nth-ave-2-2016-12-974486",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -810,7 +810,7 @@
       "pricePerSqft": 495.74
     },
     {
-      "id": "bedok-516-bedok-nth-ave-2-2015-12-954961",
+      "id": "bedok-516-bedok-nth-ave-2-2015-12-955077",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -823,7 +823,7 @@
       "pricePerSqft": 537.12
     },
     {
-      "id": "bedok-516-bedok-nth-ave-2-2015-09-950239",
+      "id": "bedok-516-bedok-nth-ave-2-2015-09-950355",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

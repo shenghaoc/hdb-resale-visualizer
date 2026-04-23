@@ -10,12 +10,6 @@
       "lng": 103.839417299226
     },
     "medianPrice": 1025000,
-    "priceIqr": [
-      916000,
-      1030000
-    ],
-    "pricePerSqmMedian": 11333.33,
-    "pricePerSqftMedian": 1052.9,
     "transactionCount": 9,
     "floorAreaRange": [
       60,
@@ -57,7 +51,13 @@
         "stationName": "MAXWELL MRT STATION",
         "distanceMeters": 800
       }
-    ]
+    ],
+    "priceIqr": [
+      916000,
+      1030000
+    ],
+    "pricePerSqmMedian": 11333.33,
+    "pricePerSqftMedian": 1052.9
   },
   "monthlyTrend": [
     {
@@ -453,7 +453,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-18-cantonment-cl-2026-03-223465",
+      "id": "bukit-merah-18-cantonment-cl-2026-03-223489",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

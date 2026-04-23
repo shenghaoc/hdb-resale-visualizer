@@ -10,12 +10,6 @@
       "lng": 103.915067020322
     },
     "medianPrice": 459500,
-    "priceIqr": [
-      447750,
-      483250
-    ],
-    "pricePerSqmMedian": 6017.05,
-    "pricePerSqftMedian": 559,
     "transactionCount": 6,
     "floorAreaRange": [
       65,
@@ -57,7 +51,13 @@
         "stationName": "SIGLAP MRT STATION",
         "distanceMeters": 1629
       }
-    ]
+    ],
+    "priceIqr": [
+      447750,
+      483250
+    ],
+    "pricePerSqmMedian": 6017.05,
+    "pricePerSqftMedian": 559
   },
   "monthlyTrend": [
     {
@@ -741,7 +741,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-20-marine-ter-2026-01-225660",
+      "id": "marine-parade-20-marine-ter-2026-01-225725",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

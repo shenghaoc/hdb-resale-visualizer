@@ -10,12 +10,6 @@
       "lng": 103.837419259859
     },
     "medianPrice": 478000,
-    "priceIqr": [
-      475000,
-      535000
-    ],
-    "pricePerSqmMedian": 6032.61,
-    "pricePerSqftMedian": 560.45,
     "transactionCount": 5,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "ANG MO KIO MRT STATION",
         "distanceMeters": 1330
       }
-    ]
+    ],
+    "priceIqr": [
+      475000,
+      535000
+    ],
+    "pricePerSqmMedian": 6032.61,
+    "pricePerSqftMedian": 560.45
   },
   "monthlyTrend": [
     {
@@ -1107,7 +1107,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-110-ang-mo-kio-ave-4-2026-02-222146",
+      "id": "ang-mo-kio-110-ang-mo-kio-ave-4-2026-02-222149",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1120,7 +1120,7 @@
       "pricePerSqft": 515.5
     },
     {
-      "id": "ang-mo-kio-110-ang-mo-kio-ave-4-2026-01-222140",
+      "id": "ang-mo-kio-110-ang-mo-kio-ave-4-2026-01-222143",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

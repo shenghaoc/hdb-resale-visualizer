@@ -10,12 +10,6 @@
       "lng": 103.90607033433
     },
     "medianPrice": 588888,
-    "priceIqr": [
-      566944,
-      633444
-    ],
-    "pricePerSqmMedian": 5450,
-    "pricePerSqftMedian": 506.32,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 781
       }
-    ]
+    ],
+    "priceIqr": [
+      566944,
+      633444
+    ],
+    "pricePerSqmMedian": 5450,
+    "pricePerSqftMedian": 506.32
   },
   "monthlyTrend": [
     {

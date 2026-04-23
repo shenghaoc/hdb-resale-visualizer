@@ -10,12 +10,6 @@
       "lng": 103.90694508249
     },
     "medianPrice": 730000,
-    "priceIqr": [
-      730000,
-      730000
-    ],
-    "pricePerSqmMedian": 6759.26,
-    "pricePerSqftMedian": 627.96,
     "transactionCount": 1,
     "floorAreaRange": [
       106,
@@ -56,7 +50,13 @@
         "stationName": "BEDOK NORTH MRT STATION",
         "distanceMeters": 1218
       }
-    ]
+    ],
+    "priceIqr": [
+      730000,
+      730000
+    ],
+    "pricePerSqmMedian": 6759.26,
+    "pricePerSqftMedian": 627.96
   },
   "monthlyTrend": [
     {
@@ -648,7 +648,7 @@
       "pricePerSqft": 421.5
     },
     {
-      "id": "bedok-654-jln-tenaga-2016-11-972782",
+      "id": "bedok-654-jln-tenaga-2016-11-972898",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -661,7 +661,7 @@
       "pricePerSqft": 406.45
     },
     {
-      "id": "bedok-654-jln-tenaga-2016-04-960536",
+      "id": "bedok-654-jln-tenaga-2016-04-960652",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -674,7 +674,7 @@
       "pricePerSqft": 404.3
     },
     {
-      "id": "bedok-654-jln-tenaga-2015-09-950224",
+      "id": "bedok-654-jln-tenaga-2015-09-950340",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -687,7 +687,7 @@
       "pricePerSqft": 365.59
     },
     {
-      "id": "bedok-654-jln-tenaga-2013-03-621703",
+      "id": "bedok-654-jln-tenaga-2013-03-621819",
       "month": "2013-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.900220786851
     },
     "medianPrice": 791000,
-    "priceIqr": [
-      639222,
-      961249
-    ],
-    "pricePerSqmMedian": 8597.83,
-    "pricePerSqftMedian": 798.76,
     "transactionCount": 10,
     "floorAreaRange": [
       67,
@@ -56,7 +50,13 @@
         "stationName": "HOUGANG MRT STATION",
         "distanceMeters": 940
       }
-    ]
+    ],
+    "priceIqr": [
+      639222,
+      961249
+    ],
+    "pricePerSqmMedian": 8597.83,
+    "pricePerSqftMedian": 798.76
   },
   "monthlyTrend": [
     {
@@ -326,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-475a-upp-serangoon-cres-2026-04-224739",
+      "id": "hougang-475a-upp-serangoon-cres-2026-04-224788",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -339,7 +339,7 @@
       "pricePerSqft": 797.76
     },
     {
-      "id": "hougang-475a-upp-serangoon-cres-2026-03-224811",
+      "id": "hougang-475a-upp-serangoon-cres-2026-03-224861",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -352,7 +352,7 @@
       "pricePerSqft": 800.46
     },
     {
-      "id": "hougang-475a-upp-serangoon-cres-2026-01-224728",
+      "id": "hougang-475a-upp-serangoon-cres-2026-01-224777",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

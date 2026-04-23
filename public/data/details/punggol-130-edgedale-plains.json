@@ -10,12 +10,6 @@
       "lng": 103.910055332313
     },
     "medianPrice": 579000,
-    "priceIqr": [
-      560000,
-      600000
-    ],
-    "pricePerSqmMedian": 5450.45,
-    "pricePerSqftMedian": 506.37,
     "transactionCount": 14,
     "floorAreaRange": [
       91,
@@ -55,7 +49,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 481
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      600000
+    ],
+    "pricePerSqmMedian": 5450.45,
+    "pricePerSqftMedian": 506.37
   },
   "monthlyTrend": [
     {
@@ -589,7 +589,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-130-edgedale-plains-2026-04-226274",
+      "id": "punggol-130-edgedale-plains-2026-04-226344",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

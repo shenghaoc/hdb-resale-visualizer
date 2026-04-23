@@ -10,12 +10,6 @@
       "lng": 103.767227214144
     },
     "medianPrice": 519000,
-    "priceIqr": [
-      477500,
-      538500
-    ],
-    "pricePerSqmMedian": 5233.01,
-    "pricePerSqftMedian": 486.16,
     "transactionCount": 4,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 478
       }
-    ]
+    ],
+    "priceIqr": [
+      477500,
+      538500
+    ],
+    "pricePerSqmMedian": 5233.01,
+    "pricePerSqftMedian": 486.16
   },
   "monthlyTrend": [
     {
@@ -613,7 +613,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-108-gangsa-rd-2026-02-223521",
+      "id": "bukit-panjang-108-gangsa-rd-2026-02-223546",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -847,7 +847,7 @@
       "pricePerSqft": 343.61
     },
     {
-      "id": "bukit-panjang-108-gangsa-rd-2015-07-947433",
+      "id": "bukit-panjang-108-gangsa-rd-2015-07-947549",
       "month": "2015-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -860,7 +860,7 @@
       "pricePerSqft": 362.7
     },
     {
-      "id": "bukit-panjang-108-gangsa-rd-2015-06-945803",
+      "id": "bukit-panjang-108-gangsa-rd-2015-06-945919",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.853913839503
     },
     "medianPrice": 508888,
-    "priceIqr": [
-      501944,
-      514444
-    ],
-    "pricePerSqmMedian": 5531.39,
-    "pricePerSqftMedian": 513.88,
     "transactionCount": 3,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1683
       }
-    ]
+    ],
+    "priceIqr": [
+      501944,
+      514444
+    ],
+    "pricePerSqmMedian": 5531.39,
+    "pricePerSqftMedian": 513.88
   },
   "monthlyTrend": [
     {
@@ -696,7 +696,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-414-ang-mo-kio-ave-10-2026-03-222193",
+      "id": "ang-mo-kio-414-ang-mo-kio-ave-10-2026-03-222199",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

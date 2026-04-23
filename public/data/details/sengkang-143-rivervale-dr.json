@@ -10,12 +10,6 @@
       "lng": 103.905723418384
     },
     "medianPrice": 828000,
-    "priceIqr": [
-      812000,
-      847000
-    ],
-    "pricePerSqmMedian": 6133.34,
-    "pricePerSqftMedian": 569.81,
     "transactionCount": 6,
     "floorAreaRange": [
       135,
@@ -54,7 +48,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 739
       }
-    ]
+    ],
+    "priceIqr": [
+      812000,
+      847000
+    ],
+    "pricePerSqmMedian": 6133.34,
+    "pricePerSqftMedian": 569.81
   },
   "monthlyTrend": [
     {
@@ -444,7 +444,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-143-rivervale-dr-2026-01-227380",
+      "id": "sengkang-143-rivervale-dr-2026-01-227465",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

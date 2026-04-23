@@ -9,14 +9,8 @@
       "lat": 1.41748872365516,
       "lng": 103.903634151773
     },
-    "medianPrice": 710000,
-    "priceIqr": [
-      576500,
-      741500
-    ],
-    "pricePerSqmMedian": 8138.3,
-    "pricePerSqftMedian": 756.07,
-    "transactionCount": 7,
+    "medianPrice": 704000,
+    "transactionCount": 6,
     "floorAreaRange": [
       47,
       94
@@ -25,10 +19,10 @@
       2020,
       2020
     ],
-    "latestMonth": "2026-04",
+    "latestMonth": "2026-03",
     "availableDateRange": [
       "2025-10",
-      "2026-04"
+      "2026-03"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "TECK LEE LRT STATION",
         "distanceMeters": 599
       }
-    ]
+    ],
+    "priceIqr": [
+      519750,
+      753250
+    ],
+    "pricePerSqmMedian": 8218.09,
+    "pricePerSqftMedian": 763.49
   },
   "monthlyTrend": [
     {
@@ -87,30 +87,11 @@
       "medianPrice": 718000,
       "transactionCount": 1,
       "medianPricePerSqm": 7638.3
-    },
-    {
-      "month": "2026-04",
-      "medianPrice": 710000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7553.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-408c-northshore-dr-2026-04-226060",
-      "month": "2026-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 94,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2021,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 710000,
-      "pricePerSqm": 7553.19,
-      "pricePerSqft": 701.72
-    },
-    {
-      "id": "punggol-408c-northshore-dr-2026-03-226058",
+      "id": "punggol-408c-northshore-dr-2026-03-226127",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -123,7 +104,7 @@
       "pricePerSqft": 709.62
     },
     {
-      "id": "punggol-408c-northshore-dr-2026-02-225908",
+      "id": "punggol-408c-northshore-dr-2026-02-225976",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "19 TO 21",
@@ -136,7 +117,7 @@
       "pricePerSqft": 915.19
     },
     {
-      "id": "punggol-408c-northshore-dr-2026-02-226051",
+      "id": "punggol-408c-northshore-dr-2026-02-226120",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -149,7 +130,7 @@
       "pricePerSqft": 681.95
     },
     {
-      "id": "punggol-408c-northshore-dr-2026-01-226033",
+      "id": "punggol-408c-northshore-dr-2026-01-226102",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

@@ -9,14 +9,8 @@
       "lat": 1.35721494856744,
       "lng": 103.739342992281
     },
-    "medianPrice": 681500,
-    "priceIqr": [
-      632500,
-      762500
-    ],
-    "pricePerSqmMedian": 6974.52,
-    "pricePerSqftMedian": 647.96,
-    "transactionCount": 42,
+    "medianPrice": 685000,
+    "transactionCount": 43,
     "floorAreaRange": [
       93,
       113
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1824
       }
-    ]
+    ],
+    "priceIqr": [
+      635000,
+      760000
+    ],
+    "pricePerSqmMedian": 6981.31,
+    "pricePerSqftMedian": 648.59
   },
   "monthlyTrend": [
     {
@@ -193,14 +193,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 805000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7123.89
+      "medianPrice": 761500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7422.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-04-223202",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-04-223099",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "92 years 10 months",
+      "resalePrice": 718000,
+      "pricePerSqm": 7720.43,
+      "pricePerSqft": 717.25
+    },
+    {
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-04-223220",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -213,7 +226,7 @@
       "pricePerSqft": 661.83
     },
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-03-223190",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-03-223208",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -226,7 +239,7 @@
       "pricePerSqft": 690.61
     },
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223054",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223069",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -239,7 +252,7 @@
       "pricePerSqft": 684.29
     },
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223064",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223079",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -252,7 +265,7 @@
       "pricePerSqft": 719.25
     },
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223186",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-02-223204",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -265,7 +278,7 @@
       "pricePerSqft": 648.59
     },
     {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-01-223045",
+      "id": "bukit-batok-439b-bt-batok-west-ave-8-2026-01-223060",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -445,19 +458,6 @@
       "resalePrice": 800000,
       "pricePerSqm": 7079.65,
       "pricePerSqft": 657.72
-    },
-    {
-      "id": "bukit-batok-439b-bt-batok-west-ave-8-2025-01-200330",
-      "month": "2025-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 630000,
-      "pricePerSqm": 6774.19,
-      "pricePerSqft": 629.34
     }
   ]
 }

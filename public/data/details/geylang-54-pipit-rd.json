@@ -9,14 +9,8 @@
       "lat": 1.32385644988852,
       "lng": 103.887585351528
     },
-    "medianPrice": 646000,
-    "priceIqr": [
-      601000,
-      654250
-    ],
-    "pricePerSqmMedian": 7000.53,
-    "pricePerSqftMedian": 650.37,
-    "transactionCount": 6,
+    "medianPrice": 640000,
+    "transactionCount": 7,
     "floorAreaRange": [
       91,
       105
@@ -25,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "PAYA LEBAR MRT STATION",
         "distanceMeters": 784
       }
-    ]
+    ],
+    "priceIqr": [
+      573444,
+      653500
+    ],
+    "pricePerSqmMedian": 6968.09,
+    "pricePerSqftMedian": 647.36
   },
   "monthlyTrend": [
     {
@@ -968,9 +968,28 @@
       "medianPrice": 655000,
       "transactionCount": 1,
       "medianPricePerSqm": 6968.09
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5714.29
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-54-pipit-rd-2026-04-224491",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 5714.29,
+      "pricePerSqft": 530.88
+    },
     {
       "id": "geylang-54-pipit-rd-2025-06-204866",
       "month": "2025-06",
@@ -1217,19 +1236,6 @@
       "resalePrice": 502000,
       "pricePerSqm": 5516.48,
       "pricePerSqft": 512.5
-    },
-    {
-      "id": "geylang-54-pipit-rd-2021-04-95417",
-      "month": "2021-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 94,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "62 years 11 months",
-      "resalePrice": 480000,
-      "pricePerSqm": 5106.38,
-      "pricePerSqft": 474.4
     }
   ]
 }

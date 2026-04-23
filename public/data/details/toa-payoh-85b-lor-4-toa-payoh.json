@@ -10,12 +10,6 @@
       "lng": 103.848443049823
     },
     "medianPrice": 422000,
-    "priceIqr": [
-      411000,
-      430000
-    ],
-    "pricePerSqmMedian": 6205.88,
-    "pricePerSqftMedian": 576.55,
     "transactionCount": 3,
     "floorAreaRange": [
       62,
@@ -56,7 +50,13 @@
         "stationName": "CALDECOTT MRT STATION",
         "distanceMeters": 903
       }
-    ]
+    ],
+    "priceIqr": [
+      411000,
+      430000
+    ],
+    "pricePerSqmMedian": 6205.88,
+    "pricePerSqftMedian": 576.55
   },
   "monthlyTrend": [
     {
@@ -890,7 +890,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-85b-lor-4-toa-payoh-2026-02-228123",
+      "id": "toa-payoh-85b-lor-4-toa-payoh-2026-02-228221",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

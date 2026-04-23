@@ -10,12 +10,6 @@
       "lng": 103.945294915705
     },
     "medianPrice": 445500,
-    "priceIqr": [
-      443250,
-      447750
-    ],
-    "pricePerSqmMedian": 5940,
-    "pricePerSqftMedian": 551.85,
     "transactionCount": 2,
     "floorAreaRange": [
       75,
@@ -55,7 +49,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1084
       }
-    ]
+    ],
+    "priceIqr": [
+      443250,
+      447750
+    ],
+    "pricePerSqmMedian": 5940,
+    "pricePerSqftMedian": 551.85
   },
   "monthlyTrend": [
     {

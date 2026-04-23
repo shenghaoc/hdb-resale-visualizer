@@ -10,12 +10,6 @@
       "lng": 103.737791107104
     },
     "medianPrice": 520000,
-    "priceIqr": [
-      502500,
-      532500
-    ],
-    "pricePerSqmMedian": 5052.4,
-    "pricePerSqftMedian": 469.38,
     "transactionCount": 4,
     "floorAreaRange": [
       99,
@@ -54,7 +48,13 @@
         "stationName": "LAKESIDE MRT STATION",
         "distanceMeters": 2961
       }
-    ]
+    ],
+    "priceIqr": [
+      502500,
+      532500
+    ],
+    "pricePerSqmMedian": 5052.4,
+    "pricePerSqftMedian": 469.38
   },
   "monthlyTrend": [
     {
@@ -737,7 +737,7 @@
       "pricePerSqft": 345.34
     },
     {
-      "id": "jurong-east-25-teban-gdns-rd-2016-05-962944",
+      "id": "jurong-east-25-teban-gdns-rd-2016-05-963060",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -750,7 +750,7 @@
       "pricePerSqft": 347.3
     },
     {
-      "id": "jurong-east-25-teban-gdns-rd-2016-02-958019",
+      "id": "jurong-east-25-teban-gdns-rd-2016-02-958135",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -763,7 +763,7 @@
       "pricePerSqft": 321.25
     },
     {
-      "id": "jurong-east-25-teban-gdns-rd-2015-08-949271",
+      "id": "jurong-east-25-teban-gdns-rd-2015-08-949387",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

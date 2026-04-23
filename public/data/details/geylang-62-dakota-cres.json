@@ -10,12 +10,6 @@
       "lng": 103.889069356653
     },
     "medianPrice": 905000,
-    "priceIqr": [
-      905000,
-      905000
-    ],
-    "pricePerSqmMedian": 8379.63,
-    "pricePerSqftMedian": 778.49,
     "transactionCount": 1,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "PAYA LEBAR MRT STATION",
         "distanceMeters": 1048
       }
-    ]
+    ],
+    "priceIqr": [
+      905000,
+      905000
+    ],
+    "pricePerSqmMedian": 8379.63,
+    "pricePerSqftMedian": 778.49
   },
   "monthlyTrend": [
     {
@@ -578,7 +578,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-62-dakota-cres-2026-04-224409",
+      "id": "geylang-62-dakota-cres-2026-04-224453",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

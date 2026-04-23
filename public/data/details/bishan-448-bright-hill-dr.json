@@ -10,12 +10,6 @@
       "lng": 103.831431580561
     },
     "medianPrice": 814000,
-    "priceIqr": [
-      768750,
-      865500
-    ],
-    "pricePerSqmMedian": 7252.61,
-    "pricePerSqftMedian": 673.8,
     "transactionCount": 4,
     "floorAreaRange": [
       94,
@@ -59,7 +53,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 1350
       }
-    ]
+    ],
+    "priceIqr": [
+      768750,
+      865500
+    ],
+    "pricePerSqmMedian": 7252.61,
+    "pricePerSqftMedian": 673.8
   },
   "monthlyTrend": [
     {
@@ -773,7 +773,7 @@
       "pricePerSqft": 528.72
     },
     {
-      "id": "bishan-448-bright-hill-dr-2016-06-964216",
+      "id": "bishan-448-bright-hill-dr-2016-06-964332",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -786,7 +786,7 @@
       "pricePerSqft": 478.05
     },
     {
-      "id": "bishan-448-bright-hill-dr-2013-11-633078",
+      "id": "bishan-448-bright-hill-dr-2013-11-633194",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

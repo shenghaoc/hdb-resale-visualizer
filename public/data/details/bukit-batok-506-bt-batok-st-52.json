@@ -10,12 +10,6 @@
       "lng": 103.754663779161
     },
     "medianPrice": 383500,
-    "priceIqr": [
-      364375,
-      407500
-    ],
-    "pricePerSqmMedian": 6028.08,
-    "pricePerSqftMedian": 560.03,
     "transactionCount": 8,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "DT4",
         "distanceMeters": 1581
       }
-    ]
+    ],
+    "priceIqr": [
+      364375,
+      407500
+    ],
+    "pricePerSqmMedian": 6028.08,
+    "pricePerSqftMedian": 560.03
   },
   "monthlyTrend": [
     {

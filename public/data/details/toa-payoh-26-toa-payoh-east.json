@@ -10,12 +10,6 @@
       "lng": 103.856763112528
     },
     "medianPrice": 365000,
-    "priceIqr": [
-      356250,
-      371722
-    ],
-    "pricePerSqmMedian": 5447.76,
-    "pricePerSqftMedian": 506.12,
     "transactionCount": 10,
     "floorAreaRange": [
       66,
@@ -54,7 +48,13 @@
         "stationName": "BRADDELL MRT STATION",
         "distanceMeters": 1348
       }
-    ]
+    ],
+    "priceIqr": [
+      356250,
+      371722
+    ],
+    "pricePerSqmMedian": 5447.76,
+    "pricePerSqftMedian": 506.12
   },
   "monthlyTrend": [
     {
@@ -1224,7 +1224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-04-228171",
+      "id": "toa-payoh-26-toa-payoh-east-2026-04-228271",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1237,7 +1237,7 @@
       "pricePerSqft": 499.18
     },
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-02-228167",
+      "id": "toa-payoh-26-toa-payoh-east-2026-02-228266",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1250,7 +1250,7 @@
       "pricePerSqft": 513.05
     },
     {
-      "id": "toa-payoh-26-toa-payoh-east-2026-01-228166",
+      "id": "toa-payoh-26-toa-payoh-east-2026-01-228265",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.903157870017
     },
     "medianPrice": 629000,
-    "priceIqr": [
-      608500,
-      649500
-    ],
-    "pricePerSqmMedian": 5823.93,
-    "pricePerSqftMedian": 541.06,
     "transactionCount": 2,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 629
       }
-    ]
+    ],
+    "priceIqr": [
+      608500,
+      649500
+    ],
+    "pricePerSqmMedian": 5823.93,
+    "pricePerSqftMedian": 541.06
   },
   "monthlyTrend": [
     {
@@ -332,7 +332,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-123-rivervale-dr-2026-01-227326",
+      "id": "sengkang-123-rivervale-dr-2026-01-227411",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -501,7 +501,7 @@
       "pricePerSqft": 347.38
     },
     {
-      "id": "sengkang-123-rivervale-dr-2016-12-975244",
+      "id": "sengkang-123-rivervale-dr-2016-12-975360",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -514,7 +514,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "sengkang-123-rivervale-dr-2016-08-968841",
+      "id": "sengkang-123-rivervale-dr-2016-08-968957",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -527,7 +527,7 @@
       "pricePerSqft": 369.84
     },
     {
-      "id": "sengkang-123-rivervale-dr-2016-07-966916",
+      "id": "sengkang-123-rivervale-dr-2016-07-967032",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -540,7 +540,7 @@
       "pricePerSqft": 332.06
     },
     {
-      "id": "sengkang-123-rivervale-dr-2015-11-954432",
+      "id": "sengkang-123-rivervale-dr-2015-11-954548",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -553,7 +553,7 @@
       "pricePerSqft": 331.22
     },
     {
-      "id": "sengkang-123-rivervale-dr-2015-08-949646",
+      "id": "sengkang-123-rivervale-dr-2015-08-949762",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -566,7 +566,7 @@
       "pricePerSqft": 347.93
     },
     {
-      "id": "sengkang-123-rivervale-dr-2015-08-949685",
+      "id": "sengkang-123-rivervale-dr-2015-08-949801",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -579,7 +579,7 @@
       "pricePerSqft": 353.84
     },
     {
-      "id": "sengkang-123-rivervale-dr-2015-04-943352",
+      "id": "sengkang-123-rivervale-dr-2015-04-943468",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

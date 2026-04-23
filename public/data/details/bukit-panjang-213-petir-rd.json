@@ -10,12 +10,6 @@
       "lng": 103.775467370494
     },
     "medianPrice": 542888,
-    "priceIqr": [
-      542888,
-      542888
-    ],
-    "pricePerSqmMedian": 5026.74,
-    "pricePerSqftMedian": 467,
     "transactionCount": 1,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "PETIR LRT STATION",
         "distanceMeters": 1028
       }
-    ]
+    ],
+    "priceIqr": [
+      542888,
+      542888
+    ],
+    "pricePerSqmMedian": 5026.74,
+    "pricePerSqftMedian": 467
   },
   "monthlyTrend": [
     {
@@ -945,7 +945,7 @@
       "pricePerSqft": 338.87
     },
     {
-      "id": "bukit-panjang-213-petir-rd-2016-08-967829",
+      "id": "bukit-panjang-213-petir-rd-2016-08-967945",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

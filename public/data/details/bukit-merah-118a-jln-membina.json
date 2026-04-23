@@ -10,13 +10,7 @@
       "lng": 103.825645216312
     },
     "medianPrice": 920000,
-    "priceIqr": [
-      898750,
-      932000
-    ],
-    "pricePerSqmMedian": 10138.58,
-    "pricePerSqftMedian": 941.91,
-    "transactionCount": 8,
+    "transactionCount": 9,
     "floorAreaRange": [
       90,
       92
@@ -54,7 +48,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1294
       }
-    ]
+    ],
+    "priceIqr": [
+      915000,
+      968000
+    ],
+    "pricePerSqmMedian": 10222.22,
+    "pricePerSqftMedian": 949.68
   },
   "monthlyTrend": [
     {
@@ -455,14 +455,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 915000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 10054.95
+      "medianPrice": 952500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10407.91
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-118a-jln-membina-2026-04-223400",
+      "id": "bukit-merah-118a-jln-membina-2026-04-223423",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -473,6 +473,19 @@
       "resalePrice": 915000,
       "pricePerSqm": 10054.95,
       "pricePerSqft": 934.14
+    },
+    {
+      "id": "bukit-merah-118a-jln-membina-2026-04-223424",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "75 years 09 months",
+      "resalePrice": 990000,
+      "pricePerSqm": 10760.87,
+      "pricePerSqft": 999.72
     },
     {
       "id": "bukit-merah-118a-jln-membina-2025-12-201423",
@@ -707,19 +720,6 @@
       "resalePrice": 685000,
       "pricePerSqm": 7611.11,
       "pricePerSqft": 707.1
-    },
-    {
-      "id": "bukit-merah-118a-jln-membina-2020-08-75844",
-      "month": "2020-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "81 years 05 months",
-      "resalePrice": 715000,
-      "pricePerSqm": 7771.74,
-      "pricePerSqft": 722.02
     }
   ]
 }

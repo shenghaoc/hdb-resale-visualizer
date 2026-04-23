@@ -9,14 +9,8 @@
       "lat": 1.38304567931228,
       "lng": 103.770465303497
     },
-    "medianPrice": 680000,
-    "priceIqr": [
-      680000,
-      680000
-    ],
-    "pricePerSqmMedian": 5619.83,
-    "pricePerSqftMedian": 522.1,
-    "transactionCount": 1,
+    "medianPrice": 606000,
+    "transactionCount": 2,
     "floorAreaRange": [
       104,
       121
@@ -25,10 +19,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-05",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "SEGAR LRT STATION",
         "distanceMeters": 543
       }
-    ]
+    ],
+    "priceIqr": [
+      569000,
+      643000
+    ],
+    "pricePerSqmMedian": 5367.6,
+    "pricePerSqftMedian": 498.67
   },
   "monthlyTrend": [
     {
@@ -562,9 +562,28 @@
       "medianPrice": 680000,
       "transactionCount": 1,
       "medianPricePerSqm": 5619.83
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 532000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5115.38
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-439-fajar-rd-2026-04-223597",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 06 months",
+      "resalePrice": 532000,
+      "pricePerSqm": 5115.38,
+      "pricePerSqft": 475.24
+    },
     {
       "id": "bukit-panjang-439-fajar-rd-2025-07-202328",
       "month": "2025-07",
@@ -761,7 +780,7 @@
       "pricePerSqft": 318.63
     },
     {
-      "id": "bukit-panjang-439-fajar-rd-2016-05-962592",
+      "id": "bukit-panjang-439-fajar-rd-2016-05-962708",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -774,7 +793,7 @@
       "pricePerSqft": 287.92
     },
     {
-      "id": "bukit-panjang-439-fajar-rd-2015-11-953700",
+      "id": "bukit-panjang-439-fajar-rd-2015-11-953816",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -787,7 +806,7 @@
       "pricePerSqft": 318.63
     },
     {
-      "id": "bukit-panjang-439-fajar-rd-2014-04-639030",
+      "id": "bukit-panjang-439-fajar-rd-2014-04-639146",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -800,7 +819,7 @@
       "pricePerSqft": 383.9
     },
     {
-      "id": "bukit-panjang-439-fajar-rd-2014-01-635397",
+      "id": "bukit-panjang-439-fajar-rd-2014-01-635513",
       "month": "2014-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -811,19 +830,6 @@
       "resalePrice": 395500,
       "pricePerSqm": 3802.88,
       "pricePerSqft": 353.3
-    },
-    {
-      "id": "bukit-panjang-439-fajar-rd-2013-03-621896",
-      "month": "2013-03",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years",
-      "resalePrice": 515000,
-      "pricePerSqm": 4256.2,
-      "pricePerSqft": 395.41
     }
   ]
 }

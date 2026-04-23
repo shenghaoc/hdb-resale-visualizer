@@ -10,12 +10,6 @@
       "lng": 103.851843638346
     },
     "medianPrice": 572500,
-    "priceIqr": [
-      480000,
-      598500
-    ],
-    "pricePerSqmMedian": 6462.36,
-    "pricePerSqftMedian": 600.38,
     "transactionCount": 36,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 3123
       }
-    ]
+    ],
+    "priceIqr": [
+      480000,
+      598500
+    ],
+    "pricePerSqmMedian": 6462.36,
+    "pricePerSqftMedian": 600.38
   },
   "monthlyTrend": [
     {
@@ -193,7 +193,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-468a-yishun-st-43-2026-03-229242",
+      "id": "yishun-468a-yishun-st-43-2026-03-229353",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -206,7 +206,7 @@
       "pricePerSqft": 617.36
     },
     {
-      "id": "yishun-468a-yishun-st-43-2026-01-229046",
+      "id": "yishun-468a-yishun-st-43-2026-01-229154",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -219,7 +219,7 @@
       "pricePerSqft": 707.17
     },
     {
-      "id": "yishun-468a-yishun-st-43-2026-01-229047",
+      "id": "yishun-468a-yishun-st-43-2026-01-229155",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -232,7 +232,7 @@
       "pricePerSqft": 679.44
     },
     {
-      "id": "yishun-468a-yishun-st-43-2026-01-229241",
+      "id": "yishun-468a-yishun-st-43-2026-01-229352",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

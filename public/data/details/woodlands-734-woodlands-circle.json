@@ -10,12 +10,6 @@
       "lng": 103.7979498113
     },
     "medianPrice": 558000,
-    "priceIqr": [
-      545000,
-      576500
-    ],
-    "pricePerSqmMedian": 5524.75,
-    "pricePerSqftMedian": 513.27,
     "transactionCount": 3,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS NORTH MRT STATION",
         "distanceMeters": 1463
       }
-    ]
+    ],
+    "priceIqr": [
+      545000,
+      576500
+    ],
+    "pricePerSqmMedian": 5524.75,
+    "pricePerSqftMedian": 513.27
   },
   "monthlyTrend": [
     {
@@ -524,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-734-woodlands-circle-2026-01-228479",
+      "id": "woodlands-734-woodlands-circle-2026-01-228581",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

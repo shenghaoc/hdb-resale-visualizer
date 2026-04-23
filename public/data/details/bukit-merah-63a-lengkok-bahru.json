@@ -10,12 +10,6 @@
       "lng": 103.815399530717
     },
     "medianPrice": 1059000,
-    "priceIqr": [
-      915750,
-      1117500
-    ],
-    "pricePerSqmMedian": 9013.05,
-    "pricePerSqftMedian": 837.34,
     "transactionCount": 6,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1359
       }
-    ]
+    ],
+    "priceIqr": [
+      915750,
+      1117500
+    ],
+    "pricePerSqmMedian": 9013.05,
+    "pricePerSqftMedian": 837.34
   },
   "monthlyTrend": [
     {
@@ -428,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-63a-lengkok-bahru-2026-03-223496",
+      "id": "bukit-merah-63a-lengkok-bahru-2026-03-223520",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -675,7 +675,7 @@
       "pricePerSqft": 673.55
     },
     {
-      "id": "bukit-merah-63a-lengkok-bahru-2016-06-964352",
+      "id": "bukit-merah-63a-lengkok-bahru-2016-06-964468",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

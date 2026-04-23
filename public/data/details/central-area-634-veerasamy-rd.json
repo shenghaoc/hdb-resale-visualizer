@@ -10,12 +10,6 @@
       "lng": 103.855108751218
     },
     "medianPrice": 802000,
-    "priceIqr": [
-      781000,
-      880000
-    ],
-    "pricePerSqmMedian": 7225.23,
-    "pricePerSqftMedian": 671.25,
     "transactionCount": 3,
     "floorAreaRange": [
       75,
@@ -56,7 +50,13 @@
         "stationName": "BUGIS MRT STATION",
         "distanceMeters": 548
       }
-    ]
+    ],
+    "priceIqr": [
+      781000,
+      880000
+    ],
+    "pricePerSqmMedian": 7225.23,
+    "pricePerSqftMedian": 671.25
   },
   "monthlyTrend": [
     {
@@ -440,7 +440,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-634-veerasamy-rd-2026-01-223816",
+      "id": "central-area-634-veerasamy-rd-2026-01-223843",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -635,7 +635,7 @@
       "pricePerSqft": 477.98
     },
     {
-      "id": "central-area-634-veerasamy-rd-2016-01-956545",
+      "id": "central-area-634-veerasamy-rd-2016-01-956661",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -648,7 +648,7 @@
       "pricePerSqft": 543.13
     },
     {
-      "id": "central-area-634-veerasamy-rd-2015-10-952058",
+      "id": "central-area-634-veerasamy-rd-2015-10-952174",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -661,7 +661,7 @@
       "pricePerSqft": 529.63
     },
     {
-      "id": "central-area-634-veerasamy-rd-2013-10-631919",
+      "id": "central-area-634-veerasamy-rd-2013-10-632035",
       "month": "2013-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -674,7 +674,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "central-area-634-veerasamy-rd-2013-07-627846",
+      "id": "central-area-634-veerasamy-rd-2013-07-627962",
       "month": "2013-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -687,7 +687,7 @@
       "pricePerSqft": 483.1
     },
     {
-      "id": "central-area-634-veerasamy-rd-2012-10-614390",
+      "id": "central-area-634-veerasamy-rd-2012-10-614506",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

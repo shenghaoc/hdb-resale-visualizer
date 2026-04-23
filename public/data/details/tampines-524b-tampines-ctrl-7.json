@@ -9,14 +9,8 @@
       "lat": 1.35895813519086,
       "lng": 103.938911100785
     },
-    "medianPrice": 575000,
-    "priceIqr": [
-      502500,
-      679000
-    ],
-    "pricePerSqmMedian": 8655.91,
-    "pricePerSqftMedian": 804.16,
-    "transactionCount": 7,
+    "medianPrice": 570000,
+    "transactionCount": 8,
     "floorAreaRange": [
       47,
       93
@@ -25,10 +19,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "TAMPINES EAST MRT STATION",
         "distanceMeters": 1759
       }
-    ]
+    ],
+    "priceIqr": [
+      461000,
+      634500
+    ],
+    "pricePerSqmMedian": 8730.94,
+    "pricePerSqftMedian": 811.13
   },
   "monthlyTrend": [
     {
@@ -268,11 +268,30 @@
       "medianPrice": 575000,
       "transactionCount": 1,
       "medianPricePerSqm": 8582.09
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 468000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9957.45
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-524b-tampines-ctrl-7-2026-03-227502",
+      "id": "tampines-524b-tampines-ctrl-7-2026-04-227576",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 468000,
+      "pricePerSqm": 9957.45,
+      "pricePerSqft": 925.08
+    },
+    {
+      "id": "tampines-524b-tampines-ctrl-7-2026-03-227591",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -517,19 +536,6 @@
       "resalePrice": 280000,
       "pricePerSqm": 5957.45,
       "pricePerSqft": 553.47
-    },
-    {
-      "id": "tampines-524b-tampines-ctrl-7-2021-05-98589",
-      "month": "2021-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "93 years 04 months",
-      "resalePrice": 448000,
-      "pricePerSqm": 6686.57,
-      "pricePerSqft": 621.2
     }
   ]
 }

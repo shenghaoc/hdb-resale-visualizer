@@ -10,12 +10,6 @@
       "lng": 103.928960561768
     },
     "medianPrice": 702000,
-    "priceIqr": [
-      609444,
-      796500
-    ],
-    "pricePerSqmMedian": 5788.32,
-    "pricePerSqftMedian": 537.75,
     "transactionCount": 7,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "TAMPINES WEST MRT STATION",
         "distanceMeters": 1409
       }
-    ]
+    ],
+    "priceIqr": [
+      609444,
+      796500
+    ],
+    "pricePerSqmMedian": 5788.32,
+    "pricePerSqftMedian": 537.75
   },
   "monthlyTrend": [
     {
@@ -722,7 +722,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-723-bedok-reservoir-rd-2026-02-222643",
+      "id": "bedok-723-bedok-reservoir-rd-2026-02-222654",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.937595591612
     },
     "medianPrice": 977250,
-    "priceIqr": [
-      950750,
-      1062000
-    ],
-    "pricePerSqmMedian": 6693.49,
-    "pricePerSqftMedian": 621.85,
     "transactionCount": 8,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES EAST MRT STATION",
         "distanceMeters": 1887
       }
-    ]
+    ],
+    "priceIqr": [
+      950750,
+      1062000
+    ],
+    "pricePerSqmMedian": 6693.49,
+    "pricePerSqftMedian": 621.85
   },
   "monthlyTrend": [
     {
@@ -738,7 +738,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-860-tampines-ave-5-2026-04-228010",
+      "id": "tampines-860-tampines-ave-5-2026-04-228104",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

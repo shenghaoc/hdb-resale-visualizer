@@ -10,12 +10,6 @@
       "lng": 103.913021967404
     },
     "medianPrice": 938000,
-    "priceIqr": [
-      923000,
-      953000
-    ],
-    "pricePerSqmMedian": 7816.67,
-    "pricePerSqftMedian": 726.19,
     "transactionCount": 2,
     "floorAreaRange": [
       117,
@@ -54,7 +48,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1713
       }
-    ]
+    ],
+    "priceIqr": [
+      923000,
+      953000
+    ],
+    "pricePerSqmMedian": 7816.67,
+    "pricePerSqftMedian": 726.19
   },
   "monthlyTrend": [
     {
@@ -702,7 +702,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-43-marine-cres-2026-02-225676",
+      "id": "marine-parade-43-marine-cres-2026-02-225741",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

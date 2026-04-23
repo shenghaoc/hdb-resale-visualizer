@@ -10,12 +10,6 @@
       "lng": 103.821818722889
     },
     "medianPrice": 370000,
-    "priceIqr": [
-      365000,
-      380000
-    ],
-    "pricePerSqmMedian": 5692.31,
-    "pricePerSqftMedian": 528.83,
     "transactionCount": 5,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1485
       }
-    ]
+    ],
+    "priceIqr": [
+      365000,
+      380000
+    ],
+    "pricePerSqmMedian": 5692.31,
+    "pricePerSqftMedian": 528.83
   },
   "monthlyTrend": [
     {
@@ -956,7 +956,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-20-telok-blangah-cres-2026-04-223321",
+      "id": "bukit-merah-20-telok-blangah-cres-2026-04-223342",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

@@ -10,12 +10,6 @@
       "lng": 103.784498087029
     },
     "medianPrice": 882500,
-    "priceIqr": [
-      762500,
-      1063750
-    ],
-    "pricePerSqmMedian": 11280.05,
-    "pricePerSqftMedian": 1047.95,
     "transactionCount": 18,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 1144
       }
-    ]
+    ],
+    "priceIqr": [
+      762500,
+      1063750
+    ],
+    "pricePerSqmMedian": 11280.05,
+    "pricePerSqftMedian": 1047.95
   },
   "monthlyTrend": [
     {
@@ -259,7 +259,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-32-ghim-moh-link-2026-01-226438",
+      "id": "queenstown-32-ghim-moh-link-2026-01-226514",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

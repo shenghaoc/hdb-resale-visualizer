@@ -10,12 +10,6 @@
       "lng": 103.837601112788
     },
     "medianPrice": 575000,
-    "priceIqr": [
-      565000,
-      617500
-    ],
-    "pricePerSqmMedian": 6250,
-    "pricePerSqftMedian": 580.64,
     "transactionCount": 3,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "LENTOR MRT STATION",
         "distanceMeters": 1258
       }
-    ]
+    ],
+    "priceIqr": [
+      565000,
+      617500
+    ],
+    "pricePerSqmMedian": 6250,
+    "pricePerSqftMedian": 580.64
   },
   "monthlyTrend": [
     {
@@ -802,7 +802,7 @@
       "pricePerSqft": 454.42
     },
     {
-      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2016-04-960415",
+      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2016-04-960531",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -815,7 +815,7 @@
       "pricePerSqft": 438.15
     },
     {
-      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-11-953396",
+      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-11-953512",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -828,7 +828,7 @@
       "pricePerSqft": 449.37
     },
     {
-      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-09-950144",
+      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-09-950260",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -841,7 +841,7 @@
       "pricePerSqft": 451.89
     },
     {
-      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-09-950146",
+      "id": "ang-mo-kio-105-ang-mo-kio-ave-4-2015-09-950262",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.849273522587
     },
     "medianPrice": 890000,
-    "priceIqr": [
-      880000,
-      935888
-    ],
-    "pricePerSqmMedian": 6267.61,
-    "pricePerSqftMedian": 582.28,
     "transactionCount": 5,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 2795
       }
-    ]
+    ],
+    "priceIqr": [
+      880000,
+      935888
+    ],
+    "pricePerSqmMedian": 6267.61,
+    "pricePerSqftMedian": 582.28
   },
   "monthlyTrend": [
     {
@@ -589,7 +589,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-405-yishun-ave-6-2026-01-229372",
+      "id": "yishun-405-yishun-ave-6-2026-01-229488",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -784,7 +784,7 @@
       "pricePerSqft": 342.11
     },
     {
-      "id": "yishun-405-yishun-ave-6-2016-08-969290",
+      "id": "yishun-405-yishun-ave-6-2016-08-969406",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -797,7 +797,7 @@
       "pricePerSqft": 325.82
     },
     {
-      "id": "yishun-405-yishun-ave-6-2016-06-965836",
+      "id": "yishun-405-yishun-ave-6-2016-06-965952",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -810,7 +810,7 @@
       "pricePerSqft": 355.92
     },
     {
-      "id": "yishun-405-yishun-ave-6-2016-05-964008",
+      "id": "yishun-405-yishun-ave-6-2016-05-964124",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -823,7 +823,7 @@
       "pricePerSqft": 329.97
     },
     {
-      "id": "yishun-405-yishun-ave-6-2016-01-957501",
+      "id": "yishun-405-yishun-ave-6-2016-01-957617",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -836,7 +836,7 @@
       "pricePerSqft": 338.97
     },
     {
-      "id": "yishun-405-yishun-ave-6-2015-12-956219",
+      "id": "yishun-405-yishun-ave-6-2015-12-956335",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.873115537451
     },
     "medianPrice": 438000,
-    "priceIqr": [
-      414000,
-      491500
-    ],
-    "pricePerSqmMedian": 6337.21,
-    "pricePerSqftMedian": 588.75,
     "transactionCount": 3,
     "floorAreaRange": [
       63,
@@ -55,7 +49,13 @@
         "stationName": "SERANGOON MRT STATION",
         "distanceMeters": 2141
       }
-    ]
+    ],
+    "priceIqr": [
+      414000,
+      491500
+    ],
+    "pricePerSqmMedian": 6337.21,
+    "pricePerSqftMedian": 588.75
   },
   "monthlyTrend": [
     {
@@ -781,7 +781,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-154-serangoon-nth-ave-1-2026-01-227441",
+      "id": "serangoon-154-serangoon-nth-ave-1-2026-01-227527",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

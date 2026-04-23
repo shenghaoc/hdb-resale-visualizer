@@ -10,12 +10,6 @@
       "lng": 103.755285866092
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      600000,
-      764500
-    ],
-    "pricePerSqmMedian": 8064.52,
-    "pricePerSqftMedian": 749.22,
     "transactionCount": 23,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "DT4",
         "distanceMeters": 1843
       }
-    ]
+    ],
+    "priceIqr": [
+      600000,
+      764500
+    ],
+    "pricePerSqmMedian": 8064.52,
+    "pricePerSqftMedian": 749.22
   },
   "monthlyTrend": [
     {
@@ -241,7 +241,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-293d-bt-batok-st-21-2026-04-222964",
+      "id": "bukit-batok-293d-bt-batok-st-21-2026-04-222979",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -254,7 +254,7 @@
       "pricePerSqft": 759.21
     },
     {
-      "id": "bukit-batok-293d-bt-batok-st-21-2026-03-222863",
+      "id": "bukit-batok-293d-bt-batok-st-21-2026-03-222877",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "25 TO 27",
@@ -267,7 +267,7 @@
       "pricePerSqft": 819.73
     },
     {
-      "id": "bukit-batok-293d-bt-batok-st-21-2026-03-222963",
+      "id": "bukit-batok-293d-bt-batok-st-21-2026-03-222978",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "34 TO 36",

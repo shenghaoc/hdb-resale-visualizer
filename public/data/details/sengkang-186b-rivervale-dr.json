@@ -10,12 +10,6 @@
       "lng": 103.905610062045
     },
     "medianPrice": 600000,
-    "priceIqr": [
-      572500,
-      602500
-    ],
-    "pricePerSqmMedian": 5500,
-    "pricePerSqftMedian": 510.97,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "MERIDIAN LRT STATION",
         "distanceMeters": 570
       }
-    ]
+    ],
+    "priceIqr": [
+      572500,
+      602500
+    ],
+    "pricePerSqmMedian": 5500,
+    "pricePerSqftMedian": 510.97
   },
   "monthlyTrend": [
     {
@@ -547,7 +547,7 @@
       "pricePerSqft": 363.17
     },
     {
-      "id": "sengkang-186b-rivervale-dr-2016-11-973779",
+      "id": "sengkang-186b-rivervale-dr-2016-11-973895",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -560,7 +560,7 @@
       "pricePerSqft": 344.59
     },
     {
-      "id": "sengkang-186b-rivervale-dr-2016-06-965320",
+      "id": "sengkang-186b-rivervale-dr-2016-06-965436",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -573,7 +573,7 @@
       "pricePerSqft": 373.3
     },
     {
-      "id": "sengkang-186b-rivervale-dr-2016-03-959844",
+      "id": "sengkang-186b-rivervale-dr-2016-03-959960",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

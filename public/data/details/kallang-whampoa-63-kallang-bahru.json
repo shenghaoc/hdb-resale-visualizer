@@ -10,12 +10,6 @@
       "lng": 103.868321383856
     },
     "medianPrice": 395000,
-    "priceIqr": [
-      385000,
-      404000
-    ],
-    "pricePerSqmMedian": 6000,
-    "pricePerSqftMedian": 557.42,
     "transactionCount": 15,
     "floorAreaRange": [
       65,
@@ -56,7 +50,13 @@
         "stationName": "BENDEMEER MRT STATION",
         "distanceMeters": 986
       }
-    ]
+    ],
+    "priceIqr": [
+      385000,
+      404000
+    ],
+    "pricePerSqmMedian": 6000,
+    "pricePerSqftMedian": 557.42
   },
   "monthlyTrend": [
     {

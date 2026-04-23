@@ -10,12 +10,6 @@
       "lng": 103.884436159774
     },
     "medianPrice": 615444,
-    "priceIqr": [
-      588000,
-      643750
-    ],
-    "pricePerSqmMedian": 5908.34,
-    "pricePerSqftMedian": 548.9,
     "transactionCount": 8,
     "floorAreaRange": [
       89,
@@ -55,7 +49,13 @@
         "stationName": "FARMWAY LRT STATION",
         "distanceMeters": 808
       }
-    ]
+    ],
+    "priceIqr": [
+      588000,
+      643750
+    ],
+    "pricePerSqmMedian": 5908.34,
+    "pricePerSqftMedian": 548.9
   },
   "monthlyTrend": [
     {
@@ -451,7 +451,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-311c-anchorvale-lane-2026-02-226967",
+      "id": "sengkang-311c-anchorvale-lane-2026-02-227047",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

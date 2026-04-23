@@ -10,12 +10,6 @@
       "lng": 103.869743094328
     },
     "medianPrice": 889444,
-    "priceIqr": [
-      805472,
-      1171000
-    ],
-    "pricePerSqmMedian": 11706.35,
-    "pricePerSqftMedian": 1087.55,
     "transactionCount": 16,
     "floorAreaRange": [
       70,
@@ -56,7 +50,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 939
       }
-    ]
+    ],
+    "priceIqr": [
+      805472,
+      1171000
+    ],
+    "pricePerSqmMedian": 11706.35,
+    "pricePerSqftMedian": 1087.55
   },
   "monthlyTrend": [
     {
@@ -260,7 +260,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-8a-upp-boon-keng-rd-2026-03-225607",
+      "id": "kallang-whampoa-8a-upp-boon-keng-rd-2026-03-225671",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",

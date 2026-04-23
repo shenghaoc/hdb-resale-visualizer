@@ -10,12 +10,6 @@
       "lng": 103.875590835007
     },
     "medianPrice": 1140000,
-    "priceIqr": [
-      1055000,
-      1187500
-    ],
-    "pricePerSqmMedian": 7718.12,
-    "pricePerSqftMedian": 717.04,
     "transactionCount": 6,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "WOODLEIGH MRT STATION",
         "distanceMeters": 1050
       }
-    ]
+    ],
+    "priceIqr": [
+      1055000,
+      1187500
+    ],
+    "pricePerSqmMedian": 7718.12,
+    "pricePerSqftMedian": 717.04
   },
   "monthlyTrend": [
     {
@@ -534,7 +534,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-424-serangoon-ctrl-2026-03-227474",
+      "id": "serangoon-424-serangoon-ctrl-2026-03-227562",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

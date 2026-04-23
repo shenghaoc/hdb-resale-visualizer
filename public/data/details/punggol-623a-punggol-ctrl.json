@@ -10,12 +10,6 @@
       "lng": 103.91189638413
     },
     "medianPrice": 565000,
-    "priceIqr": [
-      434000,
-      630000
-    ],
-    "pricePerSqmMedian": 8065.22,
-    "pricePerSqftMedian": 749.29,
     "transactionCount": 10,
     "floorAreaRange": [
       46,
@@ -56,7 +50,13 @@
         "stationName": "KADALOOR LRT STATION",
         "distanceMeters": 499
       }
-    ]
+    ],
+    "priceIqr": [
+      434000,
+      630000
+    ],
+    "pricePerSqmMedian": 8065.22,
+    "pricePerSqftMedian": 749.29
   },
   "monthlyTrend": [
     {
@@ -356,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-623a-punggol-ctrl-2026-03-225962",
+      "id": "punggol-623a-punggol-ctrl-2026-03-226030",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -369,7 +369,7 @@
       "pricePerSqft": 760.73
     },
     {
-      "id": "punggol-623a-punggol-ctrl-2026-03-226074",
+      "id": "punggol-623a-punggol-ctrl-2026-03-226142",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

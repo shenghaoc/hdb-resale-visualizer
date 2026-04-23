@@ -10,12 +10,6 @@
       "lng": 103.903899355526
     },
     "medianPrice": 610000,
-    "priceIqr": [
-      600000,
-      620000
-    ],
-    "pricePerSqmMedian": 6540.75,
-    "pricePerSqftMedian": 607.65,
     "transactionCount": 2,
     "floorAreaRange": [
       84,
@@ -55,7 +49,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 1062
       }
-    ]
+    ],
+    "priceIqr": [
+      600000,
+      620000
+    ],
+    "pricePerSqmMedian": 6540.75,
+    "pricePerSqftMedian": 607.65
   },
   "monthlyTrend": [
     {
@@ -1004,7 +1004,7 @@
       "pricePerSqft": 407.89
     },
     {
-      "id": "geylang-313-ubi-ave-1-2016-08-968063",
+      "id": "geylang-313-ubi-ave-1-2016-08-968179",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

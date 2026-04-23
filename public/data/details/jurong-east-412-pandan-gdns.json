@@ -10,12 +10,6 @@
       "lng": 103.747111361741
     },
     "medianPrice": 368000,
-    "priceIqr": [
-      368000,
-      369500
-    ],
-    "pricePerSqmMedian": 5111.11,
-    "pricePerSqftMedian": 474.84,
     "transactionCount": 6,
     "floorAreaRange": [
       72,
@@ -54,7 +48,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 2878
       }
-    ]
+    ],
+    "priceIqr": [
+      368000,
+      369500
+    ],
+    "pricePerSqmMedian": 5111.11,
+    "pricePerSqftMedian": 474.84
   },
   "monthlyTrend": [
     {
@@ -918,7 +918,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-412-pandan-gdns-2026-04-224893",
+      "id": "jurong-east-412-pandan-gdns-2026-04-224945",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -931,7 +931,7 @@
       "pricePerSqft": 498.88
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-04-224894",
+      "id": "jurong-east-412-pandan-gdns-2026-04-224946",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -944,7 +944,7 @@
       "pricePerSqft": 474.84
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-03-224892",
+      "id": "jurong-east-412-pandan-gdns-2026-03-224944",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -957,7 +957,7 @@
       "pricePerSqft": 468.33
     },
     {
-      "id": "jurong-east-412-pandan-gdns-2026-01-224889",
+      "id": "jurong-east-412-pandan-gdns-2026-01-224941",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

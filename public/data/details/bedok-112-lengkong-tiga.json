@@ -10,12 +10,6 @@
       "lng": 103.911407840981
     },
     "medianPrice": 822000,
-    "priceIqr": [
-      812000,
-      911000
-    ],
-    "pricePerSqmMedian": 7711.54,
-    "pricePerSqftMedian": 716.43,
     "transactionCount": 3,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "KAKI BUKIT MRT STATION",
         "distanceMeters": 1296
       }
-    ]
+    ],
+    "priceIqr": [
+      812000,
+      911000
+    ],
+    "pricePerSqmMedian": 7711.54,
+    "pricePerSqftMedian": 716.43
   },
   "monthlyTrend": [
     {
@@ -524,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-112-lengkong-tiga-2026-01-222617",
+      "id": "bedok-112-lengkong-tiga-2026-01-222628",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -758,7 +758,7 @@
       "pricePerSqft": 578.86
     },
     {
-      "id": "bedok-112-lengkong-tiga-2016-06-964182",
+      "id": "bedok-112-lengkong-tiga-2016-06-964298",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -771,7 +771,7 @@
       "pricePerSqft": 544.91
     },
     {
-      "id": "bedok-112-lengkong-tiga-2015-12-954974",
+      "id": "bedok-112-lengkong-tiga-2015-12-955090",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

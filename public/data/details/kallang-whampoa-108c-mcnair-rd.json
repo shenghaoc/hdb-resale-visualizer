@@ -10,12 +10,6 @@
       "lng": 103.859462494536
     },
     "medianPrice": 953444,
-    "priceIqr": [
-      895250,
-      975722
-    ],
-    "pricePerSqmMedian": 10147.28,
-    "pricePerSqftMedian": 942.72,
     "transactionCount": 8,
     "floorAreaRange": [
       86,
@@ -56,7 +50,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 874
       }
-    ]
+    ],
+    "priceIqr": [
+      895250,
+      975722
+    ],
+    "pricePerSqmMedian": 10147.28,
+    "pricePerSqftMedian": 942.72
   },
   "monthlyTrend": [
     {
@@ -464,7 +464,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-108c-mcnair-rd-2026-02-225583",
+      "id": "kallang-whampoa-108c-mcnair-rd-2026-02-225647",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

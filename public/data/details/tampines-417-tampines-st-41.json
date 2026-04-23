@@ -10,12 +10,6 @@
       "lng": 103.947275912962
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      445000,
-      465000
-    ],
-    "pricePerSqmMedian": 7666.67,
-    "pricePerSqftMedian": 712.26,
     "transactionCount": 3,
     "floorAreaRange": [
       60,
@@ -57,7 +51,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1580
       }
-    ]
+    ],
+    "priceIqr": [
+      445000,
+      465000
+    ],
+    "pricePerSqmMedian": 7666.67,
+    "pricePerSqftMedian": 712.26
   },
   "monthlyTrend": [
     {

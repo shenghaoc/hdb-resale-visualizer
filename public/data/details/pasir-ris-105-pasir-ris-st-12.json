@@ -10,12 +10,6 @@
       "lng": 103.957538790848
     },
     "medianPrice": 650000,
-    "priceIqr": [
-      619000,
-      678000
-    ],
-    "pricePerSqmMedian": 5931.62,
-    "pricePerSqftMedian": 551.07,
     "transactionCount": 5,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "TAMPINES MRT STATION",
         "distanceMeters": 2156
       }
-    ]
+    ],
+    "priceIqr": [
+      619000,
+      678000
+    ],
+    "pricePerSqmMedian": 5931.62,
+    "pricePerSqftMedian": 551.07
   },
   "monthlyTrend": [
     {
@@ -897,7 +897,7 @@
       "pricePerSqft": 333.73
     },
     {
-      "id": "pasir-ris-105-pasir-ris-st-12-2016-05-963231",
+      "id": "pasir-ris-105-pasir-ris-st-12-2016-05-963347",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

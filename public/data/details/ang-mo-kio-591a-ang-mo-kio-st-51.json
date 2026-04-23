@@ -10,12 +10,6 @@
       "lng": 103.851940766136
     },
     "medianPrice": 1025000,
-    "priceIqr": [
-      838000,
-      1084000
-    ],
-    "pricePerSqmMedian": 11170.84,
-    "pricePerSqftMedian": 1037.81,
     "transactionCount": 27,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 1635
       }
-    ]
+    ],
+    "priceIqr": [
+      838000,
+      1084000
+    ],
+    "pricePerSqmMedian": 11170.84,
+    "pricePerSqftMedian": 1037.81
   },
   "monthlyTrend": [
     {
@@ -235,7 +235,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222175",
+      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222181",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "25 TO 27",
@@ -248,7 +248,7 @@
       "pricePerSqft": 1090.25
     },
     {
-      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222270",
+      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222276",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -261,7 +261,7 @@
       "pricePerSqft": 1036.92
     },
     {
-      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222271",
+      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-03-222277",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -274,7 +274,7 @@
       "pricePerSqft": 1078.88
     },
     {
-      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-02-222269",
+      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-02-222275",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -287,7 +287,7 @@
       "pricePerSqft": 1073.88
     },
     {
-      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-01-222268",
+      "id": "ang-mo-kio-591a-ang-mo-kio-st-51-2026-01-222274",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

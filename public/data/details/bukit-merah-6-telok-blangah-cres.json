@@ -10,12 +10,6 @@
       "lng": 103.818484019328
     },
     "medianPrice": 355000,
-    "priceIqr": [
-      350000,
-      370500
-    ],
-    "pricePerSqmMedian": 5461.54,
-    "pricePerSqftMedian": 507.39,
     "transactionCount": 8,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1270
       }
-    ]
+    ],
+    "priceIqr": [
+      350000,
+      370500
+    ],
+    "pricePerSqmMedian": 5461.54,
+    "pricePerSqftMedian": 507.39
   },
   "monthlyTrend": [
     {
@@ -806,7 +806,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-6-telok-blangah-cres-2026-02-223315",
+      "id": "bukit-merah-6-telok-blangah-cres-2026-02-223336",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -819,7 +819,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "bukit-merah-6-telok-blangah-cres-2026-01-223309",
+      "id": "bukit-merah-6-telok-blangah-cres-2026-01-223330",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -832,7 +832,7 @@
       "pricePerSqft": 586
     },
     {
-      "id": "bukit-merah-6-telok-blangah-cres-2026-01-223311",
+      "id": "bukit-merah-6-telok-blangah-cres-2026-01-223332",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

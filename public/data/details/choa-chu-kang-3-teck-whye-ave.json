@@ -10,12 +10,6 @@
       "lng": 103.752527976573
     },
     "medianPrice": 388000,
-    "priceIqr": [
-      386500,
-      396500
-    ],
-    "pricePerSqmMedian": 5243.24,
-    "pricePerSqftMedian": 487.11,
     "transactionCount": 3,
     "floorAreaRange": [
       74,
@@ -55,7 +49,13 @@
         "stationName": "PHOENIX LRT STATION",
         "distanceMeters": 768
       }
-    ]
+    ],
+    "priceIqr": [
+      386500,
+      396500
+    ],
+    "pricePerSqmMedian": 5243.24,
+    "pricePerSqftMedian": 487.11
   },
   "monthlyTrend": [
     {
@@ -799,7 +799,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-3-teck-whye-ave-2026-01-223843",
+      "id": "choa-chu-kang-3-teck-whye-ave-2026-01-223870",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1020,7 +1020,7 @@
       "pricePerSqft": 342.74
     },
     {
-      "id": "choa-chu-kang-3-teck-whye-ave-2016-11-973051",
+      "id": "choa-chu-kang-3-teck-whye-ave-2016-11-973167",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1033,7 +1033,7 @@
       "pricePerSqft": 293.14
     },
     {
-      "id": "choa-chu-kang-3-teck-whye-ave-2016-11-973062",
+      "id": "choa-chu-kang-3-teck-whye-ave-2016-11-973178",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -1046,7 +1046,7 @@
       "pricePerSqft": 306.67
     },
     {
-      "id": "choa-chu-kang-3-teck-whye-ave-2016-10-971423",
+      "id": "choa-chu-kang-3-teck-whye-ave-2016-10-971539",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.90319671991
     },
     "medianPrice": 726500,
-    "priceIqr": [
-      628250,
-      824750
-    ],
-    "pricePerSqmMedian": 8075.76,
-    "pricePerSqftMedian": 750.26,
     "transactionCount": 2,
     "floorAreaRange": [
       67,
@@ -56,7 +50,13 @@
         "stationName": "TECK LEE LRT STATION",
         "distanceMeters": 671
       }
-    ]
+    ],
+    "priceIqr": [
+      628250,
+      824750
+    ],
+    "pricePerSqmMedian": 8075.76,
+    "pricePerSqftMedian": 750.26
   },
   "monthlyTrend": [
     {
@@ -68,7 +68,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-409d-northshore-dr-2026-01-225957",
+      "id": "punggol-409d-northshore-dr-2026-01-226025",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -81,7 +81,7 @@
       "pricePerSqft": 734.91
     },
     {
-      "id": "punggol-409d-northshore-dr-2026-01-226292",
+      "id": "punggol-409d-northshore-dr-2026-01-226363",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",

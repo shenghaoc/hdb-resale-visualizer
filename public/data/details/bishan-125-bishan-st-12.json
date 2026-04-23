@@ -10,12 +10,6 @@
       "lng": 103.851553257146
     },
     "medianPrice": 825000,
-    "priceIqr": [
-      742500,
-      907500
-    ],
-    "pricePerSqmMedian": 8066.82,
-    "pricePerSqftMedian": 749.43,
     "transactionCount": 2,
     "floorAreaRange": [
       83,
@@ -56,7 +50,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 1280
       }
-    ]
+    ],
+    "priceIqr": [
+      742500,
+      907500
+    ],
+    "pricePerSqmMedian": 8066.82,
+    "pricePerSqftMedian": 749.43
   },
   "monthlyTrend": [
     {
@@ -736,7 +736,7 @@
       "pricePerSqft": 638.01
     },
     {
-      "id": "bishan-125-bishan-st-12-2016-03-958887",
+      "id": "bishan-125-bishan-st-12-2016-03-959003",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -749,7 +749,7 @@
       "pricePerSqft": 593.24
     },
     {
-      "id": "bishan-125-bishan-st-12-2014-09-645755",
+      "id": "bishan-125-bishan-st-12-2014-09-645871",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -762,7 +762,7 @@
       "pricePerSqft": 552.81
     },
     {
-      "id": "bishan-125-bishan-st-12-2012-09-612359",
+      "id": "bishan-125-bishan-st-12-2012-09-612475",
       "month": "2012-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -775,7 +775,7 @@
       "pricePerSqft": 491.39
     },
     {
-      "id": "bishan-125-bishan-st-12-2012-09-612366",
+      "id": "bishan-125-bishan-st-12-2012-09-612482",
       "month": "2012-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -788,7 +788,7 @@
       "pricePerSqft": 574.31
     },
     {
-      "id": "bishan-125-bishan-st-12-2012-04-601637",
+      "id": "bishan-125-bishan-st-12-2012-04-601753",
       "month": "2012-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -801,7 +801,7 @@
       "pricePerSqft": 521.6
     },
     {
-      "id": "bishan-125-bishan-st-12-2011-07-585665",
+      "id": "bishan-125-bishan-st-12-2011-07-585781",
       "month": "2011-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

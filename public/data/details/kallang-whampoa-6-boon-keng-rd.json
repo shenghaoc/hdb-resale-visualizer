@@ -10,12 +10,6 @@
       "lng": 103.860896688005
     },
     "medianPrice": 960000,
-    "priceIqr": [
-      920000,
-      1045000
-    ],
-    "pricePerSqmMedian": 8592.59,
-    "pricePerSqftMedian": 798.28,
     "transactionCount": 9,
     "floorAreaRange": [
       105,
@@ -56,7 +50,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 787
       }
-    ]
+    ],
+    "priceIqr": [
+      920000,
+      1045000
+    ],
+    "pricePerSqmMedian": 8592.59,
+    "pricePerSqftMedian": 798.28
   },
   "monthlyTrend": [
     {
@@ -470,7 +470,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-6-boon-keng-rd-2026-03-225543",
+      "id": "kallang-whampoa-6-boon-keng-rd-2026-03-225607",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -483,7 +483,7 @@
       "pricePerSqft": 781.07
     },
     {
-      "id": "kallang-whampoa-6-boon-keng-rd-2026-02-225541",
+      "id": "kallang-whampoa-6-boon-keng-rd-2026-02-225605",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -496,7 +496,7 @@
       "pricePerSqft": 798.28
     },
     {
-      "id": "kallang-whampoa-6-boon-keng-rd-2026-01-225539",
+      "id": "kallang-whampoa-6-boon-keng-rd-2026-01-225603",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -509,7 +509,7 @@
       "pricePerSqft": 849.4
     },
     {
-      "id": "kallang-whampoa-6-boon-keng-rd-2026-01-225615",
+      "id": "kallang-whampoa-6-boon-keng-rd-2026-01-225679",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.876132957211
     },
     "medianPrice": 456000,
-    "priceIqr": [
-      437000,
-      468722
-    ],
-    "pricePerSqmMedian": 6864.18,
-    "pricePerSqftMedian": 637.7,
     "transactionCount": 4,
     "floorAreaRange": [
       64,
@@ -54,7 +48,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1250
       }
-    ]
+    ],
+    "priceIqr": [
+      437000,
+      468722
+    ],
+    "pricePerSqmMedian": 6864.18,
+    "pricePerSqftMedian": 637.7
   },
   "monthlyTrend": [
     {
@@ -833,7 +833,7 @@
       "pricePerSqft": 479.03
     },
     {
-      "id": "serangoon-3-lor-lew-lian-2016-09-970562",
+      "id": "serangoon-3-lor-lew-lian-2016-09-970678",
       "month": "2016-09",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -846,7 +846,7 @@
       "pricePerSqft": 519.68
     },
     {
-      "id": "serangoon-3-lor-lew-lian-2016-08-968876",
+      "id": "serangoon-3-lor-lew-lian-2016-08-968992",
       "month": "2016-08",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -859,7 +859,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "serangoon-3-lor-lew-lian-2016-08-968883",
+      "id": "serangoon-3-lor-lew-lian-2016-08-968999",
       "month": "2016-08",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

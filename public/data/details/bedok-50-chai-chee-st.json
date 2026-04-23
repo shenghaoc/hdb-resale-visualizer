@@ -10,12 +10,6 @@
       "lng": 103.922415807329
     },
     "medianPrice": 410000,
-    "priceIqr": [
-      402500,
-      422500
-    ],
-    "pricePerSqmMedian": 6029.41,
-    "pricePerSqftMedian": 560.15,
     "transactionCount": 7,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1393
       }
-    ]
+    ],
+    "priceIqr": [
+      402500,
+      422500
+    ],
+    "pricePerSqmMedian": 6029.41,
+    "pricePerSqftMedian": 560.15
   },
   "monthlyTrend": [
     {
@@ -1369,7 +1369,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-50-chai-chee-st-2026-01-222458",
+      "id": "bedok-50-chai-chee-st-2026-01-222465",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

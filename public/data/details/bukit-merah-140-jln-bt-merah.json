@@ -10,12 +10,6 @@
       "lng": 103.829524327849
     },
     "medianPrice": 765000,
-    "priceIqr": [
-      727500,
-      792500
-    ],
-    "pricePerSqmMedian": 6428.57,
-    "pricePerSqftMedian": 597.23,
     "transactionCount": 3,
     "floorAreaRange": [
       119,
@@ -54,7 +48,13 @@
         "stationName": "HAVELOCK MRT STATION",
         "distanceMeters": 1062
       }
-    ]
+    ],
+    "priceIqr": [
+      727500,
+      792500
+    ],
+    "pricePerSqmMedian": 6428.57,
+    "pricePerSqftMedian": 597.23
   },
   "monthlyTrend": [
     {
@@ -552,7 +552,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-140-jln-bt-merah-2026-01-223477",
+      "id": "bukit-merah-140-jln-bt-merah-2026-01-223501",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

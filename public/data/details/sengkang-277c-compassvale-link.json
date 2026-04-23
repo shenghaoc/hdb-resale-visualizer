@@ -10,12 +10,6 @@
       "lng": 103.893607838756
     },
     "medianPrice": 819000,
-    "priceIqr": [
-      817250,
-      825000
-    ],
-    "pricePerSqmMedian": 9083.33,
-    "pricePerSqftMedian": 843.87,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 601
       }
-    ]
+    ],
+    "priceIqr": [
+      817250,
+      825000
+    ],
+    "pricePerSqmMedian": 9083.33,
+    "pricePerSqftMedian": 843.87
   },
   "monthlyTrend": [
     {
@@ -342,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-277c-compassvale-link-2026-02-227029",
+      "id": "sengkang-277c-compassvale-link-2026-02-227111",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

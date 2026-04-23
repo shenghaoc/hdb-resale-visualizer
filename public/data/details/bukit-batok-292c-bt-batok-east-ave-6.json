@@ -10,12 +10,6 @@
       "lng": 103.753614683753
     },
     "medianPrice": 810000,
-    "priceIqr": [
-      755089,
-      925500
-    ],
-    "pricePerSqmMedian": 8262.8,
-    "pricePerSqftMedian": 767.64,
     "transactionCount": 19,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 1785
       }
-    ]
+    ],
+    "priceIqr": [
+      755089,
+      925500
+    ],
+    "pricePerSqmMedian": 8262.8,
+    "pricePerSqftMedian": 767.64
   },
   "monthlyTrend": [
     {
@@ -200,7 +200,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-04-223118",
+      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-04-223135",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "34 TO 36",
@@ -213,7 +213,7 @@
       "pricePerSqft": 813.93
     },
     {
-      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-02-222952",
+      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-02-222967",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -226,7 +226,7 @@
       "pricePerSqft": 802.8
     },
     {
-      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-02-222953",
+      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-02-222968",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -239,7 +239,7 @@
       "pricePerSqft": 807.85
     },
     {
-      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-01-223117",
+      "id": "bukit-batok-292c-bt-batok-east-ave-6-2026-01-223134",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

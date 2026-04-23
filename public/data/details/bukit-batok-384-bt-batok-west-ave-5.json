@@ -10,12 +10,6 @@
       "lng": 103.752194207305
     },
     "medianPrice": 589000,
-    "priceIqr": [
-      558750,
-      607138
-    ],
-    "pricePerSqmMedian": 6433.33,
-    "pricePerSqftMedian": 597.67,
     "transactionCount": 14,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 1527
       }
-    ]
+    ],
+    "priceIqr": [
+      558750,
+      607138
+    ],
+    "pricePerSqmMedian": 6433.33,
+    "pricePerSqftMedian": 597.67
   },
   "monthlyTrend": [
     {
@@ -632,7 +632,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-03-223016",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-03-223031",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -645,7 +645,7 @@
       "pricePerSqft": 560.45
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-02-223151",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-02-223170",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -658,7 +658,7 @@
       "pricePerSqft": 590.49
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223006",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223021",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -671,7 +671,7 @@
       "pricePerSqft": 614.87
     },
     {
-      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223007",
+      "id": "bukit-batok-384-bt-batok-west-ave-5-2026-01-223022",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

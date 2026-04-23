@@ -10,12 +10,6 @@
       "lng": 103.850543548091
     },
     "medianPrice": 378000,
-    "priceIqr": [
-      372000,
-      480000
-    ],
-    "pricePerSqmMedian": 7829.79,
-    "pricePerSqftMedian": 727.41,
     "transactionCount": 9,
     "floorAreaRange": [
       38,
@@ -56,7 +50,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 2714
       }
-    ]
+    ],
+    "priceIqr": [
+      372000,
+      480000
+    ],
+    "pricePerSqmMedian": 7829.79,
+    "pricePerSqftMedian": 727.41
   },
   "monthlyTrend": [
     {
@@ -104,7 +104,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-479a-yishun-st-42-2026-02-228929",
+      "id": "yishun-479a-yishun-st-42-2026-02-229036",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

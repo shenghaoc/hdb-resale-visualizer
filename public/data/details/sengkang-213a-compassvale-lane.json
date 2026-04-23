@@ -10,12 +10,6 @@
       "lng": 103.900206949645
     },
     "medianPrice": 665000,
-    "priceIqr": [
-      642500,
-      682504
-    ],
-    "pricePerSqmMedian": 7000,
-    "pricePerSqftMedian": 650.32,
     "transactionCount": 3,
     "floorAreaRange": [
       95,
@@ -55,7 +49,13 @@
         "stationName": "BAKAU LRT STATION",
         "distanceMeters": 628
       }
-    ]
+    ],
+    "priceIqr": [
+      642500,
+      682504
+    ],
+    "pricePerSqmMedian": 7000,
+    "pricePerSqftMedian": 650.32
   },
   "monthlyTrend": [
     {
@@ -259,7 +259,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-213a-compassvale-lane-2026-03-227021",
+      "id": "sengkang-213a-compassvale-lane-2026-03-227101",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

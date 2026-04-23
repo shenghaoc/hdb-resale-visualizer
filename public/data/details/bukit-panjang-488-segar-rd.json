@@ -10,12 +10,6 @@
       "lng": 103.771409031633
     },
     "medianPrice": 362500,
-    "priceIqr": [
-      336250,
-      369500
-    ],
-    "pricePerSqmMedian": 7606.38,
-    "pricePerSqftMedian": 706.66,
     "transactionCount": 10,
     "floorAreaRange": [
       47,
@@ -56,7 +50,13 @@
         "stationName": "JELAPANG LRT STATION",
         "distanceMeters": 806
       }
-    ]
+    ],
+    "priceIqr": [
+      336250,
+      369500
+    ],
+    "pricePerSqmMedian": 7606.38,
+    "pricePerSqftMedian": 706.66
   },
   "monthlyTrend": [
     {
@@ -296,7 +296,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-488-segar-rd-2026-03-223507",
+      "id": "bukit-panjang-488-segar-rd-2026-03-223532",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",

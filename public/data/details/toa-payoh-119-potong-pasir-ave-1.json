@@ -10,12 +10,6 @@
       "lng": 103.862943044844
     },
     "medianPrice": 465000,
-    "priceIqr": [
-      420000,
-      606500
-    ],
-    "pricePerSqmMedian": 6417.91,
-    "pricePerSqftMedian": 596.24,
     "transactionCount": 11,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "BOON KENG MRT STATION",
         "distanceMeters": 1615
       }
-    ]
+    ],
+    "priceIqr": [
+      420000,
+      606500
+    ],
+    "pricePerSqmMedian": 6417.91,
+    "pricePerSqftMedian": 596.24
   },
   "monthlyTrend": [
     {
@@ -937,7 +937,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-119-potong-pasir-ave-1-2026-04-228160",
+      "id": "toa-payoh-119-potong-pasir-ave-1-2026-04-228259",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

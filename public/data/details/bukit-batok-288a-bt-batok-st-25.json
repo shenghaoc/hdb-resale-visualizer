@@ -10,12 +10,6 @@
       "lng": 103.760512031129
     },
     "medianPrice": 780000,
-    "priceIqr": [
-      738000,
-      1010800
-    ],
-    "pricePerSqmMedian": 6393.44,
-    "pricePerSqftMedian": 593.97,
     "transactionCount": 5,
     "floorAreaRange": [
       122,
@@ -56,7 +50,13 @@
         "stationName": "BEAUTY WORLD MRT STATION",
         "distanceMeters": 1705
       }
-    ]
+    ],
+    "priceIqr": [
+      738000,
+      1010800
+    ],
+    "pricePerSqmMedian": 6393.44,
+    "pricePerSqftMedian": 593.97
   },
   "monthlyTrend": [
     {
@@ -440,7 +440,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-288a-bt-batok-st-25-2026-02-223137",
+      "id": "bukit-batok-288a-bt-batok-st-25-2026-02-223155",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

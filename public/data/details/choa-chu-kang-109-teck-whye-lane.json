@@ -10,12 +10,6 @@
       "lng": 103.752077659463
     },
     "medianPrice": 830000,
-    "priceIqr": [
-      798000,
-      838000
-    ],
-    "pricePerSqmMedian": 5684.93,
-    "pricePerSqftMedian": 528.15,
     "transactionCount": 5,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "PHOENIX LRT STATION",
         "distanceMeters": 686
       }
-    ]
+    ],
+    "priceIqr": [
+      798000,
+      838000
+    ],
+    "pricePerSqmMedian": 5684.93,
+    "pricePerSqftMedian": 528.15
   },
   "monthlyTrend": [
     {
@@ -504,7 +504,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-109-teck-whye-lane-2026-03-224138",
+      "id": "choa-chu-kang-109-teck-whye-lane-2026-03-224173",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.931593522645
     },
     "medianPrice": 1000000,
-    "priceIqr": [
-      950000,
-      1010000
-    ],
-    "pricePerSqmMedian": 6849.32,
-    "pricePerSqftMedian": 636.32,
     "transactionCount": 5,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES MRT STATION",
         "distanceMeters": 1421
       }
-    ]
+    ],
+    "priceIqr": [
+      950000,
+      1010000
+    ],
+    "pricePerSqmMedian": 6849.32,
+    "pricePerSqftMedian": 636.32
   },
   "monthlyTrend": [
     {

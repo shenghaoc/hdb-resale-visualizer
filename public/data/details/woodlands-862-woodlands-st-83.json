@@ -10,12 +10,6 @@
       "lng": 103.795048909553
     },
     "medianPrice": 683500,
-    "priceIqr": [
-      669250,
-      697750
-    ],
-    "pricePerSqmMedian": 5404.14,
-    "pricePerSqftMedian": 502.06,
     "transactionCount": 2,
     "floorAreaRange": [
       124,
@@ -54,7 +48,13 @@
         "stationName": "WOODLANDS SOUTH MRT STATION",
         "distanceMeters": 1385
       }
-    ]
+    ],
+    "priceIqr": [
+      669250,
+      697750
+    ],
+    "pricePerSqmMedian": 5404.14,
+    "pricePerSqftMedian": 502.06
   },
   "monthlyTrend": [
     {
@@ -402,7 +402,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-862-woodlands-st-83-2026-01-228860",
+      "id": "woodlands-862-woodlands-st-83-2026-01-228966",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -597,7 +597,7 @@
       "pricePerSqft": 318.42
     },
     {
-      "id": "woodlands-862-woodlands-st-83-2015-10-953214",
+      "id": "woodlands-862-woodlands-st-83-2015-10-953330",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -610,7 +610,7 @@
       "pricePerSqft": 288.45
     },
     {
-      "id": "woodlands-862-woodlands-st-83-2015-01-939608",
+      "id": "woodlands-862-woodlands-st-83-2015-01-939724",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -623,7 +623,7 @@
       "pricePerSqft": 344.64
     },
     {
-      "id": "woodlands-862-woodlands-st-83-2014-08-645437",
+      "id": "woodlands-862-woodlands-st-83-2014-08-645553",
       "month": "2014-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -636,7 +636,7 @@
       "pricePerSqft": 325.53
     },
     {
-      "id": "woodlands-862-woodlands-st-83-2013-05-626072",
+      "id": "woodlands-862-woodlands-st-83-2013-05-626188",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -649,7 +649,7 @@
       "pricePerSqft": 368.66
     },
     {
-      "id": "woodlands-862-woodlands-st-83-2012-01-597289",
+      "id": "woodlands-862-woodlands-st-83-2012-01-597405",
       "month": "2012-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

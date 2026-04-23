@@ -10,12 +10,6 @@
       "lng": 103.87980371499
     },
     "medianPrice": 365000,
-    "priceIqr": [
-      356000,
-      465388
-    ],
-    "pricePerSqmMedian": 7574.47,
-    "pricePerSqftMedian": 703.69,
     "transactionCount": 9,
     "floorAreaRange": [
       47,
@@ -55,7 +49,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 1205
       }
-    ]
+    ],
+    "priceIqr": [
+      356000,
+      465388
+    ],
+    "pricePerSqmMedian": 7574.47,
+    "pricePerSqftMedian": 703.69
   },
   "monthlyTrend": [
     {
@@ -331,7 +331,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-986a-buangkok-cres-2026-03-224497",
+      "id": "hougang-986a-buangkok-cres-2026-03-224542",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

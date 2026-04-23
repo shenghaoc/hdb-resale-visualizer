@@ -10,12 +10,6 @@
       "lng": 103.84481468336
     },
     "medianPrice": 501000,
-    "priceIqr": [
-      500000,
-      510000
-    ],
-    "pricePerSqmMedian": 6185.19,
-    "pricePerSqftMedian": 574.62,
     "transactionCount": 5,
     "floorAreaRange": [
       81,
@@ -54,7 +48,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 852
       }
-    ]
+    ],
+    "priceIqr": [
+      500000,
+      510000
+    ],
+    "pricePerSqmMedian": 6185.19,
+    "pricePerSqftMedian": 574.62
   },
   "monthlyTrend": [
     {

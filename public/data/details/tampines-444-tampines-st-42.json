@@ -9,14 +9,8 @@
       "lat": 1.35834096888655,
       "lng": 103.951379730883
     },
-    "medianPrice": 502500,
-    "priceIqr": [
-      445000,
-      571250
-    ],
-    "pricePerSqmMedian": 5775.77,
-    "pricePerSqftMedian": 536.59,
-    "transactionCount": 4,
+    "medianPrice": 555000,
+    "transactionCount": 5,
     "floorAreaRange": [
       74,
       108
@@ -25,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-06",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1628
       }
-    ]
+    ],
+    "priceIqr": [
+      450000,
+      620000
+    ],
+    "pricePerSqmMedian": 5810.81,
+    "pricePerSqftMedian": 539.84
   },
   "monthlyTrend": [
     {
@@ -921,11 +921,30 @@
       "medianPrice": 525000,
       "transactionCount": 2,
       "medianPricePerSqm": 5775.77
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 640000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6095.24
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-444-tampines-st-42-2026-01-227566",
+      "id": "tampines-444-tampines-st-42-2026-04-227844",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 01 month",
+      "resalePrice": 640000,
+      "pricePerSqm": 6095.24,
+      "pricePerSqft": 566.27
+    },
+    {
+      "id": "tampines-444-tampines-st-42-2026-01-227655",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -938,7 +957,7 @@
       "pricePerSqft": 539.84
     },
     {
-      "id": "tampines-444-tampines-st-42-2026-01-227745",
+      "id": "tampines-444-tampines-st-42-2026-01-227838",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1170,19 +1189,6 @@
       "resalePrice": 430000,
       "pricePerSqm": 4095.24,
       "pricePerSqft": 380.46
-    },
-    {
-      "id": "tampines-444-tampines-st-42-2016-10-972270",
-      "month": "2016-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 74,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "67",
-      "resalePrice": 320000,
-      "pricePerSqm": 4324.32,
-      "pricePerSqft": 401.74
     }
   ]
 }

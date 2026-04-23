@@ -10,12 +10,6 @@
       "lng": 103.90089026171
     },
     "medianPrice": 755000,
-    "priceIqr": [
-      725000,
-      785000
-    ],
-    "pricePerSqmMedian": 8162.4,
-    "pricePerSqftMedian": 758.31,
     "transactionCount": 8,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "SOO TECK LRT STATION",
         "distanceMeters": 432
       }
-    ]
+    ],
+    "priceIqr": [
+      725000,
+      785000
+    ],
+    "pricePerSqmMedian": 8162.4,
+    "pricePerSqftMedian": 758.31
   },
   "monthlyTrend": [
     {
@@ -246,7 +246,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-271d-punggol-walk-2026-03-226201",
+      "id": "punggol-271d-punggol-walk-2026-03-226271",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

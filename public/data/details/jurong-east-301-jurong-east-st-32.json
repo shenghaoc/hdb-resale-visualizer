@@ -10,12 +10,6 @@
       "lng": 103.735500080389
     },
     "medianPrice": 410000,
-    "priceIqr": [
-      390000,
-      439750
-    ],
-    "pricePerSqmMedian": 5695.02,
-    "pricePerSqftMedian": 529.09,
     "transactionCount": 8,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "LAKESIDE MRT STATION",
         "distanceMeters": 1533
       }
-    ]
+    ],
+    "priceIqr": [
+      390000,
+      439750
+    ],
+    "pricePerSqmMedian": 5695.02,
+    "pricePerSqftMedian": 529.09
   },
   "monthlyTrend": [
     {
@@ -1203,7 +1203,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-301-jurong-east-st-32-2026-03-224885",
+      "id": "jurong-east-301-jurong-east-st-32-2026-03-224937",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1216,7 +1216,7 @@
       "pricePerSqft": 532.83
     },
     {
-      "id": "jurong-east-301-jurong-east-st-32-2026-02-224919",
+      "id": "jurong-east-301-jurong-east-st-32-2026-02-224972",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1229,7 +1229,7 @@
       "pricePerSqft": 513.93
     },
     {
-      "id": "jurong-east-301-jurong-east-st-32-2026-01-224880",
+      "id": "jurong-east-301-jurong-east-st-32-2026-01-224932",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

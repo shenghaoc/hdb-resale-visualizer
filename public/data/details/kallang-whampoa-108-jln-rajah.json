@@ -10,12 +10,6 @@
       "lng": 103.855750872335
     },
     "medianPrice": 970000,
-    "priceIqr": [
-      960000,
-      1012500
-    ],
-    "pricePerSqmMedian": 6333.33,
-    "pricePerSqftMedian": 588.39,
     "transactionCount": 3,
     "floorAreaRange": [
       148,
@@ -54,7 +48,13 @@
         "stationName": "POTONG PASIR MRT STATION",
         "distanceMeters": 1470
       }
-    ]
+    ],
+    "priceIqr": [
+      960000,
+      1012500
+    ],
+    "pricePerSqmMedian": 6333.33,
+    "pricePerSqftMedian": 588.39
   },
   "monthlyTrend": [
     {

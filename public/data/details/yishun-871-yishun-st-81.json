@@ -10,12 +10,6 @@
       "lng": 103.837421399007
     },
     "medianPrice": 749000,
-    "priceIqr": [
-      737250,
-      762500
-    ],
-    "pricePerSqmMedian": 6139.35,
-    "pricePerSqftMedian": 570.37,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "SPRINGLEAF MRT STATION",
         "distanceMeters": 2683
       }
-    ]
+    ],
+    "priceIqr": [
+      737250,
+      762500
+    ],
+    "pricePerSqmMedian": 6139.35,
+    "pricePerSqftMedian": 570.37
   },
   "monthlyTrend": [
     {
@@ -861,7 +861,7 @@
       "pricePerSqft": 355.53
     },
     {
-      "id": "yishun-871-yishun-st-81-2016-11-974202",
+      "id": "yishun-871-yishun-st-81-2016-11-974318",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

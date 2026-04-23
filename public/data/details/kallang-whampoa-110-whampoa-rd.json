@@ -10,12 +10,6 @@
       "lng": 103.855890714758
     },
     "medianPrice": 810000,
-    "priceIqr": [
-      670000,
-      830000
-    ],
-    "pricePerSqmMedian": 6585.37,
-    "pricePerSqftMedian": 611.8,
     "transactionCount": 5,
     "floorAreaRange": [
       102,
@@ -56,7 +50,13 @@
         "stationName": "NOVENA MRT STATION",
         "distanceMeters": 1428
       }
-    ]
+    ],
+    "priceIqr": [
+      670000,
+      830000
+    ],
+    "pricePerSqmMedian": 6585.37,
+    "pricePerSqftMedian": 611.8
   },
   "monthlyTrend": [
     {
@@ -362,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2026-03-225644",
+      "id": "kallang-whampoa-110-whampoa-rd-2026-03-225708",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -596,7 +596,7 @@
       "pricePerSqft": 478.18
     },
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2016-02-958149",
+      "id": "kallang-whampoa-110-whampoa-rd-2016-02-958265",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -609,7 +609,7 @@
       "pricePerSqft": 519.16
     },
     {
-      "id": "kallang-whampoa-110-whampoa-rd-2015-10-952553",
+      "id": "kallang-whampoa-110-whampoa-rd-2015-10-952669",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

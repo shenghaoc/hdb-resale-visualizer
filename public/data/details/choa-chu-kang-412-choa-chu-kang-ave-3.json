@@ -10,12 +10,6 @@
       "lng": 103.742381573149
     },
     "medianPrice": 530000,
-    "priceIqr": [
-      530000,
-      560000
-    ],
-    "pricePerSqmMedian": 5096.15,
-    "pricePerSqftMedian": 473.45,
     "transactionCount": 5,
     "floorAreaRange": [
       104,
@@ -54,7 +48,13 @@
         "stationName": "CHOA CHU KANG LRT STATION",
         "distanceMeters": 430
       }
-    ]
+    ],
+    "priceIqr": [
+      530000,
+      560000
+    ],
+    "pricePerSqmMedian": 5096.15,
+    "pricePerSqftMedian": 473.45
   },
   "monthlyTrend": [
     {
@@ -780,7 +780,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-412-choa-chu-kang-ave-3-2026-01-223861",
+      "id": "choa-chu-kang-412-choa-chu-kang-ave-3-2026-01-223889",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

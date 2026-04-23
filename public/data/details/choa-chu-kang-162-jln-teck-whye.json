@@ -9,14 +9,8 @@
       "lat": 1.38086551927932,
       "lng": 103.757683733859
     },
-    "medianPrice": 590000,
-    "priceIqr": [
-      545000,
-      690000
-    ],
-    "pricePerSqmMedian": 5655.74,
-    "pricePerSqftMedian": 525.44,
-    "transactionCount": 5,
+    "medianPrice": 640000,
+    "transactionCount": 6,
     "floorAreaRange": [
       100,
       124
@@ -25,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "SENJA LRT STATION",
         "distanceMeters": 562
       }
-    ]
+    ],
+    "priceIqr": [
+      556250,
+      690000
+    ],
+    "pricePerSqmMedian": 5655.74,
+    "pricePerSqftMedian": 525.44
   },
   "monthlyTrend": [
     {
@@ -490,11 +490,30 @@
       "medianPrice": 710000,
       "transactionCount": 1,
       "medianPricePerSqm": 5867.77
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 690000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5655.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-162-jln-teck-whye-2026-03-224094",
+      "id": "choa-chu-kang-162-jln-teck-whye-2026-04-224129",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 10 months",
+      "resalePrice": 690000,
+      "pricePerSqm": 5655.74,
+      "pricePerSqft": 525.44
+    },
+    {
+      "id": "choa-chu-kang-162-jln-teck-whye-2026-03-224128",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -739,19 +758,6 @@
       "resalePrice": 346000,
       "pricePerSqm": 3425.74,
       "pricePerSqft": 318.26
-    },
-    {
-      "id": "choa-chu-kang-162-jln-teck-whye-2018-10-37310",
-      "month": "2018-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "78 years 05 months",
-      "resalePrice": 370000,
-      "pricePerSqm": 3663.37,
-      "pricePerSqft": 340.34
     }
   ]
 }

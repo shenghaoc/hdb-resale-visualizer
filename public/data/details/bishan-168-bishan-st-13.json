@@ -10,12 +10,6 @@
       "lng": 103.854162127782
     },
     "medianPrice": 1015000,
-    "priceIqr": [
-      982500,
-      1025000
-    ],
-    "pricePerSqmMedian": 8388.43,
-    "pricePerSqftMedian": 779.31,
     "transactionCount": 3,
     "floorAreaRange": [
       121,
@@ -56,7 +50,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1090
       }
-    ]
+    ],
+    "priceIqr": [
+      982500,
+      1025000
+    ],
+    "pricePerSqmMedian": 8388.43,
+    "pricePerSqftMedian": 779.31
   },
   "monthlyTrend": [
     {
@@ -778,7 +778,7 @@
       "pricePerSqft": 566.63
     },
     {
-      "id": "bishan-168-bishan-st-13-2016-09-969520",
+      "id": "bishan-168-bishan-st-13-2016-09-969636",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -791,7 +791,7 @@
       "pricePerSqft": 518.26
     },
     {
-      "id": "bishan-168-bishan-st-13-2016-04-960589",
+      "id": "bishan-168-bishan-st-13-2016-04-960705",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -804,7 +804,7 @@
       "pricePerSqft": 580.37
     },
     {
-      "id": "bishan-168-bishan-st-13-2014-01-635304",
+      "id": "bishan-168-bishan-st-13-2014-01-635420",
       "month": "2014-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "19 TO 21",
@@ -817,7 +817,7 @@
       "pricePerSqft": 606.97
     },
     {
-      "id": "bishan-168-bishan-st-13-2013-05-624799",
+      "id": "bishan-168-bishan-st-13-2013-05-624915",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -830,7 +830,7 @@
       "pricePerSqft": 588.13
     },
     {
-      "id": "bishan-168-bishan-st-13-2012-12-617731",
+      "id": "bishan-168-bishan-st-13-2012-12-617847",
       "month": "2012-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -843,7 +843,7 @@
       "pricePerSqft": 525.94
     },
     {
-      "id": "bishan-168-bishan-st-13-2012-10-614123",
+      "id": "bishan-168-bishan-st-13-2012-10-614239",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

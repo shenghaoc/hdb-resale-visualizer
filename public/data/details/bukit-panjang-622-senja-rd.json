@@ -10,12 +10,6 @@
       "lng": 103.761420950075
     },
     "medianPrice": 615000,
-    "priceIqr": [
-      590000,
-      688000
-    ],
-    "pricePerSqmMedian": 5912.09,
-    "pricePerSqftMedian": 549.25,
     "transactionCount": 5,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 611
       }
-    ]
+    ],
+    "priceIqr": [
+      590000,
+      688000
+    ],
+    "pricePerSqmMedian": 5912.09,
+    "pricePerSqftMedian": 549.25
   },
   "monthlyTrend": [
     {
@@ -464,7 +464,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-622-senja-rd-2026-02-223647",
+      "id": "bukit-panjang-622-senja-rd-2026-02-223674",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

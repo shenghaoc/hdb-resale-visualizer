@@ -10,12 +10,6 @@
       "lng": 103.793205067682
     },
     "medianPrice": 510000,
-    "priceIqr": [
-      494444,
-      566000
-    ],
-    "pricePerSqmMedian": 7692.31,
-    "pricePerSqftMedian": 714.64,
     "transactionCount": 11,
     "floorAreaRange": [
       65,
@@ -57,7 +51,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 912
       }
-    ]
+    ],
+    "priceIqr": [
+      494444,
+      566000
+    ],
+    "pricePerSqmMedian": 7692.31,
+    "pricePerSqftMedian": 714.64
   },
   "monthlyTrend": [
     {
@@ -1713,7 +1713,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-13-holland-dr-2026-04-226587",
+      "id": "queenstown-13-holland-dr-2026-04-226665",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -1726,7 +1726,7 @@
       "pricePerSqft": 872.15
     },
     {
-      "id": "queenstown-13-holland-dr-2026-03-226475",
+      "id": "queenstown-13-holland-dr-2026-03-226552",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1739,7 +1739,7 @@
       "pricePerSqft": 698.76
     },
     {
-      "id": "queenstown-13-holland-dr-2026-01-226473",
+      "id": "queenstown-13-holland-dr-2026-01-226550",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "22 TO 24",

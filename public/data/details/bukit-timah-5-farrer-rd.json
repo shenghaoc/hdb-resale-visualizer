@@ -10,12 +10,6 @@
       "lng": 103.807288102167
     },
     "medianPrice": 1010000,
-    "priceIqr": [
-      1005000,
-      1015000
-    ],
-    "pricePerSqmMedian": 8315.04,
-    "pricePerSqftMedian": 772.49,
     "transactionCount": 2,
     "floorAreaRange": [
       120,
@@ -54,7 +48,13 @@
         "stationName": "BOTANIC GARDENS MRT STATION",
         "distanceMeters": 1083
       }
-    ]
+    ],
+    "priceIqr": [
+      1005000,
+      1015000
+    ],
+    "pricePerSqmMedian": 8315.04,
+    "pricePerSqftMedian": 772.49
   },
   "monthlyTrend": [
     {
@@ -588,7 +588,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-5-farrer-rd-2026-04-223761",
+      "id": "bukit-timah-5-farrer-rd-2026-04-223788",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -783,7 +783,7 @@
       "pricePerSqft": 689.03
     },
     {
-      "id": "bukit-timah-5-farrer-rd-2015-01-938779",
+      "id": "bukit-timah-5-farrer-rd-2015-01-938895",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -796,7 +796,7 @@
       "pricePerSqft": 645.79
     },
     {
-      "id": "bukit-timah-5-farrer-rd-2014-09-645924",
+      "id": "bukit-timah-5-farrer-rd-2014-09-646040",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -809,7 +809,7 @@
       "pricePerSqft": 642.01
     },
     {
-      "id": "bukit-timah-5-farrer-rd-2014-09-645925",
+      "id": "bukit-timah-5-farrer-rd-2014-09-646041",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -822,7 +822,7 @@
       "pricePerSqft": 679.78
     },
     {
-      "id": "bukit-timah-5-farrer-rd-2014-06-641978",
+      "id": "bukit-timah-5-farrer-rd-2014-06-642094",
       "month": "2014-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -835,7 +835,7 @@
       "pricePerSqft": 649.57
     },
     {
-      "id": "bukit-timah-5-farrer-rd-2013-05-624975",
+      "id": "bukit-timah-5-farrer-rd-2013-05-625091",
       "month": "2013-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

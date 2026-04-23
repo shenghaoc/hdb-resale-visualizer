@@ -10,12 +10,6 @@
       "lng": 103.73907552675
     },
     "medianPrice": 452500,
-    "priceIqr": [
-      445000,
-      457500
-    ],
-    "pricePerSqmMedian": 4570.7,
-    "pricePerSqftMedian": 424.63,
     "transactionCount": 4,
     "floorAreaRange": [
       99,
@@ -54,7 +48,13 @@
         "stationName": "CLEMENTI MRT STATION",
         "distanceMeters": 2943
       }
-    ]
+    ],
+    "priceIqr": [
+      445000,
+      457500
+    ],
+    "pricePerSqmMedian": 4570.7,
+    "pricePerSqftMedian": 424.63
   },
   "monthlyTrend": [
     {
@@ -865,7 +865,7 @@
       "pricePerSqft": 326.57
     },
     {
-      "id": "jurong-east-30-teban-gdns-rd-2016-04-961091",
+      "id": "jurong-east-30-teban-gdns-rd-2016-04-961207",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

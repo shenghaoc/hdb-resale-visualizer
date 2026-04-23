@@ -9,14 +9,8 @@
       "lat": 1.3371914743342,
       "lng": 103.741941852951
     },
-    "medianPrice": 612944,
-    "priceIqr": [
-      524166,
-      707250
-    ],
-    "pricePerSqmMedian": 5582.78,
-    "pricePerSqftMedian": 518.66,
-    "transactionCount": 4,
+    "medianPrice": 697000,
+    "transactionCount": 5,
     "floorAreaRange": [
       97,
       123
@@ -25,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-06",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "BUKIT BATOK MRT STATION",
         "distanceMeters": 1480
       }
-    ]
+    ],
+    "priceIqr": [
+      528888,
+      703000
+    ],
+    "pricePerSqmMedian": 5713.11,
+    "pricePerSqftMedian": 530.77
   },
   "monthlyTrend": [
     {
@@ -604,9 +604,28 @@
       "medianPrice": 510000,
       "transactionCount": 1,
       "medianPricePerSqm": 5204.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 703000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5762.3
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-east-204-jurong-east-st-21-2026-04-225013",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "55 years 11 months",
+      "resalePrice": 703000,
+      "pricePerSqm": 5762.3,
+      "pricePerSqft": 535.34
+    },
     {
       "id": "jurong-east-204-jurong-east-st-21-2025-12-206558",
       "month": "2025-12",
@@ -842,7 +861,7 @@
       "pricePerSqft": 402.26
     },
     {
-      "id": "jurong-east-204-jurong-east-st-21-2016-05-962953",
+      "id": "jurong-east-204-jurong-east-st-21-2016-05-963069",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -853,19 +872,6 @@
       "resalePrice": 580000,
       "pricePerSqm": 4715.45,
       "pricePerSqft": 438.08
-    },
-    {
-      "id": "jurong-east-204-jurong-east-st-21-2016-01-956785",
-      "month": "2016-01",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "66",
-      "resalePrice": 650000,
-      "pricePerSqm": 5327.87,
-      "pricePerSqft": 494.98
     }
   ]
 }

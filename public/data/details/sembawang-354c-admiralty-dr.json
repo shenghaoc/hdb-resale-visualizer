@@ -10,12 +10,6 @@
       "lng": 103.818249469516
     },
     "medianPrice": 575000,
-    "priceIqr": [
-      571500,
-      625000
-    ],
-    "pricePerSqmMedian": 6136.36,
-    "pricePerSqftMedian": 570.09,
     "transactionCount": 3,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 2188
       }
-    ]
+    ],
+    "priceIqr": [
+      571500,
+      625000
+    ],
+    "pricePerSqmMedian": 6136.36,
+    "pricePerSqftMedian": 570.09
   },
   "monthlyTrend": [
     {
@@ -547,7 +547,7 @@
       "pricePerSqft": 394.59
     },
     {
-      "id": "sembawang-354c-admiralty-dr-2016-07-966890",
+      "id": "sembawang-354c-admiralty-dr-2016-07-967006",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -560,7 +560,7 @@
       "pricePerSqft": 380.66
     },
     {
-      "id": "sembawang-354c-admiralty-dr-2016-07-966892",
+      "id": "sembawang-354c-admiralty-dr-2016-07-967008",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -573,7 +573,7 @@
       "pricePerSqft": 398.74
     },
     {
-      "id": "sembawang-354c-admiralty-dr-2015-08-949618",
+      "id": "sembawang-354c-admiralty-dr-2015-08-949734",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

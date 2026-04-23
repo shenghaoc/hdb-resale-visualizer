@@ -10,12 +10,6 @@
       "lng": 103.905303792463
     },
     "medianPrice": 575000,
-    "priceIqr": [
-      552500,
-      592750
-    ],
-    "pricePerSqmMedian": 6055.56,
-    "pricePerSqftMedian": 562.58,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 561
       }
-    ]
+    ],
+    "priceIqr": [
+      552500,
+      592750
+    ],
+    "pricePerSqmMedian": 6055.56,
+    "pricePerSqftMedian": 562.58
   },
   "monthlyTrend": [
     {
@@ -380,7 +380,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-104b-edgefield-plains-2026-01-226021",
+      "id": "punggol-104b-edgefield-plains-2026-01-226090",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

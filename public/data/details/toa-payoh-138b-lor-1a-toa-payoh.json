@@ -10,12 +10,6 @@
       "lng": 103.845626191384
     },
     "medianPrice": 1315000,
-    "priceIqr": [
-      1080000,
-      1500000
-    ],
-    "pricePerSqmMedian": 11979.52,
-    "pricePerSqftMedian": 1112.93,
     "transactionCount": 14,
     "floorAreaRange": [
       70,
@@ -56,7 +50,13 @@
         "stationName": "CALDECOTT MRT STATION",
         "distanceMeters": 600
       }
-    ]
+    ],
+    "priceIqr": [
+      1080000,
+      1500000
+    ],
+    "pricePerSqmMedian": 11979.52,
+    "pricePerSqftMedian": 1112.93
   },
   "monthlyTrend": [
     {
@@ -386,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-04-228319",
+      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-04-228418",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -399,7 +399,7 @@
       "pricePerSqft": 1123.28
     },
     {
-      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-03-228314",
+      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-03-228413",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "34 TO 36",
@@ -412,7 +412,7 @@
       "pricePerSqft": 1238.71
     },
     {
-      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-03-228318",
+      "id": "toa-payoh-138b-lor-1a-toa-payoh-2026-03-228417",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "37 TO 39",

@@ -10,12 +10,6 @@
       "lng": 103.841156133831
     },
     "medianPrice": 1410000,
-    "priceIqr": [
-      1335250,
-      1476500
-    ],
-    "pricePerSqmMedian": 13943.74,
-    "pricePerSqftMedian": 1295.42,
     "transactionCount": 14,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "MAXWELL MRT STATION",
         "distanceMeters": 443
       }
-    ]
+    ],
+    "priceIqr": [
+      1335250,
+      1476500
+    ],
+    "pricePerSqmMedian": 13943.74,
+    "pricePerSqftMedian": 1295.42
   },
   "monthlyTrend": [
     {
@@ -524,7 +524,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-1e-cantonment-rd-2026-02-223819",
+      "id": "central-area-1e-cantonment-rd-2026-02-223846",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

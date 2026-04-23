@@ -10,12 +10,6 @@
       "lng": 103.903081571286
     },
     "medianPrice": 535000,
-    "priceIqr": [
-      535000,
-      578000
-    ],
-    "pricePerSqmMedian": 6011.24,
-    "pricePerSqftMedian": 558.46,
     "transactionCount": 5,
     "floorAreaRange": [
       89,
@@ -54,7 +48,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 595
       }
-    ]
+    ],
+    "priceIqr": [
+      535000,
+      578000
+    ],
+    "pricePerSqmMedian": 6011.24,
+    "pricePerSqftMedian": 558.46
   },
   "monthlyTrend": [
     {
@@ -534,7 +534,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-131-rivervale-st-2026-02-227159",
+      "id": "sengkang-131-rivervale-st-2026-02-227242",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -9,14 +9,8 @@
       "lat": 1.30455023575131,
       "lng": 103.912455527874
     },
-    "medianPrice": 638888,
-    "priceIqr": [
-      596500,
-      673000
-    ],
-    "pricePerSqmMedian": 7260.09,
-    "pricePerSqftMedian": 674.49,
-    "transactionCount": 7,
+    "medianPrice": 631944,
+    "transactionCount": 8,
     "floorAreaRange": [
       88,
       88
@@ -25,10 +19,10 @@
       1974,
       1974
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1708
       }
-    ]
+    ],
+    "priceIqr": [
+      563500,
+      670500
+    ],
+    "pricePerSqmMedian": 7181.18,
+    "pricePerSqftMedian": 667.15
   },
   "monthlyTrend": [
     {
@@ -878,11 +878,30 @@
       "medianPrice": 689000,
       "transactionCount": 2,
       "medianPricePerSqm": 7829.55
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
     }
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-45-marine-cres-2026-03-225665",
+      "id": "marine-parade-45-marine-cres-2026-04-225732",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 88,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 01 month",
+      "resalePrice": 550000,
+      "pricePerSqm": 6250,
+      "pricePerSqft": 580.64
+    },
+    {
+      "id": "marine-parade-45-marine-cres-2026-03-225730",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -895,7 +914,7 @@
       "pricePerSqft": 715.78
     },
     {
-      "id": "marine-parade-45-marine-cres-2026-03-225666",
+      "id": "marine-parade-45-marine-cres-2026-03-225731",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -908,7 +927,7 @@
       "pricePerSqft": 739
     },
     {
-      "id": "marine-parade-45-marine-cres-2026-01-225663",
+      "id": "marine-parade-45-marine-cres-2026-01-225728",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -921,7 +940,7 @@
       "pricePerSqft": 533.14
     },
     {
-      "id": "marine-parade-45-marine-cres-2026-01-225664",
+      "id": "marine-parade-45-marine-cres-2026-01-225729",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1127,19 +1146,6 @@
       "resalePrice": 438000,
       "pricePerSqm": 4977.27,
       "pricePerSqft": 462.4
-    },
-    {
-      "id": "marine-parade-45-marine-cres-2020-09-79064",
-      "month": "2020-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 88,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1975,
-      "remainingLease": "53 years 08 months",
-      "resalePrice": 478000,
-      "pricePerSqm": 5431.82,
-      "pricePerSqft": 504.63
     }
   ]
 }

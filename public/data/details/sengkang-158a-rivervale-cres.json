@@ -9,14 +9,8 @@
       "lat": 1.38872018812525,
       "lng": 103.906869059805
     },
-    "medianPrice": 607500,
-    "priceIqr": [
-      549750,
-      626250
-    ],
-    "pricePerSqmMedian": 5653.16,
-    "pricePerSqftMedian": 525.19,
-    "transactionCount": 8,
+    "medianPrice": 600000,
+    "transactionCount": 9,
     "floorAreaRange": [
       91,
       111
@@ -25,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-12",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 736
       }
-    ]
+    ],
+    "priceIqr": [
+      553000,
+      625000
+    ],
+    "pricePerSqmMedian": 5675.68,
+    "pricePerSqftMedian": 527.29
   },
   "monthlyTrend": [
     {
@@ -447,9 +447,28 @@
       "medianPrice": 560000,
       "transactionCount": 1,
       "medianPricePerSqm": 6153.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 553000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5882.98
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-158a-rivervale-cres-2026-04-227227",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 94,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 553000,
+      "pricePerSqm": 5882.98,
+      "pricePerSqft": 546.55
+    },
     {
       "id": "sengkang-158a-rivervale-cres-2025-07-214248",
       "month": "2025-07",
@@ -696,19 +715,6 @@
       "resalePrice": 485000,
       "pricePerSqm": 4369.37,
       "pricePerSqft": 405.93
-    },
-    {
-      "id": "sengkang-158a-rivervale-cres-2021-04-96243",
-      "month": "2021-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 94,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "81 years 08 months",
-      "resalePrice": 395000,
-      "pricePerSqm": 4202.13,
-      "pricePerSqft": 390.39
     }
   ]
 }

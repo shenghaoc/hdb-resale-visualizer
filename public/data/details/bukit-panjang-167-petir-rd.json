@@ -10,12 +10,6 @@
       "lng": 103.765102401589
     },
     "medianPrice": 745000,
-    "priceIqr": [
-      683500,
-      829444
-    ],
-    "pricePerSqmMedian": 6967.21,
-    "pricePerSqftMedian": 647.28,
     "transactionCount": 7,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 362
       }
-    ]
+    ],
+    "priceIqr": [
+      683500,
+      829444
+    ],
+    "pricePerSqmMedian": 6967.21,
+    "pricePerSqftMedian": 647.28
   },
   "monthlyTrend": [
     {
@@ -578,7 +578,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-167-petir-rd-2026-01-223599",
+      "id": "bukit-panjang-167-petir-rd-2026-01-223626",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

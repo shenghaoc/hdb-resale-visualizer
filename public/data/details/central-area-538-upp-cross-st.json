@@ -10,12 +10,6 @@
       "lng": 103.845766165764
     },
     "medianPrice": 554000,
-    "priceIqr": [
-      541000,
-      567000
-    ],
-    "pricePerSqmMedian": 9233.33,
-    "pricePerSqftMedian": 857.8,
     "transactionCount": 2,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "DT18",
         "distanceMeters": 339
       }
-    ]
+    ],
+    "priceIqr": [
+      541000,
+      567000
+    ],
+    "pricePerSqmMedian": 9233.33,
+    "pricePerSqftMedian": 857.8
   },
   "monthlyTrend": [
     {
@@ -768,7 +768,7 @@
       "pricePerSqft": 655.79
     },
     {
-      "id": "central-area-538-upp-cross-st-2016-10-971406",
+      "id": "central-area-538-upp-cross-st-2016-10-971522",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -781,7 +781,7 @@
       "pricePerSqft": 727.74
     },
     {
-      "id": "central-area-538-upp-cross-st-2016-03-959125",
+      "id": "central-area-538-upp-cross-st-2016-03-959241",
       "month": "2016-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

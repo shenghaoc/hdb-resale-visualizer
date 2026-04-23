@@ -10,12 +10,6 @@
       "lng": 103.891885076183
     },
     "medianPrice": 956500,
-    "priceIqr": [
-      928750,
-      998500
-    ],
-    "pricePerSqmMedian": 6596.56,
-    "pricePerSqftMedian": 612.85,
     "transactionCount": 8,
     "floorAreaRange": [
       145,
@@ -55,7 +49,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 1095
       }
-    ]
+    ],
+    "priceIqr": [
+      928750,
+      998500
+    ],
+    "pricePerSqmMedian": 6596.56,
+    "pricePerSqftMedian": 612.85
   },
   "monthlyTrend": [
     {
@@ -943,7 +943,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-533-hougang-ave-6-2026-02-224823",
+      "id": "hougang-533-hougang-ave-6-2026-02-224873",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

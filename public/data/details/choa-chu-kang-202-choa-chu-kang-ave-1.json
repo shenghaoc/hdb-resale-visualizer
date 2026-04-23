@@ -9,14 +9,8 @@
       "lat": 1.3818369774308,
       "lng": 103.74946480804
     },
-    "medianPrice": 570000,
-    "priceIqr": [
-      560000,
-      570001
-    ],
-    "pricePerSqmMedian": 5044.25,
-    "pricePerSqftMedian": 468.63,
-    "transactionCount": 3,
+    "medianPrice": 570001,
+    "transactionCount": 4,
     "floorAreaRange": [
       103,
       115
@@ -25,10 +19,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-08",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "CHOA CHU KANG MRT STATION",
         "distanceMeters": 635
       }
-    ]
+    ],
+    "priceIqr": [
+      565000,
+      575001
+    ],
+    "pricePerSqmMedian": 5156.06,
+    "pricePerSqftMedian": 479.01
   },
   "monthlyTrend": [
     {
@@ -572,9 +572,28 @@
       "medianPrice": 570001,
       "transactionCount": 1,
       "medianPricePerSqm": 5480.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 590000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5267.86
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2026-04-223887",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 112,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 09 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 5267.86,
+      "pricePerSqft": 489.4
+    },
     {
       "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2025-08-202886",
       "month": "2025-08",
@@ -784,7 +803,7 @@
       "pricePerSqft": 301.94
     },
     {
-      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-12-974611",
+      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-12-974727",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -797,7 +816,7 @@
       "pricePerSqft": 294.79
     },
     {
-      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-10-971452",
+      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-10-971568",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -810,7 +829,7 @@
       "pricePerSqft": 328.73
     },
     {
-      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-08-967915",
+      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-08-968031",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -821,19 +840,6 @@
       "resalePrice": 350000,
       "pricePerSqm": 3365.38,
       "pricePerSqft": 312.65
-    },
-    {
-      "id": "choa-chu-kang-202-choa-chu-kang-ave-1-2016-04-960828",
-      "month": "2016-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "72",
-      "resalePrice": 345000,
-      "pricePerSqm": 3317.31,
-      "pricePerSqft": 308.19
     }
   ]
 }

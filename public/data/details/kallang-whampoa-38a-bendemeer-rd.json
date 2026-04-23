@@ -9,14 +9,8 @@
       "lat": 1.32005797775204,
       "lng": 103.866939439236
     },
-    "medianPrice": 920000,
-    "priceIqr": [
-      827500,
-      935000
-    ],
-    "pricePerSqmMedian": 10000,
-    "pricePerSqftMedian": 929.03,
-    "transactionCount": 3,
+    "medianPrice": 921944,
+    "transactionCount": 4,
     "floorAreaRange": [
       89,
       115
@@ -25,10 +19,10 @@
       2010,
       2010
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2014-12",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "BENDEMEER MRT STATION",
         "distanceMeters": 813
       }
-    ]
+    ],
+    "priceIqr": [
+      873750,
+      930416
+    ],
+    "pricePerSqmMedian": 10163.05,
+    "pricePerSqftMedian": 944.18
   },
   "monthlyTrend": [
     {
@@ -298,9 +298,28 @@
       "medianPrice": 920000,
       "transactionCount": 1,
       "medianPricePerSqm": 10000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 923888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10380.76
     }
   ],
   "recentTransactions": [
+    {
+      "id": "kallang-whampoa-38a-bendemeer-rd-2026-04-225600",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 89,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 01 month",
+      "resalePrice": 923888,
+      "pricePerSqm": 10380.76,
+      "pricePerSqft": 964.41
+    },
     {
       "id": "kallang-whampoa-38a-bendemeer-rd-2025-09-208767",
       "month": "2025-09",
@@ -547,19 +566,6 @@
       "resalePrice": 715000,
       "pricePerSqm": 8033.71,
       "pricePerSqft": 746.36
-    },
-    {
-      "id": "kallang-whampoa-38a-bendemeer-rd-2021-06-100075",
-      "month": "2021-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 89,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "90 years",
-      "resalePrice": 730000,
-      "pricePerSqm": 8202.25,
-      "pricePerSqft": 762.01
     }
   ]
 }

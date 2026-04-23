@@ -10,12 +10,6 @@
       "lng": 103.934747156516
     },
     "medianPrice": 687500,
-    "priceIqr": [
-      643250,
-      733750
-    ],
-    "pricePerSqmMedian": 5961.31,
-    "pricePerSqftMedian": 553.83,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "RIVIERA LRT STATION",
         "distanceMeters": 2839
       }
-    ]
+    ],
+    "priceIqr": [
+      643250,
+      733750
+    ],
+    "pricePerSqmMedian": 5961.31,
+    "pricePerSqftMedian": 553.83
   },
   "monthlyTrend": [
     {
@@ -410,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225781",
+      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225847",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -423,7 +423,7 @@
       "pricePerSqft": 560.02
     },
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225840",
+      "id": "pasir-ris-765-pasir-ris-st-71-2026-03-225908",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -657,7 +657,7 @@
       "pricePerSqft": 328.2
     },
     {
-      "id": "pasir-ris-765-pasir-ris-st-71-2016-06-965015",
+      "id": "pasir-ris-765-pasir-ris-st-71-2016-06-965131",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

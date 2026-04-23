@@ -10,12 +10,6 @@
       "lng": 103.744743989242
     },
     "medianPrice": 663000,
-    "priceIqr": [
-      635000,
-      710000
-    ],
-    "pricePerSqmMedian": 6106.19,
-    "pricePerSqftMedian": 567.28,
     "transactionCount": 17,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 1110
       }
-    ]
+    ],
+    "priceIqr": [
+      635000,
+      710000
+    ],
+    "pricePerSqmMedian": 6106.19,
+    "pricePerSqftMedian": 567.28
   },
   "monthlyTrend": [
     {
@@ -272,7 +272,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-223981",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-224014",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -285,7 +285,7 @@
       "pricePerSqft": 635.23
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-224099",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-04-224134",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -298,7 +298,7 @@
       "pricePerSqft": 583.73
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-03-224098",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-03-224133",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -311,7 +311,7 @@
       "pricePerSqft": 567.28
     },
     {
-      "id": "choa-chu-kang-805d-keat-hong-cl-2026-01-224095",
+      "id": "choa-chu-kang-805d-keat-hong-cl-2026-01-224130",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

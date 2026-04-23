@@ -10,12 +10,6 @@
       "lng": 103.848468483993
     },
     "medianPrice": 800000,
-    "priceIqr": [
-      781500,
-      834444
-    ],
-    "pricePerSqmMedian": 7554.46,
-    "pricePerSqftMedian": 701.83,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "LITTLE INDIA MRT STATION",
         "distanceMeters": 963
       }
-    ]
+    ],
+    "priceIqr": [
+      781500,
+      834444
+    ],
+    "pricePerSqmMedian": 7554.46,
+    "pricePerSqftMedian": 701.83
   },
   "monthlyTrend": [
     {
@@ -386,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2026-02-225620",
+      "id": "kallang-whampoa-39-cambridge-rd-2026-02-225684",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -620,7 +620,7 @@
       "pricePerSqft": 449.03
     },
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2015-10-952568",
+      "id": "kallang-whampoa-39-cambridge-rd-2015-10-952684",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -633,7 +633,7 @@
       "pricePerSqft": 514.84
     },
     {
-      "id": "kallang-whampoa-39-cambridge-rd-2015-03-941572",
+      "id": "kallang-whampoa-39-cambridge-rd-2015-03-941688",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

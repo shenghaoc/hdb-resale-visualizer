@@ -9,14 +9,8 @@
       "lat": 1.31733721505469,
       "lng": 103.878442674183
     },
-    "medianPrice": 381944,
-    "priceIqr": [
-      369000,
-      389250
-    ],
-    "pricePerSqmMedian": 5876.06,
-    "pricePerSqftMedian": 545.9,
-    "transactionCount": 8,
+    "medianPrice": 385888,
+    "transactionCount": 9,
     "floorAreaRange": [
       65,
       76
@@ -25,10 +19,10 @@
       1976,
       1976
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "KALLANG MRT STATION",
         "distanceMeters": 981
       }
-    ]
+    ],
+    "priceIqr": [
+      372000,
+      388000
+    ],
+    "pricePerSqmMedian": 5936.74,
+    "pricePerSqftMedian": 551.54
   },
   "monthlyTrend": [
     {
@@ -1016,9 +1016,28 @@
       "medianPrice": 385888,
       "transactionCount": 1,
       "medianPricePerSqm": 5936.74
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 386000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5938.46
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-45-sims-dr-2026-04-224419",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1977,
+      "remainingLease": "50 years",
+      "resalePrice": 386000,
+      "pricePerSqm": 5938.46,
+      "pricePerSqft": 551.7
+    },
     {
       "id": "geylang-45-sims-dr-2025-07-204677",
       "month": "2025-07",
@@ -1265,19 +1284,6 @@
       "resalePrice": 306999,
       "pricePerSqm": 4723.06,
       "pricePerSqft": 438.79
-    },
-    {
-      "id": "geylang-45-sims-dr-2021-03-93002",
-      "month": "2021-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 76,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1977,
-      "remainingLease": "55 years 01 month",
-      "resalePrice": 315000,
-      "pricePerSqm": 4144.74,
-      "pricePerSqft": 385.06
     }
   ]
 }

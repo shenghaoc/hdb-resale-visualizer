@@ -9,14 +9,8 @@
       "lat": 1.30391193028103,
       "lng": 103.909740471499
     },
-    "medianPrice": 495000,
-    "priceIqr": [
-      458888,
-      528888
-    ],
-    "pricePerSqmMedian": 7153.85,
-    "pricePerSqftMedian": 664.61,
-    "transactionCount": 13,
+    "medianPrice": 482500,
+    "transactionCount": 14,
     "floorAreaRange": [
       65,
       76
@@ -54,7 +48,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1398
       }
-    ]
+    ],
+    "priceIqr": [
+      452222,
+      526666
+    ],
+    "pricePerSqmMedian": 7096.66,
+    "pricePerSqftMedian": 659.3
   },
   "monthlyTrend": [
     {
@@ -1169,14 +1169,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 458888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6038
+      "medianPrice": 446944,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6365.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-66-marine-dr-2026-04-225658",
+      "id": "marine-parade-66-marine-dr-2026-04-225722",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1187,6 +1187,19 @@
       "resalePrice": 458888,
       "pricePerSqm": 6038,
       "pricePerSqft": 560.95
+    },
+    {
+      "id": "marine-parade-66-marine-dr-2026-04-225723",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "48 years 11 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 6692.31,
+      "pricePerSqft": 621.74
     },
     {
       "id": "marine-parade-66-marine-dr-2025-12-209246",
@@ -1421,19 +1434,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 6923.08,
       "pricePerSqft": 643.18
-    },
-    {
-      "id": "marine-parade-66-marine-dr-2022-12-129877",
-      "month": "2022-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 76,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "53 years",
-      "resalePrice": 415000,
-      "pricePerSqm": 5460.53,
-      "pricePerSqft": 507.3
     }
   ]
 }

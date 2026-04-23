@@ -10,12 +10,6 @@
       "lng": 103.827854744997
     },
     "medianPrice": 1019000,
-    "priceIqr": [
-      959500,
-      1056000
-    ],
-    "pricePerSqmMedian": 9500,
-    "pricePerSqftMedian": 882.58,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "OUTRAM PARK MRT STATION",
         "distanceMeters": 1145
       }
-    ]
+    ],
+    "priceIqr": [
+      959500,
+      1056000
+    ],
+    "pricePerSqmMedian": 9500,
+    "pricePerSqftMedian": 882.58
   },
   "monthlyTrend": [
     {
@@ -296,7 +296,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-120a-kim-tian-pl-2026-03-223402",
+      "id": "bukit-merah-120a-kim-tian-pl-2026-03-223426",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -309,7 +309,7 @@
       "pricePerSqft": 882.58
     },
     {
-      "id": "bukit-merah-120a-kim-tian-pl-2026-01-223401",
+      "id": "bukit-merah-120a-kim-tian-pl-2026-01-223425",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -530,7 +530,7 @@
       "pricePerSqft": 687.48
     },
     {
-      "id": "bukit-merah-120a-kim-tian-pl-2015-08-948937",
+      "id": "bukit-merah-120a-kim-tian-pl-2015-08-949053",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -543,7 +543,7 @@
       "pricePerSqft": 706.06
     },
     {
-      "id": "bukit-merah-120a-kim-tian-pl-2015-08-948941",
+      "id": "bukit-merah-120a-kim-tian-pl-2015-08-949057",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

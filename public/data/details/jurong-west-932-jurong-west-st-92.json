@@ -10,12 +10,6 @@
       "lng": 103.68866421473
     },
     "medianPrice": 570000,
-    "priceIqr": [
-      545000,
-      580000
-    ],
-    "pricePerSqmMedian": 4660.52,
-    "pricePerSqftMedian": 432.98,
     "transactionCount": 6,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "JOO KOON MRT STATION",
         "distanceMeters": 1896
       }
-    ]
+    ],
+    "priceIqr": [
+      545000,
+      580000
+    ],
+    "pricePerSqmMedian": 4660.52,
+    "pricePerSqftMedian": 432.98
   },
   "monthlyTrend": [
     {
@@ -758,7 +758,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-932-jurong-west-st-92-2026-02-225382",
+      "id": "jurong-west-932-jurong-west-st-92-2026-02-225441",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

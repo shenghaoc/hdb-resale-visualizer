@@ -10,12 +10,6 @@
       "lng": 103.920246728829
     },
     "medianPrice": 439944,
-    "priceIqr": [
-      433250,
-      448500
-    ],
-    "pricePerSqmMedian": 5612.5,
-    "pricePerSqftMedian": 521.42,
     "transactionCount": 12,
     "floorAreaRange": [
       75,
@@ -55,7 +49,13 @@
         "stationName": "BEDOK NORTH MRT STATION",
         "distanceMeters": 1040
       }
-    ]
+    ],
+    "priceIqr": [
+      433250,
+      448500
+    ],
+    "pricePerSqmMedian": 5612.5,
+    "pricePerSqftMedian": 521.42
   },
   "monthlyTrend": [
     {
@@ -1315,7 +1315,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-59-chai-chee-rd-2026-02-222451",
+      "id": "bedok-59-chai-chee-rd-2026-02-222458",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

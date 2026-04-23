@@ -10,12 +10,6 @@
       "lng": 103.88961029001
     },
     "medianPrice": 966500,
-    "priceIqr": [
-      759666,
-      1006200
-    ],
-    "pricePerSqmMedian": 10674.35,
-    "pricePerSqftMedian": 991.68,
     "transactionCount": 22,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "CC9",
         "distanceMeters": 689
       }
-    ]
+    ],
+    "priceIqr": [
+      759666,
+      1006200
+    ],
+    "pricePerSqmMedian": 10674.35,
+    "pricePerSqftMedian": 991.68
   },
   "monthlyTrend": [
     {
@@ -139,7 +139,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-83a-circuit-rd-2026-04-224344",
+      "id": "geylang-83a-circuit-rd-2026-04-224383",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

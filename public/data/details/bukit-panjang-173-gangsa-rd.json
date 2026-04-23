@@ -10,12 +10,6 @@
       "lng": 103.766762151697
     },
     "medianPrice": 670836,
-    "priceIqr": [
-      652000,
-      717503
-    ],
-    "pricePerSqmMedian": 6620.98,
-    "pricePerSqftMedian": 615.11,
     "transactionCount": 4,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 541
       }
-    ]
+    ],
+    "priceIqr": [
+      652000,
+      717503
+    ],
+    "pricePerSqmMedian": 6620.98,
+    "pricePerSqftMedian": 615.11
   },
   "monthlyTrend": [
     {
@@ -488,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-173-gangsa-rd-2026-01-223573",
+      "id": "bukit-panjang-173-gangsa-rd-2026-01-223599",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -722,7 +722,7 @@
       "pricePerSqft": 399.79
     },
     {
-      "id": "bukit-panjang-173-gangsa-rd-2016-11-973016",
+      "id": "bukit-panjang-173-gangsa-rd-2016-11-973132",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -735,7 +735,7 @@
       "pricePerSqft": 409.69
     },
     {
-      "id": "bukit-panjang-173-gangsa-rd-2016-08-967821",
+      "id": "bukit-panjang-173-gangsa-rd-2016-08-967937",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

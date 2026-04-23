@@ -10,12 +10,6 @@
       "lng": 103.822053233106
     },
     "medianPrice": 1000944,
-    "priceIqr": [
-      790250,
-      1131250
-    ],
-    "pricePerSqmMedian": 11625,
-    "pricePerSqftMedian": 1080,
     "transactionCount": 18,
     "floorAreaRange": [
       68,
@@ -57,7 +51,13 @@
         "stationName": "HAVELOCK MRT STATION",
         "distanceMeters": 1268
       }
-    ]
+    ],
+    "priceIqr": [
+      790250,
+      1131250
+    ],
+    "pricePerSqmMedian": 11625,
+    "pricePerSqftMedian": 1080
   },
   "monthlyTrend": [
     {
@@ -231,7 +231,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-95c-henderson-rd-2026-04-223271",
+      "id": "bukit-merah-95c-henderson-rd-2026-04-223292",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -244,7 +244,7 @@
       "pricePerSqft": 1011
     },
     {
-      "id": "bukit-merah-95c-henderson-rd-2026-03-223389",
+      "id": "bukit-merah-95c-henderson-rd-2026-03-223412",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "46 TO 48",
@@ -257,7 +257,7 @@
       "pricePerSqft": 1158.79
     },
     {
-      "id": "bukit-merah-95c-henderson-rd-2026-02-223270",
+      "id": "bukit-merah-95c-henderson-rd-2026-02-223291",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",
@@ -270,7 +270,7 @@
       "pricePerSqft": 1080.68
     },
     {
-      "id": "bukit-merah-95c-henderson-rd-2026-02-223387",
+      "id": "bukit-merah-95c-henderson-rd-2026-02-223410",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

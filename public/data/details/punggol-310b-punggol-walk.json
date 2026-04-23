@@ -10,12 +10,6 @@
       "lng": 103.900801836373
     },
     "medianPrice": 700000,
-    "priceIqr": [
-      640000,
-      738000
-    ],
-    "pricePerSqmMedian": 7608.7,
-    "pricePerSqftMedian": 706.87,
     "transactionCount": 29,
     "floorAreaRange": [
       67,
@@ -56,7 +50,13 @@
         "stationName": "SAM KEE LRT STATION",
         "distanceMeters": 447
       }
-    ]
+    ],
+    "priceIqr": [
+      640000,
+      738000
+    ],
+    "pricePerSqmMedian": 7608.7,
+    "pricePerSqftMedian": 706.87
   },
   "monthlyTrend": [
     {
@@ -398,7 +398,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-310b-punggol-walk-2026-03-226200",
+      "id": "punggol-310b-punggol-walk-2026-03-226270",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -411,7 +411,7 @@
       "pricePerSqft": 699.8
     },
     {
-      "id": "punggol-310b-punggol-walk-2026-03-226357",
+      "id": "punggol-310b-punggol-walk-2026-03-226429",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -424,7 +424,7 @@
       "pricePerSqft": 712.44
     },
     {
-      "id": "punggol-310b-punggol-walk-2026-02-226191",
+      "id": "punggol-310b-punggol-walk-2026-02-226261",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -437,7 +437,7 @@
       "pricePerSqft": 686.68
     },
     {
-      "id": "punggol-310b-punggol-walk-2026-01-225979",
+      "id": "punggol-310b-punggol-walk-2026-01-226048",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -450,7 +450,7 @@
       "pricePerSqft": 804.24
     },
     {
-      "id": "punggol-310b-punggol-walk-2026-01-226187",
+      "id": "punggol-310b-punggol-walk-2026-01-226257",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -463,7 +463,7 @@
       "pricePerSqft": 641.23
     },
     {
-      "id": "punggol-310b-punggol-walk-2026-01-226349",
+      "id": "punggol-310b-punggol-walk-2026-01-226421",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

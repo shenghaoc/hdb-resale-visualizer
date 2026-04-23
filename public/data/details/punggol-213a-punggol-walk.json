@@ -10,12 +10,6 @@
       "lng": 103.898075134619
     },
     "medianPrice": 755000,
-    "priceIqr": [
-      682500,
-      799750
-    ],
-    "pricePerSqmMedian": 7004.42,
-    "pricePerSqftMedian": 650.73,
     "transactionCount": 6,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "CHENG LIM LRT STATION",
         "distanceMeters": 651
       }
-    ]
+    ],
+    "priceIqr": [
+      682500,
+      799750
+    ],
+    "pricePerSqmMedian": 7004.42,
+    "pricePerSqftMedian": 650.73
   },
   "monthlyTrend": [
     {
@@ -344,7 +344,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-213a-punggol-walk-2026-02-226351",
+      "id": "punggol-213a-punggol-walk-2026-02-226423",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

@@ -10,12 +10,6 @@
       "lng": 103.831606580876
     },
     "medianPrice": 502000,
-    "priceIqr": [
-      488000,
-      602000
-    ],
-    "pricePerSqmMedian": 5773.81,
-    "pricePerSqftMedian": 536.4,
     "transactionCount": 5,
     "floorAreaRange": [
       83,
@@ -57,7 +51,13 @@
         "stationName": "SEMBAWANG MRT STATION",
         "distanceMeters": 1878
       }
-    ]
+    ],
+    "priceIqr": [
+      488000,
+      602000
+    ],
+    "pricePerSqmMedian": 5773.81,
+    "pricePerSqftMedian": 536.4
   },
   "monthlyTrend": [
     {
@@ -963,7 +963,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-166-yishun-ring-rd-2026-01-229154",
+      "id": "yishun-166-yishun-ring-rd-2026-01-229264",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

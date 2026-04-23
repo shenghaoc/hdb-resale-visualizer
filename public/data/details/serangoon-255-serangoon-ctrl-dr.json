@@ -10,12 +10,6 @@
       "lng": 103.87087185901
     },
     "medianPrice": 866500,
-    "priceIqr": [
-      852250,
-      902500
-    ],
-    "pricePerSqmMedian": 8601.01,
-    "pricePerSqftMedian": 799.06,
     "transactionCount": 4,
     "floorAreaRange": [
       99,
@@ -56,7 +50,13 @@
         "stationName": "BARTLEY MRT STATION",
         "distanceMeters": 1565
       }
-    ]
+    ],
+    "priceIqr": [
+      852250,
+      902500
+    ],
+    "pricePerSqmMedian": 8601.01,
+    "pricePerSqftMedian": 799.06
   },
   "monthlyTrend": [
     {
@@ -410,7 +410,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-255-serangoon-ctrl-dr-2026-02-227440",
+      "id": "serangoon-255-serangoon-ctrl-dr-2026-02-227526",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

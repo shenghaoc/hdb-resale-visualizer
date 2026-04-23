@@ -10,12 +10,6 @@
       "lng": 103.878898984422
     },
     "medianPrice": 695000,
-    "priceIqr": [
-      676944,
-      748944
-    ],
-    "pricePerSqmMedian": 5940.17,
-    "pricePerSqftMedian": 551.86,
     "transactionCount": 3,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "KALLANG MRT STATION",
         "distanceMeters": 955
       }
-    ]
+    ],
+    "priceIqr": [
+      676944,
+      748944
+    ],
+    "pricePerSqmMedian": 5940.17,
+    "pricePerSqftMedian": 551.86
   },
   "monthlyTrend": [
     {
@@ -804,7 +804,7 @@
       "pricePerSqft": 476.43
     },
     {
-      "id": "geylang-51-sims-dr-2016-10-971585",
+      "id": "geylang-51-sims-dr-2016-10-971701",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -817,7 +817,7 @@
       "pricePerSqft": 480.81
     },
     {
-      "id": "geylang-51-sims-dr-2016-06-964647",
+      "id": "geylang-51-sims-dr-2016-06-964763",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",

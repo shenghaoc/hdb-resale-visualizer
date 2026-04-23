@@ -10,12 +10,6 @@
       "lng": 103.844851256166
     },
     "medianPrice": 878344,
-    "priceIqr": [
-      723500,
-      989722
-    ],
-    "pricePerSqmMedian": 9985.72,
-    "pricePerSqftMedian": 927.7,
     "transactionCount": 10,
     "floorAreaRange": [
       70,
@@ -55,7 +49,13 @@
         "stationName": "BRIGHT HILL MRT STATION",
         "distanceMeters": 1248
       }
-    ]
+    ],
+    "priceIqr": [
+      723500,
+      989722
+    ],
+    "pricePerSqmMedian": 9985.72,
+    "pricePerSqftMedian": 927.7
   },
   "monthlyTrend": [
     {
@@ -271,7 +271,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-310c-ang-mo-kio-ave-1-2026-01-222178",
+      "id": "ang-mo-kio-310c-ang-mo-kio-ave-1-2026-01-222184",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",

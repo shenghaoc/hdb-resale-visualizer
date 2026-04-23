@@ -9,14 +9,8 @@
       "lat": 1.34424708872298,
       "lng": 103.747101024758
     },
-    "medianPrice": 974000,
-    "priceIqr": [
-      972000,
-      976000
-    ],
-    "pricePerSqmMedian": 7007.19,
-    "pricePerSqftMedian": 650.99,
-    "transactionCount": 2,
+    "medianPrice": 970000,
+    "transactionCount": 3,
     "floorAreaRange": [
       139,
       147
@@ -55,7 +49,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1553
       }
-    ]
+    ],
+    "priceIqr": [
+      964000,
+      974000
+    ],
+    "pricePerSqmMedian": 6978.42,
+    "pricePerSqftMedian": 648.32
   },
   "monthlyTrend": [
     {
@@ -348,14 +348,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 978000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7035.97
+      "medianPrice": 968000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6915.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2026-04-223213",
+      "id": "bukit-batok-299-bt-batok-st-22-2026-04-223232",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "19 TO 21",
@@ -368,7 +368,20 @@
       "pricePerSqft": 653.66
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2026-01-223212",
+      "id": "bukit-batok-299-bt-batok-st-22-2026-04-223233",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 958000,
+      "pricePerSqm": 6794.33,
+      "pricePerSqft": 631.21
+    },
+    {
+      "id": "bukit-batok-299-bt-batok-st-22-2026-01-223231",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -537,7 +550,7 @@
       "pricePerSqft": 463.18
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2016-09-969607",
+      "id": "bukit-batok-299-bt-batok-st-22-2016-09-969723",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -550,7 +563,7 @@
       "pricePerSqft": 487.58
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2016-08-967725",
+      "id": "bukit-batok-299-bt-batok-st-22-2016-08-967841",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -563,7 +576,7 @@
       "pricePerSqft": 461.22
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2014-07-643115",
+      "id": "bukit-batok-299-bt-batok-st-22-2014-07-643231",
       "month": "2014-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "22 TO 24",
@@ -576,7 +589,7 @@
       "pricePerSqft": 489.25
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2012-03-599451",
+      "id": "bukit-batok-299-bt-batok-st-22-2012-03-599567",
       "month": "2012-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "06 TO 10",
@@ -589,7 +602,7 @@
       "pricePerSqft": 479.89
     },
     {
-      "id": "bukit-batok-299-bt-batok-st-22-2012-02-597682",
+      "id": "bukit-batok-299-bt-batok-st-22-2012-02-597798",
       "month": "2012-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -600,19 +613,6 @@
       "resalePrice": 760000,
       "pricePerSqm": 5205.48,
       "pricePerSqft": 483.61
-    },
-    {
-      "id": "bukit-batok-299-bt-batok-st-22-2010-11-569744",
-      "month": "2010-11",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 139,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years",
-      "resalePrice": 640000,
-      "pricePerSqm": 4604.32,
-      "pricePerSqft": 427.76
     }
   ]
 }

@@ -10,12 +10,6 @@
       "lng": 103.877266407149
     },
     "medianPrice": 640444,
-    "priceIqr": [
-      625000,
-      658972
-    ],
-    "pricePerSqmMedian": 6886.5,
-    "pricePerSqftMedian": 639.78,
     "transactionCount": 6,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "TONGKANG LRT STATION",
         "distanceMeters": 1382
       }
-    ]
+    ],
+    "priceIqr": [
+      625000,
+      658972
+    ],
+    "pricePerSqmMedian": 6886.5,
+    "pricePerSqftMedian": 639.78
   },
   "monthlyTrend": [
     {
@@ -270,7 +270,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-988c-buangkok-green-2026-02-224604",
+      "id": "hougang-988c-buangkok-green-2026-02-224651",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

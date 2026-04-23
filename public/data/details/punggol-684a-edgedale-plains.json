@@ -10,12 +10,6 @@
       "lng": 103.915878602831
     },
     "medianPrice": 740000,
-    "priceIqr": [
-      735888,
-      790000
-    ],
-    "pricePerSqmMedian": 7522.12,
-    "pricePerSqftMedian": 698.83,
     "transactionCount": 17,
     "floorAreaRange": [
       93,
@@ -55,7 +49,13 @@
         "stationName": "DAMAI LRT STATION",
         "distanceMeters": 835
       }
-    ]
+    ],
+    "priceIqr": [
+      735888,
+      790000
+    ],
+    "pricePerSqmMedian": 7522.12,
+    "pricePerSqftMedian": 698.83
   },
   "monthlyTrend": [
     {
@@ -229,7 +229,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-684a-edgedale-plains-2026-03-226010",
+      "id": "punggol-684a-edgedale-plains-2026-03-226079",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -242,7 +242,7 @@
       "pricePerSqft": 749.22
     },
     {
-      "id": "punggol-684a-edgedale-plains-2026-02-226266",
+      "id": "punggol-684a-edgedale-plains-2026-02-226336",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -255,7 +255,7 @@
       "pricePerSqft": 649.5
     },
     {
-      "id": "punggol-684a-edgedale-plains-2026-01-225999",
+      "id": "punggol-684a-edgedale-plains-2026-01-226068",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -268,7 +268,7 @@
       "pricePerSqft": 734.23
     },
     {
-      "id": "punggol-684a-edgedale-plains-2026-01-226001",
+      "id": "punggol-684a-edgedale-plains-2026-01-226070",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

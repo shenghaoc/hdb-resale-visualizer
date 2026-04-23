@@ -10,12 +10,6 @@
       "lng": 103.888345777377
     },
     "medianPrice": 1018000,
-    "priceIqr": [
-      963444,
-      1039000
-    ],
-    "pricePerSqmMedian": 7169.01,
-    "pricePerSqftMedian": 666.02,
     "transactionCount": 3,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "SERANGOON MRT STATION",
         "distanceMeters": 1852
       }
-    ]
+    ],
+    "priceIqr": [
+      963444,
+      1039000
+    ],
+    "pricePerSqmMedian": 7169.01,
+    "pricePerSqftMedian": 666.02
   },
   "monthlyTrend": [
     {

@@ -10,12 +10,6 @@
       "lng": 103.90307258196
     },
     "medianPrice": 639000,
-    "priceIqr": [
-      623500,
-      653750
-    ],
-    "pricePerSqmMedian": 5809.09,
-    "pricePerSqftMedian": 539.68,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "MERIDIAN LRT STATION",
         "distanceMeters": 652
       }
-    ]
+    ],
+    "priceIqr": [
+      623500,
+      653750
+    ],
+    "pricePerSqmMedian": 5809.09,
+    "pricePerSqftMedian": 539.68
   },
   "monthlyTrend": [
     {
@@ -326,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-204c-punggol-field-2026-02-226334",
+      "id": "punggol-204c-punggol-field-2026-02-226406",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -339,7 +339,7 @@
       "pricePerSqft": 548.97
     },
     {
-      "id": "punggol-204c-punggol-field-2026-02-226336",
+      "id": "punggol-204c-punggol-field-2026-02-226408",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -547,7 +547,7 @@
       "pricePerSqft": 369.92
     },
     {
-      "id": "punggol-204c-punggol-field-2016-05-963300",
+      "id": "punggol-204c-punggol-field-2016-05-963416",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -560,7 +560,7 @@
       "pricePerSqft": 325.16
     },
     {
-      "id": "punggol-204c-punggol-field-2016-04-961456",
+      "id": "punggol-204c-punggol-field-2016-04-961572",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -573,7 +573,7 @@
       "pricePerSqft": 396.95
     },
     {
-      "id": "punggol-204c-punggol-field-2015-05-944770",
+      "id": "punggol-204c-punggol-field-2015-05-944886",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

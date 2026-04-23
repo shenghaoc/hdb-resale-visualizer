@@ -10,12 +10,6 @@
       "lng": 103.887130250228
     },
     "medianPrice": 577500,
-    "priceIqr": [
-      502500,
-      716250
-    ],
-    "pricePerSqmMedian": 7003.64,
-    "pricePerSqftMedian": 650.66,
     "transactionCount": 6,
     "floorAreaRange": [
       74,
@@ -55,7 +49,13 @@
         "stationName": "CC9",
         "distanceMeters": 616
       }
-    ]
+    ],
+    "priceIqr": [
+      502500,
+      716250
+    ],
+    "pricePerSqmMedian": 7003.64,
+    "pricePerSqftMedian": 650.66
   },
   "monthlyTrend": [
     {
@@ -547,7 +547,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-126-geylang-east-ave-1-2026-04-224424",
+      "id": "geylang-126-geylang-east-ave-1-2026-04-224468",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -560,7 +560,7 @@
       "pricePerSqft": 661.04
     },
     {
-      "id": "geylang-126-geylang-east-ave-1-2026-01-224360",
+      "id": "geylang-126-geylang-east-ave-1-2026-01-224400",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -794,7 +794,7 @@
       "pricePerSqft": 518.11
     },
     {
-      "id": "geylang-126-geylang-east-ave-1-2016-10-971565",
+      "id": "geylang-126-geylang-east-ave-1-2016-10-971681",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

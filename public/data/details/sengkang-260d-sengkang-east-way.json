@@ -10,12 +10,6 @@
       "lng": 103.895863980712
     },
     "medianPrice": 697500,
-    "priceIqr": [
-      660750,
-      733250
-    ],
-    "pricePerSqmMedian": 6340.91,
-    "pricePerSqftMedian": 589.09,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 528
       }
-    ]
+    ],
+    "priceIqr": [
+      660750,
+      733250
+    ],
+    "pricePerSqmMedian": 6340.91,
+    "pricePerSqftMedian": 589.09
   },
   "monthlyTrend": [
     {
@@ -643,7 +643,7 @@
       "pricePerSqft": 413.84
     },
     {
-      "id": "sengkang-260d-sengkang-east-way-2016-10-972216",
+      "id": "sengkang-260d-sengkang-east-way-2016-10-972332",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -656,7 +656,7 @@
       "pricePerSqft": 430.73
     },
     {
-      "id": "sengkang-260d-sengkang-east-way-2016-09-970468",
+      "id": "sengkang-260d-sengkang-east-way-2016-09-970584",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -669,7 +669,7 @@
       "pricePerSqft": 443.87
     },
     {
-      "id": "sengkang-260d-sengkang-east-way-2016-02-958352",
+      "id": "sengkang-260d-sengkang-east-way-2016-02-958468",
       "month": "2016-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

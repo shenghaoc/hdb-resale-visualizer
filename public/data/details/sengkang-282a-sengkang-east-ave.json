@@ -10,12 +10,6 @@
       "lng": 103.891907359174
     },
     "medianPrice": 817500,
-    "priceIqr": [
-      788750,
-      825750
-    ],
-    "pricePerSqmMedian": 8885.86,
-    "pricePerSqftMedian": 825.52,
     "transactionCount": 14,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 606
       }
-    ]
+    ],
+    "priceIqr": [
+      788750,
+      825750
+    ],
+    "pricePerSqmMedian": 8885.86,
+    "pricePerSqftMedian": 825.52
   },
   "monthlyTrend": [
     {
@@ -282,7 +282,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-282a-sengkang-east-ave-2026-04-227181",
+      "id": "sengkang-282a-sengkang-east-ave-2026-04-227264",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

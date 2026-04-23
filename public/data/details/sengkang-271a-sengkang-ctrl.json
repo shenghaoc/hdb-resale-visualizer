@@ -10,12 +10,6 @@
       "lng": 103.894654799481
     },
     "medianPrice": 788000,
-    "priceIqr": [
-      780000,
-      800000
-    ],
-    "pricePerSqmMedian": 8473.12,
-    "pricePerSqftMedian": 787.18,
     "transactionCount": 5,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 478
       }
-    ]
+    ],
+    "priceIqr": [
+      780000,
+      800000
+    ],
+    "pricePerSqmMedian": 8473.12,
+    "pricePerSqftMedian": 787.18
   },
   "monthlyTrend": [
     {
@@ -342,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-271a-sengkang-ctrl-2026-02-227170",
+      "id": "sengkang-271a-sengkang-ctrl-2026-02-227253",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

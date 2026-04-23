@@ -10,12 +10,6 @@
       "lng": 103.937321681832
     },
     "medianPrice": 764000,
-    "priceIqr": [
-      738500,
-      777500
-    ],
-    "pricePerSqmMedian": 7346.16,
-    "pricePerSqftMedian": 682.48,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -54,7 +48,13 @@
         "stationName": "TANAH MERAH MRT STATION",
         "distanceMeters": 1337
       }
-    ]
+    ],
+    "priceIqr": [
+      738500,
+      777500
+    ],
+    "pricePerSqmMedian": 7346.16,
+    "pricePerSqftMedian": 682.48
   },
   "monthlyTrend": [
     {
@@ -447,7 +447,7 @@
       "pricePerSqft": 460.05
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2016-08-967591",
+      "id": "bedok-768-bedok-reservoir-view-2016-08-967707",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -460,7 +460,7 @@
       "pricePerSqft": 473.45
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2015-03-941001",
+      "id": "bedok-768-bedok-reservoir-view-2015-03-941117",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -473,7 +473,7 @@
       "pricePerSqft": 480.6
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2015-01-938571",
+      "id": "bedok-768-bedok-reservoir-view-2015-01-938687",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -486,7 +486,7 @@
       "pricePerSqft": 468.94
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2014-08-644367",
+      "id": "bedok-768-bedok-reservoir-view-2014-08-644483",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -499,7 +499,7 @@
       "pricePerSqft": 420.28
     },
     {
-      "id": "bedok-768-bedok-reservoir-view-2014-02-636358",
+      "id": "bedok-768-bedok-reservoir-view-2014-02-636474",
       "month": "2014-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

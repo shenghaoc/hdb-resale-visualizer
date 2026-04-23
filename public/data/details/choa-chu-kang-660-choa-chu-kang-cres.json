@@ -9,14 +9,8 @@
       "lat": 1.40102235751598,
       "lng": 103.749862447053
     },
-    "medianPrice": 543388,
-    "priceIqr": [
-      537666,
-      546916
-    ],
-    "pricePerSqmMedian": 5224.89,
-    "pricePerSqftMedian": 485.4,
-    "transactionCount": 4,
+    "medianPrice": 540888,
+    "transactionCount": 5,
     "floorAreaRange": [
       100,
       141
@@ -25,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-10",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "CHOA CHU KANG LRT STATION",
         "distanceMeters": 1874
       }
-    ]
+    ],
+    "priceIqr": [
+      528000,
+      545888
+    ],
+    "pricePerSqmMedian": 5200.85,
+    "pricePerSqftMedian": 483.17
   },
   "monthlyTrend": [
     {
@@ -550,9 +550,28 @@
       "medianPrice": 550000,
       "transactionCount": 1,
       "medianPricePerSqm": 5339.81
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 495000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4759.62
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-660-choa-chu-kang-cres-2026-04-223965",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years",
+      "resalePrice": 495000,
+      "pricePerSqm": 4759.62,
+      "pricePerSqft": 442.18
+    },
     {
       "id": "choa-chu-kang-660-choa-chu-kang-cres-2025-11-203149",
       "month": "2025-11",
@@ -799,19 +818,6 @@
       "resalePrice": 318000,
       "pricePerSqm": 3180,
       "pricePerSqft": 295.43
-    },
-    {
-      "id": "choa-chu-kang-660-choa-chu-kang-cres-2018-12-41019",
-      "month": "2018-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 104,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "79 years 04 months",
-      "resalePrice": 312000,
-      "pricePerSqm": 3000,
-      "pricePerSqft": 278.71
     }
   ]
 }

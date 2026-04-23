@@ -10,12 +10,6 @@
       "lng": 103.884040659173
     },
     "medianPrice": 805000,
-    "priceIqr": [
-      802500,
-      807500
-    ],
-    "pricePerSqmMedian": 6652.89,
-    "pricePerSqftMedian": 618.08,
     "transactionCount": 2,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 1193
       }
-    ]
+    ],
+    "priceIqr": [
+      802500,
+      807500
+    ],
+    "pricePerSqmMedian": 6652.89,
+    "pricePerSqftMedian": 618.08
   },
   "monthlyTrend": [
     {
@@ -622,7 +622,7 @@
       "pricePerSqft": 337.06
     },
     {
-      "id": "hougang-913-hougang-st-91-2016-11-973238",
+      "id": "hougang-913-hougang-st-91-2016-11-973354",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -635,7 +635,7 @@
       "pricePerSqft": 354.87
     },
     {
-      "id": "hougang-913-hougang-st-91-2016-04-961026",
+      "id": "hougang-913-hougang-st-91-2016-04-961142",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -648,7 +648,7 @@
       "pricePerSqft": 352.3
     },
     {
-      "id": "hougang-913-hougang-st-91-2014-09-646072",
+      "id": "hougang-913-hougang-st-91-2014-09-646188",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -661,7 +661,7 @@
       "pricePerSqft": 347.7
     },
     {
-      "id": "hougang-913-hougang-st-91-2014-04-639263",
+      "id": "hougang-913-hougang-st-91-2014-04-639379",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -674,7 +674,7 @@
       "pricePerSqft": 391.58
     },
     {
-      "id": "hougang-913-hougang-st-91-2012-10-614614",
+      "id": "hougang-913-hougang-st-91-2012-10-614730",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -687,7 +687,7 @@
       "pricePerSqft": 417.88
     },
     {
-      "id": "hougang-913-hougang-st-91-2012-10-614653",
+      "id": "hougang-913-hougang-st-91-2012-10-614769",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

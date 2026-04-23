@@ -10,12 +10,6 @@
       "lng": 103.84916543667
     },
     "medianPrice": 430000,
-    "priceIqr": [
-      380000,
-      450000
-    ],
-    "pricePerSqmMedian": 6615.38,
-    "pricePerSqftMedian": 614.59,
     "transactionCount": 5,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "TOA PAYOH MRT STATION",
         "distanceMeters": 1020
       }
-    ]
+    ],
+    "priceIqr": [
+      380000,
+      450000
+    ],
+    "pricePerSqmMedian": 6615.38,
+    "pricePerSqftMedian": 614.59
   },
   "monthlyTrend": [
     {
@@ -1094,7 +1094,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-203-toa-payoh-nth-2026-04-228176",
+      "id": "toa-payoh-203-toa-payoh-nth-2026-04-228275",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

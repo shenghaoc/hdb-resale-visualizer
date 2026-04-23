@@ -10,12 +10,6 @@
       "lng": 103.803594082133
     },
     "medianPrice": 649000,
-    "priceIqr": [
-      594750,
-      690000
-    ],
-    "pricePerSqmMedian": 5599,
-    "pricePerSqftMedian": 520.16,
     "transactionCount": 8,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "SEMBAWANG MRT STATION",
         "distanceMeters": 1928
       }
-    ]
+    ],
+    "priceIqr": [
+      594750,
+      690000
+    ],
+    "pricePerSqmMedian": 5599,
+    "pricePerSqftMedian": 520.16
   },
   "monthlyTrend": [
     {
@@ -488,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-794-woodlands-dr-72-2026-04-228803",
+      "id": "woodlands-794-woodlands-dr-72-2026-04-228908",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

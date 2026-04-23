@@ -10,12 +10,6 @@
       "lng": 103.959503982842
     },
     "medianPrice": 865000,
-    "priceIqr": [
-      860000,
-      916500
-    ],
-    "pricePerSqmMedian": 6195.65,
-    "pricePerSqftMedian": 575.6,
     "transactionCount": 3,
     "floorAreaRange": [
       122,
@@ -55,7 +49,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1886
       }
-    ]
+    ],
+    "priceIqr": [
+      860000,
+      916500
+    ],
+    "pricePerSqmMedian": 6195.65,
+    "pricePerSqftMedian": 575.6
   },
   "monthlyTrend": [
     {
@@ -660,7 +660,7 @@
       "pricePerSqft": 374.19
     },
     {
-      "id": "tampines-497j-tampines-st-45-2016-09-970701",
+      "id": "tampines-497j-tampines-st-45-2016-09-970817",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -673,7 +673,7 @@
       "pricePerSqft": 370.97
     },
     {
-      "id": "tampines-497j-tampines-st-45-2014-10-648307",
+      "id": "tampines-497j-tampines-st-45-2014-10-648423",
       "month": "2014-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -686,7 +686,7 @@
       "pricePerSqft": 444.46
     },
     {
-      "id": "tampines-497j-tampines-st-45-2014-10-648318",
+      "id": "tampines-497j-tampines-st-45-2014-10-648434",
       "month": "2014-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.74597741135
     },
     "medianPrice": 415000,
-    "priceIqr": [
-      402000,
-      455000
-    ],
-    "pricePerSqmMedian": 5465.76,
-    "pricePerSqftMedian": 507.78,
     "transactionCount": 8,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 1687
       }
-    ]
+    ],
+    "priceIqr": [
+      402000,
+      455000
+    ],
+    "pricePerSqmMedian": 5465.76,
+    "pricePerSqftMedian": 507.78
   },
   "monthlyTrend": [
     {
@@ -1082,7 +1082,7 @@
       "pricePerSqft": 315.69
     },
     {
-      "id": "bukit-batok-414-bt-batok-west-ave-4-2016-09-969570",
+      "id": "bukit-batok-414-bt-batok-west-ave-4-2016-09-969686",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.877538033383
     },
     "medianPrice": 685000,
-    "priceIqr": [
-      593333,
-      770000
-    ],
-    "pricePerSqmMedian": 5874.58,
-    "pricePerSqftMedian": 545.77,
     "transactionCount": 5,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 1800
       }
-    ]
+    ],
+    "priceIqr": [
+      593333,
+      770000
+    ],
+    "pricePerSqmMedian": 5874.58,
+    "pricePerSqftMedian": 545.77
   },
   "monthlyTrend": [
     {
@@ -392,7 +392,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-953-hougang-ave-9-2026-01-224687",
+      "id": "hougang-953-hougang-ave-9-2026-01-224734",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -626,7 +626,7 @@
       "pricePerSqft": 360.86
     },
     {
-      "id": "hougang-953-hougang-ave-9-2016-04-961055",
+      "id": "hougang-953-hougang-ave-9-2016-04-961171",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -639,7 +639,7 @@
       "pricePerSqft": 368.54
     },
     {
-      "id": "hougang-953-hougang-ave-9-2016-04-961060",
+      "id": "hougang-953-hougang-ave-9-2016-04-961176",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

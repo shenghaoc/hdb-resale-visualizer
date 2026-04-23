@@ -10,12 +10,6 @@
       "lng": 103.940985246396
     },
     "medianPrice": 757500,
-    "priceIqr": [
-      710000,
-      766750
-    ],
-    "pricePerSqmMedian": 5718.56,
-    "pricePerSqftMedian": 531.27,
     "transactionCount": 4,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "BEDOK RESERVOIR MRT STATION",
         "distanceMeters": 1342
       }
-    ]
+    ],
+    "priceIqr": [
+      710000,
+      766750
+    ],
+    "pricePerSqmMedian": 5718.56,
+    "pricePerSqftMedian": 531.27
   },
   "monthlyTrend": [
     {
@@ -511,7 +511,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-926-tampines-st-91-2026-01-227999",
+      "id": "tampines-926-tampines-st-91-2026-01-228093",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -758,7 +758,7 @@
       "pricePerSqft": 359.74
     },
     {
-      "id": "tampines-926-tampines-st-91-2016-06-965522",
+      "id": "tampines-926-tampines-st-91-2016-06-965638",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

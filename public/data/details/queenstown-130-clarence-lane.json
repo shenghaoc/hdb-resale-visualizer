@@ -10,12 +10,6 @@
       "lng": 103.814835714007
     },
     "medianPrice": 1013000,
-    "priceIqr": [
-      1000500,
-      1025500
-    ],
-    "pricePerSqmMedian": 9740.39,
-    "pricePerSqftMedian": 904.91,
     "transactionCount": 2,
     "floorAreaRange": [
       103,
@@ -54,7 +48,13 @@
         "stationName": "ORCHARD BOULEVARD MRT STATION",
         "distanceMeters": 1479
       }
-    ]
+    ],
+    "priceIqr": [
+      1000500,
+      1025500
+    ],
+    "pricePerSqmMedian": 9740.39,
+    "pricePerSqftMedian": 904.91
   },
   "monthlyTrend": [
     {
@@ -414,7 +414,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-130-clarence-lane-2026-03-226497",
+      "id": "queenstown-130-clarence-lane-2026-03-226574",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

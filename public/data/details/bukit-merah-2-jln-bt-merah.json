@@ -10,12 +10,6 @@
       "lng": 103.80686187976
     },
     "medianPrice": 357000,
-    "priceIqr": [
-      347500,
-      382500
-    ],
-    "pricePerSqmMedian": 5666.67,
-    "pricePerSqftMedian": 526.45,
     "transactionCount": 11,
     "floorAreaRange": [
       63,
@@ -56,7 +50,13 @@
         "stationName": "LABRADOR PARK MRT STATION",
         "distanceMeters": 1691
       }
-    ]
+    ],
+    "priceIqr": [
+      347500,
+      382500
+    ],
+    "pricePerSqmMedian": 5666.67,
+    "pricePerSqftMedian": 526.45
   },
   "monthlyTrend": [
     {
@@ -1118,7 +1118,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-2-jln-bt-merah-2026-03-223290",
+      "id": "bukit-merah-2-jln-bt-merah-2026-03-223311",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1131,7 +1131,7 @@
       "pricePerSqft": 486.64
     },
     {
-      "id": "bukit-merah-2-jln-bt-merah-2026-02-223282",
+      "id": "bukit-merah-2-jln-bt-merah-2026-02-223303",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1144,7 +1144,7 @@
       "pricePerSqft": 516.13
     },
     {
-      "id": "bukit-merah-2-jln-bt-merah-2026-01-223279",
+      "id": "bukit-merah-2-jln-bt-merah-2026-01-223300",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.75056549927
     },
     "medianPrice": 585000,
-    "priceIqr": [
-      560000,
-      590000
-    ],
-    "pricePerSqmMedian": 5123.97,
-    "pricePerSqftMedian": 476.03,
     "transactionCount": 5,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "CHOA CHU KANG LRT STATION",
         "distanceMeters": 1880
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      590000
+    ],
+    "pricePerSqmMedian": 5123.97,
+    "pricePerSqftMedian": 476.03
   },
   "monthlyTrend": [
     {
@@ -681,7 +681,7 @@
       "pricePerSqft": 343.92
     },
     {
-      "id": "choa-chu-kang-661-choa-chu-kang-cres-2016-11-973097",
+      "id": "choa-chu-kang-661-choa-chu-kang-cres-2016-11-973213",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

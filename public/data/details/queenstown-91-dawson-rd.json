@@ -10,12 +10,6 @@
       "lng": 103.812585191493
     },
     "medianPrice": 1200000,
-    "priceIqr": [
-      1070000,
-      1251000
-    ],
-    "pricePerSqmMedian": 12891.57,
-    "pricePerSqftMedian": 1197.67,
     "transactionCount": 9,
     "floorAreaRange": [
       65,
@@ -57,7 +51,13 @@
         "stationName": "NAPIER MRT STATION",
         "distanceMeters": 1445
       }
-    ]
+    ],
+    "priceIqr": [
+      1070000,
+      1251000
+    ],
+    "pricePerSqmMedian": 12891.57,
+    "pricePerSqftMedian": 1197.67
   },
   "monthlyTrend": [
     {
@@ -255,7 +255,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-91-dawson-rd-2026-03-226577",
+      "id": "queenstown-91-dawson-rd-2026-03-226654",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "40 TO 42",
@@ -268,7 +268,7 @@
       "pricePerSqft": 1454.54
     },
     {
-      "id": "queenstown-91-dawson-rd-2026-02-226511",
+      "id": "queenstown-91-dawson-rd-2026-02-226588",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

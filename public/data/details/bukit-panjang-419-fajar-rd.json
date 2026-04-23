@@ -10,12 +10,6 @@
       "lng": 103.769613738594
     },
     "medianPrice": 545000,
-    "priceIqr": [
-      545000,
-      568888
-    ],
-    "pricePerSqmMedian": 5291.26,
-    "pricePerSqftMedian": 491.57,
     "transactionCount": 5,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "BANGKIT LRT STATION",
         "distanceMeters": 563
       }
-    ]
+    ],
+    "priceIqr": [
+      545000,
+      568888
+    ],
+    "pricePerSqmMedian": 5291.26,
+    "pricePerSqftMedian": 491.57
   },
   "monthlyTrend": [
     {
@@ -704,7 +704,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-419-fajar-rd-2026-01-223676",
+      "id": "bukit-panjang-419-fajar-rd-2026-01-223703",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

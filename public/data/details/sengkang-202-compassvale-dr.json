@@ -10,12 +10,6 @@
       "lng": 103.893259995509
     },
     "medianPrice": 568000,
-    "priceIqr": [
-      566500,
-      569000
-    ],
-    "pricePerSqmMedian": 6682.35,
-    "pricePerSqftMedian": 620.81,
     "transactionCount": 3,
     "floorAreaRange": [
       85,
@@ -54,7 +48,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 580
       }
-    ]
+    ],
+    "priceIqr": [
+      566500,
+      569000
+    ],
+    "pricePerSqmMedian": 6682.35,
+    "pricePerSqftMedian": 620.81
   },
   "monthlyTrend": [
     {
@@ -402,7 +402,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-202-compassvale-dr-2026-01-227008",
+      "id": "sengkang-202-compassvale-dr-2026-01-227088",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -610,7 +610,7 @@
       "pricePerSqft": 443.16
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-11-973738",
+      "id": "sengkang-202-compassvale-dr-2016-11-973854",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -623,7 +623,7 @@
       "pricePerSqft": 425.95
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-09-970455",
+      "id": "sengkang-202-compassvale-dr-2016-09-970571",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -636,7 +636,7 @@
       "pricePerSqft": 421.8
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-07-966918",
+      "id": "sengkang-202-compassvale-dr-2016-07-967034",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -649,7 +649,7 @@
       "pricePerSqft": 389.77
     },
     {
-      "id": "sengkang-202-compassvale-dr-2016-06-965250",
+      "id": "sengkang-202-compassvale-dr-2016-06-965366",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

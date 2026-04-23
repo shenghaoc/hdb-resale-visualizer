@@ -10,12 +10,6 @@
       "lng": 103.916751438225
     },
     "medianPrice": 791888,
-    "priceIqr": [
-      768000,
-      850000
-    ],
-    "pricePerSqmMedian": 7589.29,
-    "pricePerSqftMedian": 705.07,
     "transactionCount": 5,
     "floorAreaRange": [
       92,
@@ -55,7 +49,13 @@
         "stationName": "RIVIERA LRT STATION",
         "distanceMeters": 886
       }
-    ]
+    ],
+    "priceIqr": [
+      768000,
+      850000
+    ],
+    "pricePerSqmMedian": 7589.29,
+    "pricePerSqftMedian": 705.07
   },
   "monthlyTrend": [
     {
@@ -205,7 +205,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-661b-edgedale-plains-2026-02-226005",
+      "id": "punggol-661b-edgedale-plains-2026-02-226074",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

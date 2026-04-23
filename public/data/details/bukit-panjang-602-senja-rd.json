@@ -10,12 +10,6 @@
       "lng": 103.762739370664
     },
     "medianPrice": 602000,
-    "priceIqr": [
-      590000,
-      615000
-    ],
-    "pricePerSqmMedian": 6615.38,
-    "pricePerSqftMedian": 614.59,
     "transactionCount": 5,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "BUKIT PANJANG LRT STATION",
         "distanceMeters": 380
       }
-    ]
+    ],
+    "priceIqr": [
+      590000,
+      615000
+    ],
+    "pricePerSqmMedian": 6615.38,
+    "pricePerSqftMedian": 614.59
   },
   "monthlyTrend": [
     {
@@ -492,7 +492,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-602-senja-rd-2026-02-223642",
+      "id": "bukit-panjang-602-senja-rd-2026-02-223669",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

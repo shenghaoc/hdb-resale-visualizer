@@ -9,14 +9,8 @@
       "lat": 1.42972007631008,
       "lng": 103.833109444064
     },
-    "medianPrice": 435000,
-    "priceIqr": [
-      422500,
-      454241
-    ],
-    "pricePerSqmMedian": 6343.28,
-    "pricePerSqftMedian": 589.31,
-    "transactionCount": 6,
+    "medianPrice": 440000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       162
@@ -25,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -58,7 +52,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 1503
       }
-    ]
+    ],
+    "priceIqr": [
+      425000,
+      451994
+    ],
+    "pricePerSqmMedian": 6417.91,
+    "pricePerSqftMedian": 596.24
   },
   "monthlyTrend": [
     {
@@ -1038,11 +1038,30 @@
       "medianPrice": 480000,
       "transactionCount": 1,
       "medianPricePerSqm": 5853.66
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 445000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6641.79
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-742-yishun-ave-5-2026-01-228958",
+      "id": "yishun-742-yishun-ave-5-2026-04-229075",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 08 months",
+      "resalePrice": 445000,
+      "pricePerSqm": 6641.79,
+      "pricePerSqft": 617.04
+    },
+    {
+      "id": "yishun-742-yishun-ave-5-2026-01-229065",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1287,19 +1306,6 @@
       "resalePrice": 300000,
       "pricePerSqm": 4477.61,
       "pricePerSqft": 415.98
-    },
-    {
-      "id": "yishun-742-yishun-ave-5-2021-03-94551",
-      "month": "2021-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "63 years 09 months",
-      "resalePrice": 305000,
-      "pricePerSqm": 4552.24,
-      "pricePerSqft": 422.92
     }
   ]
 }

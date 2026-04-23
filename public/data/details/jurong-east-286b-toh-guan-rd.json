@@ -9,14 +9,8 @@
       "lat": 1.33857782933995,
       "lng": 103.745137980175
     },
-    "medianPrice": 1119999,
-    "priceIqr": [
-      1100000,
-      1134000
-    ],
-    "pricePerSqmMedian": 7999.99,
-    "pricePerSqftMedian": 743.22,
-    "transactionCount": 3,
+    "medianPrice": 1105000,
+    "transactionCount": 4,
     "floorAreaRange": [
       121,
       144
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1347
       }
-    ]
+    ],
+    "priceIqr": [
+      1087500,
+      1126999
+    ],
+    "pricePerSqmMedian": 7811.18,
+    "pricePerSqftMedian": 725.68
   },
   "monthlyTrend": [
     {
@@ -451,14 +451,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 1080000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7500
+      "medianPrice": 1085000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7561.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-286b-toh-guan-rd-2026-04-224990",
+      "id": "jurong-east-286b-toh-guan-rd-2026-04-225044",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -471,7 +471,20 @@
       "pricePerSqft": 696.77
     },
     {
-      "id": "jurong-east-286b-toh-guan-rd-2026-01-224987",
+      "id": "jurong-east-286b-toh-guan-rd-2026-04-225045",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 143,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 08 months",
+      "resalePrice": 1090000,
+      "pricePerSqm": 7622.38,
+      "pricePerSqft": 708.14
+    },
+    {
+      "id": "jurong-east-286b-toh-guan-rd-2026-01-225041",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "19 TO 21",
@@ -692,7 +705,7 @@
       "pricePerSqft": 506.45
     },
     {
-      "id": "jurong-east-286b-toh-guan-rd-2016-07-966509",
+      "id": "jurong-east-286b-toh-guan-rd-2016-07-966625",
       "month": "2016-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -703,19 +716,6 @@
       "resalePrice": 725000,
       "pricePerSqm": 5034.72,
       "pricePerSqft": 467.74
-    },
-    {
-      "id": "jurong-east-286b-toh-guan-rd-2016-03-959438",
-      "month": "2016-03",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 143,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "81",
-      "resalePrice": 785000,
-      "pricePerSqm": 5489.51,
-      "pricePerSqft": 509.99
     }
   ]
 }

@@ -9,14 +9,8 @@
       "lat": 1.35740703260416,
       "lng": 103.950996054997
     },
-    "medianPrice": 618000,
-    "priceIqr": [
-      618000,
-      618000
-    ],
-    "pricePerSqmMedian": 5942.31,
-    "pricePerSqftMedian": 552.06,
-    "transactionCount": 1,
+    "medianPrice": 548000,
+    "transactionCount": 2,
     "floorAreaRange": [
       74,
       108
@@ -25,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2024-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2024-11"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1669
       }
-    ]
+    ],
+    "priceIqr": [
+      513000,
+      583000
+    ],
+    "pricePerSqmMedian": 6200.89,
+    "pricePerSqftMedian": 576.08
   },
   "monthlyTrend": [
     {
@@ -855,9 +855,28 @@
       "medianPrice": 618000,
       "transactionCount": 1,
       "medianPricePerSqm": 5942.31
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 478000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6459.46
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-448-tampines-st-42-2026-04-227656",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 478000,
+      "pricePerSqm": 6459.46,
+      "pricePerSqft": 600.1
+    },
     {
       "id": "tampines-448-tampines-st-42-2024-11-192015",
       "month": "2024-11",
@@ -1093,7 +1112,7 @@
       "pricePerSqft": 367.19
     },
     {
-      "id": "tampines-448-tampines-st-42-2016-12-975303",
+      "id": "tampines-448-tampines-st-42-2016-12-975419",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1104,19 +1123,6 @@
       "resalePrice": 320000,
       "pricePerSqm": 4324.32,
       "pricePerSqft": 401.74
-    },
-    {
-      "id": "tampines-448-tampines-st-42-2015-12-955926",
-      "month": "2015-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "68",
-      "resalePrice": 438000,
-      "pricePerSqm": 4171.43,
-      "pricePerSqft": 387.54
     }
   ]
 }

@@ -10,12 +10,6 @@
       "lng": 103.743821531821
     },
     "medianPrice": 440944,
-    "priceIqr": [
-      389722,
-      504250
-    ],
-    "pricePerSqmMedian": 5634.33,
-    "pricePerSqftMedian": 523.44,
     "transactionCount": 6,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 1307
       }
-    ]
+    ],
+    "priceIqr": [
+      389722,
+      504250
+    ],
+    "pricePerSqmMedian": 5634.33,
+    "pricePerSqftMedian": 523.44
   },
   "monthlyTrend": [
     {
@@ -819,7 +819,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-182-bt-batok-west-ave-8-2026-01-222917",
+      "id": "bukit-batok-182-bt-batok-west-ave-8-2026-01-222932",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

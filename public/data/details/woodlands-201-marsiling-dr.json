@@ -10,12 +10,6 @@
       "lng": 103.775436532502
     },
     "medianPrice": 453888,
-    "priceIqr": [
-      446500,
-      455000
-    ],
-    "pricePerSqmMedian": 4987.78,
-    "pricePerSqftMedian": 463.38,
     "transactionCount": 5,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "WOODLANDS MRT STATION",
         "distanceMeters": 1325
       }
-    ]
+    ],
+    "priceIqr": [
+      446500,
+      455000
+    ],
+    "pricePerSqmMedian": 4987.78,
+    "pricePerSqftMedian": 463.38
   },
   "monthlyTrend": [
     {
@@ -780,7 +780,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-201-marsiling-dr-2026-04-228440",
+      "id": "woodlands-201-marsiling-dr-2026-04-228540",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

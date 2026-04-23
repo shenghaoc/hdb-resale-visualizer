@@ -10,12 +10,6 @@
       "lng": 103.799571960255
     },
     "medianPrice": 630000,
-    "priceIqr": [
-      605000,
-      641000
-    ],
-    "pricePerSqmMedian": 5800,
-    "pricePerSqftMedian": 538.84,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS SOUTH MRT STATION",
         "distanceMeters": 1333
       }
-    ]
+    ],
+    "priceIqr": [
+      605000,
+      641000
+    ],
+    "pricePerSqmMedian": 5800,
+    "pricePerSqftMedian": 538.84
   },
   "monthlyTrend": [
     {
@@ -613,7 +613,7 @@
       "pricePerSqft": 377.13
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2016-04-961974",
+      "id": "woodlands-651-woodlands-ring-rd-2016-04-962090",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -626,7 +626,7 @@
       "pricePerSqft": 321.94
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2015-07-948469",
+      "id": "woodlands-651-woodlands-ring-rd-2015-07-948585",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -639,7 +639,7 @@
       "pricePerSqft": 353.03
     },
     {
-      "id": "woodlands-651-woodlands-ring-rd-2015-04-943706",
+      "id": "woodlands-651-woodlands-ring-rd-2015-04-943822",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

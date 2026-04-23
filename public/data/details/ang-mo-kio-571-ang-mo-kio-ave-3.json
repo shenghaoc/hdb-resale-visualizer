@@ -9,14 +9,8 @@
       "lat": 1.37005501296043,
       "lng": 103.85488055876
     },
-    "medianPrice": 430000,
-    "priceIqr": [
-      398750,
-      450000
-    ],
-    "pricePerSqmMedian": 6417.91,
-    "pricePerSqftMedian": 596.25,
-    "transactionCount": 6,
+    "medianPrice": 410000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       134
@@ -25,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -57,7 +51,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 1975
       }
-    ]
+    ],
+    "priceIqr": [
+      395000,
+      450000
+    ],
+    "pricePerSqmMedian": 6119.4,
+    "pricePerSqftMedian": 568.51
   },
   "monthlyTrend": [
     {
@@ -1349,9 +1349,28 @@
       "medianPrice": 395000,
       "transactionCount": 1,
       "medianPricePerSqm": 5895.52
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 374888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5595.34
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-571-ang-mo-kio-ave-3-2026-04-222141",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 01 month",
+      "resalePrice": 374888,
+      "pricePerSqm": 5595.34,
+      "pricePerSqft": 519.82
+    },
     {
       "id": "ang-mo-kio-571-ang-mo-kio-ave-3-2025-11-197311",
       "month": "2025-11",
@@ -1598,19 +1617,6 @@
       "resalePrice": 340000,
       "pricePerSqm": 5074.63,
       "pricePerSqft": 471.45
-    },
-    {
-      "id": "ang-mo-kio-571-ang-mo-kio-ave-3-2022-08-117309",
-      "month": "2022-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "55 years 09 months",
-      "resalePrice": 358000,
-      "pricePerSqm": 5343.28,
-      "pricePerSqft": 496.41
     }
   ]
 }

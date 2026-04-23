@@ -10,12 +10,6 @@
       "lng": 103.839844255368
     },
     "medianPrice": 979000,
-    "priceIqr": [
-      918000,
-      1052000
-    ],
-    "pricePerSqmMedian": 10200,
-    "pricePerSqftMedian": 947.61,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "MAXWELL MRT STATION",
         "distanceMeters": 785
       }
-    ]
+    ],
+    "priceIqr": [
+      918000,
+      1052000
+    ],
+    "pricePerSqmMedian": 10200,
+    "pricePerSqftMedian": 947.61
   },
   "monthlyTrend": [
     {
@@ -527,7 +527,7 @@
       "pricePerSqft": 701
     },
     {
-      "id": "bukit-merah-17-cantonment-cl-2016-10-971329",
+      "id": "bukit-merah-17-cantonment-cl-2016-10-971445",
       "month": "2016-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -540,7 +540,7 @@
       "pricePerSqft": 675.66
     },
     {
-      "id": "bukit-merah-17-cantonment-cl-2016-06-964354",
+      "id": "bukit-merah-17-cantonment-cl-2016-06-964470",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -553,7 +553,7 @@
       "pricePerSqft": 699.31
     },
     {
-      "id": "bukit-merah-17-cantonment-cl-2015-11-953664",
+      "id": "bukit-merah-17-cantonment-cl-2015-11-953780",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -566,7 +566,7 @@
       "pricePerSqft": 726.33
     },
     {
-      "id": "bukit-merah-17-cantonment-cl-2015-07-947415",
+      "id": "bukit-merah-17-cantonment-cl-2015-07-947531",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -579,7 +579,7 @@
       "pricePerSqft": 707.1
     },
     {
-      "id": "bukit-merah-17-cantonment-cl-2015-06-945756",
+      "id": "bukit-merah-17-cantonment-cl-2015-06-945872",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

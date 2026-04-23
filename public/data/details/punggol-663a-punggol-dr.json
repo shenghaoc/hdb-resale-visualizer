@@ -10,12 +10,6 @@
       "lng": 103.91708004
     },
     "medianPrice": 540000,
-    "priceIqr": [
-      511222,
-      591250
-    ],
-    "pricePerSqmMedian": 7852.99,
-    "pricePerSqftMedian": 729.57,
     "transactionCount": 12,
     "floorAreaRange": [
       65,
@@ -57,7 +51,13 @@
         "stationName": "RIVIERA LRT STATION",
         "distanceMeters": 645
       }
-    ]
+    ],
+    "priceIqr": [
+      511222,
+      591250
+    ],
+    "pricePerSqmMedian": 7852.99,
+    "pricePerSqftMedian": 729.57
   },
   "monthlyTrend": [
     {
@@ -363,7 +363,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-663a-punggol-dr-2026-04-226109",
+      "id": "punggol-663a-punggol-dr-2026-04-226177",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -376,7 +376,7 @@
       "pricePerSqft": 609.03
     },
     {
-      "id": "punggol-663a-punggol-dr-2026-03-225968",
+      "id": "punggol-663a-punggol-dr-2026-03-226036",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

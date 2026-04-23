@@ -10,12 +10,6 @@
       "lng": 103.950582220408
     },
     "medianPrice": 620000,
-    "priceIqr": [
-      615000,
-      680000
-    ],
-    "pricePerSqmMedian": 5849.06,
-    "pricePerSqftMedian": 543.4,
     "transactionCount": 5,
     "floorAreaRange": [
       106,
@@ -56,7 +50,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1345
       }
-    ]
+    ],
+    "priceIqr": [
+      615000,
+      680000
+    ],
+    "pricePerSqmMedian": 5849.06,
+    "pricePerSqftMedian": 543.4
   },
   "monthlyTrend": [
     {
@@ -729,7 +729,7 @@
       "pricePerSqft": 379.96
     },
     {
-      "id": "tampines-496g-tampines-ave-9-2016-10-972313",
+      "id": "tampines-496g-tampines-ave-9-2016-10-972429",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

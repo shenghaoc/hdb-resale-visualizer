@@ -10,12 +10,6 @@
       "lng": 103.904212191193
     },
     "medianPrice": 770000,
-    "priceIqr": [
-      759000,
-      837500
-    ],
-    "pricePerSqmMedian": 8239.13,
-    "pricePerSqftMedian": 765.44,
     "transactionCount": 7,
     "floorAreaRange": [
       92,
@@ -55,7 +49,13 @@
         "stationName": "BAKAU LRT STATION",
         "distanceMeters": 1177
       }
-    ]
+    ],
+    "priceIqr": [
+      759000,
+      837500
+    ],
+    "pricePerSqmMedian": 8239.13,
+    "pricePerSqftMedian": 765.44
   },
   "monthlyTrend": [
     {
@@ -325,7 +325,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-476b-upp-serangoon-view-2026-01-224745",
+      "id": "hougang-476b-upp-serangoon-view-2026-01-224794",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

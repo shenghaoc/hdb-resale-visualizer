@@ -10,12 +10,6 @@
       "lng": 103.953858335355
     },
     "medianPrice": 435000,
-    "priceIqr": [
-      415000,
-      443750
-    ],
-    "pricePerSqmMedian": 6176.47,
-    "pricePerSqftMedian": 573.82,
     "transactionCount": 6,
     "floorAreaRange": [
       68,
@@ -56,7 +50,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1141
       }
-    ]
+    ],
+    "priceIqr": [
+      415000,
+      443750
+    ],
+    "pricePerSqmMedian": 6176.47,
+    "pricePerSqftMedian": 573.82
   },
   "monthlyTrend": [
     {
@@ -590,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-201e-tampines-st-23-2026-03-227551",
+      "id": "tampines-201e-tampines-st-23-2026-03-227640",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -785,7 +785,7 @@
       "pricePerSqft": 382.94
     },
     {
-      "id": "tampines-201e-tampines-st-23-2016-12-975301",
+      "id": "tampines-201e-tampines-st-23-2016-12-975417",
       "month": "2016-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -798,7 +798,7 @@
       "pricePerSqft": 403.04
     },
     {
-      "id": "tampines-201e-tampines-st-23-2016-09-970601",
+      "id": "tampines-201e-tampines-st-23-2016-09-970717",
       "month": "2016-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -811,7 +811,7 @@
       "pricePerSqft": 416.7
     },
     {
-      "id": "tampines-201e-tampines-st-23-2015-10-952947",
+      "id": "tampines-201e-tampines-st-23-2015-10-953063",
       "month": "2015-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -824,7 +824,7 @@
       "pricePerSqft": 404.4
     },
     {
-      "id": "tampines-201e-tampines-st-23-2015-09-951230",
+      "id": "tampines-201e-tampines-st-23-2015-09-951346",
       "month": "2015-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -837,7 +837,7 @@
       "pricePerSqft": 409.87
     },
     {
-      "id": "tampines-201e-tampines-st-23-2014-09-646637",
+      "id": "tampines-201e-tampines-st-23-2014-09-646753",
       "month": "2014-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.872110832451
     },
     "medianPrice": 897500,
-    "priceIqr": [
-      886000,
-      907750
-    ],
-    "pricePerSqmMedian": 5990,
-    "pricePerSqftMedian": 556.49,
     "transactionCount": 8,
     "floorAreaRange": [
       148,
@@ -54,7 +48,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1850
       }
-    ]
+    ],
+    "priceIqr": [
+      886000,
+      907750
+    ],
+    "pricePerSqmMedian": 5990,
+    "pricePerSqftMedian": 556.49
   },
   "monthlyTrend": [
     {
@@ -810,7 +810,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-125-serangoon-nth-ave-1-2026-01-227475",
+      "id": "serangoon-125-serangoon-nth-ave-1-2026-01-227563",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

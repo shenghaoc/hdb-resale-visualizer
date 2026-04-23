@@ -10,12 +10,6 @@
       "lng": 103.852546280742
     },
     "medianPrice": 817500,
-    "priceIqr": [
-      813000,
-      822000
-    ],
-    "pricePerSqmMedian": 7785.71,
-    "pricePerSqftMedian": 723.32,
     "transactionCount": 4,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "JALAN BESAR MRT STATION",
         "distanceMeters": 451
       }
-    ]
+    ],
+    "priceIqr": [
+      813000,
+      822000
+    ],
+    "pricePerSqmMedian": 7785.71,
+    "pricePerSqftMedian": 723.32
   },
   "monthlyTrend": [
     {
@@ -350,7 +350,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-672a-klang-lane-2026-03-223823",
+      "id": "central-area-672a-klang-lane-2026-03-223850",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -363,7 +363,7 @@
       "pricePerSqft": 721.11
     },
     {
-      "id": "central-area-672a-klang-lane-2026-01-223821",
+      "id": "central-area-672a-klang-lane-2026-01-223848",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

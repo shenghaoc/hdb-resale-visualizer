@@ -10,12 +10,6 @@
       "lng": 103.894283804483
     },
     "medianPrice": 1020000,
-    "priceIqr": [
-      995000,
-      1055000
-    ],
-    "pricePerSqmMedian": 6938.17,
-    "pricePerSqftMedian": 644.58,
     "transactionCount": 4,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "HOUGANG MRT STATION",
         "distanceMeters": 776
       }
-    ]
+    ],
+    "priceIqr": [
+      995000,
+      1055000
+    ],
+    "pricePerSqmMedian": 6938.17,
+    "pricePerSqftMedian": 644.58
   },
   "monthlyTrend": [
     {
@@ -570,7 +570,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-446-hougang-ave-8-2026-04-224829",
+      "id": "hougang-446-hougang-ave-8-2026-04-224879",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

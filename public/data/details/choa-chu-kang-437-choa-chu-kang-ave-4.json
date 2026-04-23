@@ -10,12 +10,6 @@
       "lng": 103.740645540511
     },
     "medianPrice": 780000,
-    "priceIqr": [
-      780000,
-      850000
-    ],
-    "pricePerSqmMedian": 5416.67,
-    "pricePerSqftMedian": 503.23,
     "transactionCount": 5,
     "floorAreaRange": [
       144,
@@ -54,7 +48,13 @@
         "stationName": "SOUTH VIEW LRT STATION",
         "distanceMeters": 650
       }
-    ]
+    ],
+    "priceIqr": [
+      780000,
+      850000
+    ],
+    "pricePerSqmMedian": 5416.67,
+    "pricePerSqftMedian": 503.23
   },
   "monthlyTrend": [
     {

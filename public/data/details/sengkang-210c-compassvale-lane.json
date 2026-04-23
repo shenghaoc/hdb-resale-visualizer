@@ -9,14 +9,8 @@
       "lat": 1.38424155856171,
       "lng": 103.899542187144
     },
-    "medianPrice": 685000,
-    "priceIqr": [
-      670000,
-      700000
-    ],
-    "pricePerSqmMedian": 7204.3,
-    "pricePerSqftMedian": 669.3,
-    "transactionCount": 5,
+    "medianPrice": 677500,
+    "transactionCount": 6,
     "floorAreaRange": [
       48,
       97
@@ -25,10 +19,10 @@
       2011,
       2011
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2016-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 699
       }
-    ]
+    ],
+    "priceIqr": [
+      651916,
+      696250
+    ],
+    "pricePerSqmMedian": 7133.08,
+    "pricePerSqftMedian": 662.68
   },
   "monthlyTrend": [
     {
@@ -280,11 +280,30 @@
       "medianPrice": 706000,
       "transactionCount": 1,
       "medianPricePerSqm": 7278.35
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-210c-compassvale-lane-2026-01-227015",
+      "id": "sengkang-210c-compassvale-lane-2026-04-227106",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "85 years 10 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "sengkang-210c-compassvale-lane-2026-01-227095",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -529,19 +548,6 @@
       "resalePrice": 320000,
       "pricePerSqm": 4705.88,
       "pricePerSqft": 437.19
-    },
-    {
-      "id": "sengkang-210c-compassvale-lane-2019-12-63604",
-      "month": "2019-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "92 years 02 months",
-      "resalePrice": 420000,
-      "pricePerSqm": 4516.13,
-      "pricePerSqft": 419.56
     }
   ]
 }

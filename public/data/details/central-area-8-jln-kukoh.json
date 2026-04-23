@@ -10,12 +10,6 @@
       "lng": 103.839407060595
     },
     "medianPrice": 504444,
-    "priceIqr": [
-      412222,
-      596666
-    ],
-    "pricePerSqmMedian": 6182.07,
-    "pricePerSqftMedian": 574.34,
     "transactionCount": 2,
     "floorAreaRange": [
       47,
@@ -57,7 +51,13 @@
         "stationName": "HAVELOCK MRT STATION",
         "distanceMeters": 624
       }
-    ]
+    ],
+    "priceIqr": [
+      412222,
+      596666
+    ],
+    "pricePerSqmMedian": 6182.07,
+    "pricePerSqftMedian": 574.34
   },
   "monthlyTrend": [
     {
@@ -921,7 +921,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-8-jln-kukoh-2026-02-223810",
+      "id": "central-area-8-jln-kukoh-2026-02-223837",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

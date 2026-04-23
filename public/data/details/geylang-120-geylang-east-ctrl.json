@@ -10,12 +10,6 @@
       "lng": 103.884752333398
     },
     "medianPrice": 630000,
-    "priceIqr": [
-      630000,
-      630000
-    ],
-    "pricePerSqmMedian": 6847.83,
-    "pricePerSqftMedian": 636.18,
     "transactionCount": 1,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "MACPHERSON MRT STATION",
         "distanceMeters": 874
       }
-    ]
+    ],
+    "priceIqr": [
+      630000,
+      630000
+    ],
+    "pricePerSqmMedian": 6847.83,
+    "pricePerSqftMedian": 636.18
   },
   "monthlyTrend": [
     {
@@ -763,7 +763,7 @@
       "pricePerSqft": 525.77
     },
     {
-      "id": "geylang-120-geylang-east-ctrl-2015-11-953869",
+      "id": "geylang-120-geylang-east-ctrl-2015-11-953985",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

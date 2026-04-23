@@ -10,12 +10,6 @@
       "lng": 103.901170017525
     },
     "medianPrice": 451000,
-    "priceIqr": [
-      445500,
-      500500
-    ],
-    "pricePerSqmMedian": 6875,
-    "pricePerSqftMedian": 638.71,
     "transactionCount": 3,
     "floorAreaRange": [
       64,
@@ -55,7 +49,13 @@
         "stationName": "MACPHERSON MRT STATION",
         "distanceMeters": 1169
       }
-    ]
+    ],
+    "priceIqr": [
+      445500,
+      500500
+    ],
+    "pricePerSqmMedian": 6875,
+    "pricePerSqftMedian": 638.71
   },
   "monthlyTrend": [
     {
@@ -223,7 +223,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-342-ubi-ave-1-2026-03-224460",
+      "id": "geylang-342-ubi-ave-1-2026-03-224505",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -301,7 +301,7 @@
       "pricePerSqft": 428.23
     },
     {
-      "id": "geylang-342-ubi-ave-1-2016-05-962795",
+      "id": "geylang-342-ubi-ave-1-2016-05-962911",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -314,7 +314,7 @@
       "pricePerSqft": 435.48
     },
     {
-      "id": "geylang-342-ubi-ave-1-2015-04-942753",
+      "id": "geylang-342-ubi-ave-1-2015-04-942869",
       "month": "2015-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -327,7 +327,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "geylang-342-ubi-ave-1-2014-03-637693",
+      "id": "geylang-342-ubi-ave-1-2014-03-637809",
       "month": "2014-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -340,7 +340,7 @@
       "pricePerSqft": 450
     },
     {
-      "id": "geylang-342-ubi-ave-1-2010-09-564574",
+      "id": "geylang-342-ubi-ave-1-2010-09-564690",
       "month": "2010-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -353,7 +353,7 @@
       "pricePerSqft": 362.9
     },
     {
-      "id": "geylang-342-ubi-ave-1-2010-07-557847",
+      "id": "geylang-342-ubi-ave-1-2010-07-557963",
       "month": "2010-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -366,7 +366,7 @@
       "pricePerSqft": 377.42
     },
     {
-      "id": "geylang-342-ubi-ave-1-2009-03-512901",
+      "id": "geylang-342-ubi-ave-1-2009-03-513017",
       "month": "2009-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -379,7 +379,7 @@
       "pricePerSqft": 300.48
     },
     {
-      "id": "geylang-342-ubi-ave-1-2005-09-417749",
+      "id": "geylang-342-ubi-ave-1-2005-09-417865",
       "month": "2005-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -392,7 +392,7 @@
       "pricePerSqft": 166.94
     },
     {
-      "id": "geylang-342-ubi-ave-1-2004-09-387573",
+      "id": "geylang-342-ubi-ave-1-2004-09-387689",
       "month": "2004-09",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -405,7 +405,7 @@
       "pricePerSqft": 204.68
     },
     {
-      "id": "geylang-342-ubi-ave-1-2002-12-336629",
+      "id": "geylang-342-ubi-ave-1-2002-12-336745",
       "month": "2002-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -418,7 +418,7 @@
       "pricePerSqft": 182.18
     },
     {
-      "id": "geylang-342-ubi-ave-1-2001-07-283771",
+      "id": "geylang-342-ubi-ave-1-2001-07-283887",
       "month": "2001-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -431,7 +431,7 @@
       "pricePerSqft": 203.23
     },
     {
-      "id": "geylang-342-ubi-ave-1-2000-07-246703",
+      "id": "geylang-342-ubi-ave-1-2000-07-246819",
       "month": "2000-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -444,7 +444,7 @@
       "pricePerSqft": 229.35
     },
     {
-      "id": "geylang-342-ubi-ave-1-2000-03-235023",
+      "id": "geylang-342-ubi-ave-1-2000-03-235139",
       "month": "2000-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -457,7 +457,7 @@
       "pricePerSqft": 232.26
     },
     {
-      "id": "geylang-342-ubi-ave-1-1999-06-910346",
+      "id": "geylang-342-ubi-ave-1-1999-06-910462",
       "month": "1999-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -470,7 +470,7 @@
       "pricePerSqft": 205.03
     },
     {
-      "id": "geylang-342-ubi-ave-1-1999-01-882522",
+      "id": "geylang-342-ubi-ave-1-1999-01-882638",
       "month": "1999-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

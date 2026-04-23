@@ -10,12 +10,6 @@
       "lng": 103.82892831117
     },
     "medianPrice": 1345000,
-    "priceIqr": [
-      1210000,
-      1399000
-    ],
-    "pricePerSqmMedian": 12839.29,
-    "pricePerSqftMedian": 1192.81,
     "transactionCount": 7,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 789
       }
-    ]
+    ],
+    "priceIqr": [
+      1210000,
+      1399000
+    ],
+    "pricePerSqmMedian": 12839.29,
+    "pricePerSqftMedian": 1192.81
   },
   "monthlyTrend": [
     {
@@ -224,7 +224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-9b-boon-tiong-rd-2026-01-223346",
+      "id": "bukit-merah-9b-boon-tiong-rd-2026-01-223368",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "37 TO 39",

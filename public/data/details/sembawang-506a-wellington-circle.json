@@ -10,12 +10,6 @@
       "lng": 103.823946118275
     },
     "medianPrice": 745000,
-    "priceIqr": [
-      737500,
-      770000
-    ],
-    "pricePerSqmMedian": 5730.77,
-    "pricePerSqftMedian": 532.41,
     "transactionCount": 7,
     "floorAreaRange": [
       130,
@@ -54,7 +48,13 @@
         "stationName": "YISHUN MRT STATION",
         "distanceMeters": 2766
       }
-    ]
+    ],
+    "priceIqr": [
+      737500,
+      770000
+    ],
+    "pricePerSqmMedian": 5730.77,
+    "pricePerSqftMedian": 532.41
   },
   "monthlyTrend": [
     {
@@ -342,7 +342,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-506a-wellington-circle-2026-01-226882",
+      "id": "sembawang-506a-wellington-circle-2026-01-226962",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

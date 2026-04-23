@@ -10,12 +10,6 @@
       "lng": 103.767831518404
     },
     "medianPrice": 405000,
-    "priceIqr": [
-      395888,
-      450000
-    ],
-    "pricePerSqmMedian": 6044.78,
-    "pricePerSqftMedian": 561.58,
     "transactionCount": 5,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "KING ALBERT PARK MRT STATION",
         "distanceMeters": 2582
       }
-    ]
+    ],
+    "priceIqr": [
+      395888,
+      450000
+    ],
+    "pricePerSqmMedian": 6044.78,
+    "pricePerSqftMedian": 561.58
   },
   "monthlyTrend": [
     {
@@ -961,7 +961,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-379-clementi-ave-5-2026-04-224182",
+      "id": "clementi-379-clementi-ave-5-2026-04-224217",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

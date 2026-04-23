@@ -10,12 +10,6 @@
       "lng": 103.775700265583
     },
     "medianPrice": 711500,
-    "priceIqr": [
-      623250,
-      799750
-    ],
-    "pricePerSqmMedian": 5517.94,
-    "pricePerSqftMedian": 512.63,
     "transactionCount": 2,
     "floorAreaRange": [
       104,
@@ -59,7 +53,13 @@
         "stationName": "PETIR LRT STATION",
         "distanceMeters": 1002
       }
-    ]
+    ],
+    "priceIqr": [
+      623250,
+      799750
+    ],
+    "pricePerSqmMedian": 5517.94,
+    "pricePerSqftMedian": 512.63
   },
   "monthlyTrend": [
     {
@@ -807,7 +807,7 @@
       "pricePerSqft": 335.06
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2016-12-974579",
+      "id": "bukit-panjang-276-bangkit-rd-2016-12-974695",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -820,7 +820,7 @@
       "pricePerSqft": 340.21
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-12-650247",
+      "id": "bukit-panjang-276-bangkit-rd-2014-12-650363",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -833,7 +833,7 @@
       "pricePerSqft": 317.12
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-08-644533",
+      "id": "bukit-panjang-276-bangkit-rd-2014-08-644649",
       "month": "2014-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -846,7 +846,7 @@
       "pricePerSqft": 333.76
     },
     {
-      "id": "bukit-panjang-276-bangkit-rd-2014-05-640566",
+      "id": "bukit-panjang-276-bangkit-rd-2014-05-640682",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

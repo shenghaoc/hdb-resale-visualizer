@@ -10,12 +10,6 @@
       "lng": 103.768153816778
     },
     "medianPrice": 533000,
-    "priceIqr": [
-      471500,
-      546500
-    ],
-    "pricePerSqmMedian": 5436.89,
-    "pricePerSqftMedian": 505.1,
     "transactionCount": 3,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "BANGKIT LRT STATION",
         "distanceMeters": 500
       }
-    ]
+    ],
+    "priceIqr": [
+      471500,
+      546500
+    ],
+    "pricePerSqmMedian": 5436.89,
+    "pricePerSqftMedian": 505.1
   },
   "monthlyTrend": [
     {
@@ -547,7 +547,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-102-gangsa-rd-2026-01-223572",
+      "id": "bukit-panjang-102-gangsa-rd-2026-01-223598",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -781,7 +781,7 @@
       "pricePerSqft": 369.07
     },
     {
-      "id": "bukit-panjang-102-gangsa-rd-2016-09-969704",
+      "id": "bukit-panjang-102-gangsa-rd-2016-09-969820",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -794,7 +794,7 @@
       "pricePerSqft": 324.71
     },
     {
-      "id": "bukit-panjang-102-gangsa-rd-2016-07-966179",
+      "id": "bukit-panjang-102-gangsa-rd-2016-07-966295",
       "month": "2016-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.787189701148
     },
     "medianPrice": 375000,
-    "priceIqr": [
-      360000,
-      398000
-    ],
-    "pricePerSqmMedian": 5769.23,
-    "pricePerSqftMedian": 535.98,
     "transactionCount": 13,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "DOVER MRT STATION",
         "distanceMeters": 971
       }
-    ]
+    ],
+    "priceIqr": [
+      360000,
+      398000
+    ],
+    "pricePerSqmMedian": 5769.23,
+    "pricePerSqftMedian": 535.98
   },
   "monthlyTrend": [
     {
@@ -1196,7 +1196,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-3-ghim-moh-rd-2026-01-226442",
+      "id": "queenstown-3-ghim-moh-rd-2026-01-226519",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

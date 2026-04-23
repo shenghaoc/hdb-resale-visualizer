@@ -10,12 +10,6 @@
       "lng": 103.895426311766
     },
     "medianPrice": 610000,
-    "priceIqr": [
-      588250,
-      627500
-    ],
-    "pricePerSqmMedian": 5862.18,
-    "pricePerSqftMedian": 544.62,
     "transactionCount": 4,
     "floorAreaRange": [
       93,
@@ -57,7 +51,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 925
       }
-    ]
+    ],
+    "priceIqr": [
+      588250,
+      627500
+    ],
+    "pricePerSqmMedian": 5862.18,
+    "pricePerSqftMedian": 544.62
   },
   "monthlyTrend": [
     {
@@ -441,7 +441,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-418-hougang-ave-8-2026-02-224670",
+      "id": "hougang-418-hougang-ave-8-2026-02-224717",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -649,7 +649,7 @@
       "pricePerSqft": 339.78
     },
     {
-      "id": "hougang-418-hougang-ave-8-2016-09-969967",
+      "id": "hougang-418-hougang-ave-8-2016-09-970083",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -662,7 +662,7 @@
       "pricePerSqft": 415.42
     },
     {
-      "id": "hougang-418-hougang-ave-8-2016-08-968149",
+      "id": "hougang-418-hougang-ave-8-2016-08-968265",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -675,7 +675,7 @@
       "pricePerSqft": 351.77
     },
     {
-      "id": "hougang-418-hougang-ave-8-2016-06-964723",
+      "id": "hougang-418-hougang-ave-8-2016-06-964839",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -688,7 +688,7 @@
       "pricePerSqft": 374.32
     },
     {
-      "id": "hougang-418-hougang-ave-8-2014-04-639256",
+      "id": "hougang-418-hougang-ave-8-2014-04-639372",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

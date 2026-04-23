@@ -10,12 +10,6 @@
       "lng": 103.871446813638
     },
     "medianPrice": 875000,
-    "priceIqr": [
-      767000,
-      985000
-    ],
-    "pricePerSqmMedian": 8149.76,
-    "pricePerSqftMedian": 757.14,
     "transactionCount": 4,
     "floorAreaRange": [
       99,
@@ -56,7 +50,13 @@
         "stationName": "KOVAN MRT STATION",
         "distanceMeters": 1519
       }
-    ]
+    ],
+    "priceIqr": [
+      767000,
+      985000
+    ],
+    "pricePerSqmMedian": 8149.76,
+    "pricePerSqftMedian": 757.14
   },
   "monthlyTrend": [
     {
@@ -428,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-256-serangoon-ctrl-dr-2026-02-227462",
+      "id": "serangoon-256-serangoon-ctrl-dr-2026-02-227550",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

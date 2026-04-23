@@ -10,12 +10,6 @@
       "lng": 103.93670727972
     },
     "medianPrice": 774000,
-    "priceIqr": [
-      672000,
-      819750
-    ],
-    "pricePerSqmMedian": 7036.02,
-    "pricePerSqftMedian": 653.67,
     "transactionCount": 6,
     "floorAreaRange": [
       105,
@@ -55,7 +49,13 @@
         "stationName": "TANAH MERAH MRT STATION",
         "distanceMeters": 1458
       }
-    ]
+    ],
+    "priceIqr": [
+      672000,
+      819750
+    ],
+    "pricePerSqmMedian": 7036.02,
+    "pricePerSqftMedian": 653.67
   },
   "monthlyTrend": [
     {
@@ -751,7 +751,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-774-bedok-reservoir-view-2026-03-222586",
+      "id": "bedok-774-bedok-reservoir-view-2026-03-222596",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

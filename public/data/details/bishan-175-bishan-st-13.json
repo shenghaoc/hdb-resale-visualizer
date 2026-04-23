@@ -10,12 +10,6 @@
       "lng": 103.853736013686
     },
     "medianPrice": 675000,
-    "priceIqr": [
-      640000,
-      687500
-    ],
-    "pricePerSqmMedian": 7954.55,
-    "pricePerSqftMedian": 739,
     "transactionCount": 3,
     "floorAreaRange": [
       83,
@@ -57,7 +51,13 @@
         "stationName": "BRADDELL MRT STATION",
         "distanceMeters": 1157
       }
-    ]
+    ],
+    "priceIqr": [
+      640000,
+      687500
+    ],
+    "pricePerSqmMedian": 7954.55,
+    "pricePerSqftMedian": 739
   },
   "monthlyTrend": [
     {
@@ -898,7 +898,7 @@
       "pricePerSqft": 598.83
     },
     {
-      "id": "bishan-175-bishan-st-13-2012-10-614109",
+      "id": "bishan-175-bishan-st-13-2012-10-614225",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

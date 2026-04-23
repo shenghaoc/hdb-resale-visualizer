@@ -10,12 +10,6 @@
       "lng": 103.888023147529
     },
     "medianPrice": 640000,
-    "priceIqr": [
-      640000,
-      640000
-    ],
-    "pricePerSqmMedian": 6400,
-    "pricePerSqftMedian": 594.58,
     "transactionCount": 1,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 956
       }
-    ]
+    ],
+    "priceIqr": [
+      640000,
+      640000
+    ],
+    "pricePerSqmMedian": 6400,
+    "pricePerSqftMedian": 594.58
   },
   "monthlyTrend": [
     {

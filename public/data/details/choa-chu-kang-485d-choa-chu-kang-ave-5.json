@@ -9,14 +9,8 @@
       "lat": 1.37519914641013,
       "lng": 103.738966077649
     },
-    "medianPrice": 600000,
-    "priceIqr": [
-      560000,
-      625000
-    ],
-    "pricePerSqmMedian": 5172.41,
-    "pricePerSqftMedian": 480.53,
-    "transactionCount": 3,
+    "medianPrice": 623000,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       117
@@ -25,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-04",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "CHOA CHU KANG MRT STATION",
         "distanceMeters": 1211
       }
-    ]
+    ],
+    "priceIqr": [
+      580000,
+      647000
+    ],
+    "pricePerSqmMedian": 5346.89,
+    "pricePerSqftMedian": 496.74
   },
   "monthlyTrend": [
     {
@@ -514,11 +514,30 @@
       "medianPrice": 650000,
       "transactionCount": 1,
       "medianPricePerSqm": 5603.45
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 646000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5521.37
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-485d-choa-chu-kang-ave-5-2026-03-224039",
+      "id": "choa-chu-kang-485d-choa-chu-kang-ave-5-2026-04-224076",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 117,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 646000,
+      "pricePerSqm": 5521.37,
+      "pricePerSqft": 512.95
+    },
+    {
+      "id": "choa-chu-kang-485d-choa-chu-kang-ave-5-2026-03-224072",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -763,19 +782,6 @@
       "resalePrice": 350000,
       "pricePerSqm": 3500,
       "pricePerSqft": 325.16
-    },
-    {
-      "id": "choa-chu-kang-485d-choa-chu-kang-ave-5-2017-12-19345",
-      "month": "2017-12",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 116,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "80 years 06 months",
-      "resalePrice": 400000,
-      "pricePerSqm": 3448.28,
-      "pricePerSqft": 320.36
     }
   ]
 }

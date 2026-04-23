@@ -10,12 +10,6 @@
       "lng": 103.878108300823
     },
     "medianPrice": 610000,
-    "priceIqr": [
-      560944,
-      663500
-    ],
-    "pricePerSqmMedian": 5826.45,
-    "pricePerSqftMedian": 541.3,
     "transactionCount": 7,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 1712
       }
-    ]
+    ],
+    "priceIqr": [
+      560944,
+      663500
+    ],
+    "pricePerSqmMedian": 5826.45,
+    "pricePerSqftMedian": 541.3
   },
   "monthlyTrend": [
     {
@@ -494,7 +494,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-954-hougang-ave-9-2026-03-224690",
+      "id": "hougang-954-hougang-ave-9-2026-03-224737",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -507,7 +507,7 @@
       "pricePerSqft": 533.5
     },
     {
-      "id": "hougang-954-hougang-ave-9-2026-01-224686",
+      "id": "hougang-954-hougang-ave-9-2026-01-224733",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

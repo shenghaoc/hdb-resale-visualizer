@@ -10,12 +10,6 @@
       "lng": 103.913979040224
     },
     "medianPrice": 612944,
-    "priceIqr": [
-      593166,
-      639500
-    ],
-    "pricePerSqmMedian": 6662.43,
-    "pricePerSqftMedian": 618.96,
     "transactionCount": 4,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "MERIDIAN LRT STATION",
         "distanceMeters": 608
       }
-    ]
+    ],
+    "priceIqr": [
+      593166,
+      639500
+    ],
+    "pricePerSqmMedian": 6662.43,
+    "pricePerSqftMedian": 618.96
   },
   "monthlyTrend": [
     {
@@ -276,7 +276,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-168b-punggol-east-2026-02-226118",
+      "id": "punggol-168b-punggol-east-2026-02-226186",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

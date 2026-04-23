@@ -10,12 +10,6 @@
       "lng": 103.774522627887
     },
     "medianPrice": 1067500,
-    "priceIqr": [
-      898750,
-      1122000
-    ],
-    "pricePerSqmMedian": 8630.2,
-    "pricePerSqftMedian": 801.78,
     "transactionCount": 8,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "DT4",
         "distanceMeters": 1962
       }
-    ]
+    ],
+    "priceIqr": [
+      898750,
+      1122000
+    ],
+    "pricePerSqmMedian": 8630.2,
+    "pricePerSqftMedian": 801.78
   },
   "monthlyTrend": [
     {
@@ -608,7 +608,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-5-toh-yi-dr-2026-01-223762",
+      "id": "bukit-timah-5-toh-yi-dr-2026-01-223789",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

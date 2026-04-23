@@ -10,12 +10,6 @@
       "lng": 103.905380700368
     },
     "medianPrice": 615000,
-    "priceIqr": [
-      595000,
-      620000
-    ],
-    "pricePerSqmMedian": 5642.2,
-    "pricePerSqftMedian": 524.18,
     "transactionCount": 5,
     "floorAreaRange": [
       89,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 566
       }
-    ]
+    ],
+    "priceIqr": [
+      595000,
+      620000
+    ],
+    "pricePerSqmMedian": 5642.2,
+    "pricePerSqftMedian": 524.18
   },
   "monthlyTrend": [
     {
@@ -452,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-121c-sengkang-east-way-2026-01-227348",
+      "id": "sengkang-121c-sengkang-east-way-2026-01-227433",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

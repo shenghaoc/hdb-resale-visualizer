@@ -10,12 +10,6 @@
       "lng": 103.773698672408
     },
     "medianPrice": 442500,
-    "priceIqr": [
-      425000,
-      503500
-    ],
-    "pricePerSqmMedian": 5684.93,
-    "pricePerSqftMedian": 528.14,
     "transactionCount": 6,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 552
       }
-    ]
+    ],
+    "priceIqr": [
+      425000,
+      503500
+    ],
+    "pricePerSqmMedian": 5684.93,
+    "pricePerSqftMedian": 528.14
   },
   "monthlyTrend": [
     {
@@ -937,7 +937,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-250-bangkit-rd-2026-02-223544",
+      "id": "bukit-panjang-250-bangkit-rd-2026-02-223569",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

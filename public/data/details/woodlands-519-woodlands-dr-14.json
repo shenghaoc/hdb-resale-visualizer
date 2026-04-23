@@ -10,12 +10,6 @@
       "lng": 103.791962661857
     },
     "medianPrice": 592444,
-    "priceIqr": [
-      567666,
-      642250
-    ],
-    "pricePerSqmMedian": 5661.09,
-    "pricePerSqftMedian": 525.93,
     "transactionCount": 4,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 1136
       }
-    ]
+    ],
+    "priceIqr": [
+      567666,
+      642250
+    ],
+    "pricePerSqmMedian": 5661.09,
+    "pricePerSqftMedian": 525.93
   },
   "monthlyTrend": [
     {
@@ -445,7 +445,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-519-woodlands-dr-14-2026-01-228513",
+      "id": "woodlands-519-woodlands-dr-14-2026-01-228616",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

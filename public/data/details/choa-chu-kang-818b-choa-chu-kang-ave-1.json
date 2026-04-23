@@ -10,12 +10,6 @@
       "lng": 103.748291851205
     },
     "medianPrice": 638000,
-    "priceIqr": [
-      618000,
-      657500
-    ],
-    "pricePerSqmMedian": 6934.78,
-    "pricePerSqftMedian": 644.26,
     "transactionCount": 13,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 620
       }
-    ]
+    ],
+    "priceIqr": [
+      618000,
+      657500
+    ],
+    "pricePerSqmMedian": 6934.78,
+    "pricePerSqftMedian": 644.26
   },
   "monthlyTrend": [
     {
@@ -235,7 +235,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-03-223857",
+      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-03-223884",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -248,7 +248,7 @@
       "pricePerSqft": 644.26
     },
     {
-      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-01-223855",
+      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-01-223882",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -261,7 +261,7 @@
       "pricePerSqft": 663.95
     },
     {
-      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-01-223856",
+      "id": "choa-chu-kang-818b-choa-chu-kang-ave-1-2026-01-223883",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

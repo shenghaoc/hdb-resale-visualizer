@@ -10,12 +10,6 @@
       "lng": 103.913436803622
     },
     "medianPrice": 653500,
-    "priceIqr": [
-      598916,
-      694500
-    ],
-    "pricePerSqmMedian": 6263.64,
-    "pricePerSqftMedian": 581.91,
     "transactionCount": 6,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "MERIDIAN LRT STATION",
         "distanceMeters": 540
       }
-    ]
+    ],
+    "priceIqr": [
+      598916,
+      694500
+    ],
+    "pricePerSqmMedian": 6263.64,
+    "pricePerSqftMedian": 581.91
   },
   "monthlyTrend": [
     {
@@ -500,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-171c-edgedale-plains-2026-03-226271",
+      "id": "punggol-171c-edgedale-plains-2026-03-226341",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

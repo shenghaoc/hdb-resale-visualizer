@@ -10,12 +10,6 @@
       "lng": 103.861218698544
     },
     "medianPrice": 1300000,
-    "priceIqr": [
-      1225000,
-      1378000
-    ],
-    "pricePerSqmMedian": 11926.61,
-    "pricePerSqftMedian": 1108.02,
     "transactionCount": 19,
     "floorAreaRange": [
       69,
@@ -56,7 +50,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 734
       }
-    ]
+    ],
+    "priceIqr": [
+      1225000,
+      1378000
+    ],
+    "pricePerSqmMedian": 11926.61,
+    "pricePerSqftMedian": 1108.02
   },
   "monthlyTrend": [
     {
@@ -518,7 +518,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225538",
+      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225602",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -531,7 +531,7 @@
       "pricePerSqft": 1061.05
     },
     {
-      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225616",
+      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225680",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -544,7 +544,7 @@
       "pricePerSqft": 1128.73
     },
     {
-      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225617",
+      "id": "kallang-whampoa-9-boon-keng-rd-2026-01-225681",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

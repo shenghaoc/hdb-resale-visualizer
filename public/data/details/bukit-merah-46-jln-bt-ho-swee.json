@@ -10,12 +10,6 @@
       "lng": 103.826144732416
     },
     "medianPrice": 425000,
-    "priceIqr": [
-      422500,
-      427500
-    ],
-    "pricePerSqmMedian": 6854.83,
-    "pricePerSqftMedian": 636.84,
     "transactionCount": 2,
     "floorAreaRange": [
       56,
@@ -54,7 +48,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 882
       }
-    ]
+    ],
+    "priceIqr": [
+      422500,
+      427500
+    ],
+    "pricePerSqmMedian": 6854.83,
+    "pricePerSqftMedian": 636.84
   },
   "monthlyTrend": [
     {
@@ -552,7 +552,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-46-jln-bt-ho-swee-2026-01-223276",
+      "id": "bukit-merah-46-jln-bt-ho-swee-2026-01-223297",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

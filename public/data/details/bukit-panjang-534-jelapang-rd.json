@@ -10,12 +10,6 @@
       "lng": 103.764216360638
     },
     "medianPrice": 666000,
-    "priceIqr": [
-      525250,
-      803750
-    ],
-    "pricePerSqmMedian": 5967,
-    "pricePerSqftMedian": 554.35,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 654
       }
-    ]
+    ],
+    "priceIqr": [
+      525250,
+      803750
+    ],
+    "pricePerSqmMedian": 5967,
+    "pricePerSqftMedian": 554.35
   },
   "monthlyTrend": [
     {
@@ -434,7 +434,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-534-jelapang-rd-2026-04-223689",
+      "id": "bukit-panjang-534-jelapang-rd-2026-04-223716",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

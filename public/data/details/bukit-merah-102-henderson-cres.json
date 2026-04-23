@@ -10,12 +10,6 @@
       "lng": 103.82157708445
     },
     "medianPrice": 498000,
-    "priceIqr": [
-      470000,
-      500000
-    ],
-    "pricePerSqmMedian": 6225,
-    "pricePerSqftMedian": 578.32,
     "transactionCount": 7,
     "floorAreaRange": [
       80,
@@ -54,7 +48,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 1260
       }
-    ]
+    ],
+    "priceIqr": [
+      470000,
+      500000
+    ],
+    "pricePerSqmMedian": 6225,
+    "pricePerSqftMedian": 578.32
   },
   "monthlyTrend": [
     {
@@ -834,7 +834,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-102-henderson-cres-2026-03-223384",
+      "id": "bukit-merah-102-henderson-cres-2026-03-223407",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -847,7 +847,7 @@
       "pricePerSqft": 589.93
     },
     {
-      "id": "bukit-merah-102-henderson-cres-2026-01-223382",
+      "id": "bukit-merah-102-henderson-cres-2026-01-223405",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -860,7 +860,7 @@
       "pricePerSqft": 578.32
     },
     {
-      "id": "bukit-merah-102-henderson-cres-2026-01-223383",
+      "id": "bukit-merah-102-henderson-cres-2026-01-223406",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

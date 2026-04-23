@@ -10,12 +10,6 @@
       "lng": 103.898160186775
     },
     "medianPrice": 632500,
-    "priceIqr": [
-      594472,
-      673750
-    ],
-    "pricePerSqmMedian": 5839.88,
-    "pricePerSqftMedian": 542.55,
     "transactionCount": 4,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "CHENG LIM LRT STATION",
         "distanceMeters": 717
       }
-    ]
+    ],
+    "priceIqr": [
+      594472,
+      673750
+    ],
+    "pricePerSqmMedian": 5839.88,
+    "pricePerSqftMedian": 542.55
   },
   "monthlyTrend": [
     {
@@ -398,7 +398,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-239-compassvale-walk-2026-02-227285",
+      "id": "sengkang-239-compassvale-walk-2026-02-227369",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -619,7 +619,7 @@
       "pricePerSqft": 308.41
     },
     {
-      "id": "sengkang-239-compassvale-walk-2016-04-961687",
+      "id": "sengkang-239-compassvale-walk-2016-04-961803",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -632,7 +632,7 @@
       "pricePerSqft": 384.43
     },
     {
-      "id": "sengkang-239-compassvale-walk-2016-03-959933",
+      "id": "sengkang-239-compassvale-walk-2016-03-960049",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -645,7 +645,7 @@
       "pricePerSqft": 396.44
     },
     {
-      "id": "sengkang-239-compassvale-walk-2015-07-948226",
+      "id": "sengkang-239-compassvale-walk-2015-07-948342",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

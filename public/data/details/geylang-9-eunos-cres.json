@@ -10,12 +10,6 @@
       "lng": 103.902774741744
     },
     "medianPrice": 598000,
-    "priceIqr": [
-      590000,
-      620000
-    ],
-    "pricePerSqmMedian": 6571.43,
-    "pricePerSqftMedian": 610.51,
     "transactionCount": 7,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1128
       }
-    ]
+    ],
+    "priceIqr": [
+      590000,
+      620000
+    ],
+    "pricePerSqmMedian": 6571.43,
+    "pricePerSqftMedian": 610.51
   },
   "monthlyTrend": [
     {
@@ -900,7 +900,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-9-eunos-cres-2026-04-224420",
+      "id": "geylang-9-eunos-cres-2026-04-224464",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

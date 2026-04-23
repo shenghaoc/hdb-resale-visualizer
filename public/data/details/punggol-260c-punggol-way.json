@@ -10,12 +10,6 @@
       "lng": 103.896410927147
     },
     "medianPrice": 650000,
-    "priceIqr": [
-      623000,
-      689000
-    ],
-    "pricePerSqmMedian": 6989.25,
-    "pricePerSqftMedian": 649.32,
     "transactionCount": 7,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "PUNGGOL LRT STATION",
         "distanceMeters": 606
       }
-    ]
+    ],
+    "priceIqr": [
+      623000,
+      689000
+    ],
+    "pricePerSqmMedian": 6989.25,
+    "pricePerSqftMedian": 649.32
   },
   "monthlyTrend": [
     {
@@ -210,7 +210,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-260c-punggol-way-2026-04-226219",
+      "id": "punggol-260c-punggol-way-2026-04-226289",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -223,7 +223,7 @@
       "pricePerSqft": 717.25
     },
     {
-      "id": "punggol-260c-punggol-way-2026-04-226221",
+      "id": "punggol-260c-punggol-way-2026-04-226291",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -236,7 +236,7 @@
       "pricePerSqft": 677.29
     },
     {
-      "id": "punggol-260c-punggol-way-2026-01-226210",
+      "id": "punggol-260c-punggol-way-2026-01-226280",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

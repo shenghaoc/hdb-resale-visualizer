@@ -9,14 +9,8 @@
       "lat": 1.39930949012592,
       "lng": 103.900792344556
     },
-    "medianPrice": 398000,
-    "priceIqr": [
-      372000,
-      498000
-    ],
-    "pricePerSqmMedian": 8102.81,
-    "pricePerSqftMedian": 752.78,
-    "transactionCount": 17,
+    "medianPrice": 401944,
+    "transactionCount": 18,
     "floorAreaRange": [
       46,
       67
@@ -25,10 +19,10 @@
       2013,
       2013
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2018-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "PUNGGOL LRT STATION",
         "distanceMeters": 574
       }
-    ]
+    ],
+    "priceIqr": [
+      372750,
+      518250
+    ],
+    "pricePerSqmMedian": 8094.89,
+    "pricePerSqftMedian": 752.04
   },
   "monthlyTrend": [
     {
@@ -388,11 +388,30 @@
       "medianPrice": 425000,
       "transactionCount": 1,
       "medianPricePerSqm": 9239.13
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 528800,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7892.54
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-209c-punggol-pl-2026-03-225930",
+      "id": "punggol-209c-punggol-pl-2026-04-226046",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 08 months",
+      "resalePrice": 528800,
+      "pricePerSqm": 7892.54,
+      "pricePerSqft": 733.24
+    },
+    {
+      "id": "punggol-209c-punggol-pl-2026-03-225998",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",
@@ -405,7 +424,7 @@
       "pricePerSqft": 858.34
     },
     {
-      "id": "punggol-209c-punggol-pl-2026-02-225929",
+      "id": "punggol-209c-punggol-pl-2026-02-225997",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "16 TO 18",
@@ -637,19 +656,6 @@
       "resalePrice": 478888,
       "pricePerSqm": 7147.58,
       "pricePerSqft": 664.03
-    },
-    {
-      "id": "punggol-209c-punggol-pl-2024-01-184040",
-      "month": "2024-01",
-      "flatType": "2 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 46,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "90 years",
-      "resalePrice": 351000,
-      "pricePerSqm": 7630.43,
-      "pricePerSqft": 708.89
     }
   ]
 }

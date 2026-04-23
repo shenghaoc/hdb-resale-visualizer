@@ -10,12 +10,6 @@
       "lng": 103.896193260958
     },
     "medianPrice": 790000,
-    "priceIqr": [
-      704666,
-      807750
-    ],
-    "pricePerSqmMedian": 7128.32,
-    "pricePerSqftMedian": 662.24,
     "transactionCount": 10,
     "floorAreaRange": [
       93,
@@ -55,7 +49,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 592
       }
-    ]
+    ],
+    "priceIqr": [
+      704666,
+      807750
+    ],
+    "pricePerSqmMedian": 7128.32,
+    "pricePerSqftMedian": 662.24
   },
   "monthlyTrend": [
     {
@@ -211,7 +211,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-286a-compassvale-cres-2026-01-227242",
+      "id": "sengkang-286a-compassvale-cres-2026-01-227326",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

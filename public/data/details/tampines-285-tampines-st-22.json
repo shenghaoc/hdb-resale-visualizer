@@ -10,12 +10,6 @@
       "lng": 103.952816059954
     },
     "medianPrice": 480000,
-    "priceIqr": [
-      466944,
-      566500
-    ],
-    "pricePerSqmMedian": 6019.42,
-    "pricePerSqftMedian": 559.22,
     "transactionCount": 7,
     "floorAreaRange": [
       74,
@@ -55,7 +49,13 @@
         "stationName": "TAMPINES MRT STATION",
         "distanceMeters": 944
       }
-    ]
+    ],
+    "priceIqr": [
+      466944,
+      566500
+    ],
+    "pricePerSqmMedian": 6019.42,
+    "pricePerSqftMedian": 559.22
   },
   "monthlyTrend": [
     {
@@ -1147,7 +1147,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-285-tampines-st-22-2026-03-227544",
+      "id": "tampines-285-tampines-st-22-2026-03-227633",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1160,7 +1160,7 @@
       "pricePerSqft": 584.9
     },
     {
-      "id": "tampines-285-tampines-st-22-2026-03-227719",
+      "id": "tampines-285-tampines-st-22-2026-03-227811",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1173,7 +1173,7 @@
       "pricePerSqft": 548.4
     },
     {
-      "id": "tampines-285-tampines-st-22-2026-02-227543",
+      "id": "tampines-285-tampines-st-22-2026-02-227632",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

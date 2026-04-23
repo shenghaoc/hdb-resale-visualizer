@@ -10,12 +10,6 @@
       "lng": 103.901186083098
     },
     "medianPrice": 870000,
-    "priceIqr": [
-      738000,
-      908000
-    ],
-    "pricePerSqmMedian": 8021.74,
-    "pricePerSqftMedian": 745.24,
     "transactionCount": 9,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "SAM KEE LRT STATION",
         "distanceMeters": 418
       }
-    ]
+    ],
+    "priceIqr": [
+      738000,
+      908000
+    ],
+    "pricePerSqmMedian": 8021.74,
+    "pricePerSqftMedian": 745.24
   },
   "monthlyTrend": [
     {
@@ -254,7 +254,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-312c-sumang-link-2026-04-226368",
+      "id": "punggol-312c-sumang-link-2026-04-226441",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -267,7 +267,7 @@
       "pricePerSqft": 753.18
     },
     {
-      "id": "punggol-312c-sumang-link-2026-02-226241",
+      "id": "punggol-312c-sumang-link-2026-02-226311",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

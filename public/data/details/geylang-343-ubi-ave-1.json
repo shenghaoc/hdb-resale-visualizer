@@ -10,12 +10,6 @@
       "lng": 103.900492068781
     },
     "medianPrice": 581444,
-    "priceIqr": [
-      547166,
-      610000
-    ],
-    "pricePerSqmMedian": 5910.22,
-    "pricePerSqftMedian": 549.08,
     "transactionCount": 4,
     "floorAreaRange": [
       84,
@@ -55,7 +49,13 @@
         "stationName": "MACPHERSON MRT STATION",
         "distanceMeters": 1095
       }
-    ]
+    ],
+    "priceIqr": [
+      547166,
+      610000
+    ],
+    "pricePerSqmMedian": 5910.22,
+    "pricePerSqftMedian": 549.08
   },
   "monthlyTrend": [
     {
@@ -757,7 +757,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-343-ubi-ave-1-2026-03-224462",
+      "id": "geylang-343-ubi-ave-1-2026-03-224507",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

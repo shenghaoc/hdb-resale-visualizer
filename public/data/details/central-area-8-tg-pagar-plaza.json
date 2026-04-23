@@ -10,12 +10,6 @@
       "lng": 103.842917174799
     },
     "medianPrice": 801888,
-    "priceIqr": [
-      789166,
-      813166
-    ],
-    "pricePerSqmMedian": 9661.3,
-    "pricePerSqftMedian": 897.57,
     "transactionCount": 4,
     "floorAreaRange": [
       83,
@@ -54,7 +48,13 @@
         "stationName": "OUTRAM PARK MRT STATION",
         "distanceMeters": 418
       }
-    ]
+    ],
+    "priceIqr": [
+      789166,
+      813166
+    ],
+    "pricePerSqmMedian": 9661.3,
+    "pricePerSqftMedian": 897.57
   },
   "monthlyTrend": [
     {
@@ -612,7 +612,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-8-tg-pagar-plaza-2026-03-223815",
+      "id": "central-area-8-tg-pagar-plaza-2026-03-223842",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -625,7 +625,7 @@
       "pricePerSqft": 917.84
     },
     {
-      "id": "central-area-8-tg-pagar-plaza-2026-01-223814",
+      "id": "central-area-8-tg-pagar-plaza-2026-01-223841",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -859,7 +859,7 @@
       "pricePerSqft": 727.55
     },
     {
-      "id": "central-area-8-tg-pagar-plaza-2016-11-973034",
+      "id": "central-area-8-tg-pagar-plaza-2016-11-973150",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

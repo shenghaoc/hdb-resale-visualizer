@@ -10,12 +10,6 @@
       "lng": 103.842187438495
     },
     "medianPrice": 788500,
-    "priceIqr": [
-      757750,
-      819250
-    ],
-    "pricePerSqmMedian": 7289.84,
-    "pricePerSqftMedian": 677.25,
     "transactionCount": 2,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "BISHAN MRT STATION",
         "distanceMeters": 1169
       }
-    ]
+    ],
+    "priceIqr": [
+      757750,
+      819250
+    ],
+    "pricePerSqmMedian": 7289.84,
+    "pricePerSqftMedian": 677.25
   },
   "monthlyTrend": [
     {
@@ -709,7 +709,7 @@
       "pricePerSqft": 537.63
     },
     {
-      "id": "bishan-260-bishan-st-22-2015-08-948838",
+      "id": "bishan-260-bishan-st-22-2015-08-948954",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -722,7 +722,7 @@
       "pricePerSqft": 513.41
     },
     {
-      "id": "bishan-260-bishan-st-22-2013-06-626355",
+      "id": "bishan-260-bishan-st-22-2013-06-626471",
       "month": "2013-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

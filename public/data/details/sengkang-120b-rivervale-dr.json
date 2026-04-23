@@ -10,12 +10,6 @@
       "lng": 103.904394269204
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      615000,
-      860000
-    ],
-    "pricePerSqmMedian": 6089.11,
-    "pricePerSqftMedian": 565.7,
     "transactionCount": 5,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 642
       }
-    ]
+    ],
+    "priceIqr": [
+      615000,
+      860000
+    ],
+    "pricePerSqmMedian": 6089.11,
+    "pricePerSqftMedian": 565.7
   },
   "monthlyTrend": [
     {
@@ -416,7 +416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-120b-rivervale-dr-2026-02-227149",
+      "id": "sengkang-120b-rivervale-dr-2026-02-227232",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

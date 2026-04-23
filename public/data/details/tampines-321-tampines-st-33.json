@@ -10,12 +10,6 @@
       "lng": 103.957515688038
     },
     "medianPrice": 607500,
-    "priceIqr": [
-      591250,
-      618250
-    ],
-    "pricePerSqmMedian": 5448.84,
-    "pricePerSqftMedian": 506.22,
     "transactionCount": 4,
     "floorAreaRange": [
       108,
@@ -56,7 +50,13 @@
         "stationName": "UPPER CHANGI MRT STATION",
         "distanceMeters": 1040
       }
-    ]
+    ],
+    "priceIqr": [
+      591250,
+      618250
+    ],
+    "pricePerSqmMedian": 5448.84,
+    "pricePerSqftMedian": 506.22
   },
   "monthlyTrend": [
     {
@@ -458,7 +458,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-321-tampines-st-33-2026-04-227735",
+      "id": "tampines-321-tampines-st-33-2026-04-227827",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -471,7 +471,7 @@
       "pricePerSqft": 514.73
     },
     {
-      "id": "tampines-321-tampines-st-33-2026-01-227730",
+      "id": "tampines-321-tampines-st-33-2026-01-227822",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.74091413759
     },
     "medianPrice": 639000,
-    "priceIqr": [
-      629500,
-      669500
-    ],
-    "pricePerSqmMedian": 5325,
-    "pricePerSqftMedian": 494.71,
     "transactionCount": 3,
     "floorAreaRange": [
       120,
@@ -54,7 +48,13 @@
         "stationName": "BUKIT BATOK MRT STATION",
         "distanceMeters": 1231
       }
-    ]
+    ],
+    "priceIqr": [
+      629500,
+      669500
+    ],
+    "pricePerSqmMedian": 5325,
+    "pricePerSqftMedian": 494.71
   },
   "monthlyTrend": [
     {

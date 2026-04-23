@@ -10,12 +10,6 @@
       "lng": 103.908408095825
     },
     "medianPrice": 980000,
-    "priceIqr": [
-      970000,
-      980000
-    ],
-    "pricePerSqmMedian": 8166.67,
-    "pricePerSqftMedian": 758.71,
     "transactionCount": 5,
     "floorAreaRange": [
       117,
@@ -54,7 +48,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1198
       }
-    ]
+    ],
+    "priceIqr": [
+      970000,
+      980000
+    ],
+    "pricePerSqmMedian": 8166.67,
+    "pricePerSqftMedian": 758.71
   },
   "monthlyTrend": [
     {
@@ -612,7 +612,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-78-marine-dr-2026-01-225678",
+      "id": "marine-parade-78-marine-dr-2026-01-225743",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

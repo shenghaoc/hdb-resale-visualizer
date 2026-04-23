@@ -9,14 +9,8 @@
       "lat": 1.30337032890276,
       "lng": 103.907439956881
     },
-    "medianPrice": 680000,
-    "priceIqr": [
-      648750,
-      688000
-    ],
-    "pricePerSqmMedian": 8292.68,
-    "pricePerSqftMedian": 770.41,
-    "transactionCount": 12,
+    "medianPrice": 685000,
+    "transactionCount": 11,
     "floorAreaRange": [
       82,
       82
@@ -25,10 +19,10 @@
       1975,
       1975
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-01",
     "availableDateRange": [
       "1990-03",
-      "2026-02"
+      "2026-01"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1136
       }
-    ]
+    ],
+    "priceIqr": [
+      649000,
+      688000
+    ],
+    "pricePerSqmMedian": 8353.66,
+    "pricePerSqftMedian": 776.08
   },
   "monthlyTrend": [
     {
@@ -530,30 +530,11 @@
       "medianPrice": 675000,
       "transactionCount": 1,
       "medianPricePerSqm": 8231.71
-    },
-    {
-      "month": "2026-02",
-      "medianPrice": 650000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7926.83
     }
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-75-marine-dr-2026-02-225668",
-      "month": "2026-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 82,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "49 years 05 months",
-      "resalePrice": 650000,
-      "pricePerSqm": 7926.83,
-      "pricePerSqft": 736.43
-    },
-    {
-      "id": "marine-parade-75-marine-dr-2026-01-225667",
+      "id": "marine-parade-75-marine-dr-2026-01-225733",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -761,7 +742,7 @@
       "pricePerSqft": 560.82
     },
     {
-      "id": "marine-parade-75-marine-dr-2014-03-638008",
+      "id": "marine-parade-75-marine-dr-2014-03-638124",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -774,7 +755,7 @@
       "pricePerSqft": 577.81
     },
     {
-      "id": "marine-parade-75-marine-dr-2014-02-636753",
+      "id": "marine-parade-75-marine-dr-2014-02-636869",
       "month": "2014-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -787,7 +768,7 @@
       "pricePerSqft": 623.13
     },
     {
-      "id": "marine-parade-75-marine-dr-2013-08-629738",
+      "id": "marine-parade-75-marine-dr-2013-08-629854",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -798,6 +779,19 @@
       "resalePrice": 505000,
       "pricePerSqm": 6158.54,
       "pricePerSqft": 572.15
+    },
+    {
+      "id": "marine-parade-75-marine-dr-2013-03-622423",
+      "month": "2013-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 82,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years",
+      "resalePrice": 580000,
+      "pricePerSqm": 7073.17,
+      "pricePerSqft": 657.12
     }
   ]
 }

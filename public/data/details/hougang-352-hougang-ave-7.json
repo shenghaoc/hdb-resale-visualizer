@@ -10,12 +10,6 @@
       "lng": 103.899099276298
     },
     "medianPrice": 541944,
-    "priceIqr": [
-      531250,
-      587222
-    ],
-    "pricePerSqmMedian": 5890.57,
-    "pricePerSqftMedian": 547.26,
     "transactionCount": 6,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 1344
       }
-    ]
+    ],
+    "priceIqr": [
+      531250,
+      587222
+    ],
+    "pricePerSqmMedian": 5890.57,
+    "pricePerSqftMedian": 547.26
   },
   "monthlyTrend": [
     {
@@ -696,7 +696,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-352-hougang-ave-7-2026-03-224659",
+      "id": "hougang-352-hougang-ave-7-2026-03-224706",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -709,7 +709,7 @@
       "pricePerSqft": 541.08
     },
     {
-      "id": "hougang-352-hougang-ave-7-2026-01-224655",
+      "id": "hougang-352-hougang-ave-7-2026-01-224702",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
