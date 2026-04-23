@@ -252,16 +252,16 @@ export function ShortlistDrawer({
                   <Card size="sm" className="bg-muted/40">
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Lowest median</span>
-                        <strong>{highlights.cheapest ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">{t("shortlist.highlights.lowestMedian")}</span>
+                        <strong>{highlights.cheapest ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}` : t("shortlist.na")}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Newest lease</span>
-                        <strong>{highlights.newestLease ? `${highlights.newestLease.block.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">{t("shortlist.highlights.newestLease")}</span>
+                        <strong>{highlights.newestLease ? t("shortlist.highlights.commenceYear", { year: highlights.newestLease.block.leaseCommenceRange[1] }) : t("shortlist.na")}</strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Closest MRT</span>
-                        <strong>{highlights.nearestMrt?.block.nearestMrt ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">{t("shortlist.highlights.closestMrt")}</span>
+                        <strong>{highlights.nearestMrt?.block.nearestMrt ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters)}` : t("shortlist.na")}</strong>
                       </div>
                     </CardContent>
                   </Card>
@@ -370,7 +370,7 @@ export function ShortlistDrawer({
                                 </strong>
                                 {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
                                   <span className="text-sm text-muted-foreground">
-                                    Also near {(row.block.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                                    {t("results.alsoNear", { stations: (row.block.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ") })}
                                   </span>
                                 ) : null}
                               </div>

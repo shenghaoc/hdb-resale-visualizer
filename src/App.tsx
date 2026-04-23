@@ -304,6 +304,16 @@ function App() {
     patchFilters({ selectedAddressKey: addressKey });
   }
 
+  function handleMapInteract() {
+    setIsHeaderVisible(false);
+    if (isDesktop) {
+      setIsDesktopPanelOpen(false);
+      return;
+    }
+
+    setMobileTab(null);
+  }
+
   function patchFilters(patch: Partial<FilterState>) {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
@@ -373,7 +383,7 @@ function App() {
         onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
-        onMapInteract={() => setIsHeaderVisible(false)}
+        onMapInteract={handleMapInteract}
       />
     </Suspense>
   );
