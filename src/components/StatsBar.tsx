@@ -2,19 +2,45 @@ import { formatDateTime, formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import type { Manifest } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
-import { Info } from "lucide-react";
+import { Info, X } from "lucide-react";
+import { useState } from "react";
 
 type GlobalHeaderProps = {
   manifest: Manifest;
   testId?: string;
+  isVisible?: boolean;
+  onDismiss?: () => void;
+  onShow?: () => void;
 };
 
 export function GlobalHeader({
   manifest,
   testId = "global-header",
+  isVisible = true,
+  onDismiss,
+  onShow,
 }: GlobalHeaderProps) {
   const { locale, t } = useI18n();
+  const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
+
+  if (!isVisible) {
+    return (
+      <div data-testid={testId} className="flex">
+        <Button
+          type="button"
+          size="icon"
+          variant="outline"
+          className="size-9 bg-background/85 backdrop-blur-sm"
+          onClick={onShow}
+          aria-label="Show header info"
+        >
+          <Info className="size-4" />
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <header data-testid={testId}>
@@ -38,11 +64,35 @@ export function GlobalHeader({
                 {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })}
               </p>
             </div>
-            <Badge variant="ghost" className="size-8 border border-border/40 p-0 sm:hidden">
-              <Info className="size-4 opacity-40" />
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                className="size-8 border border-border/40 p-0 sm:hidden"
+                onClick={() => setMobileInfoOpen((current) => !current)}
+                aria-label="Toggle metadata"
+              >
+                <Info className="size-4 opacity-60" />
+              </Button>
+              {onDismiss ? (
+                <Button type="button" size="icon" variant="ghost" className="size-8 p-0" onClick={onDismiss} aria-label="Dismiss header">
+                  <X className="size-4" />
+                </Button>
+              ) : null}
+            </div>
           </CardAction>
         </CardHeader>
+        {mobileInfoOpen ? (
+          <div className="flex flex-col gap-2 px-2 pb-2 sm:hidden">
+            <Badge variant="outline" className="h-5 w-fit border-border/50 text-[0.6rem]">
+              {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })}
+            </Badge>
+            <p className="text-[0.65rem] font-medium text-muted-foreground/70">
+              {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })}
+            </p>
+          </div>
+        ) : null}
       </Card>
     </header>
   );

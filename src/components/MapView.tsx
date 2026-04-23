@@ -12,6 +12,7 @@ type MapViewProps = {
   selectedAddressKey: string | null;
   townFilter?: string | null;
   onSelect: (addressKey: string) => void;
+  onMapInteract?: () => void;
 };
 
 const SINGAPORE_BOUNDS: LngLatBoundsLike = [
@@ -93,10 +94,11 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
   return { stationName, lines };
 }
 
-export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: MapViewProps) {
+export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMapInteract }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<Map | null>(null);
   const onSelectRef = useRef(onSelect);
+  const onMapInteractRef = useRef(onMapInteract);
   const popupRef = useRef<Popup | null>(null);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
@@ -111,6 +113,9 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+  useEffect(() => {
+    onMapInteractRef.current = onMapInteract;
+  }, [onMapInteract]);
 
   // Create the map ONCE on mount
   useEffect(() => {
@@ -125,6 +130,9 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       minZoom: 9,
       maxZoom: 20,
       maxBounds: SINGAPORE_BOUNDS,
+      renderWorldCopies: false,
+      dragRotate: false,
+      touchPitch: false,
       style: {
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
@@ -358,6 +366,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       });
 
       map.on("click", "unclustered-point", (event) => {
+        onMapInteractRef.current?.();
         const feature = event.features?.[0];
         const properties = feature?.properties;
         if (properties && typeof properties.address_key === "string") {
@@ -366,6 +375,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       });
 
       map.on("click", "clusters", (event) => {
+        onMapInteractRef.current?.();
         const feature = event.features?.[0];
         const properties = feature?.properties;
         const clusterId =
@@ -393,6 +403,10 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             zoom,
           });
         });
+      });
+
+      map.on("click", () => {
+        onMapInteractRef.current?.();
       });
 
       // Hover popup for unclustered points
@@ -568,4 +582,3 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }
-

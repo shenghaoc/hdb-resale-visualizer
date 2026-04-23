@@ -1,18 +1,20 @@
 import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
-function isShortlistItem(value: unknown): value is ShortlistItem {
+type LegacyShortlistItem = {
+  addressKey: string;
+  notes?: unknown;
+  targetPrice?: unknown;
+  addedAt?: unknown;
+};
+
+function isLegacyShortlistItem(value: unknown): value is LegacyShortlistItem {
   if (typeof value !== "object" || value === null) {
     return false;
   }
 
   const record = value as Record<string, unknown>;
-  return (
-    typeof record.addressKey === "string" &&
-    typeof record.notes === "string" &&
-    (record.targetPrice === null || typeof record.targetPrice === "number") &&
-    typeof record.addedAt === "string"
-  );
+  return typeof record.addressKey === "string";
 }
 
 export function parseShortlist(raw: unknown): ShortlistItem[] {
@@ -20,7 +22,17 @@ export function parseShortlist(raw: unknown): ShortlistItem[] {
     return [];
   }
 
-  return raw.filter(isShortlistItem);
+  return raw
+    .filter(isLegacyShortlistItem)
+    .map((item) => ({
+      addressKey: item.addressKey,
+      notes: typeof item.notes === "string" ? item.notes : "",
+      targetPrice: typeof item.targetPrice === "number" ? item.targetPrice : null,
+      addedAt:
+        typeof item.addedAt === "string" && item.addedAt.length > 0
+          ? item.addedAt
+          : new Date(0).toISOString(),
+    }));
 }
 
 function bytesToBase64(bytes: Uint8Array) {

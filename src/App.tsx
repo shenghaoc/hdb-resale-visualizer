@@ -71,6 +71,7 @@ function App() {
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -362,6 +363,7 @@ function App() {
         onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
         townFilter={filters.town}
+        onMapInteract={() => setIsHeaderVisible(false)}
       />
     </Suspense>
   );
@@ -445,7 +447,12 @@ function App() {
                 </select>
               </div>
               <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
-                <GlobalHeader manifest={manifest} />
+                <GlobalHeader
+                  manifest={manifest}
+                  isVisible={isHeaderVisible}
+                  onDismiss={() => setIsHeaderVisible(false)}
+                  onShow={() => setIsHeaderVisible(true)}
+                />
               </div>
             </div>
           </div>
@@ -472,7 +479,7 @@ function App() {
                       <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
                         {filterContent}
                       </TabsContent>
-                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
+                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
                           <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
@@ -480,7 +487,7 @@ function App() {
                           </div>
                         </div>
                       </TabsContent>
-                      <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1">
+                      <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
                         {savedContent}
                       </TabsContent>
                     </Tabs>
@@ -498,7 +505,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "results" && (
-                    <div className="flex h-full min-h-0 flex-col gap-4">
+                    <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
                       {selectedDetailContent}
                       <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
                         {resultsPaneContent}
@@ -506,7 +513,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div className="h-full min-h-0 overflow-hidden">
+                    <div className="h-full min-h-0 overflow-y-auto">
                       {savedContent}
                     </div>
                   )}
