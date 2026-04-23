@@ -1,8 +1,20 @@
-type LineCode = "NSL" | "EWL" | "NEL" | "CCL" | "DTL" | "TEL" | "LRT";
+import {
+  DEFAULT_STATION_COLOR,
+  LRT_LINE_COLOR,
+  MRT_LINE_COLORS,
+  type RailLineCode,
+} from "../../src/lib/mrt-colors";
+
+type LineCode = RailLineCode;
+
+const LINE_COLORS = {
+  ...MRT_LINE_COLORS,
+  LRT: LRT_LINE_COLOR,
+} satisfies Record<LineCode, string>;
 
 const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> = {
   NSL: {
-    color: "#d11141",
+    color: LINE_COLORS.NSL,
     stations: new Set([
       "JURONG EAST", "BUKIT BATOK", "BUKIT GOMBAK", "CHOA CHU KANG", "YEW TEE", "KRANJI", "MARSILING", "WOODLANDS",
       "ADMIRALTY", "SEMBAWANG", "CANBERRA", "YISHUN", "KHATIB", "YIO CHU KANG", "ANG MO KIO", "BISHAN", "BRADDELL",
@@ -11,7 +23,7 @@ const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> 
     ]),
   },
   EWL: {
-    color: "#00a651",
+    color: LINE_COLORS.EWL,
     stations: new Set([
       "PASIR RIS", "TAMPINES", "SIMEI", "TANAH MERAH", "BEDOK", "KEMBANGAN", "EUNOS", "PAYA LEBAR", "ALJUNIED", "KALLANG",
       "LAVENDER", "BUGIS", "TANJONG PAGAR", "OUTRAM PARK", "TIONG BAHRU", "REDHILL", "QUEENSTOWN", "COMMONWEALTH", "BUONA VISTA",
@@ -20,14 +32,14 @@ const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> 
     ]),
   },
   NEL: {
-    color: "#9b26b6",
+    color: LINE_COLORS.NEL,
     stations: new Set([
       "HARBOURFRONT", "OUTRAM PARK", "CHINATOWN", "CLARKE QUAY", "DHOBY GHAUT", "LITTLE INDIA", "FARRER PARK",
       "BOON KENG", "POTONG PASIR", "WOODLEIGH", "SERANGOON", "KOVAN", "HOUGANG", "BUANGKOK", "SENGKANG", "PUNGGOL",
     ]),
   },
   CCL: {
-    color: "#fca311",
+    color: LINE_COLORS.CCL,
     stations: new Set([
       "DHOBY GHAUT", "BRAS BASAH", "ESPLANADE", "PROMENADE", "NICOLL HIGHWAY", "STADIUM", "MOUNTBATTEN", "DAKOTA",
       "PAYA LEBAR", "MACPHERSON", "TAI SENG", "BARTLEY", "SERANGOON", "LORONG CHUAN", "BISHAN", "MARYMOUNT", "CALDECOTT",
@@ -36,7 +48,7 @@ const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> 
     ]),
   },
   DTL: {
-    color: "#00539b",
+    color: LINE_COLORS.DTL,
     stations: new Set([
       "BUKIT PANJANG", "CASHEW", "HILLVIEW", "BEAUTY WORLD", "KING ALBERT PARK", "SIXTH AVENUE", "TAN KAH KEE",
       "BOTANIC GARDENS", "STEVENS", "NEWTON", "LITTLE INDIA", "ROCHOR", "BUGIS", "PROMENADE", "BAYFRONT", "DOWNTOWN",
@@ -46,7 +58,7 @@ const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> 
     ]),
   },
   TEL: {
-    color: "#764c24",
+    color: LINE_COLORS.TEL,
     stations: new Set([
       "WOODLANDS NORTH", "WOODLANDS", "WOODLANDS SOUTH", "SPRINGLEAF", "LENTOR", "MAYFLOWER", "BRIGHT HILL",
       "UPPER THOMSON", "CALDECOTT", "STEVENS", "NAPIER", "ORCHARD BOULEVARD", "ORCHARD", "GREAT WORLD",
@@ -55,7 +67,7 @@ const LINE_METADATA: Record<LineCode, { color: string; stations: Set<string> }> 
     ]),
   },
   LRT: {
-    color: "#7c878e",
+    color: LINE_COLORS.LRT,
     stations: new Set(),
   },
 };
@@ -133,7 +145,7 @@ export function getStationDetails(stationName: string): { color: string; lines: 
   const primaryLine = matchedLines[0];
 
   return {
-    color: primaryLine ? LINE_METADATA[primaryLine].color : "#2563eb",
+    color: primaryLine ? LINE_METADATA[primaryLine].color : DEFAULT_STATION_COLOR,
     lines: matchedLines,
     isInterchange,
   };
