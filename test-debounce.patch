@@ -1,0 +1,10 @@
+--- src/App.tsx
++++ src/App.tsx
+@@ -155,7 +155,6 @@
+     () => ({ ...filters, selectedAddressKey: null }),
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+     [
+-      filters.search,
+       filters.town,
+       filters.flatType,
+       filters.flatModel,
