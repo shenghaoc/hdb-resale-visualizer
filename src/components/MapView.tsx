@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import maplibregl, { LngLatBoundsLike, Map, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { ONEMAP_ATTRIBUTION, ONEMAP_TILE_URL } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary } from "@/types/data";
 
 type MapViewProps = {
@@ -14,8 +15,8 @@ type MapViewProps = {
 };
 
 const SINGAPORE_BOUNDS: LngLatBoundsLike = [
-  [103.605, 1.239],
-  [104.043, 1.474],
+  [103.55, 1.15],
+  [104.13, 1.5],
 ];
 
 type PopupProperties = {
@@ -100,6 +101,12 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
 
+  // Memoize GeoJSON to avoid rebuilding the object on every render
+  const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
+
+  // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
+  const debouncedTownFilter = useDebouncedValue(townFilter, 400);
+
   // Keep onSelect ref fresh without triggering map recreation
   useEffect(() => {
     onSelectRef.current = onSelect;
@@ -126,8 +133,6 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             type: "raster",
             tiles: [ONEMAP_TILE_URL],
             tileSize: 256,
-            // OneMap tiles are only published up to zoom 18; MapLibre will
-            // upscale them for zoom 19 rather than fetching nonexistent tiles.
             maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
           },
@@ -163,29 +168,19 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         type: "circle",
         source: "mrt-stations",
         paint: {
-          "circle-radius": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            8,
-            7,
-          ],
+          "circle-radius": ["case", ["==", ["get", "isInterchange"], true], 8, 7],
           "circle-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
             "#fff",
-            ["coalesce", ["get", "color"], "#2563eb"]
+            ["coalesce", ["get", "color"], "#2563eb"],
           ],
-          "circle-stroke-width": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            2.5,
-            1.5,
-          ],
+          "circle-stroke-width": ["case", ["==", ["get", "isInterchange"], true], 2.5, 1.5],
           "circle-stroke-color": [
             "case",
             ["==", ["get", "isInterchange"], true],
             "#111827",
-            "#fff"
+            "#fff",
           ],
         },
       });
@@ -200,12 +195,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           "text-font": ["Noto Sans Bold"],
         },
         paint: {
-          "text-color": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            "#111827",
-            "#fff"
-          ],
+          "text-color": ["case", ["==", ["get", "isInterchange"], true], "#111827", "#fff"],
         },
       });
 
@@ -225,7 +215,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             "case",
             ["==", ["get", "isInterchange"], true],
             "#111827",
-            ["coalesce", ["get", "color"], "#1e40af"]
+            ["coalesce", ["get", "color"], "#1e40af"],
           ],
           "text-halo-color": "#fff",
           "text-halo-width": 1.5,
@@ -251,12 +241,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
               ["at", 2, ["get", "lines"]],
             ],
             [">=", ["length", ["get", "lines"]], 2],
-            [
-              "concat",
-              ["at", 0, ["get", "lines"]],
-              "/",
-              ["at", 1, ["get", "lines"]],
-            ],
+            ["concat", ["at", 0, ["get", "lines"]], "/", ["at", 1, ["get", "lines"]]],
             ["at", 0, ["get", "lines"]],
           ],
           "text-size": 9,
@@ -285,17 +270,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         filter: ["has", "point_count"],
         paint: {
           "circle-color": "#2563eb",
-          "circle-radius": [
-            "step",
-            ["get", "point_count"],
-            16,
-            10,
-            20,
-            30,
-            28,
-            100,
-            36,
-          ],
+          "circle-radius": ["step", ["get", "point_count"], 16, 10, 20, 30, 28, 100, 36],
           "circle-opacity": 0.9,
         },
       });
@@ -333,17 +308,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
             1200000,
             "#1d4ed8",
           ],
-          "circle-radius": [
-            "interpolate",
-            ["linear"],
-            ["get", "transaction_count"],
-            1,
-            6,
-            10,
-            10,
-            25,
-            16,
-          ],
+          "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "#eff6ff",
           "circle-opacity": 0.9,
@@ -356,17 +321,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         source: "blocks",
         filter: ["==", ["get", "address_key"], ""],
         paint: {
-          "circle-radius": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            10,
-            12,
-            14,
-            24,
-            18,
-            36,
-          ],
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 12, 14, 24, 18, 36],
           "circle-color": "rgba(29, 78, 216, 0.18)",
           "circle-stroke-width": 3,
           "circle-stroke-color": "#1e3a8a",
@@ -414,11 +369,14 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         const feature = event.features?.[0];
         const properties = feature?.properties;
         const clusterId =
-          properties && typeof properties.cluster_id === "number"
-            ? properties.cluster_id
-            : null;
+          properties && typeof properties.cluster_id === "number" ? properties.cluster_id : null;
 
-        if (clusterId === null || !feature || !feature.geometry || feature.geometry.type !== "Point") {
+        if (
+          clusterId === null ||
+          !feature ||
+          !feature.geometry ||
+          feature.geometry.type !== "Point"
+        ) {
           return;
         }
 
@@ -474,10 +432,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
         infoEl.textContent = `${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`;
         container.appendChild(infoEl);
 
-        popup
-          .setLngLat([lng, lat])
-          .setDOMContent(container)
-          .addTo(map);
+        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
       });
 
       map.on("mouseleave", "unclustered-point", () => {
@@ -516,10 +471,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
           container.appendChild(linesEl);
         }
 
-        popup
-          .setLngLat([lng, lat])
-          .setDOMContent(container)
-          .addTo(map);
+        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
       });
 
       map.on("mouseleave", "mrt-icons", () => {
@@ -538,7 +490,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
     };
   }, []);
 
-  // Update the GeoJSON source data when blocks change — WITHOUT recreating the map
+  // Update the GeoJSON source data when blocks change
   useEffect(() => {
     const map = mapRef.current;
     if (!map) {
@@ -550,7 +502,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
     function updateData() {
       const source = mapInstance.getSource("blocks");
       if (isGeoJsonSourceLike(source)) {
-        source.setData(toGeoJson(blocks));
+        source.setData(geoJson);
       }
     }
 
@@ -559,16 +511,15 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
     } else {
       void mapInstance.once("load", updateData);
     }
-  }, [blocks]);
+  }, [geoJson]);
 
   // Fit bounds when townFilter changes
   useEffect(() => {
     const map = mapRef.current;
     if (!map || blocks.length === 0) return;
 
-    const nextTownFilter = townFilter ?? null;
-    const shouldFit =
-      !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+    const nextTownFilter = debouncedTownFilter ?? null;
+    const shouldFit = !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
 
     previousTownFilterRef.current = nextTownFilter;
 
@@ -578,17 +529,19 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
 
     hasInitialFitRef.current = true;
 
-    let minLng = Infinity, maxLng = -Infinity;
-    let minLat = Infinity, maxLat = -Infinity;
+    let minLng = Infinity,
+      maxLng = -Infinity;
+    let minLat = Infinity,
+      maxLat = -Infinity;
     for (const b of blocks) {
-       minLng = Math.min(minLng, b.coordinates.lng);
-       maxLng = Math.max(maxLng, b.coordinates.lng);
-       minLat = Math.min(minLat, b.coordinates.lat);
-       maxLat = Math.max(maxLat, b.coordinates.lat);
+      minLng = Math.min(minLng, b.coordinates.lng);
+      maxLng = Math.max(maxLng, b.coordinates.lng);
+      minLat = Math.min(minLat, b.coordinates.lat);
+      maxLat = Math.max(maxLat, b.coordinates.lat);
     }
 
     // Default Singapore bounds if min/max collapsed or townFilter is missing
-    if (minLng === Infinity || !townFilter) {
+    if (minLng === Infinity || !debouncedTownFilter) {
       map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
       return;
     }
@@ -596,11 +549,11 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
     map.fitBounds(
       [
         [minLng, minLat],
-        [maxLng, maxLat]
+        [maxLng, maxLat],
       ],
-      { padding: 60, maxZoom: 15, duration: 1200 }
+      { padding: 60, maxZoom: 15, duration: 1200 },
     );
-  }, [blocks, townFilter]);
+  }, [blocks, debouncedTownFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
@@ -609,17 +562,10 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect }: Ma
       return;
     }
 
-    map.setFilter("selected-point", [
-      "==",
-      ["get", "address_key"],
-      selectedAddressKey ?? "",
-    ]);
-    map.setFilter("selected-point-label", [
-      "==",
-      ["get", "address_key"],
-      selectedAddressKey ?? "",
-    ]);
+    map.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
+    map.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
   }, [selectedAddressKey]);
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }
+

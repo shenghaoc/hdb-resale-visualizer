@@ -25,8 +25,18 @@ type TrendChartProps = {
 };
 
 export function TrendChart({ points }: TrendChartProps) {
-  const option = useMemo(
-    () => ({
+  const option = useMemo(() => {
+    const prices = points.map((p) => p.medianPrice);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const range = maxPrice - minPrice;
+
+    // Use a baseline that highlights fluctuations while maintaining context
+    // We aim for the bottom of the chart to be around 80% of the minimum price,
+    // or slightly less if the range is very small.
+    const yMin = Math.floor(Math.max(0, minPrice - range * 0.5) / 10000) * 10000;
+
+    return {
       animationDuration: 500,
       backgroundColor: "transparent",
       color: ["#3a2d24", "#c5b7a4"],
@@ -64,6 +74,7 @@ export function TrendChart({ points }: TrendChartProps) {
       yAxis: [
         {
           type: "value",
+          min: yMin,
           axisLine: { show: false },
           axisTick: { show: false },
           splitLine: {
@@ -116,9 +127,9 @@ export function TrendChart({ points }: TrendChartProps) {
           },
         },
       ],
-    }),
-    [points],
-  );
+    };
+  }, [points]);
+
 
   return (
     <ReactEChartsCore
