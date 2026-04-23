@@ -1,19 +1,19 @@
 import { useMemo, useState } from "react";
+import * as echarts from "echarts/core";
+import { LineChart } from "echarts/charts";
+import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import ReactEChartsCore from "echarts-for-react/lib/core";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
-import type { AddressDetailSummary, BlockSummary, ShortlistItem } from "@/types/data";
+import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Field,
-  FieldContent,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -27,6 +27,7 @@ type ShortlistRow = {
   item: ShortlistItem;
   block: BlockSummary;
   detailSummary: AddressDetailSummary | null;
+  monthlyTrend: AddressTrendPoint[];
 };
 
 type CompareMode = "median" | "lease" | "mrt" | "target-gap";
@@ -44,6 +45,8 @@ type GapInfo = {
   labelKey: "shortlist.gap.belowTarget" | "shortlist.gap.aboveTarget";
   tone: "positive" | "negative";
 };
+
+echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
 
 function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | null {
   if (targetPrice === null) {
@@ -82,7 +85,7 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
 }: ShortlistDrawerProps) {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
 
   function handleShare() {
@@ -129,35 +132,41 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
-  const rankedRows = useMemo(() => [...rows].sort((left, right) => {
-    if (compareMode === "median") {
-      return left.block.medianPrice - right.block.medianPrice;
-    }
+  const rankedRows = useMemo(
+    () =>
+      [...rows].sort((left, right) => {
+        if (compareMode === "median") {
+          return left.block.medianPrice - right.block.medianPrice;
+        }
 
-    if (compareMode === "lease") {
-      return right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1];
-    }
+        if (compareMode === "lease") {
+          return right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1];
+        }
 
-    if (compareMode === "mrt") {
-      const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      return leftDistance - rightDistance;
-    }
+        if (compareMode === "mrt") {
+          const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+          const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+          return leftDistance - rightDistance;
+        }
 
-    const leftGap =
-      left.item.targetPrice === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(left.item.targetPrice - left.block.medianPrice);
-    const rightGap =
-      right.item.targetPrice === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(right.item.targetPrice - right.block.medianPrice);
-    return leftGap - rightGap;
-  }), [compareMode, rows]);
+        const leftGap =
+          left.item.targetPrice === null
+            ? Number.POSITIVE_INFINITY
+            : Math.abs(left.item.targetPrice - left.block.medianPrice);
+        const rightGap =
+          right.item.targetPrice === null
+            ? Number.POSITIVE_INFINITY
+            : Math.abs(right.item.targetPrice - right.block.medianPrice);
+        return leftGap - rightGap;
+      }),
+    [compareMode, rows],
+  );
 
   const highlights = useMemo(() => {
     const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
-    const byLease = [...rows].sort((left, right) => right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1]);
+    const byLease = [...rows].sort(
+      (left, right) => right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1],
+    );
     const byMrt = [...rows].sort((left, right) => {
       const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
       const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
@@ -170,6 +179,64 @@ export function ShortlistDrawer({
       nearestMrt: byMrt[0] ?? null,
     };
   }, [rows]);
+
+  const comparisonRows = useMemo(
+    () => rows.filter((row) => row.monthlyTrend.length > 0),
+    [rows],
+  );
+  const compareOption = useMemo(() => {
+    if (comparisonRows.length < 2) {
+      return null;
+    }
+
+    const monthSet = new Set<string>();
+    for (const row of comparisonRows) {
+      for (const point of row.monthlyTrend) {
+        monthSet.add(point.month);
+      }
+    }
+    const months = [...monthSet].sort((left, right) => left.localeCompare(right));
+    const series = comparisonRows.map((row) => {
+      const monthToPrice = new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice]));
+      return {
+        name: `${row.block.block} ${row.block.streetName}`,
+        type: "line",
+        smooth: true,
+        showSymbol: false,
+        lineStyle: { width: 2.5 },
+        data: months.map((month) => monthToPrice.get(month) ?? null),
+      };
+    });
+
+    return {
+      animationDuration: 400,
+      backgroundColor: "transparent",
+      grid: { left: 8, right: 12, top: 56, bottom: 30, containLabel: true },
+      tooltip: {
+        trigger: "axis",
+        valueFormatter: (value: number | null) =>
+          value === null ? t("shortlist.na") : formatCompactCurrency(value),
+      },
+      legend: {
+        type: "scroll",
+        top: 8,
+      },
+      xAxis: {
+        type: "category",
+        data: months,
+        axisLabel: {
+          formatter: (value: string) => value.slice(2),
+        },
+      },
+      yAxis: {
+        type: "value",
+        axisLabel: {
+          formatter: (value: number) => formatCompactCurrency(value),
+        },
+      },
+      series,
+    };
+  }, [comparisonRows, t]);
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
@@ -195,7 +262,7 @@ export function ShortlistDrawer({
                   onClick={() => setCompareMode("target-gap")}
                   type="button"
                 >
-                  Target fit
+                  {t("shortlist.compare.targetFit")}
                 </Button>
                 <Button
                   variant={compareMode === "median" ? "secondary" : "outline"}
@@ -203,7 +270,7 @@ export function ShortlistDrawer({
                   onClick={() => setCompareMode("median")}
                   type="button"
                 >
-                  Price
+                  {t("shortlist.compare.price")}
                 </Button>
                 <Button
                   variant={compareMode === "lease" ? "secondary" : "outline"}
@@ -211,7 +278,7 @@ export function ShortlistDrawer({
                   onClick={() => setCompareMode("lease")}
                   type="button"
                 >
-                  Lease
+                  {t("shortlist.compare.lease")}
                 </Button>
                 <Button
                   variant={compareMode === "mrt" ? "secondary" : "outline"}
@@ -219,7 +286,7 @@ export function ShortlistDrawer({
                   onClick={() => setCompareMode("mrt")}
                   type="button"
                 >
-                  MRT
+                  {t("shortlist.compare.mrt")}
                 </Button>
               </ButtonGroup>
               <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
@@ -243,202 +310,259 @@ export function ShortlistDrawer({
         {isOpen ? (
           <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
             {rows.length === 0 ? (
-              <div className="empty-state">
-                {t("shortlist.emptyState")}
-              </div>
+              <div className="empty-state">{t("shortlist.emptyState")}</div>
             ) : (
               <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
                 <div className="flex flex-col gap-4 pb-4">
                   <Card size="sm" className="bg-muted/40">
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Lowest median</span>
-                        <strong>{highlights.cheapest ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">
+                          {t("shortlist.lowestMedian")}
+                        </span>
+                        <strong>
+                          {highlights.cheapest
+                            ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}`
+                            : t("shortlist.na")}
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Newest lease</span>
-                        <strong>{highlights.newestLease ? `${highlights.newestLease.block.leaseCommenceRange[1]} commence` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">
+                          {t("shortlist.newestLease")}
+                        </span>
+                        <strong>
+                          {highlights.newestLease
+                            ? t("shortlist.commence", {
+                                year: highlights.newestLease.block.leaseCommenceRange[1],
+                              })
+                            : t("shortlist.na")}
+                        </strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Closest MRT</span>
-                        <strong>{highlights.nearestMrt?.block.nearestMrt ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters)}` : "N/A"}</strong>
+                        <span className="text-xs text-muted-foreground">
+                          {t("shortlist.closestMrt")}
+                        </span>
+                        <strong>
+                          {highlights.nearestMrt?.block.nearestMrt
+                            ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters, t, locale)}`
+                            : t("shortlist.na")}
+                        </strong>
                       </div>
                     </CardContent>
                   </Card>
+                  {compareOption ? (
+                    <Card size="sm" className="bg-muted/40">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base">{t("shortlist.compareTrendsTitle")}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p id="compare-trends-hint" className="pb-3 text-xs text-muted-foreground">{t("shortlist.compareTrendsHint")}</p>
+                        <ReactEChartsCore
+                          echarts={echarts}
+                          notMerge
+                          option={compareOption}
+                          style={{ height: 260, width: "100%" }}
+                          aria-label={t("shortlist.compareTrendsTitle")}
+                          aria-describedby="compare-trends-hint"
+                          role="img"
+                        />
+                      </CardContent>
+                    </Card>
+                  ) : null}
 
-                    {rankedRows.map((row) => {
-                      const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
-                      const remainingLeaseRange = getRemainingLeaseRange(
-                        row.block.leaseCommenceRange,
-                      );
+                  {rankedRows.map((row) => {
+                    const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
+                    const remainingLeaseRange = getRemainingLeaseRange(row.block.leaseCommenceRange);
 
-                      return (
-                        <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
-                          <CardHeader className="gap-3 border-b border-border/60 pb-5">
-                            <div className="flex flex-wrap items-start gap-3">
-                              <div className="flex flex-1 flex-col gap-2">
-                                <CardTitle className="text-lg">
-                                  {row.block.block} {row.block.streetName}
-                                </CardTitle>
-                              </div>
-                              <Button
-                                size="xs"
-                                variant="ghost"
-                                onClick={() => onRemove(row.item.addressKey)}
-                                type="button"
-                              >
-                                <X data-icon="inline-start" />
-                                {t("shortlist.remove")}
-                              </Button>
+                    return (
+                      <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
+                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
+                          <div className="flex flex-wrap items-start gap-3">
+                            <div className="flex flex-1 flex-col gap-2">
+                              <CardTitle className="text-lg">
+                                {row.block.block} {row.block.streetName}
+                              </CardTitle>
                             </div>
-                          </CardHeader>
-                          <CardContent className="flex flex-col gap-5 pt-5">
-                            <div className="grid gap-4 sm:grid-cols-2">
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.marketMedian")}
-                                </span>
-                                <strong className="font-heading text-2xl font-semibold">
-                                  {formatCompactCurrency(row.block.medianPrice)}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {formatCurrency(row.block.medianPrice)}
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.pricePerSqft")}
-                                </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {row.detailSummary
-                                    ? row.detailSummary.pricePerSqftMedian !== null
-                                      ? formatCurrency(row.detailSummary.pricePerSqftMedian)
-                                      : t("shortlist.na")
-                                    : t("shortlist.loadingMetrics")}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {row.detailSummary
-                                    ? t("shortlist.pricePerSqm", {
-                                        value: formatNumber(row.detailSummary.pricePerSqmMedian),
-                                      })
-                                    : t("shortlist.loadingMetrics")}
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.areaRange")}
-                                </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.areaRangeValue", {
-                                    min: formatNumber(row.block.floorAreaRange[0], 1),
-                                    max: formatNumber(row.block.floorAreaRange[1], 1),
-                                  })}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {row.block.flatTypes.join(", ")}
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.leaseContext")}
-                                </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.leaseLeftRange", {
-                                    min: remainingLeaseRange[0],
-                                    max: remainingLeaseRange[1],
-                                  })}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.leaseCommenceRange", {
-                                    start: row.block.leaseCommenceRange[0],
-                                    end: row.block.leaseCommenceRange[1],
-                                  })}
-                                </span>
-                              </div>
+                            <Button
+                              size="xs"
+                              variant="ghost"
+                              onClick={() => onRemove(row.item.addressKey)}
+                              type="button"
+                            >
+                              <X data-icon="inline-start" />
+                              {t("shortlist.remove")}
+                            </Button>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-5 pt-5">
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                {t("shortlist.marketMedian")}
+                              </span>
+                              <strong className="font-heading text-2xl font-semibold">
+                                {formatCompactCurrency(row.block.medianPrice, locale)}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {formatCurrency(row.block.medianPrice, locale)}
+                              </span>
                             </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                {t("shortlist.pricePerSqft")}
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {row.detailSummary
+                                  ? row.detailSummary.pricePerSqftMedian !== null
+                                    ? formatCurrency(row.detailSummary.pricePerSqftMedian, locale)
+                                    : t("shortlist.na")
+                                  : t("shortlist.loadingMetrics")}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {row.detailSummary
+                                  ? t("shortlist.pricePerSqm", {
+                                      value: formatNumber(
+                                        row.detailSummary.pricePerSqmMedian,
+                                        0,
+                                        locale,
+                                      ),
+                                    })
+                                  : t("shortlist.loadingMetrics")}
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                {t("shortlist.areaRange")}
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {t("shortlist.areaRangeValue", {
+                                  min: formatNumber(row.block.floorAreaRange[0], 1, locale),
+                                  max: formatNumber(row.block.floorAreaRange[1], 1, locale),
+                                })}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {row.block.flatTypes.join(", ")}
+                              </span>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                {t("shortlist.leaseContext")}
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {t("shortlist.leaseLeftRange", {
+                                  min: remainingLeaseRange[0],
+                                  max: remainingLeaseRange[1],
+                                })}
+                              </strong>
+                              <span className="text-sm text-muted-foreground">
+                                {t("shortlist.leaseCommenceRange", {
+                                  start: row.block.leaseCommenceRange[0],
+                                  end: row.block.leaseCommenceRange[1],
+                                })}
+                              </span>
+                            </div>
+                          </div>
 
-                            <div className="grid gap-4 sm:grid-cols-2">
-                              <div className="flex flex-col gap-2">
-                                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  <TrainFront className="size-3.5" />
-                                  {t("results.nearestMrt")}
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="flex flex-col gap-2">
+                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                <TrainFront className="size-3.5" />
+                                {t("results.nearestMrt")}
+                              </span>
+                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                {row.block.nearestMrt
+                                  ? `${row.block.nearestMrt.stationName} • ${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}`
+                                  : t("results.noMatch")}
+                              </strong>
+                              {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
+                                <span className="text-sm text-muted-foreground">
+                                  Also near{" "}
+                                  {(row.block.nearbyMrts ?? [])
+                                    .slice(1)
+                                    .map((station) => station.stationName)
+                                    .join(", ")}
                                 </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {row.block.nearestMrt
-                                    ? `${row.block.nearestMrt.stationName} • ${formatMeters(row.block.nearestMrt.distanceMeters)}`
-                                    : t("results.noMatch")}
-                                </strong>
-                                {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
+                              ) : null}
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                <Target className="size-3.5" />
+                                {t("shortlist.gapVsTarget")}
+                              </span>
+                              {gapInfo ? (
+                                <>
+                                  <strong
+                                    className={
+                                      gapInfo.tone === "positive"
+                                        ? "text-emerald-700"
+                                        : "text-rose-700"
+                                    }
+                                  >
+                                    {formatCurrency(gapInfo.amount, locale)}
+                                  </strong>
                                   <span className="text-sm text-muted-foreground">
-                                    Also near {(row.block.nearbyMrts ?? []).slice(1).map((station) => station.stationName).join(", ")}
+                                    {t(gapInfo.labelKey)}
                                   </span>
-                                ) : null}
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  <Target className="size-3.5" />
-                                  {t("shortlist.gapVsTarget")}
+                                </>
+                              ) : (
+                                <span className="text-sm text-muted-foreground">
+                                  {t("shortlist.enterTargetToCompare")}
                                 </span>
-                                {gapInfo ? (
-                                  <>
-                                    <strong className={gapInfo.tone === "positive" ? "text-emerald-700" : "text-rose-700"}>
-                                      {formatCurrency(gapInfo.amount)}
-                                    </strong>
-                                    <span className="text-sm text-muted-foreground">{t(gapInfo.labelKey)}</span>
-                                  </>
-                                ) : (
-                                  <span className="text-sm text-muted-foreground">{t("shortlist.enterTargetToCompare")}</span>
-                                )}
-                              </div>
+                              )}
                             </div>
+                          </div>
 
-                            <FieldGroup>
-                              <Field>
-                                <FieldContent>
-                                  <FieldLabel htmlFor={`target-${row.item.addressKey}`}>{t("shortlist.yourTargetPrice")}</FieldLabel>
-                                  <InputGroup>
-                                    <InputGroupAddon align="inline-start">
-                                      <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
-                                    </InputGroupAddon>
-                                    <InputGroupInput
-                                      id={`target-${row.item.addressKey}`}
-                                      inputMode="numeric"
-                                      placeholder={t("shortlist.targetPricePlaceholder")}
-                                      type="number"
-                                      value={row.item.targetPrice ?? ""}
-                                      onChange={(event) =>
-                                        onUpdate(row.item.addressKey, {
-                                          targetPrice:
-                                            event.target.value === "" ? null : Number(event.target.value),
-                                        })
-                                      }
-                                    />
-                                  </InputGroup>
-                                </FieldContent>
-                              </Field>
-                              <Field>
-                                <FieldContent>
-                                  <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
-                                    {t("shortlist.notes")}
-                                  </FieldLabel>
-                                  <Textarea
-                                    id={`notes-${row.item.addressKey}`}
-                                    placeholder={t("shortlist.notesPlaceholder")}
-                                    rows={3}
-                                    value={row.item.notes}
+                          <FieldGroup>
+                            <Field>
+                              <FieldContent>
+                                <FieldLabel htmlFor={`target-${row.item.addressKey}`}>
+                                  {t("shortlist.yourTargetPrice")}
+                                </FieldLabel>
+                                <InputGroup>
+                                  <InputGroupAddon align="inline-start">
+                                    <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
+                                  </InputGroupAddon>
+                                  <InputGroupInput
+                                    id={`target-${row.item.addressKey}`}
+                                    inputMode="numeric"
+                                    placeholder={t("shortlist.targetPricePlaceholder")}
+                                    type="number"
+                                    value={row.item.targetPrice ?? ""}
                                     onChange={(event) =>
                                       onUpdate(row.item.addressKey, {
-                                        notes: event.target.value,
+                                        targetPrice:
+                                          event.target.value === ""
+                                            ? null
+                                            : Number(event.target.value),
                                       })
                                     }
                                   />
-                                </FieldContent>
-                              </Field>
-                            </FieldGroup>
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
+                                </InputGroup>
+                              </FieldContent>
+                            </Field>
+                            <Field>
+                              <FieldContent>
+                                <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
+                                  {t("shortlist.notes")}
+                                </FieldLabel>
+                                <Textarea
+                                  id={`notes-${row.item.addressKey}`}
+                                  placeholder={t("shortlist.notesPlaceholder")}
+                                  rows={3}
+                                  value={row.item.notes}
+                                  onChange={(event) =>
+                                    onUpdate(row.item.addressKey, {
+                                      notes: event.target.value,
+                                    })
+                                  }
+                                />
+                              </FieldContent>
+                            </Field>
+                          </FieldGroup>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
                 </div>
               </ScrollArea>
             )}
