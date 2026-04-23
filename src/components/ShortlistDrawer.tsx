@@ -337,12 +337,15 @@ export function ShortlistDrawer({
                         <CardTitle className="text-base">{t("shortlist.compareTrendsTitle")}</CardTitle>
                       </CardHeader>
                       <CardContent className="pt-0">
-                        <p className="pb-3 text-xs text-muted-foreground">{t("shortlist.compareTrendsHint")}</p>
+                        <p id="compare-trends-hint" className="pb-3 text-xs text-muted-foreground">{t("shortlist.compareTrendsHint")}</p>
                         <ReactEChartsCore
                           echarts={echarts}
                           notMerge
                           option={compareOption}
                           style={{ height: 260, width: "100%" }}
+                          aria-label={t("shortlist.compareTrendsTitle")}
+                          aria-describedby="compare-trends-hint"
+                          role="img"
                         />
                       </CardContent>
                     </Card>
