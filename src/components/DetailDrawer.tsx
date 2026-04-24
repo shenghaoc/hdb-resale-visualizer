@@ -84,6 +84,7 @@ export function DetailDrawer({
               size="icon"
               className="absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100"
               onClick={onClose}
+              aria-label={t("app.close")}
             >
               <Maximize2 className="size-4" />
             </Button>
