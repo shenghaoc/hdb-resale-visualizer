@@ -21,8 +21,9 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type ShortlistRow = {
   item: ShortlistItem;
@@ -262,25 +263,38 @@ export function ShortlistDrawer({
             </CardAction>
           </div>
           {rows.length > 0 ? (
-            <>
-              <Tabs
-                value={compareMode}
-                onValueChange={(value) => setCompareMode(value as CompareMode)}
-                className="gap-1"
-              >
-                <TabsList className="grid w-full grid-cols-2 gap-2 bg-transparent p-0 sm:grid-cols-4">
-                  <TabsTrigger value="target-gap">{t("shortlist.compare.targetFit")}</TabsTrigger>
-                  <TabsTrigger value="median">{t("shortlist.compare.price")}</TabsTrigger>
-                  <TabsTrigger value="lease">{t("shortlist.compare.lease")}</TabsTrigger>
-                  <TabsTrigger value="mrt">{t("shortlist.compare.mrt")}</TabsTrigger>
-                </TabsList>
-              </Tabs>
-              <p className="text-xs text-muted-foreground">
-                {t(compareModeDescriptionKey[compareMode])}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("shortlist.compare.currentSort", { mode: t(`shortlist.compare.${compareMode === "target-gap" ? "targetFit" : compareMode}`) })}
-              </p>
+            <FieldGroup>
+              <Field className="flex-row items-center gap-3 space-y-0">
+                <FieldLabel className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+                  {t("shortlist.sortBy")}:
+                </FieldLabel>
+                <Select
+                  value={compareMode}
+                  onValueChange={(value) => setCompareMode(value as CompareMode)}
+                >
+                  <SelectTrigger className="h-8 w-auto min-w-[140px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="target-gap">{t("shortlist.compare.targetFit")}</SelectItem>
+                    <SelectItem value="median">{t("shortlist.compare.price")}</SelectItem>
+                    <SelectItem value="lease">{t("shortlist.compare.lease")}</SelectItem>
+                    <SelectItem value="mrt">{t("shortlist.compare.mrt")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs text-muted-foreground">
+                  {t(compareModeDescriptionKey[compareMode])}
+                </p>
+                <p className="text-xs text-muted-foreground font-medium">
+                  {t("shortlist.compare.currentSort", {
+                    mode: t(
+                      `shortlist.compare.${compareMode === "target-gap" ? "targetFit" : compareMode}`,
+                    ),
+                  })}
+                </p>
+              </div>
               <div className="overflow-x-auto pb-1">
                 <ButtonGroup className="w-max flex-nowrap gap-2 [&>*]:rounded-none [&>*]:border">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
@@ -297,20 +311,17 @@ export function ShortlistDrawer({
                   </Button>
                 </ButtonGroup>
               </div>
-            </>
+            </FieldGroup>
           ) : null}
         </CardHeader>
 
         {isOpen ? (
-          <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
+          <CardContent className="flex min-h-0 flex-1 flex-col pt-0 overflow-hidden">
             {rows.length === 0 ? (
-              <div className="empty-state">{t("shortlist.emptyState")}</div>
+              <div className="empty-state pt-8">{t("shortlist.emptyState")}</div>
             ) : (
-              <div
-                className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain pr-3"
-                data-testid="shortlist-scroll-container"
-              >
-                <div className="flex flex-col gap-4 pb-4">
+              <ScrollArea className="flex-1 min-h-0 pr-3" data-testid="shortlist-scroll-container">
+                <div className="flex flex-col gap-4 py-4">
                   <Card className="bg-muted/40">
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
@@ -499,8 +510,8 @@ export function ShortlistDrawer({
                                   <strong
                                     className={
                                       gapInfo.tone === "positive"
-                                        ? "text-emerald-700"
-                                        : "text-rose-700"
+                                        ? "text-success"
+                                        : "text-destructive"
                                     }
                                   >
                                     {formatCurrency(gapInfo.amount, locale)}
@@ -569,7 +580,7 @@ export function ShortlistDrawer({
                     );
                   })}
                 </div>
-              </div>
+              </ScrollArea>
             )}
           </CardContent>
         ) : null}

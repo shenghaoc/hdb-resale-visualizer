@@ -44,7 +44,7 @@ export function GlobalHeader({
           onClick={onShow}
           aria-label="Show header info"
         >
-          <Info className="size-4" />
+          <Info data-icon />
         </Button>
       </div>
     );
@@ -102,11 +102,11 @@ export function GlobalHeader({
                 onClick={() => setMobileInfoOpen((current) => !current)}
                 aria-label="Toggle metadata"
               >
-                <Info className="size-4 opacity-60" />
+                <Info data-icon />
               </Button>
               {onDismiss ? (
                 <Button type="button" size="icon" variant="ghost" className="size-8 p-0" onClick={onDismiss} aria-label="Dismiss header">
-                  <X className="size-4" />
+                  <X data-icon />
                 </Button>
               ) : null}
             </div>

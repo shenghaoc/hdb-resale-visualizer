@@ -5,7 +5,14 @@ import type { FilterOptions, FilterState } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -99,51 +106,51 @@ export function FilterPanel(props: FilterPanelProps) {
         </CardHeader>
 
         <CardContent className="flex flex-col gap-4 pt-4">
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="search">{t("filters.searchLabel")}</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="search"
-                  placeholder={t("filters.searchPlaceholder")}
-                  value={filters.search}
-                  onChange={(event) => onChange({ search: event.target.value })}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>{t("filters.search")}</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </FieldContent>
-          </Field>
+          <FieldGroup className="gap-6">
+            <Field>
+              <FieldContent>
+                <FieldLabel htmlFor="search">{t("filters.searchLabel")}</FieldLabel>
+                <InputGroup>
+                  <InputGroupInput
+                    id="search"
+                    placeholder={t("filters.searchPlaceholder")}
+                    value={filters.search}
+                    onChange={(event) => onChange({ search: event.target.value })}
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>{t("filters.search")}</InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </FieldContent>
+            </Field>
 
-          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 lg:grid-cols-2">
+              <SelectField
+                allLabel={t("filters.allTowns")}
+                label={t("filters.town")}
+                options={options.towns}
+                value={filters.town}
+                onChange={(town) => onChange({ town })}
+              />
+              <SelectField
+                allLabel={t("filters.allTypes")}
+                label={t("filters.flatType")}
+                options={options.flatTypes}
+                value={filters.flatType}
+                onChange={(flatType) => onChange({ flatType })}
+              />
+            </div>
+
             <SelectField
-              allLabel={t("filters.allTowns")}
-              label={t("filters.town")}
-              options={options.towns}
-              value={filters.town}
-              onChange={(town) => onChange({ town })}
+              allLabel={t("filters.allModels")}
+              label={t("filters.flatModel")}
+              options={options.flatModels}
+              value={filters.flatModel}
+              onChange={(flatModel) => onChange({ flatModel })}
             />
-            <SelectField
-              allLabel={t("filters.allTypes")}
-              label={t("filters.flatType")}
-              options={options.flatTypes}
-              value={filters.flatType}
-              onChange={(flatType) => onChange({ flatType })}
-            />
-          </div>
 
-          <SelectField
-            allLabel={t("filters.allModels")}
-            label={t("filters.flatModel")}
-            options={options.flatModels}
-            value={filters.flatModel}
-            onChange={(flatModel) => onChange({ flatModel })}
-          />
-
-          <div className="flex flex-col gap-6">
-            <fieldset className="flex flex-col gap-3">
-              <legend className="text-sm font-medium">{t("filters.budgetRange")}</legend>
+            <FieldSet className="gap-3">
+              <FieldLegend>{t("filters.budgetRange")}</FieldLegend>
               <div className="grid gap-4 lg:grid-cols-2">
                 <Field>
                   <FieldContent>
@@ -196,10 +203,10 @@ export function FilterPanel(props: FilterPanelProps) {
                   </FieldContent>
                 </Field>
               </div>
-            </fieldset>
+            </FieldSet>
 
-            <fieldset className="flex flex-col gap-3">
-              <legend className="text-sm font-medium">{t("filters.floorAreaRange")}</legend>
+            <FieldSet className="gap-3">
+              <FieldLegend>{t("filters.floorAreaRange")}</FieldLegend>
               <div className="grid gap-4 lg:grid-cols-2">
                 <Field>
                   <FieldContent>
@@ -252,7 +259,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   </FieldContent>
                 </Field>
               </div>
-            </fieldset>
+            </FieldSet>
 
             <Field>
               <FieldContent>
@@ -278,76 +285,76 @@ export function FilterPanel(props: FilterPanelProps) {
                 </InputGroup>
               </FieldContent>
             </Field>
-          </div>
 
-          <fieldset className="flex flex-col gap-2">
-            <legend className="sr-only">{t("filters.transactionWindow")}</legend>
-            <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
-              <span className="text-sm font-semibold" aria-hidden="true">
-                {t("filters.transactionWindow")}
-              </span>
-              <Badge variant="secondary" className="text-xs">
-                {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
-              </Badge>
-            </div>
-            <div className="grid gap-4 pt-2 lg:grid-cols-2">
-              <Field>
-                <FieldContent>
-                  <FieldLabel htmlFor="start-month">{t("filters.startMonth")}</FieldLabel>
-                  <Input
-                    id="start-month"
-                    max={maxMonth}
-                    min={minMonth}
-                    type="month"
-                    value={filters.startMonth ?? ""}
-                    onChange={(event) =>
-                      onChange({ startMonth: event.target.value === "" ? null : event.target.value })
-                    }
-                    aria-description="Start of the transaction window"
-                  />
-                </FieldContent>
-              </Field>
-              <Field>
-                <FieldContent>
-                  <FieldLabel htmlFor="end-month">{t("filters.endMonth")}</FieldLabel>
-                  <Input
-                    id="end-month"
-                    max={maxMonth}
-                    min={minMonth}
-                    type="month"
-                    value={filters.endMonth ?? ""}
-                    onChange={(event) =>
-                      onChange({ endMonth: event.target.value === "" ? null : event.target.value })
-                    }
-                    aria-description="End of the transaction window"
-                  />
-                </FieldContent>
-              </Field>
-            </div>
-          </fieldset>
+            <FieldSet className="gap-2">
+              <FieldLegend className="sr-only">{t("filters.transactionWindow")}</FieldLegend>
+              <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
+                <span className="text-sm font-semibold" aria-hidden="true">
+                  {t("filters.transactionWindow")}
+                </span>
+                <Badge variant="secondary" className="text-xs">
+                  {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
+                </Badge>
+              </div>
+              <div className="grid gap-4 pt-2 lg:grid-cols-2">
+                <Field>
+                  <FieldContent>
+                    <FieldLabel htmlFor="start-month">{t("filters.startMonth")}</FieldLabel>
+                    <Input
+                      id="start-month"
+                      max={maxMonth}
+                      min={minMonth}
+                      type="month"
+                      value={filters.startMonth ?? ""}
+                      onChange={(event) =>
+                        onChange({ startMonth: event.target.value === "" ? null : event.target.value })
+                      }
+                      aria-description="Start of the transaction window"
+                    />
+                  </FieldContent>
+                </Field>
+                <Field>
+                  <FieldContent>
+                    <FieldLabel htmlFor="end-month">{t("filters.endMonth")}</FieldLabel>
+                    <Input
+                      id="end-month"
+                      max={maxMonth}
+                      min={minMonth}
+                      type="month"
+                      value={filters.endMonth ?? ""}
+                      onChange={(event) =>
+                        onChange({ endMonth: event.target.value === "" ? null : event.target.value })
+                      }
+                      aria-description="End of the transaction window"
+                    />
+                  </FieldContent>
+                </Field>
+              </div>
+            </FieldSet>
 
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="mrt-max">{t("filters.maxMrtDistance")}</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="mrt-max"
-                  data-no-spinner="true"
-                  inputMode="numeric"
-                  min={0}
-                  placeholder={t("filters.optional")}
-                  type="number"
-                  value={filters.mrtMax ?? ""}
-                  onChange={(event) =>
-                    onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
-                  }
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>{t("unit.m", { value: "" }).trim()}</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </FieldContent>
-          </Field>
+            <Field>
+              <FieldContent>
+                <FieldLabel htmlFor="mrt-max">{t("filters.maxMrtDistance")}</FieldLabel>
+                <InputGroup>
+                  <InputGroupInput
+                    id="mrt-max"
+                    data-no-spinner="true"
+                    inputMode="numeric"
+                    min={0}
+                    placeholder={t("filters.optional")}
+                    type="number"
+                    value={filters.mrtMax ?? ""}
+                    onChange={(event) =>
+                      onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
+                    }
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>{t("unit.m", { value: "" }).trim()}</InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+              </FieldContent>
+            </Field>
+          </FieldGroup>
         </CardContent>
       </Card>
     </aside>

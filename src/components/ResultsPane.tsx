@@ -115,7 +115,7 @@ const BlockCard = memo(function BlockCard({
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
-              <Bookmark className={cn("size-3.5", isSaved && "fill-current")} />
+              <Bookmark data-icon className={isSaved ? "fill-current" : ""} />
             </Button>
           </ItemActions>
         </ItemHeader>

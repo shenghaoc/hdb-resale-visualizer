@@ -3,13 +3,17 @@ import {
   Bookmark,
   Clock3,
   Coins,
+  Compass,
+  GraduationCap,
   History,
   Info,
   MapPin,
   Maximize2,
+  Store,
   Table,
   TrainFront,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -86,7 +90,7 @@ export function DetailDrawer({
               onClick={onClose}
               aria-label={t("app.close")}
             >
-              <Maximize2 className="size-4" />
+              <Maximize2 data-icon />
             </Button>
           </DrawerHeader>
 
@@ -122,7 +126,7 @@ export function DetailDrawer({
 
               <TabsContent
                 value="overview"
-                className="mt-0 flex-1 space-y-8 pb-8 focus-visible:outline-none"
+                className="mt-0 flex-1 flex flex-col gap-8 pb-8 focus-visible:outline-none"
               >
                 {/* Key Stats Grid */}
                 <div className="grid grid-cols-2 gap-4">
@@ -164,7 +168,7 @@ export function DetailDrawer({
                     <TrainFront className="size-4" />
                     {t("detail.connectivity")}
                   </h3>
-                  <div className="space-y-3">
+                  <div className="flex flex-col gap-3">
                     {nearbyStations.length > 0 ? (
                       nearbyStations.map((mrt, idx) => (
                         <div
@@ -175,10 +179,7 @@ export function DetailDrawer({
                           )}
                         >
                           <div className="flex items-center gap-3">
-                            <div
-                              className="size-2 rounded-full ring-2 ring-offset-2"
-                              style={{ backgroundColor: "#2563eb" }}
-                            />
+                            <div className="size-2 rounded-full bg-primary ring-2 ring-offset-2 ring-primary/20" />
                             <div className="flex flex-col">
                               <span className="text-sm font-bold leading-none">
                                 {mrt.stationName}
@@ -241,26 +242,81 @@ export function DetailDrawer({
                           ))}
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-4">
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {t("filters.floorAreaRange")}
-                        </span>
-                        <span className="font-heading text-sm font-bold">
-                          {currentSummary
-                            ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
-                                currentSummary.floorAreaRange[1],
-                              )} ${t("unit.sqm", { value: "" }).trim()}`
-                            : "..."}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </section>
+	                      <div className="flex items-center justify-between p-4">
+	                        <span className="text-sm font-medium text-muted-foreground">
+	                          {t("filters.floorAreaRange")}
+	                        </span>
+	                        <span className="font-heading text-sm font-bold">
+	                          {currentSummary
+	                            ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
+	                                currentSummary.floorAreaRange[1],
+	                              )} ${t("unit.sqm", { value: "" }).trim()}`
+	                            : "..."}
+	                        </span>
+	                      </div>
+	                      <div className="flex items-center justify-between p-4">
+	                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+	                          <Compass className="size-3.5" />
+	                          Orientation
+	                        </span>
+	                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
+	                          Pipeline coming soon
+	                        </Badge>
+	                      </div>
+	                      <div className="flex items-center justify-between p-4">
+	                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+	                          <Users className="size-3.5" />
+	                          EIP Quota Status
+	                        </span>
+	                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
+	                          Pipeline coming soon
+	                        </Badge>
+	                      </div>
+	                    </CardContent>
+	                  </Card>
+	                </section>
+
+                        {/* Environment & Amenities */}
+                        <section>
+                        <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                        <MapPin className="size-4" />
+                        Environment & Amenities
+                        </h3>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                        <Card className="border-border/40 bg-muted/20 shadow-none">
+                        <CardHeader className="p-4 pb-2">
+                          <CardDescription className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em]">
+                            <GraduationCap className="size-3.5 text-primary/70" />
+                            Primary Schools
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="p-4 pt-0">
+                          <p className="text-xs italic text-muted-foreground/60">
+                            Data pipeline for 1km/2km school proximity is coming soon.
+                          </p>
+                        </CardContent>
+                        </Card>
+                        <Card className="border-border/40 bg-muted/20 shadow-none">
+                        <CardHeader className="p-4 pb-2">
+                          <CardDescription className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em]">
+                            <Store className="size-3.5 text-primary/70" />
+                            Local Amenities
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="p-4 pt-0">
+                          <p className="text-xs italic text-muted-foreground/60">
+                            Data pipeline for nearby markets and hawkers is coming soon.
+                          </p>
+                        </CardContent>
+                        </Card>
+                        </div>
+                        </section>
+
               </TabsContent>
 
               <TabsContent
                 value="trends"
-                className="mt-0 flex-1 space-y-6 focus-visible:outline-none"
+                className="mt-0 flex-1 flex flex-col gap-6 focus-visible:outline-none"
               >
                 <section>
                   <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
@@ -327,7 +383,7 @@ export function DetailDrawer({
                       {t("detail.totalCount", { count: detail?.recentTransactions.length ?? 0 })}
                     </Badge>
                   </h3>
-                  <ItemGroup className="space-y-3 pb-8">
+                  <ItemGroup className="flex flex-col gap-3 pb-8">
                     {detail?.recentTransactions.map((tx) => (
                       <Item
                         key={tx.id}
@@ -385,7 +441,7 @@ export function DetailDrawer({
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
               >
-                <Bookmark className={cn("size-4", isSaved && "fill-current")} />
+                <Bookmark data-icon="inline-start" className={isSaved ? "fill-current" : ""} />
                 {isSaved ? t("detail.saved") : t("detail.save")}
               </Button>
               <Button
@@ -402,7 +458,7 @@ export function DetailDrawer({
                   window.open(url.toString(), "_blank");
                 }}
               >
-                <MapPin className="size-4" />
+                <MapPin data-icon />
                 {t("detail.directions")}
               </Button>
             </div>

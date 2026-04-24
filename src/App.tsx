@@ -27,6 +27,7 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { GlobalHeader } from "@/components/StatsBar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -520,32 +521,34 @@ function App() {
         <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
           {isDesktop && (
             <div className="pointer-events-auto absolute left-6 top-6 z-20">
-              <button
-                type="button"
-                className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 border-border/70 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 aria-expanded={isDesktopPanelOpen}
                 aria-controls="desktop-panel"
               >
                 {isDesktopPanelOpen ? (
-                  <PanelLeftClose className="size-4" />
+                  <PanelLeftClose data-icon="inline-start" />
                 ) : (
-                  <PanelLeftOpen className="size-4" />
+                  <PanelLeftOpen data-icon="inline-start" />
                 )}
                 {isDesktopPanelOpen ? t("app.hidePanel") : t("app.showPanel")}
-              </button>
+              </Button>
             </div>
           )}
           {!isHeaderVisible ? (
             <div className="pointer-events-auto absolute right-4 top-4 z-20 lg:right-6 lg:top-6">
-              <button
-                type="button"
-                className="inline-flex h-9 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 border-border/70 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsHeaderVisible(true)}
               >
-                <Info className="size-4" />
+                <Info data-icon="inline-start" />
                 {t("app.showHeader")}
-              </button>
+              </Button>
             </div>
           ) : null}
 
