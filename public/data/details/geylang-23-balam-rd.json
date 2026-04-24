@@ -10,12 +10,6 @@
       "lng": 103.886540431592
     },
     "medianPrice": 324400,
-    "priceIqr": [
-      309250,
-      333750
-    ],
-    "pricePerSqmMedian": 5379.77,
-    "pricePerSqftMedian": 499.8,
     "transactionCount": 10,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "MATTAR MRT STATION",
         "distanceMeters": 590
       }
-    ]
+    ],
+    "priceIqr": [
+      309250,
+      333750
+    ],
+    "pricePerSqmMedian": 5379.77,
+    "pricePerSqftMedian": 499.8
   },
   "monthlyTrend": [
     {
@@ -912,7 +912,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-23-balam-rd-2026-03-224298",
+      "id": "geylang-23-balam-rd-2026-03-224337",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -925,7 +925,7 @@
       "pricePerSqft": 500.72
     },
     {
-      "id": "geylang-23-balam-rd-2026-01-224296",
+      "id": "geylang-23-balam-rd-2026-01-224335",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

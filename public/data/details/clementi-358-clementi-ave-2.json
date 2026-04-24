@@ -10,12 +10,6 @@
       "lng": 103.769084332627
     },
     "medianPrice": 610000,
-    "priceIqr": [
-      608888,
-      610000
-    ],
-    "pricePerSqmMedian": 6630.43,
-    "pricePerSqftMedian": 615.99,
     "transactionCount": 5,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "BUONA VISTA MRT STATION",
         "distanceMeters": 2475
       }
-    ]
+    ],
+    "priceIqr": [
+      608888,
+      610000
+    ],
+    "pricePerSqmMedian": 6630.43,
+    "pricePerSqftMedian": 615.99
   },
   "monthlyTrend": [
     {
@@ -606,7 +606,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-358-clementi-ave-2-2026-01-224214",
+      "id": "clementi-358-clementi-ave-2-2026-01-224250",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

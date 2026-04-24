@@ -10,12 +10,6 @@
       "lng": 103.752306417884
     },
     "medianPrice": 430000,
-    "priceIqr": [
-      402500,
-      440000
-    ],
-    "pricePerSqmMedian": 6500,
-    "pricePerSqftMedian": 603.87,
     "transactionCount": 7,
     "floorAreaRange": [
       60,
@@ -56,7 +50,13 @@
         "stationName": "HILLVIEW MRT STATION",
         "distanceMeters": 1751
       }
-    ]
+    ],
+    "priceIqr": [
+      402500,
+      440000
+    ],
+    "pricePerSqmMedian": 6500,
+    "pricePerSqftMedian": 603.87
   },
   "monthlyTrend": [
     {
@@ -956,7 +956,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-523-bt-batok-st-52-2026-03-222899",
+      "id": "bukit-batok-523-bt-batok-st-52-2026-03-222913",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

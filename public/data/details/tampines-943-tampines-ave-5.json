@@ -10,12 +10,6 @@
       "lng": 103.941193548918
     },
     "medianPrice": 1002500,
-    "priceIqr": [
-      918750,
-      1086250
-    ],
-    "pricePerSqmMedian": 7041.28,
-    "pricePerSqftMedian": 654.16,
     "transactionCount": 4,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "SIMEI MRT STATION",
         "distanceMeters": 1633
       }
-    ]
+    ],
+    "priceIqr": [
+      918750,
+      1086250
+    ],
+    "pricePerSqmMedian": 7041.28,
+    "pricePerSqftMedian": 654.16
   },
   "monthlyTrend": [
     {
@@ -685,7 +685,7 @@
       "pricePerSqft": 486.79
     },
     {
-      "id": "tampines-943-tampines-ave-5-2016-01-957307",
+      "id": "tampines-943-tampines-ave-5-2016-01-957423",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -698,7 +698,7 @@
       "pricePerSqft": 445.43
     },
     {
-      "id": "tampines-943-tampines-ave-5-2015-12-955977",
+      "id": "tampines-943-tampines-ave-5-2015-12-956093",
       "month": "2015-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

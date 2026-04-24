@@ -10,12 +10,6 @@
       "lng": 103.85345502653
     },
     "medianPrice": 410000,
-    "priceIqr": [
-      375000,
-      420444
-    ],
-    "pricePerSqmMedian": 6119.4,
-    "pricePerSqftMedian": 568.51,
     "transactionCount": 3,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 1883
       }
-    ]
+    ],
+    "priceIqr": [
+      375000,
+      420444
+    ],
+    "pricePerSqmMedian": 6119.4,
+    "pricePerSqftMedian": 568.51
   },
   "monthlyTrend": [
     {
@@ -825,7 +825,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-434-ang-mo-kio-ave-10-2026-04-222117",
+      "id": "ang-mo-kio-434-ang-mo-kio-ave-10-2026-04-222118",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

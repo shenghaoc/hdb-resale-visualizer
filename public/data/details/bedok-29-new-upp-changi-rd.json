@@ -10,12 +10,6 @@
       "lng": 103.936341250384
     },
     "medianPrice": 385000,
-    "priceIqr": [
-      364500,
-      402000
-    ],
-    "pricePerSqmMedian": 5830.76,
-    "pricePerSqftMedian": 541.7,
     "transactionCount": 12,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BAYSHORE MRT STATION",
         "distanceMeters": 1254
       }
-    ]
+    ],
+    "priceIqr": [
+      364500,
+      402000
+    ],
+    "pricePerSqmMedian": 5830.76,
+    "pricePerSqftMedian": 541.7
   },
   "monthlyTrend": [
     {
@@ -1184,7 +1184,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-29-new-upp-changi-rd-2026-03-222470",
+      "id": "bedok-29-new-upp-changi-rd-2026-03-222477",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

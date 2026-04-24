@@ -10,12 +10,6 @@
       "lng": 103.883530101124
     },
     "medianPrice": 1000000,
-    "priceIqr": [
-      932500,
-      1122500
-    ],
-    "pricePerSqmMedian": 9236.8,
-    "pricePerSqftMedian": 858.13,
     "transactionCount": 10,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "ALJUNIED MRT STATION",
         "distanceMeters": 819
       }
-    ]
+    ],
+    "priceIqr": [
+      932500,
+      1122500
+    ],
+    "pricePerSqmMedian": 9236.8,
+    "pricePerSqftMedian": 858.13
   },
   "monthlyTrend": [
     {
@@ -554,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-28-cassia-cres-2026-04-224393",
+      "id": "geylang-28-cassia-cres-2026-04-224437",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

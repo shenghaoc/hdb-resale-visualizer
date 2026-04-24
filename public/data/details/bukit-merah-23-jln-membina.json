@@ -10,12 +10,6 @@
       "lng": 103.82687567732
     },
     "medianPrice": 1174000,
-    "priceIqr": [
-      1068666,
-      1192500
-    ],
-    "pricePerSqmMedian": 10809.09,
-    "pricePerSqftMedian": 1004.19,
     "transactionCount": 8,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 1106
       }
-    ]
+    ],
+    "priceIqr": [
+      1068666,
+      1192500
+    ],
+    "pricePerSqmMedian": 10809.09,
+    "pricePerSqftMedian": 1004.19
   },
   "monthlyTrend": [
     {
@@ -446,7 +446,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-23-jln-membina-2026-04-223485",
+      "id": "bukit-merah-23-jln-membina-2026-04-223509",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -459,7 +459,7 @@
       "pricePerSqft": 1005.04
     },
     {
-      "id": "bukit-merah-23-jln-membina-2026-02-223399",
+      "id": "bukit-merah-23-jln-membina-2026-02-223422",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -472,7 +472,7 @@
       "pricePerSqft": 805.16
     },
     {
-      "id": "bukit-merah-23-jln-membina-2026-01-223480",
+      "id": "bukit-merah-23-jln-membina-2026-01-223504",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "28 TO 30",

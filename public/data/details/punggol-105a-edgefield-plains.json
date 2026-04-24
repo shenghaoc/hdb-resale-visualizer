@@ -10,12 +10,6 @@
       "lng": 103.905729497383
     },
     "medianPrice": 644000,
-    "priceIqr": [
-      607000,
-      647000
-    ],
-    "pricePerSqmMedian": 5909.09,
-    "pricePerSqftMedian": 548.97,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 616
       }
-    ]
+    ],
+    "priceIqr": [
+      607000,
+      647000
+    ],
+    "pricePerSqmMedian": 5909.09,
+    "pricePerSqftMedian": 548.97
   },
   "monthlyTrend": [
     {
@@ -368,7 +368,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-105a-edgefield-plains-2026-02-226285",
+      "id": "punggol-105a-edgefield-plains-2026-02-226356",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

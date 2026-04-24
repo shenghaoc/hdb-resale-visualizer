@@ -10,12 +10,6 @@
       "lng": 103.773263601102
     },
     "medianPrice": 600000,
-    "priceIqr": [
-      576850,
-      653750
-    ],
-    "pricePerSqmMedian": 5310.18,
-    "pricePerSqftMedian": 493.33,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "BANGKIT LRT STATION",
         "distanceMeters": 955
       }
-    ]
+    ],
+    "priceIqr": [
+      576850,
+      653750
+    ],
+    "pricePerSqmMedian": 5310.18,
+    "pricePerSqftMedian": 493.33
   },
   "monthlyTrend": [
     {
@@ -464,7 +464,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-470-segar-rd-2026-04-223747",
+      "id": "bukit-panjang-470-segar-rd-2026-04-223774",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

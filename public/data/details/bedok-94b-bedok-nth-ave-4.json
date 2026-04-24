@@ -10,12 +10,6 @@
       "lng": 103.942883460977
     },
     "medianPrice": 984000,
-    "priceIqr": [
-      961000,
-      1007000
-    ],
-    "pricePerSqmMedian": 6927.64,
-    "pricePerSqftMedian": 643.6,
     "transactionCount": 2,
     "floorAreaRange": [
       141,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES WEST MRT STATION",
         "distanceMeters": 1312
       }
-    ]
+    ],
+    "priceIqr": [
+      961000,
+      1007000
+    ],
+    "pricePerSqmMedian": 6927.64,
+    "pricePerSqftMedian": 643.6
   },
   "monthlyTrend": [
     {
@@ -426,7 +426,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2026-04-222686",
+      "id": "bedok-94b-bedok-nth-ave-4-2026-04-222697",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -634,7 +634,7 @@
       "pricePerSqft": 428.28
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957647",
+      "id": "bedok-94b-bedok-nth-ave-4-2016-02-957763",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -647,7 +647,7 @@
       "pricePerSqft": 487.25
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2014-12-650100",
+      "id": "bedok-94b-bedok-nth-ave-4-2014-12-650216",
       "month": "2014-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -660,7 +660,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634262",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-12-634378",
       "month": "2013-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -673,7 +673,7 @@
       "pricePerSqft": 525.79
     },
     {
-      "id": "bedok-94b-bedok-nth-ave-4-2013-08-629146",
+      "id": "bedok-94b-bedok-nth-ave-4-2013-08-629262",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

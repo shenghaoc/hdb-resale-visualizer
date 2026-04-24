@@ -10,12 +10,6 @@
       "lng": 103.76951726565
     },
     "medianPrice": 647500,
-    "priceIqr": [
-      608750,
-      686250
-    ],
-    "pricePerSqmMedian": 5572.42,
-    "pricePerSqftMedian": 517.7,
     "transactionCount": 2,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "JELAPANG LRT STATION",
         "distanceMeters": 590
       }
-    ]
+    ],
+    "priceIqr": [
+      608750,
+      686250
+    ],
+    "pricePerSqmMedian": 5572.42,
+    "pricePerSqftMedian": 517.7
   },
   "monthlyTrend": [
     {
@@ -631,7 +631,7 @@
       "pricePerSqft": 296.58
     },
     {
-      "id": "bukit-panjang-420-fajar-rd-2016-05-962567",
+      "id": "bukit-panjang-420-fajar-rd-2016-05-962683",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -644,7 +644,7 @@
       "pricePerSqft": 324.27
     },
     {
-      "id": "bukit-panjang-420-fajar-rd-2015-06-945799",
+      "id": "bukit-panjang-420-fajar-rd-2015-06-945915",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -657,7 +657,7 @@
       "pricePerSqft": 326.05
     },
     {
-      "id": "bukit-panjang-420-fajar-rd-2014-09-645890",
+      "id": "bukit-panjang-420-fajar-rd-2014-09-646006",
       "month": "2014-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.943718967412
     },
     "medianPrice": 995000,
-    "priceIqr": [
-      980000,
-      1062500
-    ],
-    "pricePerSqmMedian": 6611.26,
-    "pricePerSqftMedian": 614.2,
     "transactionCount": 4,
     "floorAreaRange": [
       149,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES EAST MRT STATION",
         "distanceMeters": 2567
       }
-    ]
+    ],
+    "priceIqr": [
+      980000,
+      1062500
+    ],
+    "pricePerSqmMedian": 6611.26,
+    "pricePerSqftMedian": 614.2
   },
   "monthlyTrend": [
     {
@@ -366,7 +366,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-603-elias-rd-2026-04-225855",
+      "id": "pasir-ris-603-elias-rd-2026-04-225923",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -561,7 +561,7 @@
       "pricePerSqft": 392.81
     },
     {
-      "id": "pasir-ris-603-elias-rd-2016-08-968525",
+      "id": "pasir-ris-603-elias-rd-2016-08-968641",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -574,7 +574,7 @@
       "pricePerSqft": 420.87
     },
     {
-      "id": "pasir-ris-603-elias-rd-2013-05-625537",
+      "id": "pasir-ris-603-elias-rd-2013-05-625653",
       "month": "2013-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -587,7 +587,7 @@
       "pricePerSqft": 492.57
     },
     {
-      "id": "pasir-ris-603-elias-rd-2012-10-614997",
+      "id": "pasir-ris-603-elias-rd-2012-10-615113",
       "month": "2012-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -600,7 +600,7 @@
       "pricePerSqft": 439.74
     },
     {
-      "id": "pasir-ris-603-elias-rd-2011-01-574809",
+      "id": "pasir-ris-603-elias-rd-2011-01-574925",
       "month": "2011-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -613,7 +613,7 @@
       "pricePerSqft": 393.29
     },
     {
-      "id": "pasir-ris-603-elias-rd-2010-10-568236",
+      "id": "pasir-ris-603-elias-rd-2010-10-568352",
       "month": "2010-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

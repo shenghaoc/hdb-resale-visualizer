@@ -10,12 +10,6 @@
       "lng": 103.888750009608
     },
     "medianPrice": 490000,
-    "priceIqr": [
-      477500,
-      490750
-    ],
-    "pricePerSqmMedian": 7424.24,
-    "pricePerSqftMedian": 689.74,
     "transactionCount": 8,
     "floorAreaRange": [
       66,
@@ -54,7 +48,13 @@
         "stationName": "TAI SENG MRT STATION",
         "distanceMeters": 1527
       }
-    ]
+    ],
+    "priceIqr": [
+      477500,
+      490750
+    ],
+    "pricePerSqmMedian": 7424.24,
+    "pricePerSqftMedian": 689.74
   },
   "monthlyTrend": [
     {
@@ -180,7 +180,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-174a-hougang-ave-1-2026-03-224522",
+      "id": "hougang-174a-hougang-ave-1-2026-03-224567",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -193,7 +193,7 @@
       "pricePerSqft": 689.74
     },
     {
-      "id": "hougang-174a-hougang-ave-1-2026-02-224514",
+      "id": "hougang-174a-hougang-ave-1-2026-02-224559",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

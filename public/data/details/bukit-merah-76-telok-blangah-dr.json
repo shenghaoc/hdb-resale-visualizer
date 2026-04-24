@@ -10,12 +10,6 @@
       "lng": 103.808741773193
     },
     "medianPrice": 311500,
-    "priceIqr": [
-      302000,
-      326250
-    ],
-    "pricePerSqmMedian": 7079.55,
-    "pricePerSqftMedian": 657.71,
     "transactionCount": 6,
     "floorAreaRange": [
       44,
@@ -54,7 +48,13 @@
         "stationName": "HARBOURFRONT MRT STATION",
         "distanceMeters": 1602
       }
-    ]
+    ],
+    "priceIqr": [
+      302000,
+      326250
+    ],
+    "pricePerSqmMedian": 7079.55,
+    "pricePerSqftMedian": 657.71
   },
   "monthlyTrend": [
     {
@@ -468,7 +468,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-76-telok-blangah-dr-2026-04-223238",
+      "id": "bukit-merah-76-telok-blangah-dr-2026-04-223258",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",

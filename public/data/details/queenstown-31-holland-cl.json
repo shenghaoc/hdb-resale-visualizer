@@ -10,12 +10,6 @@
       "lng": 103.797080329252
     },
     "medianPrice": 602500,
-    "priceIqr": [
-      481250,
-      723750
-    ],
-    "pricePerSqmMedian": 6631.35,
-    "pricePerSqftMedian": 616.08,
     "transactionCount": 2,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BUONA VISTA MRT STATION",
         "distanceMeters": 688
       }
-    ]
+    ],
+    "priceIqr": [
+      481250,
+      723750
+    ],
+    "pricePerSqmMedian": 6631.35,
+    "pricePerSqftMedian": 616.08
   },
   "monthlyTrend": [
     {
@@ -704,7 +704,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-31-holland-cl-2026-03-226469",
+      "id": "queenstown-31-holland-cl-2026-03-226546",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

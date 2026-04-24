@@ -10,12 +10,6 @@
       "lng": 103.905014998816
     },
     "medianPrice": 770000,
-    "priceIqr": [
-      770000,
-      770000
-    ],
-    "pricePerSqmMedian": 8191.49,
-    "pricePerSqftMedian": 761.02,
     "transactionCount": 1,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "DAMAI LRT STATION",
         "distanceMeters": 410
       }
-    ]
+    ],
+    "priceIqr": [
+      770000,
+      770000
+    ],
+    "pricePerSqmMedian": 8191.49,
+    "pricePerSqftMedian": 761.02
   },
   "monthlyTrend": [
     {
@@ -210,7 +210,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-303d-punggol-pl-2026-02-226164",
+      "id": "punggol-303d-punggol-pl-2026-02-226232",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -392,7 +392,7 @@
       "pricePerSqft": 479.34
     },
     {
-      "id": "punggol-303d-punggol-pl-2016-11-973585",
+      "id": "punggol-303d-punggol-pl-2016-11-973701",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -405,7 +405,7 @@
       "pricePerSqft": 519.46
     },
     {
-      "id": "punggol-303d-punggol-pl-2016-10-971957",
+      "id": "punggol-303d-punggol-pl-2016-10-972073",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -418,7 +418,7 @@
       "pricePerSqft": 418.56
     },
     {
-      "id": "punggol-303d-punggol-pl-2016-07-966758",
+      "id": "punggol-303d-punggol-pl-2016-07-966874",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -431,7 +431,7 @@
       "pricePerSqft": 479.5
     },
     {
-      "id": "punggol-303d-punggol-pl-2016-02-958216",
+      "id": "punggol-303d-punggol-pl-2016-02-958332",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -444,7 +444,7 @@
       "pricePerSqft": 471.51
     },
     {
-      "id": "punggol-303d-punggol-pl-2015-09-950967",
+      "id": "punggol-303d-punggol-pl-2015-09-951083",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -457,7 +457,7 @@
       "pricePerSqft": 491.49
     },
     {
-      "id": "punggol-303d-punggol-pl-2015-08-949513",
+      "id": "punggol-303d-punggol-pl-2015-08-949629",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

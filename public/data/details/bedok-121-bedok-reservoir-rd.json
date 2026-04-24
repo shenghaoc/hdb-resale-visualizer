@@ -10,12 +10,6 @@
       "lng": 103.909992224709
     },
     "medianPrice": 451000,
-    "priceIqr": [
-      445888,
-      460000
-    ],
-    "pricePerSqmMedian": 6731.34,
-    "pricePerSqftMedian": 625.36,
     "transactionCount": 5,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "UBI MRT STATION",
         "distanceMeters": 1135
       }
-    ]
+    ],
+    "priceIqr": [
+      445888,
+      460000
+    ],
+    "pricePerSqmMedian": 6731.34,
+    "pricePerSqftMedian": 625.36
   },
   "monthlyTrend": [
     {
@@ -679,7 +679,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-121-bedok-reservoir-rd-2026-01-222422",
+      "id": "bedok-121-bedok-reservoir-rd-2026-01-222429",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -692,7 +692,7 @@
       "pricePerSqft": 625.36
     },
     {
-      "id": "bedok-121-bedok-reservoir-rd-2026-01-222424",
+      "id": "bedok-121-bedok-reservoir-rd-2026-01-222431",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

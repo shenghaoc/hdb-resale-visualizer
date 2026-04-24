@@ -10,12 +10,6 @@
       "lng": 103.81188488444
     },
     "medianPrice": 930000,
-    "priceIqr": [
-      900000,
-      975000
-    ],
-    "pricePerSqmMedian": 9687.5,
-    "pricePerSqftMedian": 900,
     "transactionCount": 7,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "ORCHARD BOULEVARD MRT STATION",
         "distanceMeters": 1694
       }
-    ]
+    ],
+    "priceIqr": [
+      900000,
+      975000
+    ],
+    "pricePerSqmMedian": 9687.5,
+    "pricePerSqftMedian": 900
   },
   "monthlyTrend": [
     {
@@ -560,7 +560,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-60-strathmore-ave-2026-04-226565",
+      "id": "queenstown-60-strathmore-ave-2026-04-226642",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

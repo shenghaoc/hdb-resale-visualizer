@@ -10,12 +10,6 @@
       "lng": 103.898358925104
     },
     "medianPrice": 679000,
-    "priceIqr": [
-      628500,
-      740000
-    ],
-    "pricePerSqmMedian": 7228.86,
-    "pricePerSqftMedian": 671.59,
     "transactionCount": 4,
     "floorAreaRange": [
       93,
@@ -55,7 +49,13 @@
         "stationName": "PUNGGOL MRT STATION",
         "distanceMeters": 493
       }
-    ]
+    ],
+    "priceIqr": [
+      628500,
+      740000
+    ],
+    "pricePerSqmMedian": 7228.86,
+    "pricePerSqftMedian": 671.59
   },
   "monthlyTrend": [
     {
@@ -307,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-268d-punggol-field-2026-04-226149",
+      "id": "punggol-268d-punggol-field-2026-04-226217",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -320,7 +320,7 @@
       "pricePerSqft": 719.25
     },
     {
-      "id": "punggol-268d-punggol-field-2026-04-226150",
+      "id": "punggol-268d-punggol-field-2026-04-226218",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

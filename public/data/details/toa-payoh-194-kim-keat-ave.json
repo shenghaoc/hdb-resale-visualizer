@@ -10,12 +10,6 @@
       "lng": 103.858181909317
     },
     "medianPrice": 344000,
-    "priceIqr": [
-      339250,
-      405000
-    ],
-    "pricePerSqmMedian": 5212.12,
-    "pricePerSqftMedian": 484.22,
     "transactionCount": 6,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "BOON KENG MRT STATION",
         "distanceMeters": 1260
       }
-    ]
+    ],
+    "priceIqr": [
+      339250,
+      405000
+    ],
+    "pricePerSqmMedian": 5212.12,
+    "pricePerSqftMedian": 484.22
   },
   "monthlyTrend": [
     {
@@ -1134,7 +1134,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-03-228078",
+      "id": "toa-payoh-194-kim-keat-ave-2026-03-228175",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1147,7 +1147,7 @@
       "pricePerSqft": 450.44
     },
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-03-228079",
+      "id": "toa-payoh-194-kim-keat-ave-2026-03-228176",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1160,7 +1160,7 @@
       "pricePerSqft": 482.81
     },
     {
-      "id": "toa-payoh-194-kim-keat-ave-2026-01-228076",
+      "id": "toa-payoh-194-kim-keat-ave-2026-01-228173",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

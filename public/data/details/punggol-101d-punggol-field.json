@@ -10,12 +10,6 @@
       "lng": 103.90614388692
     },
     "medianPrice": 600000,
-    "priceIqr": [
-      585000,
-      640500
-    ],
-    "pricePerSqmMedian": 6190.91,
-    "pricePerSqftMedian": 575.15,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 747
       }
-    ]
+    ],
+    "priceIqr": [
+      585000,
+      640500
+    ],
+    "pricePerSqmMedian": 6190.91,
+    "pricePerSqftMedian": 575.15
   },
   "monthlyTrend": [
     {
@@ -320,7 +320,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-101d-punggol-field-2026-02-226137",
+      "id": "punggol-101d-punggol-field-2026-02-226205",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

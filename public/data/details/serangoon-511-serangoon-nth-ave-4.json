@@ -9,14 +9,8 @@
       "lat": 1.3711995231746,
       "lng": 103.87563237216
     },
-    "medianPrice": 770000,
-    "priceIqr": [
-      702500,
-      820000
-    ],
-    "pricePerSqmMedian": 6363.64,
-    "pricePerSqftMedian": 591.2,
-    "transactionCount": 3,
+    "medianPrice": 706500,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       121
@@ -25,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-01",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "SERANGOON MRT STATION",
         "distanceMeters": 2286
       }
-    ]
+    ],
+    "priceIqr": [
+      641000,
+      795000
+    ],
+    "pricePerSqmMedian": 6396.82,
+    "pricePerSqftMedian": 594.29
   },
   "monthlyTrend": [
     {
@@ -442,9 +442,28 @@
       "medianPrice": 870000,
       "transactionCount": 1,
       "medianPricePerSqm": 7190.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 643000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6430
     }
   ],
   "recentTransactions": [
+    {
+      "id": "serangoon-511-serangoon-nth-ave-4-2026-04-227542",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 01 month",
+      "resalePrice": 643000,
+      "pricePerSqm": 6430,
+      "pricePerSqft": 597.37
+    },
     {
       "id": "serangoon-511-serangoon-nth-ave-4-2025-11-215574",
       "month": "2025-11",
@@ -691,19 +710,6 @@
       "resalePrice": 423888,
       "pricePerSqm": 4238.88,
       "pricePerSqft": 393.81
-    },
-    {
-      "id": "serangoon-511-serangoon-nth-ave-4-2018-02-22480",
-      "month": "2018-02",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 120,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "78 years 03 months",
-      "resalePrice": 535000,
-      "pricePerSqm": 4458.33,
-      "pricePerSqft": 414.19
     }
   ]
 }

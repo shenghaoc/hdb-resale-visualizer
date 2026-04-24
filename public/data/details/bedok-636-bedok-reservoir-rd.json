@@ -10,12 +10,6 @@
       "lng": 103.904387017176
     },
     "medianPrice": 1049000,
-    "priceIqr": [
-      1013500,
-      1107222
-    ],
-    "pricePerSqmMedian": 7313.16,
-    "pricePerSqftMedian": 679.41,
     "transactionCount": 4,
     "floorAreaRange": [
       142,
@@ -54,7 +48,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 1288
       }
-    ]
+    ],
+    "priceIqr": [
+      1013500,
+      1107222
+    ],
+    "pricePerSqmMedian": 7313.16,
+    "pricePerSqftMedian": 679.41
   },
   "monthlyTrend": [
     {
@@ -622,7 +622,7 @@
       "pricePerSqft": 418.72
     },
     {
-      "id": "bedok-636-bedok-reservoir-rd-2016-07-966007",
+      "id": "bedok-636-bedok-reservoir-rd-2016-07-966123",
       "month": "2016-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -635,7 +635,7 @@
       "pricePerSqft": 457.97
     },
     {
-      "id": "bedok-636-bedok-reservoir-rd-2016-06-964205",
+      "id": "bedok-636-bedok-reservoir-rd-2016-06-964321",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -648,7 +648,7 @@
       "pricePerSqft": 436.97
     },
     {
-      "id": "bedok-636-bedok-reservoir-rd-2016-03-958874",
+      "id": "bedok-636-bedok-reservoir-rd-2016-03-958990",
       "month": "2016-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -661,7 +661,7 @@
       "pricePerSqft": 444.89
     },
     {
-      "id": "bedok-636-bedok-reservoir-rd-2012-04-601625",
+      "id": "bedok-636-bedok-reservoir-rd-2012-04-601741",
       "month": "2012-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "06 TO 10",

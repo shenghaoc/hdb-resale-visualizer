@@ -10,12 +10,6 @@
       "lng": 103.911099973166
     },
     "medianPrice": 810000,
-    "priceIqr": [
-      805000,
-      841944
-    ],
-    "pricePerSqmMedian": 6328.13,
-    "pricePerSqftMedian": 587.9,
     "transactionCount": 3,
     "floorAreaRange": [
       110,
@@ -55,7 +49,13 @@
         "stationName": "CORAL EDGE LRT STATION",
         "distanceMeters": 541
       }
-    ]
+    ],
+    "priceIqr": [
+      805000,
+      841944
+    ],
+    "pricePerSqmMedian": 6328.13,
+    "pricePerSqftMedian": 587.9
   },
   "monthlyTrend": [
     {
@@ -307,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-186-punggol-ctrl-2026-02-226382",
+      "id": "punggol-186-punggol-ctrl-2026-02-226455",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.7703219758
     },
     "medianPrice": 860000,
-    "priceIqr": [
-      856500,
-      867500
-    ],
-    "pricePerSqmMedian": 5923.61,
-    "pricePerSqftMedian": 550.32,
     "transactionCount": 3,
     "floorAreaRange": [
       144,
@@ -55,7 +49,13 @@
         "stationName": "BANGKIT LRT STATION",
         "distanceMeters": 524
       }
-    ]
+    ],
+    "priceIqr": [
+      856500,
+      867500
+    ],
+    "pricePerSqmMedian": 5923.61,
+    "pricePerSqftMedian": 550.32
   },
   "monthlyTrend": [
     {
@@ -427,7 +427,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-129-pending-rd-2026-01-223739",
+      "id": "bukit-panjang-129-pending-rd-2026-01-223766",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -622,7 +622,7 @@
       "pricePerSqft": 338.39
     },
     {
-      "id": "bukit-panjang-129-pending-rd-2016-02-957814",
+      "id": "bukit-panjang-129-pending-rd-2016-02-957930",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -635,7 +635,7 @@
       "pricePerSqft": 337.25
     },
     {
-      "id": "bukit-panjang-129-pending-rd-2015-09-950431",
+      "id": "bukit-panjang-129-pending-rd-2015-09-950547",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -648,7 +648,7 @@
       "pricePerSqft": 343.61
     },
     {
-      "id": "bukit-panjang-129-pending-rd-2014-12-650288",
+      "id": "bukit-panjang-129-pending-rd-2014-12-650404",
       "month": "2014-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -661,7 +661,7 @@
       "pricePerSqft": 329.03
     },
     {
-      "id": "bukit-panjang-129-pending-rd-2014-09-645918",
+      "id": "bukit-panjang-129-pending-rd-2014-09-646034",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -674,7 +674,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "bukit-panjang-129-pending-rd-2013-11-633252",
+      "id": "bukit-panjang-129-pending-rd-2013-11-633368",
       "month": "2013-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

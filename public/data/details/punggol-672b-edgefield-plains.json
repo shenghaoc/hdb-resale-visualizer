@@ -10,12 +10,6 @@
       "lng": 103.912312507427
     },
     "medianPrice": 372500,
-    "priceIqr": [
-      356250,
-      426250
-    ],
-    "pricePerSqmMedian": 7897.73,
-    "pricePerSqftMedian": 733.72,
     "transactionCount": 6,
     "floorAreaRange": [
       44,
@@ -55,7 +49,13 @@
         "stationName": "SAM KEE LRT STATION",
         "distanceMeters": 877
       }
-    ]
+    ],
+    "priceIqr": [
+      356250,
+      426250
+    ],
+    "pricePerSqmMedian": 7897.73,
+    "pricePerSqftMedian": 733.72
   },
   "monthlyTrend": [
     {
@@ -199,7 +199,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-672b-edgefield-plains-2026-02-225900",
+      "id": "punggol-672b-edgefield-plains-2026-02-225968",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",

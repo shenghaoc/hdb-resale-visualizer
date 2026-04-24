@@ -10,12 +10,6 @@
       "lng": 103.838327333282
     },
     "medianPrice": 1300000,
-    "priceIqr": [
-      1270000,
-      1353000
-    ],
-    "pricePerSqmMedian": 8698.63,
-    "pricePerSqftMedian": 808.13,
     "transactionCount": 5,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "BISHAN MRT STATION",
         "distanceMeters": 1107
       }
-    ]
+    ],
+    "priceIqr": [
+      1270000,
+      1353000
+    ],
+    "pricePerSqmMedian": 8698.63,
+    "pricePerSqftMedian": 808.13
   },
   "monthlyTrend": [
     {
@@ -606,7 +606,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-301-shunfu-rd-2026-03-222809",
+      "id": "bishan-301-shunfu-rd-2026-03-222822",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

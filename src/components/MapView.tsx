@@ -1,18 +1,29 @@
 import { useEffect, useMemo, useRef } from "react";
-import maplibregl, { LngLatBoundsLike, Map, Popup } from "maplibre-gl";
+import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { ONEMAP_ATTRIBUTION, ONEMAP_TILE_URL } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
+import {
+  DEFAULT_STATION_COLOR,
+  MRT_LINE_CODES,
+  MRT_LINE_COLORS,
+  MRT_LINE_FALLBACK_COLOR,
+  type MrtLineCode,
+} from "@/lib/mrt-colors";
+import { MRT_LINE_SEQUENCES } from "@/lib/mrt-line-sequences";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary } from "@/types/data";
+import type { Translator } from "@/lib/i18n";
 
 type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
   townFilter?: string | null;
+  autoFitKey?: string | null;
   onSelect: (addressKey: string) => void;
   onMapInteract?: () => void;
+  t: Translator;
 };
 
 const SINGAPORE_BOUNDS: LngLatBoundsLike = [
@@ -33,10 +44,91 @@ type MrtPopupProperties = {
   lines?: string | string[];
 };
 
+type MrtExitPopupProperties = {
+  STATION_NA?: string;
+  EXIT_CODE?: string;
+};
+
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
 };
+
+type GeoJsonDataSourceLike = {
+  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
+};
+
+type MrtStationsGeoJson = GeoJSON.FeatureCollection<
+  GeoJSON.Point,
+  { stationName?: string; lines?: string[] }
+>;
+
+function normalizeStationName(stationName: string): string {
+  return stationName
+    .toUpperCase()
+    .replace(/\s+(MRT|LRT)\s+STATION$/u, "")
+    .trim();
+}
+
+function toMrtExitPopupProperties(properties: unknown): MrtExitPopupProperties {
+  if (!properties || typeof properties !== "object") {
+    return {};
+  }
+
+  const record = properties as Record<string, unknown>;
+  return {
+    STATION_NA: typeof record.STATION_NA === "string" ? record.STATION_NA : undefined,
+    EXIT_CODE: typeof record.EXIT_CODE === "string" ? record.EXIT_CODE : undefined,
+  };
+}
+
+function buildMrtLineFeatures(
+  stationsGeoJson: MrtStationsGeoJson,
+): GeoJSON.FeatureCollection<GeoJSON.LineString, { lineCode: MrtLineCode }> {
+  const stationCoordinates = new Map<string, [number, number]>();
+  for (const feature of stationsGeoJson.features) {
+    if (!feature.geometry || feature.geometry.type !== "Point") {
+      continue;
+    }
+
+    const stationName = feature.properties?.stationName;
+    if (!stationName) {
+      continue;
+    }
+
+    const [lng, lat] = feature.geometry.coordinates;
+    if (typeof lng !== "number" || typeof lat !== "number") {
+      continue;
+    }
+
+    stationCoordinates.set(normalizeStationName(stationName), [lng, lat]);
+  }
+
+  const features: GeoJSON.Feature<GeoJSON.LineString, { lineCode: MrtLineCode }>[] = [];
+  for (const lineCode of MRT_LINE_CODES) {
+    const branches = MRT_LINE_SEQUENCES[lineCode];
+    for (const branch of branches) {
+      for (let index = 0; index < branch.length - 1; index += 1) {
+        const from = stationCoordinates.get(branch[index]);
+        const to = stationCoordinates.get(branch[index + 1]);
+        if (!from || !to) {
+          continue;
+        }
+
+        features.push({
+          type: "Feature",
+          properties: { lineCode },
+          geometry: {
+            type: "LineString",
+            coordinates: [from, to],
+          },
+        });
+      }
+    }
+  }
+
+  return { type: "FeatureCollection", features };
+}
 
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
   GeoJSON.Point,
@@ -57,6 +149,10 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
+}
+
+function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
+  return !!source && typeof source === "object" && "setData" in source;
 }
 
 function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
@@ -94,15 +190,25 @@ function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
   return { stationName, lines };
 }
 
-export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMapInteract }: MapViewProps) {
+export function MapView({
+  blocks,
+  selectedAddressKey,
+  townFilter,
+  autoFitKey,
+  onSelect,
+  onMapInteract,
+  t,
+}: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<Map | null>(null);
+  const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const onMapInteractRef = useRef(onMapInteract);
+  const tRef = useRef(t);
   const popupRef = useRef<Popup | null>(null);
   const prefersReducedMotionRef = useRef(false);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
+  const previousAutoFitKeyRef = useRef<string | null>(null);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -110,7 +216,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
 
-  // Keep onSelect ref fresh without triggering map recreation
+  // Keep callbacks and t refs fresh without triggering map recreation
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
@@ -118,13 +224,18 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
     onMapInteractRef.current = onMapInteract;
   }, [onMapInteract]);
 
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
+
   // Create the map ONCE on mount
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
       return;
     }
 
-    prefersReducedMotionRef.current = prefersReducedMotion;
+    let isMapMounted = true;
+    prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const map = new maplibregl.Map({
       container: containerRef.current,
       center: [103.8198, 1.3521],
@@ -167,10 +278,72 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
     });
     popupRef.current = popup;
 
+    map.on("movestart", (event) => {
+      if (event.originalEvent) {
+        onMapInteractRef.current?.();
+      }
+    });
+
     map.on("load", () => {
       map.addSource("mrt-stations", {
         type: "geojson",
         data: "/data/mrt-stations.geojson",
+      });
+
+      map.addSource("mrt-lines", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addSource("mrt-exits", {
+        type: "geojson",
+        data: "/data/mrt-exits.geojson",
+      });
+
+      void fetch("/data/mrt-stations.geojson")
+        .then((response) => response.json() as Promise<MrtStationsGeoJson>)
+        .then((stationsGeoJson) => {
+          if (!isMapMounted || mapRef.current !== map) {
+            return;
+          }
+
+          const source = map.getSource("mrt-lines");
+          if (!isGeoJsonDataSourceLike(source)) {
+            return;
+          }
+
+          source.setData(buildMrtLineFeatures(stationsGeoJson));
+        });
+
+      map.addLayer({
+        id: "mrt-lines",
+        type: "line",
+        source: "mrt-lines",
+        layout: {
+          "line-cap": "round",
+          "line-join": "round",
+        },
+        paint: {
+          "line-color": [
+            "match",
+            ["get", "lineCode"],
+            "NSL",
+            MRT_LINE_COLORS.NSL,
+            "EWL",
+            MRT_LINE_COLORS.EWL,
+            "NEL",
+            MRT_LINE_COLORS.NEL,
+            "CCL",
+            MRT_LINE_COLORS.CCL,
+            "DTL",
+            MRT_LINE_COLORS.DTL,
+            "TEL",
+            MRT_LINE_COLORS.TEL,
+            MRT_LINE_FALLBACK_COLOR,
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 14, 4, 18, 6],
+          "line-opacity": 0.75,
+        },
       });
 
       map.addLayer({
@@ -183,7 +356,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
             "case",
             ["==", ["get", "isInterchange"], true],
             "#fff",
-            ["coalesce", ["get", "color"], "#2563eb"],
+            ["coalesce", ["get", "color"], DEFAULT_STATION_COLOR],
           ],
           "circle-stroke-width": ["case", ["==", ["get", "isInterchange"], true], 2.5, 1.5],
           "circle-stroke-color": [
@@ -192,6 +365,38 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
             "#111827",
             "#fff",
           ],
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-exits",
+        type: "circle",
+        source: "mrt-exits",
+        minzoom: 16,
+        paint: {
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 16, 2.5, 18, 4.5],
+          "circle-color": "#ffffff",
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": "#0f172a",
+          "circle-opacity": 0.95,
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-exit-labels",
+        type: "symbol",
+        source: "mrt-exits",
+        minzoom: 17,
+        layout: {
+          "text-field": ["get", "EXIT_CODE"],
+          "text-size": 10,
+          "text-offset": [0, 1],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#0f172a",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 1.25,
         },
       });
 
@@ -445,7 +650,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
         container.appendChild(townEl);
 
         const infoEl = document.createElement("p");
-        infoEl.textContent = `${formatCompactCurrency(medianPrice)} median · ${txnCount} txns`;
+        infoEl.textContent = `${tRef.current("map.median", { value: formatCompactCurrency(medianPrice) })} · ${tRef.current("map.txns", { count: txnCount })}`;
         container.appendChild(infoEl);
 
         popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
@@ -470,7 +675,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
         const props = toMrtPopupProperties(feature.properties);
-        const stationName = props.stationName ?? "MRT Station";
+        const stationName = props.stationName ?? tRef.current("map.mrtStation");
         const lines = parseMrtLines(props.lines);
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -494,11 +699,42 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
         map.getCanvas().style.cursor = "";
         popup.remove();
       });
+
+      map.on("mouseenter", "mrt-exits", (event) => {
+        map.getCanvas().style.cursor = "pointer";
+        const feature = event.features?.[0];
+        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
+
+        const props = toMrtExitPopupProperties(feature.properties);
+        const stationName = props.STATION_NA ?? "MRT Station";
+        const exitCode = props.EXIT_CODE;
+        const [lng, lat] = feature.geometry.coordinates;
+
+        const container = document.createElement("div");
+        const nameEl = document.createElement("strong");
+        nameEl.textContent = stationName;
+        container.appendChild(nameEl);
+
+        if (exitCode) {
+          const exitEl = document.createElement("p");
+          exitEl.className = "opacity-80 mt-1";
+          exitEl.textContent = exitCode;
+          container.appendChild(exitEl);
+        }
+
+        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
+      });
+
+      map.on("mouseleave", "mrt-exits", () => {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+      });
     });
 
     mapRef.current = map;
 
     return () => {
+      isMapMounted = false;
       popup.remove();
       map.remove();
       mapRef.current = null;
@@ -535,9 +771,14 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
     if (!map || blocks.length === 0) return;
 
     const nextTownFilter = debouncedTownFilter ?? null;
-    const shouldFit = !hasInitialFitRef.current || previousTownFilterRef.current !== nextTownFilter;
+    const nextAutoFitKey = autoFitKey ?? null;
+    const shouldFit =
+      !hasInitialFitRef.current ||
+      previousTownFilterRef.current !== nextTownFilter ||
+      previousAutoFitKeyRef.current !== nextAutoFitKey;
 
     previousTownFilterRef.current = nextTownFilter;
+    previousAutoFitKeyRef.current = nextAutoFitKey;
 
     if (!shouldFit) {
       return;
@@ -556,8 +797,8 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
       maxLat = Math.max(maxLat, b.coordinates.lat);
     }
 
-    // Default Singapore bounds if min/max collapsed or townFilter is missing
-    if (minLng === Infinity || !debouncedTownFilter) {
+    // Default Singapore bounds if min/max collapsed or neither townFilter nor autoFitKey is present
+    if (minLng === Infinity || (!debouncedTownFilter && !autoFitKey)) {
       map.fitBounds(SINGAPORE_BOUNDS, {
         padding: 40,
         duration: prefersReducedMotionRef.current ? 0 : 1200,
@@ -576,7 +817,7 @@ export function MapView({ blocks, selectedAddressKey, townFilter, onSelect, onMa
         duration: prefersReducedMotionRef.current ? 0 : 1200,
       },
     );
-  }, [blocks, debouncedTownFilter]);
+  }, [autoFitKey, blocks, debouncedTownFilter]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {

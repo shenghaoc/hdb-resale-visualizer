@@ -10,12 +10,6 @@
       "lng": 103.887054329523
     },
     "medianPrice": 333888,
-    "priceIqr": [
-      325000,
-      347000
-    ],
-    "pricePerSqmMedian": 5473.57,
-    "pricePerSqftMedian": 508.51,
     "transactionCount": 9,
     "floorAreaRange": [
       56,
@@ -56,7 +50,13 @@
         "stationName": "PAYA LEBAR MRT STATION",
         "distanceMeters": 990
       }
-    ]
+    ],
+    "priceIqr": [
+      325000,
+      347000
+    ],
+    "pricePerSqmMedian": 5473.57,
+    "pricePerSqftMedian": 508.51
   },
   "monthlyTrend": [
     {
@@ -1010,7 +1010,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-61-circuit-rd-2026-04-224340",
+      "id": "geylang-61-circuit-rd-2026-04-224379",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1023,7 +1023,7 @@
       "pricePerSqft": 530
     },
     {
-      "id": "geylang-61-circuit-rd-2026-02-224328",
+      "id": "geylang-61-circuit-rd-2026-02-224367",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1036,7 +1036,7 @@
       "pricePerSqft": 490.41
     },
     {
-      "id": "geylang-61-circuit-rd-2026-01-224316",
+      "id": "geylang-61-circuit-rd-2026-01-224355",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

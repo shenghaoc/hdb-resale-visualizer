@@ -9,14 +9,8 @@
       "lat": 1.34594925522117,
       "lng": 103.754248349899
     },
-    "medianPrice": 815000,
-    "priceIqr": [
-      748750,
-      934722
-    ],
-    "pricePerSqmMedian": 8225.17,
-    "pricePerSqftMedian": 764.14,
-    "transactionCount": 10,
+    "medianPrice": 850000,
+    "transactionCount": 11,
     "floorAreaRange": [
       92,
       113
@@ -56,7 +50,13 @@
         "stationName": "DT4",
         "distanceMeters": 1881
       }
-    ]
+    ],
+    "priceIqr": [
+      757500,
+      943400
+    ],
+    "pricePerSqmMedian": 8318.58,
+    "pricePerSqftMedian": 772.82
   },
   "monthlyTrend": [
     {
@@ -187,14 +187,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 980000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8672.57
+      "medianPrice": 965000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8539.83
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-293b-bt-batok-st-21-2026-04-223128",
+      "id": "bukit-batok-293b-bt-batok-st-21-2026-04-223145",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "31 TO 33",
@@ -207,7 +207,20 @@
       "pricePerSqft": 805.71
     },
     {
-      "id": "bukit-batok-293b-bt-batok-st-21-2026-01-222958",
+      "id": "bukit-batok-293b-bt-batok-st-21-2026-04-223146",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "91 years 10 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 8407.08,
+      "pricePerSqft": 781.04
+    },
+    {
+      "id": "bukit-batok-293b-bt-batok-st-21-2026-01-222973",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -439,19 +452,6 @@
       "resalePrice": 895000,
       "pricePerSqm": 7920.35,
       "pricePerSqft": 735.83
-    },
-    {
-      "id": "bukit-batok-293b-bt-batok-st-21-2023-08-147043",
-      "month": "2023-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "37 TO 39",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 05 months",
-      "resalePrice": 788000,
-      "pricePerSqm": 8565.22,
-      "pricePerSqft": 795.74
     }
   ]
 }

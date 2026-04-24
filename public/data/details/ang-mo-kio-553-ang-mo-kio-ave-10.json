@@ -10,12 +10,6 @@
       "lng": 103.857234141592
     },
     "medianPrice": 730000,
-    "priceIqr": [
-      705000,
-      730000
-    ],
-    "pricePerSqmMedian": 6134.45,
-    "pricePerSqftMedian": 569.91,
     "transactionCount": 3,
     "floorAreaRange": [
       119,
@@ -54,7 +48,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 2200
       }
-    ]
+    ],
+    "priceIqr": [
+      705000,
+      730000
+    ],
+    "pricePerSqmMedian": 6134.45,
+    "pricePerSqftMedian": 569.91
   },
   "monthlyTrend": [
     {

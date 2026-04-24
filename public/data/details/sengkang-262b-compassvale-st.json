@@ -10,12 +10,6 @@
       "lng": 103.895470505301
     },
     "medianPrice": 889444,
-    "priceIqr": [
-      856916,
-      896000
-    ],
-    "pricePerSqmMedian": 6841.88,
-    "pricePerSqftMedian": 635.63,
     "transactionCount": 4,
     "floorAreaRange": [
       130,
@@ -54,7 +48,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 578
       }
-    ]
+    ],
+    "priceIqr": [
+      856916,
+      896000
+    ],
+    "pricePerSqmMedian": 6841.88,
+    "pricePerSqftMedian": 635.63
   },
   "monthlyTrend": [
     {
@@ -553,7 +553,7 @@
       "pricePerSqft": 445.22
     },
     {
-      "id": "sengkang-262b-compassvale-st-2016-10-972229",
+      "id": "sengkang-262b-compassvale-st-2016-10-972345",
       "month": "2016-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

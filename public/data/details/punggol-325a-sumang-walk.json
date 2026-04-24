@@ -10,12 +10,6 @@
       "lng": 103.898121318524
     },
     "medianPrice": 585000,
-    "priceIqr": [
-      547500,
-      740000
-    ],
-    "pricePerSqmMedian": 7986.64,
-    "pricePerSqftMedian": 741.99,
     "transactionCount": 20,
     "floorAreaRange": [
       68,
@@ -56,7 +50,13 @@
         "stationName": "SUMANG LRT STATION",
         "distanceMeters": 572
       }
-    ]
+    ],
+    "priceIqr": [
+      547500,
+      740000
+    ],
+    "pricePerSqmMedian": 7986.64,
+    "pricePerSqftMedian": 741.99
   },
   "monthlyTrend": [
     {
@@ -158,7 +158,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-325a-sumang-walk-2026-02-225993",
+      "id": "punggol-325a-sumang-walk-2026-02-226062",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

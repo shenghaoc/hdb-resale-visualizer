@@ -10,12 +10,6 @@
       "lng": 103.891877462839
     },
     "medianPrice": 660888,
-    "priceIqr": [
-      632000,
-      720000
-    ],
-    "pricePerSqmMedian": 6645.16,
-    "pricePerSqftMedian": 617.36,
     "transactionCount": 13,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "CHENG LIM LRT STATION",
         "distanceMeters": 663
       }
-    ]
+    ],
+    "priceIqr": [
+      632000,
+      720000
+    ],
+    "pricePerSqmMedian": 6645.16,
+    "pricePerSqftMedian": 617.36
   },
   "monthlyTrend": [
     {
@@ -206,7 +206,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-231a-sumang-lane-2026-04-226236",
+      "id": "punggol-231a-sumang-lane-2026-04-226306",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -219,7 +219,7 @@
       "pricePerSqft": 611.36
     },
     {
-      "id": "punggol-231a-sumang-lane-2026-01-226225",
+      "id": "punggol-231a-sumang-lane-2026-01-226295",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -232,7 +232,7 @@
       "pricePerSqft": 659.31
     },
     {
-      "id": "punggol-231a-sumang-lane-2026-01-226228",
+      "id": "punggol-231a-sumang-lane-2026-01-226298",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.900930171269
     },
     "medianPrice": 622500,
-    "priceIqr": [
-      596250,
-      662500
-    ],
-    "pricePerSqmMedian": 6275.41,
-    "pricePerSqftMedian": 583,
     "transactionCount": 4,
     "floorAreaRange": [
       94,
@@ -56,7 +50,13 @@
         "stationName": "SENGKANG MRT STATION",
         "distanceMeters": 696
       }
-    ]
+    ],
+    "priceIqr": [
+      596250,
+      662500
+    ],
+    "pricePerSqmMedian": 6275.41,
+    "pricePerSqftMedian": 583
   },
   "monthlyTrend": [
     {
@@ -572,7 +572,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-298d-compassvale-st-2026-04-227283",
+      "id": "sengkang-298d-compassvale-st-2026-04-227367",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.740943329677
     },
     "medianPrice": 548444,
-    "priceIqr": [
-      539138,
-      623750
-    ],
-    "pricePerSqmMedian": 5484.44,
-    "pricePerSqftMedian": 509.52,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "KEAT HONG LRT STATION",
         "distanceMeters": 933
       }
-    ]
+    ],
+    "priceIqr": [
+      539138,
+      623750
+    ],
+    "pricePerSqmMedian": 5484.44,
+    "pricePerSqftMedian": 509.52
   },
   "monthlyTrend": [
     {
@@ -452,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-296a-choa-chu-kang-ave-2-2026-04-224113",
+      "id": "choa-chu-kang-296a-choa-chu-kang-ave-2-2026-04-224148",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

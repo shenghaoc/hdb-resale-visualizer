@@ -9,14 +9,8 @@
       "lat": 1.44448968447959,
       "lng": 103.792643075252
     },
-    "medianPrice": 615000,
-    "priceIqr": [
-      574500,
-      630000
-    ],
-    "pricePerSqmMedian": 5040,
-    "pricePerSqftMedian": 468.23,
-    "transactionCount": 6,
+    "medianPrice": 620000,
+    "transactionCount": 7,
     "floorAreaRange": [
       105,
       125
@@ -25,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2000-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 979
       }
-    ]
+    ],
+    "priceIqr": [
+      583000,
+      630000
+    ],
+    "pricePerSqmMedian": 5040,
+    "pricePerSqftMedian": 468.23
   },
   "monthlyTrend": [
     {
@@ -466,11 +466,30 @@
       "medianPrice": 630000,
       "transactionCount": 3,
       "medianPricePerSqm": 5040
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4960
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-880-woodlands-st-82-2026-01-228688",
+      "id": "woodlands-880-woodlands-st-82-2026-04-228965",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 125,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 05 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 4960,
+      "pricePerSqft": 460.8
+    },
+    {
+      "id": "woodlands-880-woodlands-st-82-2026-01-228792",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -483,7 +502,7 @@
       "pricePerSqft": 460.09
     },
     {
-      "id": "woodlands-880-woodlands-st-82-2026-01-228857",
+      "id": "woodlands-880-woodlands-st-82-2026-01-228962",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -496,7 +515,7 @@
       "pricePerSqft": 497.96
     },
     {
-      "id": "woodlands-880-woodlands-st-82-2026-01-228858",
+      "id": "woodlands-880-woodlands-st-82-2026-01-228963",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -715,19 +734,6 @@
       "resalePrice": 388800,
       "pricePerSqm": 3110.4,
       "pricePerSqft": 288.97
-    },
-    {
-      "id": "woodlands-880-woodlands-st-82-2017-04-5837",
-      "month": "2017-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "78 years 05 months",
-      "resalePrice": 394888,
-      "pricePerSqm": 3263.54,
-      "pricePerSqft": 303.19
     }
   ]
 }

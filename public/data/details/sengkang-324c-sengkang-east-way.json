@@ -10,12 +10,6 @@
       "lng": 103.891776534324
     },
     "medianPrice": 830000,
-    "priceIqr": [
-      808000,
-      869444
-    ],
-    "pricePerSqmMedian": 6640,
-    "pricePerSqftMedian": 616.88,
     "transactionCount": 7,
     "floorAreaRange": [
       125,
@@ -54,7 +48,13 @@
         "stationName": "FARMWAY LRT STATION",
         "distanceMeters": 581
       }
-    ]
+    ],
+    "priceIqr": [
+      808000,
+      869444
+    ],
+    "pricePerSqmMedian": 6640,
+    "pricePerSqftMedian": 616.88
   },
   "monthlyTrend": [
     {

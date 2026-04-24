@@ -10,12 +10,6 @@
       "lng": 103.956985966766
     },
     "medianPrice": 680000,
-    "priceIqr": [
-      668000,
-      683444
-    ],
-    "pricePerSqmMedian": 6307.69,
-    "pricePerSqftMedian": 586,
     "transactionCount": 3,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "EXPO MRT STATION",
         "distanceMeters": 846
       }
-    ]
+    ],
+    "priceIqr": [
+      668000,
+      683444
+    ],
+    "pricePerSqmMedian": 6307.69,
+    "pricePerSqftMedian": 586
   },
   "monthlyTrend": [
     {
@@ -774,7 +774,7 @@
       "pricePerSqft": 433.25
     },
     {
-      "id": "tampines-222-simei-st-4-2015-11-954561",
+      "id": "tampines-222-simei-st-4-2015-11-954677",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -787,7 +787,7 @@
       "pricePerSqft": 415.38
     },
     {
-      "id": "tampines-222-simei-st-4-2014-12-650963",
+      "id": "tampines-222-simei-st-4-2014-12-651079",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -800,7 +800,7 @@
       "pricePerSqft": 455.58
     },
     {
-      "id": "tampines-222-simei-st-4-2014-07-643938",
+      "id": "tampines-222-simei-st-4-2014-07-644054",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -813,7 +813,7 @@
       "pricePerSqft": 451.12
     },
     {
-      "id": "tampines-222-simei-st-4-2014-06-642637",
+      "id": "tampines-222-simei-st-4-2014-06-642753",
       "month": "2014-06",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

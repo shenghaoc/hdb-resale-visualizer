@@ -10,12 +10,6 @@
       "lng": 103.90298325894
     },
     "medianPrice": 896500,
-    "priceIqr": [
-      853750,
-      968500
-    ],
-    "pricePerSqmMedian": 6140.41,
-    "pricePerSqftMedian": 570.46,
     "transactionCount": 4,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "KAKI BUKIT MRT STATION",
         "distanceMeters": 1143
       }
-    ]
+    ],
+    "priceIqr": [
+      853750,
+      968500
+    ],
+    "pricePerSqmMedian": 6140.41,
+    "pricePerSqftMedian": 570.46
   },
   "monthlyTrend": [
     {
@@ -648,7 +648,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-333-ubi-ave-1-2026-01-224490",
+      "id": "geylang-333-ubi-ave-1-2026-01-224535",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -869,7 +869,7 @@
       "pricePerSqft": 426.62
     },
     {
-      "id": "geylang-333-ubi-ave-1-2016-06-964651",
+      "id": "geylang-333-ubi-ave-1-2016-06-964767",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -882,7 +882,7 @@
       "pricePerSqft": 391.34
     },
     {
-      "id": "geylang-333-ubi-ave-1-2012-06-606593",
+      "id": "geylang-333-ubi-ave-1-2012-06-606709",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -895,7 +895,7 @@
       "pricePerSqft": 383.07
     },
     {
-      "id": "geylang-333-ubi-ave-1-2012-05-604366",
+      "id": "geylang-333-ubi-ave-1-2012-05-604482",
       "month": "2012-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "11 TO 15",

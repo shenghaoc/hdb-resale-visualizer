@@ -10,12 +10,6 @@
       "lng": 103.884240123623
     },
     "medianPrice": 760000,
-    "priceIqr": [
-      646000,
-      762916
-    ],
-    "pricePerSqmMedian": 5772.31,
-    "pricePerSqftMedian": 536.26,
     "transactionCount": 6,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "BARTLEY MRT STATION",
         "distanceMeters": 1137
       }
-    ]
+    ],
+    "priceIqr": [
+      646000,
+      762916
+    ],
+    "pricePerSqmMedian": 5772.31,
+    "pricePerSqftMedian": 536.26
   },
   "monthlyTrend": [
     {
@@ -595,7 +595,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-139-lor-ah-soo-2026-02-224804",
+      "id": "hougang-139-lor-ah-soo-2026-02-224854",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -829,7 +829,7 @@
       "pricePerSqft": 417.61
     },
     {
-      "id": "hougang-139-lor-ah-soo-2016-10-971648",
+      "id": "hougang-139-lor-ah-soo-2016-10-971764",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -842,7 +842,7 @@
       "pricePerSqft": 387.85
     },
     {
-      "id": "hougang-139-lor-ah-soo-2016-01-956726",
+      "id": "hougang-139-lor-ah-soo-2016-01-956842",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

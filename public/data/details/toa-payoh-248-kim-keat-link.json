@@ -10,12 +10,6 @@
       "lng": 103.855879359987
     },
     "medianPrice": 679000,
-    "priceIqr": [
-      671000,
-      717500
-    ],
-    "pricePerSqmMedian": 6560.26,
-    "pricePerSqftMedian": 609.47,
     "transactionCount": 4,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "BOON KENG MRT STATION",
         "distanceMeters": 1399
       }
-    ]
+    ],
+    "priceIqr": [
+      671000,
+      717500
+    ],
+    "pricePerSqmMedian": 6560.26,
+    "pricePerSqftMedian": 609.47
   },
   "monthlyTrend": [
     {
@@ -608,7 +608,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-248-kim-keat-link-2026-02-228306",
+      "id": "toa-payoh-248-kim-keat-link-2026-02-228405",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.795264617136
     },
     "medianPrice": 500000,
-    "priceIqr": [
-      438222,
-      546250
-    ],
-    "pricePerSqmMedian": 7108.53,
-    "pricePerSqftMedian": 660.4,
     "transactionCount": 20,
     "floorAreaRange": [
       59,
@@ -57,7 +51,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 576
       }
-    ]
+    ],
+    "priceIqr": [
+      438222,
+      546250
+    ],
+    "pricePerSqmMedian": 7108.53,
+    "pricePerSqftMedian": 660.4
   },
   "monthlyTrend": [
     {
@@ -1737,7 +1737,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-6-holland-cl-2026-04-226470",
+      "id": "queenstown-6-holland-cl-2026-04-226547",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.808148105183
     },
     "medianPrice": 852500,
-    "priceIqr": [
-      801250,
-      910500
-    ],
-    "pricePerSqmMedian": 7925,
-    "pricePerSqftMedian": 736.26,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1318
       }
-    ]
+    ],
+    "priceIqr": [
+      801250,
+      910500
+    ],
+    "pricePerSqmMedian": 7925,
+    "pricePerSqftMedian": 736.26
   },
   "monthlyTrend": [
     {
@@ -505,7 +505,7 @@
       "pricePerSqft": 571.96
     },
     {
-      "id": "bukit-merah-112a-depot-rd-2016-12-974528",
+      "id": "bukit-merah-112a-depot-rd-2016-12-974644",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -518,7 +518,7 @@
       "pricePerSqft": 588.12
     },
     {
-      "id": "bukit-merah-112a-depot-rd-2016-10-971309",
+      "id": "bukit-merah-112a-depot-rd-2016-10-971425",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -531,7 +531,7 @@
       "pricePerSqft": 529.55
     },
     {
-      "id": "bukit-merah-112a-depot-rd-2016-09-969644",
+      "id": "bukit-merah-112a-depot-rd-2016-09-969760",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

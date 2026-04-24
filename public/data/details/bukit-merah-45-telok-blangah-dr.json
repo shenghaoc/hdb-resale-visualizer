@@ -10,12 +10,6 @@
       "lng": 103.809560438327
     },
     "medianPrice": 315000,
-    "priceIqr": [
-      305250,
-      352500
-    ],
-    "pricePerSqmMedian": 7000,
-    "pricePerSqftMedian": 650.33,
     "transactionCount": 10,
     "floorAreaRange": [
       45,
@@ -54,7 +48,13 @@
         "stationName": "HARBOURFRONT MRT STATION",
         "distanceMeters": 1371
       }
-    ]
+    ],
+    "priceIqr": [
+      305250,
+      352500
+    ],
+    "pricePerSqmMedian": 7000,
+    "pricePerSqftMedian": 650.33
   },
   "monthlyTrend": [
     {

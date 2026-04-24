@@ -10,12 +10,6 @@
       "lng": 103.841274606704
     },
     "medianPrice": 1350000,
-    "priceIqr": [
-      1301000,
-      1447500
-    ],
-    "pricePerSqmMedian": 14150.94,
-    "pricePerSqftMedian": 1314.67,
     "transactionCount": 19,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "MAXWELL MRT STATION",
         "distanceMeters": 549
       }
-    ]
+    ],
+    "priceIqr": [
+      1301000,
+      1447500
+    ],
+    "pricePerSqmMedian": 14150.94,
+    "pricePerSqftMedian": 1314.67
   },
   "monthlyTrend": [
     {
@@ -512,7 +512,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-1g-cantonment-rd-2026-04-223804",
+      "id": "central-area-1g-cantonment-rd-2026-04-223831",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -525,7 +525,7 @@
       "pricePerSqft": 1281.09
     },
     {
-      "id": "central-area-1g-cantonment-rd-2026-04-223805",
+      "id": "central-area-1g-cantonment-rd-2026-04-223832",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -538,7 +538,7 @@
       "pricePerSqft": 1162.65
     },
     {
-      "id": "central-area-1g-cantonment-rd-2026-03-223802",
+      "id": "central-area-1g-cantonment-rd-2026-03-223829",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -551,7 +551,7 @@
       "pricePerSqft": 1158.79
     },
     {
-      "id": "central-area-1g-cantonment-rd-2026-03-223820",
+      "id": "central-area-1g-cantonment-rd-2026-03-223847",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -564,7 +564,7 @@
       "pricePerSqft": 1302.38
     },
     {
-      "id": "central-area-1g-cantonment-rd-2026-02-223799",
+      "id": "central-area-1g-cantonment-rd-2026-02-223826",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -577,7 +577,7 @@
       "pricePerSqft": 1320.2
     },
     {
-      "id": "central-area-1g-cantonment-rd-2026-01-223798",
+      "id": "central-area-1g-cantonment-rd-2026-01-223825",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "40 TO 42",

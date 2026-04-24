@@ -9,14 +9,8 @@
       "lat": 1.3683777926341,
       "lng": 103.839223299345
     },
-    "medianPrice": 1137500,
-    "priceIqr": [
-      1052000,
-      1170666
-    ],
-    "pricePerSqmMedian": 10707.97,
-    "pricePerSqftMedian": 994.8,
-    "transactionCount": 12,
+    "medianPrice": 1155000,
+    "transactionCount": 13,
     "floorAreaRange": [
       93,
       113
@@ -56,7 +50,13 @@
         "stationName": "ANG MO KIO MRT STATION",
         "distanceMeters": 1131
       }
-    ]
+    ],
+    "priceIqr": [
+      1060000,
+      1165000
+    ],
+    "pricePerSqmMedian": 10619.47,
+    "pricePerSqftMedian": 986.58
   },
   "monthlyTrend": [
     {
@@ -79,14 +79,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 1160888,
-      "transactionCount": 3,
-      "medianPricePerSqm": 10913.98
+      "medianPrice": 1162944,
+      "transactionCount": 4,
+      "medianPricePerSqm": 10611.85
     }
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222261",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222266",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -99,7 +99,7 @@
       "pricePerSqft": 1013.94
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222308",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222314",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -112,7 +112,7 @@
       "pricePerSqft": 1085.24
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222310",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222316",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -125,7 +125,20 @@
       "pricePerSqft": 954.43
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222250",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-04-222319",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 05 months",
+      "resalePrice": 1165000,
+      "pricePerSqm": 10309.73,
+      "pricePerSqft": 957.81
+    },
+    {
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222256",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -138,7 +151,7 @@
       "pricePerSqft": 970.99
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222253",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222259",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -151,7 +164,7 @@
       "pricePerSqft": 1026.93
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222303",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222309",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -164,7 +177,7 @@
       "pricePerSqft": 986.58
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222305",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222311",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -177,7 +190,7 @@
       "pricePerSqft": 1003.02
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222307",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-03-222313",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -190,7 +203,7 @@
       "pricePerSqft": 920.81
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222242",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222248",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -203,7 +216,7 @@
       "pricePerSqft": 1073.88
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222300",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222306",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -216,7 +229,7 @@
       "pricePerSqft": 949.59
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222301",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-02-222307",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -229,7 +242,7 @@
       "pricePerSqft": 953.7
     },
     {
-      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-01-222240",
+      "id": "ang-mo-kio-228b-ang-mo-kio-st-23-2026-01-222246",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

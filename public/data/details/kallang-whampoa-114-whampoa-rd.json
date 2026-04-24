@@ -10,12 +10,6 @@
       "lng": 103.857487440506
     },
     "medianPrice": 807500,
-    "priceIqr": [
-      781250,
-      833750
-    ],
-    "pricePerSqmMedian": 6267.5,
-    "pricePerSqftMedian": 582.27,
     "transactionCount": 2,
     "floorAreaRange": [
       106,
@@ -56,7 +50,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 1352
       }
-    ]
+    ],
+    "priceIqr": [
+      781250,
+      833750
+    ],
+    "pricePerSqmMedian": 6267.5,
+    "pricePerSqftMedian": 582.27
   },
   "monthlyTrend": [
     {
@@ -577,7 +577,7 @@
       "pricePerSqft": 451.61
     },
     {
-      "id": "kallang-whampoa-114-whampoa-rd-2016-04-961310",
+      "id": "kallang-whampoa-114-whampoa-rd-2016-04-961426",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -590,7 +590,7 @@
       "pricePerSqft": 450.44
     },
     {
-      "id": "kallang-whampoa-114-whampoa-rd-2015-08-949422",
+      "id": "kallang-whampoa-114-whampoa-rd-2015-08-949538",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -603,7 +603,7 @@
       "pricePerSqft": 526.69
     },
     {
-      "id": "kallang-whampoa-114-whampoa-rd-2015-01-939138",
+      "id": "kallang-whampoa-114-whampoa-rd-2015-01-939254",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

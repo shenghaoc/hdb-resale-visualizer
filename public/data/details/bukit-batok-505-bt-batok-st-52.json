@@ -10,12 +10,6 @@
       "lng": 103.753670851157
     },
     "medianPrice": 375000,
-    "priceIqr": [
-      369250,
-      420222
-    ],
-    "pricePerSqmMedian": 6116.31,
-    "pricePerSqftMedian": 568.23,
     "transactionCount": 12,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "DT4",
         "distanceMeters": 1696
       }
-    ]
+    ],
+    "priceIqr": [
+      369250,
+      420222
+    ],
+    "pricePerSqmMedian": 6116.31,
+    "pricePerSqftMedian": 568.23
   },
   "monthlyTrend": [
     {
@@ -852,7 +852,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-505-bt-batok-st-52-2026-04-222900",
+      "id": "bukit-batok-505-bt-batok-st-52-2026-04-222914",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

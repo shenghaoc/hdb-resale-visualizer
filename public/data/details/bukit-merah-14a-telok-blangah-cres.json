@@ -10,12 +10,6 @@
       "lng": 103.820730062207
     },
     "medianPrice": 795000,
-    "priceIqr": [
-      780000,
-      810000
-    ],
-    "pricePerSqmMedian": 7800,
-    "pricePerSqftMedian": 724.64,
     "transactionCount": 5,
     "floorAreaRange": [
       99,
@@ -56,7 +50,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1356
       }
-    ]
+    ],
+    "priceIqr": [
+      780000,
+      810000
+    ],
+    "pricePerSqmMedian": 7800,
+    "pricePerSqftMedian": 724.64
   },
   "monthlyTrend": [
     {
@@ -356,7 +356,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-14a-telok-blangah-cres-2026-04-223429",
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-04-223453",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -369,7 +369,7 @@
       "pricePerSqft": 746.04
     },
     {
-      "id": "bukit-merah-14a-telok-blangah-cres-2026-03-223426",
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-03-223450",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -382,7 +382,7 @@
       "pricePerSqft": 758.86
     },
     {
-      "id": "bukit-merah-14a-telok-blangah-cres-2026-01-223424",
+      "id": "bukit-merah-14a-telok-blangah-cres-2026-01-223448",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

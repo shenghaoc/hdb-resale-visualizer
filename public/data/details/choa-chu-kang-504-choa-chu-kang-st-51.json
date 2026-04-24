@@ -10,12 +10,6 @@
       "lng": 103.742676142012
     },
     "medianPrice": 629000,
-    "priceIqr": [
-      587000,
-      668500
-    ],
-    "pricePerSqmMedian": 5217.33,
-    "pricePerSqftMedian": 484.71,
     "transactionCount": 4,
     "floorAreaRange": [
       106,
@@ -56,7 +50,13 @@
         "stationName": "YEW TEE MRT STATION",
         "distanceMeters": 1019
       }
-    ]
+    ],
+    "priceIqr": [
+      587000,
+      668500
+    ],
+    "pricePerSqmMedian": 5217.33,
+    "pricePerSqftMedian": 484.71
   },
   "monthlyTrend": [
     {
@@ -566,7 +566,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-504-choa-chu-kang-st-51-2026-03-224075",
+      "id": "choa-chu-kang-504-choa-chu-kang-st-51-2026-03-224109",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

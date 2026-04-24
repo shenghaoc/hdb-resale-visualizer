@@ -9,14 +9,8 @@
       "lat": 1.37626067387977,
       "lng": 103.841230957516
     },
-    "medianPrice": 404444,
-    "priceIqr": [
-      392222,
-      416666
-    ],
-    "pricePerSqmMedian": 5947.71,
-    "pricePerSqftMedian": 552.56,
-    "transactionCount": 2,
+    "medianPrice": 410000,
+    "transactionCount": 3,
     "floorAreaRange": [
       68,
       163
@@ -25,10 +19,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2025-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2025-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -57,7 +51,13 @@
         "stationName": "LENTOR MRT STATION",
         "distanceMeters": 926
       }
-    ]
+    ],
+    "priceIqr": [
+      395000,
+      419444
+    ],
+    "pricePerSqmMedian": 6029.41,
+    "pricePerSqftMedian": 560.15
   },
   "monthlyTrend": [
     {
@@ -947,9 +947,28 @@
       "medianPrice": 380000,
       "transactionCount": 1,
       "medianPricePerSqm": 5588.24
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6029.41
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-154-ang-mo-kio-ave-5-2026-04-222171",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "53 years 09 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 6029.41,
+      "pricePerSqft": 560.15
+    },
     {
       "id": "ang-mo-kio-154-ang-mo-kio-ave-5-2025-01-197402",
       "month": "2025-01",
@@ -1196,19 +1215,6 @@
       "resalePrice": 310000,
       "pricePerSqm": 4558.82,
       "pricePerSqft": 423.53
-    },
-    {
-      "id": "ang-mo-kio-154-ang-mo-kio-ave-5-2018-08-32749",
-      "month": "2018-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "61 years 05 months",
-      "resalePrice": 255000,
-      "pricePerSqm": 3750,
-      "pricePerSqft": 348.39
     }
   ]
 }

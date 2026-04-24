@@ -10,12 +10,6 @@
       "lng": 103.800026532056
     },
     "medianPrice": 465000,
-    "priceIqr": [
-      432500,
-      475000
-    ],
-    "pricePerSqmMedian": 5224.72,
-    "pricePerSqftMedian": 485.39,
     "transactionCount": 3,
     "floorAreaRange": [
       89,
@@ -54,7 +48,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 1516
       }
-    ]
+    ],
+    "priceIqr": [
+      432500,
+      475000
+    ],
+    "pricePerSqmMedian": 5224.72,
+    "pricePerSqftMedian": 485.39
   },
   "monthlyTrend": [
     {
@@ -892,7 +892,7 @@
       "pricePerSqft": 417.54
     },
     {
-      "id": "queenstown-23b-queen-s-cl-2016-09-970361",
+      "id": "queenstown-23b-queen-s-cl-2016-09-970477",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -905,7 +905,7 @@
       "pricePerSqft": 501.05
     },
     {
-      "id": "queenstown-23b-queen-s-cl-2016-08-968657",
+      "id": "queenstown-23b-queen-s-cl-2016-08-968773",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -918,7 +918,7 @@
       "pricePerSqft": 469.73
     },
     {
-      "id": "queenstown-23b-queen-s-cl-2015-10-952728",
+      "id": "queenstown-23b-queen-s-cl-2015-10-952844",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -931,7 +931,7 @@
       "pricePerSqft": 480.17
     },
     {
-      "id": "queenstown-23b-queen-s-cl-2015-04-943226",
+      "id": "queenstown-23b-queen-s-cl-2015-04-943342",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

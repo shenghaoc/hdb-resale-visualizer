@@ -10,12 +10,6 @@
       "lng": 103.88212045504
     },
     "medianPrice": 792500,
-    "priceIqr": [
-      758250,
-      821250
-    ],
-    "pricePerSqmMedian": 6549.59,
-    "pricePerSqftMedian": 608.48,
     "transactionCount": 4,
     "floorAreaRange": [
       121,
@@ -54,7 +48,13 @@
         "stationName": "ALJUNIED MRT STATION",
         "distanceMeters": 795
       }
-    ]
+    ],
+    "priceIqr": [
+      758250,
+      821250
+    ],
+    "pricePerSqmMedian": 6549.59,
+    "pricePerSqftMedian": 608.48
   },
   "monthlyTrend": [
     {
@@ -540,7 +540,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-126-aljunied-rd-2026-01-224466",
+      "id": "geylang-126-aljunied-rd-2026-01-224511",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -709,7 +709,7 @@
       "pricePerSqft": 441.48
     },
     {
-      "id": "geylang-126-aljunied-rd-2016-09-969895",
+      "id": "geylang-126-aljunied-rd-2016-09-970011",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -722,7 +722,7 @@
       "pricePerSqft": 437.64
     },
     {
-      "id": "geylang-126-aljunied-rd-2016-07-966391",
+      "id": "geylang-126-aljunied-rd-2016-07-966507",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -735,7 +735,7 @@
       "pricePerSqft": 433.8
     },
     {
-      "id": "geylang-126-aljunied-rd-2015-02-940100",
+      "id": "geylang-126-aljunied-rd-2015-02-940216",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -748,7 +748,7 @@
       "pricePerSqft": 426.13
     },
     {
-      "id": "geylang-126-aljunied-rd-2014-02-636559",
+      "id": "geylang-126-aljunied-rd-2014-02-636675",
       "month": "2014-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -761,7 +761,7 @@
       "pricePerSqft": 437.64
     },
     {
-      "id": "geylang-126-aljunied-rd-2013-07-627978",
+      "id": "geylang-126-aljunied-rd-2013-07-628094",
       "month": "2013-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -774,7 +774,7 @@
       "pricePerSqft": 482.17
     },
     {
-      "id": "geylang-126-aljunied-rd-2011-10-591479",
+      "id": "geylang-126-aljunied-rd-2011-10-591595",
       "month": "2011-10",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -787,7 +787,7 @@
       "pricePerSqft": 459.14
     },
     {
-      "id": "geylang-126-aljunied-rd-2011-09-589771",
+      "id": "geylang-126-aljunied-rd-2011-09-589887",
       "month": "2011-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

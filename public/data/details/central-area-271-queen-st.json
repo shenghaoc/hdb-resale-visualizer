@@ -10,12 +10,6 @@
       "lng": 103.853991004773
     },
     "medianPrice": 559444,
-    "priceIqr": [
-      507000,
-      585000
-    ],
-    "pricePerSqmMedian": 8676.47,
-    "pricePerSqftMedian": 806.07,
     "transactionCount": 8,
     "floorAreaRange": [
       60,
@@ -56,7 +50,13 @@
         "stationName": "BENCOOLEN MRT STATION",
         "distanceMeters": 400
       }
-    ]
+    ],
+    "priceIqr": [
+      507000,
+      585000
+    ],
+    "pricePerSqmMedian": 8676.47,
+    "pricePerSqftMedian": 806.07
   },
   "monthlyTrend": [
     {
@@ -866,7 +866,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-271-queen-st-2026-03-223776",
+      "id": "central-area-271-queen-st-2026-03-223803",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -879,7 +879,7 @@
       "pricePerSqft": 789.68
     },
     {
-      "id": "central-area-271-queen-st-2026-01-223773",
+      "id": "central-area-271-queen-st-2026-01-223800",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -892,7 +892,7 @@
       "pricePerSqft": 771.1
     },
     {
-      "id": "central-area-271-queen-st-2026-01-223774",
+      "id": "central-area-271-queen-st-2026-01-223801",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

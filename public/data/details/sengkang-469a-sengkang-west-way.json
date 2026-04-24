@@ -10,12 +10,6 @@
       "lng": 103.878083108343
     },
     "medianPrice": 672500,
-    "priceIqr": [
-      665000,
-      723500
-    ],
-    "pricePerSqmMedian": 6584.07,
-    "pricePerSqftMedian": 611.68,
     "transactionCount": 6,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 462
       }
-    ]
+    ],
+    "priceIqr": [
+      665000,
+      723500
+    ],
+    "pricePerSqmMedian": 6584.07,
+    "pricePerSqftMedian": 611.68
   },
   "monthlyTrend": [
     {
@@ -194,7 +194,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-469a-sengkang-west-way-2026-02-227195",
+      "id": "sengkang-469a-sengkang-west-way-2026-02-227278",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

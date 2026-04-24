@@ -10,12 +10,6 @@
       "lng": 103.888646477925
     },
     "medianPrice": 528000,
-    "priceIqr": [
-      525250,
-      557600
-    ],
-    "pricePerSqmMedian": 5802.2,
-    "pricePerSqftMedian": 539.04,
     "transactionCount": 6,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 1931
       }
-    ]
+    ],
+    "priceIqr": [
+      525250,
+      557600
+    ],
+    "pricePerSqmMedian": 5802.2,
+    "pricePerSqftMedian": 539.04
   },
   "monthlyTrend": [
     {
@@ -708,7 +708,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-706-hougang-ave-2-2026-03-224636",
+      "id": "hougang-706-hougang-ave-2-2026-03-224683",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -916,7 +916,7 @@
       "pricePerSqft": 362.42
     },
     {
-      "id": "hougang-706-hougang-ave-2-2016-03-959341",
+      "id": "hougang-706-hougang-ave-2-2016-03-959457",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -929,7 +929,7 @@
       "pricePerSqft": 316.06
     },
     {
-      "id": "hougang-706-hougang-ave-2-2015-06-946076",
+      "id": "hougang-706-hougang-ave-2-2015-06-946192",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -942,7 +942,7 @@
       "pricePerSqft": 428.78
     },
     {
-      "id": "hougang-706-hougang-ave-2-2015-03-941379",
+      "id": "hougang-706-hougang-ave-2-2015-03-941495",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -955,7 +955,7 @@
       "pricePerSqft": 387.95
     },
     {
-      "id": "hougang-706-hougang-ave-2-2013-11-633392",
+      "id": "hougang-706-hougang-ave-2-2013-11-633508",
       "month": "2013-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.844605484696
     },
     "medianPrice": 371500,
-    "priceIqr": [
-      365750,
-      382500
-    ],
-    "pricePerSqmMedian": 5715.39,
-    "pricePerSqftMedian": 530.98,
     "transactionCount": 6,
     "floorAreaRange": [
       64,
@@ -54,7 +48,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 890
       }
-    ]
+    ],
+    "priceIqr": [
+      365750,
+      382500
+    ],
+    "pricePerSqmMedian": 5715.39,
+    "pricePerSqftMedian": 530.98
   },
   "monthlyTrend": [
     {
@@ -774,7 +774,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-113-lor-1-toa-payoh-2026-01-228088",
+      "id": "toa-payoh-113-lor-1-toa-payoh-2026-01-228185",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

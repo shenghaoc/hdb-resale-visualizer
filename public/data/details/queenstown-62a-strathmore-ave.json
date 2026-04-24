@@ -10,12 +10,6 @@
       "lng": 103.811426489782
     },
     "medianPrice": 1290000,
-    "priceIqr": [
-      1154500,
-      1307500
-    ],
-    "pricePerSqmMedian": 11025.64,
-    "pricePerSqftMedian": 1024.32,
     "transactionCount": 8,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "NAPIER MRT STATION",
         "distanceMeters": 1605
       }
-    ]
+    ],
+    "priceIqr": [
+      1154500,
+      1307500
+    ],
+    "pricePerSqmMedian": 11025.64,
+    "pricePerSqftMedian": 1024.32
   },
   "monthlyTrend": [
     {
@@ -326,7 +326,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-62a-strathmore-ave-2026-03-226593",
+      "id": "queenstown-62a-strathmore-ave-2026-03-226671",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -339,7 +339,7 @@
       "pricePerSqft": 1047.13
     },
     {
-      "id": "queenstown-62a-strathmore-ave-2026-03-226594",
+      "id": "queenstown-62a-strathmore-ave-2026-03-226672",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

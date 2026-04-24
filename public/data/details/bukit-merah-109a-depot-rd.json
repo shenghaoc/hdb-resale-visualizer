@@ -10,12 +10,6 @@
       "lng": 103.809440153696
     },
     "medianPrice": 862000,
-    "priceIqr": [
-      821000,
-      881000
-    ],
-    "pricePerSqmMedian": 7431.03,
-    "pricePerSqftMedian": 690.37,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "LABRADOR PARK MRT STATION",
         "distanceMeters": 1260
       }
-    ]
+    ],
+    "priceIqr": [
+      821000,
+      881000
+    ],
+    "pricePerSqmMedian": 7431.03,
+    "pricePerSqftMedian": 690.37
   },
   "monthlyTrend": [
     {
@@ -272,7 +272,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-109a-depot-rd-2026-04-223472",
+      "id": "bukit-merah-109a-depot-rd-2026-04-223496",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -493,7 +493,7 @@
       "pricePerSqft": 555.56
     },
     {
-      "id": "bukit-merah-109a-depot-rd-2016-05-962535",
+      "id": "bukit-merah-109a-depot-rd-2016-05-962651",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -506,7 +506,7 @@
       "pricePerSqft": 549.34
     },
     {
-      "id": "bukit-merah-109a-depot-rd-2016-04-960689",
+      "id": "bukit-merah-109a-depot-rd-2016-04-960805",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -519,7 +519,7 @@
       "pricePerSqft": 620.27
     },
     {
-      "id": "bukit-merah-109a-depot-rd-2016-03-959004",
+      "id": "bukit-merah-109a-depot-rd-2016-03-959120",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

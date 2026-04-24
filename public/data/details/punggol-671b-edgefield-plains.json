@@ -10,12 +10,6 @@
       "lng": 103.911699311071
     },
     "medianPrice": 620000,
-    "priceIqr": [
-      610000,
-      630000
-    ],
-    "pricePerSqmMedian": 6888.89,
-    "pricePerSqftMedian": 640,
     "transactionCount": 2,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "SAM KEE LRT STATION",
         "distanceMeters": 837
       }
-    ]
+    ],
+    "priceIqr": [
+      610000,
+      630000
+    ],
+    "pricePerSqmMedian": 6888.89,
+    "pricePerSqftMedian": 640
   },
   "monthlyTrend": [
     {

@@ -10,12 +10,6 @@
       "lng": 103.895116210204
     },
     "medianPrice": 785000,
-    "priceIqr": [
-      771250,
-      806250
-    ],
-    "pricePerSqmMedian": 6487.6,
-    "pricePerSqftMedian": 602.72,
     "transactionCount": 4,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 1181
       }
-    ]
+    ],
+    "priceIqr": [
+      771250,
+      806250
+    ],
+    "pricePerSqmMedian": 6487.6,
+    "pricePerSqftMedian": 602.72
   },
   "monthlyTrend": [
     {
@@ -584,7 +584,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-409-hougang-ave-10-2026-03-224765",
+      "id": "hougang-409-hougang-ave-10-2026-03-224814",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -779,7 +779,7 @@
       "pricePerSqft": 445.32
     },
     {
-      "id": "hougang-409-hougang-ave-10-2016-01-956753",
+      "id": "hougang-409-hougang-ave-10-2016-01-956869",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -792,7 +792,7 @@
       "pricePerSqft": 403.09
     },
     {
-      "id": "hougang-409-hougang-ave-10-2016-01-956754",
+      "id": "hougang-409-hougang-ave-10-2016-01-956870",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -805,7 +805,7 @@
       "pricePerSqft": 405.4
     },
     {
-      "id": "hougang-409-hougang-ave-10-2015-05-944430",
+      "id": "hougang-409-hougang-ave-10-2015-05-944546",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -818,7 +818,7 @@
       "pricePerSqft": 372.38
     },
     {
-      "id": "hougang-409-hougang-ave-10-2015-03-941403",
+      "id": "hougang-409-hougang-ave-10-2015-03-941519",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -831,7 +831,7 @@
       "pricePerSqft": 406.93
     },
     {
-      "id": "hougang-409-hougang-ave-10-2014-11-649093",
+      "id": "hougang-409-hougang-ave-10-2014-11-649209",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

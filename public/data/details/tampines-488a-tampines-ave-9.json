@@ -10,12 +10,6 @@
       "lng": 103.956335998151
     },
     "medianPrice": 730888,
-    "priceIqr": [
-      675444,
-      735444
-    ],
-    "pricePerSqmMedian": 6040.4,
-    "pricePerSqftMedian": 561.17,
     "transactionCount": 3,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1605
       }
-    ]
+    ],
+    "priceIqr": [
+      675444,
+      735444
+    ],
+    "pricePerSqmMedian": 6040.4,
+    "pricePerSqftMedian": 561.17
   },
   "monthlyTrend": [
     {
@@ -804,7 +804,7 @@
       "pricePerSqft": 349.35
     },
     {
-      "id": "tampines-488a-tampines-ave-9-2015-10-953053",
+      "id": "tampines-488a-tampines-ave-9-2015-10-953169",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -817,7 +817,7 @@
       "pricePerSqft": 389.27
     },
     {
-      "id": "tampines-488a-tampines-ave-9-2015-08-949813",
+      "id": "tampines-488a-tampines-ave-9-2015-08-949929",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -830,7 +830,7 @@
       "pricePerSqft": 345.51
     },
     {
-      "id": "tampines-488a-tampines-ave-9-2015-07-948311",
+      "id": "tampines-488a-tampines-ave-9-2015-07-948427",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -843,7 +843,7 @@
       "pricePerSqft": 343.92
     },
     {
-      "id": "tampines-488a-tampines-ave-9-2015-03-941967",
+      "id": "tampines-488a-tampines-ave-9-2015-03-942083",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

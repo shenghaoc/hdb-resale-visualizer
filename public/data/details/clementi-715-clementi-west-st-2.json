@@ -10,12 +10,6 @@
       "lng": 103.761943675943
     },
     "medianPrice": 435000,
-    "priceIqr": [
-      380000,
-      494000
-    ],
-    "pricePerSqmMedian": 5565.32,
-    "pricePerSqftMedian": 517.04,
     "transactionCount": 12,
     "floorAreaRange": [
       68,
@@ -57,7 +51,13 @@
         "stationName": "KENT RIDGE MRT STATION",
         "distanceMeters": 2690
       }
-    ]
+    ],
+    "priceIqr": [
+      380000,
+      494000
+    ],
+    "pricePerSqmMedian": 5565.32,
+    "pricePerSqftMedian": 517.04
   },
   "monthlyTrend": [
     {
@@ -1335,7 +1335,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-715-clementi-west-st-2-2026-03-224194",
+      "id": "clementi-715-clementi-west-st-2-2026-03-224229",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1348,7 +1348,7 @@
       "pricePerSqft": 539.66
     },
     {
-      "id": "clementi-715-clementi-west-st-2-2026-02-224193",
+      "id": "clementi-715-clementi-west-st-2-2026-02-224228",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1361,7 +1361,7 @@
       "pricePerSqft": 519.16
     },
     {
-      "id": "clementi-715-clementi-west-st-2-2026-01-224257",
+      "id": "clementi-715-clementi-west-st-2-2026-01-224295",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

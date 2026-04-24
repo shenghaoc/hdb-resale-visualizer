@@ -10,12 +10,6 @@
       "lng": 103.703828514186
     },
     "medianPrice": 630000,
-    "priceIqr": [
-      620000,
-      642500
-    ],
-    "pricePerSqmMedian": 5000,
-    "pricePerSqftMedian": 464.52,
     "transactionCount": 3,
     "floorAreaRange": [
       126,
@@ -54,7 +48,13 @@
         "stationName": "LAKESIDE MRT STATION",
         "distanceMeters": 2098
       }
-    ]
+    ],
+    "priceIqr": [
+      620000,
+      642500
+    ],
+    "pricePerSqmMedian": 5000,
+    "pricePerSqftMedian": 464.52
   },
   "monthlyTrend": [
     {

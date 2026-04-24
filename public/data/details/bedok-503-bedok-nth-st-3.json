@@ -10,12 +10,6 @@
       "lng": 103.932465913287
     },
     "medianPrice": 381500,
-    "priceIqr": [
-      372750,
-      387250
-    ],
-    "pricePerSqmMedian": 6347.46,
-    "pricePerSqftMedian": 589.7,
     "transactionCount": 6,
     "floorAreaRange": [
       59,
@@ -54,7 +48,13 @@
         "stationName": "BEDOK NORTH MRT STATION",
         "distanceMeters": 1516
       }
-    ]
+    ],
+    "priceIqr": [
+      372750,
+      387250
+    ],
+    "pricePerSqmMedian": 6347.46,
+    "pricePerSqftMedian": 589.7
   },
   "monthlyTrend": [
     {
@@ -1284,7 +1284,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-503-bedok-nth-st-3-2026-03-222406",
+      "id": "bedok-503-bedok-nth-st-3-2026-03-222413",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

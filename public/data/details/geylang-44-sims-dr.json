@@ -10,12 +10,6 @@
       "lng": 103.876881159027
     },
     "medianPrice": 468000,
-    "priceIqr": [
-      455944,
-      485000
-    ],
-    "pricePerSqmMedian": 5318.18,
-    "pricePerSqftMedian": 494.08,
     "transactionCount": 7,
     "floorAreaRange": [
       88,
@@ -54,7 +48,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 783
       }
-    ]
+    ],
+    "priceIqr": [
+      455944,
+      485000
+    ],
+    "pricePerSqmMedian": 5318.18,
+    "pricePerSqftMedian": 494.08
   },
   "monthlyTrend": [
     {
@@ -1038,7 +1038,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-44-sims-dr-2026-03-224449",
+      "id": "geylang-44-sims-dr-2026-03-224494",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

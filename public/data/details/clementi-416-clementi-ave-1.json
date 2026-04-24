@@ -10,12 +10,6 @@
       "lng": 103.771355673383
     },
     "medianPrice": 1003444,
-    "priceIqr": [
-      958666,
-      1161972
-    ],
-    "pricePerSqmMedian": 9584.44,
-    "pricePerSqftMedian": 890.42,
     "transactionCount": 16,
     "floorAreaRange": [
       99,
@@ -56,7 +50,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 2138
       }
-    ]
+    ],
+    "priceIqr": [
+      958666,
+      1161972
+    ],
+    "pricePerSqmMedian": 9584.44,
+    "pricePerSqftMedian": 890.42
   },
   "monthlyTrend": [
     {
@@ -386,7 +386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-416-clementi-ave-1-2026-04-224212",
+      "id": "clementi-416-clementi-ave-1-2026-04-224248",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -399,7 +399,7 @@
       "pricePerSqft": 890.84
     },
     {
-      "id": "clementi-416-clementi-ave-1-2026-03-224209",
+      "id": "clementi-416-clementi-ave-1-2026-03-224245",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",

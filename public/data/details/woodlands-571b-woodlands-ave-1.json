@@ -10,12 +10,6 @@
       "lng": 103.790642444468
     },
     "medianPrice": 705000,
-    "priceIqr": [
-      657500,
-      727194
-    ],
-    "pricePerSqmMedian": 6507.93,
-    "pricePerSqftMedian": 604.61,
     "transactionCount": 7,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 1565
       }
-    ]
+    ],
+    "priceIqr": [
+      657500,
+      727194
+    ],
+    "pricePerSqmMedian": 6507.93,
+    "pricePerSqftMedian": 604.61
   },
   "monthlyTrend": [
     {
@@ -248,7 +248,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-571b-woodlands-ave-1-2026-03-228712",
+      "id": "woodlands-571b-woodlands-ave-1-2026-03-228816",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -261,7 +261,7 @@
       "pricePerSqft": 637.79
     },
     {
-      "id": "woodlands-571b-woodlands-ave-1-2026-01-228450",
+      "id": "woodlands-571b-woodlands-ave-1-2026-01-228550",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

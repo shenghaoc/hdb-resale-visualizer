@@ -10,12 +10,6 @@
       "lng": 103.826201445621
     },
     "medianPrice": 280000,
-    "priceIqr": [
-      276000,
-      290000
-    ],
-    "pricePerSqmMedian": 6571.43,
-    "pricePerSqftMedian": 610.51,
     "transactionCount": 9,
     "floorAreaRange": [
       39,
@@ -54,7 +48,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 810
       }
-    ]
+    ],
+    "priceIqr": [
+      276000,
+      290000
+    ],
+    "pricePerSqmMedian": 6571.43,
+    "pricePerSqftMedian": 610.51
   },
   "monthlyTrend": [
     {
@@ -414,7 +414,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-48-lower-delta-rd-2026-04-223237",
+      "id": "bukit-merah-48-lower-delta-rd-2026-04-223257",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -427,7 +427,7 @@
       "pricePerSqft": 609.27
     },
     {
-      "id": "bukit-merah-48-lower-delta-rd-2026-03-223236",
+      "id": "bukit-merah-48-lower-delta-rd-2026-03-223256",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",

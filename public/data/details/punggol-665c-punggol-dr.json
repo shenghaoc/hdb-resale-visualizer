@@ -10,12 +10,6 @@
       "lng": 103.914459128885
     },
     "medianPrice": 722500,
-    "priceIqr": [
-      671888,
-      846250
-    ],
-    "pricePerSqmMedian": 7791.65,
-    "pricePerSqftMedian": 723.87,
     "transactionCount": 10,
     "floorAreaRange": [
       68,
@@ -56,7 +50,13 @@
         "stationName": "DAMAI LRT STATION",
         "distanceMeters": 758
       }
-    ]
+    ],
+    "priceIqr": [
+      671888,
+      846250
+    ],
+    "pricePerSqmMedian": 7791.65,
+    "pricePerSqftMedian": 723.87
   },
   "monthlyTrend": [
     {
@@ -284,7 +284,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-665c-punggol-dr-2026-02-226317",
+      "id": "punggol-665c-punggol-dr-2026-02-226389",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -297,7 +297,7 @@
       "pricePerSqft": 739.11
     },
     {
-      "id": "punggol-665c-punggol-dr-2026-01-226313",
+      "id": "punggol-665c-punggol-dr-2026-01-226385",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.832376118316
     },
     "medianPrice": 830000,
-    "priceIqr": [
-      820000,
-      833000
-    ],
-    "pricePerSqmMedian": 5845.07,
-    "pricePerSqftMedian": 543.03,
     "transactionCount": 5,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 2498
       }
-    ]
+    ],
+    "priceIqr": [
+      820000,
+      833000
+    ],
+    "pricePerSqmMedian": 5845.07,
+    "pricePerSqftMedian": 543.03
   },
   "monthlyTrend": [
     {
@@ -499,7 +499,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-792-yishun-ring-rd-2026-03-229380",
+      "id": "yishun-792-yishun-ring-rd-2026-03-229496",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -512,7 +512,7 @@
       "pricePerSqft": 552.29
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2026-02-229377",
+      "id": "yishun-792-yishun-ring-rd-2026-02-229493",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -668,7 +668,7 @@
       "pricePerSqft": 343.48
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2016-09-970957",
+      "id": "yishun-792-yishun-ring-rd-2016-09-971073",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -681,7 +681,7 @@
       "pricePerSqft": 338.9
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2015-07-948646",
+      "id": "yishun-792-yishun-ring-rd-2015-07-948762",
       "month": "2015-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -694,7 +694,7 @@
       "pricePerSqft": 395.82
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2015-06-947093",
+      "id": "yishun-792-yishun-ring-rd-2015-06-947209",
       "month": "2015-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -707,7 +707,7 @@
       "pricePerSqft": 392.55
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2013-09-631541",
+      "id": "yishun-792-yishun-ring-rd-2013-09-631657",
       "month": "2013-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -720,7 +720,7 @@
       "pricePerSqft": 416.79
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2012-11-617561",
+      "id": "yishun-792-yishun-ring-rd-2012-11-617677",
       "month": "2012-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -733,7 +733,7 @@
       "pricePerSqft": 419.97
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2012-07-610053",
+      "id": "yishun-792-yishun-ring-rd-2012-07-610169",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -746,7 +746,7 @@
       "pricePerSqft": 416.76
     },
     {
-      "id": "yishun-792-yishun-ring-rd-2011-11-594281",
+      "id": "yishun-792-yishun-ring-rd-2011-11-594397",
       "month": "2011-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

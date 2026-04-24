@@ -10,12 +10,6 @@
       "lng": 103.892735553222
     },
     "medianPrice": 655944,
-    "priceIqr": [
-      631472,
-      692500
-    ],
-    "pricePerSqmMedian": 6245.45,
-    "pricePerSqftMedian": 580.22,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "SENGKANG MRT STATION",
         "distanceMeters": 506
       }
-    ]
+    ],
+    "priceIqr": [
+      631472,
+      692500
+    ],
+    "pricePerSqmMedian": 6245.45,
+    "pricePerSqftMedian": 580.22
   },
   "monthlyTrend": [
     {
@@ -368,7 +368,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-200b-sengkang-east-rd-2026-01-227345",
+      "id": "sengkang-200b-sengkang-east-rd-2026-01-227430",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

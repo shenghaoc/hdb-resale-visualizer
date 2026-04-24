@@ -10,12 +10,6 @@
       "lng": 103.882985586929
     },
     "medianPrice": 662500,
-    "priceIqr": [
-      641250,
-      675000
-    ],
-    "pricePerSqmMedian": 7123.66,
-    "pricePerSqftMedian": 661.81,
     "transactionCount": 22,
     "floorAreaRange": [
       93,
@@ -54,7 +48,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 837
       }
-    ]
+    ],
+    "priceIqr": [
+      641250,
+      675000
+    ],
+    "pricePerSqmMedian": 7123.66,
+    "pricePerSqftMedian": 661.81
   },
   "monthlyTrend": [
     {
@@ -108,7 +108,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-994c-buangkok-link-2026-01-224610",
+      "id": "hougang-994c-buangkok-link-2026-01-224657",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

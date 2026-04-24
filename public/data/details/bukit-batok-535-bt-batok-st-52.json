@@ -10,12 +10,6 @@
       "lng": 103.750399544877
     },
     "medianPrice": 835000,
-    "priceIqr": [
-      828000,
-      840000
-    ],
-    "pricePerSqmMedian": 5520,
-    "pricePerSqftMedian": 512.83,
     "transactionCount": 5,
     "floorAreaRange": [
       141,
@@ -55,7 +49,13 @@
         "stationName": "HILLVIEW MRT STATION",
         "distanceMeters": 2019
       }
-    ]
+    ],
+    "priceIqr": [
+      828000,
+      840000
+    ],
+    "pricePerSqmMedian": 5520,
+    "pricePerSqftMedian": 512.83
   },
   "monthlyTrend": [
     {

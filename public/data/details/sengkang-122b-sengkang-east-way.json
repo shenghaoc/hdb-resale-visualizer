@@ -10,12 +10,6 @@
       "lng": 103.906534426334
     },
     "medianPrice": 770000,
-    "priceIqr": [
-      758750,
-      785000
-    ],
-    "pricePerSqmMedian": 5900.47,
-    "pricePerSqftMedian": 548.17,
     "transactionCount": 6,
     "floorAreaRange": [
       129,
@@ -54,7 +48,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 597
       }
-    ]
+    ],
+    "priceIqr": [
+      758750,
+      785000
+    ],
+    "pricePerSqmMedian": 5900.47,
+    "pricePerSqftMedian": 548.17
   },
   "monthlyTrend": [
     {
@@ -529,7 +529,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "sengkang-122b-sengkang-east-way-2016-11-973811",
+      "id": "sengkang-122b-sengkang-east-way-2016-11-973927",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

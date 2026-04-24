@@ -10,12 +10,6 @@
       "lng": 103.885424848249
     },
     "medianPrice": 920000,
-    "priceIqr": [
-      898000,
-      930000
-    ],
-    "pricePerSqmMedian": 9892.47,
-    "pricePerSqftMedian": 919.04,
     "transactionCount": 5,
     "floorAreaRange": [
       85,
@@ -54,7 +48,13 @@
         "stationName": "ALJUNIED MRT STATION",
         "distanceMeters": 880
       }
-    ]
+    ],
+    "priceIqr": [
+      898000,
+      930000
+    ],
+    "pricePerSqmMedian": 9892.47,
+    "pricePerSqftMedian": 919.04
   },
   "monthlyTrend": [
     {
@@ -264,7 +264,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-49-jln-tiga-2026-04-224440",
+      "id": "geylang-49-jln-tiga-2026-04-224484",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -277,7 +277,7 @@
       "pricePerSqft": 929.03
     },
     {
-      "id": "geylang-49-jln-tiga-2026-01-224437",
+      "id": "geylang-49-jln-tiga-2026-01-224481",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

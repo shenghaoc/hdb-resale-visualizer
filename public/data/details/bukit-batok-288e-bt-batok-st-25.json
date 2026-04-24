@@ -10,12 +10,6 @@
       "lng": 103.75889748406
     },
     "medianPrice": 566444,
-    "priceIqr": [
-      560916,
-      587500
-    ],
-    "pricePerSqmMedian": 5581.03,
-    "pricePerSqftMedian": 518.5,
     "transactionCount": 4,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT GOMBAK MRT STATION",
         "distanceMeters": 1650
       }
-    ]
+    ],
+    "priceIqr": [
+      560916,
+      587500
+    ],
+    "pricePerSqmMedian": 5581.03,
+    "pricePerSqftMedian": 518.5
   },
   "monthlyTrend": [
     {
@@ -452,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-288e-bt-batok-st-25-2026-02-222977",
+      "id": "bukit-batok-288e-bt-batok-st-25-2026-02-222993",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

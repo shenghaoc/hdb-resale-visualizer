@@ -10,12 +10,6 @@
       "lng": 103.873319886194
     },
     "medianPrice": 435000,
-    "priceIqr": [
-      363000,
-      545000
-    ],
-    "pricePerSqmMedian": 8110.65,
-    "pricePerSqftMedian": 753.5,
     "transactionCount": 14,
     "floorAreaRange": [
       46,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 772
       }
-    ]
+    ],
+    "priceIqr": [
+      363000,
+      545000
+    ],
+    "pricePerSqmMedian": 8110.65,
+    "pricePerSqftMedian": 753.5
   },
   "monthlyTrend": [
     {
@@ -266,7 +266,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-448b-sengkang-west-way-2026-04-226900",
+      "id": "sengkang-448b-sengkang-west-way-2026-04-226980",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "25 TO 27",

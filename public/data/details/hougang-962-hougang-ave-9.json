@@ -10,12 +10,6 @@
       "lng": 103.878389313554
     },
     "medianPrice": 640444,
-    "priceIqr": [
-      615222,
-      665666
-    ],
-    "pricePerSqmMedian": 5521.07,
-    "pricePerSqftMedian": 512.92,
     "transactionCount": 2,
     "floorAreaRange": [
       115,
@@ -54,7 +48,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 1620
       }
-    ]
+    ],
+    "priceIqr": [
+      615222,
+      665666
+    ],
+    "pricePerSqmMedian": 5521.07,
+    "pricePerSqftMedian": 512.92
   },
   "monthlyTrend": [
     {
@@ -542,7 +542,7 @@
       "pricePerSqft": 309.14
     },
     {
-      "id": "hougang-962-hougang-ave-9-2016-11-973256",
+      "id": "hougang-962-hougang-ave-9-2016-11-973372",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -555,7 +555,7 @@
       "pricePerSqft": 390.83
     },
     {
-      "id": "hougang-962-hougang-ave-9-2016-04-961056",
+      "id": "hougang-962-hougang-ave-9-2016-04-961172",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -568,7 +568,7 @@
       "pricePerSqft": 392.44
     },
     {
-      "id": "hougang-962-hougang-ave-9-2015-12-955375",
+      "id": "hougang-962-hougang-ave-9-2015-12-955491",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -581,7 +581,7 @@
       "pricePerSqft": 380.42
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-04-623511",
+      "id": "hougang-962-hougang-ave-9-2013-04-623627",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -594,7 +594,7 @@
       "pricePerSqft": 411.66
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-04-623516",
+      "id": "hougang-962-hougang-ave-9-2013-04-623632",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -607,7 +607,7 @@
       "pricePerSqft": 436.24
     },
     {
-      "id": "hougang-962-hougang-ave-9-2013-01-619636",
+      "id": "hougang-962-hougang-ave-9-2013-01-619752",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

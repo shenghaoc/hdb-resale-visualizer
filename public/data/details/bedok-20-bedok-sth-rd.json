@@ -10,12 +10,6 @@
       "lng": 103.933718160998
     },
     "medianPrice": 748888,
-    "priceIqr": [
-      726944,
-      780000
-    ],
-    "pricePerSqmMedian": 6473.68,
-    "pricePerSqftMedian": 601.43,
     "transactionCount": 7,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "SIGLAP MRT STATION",
         "distanceMeters": 1077
       }
-    ]
+    ],
+    "priceIqr": [
+      726944,
+      780000
+    ],
+    "pricePerSqmMedian": 6473.68,
+    "pricePerSqftMedian": 601.43
   },
   "monthlyTrend": [
     {
@@ -720,7 +720,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-20-bedok-sth-rd-2026-04-222664",
+      "id": "bedok-20-bedok-sth-rd-2026-04-222675",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -733,7 +733,7 @@
       "pricePerSqft": 601.43
     },
     {
-      "id": "bedok-20-bedok-sth-rd-2026-04-222665",
+      "id": "bedok-20-bedok-sth-rd-2026-04-222676",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -746,7 +746,7 @@
       "pricePerSqft": 568.45
     },
     {
-      "id": "bedok-20-bedok-sth-rd-2026-01-222663",
+      "id": "bedok-20-bedok-sth-rd-2026-01-222674",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

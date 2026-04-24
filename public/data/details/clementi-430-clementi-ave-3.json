@@ -10,12 +10,6 @@
       "lng": 103.762553042236
     },
     "medianPrice": 452988,
-    "priceIqr": [
-      412438,
-      457388
-    ],
-    "pricePerSqmMedian": 6761.01,
-    "pricePerSqftMedian": 628.12,
     "transactionCount": 6,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 3078
       }
-    ]
+    ],
+    "priceIqr": [
+      412438,
+      457388
+    ],
+    "pricePerSqmMedian": 6761.01,
+    "pricePerSqftMedian": 628.12
   },
   "monthlyTrend": [
     {
@@ -1023,7 +1023,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-430-clementi-ave-3-2026-01-224153",
+      "id": "clementi-430-clementi-ave-3-2026-01-224188",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

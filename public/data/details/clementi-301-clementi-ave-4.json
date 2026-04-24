@@ -9,14 +9,8 @@
       "lat": 1.32217649495476,
       "lng": 103.764912144396
     },
-    "medianPrice": 602000,
-    "priceIqr": [
-      586944,
-      606000
-    ],
-    "pricePerSqmMedian": 6543.48,
-    "pricePerSqftMedian": 607.91,
-    "transactionCount": 3,
+    "medianPrice": 606000,
+    "transactionCount": 4,
     "floorAreaRange": [
       92,
       92
@@ -25,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "BEAUTY WORLD MRT STATION",
         "distanceMeters": 2318
       }
-    ]
+    ],
+    "priceIqr": [
+      594472,
+      612500
+    ],
+    "pricePerSqmMedian": 6586.95,
+    "pricePerSqftMedian": 611.95
   },
   "monthlyTrend": [
     {
@@ -902,11 +902,30 @@
       "medianPrice": 571888,
       "transactionCount": 1,
       "medianPricePerSqm": 6216.17
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 620000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6739.13
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-301-clementi-ave-4-2026-02-224242",
+      "id": "clementi-301-clementi-ave-4-2026-04-224287",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 92,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "51 years 11 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6739.13,
+      "pricePerSqft": 626.09
+    },
+    {
+      "id": "clementi-301-clementi-ave-4-2026-02-224279",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -919,7 +938,7 @@
       "pricePerSqft": 577.5
     },
     {
-      "id": "clementi-301-clementi-ave-4-2026-01-224236",
+      "id": "clementi-301-clementi-ave-4-2026-01-224273",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -1151,19 +1170,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 4891.3,
       "pricePerSqft": 454.42
-    },
-    {
-      "id": "clementi-301-clementi-ave-4-2019-10-58941",
-      "month": "2019-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 92,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "58 years 05 months",
-      "resalePrice": 425000,
-      "pricePerSqm": 4619.57,
-      "pricePerSqft": 429.17
     }
   ]
 }

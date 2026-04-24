@@ -10,12 +10,6 @@
       "lng": 103.889018489102
     },
     "medianPrice": 820000,
-    "priceIqr": [
-      820000,
-      820000
-    ],
-    "pricePerSqmMedian": 6560,
-    "pricePerSqftMedian": 609.44,
     "transactionCount": 1,
     "floorAreaRange": [
       110,
@@ -55,7 +49,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 592
       }
-    ]
+    ],
+    "priceIqr": [
+      820000,
+      820000
+    ],
+    "pricePerSqmMedian": 6560,
+    "pricePerSqftMedian": 609.44
   },
   "monthlyTrend": [
     {
@@ -558,7 +558,7 @@
       "pricePerSqft": 400.52
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-08-968863",
+      "id": "sengkang-315a-anchorvale-rd-2016-08-968979",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -571,7 +571,7 @@
       "pricePerSqft": 412.49
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-05-963536",
+      "id": "sengkang-315a-anchorvale-rd-2016-05-963652",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -584,7 +584,7 @@
       "pricePerSqft": 375.84
     },
     {
-      "id": "sengkang-315a-anchorvale-rd-2016-04-961655",
+      "id": "sengkang-315a-anchorvale-rd-2016-04-961771",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

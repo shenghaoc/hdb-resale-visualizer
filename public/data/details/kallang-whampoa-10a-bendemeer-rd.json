@@ -9,14 +9,8 @@
       "lat": 1.31499138887312,
       "lng": 103.86050538635
     },
-    "medianPrice": 960000,
-    "priceIqr": [
-      841500,
-      1045000
-    ],
-    "pricePerSqmMedian": 11612.9,
-    "pricePerSqftMedian": 1078.88,
-    "transactionCount": 11,
+    "medianPrice": 975000,
+    "transactionCount": 12,
     "floorAreaRange": [
       68,
       93
@@ -25,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-08",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 599
       }
-    ]
+    ],
+    "priceIqr": [
+      843250,
+      1072500
+    ],
+    "pricePerSqmMedian": 11720.43,
+    "pricePerSqftMedian": 1088.87
   },
   "monthlyTrend": [
     {
@@ -267,11 +267,30 @@
       "medianPrice": 845000,
       "transactionCount": 1,
       "medianPricePerSqm": 12426.47
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1100000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11827.96
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-10a-bendemeer-rd-2026-01-225451",
+      "id": "kallang-whampoa-10a-bendemeer-rd-2026-04-225599",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 08 months",
+      "resalePrice": 1100000,
+      "pricePerSqm": 11827.96,
+      "pricePerSqft": 1098.85
+    },
+    {
+      "id": "kallang-whampoa-10a-bendemeer-rd-2026-01-225512",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "28 TO 30",
@@ -516,19 +535,6 @@
       "resalePrice": 850000,
       "pricePerSqm": 9139.78,
       "pricePerSqft": 849.11
-    },
-    {
-      "id": "kallang-whampoa-10a-bendemeer-rd-2023-04-155580",
-      "month": "2023-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 09 months",
-      "resalePrice": 920000,
-      "pricePerSqm": 9892.47,
-      "pricePerSqft": 919.04
     }
   ]
 }

@@ -10,12 +10,6 @@
       "lng": 103.924236461237
     },
     "medianPrice": 400000,
-    "priceIqr": [
-      400000,
-      410000
-    ],
-    "pricePerSqmMedian": 5882.35,
-    "pricePerSqftMedian": 546.49,
     "transactionCount": 5,
     "floorAreaRange": [
       68,
@@ -54,7 +48,13 @@
         "stationName": "BEDOK RESERVOIR MRT STATION",
         "distanceMeters": 1088
       }
-    ]
+    ],
+    "priceIqr": [
+      400000,
+      410000
+    ],
+    "pricePerSqmMedian": 5882.35,
+    "pricePerSqftMedian": 546.49
   },
   "monthlyTrend": [
     {
@@ -1051,7 +1051,7 @@
       "pricePerSqft": 396.2
     },
     {
-      "id": "bedok-537-bedok-nth-st-3-2016-08-967514",
+      "id": "bedok-537-bedok-nth-st-3-2016-08-967630",
       "month": "2016-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

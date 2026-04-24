@@ -10,12 +10,6 @@
       "lng": 103.741578052416
     },
     "medianPrice": 666944,
-    "priceIqr": [
-      652916,
-      680972
-    ],
-    "pricePerSqmMedian": 5312.38,
-    "pricePerSqftMedian": 493.54,
     "transactionCount": 2,
     "floorAreaRange": [
       105,
@@ -56,7 +50,13 @@
         "stationName": "SOUTH VIEW LRT STATION",
         "distanceMeters": 490
       }
-    ]
+    ],
+    "priceIqr": [
+      652916,
+      680972
+    ],
+    "pricePerSqmMedian": 5312.38,
+    "pricePerSqftMedian": 493.54
   },
   "monthlyTrend": [
     {
@@ -861,7 +861,7 @@
       "pricePerSqft": 354.79
     },
     {
-      "id": "choa-chu-kang-417-choa-chu-kang-ave-4-2016-03-959184",
+      "id": "choa-chu-kang-417-choa-chu-kang-ave-4-2016-03-959300",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

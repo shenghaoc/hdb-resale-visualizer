@@ -10,12 +10,6 @@
       "lng": 103.902400185088
     },
     "medianPrice": 582500,
-    "priceIqr": [
-      560000,
-      625750
-    ],
-    "pricePerSqmMedian": 6176.02,
-    "pricePerSqftMedian": 573.77,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "BAKAU LRT STATION",
         "distanceMeters": 617
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      625750
+    ],
+    "pricePerSqmMedian": 6176.02,
+    "pricePerSqftMedian": 573.77
   },
   "monthlyTrend": [
     {
@@ -560,7 +560,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-195-rivervale-dr-2026-03-227151",
+      "id": "sengkang-195-rivervale-dr-2026-03-227234",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

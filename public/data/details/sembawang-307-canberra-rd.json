@@ -10,12 +10,6 @@
       "lng": 103.82165734645
     },
     "medianPrice": 800000,
-    "priceIqr": [
-      800000,
-      800000
-    ],
-    "pricePerSqmMedian": 5673.76,
-    "pricePerSqftMedian": 527.11,
     "transactionCount": 1,
     "floorAreaRange": [
       121,
@@ -56,7 +50,13 @@
         "stationName": "YISHUN MRT STATION",
         "distanceMeters": 2331
       }
-    ]
+    ],
+    "priceIqr": [
+      800000,
+      800000
+    ],
+    "pricePerSqmMedian": 5673.76,
+    "pricePerSqftMedian": 527.11
   },
   "monthlyTrend": [
     {
@@ -600,7 +600,7 @@
       "pricePerSqft": 333.4
     },
     {
-      "id": "sembawang-307-canberra-rd-2016-02-958289",
+      "id": "sembawang-307-canberra-rd-2016-02-958405",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -613,7 +613,7 @@
       "pricePerSqft": 345.92
     },
     {
-      "id": "sembawang-307-canberra-rd-2013-03-622427",
+      "id": "sembawang-307-canberra-rd-2013-03-622543",
       "month": "2013-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -626,7 +626,7 @@
       "pricePerSqft": 383.9
     },
     {
-      "id": "sembawang-307-canberra-rd-2013-01-620055",
+      "id": "sembawang-307-canberra-rd-2013-01-620171",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -639,7 +639,7 @@
       "pricePerSqft": 381.51
     },
     {
-      "id": "sembawang-307-canberra-rd-2012-03-600602",
+      "id": "sembawang-307-canberra-rd-2012-03-600718",
       "month": "2012-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 20",

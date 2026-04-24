@@ -10,12 +10,6 @@
       "lng": 103.904635475422
     },
     "medianPrice": 673500,
-    "priceIqr": [
-      642250,
-      709500
-    ],
-    "pricePerSqmMedian": 6536.36,
-    "pricePerSqftMedian": 607.25,
     "transactionCount": 4,
     "floorAreaRange": [
       90,
@@ -55,7 +49,13 @@
         "stationName": "COVE LRT STATION",
         "distanceMeters": 402
       }
-    ]
+    ],
+    "priceIqr": [
+      642250,
+      709500
+    ],
+    "pricePerSqmMedian": 6536.36,
+    "pricePerSqftMedian": 607.25
   },
   "monthlyTrend": [
     {
@@ -475,7 +475,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-294-punggol-ctrl-2026-03-226307",
+      "id": "punggol-294-punggol-ctrl-2026-03-226378",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

@@ -10,12 +10,6 @@
       "lng": 103.856879434972
     },
     "medianPrice": 546944,
-    "priceIqr": [
-      510838,
-      586250
-    ],
-    "pricePerSqmMedian": 8070.39,
-    "pricePerSqftMedian": 749.76,
     "transactionCount": 4,
     "floorAreaRange": [
       65,
@@ -54,7 +48,13 @@
         "stationName": "BUGIS MRT STATION",
         "distanceMeters": 486
       }
-    ]
+    ],
+    "priceIqr": [
+      510838,
+      586250
+    ],
+    "pricePerSqmMedian": 8070.39,
+    "pricePerSqftMedian": 749.76
   },
   "monthlyTrend": [
     {
@@ -642,7 +642,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-30-kelantan-rd-2026-01-223769",
+      "id": "central-area-30-kelantan-rd-2026-01-223796",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

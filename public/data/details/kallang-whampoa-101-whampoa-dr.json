@@ -10,12 +10,6 @@
       "lng": 103.853813946402
     },
     "medianPrice": 501000,
-    "priceIqr": [
-      493750,
-      524000
-    ],
-    "pricePerSqmMedian": 5505.5,
-    "pricePerSqftMedian": 511.48,
     "transactionCount": 4,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "NOVENA MRT STATION",
         "distanceMeters": 1050
       }
-    ]
+    ],
+    "priceIqr": [
+      493750,
+      524000
+    ],
+    "pricePerSqmMedian": 5505.5,
+    "pricePerSqftMedian": 511.48
   },
   "monthlyTrend": [
     {
@@ -889,7 +889,7 @@
       "pricePerSqft": 426.74
     },
     {
-      "id": "kallang-whampoa-101-whampoa-dr-2016-12-974961",
+      "id": "kallang-whampoa-101-whampoa-dr-2016-12-975077",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

@@ -10,12 +10,6 @@
       "lng": 103.799918049241
     },
     "medianPrice": 965000,
-    "priceIqr": [
-      866000,
-      995000
-    ],
-    "pricePerSqmMedian": 7835.89,
-    "pricePerSqftMedian": 727.98,
     "transactionCount": 6,
     "floorAreaRange": [
       107,
@@ -56,7 +50,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 1546
       }
-    ]
+    ],
+    "priceIqr": [
+      866000,
+      995000
+    ],
+    "pricePerSqmMedian": 7835.89,
+    "pricePerSqftMedian": 727.98
   },
   "monthlyTrend": [
     {
@@ -542,7 +542,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-21-queen-s-cl-2026-03-226591",
+      "id": "queenstown-21-queen-s-cl-2026-03-226669",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

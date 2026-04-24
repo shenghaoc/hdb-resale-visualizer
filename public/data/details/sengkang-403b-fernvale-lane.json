@@ -10,12 +10,6 @@
       "lng": 103.872979832028
     },
     "medianPrice": 685000,
-    "priceIqr": [
-      647500,
-      687500
-    ],
-    "pricePerSqmMedian": 6216.22,
-    "pricePerSqftMedian": 577.51,
     "transactionCount": 3,
     "floorAreaRange": [
       93,
@@ -55,7 +49,13 @@
         "stationName": "THANGGAM LRT STATION",
         "distanceMeters": 978
       }
-    ]
+    ],
+    "priceIqr": [
+      647500,
+      687500
+    ],
+    "pricePerSqmMedian": 6216.22,
+    "pricePerSqftMedian": 577.51
   },
   "monthlyTrend": [
     {
@@ -385,7 +385,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-403b-fernvale-lane-2026-03-227059",
+      "id": "sengkang-403b-fernvale-lane-2026-03-227141",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

@@ -10,12 +10,6 @@
       "lng": 103.813547483063
     },
     "medianPrice": 515000,
-    "priceIqr": [
-      512000,
-      538000
-    ],
-    "pricePerSqmMedian": 5688.89,
-    "pricePerSqftMedian": 528.52,
     "transactionCount": 5,
     "floorAreaRange": [
       90,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 2228
       }
-    ]
+    ],
+    "priceIqr": [
+      512000,
+      538000
+    ],
+    "pricePerSqmMedian": 5688.89,
+    "pricePerSqftMedian": 528.52
   },
   "monthlyTrend": [
     {
@@ -355,7 +355,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-466d-sembawang-dr-2026-01-226766",
+      "id": "sembawang-466d-sembawang-dr-2026-01-226845",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

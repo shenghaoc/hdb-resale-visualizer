@@ -10,12 +10,6 @@
       "lng": 103.882463203575
     },
     "medianPrice": 564000,
-    "priceIqr": [
-      555000,
-      575250
-    ],
-    "pricePerSqmMedian": 6135.09,
-    "pricePerSqftMedian": 569.97,
     "transactionCount": 6,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "MACPHERSON MRT STATION",
         "distanceMeters": 724
       }
-    ]
+    ],
+    "priceIqr": [
+      555000,
+      575250
+    ],
+    "pricePerSqmMedian": 6135.09,
+    "pricePerSqftMedian": 569.97
   },
   "monthlyTrend": [
     {
@@ -654,7 +654,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-122-paya-lebar-way-2026-01-224441",
+      "id": "geylang-122-paya-lebar-way-2026-01-224485",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

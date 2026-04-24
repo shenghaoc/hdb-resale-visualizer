@@ -10,12 +10,6 @@
       "lng": 103.896910477404
     },
     "medianPrice": 753000,
-    "priceIqr": [
-      744000,
-      780000
-    ],
-    "pricePerSqmMedian": 6417.39,
-    "pricePerSqftMedian": 596.2,
     "transactionCount": 7,
     "floorAreaRange": [
       115,
@@ -54,7 +48,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 898
       }
-    ]
+    ],
+    "priceIqr": [
+      744000,
+      780000
+    ],
+    "pricePerSqmMedian": 6417.39,
+    "pricePerSqftMedian": 596.2
   },
   "monthlyTrend": [
     {
@@ -522,7 +522,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-7-haig-rd-2026-04-224479",
+      "id": "geylang-7-haig-rd-2026-04-224524",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

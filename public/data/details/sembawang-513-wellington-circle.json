@@ -10,12 +10,6 @@
       "lng": 103.82013524496
     },
     "medianPrice": 328944,
-    "priceIqr": [
-      326972,
-      330916
-    ],
-    "pricePerSqmMedian": 8223.6,
-    "pricePerSqftMedian": 764,
     "transactionCount": 2,
     "floorAreaRange": [
       40,
@@ -54,7 +48,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 2582
       }
-    ]
+    ],
+    "priceIqr": [
+      326972,
+      330916
+    ],
+    "pricePerSqmMedian": 8223.6,
+    "pricePerSqftMedian": 764
   },
   "monthlyTrend": [
     {
@@ -414,7 +414,7 @@
       "pricePerSqft": 545.81
     },
     {
-      "id": "sembawang-513-wellington-circle-2016-07-966846",
+      "id": "sembawang-513-wellington-circle-2016-07-966962",
       "month": "2016-07",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -427,7 +427,7 @@
       "pricePerSqft": 522.58
     },
     {
-      "id": "sembawang-513-wellington-circle-2016-07-966847",
+      "id": "sembawang-513-wellington-circle-2016-07-966963",
       "month": "2016-07",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",

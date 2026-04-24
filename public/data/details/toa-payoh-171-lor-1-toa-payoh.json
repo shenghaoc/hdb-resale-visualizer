@@ -10,12 +10,6 @@
       "lng": 103.842659017362
     },
     "medianPrice": 868000,
-    "priceIqr": [
-      789000,
-      970000
-    ],
-    "pricePerSqmMedian": 7514.29,
-    "pricePerSqftMedian": 698.1,
     "transactionCount": 5,
     "floorAreaRange": [
       103,
@@ -56,7 +50,13 @@
         "stationName": "NOVENA MRT STATION",
         "distanceMeters": 1084
       }
-    ]
+    ],
+    "priceIqr": [
+      789000,
+      970000
+    ],
+    "pricePerSqmMedian": 7514.29,
+    "pricePerSqftMedian": 698.1
   },
   "monthlyTrend": [
     {
@@ -542,7 +542,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-171-lor-1-toa-payoh-2026-01-228230",
+      "id": "toa-payoh-171-lor-1-toa-payoh-2026-01-228329",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

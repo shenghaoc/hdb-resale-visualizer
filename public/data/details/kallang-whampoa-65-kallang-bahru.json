@@ -10,12 +10,6 @@
       "lng": 103.868364964604
     },
     "medianPrice": 430000,
-    "priceIqr": [
-      405000,
-      460000
-    ],
-    "pricePerSqmMedian": 6615.38,
-    "pricePerSqftMedian": 614.59,
     "transactionCount": 17,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BENDEMEER MRT STATION",
         "distanceMeters": 876
       }
-    ]
+    ],
+    "priceIqr": [
+      405000,
+      460000
+    ],
+    "pricePerSqmMedian": 6615.38,
+    "pricePerSqftMedian": 614.59
   },
   "monthlyTrend": [
     {
@@ -1436,7 +1436,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-65-kallang-bahru-2026-02-225492",
+      "id": "kallang-whampoa-65-kallang-bahru-2026-02-225554",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

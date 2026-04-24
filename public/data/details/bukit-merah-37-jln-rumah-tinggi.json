@@ -10,12 +10,6 @@
       "lng": 103.809193412567
     },
     "medianPrice": 310000,
-    "priceIqr": [
-      302500,
-      327500
-    ],
-    "pricePerSqmMedian": 5849.06,
-    "pricePerSqftMedian": 543.4,
     "transactionCount": 11,
     "floorAreaRange": [
       52,
@@ -56,7 +50,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 1837
       }
-    ]
+    ],
+    "priceIqr": [
+      302500,
+      327500
+    ],
+    "pricePerSqmMedian": 5849.06,
+    "pricePerSqftMedian": 543.4
   },
   "monthlyTrend": [
     {
@@ -1196,7 +1196,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-37-jln-rumah-tinggi-2026-04-223298",
+      "id": "bukit-merah-37-jln-rumah-tinggi-2026-04-223319",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1209,7 +1209,7 @@
       "pricePerSqft": 531.13
     },
     {
-      "id": "bukit-merah-37-jln-rumah-tinggi-2026-02-223297",
+      "id": "bukit-merah-37-jln-rumah-tinggi-2026-02-223318",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

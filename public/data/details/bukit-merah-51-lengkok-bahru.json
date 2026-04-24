@@ -9,14 +9,8 @@
       "lat": 1.28761342640189,
       "lng": 103.812272115642
     },
-    "medianPrice": 351500,
-    "priceIqr": [
-      263000,
-      480000
-    ],
-    "pricePerSqmMedian": 3404.76,
-    "pricePerSqftMedian": 316.31,
-    "transactionCount": 143,
+    "medianPrice": 850000,
+    "transactionCount": 1,
     "floorAreaRange": [
       84,
       122
@@ -25,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2023-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-09",
-      "2023-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -57,7 +51,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1649
       }
-    ]
+    ],
+    "priceIqr": [
+      850000,
+      850000
+    ],
+    "pricePerSqmMedian": 6967.21,
+    "pricePerSqftMedian": 647.28
   },
   "monthlyTrend": [
     {
@@ -779,9 +779,28 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 7142.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6967.21
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-51-lengkok-bahru-2026-04-223521",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 06 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 6967.21,
+      "pricePerSqft": 647.28
+    },
     {
       "id": "bukit-merah-51-lengkok-bahru-2023-09-148229",
       "month": "2023-09",
@@ -1028,19 +1047,6 @@
       "resalePrice": 590000,
       "pricePerSqm": 4836.07,
       "pricePerSqft": 449.29
-    },
-    {
-      "id": "bukit-merah-51-lengkok-bahru-2019-02-43872",
-      "month": "2019-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "66 years 08 months",
-      "resalePrice": 440000,
-      "pricePerSqm": 5238.1,
-      "pricePerSqft": 486.64
     }
   ]
 }

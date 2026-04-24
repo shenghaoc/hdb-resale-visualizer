@@ -9,14 +9,8 @@
       "lat": 1.34020748183852,
       "lng": 103.721534317406
     },
-    "medianPrice": 605000,
-    "priceIqr": [
-      551500,
-      652500
-    ],
-    "pricePerSqmMedian": 5384.14,
-    "pricePerSqftMedian": 500.2,
-    "transactionCount": 6,
+    "medianPrice": 630000,
+    "transactionCount": 7,
     "floorAreaRange": [
       102,
       124
@@ -56,7 +50,13 @@
         "stationName": "BOON LAY MRT STATION",
         "distanceMeters": 1722
       }
-    ]
+    ],
+    "priceIqr": [
+      561000,
+      652944
+    ],
+    "pricePerSqmMedian": 5313.73,
+    "pricePerSqftMedian": 493.66
   },
   "monthlyTrend": [
     {
@@ -613,14 +613,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 718888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5941.22
+      "medianPrice": 682388,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5617.69
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-345-kang-ching-rd-2026-04-225387",
+      "id": "jurong-west-345-kang-ching-rd-2026-04-225446",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -631,6 +631,19 @@
       "resalePrice": 718888,
       "pricePerSqm": 5941.22,
       "pricePerSqft": 551.96
+    },
+    {
+      "id": "jurong-west-345-kang-ching-rd-2026-04-225448",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 645888,
+      "pricePerSqm": 5294.16,
+      "pricePerSqft": 491.84
     },
     {
       "id": "jurong-west-345-kang-ching-rd-2025-08-207731",
@@ -865,19 +878,6 @@
       "resalePrice": 385000,
       "pricePerSqm": 3774.51,
       "pricePerSqft": 350.66
-    },
-    {
-      "id": "jurong-west-345-kang-ching-rd-2019-07-53409",
-      "month": "2019-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 124,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "77 years",
-      "resalePrice": 425000,
-      "pricePerSqm": 3427.42,
-      "pricePerSqft": 318.42
     }
   ]
 }

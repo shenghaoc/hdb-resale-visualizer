@@ -9,14 +9,8 @@
       "lat": 1.37544982404192,
       "lng": 103.738349548996
     },
-    "medianPrice": 530000,
-    "priceIqr": [
-      521944,
-      537500
-    ],
-    "pricePerSqmMedian": 5247.52,
-    "pricePerSqftMedian": 487.51,
-    "transactionCount": 3,
+    "medianPrice": 537500,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       117
@@ -25,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-04",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "KEAT HONG LRT STATION",
         "distanceMeters": 1255
       }
-    ]
+    ],
+    "priceIqr": [
+      525972,
+      548750
+    ],
+    "pricePerSqmMedian": 5321.78,
+    "pricePerSqftMedian": 494.41
   },
   "monthlyTrend": [
     {
@@ -442,9 +442,28 @@
       "medianPrice": 513888,
       "transactionCount": 1,
       "medianPricePerSqm": 5088
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5544.55
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-486-choa-chu-kang-ave-5-2026-04-223942",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 03 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 5544.55,
+      "pricePerSqft": 515.11
+    },
     {
       "id": "choa-chu-kang-486-choa-chu-kang-ave-5-2025-06-203031",
       "month": "2025-06",
@@ -691,19 +710,6 @@
       "resalePrice": 310000,
       "pricePerSqm": 3069.31,
       "pricePerSqft": 285.15
-    },
-    {
-      "id": "choa-chu-kang-486-choa-chu-kang-ave-5-2017-12-19347",
-      "month": "2017-12",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 115,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "80 years 06 months",
-      "resalePrice": 350000,
-      "pricePerSqm": 3043.48,
-      "pricePerSqft": 282.75
     }
   ]
 }

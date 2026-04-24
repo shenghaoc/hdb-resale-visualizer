@@ -10,12 +10,6 @@
       "lng": 103.944689528272
     },
     "medianPrice": 561000,
-    "priceIqr": [
-      557250,
-      623500
-    ],
-    "pricePerSqmMedian": 6644.81,
-    "pricePerSqftMedian": 617.32,
     "transactionCount": 4,
     "floorAreaRange": [
       84,
@@ -57,7 +51,13 @@
         "stationName": "BEDOK MRT STATION",
         "distanceMeters": 1717
       }
-    ]
+    ],
+    "priceIqr": [
+      557250,
+      623500
+    ],
+    "pricePerSqmMedian": 6644.81,
+    "pricePerSqftMedian": 617.32
   },
   "monthlyTrend": [
     {
@@ -615,7 +615,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-172-bedok-sth-rd-2026-01-222596",
+      "id": "bedok-172-bedok-sth-rd-2026-01-222607",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -628,7 +628,7 @@
       "pricePerSqft": 607.19
     },
     {
-      "id": "bedok-172-bedok-sth-rd-2026-01-222662",
+      "id": "bedok-172-bedok-sth-rd-2026-01-222673",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -823,7 +823,7 @@
       "pricePerSqft": 415.02
     },
     {
-      "id": "bedok-172-bedok-sth-rd-2016-08-967564",
+      "id": "bedok-172-bedok-sth-rd-2016-08-967680",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -836,7 +836,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "bedok-172-bedok-sth-rd-2015-09-950211",
+      "id": "bedok-172-bedok-sth-rd-2015-09-950327",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -849,7 +849,7 @@
       "pricePerSqft": 400.37
     },
     {
-      "id": "bedok-172-bedok-sth-rd-2015-01-938582",
+      "id": "bedok-172-bedok-sth-rd-2015-01-938698",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -862,7 +862,7 @@
       "pricePerSqft": 437.86
     },
     {
-      "id": "bedok-172-bedok-sth-rd-2014-12-650076",
+      "id": "bedok-172-bedok-sth-rd-2014-12-650192",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

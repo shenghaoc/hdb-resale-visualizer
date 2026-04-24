@@ -10,12 +10,6 @@
       "lng": 103.871651573593
     },
     "medianPrice": 456000,
-    "priceIqr": [
-      408666,
-      460750
-    ],
-    "pricePerSqmMedian": 6283.75,
-    "pricePerSqftMedian": 583.78,
     "transactionCount": 8,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BENDEMEER MRT STATION",
         "distanceMeters": 962
       }
-    ]
+    ],
+    "priceIqr": [
+      408666,
+      460750
+    ],
+    "pricePerSqmMedian": 6283.75,
+    "pricePerSqftMedian": 583.78
   },
   "monthlyTrend": [
     {
@@ -1226,7 +1226,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-16-upp-boon-keng-rd-2026-02-225511",
+      "id": "kallang-whampoa-16-upp-boon-keng-rd-2026-02-225573",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

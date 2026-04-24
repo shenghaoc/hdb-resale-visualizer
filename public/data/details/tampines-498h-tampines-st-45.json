@@ -9,14 +9,8 @@
       "lat": 1.36295791496804,
       "lng": 103.957515257339
     },
-    "medianPrice": 835444,
-    "priceIqr": [
-      792722,
-      878166
-    ],
-    "pricePerSqmMedian": 6244.09,
-    "pricePerSqftMedian": 580.1,
-    "transactionCount": 2,
+    "medianPrice": 920888,
+    "transactionCount": 3,
     "floorAreaRange": [
       106,
       147
@@ -25,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2000-07",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -57,7 +51,13 @@
         "stationName": "TAMPINES MRT STATION",
         "distanceMeters": 1733
       }
-    ]
+    ],
+    "priceIqr": [
+      835444,
+      1029888
+    ],
+    "pricePerSqmMedian": 6439.78,
+    "pricePerSqftMedian": 598.28
   },
   "monthlyTrend": [
     {
@@ -443,9 +443,28 @@
       "medianPrice": 920888,
       "transactionCount": 1,
       "medianPricePerSqm": 6439.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1138888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7747.54
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-498h-tampines-st-45-2026-04-228134",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 147,
+      "flatModel": "PREMIUM MAISONETTE",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years",
+      "resalePrice": 1138888,
+      "pricePerSqm": 7747.54,
+      "pricePerSqft": 719.77
+    },
     {
       "id": "tampines-498h-tampines-st-45-2025-03-217507",
       "month": "2025-03",
@@ -616,7 +635,7 @@
       "pricePerSqft": 374.61
     },
     {
-      "id": "tampines-498h-tampines-st-45-2016-09-970654",
+      "id": "tampines-498h-tampines-st-45-2016-09-970770",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -629,7 +648,7 @@
       "pricePerSqft": 385.64
     },
     {
-      "id": "tampines-498h-tampines-st-45-2016-06-965465",
+      "id": "tampines-498h-tampines-st-45-2016-06-965581",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -642,7 +661,7 @@
       "pricePerSqft": 359.34
     },
     {
-      "id": "tampines-498h-tampines-st-45-2016-04-961807",
+      "id": "tampines-498h-tampines-st-45-2016-04-961923",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -655,7 +674,7 @@
       "pricePerSqft": 376.87
     },
     {
-      "id": "tampines-498h-tampines-st-45-2016-03-960029",
+      "id": "tampines-498h-tampines-st-45-2016-03-960145",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -668,7 +687,7 @@
       "pricePerSqft": 350.58
     },
     {
-      "id": "tampines-498h-tampines-st-45-2016-02-958445",
+      "id": "tampines-498h-tampines-st-45-2016-02-958561",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -681,7 +700,7 @@
       "pricePerSqft": 371.51
     },
     {
-      "id": "tampines-498h-tampines-st-45-2014-05-641352",
+      "id": "tampines-498h-tampines-st-45-2014-05-641468",
       "month": "2014-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -692,19 +711,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 4274.19,
       "pricePerSqft": 397.09
-    },
-    {
-      "id": "tampines-498h-tampines-st-45-2013-06-627224",
-      "month": "2013-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 125,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years",
-      "resalePrice": 575000,
-      "pricePerSqm": 4600,
-      "pricePerSqft": 427.35
     }
   ]
 }

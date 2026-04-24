@@ -10,12 +10,6 @@
       "lng": 103.722395565486
     },
     "medianPrice": 625000,
-    "priceIqr": [
-      476450,
-      653166
-    ],
-    "pricePerSqmMedian": 6972.81,
-    "pricePerSqftMedian": 647.79,
     "transactionCount": 8,
     "floorAreaRange": [
       64,
@@ -55,7 +49,13 @@
         "stationName": "BOON LAY MRT STATION",
         "distanceMeters": 1810
       }
-    ]
+    ],
+    "priceIqr": [
+      476450,
+      653166
+    ],
+    "pricePerSqmMedian": 6972.81,
+    "pricePerSqftMedian": 647.79
   },
   "monthlyTrend": [
     {
@@ -211,7 +211,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-337b-tah-ching-rd-2026-02-225085",
+      "id": "jurong-west-337b-tah-ching-rd-2026-02-225142",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -224,7 +224,7 @@
       "pricePerSqft": 637.09
     },
     {
-      "id": "jurong-west-337b-tah-ching-rd-2026-02-225253",
+      "id": "jurong-west-337b-tah-ching-rd-2026-02-225311",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -237,7 +237,7 @@
       "pricePerSqft": 713.58
     },
     {
-      "id": "jurong-west-337b-tah-ching-rd-2026-01-225252",
+      "id": "jurong-west-337b-tah-ching-rd-2026-01-225310",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -458,7 +458,7 @@
       "pricePerSqft": 390.39
     },
     {
-      "id": "jurong-west-337b-tah-ching-rd-2016-10-971777",
+      "id": "jurong-west-337b-tah-ching-rd-2016-10-971893",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

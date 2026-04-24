@@ -10,12 +10,6 @@
       "lng": 103.801700391926
     },
     "medianPrice": 575000,
-    "priceIqr": [
-      555000,
-      592000
-    ],
-    "pricePerSqmMedian": 6250,
-    "pricePerSqftMedian": 580.64,
     "transactionCount": 9,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "WOODLANDS MRT STATION",
         "distanceMeters": 1916
       }
-    ]
+    ],
+    "priceIqr": [
+      555000,
+      592000
+    ],
+    "pricePerSqmMedian": 6250,
+    "pricePerSqftMedian": 580.64
   },
   "monthlyTrend": [
     {
@@ -300,7 +300,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-780e-woodlands-cres-2026-04-228509",
+      "id": "woodlands-780e-woodlands-cres-2026-04-228612",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -313,7 +313,7 @@
       "pricePerSqft": 545.3
     },
     {
-      "id": "woodlands-780e-woodlands-cres-2026-04-228511",
+      "id": "woodlands-780e-woodlands-cres-2026-04-228614",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -326,7 +326,7 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "woodlands-780e-woodlands-cres-2026-02-228507",
+      "id": "woodlands-780e-woodlands-cres-2026-02-228610",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

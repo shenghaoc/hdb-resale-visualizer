@@ -10,12 +10,6 @@
       "lng": 103.902317496614
     },
     "medianPrice": 465000,
-    "priceIqr": [
-      465000,
-      465000
-    ],
-    "pricePerSqmMedian": 7380.95,
-    "pricePerSqftMedian": 685.71,
     "transactionCount": 1,
     "floorAreaRange": [
       63,
@@ -56,7 +50,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 1097
       }
-    ]
+    ],
+    "priceIqr": [
+      465000,
+      465000
+    ],
+    "pricePerSqmMedian": 7380.95,
+    "pricePerSqftMedian": 685.71
   },
   "monthlyTrend": [
     {
@@ -152,7 +152,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-305-ubi-ave-1-2026-03-224383",
+      "id": "geylang-305-ubi-ave-1-2026-03-224427",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -282,7 +282,7 @@
       "pricePerSqft": 449.77
     },
     {
-      "id": "geylang-305-ubi-ave-1-2015-09-950580",
+      "id": "geylang-305-ubi-ave-1-2015-09-950696",
       "month": "2015-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -295,7 +295,7 @@
       "pricePerSqft": 412.9
     },
     {
-      "id": "geylang-305-ubi-ave-1-2013-07-627954",
+      "id": "geylang-305-ubi-ave-1-2013-07-628070",
       "month": "2013-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -308,7 +308,7 @@
       "pricePerSqft": 476.31
     },
     {
-      "id": "geylang-305-ubi-ave-1-2012-10-614542",
+      "id": "geylang-305-ubi-ave-1-2012-10-614658",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -321,7 +321,7 @@
       "pricePerSqft": 416.71
     },
     {
-      "id": "geylang-305-ubi-ave-1-2012-06-606578",
+      "id": "geylang-305-ubi-ave-1-2012-06-606694",
       "month": "2012-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -334,7 +334,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "geylang-305-ubi-ave-1-2011-09-589744",
+      "id": "geylang-305-ubi-ave-1-2011-09-589860",
       "month": "2011-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

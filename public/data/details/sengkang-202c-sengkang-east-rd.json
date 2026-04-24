@@ -10,12 +10,6 @@
       "lng": 103.892967111261
     },
     "medianPrice": 629888,
-    "priceIqr": [
-      577500,
-      704000
-    ],
-    "pricePerSqmMedian": 6431.82,
-    "pricePerSqftMedian": 597.54,
     "transactionCount": 8,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 458
       }
-    ]
+    ],
+    "priceIqr": [
+      577500,
+      704000
+    ],
+    "pricePerSqmMedian": 6431.82,
+    "pricePerSqftMedian": 597.54
   },
   "monthlyTrend": [
     {
@@ -428,7 +428,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-202c-sengkang-east-rd-2026-02-227182",
+      "id": "sengkang-202c-sengkang-east-rd-2026-02-227265",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

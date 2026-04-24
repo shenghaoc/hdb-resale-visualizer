@@ -10,12 +10,6 @@
       "lng": 103.883179671688
     },
     "medianPrice": 302000,
-    "priceIqr": [
-      298500,
-      303500
-    ],
-    "pricePerSqmMedian": 6100,
-    "pricePerSqftMedian": 566.71,
     "transactionCount": 3,
     "floorAreaRange": [
       48,
@@ -54,7 +48,13 @@
         "stationName": "STADIUM MRT STATION",
         "distanceMeters": 777
       }
-    ]
+    ],
+    "priceIqr": [
+      298500,
+      303500
+    ],
+    "pricePerSqmMedian": 6100,
+    "pricePerSqftMedian": 566.71
   },
   "monthlyTrend": [
     {

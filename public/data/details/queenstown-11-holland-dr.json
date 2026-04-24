@@ -10,12 +10,6 @@
       "lng": 103.782719704956
     },
     "medianPrice": 500000,
-    "priceIqr": [
-      464000,
-      546500
-    ],
-    "pricePerSqmMedian": 7386.36,
-    "pricePerSqftMedian": 686.22,
     "transactionCount": 15,
     "floorAreaRange": [
       59,
@@ -57,7 +51,13 @@
         "stationName": "HOLLAND VILLAGE MRT STATION",
         "distanceMeters": 1492
       }
-    ]
+    ],
+    "priceIqr": [
+      464000,
+      546500
+    ],
+    "pricePerSqmMedian": 7386.36,
+    "pricePerSqftMedian": 686.22
   },
   "monthlyTrend": [
     {
@@ -1593,7 +1593,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-11-holland-dr-2026-04-226476",
+      "id": "queenstown-11-holland-dr-2026-04-226553",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1606,7 +1606,7 @@
       "pricePerSqft": 626.02
     },
     {
-      "id": "queenstown-11-holland-dr-2026-04-226553",
+      "id": "queenstown-11-holland-dr-2026-04-226630",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1619,7 +1619,7 @@
       "pricePerSqft": 686.22
     },
     {
-      "id": "queenstown-11-holland-dr-2026-01-226474",
+      "id": "queenstown-11-holland-dr-2026-01-226551",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

@@ -10,12 +10,6 @@
       "lng": 103.786855017635
     },
     "medianPrice": 393000,
-    "priceIqr": [
-      380750,
-      403750
-    ],
-    "pricePerSqmMedian": 5930.77,
-    "pricePerSqftMedian": 550.98,
     "transactionCount": 10,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "HOLLAND VILLAGE MRT STATION",
         "distanceMeters": 1011
       }
-    ]
+    ],
+    "priceIqr": [
+      380750,
+      403750
+    ],
+    "pricePerSqmMedian": 5930.77,
+    "pricePerSqftMedian": 550.98
   },
   "monthlyTrend": [
     {
@@ -1154,7 +1154,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-1-ghim-moh-rd-2026-02-226448",
+      "id": "queenstown-1-ghim-moh-rd-2026-02-226525",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

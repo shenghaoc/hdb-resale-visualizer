@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
-import { getFilterOptions, matchesFilter, resetFilteringCachesForTests } from "@/lib/filtering";
+import {
+  getFilterOptions,
+  matchesFilter,
+  matchesGeographicSearchIntent,
+  resetFilteringCachesForTests,
+  resolveGeographicSearchIntent,
+} from "@/lib/filtering";
 import { buildFixtureArtifacts } from "../fixtures/pipeline";
 
 describe("matchesFilter", () => {
@@ -131,11 +137,47 @@ describe("matchesFilter", () => {
         search: "alpha",
       }),
     ).toBe(false);
-    expect(
+      expect(
       matchesFilter(updatedBlock, {
         ...DEFAULT_FILTERS,
         search: "beta",
       }),
     ).toBe(true);
+  });
+
+  it("detects MRT station 'near' search and applies distance filtering", () => {
+    expect(alpha).toBeTruthy();
+    expect(beta).toBeTruthy();
+
+    const query = "near ang mo kio mrt";
+    const intent = resolveGeographicSearchIntent(query, artifact.blockSummaries, 800);
+    expect(intent).toEqual({
+      type: "station",
+      stationName: "ANG MO KIO MRT STATION",
+      radiusMeters: 800,
+    });
+
+    // matchesFilter should return true because intent is provided, bypassing the text search for "near"
+    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, search: query }, intent)).toBe(true);
+    expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
+    expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
+  });
+
+  it("detects coordinate search and filters blocks by radius", () => {
+    expect(alpha).toBeTruthy();
+    expect(beta).toBeTruthy();
+
+    const query = "1.3692, 103.8492";
+    const intent = resolveGeographicSearchIntent(query, artifact.blockSummaries, 300);
+    expect(intent).toEqual({
+      type: "coordinates",
+      coordinates: { lat: 1.3692, lng: 103.8492 },
+      radiusMeters: 300,
+    });
+
+    // matchesFilter should return true because intent is provided, bypassing text search for coordinates
+    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, search: query }, intent)).toBe(true);
+    expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
+    expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
 });

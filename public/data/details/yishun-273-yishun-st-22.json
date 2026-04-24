@@ -10,13 +10,7 @@
       "lng": 103.839676978317
     },
     "medianPrice": 530000,
-    "priceIqr": [
-      464000,
-      530000
-    ],
-    "pricePerSqmMedian": 5096.15,
-    "pricePerSqftMedian": 473.45,
-    "transactionCount": 3,
+    "transactionCount": 4,
     "floorAreaRange": [
       74,
       108
@@ -25,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-11",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "KHATIB MRT STATION",
         "distanceMeters": 2317
       }
-    ]
+    ],
+    "priceIqr": [
+      497000,
+      532000
+    ],
+    "pricePerSqmMedian": 5134.61,
+    "pricePerSqftMedian": 477.02
   },
   "monthlyTrend": [
     {
@@ -915,11 +915,30 @@
       "medianPrice": 530000,
       "transactionCount": 1,
       "medianPricePerSqm": 5096.15
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5173.08
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-273-yishun-st-22-2026-02-229207",
+      "id": "yishun-273-yishun-st-22-2026-04-229320",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 04 months",
+      "resalePrice": 538000,
+      "pricePerSqm": 5173.08,
+      "pricePerSqft": 480.6
+    },
+    {
+      "id": "yishun-273-yishun-st-22-2026-02-229317",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1164,19 +1183,6 @@
       "resalePrice": 270000,
       "pricePerSqm": 3648.65,
       "pricePerSqft": 338.97
-    },
-    {
-      "id": "yishun-273-yishun-st-22-2017-08-13385",
-      "month": "2017-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 74,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "67 years 11 months",
-      "resalePrice": 280000,
-      "pricePerSqm": 3783.78,
-      "pricePerSqft": 351.53
     }
   ]
 }

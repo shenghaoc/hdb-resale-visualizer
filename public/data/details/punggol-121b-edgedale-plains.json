@@ -10,12 +10,6 @@
       "lng": 103.909041773266
     },
     "medianPrice": 608000,
-    "priceIqr": [
-      590000,
-      630000
-    ],
-    "pricePerSqmMedian": 6537.63,
-    "pricePerSqftMedian": 607.37,
     "transactionCount": 5,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "CORAL EDGE LRT STATION",
         "distanceMeters": 407
       }
-    ]
+    ],
+    "priceIqr": [
+      590000,
+      630000
+    ],
+    "pricePerSqmMedian": 6537.63,
+    "pricePerSqftMedian": 607.37
   },
   "monthlyTrend": [
     {
@@ -224,7 +224,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-121b-edgedale-plains-2026-02-226006",
+      "id": "punggol-121b-edgedale-plains-2026-02-226075",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

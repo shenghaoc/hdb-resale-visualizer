@@ -10,12 +10,6 @@
       "lng": 103.833163087554
     },
     "medianPrice": 1000000,
-    "priceIqr": [
-      944000,
-      1075000
-    ],
-    "pricePerSqmMedian": 10000,
-    "pricePerSqftMedian": 929.03,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 707
       }
-    ]
+    ],
+    "priceIqr": [
+      944000,
+      1075000
+    ],
+    "pricePerSqmMedian": 10000,
+    "pricePerSqftMedian": 929.03
   },
   "monthlyTrend": [
     {
@@ -390,7 +390,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-2a-boon-tiong-rd-2026-01-223347",
+      "id": "bukit-merah-2a-boon-tiong-rd-2026-01-223369",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -611,7 +611,7 @@
       "pricePerSqft": 766.45
     },
     {
-      "id": "bukit-merah-2a-boon-tiong-rd-2016-12-974507",
+      "id": "bukit-merah-2a-boon-tiong-rd-2016-12-974623",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -624,7 +624,7 @@
       "pricePerSqft": 713.5
     },
     {
-      "id": "bukit-merah-2a-boon-tiong-rd-2016-08-967767",
+      "id": "bukit-merah-2a-boon-tiong-rd-2016-08-967883",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -637,7 +637,7 @@
       "pricePerSqft": 766.45
     },
     {
-      "id": "bukit-merah-2a-boon-tiong-rd-2016-05-962531",
+      "id": "bukit-merah-2a-boon-tiong-rd-2016-05-962647",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",

@@ -10,12 +10,6 @@
       "lng": 103.8214740879
     },
     "medianPrice": 471000,
-    "priceIqr": [
-      464000,
-      478000
-    ],
-    "pricePerSqmMedian": 5743.9,
-    "pricePerSqftMedian": 533.63,
     "transactionCount": 2,
     "floorAreaRange": [
       82,
@@ -54,7 +48,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1397
       }
-    ]
+    ],
+    "priceIqr": [
+      464000,
+      478000
+    ],
+    "pricePerSqmMedian": 5743.9,
+    "pricePerSqftMedian": 533.63
   },
   "monthlyTrend": [
     {
@@ -804,7 +804,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-27-telok-blangah-way-2026-01-223454",
+      "id": "bukit-merah-27-telok-blangah-way-2026-01-223478",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

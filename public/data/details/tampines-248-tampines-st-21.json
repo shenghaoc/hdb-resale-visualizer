@@ -10,12 +10,6 @@
       "lng": 103.947108773379
     },
     "medianPrice": 634000,
-    "priceIqr": [
-      600000,
-      652250
-    ],
-    "pricePerSqmMedian": 6967.03,
-    "pricePerSqftMedian": 647.26,
     "transactionCount": 4,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES WEST MRT STATION",
         "distanceMeters": 1189
       }
-    ]
+    ],
+    "priceIqr": [
+      600000,
+      652250
+    ],
+    "pricePerSqmMedian": 6967.03,
+    "pricePerSqftMedian": 647.26
   },
   "monthlyTrend": [
     {
@@ -702,7 +702,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-248-tampines-st-21-2026-02-227709",
+      "id": "tampines-248-tampines-st-21-2026-02-227800",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -923,7 +923,7 @@
       "pricePerSqft": 510.46
     },
     {
-      "id": "tampines-248-tampines-st-21-2016-12-975324",
+      "id": "tampines-248-tampines-st-21-2016-12-975440",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -936,7 +936,7 @@
       "pricePerSqft": 489.76
     },
     {
-      "id": "tampines-248-tampines-st-21-2016-01-957264",
+      "id": "tampines-248-tampines-st-21-2016-01-957380",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -949,7 +949,7 @@
       "pricePerSqft": 490.04
     },
     {
-      "id": "tampines-248-tampines-st-21-2015-12-955914",
+      "id": "tampines-248-tampines-st-21-2015-12-956030",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

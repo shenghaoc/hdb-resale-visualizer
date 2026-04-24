@@ -1,8 +1,17 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
 import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
-import { DEFAULT_FILTERS, HEADER_DISMISSED_STORAGE_KEY } from "@/lib/constants";
+import {
+  DEFAULT_FILTERS,
+  DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+  HEADER_DISMISSED_STORAGE_KEY,
+} from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
-import { getSelectionByAddressKey, matchesFilter } from "@/lib/filtering";
+import {
+  getSelectionByAddressKey,
+  matchesFilter,
+  matchesGeographicSearchIntent,
+  resolveGeographicSearchIntent,
+} from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -10,7 +19,6 @@ import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import type {
   AddressDetail,
-  AddressDetailSummary,
   BlockSummary,
   FilterState,
   Manifest,
@@ -43,7 +51,7 @@ type LoadedDetail = {
 };
 
 function App() {
-  const { locale, setLocale, t } = useI18n();
+  const { t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -59,9 +67,7 @@ function App() {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
-  const [shortlistDetailSummaries, setShortlistDetailSummaries] = useState<
-    Record<string, AddressDetailSummary | null>
-  >({});
+  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -78,6 +84,7 @@ function App() {
 
     return window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY) !== "1";
   });
+  const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -185,13 +192,49 @@ function App() {
     () => ({ ...stableFilters, search: debouncedSearch }),
     [debouncedSearch, stableFilters],
   );
+  const geographicIntent = useMemo(
+    () =>
+      resolveGeographicSearchIntent(
+        filters.search,
+        blocks,
+        filters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+      ),
+    [blocks, filters.mrtMax, filters.search],
+  );
+  const mapGeographicIntent = useMemo(
+    () =>
+      resolveGeographicSearchIntent(
+        mapFilters.search,
+        blocks,
+        mapFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+      ),
+    [blocks, mapFilters.mrtMax, mapFilters.search],
+  );
   const filteredBlocks = useMemo(
-    () => (resultsVisible ? blocks.filter((block) => matchesFilter(block, stableFilters)) : []),
-    [blocks, resultsVisible, stableFilters],
+    () =>
+      resultsVisible
+        ? blocks.filter((block) => {
+            if (!matchesFilter(block, stableFilters, geographicIntent)) {
+              return false;
+            }
+            return geographicIntent
+              ? matchesGeographicSearchIntent(block, geographicIntent)
+              : true;
+          })
+        : [],
+    [blocks, geographicIntent, resultsVisible, stableFilters],
   );
   const mapFilteredBlocks = useMemo(
-    () => blocks.filter((block) => matchesFilter(block, mapFilters)),
-    [blocks, mapFilters],
+    () =>
+      blocks.filter((block) => {
+        if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
+          return false;
+        }
+        return mapGeographicIntent
+          ? matchesGeographicSearchIntent(block, mapGeographicIntent)
+          : true;
+      }),
+    [blocks, mapFilters, mapGeographicIntent],
   );
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
@@ -222,10 +265,15 @@ function App() {
             item,
             block,
             detailSummary:
-              shortlistDetailSummaries[item.addressKey] ??
+              shortlistDetails[item.addressKey]?.summary ??
               (selectedDetail?.summary.addressKey === item.addressKey
                 ? selectedDetail.summary
                 : null),
+            monthlyTrend:
+              shortlistDetails[item.addressKey]?.monthlyTrend ??
+              (selectedDetail?.summary.addressKey === item.addressKey
+                ? selectedDetail.monthlyTrend
+                : []),
           };
         })
         .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
@@ -246,7 +294,7 @@ function App() {
           return left.item.addedAt.localeCompare(right.item.addedAt);
         });
     },
-    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetailSummaries],
+    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetails],
   );
 
   useEffect(() => {
@@ -256,7 +304,7 @@ function App() {
 
     const missingAddressKeys = shortlist.items
       .map((item) => item.addressKey)
-      .filter((addressKey) => !(addressKey in shortlistDetailSummaries));
+      .filter((addressKey) => !(addressKey in shortlistDetails));
 
     if (missingAddressKeys.length === 0) {
       return;
@@ -268,7 +316,7 @@ function App() {
       missingAddressKeys.map(async (addressKey) => {
         try {
           const nextDetail = await fetchAddressDetail(addressKey);
-          return [addressKey, nextDetail.summary] as const;
+          return [addressKey, nextDetail] as const;
         } catch {
           return [addressKey, null] as const;
         }
@@ -278,10 +326,10 @@ function App() {
         return;
       }
 
-      setShortlistDetailSummaries((current) => {
+      setShortlistDetails((current) => {
         const next = { ...current };
-        for (const [addressKey, summary] of entries) {
-          next[addressKey] = summary;
+        for (const [addressKey, detailData] of entries) {
+          next[addressKey] = detailData;
         }
 
         return next;
@@ -291,7 +339,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetailSummaries]);
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
 
   function handleSelectAddress(addressKey: string) {
     if (isDesktop) {
@@ -305,7 +353,11 @@ function App() {
   }
 
   function handleMapInteract() {
-    setIsHeaderVisible(false);
+    if (!hasInteractedWithMap) {
+      setIsHeaderVisible(false);
+      setHasInteractedWithMap(true);
+    }
+
     if (isDesktop) {
       setIsDesktopPanelOpen(false);
       return;
@@ -382,15 +434,21 @@ function App() {
         blocks={mapFilteredBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={selectedAddressKey}
-        townFilter={filters.town}
+        townFilter={mapFilters.town}
+        autoFitKey={
+          mapGeographicIntent
+            ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
+            : null
+        }
         onMapInteract={handleMapInteract}
+        t={t}
       />
     </Suspense>
   );
 
   const selectedDetailContent =
     detailVisible || detailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label="Loading block details…" />}>
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
         <DetailDrawer
           detail={selectedDetail}
           selectedBlock={selectedBlock}
@@ -407,7 +465,7 @@ function App() {
     ) : null;
 
   const resultsPaneContent = resultsVisible ? (
-    <Suspense fallback={<DrawerSkeleton label="Loading results…" />}>
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
       <ResultsPane
         blocks={filteredBlocks}
         hasTownFilter={!!filters.town || !!filters.search}
@@ -420,7 +478,7 @@ function App() {
     </Suspense>
   ) : null;
   const savedContent = savedVisible ? (
-    <Suspense fallback={<DrawerSkeleton label="Loading shortlist…" />}>
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
         onRemove={(addressKey) => shortlist.toggle(addressKey)}
@@ -434,9 +492,7 @@ function App() {
   return (
     <>
       <main className="relative min-h-dvh w-full overflow-hidden">
-        <div className="absolute inset-0">
-          {mapContent}
-        </div>
+        <div className="absolute inset-0">{mapContent}</div>
 
         <div className="pointer-events-none absolute inset-0 z-10 flex min-h-dvh flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
           {isDesktop && (
@@ -446,26 +502,18 @@ function App() {
                 className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
               >
-                {isDesktopPanelOpen ? <PanelLeftClose className="size-4" /> : <PanelLeftOpen className="size-4" />}
-                {isDesktopPanelOpen ? "Hide panel" : "Show panel"}
+                {isDesktopPanelOpen ? (
+                  <PanelLeftClose className="size-4" />
+                ) : (
+                  <PanelLeftOpen className="size-4" />
+                )}
+                {isDesktopPanelOpen ? t("app.hidePanel") : t("app.showPanel")}
               </button>
             </div>
           )}
 
           <div className="flex flex-wrap items-start gap-3 lg:pl-36">
             <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-              <div className="pointer-events-auto flex shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-2 py-1 text-sm shadow-sm backdrop-blur-sm">
-                <label htmlFor="locale-select" className="text-muted-foreground">{t("language.label")}</label>
-                <select
-                  id="locale-select"
-                  className="rounded-md border border-border bg-background px-2 py-1"
-                  value={locale}
-                  onChange={(event) => setLocale(event.target.value as typeof locale)}
-                >
-                  <option value="en-SG">{t("language.en")}</option>
-                  <option value="zh-SG">{t("language.zh")}</option>
-                </select>
-              </div>
               <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
                 <GlobalHeader
                   manifest={manifest}
@@ -496,18 +544,28 @@ function App() {
                         <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
                         <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1">
+                      <TabsContent
+                        value="filters"
+                        className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1"
+                      >
                         {filterContent}
                       </TabsContent>
                       <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
-                          <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
+                          <div
+                            className={`min-h-0 flex-1 flex-col ${
+                              detailVisible || detailLoading ? "hidden" : "flex"
+                            }`}
+                          >
                             {resultsPaneContent}
                           </div>
                         </div>
                       </TabsContent>
-                      <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
+                      <TabsContent
+                        value="saved"
+                        className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1"
+                      >
                         {savedContent}
                       </TabsContent>
                     </Tabs>
@@ -520,22 +578,22 @@ function App() {
               {mobileTab && (
                 <div className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
                   {mobileTab === "filters" && (
-                    <div className="h-full overflow-y-auto pr-1">
-                      {filterContent}
-                    </div>
+                    <div className="h-full overflow-y-auto pr-1">{filterContent}</div>
                   )}
                   {mobileTab === "results" && (
                     <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
                       {selectedDetailContent}
-                      <div className={`min-h-0 flex-1 flex-col ${detailVisible || detailLoading ? "hidden" : "flex"}`}>
+                      <div
+                        className={`min-h-0 flex-1 flex-col ${
+                          detailVisible || detailLoading ? "hidden" : "flex"
+                        }`}
+                      >
                         {resultsPaneContent}
                       </div>
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div className="h-full min-h-0 overflow-y-auto">
-                      {savedContent}
-                    </div>
+                    <div className="h-full min-h-0 overflow-hidden">{savedContent}</div>
                   )}
                 </div>
               )}
@@ -569,7 +627,8 @@ function App() {
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
             <Bookmark />
-            {t("tab.saved")}{shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
+            {t("tab.saved")}
+            {shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
           </button>
         </nav>
       )}

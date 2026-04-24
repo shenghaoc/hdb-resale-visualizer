@@ -10,12 +10,6 @@
       "lng": 103.724354324887
     },
     "medianPrice": 319000,
-    "priceIqr": [
-      313250,
-      331250
-    ],
-    "pricePerSqmMedian": 4761.19,
-    "pricePerSqftMedian": 442.33,
     "transactionCount": 8,
     "floorAreaRange": [
       66,
@@ -54,7 +48,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 1937
       }
-    ]
+    ],
+    "priceIqr": [
+      313250,
+      331250
+    ],
+    "pricePerSqmMedian": 4761.19,
+    "pricePerSqftMedian": 442.33
   },
   "monthlyTrend": [
     {
@@ -1092,7 +1092,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-113-tao-ching-rd-2026-02-225086",
+      "id": "jurong-west-113-tao-ching-rd-2026-02-225143",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

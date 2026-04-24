@@ -10,12 +10,6 @@
       "lng": 103.883129110308
     },
     "medianPrice": 595000,
-    "priceIqr": [
-      449666,
-      663750
-    ],
-    "pricePerSqmMedian": 7252.22,
-    "pricePerSqftMedian": 673.75,
     "transactionCount": 14,
     "floorAreaRange": [
       38,
@@ -57,7 +51,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 865
       }
-    ]
+    ],
+    "priceIqr": [
+      449666,
+      663750
+    ],
+    "pricePerSqmMedian": 7252.22,
+    "pricePerSqftMedian": 673.75
   },
   "monthlyTrend": [
     {
@@ -117,7 +117,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-993a-buangkok-link-2026-02-224614",
+      "id": "hougang-993a-buangkok-link-2026-02-224661",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

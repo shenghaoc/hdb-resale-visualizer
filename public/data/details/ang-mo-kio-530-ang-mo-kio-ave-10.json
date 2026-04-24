@@ -10,12 +10,6 @@
       "lng": 103.85527326009
     },
     "medianPrice": 147500,
-    "priceIqr": [
-      125000,
-      157500
-    ],
-    "pricePerSqmMedian": 2137.68,
-    "pricePerSqftMedian": 198.6,
     "transactionCount": 4,
     "floorAreaRange": [
       69,
@@ -54,7 +48,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 1982
       }
-    ]
+    ],
+    "priceIqr": [
+      125000,
+      157500
+    ],
+    "pricePerSqmMedian": 2137.68,
+    "pricePerSqftMedian": 198.6
   },
   "monthlyTrend": [
     {
@@ -84,7 +84,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-2005-10-419431",
+      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-2005-10-419547",
       "month": "2005-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -97,7 +97,7 @@
       "pricePerSqft": 188.5
     },
     {
-      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-2000-03-234127",
+      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-2000-03-234243",
       "month": "2000-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -110,7 +110,7 @@
       "pricePerSqft": 208.7
     },
     {
-      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-1996-07-779820",
+      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-1996-07-779936",
       "month": "1996-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -123,7 +123,7 @@
       "pricePerSqft": 222.16
     },
     {
-      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-1993-09-700912",
+      "id": "ang-mo-kio-530-ang-mo-kio-ave-10-1993-09-701028",
       "month": "1993-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

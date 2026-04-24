@@ -9,14 +9,8 @@
       "lat": 1.31782374680828,
       "lng": 103.88007758537
     },
-    "medianPrice": 429000,
-    "priceIqr": [
-      399500,
-      430000
-    ],
-    "pricePerSqmMedian": 5744.33,
-    "pricePerSqftMedian": 533.67,
-    "transactionCount": 6,
+    "medianPrice": 430000,
+    "transactionCount": 7,
     "floorAreaRange": [
       59,
       150
@@ -56,7 +50,13 @@
         "stationName": "MATTAR MRT STATION",
         "distanceMeters": 1044
       }
-    ]
+    ],
+    "priceIqr": [
+      409000,
+      432500
+    ],
+    "pricePerSqmMedian": 5830.77,
+    "pricePerSqftMedian": 541.7
   },
   "monthlyTrend": [
     {
@@ -890,13 +890,13 @@
     {
       "month": "2026-04",
       "medianPrice": 430000,
-      "transactionCount": 2,
+      "transactionCount": 3,
       "medianPricePerSqm": 5657.89
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-53-sims-pl-2026-04-224380",
+      "id": "geylang-53-sims-pl-2026-04-224423",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -909,7 +909,7 @@
       "pricePerSqft": 525.64
     },
     {
-      "id": "geylang-53-sims-pl-2026-04-224381",
+      "id": "geylang-53-sims-pl-2026-04-224424",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -920,6 +920,19 @@
       "resalePrice": 430000,
       "pricePerSqm": 5657.89,
       "pricePerSqft": 525.64
+    },
+    {
+      "id": "geylang-53-sims-pl-2026-04-224425",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "53 years 09 months",
+      "resalePrice": 438000,
+      "pricePerSqm": 6738.46,
+      "pricePerSqft": 626.02
     },
     {
       "id": "geylang-53-sims-pl-2025-08-204686",
@@ -1141,19 +1154,6 @@
       "resalePrice": 270000,
       "pricePerSqm": 4153.85,
       "pricePerSqft": 385.91
-    },
-    {
-      "id": "geylang-53-sims-pl-2020-01-64863",
-      "month": "2020-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "60 years 01 month",
-      "resalePrice": 300000,
-      "pricePerSqm": 4615.38,
-      "pricePerSqft": 428.78
     }
   ]
 }

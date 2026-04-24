@@ -10,12 +10,6 @@
       "lng": 103.901372601594
     },
     "medianPrice": 900000,
-    "priceIqr": [
-      785000,
-      902500
-    ],
-    "pricePerSqmMedian": 10647.06,
-    "pricePerSqftMedian": 989.15,
     "transactionCount": 3,
     "floorAreaRange": [
       60,
@@ -57,7 +51,13 @@
         "stationName": "UBI MRT STATION",
         "distanceMeters": 997
       }
-    ]
+    ],
+    "priceIqr": [
+      785000,
+      902500
+    ],
+    "pricePerSqmMedian": 10647.06,
+    "pricePerSqftMedian": 989.15
   },
   "monthlyTrend": [
     {
@@ -417,7 +417,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-35-eunos-cres-2026-03-224418",
+      "id": "geylang-35-eunos-cres-2026-03-224462",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

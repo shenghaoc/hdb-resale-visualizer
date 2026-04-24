@@ -10,12 +10,6 @@
       "lng": 103.766289444489
     },
     "medianPrice": 638888,
-    "priceIqr": [
-      609444,
-      704444
-    ],
-    "pricePerSqmMedian": 5384.62,
-    "pricePerSqftMedian": 500.25,
     "transactionCount": 3,
     "floorAreaRange": [
       102,
@@ -58,7 +52,13 @@
         "stationName": "FAJAR LRT STATION",
         "distanceMeters": 609
       }
-    ]
+    ],
+    "priceIqr": [
+      609444,
+      704444
+    ],
+    "pricePerSqmMedian": 5384.62,
+    "pricePerSqftMedian": 500.25
   },
   "monthlyTrend": [
     {
@@ -472,7 +472,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-519-jelapang-rd-2026-02-223736",
+      "id": "bukit-panjang-519-jelapang-rd-2026-02-223763",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

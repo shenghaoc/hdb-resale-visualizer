@@ -10,12 +10,6 @@
       "lng": 103.83891867844
     },
     "medianPrice": 430000,
-    "priceIqr": [
-      415000,
-      443500
-    ],
-    "pricePerSqmMedian": 6268.65,
-    "pricePerSqftMedian": 582.38,
     "transactionCount": 6,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "KHATIB MRT STATION",
         "distanceMeters": 1845
       }
-    ]
+    ],
+    "priceIqr": [
+      415000,
+      443500
+    ],
+    "pricePerSqmMedian": 6268.65,
+    "pricePerSqftMedian": 582.38
   },
   "monthlyTrend": [
     {
@@ -873,7 +873,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-237-yishun-ring-rd-2026-02-229166",
+      "id": "yishun-237-yishun-ring-rd-2026-02-229276",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

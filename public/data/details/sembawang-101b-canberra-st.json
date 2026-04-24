@@ -10,12 +10,6 @@
       "lng": 103.831174909166
     },
     "medianPrice": 560000,
-    "priceIqr": [
-      377500,
-      640000
-    ],
-    "pricePerSqmMedian": 7191.49,
-    "pricePerSqftMedian": 668.11,
     "transactionCount": 47,
     "floorAreaRange": [
       38,
@@ -57,7 +51,13 @@
         "stationName": "YISHUN MRT STATION",
         "distanceMeters": 2483
       }
-    ]
+    ],
+    "priceIqr": [
+      377500,
+      640000
+    ],
+    "pricePerSqmMedian": 7191.49,
+    "pricePerSqftMedian": 668.11
   },
   "monthlyTrend": [
     {
@@ -171,7 +171,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-101b-canberra-st-2026-04-226723",
+      "id": "sembawang-101b-canberra-st-2026-04-226801",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -184,7 +184,7 @@
       "pricePerSqft": 609.36
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-03-226614",
+      "id": "sembawang-101b-canberra-st-2026-03-226692",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -197,7 +197,7 @@
       "pricePerSqft": 880.13
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-03-226718",
+      "id": "sembawang-101b-canberra-st-2026-03-226796",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -210,7 +210,7 @@
       "pricePerSqft": 647.33
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-02-226711",
+      "id": "sembawang-101b-canberra-st-2026-02-226789",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -223,7 +223,7 @@
       "pricePerSqft": 629.34
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-01-226607",
+      "id": "sembawang-101b-canberra-st-2026-01-226685",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",
@@ -236,7 +236,7 @@
       "pricePerSqft": 751.13
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-01-226642",
+      "id": "sembawang-101b-canberra-st-2026-01-226720",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -249,7 +249,7 @@
       "pricePerSqft": 673.21
     },
     {
-      "id": "sembawang-101b-canberra-st-2026-01-226699",
+      "id": "sembawang-101b-canberra-st-2026-01-226777",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

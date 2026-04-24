@@ -10,12 +10,6 @@
       "lng": 103.882578686361
     },
     "medianPrice": 969444,
-    "priceIqr": [
-      923750,
-      1005500
-    ],
-    "pricePerSqmMedian": 7430.6,
-    "pricePerSqftMedian": 690.33,
     "transactionCount": 8,
     "floorAreaRange": [
       49,
@@ -60,7 +54,13 @@
         "stationName": "STADIUM MRT STATION",
         "distanceMeters": 730
       }
-    ]
+    ],
+    "priceIqr": [
+      923750,
+      1005500
+    ],
+    "pricePerSqmMedian": 7430.6,
+    "pricePerSqftMedian": 690.33
   },
   "monthlyTrend": [
     {
@@ -810,7 +810,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-11-jln-batu-2026-01-225626",
+      "id": "kallang-whampoa-11-jln-batu-2026-01-225690",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

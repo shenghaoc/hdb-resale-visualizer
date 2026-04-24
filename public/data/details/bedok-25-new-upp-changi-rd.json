@@ -10,12 +10,6 @@
       "lng": 103.933835585816
     },
     "medianPrice": 345000,
-    "priceIqr": [
-      345000,
-      345000
-    ],
-    "pricePerSqmMedian": 5227.27,
-    "pricePerSqftMedian": 485.63,
     "transactionCount": 1,
     "floorAreaRange": [
       66,
@@ -54,7 +48,13 @@
         "stationName": "TANAH MERAH MRT STATION",
         "distanceMeters": 1388
       }
-    ]
+    ],
+    "priceIqr": [
+      345000,
+      345000
+    ],
+    "pricePerSqmMedian": 5227.27,
+    "pricePerSqftMedian": 485.63
   },
   "monthlyTrend": [
     {
@@ -85,7 +85,7 @@
       "pricePerSqft": 485.63
     },
     {
-      "id": "bedok-25-new-upp-changi-rd-2012-02-597499",
+      "id": "bedok-25-new-upp-changi-rd-2012-02-597615",
       "month": "2012-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

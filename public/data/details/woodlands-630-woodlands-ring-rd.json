@@ -10,12 +10,6 @@
       "lng": 103.801501088314
     },
     "medianPrice": 575000,
-    "priceIqr": [
-      550000,
-      620000
-    ],
-    "pricePerSqmMedian": 5165.73,
-    "pricePerSqftMedian": 479.91,
     "transactionCount": 9,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS MRT STATION",
         "distanceMeters": 1380
       }
-    ]
+    ],
+    "priceIqr": [
+      550000,
+      620000
+    ],
+    "pricePerSqmMedian": 5165.73,
+    "pricePerSqftMedian": 479.91
   },
   "monthlyTrend": [
     {
@@ -650,7 +650,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-630-woodlands-ring-rd-2026-01-228825",
+      "id": "woodlands-630-woodlands-ring-rd-2026-01-228930",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

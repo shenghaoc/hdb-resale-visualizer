@@ -10,13 +10,7 @@
       "lng": 103.7838389718
     },
     "medianPrice": 1000000,
-    "priceIqr": [
-      942000,
-      1030000
-    ],
-    "pricePerSqmMedian": 10887.1,
-    "pricePerSqftMedian": 1011.45,
-    "transactionCount": 22,
+    "transactionCount": 23,
     "floorAreaRange": [
       68,
       93
@@ -25,10 +19,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-08",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 1045
       }
-    ]
+    ],
+    "priceIqr": [
+      891000,
+      1030000
+    ],
+    "pricePerSqmMedian": 10806.45,
+    "pricePerSqftMedian": 1003.95
   },
   "monthlyTrend": [
     {
@@ -243,9 +243,28 @@
       "medianPrice": 945000,
       "transactionCount": 2,
       "medianPricePerSqm": 11738.62
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 718000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10558.82
     }
   ],
   "recentTransactions": [
+    {
+      "id": "queenstown-30-ghim-moh-link-2026-04-226518",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 02 months",
+      "resalePrice": 718000,
+      "pricePerSqm": 10558.82,
+      "pricePerSqft": 980.95
+    },
     {
       "id": "queenstown-30-ghim-moh-link-2025-12-211647",
       "month": "2025-12",
@@ -492,19 +511,6 @@
       "resalePrice": 842000,
       "pricePerSqm": 9053.76,
       "pricePerSqft": 841.12
-    },
-    {
-      "id": "queenstown-30-ghim-moh-link-2024-07-186464",
-      "month": "2024-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "28 TO 30",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "93 years",
-      "resalePrice": 1000000,
-      "pricePerSqm": 10752.69,
-      "pricePerSqft": 998.96
     }
   ]
 }

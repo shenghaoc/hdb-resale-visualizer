@@ -10,12 +10,6 @@
       "lng": 103.89401748623
     },
     "medianPrice": 740000,
-    "priceIqr": [
-      666444,
-      789444
-    ],
-    "pricePerSqmMedian": 7017.54,
-    "pricePerSqftMedian": 651.95,
     "transactionCount": 11,
     "floorAreaRange": [
       92,
@@ -55,7 +49,13 @@
         "stationName": "FARMWAY LRT STATION",
         "distanceMeters": 788
       }
-    ]
+    ],
+    "priceIqr": [
+      666444,
+      789444
+    ],
+    "pricePerSqmMedian": 7017.54,
+    "pricePerSqftMedian": 651.95
   },
   "monthlyTrend": [
     {
@@ -199,7 +199,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-226c-sumang-lane-2026-01-226364",
+      "id": "punggol-226c-sumang-lane-2026-01-226437",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

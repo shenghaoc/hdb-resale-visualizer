@@ -10,12 +10,6 @@
       "lng": 103.778158395764
     },
     "medianPrice": 345000,
-    "priceIqr": [
-      345000,
-      360000
-    ],
-    "pricePerSqmMedian": 5307.69,
-    "pricePerSqftMedian": 493.1,
     "transactionCount": 13,
     "floorAreaRange": [
       65,
@@ -54,7 +48,13 @@
         "stationName": "MARSILING MRT STATION",
         "distanceMeters": 1102
       }
-    ]
+    ],
+    "priceIqr": [
+      345000,
+      360000
+    ],
+    "pricePerSqmMedian": 5307.69,
+    "pricePerSqftMedian": 493.1
   },
   "monthlyTrend": [
     {
@@ -1386,7 +1386,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-15-marsiling-lane-2026-03-228378",
+      "id": "woodlands-15-marsiling-lane-2026-03-228477",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1399,7 +1399,7 @@
       "pricePerSqft": 493.1
     },
     {
-      "id": "woodlands-15-marsiling-lane-2026-02-228376",
+      "id": "woodlands-15-marsiling-lane-2026-02-228475",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1412,7 +1412,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "woodlands-15-marsiling-lane-2026-01-228370",
+      "id": "woodlands-15-marsiling-lane-2026-01-228469",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.746499580095
     },
     "medianPrice": 534944,
-    "priceIqr": [
-      522416,
-      547472
-    ],
-    "pricePerSqmMedian": 5193.63,
-    "pricePerSqftMedian": 482.5,
     "transactionCount": 2,
     "floorAreaRange": [
       103,
@@ -54,7 +48,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1733
       }
-    ]
+    ],
+    "priceIqr": [
+      522416,
+      547472
+    ],
+    "pricePerSqmMedian": 5193.63,
+    "pricePerSqftMedian": 482.5
   },
   "monthlyTrend": [
     {
@@ -847,7 +847,7 @@
       "pricePerSqft": 327.23
     },
     {
-      "id": "bukit-batok-118-bt-batok-west-ave-6-2016-11-972888",
+      "id": "bukit-batok-118-bt-batok-west-ave-6-2016-11-973004",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

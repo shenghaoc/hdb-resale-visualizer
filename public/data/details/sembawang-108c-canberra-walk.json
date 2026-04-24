@@ -10,12 +10,6 @@
       "lng": 103.831796158318
     },
     "medianPrice": 675000,
-    "priceIqr": [
-      661000,
-      697500
-    ],
-    "pricePerSqmMedian": 7096.77,
-    "pricePerSqftMedian": 659.31,
     "transactionCount": 15,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "YISHUN MRT STATION",
         "distanceMeters": 1999
       }
-    ]
+    ],
+    "priceIqr": [
+      661000,
+      697500
+    ],
+    "pricePerSqmMedian": 7096.77,
+    "pricePerSqftMedian": 659.31
   },
   "monthlyTrend": [
     {
@@ -242,7 +242,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-108c-canberra-walk-2026-03-226735",
+      "id": "sembawang-108c-canberra-walk-2026-03-226814",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -255,7 +255,7 @@
       "pricePerSqft": 669.3
     },
     {
-      "id": "sembawang-108c-canberra-walk-2026-01-226827",
+      "id": "sembawang-108c-canberra-walk-2026-01-226906",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

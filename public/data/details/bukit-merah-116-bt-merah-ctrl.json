@@ -10,12 +10,6 @@
       "lng": 103.814983303997
     },
     "medianPrice": 703000,
-    "priceIqr": [
-      695500,
-      710500
-    ],
-    "pricePerSqmMedian": 6008.55,
-    "pricePerSqftMedian": 558.21,
     "transactionCount": 2,
     "floorAreaRange": [
       117,
@@ -54,7 +48,13 @@
         "stationName": "QUEENSTOWN MRT STATION",
         "distanceMeters": 1507
       }
-    ]
+    ],
+    "priceIqr": [
+      695500,
+      710500
+    ],
+    "pricePerSqmMedian": 6008.55,
+    "pricePerSqftMedian": 558.21
   },
   "monthlyTrend": [
     {
@@ -779,7 +779,7 @@
       "pricePerSqft": 501.84
     },
     {
-      "id": "bukit-merah-116-bt-merah-ctrl-2016-07-966165",
+      "id": "bukit-merah-116-bt-merah-ctrl-2016-07-966281",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -792,7 +792,7 @@
       "pricePerSqft": 516.13
     },
     {
-      "id": "bukit-merah-116-bt-merah-ctrl-2015-08-948944",
+      "id": "bukit-merah-116-bt-merah-ctrl-2015-08-949060",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -805,7 +805,7 @@
       "pricePerSqft": 524.07
     },
     {
-      "id": "bukit-merah-116-bt-merah-ctrl-2015-05-944130",
+      "id": "bukit-merah-116-bt-merah-ctrl-2015-05-944246",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

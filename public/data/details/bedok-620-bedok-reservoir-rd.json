@@ -10,12 +10,6 @@
       "lng": 103.917712559288
     },
     "medianPrice": 405000,
-    "priceIqr": [
-      315000,
-      431000
-    ],
-    "pricePerSqmMedian": 6797.22,
-    "pricePerSqftMedian": 631.49,
     "transactionCount": 14,
     "floorAreaRange": [
       45,
@@ -57,7 +51,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1560
       }
-    ]
+    ],
+    "priceIqr": [
+      315000,
+      431000
+    ],
+    "pricePerSqmMedian": 6797.22,
+    "pricePerSqftMedian": 631.49
   },
   "monthlyTrend": [
     {
@@ -1647,7 +1647,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222330",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222337",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -1660,7 +1660,7 @@
       "pricePerSqft": 681.29
     },
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222435",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222442",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1673,7 +1673,7 @@
       "pricePerSqft": 607.97
     },
     {
-      "id": "bedok-620-bedok-reservoir-rd-2026-03-222436",
+      "id": "bedok-620-bedok-reservoir-rd-2026-03-222443",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

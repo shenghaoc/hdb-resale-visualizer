@@ -9,14 +9,8 @@
       "lat": 1.27204427103763,
       "lng": 103.810096953624
     },
-    "medianPrice": 390000,
-    "priceIqr": [
-      382000,
-      395000
-    ],
-    "pricePerSqmMedian": 6000,
-    "pricePerSqftMedian": 557.42,
-    "transactionCount": 5,
+    "medianPrice": 392500,
+    "transactionCount": 6,
     "floorAreaRange": [
       65,
       79
@@ -25,10 +19,10 @@
       1975,
       1975
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-06",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "HARBOURFRONT MRT STATION",
         "distanceMeters": 1334
       }
-    ]
+    ],
+    "priceIqr": [
+      384000,
+      398750
+    ],
+    "pricePerSqmMedian": 6038.46,
+    "pricePerSqftMedian": 561
   },
   "monthlyTrend": [
     {
@@ -530,11 +530,30 @@
       "medianPrice": 390000,
       "transactionCount": 1,
       "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6153.85
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-47-telok-blangah-dr-2026-01-223326",
+      "id": "bukit-merah-47-telok-blangah-dr-2026-04-223354",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "48 years 09 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 6153.85,
+      "pricePerSqft": 571.71
+    },
+    {
+      "id": "bukit-merah-47-telok-blangah-dr-2026-01-223347",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -779,19 +798,6 @@
       "resalePrice": 408888,
       "pricePerSqm": 5380.11,
       "pricePerSqft": 499.83
-    },
-    {
-      "id": "bukit-merah-47-telok-blangah-dr-2017-10-15467",
-      "month": "2017-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 76,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "57 years 03 months",
-      "resalePrice": 385000,
-      "pricePerSqm": 5065.79,
-      "pricePerSqft": 470.63
     }
   ]
 }

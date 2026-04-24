@@ -10,12 +10,6 @@
       "lng": 103.787643069812
     },
     "medianPrice": 765000,
-    "priceIqr": [
-      742500,
-      836500
-    ],
-    "pricePerSqmMedian": 6710.53,
-    "pricePerSqftMedian": 623.43,
     "transactionCount": 3,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "DOVER MRT STATION",
         "distanceMeters": 1028
       }
-    ]
+    ],
+    "priceIqr": [
+      742500,
+      836500
+    ],
+    "pricePerSqmMedian": 6710.53,
+    "pricePerSqftMedian": 623.43
   },
   "monthlyTrend": [
     {
@@ -827,7 +827,7 @@
       "pricePerSqft": 488.96
     },
     {
-      "id": "queenstown-8-ghim-moh-rd-2015-02-940453",
+      "id": "queenstown-8-ghim-moh-rd-2015-02-940569",
       "month": "2015-02",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -840,7 +840,7 @@
       "pricePerSqft": 631.33
     },
     {
-      "id": "queenstown-8-ghim-moh-rd-2012-11-616923",
+      "id": "queenstown-8-ghim-moh-rd-2012-11-617039",
       "month": "2012-11",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -853,7 +853,7 @@
       "pricePerSqft": 667
     },
     {
-      "id": "queenstown-8-ghim-moh-rd-2012-06-607171",
+      "id": "queenstown-8-ghim-moh-rd-2012-06-607287",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",

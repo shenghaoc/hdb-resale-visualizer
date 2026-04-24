@@ -10,12 +10,6 @@
       "lng": 103.896179521001
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      370000,
-      670416
-    ],
-    "pricePerSqmMedian": 7500,
-    "pricePerSqftMedian": 696.78,
     "transactionCount": 8,
     "floorAreaRange": [
       47,
@@ -57,7 +51,13 @@
         "stationName": "PUNGGOL LRT STATION",
         "distanceMeters": 650
       }
-    ]
+    ],
+    "priceIqr": [
+      370000,
+      670416
+    ],
+    "pricePerSqmMedian": 7500,
+    "pricePerSqftMedian": 696.78
   },
   "monthlyTrend": [
     {

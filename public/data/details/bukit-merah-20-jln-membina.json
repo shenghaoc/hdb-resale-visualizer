@@ -10,12 +10,6 @@
       "lng": 103.825923251122
     },
     "medianPrice": 995000,
-    "priceIqr": [
-      946250,
-      1065000
-    ],
-    "pricePerSqmMedian": 10641.42,
-    "pricePerSqftMedian": 988.62,
     "transactionCount": 8,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1056
       }
-    ]
+    ],
+    "priceIqr": [
+      946250,
+      1065000
+    ],
+    "pricePerSqmMedian": 10641.42,
+    "pricePerSqftMedian": 988.62
   },
   "monthlyTrend": [
     {
@@ -368,7 +368,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-20-jln-membina-2026-01-223394",
+      "id": "bukit-merah-20-jln-membina-2026-01-223417",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

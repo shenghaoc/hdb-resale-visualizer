@@ -10,12 +10,6 @@
       "lng": 103.779524807409
     },
     "medianPrice": 372888,
-    "priceIqr": [
-      350000,
-      390000
-    ],
-    "pricePerSqmMedian": 5666.67,
-    "pricePerSqftMedian": 526.45,
     "transactionCount": 5,
     "floorAreaRange": [
       60,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS NORTH MRT STATION",
         "distanceMeters": 1239
       }
-    ]
+    ],
+    "priceIqr": [
+      350000,
+      390000
+    ],
+    "pricePerSqmMedian": 5666.67,
+    "pricePerSqftMedian": 526.45
   },
   "monthlyTrend": [
     {
@@ -830,7 +830,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-125-marsiling-rise-2026-02-228384",
+      "id": "woodlands-125-marsiling-rise-2026-02-228483",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

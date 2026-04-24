@@ -10,12 +10,6 @@
       "lng": 103.757696498682
     },
     "medianPrice": 750000,
-    "priceIqr": [
-      720000,
-      771000
-    ],
-    "pricePerSqmMedian": 6250,
-    "pricePerSqftMedian": 580.64,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT GOMBAK MRT STATION",
         "distanceMeters": 1799
       }
-    ]
+    ],
+    "priceIqr": [
+      720000,
+      771000
+    ],
+    "pricePerSqmMedian": 6250,
+    "pricePerSqftMedian": 580.64
   },
   "monthlyTrend": [
     {

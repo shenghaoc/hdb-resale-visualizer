@@ -10,12 +10,6 @@
       "lng": 103.907508047408
     },
     "medianPrice": 624000,
-    "priceIqr": [
-      612500,
-      629500
-    ],
-    "pricePerSqmMedian": 5718.18,
-    "pricePerSqftMedian": 531.24,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "MERIDIAN LRT STATION",
         "distanceMeters": 532
       }
-    ]
+    ],
+    "priceIqr": [
+      612500,
+      629500
+    ],
+    "pricePerSqmMedian": 5718.18,
+    "pricePerSqftMedian": 531.24
   },
   "monthlyTrend": [
     {
@@ -368,7 +368,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-184a-rivervale-cres-2026-03-227321",
+      "id": "sengkang-184a-rivervale-cres-2026-03-227405",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

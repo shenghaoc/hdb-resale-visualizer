@@ -10,12 +10,6 @@
       "lng": 103.804466224743
     },
     "medianPrice": 1350000,
-    "priceIqr": [
-      1315000,
-      1352500
-    ],
-    "pricePerSqmMedian": 9185.37,
-    "pricePerSqftMedian": 853.35,
     "transactionCount": 4,
     "floorAreaRange": [
       145,
@@ -54,7 +48,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1497
       }
-    ]
+    ],
+    "priceIqr": [
+      1315000,
+      1352500
+    ],
+    "pricePerSqmMedian": 9185.37,
+    "pricePerSqftMedian": 853.35
   },
   "monthlyTrend": [
     {
@@ -498,7 +498,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-148-mei-ling-st-2026-02-226599",
+      "id": "queenstown-148-mei-ling-st-2026-02-226677",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -511,7 +511,7 @@
       "pricePerSqft": 871.37
     },
     {
-      "id": "queenstown-148-mei-ling-st-2026-01-226598",
+      "id": "queenstown-148-mei-ling-st-2026-01-226676",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

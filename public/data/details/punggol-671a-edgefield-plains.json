@@ -10,12 +10,6 @@
       "lng": 103.912020670376
     },
     "medianPrice": 620000,
-    "priceIqr": [
-      602500,
-      626000
-    ],
-    "pricePerSqmMedian": 6888.89,
-    "pricePerSqftMedian": 640,
     "transactionCount": 10,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "KADALOOR LRT STATION",
         "distanceMeters": 848
       }
-    ]
+    ],
+    "priceIqr": [
+      602500,
+      626000
+    ],
+    "pricePerSqmMedian": 6888.89,
+    "pricePerSqftMedian": 640
   },
   "monthlyTrend": [
     {

@@ -10,12 +10,6 @@
       "lng": 103.763946218351
     },
     "medianPrice": 802944,
-    "priceIqr": [
-      756916,
-      848972
-    ],
-    "pricePerSqmMedian": 6673.62,
-    "pricePerSqftMedian": 620,
     "transactionCount": 2,
     "floorAreaRange": [
       110,
@@ -55,7 +49,13 @@
         "stationName": "SEGAR LRT STATION",
         "distanceMeters": 615
       }
-    ]
+    ],
+    "priceIqr": [
+      756916,
+      848972
+    ],
+    "pricePerSqmMedian": 6673.62,
+    "pricePerSqftMedian": 620
   },
   "monthlyTrend": [
     {
@@ -379,7 +379,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-653-senja-link-2026-01-223714",
+      "id": "bukit-panjang-653-senja-link-2026-01-223741",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -600,7 +600,7 @@
       "pricePerSqft": 360.89
     },
     {
-      "id": "bukit-panjang-653-senja-link-2016-12-974586",
+      "id": "bukit-panjang-653-senja-link-2016-12-974702",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -613,7 +613,7 @@
       "pricePerSqft": 428.78
     },
     {
-      "id": "bukit-panjang-653-senja-link-2016-08-967845",
+      "id": "bukit-panjang-653-senja-link-2016-08-967961",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -626,7 +626,7 @@
       "pricePerSqft": 414.49
     },
     {
-      "id": "bukit-panjang-653-senja-link-2016-07-966214",
+      "id": "bukit-panjang-653-senja-link-2016-07-966330",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

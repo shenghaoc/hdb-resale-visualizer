@@ -10,12 +10,6 @@
       "lng": 103.813729263582
     },
     "medianPrice": 618000,
-    "priceIqr": [
-      604000,
-      634000
-    ],
-    "pricePerSqmMedian": 5000,
-    "pricePerSqftMedian": 464.52,
     "transactionCount": 3,
     "floorAreaRange": [
       118,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 1893
       }
-    ]
+    ],
+    "priceIqr": [
+      604000,
+      634000
+    ],
+    "pricePerSqmMedian": 5000,
+    "pricePerSqftMedian": 464.52
   },
   "monthlyTrend": [
     {

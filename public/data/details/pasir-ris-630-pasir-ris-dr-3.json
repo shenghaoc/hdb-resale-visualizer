@@ -10,12 +10,6 @@
       "lng": 103.941096778597
     },
     "medianPrice": 720000,
-    "priceIqr": [
-      715000,
-      740000
-    ],
-    "pricePerSqmMedian": 5901.64,
-    "pricePerSqftMedian": 548.28,
     "transactionCount": 4,
     "floorAreaRange": [
       120,
@@ -54,7 +48,13 @@
         "stationName": "TAMPINES EAST MRT STATION",
         "distanceMeters": 2859
       }
-    ]
+    ],
+    "priceIqr": [
+      715000,
+      740000
+    ],
+    "pricePerSqmMedian": 5901.64,
+    "pricePerSqftMedian": 548.28
   },
   "monthlyTrend": [
     {
@@ -492,7 +492,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-630-pasir-ris-dr-3-2026-03-225794",
+      "id": "pasir-ris-630-pasir-ris-dr-3-2026-03-225860",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

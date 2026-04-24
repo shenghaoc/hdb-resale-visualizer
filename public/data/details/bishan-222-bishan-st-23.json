@@ -10,12 +10,6 @@
       "lng": 103.848208486822
     },
     "medianPrice": 1235000,
-    "priceIqr": [
-      1195000,
-      1280000
-    ],
-    "pricePerSqmMedian": 8232.97,
-    "pricePerSqftMedian": 764.87,
     "transactionCount": 4,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 1429
       }
-    ]
+    ],
+    "priceIqr": [
+      1195000,
+      1280000
+    ],
+    "pricePerSqmMedian": 8232.97,
+    "pricePerSqftMedian": 764.87
   },
   "monthlyTrend": [
     {
@@ -694,7 +694,7 @@
       "pricePerSqft": 565.05
     },
     {
-      "id": "bishan-222-bishan-st-23-2016-02-957674",
+      "id": "bishan-222-bishan-st-23-2016-02-957790",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -707,7 +707,7 @@
       "pricePerSqft": 588.6
     },
     {
-      "id": "bishan-222-bishan-st-23-2015-11-953528",
+      "id": "bishan-222-bishan-st-23-2015-11-953644",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -720,7 +720,7 @@
       "pricePerSqft": 509.06
     },
     {
-      "id": "bishan-222-bishan-st-23-2015-03-941040",
+      "id": "bishan-222-bishan-st-23-2015-03-941156",
       "month": "2015-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -733,7 +733,7 @@
       "pricePerSqft": 518.81
     },
     {
-      "id": "bishan-222-bishan-st-23-2014-10-647230",
+      "id": "bishan-222-bishan-st-23-2014-10-647346",
       "month": "2014-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

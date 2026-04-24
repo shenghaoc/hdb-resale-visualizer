@@ -10,12 +10,6 @@
       "lng": 103.897761563713
     },
     "medianPrice": 720000,
-    "priceIqr": [
-      690000,
-      829444
-    ],
-    "pricePerSqmMedian": 7389.38,
-    "pricePerSqftMedian": 686.5,
     "transactionCount": 23,
     "floorAreaRange": [
       93,
@@ -55,7 +49,13 @@
         "stationName": "SAMUDERA LRT STATION",
         "distanceMeters": 626
       }
-    ]
+    ],
+    "priceIqr": [
+      690000,
+      829444
+    ],
+    "pricePerSqmMedian": 7389.38,
+    "pricePerSqftMedian": 686.5
   },
   "monthlyTrend": [
     {
@@ -175,7 +175,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-323b-sumang-walk-2026-01-226245",
+      "id": "punggol-323b-sumang-walk-2026-01-226315",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

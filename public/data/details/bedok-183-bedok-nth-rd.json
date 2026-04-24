@@ -10,12 +10,6 @@
       "lng": 103.941850926144
     },
     "medianPrice": 745000,
-    "priceIqr": [
-      708000,
-      785000
-    ],
-    "pricePerSqmMedian": 8294.12,
-    "pricePerSqftMedian": 770.55,
     "transactionCount": 9,
     "floorAreaRange": [
       85,
@@ -54,7 +48,13 @@
         "stationName": "BAYSHORE MRT STATION",
         "distanceMeters": 1436
       }
-    ]
+    ],
+    "priceIqr": [
+      708000,
+      785000
+    ],
+    "pricePerSqmMedian": 8294.12,
+    "pricePerSqftMedian": 770.55
   },
   "monthlyTrend": [
     {
@@ -552,7 +552,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-183-bedok-nth-rd-2026-03-222512",
+      "id": "bedok-183-bedok-nth-rd-2026-03-222519",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -565,7 +565,7 @@
       "pricePerSqft": 857.99
     },
     {
-      "id": "bedok-183-bedok-nth-rd-2026-02-222505",
+      "id": "bedok-183-bedok-nth-rd-2026-02-222512",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

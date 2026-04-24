@@ -10,12 +10,6 @@
       "lng": 103.760802118745
     },
     "medianPrice": 435000,
-    "priceIqr": [
-      403750,
-      511250
-    ],
-    "pricePerSqmMedian": 5809.17,
-    "pricePerSqftMedian": 539.69,
     "transactionCount": 6,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 3041
       }
-    ]
+    ],
+    "priceIqr": [
+      403750,
+      511250
+    ],
+    "pricePerSqmMedian": 5809.17,
+    "pricePerSqftMedian": 539.69
   },
   "monthlyTrend": [
     {
@@ -859,7 +859,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-507-west-coast-dr-2026-01-224197",
+      "id": "clementi-507-west-coast-dr-2026-01-224232",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -872,7 +872,7 @@
       "pricePerSqft": 575.44
     },
     {
-      "id": "clementi-507-west-coast-dr-2026-01-224262",
+      "id": "clementi-507-west-coast-dr-2026-01-224300",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

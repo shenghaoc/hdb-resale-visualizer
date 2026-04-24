@@ -10,12 +10,6 @@
       "lng": 103.842623959859
     },
     "medianPrice": 810000,
-    "priceIqr": [
-      765000,
-      836888
-    ],
-    "pricePerSqmMedian": 7548.08,
-    "pricePerSqftMedian": 701.24,
     "transactionCount": 7,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "UPPER THOMSON MRT STATION",
         "distanceMeters": 1121
       }
-    ]
+    ],
+    "priceIqr": [
+      765000,
+      836888
+    ],
+    "pricePerSqmMedian": 7548.08,
+    "pricePerSqftMedian": 701.24
   },
   "monthlyTrend": [
     {
@@ -535,7 +535,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-262-bishan-st-22-2026-04-222749",
+      "id": "bishan-262-bishan-st-22-2026-04-222761",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -548,7 +548,7 @@
       "pricePerSqft": 665.51
     },
     {
-      "id": "bishan-262-bishan-st-22-2026-03-222746",
+      "id": "bishan-262-bishan-st-22-2026-03-222758",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

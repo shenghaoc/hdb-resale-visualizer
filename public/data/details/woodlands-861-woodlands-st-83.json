@@ -10,12 +10,6 @@
       "lng": 103.795235776713
     },
     "medianPrice": 677500,
-    "priceIqr": [
-      671250,
-      683750
-    ],
-    "pricePerSqmMedian": 5359.78,
-    "pricePerSqftMedian": 497.94,
     "transactionCount": 2,
     "floorAreaRange": [
       121,
@@ -54,7 +48,13 @@
         "stationName": "WOODLANDS SOUTH MRT STATION",
         "distanceMeters": 1356
       }
-    ]
+    ],
+    "priceIqr": [
+      671250,
+      683750
+    ],
+    "pricePerSqmMedian": 5359.78,
+    "pricePerSqftMedian": 497.94
   },
   "monthlyTrend": [
     {
@@ -354,7 +354,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-861-woodlands-st-83-2026-03-228863",
+      "id": "woodlands-861-woodlands-st-83-2026-03-228969",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -562,7 +562,7 @@
       "pricePerSqft": 309.68
     },
     {
-      "id": "woodlands-861-woodlands-st-83-2013-01-620533",
+      "id": "woodlands-861-woodlands-st-83-2013-01-620649",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -575,7 +575,7 @@
       "pricePerSqft": 380.39
     },
     {
-      "id": "woodlands-861-woodlands-st-83-2012-11-617382",
+      "id": "woodlands-861-woodlands-st-83-2012-11-617498",
       "month": "2012-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -588,7 +588,7 @@
       "pricePerSqft": 321.87
     },
     {
-      "id": "woodlands-861-woodlands-st-83-2012-10-615637",
+      "id": "woodlands-861-woodlands-st-83-2012-10-615753",
       "month": "2012-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -601,7 +601,7 @@
       "pricePerSqft": 329.83
     },
     {
-      "id": "woodlands-861-woodlands-st-83-2012-07-609884",
+      "id": "woodlands-861-woodlands-st-83-2012-07-610000",
       "month": "2012-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

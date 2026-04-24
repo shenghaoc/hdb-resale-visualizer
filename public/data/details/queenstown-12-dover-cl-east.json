@@ -10,12 +10,6 @@
       "lng": 103.785807493097
     },
     "medianPrice": 938000,
-    "priceIqr": [
-      938000,
-      938000
-    ],
-    "pricePerSqmMedian": 8017.09,
-    "pricePerSqftMedian": 744.81,
     "transactionCount": 1,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "DOVER MRT STATION",
         "distanceMeters": 1098
       }
-    ]
+    ],
+    "priceIqr": [
+      938000,
+      938000
+    ],
+    "pricePerSqmMedian": 8017.09,
+    "pricePerSqftMedian": 744.81
   },
   "monthlyTrend": [
     {
@@ -972,7 +972,7 @@
       "pricePerSqft": 651.12
     },
     {
-      "id": "queenstown-12-dover-cl-east-2016-12-975117",
+      "id": "queenstown-12-dover-cl-east-2016-12-975233",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -985,7 +985,7 @@
       "pricePerSqft": 636.27
     },
     {
-      "id": "queenstown-12-dover-cl-east-2016-09-970379",
+      "id": "queenstown-12-dover-cl-east-2016-09-970495",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

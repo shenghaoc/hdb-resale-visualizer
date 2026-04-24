@@ -1,4 +1,4 @@
-import type { BlockSummary, FilterState } from "@/types/data";
+import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
 import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
@@ -23,6 +23,21 @@ type SearchToken = {
   value: string;
   isNumericPrefix: boolean;
 };
+
+export type GeographicSearchIntent =
+  | {
+      type: "station";
+      stationName: string;
+      radiusMeters: number;
+    }
+  | {
+      type: "coordinates";
+      coordinates: Coordinates;
+      radiusMeters: number;
+    };
+
+const STATION_SEARCH_CUE_WORDS = new Set(["near", "nearby", "around", "mrt", "station"]);
+const STATION_NAME_STOP_WORDS = new Set(["mrt", "station"]);
 
 function normalizeSearchText(value: string): string {
   return value
@@ -167,6 +182,7 @@ function isNearMatch(left: string, right: string): boolean {
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
 let blockTokensCache = new WeakMap<BlockSummary, string[]>();
+let stationNamesCache: string[] | null = null;
 
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
@@ -197,13 +213,196 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   });
 }
 
+function normalizeStationName(stationName: string): string {
+  const tokens = tokenizeSearchText(stationName).map((token) => token.value);
+  return tokens.filter((token) => !STATION_NAME_STOP_WORDS.has(token)).join(" ");
+}
+
+function collectStationNames(blocks: BlockSummary[]): string[] {
+  if (stationNamesCache) {
+    return stationNamesCache;
+  }
+
+  const stationNames = new Set<string>();
+
+  for (const block of blocks) {
+    if (block.nearestMrt?.stationName) {
+      stationNames.add(block.nearestMrt.stationName);
+    }
+
+    for (const nearbyMrt of block.nearbyMrts ?? []) {
+      stationNames.add(nearbyMrt.stationName);
+    }
+  }
+
+  stationNamesCache = Array.from(stationNames);
+  return stationNamesCache;
+}
+
+function matchStationName(query: string, stationNames: string[]): string | null {
+  const normalizedQuery = resolveSearchAliases(normalizeSearchText(query));
+  if (!normalizedQuery) {
+    return null;
+  }
+
+  const hasCueWords = normalizedQuery
+    .split(" ")
+    .some((token) => STATION_SEARCH_CUE_WORDS.has(token));
+  const queryTokens = tokenizeSearchText(normalizedQuery)
+    .map((token) => token.value)
+    .filter((token) => !STATION_SEARCH_CUE_WORDS.has(token));
+
+  if (queryTokens.length === 0) {
+    return null;
+  }
+
+  let bestMatch: { stationName: string; score: number } | null = null;
+
+  for (const stationName of stationNames) {
+    const normalizedStation = normalizeStationName(stationName);
+    const stationTokens = normalizedStation.split(" ").filter(Boolean);
+    if (stationTokens.length === 0) {
+      continue;
+    }
+
+    const exactStationMatch = normalizedQuery === normalizedStation;
+    const allTokensMatch = queryTokens.every((queryToken) =>
+      stationTokens.some(
+        (stationToken) =>
+          stationToken.includes(queryToken) ||
+          queryToken.includes(stationToken) ||
+          isNearMatch(stationToken, queryToken),
+      ),
+    );
+
+    if (!allTokensMatch) {
+      continue;
+    }
+
+    if (!hasCueWords && !exactStationMatch) {
+      continue;
+    }
+
+    const score = queryTokens.reduce((total, queryToken) => {
+      if (stationTokens.includes(queryToken)) {
+        return total + 4;
+      }
+      if (stationTokens.some((stationToken) => stationToken.startsWith(queryToken))) {
+        return total + 3;
+      }
+      if (
+        stationTokens.some(
+          (stationToken) =>
+            stationToken.includes(queryToken) || queryToken.includes(stationToken),
+        )
+      ) {
+        return total + 2;
+      }
+      return total + 1;
+    }, exactStationMatch ? 8 : 0);
+
+    if (!bestMatch || score > bestMatch.score) {
+      bestMatch = { stationName, score };
+    }
+  }
+
+  return bestMatch?.stationName ?? null;
+}
+
+function parseCoordinateSearch(query: string): Coordinates | null {
+  const coordinateMatch = query.match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+  if (!coordinateMatch) {
+    return null;
+  }
+
+  const lat = Number(coordinateMatch[1]);
+  const lng = Number(coordinateMatch[2]);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+
+  const isSingaporeLikeCoordinates = lat >= 1 && lat <= 2 && lng >= 103 && lng <= 105;
+  return isSingaporeLikeCoordinates ? { lat, lng } : null;
+}
+
+function toRadians(value: number): number {
+  return (value * Math.PI) / 180;
+}
+
+function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
+  const earthRadiusMeters = 6_371_000;
+  const deltaLat = toRadians(right.lat - left.lat);
+  const deltaLng = toRadians(right.lng - left.lng);
+  const leftLat = toRadians(left.lat);
+  const rightLat = toRadians(right.lat);
+  const a =
+    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+    Math.cos(leftLat) *
+      Math.cos(rightLat) *
+      Math.sin(deltaLng / 2) *
+      Math.sin(deltaLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return earthRadiusMeters * c;
+}
+
+export function resolveGeographicSearchIntent(
+  query: string,
+  blocks: BlockSummary[],
+  radiusMeters: number,
+): GeographicSearchIntent | null {
+  const coordinates = parseCoordinateSearch(query);
+  if (coordinates) {
+    return {
+      type: "coordinates",
+      coordinates,
+      radiusMeters,
+    };
+  }
+
+  const stationName = matchStationName(query, collectStationNames(blocks));
+  if (!stationName) {
+    return null;
+  }
+
+  return {
+    type: "station",
+    stationName,
+    radiusMeters,
+  };
+}
+
+export function matchesGeographicSearchIntent(
+  block: BlockSummary,
+  intent: GeographicSearchIntent,
+): boolean {
+  if (intent.type === "coordinates") {
+    return computeDistanceMeters(block.coordinates, intent.coordinates) <= intent.radiusMeters;
+  }
+
+  const stationRecords = [block.nearestMrt, ...(block.nearbyMrts ?? [])].filter(
+    (station): station is NonNullable<typeof station> => station !== null,
+  );
+
+  const normalizedIntentName = normalizeStationName(intent.stationName);
+  return stationRecords.some(
+    (station) =>
+      normalizeStationName(station.stationName) === normalizedIntentName &&
+      station.distanceMeters <= intent.radiusMeters,
+  );
+}
+
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, string[]>();
+  stationNamesCache = null;
 }
 
-export function matchesFilter(block: BlockSummary, filters: FilterState): boolean {
-  if (!searchMatchesBlock(block, filters.search)) {
+export function matchesFilter(
+  block: BlockSummary,
+  filters: FilterState,
+  geographicIntent?: GeographicSearchIntent | null,
+): boolean {
+  if (!geographicIntent && !searchMatchesBlock(block, filters.search)) {
     return false;
   }
 
@@ -213,8 +412,7 @@ export function matchesFilter(block: BlockSummary, filters: FilterState): boolea
 
   if (filters.flatType) {
     const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
-    const canonicalBlockFlatTypes = new Set(block.flatTypes.map(canonicalFlatType));
-    if (!canonicalBlockFlatTypes.has(canonicalSelectedFlatType)) {
+    if (!block.flatTypes.some((type) => canonicalFlatType(type) === canonicalSelectedFlatType)) {
       return false;
     }
   }

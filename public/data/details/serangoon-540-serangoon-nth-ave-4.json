@@ -10,12 +10,6 @@
       "lng": 103.872573520638
     },
     "medianPrice": 621944,
-    "priceIqr": [
-      618472,
-      625416
-    ],
-    "pricePerSqmMedian": 5980.23,
-    "pricePerSqftMedian": 555.59,
     "transactionCount": 2,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 2111
       }
-    ]
+    ],
+    "priceIqr": [
+      618472,
+      625416
+    ],
+    "pricePerSqmMedian": 5980.23,
+    "pricePerSqftMedian": 555.59
   },
   "monthlyTrend": [
     {
@@ -680,7 +680,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-540-serangoon-nth-ave-4-2026-03-227454",
+      "id": "serangoon-540-serangoon-nth-ave-4-2026-03-227541",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

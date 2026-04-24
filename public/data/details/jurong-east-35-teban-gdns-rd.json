@@ -10,12 +10,6 @@
       "lng": 103.742644766325
     },
     "medianPrice": 365000,
-    "priceIqr": [
-      345000,
-      371000
-    ],
-    "pricePerSqmMedian": 4805.19,
-    "pricePerSqftMedian": 446.42,
     "transactionCount": 7,
     "floorAreaRange": [
       74,
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 2655
       }
-    ]
+    ],
+    "priceIqr": [
+      345000,
+      371000
+    ],
+    "pricePerSqmMedian": 4805.19,
+    "pricePerSqftMedian": 446.42
   },
   "monthlyTrend": [
     {
@@ -950,7 +950,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-35-teban-gdns-rd-2026-02-224899",
+      "id": "jurong-east-35-teban-gdns-rd-2026-02-224951",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

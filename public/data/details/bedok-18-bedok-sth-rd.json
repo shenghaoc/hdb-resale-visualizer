@@ -10,12 +10,6 @@
       "lng": 103.934734222428
     },
     "medianPrice": 404000,
-    "priceIqr": [
-      381000,
-      418750
-    ],
-    "pricePerSqmMedian": 6215.39,
-    "pricePerSqftMedian": 577.43,
     "transactionCount": 10,
     "floorAreaRange": [
       59,
@@ -54,7 +48,13 @@
         "stationName": "SIGLAP MRT STATION",
         "distanceMeters": 1181
       }
-    ]
+    ],
+    "priceIqr": [
+      381000,
+      418750
+    ],
+    "pricePerSqmMedian": 6215.39,
+    "pricePerSqftMedian": 577.43
   },
   "monthlyTrend": [
     {
@@ -1416,7 +1416,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-18-bedok-sth-rd-2026-03-222447",
+      "id": "bedok-18-bedok-sth-rd-2026-03-222454",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

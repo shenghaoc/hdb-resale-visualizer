@@ -10,12 +10,6 @@
       "lng": 103.744946684475
     },
     "medianPrice": 386444,
-    "priceIqr": [
-      379750,
-      413666
-    ],
-    "pricePerSqmMedian": 5536.77,
-    "pricePerSqftMedian": 514.38,
     "transactionCount": 4,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "KEAT HONG LRT STATION",
         "distanceMeters": 1836
       }
-    ]
+    ],
+    "priceIqr": [
+      379750,
+      413666
+    ],
+    "pricePerSqmMedian": 5536.77,
+    "pricePerSqftMedian": 514.38
   },
   "monthlyTrend": [
     {
@@ -865,7 +865,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-421-bt-batok-west-ave-2-2026-02-222902",
+      "id": "bukit-batok-421-bt-batok-west-ave-2-2026-02-222917",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.715342876347
     },
     "medianPrice": 398000,
-    "priceIqr": [
-      386500,
-      421000
-    ],
-    "pricePerSqmMedian": 5671.64,
-    "pricePerSqftMedian": 526.91,
     "transactionCount": 7,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 2016
       }
-    ]
+    ],
+    "priceIqr": [
+      386500,
+      421000
+    ],
+    "pricePerSqmMedian": 5671.64,
+    "pricePerSqftMedian": 526.91
   },
   "monthlyTrend": [
     {
@@ -1009,7 +1009,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-531-jurong-west-st-52-2026-01-225061",
+      "id": "jurong-west-531-jurong-west-st-52-2026-01-225117",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

@@ -10,12 +10,6 @@
       "lng": 103.819822012552
     },
     "medianPrice": 632888,
-    "priceIqr": [
-      620444,
-      641444
-    ],
-    "pricePerSqmMedian": 5909.09,
-    "pricePerSqftMedian": 548.97,
     "transactionCount": 3,
     "floorAreaRange": [
       91,
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 2298
       }
-    ]
+    ],
+    "priceIqr": [
+      620444,
+      641444
+    ],
+    "pricePerSqmMedian": 5909.09,
+    "pricePerSqftMedian": 548.97
   },
   "monthlyTrend": [
     {
@@ -374,7 +374,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-352c-canberra-rd-2026-01-226815",
+      "id": "sembawang-352c-canberra-rd-2026-01-226894",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.751710905678
     },
     "medianPrice": 415000,
-    "priceIqr": [
-      400000,
-      435000
-    ],
-    "pricePerSqmMedian": 5405.41,
-    "pricePerSqftMedian": 502.18,
     "transactionCount": 9,
     "floorAreaRange": [
       74,
@@ -57,7 +51,13 @@
         "stationName": "SOUTH VIEW LRT STATION",
         "distanceMeters": 775
       }
-    ]
+    ],
+    "priceIqr": [
+      400000,
+      435000
+    ],
+    "pricePerSqmMedian": 5405.41,
+    "pricePerSqftMedian": 502.18
   },
   "monthlyTrend": [
     {
@@ -813,7 +813,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-1-teck-whye-ave-2026-04-223848",
+      "id": "choa-chu-kang-1-teck-whye-ave-2026-04-223875",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

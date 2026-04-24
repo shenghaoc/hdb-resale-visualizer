@@ -10,12 +10,6 @@
       "lng": 103.75356509712
     },
     "medianPrice": 408000,
-    "priceIqr": [
-      395000,
-      415888
-    ],
-    "pricePerSqmMedian": 5337.84,
-    "pricePerSqftMedian": 495.9,
     "transactionCount": 5,
     "floorAreaRange": [
       74,
@@ -55,7 +49,13 @@
         "stationName": "PHOENIX LRT STATION",
         "distanceMeters": 650
       }
-    ]
+    ],
+    "priceIqr": [
+      395000,
+      415888
+    ],
+    "pricePerSqmMedian": 5337.84,
+    "pricePerSqftMedian": 495.9
   },
   "monthlyTrend": [
     {
@@ -871,7 +871,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-5-teck-whye-ave-2026-04-223988",
+      "id": "choa-chu-kang-5-teck-whye-ave-2026-04-224021",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

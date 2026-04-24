@@ -10,12 +10,6 @@
       "lng": 103.884506817902
     },
     "medianPrice": 813000,
-    "priceIqr": [
-      708750,
-      862000
-    ],
-    "pricePerSqmMedian": 7586.78,
-    "pricePerSqftMedian": 704.84,
     "transactionCount": 28,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "KUPANG LRT STATION",
         "distanceMeters": 603
       }
-    ]
+    ],
+    "priceIqr": [
+      708750,
+      862000
+    ],
+    "pricePerSqmMedian": 7586.78,
+    "pricePerSqftMedian": 704.84
   },
   "monthlyTrend": [
     {
@@ -128,7 +128,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-356b-anchorvale-lane-2026-01-226966",
+      "id": "sengkang-356b-anchorvale-lane-2026-01-227046",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -141,7 +141,7 @@
       "pricePerSqft": 654.32
     },
     {
-      "id": "sengkang-356b-anchorvale-lane-2026-01-227215",
+      "id": "sengkang-356b-anchorvale-lane-2026-01-227298",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -154,7 +154,7 @@
       "pricePerSqft": 690.61
     },
     {
-      "id": "sengkang-356b-anchorvale-lane-2026-01-227217",
+      "id": "sengkang-356b-anchorvale-lane-2026-01-227300",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

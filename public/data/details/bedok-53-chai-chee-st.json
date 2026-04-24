@@ -10,12 +10,6 @@
       "lng": 103.919978470188
     },
     "medianPrice": 660000,
-    "priceIqr": [
-      659000,
-      677500
-    ],
-    "pricePerSqmMedian": 5454.55,
-    "pricePerSqftMedian": 506.74,
     "transactionCount": 3,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "BEDOK MRT STATION",
         "distanceMeters": 1156
       }
-    ]
+    ],
+    "priceIqr": [
+      659000,
+      677500
+    ],
+    "pricePerSqmMedian": 5454.55,
+    "pricePerSqftMedian": 506.74
   },
   "monthlyTrend": [
     {
@@ -656,7 +656,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-53-chai-chee-st-2026-03-222671",
+      "id": "bedok-53-chai-chee-st-2026-03-222682",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -890,7 +890,7 @@
       "pricePerSqft": 368.54
     },
     {
-      "id": "bedok-53-chai-chee-st-2016-05-962358",
+      "id": "bedok-53-chai-chee-st-2016-05-962474",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -903,7 +903,7 @@
       "pricePerSqft": 383.9
     },
     {
-      "id": "bedok-53-chai-chee-st-2015-12-954972",
+      "id": "bedok-53-chai-chee-st-2015-12-955088",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

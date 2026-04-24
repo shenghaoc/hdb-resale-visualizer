@@ -10,12 +10,6 @@
       "lng": 103.811714119673
     },
     "medianPrice": 815000,
-    "priceIqr": [
-      702500,
-      820000
-    ],
-    "pricePerSqmMedian": 6762.3,
-    "pricePerSqftMedian": 628.24,
     "transactionCount": 3,
     "floorAreaRange": [
       84,
@@ -57,7 +51,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1709
       }
-    ]
+    ],
+    "priceIqr": [
+      702500,
+      820000
+    ],
+    "pricePerSqmMedian": 6762.3,
+    "pricePerSqftMedian": 628.24
   },
   "monthlyTrend": [
     {
@@ -585,7 +585,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-49-hoy-fatt-rd-2026-04-223390",
+      "id": "bukit-merah-49-hoy-fatt-rd-2026-04-223413",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -598,7 +598,7 @@
       "pricePerSqft": 652.53
     },
     {
-      "id": "bukit-merah-49-hoy-fatt-rd-2026-02-223476",
+      "id": "bukit-merah-49-hoy-fatt-rd-2026-02-223500",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -819,7 +819,7 @@
       "pricePerSqft": 541.93
     },
     {
-      "id": "bukit-merah-49-hoy-fatt-rd-2016-09-969638",
+      "id": "bukit-merah-49-hoy-fatt-rd-2016-09-969754",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -832,7 +832,7 @@
       "pricePerSqft": 569.58
     },
     {
-      "id": "bukit-merah-49-hoy-fatt-rd-2016-08-967772",
+      "id": "bukit-merah-49-hoy-fatt-rd-2016-08-967888",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.924883893296
     },
     "medianPrice": 873500,
-    "priceIqr": [
-      746500,
-      915000
-    ],
-    "pricePerSqmMedian": 7406.32,
-    "pricePerSqftMedian": 688.07,
     "transactionCount": 6,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BEDOK RESERVOIR MRT STATION",
         "distanceMeters": 1376
       }
-    ]
+    ],
+    "priceIqr": [
+      746500,
+      915000
+    ],
+    "pricePerSqmMedian": 7406.32,
+    "pricePerSqftMedian": 688.07
   },
   "monthlyTrend": [
     {
@@ -404,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-11-chai-chee-rd-2026-03-222670",
+      "id": "bedok-11-chai-chee-rd-2026-03-222681",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.848243053959
     },
     "medianPrice": 826000,
-    "priceIqr": [
-      807000,
-      907000
-    ],
-    "pricePerSqmMedian": 8098.04,
-    "pricePerSqftMedian": 752.33,
     "transactionCount": 3,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "LITTLE INDIA MRT STATION",
         "distanceMeters": 924
       }
-    ]
+    ],
+    "priceIqr": [
+      807000,
+      907000
+    ],
+    "pricePerSqmMedian": 8098.04,
+    "pricePerSqftMedian": 752.33
   },
   "monthlyTrend": [
     {
@@ -404,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2026-03-225549",
+      "id": "kallang-whampoa-40-cambridge-rd-2026-03-225613",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -599,7 +599,7 @@
       "pricePerSqft": 500.95
     },
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2016-08-968446",
+      "id": "kallang-whampoa-40-cambridge-rd-2016-08-968562",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +612,7 @@
       "pricePerSqft": 499.35
     },
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2013-10-632300",
+      "id": "kallang-whampoa-40-cambridge-rd-2013-10-632416",
       "month": "2013-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -625,7 +625,7 @@
       "pricePerSqft": 564.71
     },
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2012-05-604791",
+      "id": "kallang-whampoa-40-cambridge-rd-2012-05-604907",
       "month": "2012-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -638,7 +638,7 @@
       "pricePerSqft": 531.01
     },
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2012-05-604792",
+      "id": "kallang-whampoa-40-cambridge-rd-2012-05-604908",
       "month": "2012-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 05",
@@ -651,7 +651,7 @@
       "pricePerSqft": 456.77
     },
     {
-      "id": "kallang-whampoa-40-cambridge-rd-2012-02-598265",
+      "id": "kallang-whampoa-40-cambridge-rd-2012-02-598381",
       "month": "2012-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

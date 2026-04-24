@@ -10,12 +10,6 @@
       "lng": 103.770645093029
     },
     "medianPrice": 725000,
-    "priceIqr": [
-      625000,
-      748888
-    ],
-    "pricePerSqmMedian": 6666.67,
-    "pricePerSqftMedian": 619.35,
     "transactionCount": 9,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 486
       }
-    ]
+    ],
+    "priceIqr": [
+      625000,
+      748888
+    ],
+    "pricePerSqmMedian": 6666.67,
+    "pricePerSqftMedian": 619.35
   },
   "monthlyTrend": [
     {
@@ -260,7 +260,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-443d-fajar-rd-2026-01-223675",
+      "id": "bukit-panjang-443d-fajar-rd-2026-01-223702",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

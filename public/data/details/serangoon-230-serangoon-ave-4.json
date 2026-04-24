@@ -10,12 +10,6 @@
       "lng": 103.869580972459
     },
     "medianPrice": 454444,
-    "priceIqr": [
-      445000,
-      513666
-    ],
-    "pricePerSqmMedian": 6782.45,
-    "pricePerSqftMedian": 630.12,
     "transactionCount": 4,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "KOVAN MRT STATION",
         "distanceMeters": 1690
       }
-    ]
+    ],
+    "priceIqr": [
+      445000,
+      513666
+    ],
+    "pricePerSqmMedian": 6782.45,
+    "pricePerSqftMedian": 630.12
   },
   "monthlyTrend": [
     {

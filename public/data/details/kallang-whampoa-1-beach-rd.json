@@ -10,12 +10,6 @@
       "lng": 103.854314998464
     },
     "medianPrice": 470000,
-    "priceIqr": [
-      465000,
-      492888
-    ],
-    "pricePerSqmMedian": 6838.24,
-    "pricePerSqftMedian": 635.29,
     "transactionCount": 9,
     "floorAreaRange": [
       47,
@@ -57,7 +51,13 @@
         "stationName": "BRAS BASAH MRT STATION",
         "distanceMeters": 396
       }
-    ]
+    ],
+    "priceIqr": [
+      465000,
+      492888
+    ],
+    "pricePerSqmMedian": 6838.24,
+    "pricePerSqftMedian": 635.29
   },
   "monthlyTrend": [
     {
@@ -825,7 +825,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-1-beach-rd-2026-01-225448",
+      "id": "kallang-whampoa-1-beach-rd-2026-01-225509",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

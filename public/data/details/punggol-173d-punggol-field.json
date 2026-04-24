@@ -10,12 +10,6 @@
       "lng": 103.910764686722
     },
     "medianPrice": 605000,
-    "priceIqr": [
-      597500,
-      627500
-    ],
-    "pricePerSqmMedian": 5500,
-    "pricePerSqftMedian": 510.97,
     "transactionCount": 3,
     "floorAreaRange": [
       110,
@@ -54,7 +48,13 @@
         "stationName": "RIVIERA LRT STATION",
         "distanceMeters": 597
       }
-    ]
+    ],
+    "priceIqr": [
+      597500,
+      627500
+    ],
+    "pricePerSqmMedian": 5500,
+    "pricePerSqftMedian": 510.97
   },
   "monthlyTrend": [
     {

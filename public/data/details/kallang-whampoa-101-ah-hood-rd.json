@@ -10,12 +10,6 @@
       "lng": 103.84448102202
     },
     "medianPrice": 828000,
-    "priceIqr": [
-      824000,
-      833000
-    ],
-    "pricePerSqmMedian": 7016.95,
-    "pricePerSqftMedian": 651.9,
     "transactionCount": 3,
     "floorAreaRange": [
       118,
@@ -54,7 +48,13 @@
         "stationName": "CALDECOTT MRT STATION",
         "distanceMeters": 1159
       }
-    ]
+    ],
+    "priceIqr": [
+      824000,
+      833000
+    ],
+    "pricePerSqmMedian": 7016.95,
+    "pricePerSqftMedian": 651.9
   },
   "monthlyTrend": [
     {
@@ -761,7 +761,7 @@
       "pricePerSqft": 523.56
     },
     {
-      "id": "kallang-whampoa-101-ah-hood-rd-2016-08-968447",
+      "id": "kallang-whampoa-101-ah-hood-rd-2016-08-968563",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -774,7 +774,7 @@
       "pricePerSqft": 533.8
     },
     {
-      "id": "kallang-whampoa-101-ah-hood-rd-2016-01-956918",
+      "id": "kallang-whampoa-101-ah-hood-rd-2016-01-957034",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -787,7 +787,7 @@
       "pricePerSqft": 535.37
     },
     {
-      "id": "kallang-whampoa-101-ah-hood-rd-2015-03-941574",
+      "id": "kallang-whampoa-101-ah-hood-rd-2015-03-941690",
       "month": "2015-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

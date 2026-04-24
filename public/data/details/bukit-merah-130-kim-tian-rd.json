@@ -10,12 +10,6 @@
       "lng": 103.829278570017
     },
     "medianPrice": 378000,
-    "priceIqr": [
-      360000,
-      400000
-    ],
-    "pricePerSqmMedian": 5815.38,
-    "pricePerSqftMedian": 540.27,
     "transactionCount": 5,
     "floorAreaRange": [
       65,
@@ -54,7 +48,13 @@
         "stationName": "OUTRAM PARK MRT STATION",
         "distanceMeters": 1005
       }
-    ]
+    ],
+    "priceIqr": [
+      360000,
+      400000
+    ],
+    "pricePerSqmMedian": 5815.38,
+    "pricePerSqftMedian": 540.27
   },
   "monthlyTrend": [
     {
@@ -797,7 +797,7 @@
       "pricePerSqft": 389.48
     },
     {
-      "id": "bukit-merah-130-kim-tian-rd-2016-11-972910",
+      "id": "bukit-merah-130-kim-tian-rd-2016-11-973026",
       "month": "2016-11",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -810,7 +810,7 @@
       "pricePerSqft": 478.81
     },
     {
-      "id": "bukit-merah-130-kim-tian-rd-2016-10-971287",
+      "id": "bukit-merah-130-kim-tian-rd-2016-10-971403",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -823,7 +823,7 @@
       "pricePerSqft": 452.29
     },
     {
-      "id": "bukit-merah-130-kim-tian-rd-2016-08-967742",
+      "id": "bukit-merah-130-kim-tian-rd-2016-08-967858",
       "month": "2016-08",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

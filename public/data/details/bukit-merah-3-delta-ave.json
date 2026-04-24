@@ -10,12 +10,6 @@
       "lng": 103.827334523132
     },
     "medianPrice": 760000,
-    "priceIqr": [
-      715000,
-      768000
-    ],
-    "pricePerSqmMedian": 8351.65,
-    "pricePerSqftMedian": 775.89,
     "transactionCount": 5,
     "floorAreaRange": [
       91,
@@ -54,7 +48,13 @@
         "stationName": "HAVELOCK MRT STATION",
         "distanceMeters": 742
       }
-    ]
+    ],
+    "priceIqr": [
+      715000,
+      768000
+    ],
+    "pricePerSqmMedian": 8351.65,
+    "pricePerSqftMedian": 775.89
   },
   "monthlyTrend": [
     {
@@ -612,7 +612,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-3-delta-ave-2026-02-223362",
+      "id": "bukit-merah-3-delta-ave-2026-02-223385",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -833,7 +833,7 @@
       "pricePerSqft": 607.44
     },
     {
-      "id": "bukit-merah-3-delta-ave-2015-11-953640",
+      "id": "bukit-merah-3-delta-ave-2015-11-953756",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -846,7 +846,7 @@
       "pricePerSqft": 607.44
     },
     {
-      "id": "bukit-merah-3-delta-ave-2015-07-947407",
+      "id": "bukit-merah-3-delta-ave-2015-07-947523",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -859,7 +859,7 @@
       "pricePerSqft": 515.01
     },
     {
-      "id": "bukit-merah-3-delta-ave-2014-11-648861",
+      "id": "bukit-merah-3-delta-ave-2014-11-648977",
       "month": "2014-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

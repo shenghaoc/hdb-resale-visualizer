@@ -10,12 +10,6 @@
       "lng": 103.939441311085
     },
     "medianPrice": 824000,
-    "priceIqr": [
-      816000,
-      832000
-    ],
-    "pricePerSqmMedian": 6109.35,
-    "pricePerSqftMedian": 567.58,
     "transactionCount": 2,
     "floorAreaRange": [
       102,
@@ -55,7 +49,13 @@
         "stationName": "BEDOK RESERVOIR MRT STATION",
         "distanceMeters": 1204
       }
-    ]
+    ],
+    "priceIqr": [
+      816000,
+      832000
+    ],
+    "pricePerSqmMedian": 6109.35,
+    "pricePerSqftMedian": 567.58
   },
   "monthlyTrend": [
     {
@@ -825,7 +825,7 @@
       "pricePerSqft": 401.17
     },
     {
-      "id": "tampines-932-tampines-st-91-2016-05-963707",
+      "id": "tampines-932-tampines-st-91-2016-05-963823",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -838,7 +838,7 @@
       "pricePerSqft": 364.1
     },
     {
-      "id": "tampines-932-tampines-st-91-2015-09-951316",
+      "id": "tampines-932-tampines-st-91-2015-09-951432",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -851,7 +851,7 @@
       "pricePerSqft": 363.17
     },
     {
-      "id": "tampines-932-tampines-st-91-2013-11-633901",
+      "id": "tampines-932-tampines-st-91-2013-11-634017",
       "month": "2013-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -864,7 +864,7 @@
       "pricePerSqft": 385.75
     },
     {
-      "id": "tampines-932-tampines-st-91-2013-10-632638",
+      "id": "tampines-932-tampines-st-91-2013-10-632754",
       "month": "2013-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -877,7 +877,7 @@
       "pricePerSqft": 395.36
     },
     {
-      "id": "tampines-932-tampines-st-91-2013-10-632640",
+      "id": "tampines-932-tampines-st-91-2013-10-632756",
       "month": "2013-10",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -890,7 +890,7 @@
       "pricePerSqft": 401.65
     },
     {
-      "id": "tampines-932-tampines-st-91-2013-01-620320",
+      "id": "tampines-932-tampines-st-91-2013-01-620436",
       "month": "2013-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

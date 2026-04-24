@@ -10,12 +10,6 @@
       "lng": 103.856495249944
     },
     "medianPrice": 910000,
-    "priceIqr": [
-      815000,
-      1022500
-    ],
-    "pricePerSqmMedian": 7431.19,
-    "pricePerSqftMedian": 690.38,
     "transactionCount": 4,
     "floorAreaRange": [
       101,
@@ -55,7 +49,13 @@
         "stationName": "ROCHOR MRT STATION",
         "distanceMeters": 547
       }
-    ]
+    ],
+    "priceIqr": [
+      815000,
+      1022500
+    ],
+    "pricePerSqmMedian": 7431.19,
+    "pricePerSqftMedian": 690.38
   },
   "monthlyTrend": [
     {
@@ -659,7 +659,7 @@
       "pricePerSqft": 456.15
     },
     {
-      "id": "central-area-642-rowell-rd-2016-06-964442",
+      "id": "central-area-642-rowell-rd-2016-06-964558",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -672,7 +672,7 @@
       "pricePerSqft": 528.44
     },
     {
-      "id": "central-area-642-rowell-rd-2015-11-953736",
+      "id": "central-area-642-rowell-rd-2015-11-953852",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -685,7 +685,7 @@
       "pricePerSqft": 518.92
     },
     {
-      "id": "central-area-642-rowell-rd-2015-11-953743",
+      "id": "central-area-642-rowell-rd-2015-11-953859",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -698,7 +698,7 @@
       "pricePerSqft": 515.38
     },
     {
-      "id": "central-area-642-rowell-rd-2015-06-945843",
+      "id": "central-area-642-rowell-rd-2015-06-945959",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

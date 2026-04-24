@@ -10,12 +10,6 @@
       "lng": 103.70841773457
     },
     "medianPrice": 416500,
-    "priceIqr": [
-      330750,
-      485000
-    ],
-    "pricePerSqmMedian": 7132.35,
-    "pricePerSqftMedian": 662.62,
     "transactionCount": 10,
     "floorAreaRange": [
       47,
@@ -56,7 +50,13 @@
         "stationName": "PIONEER MRT STATION",
         "distanceMeters": 1749
       }
-    ]
+    ],
+    "priceIqr": [
+      330750,
+      485000
+    ],
+    "pricePerSqmMedian": 7132.35,
+    "pricePerSqftMedian": 662.62
   },
   "monthlyTrend": [
     {
@@ -320,7 +320,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-181b-boon-lay-dr-2026-03-225010",
+      "id": "jurong-west-181b-boon-lay-dr-2026-03-225065",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

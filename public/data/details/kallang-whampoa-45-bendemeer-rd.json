@@ -10,12 +10,6 @@
       "lng": 103.866126107239
     },
     "medianPrice": 405000,
-    "priceIqr": [
-      405000,
-      418000
-    ],
-    "pricePerSqmMedian": 6136.36,
-    "pricePerSqftMedian": 570.09,
     "transactionCount": 5,
     "floorAreaRange": [
       60,
@@ -56,7 +50,13 @@
         "stationName": "POTONG PASIR MRT STATION",
         "distanceMeters": 1007
       }
-    ]
+    ],
+    "priceIqr": [
+      405000,
+      418000
+    ],
+    "pricePerSqmMedian": 6136.36,
+    "pricePerSqftMedian": 570.09
   },
   "monthlyTrend": [
     {
@@ -788,7 +788,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-45-bendemeer-rd-2026-04-225458",
+      "id": "kallang-whampoa-45-bendemeer-rd-2026-04-225519",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

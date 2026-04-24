@@ -10,12 +10,6 @@
       "lng": 103.909627012363
     },
     "medianPrice": 588000,
-    "priceIqr": [
-      560944,
-      598000
-    ],
-    "pricePerSqmMedian": 6461.54,
-    "pricePerSqftMedian": 600.3,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "COVE LRT STATION",
         "distanceMeters": 558
       }
-    ]
+    ],
+    "priceIqr": [
+      560944,
+      598000
+    ],
+    "pricePerSqmMedian": 6461.54,
+    "pricePerSqftMedian": 600.3
   },
   "monthlyTrend": [
     {
@@ -302,7 +302,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-110b-punggol-field-2026-04-226148",
+      "id": "punggol-110b-punggol-field-2026-04-226216",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -315,7 +315,7 @@
       "pricePerSqft": 551.11
     },
     {
-      "id": "punggol-110b-punggol-field-2026-01-226125",
+      "id": "punggol-110b-punggol-field-2026-01-226193",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -458,7 +458,7 @@
       "pricePerSqft": 312.49
     },
     {
-      "id": "punggol-110b-punggol-field-2016-07-966791",
+      "id": "punggol-110b-punggol-field-2016-07-966907",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -471,7 +471,7 @@
       "pricePerSqft": 405.4
     },
     {
-      "id": "punggol-110b-punggol-field-2016-05-963247",
+      "id": "punggol-110b-punggol-field-2016-05-963363",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -484,7 +484,7 @@
       "pricePerSqft": 369.55
     },
     {
-      "id": "punggol-110b-punggol-field-2016-04-961389",
+      "id": "punggol-110b-punggol-field-2016-04-961505",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -497,7 +497,7 @@
       "pricePerSqft": 361.29
     },
     {
-      "id": "punggol-110b-punggol-field-2016-04-961392",
+      "id": "punggol-110b-punggol-field-2016-04-961508",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -510,7 +510,7 @@
       "pricePerSqft": 382.85
     },
     {
-      "id": "punggol-110b-punggol-field-2016-02-958202",
+      "id": "punggol-110b-punggol-field-2016-02-958318",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -523,7 +523,7 @@
       "pricePerSqft": 381.94
     },
     {
-      "id": "punggol-110b-punggol-field-2015-09-950957",
+      "id": "punggol-110b-punggol-field-2015-09-951073",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -536,7 +536,7 @@
       "pricePerSqft": 402.58
     },
     {
-      "id": "punggol-110b-punggol-field-2015-07-948004",
+      "id": "punggol-110b-punggol-field-2015-07-948120",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -549,7 +549,7 @@
       "pricePerSqft": 402.58
     },
     {
-      "id": "punggol-110b-punggol-field-2015-04-943165",
+      "id": "punggol-110b-punggol-field-2015-04-943281",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

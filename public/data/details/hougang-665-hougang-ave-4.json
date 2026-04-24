@@ -9,14 +9,8 @@
       "lat": 1.37403985056586,
       "lng": 103.884391131798
     },
-    "medianPrice": 642500,
-    "priceIqr": [
-      636250,
-      648750
-    ],
-    "pricePerSqmMedian": 6089.59,
-    "pricePerSqftMedian": 565.75,
-    "transactionCount": 2,
+    "medianPrice": 630000,
+    "transactionCount": 3,
     "floorAreaRange": [
       74,
       107
@@ -25,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-01",
-      "2025-04"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "KOVAN MRT STATION",
         "distanceMeters": 1539
       }
-    ]
+    ],
+    "priceIqr": [
+      540000,
+      642500
+    ],
+    "pricePerSqmMedian": 6081.08,
+    "pricePerSqftMedian": 564.95
   },
   "monthlyTrend": [
     {
@@ -681,9 +681,28 @@
       "medianPrice": 655000,
       "transactionCount": 1,
       "medianPricePerSqm": 6121.5
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6081.08
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-665-hougang-ave-4-2026-04-224586",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 09 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 6081.08,
+      "pricePerSqft": 564.95
+    },
     {
       "id": "hougang-665-hougang-ave-4-2025-04-205651",
       "month": "2025-04",
@@ -893,7 +912,7 @@
       "pricePerSqft": 364.08
     },
     {
-      "id": "hougang-665-hougang-ave-4-2016-10-971639",
+      "id": "hougang-665-hougang-ave-4-2016-10-971755",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -906,7 +925,7 @@
       "pricePerSqft": 358.11
     },
     {
-      "id": "hougang-665-hougang-ave-4-2016-06-964707",
+      "id": "hougang-665-hougang-ave-4-2016-06-964823",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -919,7 +938,7 @@
       "pricePerSqft": 339.45
     },
     {
-      "id": "hougang-665-hougang-ave-4-2015-09-950648",
+      "id": "hougang-665-hougang-ave-4-2015-09-950764",
       "month": "2015-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -930,19 +949,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 3980.58,
       "pricePerSqft": 369.81
-    },
-    {
-      "id": "hougang-665-hougang-ave-4-2014-06-642134",
-      "month": "2014-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "61 years",
-      "resalePrice": 425000,
-      "pricePerSqm": 4086.54,
-      "pricePerSqft": 379.65
     }
   ]
 }

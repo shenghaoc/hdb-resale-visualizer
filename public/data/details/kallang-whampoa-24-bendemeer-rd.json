@@ -10,12 +10,6 @@
       "lng": 103.862324355167
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      416888,
-      480000
-    ],
-    "pricePerSqmMedian": 6764.71,
-    "pricePerSqftMedian": 628.46,
     "transactionCount": 9,
     "floorAreaRange": [
       68,
@@ -54,7 +48,13 @@
         "stationName": "FARRER PARK MRT STATION",
         "distanceMeters": 1013
       }
-    ]
+    ],
+    "priceIqr": [
+      416888,
+      480000
+    ],
+    "pricePerSqmMedian": 6764.71,
+    "pricePerSqftMedian": 628.46
   },
   "monthlyTrend": [
     {
@@ -546,7 +546,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-24-bendemeer-rd-2026-03-225457",
+      "id": "kallang-whampoa-24-bendemeer-rd-2026-03-225518",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.907600724822
     },
     "medianPrice": 648000,
-    "priceIqr": [
-      648000,
-      648000
-    ],
-    "pricePerSqmMedian": 5890.91,
-    "pricePerSqftMedian": 547.28,
     "transactionCount": 1,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 602
       }
-    ]
+    ],
+    "priceIqr": [
+      648000,
+      648000
+    ],
+    "pricePerSqmMedian": 5890.91,
+    "pricePerSqftMedian": 547.28
   },
   "monthlyTrend": [
     {
@@ -314,7 +314,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-107c-edgefield-plains-2026-01-226281",
+      "id": "punggol-107c-edgefield-plains-2026-01-226352",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -509,7 +509,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-10-971951",
+      "id": "punggol-107c-edgefield-plains-2016-10-972067",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -522,7 +522,7 @@
       "pricePerSqft": 421.16
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-07-966780",
+      "id": "punggol-107c-edgefield-plains-2016-07-966896",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -535,7 +535,7 @@
       "pricePerSqft": 378.37
     },
     {
-      "id": "punggol-107c-edgefield-plains-2016-04-961390",
+      "id": "punggol-107c-edgefield-plains-2016-04-961506",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -548,7 +548,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "punggol-107c-edgefield-plains-2015-11-954228",
+      "id": "punggol-107c-edgefield-plains-2015-11-954344",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -561,7 +561,7 @@
       "pricePerSqft": 418.06
     },
     {
-      "id": "punggol-107c-edgefield-plains-2015-04-943166",
+      "id": "punggol-107c-edgefield-plains-2015-04-943282",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

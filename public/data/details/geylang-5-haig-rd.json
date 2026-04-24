@@ -10,12 +10,6 @@
       "lng": 103.896591193187
     },
     "medianPrice": 590000,
-    "priceIqr": [
-      585000,
-      605000
-    ],
-    "pricePerSqmMedian": 6413.04,
-    "pricePerSqftMedian": 595.79,
     "transactionCount": 3,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "DAKOTA MRT STATION",
         "distanceMeters": 912
       }
-    ]
+    ],
+    "priceIqr": [
+      585000,
+      605000
+    ],
+    "pricePerSqmMedian": 6413.04,
+    "pricePerSqftMedian": 595.79
   },
   "monthlyTrend": [
     {
@@ -570,7 +570,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-5-haig-rd-2026-01-224434",
+      "id": "geylang-5-haig-rd-2026-01-224478",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

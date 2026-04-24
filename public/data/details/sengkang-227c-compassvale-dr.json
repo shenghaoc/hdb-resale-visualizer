@@ -10,12 +10,6 @@
       "lng": 103.901132950862
     },
     "medianPrice": 580000,
-    "priceIqr": [
-      560000,
-      585000
-    ],
-    "pricePerSqmMedian": 5686.27,
-    "pricePerSqftMedian": 528.27,
     "transactionCount": 5,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 515
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      585000
+    ],
+    "pricePerSqmMedian": 5686.27,
+    "pricePerSqftMedian": 528.27
   },
   "monthlyTrend": [
     {
@@ -434,7 +434,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-227c-compassvale-dr-2026-03-227011",
+      "id": "sengkang-227c-compassvale-dr-2026-03-227091",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

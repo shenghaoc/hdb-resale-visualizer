@@ -10,12 +10,6 @@
       "lng": 103.891303333488
     },
     "medianPrice": 825000,
-    "priceIqr": [
-      815000,
-      870000
-    ],
-    "pricePerSqmMedian": 6600,
-    "pricePerSqftMedian": 613.16,
     "transactionCount": 5,
     "floorAreaRange": [
       125,
@@ -54,7 +48,13 @@
         "stationName": "TONGKANG LRT STATION",
         "distanceMeters": 616
       }
-    ]
+    ],
+    "priceIqr": [
+      815000,
+      870000
+    ],
+    "pricePerSqmMedian": 6600,
+    "pricePerSqftMedian": 613.16
   },
   "monthlyTrend": [
     {
@@ -485,7 +485,7 @@
       "pricePerSqft": 444.76
     },
     {
-      "id": "sengkang-320c-anchorvale-dr-2015-11-954475",
+      "id": "sengkang-320c-anchorvale-dr-2015-11-954591",
       "month": "2015-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -498,7 +498,7 @@
       "pricePerSqft": 423.64
     },
     {
-      "id": "sengkang-320c-anchorvale-dr-2014-09-646597",
+      "id": "sengkang-320c-anchorvale-dr-2014-09-646713",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -511,7 +511,7 @@
       "pricePerSqft": 423.64
     },
     {
-      "id": "sengkang-320c-anchorvale-dr-2014-09-646602",
+      "id": "sengkang-320c-anchorvale-dr-2014-09-646718",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",

@@ -10,12 +10,6 @@
       "lng": 103.79267558158
     },
     "medianPrice": 684000,
-    "priceIqr": [
-      677500,
-      691000
-    ],
-    "pricePerSqmMedian": 5454.94,
-    "pricePerSqftMedian": 506.78,
     "transactionCount": 4,
     "floorAreaRange": [
       105,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS NORTH MRT STATION",
         "distanceMeters": 1158
       }
-    ]
+    ],
+    "priceIqr": [
+      677500,
+      691000
+    ],
+    "pricePerSqmMedian": 5454.94,
+    "pricePerSqftMedian": 506.78
   },
   "monthlyTrend": [
     {
@@ -781,7 +781,7 @@
       "pricePerSqft": 292.61
     },
     {
-      "id": "woodlands-851-woodlands-st-83-2016-08-969108",
+      "id": "woodlands-851-woodlands-st-83-2016-08-969224",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -794,7 +794,7 @@
       "pricePerSqft": 311.14
     },
     {
-      "id": "woodlands-851-woodlands-st-83-2016-04-961969",
+      "id": "woodlands-851-woodlands-st-83-2016-04-962085",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -807,7 +807,7 @@
       "pricePerSqft": 303.25
     },
     {
-      "id": "woodlands-851-woodlands-st-83-2016-04-961995",
+      "id": "woodlands-851-woodlands-st-83-2016-04-962111",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

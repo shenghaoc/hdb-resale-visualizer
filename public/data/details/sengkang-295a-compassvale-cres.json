@@ -10,12 +10,6 @@
       "lng": 103.899278132144
     },
     "medianPrice": 615000,
-    "priceIqr": [
-      567500,
-      642500
-    ],
-    "pricePerSqmMedian": 5777.78,
-    "pricePerSqftMedian": 536.77,
     "transactionCount": 3,
     "floorAreaRange": [
       89,
@@ -56,7 +50,13 @@
         "stationName": "PUNGGOL LRT STATION",
         "distanceMeters": 741
       }
-    ]
+    ],
+    "priceIqr": [
+      567500,
+      642500
+    ],
+    "pricePerSqmMedian": 5777.78,
+    "pricePerSqftMedian": 536.77
   },
   "monthlyTrend": [
     {
@@ -632,7 +632,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-295a-compassvale-cres-2026-01-226999",
+      "id": "sengkang-295a-compassvale-cres-2026-01-227079",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.828467082634
     },
     "medianPrice": 1022500,
-    "priceIqr": [
-      839500,
-      1052500
-    ],
-    "pricePerSqmMedian": 11581.28,
-    "pricePerSqftMedian": 1075.94,
     "transactionCount": 8,
     "floorAreaRange": [
       69,
@@ -55,7 +49,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 594
       }
-    ]
+    ],
+    "priceIqr": [
+      839500,
+      1052500
+    ],
+    "pricePerSqmMedian": 11581.28,
+    "pricePerSqftMedian": 1075.94
   },
   "monthlyTrend": [
     {
@@ -361,7 +361,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-52-havelock-rd-2026-02-223374",
+      "id": "bukit-merah-52-havelock-rd-2026-02-223397",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

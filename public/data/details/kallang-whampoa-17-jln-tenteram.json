@@ -10,12 +10,6 @@
       "lng": 103.859812573047
     },
     "medianPrice": 620000,
-    "priceIqr": [
-      605000,
-      630000
-    ],
-    "pricePerSqmMedian": 7840,
-    "pricePerSqftMedian": 728.36,
     "transactionCount": 9,
     "floorAreaRange": [
       75,
@@ -56,7 +50,13 @@
         "stationName": "TOA PAYOH MRT STATION",
         "distanceMeters": 1421
       }
-    ]
+    ],
+    "priceIqr": [
+      605000,
+      630000
+    ],
+    "pricePerSqmMedian": 7840,
+    "pricePerSqftMedian": 728.36
   },
   "monthlyTrend": [
     {
@@ -500,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-17-jln-tenteram-2026-01-225558",
+      "id": "kallang-whampoa-17-jln-tenteram-2026-01-225622",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.88359641393
     },
     "medianPrice": 283000,
-    "priceIqr": [
-      280000,
-      297000
-    ],
-    "pricePerSqmMedian": 5729.17,
-    "pricePerSqftMedian": 532.26,
     "transactionCount": 5,
     "floorAreaRange": [
       48,
@@ -54,7 +48,13 @@
         "stationName": "DAKOTA MRT STATION",
         "distanceMeters": 802
       }
-    ]
+    ],
+    "priceIqr": [
+      280000,
+      297000
+    ],
+    "pricePerSqmMedian": 5729.17,
+    "pricePerSqftMedian": 532.26
   },
   "monthlyTrend": [
     {

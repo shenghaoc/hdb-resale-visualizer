@@ -10,12 +10,6 @@
       "lng": 103.924132068906
     },
     "medianPrice": 1050000,
-    "priceIqr": [
-      1050000,
-      1050000
-    ],
-    "pricePerSqmMedian": 7191.78,
-    "pricePerSqftMedian": 668.14,
     "transactionCount": 1,
     "floorAreaRange": [
       145,
@@ -55,7 +49,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1316
       }
-    ]
+    ],
+    "priceIqr": [
+      1050000,
+      1050000
+    ],
+    "pricePerSqmMedian": 7191.78,
+    "pricePerSqftMedian": 668.14
   },
   "monthlyTrend": [
     {
@@ -538,7 +538,7 @@
       "pricePerSqft": 492.07
     },
     {
-      "id": "bedok-29a-chai-chee-ave-2016-12-974391",
+      "id": "bedok-29a-chai-chee-ave-2016-12-974507",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -551,7 +551,7 @@
       "pricePerSqft": 492.07
     },
     {
-      "id": "bedok-29a-chai-chee-ave-2016-08-967619",
+      "id": "bedok-29a-chai-chee-ave-2016-08-967735",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -564,7 +564,7 @@
       "pricePerSqft": 490.14
     },
     {
-      "id": "bedok-29a-chai-chee-ave-2015-10-951802",
+      "id": "bedok-29a-chai-chee-ave-2015-10-951918",
       "month": "2015-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -577,7 +577,7 @@
       "pricePerSqft": 492.2
     },
     {
-      "id": "bedok-29a-chai-chee-ave-2014-05-640387",
+      "id": "bedok-29a-chai-chee-ave-2014-05-640503",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -590,7 +590,7 @@
       "pricePerSqft": 442.98
     },
     {
-      "id": "bedok-29a-chai-chee-ave-2013-12-634266",
+      "id": "bedok-29a-chai-chee-ave-2013-12-634382",
       "month": "2013-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

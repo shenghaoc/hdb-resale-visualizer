@@ -10,12 +10,6 @@
       "lng": 103.744452232566
     },
     "medianPrice": 1031000,
-    "priceIqr": [
-      1002000,
-      1045500
-    ],
-    "pricePerSqmMedian": 7159.72,
-    "pricePerSqftMedian": 665.16,
     "transactionCount": 3,
     "floorAreaRange": [
       121,
@@ -56,7 +50,13 @@
         "stationName": "CHINESE GARDEN MRT STATION",
         "distanceMeters": 1263
       }
-    ]
+    ],
+    "priceIqr": [
+      1002000,
+      1045500
+    ],
+    "pricePerSqmMedian": 7159.72,
+    "pricePerSqftMedian": 665.16
   },
   "monthlyTrend": [
     {
@@ -729,7 +729,7 @@
       "pricePerSqft": 506.74
     },
     {
-      "id": "jurong-east-286c-toh-guan-rd-2016-10-971707",
+      "id": "jurong-east-286c-toh-guan-rd-2016-10-971823",
       "month": "2016-10",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

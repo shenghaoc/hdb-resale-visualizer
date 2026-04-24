@@ -10,12 +10,6 @@
       "lng": 103.911806642809
     },
     "medianPrice": 555000,
-    "priceIqr": [
-      522500,
-      559000
-    ],
-    "pricePerSqmMedian": 7407.89,
-    "pricePerSqftMedian": 688.22,
     "transactionCount": 3,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1600
       }
-    ]
+    ],
+    "priceIqr": [
+      522500,
+      559000
+    ],
+    "pricePerSqmMedian": 7407.89,
+    "pricePerSqftMedian": 688.22
   },
   "monthlyTrend": [
     {

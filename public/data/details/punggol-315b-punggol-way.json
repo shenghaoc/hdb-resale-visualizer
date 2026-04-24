@@ -10,12 +10,6 @@
       "lng": 103.896400767911
     },
     "medianPrice": 708000,
-    "priceIqr": [
-      622500,
-      827500
-    ],
-    "pricePerSqmMedian": 7814.16,
-    "pricePerSqftMedian": 725.96,
     "transactionCount": 19,
     "floorAreaRange": [
       68,
@@ -56,7 +50,13 @@
         "stationName": "NIBONG LRT STATION",
         "distanceMeters": 589
       }
-    ]
+    ],
+    "priceIqr": [
+      622500,
+      827500
+    ],
+    "pricePerSqmMedian": 7814.16,
+    "pricePerSqftMedian": 725.96
   },
   "monthlyTrend": [
     {
@@ -296,7 +296,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-315b-punggol-way-2026-04-226220",
+      "id": "punggol-315b-punggol-way-2026-04-226290",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -309,7 +309,7 @@
       "pricePerSqft": 767.2
     },
     {
-      "id": "punggol-315b-punggol-way-2026-02-226360",
+      "id": "punggol-315b-punggol-way-2026-02-226432",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -322,7 +322,7 @@
       "pricePerSqft": 782.69
     },
     {
-      "id": "punggol-315b-punggol-way-2026-01-226209",
+      "id": "punggol-315b-punggol-way-2026-01-226279",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -335,7 +335,7 @@
       "pricePerSqft": 719.25
     },
     {
-      "id": "punggol-315b-punggol-way-2026-01-226213",
+      "id": "punggol-315b-punggol-way-2026-01-226283",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

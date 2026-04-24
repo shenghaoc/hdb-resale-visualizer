@@ -10,12 +10,6 @@
       "lng": 103.799417284922
     },
     "medianPrice": 1000000,
-    "priceIqr": [
-      971944,
-      1072944
-    ],
-    "pricePerSqmMedian": 11198.91,
-    "pricePerSqftMedian": 1040.41,
     "transactionCount": 23,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "BUONA VISTA MRT STATION",
         "distanceMeters": 1129
       }
-    ]
+    ],
+    "priceIqr": [
+      971944,
+      1072944
+    ],
+    "pricePerSqmMedian": 11198.91,
+    "pricePerSqftMedian": 1040.41
   },
   "monthlyTrend": [
     {
@@ -728,7 +728,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-04-226574",
+      "id": "queenstown-91-tanglin-halt-rd-2026-04-226651",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -741,7 +741,7 @@
       "pricePerSqft": 1031.22
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226571",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226648",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -754,7 +754,7 @@
       "pricePerSqft": 1020.79
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226572",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226649",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -767,7 +767,7 @@
       "pricePerSqft": 1046.37
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226573",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226650",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -780,7 +780,7 @@
       "pricePerSqft": 1003.24
     },
     {
-      "id": "queenstown-91-tanglin-halt-rd-2026-03-226596",
+      "id": "queenstown-91-tanglin-halt-rd-2026-03-226674",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "31 TO 33",

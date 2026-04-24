@@ -9,14 +9,8 @@
       "lat": 1.36483672442073,
       "lng": 103.935795400387
     },
-    "medianPrice": 938000,
-    "priceIqr": [
-      810000,
-      940000
-    ],
-    "pricePerSqmMedian": 8318.58,
-    "pricePerSqftMedian": 772.82,
-    "transactionCount": 11,
+    "medianPrice": 908000,
+    "transactionCount": 12,
     "floorAreaRange": [
       93,
       113
@@ -56,7 +50,13 @@
         "stationName": "TAMPINES WEST MRT STATION",
         "distanceMeters": 2152
       }
-    ]
+    ],
+    "priceIqr": [
+      811000,
+      940000
+    ],
+    "pricePerSqmMedian": 8318.58,
+    "pricePerSqftMedian": 772.82
   },
   "monthlyTrend": [
     {
@@ -103,14 +103,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 800000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8602.15
+      "medianPrice": 806500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8672.05
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-614b-tampines-nth-dr-1-2026-04-227694",
+      "id": "tampines-614b-tampines-nth-dr-1-2026-04-227784",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -123,7 +123,20 @@
       "pricePerSqft": 799.17
     },
     {
-      "id": "tampines-614b-tampines-nth-dr-1-2026-03-227910",
+      "id": "tampines-614b-tampines-nth-dr-1-2026-04-227788",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "93 years 09 months",
+      "resalePrice": 813000,
+      "pricePerSqm": 8741.94,
+      "pricePerSqft": 812.15
+    },
+    {
+      "id": "tampines-614b-tampines-nth-dr-1-2026-03-228004",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -136,7 +149,7 @@
       "pricePerSqft": 781.04
     },
     {
-      "id": "tampines-614b-tampines-nth-dr-1-2026-01-227899",
+      "id": "tampines-614b-tampines-nth-dr-1-2026-01-227993",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

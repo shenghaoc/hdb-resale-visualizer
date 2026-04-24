@@ -10,12 +10,6 @@
       "lng": 103.921492598319
     },
     "medianPrice": 683000,
-    "priceIqr": [
-      660000,
-      800000
-    ],
-    "pricePerSqmMedian": 9885.06,
-    "pricePerSqftMedian": 918.35,
     "transactionCount": 5,
     "floorAreaRange": [
       66,
@@ -56,7 +50,13 @@
         "stationName": "KAKI BUKIT MRT STATION",
         "distanceMeters": 1347
       }
-    ]
+    ],
+    "priceIqr": [
+      660000,
+      800000
+    ],
+    "pricePerSqmMedian": 9885.06,
+    "pricePerSqftMedian": 918.35
   },
   "monthlyTrend": [
     {
@@ -206,7 +206,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-748c-bedok-reservoir-cres-2026-04-222415",
+      "id": "bedok-748c-bedok-reservoir-cres-2026-04-222422",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -219,7 +219,7 @@
       "pricePerSqft": 929.03
     },
     {
-      "id": "bedok-748c-bedok-reservoir-cres-2026-04-222551",
+      "id": "bedok-748c-bedok-reservoir-cres-2026-04-222559",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -232,7 +232,7 @@
       "pricePerSqft": 918.35
     },
     {
-      "id": "bedok-748c-bedok-reservoir-cres-2026-01-222548",
+      "id": "bedok-748c-bedok-reservoir-cres-2026-01-222556",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

@@ -10,12 +10,6 @@
       "lng": 103.923284613437
     },
     "medianPrice": 665000,
-    "priceIqr": [
-      605000,
-      700000
-    ],
-    "pricePerSqmMedian": 5495.87,
-    "pricePerSqftMedian": 510.58,
     "transactionCount": 5,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "KAKI BUKIT MRT STATION",
         "distanceMeters": 1555
       }
-    ]
+    ],
+    "priceIqr": [
+      605000,
+      700000
+    ],
+    "pricePerSqmMedian": 5495.87,
+    "pricePerSqftMedian": 510.58
   },
   "monthlyTrend": [
     {
@@ -751,7 +751,7 @@
       "pricePerSqft": 410.77
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2015-04-942369",
+      "id": "bedok-714-bedok-reservoir-rd-2015-04-942485",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -764,7 +764,7 @@
       "pricePerSqft": 403.86
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2014-10-647172",
+      "id": "bedok-714-bedok-reservoir-rd-2014-10-647288",
       "month": "2014-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -777,7 +777,7 @@
       "pricePerSqft": 412.38
     },
     {
-      "id": "bedok-714-bedok-reservoir-rd-2014-04-638823",
+      "id": "bedok-714-bedok-reservoir-rd-2014-04-638939",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

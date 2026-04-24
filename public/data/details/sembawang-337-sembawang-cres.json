@@ -10,12 +10,6 @@
       "lng": 103.815651965202
     },
     "medianPrice": 720000,
-    "priceIqr": [
-      630000,
-      750000
-    ],
-    "pricePerSqmMedian": 5400,
-    "pricePerSqftMedian": 501.68,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -58,7 +52,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 1707
       }
-    ]
+    ],
+    "priceIqr": [
+      630000,
+      750000
+    ],
+    "pricePerSqmMedian": 5400,
+    "pricePerSqftMedian": 501.68
   },
   "monthlyTrend": [
     {

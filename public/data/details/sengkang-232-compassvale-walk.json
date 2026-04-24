@@ -10,12 +10,6 @@
       "lng": 103.900837998637
     },
     "medianPrice": 685000,
-    "priceIqr": [
-      639416,
-      696000
-    ],
-    "pricePerSqmMedian": 5642.28,
-    "pricePerSqftMedian": 524.18,
     "transactionCount": 6,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 582
       }
-    ]
+    ],
+    "priceIqr": [
+      639416,
+      696000
+    ],
+    "pricePerSqmMedian": 5642.28,
+    "pricePerSqftMedian": 524.18
   },
   "monthlyTrend": [
     {
@@ -512,7 +512,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-232-compassvale-walk-2026-03-227288",
+      "id": "sengkang-232-compassvale-walk-2026-03-227372",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

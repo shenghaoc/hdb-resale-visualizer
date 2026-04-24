@@ -10,12 +10,6 @@
       "lng": 103.902073613523
     },
     "medianPrice": 548000,
-    "priceIqr": [
-      530000,
-      565000
-    ],
-    "pricePerSqmMedian": 6523.81,
-    "pricePerSqftMedian": 606.08,
     "transactionCount": 5,
     "floorAreaRange": [
       84,
@@ -55,7 +49,13 @@
         "stationName": "KAKI BUKIT MRT STATION",
         "distanceMeters": 1254
       }
-    ]
+    ],
+    "priceIqr": [
+      530000,
+      565000
+    ],
+    "pricePerSqmMedian": 6523.81,
+    "pricePerSqftMedian": 606.08
   },
   "monthlyTrend": [
     {
@@ -889,7 +889,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-338-ubi-ave-1-2026-01-224452",
+      "id": "geylang-338-ubi-ave-1-2026-01-224497",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

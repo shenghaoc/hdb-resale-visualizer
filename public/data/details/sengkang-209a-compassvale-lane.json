@@ -10,12 +10,6 @@
       "lng": 103.898502660861
     },
     "medianPrice": 650000,
-    "priceIqr": [
-      591500,
-      670000
-    ],
-    "pricePerSqmMedian": 7336.96,
-    "pricePerSqftMedian": 681.63,
     "transactionCount": 7,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 570
       }
-    ]
+    ],
+    "priceIqr": [
+      591500,
+      670000
+    ],
+    "pricePerSqmMedian": 7336.96,
+    "pricePerSqftMedian": 681.63
   },
   "monthlyTrend": [
     {
@@ -295,7 +295,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-209a-compassvale-lane-2026-01-226915",
+      "id": "sengkang-209a-compassvale-lane-2026-01-226995",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

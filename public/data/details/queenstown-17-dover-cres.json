@@ -10,12 +10,6 @@
       "lng": 103.782891219198
     },
     "medianPrice": 839000,
-    "priceIqr": [
-      801250,
-      874500
-    ],
-    "pricePerSqmMedian": 9077.06,
-    "pricePerSqftMedian": 843.28,
     "transactionCount": 6,
     "floorAreaRange": [
       87,
@@ -56,7 +50,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 986
       }
-    ]
+    ],
+    "priceIqr": [
+      801250,
+      874500
+    ],
+    "pricePerSqmMedian": 9077.06,
+    "pricePerSqftMedian": 843.28
   },
   "monthlyTrend": [
     {
@@ -452,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-17-dover-cres-2026-02-226579",
+      "id": "queenstown-17-dover-cres-2026-02-226656",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

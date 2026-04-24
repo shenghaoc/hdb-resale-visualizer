@@ -10,12 +10,6 @@
       "lng": 103.874226522075
     },
     "medianPrice": 620000,
-    "priceIqr": [
-      615000,
-      625000
-    ],
-    "pricePerSqmMedian": 5326.18,
-    "pricePerSqftMedian": 494.82,
     "transactionCount": 2,
     "floorAreaRange": [
       114,
@@ -54,7 +48,13 @@
         "stationName": "ALJUNIED MRT STATION",
         "distanceMeters": 950
       }
-    ]
+    ],
+    "priceIqr": [
+      615000,
+      625000
+    ],
+    "pricePerSqmMedian": 5326.18,
+    "pricePerSqftMedian": 494.82
   },
   "monthlyTrend": [
     {
@@ -863,7 +863,7 @@
       "pricePerSqft": 407.47
     },
     {
-      "id": "kallang-whampoa-39-upp-boon-keng-rd-2015-05-944657",
+      "id": "kallang-whampoa-39-upp-boon-keng-rd-2015-05-944773",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -876,7 +876,7 @@
       "pricePerSqft": 505.26
     },
     {
-      "id": "kallang-whampoa-39-upp-boon-keng-rd-2014-03-637991",
+      "id": "kallang-whampoa-39-upp-boon-keng-rd-2014-03-638107",
       "month": "2014-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -889,7 +889,7 @@
       "pricePerSqft": 440.07
     },
     {
-      "id": "kallang-whampoa-39-upp-boon-keng-rd-2013-12-634702",
+      "id": "kallang-whampoa-39-upp-boon-keng-rd-2013-12-634818",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",

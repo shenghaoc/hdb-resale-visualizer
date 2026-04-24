@@ -10,12 +10,6 @@
       "lng": 103.884325036239
     },
     "medianPrice": 587500,
-    "priceIqr": [
-      561416,
-      595166
-    ],
-    "pricePerSqmMedian": 5506.48,
-    "pricePerSqftMedian": 511.56,
     "transactionCount": 8,
     "floorAreaRange": [
       90,
@@ -55,7 +49,13 @@
         "stationName": "RENJONG LRT STATION",
         "distanceMeters": 840
       }
-    ]
+    ],
+    "priceIqr": [
+      561416,
+      595166
+    ],
+    "pricePerSqmMedian": 5506.48,
+    "pricePerSqftMedian": 511.56
   },
   "monthlyTrend": [
     {
@@ -463,7 +463,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-311b-anchorvale-lane-2026-01-227214",
+      "id": "sengkang-311b-anchorvale-lane-2026-01-227297",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

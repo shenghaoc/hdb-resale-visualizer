@@ -10,12 +10,6 @@
       "lng": 103.767439286222
     },
     "medianPrice": 836000,
-    "priceIqr": [
-      829000,
-      843000
-    ],
-    "pricePerSqmMedian": 5805.56,
-    "pricePerSqftMedian": 539.36,
     "transactionCount": 2,
     "floorAreaRange": [
       144,
@@ -55,7 +49,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 537
       }
-    ]
+    ],
+    "priceIqr": [
+      829000,
+      843000
+    ],
+    "pricePerSqmMedian": 5805.56,
+    "pricePerSqftMedian": 539.36
   },
   "monthlyTrend": [
     {
@@ -361,7 +361,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-101-gangsa-rd-2026-01-223733",
+      "id": "bukit-panjang-101-gangsa-rd-2026-01-223760",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -491,7 +491,7 @@
       "pricePerSqft": 422.58
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2014-04-639040",
+      "id": "bukit-panjang-101-gangsa-rd-2014-04-639156",
       "month": "2014-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -504,7 +504,7 @@
       "pricePerSqft": 396.77
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2012-06-606358",
+      "id": "bukit-panjang-101-gangsa-rd-2012-06-606474",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -517,7 +517,7 @@
       "pricePerSqft": 384.52
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2011-05-581925",
+      "id": "bukit-panjang-101-gangsa-rd-2011-05-582041",
       "month": "2011-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -530,7 +530,7 @@
       "pricePerSqft": 321.34
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2008-06-492521",
+      "id": "bukit-panjang-101-gangsa-rd-2008-06-492637",
       "month": "2008-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -543,7 +543,7 @@
       "pricePerSqft": 259.93
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2008-03-485828",
+      "id": "bukit-panjang-101-gangsa-rd-2008-03-485944",
       "month": "2008-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -556,7 +556,7 @@
       "pricePerSqft": 222.71
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2007-02-456749",
+      "id": "bukit-panjang-101-gangsa-rd-2007-02-456865",
       "month": "2007-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -569,7 +569,7 @@
       "pricePerSqft": 195.48
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2007-01-454576",
+      "id": "bukit-panjang-101-gangsa-rd-2007-01-454692",
       "month": "2007-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -582,7 +582,7 @@
       "pricePerSqft": 203.03
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2006-01-427109",
+      "id": "bukit-panjang-101-gangsa-rd-2006-01-427225",
       "month": "2006-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -595,7 +595,7 @@
       "pricePerSqft": 175.35
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2006-01-427110",
+      "id": "bukit-panjang-101-gangsa-rd-2006-01-427226",
       "month": "2006-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -608,7 +608,7 @@
       "pricePerSqft": 192.57
     },
     {
-      "id": "bukit-panjang-101-gangsa-rd-2004-02-370784",
+      "id": "bukit-panjang-101-gangsa-rd-2004-02-370900",
       "month": "2004-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",

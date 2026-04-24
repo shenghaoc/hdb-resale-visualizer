@@ -10,12 +10,6 @@
       "lng": 103.88323988763
     },
     "medianPrice": 976944,
-    "priceIqr": [
-      921666,
-      988000
-    ],
-    "pricePerSqmMedian": 6460.36,
-    "pricePerSqftMedian": 600.18,
     "transactionCount": 8,
     "floorAreaRange": [
       146,
@@ -54,7 +48,13 @@
         "stationName": "BARTLEY MRT STATION",
         "distanceMeters": 1011
       }
-    ]
+    ],
+    "priceIqr": [
+      921666,
+      988000
+    ],
+    "pricePerSqmMedian": 6460.36,
+    "pricePerSqftMedian": 600.18
   },
   "monthlyTrend": [
     {
@@ -792,7 +792,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-145-lor-ah-soo-2026-02-224843",
+      "id": "hougang-145-lor-ah-soo-2026-02-224894",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

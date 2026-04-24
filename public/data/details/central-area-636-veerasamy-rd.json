@@ -10,12 +10,6 @@
       "lng": 103.855387281341
     },
     "medianPrice": 542000,
-    "priceIqr": [
-      538500,
-      587000
-    ],
-    "pricePerSqmMedian": 7430.56,
-    "pricePerSqftMedian": 690.32,
     "transactionCount": 3,
     "floorAreaRange": [
       72,
@@ -54,7 +48,13 @@
         "stationName": "BUGIS MRT STATION",
         "distanceMeters": 571
       }
-    ]
+    ],
+    "priceIqr": [
+      538500,
+      587000
+    ],
+    "pricePerSqmMedian": 7430.56,
+    "pricePerSqftMedian": 690.32
   },
   "monthlyTrend": [
     {
@@ -222,7 +222,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-636-veerasamy-rd-2026-04-223790",
+      "id": "central-area-636-veerasamy-rd-2026-04-223817",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -235,7 +235,7 @@
       "pricePerSqft": 699.35
     },
     {
-      "id": "central-area-636-veerasamy-rd-2026-02-223789",
+      "id": "central-area-636-veerasamy-rd-2026-02-223816",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -300,7 +300,7 @@
       "pricePerSqft": 516.13
     },
     {
-      "id": "central-area-636-veerasamy-rd-2016-10-971401",
+      "id": "central-area-636-veerasamy-rd-2016-10-971517",
       "month": "2016-10",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -313,7 +313,7 @@
       "pricePerSqft": 479.74
     },
     {
-      "id": "central-area-636-veerasamy-rd-2014-07-643211",
+      "id": "central-area-636-veerasamy-rd-2014-07-643327",
       "month": "2014-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -326,7 +326,7 @@
       "pricePerSqft": 541.93
     },
     {
-      "id": "central-area-636-veerasamy-rd-2014-02-636489",
+      "id": "central-area-636-veerasamy-rd-2014-02-636605",
       "month": "2014-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -339,7 +339,7 @@
       "pricePerSqft": 508.92
     },
     {
-      "id": "central-area-636-veerasamy-rd-2011-11-592982",
+      "id": "central-area-636-veerasamy-rd-2011-11-593098",
       "month": "2011-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -352,7 +352,7 @@
       "pricePerSqft": 492.5
     },
     {
-      "id": "central-area-636-veerasamy-rd-2011-01-574130",
+      "id": "central-area-636-veerasamy-rd-2011-01-574246",
       "month": "2011-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -365,7 +365,7 @@
       "pricePerSqft": 473.55
     },
     {
-      "id": "central-area-636-veerasamy-rd-2010-04-547988",
+      "id": "central-area-636-veerasamy-rd-2010-04-548104",
       "month": "2010-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -378,7 +378,7 @@
       "pricePerSqft": 393.55
     },
     {
-      "id": "central-area-636-veerasamy-rd-2004-08-385055",
+      "id": "central-area-636-veerasamy-rd-2004-08-385171",
       "month": "2004-08",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -391,7 +391,7 @@
       "pricePerSqft": 270.97
     },
     {
-      "id": "central-area-636-veerasamy-rd-2003-07-352459",
+      "id": "central-area-636-veerasamy-rd-2003-07-352575",
       "month": "2003-07",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -404,7 +404,7 @@
       "pricePerSqft": 267.1
     },
     {
-      "id": "central-area-636-veerasamy-rd-2003-04-345830",
+      "id": "central-area-636-veerasamy-rd-2003-04-345946",
       "month": "2003-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -417,7 +417,7 @@
       "pricePerSqft": 235.06
     },
     {
-      "id": "central-area-636-veerasamy-rd-2003-03-343595",
+      "id": "central-area-636-veerasamy-rd-2003-03-343711",
       "month": "2003-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -430,7 +430,7 @@
       "pricePerSqft": 226.1
     },
     {
-      "id": "central-area-636-veerasamy-rd-2002-04-312316",
+      "id": "central-area-636-veerasamy-rd-2002-04-312432",
       "month": "2002-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -443,7 +443,7 @@
       "pricePerSqft": 225.81
     },
     {
-      "id": "central-area-636-veerasamy-rd-2001-12-300074",
+      "id": "central-area-636-veerasamy-rd-2001-12-300190",
       "month": "2001-12",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -456,7 +456,7 @@
       "pricePerSqft": 195.88
     },
     {
-      "id": "central-area-636-veerasamy-rd-2001-10-293420",
+      "id": "central-area-636-veerasamy-rd-2001-10-293536",
       "month": "2001-10",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -469,7 +469,7 @@
       "pricePerSqft": 232.26
     },
     {
-      "id": "central-area-636-veerasamy-rd-2000-11-259050",
+      "id": "central-area-636-veerasamy-rd-2000-11-259166",
       "month": "2000-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

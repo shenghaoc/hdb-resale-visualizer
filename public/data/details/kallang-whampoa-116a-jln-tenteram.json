@@ -10,12 +10,6 @@
       "lng": 103.860558381575
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      617500,
-      886250
-    ],
-    "pricePerSqmMedian": 9431.75,
-    "pricePerSqftMedian": 876.24,
     "transactionCount": 20,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 1367
       }
-    ]
+    ],
+    "priceIqr": [
+      617500,
+      886250
+    ],
+    "pricePerSqmMedian": 9431.75,
+    "pricePerSqftMedian": 876.24
   },
   "monthlyTrend": [
     {
@@ -307,7 +307,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-116a-jln-tenteram-2026-04-225491",
+      "id": "kallang-whampoa-116a-jln-tenteram-2026-04-225553",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

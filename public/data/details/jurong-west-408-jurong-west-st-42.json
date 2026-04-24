@@ -10,12 +10,6 @@
       "lng": 103.722563908677
     },
     "medianPrice": 670000,
-    "priceIqr": [
-      655000,
-      682722
-    ],
-    "pricePerSqmMedian": 4836.82,
-    "pricePerSqftMedian": 449.36,
     "transactionCount": 8,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "BOON LAY MRT STATION",
         "distanceMeters": 2568
       }
-    ]
+    ],
+    "priceIqr": [
+      655000,
+      682722
+    ],
+    "pricePerSqmMedian": 4836.82,
+    "pricePerSqftMedian": 449.36
   },
   "monthlyTrend": [
     {
@@ -782,7 +782,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-408-jurong-west-st-42-2026-01-225142",
+      "id": "jurong-west-408-jurong-west-st-42-2026-01-225199",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

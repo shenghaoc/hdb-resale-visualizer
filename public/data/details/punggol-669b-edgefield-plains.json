@@ -10,12 +10,6 @@
       "lng": 103.914012816111
     },
     "medianPrice": 683000,
-    "priceIqr": [
-      668000,
-      718000
-    ],
-    "pricePerSqmMedian": 7258.06,
-    "pricePerSqftMedian": 674.3,
     "transactionCount": 13,
     "floorAreaRange": [
       68,
@@ -56,7 +50,13 @@
         "stationName": "KADALOOR LRT STATION",
         "distanceMeters": 588
       }
-    ]
+    ],
+    "priceIqr": [
+      668000,
+      718000
+    ],
+    "pricePerSqmMedian": 7258.06,
+    "pricePerSqftMedian": 674.3
   },
   "monthlyTrend": [
     {
@@ -284,7 +284,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-669b-edgefield-plains-2026-03-226287",
+      "id": "punggol-669b-edgefield-plains-2026-03-226358",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -297,7 +297,7 @@
       "pricePerSqft": 723.49
     },
     {
-      "id": "punggol-669b-edgefield-plains-2026-01-225946",
+      "id": "punggol-669b-edgefield-plains-2026-01-226014",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -310,7 +310,7 @@
       "pricePerSqft": 669.45
     },
     {
-      "id": "punggol-669b-edgefield-plains-2026-01-226020",
+      "id": "punggol-669b-edgefield-plains-2026-01-226089",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

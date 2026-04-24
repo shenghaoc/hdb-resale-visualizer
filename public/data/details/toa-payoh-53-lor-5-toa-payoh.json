@@ -10,13 +10,7 @@
       "lng": 103.85079328117
     },
     "medianPrice": 380000,
-    "priceIqr": [
-      355000,
-      387250
-    ],
-    "pricePerSqmMedian": 5588.24,
-    "pricePerSqftMedian": 519.16,
-    "transactionCount": 14,
+    "transactionCount": 15,
     "floorAreaRange": [
       68,
       68
@@ -25,10 +19,10 @@
       1967,
       1967
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "CALDECOTT MRT STATION",
         "distanceMeters": 1148
       }
-    ]
+    ],
+    "priceIqr": [
+      357000,
+      386500
+    ],
+    "pricePerSqmMedian": 5588.24,
+    "pricePerSqftMedian": 519.16
   },
   "monthlyTrend": [
     {
@@ -1034,11 +1034,30 @@
       "medianPrice": 375000,
       "transactionCount": 1,
       "medianPricePerSqm": 5514.71
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 373000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5485.29
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-53-lor-5-toa-payoh-2026-01-228128",
+      "id": "toa-payoh-53-lor-5-toa-payoh-2026-04-228230",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1968,
+      "remainingLease": "41 years 03 months",
+      "resalePrice": 373000,
+      "pricePerSqm": 5485.29,
+      "pricePerSqft": 509.6
+    },
+    {
+      "id": "toa-payoh-53-lor-5-toa-payoh-2026-01-228226",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1283,19 +1302,6 @@
       "resalePrice": 320000,
       "pricePerSqm": 4705.88,
       "pricePerSqft": 437.19
-    },
-    {
-      "id": "toa-payoh-53-lor-5-toa-payoh-2022-08-139176",
-      "month": "2022-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 68,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1968,
-      "remainingLease": "44 years 11 months",
-      "resalePrice": 315000,
-      "pricePerSqm": 4632.35,
-      "pricePerSqft": 430.36
     }
   ]
 }

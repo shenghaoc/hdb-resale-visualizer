@@ -10,12 +10,6 @@
       "lng": 103.810092969298
     },
     "medianPrice": 1030000,
-    "priceIqr": [
-      1001400,
-      1080000
-    ],
-    "pricePerSqmMedian": 11795.45,
-    "pricePerSqftMedian": 1095.83,
     "transactionCount": 11,
     "floorAreaRange": [
       62,
@@ -55,7 +49,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 1554
       }
-    ]
+    ],
+    "priceIqr": [
+      1001400,
+      1080000
+    ],
+    "pricePerSqmMedian": 11795.45,
+    "pricePerSqftMedian": 1095.83
   },
   "monthlyTrend": [
     {
@@ -103,7 +103,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-78-dawson-rd-2026-01-226502",
+      "id": "queenstown-78-dawson-rd-2026-01-226579",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

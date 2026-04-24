@@ -10,12 +10,6 @@
       "lng": 103.872490556246
     },
     "medianPrice": 452500,
-    "priceIqr": [
-      360000,
-      549888
-    ],
-    "pricePerSqmMedian": 7765.95,
-    "pricePerSqftMedian": 721.49,
     "transactionCount": 8,
     "floorAreaRange": [
       47,
@@ -56,7 +50,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 851
       }
-    ]
+    ],
+    "priceIqr": [
+      360000,
+      549888
+    ],
+    "pricePerSqmMedian": 7765.95,
+    "pricePerSqftMedian": 721.49
   },
   "monthlyTrend": [
     {
@@ -266,7 +266,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-447a-jln-kayu-2026-04-226890",
+      "id": "sengkang-447a-jln-kayu-2026-04-226970",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -279,7 +279,7 @@
       "pricePerSqft": 731.37
     },
     {
-      "id": "sengkang-447a-jln-kayu-2026-03-227113",
+      "id": "sengkang-447a-jln-kayu-2026-03-227195",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -292,7 +292,7 @@
       "pricePerSqft": 660.21
     },
     {
-      "id": "sengkang-447a-jln-kayu-2026-02-226938",
+      "id": "sengkang-447a-jln-kayu-2026-02-227018",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

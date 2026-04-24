@@ -10,12 +10,6 @@
       "lng": 103.774054657076
     },
     "medianPrice": 492500,
-    "priceIqr": [
-      468750,
-      512500
-    ],
-    "pricePerSqmMedian": 5097.09,
-    "pricePerSqftMedian": 473.53,
     "transactionCount": 4,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "PENDING LRT STATION",
         "distanceMeters": 605
       }
-    ]
+    ],
+    "priceIqr": [
+      468750,
+      512500
+    ],
+    "pricePerSqmMedian": 5097.09,
+    "pricePerSqftMedian": 473.53
   },
   "monthlyTrend": [
     {

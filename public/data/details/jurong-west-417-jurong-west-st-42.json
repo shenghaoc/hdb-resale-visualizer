@@ -10,12 +10,6 @@
       "lng": 103.727345002671
     },
     "medianPrice": 412500,
-    "priceIqr": [
-      375000,
-      468750
-    ],
-    "pricePerSqmMedian": 5732.51,
-    "pricePerSqftMedian": 532.57,
     "transactionCount": 6,
     "floorAreaRange": [
       64,
@@ -55,7 +49,13 @@
         "stationName": "BUKIT BATOK MRT STATION",
         "distanceMeters": 2442
       }
-    ]
+    ],
+    "priceIqr": [
+      375000,
+      468750
+    ],
+    "pricePerSqmMedian": 5732.51,
+    "pricePerSqftMedian": 532.57
   },
   "monthlyTrend": [
     {
@@ -991,7 +991,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-417-jurong-west-st-42-2026-01-225054",
+      "id": "jurong-west-417-jurong-west-st-42-2026-01-225110",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.955756570936
     },
     "medianPrice": 732000,
-    "priceIqr": [
-      726000,
-      748500
-    ],
-    "pricePerSqmMedian": 5856,
-    "pricePerSqftMedian": 544.04,
     "transactionCount": 3,
     "floorAreaRange": [
       124,
@@ -54,7 +48,13 @@
         "stationName": "PASIR RIS MRT STATION",
         "distanceMeters": 1607
       }
-    ]
+    ],
+    "priceIqr": [
+      726000,
+      748500
+    ],
+    "pricePerSqmMedian": 5856,
+    "pricePerSqftMedian": 544.04
   },
   "monthlyTrend": [
     {
@@ -294,7 +294,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-485a-tampines-ave-9-2026-01-227875",
+      "id": "tampines-485a-tampines-ave-9-2026-01-227969",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -307,7 +307,7 @@
       "pricePerSqft": 568.57
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2026-01-227876",
+      "id": "tampines-485a-tampines-ave-9-2026-01-227970",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -372,7 +372,7 @@
       "pricePerSqft": 360.46
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2016-11-973920",
+      "id": "tampines-485a-tampines-ave-9-2016-11-974036",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -385,7 +385,7 @@
       "pricePerSqft": 367.12
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2016-05-963699",
+      "id": "tampines-485a-tampines-ave-9-2016-05-963815",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -398,7 +398,7 @@
       "pricePerSqft": 348.39
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2014-02-636995",
+      "id": "tampines-485a-tampines-ave-9-2014-02-637111",
       "month": "2014-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -411,7 +411,7 @@
       "pricePerSqft": 389.59
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2013-12-634944",
+      "id": "tampines-485a-tampines-ave-9-2013-12-635060",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -424,7 +424,7 @@
       "pricePerSqft": 382.76
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2012-06-607450",
+      "id": "tampines-485a-tampines-ave-9-2012-06-607566",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -437,7 +437,7 @@
       "pricePerSqft": 376.86
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2011-08-588799",
+      "id": "tampines-485a-tampines-ave-9-2011-08-588915",
       "month": "2011-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -450,7 +450,7 @@
       "pricePerSqft": 355.88
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2011-06-584984",
+      "id": "tampines-485a-tampines-ave-9-2011-06-585100",
       "month": "2011-06",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -463,7 +463,7 @@
       "pricePerSqft": 363.44
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2011-06-584985",
+      "id": "tampines-485a-tampines-ave-9-2011-06-585101",
       "month": "2011-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -476,7 +476,7 @@
       "pricePerSqft": 367.12
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2011-05-582974",
+      "id": "tampines-485a-tampines-ave-9-2011-05-583090",
       "month": "2011-05",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -489,7 +489,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2011-04-581040",
+      "id": "tampines-485a-tampines-ave-9-2011-04-581156",
       "month": "2011-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -502,7 +502,7 @@
       "pricePerSqft": 347.83
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2010-08-562921",
+      "id": "tampines-485a-tampines-ave-9-2010-08-563037",
       "month": "2010-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -515,7 +515,7 @@
       "pricePerSqft": 312.15
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2009-11-535429",
+      "id": "tampines-485a-tampines-ave-9-2009-11-535545",
       "month": "2009-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -528,7 +528,7 @@
       "pricePerSqft": 268.97
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2009-07-523713",
+      "id": "tampines-485a-tampines-ave-9-2009-07-523829",
       "month": "2009-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -541,7 +541,7 @@
       "pricePerSqft": 274.99
     },
     {
-      "id": "tampines-485a-tampines-ave-9-2007-05-464386",
+      "id": "tampines-485a-tampines-ave-9-2007-05-464502",
       "month": "2007-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

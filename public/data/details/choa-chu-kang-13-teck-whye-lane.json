@@ -10,12 +10,6 @@
       "lng": 103.755847939018
     },
     "medianPrice": 556000,
-    "priceIqr": [
-      540000,
-      562750
-    ],
-    "pricePerSqmMedian": 4672.27,
-    "pricePerSqftMedian": 434.07,
     "transactionCount": 8,
     "floorAreaRange": [
       119,
@@ -54,7 +48,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 462
       }
-    ]
+    ],
+    "priceIqr": [
+      540000,
+      562750
+    ],
+    "pricePerSqmMedian": 4672.27,
+    "pricePerSqftMedian": 434.07
   },
   "monthlyTrend": [
     {
@@ -732,7 +732,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-13-teck-whye-lane-2026-03-224107",
+      "id": "choa-chu-kang-13-teck-whye-lane-2026-03-224142",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

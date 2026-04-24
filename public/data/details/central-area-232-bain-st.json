@@ -10,12 +10,6 @@
       "lng": 103.853347534791
     },
     "medianPrice": 800000,
-    "priceIqr": [
-      783000,
-      825000
-    ],
-    "pricePerSqmMedian": 9756.1,
-    "pricePerSqftMedian": 906.37,
     "transactionCount": 5,
     "floorAreaRange": [
       82,
@@ -54,7 +48,13 @@
         "stationName": "ESPLANADE MRT STATION",
         "distanceMeters": 390
       }
-    ]
+    ],
+    "priceIqr": [
+      783000,
+      825000
+    ],
+    "pricePerSqmMedian": 9756.1,
+    "pricePerSqftMedian": 906.37
   },
   "monthlyTrend": [
     {
@@ -588,7 +588,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-232-bain-st-2026-03-223792",
+      "id": "central-area-232-bain-st-2026-03-223819",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

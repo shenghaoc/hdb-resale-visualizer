@@ -10,12 +10,6 @@
       "lng": 103.897624425125
     },
     "medianPrice": 776000,
-    "priceIqr": [
-      740000,
-      814444
-    ],
-    "pricePerSqmMedian": 8695.65,
-    "pricePerSqftMedian": 807.85,
     "transactionCount": 11,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 1601
       }
-    ]
+    ],
+    "priceIqr": [
+      740000,
+      814444
+    ],
+    "pricePerSqmMedian": 8695.65,
+    "pricePerSqftMedian": 807.85
   },
   "monthlyTrend": [
     {
@@ -259,7 +259,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-365a-upp-serangoon-rd-2026-01-224580",
+      "id": "hougang-365a-upp-serangoon-rd-2026-01-224626",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

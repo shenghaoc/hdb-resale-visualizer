@@ -10,12 +10,6 @@
       "lng": 103.818673592235
     },
     "medianPrice": 410000,
-    "priceIqr": [
-      378888,
-      418000
-    ],
-    "pricePerSqmMedian": 6764.71,
-    "pricePerSqftMedian": 628.46,
     "transactionCount": 5,
     "floorAreaRange": [
       59,
@@ -54,7 +48,13 @@
         "stationName": "QUEENSTOWN MRT STATION",
         "distanceMeters": 1602
       }
-    ]
+    ],
+    "priceIqr": [
+      378888,
+      418000
+    ],
+    "pricePerSqmMedian": 6764.71,
+    "pricePerSqftMedian": 628.46
   },
   "monthlyTrend": [
     {
@@ -798,7 +798,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-86-redhill-cl-2026-02-223303",
+      "id": "bukit-merah-86-redhill-cl-2026-02-223324",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

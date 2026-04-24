@@ -10,12 +10,6 @@
       "lng": 103.919048765929
     },
     "medianPrice": 768900,
-    "priceIqr": [
-      677750,
-      802500
-    ],
-    "pricePerSqmMedian": 6986.73,
-    "pricePerSqftMedian": 649.09,
     "transactionCount": 8,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "OASIS LRT STATION",
         "distanceMeters": 731
       }
-    ]
+    ],
+    "priceIqr": [
+      677750,
+      802500
+    ],
+    "pricePerSqmMedian": 6986.73,
+    "pricePerSqftMedian": 649.09
   },
   "monthlyTrend": [
     {
@@ -140,7 +140,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-658b-punggol-east-2026-01-226116",
+      "id": "punggol-658b-punggol-east-2026-01-226184",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

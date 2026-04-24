@@ -10,12 +10,6 @@
       "lng": 103.765271283331
     },
     "medianPrice": 704844,
-    "priceIqr": [
-      677700,
-      728472
-    ],
-    "pricePerSqmMedian": 5825.16,
-    "pricePerSqftMedian": 541.17,
     "transactionCount": 6,
     "floorAreaRange": [
       101,
@@ -58,7 +52,13 @@
         "stationName": "SEGAR LRT STATION",
         "distanceMeters": 575
       }
-    ]
+    ],
+    "priceIqr": [
+      677700,
+      728472
+    ],
+    "pricePerSqmMedian": 5825.16,
+    "pricePerSqftMedian": 541.17
   },
   "monthlyTrend": [
     {
@@ -460,7 +460,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-530-jelapang-rd-2026-03-223687",
+      "id": "bukit-panjang-530-jelapang-rd-2026-03-223714",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",

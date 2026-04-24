@@ -10,12 +10,6 @@
       "lng": 103.908102521069
     },
     "medianPrice": 831500,
-    "priceIqr": [
-      793250,
-      853000
-    ],
-    "pricePerSqmMedian": 6836.44,
-    "pricePerSqftMedian": 635.13,
     "transactionCount": 4,
     "floorAreaRange": [
       104,
@@ -56,7 +50,13 @@
         "stationName": "BEDOK NORTH MRT STATION",
         "distanceMeters": 1083
       }
-    ]
+    ],
+    "priceIqr": [
+      793250,
+      853000
+    ],
+    "pricePerSqmMedian": 6836.44,
+    "pricePerSqftMedian": 635.13
   },
   "monthlyTrend": [
     {
@@ -434,7 +434,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-666-jln-damai-2026-03-222614",
+      "id": "bedok-666-jln-damai-2026-03-222625",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -668,7 +668,7 @@
       "pricePerSqft": 421.64
     },
     {
-      "id": "bedok-666-jln-damai-2016-05-962344",
+      "id": "bedok-666-jln-damai-2016-05-962460",
       "month": "2016-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -681,7 +681,7 @@
       "pricePerSqft": 433.25
     },
     {
-      "id": "bedok-666-jln-damai-2014-12-650097",
+      "id": "bedok-666-jln-damai-2014-12-650213",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

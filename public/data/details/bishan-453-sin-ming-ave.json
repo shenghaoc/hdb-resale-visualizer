@@ -10,12 +10,6 @@
       "lng": 103.829898490029
     },
     "medianPrice": 1010000,
-    "priceIqr": [
-      1005000,
-      1015000
-    ],
-    "pricePerSqmMedian": 8080,
-    "pricePerSqftMedian": 750.66,
     "transactionCount": 2,
     "floorAreaRange": [
       120,
@@ -56,7 +50,13 @@
         "stationName": "MAYFLOWER MRT STATION",
         "distanceMeters": 1498
       }
-    ]
+    ],
+    "priceIqr": [
+      1005000,
+      1015000
+    ],
+    "pricePerSqmMedian": 8080,
+    "pricePerSqftMedian": 750.66
   },
   "monthlyTrend": [
     {
@@ -404,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-453-sin-ming-ave-2026-02-222795",
+      "id": "bishan-453-sin-ming-ave-2026-02-222807",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -625,7 +625,7 @@
       "pricePerSqft": 512.57
     },
     {
-      "id": "bishan-453-sin-ming-ave-2016-08-967644",
+      "id": "bishan-453-sin-ming-ave-2016-08-967760",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -638,7 +638,7 @@
       "pricePerSqft": 445.94
     },
     {
-      "id": "bishan-453-sin-ming-ave-2016-08-967656",
+      "id": "bishan-453-sin-ming-ave-2016-08-967772",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -651,7 +651,7 @@
       "pricePerSqft": 549.39
     },
     {
-      "id": "bishan-453-sin-ming-ave-2015-11-953523",
+      "id": "bishan-453-sin-ming-ave-2015-11-953639",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

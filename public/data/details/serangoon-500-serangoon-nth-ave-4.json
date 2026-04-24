@@ -10,12 +10,6 @@
       "lng": 103.875744233814
     },
     "medianPrice": 777500,
-    "priceIqr": [
-      761250,
-      793750
-    ],
-    "pricePerSqmMedian": 6246.13,
-    "pricePerSqftMedian": 580.29,
     "transactionCount": 2,
     "floorAreaRange": [
       123,
@@ -54,7 +48,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 1961
       }
-    ]
+    ],
+    "priceIqr": [
+      761250,
+      793750
+    ],
+    "pricePerSqmMedian": 6246.13,
+    "pricePerSqftMedian": 580.29
   },
   "monthlyTrend": [
     {
@@ -456,7 +456,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-500-serangoon-nth-ave-4-2026-02-227470",
+      "id": "serangoon-500-serangoon-nth-ave-4-2026-02-227558",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -677,7 +677,7 @@
       "pricePerSqft": 372.28
     },
     {
-      "id": "serangoon-500-serangoon-nth-ave-4-2016-09-970588",
+      "id": "serangoon-500-serangoon-nth-ave-4-2016-09-970704",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -690,7 +690,7 @@
       "pricePerSqft": 352.13
     },
     {
-      "id": "serangoon-500-serangoon-nth-ave-4-2016-09-970590",
+      "id": "serangoon-500-serangoon-nth-ave-4-2016-09-970706",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -703,7 +703,7 @@
       "pricePerSqft": 377.65
     },
     {
-      "id": "serangoon-500-serangoon-nth-ave-4-2016-05-963599",
+      "id": "serangoon-500-serangoon-nth-ave-4-2016-05-963715",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

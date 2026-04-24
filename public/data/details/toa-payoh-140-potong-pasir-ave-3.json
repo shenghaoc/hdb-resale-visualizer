@@ -10,12 +10,6 @@
       "lng": 103.866824943073
     },
     "medianPrice": 622388,
-    "priceIqr": [
-      604722,
-      711472
-    ],
-    "pricePerSqmMedian": 7837.84,
-    "pricePerSqftMedian": 728.16,
     "transactionCount": 6,
     "floorAreaRange": [
       74,
@@ -57,7 +51,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 1461
       }
-    ]
+    ],
+    "priceIqr": [
+      604722,
+      711472
+    ],
+    "pricePerSqmMedian": 7837.84,
+    "pricePerSqftMedian": 728.16
   },
   "monthlyTrend": [
     {
@@ -675,7 +675,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-140-potong-pasir-ave-3-2026-03-228163",
+      "id": "toa-payoh-140-potong-pasir-ave-3-2026-03-228262",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -909,7 +909,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "toa-payoh-140-potong-pasir-ave-3-2016-04-961903",
+      "id": "toa-payoh-140-potong-pasir-ave-3-2016-04-962019",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -922,7 +922,7 @@
       "pricePerSqft": 502.18
     },
     {
-      "id": "toa-payoh-140-potong-pasir-ave-3-2012-11-617268",
+      "id": "toa-payoh-140-potong-pasir-ave-3-2012-11-617384",
       "month": "2012-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

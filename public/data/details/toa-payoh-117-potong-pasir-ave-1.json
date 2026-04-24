@@ -10,12 +10,6 @@
       "lng": 103.863020849819
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      440000,
-      605000
-    ],
-    "pricePerSqmMedian": 6343.28,
-    "pricePerSqftMedian": 589.31,
     "transactionCount": 9,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1729
       }
-    ]
+    ],
+    "priceIqr": [
+      440000,
+      605000
+    ],
+    "pricePerSqmMedian": 6343.28,
+    "pricePerSqftMedian": 589.31
   },
   "monthlyTrend": [
     {
@@ -1039,7 +1039,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-117-potong-pasir-ave-1-2026-01-228268",
+      "id": "toa-payoh-117-potong-pasir-ave-1-2026-01-228367",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

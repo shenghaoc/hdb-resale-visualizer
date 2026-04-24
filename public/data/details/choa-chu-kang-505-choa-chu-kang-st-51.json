@@ -9,14 +9,8 @@
       "lat": 1.38907418639043,
       "lng": 103.742140885339
     },
-    "medianPrice": 540000,
-    "priceIqr": [
-      530000,
-      550000
-    ],
-    "pricePerSqmMedian": 5024.23,
-    "pricePerSqftMedian": 466.76,
-    "transactionCount": 2,
+    "medianPrice": 545000,
+    "transactionCount": 3,
     "floorAreaRange": [
       107,
       133
@@ -25,10 +19,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2025-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1999-01",
-      "2025-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "SOUTH VIEW LRT STATION",
         "distanceMeters": 1028
       }
-    ]
+    ],
+    "priceIqr": [
+      532500,
+      552500
+    ],
+    "pricePerSqmMedian": 5046.3,
+    "pricePerSqftMedian": 468.82
   },
   "monthlyTrend": [
     {
@@ -550,9 +550,28 @@
       "medianPrice": 560000,
       "transactionCount": 1,
       "medianPricePerSqm": 5233.64
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5046.3
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2026-04-223983",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 108,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "67 years 07 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 5046.3,
+      "pricePerSqft": 468.82
+    },
     {
       "id": "choa-chu-kang-505-choa-chu-kang-st-51-2025-02-203216",
       "month": "2025-02",
@@ -723,7 +742,7 @@
       "pricePerSqft": 281.27
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2016-07-966256",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2016-07-966372",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -736,7 +755,7 @@
       "pricePerSqft": 286.52
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2015-08-949037",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2015-08-949153",
       "month": "2015-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -749,7 +768,7 @@
       "pricePerSqft": 275.27
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2015-05-944272",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2015-05-944388",
       "month": "2015-05",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -762,7 +781,7 @@
       "pricePerSqft": 308.47
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2014-07-643241",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2014-07-643357",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -775,7 +794,7 @@
       "pricePerSqft": 342.37
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2013-12-634437",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2013-12-634553",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -788,7 +807,7 @@
       "pricePerSqft": 344.76
     },
     {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2013-08-629337",
+      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2013-08-629453",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -799,19 +818,6 @@
       "resalePrice": 412000,
       "pricePerSqm": 3850.47,
       "pricePerSqft": 357.72
-    },
-    {
-      "id": "choa-chu-kang-505-choa-chu-kang-st-51-2013-05-625033",
-      "month": "2013-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 129,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1994,
-      "remainingLease": "67 years",
-      "resalePrice": 500000,
-      "pricePerSqm": 3875.97,
-      "pricePerSqft": 360.09
     }
   ]
 }

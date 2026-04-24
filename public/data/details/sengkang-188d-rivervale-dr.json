@@ -10,12 +10,6 @@
       "lng": 103.904008558369
     },
     "medianPrice": 605000,
-    "priceIqr": [
-      590000,
-      632500
-    ],
-    "pricePerSqmMedian": 6052.63,
-    "pricePerSqftMedian": 562.31,
     "transactionCount": 3,
     "floorAreaRange": [
       95,
@@ -56,7 +50,13 @@
         "stationName": "COVE LRT STATION",
         "distanceMeters": 511
       }
-    ]
+    ],
+    "priceIqr": [
+      590000,
+      632500
+    ],
+    "pricePerSqmMedian": 6052.63,
+    "pricePerSqftMedian": 562.31
   },
   "monthlyTrend": [
     {
@@ -350,7 +350,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-188d-rivervale-dr-2026-02-227148",
+      "id": "sengkang-188d-rivervale-dr-2026-02-227231",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

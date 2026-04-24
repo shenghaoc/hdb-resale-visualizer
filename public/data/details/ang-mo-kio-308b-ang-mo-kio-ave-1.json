@@ -9,14 +9,8 @@
       "lat": 1.3652661423815,
       "lng": 103.844538059044
     },
-    "medianPrice": 785944,
-    "priceIqr": [
-      670222,
-      892750
-    ],
-    "pricePerSqmMedian": 9501.52,
-    "pricePerSqftMedian": 882.72,
-    "transactionCount": 6,
+    "medianPrice": 700888,
+    "transactionCount": 7,
     "floorAreaRange": [
       70,
       96
@@ -55,7 +49,13 @@
         "stationName": "BRIGHT HILL MRT STATION",
         "distanceMeters": 1220
       }
-    ]
+    ],
+    "priceIqr": [
+      680000,
+      885500
+    ],
+    "pricePerSqmMedian": 9574.47,
+    "pricePerSqftMedian": 889.5
   },
   "monthlyTrend": [
     {
@@ -336,14 +336,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 930000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9893.62
+      "medianPrice": 815000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9946.81
     }
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-308b-ang-mo-kio-ave-1-2026-04-222184",
+      "id": "ang-mo-kio-308b-ang-mo-kio-ave-1-2026-04-222087",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 70,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 05 months",
+      "resalePrice": 700000,
+      "pricePerSqm": 10000,
+      "pricePerSqft": 929.03
+    },
+    {
+      "id": "ang-mo-kio-308b-ang-mo-kio-ave-1-2026-04-222190",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -588,19 +601,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 7571.43,
       "pricePerSqft": 703.41
-    },
-    {
-      "id": "ang-mo-kio-308b-ang-mo-kio-ave-1-2021-08-104004",
-      "month": "2021-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 70,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "90 years 02 months",
-      "resalePrice": 465000,
-      "pricePerSqm": 6642.86,
-      "pricePerSqft": 617.14
     }
   ]
 }

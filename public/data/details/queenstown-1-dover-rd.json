@@ -10,12 +10,6 @@
       "lng": 103.783273166817
     },
     "medianPrice": 382500,
-    "priceIqr": [
-      363500,
-      420000
-    ],
-    "pricePerSqmMedian": 5707.48,
-    "pricePerSqftMedian": 530.24,
     "transactionCount": 8,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BUONA VISTA MRT STATION",
         "distanceMeters": 949
       }
-    ]
+    ],
+    "priceIqr": [
+      363500,
+      420000
+    ],
+    "pricePerSqmMedian": 5707.48,
+    "pricePerSqftMedian": 530.24
   },
   "monthlyTrend": [
     {
@@ -848,7 +848,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-1-dover-rd-2026-03-226435",
+      "id": "queenstown-1-dover-rd-2026-03-226511",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -861,7 +861,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "queenstown-1-dover-rd-2026-01-226434",
+      "id": "queenstown-1-dover-rd-2026-01-226510",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

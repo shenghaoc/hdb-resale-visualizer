@@ -10,12 +10,6 @@
       "lng": 103.825441382185
     },
     "medianPrice": 535000,
-    "priceIqr": [
-      502500,
-      582500
-    ],
-    "pricePerSqmMedian": 6689.19,
-    "pricePerSqftMedian": 621.44,
     "transactionCount": 4,
     "floorAreaRange": [
       74,
@@ -57,7 +51,13 @@
         "stationName": "OUTRAM PARK MRT STATION",
         "distanceMeters": 1451
       }
-    ]
+    ],
+    "priceIqr": [
+      502500,
+      582500
+    ],
+    "pricePerSqmMedian": 6689.19,
+    "pricePerSqftMedian": 621.44
   },
   "monthlyTrend": [
     {
@@ -705,7 +705,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-108-jln-bt-merah-2026-01-223278",
+      "id": "bukit-merah-108-jln-bt-merah-2026-01-223299",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

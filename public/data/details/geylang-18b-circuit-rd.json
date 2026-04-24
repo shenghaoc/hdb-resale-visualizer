@@ -10,12 +10,6 @@
       "lng": 103.888248441219
     },
     "medianPrice": 760000,
-    "priceIqr": [
-      707000,
-      960000
-    ],
-    "pricePerSqmMedian": 10552.24,
-    "pricePerSqftMedian": 980.34,
     "transactionCount": 9,
     "floorAreaRange": [
       67,
@@ -55,7 +49,13 @@
         "stationName": "TAI SENG MRT STATION",
         "distanceMeters": 605
       }
-    ]
+    ],
+    "priceIqr": [
+      707000,
+      960000
+    ],
+    "pricePerSqmMedian": 10552.24,
+    "pricePerSqftMedian": 980.34
   },
   "monthlyTrend": [
     {
@@ -253,7 +253,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-18b-circuit-rd-2026-03-224331",
+      "id": "geylang-18b-circuit-rd-2026-03-224370",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -266,7 +266,7 @@
       "pricePerSqft": 995.59
     },
     {
-      "id": "geylang-18b-circuit-rd-2026-03-224333",
+      "id": "geylang-18b-circuit-rd-2026-03-224372",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -279,7 +279,7 @@
       "pricePerSqft": 1053.83
     },
     {
-      "id": "geylang-18b-circuit-rd-2026-01-224314",
+      "id": "geylang-18b-circuit-rd-2026-01-224353",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

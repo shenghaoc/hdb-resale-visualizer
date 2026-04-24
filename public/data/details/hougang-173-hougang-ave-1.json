@@ -10,12 +10,6 @@
       "lng": 103.888838230371
     },
     "medianPrice": 652500,
-    "priceIqr": [
-      593750,
-      725000
-    ],
-    "pricePerSqmMedian": 5834.53,
-    "pricePerSqftMedian": 542.04,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "TAI SENG MRT STATION",
         "distanceMeters": 1586
       }
-    ]
+    ],
+    "priceIqr": [
+      593750,
+      725000
+    ],
+    "pricePerSqmMedian": 5834.53,
+    "pricePerSqftMedian": 542.04
   },
   "monthlyTrend": [
     {
@@ -647,7 +647,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-12-974759",
+      "id": "hougang-173-hougang-ave-1-2016-12-974875",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -660,7 +660,7 @@
       "pricePerSqft": 366.09
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-10-971636",
+      "id": "hougang-173-hougang-ave-1-2016-10-971752",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -673,7 +673,7 @@
       "pricePerSqft": 371.61
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-06-964677",
+      "id": "hougang-173-hougang-ave-1-2016-06-964793",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -686,7 +686,7 @@
       "pricePerSqft": 306.58
     },
     {
-      "id": "hougang-173-hougang-ave-1-2016-01-956755",
+      "id": "hougang-173-hougang-ave-1-2016-01-956871",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -699,7 +699,7 @@
       "pricePerSqft": 403.6
     },
     {
-      "id": "hougang-173-hougang-ave-1-2015-05-944423",
+      "id": "hougang-173-hougang-ave-1-2015-05-944539",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

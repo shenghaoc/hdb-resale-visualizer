@@ -10,12 +10,6 @@
       "lng": 103.758340839001
     },
     "medianPrice": 475000,
-    "priceIqr": [
-      395000,
-      615000
-    ],
-    "pricePerSqmMedian": 7507.46,
-    "pricePerSqftMedian": 697.47,
     "transactionCount": 13,
     "floorAreaRange": [
       47,
@@ -56,7 +50,13 @@
         "stationName": "JELAPANG LRT STATION",
         "distanceMeters": 718
       }
-    ]
+    ],
+    "priceIqr": [
+      395000,
+      615000
+    ],
+    "pricePerSqmMedian": 7507.46,
+    "pricePerSqftMedian": 697.47
   },
   "monthlyTrend": [
     {
@@ -308,7 +308,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-633a-senja-rd-2026-01-223510",
+      "id": "bukit-panjang-633a-senja-rd-2026-01-223535",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "22 TO 24",

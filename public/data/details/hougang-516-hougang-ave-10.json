@@ -10,12 +10,6 @@
       "lng": 103.88904248743
     },
     "medianPrice": 557500,
-    "priceIqr": [
-      532750,
-      568750
-    ],
-    "pricePerSqmMedian": 6636.9,
-    "pricePerSqftMedian": 616.59,
     "transactionCount": 3,
     "floorAreaRange": [
       84,
@@ -55,7 +49,13 @@
         "stationName": "KOVAN MRT STATION",
         "distanceMeters": 1470
       }
-    ]
+    ],
+    "priceIqr": [
+      532750,
+      568750
+    ],
+    "pricePerSqmMedian": 6636.9,
+    "pricePerSqftMedian": 616.59
   },
   "monthlyTrend": [
     {
@@ -751,7 +751,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-516-hougang-ave-10-2026-01-224629",
+      "id": "hougang-516-hougang-ave-10-2026-01-224676",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -998,7 +998,7 @@
       "pricePerSqft": 393.73
     },
     {
-      "id": "hougang-516-hougang-ave-10-2016-11-973220",
+      "id": "hougang-516-hougang-ave-10-2016-11-973336",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

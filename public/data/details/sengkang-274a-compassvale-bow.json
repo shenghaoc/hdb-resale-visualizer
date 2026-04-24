@@ -10,12 +10,6 @@
       "lng": 103.890563070914
     },
     "medianPrice": 894000,
-    "priceIqr": [
-      783750,
-      957000
-    ],
-    "pricePerSqmMedian": 8377.45,
-    "pricePerSqftMedian": 778.29,
     "transactionCount": 12,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 793
       }
-    ]
+    ],
+    "priceIqr": [
+      783750,
+      957000
+    ],
+    "pricePerSqmMedian": 8377.45,
+    "pricePerSqftMedian": 778.29
   },
   "monthlyTrend": [
     {
@@ -230,7 +230,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-274a-compassvale-bow-2026-04-227239",
+      "id": "sengkang-274a-compassvale-bow-2026-04-227322",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.77000324485
     },
     "medianPrice": 691500,
-    "priceIqr": [
-      458750,
-      924000
-    ],
-    "pricePerSqmMedian": 9300,
-    "pricePerSqftMedian": 864,
     "transactionCount": 8,
     "floorAreaRange": [
       49,
@@ -56,7 +50,13 @@
         "stationName": "ONE-NORTH MRT STATION",
         "distanceMeters": 2251
       }
-    ]
+    ],
+    "priceIqr": [
+      458750,
+      924000
+    ],
+    "pricePerSqmMedian": 9300,
+    "pricePerSqftMedian": 864
   },
   "monthlyTrend": [
     {

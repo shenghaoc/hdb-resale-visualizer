@@ -10,12 +10,6 @@
       "lng": 103.881375973843
     },
     "medianPrice": 595000,
-    "priceIqr": [
-      570000,
-      603750
-    ],
-    "pricePerSqmMedian": 5776.7,
-    "pricePerSqftMedian": 536.67,
     "transactionCount": 8,
     "floorAreaRange": [
       102,
@@ -54,7 +48,13 @@
         "stationName": "MATTAR MRT STATION",
         "distanceMeters": 1002
       }
-    ]
+    ],
+    "priceIqr": [
+      570000,
+      603750
+    ],
+    "pricePerSqmMedian": 5776.7,
+    "pricePerSqftMedian": 536.67
   },
   "monthlyTrend": [
     {
@@ -738,7 +738,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-17-joo-seng-rd-2026-02-228221",
+      "id": "toa-payoh-17-joo-seng-rd-2026-02-228320",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

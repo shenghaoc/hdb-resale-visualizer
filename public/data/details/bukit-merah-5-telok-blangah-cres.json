@@ -10,12 +10,6 @@
       "lng": 103.819220384802
     },
     "medianPrice": 425000,
-    "priceIqr": [
-      420000,
-      438000
-    ],
-    "pricePerSqmMedian": 6363.64,
-    "pricePerSqftMedian": 591.2,
     "transactionCount": 5,
     "floorAreaRange": [
       66,
@@ -56,7 +50,13 @@
         "stationName": "TELOK BLANGAH MRT STATION",
         "distanceMeters": 1367
       }
-    ]
+    ],
+    "priceIqr": [
+      420000,
+      438000
+    ],
+    "pricePerSqmMedian": 6363.64,
+    "pricePerSqftMedian": 591.2
   },
   "monthlyTrend": [
     {
@@ -842,7 +842,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-5-telok-blangah-cres-2026-02-223317",
+      "id": "bukit-merah-5-telok-blangah-cres-2026-02-223338",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

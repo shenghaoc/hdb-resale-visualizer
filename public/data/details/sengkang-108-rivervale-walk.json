@@ -10,12 +10,6 @@
       "lng": 103.899782887436
     },
     "medianPrice": 600000,
-    "priceIqr": [
-      575000,
-      606000
-    ],
-    "pricePerSqmMedian": 5750,
-    "pricePerSqftMedian": 534.19,
     "transactionCount": 5,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 703
       }
-    ]
+    ],
+    "priceIqr": [
+      575000,
+      606000
+    ],
+    "pricePerSqmMedian": 5750,
+    "pricePerSqftMedian": 534.19
   },
   "monthlyTrend": [
     {
@@ -380,7 +380,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-108-rivervale-walk-2026-03-227161",
+      "id": "sengkang-108-rivervale-walk-2026-03-227244",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

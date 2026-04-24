@@ -9,14 +9,8 @@
       "lat": 1.43408170813881,
       "lng": 103.796662417315
     },
-    "medianPrice": 540000,
-    "priceIqr": [
-      522500,
-      580000
-    ],
-    "pricePerSqmMedian": 5040.65,
-    "pricePerSqftMedian": 468.29,
-    "transactionCount": 3,
+    "medianPrice": 548000,
+    "transactionCount": 4,
     "floorAreaRange": [
       101,
       123
@@ -25,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-04",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS MRT STATION",
         "distanceMeters": 846
       }
-    ]
+    ],
+    "priceIqr": [
+      531250,
+      572000
+    ],
+    "pricePerSqmMedian": 5167.39,
+    "pricePerSqftMedian": 480.06
   },
   "monthlyTrend": [
     {
@@ -508,9 +508,28 @@
       "medianPrice": 620000,
       "transactionCount": 1,
       "medianPricePerSqm": 5040.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 556000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5450.98
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-615-woodlands-ave-4-2026-04-228566",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 02 months",
+      "resalePrice": 556000,
+      "pricePerSqm": 5450.98,
+      "pricePerSqft": 506.41
+    },
     {
       "id": "woodlands-615-woodlands-ave-4-2025-03-219738",
       "month": "2025-03",
@@ -757,19 +776,6 @@
       "resalePrice": 430000,
       "pricePerSqm": 3553.72,
       "pricePerSqft": 330.15
-    },
-    {
-      "id": "woodlands-615-woodlands-ave-4-2017-05-7822",
-      "month": "2017-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "80 years 01 month",
-      "resalePrice": 420000,
-      "pricePerSqm": 3442.62,
-      "pricePerSqft": 319.83
     }
   ]
 }

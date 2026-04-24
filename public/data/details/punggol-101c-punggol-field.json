@@ -10,12 +10,6 @@
       "lng": 103.906569305679
     },
     "medianPrice": 596500,
-    "priceIqr": [
-      587250,
-      605750
-    ],
-    "pricePerSqmMedian": 5446.83,
-    "pricePerSqftMedian": 506.02,
     "transactionCount": 2,
     "floorAreaRange": [
       109,
@@ -54,7 +48,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 744
       }
-    ]
+    ],
+    "priceIqr": [
+      587250,
+      605750
+    ],
+    "pricePerSqmMedian": 5446.83,
+    "pricePerSqftMedian": 506.02
   },
   "monthlyTrend": [
     {
@@ -583,7 +583,7 @@
       "pricePerSqft": 366.5
     },
     {
-      "id": "punggol-101c-punggol-field-2016-12-975077",
+      "id": "punggol-101c-punggol-field-2016-12-975193",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

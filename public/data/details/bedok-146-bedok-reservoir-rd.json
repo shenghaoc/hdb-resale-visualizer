@@ -9,14 +9,8 @@
       "lat": 1.33459969119921,
       "lng": 103.912010752027
     },
-    "medianPrice": 582500,
-    "priceIqr": [
-      543750,
-      630000
-    ],
-    "pricePerSqmMedian": 6458.34,
-    "pricePerSqftMedian": 600,
-    "transactionCount": 4,
+    "medianPrice": 545000,
+    "transactionCount": 5,
     "floorAreaRange": [
       84,
       122
@@ -57,7 +51,13 @@
         "stationName": "UBI MRT STATION",
         "distanceMeters": 1445
       }
-    ]
+    ],
+    "priceIqr": [
+      545000,
+      620000
+    ],
+    "pricePerSqmMedian": 6488.1,
+    "pricePerSqftMedian": 602.76
   },
   "monthlyTrend": [
     {
@@ -891,13 +891,13 @@
     {
       "month": "2026-04",
       "medianPrice": 545000,
-      "transactionCount": 1,
+      "transactionCount": 2,
       "medianPricePerSqm": 6488.1
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-146-bedok-reservoir-rd-2026-04-222574",
+      "id": "bedok-146-bedok-reservoir-rd-2026-04-222582",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -905,6 +905,19 @@
       "flatModel": "SIMPLIFIED",
       "leaseCommenceDate": 1986,
       "remainingLease": "59 years 09 months",
+      "resalePrice": 545000,
+      "pricePerSqm": 6488.1,
+      "pricePerSqft": 602.76
+    },
+    {
+      "id": "bedok-146-bedok-reservoir-rd-2026-04-222586",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 08 months",
       "resalePrice": 545000,
       "pricePerSqm": 6488.1,
       "pricePerSqft": 602.76
@@ -1142,19 +1155,6 @@
       "resalePrice": 385000,
       "pricePerSqm": 4583.33,
       "pricePerSqft": 425.81
-    },
-    {
-      "id": "bedok-146-bedok-reservoir-rd-2017-03-2443",
-      "month": "2017-03",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "68 years 09 months",
-      "resalePrice": 500000,
-      "pricePerSqm": 4098.36,
-      "pricePerSqft": 380.75
     }
   ]
 }

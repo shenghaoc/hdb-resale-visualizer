@@ -10,12 +10,6 @@
       "lng": 103.807789228113
     },
     "medianPrice": 990000,
-    "priceIqr": [
-      971250,
-      1034972
-    ],
-    "pricePerSqmMedian": 11000,
-    "pricePerSqftMedian": 1021.93,
     "transactionCount": 16,
     "floorAreaRange": [
       85,
@@ -56,7 +50,13 @@
         "stationName": "COMMONWEALTH MRT STATION",
         "distanceMeters": 1360
       }
-    ]
+    ],
+    "priceIqr": [
+      971250,
+      1034972
+    ],
+    "pricePerSqmMedian": 11000,
+    "pricePerSqftMedian": 1021.93
   },
   "monthlyTrend": [
     {
@@ -590,7 +590,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-48-strathmore-ave-2026-04-226595",
+      "id": "queenstown-48-strathmore-ave-2026-04-226673",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -603,7 +603,7 @@
       "pricePerSqft": 1062.47
     },
     {
-      "id": "queenstown-48-strathmore-ave-2026-03-226563",
+      "id": "queenstown-48-strathmore-ave-2026-03-226640",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

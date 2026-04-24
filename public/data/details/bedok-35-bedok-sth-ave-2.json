@@ -10,12 +10,6 @@
       "lng": 103.939766219283
     },
     "medianPrice": 500000,
-    "priceIqr": [
-      470000,
-      510000
-    ],
-    "pricePerSqmMedian": 5555.56,
-    "pricePerSqftMedian": 516.13,
     "transactionCount": 5,
     "floorAreaRange": [
       90,
@@ -54,7 +48,13 @@
         "stationName": "BEDOK MRT STATION",
         "distanceMeters": 1142
       }
-    ]
+    ],
+    "priceIqr": [
+      470000,
+      510000
+    ],
+    "pricePerSqmMedian": 5555.56,
+    "pricePerSqftMedian": 516.13
   },
   "monthlyTrend": [
     {

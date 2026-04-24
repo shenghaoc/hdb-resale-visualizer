@@ -10,12 +10,6 @@
       "lng": 103.824378409707
     },
     "medianPrice": 540000,
-    "priceIqr": [
-      535000,
-      548500
-    ],
-    "pricePerSqmMedian": 6000,
-    "pricePerSqftMedian": 557.42,
     "transactionCount": 3,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "YISHUN MRT STATION",
         "distanceMeters": 2531
       }
-    ]
+    ],
+    "priceIqr": [
+      535000,
+      548500
+    ],
+    "pricePerSqmMedian": 6000,
+    "pricePerSqftMedian": 557.42
   },
   "monthlyTrend": [
     {
@@ -627,7 +627,7 @@
       "pricePerSqft": 314.84
     },
     {
-      "id": "sembawang-589d-montreal-dr-2015-10-952762",
+      "id": "sembawang-589d-montreal-dr-2015-10-952878",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

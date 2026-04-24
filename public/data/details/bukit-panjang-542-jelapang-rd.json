@@ -10,12 +10,6 @@
       "lng": 103.763951611228
     },
     "medianPrice": 975000,
-    "priceIqr": [
-      945000,
-      1000000
-    ],
-    "pricePerSqmMedian": 6964.29,
-    "pricePerSqftMedian": 647,
     "transactionCount": 5,
     "floorAreaRange": [
       140,
@@ -55,7 +49,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 494
       }
-    ]
+    ],
+    "priceIqr": [
+      945000,
+      1000000
+    ],
+    "pricePerSqmMedian": 6964.29,
+    "pricePerSqftMedian": 647
   },
   "monthlyTrend": [
     {
@@ -445,7 +445,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-542-jelapang-rd-2026-01-223735",
+      "id": "bukit-panjang-542-jelapang-rd-2026-01-223762",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

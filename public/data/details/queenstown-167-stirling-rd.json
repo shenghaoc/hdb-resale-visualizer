@@ -10,12 +10,6 @@
       "lng": 103.80260432134
     },
     "medianPrice": 360000,
-    "priceIqr": [
-      311500,
-      364000
-    ],
-    "pricePerSqmMedian": 5383.33,
-    "pricePerSqftMedian": 500.13,
     "transactionCount": 7,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "REDHILL MRT STATION",
         "distanceMeters": 1601
       }
-    ]
+    ],
+    "priceIqr": [
+      311500,
+      364000
+    ],
+    "pricePerSqmMedian": 5383.33,
+    "pricePerSqftMedian": 500.13
   },
   "monthlyTrend": [
     {
@@ -894,7 +894,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-167-stirling-rd-2026-02-226484",
+      "id": "queenstown-167-stirling-rd-2026-02-226561",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

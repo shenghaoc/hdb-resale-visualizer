@@ -10,12 +10,6 @@
       "lng": 103.786732547129
     },
     "medianPrice": 740000,
-    "priceIqr": [
-      647500,
-      761250
-    ],
-    "pricePerSqmMedian": 6001.16,
-    "pricePerSqftMedian": 557.53,
     "transactionCount": 6,
     "floorAreaRange": [
       105,
@@ -56,7 +50,13 @@
         "stationName": "MARSILING MRT STATION",
         "distanceMeters": 1370
       }
-    ]
+    ],
+    "priceIqr": [
+      647500,
+      761250
+    ],
+    "pricePerSqmMedian": 6001.16,
+    "pricePerSqftMedian": 557.53
   },
   "monthlyTrend": [
     {
@@ -542,7 +542,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-368-woodlands-ave-1-2026-03-228457",
+      "id": "woodlands-368-woodlands-ave-1-2026-03-228557",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -555,7 +555,7 @@
       "pricePerSqft": 548.57
     },
     {
-      "id": "woodlands-368-woodlands-ave-1-2026-01-228709",
+      "id": "woodlands-368-woodlands-ave-1-2026-01-228813",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

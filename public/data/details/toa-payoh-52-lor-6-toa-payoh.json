@@ -10,12 +10,6 @@
       "lng": 103.852481978622
     },
     "medianPrice": 300000,
-    "priceIqr": [
-      293000,
-      300000
-    ],
-    "pricePerSqmMedian": 6627.91,
-    "pricePerSqftMedian": 615.75,
     "transactionCount": 5,
     "floorAreaRange": [
       40,
@@ -55,7 +49,13 @@
         "stationName": "CALDECOTT MRT STATION",
         "distanceMeters": 1337
       }
-    ]
+    ],
+    "priceIqr": [
+      293000,
+      300000
+    ],
+    "pricePerSqmMedian": 6627.91,
+    "pricePerSqftMedian": 615.75
   },
   "monthlyTrend": [
     {

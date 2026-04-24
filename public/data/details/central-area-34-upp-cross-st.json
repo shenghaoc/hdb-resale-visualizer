@@ -10,12 +10,6 @@
       "lng": 103.842303340846
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      448000,
-      478750
-    ],
-    "pricePerSqmMedian": 6984.61,
-    "pricePerSqftMedian": 648.89,
     "transactionCount": 10,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "MAXWELL MRT STATION",
         "distanceMeters": 614
       }
-    ]
+    ],
+    "priceIqr": [
+      448000,
+      478750
+    ],
+    "pricePerSqmMedian": 6984.61,
+    "pricePerSqftMedian": 648.89
   },
   "monthlyTrend": [
     {
@@ -1130,7 +1130,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-34-upp-cross-st-2026-03-223787",
+      "id": "central-area-34-upp-cross-st-2026-03-223814",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

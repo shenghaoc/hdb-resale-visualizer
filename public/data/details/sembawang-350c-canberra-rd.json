@@ -10,12 +10,6 @@
       "lng": 103.82038215131
     },
     "medianPrice": 618000,
-    "priceIqr": [
-      604444,
-      659000
-    ],
-    "pricePerSqmMedian": 6363.64,
-    "pricePerSqftMedian": 591.2,
     "transactionCount": 3,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 2360
       }
-    ]
+    ],
+    "priceIqr": [
+      604444,
+      659000
+    ],
+    "pricePerSqmMedian": 6363.64,
+    "pricePerSqftMedian": 591.2
   },
   "monthlyTrend": [
     {
@@ -308,7 +308,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-350c-canberra-rd-2026-03-226693",
+      "id": "sembawang-350c-canberra-rd-2026-03-226771",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -321,7 +321,7 @@
       "pricePerSqft": 617.36
     },
     {
-      "id": "sembawang-350c-canberra-rd-2026-02-226692",
+      "id": "sembawang-350c-canberra-rd-2026-02-226770",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -516,7 +516,7 @@
       "pricePerSqft": 394.63
     },
     {
-      "id": "sembawang-350c-canberra-rd-2015-11-954355",
+      "id": "sembawang-350c-canberra-rd-2015-11-954471",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -529,7 +529,7 @@
       "pricePerSqft": 409.62
     },
     {
-      "id": "sembawang-350c-canberra-rd-2015-07-948123",
+      "id": "sembawang-350c-canberra-rd-2015-07-948239",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -542,7 +542,7 @@
       "pricePerSqft": 384.28
     },
     {
-      "id": "sembawang-350c-canberra-rd-2014-10-648049",
+      "id": "sembawang-350c-canberra-rd-2014-10-648165",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -555,7 +555,7 @@
       "pricePerSqft": 430.73
     },
     {
-      "id": "sembawang-350c-canberra-rd-2014-09-646505",
+      "id": "sembawang-350c-canberra-rd-2014-09-646621",
       "month": "2014-09",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",

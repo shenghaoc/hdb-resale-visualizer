@@ -10,12 +10,6 @@
       "lng": 103.792079496533
     },
     "medianPrice": 703888,
-    "priceIqr": [
-      655500,
-      730000
-    ],
-    "pricePerSqmMedian": 6796.46,
-    "pricePerSqftMedian": 631.41,
     "transactionCount": 7,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "WOODLANDS SOUTH MRT STATION",
         "distanceMeters": 1141
       }
-    ]
+    ],
+    "priceIqr": [
+      655500,
+      730000
+    ],
+    "pricePerSqmMedian": 6796.46,
+    "pricePerSqftMedian": 631.41
   },
   "monthlyTrend": [
     {
@@ -254,7 +254,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-889d-woodlands-dr-50-2026-02-228567",
+      "id": "woodlands-889d-woodlands-dr-50-2026-02-228671",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

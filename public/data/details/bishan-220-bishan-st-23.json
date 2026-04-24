@@ -10,12 +10,6 @@
       "lng": 103.84883618436
     },
     "medianPrice": 780000,
-    "priceIqr": [
-      768750,
-      861000
-    ],
-    "pricePerSqmMedian": 7383.35,
-    "pricePerSqftMedian": 685.94,
     "transactionCount": 6,
     "floorAreaRange": [
       103,
@@ -55,7 +49,13 @@
         "stationName": "MARYMOUNT MRT STATION",
         "distanceMeters": 1438
       }
-    ]
+    ],
+    "priceIqr": [
+      768750,
+      861000
+    ],
+    "pricePerSqmMedian": 7383.35,
+    "pricePerSqftMedian": 685.94
   },
   "monthlyTrend": [
     {
@@ -499,7 +499,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-220-bishan-st-23-2026-03-222757",
+      "id": "bishan-220-bishan-st-23-2026-03-222769",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -512,7 +512,7 @@
       "pricePerSqft": 730.07
     },
     {
-      "id": "bishan-220-bishan-st-23-2026-02-222755",
+      "id": "bishan-220-bishan-st-23-2026-02-222767",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -525,7 +525,7 @@
       "pricePerSqft": 690.14
     },
     {
-      "id": "bishan-220-bishan-st-23-2026-01-222751",
+      "id": "bishan-220-bishan-st-23-2026-01-222763",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -746,7 +746,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "bishan-220-bishan-st-23-2016-09-969526",
+      "id": "bishan-220-bishan-st-23-2016-09-969642",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.91316583986
     },
     "medianPrice": 440000,
-    "priceIqr": [
-      420000,
-      460000
-    ],
-    "pricePerSqmMedian": 6875,
-    "pricePerSqftMedian": 638.7,
     "transactionCount": 2,
     "floorAreaRange": [
       64,
@@ -56,7 +50,13 @@
         "stationName": "KEMBANGAN MRT STATION",
         "distanceMeters": 1462
       }
-    ]
+    ],
+    "priceIqr": [
+      420000,
+      460000
+    ],
+    "pricePerSqmMedian": 6875,
+    "pricePerSqftMedian": 638.7
   },
   "monthlyTrend": [
     {
@@ -254,7 +254,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-138-bedok-reservoir-rd-2026-01-222418",
+      "id": "bedok-138-bedok-reservoir-rd-2026-01-222425",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -306,7 +306,7 @@
       "pricePerSqft": 443.64
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2016-09-969386",
+      "id": "bedok-138-bedok-reservoir-rd-2016-09-969502",
       "month": "2016-09",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -319,7 +319,7 @@
       "pricePerSqft": 382.23
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2010-06-553418",
+      "id": "bedok-138-bedok-reservoir-rd-2010-06-553534",
       "month": "2010-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -332,7 +332,7 @@
       "pricePerSqft": 287.27
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2005-03-401924",
+      "id": "bedok-138-bedok-reservoir-rd-2005-03-402040",
       "month": "2005-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -345,7 +345,7 @@
       "pricePerSqft": 271.4
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2004-03-373130",
+      "id": "bedok-138-bedok-reservoir-rd-2004-03-373246",
       "month": "2004-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -358,7 +358,7 @@
       "pricePerSqft": 250.53
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2003-11-361887",
+      "id": "bedok-138-bedok-reservoir-rd-2003-11-362003",
       "month": "2003-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -371,7 +371,7 @@
       "pricePerSqft": 182.67
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2003-08-354305",
+      "id": "bedok-138-bedok-reservoir-rd-2003-08-354421",
       "month": "2003-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -384,7 +384,7 @@
       "pricePerSqft": 192.44
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2003-06-349878",
+      "id": "bedok-138-bedok-reservoir-rd-2003-06-349994",
       "month": "2003-06",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -397,7 +397,7 @@
       "pricePerSqft": 181.45
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2003-01-338636",
+      "id": "bedok-138-bedok-reservoir-rd-2003-01-338752",
       "month": "2003-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -410,7 +410,7 @@
       "pricePerSqft": 174.19
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2001-07-282875",
+      "id": "bedok-138-bedok-reservoir-rd-2001-07-282991",
       "month": "2001-07",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -423,7 +423,7 @@
       "pricePerSqft": 187.26
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-2000-07-245934",
+      "id": "bedok-138-bedok-reservoir-rd-2000-07-246050",
       "month": "2000-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -436,7 +436,7 @@
       "pricePerSqft": 217.74
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1999-08-919986",
+      "id": "bedok-138-bedok-reservoir-rd-1999-08-920102",
       "month": "1999-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -449,7 +449,7 @@
       "pricePerSqft": 197.42
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1999-08-920125",
+      "id": "bedok-138-bedok-reservoir-rd-1999-08-920241",
       "month": "1999-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -462,7 +462,7 @@
       "pricePerSqft": 250.53
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1999-03-890936",
+      "id": "bedok-138-bedok-reservoir-rd-1999-03-891052",
       "month": "1999-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -475,7 +475,7 @@
       "pricePerSqft": 227.79
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1998-11-871205",
+      "id": "bedok-138-bedok-reservoir-rd-1998-11-871321",
       "month": "1998-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -488,7 +488,7 @@
       "pricePerSqft": 245.66
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1998-07-851768",
+      "id": "bedok-138-bedok-reservoir-rd-1998-07-851884",
       "month": "1998-07",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -501,7 +501,7 @@
       "pricePerSqft": 214.84
     },
     {
-      "id": "bedok-138-bedok-reservoir-rd-1997-11-824847",
+      "id": "bedok-138-bedok-reservoir-rd-1997-11-824963",
       "month": "1997-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

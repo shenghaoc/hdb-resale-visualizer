@@ -10,12 +10,6 @@
       "lng": 103.956105132704
     },
     "medianPrice": 1017500,
-    "priceIqr": [
-      970750,
-      1064500
-    ],
-    "pricePerSqmMedian": 6969.18,
-    "pricePerSqftMedian": 647.46,
     "transactionCount": 4,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "EXPO MRT STATION",
         "distanceMeters": 1046
       }
-    ]
+    ],
+    "priceIqr": [
+      970750,
+      1064500
+    ],
+    "pricePerSqmMedian": 6969.18,
+    "pricePerSqftMedian": 647.46
   },
   "monthlyTrend": [
     {
@@ -541,7 +541,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "tampines-229-simei-st-4-2026-04-228003",
+      "id": "tampines-229-simei-st-4-2026-04-228097",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

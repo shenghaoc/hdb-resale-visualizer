@@ -10,12 +10,6 @@
       "lng": 103.897862620782
     },
     "medianPrice": 675000,
-    "priceIqr": [
-      662500,
-      687500
-    ],
-    "pricePerSqmMedian": 7388.89,
-    "pricePerSqftMedian": 686.45,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -55,7 +49,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 492
       }
-    ]
+    ],
+    "priceIqr": [
+      662500,
+      687500
+    ],
+    "pricePerSqmMedian": 7388.89,
+    "pricePerSqftMedian": 686.45
   },
   "monthlyTrend": [
     {
@@ -343,7 +343,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-267a-compassvale-link-2026-02-227031",
+      "id": "sengkang-267a-compassvale-link-2026-02-227113",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

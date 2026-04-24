@@ -10,12 +10,6 @@
       "lng": 103.760505946377
     },
     "medianPrice": 900000,
-    "priceIqr": [
-      858000,
-      980000
-    ],
-    "pricePerSqmMedian": 6805.56,
-    "pricePerSqftMedian": 632.26,
     "transactionCount": 5,
     "floorAreaRange": [
       122,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT GOMBAK MRT STATION",
         "distanceMeters": 1693
       }
-    ]
+    ],
+    "priceIqr": [
+      858000,
+      980000
+    ],
+    "pricePerSqmMedian": 6805.56,
+    "pricePerSqftMedian": 632.26
   },
   "monthlyTrend": [
     {
@@ -655,7 +655,7 @@
       "pricePerSqft": 399.79
     },
     {
-      "id": "bukit-batok-288b-bt-batok-st-25-2016-04-960653",
+      "id": "bukit-batok-288b-bt-batok-st-25-2016-04-960769",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -668,7 +668,7 @@
       "pricePerSqft": 455
     },
     {
-      "id": "bukit-batok-288b-bt-batok-st-25-2016-02-957722",
+      "id": "bukit-batok-288b-bt-batok-st-25-2016-02-957838",
       "month": "2016-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -681,7 +681,7 @@
       "pricePerSqft": 425.81
     },
     {
-      "id": "bukit-batok-288b-bt-batok-st-25-2015-10-951908",
+      "id": "bukit-batok-288b-bt-batok-st-25-2015-10-952024",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

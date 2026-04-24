@@ -10,12 +10,6 @@
       "lng": 103.760633580535
     },
     "medianPrice": 375000,
-    "priceIqr": [
-      370444,
-      396500
-    ],
-    "pricePerSqmMedian": 5567.16,
-    "pricePerSqftMedian": 517.21,
     "transactionCount": 19,
     "floorAreaRange": [
       67,
@@ -57,7 +51,13 @@
         "stationName": "KENT RIDGE MRT STATION",
         "distanceMeters": 2988
       }
-    ]
+    ],
+    "priceIqr": [
+      370444,
+      396500
+    ],
+    "pricePerSqmMedian": 5567.16,
+    "pricePerSqftMedian": 517.21
   },
   "monthlyTrend": [
     {
@@ -1281,7 +1281,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-703-west-coast-rd-2026-03-224205",
+      "id": "clementi-703-west-coast-rd-2026-03-224241",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1294,7 +1294,7 @@
       "pricePerSqft": 519.98
     },
     {
-      "id": "clementi-703-west-coast-rd-2026-02-224204",
+      "id": "clementi-703-west-coast-rd-2026-02-224240",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1307,7 +1307,7 @@
       "pricePerSqft": 482.54
     },
     {
-      "id": "clementi-703-west-coast-rd-2026-01-224202",
+      "id": "clementi-703-west-coast-rd-2026-01-224238",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

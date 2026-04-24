@@ -10,12 +10,6 @@
       "lng": 103.904672885312
     },
     "medianPrice": 682500,
-    "priceIqr": [
-      662000,
-      688750
-    ],
-    "pricePerSqmMedian": 5702.18,
-    "pricePerSqftMedian": 529.75,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "KANGKAR LRT STATION",
         "distanceMeters": 506
       }
-    ]
+    ],
+    "priceIqr": [
+      662000,
+      688750
+    ],
+    "pricePerSqmMedian": 5702.18,
+    "pricePerSqftMedian": 529.75
   },
   "monthlyTrend": [
     {
@@ -314,7 +314,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-134-rivervale-st-2026-01-227337",
+      "id": "sengkang-134-rivervale-st-2026-01-227422",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -522,7 +522,7 @@
       "pricePerSqft": 332.04
     },
     {
-      "id": "sengkang-134-rivervale-st-2014-04-639716",
+      "id": "sengkang-134-rivervale-st-2014-04-639832",
       "month": "2014-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -535,7 +535,7 @@
       "pricePerSqft": 397.63
     },
     {
-      "id": "sengkang-134-rivervale-st-2014-03-638215",
+      "id": "sengkang-134-rivervale-st-2014-03-638331",
       "month": "2014-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -548,7 +548,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "sengkang-134-rivervale-st-2014-03-638217",
+      "id": "sengkang-134-rivervale-st-2014-03-638333",
       "month": "2014-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -561,7 +561,7 @@
       "pricePerSqft": 380.06
     },
     {
-      "id": "sengkang-134-rivervale-st-2013-12-634869",
+      "id": "sengkang-134-rivervale-st-2013-12-634985",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

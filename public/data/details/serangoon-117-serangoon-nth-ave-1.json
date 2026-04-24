@@ -10,12 +10,6 @@
       "lng": 103.870862723896
     },
     "medianPrice": 662444,
-    "priceIqr": [
-      632416,
-      690972
-    ],
-    "pricePerSqmMedian": 5712.24,
-    "pricePerSqftMedian": 530.68,
     "transactionCount": 4,
     "floorAreaRange": [
       98,
@@ -56,7 +50,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1953
       }
-    ]
+    ],
+    "priceIqr": [
+      632416,
+      690972
+    ],
+    "pricePerSqmMedian": 5712.24,
+    "pricePerSqftMedian": 530.68
   },
   "monthlyTrend": [
     {
@@ -620,7 +620,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-117-serangoon-nth-ave-1-2026-01-227464",
+      "id": "serangoon-117-serangoon-nth-ave-1-2026-01-227552",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -854,7 +854,7 @@
       "pricePerSqft": 326.31
     },
     {
-      "id": "serangoon-117-serangoon-nth-ave-1-2016-12-975289",
+      "id": "serangoon-117-serangoon-nth-ave-1-2016-12-975405",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -867,7 +867,7 @@
       "pricePerSqft": 341.67
     },
     {
-      "id": "serangoon-117-serangoon-nth-ave-1-2016-08-968909",
+      "id": "serangoon-117-serangoon-nth-ave-1-2016-08-969025",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",

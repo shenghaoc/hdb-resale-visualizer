@@ -10,12 +10,6 @@
       "lng": 103.848152969032
     },
     "medianPrice": 860000,
-    "priceIqr": [
-      850000,
-      1060000
-    ],
-    "pricePerSqmMedian": 8095.24,
-    "pricePerSqftMedian": 752.07,
     "transactionCount": 5,
     "floorAreaRange": [
       102,
@@ -55,7 +49,13 @@
         "stationName": "ANG MO KIO MRT STATION",
         "distanceMeters": 1370
       }
-    ]
+    ],
+    "priceIqr": [
+      850000,
+      1060000
+    ],
+    "pricePerSqmMedian": 8095.24,
+    "pricePerSqftMedian": 752.07
   },
   "monthlyTrend": [
     {
@@ -768,7 +768,7 @@
       "pricePerSqft": 541.38
     },
     {
-      "id": "bishan-213-bishan-st-23-2016-07-966019",
+      "id": "bishan-213-bishan-st-23-2016-07-966135",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -781,7 +781,7 @@
       "pricePerSqft": 518.11
     },
     {
-      "id": "bishan-213-bishan-st-23-2015-07-947315",
+      "id": "bishan-213-bishan-st-23-2015-07-947431",
       "month": "2015-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -794,7 +794,7 @@
       "pricePerSqft": 500.95
     },
     {
-      "id": "bishan-213-bishan-st-23-2014-10-647232",
+      "id": "bishan-213-bishan-st-23-2014-10-647348",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

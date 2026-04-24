@@ -10,12 +10,6 @@
       "lng": 103.723574645357
     },
     "medianPrice": 480000,
-    "priceIqr": [
-      340000,
-      515000
-    ],
-    "pricePerSqmMedian": 7234.04,
-    "pricePerSqftMedian": 672.07,
     "transactionCount": 17,
     "floorAreaRange": [
       47,
@@ -56,7 +50,13 @@
         "stationName": "JURONG EAST MRT STATION",
         "distanceMeters": 2155
       }
-    ]
+    ],
+    "priceIqr": [
+      340000,
+      515000
+    ],
+    "pricePerSqmMedian": 7234.04,
+    "pricePerSqftMedian": 672.07
   },
   "monthlyTrend": [
     {
@@ -170,7 +170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-140b-corporation-dr-2026-01-225022",
+      "id": "jurong-west-140b-corporation-dr-2026-01-225077",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

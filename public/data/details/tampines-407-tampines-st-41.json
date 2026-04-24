@@ -10,12 +10,6 @@
       "lng": 103.945015695225
     },
     "medianPrice": 455000,
-    "priceIqr": [
-      440000,
-      485000
-    ],
-    "pricePerSqmMedian": 6594.2,
-    "pricePerSqftMedian": 612.62,
     "transactionCount": 3,
     "floorAreaRange": [
       60,
@@ -57,7 +51,13 @@
         "stationName": "TAMPINES WEST MRT STATION",
         "distanceMeters": 1590
       }
-    ]
+    ],
+    "priceIqr": [
+      440000,
+      485000
+    ],
+    "pricePerSqmMedian": 6594.2,
+    "pricePerSqftMedian": 612.62
   },
   "monthlyTrend": [
     {

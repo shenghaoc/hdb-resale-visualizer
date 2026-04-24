@@ -10,12 +10,6 @@
       "lng": 103.81582008771
     },
     "medianPrice": 552500,
-    "priceIqr": [
-      538972,
-      611250
-    ],
-    "pricePerSqmMedian": 5417.21,
-    "pricePerSqftMedian": 503.27,
     "transactionCount": 12,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "ADMIRALTY MRT STATION",
         "distanceMeters": 1776
       }
-    ]
+    ],
+    "priceIqr": [
+      538972,
+      611250
+    ],
+    "pricePerSqmMedian": 5417.21,
+    "pricePerSqftMedian": 503.27
   },
   "monthlyTrend": [
     {
@@ -668,7 +668,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-334-sembawang-cl-2026-01-226834",
+      "id": "sembawang-334-sembawang-cl-2026-01-226913",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",

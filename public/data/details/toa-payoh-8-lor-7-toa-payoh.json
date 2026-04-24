@@ -10,12 +10,6 @@
       "lng": 103.855529906182
     },
     "medianPrice": 345000,
-    "priceIqr": [
-      330000,
-      410000
-    ],
-    "pricePerSqmMedian": 5227.27,
-    "pricePerSqftMedian": 485.63,
     "transactionCount": 5,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "BISHAN MRT STATION",
         "distanceMeters": 1332
       }
-    ]
+    ],
+    "priceIqr": [
+      330000,
+      410000
+    ],
+    "pricePerSqmMedian": 5227.27,
+    "pricePerSqftMedian": 485.63
   },
   "monthlyTrend": [
     {
@@ -836,7 +836,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-8-lor-7-toa-payoh-2026-03-228334",
+      "id": "toa-payoh-8-lor-7-toa-payoh-2026-03-228433",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

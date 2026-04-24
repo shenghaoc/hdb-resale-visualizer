@@ -10,12 +10,6 @@
       "lng": 103.772386971275
     },
     "medianPrice": 617500,
-    "priceIqr": [
-      594500,
-      644000
-    ],
-    "pricePerSqmMedian": 5412.13,
-    "pricePerSqftMedian": 502.81,
     "transactionCount": 4,
     "floorAreaRange": [
       101,
@@ -56,7 +50,13 @@
         "stationName": "SEGAR LRT STATION",
         "distanceMeters": 523
       }
-    ]
+    ],
+    "priceIqr": [
+      594500,
+      644000
+    ],
+    "pricePerSqmMedian": 5412.13,
+    "pricePerSqftMedian": 502.81
   },
   "monthlyTrend": [
     {
@@ -554,7 +554,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-449-bt-panjang-ring-rd-2026-04-223673",
+      "id": "bukit-panjang-449-bt-panjang-ring-rd-2026-04-223700",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -801,7 +801,7 @@
       "pricePerSqft": 298.95
     },
     {
-      "id": "bukit-panjang-449-bt-panjang-ring-rd-2016-12-974545",
+      "id": "bukit-panjang-449-bt-panjang-ring-rd-2016-12-974661",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

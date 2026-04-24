@@ -10,12 +10,6 @@
       "lng": 103.896744510446
     },
     "medianPrice": 980000,
-    "priceIqr": [
-      965000,
-      992500
-    ],
-    "pricePerSqmMedian": 6853.15,
-    "pricePerSqftMedian": 636.68,
     "transactionCount": 3,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "SENGKANG MRT STATION",
         "distanceMeters": 616
       }
-    ]
+    ],
+    "priceIqr": [
+      965000,
+      992500
+    ],
+    "pricePerSqmMedian": 6853.15,
+    "pricePerSqftMedian": 636.68
   },
   "monthlyTrend": [
     {
@@ -319,7 +319,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-205b-compassvale-lane-2026-01-227365",
+      "id": "sengkang-205b-compassvale-lane-2026-01-227450",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -566,7 +566,7 @@
       "pricePerSqft": 397.99
     },
     {
-      "id": "sengkang-205b-compassvale-lane-2016-05-963573",
+      "id": "sengkang-205b-compassvale-lane-2016-05-963689",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

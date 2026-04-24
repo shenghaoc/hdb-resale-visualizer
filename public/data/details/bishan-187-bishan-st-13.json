@@ -10,12 +10,6 @@
       "lng": 103.851544031278
     },
     "medianPrice": 1360444,
-    "priceIqr": [
-      1317750,
-      1408888
-    ],
-    "pricePerSqmMedian": 9318.1,
-    "pricePerSqftMedian": 865.68,
     "transactionCount": 4,
     "floorAreaRange": [
       142,
@@ -55,7 +49,13 @@
         "stationName": "LORONG CHUAN MRT STATION",
         "distanceMeters": 1288
       }
-    ]
+    ],
+    "priceIqr": [
+      1317750,
+      1408888
+    ],
+    "pricePerSqmMedian": 9318.1,
+    "pricePerSqftMedian": 865.68
   },
   "monthlyTrend": [
     {
@@ -709,7 +709,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-187-bishan-st-13-2026-01-222800",
+      "id": "bishan-187-bishan-st-13-2026-01-222813",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.874590319684
     },
     "medianPrice": 1193084,
-    "priceIqr": [
-      1127376,
-      1223500
-    ],
-    "pricePerSqmMedian": 8033.36,
-    "pricePerSqftMedian": 746.33,
     "transactionCount": 4,
     "floorAreaRange": [
       147,
@@ -55,7 +49,13 @@
         "stationName": "FERNVALE LRT STATION",
         "distanceMeters": 2250
       }
-    ]
+    ],
+    "priceIqr": [
+      1127376,
+      1223500
+    ],
+    "pricePerSqmMedian": 8033.36,
+    "pricePerSqftMedian": 746.33
   },
   "monthlyTrend": [
     {
@@ -577,7 +577,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-519-serangoon-nth-ave-4-2026-03-227480",
+      "id": "serangoon-519-serangoon-nth-ave-4-2026-03-227568",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -590,7 +590,7 @@
       "pricePerSqft": 738.28
     },
     {
-      "id": "serangoon-519-serangoon-nth-ave-4-2026-03-227482",
+      "id": "serangoon-519-serangoon-nth-ave-4-2026-03-227570",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -603,7 +603,7 @@
       "pricePerSqft": 783.67
     },
     {
-      "id": "serangoon-519-serangoon-nth-ave-4-2026-01-227479",
+      "id": "serangoon-519-serangoon-nth-ave-4-2026-01-227567",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",

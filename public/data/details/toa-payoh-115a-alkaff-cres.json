@@ -10,12 +10,6 @@
       "lng": 103.87276093968
     },
     "medianPrice": 935000,
-    "priceIqr": [
-      819000,
-      1043722
-    ],
-    "pricePerSqmMedian": 11440.86,
-    "pricePerSqftMedian": 1062.89,
     "transactionCount": 12,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "BARTLEY MRT STATION",
         "distanceMeters": 1040
       }
-    ]
+    ],
+    "priceIqr": [
+      819000,
+      1043722
+    ],
+    "pricePerSqmMedian": 11440.86,
+    "pricePerSqftMedian": 1062.89
   },
   "monthlyTrend": [
     {
@@ -115,7 +115,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-115a-alkaff-cres-2026-01-228179",
+      "id": "toa-payoh-115a-alkaff-cres-2026-01-228278",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

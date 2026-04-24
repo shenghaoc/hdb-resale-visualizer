@@ -10,12 +10,6 @@
       "lng": 103.933180861675
     },
     "medianPrice": 380000,
-    "priceIqr": [
-      365000,
-      400500
-    ],
-    "pricePerSqmMedian": 6440.68,
-    "pricePerSqftMedian": 598.36,
     "transactionCount": 7,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "SIGLAP MRT STATION",
         "distanceMeters": 1278
       }
-    ]
+    ],
+    "priceIqr": [
+      365000,
+      400500
+    ],
+    "pricePerSqmMedian": 6440.68,
+    "pricePerSqftMedian": 598.36
   },
   "monthlyTrend": [
     {

@@ -9,14 +9,8 @@
       "lat": 1.38020079047279,
       "lng": 103.83575571651
     },
-    "medianPrice": 403000,
-    "priceIqr": [
-      386000,
-      419250
-    ],
-    "pricePerSqmMedian": 6014.93,
-    "pricePerSqftMedian": 558.81,
-    "transactionCount": 4,
+    "medianPrice": 418000,
+    "transactionCount": 5,
     "floorAreaRange": [
       67,
       91
@@ -25,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,7 +49,13 @@
         "stationName": "YIO CHU KANG MRT STATION",
         "distanceMeters": 1007
       }
-    ]
+    ],
+    "priceIqr": [
+      388000,
+      423000
+    ],
+    "pricePerSqmMedian": 5864.2,
+    "pricePerSqftMedian": 544.8
   },
   "monthlyTrend": [
     {
@@ -981,9 +981,28 @@
       "medianPrice": 418000,
       "transactionCount": 1,
       "medianPricePerSqm": 6238.81
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 475000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5864.2
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-603-ang-mo-kio-ave-5-2026-04-222172",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 81,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 02 months",
+      "resalePrice": 475000,
+      "pricePerSqm": 5864.2,
+      "pricePerSqft": 544.8
+    },
     {
       "id": "ang-mo-kio-603-ang-mo-kio-ave-5-2025-08-197445",
       "month": "2025-08",
@@ -1230,19 +1249,6 @@
       "resalePrice": 280000,
       "pricePerSqm": 4179.1,
       "pricePerSqft": 388.25
-    },
-    {
-      "id": "ang-mo-kio-603-ang-mo-kio-ave-5-2018-07-30215",
-      "month": "2018-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "60 years 11 months",
-      "resalePrice": 275000,
-      "pricePerSqm": 4104.48,
-      "pricePerSqft": 381.32
     }
   ]
 }

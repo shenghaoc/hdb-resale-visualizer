@@ -10,12 +10,6 @@
       "lng": 103.9082928215
     },
     "medianPrice": 590000,
-    "priceIqr": [
-      486272,
-      623416
-    ],
-    "pricePerSqmMedian": 7001.92,
-    "pricePerSqftMedian": 650.5,
     "transactionCount": 10,
     "floorAreaRange": [
       68,
@@ -55,7 +49,13 @@
         "stationName": "CORAL EDGE LRT STATION",
         "distanceMeters": 660
       }
-    ]
+    ],
+    "priceIqr": [
+      486272,
+      623416
+    ],
+    "pricePerSqmMedian": 7001.92,
+    "pricePerSqftMedian": 650.5
   },
   "monthlyTrend": [
     {
@@ -199,7 +199,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-163c-rivervale-cres-2026-01-226939",
+      "id": "sengkang-163c-rivervale-cres-2026-01-227019",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

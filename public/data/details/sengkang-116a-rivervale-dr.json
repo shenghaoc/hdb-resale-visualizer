@@ -10,12 +10,6 @@
       "lng": 103.902238675198
     },
     "medianPrice": 700000,
-    "priceIqr": [
-      635000,
-      725000
-    ],
-    "pricePerSqmMedian": 6000,
-    "pricePerSqftMedian": 557.42,
     "transactionCount": 3,
     "floorAreaRange": [
       95,
@@ -58,7 +52,13 @@
         "stationName": "BAKAU LRT STATION",
         "distanceMeters": 699
       }
-    ]
+    ],
+    "priceIqr": [
+      635000,
+      725000
+    ],
+    "pricePerSqmMedian": 6000,
+    "pricePerSqftMedian": 557.42
   },
   "monthlyTrend": [
     {

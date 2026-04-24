@@ -10,12 +10,6 @@
       "lng": 103.881232764244
     },
     "medianPrice": 534000,
-    "priceIqr": [
-      518250,
-      561666
-    ],
-    "pricePerSqmMedian": 7852.94,
-    "pricePerSqftMedian": 729.57,
     "transactionCount": 6,
     "floorAreaRange": [
       68,
@@ -54,7 +48,13 @@
         "stationName": "LAYAR LRT STATION",
         "distanceMeters": 647
       }
-    ]
+    ],
+    "priceIqr": [
+      518250,
+      561666
+    ],
+    "pricePerSqmMedian": 7852.94,
+    "pricePerSqftMedian": 729.57
   },
   "monthlyTrend": [
     {
@@ -162,7 +162,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-473a-fernvale-st-2026-04-226937",
+      "id": "sengkang-473a-fernvale-st-2026-04-227017",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",

@@ -10,12 +10,6 @@
       "lng": 103.73958458455
     },
     "medianPrice": 681000,
-    "priceIqr": [
-      602500,
-      701250
-    ],
-    "pricePerSqmMedian": 6215.63,
-    "pricePerSqftMedian": 577.45,
     "transactionCount": 8,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "CHOA CHU KANG MRT STATION",
         "distanceMeters": 1125
       }
-    ]
+    ],
+    "priceIqr": [
+      602500,
+      701250
+    ],
+    "pricePerSqmMedian": 6215.63,
+    "pricePerSqftMedian": 577.45
   },
   "monthlyTrend": [
     {
@@ -212,7 +212,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-489b-choa-chu-kang-ave-5-2026-01-224031",
+      "id": "choa-chu-kang-489b-choa-chu-kang-ave-5-2026-01-224064",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

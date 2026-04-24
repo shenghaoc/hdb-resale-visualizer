@@ -10,12 +10,6 @@
       "lng": 103.857970837281
     },
     "medianPrice": 485000,
-    "priceIqr": [
-      472000,
-      490000
-    ],
-    "pricePerSqmMedian": 5914.63,
-    "pricePerSqftMedian": 549.49,
     "transactionCount": 5,
     "floorAreaRange": [
       82,
@@ -54,7 +48,13 @@
         "stationName": "WOODLEIGH MRT STATION",
         "distanceMeters": 1398
       }
-    ]
+    ],
+    "priceIqr": [
+      472000,
+      490000
+    ],
+    "pricePerSqmMedian": 5914.63,
+    "pricePerSqftMedian": 549.49
   },
   "monthlyTrend": [
     {
@@ -720,7 +720,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-227-lor-8-toa-payoh-2026-03-228267",
+      "id": "toa-payoh-227-lor-8-toa-payoh-2026-03-228366",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

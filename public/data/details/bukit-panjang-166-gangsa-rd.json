@@ -10,12 +10,6 @@
       "lng": 103.765391081305
     },
     "medianPrice": 700000,
-    "priceIqr": [
-      660000,
-      735444
-    ],
-    "pricePerSqmMedian": 7000,
-    "pricePerSqftMedian": 650.32,
     "transactionCount": 7,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "BUKIT PANJANG MRT STATION",
         "distanceMeters": 399
       }
-    ]
+    ],
+    "priceIqr": [
+      660000,
+      735444
+    ],
+    "pricePerSqmMedian": 7000,
+    "pricePerSqftMedian": 650.32
   },
   "monthlyTrend": [
     {

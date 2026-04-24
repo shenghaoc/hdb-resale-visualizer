@@ -10,12 +10,6 @@
       "lng": 103.828203629292
     },
     "medianPrice": 358000,
-    "priceIqr": [
-      344000,
-      377500
-    ],
-    "pricePerSqmMedian": 6034.48,
-    "pricePerSqftMedian": 560.62,
     "transactionCount": 7,
     "floorAreaRange": [
       49,
@@ -57,7 +51,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 740
       }
-    ]
+    ],
+    "priceIqr": [
+      344000,
+      377500
+    ],
+    "pricePerSqmMedian": 6034.48,
+    "pricePerSqftMedian": 560.62
   },
   "monthlyTrend": [
     {
@@ -957,7 +957,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-28-jln-klinik-2026-04-223294",
+      "id": "bukit-merah-28-jln-klinik-2026-04-223315",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

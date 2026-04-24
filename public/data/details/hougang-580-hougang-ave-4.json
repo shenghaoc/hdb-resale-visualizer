@@ -10,12 +10,6 @@
       "lng": 103.886776999855
     },
     "medianPrice": 618888,
-    "priceIqr": [
-      569944,
-      669444
-    ],
-    "pricePerSqmMedian": 6050.42,
-    "pricePerSqftMedian": 562.1,
     "transactionCount": 3,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "HOUGANG MRT STATION",
         "distanceMeters": 953
       }
-    ]
+    ],
+    "priceIqr": [
+      569944,
+      669444
+    ],
+    "pricePerSqmMedian": 6050.42,
+    "pricePerSqftMedian": 562.1
   },
   "monthlyTrend": [
     {
@@ -452,7 +452,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-580-hougang-ave-4-2026-01-224643",
+      "id": "hougang-580-hougang-ave-4-2026-01-224690",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -686,7 +686,7 @@
       "pricePerSqft": 305.9
     },
     {
-      "id": "hougang-580-hougang-ave-4-2015-11-953924",
+      "id": "hougang-580-hougang-ave-4-2015-11-954040",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -699,7 +699,7 @@
       "pricePerSqft": 373.17
     },
     {
-      "id": "hougang-580-hougang-ave-4-2015-08-949249",
+      "id": "hougang-580-hougang-ave-4-2015-08-949365",
       "month": "2015-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

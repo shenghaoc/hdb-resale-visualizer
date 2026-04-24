@@ -9,14 +9,8 @@
       "lat": 1.31443381495978,
       "lng": 103.896061149264
     },
-    "medianPrice": 388000,
-    "priceIqr": [
-      379000,
-      389000
-    ],
-    "pricePerSqmMedian": 6576.27,
-    "pricePerSqftMedian": 610.96,
-    "transactionCount": 3,
+    "medianPrice": 379000,
+    "transactionCount": 4,
     "floorAreaRange": [
       59,
       70
@@ -25,10 +19,10 @@
       1976,
       1976
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-09",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -54,7 +48,13 @@
         "stationName": "EUNOS MRT STATION",
         "distanceMeters": 922
       }
-    ]
+    ],
+    "priceIqr": [
+      367000,
+      388500
+    ],
+    "pricePerSqmMedian": 6423.73,
+    "pricePerSqftMedian": 596.79
   },
   "monthlyTrend": [
     {
@@ -764,11 +764,30 @@
       "medianPrice": 388000,
       "transactionCount": 1,
       "medianPricePerSqm": 6576.27
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 358000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6067.8
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-9-haig-rd-2026-01-224361",
+      "id": "geylang-9-haig-rd-2026-04-224408",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 03 months",
+      "resalePrice": 358000,
+      "pricePerSqm": 6067.8,
+      "pricePerSqft": 563.72
+    },
+    {
+      "id": "geylang-9-haig-rd-2026-01-224401",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1013,19 +1032,6 @@
       "resalePrice": 320000,
       "pricePerSqm": 4571.43,
       "pricePerSqft": 424.7
-    },
-    {
-      "id": "geylang-9-haig-rd-2018-06-28867",
-      "month": "2018-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 59,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "57 years 03 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 5423.73,
-      "pricePerSqft": 503.88
     }
   ]
 }

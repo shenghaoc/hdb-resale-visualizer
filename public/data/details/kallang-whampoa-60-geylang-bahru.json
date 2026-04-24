@@ -10,12 +10,6 @@
       "lng": 103.869177870562
     },
     "medianPrice": 925000,
-    "priceIqr": [
-      860722,
-      989750
-    ],
-    "pricePerSqmMedian": 8298.74,
-    "pricePerSqftMedian": 770.98,
     "transactionCount": 8,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "POTONG PASIR MRT STATION",
         "distanceMeters": 918
       }
-    ]
+    ],
+    "priceIqr": [
+      860722,
+      989750
+    ],
+    "pricePerSqmMedian": 8298.74,
+    "pricePerSqftMedian": 770.98
   },
   "monthlyTrend": [
     {
@@ -500,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-60-geylang-bahru-2026-01-225553",
+      "id": "kallang-whampoa-60-geylang-bahru-2026-01-225617",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",

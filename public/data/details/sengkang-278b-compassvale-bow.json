@@ -9,14 +9,8 @@
       "lat": 1.38235083780012,
       "lng": 103.890641438035
     },
-    "medianPrice": 920000,
-    "priceIqr": [
-      862500,
-      954000
-    ],
-    "pricePerSqmMedian": 8212.39,
-    "pricePerSqftMedian": 762.96,
-    "transactionCount": 7,
+    "medianPrice": 924000,
+    "transactionCount": 8,
     "floorAreaRange": [
       92,
       113
@@ -56,7 +50,13 @@
         "stationName": "RANGGUNG LRT STATION",
         "distanceMeters": 757
       }
-    ]
+    ],
+    "priceIqr": [
+      878750,
+      980000
+    ],
+    "pricePerSqmMedian": 8399.67,
+    "pricePerSqftMedian": 780.36
   },
   "monthlyTrend": [
     {
@@ -229,14 +229,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 980000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8672.57
+      "medianPrice": 982500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8694.69
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-278b-compassvale-bow-2026-04-227238",
+      "id": "sengkang-278b-compassvale-bow-2026-04-227321",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -247,6 +247,19 @@
       "resalePrice": 980000,
       "pricePerSqm": 8672.57,
       "pricePerSqft": 805.71
+    },
+    {
+      "id": "sengkang-278b-compassvale-bow-2026-04-227323",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 07 months",
+      "resalePrice": 985000,
+      "pricePerSqm": 8716.81,
+      "pricePerSqft": 809.82
     },
     {
       "id": "sengkang-278b-compassvale-bow-2025-11-214663",
@@ -481,19 +494,6 @@
       "resalePrice": 665000,
       "pricePerSqm": 7228.26,
       "pricePerSqft": 671.53
-    },
-    {
-      "id": "sengkang-278b-compassvale-bow-2023-02-160814",
-      "month": "2023-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 10 months",
-      "resalePrice": 700000,
-      "pricePerSqm": 7608.7,
-      "pricePerSqft": 706.87
     }
   ]
 }

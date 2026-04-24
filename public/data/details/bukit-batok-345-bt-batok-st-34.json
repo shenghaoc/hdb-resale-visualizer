@@ -10,12 +10,6 @@
       "lng": 103.750843242288
     },
     "medianPrice": 435000,
-    "priceIqr": [
-      423750,
-      438750
-    ],
-    "pricePerSqmMedian": 5856.16,
-    "pricePerSqftMedian": 544.06,
     "transactionCount": 6,
     "floorAreaRange": [
       73,
@@ -55,7 +49,13 @@
         "stationName": "TECK WHYE LRT STATION",
         "distanceMeters": 1561
       }
-    ]
+    ],
+    "priceIqr": [
+      423750,
+      438750
+    ],
+    "pricePerSqmMedian": 5856.16,
+    "pricePerSqftMedian": 544.06
   },
   "monthlyTrend": [
     {
@@ -1027,7 +1027,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-345-bt-batok-st-34-2026-04-222887",
+      "id": "bukit-batok-345-bt-batok-st-34-2026-04-222901",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

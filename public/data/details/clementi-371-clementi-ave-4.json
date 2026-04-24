@@ -10,12 +10,6 @@
       "lng": 103.768211873157
     },
     "medianPrice": 422888,
-    "priceIqr": [
-      400000,
-      450000
-    ],
-    "pricePerSqmMedian": 6218.94,
-    "pricePerSqftMedian": 577.76,
     "transactionCount": 9,
     "floorAreaRange": [
       68,
@@ -57,7 +51,13 @@
         "stationName": "BEAUTY WORLD MRT STATION",
         "distanceMeters": 2315
       }
-    ]
+    ],
+    "priceIqr": [
+      400000,
+      450000
+    ],
+    "pricePerSqmMedian": 6218.94,
+    "pricePerSqftMedian": 577.76
   },
   "monthlyTrend": [
     {
@@ -1101,7 +1101,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "clementi-371-clementi-ave-4-2026-04-224174",
+      "id": "clementi-371-clementi-ave-4-2026-04-224209",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1114,7 +1114,7 @@
       "pricePerSqft": 614.8
     },
     {
-      "id": "clementi-371-clementi-ave-4-2026-02-224165",
+      "id": "clementi-371-clementi-ave-4-2026-02-224200",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",

@@ -10,12 +10,6 @@
       "lng": 103.841403430465
     },
     "medianPrice": 1425000,
-    "priceIqr": [
-      1357000,
-      1439416
-    ],
-    "pricePerSqmMedian": 14854.64,
-    "pricePerSqftMedian": 1380.05,
     "transactionCount": 8,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "TANJONG PAGAR MRT STATION",
         "distanceMeters": 412
       }
-    ]
+    ],
+    "priceIqr": [
+      1357000,
+      1439416
+    ],
+    "pricePerSqmMedian": 14854.64,
+    "pricePerSqftMedian": 1380.05
   },
   "monthlyTrend": [
     {
@@ -488,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "central-area-1b-cantonment-rd-2026-01-223796",
+      "id": "central-area-1b-cantonment-rd-2026-01-223823",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",

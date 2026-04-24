@@ -9,14 +9,8 @@
       "lat": 1.40640385188347,
       "lng": 103.905958190135
     },
-    "medianPrice": 715500,
-    "priceIqr": [
-      679500,
-      735000
-    ],
-    "pricePerSqmMedian": 7536.09,
-    "pricePerSqftMedian": 700.13,
-    "transactionCount": 6,
+    "medianPrice": 723000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       147
@@ -57,7 +51,13 @@
         "stationName": "PUNGGOL MRT STATION",
         "distanceMeters": 397
       }
-    ]
+    ],
+    "priceIqr": [
+      689000,
+      763500
+    ],
+    "pricePerSqmMedian": 7618.56,
+    "pricePerSqftMedian": 707.79
   },
   "monthlyTrend": [
     {
@@ -320,14 +320,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 723000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7453.61
+      "medianPrice": 755500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7788.66
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-306c-punggol-pl-2026-04-226167",
+      "id": "punggol-306c-punggol-pl-2026-04-226235",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -340,7 +340,20 @@
       "pricePerSqft": 692.46
     },
     {
-      "id": "punggol-306c-punggol-pl-2026-02-226344",
+      "id": "punggol-306c-punggol-pl-2026-04-226239",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 97,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 03 months",
+      "resalePrice": 788000,
+      "pricePerSqm": 8123.71,
+      "pricePerSqft": 754.72
+    },
+    {
+      "id": "punggol-306c-punggol-pl-2026-02-226416",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -572,19 +585,6 @@
       "resalePrice": 555000,
       "pricePerSqm": 5721.65,
       "pricePerSqft": 531.56
-    },
-    {
-      "id": "punggol-306c-punggol-pl-2020-11-84161",
-      "month": "2020-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 96,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "90 years 09 months",
-      "resalePrice": 525000,
-      "pricePerSqm": 5468.75,
-      "pricePerSqft": 508.06
     }
   ]
 }

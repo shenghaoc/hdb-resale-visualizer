@@ -10,12 +10,6 @@
       "lng": 103.881598248704
     },
     "medianPrice": 397500,
-    "priceIqr": [
-      391250,
-      428500
-    ],
-    "pricePerSqmMedian": 6541.66,
-    "pricePerSqftMedian": 607.74,
     "transactionCount": 6,
     "floorAreaRange": [
       60,
@@ -54,7 +48,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 1743
       }
-    ]
+    ],
+    "priceIqr": [
+      391250,
+      428500
+    ],
+    "pricePerSqmMedian": 6541.66,
+    "pricePerSqftMedian": 607.74
   },
   "monthlyTrend": [
     {
@@ -834,7 +834,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-652-hougang-ave-8-2026-03-224563",
+      "id": "hougang-652-hougang-ave-8-2026-03-224609",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -847,7 +847,7 @@
       "pricePerSqft": 611.61
     },
     {
-      "id": "hougang-652-hougang-ave-8-2026-01-224555",
+      "id": "hougang-652-hougang-ave-8-2026-01-224601",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",

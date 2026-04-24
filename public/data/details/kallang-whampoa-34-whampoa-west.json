@@ -10,12 +10,6 @@
       "lng": 103.863341271367
     },
     "medianPrice": 412500,
-    "priceIqr": [
-      388000,
-      440802
-    ],
-    "pricePerSqmMedian": 6066.17,
-    "pricePerSqftMedian": 563.57,
     "transactionCount": 24,
     "floorAreaRange": [
       62,
@@ -56,7 +50,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 921
       }
-    ]
+    ],
+    "priceIqr": [
+      388000,
+      440802
+    ],
+    "pricePerSqmMedian": 6066.17,
+    "pricePerSqftMedian": 563.57
   },
   "monthlyTrend": [
     {
@@ -1634,7 +1634,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-34-whampoa-west-2026-03-225525",
+      "id": "kallang-whampoa-34-whampoa-west-2026-03-225587",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1647,7 +1647,7 @@
       "pricePerSqft": 628.46
     },
     {
-      "id": "kallang-whampoa-34-whampoa-west-2026-02-225645",
+      "id": "kallang-whampoa-34-whampoa-west-2026-02-225709",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -1660,7 +1660,7 @@
       "pricePerSqft": 587.48
     },
     {
-      "id": "kallang-whampoa-34-whampoa-west-2026-01-225524",
+      "id": "kallang-whampoa-34-whampoa-west-2026-01-225586",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

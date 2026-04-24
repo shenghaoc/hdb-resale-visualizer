@@ -10,12 +10,6 @@
       "lng": 103.902651026007
     },
     "medianPrice": 592500,
-    "priceIqr": [
-      585000,
-      611750
-    ],
-    "pricePerSqmMedian": 5850,
-    "pricePerSqftMedian": 543.48,
     "transactionCount": 4,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "COMPASSVALE LRT STATION",
         "distanceMeters": 545
       }
-    ]
+    ],
+    "priceIqr": [
+      585000,
+      611750
+    ],
+    "pricePerSqmMedian": 5850,
+    "pricePerSqftMedian": 543.48
   },
   "monthlyTrend": [
     {
@@ -362,7 +362,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-129-rivervale-st-2026-01-227156",
+      "id": "sengkang-129-rivervale-st-2026-01-227239",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -375,7 +375,7 @@
       "pricePerSqft": 543.48
     },
     {
-      "id": "sengkang-129-rivervale-st-2026-01-227157",
+      "id": "sengkang-129-rivervale-st-2026-01-227240",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -388,7 +388,7 @@
       "pricePerSqft": 543.48
     },
     {
-      "id": "sengkang-129-rivervale-st-2026-01-227339",
+      "id": "sengkang-129-rivervale-st-2026-01-227424",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -557,7 +557,7 @@
       "pricePerSqft": 340.34
     },
     {
-      "id": "sengkang-129-rivervale-st-2016-08-968751",
+      "id": "sengkang-129-rivervale-st-2016-08-968867",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -570,7 +570,7 @@
       "pricePerSqft": 339.1
     },
     {
-      "id": "sengkang-129-rivervale-st-2016-03-959845",
+      "id": "sengkang-129-rivervale-st-2016-03-959961",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -583,7 +583,7 @@
       "pricePerSqft": 325.16
     },
     {
-      "id": "sengkang-129-rivervale-st-2015-09-951152",
+      "id": "sengkang-129-rivervale-st-2015-09-951268",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -596,7 +596,7 @@
       "pricePerSqft": 347.41
     },
     {
-      "id": "sengkang-129-rivervale-st-2015-05-944896",
+      "id": "sengkang-129-rivervale-st-2015-05-945012",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -609,7 +609,7 @@
       "pricePerSqft": 352.3
     },
     {
-      "id": "sengkang-129-rivervale-st-2015-03-941786",
+      "id": "sengkang-129-rivervale-st-2015-03-941902",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

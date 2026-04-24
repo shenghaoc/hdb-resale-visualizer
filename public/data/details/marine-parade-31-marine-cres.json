@@ -10,12 +10,6 @@
       "lng": 103.911444787591
     },
     "medianPrice": 463000,
-    "priceIqr": [
-      446250,
-      481250
-    ],
-    "pricePerSqmMedian": 6984.61,
-    "pricePerSqftMedian": 648.89,
     "transactionCount": 10,
     "floorAreaRange": [
       59,
@@ -56,7 +50,13 @@
         "stationName": "TANJONG KATONG MRT STATION",
         "distanceMeters": 1574
       }
-    ]
+    ],
+    "priceIqr": [
+      446250,
+      481250
+    ],
+    "pricePerSqmMedian": 6984.61,
+    "pricePerSqftMedian": 648.89
   },
   "monthlyTrend": [
     {
@@ -1202,7 +1202,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-31-marine-cres-2026-03-225650",
+      "id": "marine-parade-31-marine-cres-2026-03-225714",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1215,7 +1215,7 @@
       "pricePerSqft": 626.02
     },
     {
-      "id": "marine-parade-31-marine-cres-2026-01-225648",
+      "id": "marine-parade-31-marine-cres-2026-01-225712",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

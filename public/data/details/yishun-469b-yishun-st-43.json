@@ -9,14 +9,8 @@
       "lat": 1.42438879653642,
       "lng": 103.852083098516
     },
-    "medianPrice": 469000,
-    "priceIqr": [
-      357250,
-      585972
-    ],
-    "pricePerSqmMedian": 6727.41,
-    "pricePerSqftMedian": 625,
-    "transactionCount": 16,
+    "medianPrice": 490000,
+    "transactionCount": 17,
     "floorAreaRange": [
       38,
       93
@@ -25,10 +19,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-12",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -56,7 +50,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 3209
       }
-    ]
+    ],
+    "priceIqr": [
+      358000,
+      585000
+    ],
+    "pricePerSqmMedian": 6702.13,
+    "pricePerSqftMedian": 622.65
   },
   "monthlyTrend": [
     {
@@ -154,9 +154,28 @@
       "medianPrice": 380000,
       "transactionCount": 1,
       "medianPricePerSqm": 8085.11
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5268.82
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-469b-yishun-st-43-2026-04-229355",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 490000,
+      "pricePerSqm": 5268.82,
+      "pricePerSqft": 489.49
+    },
     {
       "id": "yishun-469b-yishun-st-43-2025-11-220425",
       "month": "2025-11",
@@ -403,19 +422,6 @@
       "resalePrice": 560000,
       "pricePerSqm": 6021.51,
       "pricePerSqft": 559.42
-    },
-    {
-      "id": "yishun-469b-yishun-st-43-2024-02-195342",
-      "month": "2024-02",
-      "flatType": "2 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 38,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 10 months",
-      "resalePrice": 335000,
-      "pricePerSqm": 8815.79,
-      "pricePerSqft": 819.01
     }
   ]
 }

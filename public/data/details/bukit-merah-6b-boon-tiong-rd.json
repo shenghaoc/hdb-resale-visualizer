@@ -10,12 +10,6 @@
       "lng": 103.83082447985
     },
     "medianPrice": 1012500,
-    "priceIqr": [
-      937500,
-      1098000
-    ],
-    "pricePerSqmMedian": 10075,
-    "pricePerSqftMedian": 936,
     "transactionCount": 10,
     "floorAreaRange": [
       91,
@@ -56,7 +50,13 @@
         "stationName": "GREAT WORLD MRT STATION",
         "distanceMeters": 731
       }
-    ]
+    ],
+    "priceIqr": [
+      937500,
+      1098000
+    ],
+    "pricePerSqmMedian": 10075,
+    "pricePerSqftMedian": 936
   },
   "monthlyTrend": [
     {

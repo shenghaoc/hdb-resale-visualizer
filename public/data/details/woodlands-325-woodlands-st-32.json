@@ -9,14 +9,8 @@
       "lat": 1.43078891155605,
       "lng": 103.779517722142
     },
-    "medianPrice": 945000,
-    "priceIqr": [
-      937000,
-      956250
-    ],
-    "pricePerSqmMedian": 5904.91,
-    "pricePerSqftMedian": 548.59,
-    "transactionCount": 4,
+    "medianPrice": 950000,
+    "transactionCount": 5,
     "floorAreaRange": [
       64,
       163
@@ -25,10 +19,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1998-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -58,7 +52,13 @@
         "stationName": "WOODLANDS SOUTH MRT STATION",
         "distanceMeters": 1551
       }
-    ]
+    ],
+    "priceIqr": [
+      940000,
+      975000
+    ],
+    "pricePerSqmMedian": 5981.6,
+    "pricePerSqftMedian": 555.71
   },
   "monthlyTrend": [
     {
@@ -480,11 +480,30 @@
       "medianPrice": 950000,
       "transactionCount": 1,
       "medianPricePerSqm": 5828.22
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1028888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6312.2
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-325-woodlands-st-32-2026-03-228903",
+      "id": "woodlands-325-woodlands-st-32-2026-04-229010",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 163,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "67 years 09 months",
+      "resalePrice": 1028888,
+      "pricePerSqm": 6312.2,
+      "pricePerSqft": 586.42
+    },
+    {
+      "id": "woodlands-325-woodlands-st-32-2026-03-229009",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -729,19 +748,6 @@
       "resalePrice": 425000,
       "pricePerSqm": 3219.7,
       "pricePerSqft": 299.12
-    },
-    {
-      "id": "woodlands-325-woodlands-st-32-2019-02-44818",
-      "month": "2019-02",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 132,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "74 years 11 months",
-      "resalePrice": 440000,
-      "pricePerSqm": 3333.33,
-      "pricePerSqft": 309.68
     }
   ]
 }

@@ -10,12 +10,6 @@
       "lng": 103.840131905186
     },
     "medianPrice": 650000,
-    "priceIqr": [
-      605500,
-      699000
-    ],
-    "pricePerSqmMedian": 6451.61,
-    "pricePerSqftMedian": 599.38,
     "transactionCount": 11,
     "floorAreaRange": [
       93,
@@ -56,7 +50,13 @@
         "stationName": "SPRINGLEAF MRT STATION",
         "distanceMeters": 2973
       }
-    ]
+    ],
+    "priceIqr": [
+      605500,
+      699000
+    ],
+    "pricePerSqmMedian": 6451.61,
+    "pricePerSqftMedian": 599.38
   },
   "monthlyTrend": [
     {
@@ -170,7 +170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "yishun-509b-yishun-ave-4-2026-03-229104",
+      "id": "yishun-509b-yishun-ave-4-2026-03-229213",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -183,7 +183,7 @@
       "pricePerSqft": 649.32
     },
     {
-      "id": "yishun-509b-yishun-ave-4-2026-03-229313",
+      "id": "yishun-509b-yishun-ave-4-2026-03-229428",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -196,7 +196,7 @@
       "pricePerSqft": 610.86
     },
     {
-      "id": "yishun-509b-yishun-ave-4-2026-02-229101",
+      "id": "yishun-509b-yishun-ave-4-2026-02-229210",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",

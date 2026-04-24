@@ -10,12 +10,6 @@
       "lng": 103.702295748842
     },
     "medianPrice": 590000,
-    "priceIqr": [
-      586500,
-      648944
-    ],
-    "pricePerSqmMedian": 6055.56,
-    "pricePerSqftMedian": 562.58,
     "transactionCount": 7,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "LAKESIDE MRT STATION",
         "distanceMeters": 2042
       }
-    ]
+    ],
+    "priceIqr": [
+      586500,
+      648944
+    ],
+    "pricePerSqmMedian": 6055.56,
+    "pricePerSqftMedian": 562.58
   },
   "monthlyTrend": [
     {
@@ -500,7 +500,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-667c-jurong-west-st-65-2026-03-225194",
+      "id": "jurong-west-667c-jurong-west-st-65-2026-03-225251",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

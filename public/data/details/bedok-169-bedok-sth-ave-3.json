@@ -10,12 +10,6 @@
       "lng": 103.945093904498
     },
     "medianPrice": 565000,
-    "priceIqr": [
-      522500,
-      623722
-    ],
-    "pricePerSqmMedian": 6204.82,
-    "pricePerSqftMedian": 576.45,
     "transactionCount": 4,
     "floorAreaRange": [
       83,
@@ -55,7 +49,13 @@
         "stationName": "BEDOK MRT STATION",
         "distanceMeters": 1768
       }
-    ]
+    ],
+    "priceIqr": [
+      522500,
+      623722
+    ],
+    "pricePerSqmMedian": 6204.82,
+    "pricePerSqftMedian": 576.45
   },
   "monthlyTrend": [
     {
@@ -601,7 +601,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-169-bedok-sth-ave-3-2026-04-222595",
+      "id": "bedok-169-bedok-sth-ave-3-2026-04-222606",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -822,7 +822,7 @@
       "pricePerSqft": 453.32
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2016-09-969443",
+      "id": "bedok-169-bedok-sth-ave-3-2016-09-969559",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -835,7 +835,7 @@
       "pricePerSqft": 447.73
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2015-03-940992",
+      "id": "bedok-169-bedok-sth-ave-3-2015-03-941108",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -848,7 +848,7 @@
       "pricePerSqft": 380.46
     },
     {
-      "id": "bedok-169-bedok-sth-ave-3-2014-12-650074",
+      "id": "bedok-169-bedok-sth-ave-3-2014-12-650190",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

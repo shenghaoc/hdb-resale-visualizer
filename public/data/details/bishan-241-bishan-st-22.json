@@ -10,12 +10,6 @@
       "lng": 103.84547335577
     },
     "medianPrice": 890000,
-    "priceIqr": [
-      890000,
-      900888
-    ],
-    "pricePerSqmMedian": 7902.53,
-    "pricePerSqftMedian": 734.17,
     "transactionCount": 5,
     "floorAreaRange": [
       101,
@@ -58,7 +52,13 @@
         "stationName": "BRIGHT HILL MRT STATION",
         "distanceMeters": 1358
       }
-    ]
+    ],
+    "priceIqr": [
+      890000,
+      900888
+    ],
+    "pricePerSqmMedian": 7902.53,
+    "pricePerSqftMedian": 734.17
   },
   "monthlyTrend": [
     {
@@ -538,7 +538,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bishan-241-bishan-st-22-2026-03-222742",
+      "id": "bishan-241-bishan-st-22-2026-03-222754",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -551,7 +551,7 @@
       "pricePerSqft": 772.75
     },
     {
-      "id": "bishan-241-bishan-st-22-2026-02-222740",
+      "id": "bishan-241-bishan-st-22-2026-02-222752",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -785,7 +785,7 @@
       "pricePerSqft": 582.68
     },
     {
-      "id": "bishan-241-bishan-st-22-2013-03-621743",
+      "id": "bishan-241-bishan-st-22-2013-03-621859",
       "month": "2013-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",

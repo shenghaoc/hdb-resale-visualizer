@@ -10,12 +10,6 @@
       "lng": 103.890220332665
     },
     "medianPrice": 595000,
-    "priceIqr": [
-      560000,
-      600000
-    ],
-    "pricePerSqmMedian": 6761.36,
-    "pricePerSqftMedian": 628.15,
     "transactionCount": 3,
     "floorAreaRange": [
       84,
@@ -54,7 +48,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 552
       }
-    ]
+    ],
+    "priceIqr": [
+      560000,
+      600000
+    ],
+    "pricePerSqmMedian": 6761.36,
+    "pricePerSqftMedian": 628.15
   },
   "monthlyTrend": [
     {
@@ -582,7 +582,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-303c-anchorvale-link-2026-01-226969",
+      "id": "sengkang-303c-anchorvale-link-2026-01-227049",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",

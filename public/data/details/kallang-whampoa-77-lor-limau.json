@@ -10,12 +10,6 @@
       "lng": 103.854803547284
     },
     "medianPrice": 350000,
-    "priceIqr": [
-      334000,
-      365500
-    ],
-    "pricePerSqmMedian": 5932.2,
-    "pricePerSqftMedian": 551.12,
     "transactionCount": 11,
     "floorAreaRange": [
       59,
@@ -54,7 +48,13 @@
         "stationName": "NOVENA MRT STATION",
         "distanceMeters": 1239
       }
-    ]
+    ],
+    "priceIqr": [
+      334000,
+      365500
+    ],
+    "pricePerSqmMedian": 5932.2,
+    "pricePerSqftMedian": 551.12
   },
   "monthlyTrend": [
     {
@@ -1170,7 +1170,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-77-lor-limau-2026-03-225497",
+      "id": "kallang-whampoa-77-lor-limau-2026-03-225559",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

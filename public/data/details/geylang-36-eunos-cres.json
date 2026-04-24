@@ -10,12 +10,6 @@
       "lng": 103.901772831996
     },
     "medianPrice": 910444,
-    "priceIqr": [
-      843000,
-      933500
-    ],
-    "pricePerSqmMedian": 10870.59,
-    "pricePerSqftMedian": 1009.91,
     "transactionCount": 8,
     "floorAreaRange": [
       60,
@@ -57,7 +51,13 @@
         "stationName": "CC9",
         "distanceMeters": 1002
       }
-    ]
+    ],
+    "priceIqr": [
+      843000,
+      933500
+    ],
+    "pricePerSqmMedian": 10870.59,
+    "pricePerSqftMedian": 1009.91
   },
   "monthlyTrend": [
     {
@@ -423,7 +423,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "geylang-36-eunos-cres-2026-04-224421",
+      "id": "geylang-36-eunos-cres-2026-04-224465",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -436,7 +436,7 @@
       "pricePerSqft": 1058
     },
     {
-      "id": "geylang-36-eunos-cres-2026-03-224416",
+      "id": "geylang-36-eunos-cres-2026-03-224460",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -449,7 +449,7 @@
       "pricePerSqft": 1014.28
     },
     {
-      "id": "geylang-36-eunos-cres-2026-01-224349",
+      "id": "geylang-36-eunos-cres-2026-01-224389",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",

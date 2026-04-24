@@ -10,12 +10,6 @@
       "lng": 103.814273470438
     },
     "medianPrice": 685000,
-    "priceIqr": [
-      662000,
-      700000
-    ],
-    "pricePerSqmMedian": 5000,
-    "pricePerSqftMedian": 464.52,
     "transactionCount": 9,
     "floorAreaRange": [
       118,
@@ -55,7 +49,13 @@
         "stationName": "CANBERRA MRT STATION",
         "distanceMeters": 1854
       }
-    ]
+    ],
+    "priceIqr": [
+      662000,
+      700000
+    ],
+    "pricePerSqmMedian": 5000,
+    "pricePerSqftMedian": 464.52
   },
   "monthlyTrend": [
     {
@@ -367,7 +367,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-468d-admiralty-dr-2026-03-226871",
+      "id": "sembawang-468d-admiralty-dr-2026-03-226950",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -380,7 +380,7 @@
       "pricePerSqft": 462.48
     },
     {
-      "id": "sembawang-468d-admiralty-dr-2026-01-226866",
+      "id": "sembawang-468d-admiralty-dr-2026-01-226945",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -393,7 +393,7 @@
       "pricePerSqft": 467.79
     },
     {
-      "id": "sembawang-468d-admiralty-dr-2026-01-226869",
+      "id": "sembawang-468d-admiralty-dr-2026-01-226948",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -614,7 +614,7 @@
       "pricePerSqft": 295.24
     },
     {
-      "id": "sembawang-468d-admiralty-dr-2016-01-957074",
+      "id": "sembawang-468d-admiralty-dr-2016-01-957190",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",

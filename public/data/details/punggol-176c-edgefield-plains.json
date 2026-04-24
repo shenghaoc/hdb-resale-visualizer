@@ -10,12 +10,6 @@
       "lng": 103.90878367744
     },
     "medianPrice": 639750,
-    "priceIqr": [
-      613500,
-      653625
-    ],
-    "pricePerSqmMedian": 5815.91,
-    "pricePerSqftMedian": 540.32,
     "transactionCount": 6,
     "floorAreaRange": [
       90,
@@ -56,7 +50,13 @@
         "stationName": "OASIS LRT STATION",
         "distanceMeters": 611
       }
-    ]
+    ],
+    "priceIqr": [
+      613500,
+      653625
+    ],
+    "pricePerSqmMedian": 5815.91,
+    "pricePerSqftMedian": 540.32
   },
   "monthlyTrend": [
     {
@@ -404,7 +404,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "punggol-176c-edgefield-plains-2026-01-226280",
+      "id": "punggol-176c-edgefield-plains-2026-01-226351",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",

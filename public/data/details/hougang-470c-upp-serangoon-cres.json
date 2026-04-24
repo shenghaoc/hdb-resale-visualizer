@@ -10,12 +10,6 @@
       "lng": 103.900804189301
     },
     "medianPrice": 715000,
-    "priceIqr": [
-      678944,
-      814444
-    ],
-    "pricePerSqmMedian": 7365.59,
-    "pricePerSqftMedian": 684.29,
     "transactionCount": 11,
     "floorAreaRange": [
       92,
@@ -56,7 +50,13 @@
         "stationName": "BUANGKOK MRT STATION",
         "distanceMeters": 939
       }
-    ]
+    ],
+    "priceIqr": [
+      678944,
+      814444
+    ],
+    "pricePerSqmMedian": 7365.59,
+    "pricePerSqftMedian": 684.29
   },
   "monthlyTrend": [
     {
@@ -338,7 +338,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "hougang-470c-upp-serangoon-cres-2026-04-224737",
+      "id": "hougang-470c-upp-serangoon-cres-2026-04-224786",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

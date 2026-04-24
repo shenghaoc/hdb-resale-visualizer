@@ -10,12 +10,6 @@
       "lng": 103.840557182306
     },
     "medianPrice": 460000,
-    "priceIqr": [
-      453750,
-      540972
-    ],
-    "pricePerSqmMedian": 5900,
-    "pricePerSqftMedian": 548.13,
     "transactionCount": 8,
     "floorAreaRange": [
       75,
@@ -57,7 +51,13 @@
         "stationName": "LENTOR MRT STATION",
         "distanceMeters": 769
       }
-    ]
+    ],
+    "priceIqr": [
+      453750,
+      540972
+    ],
+    "pricePerSqmMedian": 5900,
+    "pricePerSqftMedian": 548.13
   },
   "monthlyTrend": [
     {
@@ -1227,7 +1227,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-02-222160",
+      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-02-222163",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1240,7 +1240,7 @@
       "pricePerSqft": 558.46
     },
     {
-      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-01-222225",
+      "id": "ang-mo-kio-643-ang-mo-kio-ave-5-2026-01-222231",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

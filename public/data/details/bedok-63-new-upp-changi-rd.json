@@ -10,12 +10,6 @@
       "lng": 103.939938951727
     },
     "medianPrice": 525000,
-    "priceIqr": [
-      512500,
-      537500
-    ],
-    "pricePerSqmMedian": 5706.52,
-    "pricePerSqftMedian": 530.15,
     "transactionCount": 2,
     "floorAreaRange": [
       92,
@@ -54,7 +48,13 @@
         "stationName": "BEDOK MRT STATION",
         "distanceMeters": 1142
       }
-    ]
+    ],
+    "priceIqr": [
+      512500,
+      537500
+    ],
+    "pricePerSqmMedian": 5706.52,
+    "pricePerSqftMedian": 530.15
   },
   "monthlyTrend": [
     {
@@ -690,7 +690,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bedok-63-new-upp-changi-rd-2026-02-222621",
+      "id": "bedok-63-new-upp-changi-rd-2026-02-222632",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -911,7 +911,7 @@
       "pricePerSqft": 424.12
     },
     {
-      "id": "bedok-63-new-upp-changi-rd-2016-10-971126",
+      "id": "bedok-63-new-upp-changi-rd-2016-10-971242",
       "month": "2016-10",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -924,7 +924,7 @@
       "pricePerSqft": 403.93
     },
     {
-      "id": "bedok-63-new-upp-changi-rd-2016-04-960523",
+      "id": "bedok-63-new-upp-changi-rd-2016-04-960639",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -937,7 +937,7 @@
       "pricePerSqft": 403.72
     },
     {
-      "id": "bedok-63-new-upp-changi-rd-2015-10-951769",
+      "id": "bedok-63-new-upp-changi-rd-2015-10-951885",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",

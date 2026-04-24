@@ -10,12 +10,6 @@
       "lng": 103.815878776808
     },
     "medianPrice": 1065000,
-    "priceIqr": [
-      1019166,
-      1095000
-    ],
-    "pricePerSqmMedian": 10109.65,
-    "pricePerSqftMedian": 939.22,
     "transactionCount": 6,
     "floorAreaRange": [
       100,
@@ -56,7 +50,13 @@
         "stationName": "TIONG BAHRU MRT STATION",
         "distanceMeters": 1272
       }
-    ]
+    ],
+    "priceIqr": [
+      1019166,
+      1095000
+    ],
+    "pricePerSqmMedian": 10109.65,
+    "pricePerSqftMedian": 939.22
   },
   "monthlyTrend": [
     {
@@ -488,7 +488,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-75b-redhill-rd-2026-02-223419",
+      "id": "bukit-merah-75b-redhill-rd-2026-02-223443",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",

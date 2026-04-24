@@ -10,12 +10,6 @@
       "lng": 103.775294044439
     },
     "medianPrice": 535000,
-    "priceIqr": [
-      508888,
-      555888
-    ],
-    "pricePerSqmMedian": 7985.07,
-    "pricePerSqftMedian": 741.84,
     "transactionCount": 5,
     "floorAreaRange": [
       67,
@@ -54,7 +48,13 @@
         "stationName": "KRANJI MRT STATION",
         "distanceMeters": 1607
       }
-    ]
+    ],
+    "priceIqr": [
+      508888,
+      555888
+    ],
+    "pricePerSqmMedian": 7985.07,
+    "pricePerSqftMedian": 741.84
   },
   "monthlyTrend": [
     {
@@ -198,7 +198,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-302a-woodlands-st-31-2026-01-228419",
+      "id": "woodlands-302a-woodlands-st-31-2026-01-228519",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",

@@ -10,12 +10,6 @@
       "lng": 103.904021658575
     },
     "medianPrice": 739888,
-    "priceIqr": [
-      729944,
-      757444
-    ],
-    "pricePerSqmMedian": 5648,
-    "pricePerSqftMedian": 524.72,
     "transactionCount": 3,
     "floorAreaRange": [
       130,
@@ -54,7 +48,13 @@
         "stationName": "RUMBIA LRT STATION",
         "distanceMeters": 516
       }
-    ]
+    ],
+    "priceIqr": [
+      729944,
+      757444
+    ],
+    "pricePerSqmMedian": 5648,
+    "pricePerSqftMedian": 524.72
   },
   "monthlyTrend": [
     {

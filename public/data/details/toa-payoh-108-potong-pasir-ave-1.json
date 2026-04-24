@@ -10,12 +10,6 @@
       "lng": 103.867928446438
     },
     "medianPrice": 596500,
-    "priceIqr": [
-      556000,
-      609500
-    ],
-    "pricePerSqmMedian": 7953.56,
-    "pricePerSqftMedian": 738.91,
     "transactionCount": 10,
     "floorAreaRange": [
       74,
@@ -55,7 +49,13 @@
         "stationName": "GEYLANG BAHRU MRT STATION",
         "distanceMeters": 1518
       }
-    ]
+    ],
+    "priceIqr": [
+      556000,
+      609500
+    ],
+    "pricePerSqmMedian": 7953.56,
+    "pricePerSqftMedian": 738.91
   },
   "monthlyTrend": [
     {
@@ -781,7 +781,7 @@
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-108-potong-pasir-ave-1-2026-03-228272",
+      "id": "toa-payoh-108-potong-pasir-ave-1-2026-03-228371",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
