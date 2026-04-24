@@ -278,12 +278,6 @@ export function MapView({
     });
     popupRef.current = popup;
 
-    map.on("movestart", (event) => {
-      if (event.originalEvent) {
-        onMapInteractRef.current?.();
-      }
-    });
-
     map.on("load", () => {
       map.addSource("mrt-stations", {
         type: "geojson",
@@ -614,6 +608,12 @@ export function MapView({
 
       map.on("click", () => {
         onMapInteractRef.current?.();
+      });
+
+      map.on("movestart", (event) => {
+        if (event.originalEvent) {
+          onMapInteractRef.current?.();
+        }
       });
 
       // Hover popup for unclustered points
