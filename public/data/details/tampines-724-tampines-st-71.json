@@ -9,8 +9,8 @@
       "lat": 1.35684229419395,
       "lng": 103.934951160364
     },
-    "medianPrice": 680000,
-    "transactionCount": 7,
+    "medianPrice": 694444,
+    "transactionCount": 8,
     "floorAreaRange": [
       100,
       125
@@ -19,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-01",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      655000,
-      723444
+      665000,
+      741000
     ],
-    "pricePerSqmMedian": 6553.4,
-    "pricePerSqftMedian": 608.83
+    "pricePerSqmMedian": 6401.7,
+    "pricePerSqftMedian": 594.74
   },
   "monthlyTrend": [
     {
@@ -622,9 +622,28 @@
       "medianPrice": 680000,
       "transactionCount": 1,
       "medianPricePerSqm": 6601.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6250
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-724-tampines-st-71-2026-04-228161",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 04 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 6250,
+      "pricePerSqft": 580.64
+    },
     {
       "id": "tampines-724-tampines-st-71-2025-09-216755",
       "month": "2025-09",
@@ -871,19 +890,6 @@
       "resalePrice": 412000,
       "pricePerSqm": 4000,
       "pricePerSqft": 371.61
-    },
-    {
-      "id": "tampines-724-tampines-st-71-2020-03-69360",
-      "month": "2020-03",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 125,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "76 years 05 months",
-      "resalePrice": 525000,
-      "pricePerSqm": 4200,
-      "pricePerSqft": 390.19
     }
   ]
 }

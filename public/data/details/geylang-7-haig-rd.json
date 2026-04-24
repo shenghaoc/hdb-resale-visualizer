@@ -9,8 +9,8 @@
       "lat": 1.31380661212249,
       "lng": 103.896910477404
     },
-    "medianPrice": 753000,
-    "transactionCount": 7,
+    "medianPrice": 751500,
+    "transactionCount": 8,
     "floorAreaRange": [
       115,
       118
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      744000,
-      780000
+      738000,
+      772500
     ],
-    "pricePerSqmMedian": 6417.39,
-    "pricePerSqftMedian": 596.2
+    "pricePerSqmMedian": 6399.38,
+    "pricePerSqftMedian": 594.53
   },
   "monthlyTrend": [
     {
@@ -515,14 +515,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 808888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7033.81
+      "medianPrice": 773444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6644.02
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-7-haig-rd-2026-04-224524",
+      "id": "geylang-7-haig-rd-2026-04-224558",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -533,6 +533,19 @@
       "resalePrice": 808888,
       "pricePerSqm": 7033.81,
       "pricePerSqft": 653.46
+    },
+    {
+      "id": "geylang-7-haig-rd-2026-04-224559",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 118,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 03 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 6254.24,
+      "pricePerSqft": 581.04
     },
     {
       "id": "geylang-7-haig-rd-2025-12-204968",
@@ -767,19 +780,6 @@
       "resalePrice": 680000,
       "pricePerSqm": 5762.71,
       "pricePerSqft": 535.37
-    },
-    {
-      "id": "geylang-7-haig-rd-2020-09-78644",
-      "month": "2020-09",
-      "flatType": "5 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 118,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "54 years 11 months",
-      "resalePrice": 645000,
-      "pricePerSqm": 5466.1,
-      "pricePerSqft": 507.82
     }
   ]
 }

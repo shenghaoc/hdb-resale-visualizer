@@ -9,8 +9,8 @@
       "lat": 1.43585650383199,
       "lng": 103.776294109996
     },
-    "medianPrice": 510000,
-    "transactionCount": 19,
+    "medianPrice": 521500,
+    "transactionCount": 20,
     "floorAreaRange": [
       38,
       93
@@ -19,10 +19,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      442500,
-      578000
+      471250,
+      600000
     ],
-    "pricePerSqmMedian": 7500,
-    "pricePerSqftMedian": 696.77
+    "pricePerSqmMedian": 7426.47,
+    "pricePerSqftMedian": 689.94
   },
   "monthlyTrend": [
     {
@@ -208,11 +208,30 @@
       "medianPrice": 358000,
       "transactionCount": 1,
       "medianPricePerSqm": 9421.05
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630088,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6775.14
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-185b-woodlands-st-13-2026-03-228452",
+      "id": "woodlands-185b-woodlands-st-13-2026-04-228872",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 06 months",
+      "resalePrice": 630088,
+      "pricePerSqm": 6775.14,
+      "pricePerSqft": 629.43
+    },
+    {
+      "id": "woodlands-185b-woodlands-st-13-2026-03-228548",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -457,19 +476,6 @@
       "resalePrice": 643000,
       "pricePerSqm": 6913.98,
       "pricePerSqft": 642.33
-    },
-    {
-      "id": "woodlands-185b-woodlands-st-13-2024-03-193481",
-      "month": "2024-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 08 months",
-      "resalePrice": 460000,
-      "pricePerSqm": 6764.71,
-      "pricePerSqft": 628.46
     }
   ]
 }

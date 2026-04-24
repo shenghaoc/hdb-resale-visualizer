@@ -9,8 +9,8 @@
       "lat": 1.39016261835765,
       "lng": 103.877056202025
     },
-    "medianPrice": 648000,
-    "transactionCount": 11,
+    "medianPrice": 644000,
+    "transactionCount": 12,
     "floorAreaRange": [
       95,
       96
@@ -19,10 +19,10 @@
       2011,
       2011
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2016-04",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      638444,
-      663000
+      636000,
+      660500
     ],
-    "pricePerSqmMedian": 6821.05,
-    "pricePerSqftMedian": 633.7
+    "pricePerSqmMedian": 6778.94,
+    "pricePerSqftMedian": 629.79
   },
   "monthlyTrend": [
     {
@@ -386,11 +386,30 @@
       "medianPrice": 680000,
       "transactionCount": 1,
       "medianPricePerSqm": 7083.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 630000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6631.58
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-411b-fernvale-rd-2026-03-227182",
+      "id": "sengkang-411b-fernvale-rd-2026-04-227259",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 95,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 07 months",
+      "resalePrice": 630000,
+      "pricePerSqm": 6631.58,
+      "pricePerSqft": 616.09
+    },
+    {
+      "id": "sengkang-411b-fernvale-rd-2026-03-227253",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -403,7 +422,7 @@
       "pricePerSqft": 658.06
     },
     {
-      "id": "sengkang-411b-fernvale-rd-2026-01-227171",
+      "id": "sengkang-411b-fernvale-rd-2026-01-227242",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -635,19 +654,6 @@
       "resalePrice": 545000,
       "pricePerSqm": 5736.84,
       "pricePerSqft": 532.97
-    },
-    {
-      "id": "sengkang-411b-fernvale-rd-2022-07-135497",
-      "month": "2022-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 95,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "89 years 05 months",
-      "resalePrice": 520000,
-      "pricePerSqm": 5473.68,
-      "pricePerSqft": 508.52
     }
   ]
 }

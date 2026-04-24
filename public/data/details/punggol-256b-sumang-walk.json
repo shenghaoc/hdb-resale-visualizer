@@ -9,8 +9,8 @@
       "lat": 1.40604907945801,
       "lng": 103.896179521001
     },
-    "medianPrice": 460000,
-    "transactionCount": 8,
+    "medianPrice": 520000,
+    "transactionCount": 9,
     "floorAreaRange": [
       47,
       93
@@ -19,10 +19,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-10",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      370000,
-      670416
+      375000,
+      675000
     ],
-    "pricePerSqmMedian": 7500,
-    "pricePerSqftMedian": 696.78
+    "pricePerSqmMedian": 7553.19,
+    "pricePerSqftMedian": 701.72
   },
   "monthlyTrend": [
     {
@@ -227,9 +227,28 @@
       "medianPrice": 400000,
       "transactionCount": 1,
       "medianPricePerSqm": 8510.64
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 718000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7720.43
     }
   ],
   "recentTransactions": [
+    {
+      "id": "punggol-256b-sumang-walk-2026-04-226389",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 08 months",
+      "resalePrice": 718000,
+      "pricePerSqm": 7720.43,
+      "pricePerSqft": 717.25
+    },
     {
       "id": "punggol-256b-sumang-walk-2025-09-210066",
       "month": "2025-09",
@@ -476,19 +495,6 @@
       "resalePrice": 540000,
       "pricePerSqm": 5806.45,
       "pricePerSqft": 539.44
-    },
-    {
-      "id": "punggol-256b-sumang-walk-2021-11-113140",
-      "month": "2021-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 530000,
-      "pricePerSqm": 5698.92,
-      "pricePerSqft": 529.45
     }
   ]
 }

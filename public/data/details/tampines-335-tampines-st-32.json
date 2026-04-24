@@ -9,8 +9,8 @@
       "lat": 1.35250493912815,
       "lng": 103.960594510325
     },
-    "medianPrice": 932000,
-    "transactionCount": 4,
+    "medianPrice": 938000,
+    "transactionCount": 5,
     "floorAreaRange": [
       146,
       154
@@ -19,10 +19,10 @@
       1994,
       1994
     ],
-    "latestMonth": "2025-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-12",
-      "2025-04"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      918500,
-      946750
+      926000,
+      950000
     ],
-    "pricePerSqmMedian": 6318.89,
-    "pricePerSqftMedian": 587.04
+    "pricePerSqmMedian": 6342.47,
+    "pricePerSqftMedian": 589.23
   },
   "monthlyTrend": [
     {
@@ -393,9 +393,28 @@
       "medianPrice": 938000,
       "transactionCount": 1,
       "medianPricePerSqm": 6295.3
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6375.84
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-335-tampines-st-32-2026-04-228217",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 149,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "68 years 09 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 6375.84,
+      "pricePerSqft": 592.34
+    },
     {
       "id": "tampines-335-tampines-st-32-2025-04-217459",
       "month": "2025-04",
@@ -540,7 +559,7 @@
       "pricePerSqft": 391.56
     },
     {
-      "id": "tampines-335-tampines-st-32-2016-04-961983",
+      "id": "tampines-335-tampines-st-32-2016-04-962095",
       "month": "2016-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -553,7 +572,7 @@
       "pricePerSqft": 387.1
     },
     {
-      "id": "tampines-335-tampines-st-32-2014-09-646870",
+      "id": "tampines-335-tampines-st-32-2014-09-646982",
       "month": "2014-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -566,7 +585,7 @@
       "pricePerSqft": 425.05
     },
     {
-      "id": "tampines-335-tampines-st-32-2013-08-630191",
+      "id": "tampines-335-tampines-st-32-2013-08-630303",
       "month": "2013-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -579,7 +598,7 @@
       "pricePerSqft": 425.7
     },
     {
-      "id": "tampines-335-tampines-st-32-2012-12-618853",
+      "id": "tampines-335-tampines-st-32-2012-12-618965",
       "month": "2012-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -592,7 +611,7 @@
       "pricePerSqft": 419.01
     },
     {
-      "id": "tampines-335-tampines-st-32-2012-09-613676",
+      "id": "tampines-335-tampines-st-32-2012-09-613788",
       "month": "2012-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -605,7 +624,7 @@
       "pricePerSqft": 431.12
     },
     {
-      "id": "tampines-335-tampines-st-32-2012-08-611849",
+      "id": "tampines-335-tampines-st-32-2012-08-611961",
       "month": "2012-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -618,7 +637,7 @@
       "pricePerSqft": 410.27
     },
     {
-      "id": "tampines-335-tampines-st-32-2012-07-609763",
+      "id": "tampines-335-tampines-st-32-2012-07-609875",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -631,7 +650,7 @@
       "pricePerSqft": 395.61
     },
     {
-      "id": "tampines-335-tampines-st-32-2012-07-609771",
+      "id": "tampines-335-tampines-st-32-2012-07-609883",
       "month": "2012-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -642,19 +661,6 @@
       "resalePrice": 675000,
       "pricePerSqm": 4623.29,
       "pricePerSqft": 429.52
-    },
-    {
-      "id": "tampines-335-tampines-st-32-2012-04-603249",
-      "month": "2012-04",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 05",
-      "floorAreaSqm": 147,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "69 years",
-      "resalePrice": 625000,
-      "pricePerSqm": 4251.7,
-      "pricePerSqft": 395
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.30935284651406,
       "lng": 103.794873297267
     },
-    "medianPrice": 494500,
-    "transactionCount": 14,
+    "medianPrice": 489000,
+    "transactionCount": 15,
     "floorAreaRange": [
       59,
       147
@@ -19,10 +19,10 @@
       1974,
       1974
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      458750,
-      512916
+      461000,
+      511944
     ],
-    "pricePerSqmMedian": 7530.24,
-    "pricePerSqftMedian": 699.59
+    "pricePerSqmMedian": 7523.08,
+    "pricePerSqftMedian": 698.92
   },
   "monthlyTrend": [
     {
@@ -1583,11 +1583,30 @@
       "medianPrice": 513888,
       "transactionCount": 1,
       "medianPricePerSqm": 7905.97
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 467000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7184.62
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-12-holland-ave-2026-03-226540",
+      "id": "queenstown-12-holland-ave-2026-04-226606",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "47 years 09 months",
+      "resalePrice": 467000,
+      "pricePerSqm": 7184.62,
+      "pricePerSqft": 667.47
+    },
+    {
+      "id": "queenstown-12-holland-ave-2026-03-226603",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1600,7 +1619,7 @@
       "pricePerSqft": 734.49
     },
     {
-      "id": "queenstown-12-holland-ave-2026-02-226538",
+      "id": "queenstown-12-holland-ave-2026-02-226601",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1613,7 +1632,7 @@
       "pricePerSqft": 714.64
     },
     {
-      "id": "queenstown-12-holland-ave-2026-02-226539",
+      "id": "queenstown-12-holland-ave-2026-02-226602",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -1626,7 +1645,7 @@
       "pricePerSqft": 728.93
     },
     {
-      "id": "queenstown-12-holland-ave-2026-01-226536",
+      "id": "queenstown-12-holland-ave-2026-01-226599",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1832,19 +1851,6 @@
       "resalePrice": 425000,
       "pricePerSqm": 6538.46,
       "pricePerSqft": 607.44
-    },
-    {
-      "id": "queenstown-12-holland-ave-2023-06-159217",
-      "month": "2023-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1975,
-      "remainingLease": "50 years 08 months",
-      "resalePrice": 475000,
-      "pricePerSqm": 7307.69,
-      "pricePerSqft": 678.91
     }
   ]
 }

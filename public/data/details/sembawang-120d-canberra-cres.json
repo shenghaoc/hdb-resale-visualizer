@@ -9,8 +9,8 @@
       "lat": 1.44676707236829,
       "lng": 103.83229420147
     },
-    "medianPrice": 759000,
-    "transactionCount": 8,
+    "medianPrice": 738000,
+    "transactionCount": 9,
     "floorAreaRange": [
       93,
       113
@@ -19,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      672750,
+      660000,
       790000
     ],
-    "pricePerSqmMedian": 7017.08,
-    "pricePerSqftMedian": 651.91
+    "pricePerSqmMedian": 7010.75,
+    "pricePerSqftMedian": 651.32
   },
   "monthlyTrend": [
     {
@@ -196,11 +196,30 @@
       "medianPrice": 800000,
       "transactionCount": 1,
       "medianPricePerSqm": 7079.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 652000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7010.75
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-120d-canberra-cres-2026-01-226881",
+      "id": "sembawang-120d-canberra-cres-2026-04-226834",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "90 years 10 months",
+      "resalePrice": 652000,
+      "pricePerSqm": 7010.75,
+      "pricePerSqft": 651.32
+    },
+    {
+      "id": "sembawang-120d-canberra-cres-2026-01-226949",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -445,19 +464,6 @@
       "resalePrice": 650000,
       "pricePerSqm": 5752.21,
       "pricePerSqft": 534.4
-    },
-    {
-      "id": "sembawang-120d-canberra-cres-2023-03-159735",
-      "month": "2023-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years",
-      "resalePrice": 570000,
-      "pricePerSqm": 6129.03,
-      "pricePerSqft": 569.41
     }
   ]
 }

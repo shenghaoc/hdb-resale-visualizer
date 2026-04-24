@@ -9,8 +9,8 @@
       "lat": 1.37200972461679,
       "lng": 103.958089263401
     },
-    "medianPrice": 910000,
-    "transactionCount": 3,
+    "medianPrice": 940000,
+    "transactionCount": 4,
     "floorAreaRange": [
       146,
       154
@@ -19,10 +19,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-12",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      905000,
-      940000
+      907500,
+      970000
     ],
-    "pricePerSqmMedian": 6232.88,
-    "pricePerSqftMedian": 579.05
+    "pricePerSqmMedian": 6438.36,
+    "pricePerSqftMedian": 598.14
   },
   "monthlyTrend": [
     {
@@ -398,9 +398,28 @@
       "medianPrice": 970000,
       "transactionCount": 1,
       "medianPricePerSqm": 6643.84
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 970000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6643.84
     }
   ],
   "recentTransactions": [
+    {
+      "id": "pasir-ris-454-pasir-ris-dr-6-2026-04-225993",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 07 months",
+      "resalePrice": 970000,
+      "pricePerSqm": 6643.84,
+      "pricePerSqft": 617.23
+    },
     {
       "id": "pasir-ris-454-pasir-ris-dr-6-2025-08-209888",
       "month": "2025-08",
@@ -571,7 +590,7 @@
       "pricePerSqft": 439.06
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2015-09-951055",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2015-09-951167",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -584,7 +603,7 @@
       "pricePerSqft": 362.7
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2014-05-641148",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2014-05-641260",
       "month": "2014-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -597,7 +616,7 @@
       "pricePerSqft": 375.33
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2013-06-627055",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2013-06-627167",
       "month": "2013-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -610,7 +629,7 @@
       "pricePerSqft": 416.79
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2012-12-618491",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2012-12-618603",
       "month": "2012-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -623,7 +642,7 @@
       "pricePerSqft": 388.16
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2012-06-607147",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2012-06-607259",
       "month": "2012-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -636,7 +655,7 @@
       "pricePerSqft": 367.99
     },
     {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2011-11-593673",
+      "id": "pasir-ris-454-pasir-ris-dr-6-2011-11-593785",
       "month": "2011-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -647,19 +666,6 @@
       "resalePrice": 600000,
       "pricePerSqm": 4109.59,
       "pricePerSqft": 381.79
-    },
-    {
-      "id": "pasir-ris-454-pasir-ris-dr-6-2011-07-586680",
-      "month": "2011-07",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 154,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years",
-      "resalePrice": 568000,
-      "pricePerSqm": 3688.31,
-      "pricePerSqft": 342.66
     }
   ]
 }

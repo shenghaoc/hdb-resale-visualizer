@@ -9,8 +9,8 @@
       "lat": 1.45093939112951,
       "lng": 103.827087654463
     },
-    "medianPrice": 570000,
-    "transactionCount": 9,
+    "medianPrice": 585000,
+    "transactionCount": 10,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2013,
       2013
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      510000,
-      618000
+      510222,
+      619500
     ],
-    "pricePerSqmMedian": 7132.35,
-    "pricePerSqftMedian": 662.62
+    "pricePerSqmMedian": 6926.39,
+    "pricePerSqftMedian": 643.49
   },
   "monthlyTrend": [
     {
@@ -225,11 +225,30 @@
       "medianPrice": 649000,
       "transactionCount": 2,
       "medianPricePerSqm": 6978.49
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 625000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6720.43
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-592a-montreal-link-2026-03-226823",
+      "id": "sembawang-592a-montreal-link-2026-04-226895",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years",
+      "resalePrice": 625000,
+      "pricePerSqm": 6720.43,
+      "pricePerSqft": 624.35
+    },
+    {
+      "id": "sembawang-592a-montreal-link-2026-03-226890",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -242,7 +261,7 @@
       "pricePerSqft": 617.36
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-03-226825",
+      "id": "sembawang-592a-montreal-link-2026-03-226892",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -255,7 +274,7 @@
       "pricePerSqft": 679.29
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-02-226821",
+      "id": "sembawang-592a-montreal-link-2026-02-226888",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -268,7 +287,7 @@
       "pricePerSqft": 569.41
     },
     {
-      "id": "sembawang-592a-montreal-link-2026-01-226732",
+      "id": "sembawang-592a-montreal-link-2026-01-226797",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -474,19 +493,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 4838.71,
       "pricePerSqft": 449.53
-    },
-    {
-      "id": "sembawang-592a-montreal-link-2021-04-96191",
-      "month": "2021-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "93 years 01 month",
-      "resalePrice": 320000,
-      "pricePerSqm": 4705.88,
-      "pricePerSqft": 437.19
     }
   ]
 }

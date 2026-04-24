@@ -9,8 +9,8 @@
       "lat": 1.44214857011821,
       "lng": 103.802298646195
     },
-    "medianPrice": 608500,
-    "transactionCount": 2,
+    "medianPrice": 662000,
+    "transactionCount": 3,
     "floorAreaRange": [
       100,
       123
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-08",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      581750,
-      635250
+      608500,
+      673500
     ],
-    "pricePerSqmMedian": 5456.13,
-    "pricePerSqftMedian": 506.89
+    "pricePerSqmMedian": 5471.07,
+    "pricePerSqftMedian": 508.28
   },
   "monthlyTrend": [
     {
@@ -478,9 +478,28 @@
       "medianPrice": 555000,
       "transactionCount": 1,
       "medianPricePerSqm": 5441.18
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 685000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5661.16
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-792-woodlands-ave-6-2026-04-228931",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 08 months",
+      "resalePrice": 685000,
+      "pricePerSqm": 5661.16,
+      "pricePerSqft": 525.94
+    },
     {
       "id": "woodlands-792-woodlands-ave-6-2025-11-219000",
       "month": "2025-11",
@@ -638,7 +657,7 @@
       "pricePerSqft": 357.71
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2016-09-970966",
+      "id": "woodlands-792-woodlands-ave-6-2016-09-971078",
       "month": "2016-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -651,7 +670,7 @@
       "pricePerSqft": 336.11
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2016-01-957519",
+      "id": "woodlands-792-woodlands-ave-6-2016-01-957631",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -664,7 +683,7 @@
       "pricePerSqft": 336.29
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2015-12-956214",
+      "id": "woodlands-792-woodlands-ave-6-2015-12-956326",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -677,7 +696,7 @@
       "pricePerSqft": 328.56
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2014-12-651205",
+      "id": "woodlands-792-woodlands-ave-6-2014-12-651317",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -690,7 +709,7 @@
       "pricePerSqft": 358.73
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2014-07-644186",
+      "id": "woodlands-792-woodlands-ave-6-2014-07-644298",
       "month": "2014-07",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -703,7 +722,7 @@
       "pricePerSqft": 364.33
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2014-07-644224",
+      "id": "woodlands-792-woodlands-ave-6-2014-07-644336",
       "month": "2014-07",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -716,7 +735,7 @@
       "pricePerSqft": 350.03
     },
     {
-      "id": "woodlands-792-woodlands-ave-6-2014-06-642898",
+      "id": "woodlands-792-woodlands-ave-6-2014-06-643010",
       "month": "2014-06",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -727,19 +746,6 @@
       "resalePrice": 460000,
       "pricePerSqm": 3801.65,
       "pricePerSqft": 353.19
-    },
-    {
-      "id": "woodlands-792-woodlands-ave-6-2013-11-634116",
-      "month": "2013-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "70 years",
-      "resalePrice": 420000,
-      "pricePerSqm": 4200,
-      "pricePerSqft": 390.19
     }
   ]
 }

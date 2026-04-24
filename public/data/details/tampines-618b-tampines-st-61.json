@@ -9,11 +9,11 @@
       "lat": 1.36232327931501,
       "lng": 103.939141771406
     },
-    "medianPrice": 809000,
-    "transactionCount": 2,
+    "medianPrice": 818000,
+    "transactionCount": 3,
     "floorAreaRange": [
       93,
-      93
+      113
     ],
     "leaseCommenceRange": [
       2021,
@@ -25,9 +25,11 @@
       "2026-04"
     ],
     "flatTypes": [
-      "4 ROOM"
+      "4 ROOM",
+      "5 ROOM"
     ],
     "flatModels": [
+      "IMPROVED",
       "MODEL A",
       "MAX FLOOR 15"
     ],
@@ -50,23 +52,23 @@
       }
     ],
     "priceIqr": [
-      804500,
-      813500
+      809000,
+      839000
     ],
-    "pricePerSqmMedian": 8698.92,
-    "pricePerSqftMedian": 808.16
+    "pricePerSqmMedian": 8602.15,
+    "pricePerSqftMedian": 799.17
   },
   "monthlyTrend": [
     {
       "month": "2026-04",
-      "medianPrice": 809000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 8698.92
+      "medianPrice": 818000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8602.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-618b-tampines-st-61-2026-04-227871",
+      "id": "tampines-618b-tampines-st-61-2026-04-227957",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -79,7 +81,7 @@
       "pricePerSqft": 817.15
     },
     {
-      "id": "tampines-618b-tampines-st-61-2026-04-227873",
+      "id": "tampines-618b-tampines-st-61-2026-04-227959",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -90,6 +92,19 @@
       "resalePrice": 800000,
       "pricePerSqm": 8602.15,
       "pricePerSqft": 799.17
+    },
+    {
+      "id": "tampines-618b-tampines-st-61-2026-04-228151",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 06 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 7610.62,
+      "pricePerSqft": 707.05
     }
   ]
 }

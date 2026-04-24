@@ -9,8 +9,8 @@
       "lat": 1.34972661567521,
       "lng": 103.710830462207
     },
-    "medianPrice": 521500,
-    "transactionCount": 10,
+    "medianPrice": 523000,
+    "transactionCount": 11,
     "floorAreaRange": [
       68,
       94
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      485000,
-      593500
+      490000,
+      584000
     ],
-    "pricePerSqmMedian": 6838.24,
-    "pricePerSqftMedian": 635.29
+    "pricePerSqmMedian": 6911.76,
+    "pricePerSqftMedian": 642.12
   },
   "monthlyTrend": [
     {
@@ -156,14 +156,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 565000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6010.64
+      "medianPrice": 545000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6865.61
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-217b-boon-lay-ave-2026-04-225157",
+      "id": "jurong-west-217b-boon-lay-ave-2026-04-225102",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 525000,
+      "pricePerSqm": 7720.59,
+      "pricePerSqft": 717.27
+    },
+    {
+      "id": "jurong-west-217b-boon-lay-ave-2026-04-225198",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -176,7 +189,7 @@
       "pricePerSqft": 558.41
     },
     {
-      "id": "jurong-west-217b-boon-lay-ave-2026-03-225155",
+      "id": "jurong-west-217b-boon-lay-ave-2026-03-225196",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -408,19 +421,6 @@
       "resalePrice": 435000,
       "pricePerSqm": 6397.06,
       "pricePerSqft": 594.31
-    },
-    {
-      "id": "jurong-west-217b-boon-lay-ave-2022-08-128156",
-      "month": "2022-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 94,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 11 months",
-      "resalePrice": 550000,
-      "pricePerSqm": 5851.06,
-      "pricePerSqft": 543.58
     }
   ]
 }

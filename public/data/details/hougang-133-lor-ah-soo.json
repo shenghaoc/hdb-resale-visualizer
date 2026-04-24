@@ -9,8 +9,8 @@
       "lat": 1.35076271020557,
       "lng": 103.887548072787
     },
-    "medianPrice": 575000,
-    "transactionCount": 2,
+    "medianPrice": 565000,
+    "transactionCount": 3,
     "floorAreaRange": [
       104,
       144
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2024-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2024-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      567500,
-      582500
+      562500,
+      577500
     ],
-    "pricePerSqmMedian": 5424.53,
-    "pricePerSqftMedian": 503.96
+    "pricePerSqmMedian": 5283.02,
+    "pricePerSqftMedian": 490.81
   },
   "monthlyTrend": [
     {
@@ -760,9 +760,28 @@
       "medianPrice": 590000,
       "transactionCount": 1,
       "medianPricePerSqm": 5566.04
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5090.09
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-133-lor-ah-soo-2026-04-224812",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 5090.09,
+      "pricePerSqft": 472.89
+    },
     {
       "id": "hougang-133-lor-ah-soo-2024-12-179712",
       "month": "2024-12",
@@ -985,7 +1004,7 @@
       "pricePerSqft": 364.47
     },
     {
-      "id": "hougang-133-lor-ah-soo-2015-10-952419",
+      "id": "hougang-133-lor-ah-soo-2015-10-952531",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -998,7 +1017,7 @@
       "pricePerSqft": 359.34
     },
     {
-      "id": "hougang-133-lor-ah-soo-2012-03-600045",
+      "id": "hougang-133-lor-ah-soo-2012-03-600157",
       "month": "2012-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -1009,19 +1028,6 @@
       "resalePrice": 404000,
       "pricePerSqm": 3811.32,
       "pricePerSqft": 354.08
-    },
-    {
-      "id": "hougang-133-lor-ah-soo-2012-02-598124",
-      "month": "2012-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years",
-      "resalePrice": 451000,
-      "pricePerSqm": 4336.54,
-      "pricePerSqft": 402.88
     }
   ]
 }

@@ -10,7 +10,7 @@
       "lng": 103.77402996229
     },
     "medianPrice": 385000,
-    "transactionCount": 3,
+    "transactionCount": 4,
     "floorAreaRange": [
       68,
       98
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      372500,
-      442500
+      378750,
+      413750
     ],
-    "pricePerSqmMedian": 5376.34,
-    "pricePerSqftMedian": 499.48
+    "pricePerSqmMedian": 5519.05,
+    "pricePerSqftMedian": 512.74
   },
   "monthlyTrend": [
     {
@@ -853,13 +853,26 @@
     {
       "month": "2026-04",
       "medianPrice": 385000,
-      "transactionCount": 1,
+      "transactionCount": 2,
       "medianPricePerSqm": 5661.76
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-148-woodlands-st-13-2026-04-228518",
+      "id": "woodlands-148-woodlands-st-13-2026-04-228615",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 5661.76,
+      "pricePerSqft": 526
+    },
+    {
+      "id": "woodlands-148-woodlands-st-13-2026-04-228616",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1104,19 +1117,6 @@
       "resalePrice": 245000,
       "pricePerSqm": 3602.94,
       "pricePerSqft": 334.72
-    },
-    {
-      "id": "woodlands-148-woodlands-st-13-2018-07-32426",
-      "month": "2018-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "65 years 08 months",
-      "resalePrice": 280000,
-      "pricePerSqm": 4117.65,
-      "pricePerSqft": 382.54
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.34382869717494,
       "lng": 103.741654163177
     },
-    "medianPrice": 395000,
-    "transactionCount": 10,
+    "medianPrice": 390000,
+    "transactionCount": 11,
     "floorAreaRange": [
       68,
       136
@@ -19,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,8 +53,8 @@
       }
     ],
     "priceIqr": [
-      380000,
-      442750
+      375000,
+      433500
     ],
     "pricePerSqmMedian": 5588.24,
     "pricePerSqftMedian": 519.16
@@ -1337,11 +1337,30 @@
       "medianPrice": 415000,
       "transactionCount": 1,
       "medianPricePerSqm": 6102.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 368888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5424.82
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-264-jurong-east-st-24-2026-03-224927",
+      "id": "jurong-east-264-jurong-east-st-24-2026-04-224969",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years",
+      "resalePrice": 368888,
+      "pricePerSqm": 5424.82,
+      "pricePerSqft": 503.98
+    },
+    {
+      "id": "jurong-east-264-jurong-east-st-24-2026-03-224964",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1586,19 +1605,6 @@
       "resalePrice": 355000,
       "pricePerSqm": 5220.59,
       "pricePerSqft": 485.01
-    },
-    {
-      "id": "jurong-east-264-jurong-east-st-24-2022-09-126981",
-      "month": "2022-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 84,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "59 years 08 months",
-      "resalePrice": 445000,
-      "pricePerSqm": 5297.62,
-      "pricePerSqft": 492.17
     }
   ]
 }

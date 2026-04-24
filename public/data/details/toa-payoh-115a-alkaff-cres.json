@@ -9,8 +9,8 @@
       "lat": 1.33645283610396,
       "lng": 103.87276093968
     },
-    "medianPrice": 935000,
-    "transactionCount": 12,
+    "medianPrice": 1020000,
+    "transactionCount": 13,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2025-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      819000,
-      1043722
+      825000,
+      1042000
     ],
-    "pricePerSqmMedian": 11440.86,
-    "pricePerSqftMedian": 1062.89
+    "pricePerSqmMedian": 11376.34,
+    "pricePerSqftMedian": 1056.9
   },
   "monthlyTrend": [
     {
@@ -111,11 +111,30 @@
       "medianPrice": 1020000,
       "transactionCount": 1,
       "medianPricePerSqm": 10967.74
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1020000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10967.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-115a-alkaff-cres-2026-01-228278",
+      "id": "toa-payoh-115a-alkaff-cres-2026-04-228380",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 08 months",
+      "resalePrice": 1020000,
+      "pricePerSqm": 10967.74,
+      "pricePerSqft": 1018.94
+    },
+    {
+      "id": "toa-payoh-115a-alkaff-cres-2026-01-228373",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",

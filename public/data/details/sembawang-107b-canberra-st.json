@@ -9,8 +9,8 @@
       "lat": 1.44916516333167,
       "lng": 103.833497265983
     },
-    "medianPrice": 633444,
-    "transactionCount": 12,
+    "medianPrice": 620000,
+    "transactionCount": 13,
     "floorAreaRange": [
       67,
       93
@@ -19,10 +19,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-05",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,8 +51,8 @@
       }
     ],
     "priceIqr": [
-      557000,
-      652500
+      558000,
+      650000
     ],
     "pricePerSqmMedian": 6989.25,
     "pricePerSqftMedian": 649.32
@@ -219,11 +219,30 @@
       "medianPrice": 604000,
       "transactionCount": 2,
       "medianPricePerSqm": 7637.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 558000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8328.36
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-107b-canberra-st-2026-01-226716",
+      "id": "sembawang-107b-canberra-st-2026-04-226793",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 04 months",
+      "resalePrice": 558000,
+      "pricePerSqm": 8328.36,
+      "pricePerSqft": 773.73
+    },
+    {
+      "id": "sembawang-107b-canberra-st-2026-01-226780",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -236,7 +255,7 @@
       "pricePerSqft": 759.86
     },
     {
-      "id": "sembawang-107b-canberra-st-2026-01-226781",
+      "id": "sembawang-107b-canberra-st-2026-01-226848",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -468,19 +487,6 @@
       "resalePrice": 560000,
       "pricePerSqm": 6021.51,
       "pricePerSqft": 559.42
-    },
-    {
-      "id": "sembawang-107b-canberra-st-2023-09-160209",
-      "month": "2023-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "93 years 11 months",
-      "resalePrice": 428000,
-      "pricePerSqm": 6388.06,
-      "pricePerSqft": 593.47
     }
   ]
 }

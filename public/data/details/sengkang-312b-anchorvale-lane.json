@@ -9,8 +9,8 @@
       "lat": 1.39173421861576,
       "lng": 103.885497782179
     },
-    "medianPrice": 692000,
-    "transactionCount": 7,
+    "medianPrice": 700000,
+    "transactionCount": 8,
     "floorAreaRange": [
       111,
       130
@@ -19,10 +19,10 @@
       2000,
       2000
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-02",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      654000,
-      728444
+      657000,
+      752916
     ],
-    "pricePerSqmMedian": 5837.84,
-    "pricePerSqftMedian": 542.35
+    "pricePerSqmMedian": 5861.23,
+    "pricePerSqftMedian": 544.53
   },
   "monthlyTrend": [
     {
@@ -477,11 +477,30 @@
       "medianPrice": 660000,
       "transactionCount": 1,
       "medianPricePerSqm": 5945.95
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 765000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5884.62
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-312b-anchorvale-lane-2026-01-227299",
+      "id": "sengkang-312b-anchorvale-lane-2026-04-227524",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 130,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 08 months",
+      "resalePrice": 765000,
+      "pricePerSqm": 5884.62,
+      "pricePerSqft": 546.7
+    },
+    {
+      "id": "sengkang-312b-anchorvale-lane-2026-01-227373",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -726,19 +745,6 @@
       "resalePrice": 510000,
       "pricePerSqm": 3923.08,
       "pricePerSqft": 364.47
-    },
-    {
-      "id": "sengkang-312b-anchorvale-lane-2019-03-46095",
-      "month": "2019-03",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 113,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2002,
-      "remainingLease": "82 years 08 months",
-      "resalePrice": 410000,
-      "pricePerSqm": 3628.32,
-      "pricePerSqft": 337.08
     }
   ]
 }

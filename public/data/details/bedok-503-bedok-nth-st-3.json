@@ -9,8 +9,8 @@
       "lat": 1.33148387479968,
       "lng": 103.932465913287
     },
-    "medianPrice": 381500,
-    "transactionCount": 6,
+    "medianPrice": 378000,
+    "transactionCount": 7,
     "floorAreaRange": [
       59,
       70
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      372750,
-      387250
+      370500,
+      386500
     ],
-    "pricePerSqmMedian": 6347.46,
-    "pricePerSqftMedian": 589.7
+    "pricePerSqmMedian": 6288.14,
+    "pricePerSqftMedian": 584.19
   },
   "monthlyTrend": [
     {
@@ -1280,11 +1280,30 @@
       "medianPrice": 388000,
       "transactionCount": 1,
       "medianPricePerSqm": 5542.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 370000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6271.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-503-bedok-nth-st-3-2026-03-222413",
+      "id": "bedok-503-bedok-nth-st-3-2026-04-222427",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 59,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years",
+      "resalePrice": 370000,
+      "pricePerSqm": 6271.19,
+      "pricePerSqft": 582.61
+    },
+    {
+      "id": "bedok-503-bedok-nth-st-3-2026-03-222420",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1529,19 +1548,6 @@
       "resalePrice": 325000,
       "pricePerSqm": 4642.86,
       "pricePerSqft": 431.34
-    },
-    {
-      "id": "bedok-503-bedok-nth-st-3-2021-09-106766",
-      "month": "2021-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 59,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "55 years 07 months",
-      "resalePrice": 290000,
-      "pricePerSqm": 4915.25,
-      "pricePerSqft": 456.64
     }
   ]
 }

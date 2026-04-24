@@ -9,8 +9,8 @@
       "lat": 1.40358421163654,
       "lng": 103.909264059421
     },
-    "medianPrice": 665000,
-    "transactionCount": 11,
+    "medianPrice": 657500,
+    "transactionCount": 12,
     "floorAreaRange": [
       92,
       97
@@ -19,10 +19,10 @@
       2011,
       2011
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2016-05",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      644000,
-      679000
+      634500,
+      678500
     ],
-    "pricePerSqmMedian": 7228.26,
-    "pricePerSqftMedian": 671.53
+    "pricePerSqmMedian": 7146.74,
+    "pricePerSqftMedian": 663.95
   },
   "monthlyTrend": [
     {
@@ -356,11 +356,30 @@
       "medianPrice": 728888,
       "transactionCount": 1,
       "medianPricePerSqm": 7514.31
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 618000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6717.39
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-614a-edgefield-plains-2026-02-226092",
+      "id": "punggol-614a-edgefield-plains-2026-04-226157",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2012,
+      "remainingLease": "85 years 09 months",
+      "resalePrice": 618000,
+      "pricePerSqm": 6717.39,
+      "pricePerSqft": 624.07
+    },
+    {
+      "id": "punggol-614a-edgefield-plains-2026-02-226147",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -605,19 +624,6 @@
       "resalePrice": 505000,
       "pricePerSqm": 5489.13,
       "pricePerSqft": 509.96
-    },
-    {
-      "id": "punggol-614a-edgefield-plains-2022-06-131627",
-      "month": "2022-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2012,
-      "remainingLease": "89 years 07 months",
-      "resalePrice": 558888,
-      "pricePerSqm": 6074.87,
-      "pricePerSqft": 564.37
     }
   ]
 }

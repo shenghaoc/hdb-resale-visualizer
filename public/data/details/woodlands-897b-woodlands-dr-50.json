@@ -9,8 +9,8 @@
       "lat": 1.43605136306912,
       "lng": 103.793998410947
     },
-    "medianPrice": 542500,
-    "transactionCount": 6,
+    "medianPrice": 535000,
+    "transactionCount": 7,
     "floorAreaRange": [
       97,
       123
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      532750,
-      613750
+      529000,
+      592500
     ],
-    "pricePerSqmMedian": 5354.91,
-    "pricePerSqftMedian": 497.49
+    "pricePerSqmMedian": 5320,
+    "pricePerSqftMedian": 494.24
   },
   "monthlyTrend": [
     {
@@ -685,14 +685,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 583500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5241.3
+      "medianPrice": 532000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5162.6
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-897b-woodlands-dr-50-2026-04-228683",
+      "id": "woodlands-897b-woodlands-dr-50-2026-04-228782",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -705,7 +705,20 @@
       "pricePerSqft": 494.24
     },
     {
-      "id": "woodlands-897b-woodlands-dr-50-2026-04-228883",
+      "id": "woodlands-897b-woodlands-dr-50-2026-04-228784",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 5150,
+      "pricePerSqft": 478.45
+    },
+    {
+      "id": "woodlands-897b-woodlands-dr-50-2026-04-228986",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -937,19 +950,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 3402.06,
       "pricePerSqft": 316.06
-    },
-    {
-      "id": "woodlands-897b-woodlands-dr-50-2018-11-40491",
-      "month": "2018-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 118,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "77 years 08 months",
-      "resalePrice": 390000,
-      "pricePerSqm": 3305.08,
-      "pricePerSqft": 307.05
     }
   ]
 }

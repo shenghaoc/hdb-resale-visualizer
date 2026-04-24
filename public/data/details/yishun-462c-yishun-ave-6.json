@@ -10,7 +10,7 @@
       "lng": 103.850898727139
     },
     "medianPrice": 560000,
-    "transactionCount": 13,
+    "transactionCount": 14,
     "floorAreaRange": [
       38,
       93
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      450000,
-      605000
+      454500,
+      602500
     ],
-    "pricePerSqmMedian": 6720.43,
-    "pricePerSqftMedian": 624.35
+    "pricePerSqmMedian": 6669.04,
+    "pricePerSqftMedian": 619.58
   },
   "monthlyTrend": [
     {
@@ -163,14 +163,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 605000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6505.38
+      "medianPrice": 582500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6263.44
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-462c-yishun-ave-6-2026-04-229233",
+      "id": "yishun-462c-yishun-ave-6-2026-04-229339",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -183,7 +183,20 @@
       "pricePerSqft": 604.37
     },
     {
-      "id": "yishun-462c-yishun-ave-6-2026-03-229231",
+      "id": "yishun-462c-yishun-ave-6-2026-04-229343",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 04 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 6021.51,
+      "pricePerSqft": 559.42
+    },
+    {
+      "id": "yishun-462c-yishun-ave-6-2026-03-229337",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -415,19 +428,6 @@
       "resalePrice": 333000,
       "pricePerSqm": 7085.11,
       "pricePerSqft": 658.23
-    },
-    {
-      "id": "yishun-462c-yishun-ave-6-2024-01-195235",
-      "month": "2024-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 08 months",
-      "resalePrice": 530000,
-      "pricePerSqm": 5698.92,
-      "pricePerSqft": 529.45
     }
   ]
 }

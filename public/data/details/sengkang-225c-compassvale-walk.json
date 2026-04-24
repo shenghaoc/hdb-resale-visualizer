@@ -9,8 +9,8 @@
       "lat": 1.3883535280206,
       "lng": 103.898838274873
     },
-    "medianPrice": 851444,
-    "transactionCount": 4,
+    "medianPrice": 880000,
+    "transactionCount": 5,
     "floorAreaRange": [
       135,
       141
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2004-08",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      815000,
-      884666
+      820000,
+      882888
     ],
-    "pricePerSqmMedian": 6167.84,
-    "pricePerSqftMedian": 573.01
+    "pricePerSqmMedian": 6261.62,
+    "pricePerSqftMedian": 581.72
   },
   "monthlyTrend": [
     {
@@ -380,11 +380,30 @@
       "medianPrice": 886444,
       "transactionCount": 2,
       "medianPricePerSqm": 6427.1
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 880000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6518.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-225c-compassvale-walk-2026-01-227461",
+      "id": "sengkang-225c-compassvale-walk-2026-04-227544",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 135,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 880000,
+      "pricePerSqm": 6518.52,
+      "pricePerSqft": 605.59
+    },
+    {
+      "id": "sengkang-225c-compassvale-walk-2026-01-227540",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -397,7 +416,7 @@
       "pricePerSqft": 581.72
     },
     {
-      "id": "sengkang-225c-compassvale-walk-2026-01-227462",
+      "id": "sengkang-225c-compassvale-walk-2026-01-227541",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -629,19 +648,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 3758.87,
       "pricePerSqft": 349.21
-    },
-    {
-      "id": "sengkang-225c-compassvale-walk-2017-06-9287",
-      "month": "2017-06",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 135,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "81 years 06 months",
-      "resalePrice": 525000,
-      "pricePerSqm": 3888.89,
-      "pricePerSqft": 361.29
     }
   ]
 }

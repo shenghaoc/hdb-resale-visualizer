@@ -9,8 +9,8 @@
       "lat": 1.43726918605213,
       "lng": 103.790432362073
     },
-    "medianPrice": 653000,
-    "transactionCount": 8,
+    "medianPrice": 648000,
+    "transactionCount": 9,
     "floorAreaRange": [
       100,
       119
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      549500,
-      693500
+      548000,
+      693000
     ],
-    "pricePerSqmMedian": 5538.14,
-    "pricePerSqftMedian": 514.51
+    "pricePerSqmMedian": 5500,
+    "pricePerSqftMedian": 510.97
   },
   "monthlyTrend": [
     {
@@ -613,14 +613,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 695000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5889.83
+      "medianPrice": 612500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5594.91
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-892a-woodlands-dr-50-2026-04-228879",
+      "id": "woodlands-892a-woodlands-dr-50-2026-04-228783",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 07 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 5300,
+      "pricePerSqft": 492.39
+    },
+    {
+      "id": "woodlands-892a-woodlands-dr-50-2026-04-228982",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -865,19 +878,6 @@
       "resalePrice": 358000,
       "pricePerSqm": 3580,
       "pricePerSqft": 332.59
-    },
-    {
-      "id": "woodlands-892a-woodlands-dr-50-2019-04-48345",
-      "month": "2019-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 118,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "76 years 07 months",
-      "resalePrice": 438000,
-      "pricePerSqm": 3711.86,
-      "pricePerSqft": 344.84
     }
   ]
 }

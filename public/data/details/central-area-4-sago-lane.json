@@ -9,8 +9,8 @@
       "lat": 1.28180062242257,
       "lng": 103.842908159495
     },
-    "medianPrice": 460000,
-    "transactionCount": 3,
+    "medianPrice": 470000,
+    "transactionCount": 4,
     "floorAreaRange": [
       57,
       137
@@ -19,10 +19,10 @@
       1973,
       1973
     ],
-    "latestMonth": "2025-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2025-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      440000,
-      470000
+      450000,
+      485000
     ],
-    "pricePerSqmMedian": 7368.42,
-    "pricePerSqftMedian": 684.55
+    "pricePerSqmMedian": 7415.56,
+    "pricePerSqftMedian": 688.93
   },
   "monthlyTrend": [
     {
@@ -1010,9 +1010,28 @@
       "medianPrice": 480000,
       "transactionCount": 1,
       "medianPricePerSqm": 8421.05
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7462.69
     }
   ],
   "recentTransactions": [
+    {
+      "id": "central-area-4-sago-lane-2026-04-223832",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "47 years 03 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 7462.69,
+      "pricePerSqft": 693.31
+    },
     {
       "id": "central-area-4-sago-lane-2025-01-202648",
       "month": "2025-01",
@@ -1259,19 +1278,6 @@
       "resalePrice": 508000,
       "pricePerSqm": 7582.09,
       "pricePerSqft": 704.4
-    },
-    {
-      "id": "central-area-4-sago-lane-2021-04-95213",
-      "month": "2021-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "52 years 04 months",
-      "resalePrice": 400000,
-      "pricePerSqm": 5970.15,
-      "pricePerSqft": 554.65
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.27425274045994,
       "lng": 103.812429094644
     },
-    "medianPrice": 560000,
-    "transactionCount": 7,
+    "medianPrice": 562500,
+    "transactionCount": 8,
     "floorAreaRange": [
       91,
       92
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-06",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      550000,
-      582944
+      555000,
+      600138
     ],
-    "pricePerSqmMedian": 6153.85,
-    "pricePerSqftMedian": 571.71
+    "pricePerSqmMedian": 6181.32,
+    "pricePerSqftMedian": 574.27
   },
   "monthlyTrend": [
     {
@@ -698,9 +698,28 @@
       "medianPrice": 530000,
       "transactionCount": 1,
       "medianPricePerSqm": 5760.87
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 599888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6592.18
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-56-telok-blangah-hts-2026-04-223489",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 05 months",
+      "resalePrice": 599888,
+      "pricePerSqm": 6592.18,
+      "pricePerSqft": 612.43
+    },
     {
       "id": "bukit-merah-56-telok-blangah-hts-2025-11-201551",
       "month": "2025-11",
@@ -947,19 +966,6 @@
       "resalePrice": 428000,
       "pricePerSqm": 4652.17,
       "pricePerSqft": 432.2
-    },
-    {
-      "id": "bukit-merah-56-telok-blangah-hts-2019-02-43871",
-      "month": "2019-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "56 years 07 months",
-      "resalePrice": 435000,
-      "pricePerSqm": 4780.22,
-      "pricePerSqft": 444.1
     }
   ]
 }

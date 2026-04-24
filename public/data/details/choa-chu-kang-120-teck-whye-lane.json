@@ -9,8 +9,8 @@
       "lat": 1.37884184875046,
       "lng": 103.750340641074
     },
-    "medianPrice": 847500,
-    "transactionCount": 8,
+    "medianPrice": 850000,
+    "transactionCount": 9,
     "floorAreaRange": [
       146,
       154
@@ -19,10 +19,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      816250,
-      853416
+      825000,
+      855000
     ],
-    "pricePerSqmMedian": 5804.8,
-    "pricePerSqftMedian": 539.28
+    "pricePerSqmMedian": 5821.92,
+    "pricePerSqftMedian": 540.87
   },
   "monthlyTrend": [
     {
@@ -542,11 +542,30 @@
       "medianPrice": 852888,
       "transactionCount": 1,
       "medianPricePerSqm": 5841.7
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 875000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5993.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-120-teck-whye-lane-2026-03-224172",
+      "id": "choa-chu-kang-120-teck-whye-lane-2026-04-224206",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 146,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 875000,
+      "pricePerSqm": 5993.15,
+      "pricePerSqft": 556.78
+    },
+    {
+      "id": "choa-chu-kang-120-teck-whye-lane-2026-03-224203",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -559,7 +578,7 @@
       "pricePerSqft": 542.71
     },
     {
-      "id": "choa-chu-kang-120-teck-whye-lane-2026-02-224171",
+      "id": "choa-chu-kang-120-teck-whye-lane-2026-02-224202",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -791,19 +810,6 @@
       "resalePrice": 525000,
       "pricePerSqm": 3595.89,
       "pricePerSqft": 334.07
-    },
-    {
-      "id": "choa-chu-kang-120-teck-whye-lane-2018-09-35355",
-      "month": "2018-09",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 146,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "69 years 09 months",
-      "resalePrice": 480000,
-      "pricePerSqm": 3287.67,
-      "pricePerSqft": 305.43
     }
   ]
 }

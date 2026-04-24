@@ -9,8 +9,8 @@
       "lat": 1.32519591330303,
       "lng": 103.888039969791
     },
-    "medianPrice": 307500,
-    "transactionCount": 6,
+    "medianPrice": 295000,
+    "transactionCount": 7,
     "floorAreaRange": [
       40,
       56
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      283750,
-      327500
+      281500,
+      325000
     ],
-    "pricePerSqmMedian": 6313.5,
-    "pricePerSqftMedian": 586.54
+    "pricePerSqmMedian": 6555.56,
+    "pricePerSqftMedian": 609.03
   },
   "monthlyTrend": [
     {
@@ -354,14 +354,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 280000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6666.67
+      "medianPrice": 281500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6870.84
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-70-circuit-rd-2026-04-224326",
+      "id": "geylang-70-circuit-rd-2026-04-224359",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -374,7 +374,20 @@
       "pricePerSqft": 619.35
     },
     {
-      "id": "geylang-70-circuit-rd-2026-01-224358",
+      "id": "geylang-70-circuit-rd-2026-04-224360",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 40,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1969,
+      "remainingLease": "41 years 10 months",
+      "resalePrice": 283000,
+      "pricePerSqm": 7075,
+      "pricePerSqft": 657.29
+    },
+    {
+      "id": "geylang-70-circuit-rd-2026-01-224392",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -606,19 +619,6 @@
       "resalePrice": 200000,
       "pricePerSqm": 4761.9,
       "pricePerSqft": 442.4
-    },
-    {
-      "id": "geylang-70-circuit-rd-2016-08-968145",
-      "month": "2016-08",
-      "flatType": "2 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 40,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1969,
-      "remainingLease": "51",
-      "resalePrice": 220000,
-      "pricePerSqm": 5500,
-      "pricePerSqft": 510.97
     }
   ]
 }

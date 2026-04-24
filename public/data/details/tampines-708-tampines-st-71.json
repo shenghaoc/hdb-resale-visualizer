@@ -9,8 +9,8 @@
       "lat": 1.35799336789679,
       "lng": 103.936891128575
     },
-    "medianPrice": 621000,
-    "transactionCount": 2,
+    "medianPrice": 642000,
+    "transactionCount": 3,
     "floorAreaRange": [
       100,
       119
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-03",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      610500,
-      631500
+      621000,
+      646000
     ],
-    "pricePerSqmMedian": 6210,
-    "pricePerSqftMedian": 576.93
+    "pricePerSqmMedian": 6372.55,
+    "pricePerSqftMedian": 592.03
   },
   "monthlyTrend": [
     {
@@ -520,9 +520,28 @@
       "medianPrice": 600000,
       "transactionCount": 1,
       "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 650000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6372.55
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-708-tampines-st-71-2026-04-227970",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 02 months",
+      "resalePrice": 650000,
+      "pricePerSqm": 6372.55,
+      "pricePerSqft": 592.03
+    },
     {
       "id": "tampines-708-tampines-st-71-2025-10-216760",
       "month": "2025-10",
@@ -769,19 +788,6 @@
       "resalePrice": 435000,
       "pricePerSqm": 4306.93,
       "pricePerSqft": 400.13
-    },
-    {
-      "id": "tampines-708-tampines-st-71-2019-04-48081",
-      "month": "2019-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "77 years 02 months",
-      "resalePrice": 465000,
-      "pricePerSqm": 4603.96,
-      "pricePerSqft": 427.72
     }
   ]
 }

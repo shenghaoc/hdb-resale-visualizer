@@ -9,8 +9,8 @@
       "lat": 1.366081228979,
       "lng": 103.936008325034
     },
-    "medianPrice": 769000,
-    "transactionCount": 27,
+    "medianPrice": 769500,
+    "transactionCount": 28,
     "floorAreaRange": [
       69,
       113
@@ -19,10 +19,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2024-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      737500,
-      790000
+      741250,
+      792000
     ],
-    "pricePerSqmMedian": 8258.06,
-    "pricePerSqftMedian": 767.2
+    "pricePerSqmMedian": 8263.44,
+    "pricePerSqftMedian": 767.7
   },
   "monthlyTrend": [
     {
@@ -131,11 +131,30 @@
       "medianPrice": 798000,
       "transactionCount": 1,
       "medianPricePerSqm": 8580.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 820000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8817.2
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-613b-tampines-nth-dr-1-2026-02-227774",
+      "id": "tampines-613b-tampines-nth-dr-1-2026-04-227872",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 06 months",
+      "resalePrice": 820000,
+      "pricePerSqm": 8817.2,
+      "pricePerSqft": 819.15
+    },
+    {
+      "id": "tampines-613b-tampines-nth-dr-1-2026-02-227857",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -148,7 +167,7 @@
       "pricePerSqft": 797.17
     },
     {
-      "id": "tampines-613b-tampines-nth-dr-1-2026-01-227772",
+      "id": "tampines-613b-tampines-nth-dr-1-2026-01-227855",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -380,19 +399,6 @@
       "resalePrice": 880000,
       "pricePerSqm": 7787.61,
       "pricePerSqft": 723.49
-    },
-    {
-      "id": "tampines-613b-tampines-nth-dr-1-2025-01-215712",
-      "month": "2025-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 69,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 10 months",
-      "resalePrice": 575000,
-      "pricePerSqm": 8333.33,
-      "pricePerSqft": 774.19
     }
   ]
 }

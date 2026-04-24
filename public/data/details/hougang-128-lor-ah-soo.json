@@ -10,7 +10,7 @@
       "lng": 103.886487164914
     },
     "medianPrice": 930000,
-    "transactionCount": 7,
+    "transactionCount": 8,
     "floorAreaRange": [
       142,
       151
@@ -19,10 +19,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      922500,
+      923750,
       950000
     ],
-    "pricePerSqmMedian": 6394.37,
-    "pricePerSqftMedian": 594.06
+    "pricePerSqmMedian": 6385.1,
+    "pricePerSqftMedian": 593.2
   },
   "monthlyTrend": [
     {
@@ -699,9 +699,28 @@
       "medianPrice": 940000,
       "transactionCount": 2,
       "medianPricePerSqm": 6225.16
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 930000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6241.61
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-128-lor-ah-soo-2026-04-224933",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 149,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 930000,
+      "pricePerSqm": 6241.61,
+      "pricePerSqft": 579.87
+    },
     {
       "id": "hougang-128-lor-ah-soo-2025-09-206323",
       "month": "2025-09",
@@ -948,19 +967,6 @@
       "resalePrice": 635000,
       "pricePerSqm": 4471.83,
       "pricePerSqft": 415.45
-    },
-    {
-      "id": "hougang-128-lor-ah-soo-2020-11-83687",
-      "month": "2020-11",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 151,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "62 years 09 months",
-      "resalePrice": 655000,
-      "pricePerSqm": 4337.75,
-      "pricePerSqft": 402.99
     }
   ]
 }

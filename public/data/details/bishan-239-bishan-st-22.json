@@ -9,8 +9,8 @@
       "lat": 1.36042894626787,
       "lng": 103.8447773181
     },
-    "medianPrice": 870000,
-    "transactionCount": 3,
+    "medianPrice": 895000,
+    "transactionCount": 4,
     "floorAreaRange": [
       101,
       133
@@ -19,10 +19,10 @@
       1990,
       1990
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      844000,
-      980000
+      857000,
+      962500
     ],
-    "pricePerSqmMedian": 7790.48,
-    "pricePerSqftMedian": 723.76
+    "pricePerSqmMedian": 7992.98,
+    "pricePerSqftMedian": 742.58
   },
   "monthlyTrend": [
     {
@@ -549,11 +549,30 @@
       "medianPrice": 1090000,
       "transactionCount": 1,
       "medianPricePerSqm": 8195.49
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 920000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8932.04
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-239-bishan-st-22-2026-03-222798",
+      "id": "bishan-239-bishan-st-22-2026-04-222777",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1992,
+      "remainingLease": "65 years 04 months",
+      "resalePrice": 920000,
+      "pricePerSqm": 8932.04,
+      "pricePerSqft": 829.81
+    },
+    {
+      "id": "bishan-239-bishan-st-22-2026-03-222813",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -774,7 +793,7 @@
       "pricePerSqft": 588.62
     },
     {
-      "id": "bishan-239-bishan-st-22-2016-08-967744",
+      "id": "bishan-239-bishan-st-22-2016-08-967856",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -787,7 +806,7 @@
       "pricePerSqft": 358.34
     },
     {
-      "id": "bishan-239-bishan-st-22-2015-04-942517",
+      "id": "bishan-239-bishan-st-22-2015-04-942629",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -798,19 +817,6 @@
       "resalePrice": 645000,
       "pricePerSqm": 5512.82,
       "pricePerSqft": 512.16
-    },
-    {
-      "id": "bishan-239-bishan-st-22-2015-01-938712",
-      "month": "2015-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1992,
-      "remainingLease": "76",
-      "resalePrice": 470000,
-      "pricePerSqm": 4476.19,
-      "pricePerSqft": 415.85
     }
   ]
 }

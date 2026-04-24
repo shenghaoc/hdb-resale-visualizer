@@ -9,8 +9,8 @@
       "lat": 1.35915579362423,
       "lng": 103.945140506761
     },
-    "medianPrice": 270000,
-    "transactionCount": 89,
+    "medianPrice": 662000,
+    "transactionCount": 1,
     "floorAreaRange": [
       84,
       104
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2024-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-02",
-      "2024-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      224000,
-      350000
+      662000,
+      662000
     ],
-    "pricePerSqmMedian": 2883.5,
-    "pricePerSqftMedian": 267.89
+    "pricePerSqmMedian": 6427.18,
+    "pricePerSqftMedian": 597.11
   },
   "monthlyTrend": [
     {
@@ -507,9 +507,28 @@
       "medianPrice": 510000,
       "transactionCount": 1,
       "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 662000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6427.18
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-409-tampines-st-41-2026-04-227922",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "59 years 07 months",
+      "resalePrice": 662000,
+      "pricePerSqm": 6427.18,
+      "pricePerSqft": 597.11
+    },
     {
       "id": "tampines-409-tampines-st-41-2024-02-190528",
       "month": "2024-02",
@@ -706,7 +725,7 @@
       "pricePerSqft": 464.52
     },
     {
-      "id": "tampines-409-tampines-st-41-2016-09-970779",
+      "id": "tampines-409-tampines-st-41-2016-09-970891",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -719,7 +738,7 @@
       "pricePerSqft": 446.48
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-12-651098",
+      "id": "tampines-409-tampines-st-41-2014-12-651210",
       "month": "2014-12",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -732,7 +751,7 @@
       "pricePerSqft": 444.86
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-05-641409",
+      "id": "tampines-409-tampines-st-41-2014-05-641521",
       "month": "2014-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -745,7 +764,7 @@
       "pricePerSqft": 442.4
     },
     {
-      "id": "tampines-409-tampines-st-41-2014-03-638433",
+      "id": "tampines-409-tampines-st-41-2014-03-638545",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -756,19 +775,6 @@
       "resalePrice": 390000,
       "pricePerSqm": 4642.86,
       "pricePerSqft": 431.34
-    },
-    {
-      "id": "tampines-409-tampines-st-41-2011-03-579127",
-      "month": "2011-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "59 years",
-      "resalePrice": 355000,
-      "pricePerSqm": 4226.19,
-      "pricePerSqft": 392.63
     }
   ]
 }

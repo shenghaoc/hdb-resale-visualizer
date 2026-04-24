@@ -9,8 +9,8 @@
       "lat": 1.39576281508857,
       "lng": 103.889466805657
     },
-    "medianPrice": 701500,
-    "transactionCount": 8,
+    "medianPrice": 695000,
+    "transactionCount": 9,
     "floorAreaRange": [
       92,
       112
@@ -19,10 +19,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-08",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,8 +52,8 @@
       }
     ],
     "priceIqr": [
-      693250,
-      826250
+      688000,
+      820000
     ],
     "pricePerSqmMedian": 7473.12,
     "pricePerSqftMedian": 694.28
@@ -226,9 +226,28 @@
       "medianPrice": 845000,
       "transactionCount": 3,
       "medianPricePerSqm": 7544.64
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7043.01
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-329b-anchorvale-st-2026-04-227136",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 05 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 7043.01,
+      "pricePerSqft": 654.32
+    },
     {
       "id": "sengkang-329b-anchorvale-st-2025-08-213739",
       "month": "2025-08",
@@ -475,19 +494,6 @@
       "resalePrice": 489888,
       "pricePerSqm": 5267.61,
       "pricePerSqft": 489.38
-    },
-    {
-      "id": "sengkang-329b-anchorvale-st-2021-12-115906",
-      "month": "2021-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "92 years 08 months",
-      "resalePrice": 480000,
-      "pricePerSqm": 5161.29,
-      "pricePerSqft": 479.5
     }
   ]
 }

@@ -10,7 +10,7 @@
       "lng": 103.766701647482
     },
     "medianPrice": 448000,
-    "transactionCount": 7,
+    "transactionCount": 8,
     "floorAreaRange": [
       67,
       91
@@ -19,10 +19,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-09",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      442500,
-      479000
+      443750,
+      506250
     ],
-    "pricePerSqmMedian": 6641.79,
-    "pricePerSqftMedian": 617.04
+    "pricePerSqmMedian": 6604.48,
+    "pricePerSqftMedian": 613.58
   },
   "monthlyTrend": [
     {
@@ -993,11 +993,30 @@
       "medianPrice": 448000,
       "transactionCount": 1,
       "medianPricePerSqm": 6686.57
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 505000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6158.54
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-375-clementi-ave-4-2026-03-224207",
+      "id": "clementi-375-clementi-ave-4-2026-04-224242",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 82,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 06 months",
+      "resalePrice": 505000,
+      "pricePerSqm": 6158.54,
+      "pricePerSqft": 572.15
+    },
+    {
+      "id": "clementi-375-clementi-ave-4-2026-03-224239",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1242,19 +1261,6 @@
       "resalePrice": 325000,
       "pricePerSqm": 4850.75,
       "pricePerSqft": 450.65
-    },
-    {
-      "id": "clementi-375-clementi-ave-4-2019-07-53060",
-      "month": "2019-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 82,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "60 years 04 months",
-      "resalePrice": 405000,
-      "pricePerSqm": 4939.02,
-      "pricePerSqft": 458.85
     }
   ]
 }

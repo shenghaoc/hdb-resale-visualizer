@@ -9,8 +9,8 @@
       "lat": 1.30264896606627,
       "lng": 103.912184784558
     },
-    "medianPrice": 500000,
-    "transactionCount": 10,
+    "medianPrice": 490000,
+    "transactionCount": 11,
     "floorAreaRange": [
       59,
       141
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      475250,
-      523250
+      456000,
+      521500
     ],
-    "pricePerSqmMedian": 7361.54,
-    "pricePerSqftMedian": 683.91
+    "pricePerSqmMedian": 7261.54,
+    "pricePerSqftMedian": 674.62
   },
   "monthlyTrend": [
     {
@@ -1219,14 +1219,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 510000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6710.53
+      "medianPrice": 472500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6701.42
     }
   ],
   "recentTransactions": [
     {
-      "id": "marine-parade-33-marine-cres-2026-04-225715",
+      "id": "marine-parade-33-marine-cres-2026-04-225764",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1237,6 +1237,19 @@
       "resalePrice": 510000,
       "pricePerSqm": 6710.53,
       "pricePerSqft": 623.43
+    },
+    {
+      "id": "marine-parade-33-marine-cres-2026-04-225766",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 02 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 6692.31,
+      "pricePerSqft": 621.74
     },
     {
       "id": "marine-parade-33-marine-cres-2025-12-209225",
@@ -1471,19 +1484,6 @@
       "resalePrice": 425000,
       "pricePerSqm": 6538.46,
       "pricePerSqft": 607.44
-    },
-    {
-      "id": "marine-parade-33-marine-cres-2022-05-129763",
-      "month": "2022-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 76,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1975,
-      "remainingLease": "52 years 01 month",
-      "resalePrice": 533893,
-      "pricePerSqm": 7024.91,
-      "pricePerSqft": 652.64
     }
   ]
 }

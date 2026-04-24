@@ -9,8 +9,8 @@
       "lat": 1.33460113941761,
       "lng": 103.929445271638
     },
-    "medianPrice": 408000,
-    "transactionCount": 19,
+    "medianPrice": 406500,
+    "transactionCount": 20,
     "floorAreaRange": [
       67,
       162
@@ -19,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,8 +53,8 @@
       }
     ],
     "priceIqr": [
-      392500,
-      422500
+      396250,
+      421250
     ],
     "pricePerSqmMedian": 5970.15,
     "pricePerSqftMedian": 554.65
@@ -1655,11 +1655,30 @@
       "medianPrice": 385000,
       "transactionCount": 1,
       "medianPricePerSqm": 5746.27
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 405000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6044.78
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-525-bedok-nth-st-3-2026-02-222406",
+      "id": "bedok-525-bedok-nth-st-3-2026-04-222428",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 04 months",
+      "resalePrice": 405000,
+      "pricePerSqm": 6044.78,
+      "pricePerSqft": 561.58
+    },
+    {
+      "id": "bedok-525-bedok-nth-st-3-2026-02-222413",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1672,7 +1691,7 @@
       "pricePerSqft": 533.85
     },
     {
-      "id": "bedok-525-bedok-nth-st-3-2026-01-222533",
+      "id": "bedok-525-bedok-nth-st-3-2026-01-222544",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1904,19 +1923,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 5373.13,
       "pricePerSqft": 499.18
-    },
-    {
-      "id": "bedok-525-bedok-nth-st-3-2024-04-170521",
-      "month": "2024-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "54 years 05 months",
-      "resalePrice": 335000,
-      "pricePerSqm": 5000,
-      "pricePerSqft": 464.52
     }
   ]
 }

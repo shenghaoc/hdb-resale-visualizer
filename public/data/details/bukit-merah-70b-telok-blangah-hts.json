@@ -9,8 +9,8 @@
       "lat": 1.27674945693288,
       "lng": 103.810541543465
     },
-    "medianPrice": 872500,
-    "transactionCount": 10,
+    "medianPrice": 835000,
+    "transactionCount": 11,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-02",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      782500,
-      972500
+      781944,
+      970000
     ],
-    "pricePerSqmMedian": 10430.1,
-    "pricePerSqftMedian": 968.99
+    "pricePerSqmMedian": 10483.87,
+    "pricePerSqftMedian": 973.98
   },
   "monthlyTrend": [
     {
@@ -243,11 +243,30 @@
       "medianPrice": 975000,
       "transactionCount": 1,
       "medianPricePerSqm": 10483.87
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 788888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11601.29
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-70b-telok-blangah-hts-2026-01-223456",
+      "id": "bukit-merah-70b-telok-blangah-hts-2026-04-223382",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 788888,
+      "pricePerSqm": 11601.29,
+      "pricePerSqft": 1077.8
+    },
+    {
+      "id": "bukit-merah-70b-telok-blangah-hts-2026-01-223481",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -492,19 +511,6 @@
       "resalePrice": 788000,
       "pricePerSqm": 8473.12,
       "pricePerSqft": 787.18
-    },
-    {
-      "id": "bukit-merah-70b-telok-blangah-hts-2022-09-121159",
-      "month": "2022-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 09 months",
-      "resalePrice": 857000,
-      "pricePerSqm": 9215.05,
-      "pricePerSqft": 856.11
     }
   ]
 }

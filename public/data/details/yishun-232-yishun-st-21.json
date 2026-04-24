@@ -9,8 +9,8 @@
       "lat": 1.43459992009659,
       "lng": 103.837409471332
     },
-    "medianPrice": 572944,
-    "transactionCount": 2,
+    "medianPrice": 637888,
+    "transactionCount": 3,
     "floorAreaRange": [
       98,
       125
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-05",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2025-05"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      536916,
-      608972
+      569388,
+      641444
     ],
-    "pricePerSqmMedian": 5220.84,
-    "pricePerSqftMedian": 485.03
+    "pricePerSqmMedian": 5271.8,
+    "pricePerSqftMedian": 489.77
   },
   "monthlyTrend": [
     {
@@ -808,9 +808,28 @@
       "medianPrice": 645000,
       "transactionCount": 1,
       "medianPricePerSqm": 5330.58
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 637888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5271.8
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-232-yishun-st-21-2026-04-229571",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 04 months",
+      "resalePrice": 637888,
+      "pricePerSqm": 5271.8,
+      "pricePerSqft": 489.77
+    },
     {
       "id": "yishun-232-yishun-st-21-2025-05-221913",
       "month": "2025-05",
@@ -1020,7 +1039,7 @@
       "pricePerSqft": 344.65
     },
     {
-      "id": "yishun-232-yishun-st-21-2016-05-964112",
+      "id": "yishun-232-yishun-st-21-2016-05-964224",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -1033,7 +1052,7 @@
       "pricePerSqft": 330.15
     },
     {
-      "id": "yishun-232-yishun-st-21-2016-05-964114",
+      "id": "yishun-232-yishun-st-21-2016-05-964226",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -1046,7 +1065,7 @@
       "pricePerSqft": 330.15
     },
     {
-      "id": "yishun-232-yishun-st-21-2016-04-962267",
+      "id": "yishun-232-yishun-st-21-2016-04-962379",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1057,19 +1076,6 @@
       "resalePrice": 380000,
       "pricePerSqm": 3877.55,
       "pricePerSqft": 360.24
-    },
-    {
-      "id": "yishun-232-yishun-st-21-2015-10-953450",
-      "month": "2015-10",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "68",
-      "resalePrice": 450000,
-      "pricePerSqm": 3719.01,
-      "pricePerSqft": 345.51
     }
   ]
 }

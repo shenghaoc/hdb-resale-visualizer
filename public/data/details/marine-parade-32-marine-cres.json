@@ -9,8 +9,8 @@
       "lat": 1.303178277126,
       "lng": 103.911806642809
     },
-    "medianPrice": 555000,
-    "transactionCount": 3,
+    "medianPrice": 522500,
+    "transactionCount": 4,
     "floorAreaRange": [
       59,
       153
@@ -19,10 +19,10 @@
       1974,
       1974
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      522500,
-      559000
+      480000,
+      557000
     ],
-    "pricePerSqmMedian": 7407.89,
-    "pricePerSqftMedian": 688.22
+    "pricePerSqmMedian": 7355.26,
+    "pricePerSqftMedian": 683.33
   },
   "monthlyTrend": [
     {
@@ -1174,9 +1174,28 @@
       "medianPrice": 490000,
       "transactionCount": 1,
       "medianPricePerSqm": 7538.46
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6923.08
     }
   ],
   "recentTransactions": [
+    {
+      "id": "marine-parade-32-marine-cres-2026-04-225765",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1975,
+      "remainingLease": "48 years 01 month",
+      "resalePrice": 450000,
+      "pricePerSqm": 6923.08,
+      "pricePerSqft": 643.18
+    },
     {
       "id": "marine-parade-32-marine-cres-2025-08-209215",
       "month": "2025-08",
@@ -1423,19 +1442,6 @@
       "resalePrice": 407000,
       "pricePerSqm": 5355.26,
       "pricePerSqft": 497.52
-    },
-    {
-      "id": "marine-parade-32-marine-cres-2021-05-97960",
-      "month": "2021-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1975,
-      "remainingLease": "53 years",
-      "resalePrice": 373000,
-      "pricePerSqm": 5738.46,
-      "pricePerSqft": 533.12
     }
   ]
 }

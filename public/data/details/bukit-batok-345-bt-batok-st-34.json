@@ -10,7 +10,7 @@
       "lng": 103.750843242288
     },
     "medianPrice": 435000,
-    "transactionCount": 6,
+    "transactionCount": 7,
     "floorAreaRange": [
       73,
       107
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      423750,
-      438750
+      422500,
+      437500
     ],
-    "pricePerSqmMedian": 5856.16,
-    "pricePerSqftMedian": 544.06
+    "pricePerSqmMedian": 5821.92,
+    "pricePerSqftMedian": 540.87
   },
   "monthlyTrend": [
     {
@@ -1020,14 +1020,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 382000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5232.88
+      "medianPrice": 403500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5527.4
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-345-bt-batok-st-34-2026-04-222901",
+      "id": "bukit-batok-345-bt-batok-st-34-2026-04-222916",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1038,6 +1038,19 @@
       "resalePrice": 382000,
       "pricePerSqm": 5232.88,
       "pricePerSqft": 486.15
+    },
+    {
+      "id": "bukit-batok-345-bt-batok-st-34-2026-04-222917",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 73,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 425000,
+      "pricePerSqm": 5821.92,
+      "pricePerSqft": 540.87
     },
     {
       "id": "bukit-batok-345-bt-batok-st-34-2025-09-199776",
@@ -1272,19 +1285,6 @@
       "resalePrice": 255000,
       "pricePerSqm": 3493.15,
       "pricePerSqft": 324.52
-    },
-    {
-      "id": "bukit-batok-345-bt-batok-st-34-2017-11-17233",
-      "month": "2017-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 103,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "68 years 04 months",
-      "resalePrice": 400000,
-      "pricePerSqm": 3883.5,
-      "pricePerSqft": 360.79
     }
   ]
 }

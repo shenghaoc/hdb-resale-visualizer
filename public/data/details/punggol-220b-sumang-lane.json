@@ -9,8 +9,8 @@
       "lat": 1.40151003643786,
       "lng": 103.895420741116
     },
-    "medianPrice": 580000,
-    "transactionCount": 17,
+    "medianPrice": 594000,
+    "transactionCount": 18,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      520000,
-      645000
+      523972,
+      648000
     ],
-    "pricePerSqmMedian": 7096.77,
-    "pricePerSqftMedian": 659.31
+    "pricePerSqmMedian": 7112.9,
+    "pricePerSqftMedian": 660.81
   },
   "monthlyTrend": [
     {
@@ -207,11 +207,30 @@
       "medianPrice": 535000,
       "transactionCount": 2,
       "medianPricePerSqm": 7867.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 663000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7129.03
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-220b-sumang-lane-2026-02-226057",
+      "id": "punggol-220b-sumang-lane-2026-04-226368",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 08 months",
+      "resalePrice": 663000,
+      "pricePerSqm": 7129.03,
+      "pricePerSqft": 662.31
+    },
+    {
+      "id": "punggol-220b-sumang-lane-2026-02-226111",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -224,7 +243,7 @@
       "pricePerSqft": 792.41
     },
     {
-      "id": "punggol-220b-sumang-lane-2026-02-226058",
+      "id": "punggol-220b-sumang-lane-2026-02-226112",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -456,19 +475,6 @@
       "resalePrice": 633888,
       "pricePerSqm": 6816,
       "pricePerSqft": 633.23
-    },
-    {
-      "id": "punggol-220b-sumang-lane-2023-12-158802",
-      "month": "2023-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 01 month",
-      "resalePrice": 440000,
-      "pricePerSqm": 6470.59,
-      "pricePerSqft": 601.14
     }
   ]
 }

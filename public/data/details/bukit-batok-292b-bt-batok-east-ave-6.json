@@ -10,7 +10,7 @@
       "lng": 103.753961675829
     },
     "medianPrice": 768000,
-    "transactionCount": 25,
+    "transactionCount": 26,
     "floorAreaRange": [
       93,
       113
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      740000,
-      780000
+      742500,
+      784500
     ],
-    "pricePerSqmMedian": 8064.52,
-    "pricePerSqftMedian": 749.22
+    "pricePerSqmMedian": 8074.67,
+    "pricePerSqftMedian": 750.16
   },
   "monthlyTrend": [
     {
@@ -241,14 +241,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 774000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 8322.58
+      "medianPrice": 798000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 8495.58
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222969",
+      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222986",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -261,7 +261,7 @@
       "pricePerSqft": 749.22
     },
     {
-      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222970",
+      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-222987",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -272,6 +272,19 @@
       "resalePrice": 798000,
       "pricePerSqm": 8580.65,
       "pricePerSqft": 797.17
+    },
+    {
+      "id": "bukit-batok-292b-bt-batok-east-ave-6-2026-04-223158",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "28 TO 30",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "91 years 09 months",
+      "resalePrice": 960000,
+      "pricePerSqm": 8495.58,
+      "pricePerSqft": 789.27
     },
     {
       "id": "bukit-batok-292b-bt-batok-east-ave-6-2025-12-200018",
@@ -493,19 +506,6 @@
       "resalePrice": 780000,
       "pricePerSqm": 8387.1,
       "pricePerSqft": 779.19
-    },
-    {
-      "id": "bukit-batok-292b-bt-batok-east-ave-6-2024-08-173122",
-      "month": "2024-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "31 TO 33",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "93 years 06 months",
-      "resalePrice": 768000,
-      "pricePerSqm": 8258.06,
-      "pricePerSqft": 767.2
     }
   ]
 }

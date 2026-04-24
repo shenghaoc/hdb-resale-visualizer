@@ -9,8 +9,8 @@
       "lat": 1.38441803266575,
       "lng": 103.763328716712
     },
-    "medianPrice": 663500,
-    "transactionCount": 4,
+    "medianPrice": 702000,
+    "transactionCount": 5,
     "floorAreaRange": [
       99,
       122
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-04",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      623750,
-      711500
+      625000,
+      740000
     ],
-    "pricePerSqmMedian": 6132.78,
-    "pricePerSqftMedian": 569.75
+    "pricePerSqmMedian": 6200,
+    "pricePerSqftMedian": 576
   },
   "monthlyTrend": [
     {
@@ -484,9 +484,28 @@
       "medianPrice": 625000,
       "transactionCount": 1,
       "medianPricePerSqm": 6250
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 765000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6270.49
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-535-bt-panjang-ring-rd-2026-04-223729",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 765000,
+      "pricePerSqm": 6270.49,
+      "pricePerSqft": 582.55
+    },
     {
       "id": "bukit-panjang-535-bt-panjang-ring-rd-2025-11-201956",
       "month": "2025-11",
@@ -733,19 +752,6 @@
       "resalePrice": 490000,
       "pricePerSqm": 4016.39,
       "pricePerSqft": 373.14
-    },
-    {
-      "id": "bukit-panjang-535-bt-panjang-ring-rd-2018-08-33154",
-      "month": "2018-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 99,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "79 years 09 months",
-      "resalePrice": 366000,
-      "pricePerSqm": 3696.97,
-      "pricePerSqft": 343.46
     }
   ]
 }

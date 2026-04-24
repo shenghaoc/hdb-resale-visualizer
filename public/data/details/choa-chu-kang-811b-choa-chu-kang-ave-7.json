@@ -9,8 +9,8 @@
       "lat": 1.37312145835945,
       "lng": 103.745382153467
     },
-    "medianPrice": 505000,
-    "transactionCount": 15,
+    "medianPrice": 506500,
+    "transactionCount": 16,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-08",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      470444,
-      569000
+      470666,
+      572000
     ],
-    "pricePerSqmMedian": 6838.24,
-    "pricePerSqftMedian": 635.29
+    "pricePerSqmMedian": 6837.88,
+    "pricePerSqftMedian": 635.26
   },
   "monthlyTrend": [
     {
@@ -237,11 +237,30 @@
       "medianPrice": 470000,
       "transactionCount": 1,
       "medianPricePerSqm": 6911.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 570000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6129.03
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-811b-choa-chu-kang-ave-7-2026-02-223860",
+      "id": "choa-chu-kang-811b-choa-chu-kang-ave-7-2026-04-223972",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 07 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 6129.03,
+      "pricePerSqft": 569.41
+    },
+    {
+      "id": "choa-chu-kang-811b-choa-chu-kang-ave-7-2026-02-223888",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -486,19 +505,6 @@
       "resalePrice": 500000,
       "pricePerSqm": 5376.34,
       "pricePerSqft": 499.48
-    },
-    {
-      "id": "choa-chu-kang-811b-choa-chu-kang-ave-7-2023-10-150444",
-      "month": "2023-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 03 months",
-      "resalePrice": 528000,
-      "pricePerSqm": 5677.42,
-      "pricePerSqft": 527.45
     }
   ]
 }

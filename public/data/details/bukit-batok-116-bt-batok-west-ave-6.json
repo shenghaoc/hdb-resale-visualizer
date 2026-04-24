@@ -9,8 +9,8 @@
       "lat": 1.34962866452512,
       "lng": 103.746381073293
     },
-    "medianPrice": 575000,
-    "transactionCount": 3,
+    "medianPrice": 581500,
+    "transactionCount": 4,
     "floorAreaRange": [
       103,
       120
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      558500,
-      587944
+      566750,
+      591222
     ],
-    "pricePerSqmMedian": 5582.52,
-    "pricePerSqftMedian": 518.63
+    "pricePerSqmMedian": 5645.63,
+    "pricePerSqftMedian": 524.5
   },
   "monthlyTrend": [
     {
@@ -716,9 +716,28 @@
       "medianPrice": 600888,
       "transactionCount": 1,
       "medianPricePerSqm": 5833.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 588000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5708.74
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2026-04-223077",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 08 months",
+      "resalePrice": 588000,
+      "pricePerSqm": 5708.74,
+      "pricePerSqft": 530.36
+    },
     {
       "id": "bukit-batok-116-bt-batok-west-ave-6-2025-06-200289",
       "month": "2025-06",
@@ -876,7 +895,7 @@
       "pricePerSqft": 367.27
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2016-09-969707",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2016-09-969819",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -889,7 +908,7 @@
       "pricePerSqft": 359.9
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2016-07-966197",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2016-07-966309",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -902,7 +921,7 @@
       "pricePerSqft": 396.87
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-10-952005",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-10-952117",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -915,7 +934,7 @@
       "pricePerSqft": 355.98
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-10-952006",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-10-952118",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -928,7 +947,7 @@
       "pricePerSqft": 360.33
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-06-945800",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-06-945912",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -941,7 +960,7 @@
       "pricePerSqft": 333.73
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-06-945807",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-06-945919",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -954,7 +973,7 @@
       "pricePerSqft": 395.06
     },
     {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-02-939995",
+      "id": "bukit-batok-116-bt-batok-west-ave-6-2015-02-940107",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -965,19 +984,6 @@
       "resalePrice": 422000,
       "pricePerSqm": 3943.93,
       "pricePerSqft": 366.4
-    },
-    {
-      "id": "bukit-batok-116-bt-batok-west-ave-6-2011-10-591276",
-      "month": "2011-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 107,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "57 years",
-      "resalePrice": 488000,
-      "pricePerSqm": 4560.75,
-      "pricePerSqft": 423.71
     }
   ]
 }

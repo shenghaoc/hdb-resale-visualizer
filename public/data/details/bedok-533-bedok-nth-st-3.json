@@ -9,8 +9,8 @@
       "lat": 1.33358016248275,
       "lng": 103.92421866691
     },
-    "medianPrice": 405500,
-    "transactionCount": 10,
+    "medianPrice": 401000,
+    "transactionCount": 11,
     "floorAreaRange": [
       68,
       163
@@ -19,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -54,11 +54,11 @@
       }
     ],
     "priceIqr": [
-      394000,
-      423750
+      383500,
+      422500
     ],
-    "pricePerSqmMedian": 5889.7,
-    "pricePerSqftMedian": 547.17
+    "pricePerSqmMedian": 5882.35,
+    "pricePerSqftMedian": 546.49
   },
   "monthlyTrend": [
     {
@@ -1518,11 +1518,30 @@
       "medianPrice": 401000,
       "transactionCount": 1,
       "medianPricePerSqm": 5897.06
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 375000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5514.71
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-533-bedok-nth-st-3-2026-03-222415",
+      "id": "bedok-533-bedok-nth-st-3-2026-04-222429",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "52 years 09 months",
+      "resalePrice": 375000,
+      "pricePerSqm": 5514.71,
+      "pricePerSqft": 512.33
+    },
+    {
+      "id": "bedok-533-bedok-nth-st-3-2026-03-222422",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1767,19 +1786,6 @@
       "resalePrice": 350000,
       "pricePerSqm": 5147.06,
       "pricePerSqft": 478.18
-    },
-    {
-      "id": "bedok-533-bedok-nth-st-3-2023-01-144477",
-      "month": "2023-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "56 years 01 month",
-      "resalePrice": 372000,
-      "pricePerSqm": 5470.59,
-      "pricePerSqft": 508.23
     }
   ]
 }

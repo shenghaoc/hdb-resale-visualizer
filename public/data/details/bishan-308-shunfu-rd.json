@@ -9,8 +9,8 @@
       "lat": 1.35058252902296,
       "lng": 103.837846846026
     },
-    "medianPrice": 552000,
-    "transactionCount": 7,
+    "medianPrice": 551000,
+    "transactionCount": 8,
     "floorAreaRange": [
       67,
       134
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      550000,
-      624000
+      549722,
+      592000
     ],
-    "pricePerSqmMedian": 8208.96,
-    "pricePerSqftMedian": 762.64
+    "pricePerSqmMedian": 8200.66,
+    "pricePerSqftMedian": 761.87
   },
   "monthlyTrend": [
     {
@@ -1013,9 +1013,28 @@
       "medianPrice": 693000,
       "transactionCount": 1,
       "medianPricePerSqm": 7532.61
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 540000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8059.7
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bishan-308-shunfu-rd-2026-04-222732",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 08 months",
+      "resalePrice": 540000,
+      "pricePerSqm": 8059.7,
+      "pricePerSqft": 748.77
+    },
     {
       "id": "bishan-308-shunfu-rd-2025-07-199382",
       "month": "2025-07",
@@ -1262,19 +1281,6 @@
       "resalePrice": 550000,
       "pricePerSqm": 5978.26,
       "pricePerSqft": 555.4
-    },
-    {
-      "id": "bishan-308-shunfu-rd-2021-05-97219",
-      "month": "2021-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "62 years 07 months",
-      "resalePrice": 457000,
-      "pricePerSqm": 6820.9,
-      "pricePerSqft": 633.68
     }
   ]
 }

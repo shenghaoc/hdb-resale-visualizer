@@ -9,8 +9,8 @@
       "lat": 1.31955255991308,
       "lng": 103.742644766325
     },
-    "medianPrice": 365000,
-    "transactionCount": 7,
+    "medianPrice": 367500,
+    "transactionCount": 8,
     "floorAreaRange": [
       74,
       133
@@ -19,10 +19,10 @@
       1976,
       1976
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-05",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      345000,
-      371000
+      352500,
+      376500
     ],
-    "pricePerSqmMedian": 4805.19,
-    "pricePerSqftMedian": 446.42
+    "pricePerSqmMedian": 4835.02,
+    "pricePerSqftMedian": 449.19
   },
   "monthlyTrend": [
     {
@@ -946,11 +946,30 @@
       "medianPrice": 372000,
       "transactionCount": 1,
       "medianPricePerSqm": 5027.03
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 390000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5064.94
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-35-teban-gdns-rd-2026-02-224951",
+      "id": "jurong-east-35-teban-gdns-rd-2026-04-224994",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 77,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1977,
+      "remainingLease": "50 years 02 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 5064.94,
+      "pricePerSqft": 470.55
+    },
+    {
+      "id": "jurong-east-35-teban-gdns-rd-2026-02-224989",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1195,19 +1214,6 @@
       "resalePrice": 245000,
       "pricePerSqm": 3310.81,
       "pricePerSqft": 307.58
-    },
-    {
-      "id": "jurong-east-35-teban-gdns-rd-2017-05-6782",
-      "month": "2017-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 77,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1977,
-      "remainingLease": "59 years 01 month",
-      "resalePrice": 288000,
-      "pricePerSqm": 3740.26,
-      "pricePerSqft": 347.48
     }
   ]
 }

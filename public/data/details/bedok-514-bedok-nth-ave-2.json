@@ -9,8 +9,8 @@
       "lat": 1.33224019718694,
       "lng": 103.92890624288
     },
-    "medianPrice": 307000,
-    "transactionCount": 6,
+    "medianPrice": 312000,
+    "transactionCount": 7,
     "floorAreaRange": [
       45,
       45
@@ -19,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2007-10",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      293000,
-      317166
+      296000,
+      317444
     ],
-    "pricePerSqmMedian": 6822.22,
-    "pricePerSqftMedian": 633.81
+    "pricePerSqmMedian": 6933.33,
+    "pricePerSqftMedian": 644.13
   },
   "monthlyTrend": [
     {
@@ -266,11 +266,30 @@
       "medianPrice": 318888,
       "transactionCount": 1,
       "medianPricePerSqm": 7086.4
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 316000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7022.22
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-514-bedok-nth-ave-2-2026-01-222336",
+      "id": "bedok-514-bedok-nth-ave-2-2026-04-222343",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 45,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 03 months",
+      "resalePrice": 316000,
+      "pricePerSqm": 7022.22,
+      "pricePerSqft": 652.39
+    },
+    {
+      "id": "bedok-514-bedok-nth-ave-2-2026-01-222342",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -478,7 +497,7 @@
       "pricePerSqft": 454.19
     },
     {
-      "id": "bedok-514-bedok-nth-ave-2-2016-08-967612",
+      "id": "bedok-514-bedok-nth-ave-2-2016-08-967724",
       "month": "2016-08",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -491,7 +510,7 @@
       "pricePerSqft": 474.84
     },
     {
-      "id": "bedok-514-bedok-nth-ave-2-2015-06-945597",
+      "id": "bedok-514-bedok-nth-ave-2-2015-06-945709",
       "month": "2015-06",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -504,7 +523,7 @@
       "pricePerSqft": 495.48
     },
     {
-      "id": "bedok-514-bedok-nth-ave-2-2015-04-942398",
+      "id": "bedok-514-bedok-nth-ave-2-2015-04-942510",
       "month": "2015-04",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -515,19 +534,6 @@
       "resalePrice": 220000,
       "pricePerSqm": 4888.89,
       "pricePerSqft": 454.19
-    },
-    {
-      "id": "bedok-514-bedok-nth-ave-2-2014-07-643060",
-      "month": "2014-07",
-      "flatType": "2 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 45,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "52 years",
-      "resalePrice": 255000,
-      "pricePerSqm": 5666.67,
-      "pricePerSqft": 526.45
     }
   ]
 }
