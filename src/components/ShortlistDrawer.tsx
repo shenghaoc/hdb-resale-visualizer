@@ -7,6 +7,7 @@ import ReactEChartsCore from "echarts-for-react/lib/core";
 import { Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
+import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 type ShortlistRow = {
@@ -29,8 +30,6 @@ type ShortlistRow = {
   detailSummary: AddressDetailSummary | null;
   monthlyTrend: AddressTrendPoint[];
 };
-
-type CompareMode = "median" | "lease" | "mrt" | "target-gap";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -87,6 +86,43 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+  const compareModeDescriptionKey: Record<CompareMode, string> = {
+    "target-gap": "shortlist.compare.targetFit.help",
+    median: "shortlist.compare.price.help",
+    lease: "shortlist.compare.lease.help",
+    mrt: "shortlist.compare.mrt.help",
+  };
+
+  function getRankingMetricLabel(row: ShortlistRow) {
+    if (compareMode === "target-gap") {
+      if (row.item.targetPrice === null) {
+        return t("shortlist.compare.metric.targetFit.noTarget");
+      }
+      return t("shortlist.compare.metric.targetFit.value", {
+        value: formatCurrency(Math.abs(row.item.targetPrice - row.block.medianPrice), locale),
+      });
+    }
+
+    if (compareMode === "median") {
+      return t("shortlist.compare.metric.price.value", {
+        value: formatCurrency(row.block.medianPrice, locale),
+      });
+    }
+
+    if (compareMode === "lease") {
+      return t("shortlist.compare.metric.lease.value", {
+        value: row.block.leaseCommenceRange[1],
+      });
+    }
+
+    if (row.block.nearestMrt) {
+      return t("shortlist.compare.metric.mrt.value", {
+        value: formatMeters(row.block.nearestMrt.distanceMeters, t, locale),
+      });
+    }
+
+    return t("shortlist.compare.metric.mrt.missing");
+  }
 
   function handleShare() {
     const params = new URLSearchParams(window.location.search);
@@ -132,35 +168,7 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
-  const rankedRows = useMemo(
-    () =>
-      [...rows].sort((left, right) => {
-        if (compareMode === "median") {
-          return left.block.medianPrice - right.block.medianPrice;
-        }
-
-        if (compareMode === "lease") {
-          return right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1];
-        }
-
-        if (compareMode === "mrt") {
-          const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-          const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-          return leftDistance - rightDistance;
-        }
-
-        const leftGap =
-          left.item.targetPrice === null
-            ? Number.POSITIVE_INFINITY
-            : Math.abs(left.item.targetPrice - left.block.medianPrice);
-        const rightGap =
-          right.item.targetPrice === null
-            ? Number.POSITIVE_INFINITY
-            : Math.abs(right.item.targetPrice - right.block.medianPrice);
-        return leftGap - rightGap;
-      }),
-    [compareMode, rows],
-  );
+  const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [compareMode, rows]);
 
   const highlights = useMemo(() => {
     const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
@@ -255,40 +263,24 @@ export function ShortlistDrawer({
           </div>
           {rows.length > 0 ? (
             <>
-              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-                <Button
-                  variant={compareMode === "target-gap" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("target-gap")}
-                  type="button"
-                >
-                  {t("shortlist.compare.targetFit")}
-                </Button>
-                <Button
-                  variant={compareMode === "median" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("median")}
-                  type="button"
-                >
-                  {t("shortlist.compare.price")}
-                </Button>
-                <Button
-                  variant={compareMode === "lease" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("lease")}
-                  type="button"
-                >
-                  {t("shortlist.compare.lease")}
-                </Button>
-                <Button
-                  variant={compareMode === "mrt" ? "secondary" : "outline"}
-                  size="xs"
-                  onClick={() => setCompareMode("mrt")}
-                  type="button"
-                >
-                  {t("shortlist.compare.mrt")}
-                </Button>
-              </ButtonGroup>
+              <Tabs
+                value={compareMode}
+                onValueChange={(value) => setCompareMode(value as CompareMode)}
+                className="gap-1"
+              >
+                <TabsList className="grid w-full grid-cols-2 gap-2 bg-transparent p-0 sm:grid-cols-4">
+                  <TabsTrigger value="target-gap">{t("shortlist.compare.targetFit")}</TabsTrigger>
+                  <TabsTrigger value="median">{t("shortlist.compare.price")}</TabsTrigger>
+                  <TabsTrigger value="lease">{t("shortlist.compare.lease")}</TabsTrigger>
+                  <TabsTrigger value="mrt">{t("shortlist.compare.mrt")}</TabsTrigger>
+                </TabsList>
+              </Tabs>
+              <p className="text-xs text-muted-foreground">
+                {t(compareModeDescriptionKey[compareMode])}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {t("shortlist.compare.currentSort", { mode: t(`shortlist.compare.${compareMode === "target-gap" ? "targetFit" : compareMode}`) })}
+              </p>
               <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
                 <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
                   <Download data-icon="inline-start" />
@@ -312,7 +304,10 @@ export function ShortlistDrawer({
             {rows.length === 0 ? (
               <div className="empty-state">{t("shortlist.emptyState")}</div>
             ) : (
-              <ScrollArea className="min-h-0 flex-1 pr-3 border-r border-transparent">
+              <div
+                className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain pr-3"
+                data-testid="shortlist-scroll-container"
+              >
                 <div className="flex flex-col gap-4 pb-4">
                   <Card size="sm" className="bg-muted/40">
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
@@ -370,7 +365,7 @@ export function ShortlistDrawer({
                     </Card>
                   ) : null}
 
-                  {rankedRows.map((row) => {
+                  {rankedRows.map((row, index) => {
                     const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
                     const remainingLeaseRange = getRemainingLeaseRange(row.block.leaseCommenceRange);
 
@@ -382,6 +377,14 @@ export function ShortlistDrawer({
                               <CardTitle className="text-lg">
                                 {row.block.block} {row.block.streetName}
                               </CardTitle>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <Badge variant="secondary">
+                                  {t("shortlist.compare.rank", { rank: index + 1 })}
+                                </Badge>
+                                <span className="text-xs text-muted-foreground">
+                                  {getRankingMetricLabel(row)}
+                                </span>
+                              </div>
                             </div>
                             <Button
                               size="xs"
@@ -564,7 +567,7 @@ export function ShortlistDrawer({
                     );
                   })}
                 </div>
-              </ScrollArea>
+              </div>
             )}
           </CardContent>
         ) : null}
