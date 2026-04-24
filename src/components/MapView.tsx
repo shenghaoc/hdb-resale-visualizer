@@ -22,7 +22,7 @@ type MapViewProps = {
   townFilter?: string | null;
   autoFitKey?: string | null;
   onSelect: (addressKey: string) => void;
-  onMapInteract?: () => void;
+  onMapInteract?: (interactionType?: "background" | "feature") => void;
   t: Translator;
 };
 
@@ -567,7 +567,7 @@ export function MapView({
       });
 
       map.on("click", "unclustered-point", (event) => {
-        onMapInteractRef.current?.();
+        onMapInteractRef.current?.("feature");
         const feature = event.features?.[0];
         const properties = feature?.properties;
         if (properties && typeof properties.address_key === "string") {
@@ -576,7 +576,7 @@ export function MapView({
       });
 
       map.on("click", "clusters", (event) => {
-        onMapInteractRef.current?.();
+        onMapInteractRef.current?.("feature");
         const feature = event.features?.[0];
         const properties = feature?.properties;
         const clusterId =
@@ -606,13 +606,21 @@ export function MapView({
         });
       });
 
-      map.on("click", () => {
-        onMapInteractRef.current?.();
+      map.on("click", (event) => {
+        const clickedFeatures = map.queryRenderedFeatures(event.point, {
+          layers: ["unclustered-point", "clusters"],
+        });
+
+        if (clickedFeatures.length > 0) {
+          return;
+        }
+
+        onMapInteractRef.current?.("background");
       });
 
       map.on("movestart", (event) => {
         if (event.originalEvent) {
-          onMapInteractRef.current?.();
+          onMapInteractRef.current?.("background");
         }
       });
 

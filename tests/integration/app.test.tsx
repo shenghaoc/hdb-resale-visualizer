@@ -35,7 +35,28 @@ vi.mock("@/components/FilterPanel", () => ({
 }));
 
 vi.mock("@/components/MapView", () => ({
-  MapView: () => <div data-testid="map-view" />,
+  MapView: ({
+    onMapInteract,
+    onSelect,
+  }: {
+    onMapInteract?: (interactionType?: "background" | "feature") => void;
+    onSelect: (addressKey: string) => void;
+  }) => (
+    <div data-testid="map-view">
+      <button type="button" onClick={() => onMapInteract?.("background")}>
+        Background map interaction
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          onSelect("bedok-101-bedok-nth-ave-4");
+          onMapInteract?.("feature");
+        }}
+      >
+        Feature map click
+      </button>
+    </div>
+  ),
 }));
 
 vi.mock("@/components/ResultsPane", () => ({
@@ -132,7 +153,11 @@ describe("App detail loading", () => {
   beforeEach(() => {
     dataMocks.fetchManifest.mockResolvedValue(manifest);
     dataMocks.fetchBlockSummaries.mockResolvedValue(blocks);
-    dataMocks.fetchAddressDetail.mockReset();
+    dataMocks.fetchAddressDetail.mockResolvedValue({
+      summary: blocks[0],
+      monthlyTrend: [],
+      transactions: [],
+    });
     Object.defineProperty(window, "localStorage", {
       value: {
         getItem: vi.fn(() => null),
@@ -169,5 +194,41 @@ describe("App detail loading", () => {
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
 
     detailRequest.reject(new Error("Request aborted"));
+  });
+
+  it("keeps the results panel open when a map feature click selects a block", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+
+    await user.click(screen.getByRole("button", { name: "Feature map click" }));
+
+    await screen.findByTestId("detail-drawer");
+    expect(screen.getByTestId("results-pane")).toBeInTheDocument();
+  });
+
+  it("closes the results panel for background map exploration", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("tab", { name: "Results" }));
+    await screen.findByTestId("results-pane");
+
+    await user.click(screen.getByRole("button", { name: "Background map interaction" }));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("results-pane")).not.toBeInTheDocument();
+    });
   });
 });

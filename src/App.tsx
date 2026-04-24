@@ -77,14 +77,9 @@ function App() {
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(() => {
-    if (typeof window === "undefined") {
-      return true;
-    }
-
-    return window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY) !== "1";
-  });
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
+  const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -131,8 +126,25 @@ function App() {
   }, [filters]);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const stored = window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY);
+      if (stored === "1") {
+        setIsHeaderVisible(false);
+        setHasInteractedWithMap(true);
+      }
+      setHasLoadedHeaderPreference(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!hasLoadedHeaderPreference) {
+      return;
+    }
+
     window.localStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
-  }, [isHeaderVisible]);
+  }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
   useEffect(() => {
     if (!selectedAddressKey) {
@@ -352,10 +364,14 @@ function App() {
     patchFilters({ selectedAddressKey: addressKey });
   }
 
-  function handleMapInteract() {
+  function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
       setIsHeaderVisible(false);
       setHasInteractedWithMap(true);
+    }
+
+    if (interactionType === "feature") {
+      return;
     }
 
     if (isDesktop) {
