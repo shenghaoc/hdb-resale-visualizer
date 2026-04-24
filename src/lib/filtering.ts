@@ -213,9 +213,23 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   });
 }
 
+// Memoize station name normalization since it's called repeatedly for every block's
+// MRT stations during array filtering passes.
+const normalizedStationNameCache = new Map<string, string>();
+
 function normalizeStationName(stationName: string): string {
+  const cached = normalizedStationNameCache.get(stationName);
+  if (cached !== undefined) {
+    return cached;
+  }
+
   const tokens = tokenizeSearchText(stationName).map((token) => token.value);
-  return tokens.filter((token) => !STATION_NAME_STOP_WORDS.has(token)).join(" ");
+  const normalized = tokens.filter((token) => !STATION_NAME_STOP_WORDS.has(token)).join(" ");
+
+  evictCacheIfNeeded(normalizedStationNameCache, TOKENIZATION_CACHE_LIMIT);
+  normalizedStationNameCache.set(stationName, normalized);
+
+  return normalized;
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
@@ -393,6 +407,7 @@ export function matchesGeographicSearchIntent(
 
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
+  normalizedStationNameCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
 }
