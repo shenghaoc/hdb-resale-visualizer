@@ -1,5 +1,5 @@
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
-import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
+import { Bookmark, Info, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
 import {
   DEFAULT_FILTERS,
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
@@ -514,10 +514,10 @@ function App() {
 
   return (
     <>
-      <main className="relative min-h-dvh w-full overflow-hidden">
+      <main className="relative h-dvh w-full overflow-hidden">
         <div className="absolute inset-0">{mapContent}</div>
 
-        <div className="pointer-events-none absolute inset-0 z-10 flex min-h-dvh flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
+        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
           {isDesktop && (
             <div className="pointer-events-auto absolute left-6 top-6 z-20">
               <button
@@ -536,6 +536,18 @@ function App() {
               </button>
             </div>
           )}
+          {!isHeaderVisible ? (
+            <div className="pointer-events-auto absolute right-4 top-4 z-20 lg:right-6 lg:top-6">
+              <button
+                type="button"
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+                onClick={() => setIsHeaderVisible(true)}
+              >
+                <Info className="size-4" />
+                {t("app.showHeader")}
+              </button>
+            </div>
+          ) : null}
 
           {showMobileHeader ? (
             <div className="flex flex-wrap items-start gap-3 lg:pl-36">

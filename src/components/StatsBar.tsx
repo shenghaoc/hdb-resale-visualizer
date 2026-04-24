@@ -40,7 +40,7 @@ export function GlobalHeader({
           type="button"
           size="icon"
           variant="outline"
-          className="size-9 bg-background/85 backdrop-blur-sm"
+          className="size-9 border-border/70 bg-background/85 shadow-sm backdrop-blur-sm"
           onClick={onShow}
           aria-label="Show header info"
         >
@@ -52,30 +52,33 @@ export function GlobalHeader({
 
   return (
     <header data-testid={testId}>
-      <Card size="sm" className="overflow-visible border-none bg-background px-0 py-0 shadow-none">
-        <CardHeader className="flex-row items-center justify-between gap-4 px-1 py-1">
+      <Card
+        size="sm"
+        className="overflow-visible border border-border/70 bg-gradient-to-br from-background via-background to-muted/40 px-0 py-0 shadow-sm"
+      >
+        <CardHeader className="flex-row items-center justify-between gap-4 px-3 py-2">
           <div className="flex flex-col">
             <CardTitle className="text-lg font-bold leading-tight tracking-tight sm:text-xl">
               {t("app.title")}
             </CardTitle>
-            <div className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+            <div className="flex items-center gap-2 text-[0.62rem] font-bold uppercase tracking-widest text-muted-foreground/70">
               {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
             </div>
           </div>
 
           <CardAction className="flex items-center gap-3">
             <div className="hidden items-center gap-3 md:flex">
-              <Badge variant="outline" className="h-5 border-border/50 text-[0.6rem]">
+              <Badge variant="outline" className="h-5 border-border/60 bg-background/80 text-[0.62rem]">
                 {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })}
               </Badge>
-              <p className="text-[0.6rem] font-medium text-muted-foreground/50">
+              <p className="text-[0.62rem] font-medium text-muted-foreground/65">
                 {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })}
               </p>
             </div>
 
             <div className="flex items-center gap-2">
               <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-                <SelectTrigger className="h-8 min-w-24 border-border/40 bg-muted/30 px-2 py-0 text-xs">
+                <SelectTrigger className="h-8 min-w-24 border-border/50 bg-background/80 px-2 py-0 text-xs shadow-sm">
                   <div className="flex items-center gap-2">
                     <Languages className="size-3 opacity-60" />
                     <SelectValue placeholder={t("language.label")} />

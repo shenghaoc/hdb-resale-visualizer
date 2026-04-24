@@ -215,6 +215,7 @@ export function MapView({
 
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
+  const shouldShowTownBubbles = Boolean(debouncedTownFilter);
 
   // Keep callbacks and t refs fresh without triggering map recreation
   useEffect(() => {
@@ -269,6 +270,7 @@ export function MapView({
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
+    map.doubleClickZoom.disable();
 
     const popup = new Popup({
       closeButton: false,
@@ -618,6 +620,15 @@ export function MapView({
         onMapInteractRef.current?.("background");
       });
 
+      map.on("dblclick", (event) => {
+        onMapInteractRef.current?.("feature");
+        map.easeTo({
+          center: [event.lngLat.lng, event.lngLat.lat],
+          zoom: Math.min(map.getZoom() + 2.2, 20),
+          duration: prefersReducedMotionRef.current ? 0 : 260,
+        });
+      });
+
       map.on("movestart", (event) => {
         if (event.originalEvent) {
           onMapInteractRef.current?.("background");
@@ -749,6 +760,29 @@ export function MapView({
       popupRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
+
+    const applyVisibility = () => {
+      const visibility = shouldShowTownBubbles ? "visible" : "none";
+      for (const layerId of ["clusters", "cluster-count", "unclustered-point"]) {
+        if (map.getLayer(layerId)) {
+          map.setLayoutProperty(layerId, "visibility", visibility);
+        }
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      applyVisibility();
+      return;
+    }
+
+    void map.once("load", applyVisibility);
+  }, [shouldShowTownBubbles]);
 
   // Update the GeoJSON source data when blocks change
   useEffect(() => {
