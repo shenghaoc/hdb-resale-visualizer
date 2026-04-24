@@ -309,7 +309,7 @@ export function ShortlistDrawer({
                 data-testid="shortlist-scroll-container"
               >
                 <div className="flex flex-col gap-4 pb-4">
-                  <Card size="sm" className="bg-muted/40">
+                  <Card className="bg-muted/40">
                     <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
                         <span className="text-xs text-muted-foreground">
@@ -346,7 +346,7 @@ export function ShortlistDrawer({
                     </CardContent>
                   </Card>
                   {compareOption ? (
-                    <Card size="sm" className="bg-muted/40">
+                    <Card className="bg-muted/40">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-base">{t("shortlist.compareTrendsTitle")}</CardTitle>
                       </CardHeader>
@@ -370,11 +370,11 @@ export function ShortlistDrawer({
                     const remainingLeaseRange = getRemainingLeaseRange(row.block.leaseCommenceRange);
 
                     return (
-                      <Card key={row.item.addressKey} size="sm" className="bg-muted/40">
+                      <Card key={row.item.addressKey} className="bg-muted/40">
                         <CardHeader className="gap-3 border-b border-border/60 pb-5">
                           <div className="flex flex-wrap items-start gap-3">
                             <div className="flex flex-1 flex-col gap-2">
-                              <CardTitle className="text-lg">
+                              <CardTitle className="text-xl">
                                 {row.block.block} {row.block.streetName}
                               </CardTitle>
                               <div className="flex flex-wrap items-center gap-2">

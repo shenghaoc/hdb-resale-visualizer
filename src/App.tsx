@@ -88,6 +88,7 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
+  const showMobileHeader = isDesktop || mobileTab === null;
 
   useEffect(() => {
     let isMounted = true;
@@ -536,24 +537,26 @@ function App() {
             </div>
           )}
 
-          <div className="flex flex-wrap items-start gap-3 lg:pl-36">
-            <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-              <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
-                <GlobalHeader
-                  manifest={manifest}
-                  isVisible={isHeaderVisible}
-                  onDismiss={() => setIsHeaderVisible(false)}
-                  onShow={() => setIsHeaderVisible(true)}
-                />
+          {showMobileHeader ? (
+            <div className="flex flex-wrap items-start gap-3 lg:pl-36">
+              <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
+                <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
+                  <GlobalHeader
+                    manifest={manifest}
+                    isVisible={isHeaderVisible}
+                    onDismiss={() => setIsHeaderVisible(false)}
+                    onShow={() => setIsHeaderVisible(true)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
           {isDesktop ? (
             <section className="pointer-events-none relative min-h-0 flex-1">
               <aside
                 id="desktop-panel"
-                className={`pointer-events-auto absolute left-0 top-0 h-full w-[min(34rem,48vw)] max-w-[96vw] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                className={`pointer-events-auto absolute left-0 top-0 h-full w-[min(46rem,62vw)] max-w-[96vw] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                   isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"
                 }`}
                 {...(!isDesktopPanelOpen && { inert: true })}
@@ -590,7 +593,7 @@ function App() {
                       </TabsContent>
                       <TabsContent
                         value="saved"
-                        className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden pr-1"
+                        className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden"
                       >
                         {savedContent}
                       </TabsContent>
@@ -604,7 +607,7 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-2 shadow-sm backdrop-blur-sm"
                 >
                   {mobileTab === "filters" && (
                     <div id="mobile-filters-content" className="h-full overflow-y-auto pr-1">{filterContent}</div>
@@ -622,7 +625,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="h-full min-h-0 overflow-hidden">{savedContent}</div>
+                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden">{savedContent}</div>
                   )}
                 </div>
               )}
