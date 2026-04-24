@@ -22,6 +22,7 @@ type MapViewProps = {
   townFilter?: string | null;
   autoFitKey?: string | null;
   onSelect: (addressKey: string) => void;
+  onMapInteract?: (interactionType?: "background" | "feature") => void;
   t: Translator;
 };
 
@@ -195,13 +196,16 @@ export function MapView({
   townFilter,
   autoFitKey,
   onSelect,
+  onMapInteract,
   t,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
+  const onMapInteractRef = useRef(onMapInteract);
   const tRef = useRef(t);
   const popupRef = useRef<Popup | null>(null);
+  const prefersReducedMotionRef = useRef(false);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
@@ -212,10 +216,13 @@ export function MapView({
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
 
-  // Keep onSelect and t refs fresh without triggering map recreation
+  // Keep callbacks and t refs fresh without triggering map recreation
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+  useEffect(() => {
+    onMapInteractRef.current = onMapInteract;
+  }, [onMapInteract]);
 
   useEffect(() => {
     tRef.current = t;
@@ -228,7 +235,7 @@ export function MapView({
     }
 
     let isMapMounted = true;
-
+    prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const map = new maplibregl.Map({
       container: containerRef.current,
       center: [103.8198, 1.3521],
@@ -236,6 +243,9 @@ export function MapView({
       minZoom: 9,
       maxZoom: 20,
       maxBounds: SINGAPORE_BOUNDS,
+      renderWorldCopies: false,
+      dragRotate: false,
+      touchPitch: false,
       style: {
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
@@ -557,6 +567,7 @@ export function MapView({
       });
 
       map.on("click", "unclustered-point", (event) => {
+        onMapInteractRef.current?.("feature");
         const feature = event.features?.[0];
         const properties = feature?.properties;
         if (properties && typeof properties.address_key === "string") {
@@ -565,6 +576,7 @@ export function MapView({
       });
 
       map.on("click", "clusters", (event) => {
+        onMapInteractRef.current?.("feature");
         const feature = event.features?.[0];
         const properties = feature?.properties;
         const clusterId =
@@ -592,6 +604,24 @@ export function MapView({
             zoom,
           });
         });
+      });
+
+      map.on("click", (event) => {
+        const clickedFeatures = map.queryRenderedFeatures(event.point, {
+          layers: ["unclustered-point", "clusters"],
+        });
+
+        if (clickedFeatures.length > 0) {
+          return;
+        }
+
+        onMapInteractRef.current?.("background");
+      });
+
+      map.on("movestart", (event) => {
+        if (event.originalEvent) {
+          onMapInteractRef.current?.("background");
+        }
       });
 
       // Hover popup for unclustered points
@@ -777,7 +807,10 @@ export function MapView({
 
     // Default Singapore bounds if min/max collapsed or neither townFilter nor autoFitKey is present
     if (minLng === Infinity || (!debouncedTownFilter && !autoFitKey)) {
-      map.fitBounds(SINGAPORE_BOUNDS, { padding: 40, duration: 1200 });
+      map.fitBounds(SINGAPORE_BOUNDS, {
+        padding: 40,
+        duration: prefersReducedMotionRef.current ? 0 : 1200,
+      });
       return;
     }
 
@@ -786,7 +819,11 @@ export function MapView({
         [minLng, minLat],
         [maxLng, maxLat],
       ],
-      { padding: 60, maxZoom: 15, duration: 1200 },
+      {
+        padding: 60,
+        maxZoom: 15,
+        duration: prefersReducedMotionRef.current ? 0 : 1200,
+      },
     );
   }, [autoFitKey, blocks, debouncedTownFilter]);
 

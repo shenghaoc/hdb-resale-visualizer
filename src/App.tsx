@@ -3,6 +3,7 @@ import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from
 import {
   DEFAULT_FILTERS,
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+  HEADER_DISMISSED_STORAGE_KEY,
 } from "@/lib/constants";
 import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
 import {
@@ -76,6 +77,9 @@ function App() {
   const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
+  const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -122,6 +126,27 @@ function App() {
   }, [filters]);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const stored = window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY);
+      if (stored === "1") {
+        setIsHeaderVisible(false);
+        setHasInteractedWithMap(true);
+      }
+      setHasLoadedHeaderPreference(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (!hasLoadedHeaderPreference) {
+      return;
+    }
+
+    window.localStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
+  }, [hasLoadedHeaderPreference, isHeaderVisible]);
+
+  useEffect(() => {
     if (!selectedAddressKey) {
       return;
     }
@@ -161,6 +186,7 @@ function App() {
     () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
+      filters.search,
       filters.town,
       filters.flatType,
       filters.flatModel,
@@ -338,6 +364,24 @@ function App() {
     patchFilters({ selectedAddressKey: addressKey });
   }
 
+  function handleMapInteract(interactionType: "background" | "feature" = "background") {
+    if (!hasInteractedWithMap) {
+      setIsHeaderVisible(false);
+      setHasInteractedWithMap(true);
+    }
+
+    if (interactionType === "feature") {
+      return;
+    }
+
+    if (isDesktop) {
+      setIsDesktopPanelOpen(false);
+      return;
+    }
+
+    setMobileTab(null);
+  }
+
   function patchFilters(patch: Partial<FilterState>) {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
@@ -412,6 +456,7 @@ function App() {
             ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
             : null
         }
+        onMapInteract={handleMapInteract}
         t={t}
       />
     </Suspense>
@@ -486,7 +531,12 @@ function App() {
           <div className="flex flex-wrap items-start gap-3 lg:pl-36">
             <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
               <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
-                <GlobalHeader manifest={manifest} />
+                <GlobalHeader
+                  manifest={manifest}
+                  isVisible={isHeaderVisible}
+                  onDismiss={() => setIsHeaderVisible(false)}
+                  onShow={() => setIsHeaderVisible(true)}
+                />
               </div>
             </div>
           </div>
@@ -516,7 +566,7 @@ function App() {
                       >
                         {filterContent}
                       </TabsContent>
-                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col pr-1">
+                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                           {selectedDetailContent}
                           <div
@@ -547,7 +597,7 @@ function App() {
                     <div className="h-full overflow-y-auto pr-1">{filterContent}</div>
                   )}
                   {mobileTab === "results" && (
-                    <div className="flex h-full min-h-0 flex-col gap-4">
+                    <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
                       {selectedDetailContent}
                       <div
                         className={`min-h-0 flex-1 flex-col ${

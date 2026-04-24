@@ -203,7 +203,7 @@ function BlockCard({
           </strong>
           {nearbyStations.length > 1 ? (
             <span className="text-xs text-muted-foreground">
-              Also near {nearbyStations.slice(1).map((station) => station.stationName).join(", ")}
+              {t("results.alsoNear", { stations: nearbyStations.slice(1).map((station) => station.stationName).join(", ") })}
             </span>
           ) : null}
         </div>
