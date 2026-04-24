@@ -281,20 +281,22 @@ export function ShortlistDrawer({
               <p className="text-xs text-muted-foreground">
                 {t("shortlist.compare.currentSort", { mode: t(`shortlist.compare.${compareMode === "target-gap" ? "targetFit" : compareMode}`) })}
               </p>
-              <ButtonGroup className="flex-wrap gap-2 [&>*]:rounded-none [&>*]:border">
-                <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
-                  <Download data-icon="inline-start" />
-                  {t("shortlist.export.json")}
-                </Button>
-                <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                  <Download data-icon="inline-start" />
-                  {t("shortlist.export.csv")}
-                </Button>
-                <Button variant="outline" size="xs" onClick={handleShare} type="button">
-                  <Link2 data-icon="inline-start" />
-                  {t("shortlist.shareLink")}
-                </Button>
-              </ButtonGroup>
+              <div className="overflow-x-auto pb-1">
+                <ButtonGroup className="w-max flex-nowrap gap-2 [&>*]:rounded-none [&>*]:border">
+                  <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                    <Download data-icon="inline-start" />
+                    {t("shortlist.export.json")}
+                  </Button>
+                  <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                    <Download data-icon="inline-start" />
+                    {t("shortlist.export.csv")}
+                  </Button>
+                  <Button variant="outline" size="xs" onClick={handleShare} type="button">
+                    <Link2 data-icon="inline-start" />
+                    {t("shortlist.shareLink")}
+                  </Button>
+                </ButtonGroup>
+              </div>
             </>
           ) : null}
         </CardHeader>
