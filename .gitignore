@@ -8,3 +8,15 @@ test-results
 *.log
 /.cache
 *.tsbuildinfo
+
+# Spirit of Kiro supplemental ignores
+.aiEditorAgent
+.aiEditorAgentDebug
+.vscode/
+bun-tests.xml
+docker
+.odo
+*.spec.md
+*.code-workspace
+dev.env
+ash_output
