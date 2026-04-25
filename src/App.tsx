@@ -1,11 +1,23 @@
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
-import { Bookmark, Info, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
+import {
+  Bookmark,
+  Info,
+  List,
+  PanelLeftClose,
+  PanelLeftOpen,
+  SlidersHorizontal,
+} from "lucide-react";
 import {
   DEFAULT_FILTERS,
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   HEADER_DISMISSED_STORAGE_KEY,
 } from "@/lib/constants";
-import { fetchAddressDetail, fetchBlockSummaries, fetchComparisonArtifact, fetchManifest } from "@/lib/data";
+import {
+  fetchAddressDetail,
+  fetchBlockSummaries,
+  fetchComparisonArtifact,
+  fetchManifest,
+} from "@/lib/data";
 import {
   getSelectionByAddressKey,
   matchesFilter,
@@ -17,6 +29,7 @@ import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { safeStorage } from "@/lib/storage";
 import type {
   AddressDetail,
   BlockSummary,
@@ -34,9 +47,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-const MapView = lazy(() =>
-  import("@/components/MapView").then((m) => ({ default: m.MapView })),
-);
+const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
 );
@@ -76,10 +87,16 @@ function App() {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [comparison, setComparison] = useState<LoadedComparison | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
-  const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(filters.selectedAddressKey));
+  const [isComparisonLoading, setIsComparisonLoading] = useState(() =>
+    Boolean(filters.selectedAddressKey),
+  );
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
-  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>({});
-  const [shortlistComparisons, setShortlistComparisons] = useState<Record<string, ComparisonArtifact | null>>({});
+  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
+    {},
+  );
+  const [shortlistComparisons, setShortlistComparisons] = useState<
+    Record<string, ComparisonArtifact | null>
+  >({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -141,7 +158,7 @@ function App() {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      const stored = window.localStorage.getItem(HEADER_DISMISSED_STORAGE_KEY);
+      const stored = safeStorage.getItem(HEADER_DISMISSED_STORAGE_KEY);
       if (stored === "1") {
         setIsHeaderVisible(false);
         setHasInteractedWithMap(true);
@@ -157,7 +174,7 @@ function App() {
       return;
     }
 
-    window.localStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
+    safeStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
   useEffect(() => {
@@ -282,9 +299,7 @@ function App() {
             if (!matchesFilter(block, stableFilters, geographicIntent)) {
               return false;
             }
-            return geographicIntent
-              ? matchesGeographicSearchIntent(block, geographicIntent)
-              : true;
+            return geographicIntent ? matchesGeographicSearchIntent(block, geographicIntent) : true;
           })
         : [],
     [blocks, geographicIntent, hasResultScope, resultsVisible, stableFilters],
@@ -292,13 +307,13 @@ function App() {
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
       ? blocks.filter((block) => {
-        if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
-          return false;
-        }
-        return mapGeographicIntent
-          ? matchesGeographicSearchIntent(block, mapGeographicIntent)
-          : true;
-      })
+          if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
+            return false;
+          }
+          return mapGeographicIntent
+            ? matchesGeographicSearchIntent(block, mapGeographicIntent)
+            : true;
+        })
       : [];
 
     if (!selectedAddressKey) {
@@ -355,9 +370,7 @@ function App() {
                 : []),
             comparison:
               shortlistComparisons[item.addressKey] ??
-              (selectedComparison?.addressKey === item.addressKey
-                ? selectedComparison
-                : null),
+              (selectedComparison?.addressKey === item.addressKey ? selectedComparison : null),
           };
         })
         .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
@@ -378,7 +391,15 @@ function App() {
           return left.item.addedAt.localeCompare(right.item.addedAt);
         });
     },
-    [blocks, savedVisible, selectedDetail, selectedComparison, shortlist.items, shortlistDetails, shortlistComparisons],
+    [
+      blocks,
+      savedVisible,
+      selectedDetail,
+      selectedComparison,
+      shortlist.items,
+      shortlistDetails,
+      shortlistComparisons,
+    ],
   );
 
   useEffect(() => {
@@ -484,16 +505,19 @@ function App() {
     });
   }, []);
 
-  const handleSelectAddress = useCallback((addressKey: string) => {
-    if (isDesktop) {
-      setIsDesktopPanelOpen(true);
-      setDesktopTab("results");
-    } else {
-      setMobileTab("results");
-    }
+  const handleSelectAddress = useCallback(
+    (addressKey: string) => {
+      if (isDesktop) {
+        setIsDesktopPanelOpen(true);
+        setDesktopTab("results");
+      } else {
+        setMobileTab("results");
+      }
 
-    patchFilters({ selectedAddressKey: addressKey });
-  }, [isDesktop, patchFilters]);
+      patchFilters({ selectedAddressKey: addressKey });
+    },
+    [isDesktop, patchFilters],
+  );
 
   const handleToggleShortlist = useCallback(
     (addressKey: string) => toggleShortlist(addressKey),
@@ -581,7 +605,7 @@ function App() {
             ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
             : mapFilters.search.trim()
               ? `search:${mapFilters.search.trim().toLowerCase()}`
-            : null
+              : null
         }
         showBlockMarkers={hasMapMarkerScope}
         onMapInteract={handleMapInteract}
@@ -654,7 +678,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 aria-expanded={isDesktopPanelOpen}
                 aria-controls="desktop-panel"
@@ -673,7 +697,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsHeaderVisible(true)}
               >
                 <Info data-icon="inline-start" />
@@ -706,21 +730,33 @@ function App() {
                 )}
                 {...(!isDesktopPanelOpen && { inert: true })}
               >
-                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-background/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
+                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-white/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
                   <Tabs
                     value={desktopTab}
                     onValueChange={(value) => setDesktopTab(value as DesktopTab)}
                     className="flex h-full flex-col overflow-hidden"
                   >
                     <TabsList className="grid w-full shrink-0 grid-cols-3 bg-muted/30">
-                      <TabsTrigger value="filters" className="text-xs font-bold uppercase tracking-wider">{t("tab.filters")}</TabsTrigger>
-                      <TabsTrigger value="results" className="text-xs font-bold uppercase tracking-wider">{t("tab.results")}</TabsTrigger>
-                      <TabsTrigger value="saved" className="text-xs font-bold uppercase tracking-wider">{t("tab.saved")}</TabsTrigger>
+                      <TabsTrigger
+                        value="filters"
+                        className="text-xs font-bold uppercase tracking-wider"
+                      >
+                        {t("tab.filters")}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="results"
+                        className="text-xs font-bold uppercase tracking-wider"
+                      >
+                        {t("tab.results")}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="saved"
+                        className="text-xs font-bold uppercase tracking-wider"
+                      >
+                        {t("tab.saved")}
+                      </TabsTrigger>
                     </TabsList>
-                    <TabsContent
-                      value="filters"
-                      className="mt-3 min-h-0 flex-1 overflow-y-auto px-3"
-                    >
+                    <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto px-3">
                       {filterContent}
                     </TabsContent>
                     <TabsContent
@@ -739,10 +775,7 @@ function App() {
                         </div>
                       </div>
                     </TabsContent>
-                    <TabsContent
-                      value="saved"
-                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden px-3"
-                    >
+                    <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden px-3">
                       {savedContent}
                     </TabsContent>
                   </Tabs>
@@ -754,13 +787,18 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-background/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-white/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
                 >
                   {mobileTab === "filters" && (
-                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3">{filterContent}</div>
+                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3">
+                      {filterContent}
+                    </div>
                   )}
                   {mobileTab === "results" && (
-                    <div id="mobile-results-content" className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3">
+                    <div
+                      id="mobile-results-content"
+                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3"
+                    >
                       {selectedDetailContent}
                       <div
                         className={cn(
@@ -773,7 +811,9 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3">{savedContent}</div>
+                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3">
+                      {savedContent}
+                    </div>
                   )}
                 </div>
               )}

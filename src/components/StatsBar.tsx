@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info, Languages, Moon, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { safeStorage } from "@/lib/storage";
 import {
   Select,
   SelectContent,
@@ -31,29 +32,35 @@ export function GlobalHeader({
   const THEME_STORAGE_KEY = "hdb-resale-theme";
   const { locale, setLocale, t } = useI18n();
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window !== "undefined") {
-      const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-      if (storedTheme === "dark" || storedTheme === "light") {
-        return storedTheme;
-      }
-      if (document.documentElement.classList.contains("dark")) {
-        return "dark";
-      }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-    }
-    return "light";
+  
+  // userTheme is null if the user hasn't explicitly set a preference
+  const [userTheme, setUserTheme] = useState<"light" | "dark" | null>(() => {
+    const stored = safeStorage.getItem(THEME_STORAGE_KEY);
+    return stored === "dark" || stored === "light" ? stored : null;
   });
 
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
+
+  // Sync system theme and listen for changes
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const update = () => setSystemTheme(media.matches ? "dark" : "light");
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const activeTheme = userTheme ?? systemTheme;
+
+  // Apply theme to document
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", activeTheme === "dark");
+  }, [activeTheme]);
 
   const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+    const nextTheme = activeTheme === "light" ? "dark" : "light";
+    setUserTheme(nextTheme);
+    safeStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   };
 
   if (!isVisible) {
@@ -96,7 +103,7 @@ export function GlobalHeader({
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
-                {theme === "light" ? (
+                {activeTheme === "light" ? (
                   <Moon data-icon className="size-4" />
                 ) : (
                   <Sun data-icon className="size-4" />
