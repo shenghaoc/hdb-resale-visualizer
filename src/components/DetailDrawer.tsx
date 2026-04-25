@@ -27,7 +27,7 @@ import {
   formatRemainingLease,
 } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
-import type { Translator } from "@/lib/i18n";
+import type { Locale, Translator } from "@/lib/i18n";
 import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -103,7 +103,7 @@ function AmenityCard({
   nearestDistance?: number | null;
   nearestName?: string | null;
   t: Translator;
-  locale: string;
+  locale: Locale;
 }) {
   return (
     <Card className="border-border/40 bg-card/50 shadow-none">

@@ -680,7 +680,6 @@ function App() {
                     manifest={manifest}
                     isVisible={isHeaderVisible}
                     onDismiss={() => setIsHeaderVisible(false)}
-                    onShow={() => setIsHeaderVisible(true)}
                   />
                 </div>
               </div>
