@@ -277,7 +277,7 @@ export function ShortlistDrawer({
             </CardAction>
           </div>
           {rows.length > 0 ? (
-            <FieldGroup>
+            <div className="col-span-full flex flex-col gap-4">
               <Field className="flex-row items-center gap-3 space-y-0">
                 <FieldLabel className="text-xs font-medium text-muted-foreground whitespace-nowrap">
                   {t("shortlist.sortBy")}:
@@ -323,7 +323,7 @@ export function ShortlistDrawer({
                   </Button>
                 </ButtonGroup>
               </div>
-            </FieldGroup>
+            </div>
           ) : null}
         </CardHeader>
 
