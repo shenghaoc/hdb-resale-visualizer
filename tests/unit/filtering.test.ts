@@ -25,14 +25,19 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(beta!, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         town: "BEDOK",
-        budgetMin: 500000,
       }),
     ).toBe(true);
 
     expect(
       matchesFilter(alpha!, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         town: "BEDOK",
       }),
     ).toBe(false);
@@ -44,6 +49,9 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(alpha!, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         mrtMax: 700,
       }),
     ).toBe(true);
@@ -61,6 +69,9 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(yewTeeLikeBlock, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "yew tee block 600 plus",
       }),
     ).toBe(true);
@@ -72,6 +83,9 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(beta!, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "Bedok North Avenue 4",
       }),
     ).toBe(true);
@@ -79,6 +93,9 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(beta!, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "Bedokk Nth Ave 4",
       }),
     ).toBe(true);
@@ -120,6 +137,9 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(cachedBlock, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "alpha",
       }),
     ).toBe(true);
@@ -134,12 +154,18 @@ describe("matchesFilter", () => {
     expect(
       matchesFilter(updatedBlock, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "alpha",
       }),
     ).toBe(false);
       expect(
       matchesFilter(updatedBlock, {
         ...DEFAULT_FILTERS,
+        budgetMin: null, // Reset to null for test
+        budgetMax: null, // Reset to null for test
+        remainingLeaseMin: null, // Reset to null for test
         search: "beta",
       }),
     ).toBe(true);
@@ -158,7 +184,7 @@ describe("matchesFilter", () => {
     });
 
     // matchesFilter should return true because intent is provided, bypassing the text search for "near"
-    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, search: query }, intent)).toBe(true);
+    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, budgetMin: null, budgetMax: null, remainingLeaseMin: null, search: query }, intent)).toBe(true);
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
@@ -176,7 +202,7 @@ describe("matchesFilter", () => {
     });
 
     // matchesFilter should return true because intent is provided, bypassing text search for coordinates
-    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, search: query }, intent)).toBe(true);
+    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, budgetMin: null, budgetMax: null, remainingLeaseMin: null, search: query }, intent)).toBe(true);
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });

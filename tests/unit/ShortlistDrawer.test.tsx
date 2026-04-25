@@ -103,7 +103,7 @@ describe("ShortlistDrawer", () => {
     expect(screen.getByText("MRT: 60th • Lease: 76th")).toBeInTheDocument();
   });
 
-  it("shows loading state when comparison data is not available", () => {
+  it("gracefully handles missing comparison data", () => {
     const rowWithoutComparison = {
       ...mockRow,
       comparison: null,
@@ -121,7 +121,14 @@ describe("ShortlistDrawer", () => {
       </I18nProvider>
     );
 
-    expect(screen.getByText("Loading comparison data…")).toBeInTheDocument();
+    // Should not show loading state - comparison data sections are simply omitted
+    expect(screen.queryByText("Loading comparison data…")).not.toBeInTheDocument();
+    
+    // Basic block info should still be displayed (address in title)
+    expect(screen.getByText("101 Ang Mo Kio Ave 3")).toBeInTheDocument();
+    
+    // Market median should still be displayed
+    expect(screen.getByText("Market median")).toBeInTheDocument();
   });
 
   it("handles empty shortlist correctly", () => {

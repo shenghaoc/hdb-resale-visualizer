@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -75,14 +75,6 @@ function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | 
     labelKey: "shortlist.gap.aboveTarget",
     tone: "negative",
   };
-}
-
-function getRemainingLeaseRange(leaseCommenceRange: [number, number]) {
-  const currentYear = new Date().getFullYear();
-  const oldestRemaining = Math.max(0, 99 - (currentYear - leaseCommenceRange[0]));
-  const newestRemaining = Math.max(0, 99 - (currentYear - leaseCommenceRange[1]));
-
-  return [Math.min(oldestRemaining, newestRemaining), Math.max(oldestRemaining, newestRemaining)];
 }
 
 // Note: Lease context is block-level data, not per-transaction.
