@@ -3,6 +3,7 @@ import {
   Bookmark,
   Clock3,
   Coins,
+  Compass,
   GraduationCap,
   History,
   Info,
@@ -11,12 +12,19 @@ import {
   ShoppingCart,
   Table,
   TrainFront,
-  TrendingUp,
   Trees,
+  TrendingUp,
+  Users,
   UtensilsCrossed,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
+import {
+  formatCurrency,
+  formatMeters,
+  formatMonth,
+  formatNumber,
+  formatRemainingLease,
+} from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +54,35 @@ type DetailDrawerProps = {
   onClose: () => void;
   onToggleShortlist: () => void;
 };
+
+function PercentileBadge({
+  percentile,
+  invert = false,
+  label,
+}: {
+  percentile: number;
+  invert?: boolean;
+  label: string;
+}) {
+  const isGood = invert ? percentile >= 75 : percentile <= 25;
+  const isMid = invert ? percentile >= 25 : percentile <= 75;
+
+  return (
+    <Card className="border-border/40 bg-card/50 shadow-none">
+      <CardContent className="p-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-muted-foreground">{label}</span>
+          <Badge
+            variant={isGood ? "default" : isMid ? "secondary" : "outline"}
+            className="h-5 text-[0.6rem] font-bold"
+          >
+            {Math.round(percentile)}%
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export function DetailDrawer({
   selectedBlock,
@@ -147,6 +184,13 @@ export function DetailDrawer({
                           ? formatCurrency(currentSummary.medianPrice, locale)
                           : "..."}
                       </div>
+                      {detail?.summary.pricePerSqftMedian ? (
+                        <div className="mt-1 text-xs font-medium text-muted-foreground">
+                          {t("unit.psf", {
+                            value: formatNumber(detail.summary.pricePerSqftMedian, 0, locale),
+                          })}
+                        </div>
+                      ) : null}
                     </CardContent>
                   </Card>
                   <Card className="border-border/40 bg-muted/20 shadow-none">
@@ -258,6 +302,24 @@ export function DetailDrawer({
                             : "..."}
                         </span>
                       </div>
+                      <div className="flex items-center justify-between p-4">
+                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Compass className="size-3.5" />
+                          {t("detail.orientation")}
+                        </span>
+                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
+                          {t("detail.pipelineComingSoon")}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between p-4">
+                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                          <Users className="size-3.5" />
+                          {t("detail.eipQuota")}
+                        </span>
+                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
+                          {t("detail.pipelineComingSoon")}
+                        </Badge>
+                      </div>
                     </CardContent>
                   </Card>
                 </section>
@@ -266,7 +328,7 @@ export function DetailDrawer({
                 <section>
                   <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <Trees className="size-4" />
-                    Nearby Amenities
+                    {t("detail.nearbyAmenities")}
                   </h3>
                   {isComparisonLoading ? (
                     <div className="grid grid-cols-2 gap-3">
@@ -284,19 +346,29 @@ export function DetailDrawer({
                           <div className="flex items-center gap-2 mb-2">
                             <GraduationCap className="size-4 text-primary/70" />
                             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              Schools
+                              {t("detail.amenity.schools")}
                             </span>
                           </div>
-                          <div className="space-y-1">
+                          <div className="flex flex-col gap-1">
                             <div className="text-sm font-bold">
-                              {comparison.amenities.primarySchoolsWithin1km} within 1km
+                              {t("detail.within1km", {
+                                count: comparison.amenities.primarySchoolsWithin1km,
+                              })}
                             </div>
                             <div className="text-xs text-muted-foreground">
-                              {comparison.amenities.primarySchoolsWithin2km} within 2km
+                              {t("detail.within2km", {
+                                count: comparison.amenities.primarySchoolsWithin2km,
+                              })}
                             </div>
                             {comparison.amenities.nearestPrimarySchoolMeters && (
                               <div className="text-xs text-muted-foreground">
-                                Nearest: {formatMeters(comparison.amenities.nearestPrimarySchoolMeters, t, locale)}
+                                {t("detail.nearest", {
+                                  distance: formatMeters(
+                                    comparison.amenities.nearestPrimarySchoolMeters,
+                                    t,
+                                    locale,
+                                  ),
+                                })}
                               </div>
                             )}
                           </div>
@@ -308,16 +380,24 @@ export function DetailDrawer({
                           <div className="flex items-center gap-2 mb-2">
                             <UtensilsCrossed className="size-4 text-primary/70" />
                             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              Hawkers
+                              {t("detail.amenity.hawkers")}
                             </span>
                           </div>
-                          <div className="space-y-1">
+                          <div className="flex flex-col gap-1">
                             <div className="text-sm font-bold">
-                              {comparison.amenities.hawkerCentresWithin1km} within 1km
+                              {t("detail.within1km", {
+                                count: comparison.amenities.hawkerCentresWithin1km,
+                              })}
                             </div>
                             {comparison.amenities.nearestHawkerCentreMeters && (
                               <div className="text-xs text-muted-foreground">
-                                Nearest: {formatMeters(comparison.amenities.nearestHawkerCentreMeters, t, locale)}
+                                {t("detail.nearest", {
+                                  distance: formatMeters(
+                                    comparison.amenities.nearestHawkerCentreMeters,
+                                    t,
+                                    locale,
+                                  ),
+                                })}
                               </div>
                             )}
                           </div>
@@ -329,16 +409,24 @@ export function DetailDrawer({
                           <div className="flex items-center gap-2 mb-2">
                             <ShoppingCart className="size-4 text-primary/70" />
                             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              Supermarkets
+                              {t("detail.amenity.supermarkets")}
                             </span>
                           </div>
-                          <div className="space-y-1">
+                          <div className="flex flex-col gap-1">
                             <div className="text-sm font-bold">
-                              {comparison.amenities.supermarketsWithin1km} within 1km
+                              {t("detail.within1km", {
+                                count: comparison.amenities.supermarketsWithin1km,
+                              })}
                             </div>
                             {comparison.amenities.nearestSupermarketMeters && (
                               <div className="text-xs text-muted-foreground">
-                                Nearest: {formatMeters(comparison.amenities.nearestSupermarketMeters, t, locale)}
+                                {t("detail.nearest", {
+                                  distance: formatMeters(
+                                    comparison.amenities.nearestSupermarketMeters,
+                                    t,
+                                    locale,
+                                  ),
+                                })}
                               </div>
                             )}
                           </div>
@@ -350,16 +438,24 @@ export function DetailDrawer({
                           <div className="flex items-center gap-2 mb-2">
                             <Trees className="size-4 text-primary/70" />
                             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              Parks
+                              {t("detail.amenity.parks")}
                             </span>
                           </div>
-                          <div className="space-y-1">
+                          <div className="flex flex-col gap-1">
                             <div className="text-sm font-bold">
-                              {comparison.amenities.parksWithin1km} within 1km
+                              {t("detail.within1km", {
+                                count: comparison.amenities.parksWithin1km,
+                              })}
                             </div>
                             {comparison.amenities.nearestParkMeters && (
                               <div className="text-xs text-muted-foreground">
-                                Nearest: {formatMeters(comparison.amenities.nearestParkMeters, t, locale)}
+                                {t("detail.nearest", {
+                                  distance: formatMeters(
+                                    comparison.amenities.nearestParkMeters,
+                                    t,
+                                    locale,
+                                  ),
+                                })}
                               </div>
                             )}
                           </div>
@@ -368,7 +464,7 @@ export function DetailDrawer({
                     </div>
                   ) : (
                     <p className="py-4 text-sm text-muted-foreground italic">
-                      Amenity comparison data not available yet.
+                      {t("detail.noComparisonData")}
                     </p>
                   )}
                 </section>
@@ -377,7 +473,7 @@ export function DetailDrawer({
                 <section>
                   <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <TrendingUp className="size-4" />
-                    Market Percentiles
+                    {t("detail.marketPercentiles")}
                   </h3>
                   {isComparisonLoading ? (
                     <div className="grid grid-cols-2 gap-3">
@@ -390,147 +486,41 @@ export function DetailDrawer({
                     </div>
                   ) : comparison ? (
                     <div className="grid grid-cols-2 gap-3">
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Price Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.pricePercentile <= 25
-                                  ? "default"
-                                  : comparison.percentileRanks.pricePercentile <= 75
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.pricePercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Price/sqm Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.pricePerSqmPercentile <= 25
-                                  ? "default"
-                                  : comparison.percentileRanks.pricePerSqmPercentile <= 75
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.pricePerSqmPercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Lease Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.leasePercentile >= 75
-                                  ? "default"
-                                  : comparison.percentileRanks.leasePercentile >= 25
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.leasePercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              MRT Access Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.mrtDistancePercentile >= 75
-                                  ? "default"
-                                  : comparison.percentileRanks.mrtDistancePercentile >= 25
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.mrtDistancePercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Liquidity Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.transactionCountPercentile >= 75
-                                  ? "default"
-                                  : comparison.percentileRanks.transactionCountPercentile >= 25
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.transactionCountPercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-muted-foreground">
-                              Recency Rank
-                            </span>
-                            <Badge
-                              variant={
-                                comparison.percentileRanks.recencyPercentile >= 75
-                                  ? "default"
-                                  : comparison.percentileRanks.recencyPercentile >= 25
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                              className="h-5 text-[0.6rem] font-bold"
-                            >
-                              {Math.round(comparison.percentileRanks.recencyPercentile)}%
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <PercentileBadge
+                        label={t("detail.rank.price")}
+                        percentile={comparison.percentileRanks.pricePercentile}
+                      />
+                      <PercentileBadge
+                        label={t("detail.rank.pricePerSqm")}
+                        percentile={comparison.percentileRanks.pricePerSqmPercentile}
+                      />
+                      <PercentileBadge
+                        label={t("detail.rank.lease")}
+                        percentile={comparison.percentileRanks.leasePercentile}
+                        invert
+                      />
+                      <PercentileBadge
+                        label={t("detail.rank.mrt")}
+                        percentile={comparison.percentileRanks.mrtDistancePercentile}
+                        invert
+                      />
+                      <PercentileBadge
+                        label={t("detail.rank.liquidity")}
+                        percentile={comparison.percentileRanks.transactionCountPercentile}
+                        invert
+                      />
+                      <PercentileBadge
+                        label={t("detail.rank.recency")}
+                        percentile={comparison.percentileRanks.recencyPercentile}
+                        invert
+                      />
                     </div>
                   ) : (
                     <p className="py-4 text-sm text-muted-foreground italic">
-                      Market percentile data not available yet.
+                      {t("detail.noPercentileData")}
                     </p>
                   )}
                 </section>
-
-
-
               </TabsContent>
 
               <TabsContent

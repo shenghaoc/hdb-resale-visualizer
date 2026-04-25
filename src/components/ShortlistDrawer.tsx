@@ -152,6 +152,11 @@ export function ShortlistDrawer({
       t("shortlist.export.address"),
       t("shortlist.export.medianPrice"),
       t("shortlist.export.targetPrice"),
+      t("shortlist.export.schools1km"),
+      t("shortlist.export.hawkers1km"),
+      t("shortlist.export.supermarkets1km"),
+      t("shortlist.export.parks1km"),
+      t("shortlist.export.mrtDistance"),
       t("shortlist.export.notes"),
     ];
     const csvRows = rows.map((row) =>
@@ -159,6 +164,11 @@ export function ShortlistDrawer({
         `"${row.block.block} ${row.block.streetName}"`,
         row.block.medianPrice,
         row.item.targetPrice ?? "",
+        row.comparison?.amenities.primarySchoolsWithin1km ?? "",
+        row.comparison?.amenities.hawkerCentresWithin1km ?? "",
+        row.comparison?.amenities.supermarketsWithin1km ?? "",
+        row.comparison?.amenities.parksWithin1km ?? "",
+        row.block.nearestMrt?.distanceMeters ?? "",
         `"${(row.item.notes || "").replace(/"/g, '""')}"`,
       ].join(","),
     );
@@ -578,11 +588,12 @@ export function ShortlistDrawer({
                               </strong>
                               {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
                                 <span className="text-sm text-muted-foreground">
-                                  Also near{" "}
-                                  {(row.block.nearbyMrts ?? [])
-                                    .slice(1)
-                                    .map((station) => station.stationName)
-                                    .join(", ")}
+                                  {t("results.alsoNear", {
+                                    stations: (row.block.nearbyMrts ?? [])
+                                      .slice(1)
+                                      .map((station) => station.stationName)
+                                      .join(", "),
+                                  })}
                                 </span>
                               ) : null}
                             </div>
