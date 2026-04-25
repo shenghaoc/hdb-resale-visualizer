@@ -11,7 +11,7 @@ import { useI18n } from "@/lib/i18n";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Item,
   ItemActions,
@@ -390,19 +390,20 @@ export function ResultsPane({
 
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col bg-background">
-        <CardHeader className="gap-4 border-b border-border pb-5">
-          <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-2">
-              <Badge variant="secondary">{t("results.shortlistCandidates")}</Badge>
-              <CardTitle className="text-2xl">{t("results.filteredBlocks")}</CardTitle>
-            </div>
-            <CardAction className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
-              {hasResultScope ? <Badge>{t("results.shown", { count: blocks.length })}</Badge> : null}
-              {hasResultScope ? (
-                <div className="flex min-w-[14rem] items-center gap-3">
-                  <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                    <ArrowUpDown className="size-3.5" />
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
+        <CardHeader className="border-b border-border px-3 py-2 sm:px-4">
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+              {t("results.filteredBlocks")}
+            </CardTitle>
+            {hasResultScope ? (
+              <>
+                <Badge className="h-6 shrink-0 px-2 text-[0.65rem]">
+                  {t("results.shown", { count: blocks.length })}
+                </Badge>
+                <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:flex-none">
+                  <span className="inline-flex shrink-0 items-center gap-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    <ArrowUpDown className="size-3" />
                     {t("results.sort")}
                   </span>
                   <Select
@@ -412,7 +413,7 @@ export function ResultsPane({
                     }}
                     value={sortMode}
                   >
-                    <SelectTrigger className="w-full sm:w-[15rem]">
+                    <SelectTrigger className="h-8 min-w-0 flex-1 sm:w-[12.5rem]">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -424,11 +425,11 @@ export function ResultsPane({
                     </SelectContent>
                   </Select>
                 </div>
-              ) : null}
-            </CardAction>
+              </>
+            ) : null}
           </div>
         </CardHeader>
-        <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
+        <CardContent className="flex min-h-0 flex-1 flex-col px-3 pt-3 sm:px-4">
           {!hasResultScope ? (
             <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
               <ArrowUpDown className="size-6 opacity-40" />

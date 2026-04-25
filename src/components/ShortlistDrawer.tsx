@@ -13,7 +13,7 @@ import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ComparisonA
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
@@ -47,23 +47,11 @@ type GapInfo = {
   tone: "positive" | "negative";
 };
 
-const compareModeKeys: Record<CompareMode, { label: string; help: string }> = {
-  "target-gap": {
-    label: "shortlist.compare.targetFit",
-    help: "shortlist.compare.targetFit.help",
-  },
-  median: {
-    label: "shortlist.compare.price",
-    help: "shortlist.compare.price.help",
-  },
-  lease: {
-    label: "shortlist.compare.lease",
-    help: "shortlist.compare.lease.help",
-  },
-  mrt: {
-    label: "shortlist.compare.mrt",
-    help: "shortlist.compare.mrt.help",
-  },
+const compareModeLabels: Record<CompareMode, string> = {
+  "target-gap": "shortlist.compare.targetFit",
+  median: "shortlist.compare.price",
+  lease: "shortlist.compare.lease",
+  mrt: "shortlist.compare.mrt",
 };
 
 echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
@@ -273,52 +261,48 @@ export function ShortlistDrawer({
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col bg-background">
-        <CardHeader className="gap-3 border-b border-border pb-5">
-          <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-1">
-              <CardTitle className="text-2xl">{t("shortlist.title")}</CardTitle>
-            </div>
-            <CardAction className="flex flex-col items-end gap-3">
-              <Badge>{t("shortlist.savedCount", { count: rows.length })}</Badge>
-              <Button onClick={onToggleOpen} size="sm" variant="ghost" type="button">
-                {isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
-              </Button>
-            </CardAction>
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
+        <CardHeader className="gap-2 border-b border-border px-3 py-2 sm:px-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+              {t("shortlist.title")}
+            </CardTitle>
+            <Badge className="h-6 shrink-0 px-2 text-[0.65rem]">
+              {t("shortlist.savedCount", { count: rows.length })}
+            </Badge>
+            <Button
+              onClick={onToggleOpen}
+              size="xs"
+              variant="ghost"
+              type="button"
+              className="h-7 shrink-0 px-2 text-[0.65rem]"
+            >
+              {isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
+            </Button>
           </div>
           {rows.length > 0 ? (
-            <div className="col-span-full flex flex-col gap-4">
-              <Field className="flex-row items-center gap-3 space-y-0">
-                <FieldLabel className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
+              <Field className="min-w-0 flex-1 flex-row items-center gap-2 space-y-0 sm:flex-none">
+                <FieldLabel className="shrink-0 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                   {t("shortlist.sortBy")}:
                 </FieldLabel>
                 <Select
                   value={compareMode}
                   onValueChange={(value) => setCompareMode(value as CompareMode)}
                 >
-                  <SelectTrigger className="h-8 w-auto min-w-[140px]">
+                  <SelectTrigger className="h-8 min-w-0 flex-1 sm:w-[10.5rem]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="target-gap">{t(compareModeKeys["target-gap"].label)}</SelectItem>
-                    <SelectItem value="median">{t(compareModeKeys.median.label)}</SelectItem>
-                    <SelectItem value="lease">{t(compareModeKeys.lease.label)}</SelectItem>
-                    <SelectItem value="mrt">{t(compareModeKeys.mrt.label)}</SelectItem>
+                    <SelectItem value="target-gap">{t(compareModeLabels["target-gap"])}</SelectItem>
+                    <SelectItem value="median">{t(compareModeLabels.median)}</SelectItem>
+                    <SelectItem value="lease">{t(compareModeLabels.lease)}</SelectItem>
+                    <SelectItem value="mrt">{t(compareModeLabels.mrt)}</SelectItem>
                   </SelectContent>
                 </Select>
               </Field>
-              <div className="flex flex-col gap-1">
-                <p className="text-xs text-muted-foreground">
-                  {t(compareModeKeys[compareMode].help)}
-                </p>
-                <p className="text-xs text-muted-foreground font-medium">
-                  {t("shortlist.compare.currentSort", {
-                    mode: t(compareModeKeys[compareMode].label),
-                  })}
-                </p>
-              </div>
-              <div className="overflow-x-auto pb-1">
-                <ButtonGroup className="w-max flex-nowrap gap-2 [&>*]:rounded-none [&>*]:border">
+              <div className="min-w-0 overflow-x-auto">
+                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
                     <Download data-icon="inline-start" />
                     {t("shortlist.export.json")}
@@ -338,7 +322,7 @@ export function ShortlistDrawer({
         </CardHeader>
 
         {isOpen ? (
-          <CardContent className="flex min-h-0 flex-1 flex-col pt-0 overflow-hidden">
+          <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 pt-3 sm:px-4">
             {rows.length === 0 ? (
               <div className="empty-state pt-8">{t("shortlist.emptyState")}</div>
             ) : (
