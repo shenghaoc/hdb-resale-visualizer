@@ -33,6 +33,12 @@ const mockComparison: ComparisonArtifact = {
     primarySchoolsWithin1km: 3,
     primarySchoolsWithin2km: 8,
     nearestPrimarySchoolMeters: 250,
+    nearestPrimarySchools: [
+      {
+        name: "BEDOK PRIMARY SCHOOL",
+        distanceMeters: 250,
+      },
+    ],
     hawkerCentresWithin1km: 2,
     nearestHawkerCentreMeters: 180,
     supermarketsWithin1km: 1,
@@ -73,6 +79,7 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("Schools")).toBeInTheDocument();
     expect(screen.getByText("3 within 1km")).toBeInTheDocument();
     expect(screen.getByText("8 within 2km")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK PRIMARY SCHOOL: 250 m")).toBeInTheDocument();
     
     expect(screen.getByText("Hawkers")).toBeInTheDocument();
     expect(screen.getByText("2 within 1km")).toBeInTheDocument();

@@ -12,6 +12,7 @@ import {
   type MrtExit,
   type PropertyInfo,
   type ResaleTransaction,
+  type SchoolLocation,
 } from "./lib/pipeline";
 
 const ROOT = process.cwd();
@@ -299,7 +300,7 @@ async function normalizeSchoolRows(
   geocodeCache: GeocodeCacheFile,
   options: { skipGeocoding: boolean },
 ) {
-  const schools: Array<{ name: string; lat: number; lng: number }> = [];
+  const schools: SchoolLocation[] = [];
 
   for (const row of rows) {
     const parsed = schoolRowSchema.safeParse(row);
@@ -308,19 +309,31 @@ async function normalizeSchoolRows(
     }
 
     const schoolName = parsed.data.school_name.trim();
+    if (!schoolName) {
+      continue;
+    }
+
+    const mainLevelCode = normalizeText(parsed.data.mainlevel_code ?? "");
+    if (mainLevelCode !== "PRIMARY") {
+      continue;
+    }
+
     const lat = parsed.data.latitude ? Number(parsed.data.latitude) : null;
     const lng = parsed.data.longitude ? Number(parsed.data.longitude) : null;
 
     if (lat !== null && lng !== null && Number.isFinite(lat) && Number.isFinite(lng)) {
-      schools.push({ name: schoolName, lat, lng });
+      schools.push({ name: schoolName, lat, lng, mainLevelCode });
       continue;
     }
 
+    const address = parsed.data.address?.trim();
     const postalCode = parsed.data.postal_code?.trim();
-    const cacheKey = `school:${normalizeText(schoolName)}${postalCode ? `:${postalCode}` : ""}`;
+    const cacheKey = `school:${normalizeText(schoolName)}${
+      postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""
+    }`;
     const cached = geocodeCache.entries[cacheKey];
     if (cached) {
-      schools.push({ name: schoolName, lat: cached.lat, lng: cached.lng });
+      schools.push({ name: schoolName, lat: cached.lat, lng: cached.lng, mainLevelCode });
       continue;
     }
 
@@ -330,7 +343,9 @@ async function normalizeSchoolRows(
 
     const searchValue = postalCode
       ? `${postalCode} SINGAPORE`
-      : `${schoolName} SINGAPORE`;
+      : address
+        ? `${address} SINGAPORE`
+        : `${schoolName} SINGAPORE`;
 
     try {
       const geocode = await geocodeAddress(searchValue);
@@ -339,7 +354,7 @@ async function normalizeSchoolRows(
       }
 
       geocodeCache.entries[cacheKey] = geocode;
-      schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng });
+      schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng, mainLevelCode });
       await sleep(300);
     } catch (error) {
       console.warn(
@@ -430,7 +445,7 @@ async function main() {
   const geocodeCache = await loadGeocodeCache();
 
   // Fetch amenity data if not skipped
-  let schools: Array<{ name: string; lat: number; lng: number }> | undefined;
+  let schools: SchoolLocation[] | undefined;
   let hawkers: Array<{ name: string; lat: number; lng: number }> | undefined;
   let supermarkets: Array<{ name: string; lat: number; lng: number }> | undefined;
   let parks: Array<{ name: string; lat: number; lng: number }> | undefined;

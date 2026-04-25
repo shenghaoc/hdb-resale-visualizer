@@ -39,6 +39,12 @@ const mockComparison: ComparisonArtifact = {
     primarySchoolsWithin1km: 2,
     primarySchoolsWithin2km: 5,
     nearestPrimarySchoolMeters: 300,
+    nearestPrimarySchools: [
+      {
+        name: "ANG MO KIO PRIMARY SCHOOL",
+        distanceMeters: 300,
+      },
+    ],
     hawkerCentresWithin1km: 1,
     nearestHawkerCentreMeters: 400,
     supermarketsWithin1km: 3,
@@ -82,6 +88,7 @@ describe("ShortlistDrawer", () => {
     // Check that primary schools data is displayed
     expect(screen.getByText("Primary schools")).toBeInTheDocument();
     expect(screen.getByText("2 within 1km, 5 within 2km")).toBeInTheDocument();
+    expect(screen.getByText("ANG MO KIO PRIMARY SCHOOL: 300 m")).toBeInTheDocument();
 
     // Check that amenities data is displayed
     expect(screen.getByText("Amenities")).toBeInTheDocument();

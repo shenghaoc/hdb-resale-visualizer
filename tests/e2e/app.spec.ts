@@ -8,6 +8,12 @@ const comparisonFixture = {
     primarySchoolsWithin1km: 3,
     primarySchoolsWithin2km: 8,
     nearestPrimarySchoolMeters: 250,
+    nearestPrimarySchools: [
+      {
+        name: "BEDOK PRIMARY SCHOOL",
+        distanceMeters: 250,
+      },
+    ],
     hawkerCentresWithin1km: 2,
     nearestHawkerCentreMeters: 180,
     supermarketsWithin1km: 1,
@@ -154,7 +160,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(shortlistDrawer).toContainText(rowAddress ?? "");
   await expect(shortlistDrawer).toContainText("Primary schools");
   await expect(shortlistDrawer).toContainText("3 within 1km, 8 within 2km");
-  await expect(shortlistDrawer).toContainText("Nearest: 250 m");
+  await expect(shortlistDrawer).toContainText("BEDOK PRIMARY SCHOOL: 250 m");
   await expect(shortlistDrawer).toContainText("Amenities");
   await expect(shortlistDrawer).toContainText("2H • 1S • 4P");
   await expect(shortlistDrawer).toContainText("Price percentile");

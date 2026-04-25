@@ -92,6 +92,7 @@ export type SchoolLocation = {
   name: string;
   lat: number;
   lng: number;
+  mainLevelCode: string;
 };
 
 export type AmenityLocation = {
@@ -246,6 +247,28 @@ function findNearestAmenity(
   }
 
   return minDistance === Infinity ? null : Math.round(minDistance);
+}
+
+function findNearestSchools(
+  schools: SchoolLocation[],
+  blockCoords: { lat: number; lng: number },
+  limit = 3,
+) {
+  return schools
+    .map((school) => ({
+      name: school.name,
+      distanceMeters: Math.round(
+        haversineDistanceMeters(blockCoords, { lat: school.lat, lng: school.lng }),
+      ),
+    }))
+    .sort((left, right) => {
+      if (left.distanceMeters !== right.distanceMeters) {
+        return left.distanceMeters - right.distanceMeters;
+      }
+
+      return left.name.localeCompare(right.name);
+    })
+    .slice(0, limit);
 }
 
 function calculatePercentile(value: number, values: number[]): number {
@@ -582,7 +605,7 @@ export function buildArtifacts({
 
   // Generate comparison artifacts if amenity data is available
   const comparisons: Record<string, ComparisonArtifact> = {};
-  const schoolsData: AmenityLocation[] = schools ?? [];
+  const schoolsData: SchoolLocation[] = schools ?? [];
   const hawkersData: AmenityLocation[] = hawkers ?? [];
   const supermarketsData: AmenityLocation[] = supermarkets ?? [];
   const parksData: AmenityLocation[] = parks ?? [];
@@ -668,6 +691,7 @@ export function buildArtifacts({
         primarySchoolsWithin1km: countAmenitiesWithinDistance(schoolsData, geocode, 1000),
         primarySchoolsWithin2km: countAmenitiesWithinDistance(schoolsData, geocode, 2000),
         nearestPrimarySchoolMeters: findNearestAmenity(schoolsData, geocode),
+        nearestPrimarySchools: findNearestSchools(schoolsData, geocode),
         hawkerCentresWithin1km: countAmenitiesWithinDistance(hawkersData, geocode, 1000),
         nearestHawkerCentreMeters: findNearestAmenity(hawkersData, geocode),
         supermarketsWithin1km: countAmenitiesWithinDistance(supermarketsData, geocode, 1000),

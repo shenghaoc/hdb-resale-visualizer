@@ -514,7 +514,16 @@ export function ShortlistDrawer({
                                   })}
                                 </strong>
                                 <span className="text-sm text-muted-foreground">
-                                  {row.comparison.amenities.nearestPrimarySchoolMeters !== null
+                                  {row.comparison.amenities.nearestPrimarySchools?.[0]
+                                    ? t("shortlist.nearestNamedDistance", {
+                                        name: row.comparison.amenities.nearestPrimarySchools[0].name,
+                                        distance: formatMeters(
+                                          row.comparison.amenities.nearestPrimarySchools[0].distanceMeters,
+                                          t,
+                                          locale,
+                                        ),
+                                      })
+                                    : row.comparison.amenities.nearestPrimarySchoolMeters !== null
                                     ? t("shortlist.nearestDistance", {
                                         distance: formatMeters(row.comparison.amenities.nearestPrimarySchoolMeters, t, locale),
                                       })

@@ -62,7 +62,9 @@ export const oneMapResponseSchema = z.object({
 
 export const schoolRowSchema = z.object({
   school_name: z.string(),
+  address: z.string().optional(),
   postal_code: z.string().optional(),
+  mainlevel_code: z.string().optional(),
   latitude: z.string().optional(),
   longitude: z.string().optional(),
 });

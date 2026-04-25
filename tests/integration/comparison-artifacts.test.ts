@@ -114,11 +114,19 @@ describe("comparison artifacts", () => {
       name: "ANG MO KIO PRIMARY SCHOOL",
       lat: 1.3700,
       lng: 103.8500,
+      mainLevelCode: "PRIMARY",
+    },
+    {
+      name: "ANDERSON PRIMARY SCHOOL",
+      lat: 1.3693,
+      lng: 103.8493,
+      mainLevelCode: "PRIMARY",
     },
     {
       name: "BEDOK PRIMARY SCHOOL",
       lat: 1.3340,
       lng: 103.9380,
+      mainLevelCode: "PRIMARY",
     },
   ];
 
@@ -234,6 +242,9 @@ describe("comparison artifacts", () => {
     const alphaComparison = artifacts.comparisons?.[alphaKey];
     // Amenities are close to alpha location, so distances should be small numbers
     expect(alphaComparison?.amenities.nearestPrimarySchoolMeters).toBeGreaterThanOrEqual(0);
+    expect(alphaComparison?.amenities.nearestPrimarySchools[0]).toMatchObject({
+      name: "ANDERSON PRIMARY SCHOOL",
+    });
     expect(alphaComparison?.amenities.nearestHawkerCentreMeters).toBeGreaterThanOrEqual(0);
     expect(alphaComparison?.amenities.nearestSupermarketMeters).toBeGreaterThanOrEqual(0);
     expect(alphaComparison?.amenities.nearestParkMeters).toBeGreaterThanOrEqual(0);

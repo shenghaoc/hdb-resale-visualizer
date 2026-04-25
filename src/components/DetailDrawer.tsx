@@ -360,7 +360,18 @@ export function DetailDrawer({
                                 count: comparison.amenities.primarySchoolsWithin2km,
                               })}
                             </div>
-                            {comparison.amenities.nearestPrimarySchoolMeters && (
+                            {comparison.amenities.nearestPrimarySchools?.[0] ? (
+                              <div className="line-clamp-1 text-xs text-muted-foreground">
+                                {t("detail.nearestNamed", {
+                                  name: comparison.amenities.nearestPrimarySchools[0].name,
+                                  distance: formatMeters(
+                                    comparison.amenities.nearestPrimarySchools[0].distanceMeters,
+                                    t,
+                                    locale,
+                                  ),
+                                })}
+                              </div>
+                            ) : comparison.amenities.nearestPrimarySchoolMeters ? (
                               <div className="text-xs text-muted-foreground">
                                 {t("detail.nearest", {
                                   distance: formatMeters(
@@ -370,7 +381,7 @@ export function DetailDrawer({
                                   ),
                                 })}
                               </div>
-                            )}
+                            ) : null}
                           </div>
                         </CardContent>
                       </Card>

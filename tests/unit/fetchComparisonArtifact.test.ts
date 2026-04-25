@@ -23,6 +23,12 @@ describe('fetchComparisonArtifact', () => {
         primarySchoolsWithin1km: 2,
         primarySchoolsWithin2km: 5,
         nearestPrimarySchoolMeters: 300,
+        nearestPrimarySchools: [
+          {
+            name: 'TEST PRIMARY SCHOOL',
+            distanceMeters: 300,
+          },
+        ],
         hawkerCentresWithin1km: 1,
         nearestHawkerCentreMeters: 500,
         supermarketsWithin1km: 3,

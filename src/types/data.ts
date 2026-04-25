@@ -125,10 +125,16 @@ export type ShortlistItem = {
   addedAt: string;
 };
 
+export type NearbySchool = {
+  name: string;
+  distanceMeters: number;
+};
+
 export type AmenityComparison = {
   primarySchoolsWithin1km: number;
   primarySchoolsWithin2km: number;
   nearestPrimarySchoolMeters: number | null;
+  nearestPrimarySchools: NearbySchool[];
   hawkerCentresWithin1km: number;
   nearestHawkerCentreMeters: number | null;
   supermarketsWithin1km: number;
