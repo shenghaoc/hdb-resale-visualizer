@@ -36,6 +36,7 @@
 - [x] **Task 15: Copy All Summary**: Implement a "Copy All" button in `ShortlistDrawer` that formats the entire shortlist as a Markdown table for easy sharing.
 - [x] **Task 16: Shortlist Market Badges**: Add tiny "Price Rank" and "MRT Rank" badges to the Shortlist cards for immediate side-by-side ranking comparison.
 - [x] **Task 17: Dark Mode Reliability**: Add persistent theme preference and ensure core surfaces use semantic color tokens so dark mode renders correctly across desktop and mobile panels.
+- [x] **Task 18: Geolocate Single-Fix Positioning**: Configure geolocation to avoid continuous user tracking while moving.
 
 ## Phase 7: Mobile Viewport Stability Hotfixes
 - [x] Pin the app shell to viewport bounds so mobile browser zoom/tilt/resize cannot expose background gaps between map content and the bottom tab bar.
