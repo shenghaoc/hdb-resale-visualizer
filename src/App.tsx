@@ -80,6 +80,7 @@ function App() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
+  const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -377,7 +378,10 @@ function App() {
     patchFilters({ selectedAddressKey: addressKey });
   }, [isDesktop, patchFilters]);
 
-  const handleToggleShortlist = useCallback((addressKey: string) => shortlist.toggle(addressKey), [shortlist]);
+  const handleToggleShortlist = useCallback(
+    (addressKey: string) => toggleShortlist(addressKey),
+    [toggleShortlist],
+  );
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {

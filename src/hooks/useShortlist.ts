@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
@@ -82,10 +82,13 @@ export function useShortlist() {
     return items.some((item) => item.addressKey === addressKey);
   }, [items]);
 
-  return {
-    items,
-    toggle,
-    update,
-    has,
-  };
+  return useMemo(
+    () => ({
+      items,
+      toggle,
+      update,
+      has,
+    }),
+    [items, toggle, update, has],
+  );
 }
