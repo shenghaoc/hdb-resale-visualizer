@@ -340,9 +340,16 @@ export function FilterPanel(props: FilterPanelProps) {
                         min={minMonth}
                         type="month"
                         value={filters.startMonth ?? ""}
-                        onChange={(event) =>
-                          onChange({ startMonth: event.target.value === "" ? null : event.target.value })
-                        }
+                        onChange={(event) => {
+                          const val = event.target.value;
+                          if (val === "") {
+                            onChange({ startMonth: null });
+                            return;
+                          }
+                          // Clamp the value
+                          const clamped = val < minMonth ? minMonth : (val > maxMonth ? maxMonth : val);
+                          onChange({ startMonth: clamped });
+                        }}
                         aria-description="Start of the transaction window"
                       />
                     </FieldContent>
@@ -356,9 +363,16 @@ export function FilterPanel(props: FilterPanelProps) {
                         min={minMonth}
                         type="month"
                         value={filters.endMonth ?? ""}
-                        onChange={(event) =>
-                          onChange({ endMonth: event.target.value === "" ? null : event.target.value })
-                        }
+                        onChange={(event) => {
+                          const val = event.target.value;
+                          if (val === "") {
+                            onChange({ endMonth: null });
+                            return;
+                          }
+                          // Clamp the value
+                          const clamped = val < minMonth ? minMonth : (val > maxMonth ? maxMonth : val);
+                          onChange({ endMonth: clamped });
+                        }}
                         aria-description="End of the transaction window"
                       />
                     </FieldContent>
