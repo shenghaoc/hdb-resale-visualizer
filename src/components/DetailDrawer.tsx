@@ -301,7 +301,12 @@ export function DetailDrawer({
                           )}
                         >
                           <div className="flex items-center gap-3">
-                            <div className="size-2 rounded-full bg-primary ring-2 ring-offset-2 ring-primary/20" />
+                            <div className={cn(
+                              "size-2 rounded-full ring-2 ring-offset-2",
+                              idx === 0 
+                                ? "bg-primary ring-primary/20" 
+                                : "bg-muted-foreground/40 ring-muted-foreground/10"
+                            )} />
                             <div className="flex flex-col">
                               <span className="text-sm font-bold leading-none">
                                 {mrt.stationName}

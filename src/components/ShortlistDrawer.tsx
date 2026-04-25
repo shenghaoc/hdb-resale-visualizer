@@ -22,7 +22,6 @@ import {
   InputGroupText,
 } from "@/components/ui/input-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type ShortlistRow = {
@@ -85,6 +84,9 @@ function getRemainingLeaseRange(leaseCommenceRange: [number, number]) {
 
   return [Math.min(oldestRemaining, newestRemaining), Math.max(oldestRemaining, newestRemaining)];
 }
+
+// Note: Lease context is block-level data, not per-transaction.
+// All units in a block share the same lease commencement range.
 
 export function ShortlistDrawer({
   isOpen,
@@ -386,7 +388,6 @@ export function ShortlistDrawer({
 
                   {rankedRows.map((row, index) => {
                     const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
-                    const remainingLeaseRange = getRemainingLeaseRange(row.block.leaseCommenceRange);
 
                     return (
                       <Card key={row.item.addressKey} className="bg-muted/40">
@@ -417,7 +418,7 @@ export function ShortlistDrawer({
                           </div>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-5 pt-5">
-                          <div className="grid gap-4 sm:grid-cols-2">
+                          <div className="grid gap-4 sm:grid-cols-3">
                             <div className="flex flex-col gap-2">
                               <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                                 {t("shortlist.marketMedian")}
@@ -466,26 +467,9 @@ export function ShortlistDrawer({
                                 {row.block.flatTypes.join(", ")}
                               </span>
                             </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                {t("shortlist.leaseContext")}
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {t("shortlist.leaseLeftRange", {
-                                  min: remainingLeaseRange[0],
-                                  max: remainingLeaseRange[1],
-                                })}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {t("shortlist.leaseCommenceRange", {
-                                  start: row.block.leaseCommenceRange[0],
-                                  end: row.block.leaseCommenceRange[1],
-                                })}
-                              </span>
-                            </div>
                           </div>
 
-                          {row.comparison ? (
+                          {row.comparison && (
                             <div className="grid gap-4 sm:grid-cols-2">
                               <div className="flex flex-col gap-2">
                                 <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -560,12 +544,6 @@ export function ShortlistDrawer({
                                 </span>
                               </div>
                             </div>
-                          ) : (
-                            <div className="rounded-lg border border-dashed border-border/60 p-4">
-                              <p className="text-sm text-muted-foreground text-center">
-                                {t("shortlist.comparisonDataLoading")}
-                              </p>
-                            </div>
                           )}
 
                           <div className="grid gap-4 sm:grid-cols-2">
@@ -618,53 +596,33 @@ export function ShortlistDrawer({
                             </div>
                           </div>
 
-                          <FieldGroup>
-                            <Field>
-                              <FieldContent>
-                                <FieldLabel htmlFor={`target-${row.item.addressKey}`}>
-                                  {t("shortlist.yourTargetPrice")}
-                                </FieldLabel>
-                                <InputGroup>
-                                  <InputGroupAddon align="inline-start">
-                                    <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
-                                  </InputGroupAddon>
-                                  <InputGroupInput
-                                    id={`target-${row.item.addressKey}`}
-                                    inputMode="numeric"
-                                    placeholder={t("shortlist.targetPricePlaceholder")}
-                                    type="number"
-                                    value={row.item.targetPrice ?? ""}
-                                    onChange={(event) =>
-                                      onUpdate(row.item.addressKey, {
-                                        targetPrice:
-                                          event.target.value === ""
-                                            ? null
-                                            : Number(event.target.value),
-                                      })
-                                    }
-                                  />
-                                </InputGroup>
-                              </FieldContent>
-                            </Field>
-                            <Field>
-                              <FieldContent>
-                                <FieldLabel htmlFor={`notes-${row.item.addressKey}`}>
-                                  {t("shortlist.notes")}
-                                </FieldLabel>
-                                <Textarea
-                                  id={`notes-${row.item.addressKey}`}
-                                  placeholder={t("shortlist.notesPlaceholder")}
-                                  rows={3}
-                                  value={row.item.notes}
+                          <Field>
+                            <FieldContent>
+                              <FieldLabel htmlFor={`target-${row.item.addressKey}`}>
+                                {t("shortlist.yourTargetPrice")}
+                              </FieldLabel>
+                              <InputGroup>
+                                <InputGroupAddon align="inline-start">
+                                  <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
+                                </InputGroupAddon>
+                                <InputGroupInput
+                                  id={`target-${row.item.addressKey}`}
+                                  inputMode="numeric"
+                                  placeholder={t("shortlist.targetPricePlaceholder")}
+                                  type="number"
+                                  value={row.item.targetPrice ?? ""}
                                   onChange={(event) =>
                                     onUpdate(row.item.addressKey, {
-                                      notes: event.target.value,
+                                      targetPrice:
+                                        event.target.value === ""
+                                          ? null
+                                          : Number(event.target.value),
                                     })
                                   }
                                 />
-                              </FieldContent>
-                            </Field>
-                          </FieldGroup>
+                              </InputGroup>
+                            </FieldContent>
+                          </Field>
                         </CardContent>
                       </Card>
                     );

@@ -14,11 +14,11 @@ export const DEFAULT_FILTERS: FilterState = {
   town: "",
   flatType: "",
   flatModel: "",
-  budgetMin: null,
-  budgetMax: null,
+  budgetMin: 300000, // Sensible default: S$300K
+  budgetMax: 800000, // Sensible default: S$800K
   areaMin: null,
   areaMax: null,
-  remainingLeaseMin: null,
+  remainingLeaseMin: 60, // Sensible default: 60 years minimum
   startMonth: null,
   endMonth: null,
   mrtMax: null,
