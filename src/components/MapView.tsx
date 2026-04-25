@@ -308,7 +308,8 @@ export function MapView({
         positionOptions: {
           enableHighAccuracy: true,
         },
-        trackUserLocation: true,
+        // One-shot geolocation only. Do not keep tracking while the user moves.
+        trackUserLocation: false,
         showUserLocation: true,
       }),
       "top-right",

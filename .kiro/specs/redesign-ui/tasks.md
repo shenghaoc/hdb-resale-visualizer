@@ -33,5 +33,6 @@
 ## Phase 6: Visual Context & Advanced Sharing
 - [x] **Task 13: Map Radius Visualization**: Update `MapView.tsx` to render concentric 1km/2km shaded circles around the selected block.
 - [x] **Task 14: Geolocate Integration**: Add a Geolocate control to the map UI with custom styling.
+- [x] **Task 17: Geolocate Single-Fix Positioning**: Configure geolocation to avoid continuous user tracking while moving.
 - [x] **Task 15: Copy All Summary**: Implement a "Copy All" button in `ShortlistDrawer` that formats the entire shortlist as a Markdown table for easy sharing.
 - [x] **Task 16: Shortlist Market Badges**: Add tiny "Price Rank" and "MRT Rank" badges to the Shortlist cards for immediate side-by-side ranking comparison.
