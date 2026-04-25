@@ -1,13 +1,13 @@
 import { formatDateTime, formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
+import { useTheme } from "@/hooks/useTheme";
 import type { Manifest } from "@/types/data";
 import type { Locale } from "@/lib/i18n/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info, Languages, Moon, Sun, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import { safeStorage } from "@/lib/storage";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -29,39 +29,9 @@ export function GlobalHeader({
   isVisible = true,
   onDismiss,
 }: GlobalHeaderProps) {
-  const THEME_STORAGE_KEY = "hdb-resale-theme";
   const { locale, setLocale, t } = useI18n();
+  const { theme, toggleTheme } = useTheme();
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
-  
-  // userTheme is null if the user hasn't explicitly set a preference
-  const [userTheme, setUserTheme] = useState<"light" | "dark" | null>(() => {
-    const stored = safeStorage.getItem(THEME_STORAGE_KEY);
-    return stored === "dark" || stored === "light" ? stored : null;
-  });
-
-  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
-
-  // Sync system theme and listen for changes
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const update = () => setSystemTheme(media.matches ? "dark" : "light");
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  const activeTheme = userTheme ?? systemTheme;
-
-  // Apply theme to document
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", activeTheme === "dark");
-  }, [activeTheme]);
-
-  const toggleTheme = () => {
-    const nextTheme = activeTheme === "light" ? "dark" : "light";
-    setUserTheme(nextTheme);
-    safeStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-  };
 
   if (!isVisible) {
     return null;
@@ -103,7 +73,7 @@ export function GlobalHeader({
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
-                {activeTheme === "light" ? (
+                {theme === "light" ? (
                   <Moon data-icon className="size-4" />
                 ) : (
                   <Sun data-icon className="size-4" />

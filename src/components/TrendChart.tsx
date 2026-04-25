@@ -10,6 +10,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
+import { useTheme } from "@/hooks/useTheme";
 
 echarts.use([
   LineChart,
@@ -25,6 +26,8 @@ type TrendChartProps = {
 };
 
 export function TrendChart({ points }: TrendChartProps) {
+  const { isDark } = useTheme();
+
   const option = useMemo(() => {
     const prices = points.map((p) => p.medianPrice);
     const minPrice = Math.min(...prices);
@@ -32,14 +35,23 @@ export function TrendChart({ points }: TrendChartProps) {
     const range = maxPrice - minPrice;
 
     // Use a baseline that highlights fluctuations while maintaining context
-    // We aim for the bottom of the chart to be around 80% of the minimum price,
-    // or slightly less if the range is very small.
     const yMin = Math.floor(Math.max(0, minPrice - range * 0.5) / 10000) * 10000;
+
+    // Theme-aware colors
+    const colors = {
+      primary: isDark ? "#79a6ff" : "#2563eb",
+      chart2: isDark ? "#9bb7ff" : "#495c95",
+      popover: isDark ? "#22262e" : "#ffffff",
+      popoverForeground: isDark ? "#e0e0e0" : "#171c1f",
+      border: isDark ? "rgba(255, 255, 255, 0.08)" : "#c3c6d7",
+      splitLine: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(195, 198, 215, 0.5)",
+      mutedForeground: isDark ? "#94a3b8" : "#434655",
+    };
 
     return {
       animationDuration: 500,
       backgroundColor: "transparent",
-      color: ["hsl(var(--primary))", "hsl(var(--chart-2))"],
+      color: [colors.primary, colors.chart2],
       grid: {
         left: 12,
         right: 12,
@@ -49,11 +61,11 @@ export function TrendChart({ points }: TrendChartProps) {
       },
       tooltip: {
         trigger: "axis",
-        backgroundColor: "hsl(var(--popover))",
-        borderColor: "hsl(var(--border))",
+        backgroundColor: colors.popover,
+        borderColor: colors.border,
         borderWidth: 1,
         textStyle: {
-          color: "hsl(var(--popover-foreground))",
+          color: colors.popoverForeground,
         },
       },
       xAxis: {
@@ -62,12 +74,12 @@ export function TrendChart({ points }: TrendChartProps) {
         boundaryGap: false,
         axisLine: {
           lineStyle: {
-            color: "hsl(var(--border))",
+            color: colors.border,
           },
         },
         axisTick: { show: false },
         axisLabel: {
-          color: "hsl(var(--muted-foreground))",
+          color: colors.mutedForeground,
           formatter: (value: string) => value.slice(2),
         },
       },
@@ -79,11 +91,11 @@ export function TrendChart({ points }: TrendChartProps) {
           axisTick: { show: false },
           splitLine: {
             lineStyle: {
-              color: "hsl(var(--border) / 0.5)",
+              color: colors.splitLine,
             },
           },
           axisLabel: {
-            color: "hsl(var(--muted-foreground))",
+            color: colors.mutedForeground,
             formatter: (value: number) => formatCompactCurrency(value),
           },
         },
@@ -93,7 +105,7 @@ export function TrendChart({ points }: TrendChartProps) {
           axisTick: { show: false },
           splitLine: { show: false },
           axisLabel: {
-            color: "hsl(var(--muted-foreground))",
+            color: colors.mutedForeground,
           },
         },
       ],
@@ -105,11 +117,11 @@ export function TrendChart({ points }: TrendChartProps) {
           showSymbol: false,
           lineStyle: {
             width: 3,
-            color: "hsl(var(--primary))",
+            color: colors.primary,
           },
           areaStyle: {
             opacity: 0.1,
-            color: "hsl(var(--primary))",
+            color: colors.primary,
           },
           data: points.map((point) => point.medianPrice),
           tooltip: {
@@ -122,7 +134,7 @@ export function TrendChart({ points }: TrendChartProps) {
           yAxisIndex: 1,
           itemStyle: {
             opacity: 0.6,
-            color: "hsl(var(--chart-2))",
+            color: colors.chart2,
           },
           data: points.map((point) => point.transactionCount),
           tooltip: {
@@ -131,7 +143,7 @@ export function TrendChart({ points }: TrendChartProps) {
         },
       ],
     };
-  }, [points]);
+  }, [points, isDark]);
 
 
   return (

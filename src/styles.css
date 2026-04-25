@@ -97,25 +97,26 @@
 }
 
 .dark {
-  --background: #0d1117;
-  --foreground: #e6edf3;
-  --card: #111722;
-  --card-foreground: #e6edf3;
-  --popover: #111722;
-  --popover-foreground: #e6edf3;
-  --primary: #79a6ff;
+  /* Refined Dark Mode Palette following expert guidelines */
+  --background: #0f1115; /* Near-black */
+  --foreground: #e0e0e0; /* 88% white for comfort */
+  --card: #1a1d23; /* Elevated surface */
+  --card-foreground: #e0e0e0;
+  --popover: #22262e; /* Further elevation */
+  --popover-foreground: #e0e0e0;
+  --primary: #79a6ff; /* Desaturated + Brightened blue */
   --primary-foreground: #081224;
-  --secondary: #1b2432;
+  --secondary: #1f232b;
   --secondary-foreground: #dce7ff;
-  --muted: #161d29;
-  --muted-foreground: #a5b2c6;
+  --muted: #1a1d23;
+  --muted-foreground: #94a3b8; /* Softer secondary text */
   --accent: #1f2b42;
   --accent-foreground: #dce7ff;
   --destructive: #ff6b6b;
   --destructive-foreground: #2a0c0c;
   --success: #7ecb63;
   --success-foreground: #0e2410;
-  --border: #2a3344;
+  --border: rgba(255, 255, 255, 0.08); /* Subtle light borders */
   --input: #2a3344;
   --ring: #79a6ff;
   --chart-1: #79a6ff;
@@ -123,14 +124,7 @@
   --chart-3: #4f6d9f;
   --chart-4: #7f99d6;
   --chart-5: #b9cbff;
-  --sidebar: #0d1117;
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--secondary);
-  --sidebar-accent-foreground: var(--secondary-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+  --sidebar: #0f1115;
 }
 
 @layer base {
@@ -184,6 +178,22 @@
   overflow: hidden;
 }
 
+.dark .map-view .maplibregl-canvas {
+  /* Improved dark mode filter - more natural looking */
+  filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(0.9) saturate(0.8);
+}
+
+.dark .map-view .maplibregl-marker,
+.dark .map-view .maplibregl-popup {
+  filter: none;
+}
+
+/* Compensate markers and popups to preserve their intended colors against the inverted map */
+.dark .map-view .maplibregl-marker > *,
+.dark .map-view .maplibregl-popup-content {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9);
+}
+
 .map-attribution-link {
   position: absolute;
   right: 0.5rem;
@@ -212,7 +222,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
-  background: color-mix(in oklab, white 86%, var(--muted));
+  background: color-mix(in oklab, var(--card) 86%, var(--muted));
 }
 
 .map-skeleton {

@@ -6,6 +6,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import { Copy, Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { useTheme } from "@/hooks/useTheme";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber, formatRemainingLease } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
@@ -87,6 +88,7 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
 }: ShortlistDrawerProps) {
+  const { isDark } = useTheme();
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
   const sortLabelId = useId();
@@ -246,35 +248,65 @@ export function ShortlistDrawer({
       };
     });
 
+    const colors = {
+      popover: isDark ? "#22262e" : "#ffffff",
+      popoverForeground: isDark ? "#e0e0e0" : "#171c1f",
+      border: isDark ? "rgba(255, 255, 255, 0.08)" : "#c3c6d7",
+      splitLine: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(195, 198, 215, 0.5)",
+      mutedForeground: isDark ? "#94a3b8" : "#434655",
+      legendText: isDark ? "#e0e0e0" : "#171c1f",
+    };
+
     return {
       animationDuration: 400,
       backgroundColor: "transparent",
       grid: { left: 8, right: 12, top: 56, bottom: 30, containLabel: true },
       tooltip: {
         trigger: "axis",
+        backgroundColor: colors.popover,
+        borderColor: colors.border,
+        borderWidth: 1,
+        textStyle: {
+          color: colors.popoverForeground,
+        },
         valueFormatter: (value: number | null) =>
           value === null ? t("shortlist.na") : formatCompactCurrency(value),
       },
       legend: {
         type: "scroll",
         top: 8,
+        textStyle: {
+          color: colors.legendText,
+        },
       },
       xAxis: {
         type: "category",
         data: months,
+        axisLine: {
+          lineStyle: {
+            color: colors.border,
+          },
+        },
         axisLabel: {
+          color: colors.mutedForeground,
           formatter: (value: string) => value.slice(2),
         },
       },
       yAxis: {
         type: "value",
+        splitLine: {
+          lineStyle: {
+            color: colors.splitLine,
+          },
+        },
         axisLabel: {
+          color: colors.mutedForeground,
           formatter: (value: number) => formatCompactCurrency(value),
         },
       },
       series,
     };
-  }, [comparisonRows, t]);
+  }, [comparisonRows, t, isDark]);
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">

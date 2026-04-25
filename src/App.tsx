@@ -678,7 +678,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 aria-expanded={isDesktopPanelOpen}
                 aria-controls="desktop-panel"
@@ -697,7 +697,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsHeaderVisible(true)}
               >
                 <Info data-icon="inline-start" />
@@ -730,7 +730,7 @@ function App() {
                 )}
                 {...(!isDesktopPanelOpen && { inert: true })}
               >
-                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-white/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
+                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-card/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
                   <Tabs
                     value={desktopTab}
                     onValueChange={(value) => setDesktopTab(value as DesktopTab)}
@@ -787,7 +787,7 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-white/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
                 >
                   {mobileTab === "filters" && (
                     <div id="mobile-filters-content" className="h-full overflow-y-auto p-3">

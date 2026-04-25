@@ -241,6 +241,7 @@ export function MapView({
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
 
+
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
 
@@ -885,6 +886,8 @@ export function MapView({
     }
   }, [geoJson]);
 
+
+
   // Fit bounds when townFilter changes
   useEffect(() => {
     const map = mapRef.current;
@@ -999,7 +1002,7 @@ export function MapView({
 
   return (
     <div
-      className="map-view"
+      className="map-view bg-background transition-colors duration-300"
       data-testid="map-view"
       ref={containerRef}
       role="application"
