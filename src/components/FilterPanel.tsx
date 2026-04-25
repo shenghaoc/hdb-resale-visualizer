@@ -20,6 +20,7 @@ import {
   InputGroupText,
 } from "@/components/ui/input-group";
 import { Input } from "@/components/ui/input";
+import { MonthPicker } from "@/components/ui/month-picker";
 import {
   Select,
   SelectContent,
@@ -334,46 +335,24 @@ export function FilterPanel(props: FilterPanelProps) {
                   <Field>
                     <FieldContent>
                       <FieldLabel htmlFor="start-month">{t("filters.startMonth")}</FieldLabel>
-                      <Input
+                      <MonthPicker
                         id="start-month"
-                        max={maxMonth}
-                        min={minMonth}
-                        type="month"
-                        value={filters.startMonth ?? ""}
-                        onChange={(event) => {
-                          const val = event.target.value;
-                          if (val === "") {
-                            onChange({ startMonth: null });
-                            return;
-                          }
-                          // Clamp the value
-                          const clamped = val < minMonth ? minMonth : (val > maxMonth ? maxMonth : val);
-                          onChange({ startMonth: clamped });
-                        }}
-                        aria-description="Start of the transaction window"
+                        value={filters.startMonth}
+                        onChange={(value) => onChange({ startMonth: value })}
+                        minMonth={minMonth}
+                        maxMonth={maxMonth}
                       />
                     </FieldContent>
                   </Field>
                   <Field>
                     <FieldContent>
                       <FieldLabel htmlFor="end-month">{t("filters.endMonth")}</FieldLabel>
-                      <Input
+                      <MonthPicker
                         id="end-month"
-                        max={maxMonth}
-                        min={minMonth}
-                        type="month"
-                        value={filters.endMonth ?? ""}
-                        onChange={(event) => {
-                          const val = event.target.value;
-                          if (val === "") {
-                            onChange({ endMonth: null });
-                            return;
-                          }
-                          // Clamp the value
-                          const clamped = val < minMonth ? minMonth : (val > maxMonth ? maxMonth : val);
-                          onChange({ endMonth: clamped });
-                        }}
-                        aria-description="End of the transaction window"
+                        value={filters.endMonth}
+                        onChange={(value) => onChange({ endMonth: value })}
+                        minMonth={minMonth}
+                        maxMonth={maxMonth}
                       />
                     </FieldContent>
                   </Field>
