@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
@@ -61,25 +61,31 @@ export function useShortlist() {
     saveShortlist(window.localStorage, items);
   }, [items]);
 
+  const toggle = useCallback((addressKey: string) => {
+    setItems((current) => toggleShortlistItem(current, addressKey));
+  }, []);
+
+  const update = useCallback((addressKey: string, patch: Partial<ShortlistItem>) => {
+    setItems((current) =>
+      current.map((item) =>
+        item.addressKey === addressKey
+          ? {
+              ...item,
+              ...patch,
+            }
+          : item,
+      ),
+    );
+  }, []);
+
+  const has = useCallback((addressKey: string) => {
+    return items.some((item) => item.addressKey === addressKey);
+  }, [items]);
+
   return {
     items,
-    toggle(addressKey: string) {
-      setItems((current) => toggleShortlistItem(current, addressKey));
-    },
-    update(addressKey: string, patch: Partial<ShortlistItem>) {
-      setItems((current) =>
-        current.map((item) =>
-          item.addressKey === addressKey
-            ? {
-                ...item,
-                ...patch,
-              }
-            : item,
-        ),
-      );
-    },
-    has(addressKey: string) {
-      return items.some((item) => item.addressKey === addressKey);
-    },
+    toggle,
+    update,
+    has,
   };
 }
