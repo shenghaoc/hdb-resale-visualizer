@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -61,7 +61,7 @@ function getSortValue(block: BlockSummary, mode: SortMode) {
   }
 }
 
-function BlockCard({
+const BlockCard = memo(function BlockCard({
   block,
   isFeatured = false,
   isSaved,
@@ -239,7 +239,7 @@ function BlockCard({
       </ItemFooter>
     </Item>
   );
-}
+});
 
 export function ResultsPane({
   blocks,
