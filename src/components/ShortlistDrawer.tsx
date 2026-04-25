@@ -275,11 +275,15 @@ export function ShortlistDrawer({
       splitLine: isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(195, 198, 215, 0.5)",
       mutedForeground: isDark ? "#94a3b8" : "#434655",
       legendText: isDark ? "#e0e0e0" : "#171c1f",
+      palette: isDark 
+        ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6", "#bd93f9", "#8be9fd"] 
+        : ["#2563eb", "#62a34b", "#d97706", "#db2777", "#7c3aed", "#0891b2"],
     };
 
     return {
       animationDuration: 400,
       backgroundColor: "transparent",
+      color: colors.palette,
       grid: { left: 8, right: 12, top: 56, bottom: 30, containLabel: true },
       tooltip: {
         trigger: "axis",

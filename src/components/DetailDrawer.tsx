@@ -1,4 +1,4 @@
-import { startTransition, useState } from "react";
+import { startTransition, Suspense, useState } from "react";
 import {
   Bookmark,
   Clock3,
@@ -535,7 +535,16 @@ export function DetailDrawer({
                     <CardContent className="p-0">
                       <div className="flex h-[280px] items-center justify-center pt-4">
                         {detail ? (
-                          <TrendChart points={detail.monthlyTrend.slice(-24)} />
+                          <Suspense fallback={
+                            <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
+                              <TrendingUp className="size-8 stroke-[1px] animate-pulse" />
+                              <p className="text-xs font-medium tracking-widest uppercase">
+                                {t("detail.calculatingTrends")}
+                              </p>
+                            </div>
+                          }>
+                            <TrendChart points={detail.monthlyTrend.slice(-24)} />
+                          </Suspense>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
                             <TrendingUp className="size-8 stroke-[1px]" />
