@@ -352,12 +352,18 @@ export function ResultsPane({
           size="sm"
           onClick={() => setCurrentPage((p) => p - 1)}
           disabled={visiblePage === 1}
+          aria-label={t("results.prevPage") || "Previous Page"}
         >
           {t("results.prev")}
         </Button>
         {startPage > 1 && (
           <>
-            <Button variant="outline" size="sm" onClick={() => setCurrentPage(1)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(1)}
+              aria-label={t("results.pageN", { value: 1 }) || "Go to Page 1"}
+            >
               1
             </Button>
             {startPage > 2 && <span className="px-1 text-muted-foreground">...</span>}
@@ -369,6 +375,12 @@ export function ResultsPane({
             variant={p === visiblePage ? "default" : "outline"}
             size="sm"
             onClick={() => setCurrentPage(p)}
+            aria-label={
+              p === visiblePage
+                ? t("results.currentPageN", { value: p }) || `Current Page, Page ${p}`
+                : t("results.pageN", { value: p }) || `Go to Page ${p}`
+            }
+            aria-current={p === visiblePage ? "page" : undefined}
           >
             {p}
           </Button>
@@ -376,7 +388,12 @@ export function ResultsPane({
         {endPage < totalPages && (
           <>
             {endPage < totalPages - 1 && <span className="px-1 text-muted-foreground">...</span>}
-            <Button variant="outline" size="sm" onClick={() => setCurrentPage(totalPages)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(totalPages)}
+              aria-label={t("results.pageN", { value: totalPages }) || `Go to Page ${totalPages}`}
+            >
               {totalPages}
             </Button>
           </>
@@ -386,6 +403,7 @@ export function ResultsPane({
           size="sm"
           onClick={() => setCurrentPage((p) => p + 1)}
           disabled={visiblePage === totalPages}
+          aria-label={t("results.nextPage") || "Next Page"}
         >
           {t("results.next")}
         </Button>

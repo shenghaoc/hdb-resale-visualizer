@@ -192,6 +192,7 @@ export function DetailDrawer({
                       );
                     }}
                     title="Copy address"
+                    aria-label={t("detail.copyAddress") || "Copy address to clipboard"}
                   >
                     <Copy data-icon />
                   </Button>

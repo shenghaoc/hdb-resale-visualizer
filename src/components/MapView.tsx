@@ -997,5 +997,13 @@ export function MapView({
     }
   }, [selectedAddressKey, blocks]);
 
-  return <div className="map-view" data-testid="map-view" ref={containerRef} />;
+  return (
+    <div
+      className="map-view"
+      data-testid="map-view"
+      ref={containerRef}
+      role="application"
+      aria-label={t("map.ariaLabel") || "Singapore HDB Resale Map"}
+    />
+  );
 }

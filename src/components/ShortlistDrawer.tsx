@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
@@ -89,6 +89,7 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+  const sortLabelId = useId();
 
   function getRankingMetricLabel(row: ShortlistRow) {
     if (compareMode === "target-gap") {
@@ -297,18 +298,25 @@ export function ShortlistDrawer({
             </Button>
           </div>
           {rows.length > 0 ? (
-            <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <div className="col-span-full flex flex-col gap-4">
               <Field className="min-w-0 flex-1 flex-row items-center gap-2 space-y-0 sm:flex-none">
-                <FieldLabel className="shrink-0 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                <FieldLabel
+                  id={sortLabelId}
+                  className="shrink-0 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+                >
                   {t("shortlist.sortBy")}:
                 </FieldLabel>
                 <Select
                   value={compareMode}
                   onValueChange={(value) => setCompareMode(value as CompareMode)}
                 >
-                  <SelectTrigger className="h-8 min-w-0 flex-1 sm:w-[10.5rem]">
+                  <SelectTrigger
+                    className="h-8 min-w-0 flex-1 sm:w-[10.5rem]"
+                    aria-labelledby={sortLabelId}
+                  >
                     <SelectValue />
                   </SelectTrigger>
+
                   <SelectContent>
                     <SelectItem value="target-gap">{t(compareModeLabels["target-gap"])}</SelectItem>
                     <SelectItem value="median">{t(compareModeLabels.median)}</SelectItem>
