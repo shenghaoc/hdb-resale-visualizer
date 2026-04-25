@@ -96,6 +96,43 @@
   --sidebar-ring: var(--ring);
 }
 
+.dark {
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --card: #111722;
+  --card-foreground: #e6edf3;
+  --popover: #111722;
+  --popover-foreground: #e6edf3;
+  --primary: #79a6ff;
+  --primary-foreground: #081224;
+  --secondary: #1b2432;
+  --secondary-foreground: #dce7ff;
+  --muted: #161d29;
+  --muted-foreground: #a5b2c6;
+  --accent: #1f2b42;
+  --accent-foreground: #dce7ff;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #2a0c0c;
+  --success: #7ecb63;
+  --success-foreground: #0e2410;
+  --border: #2a3344;
+  --input: #2a3344;
+  --ring: #79a6ff;
+  --chart-1: #79a6ff;
+  --chart-2: #9bb7ff;
+  --chart-3: #4f6d9f;
+  --chart-4: #7f99d6;
+  --chart-5: #b9cbff;
+  --sidebar: #0d1117;
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--secondary-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -155,7 +192,7 @@
   max-width: min(72vw, 22rem);
   border: 1px solid rgba(195, 198, 215, 0.3);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.85);
+  background: color-mix(in oklab, var(--background) 88%, transparent);
   padding: 0.25rem 0.5rem;
   font-size: 0.625rem;
   line-height: 1.2;
@@ -204,7 +241,7 @@
   align-items: stretch;
   border-top: 1px solid rgba(195, 198, 215, 0.3);
   gap: 0.25rem;
-  background: rgba(255, 255, 255, 0.92);
+  background: color-mix(in oklab, var(--background) 92%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px));

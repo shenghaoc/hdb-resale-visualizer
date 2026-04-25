@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info, Languages, Moon, Sun, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { safeStorage } from "@/lib/storage";
 import {
   Select,
   SelectContent,
@@ -28,19 +29,38 @@ export function GlobalHeader({
   isVisible = true,
   onDismiss,
 }: GlobalHeaderProps) {
+  const THEME_STORAGE_KEY = "hdb-resale-theme";
   const { locale, setLocale, t } = useI18n();
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") ? "dark" : "light";
-    }
-    return "light";
+  
+  // userTheme is null if the user hasn't explicitly set a preference
+  const [userTheme, setUserTheme] = useState<"light" | "dark" | null>(() => {
+    const stored = safeStorage.getItem(THEME_STORAGE_KEY);
+    return stored === "dark" || stored === "light" ? stored : null;
   });
 
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
+
+  // Sync system theme and listen for changes
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const update = () => setSystemTheme(media.matches ? "dark" : "light");
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const activeTheme = userTheme ?? systemTheme;
+
+  // Apply theme to document
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", activeTheme === "dark");
+  }, [activeTheme]);
+
   const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    const nextTheme = activeTheme === "light" ? "dark" : "light";
+    setUserTheme(nextTheme);
+    safeStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   };
 
   if (!isVisible) {
@@ -52,7 +72,7 @@ export function GlobalHeader({
     <header data-testid={testId}>
       <Card
         size="sm"
-        className="overflow-visible border border-border/20 bg-white/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px]"
+        className="overflow-visible border border-border/20 bg-background/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px]"
       >
         <CardHeader className="flex-row items-center justify-between gap-4 px-3 py-2.5">
           <div className="flex flex-col gap-0.5">
@@ -83,7 +103,7 @@ export function GlobalHeader({
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
-                {theme === "light" ? (
+                {activeTheme === "light" ? (
                   <Moon data-icon className="size-4" />
                 ) : (
                   <Sun data-icon className="size-4" />
@@ -91,7 +111,7 @@ export function GlobalHeader({
               </Button>
 
               <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-                <SelectTrigger className="h-7 min-w-20 border-border/30 bg-white/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm">
+                <SelectTrigger className="h-7 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm">
                   <div className="flex items-center gap-1.5">
                     <Languages data-icon className="size-3 opacity-60" />
                     <SelectValue placeholder={t("language.label")} />

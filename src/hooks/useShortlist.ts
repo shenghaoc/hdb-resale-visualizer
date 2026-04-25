@@ -6,6 +6,7 @@ import {
   toggleShortlistItem,
 } from "@/lib/shortlist";
 import type { ShortlistItem } from "@/types/data";
+import { safeStorage } from "@/lib/storage";
 
 type InitialShortlistState = {
   items: ShortlistItem[];
@@ -37,7 +38,7 @@ function readInitialShortlist(): InitialShortlistState {
   }
 
   return {
-    items: loadShortlist(window.localStorage),
+    items: loadShortlist(safeStorage),
     shouldClearUrlParam: false,
   };
 }
@@ -58,7 +59,7 @@ export function useShortlist() {
   }, [initialState.shouldClearUrlParam]);
 
   useEffect(() => {
-    saveShortlist(window.localStorage, items);
+    saveShortlist(safeStorage, items);
   }, [items]);
 
   const toggle = useCallback((addressKey: string) => {
