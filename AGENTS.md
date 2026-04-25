@@ -1,5 +1,13 @@
 # AI Agent Instructions
 
+## Authoritative Documentation (.kiro)
+This project follows the **.kiro** workflow. The `.kiro/` folder contains the authoritative source of truth for the current state of the project:
+- **.kiro/requirements.md**: Current product requirements and user stories.
+- **.kiro/design.md**: Technical architecture and component design.
+- **.kiro/tasks.md**: Modular implementation plan and task tracking.
+
+**Agents MUST** read these files before starting any work and update `tasks.md` as they complete phases.
+
 ## Project Summary
 Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction.
 
