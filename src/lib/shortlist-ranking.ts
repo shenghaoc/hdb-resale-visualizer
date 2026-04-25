@@ -31,12 +31,34 @@ export function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: C
     : Math.abs(row.item.targetPrice - row.block.medianPrice);
 }
 
+function comparePrimaryValues(left: number, right: number) {
+  const leftIsFinite = Number.isFinite(left);
+  const rightIsFinite = Number.isFinite(right);
+
+  if (!leftIsFinite && !rightIsFinite) {
+    return 0;
+  }
+
+  if (!leftIsFinite) {
+    return 1;
+  }
+
+  if (!rightIsFinite) {
+    return -1;
+  }
+
+  return left - right;
+}
+
 export function rankShortlistRows<T extends SortableShortlistRow>(
   rows: T[],
   compareMode: CompareMode,
 ) {
   return [...rows].sort((left, right) => {
-    const primary = getPrimaryCompareValue(left, compareMode) - getPrimaryCompareValue(right, compareMode);
+    const primary = comparePrimaryValues(
+      getPrimaryCompareValue(left, compareMode),
+      getPrimaryCompareValue(right, compareMode),
+    );
     if (primary !== 0) {
       return primary;
     }

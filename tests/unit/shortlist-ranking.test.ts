@@ -73,4 +73,52 @@ describe("shortlist ranking", () => {
     const ranked = rankShortlistRows(sampleRows, "mrt");
     expect(ranked.map((row) => row.block.nearestMrt?.distanceMeters)).toEqual([280, 410, 620]);
   });
+
+  it("falls back to deterministic tie-breakers when target gaps are unavailable", () => {
+    const rowsWithoutTargets = [
+      {
+        item: { targetPrice: null },
+        block: {
+          medianPrice: 620000,
+          leaseCommenceRange: [2019, 2019] as [number, number],
+          nearestMrt: { distanceMeters: 320 },
+        },
+      },
+      {
+        item: { targetPrice: null },
+        block: {
+          medianPrice: 540000,
+          leaseCommenceRange: [1995, 1995] as [number, number],
+          nearestMrt: { distanceMeters: 450 },
+        },
+      },
+    ];
+
+    const ranked = rankShortlistRows(rowsWithoutTargets, "target-gap");
+    expect(ranked.map((row) => row.block.medianPrice)).toEqual([540000, 620000]);
+  });
+
+  it("falls back to deterministic tie-breakers when MRT distances are unavailable", () => {
+    const rowsWithoutMrt = [
+      {
+        item: { targetPrice: 700000 },
+        block: {
+          medianPrice: 610000,
+          leaseCommenceRange: [2000, 2000] as [number, number],
+          nearestMrt: null,
+        },
+      },
+      {
+        item: { targetPrice: 700000 },
+        block: {
+          medianPrice: 590000,
+          leaseCommenceRange: [2010, 2010] as [number, number],
+          nearestMrt: null,
+        },
+      },
+    ];
+
+    const ranked = rankShortlistRows(rowsWithoutMrt, "mrt");
+    expect(ranked.map((row) => row.block.medianPrice)).toEqual([590000, 610000]);
+  });
 });

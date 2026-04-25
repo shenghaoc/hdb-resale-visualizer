@@ -555,9 +555,10 @@ async function main() {
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-exits.geojson"), mrtGeoJson);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-stations.geojson"), buildMrtStationsGeoJson(mrtExits));
 
+  const comparisonsDir = path.join(PUBLIC_DATA_DIR, "comparisons");
+  await fs.rm(comparisonsDir, { recursive: true, force: true });
+
   if (artifacts.comparisons) {
-    const comparisonsDir = path.join(PUBLIC_DATA_DIR, "comparisons");
-    await fs.rm(comparisonsDir, { recursive: true, force: true });
     await fs.mkdir(comparisonsDir, { recursive: true });
 
     for (const [addressKey, comparison] of Object.entries(artifacts.comparisons)) {

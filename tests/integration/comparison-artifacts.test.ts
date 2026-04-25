@@ -309,6 +309,120 @@ describe("comparison artifacts", () => {
     expect(betaComparison?.flatType).toBe("4 ROOM");
   });
 
+  it("derives comparison cohort from the latest sorted transaction", () => {
+    const mixedKey = makeAddressKey("ANG MO KIO", "500", "ANG MO KIO AVE 5");
+    const artifacts = buildArtifacts({
+      transactions: [
+        {
+          ...transactions[0],
+          id: "mixed-old",
+          month: "2026-01",
+          flatType: "5 ROOM",
+          block: "500",
+          streetName: "ANG MO KIO AVE 5",
+          floorAreaSqm: 110,
+          resalePrice: 820000,
+          pricePerSqm: 7454.55,
+          pricePerSqft: 692.09,
+          addressKey: mixedKey,
+        },
+        {
+          ...transactions[0],
+          id: "mixed-new",
+          month: "2026-03",
+          flatType: "3 ROOM",
+          block: "500",
+          streetName: "ANG MO KIO AVE 5",
+          resalePrice: 395000,
+          pricePerSqm: 5895.52,
+          pricePerSqft: 547.25,
+          addressKey: mixedKey,
+        },
+        ...transactions,
+      ],
+      propertyInfo: [
+        ...propertyInfo,
+        {
+          addressKey: mixedKey,
+          block: "500",
+          streetName: "ANG MO KIO AVE 5",
+          maxFloorLevel: 12,
+          yearCompleted: 1980,
+          totalDwellingUnits: 120,
+        },
+      ],
+      mrtExits,
+      geocodes: {
+        ...geocodes,
+        [mixedKey]: {
+          lat: 1.3693,
+          lng: 103.8493,
+          postalCode: "560500",
+          displayName: "BLK 500 ANG MO KIO AVE 5",
+          searchValue: "500 ANG MO KIO AVE 5 SINGAPORE",
+        },
+      },
+      schools,
+      hawkers,
+      supermarkets,
+      parks,
+      metadata: {
+        resaleCollectionId: "189",
+        resaleDatasetIds: ["test"],
+        propertyDatasetId: "test-property",
+        mrtDatasetId: "test-mrt",
+        moeSchoolDatasetId: "test-schools",
+        neaHawkerDatasetId: "test-hawkers",
+        sfaSupermarketDatasetId: "test-supermarkets",
+        nparksParksDatasetId: "test-parks",
+        lastUpdatedAt: "2026-04-19T02:10:00+08:00",
+      },
+    });
+
+    expect(artifacts.comparisons?.[mixedKey]?.flatType).toBe("3 ROOM");
+  });
+
+  it("treats missing geocodes as worst-case MRT distance in cohort percentiles", () => {
+    const missingGeocodeKey = makeAddressKey("ANG MO KIO", "999", "ANG MO KIO AVE 9");
+    const artifacts = buildArtifacts({
+      transactions: [
+        transactions[0],
+        {
+          ...transactions[0],
+          id: "missing-geocode",
+          block: "999",
+          streetName: "ANG MO KIO AVE 9",
+          resalePrice: 410000,
+          pricePerSqm: 6119.4,
+          pricePerSqft: 568.51,
+          addressKey: missingGeocodeKey,
+        },
+      ],
+      propertyInfo,
+      mrtExits,
+      geocodes: {
+        [alphaKey]: geocodes[alphaKey],
+      },
+      schools,
+      hawkers,
+      supermarkets,
+      parks,
+      metadata: {
+        resaleCollectionId: "189",
+        resaleDatasetIds: ["test"],
+        propertyDatasetId: "test-property",
+        mrtDatasetId: "test-mrt",
+        moeSchoolDatasetId: "test-schools",
+        neaHawkerDatasetId: "test-hawkers",
+        sfaSupermarketDatasetId: "test-supermarkets",
+        nparksParksDatasetId: "test-parks",
+        lastUpdatedAt: "2026-04-19T02:10:00+08:00",
+      },
+    });
+
+    expect(artifacts.comparisons?.[alphaKey]?.percentileRanks.mrtDistancePercentile).toBe(50);
+  });
+
   it("does not generate comparisons without amenity data", () => {
     const artifacts = buildArtifacts({
       transactions,

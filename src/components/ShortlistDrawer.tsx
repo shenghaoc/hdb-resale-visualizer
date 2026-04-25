@@ -47,6 +47,25 @@ type GapInfo = {
   tone: "positive" | "negative";
 };
 
+const compareModeKeys: Record<CompareMode, { label: string; help: string }> = {
+  "target-gap": {
+    label: "shortlist.compare.targetFit",
+    help: "shortlist.compare.targetFit.help",
+  },
+  median: {
+    label: "shortlist.compare.price",
+    help: "shortlist.compare.price.help",
+  },
+  lease: {
+    label: "shortlist.compare.lease",
+    help: "shortlist.compare.lease.help",
+  },
+  mrt: {
+    label: "shortlist.compare.mrt",
+    help: "shortlist.compare.mrt.help",
+  },
+};
+
 echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
 
 function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | null {
@@ -88,12 +107,6 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
-  const compareModeDescriptionKey: Record<CompareMode, string> = {
-    "target-gap": "shortlist.compare.targetFit.help",
-    median: "shortlist.compare.price.help",
-    lease: "shortlist.compare.lease.help",
-    mrt: "shortlist.compare.mrt.help",
-  };
 
   function getRankingMetricLabel(row: ShortlistRow) {
     if (compareMode === "target-gap") {
@@ -277,22 +290,20 @@ export function ShortlistDrawer({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="target-gap">{t("shortlist.compare.targetFit")}</SelectItem>
-                    <SelectItem value="median">{t("shortlist.compare.price")}</SelectItem>
-                    <SelectItem value="lease">{t("shortlist.compare.lease")}</SelectItem>
-                    <SelectItem value="mrt">{t("shortlist.compare.mrt")}</SelectItem>
+                    <SelectItem value="target-gap">{t(compareModeKeys["target-gap"].label)}</SelectItem>
+                    <SelectItem value="median">{t(compareModeKeys.median.label)}</SelectItem>
+                    <SelectItem value="lease">{t(compareModeKeys.lease.label)}</SelectItem>
+                    <SelectItem value="mrt">{t(compareModeKeys.mrt.label)}</SelectItem>
                   </SelectContent>
                 </Select>
               </Field>
               <div className="flex flex-col gap-1">
                 <p className="text-xs text-muted-foreground">
-                  {t(compareModeDescriptionKey[compareMode])}
+                  {t(compareModeKeys[compareMode].help)}
                 </p>
                 <p className="text-xs text-muted-foreground font-medium">
                   {t("shortlist.compare.currentSort", {
-                    mode: t(
-                      `shortlist.compare.${compareMode === "target-gap" ? "targetFit" : compareMode}`,
-                    ),
+                    mode: t(compareModeKeys[compareMode].label),
                   })}
                 </p>
               </div>
