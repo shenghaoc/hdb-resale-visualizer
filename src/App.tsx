@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { Bookmark, List, PanelLeftClose, PanelLeftOpen, SlidersHorizontal } from "lucide-react";
 import {
   DEFAULT_FILTERS,
@@ -80,6 +80,7 @@ function App() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
+  const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
@@ -353,7 +354,20 @@ function App() {
     };
   }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
 
-  function handleSelectAddress(addressKey: string) {
+  const patchFilters = useCallback((patch: Partial<FilterState>) => {
+    if ("selectedAddressKey" in patch) {
+      setIsDetailLoading(Boolean(patch.selectedAddressKey));
+      if (!patch.selectedAddressKey) {
+        setDetail(null);
+      }
+    }
+
+    startTransition(() => {
+      setFilters((current) => ({ ...current, ...patch }));
+    });
+  }, []);
+
+  const handleSelectAddress = useCallback((addressKey: string) => {
     if (isDesktop) {
       setIsDesktopPanelOpen(true);
       setDesktopTab("results");
@@ -362,7 +376,12 @@ function App() {
     }
 
     patchFilters({ selectedAddressKey: addressKey });
-  }
+  }, [isDesktop, patchFilters]);
+
+  const handleToggleShortlist = useCallback(
+    (addressKey: string) => toggleShortlist(addressKey),
+    [toggleShortlist],
+  );
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
@@ -380,19 +399,6 @@ function App() {
     }
 
     setMobileTab(null);
-  }
-
-  function patchFilters(patch: Partial<FilterState>) {
-    if ("selectedAddressKey" in patch) {
-      setIsDetailLoading(Boolean(patch.selectedAddressKey));
-      if (!patch.selectedAddressKey) {
-        setDetail(null);
-      }
-    }
-
-    startTransition(() => {
-      setFilters((current) => ({ ...current, ...patch }));
-    });
   }
 
   if (error) {
@@ -486,7 +492,7 @@ function App() {
         blocks={filteredBlocks}
         hasTownFilter={!!filters.town || !!filters.search}
         onSelect={handleSelectAddress}
-        onToggleShortlist={(addressKey) => shortlist.toggle(addressKey)}
+        onToggleShortlist={handleToggleShortlist}
         selectedAddressKey={selectedAddressKey}
         shortlistKeys={shortlistKeySet}
         isCompact={!isDesktop}
