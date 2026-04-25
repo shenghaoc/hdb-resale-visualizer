@@ -242,6 +242,7 @@ export function MapView({
     prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const map = new maplibregl.Map({
       container: containerRef.current,
+      attributionControl: false,
       center: [103.8198, 1.3521],
       zoom: 10.2,
       minZoom: 9,

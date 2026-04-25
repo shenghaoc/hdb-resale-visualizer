@@ -83,7 +83,7 @@
   --chart-3: oklch(0.7 0.07 210);
   --chart-4: oklch(0.82 0.06 150);
   --chart-5: oklch(0.67 0.12 30);
-  --radius: 0.625rem;
+  --radius: 0.5rem;
   --sidebar: oklch(0.98 0.005 248);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -149,6 +149,28 @@
   overflow: hidden;
 }
 
+.map-attribution-link {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 30;
+  max-width: min(72vw, 22rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklab, var(--background) 92%, transparent);
+  padding: 0.2rem 0.45rem;
+  font-size: 0.625rem;
+  line-height: 1.2;
+  color: var(--foreground);
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.map-attribution-link:hover {
+  text-decoration: underline;
+}
+
 .map-skeleton,
 .drawer-skeleton {
   position: relative;
@@ -182,37 +204,42 @@
   display: flex;
   align-items: stretch;
   border-top: 1px solid var(--border);
-  background: color-mix(in oklab, var(--background) 85%, transparent);
+  gap: 0.25rem;
+  background: color-mix(in oklab, var(--background) 90%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding: 0.4rem 0.5rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
 }
 
-.mobile-tab-bar button {
+.mobile-tab-bar [data-slot="button"] {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
+  gap: 0.15rem;
+  height: 3.2rem;
+  min-width: 0;
+  border-color: transparent;
+  padding: 0.35rem 0.25rem;
   font-size: 0.625rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--muted-foreground);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color 0.15s;
+  white-space: normal;
 }
 
-.mobile-tab-bar button[data-active="true"] {
+.mobile-tab-bar [data-slot="button"][data-active="true"] {
   color: var(--foreground);
+  border-color: var(--border);
+  background: var(--secondary);
 }
 
-.mobile-tab-bar button svg {
-  width: 20px;
-  height: 20px;
+.mobile-tab-bar [data-slot="button"] > span {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (min-width: 1024px) {
@@ -312,6 +339,10 @@
 }
 
 @media (max-width: 1023px) {
+  .map-attribution-link {
+    bottom: calc(var(--mobile-tab-bar-height) + env(safe-area-inset-bottom, 0px) + 0.45rem);
+  }
+
   .maplibregl-ctrl-bottom-left,
   .maplibregl-ctrl-bottom-right {
     bottom: calc(var(--mobile-tab-bar-height) + env(safe-area-inset-bottom, 0px));
@@ -319,6 +350,7 @@
 
   .maplibregl-ctrl-bottom-right {
     right: 0.5rem;
+    z-index: 30;
   }
 
   .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib,

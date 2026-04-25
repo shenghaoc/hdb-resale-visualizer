@@ -161,7 +161,7 @@ export function DetailDrawer({
     <Drawer open={Boolean(selectedBlock)} onClose={onClose} dismissible={false}>
       <DrawerContent
         data-testid="detail-drawer"
-        className="h-[85vh] sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
+        className="h-full max-h-full sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
         hideHandle={true}
       >
         <div className="flex h-full flex-col overflow-hidden">
@@ -185,7 +185,7 @@ export function DetailDrawer({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+                    className="shrink-0 text-muted-foreground hover:text-foreground"
                     onClick={() => {
                       void navigator.clipboard.writeText(
                         `${currentSummary.block} ${currentSummary.streetName} Singapore`,
@@ -193,7 +193,7 @@ export function DetailDrawer({
                     }}
                     title="Copy address"
                   >
-                    <Copy className="size-4" />
+                    <Copy data-icon />
                   </Button>
                 )}
               </div>

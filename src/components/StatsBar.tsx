@@ -40,7 +40,7 @@ export function GlobalHeader({
     <header data-testid={testId}>
       <Card
         size="sm"
-        className="overflow-visible border border-border/70 bg-gradient-to-br from-background via-background to-muted/40 px-0 py-0 shadow-sm"
+        className="overflow-visible border border-border/70 bg-card/95 px-0 py-0 shadow-sm backdrop-blur-md"
       >
         <CardHeader className="flex-row items-center justify-between gap-4 px-3 py-2">
           <div className="flex flex-col">
@@ -66,7 +66,7 @@ export function GlobalHeader({
               <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
                 <SelectTrigger className="h-8 min-w-24 border-border/50 bg-background/80 px-2 py-0 text-xs shadow-sm">
                   <div className="flex items-center gap-2">
-                    <Languages className="size-3 opacity-60" />
+                    <Languages data-icon className="opacity-60" />
                     <SelectValue placeholder={t("language.label")} />
                   </div>
                 </SelectTrigger>

@@ -87,7 +87,7 @@ const BlockCard = memo(function BlockCard({
         className={cn(
           "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
           isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
-          "h-[86px] min-h-[86px] max-h-[86px] gap-2 px-3 py-2.5",
+          "h-[94px] min-h-[94px] max-h-[94px] gap-2 px-3 py-2.5",
         )}
         onClick={() => onSelect(block.addressKey)}
       >
@@ -265,7 +265,7 @@ export function ResultsPane({
   const [currentPage, setCurrentPage] = useState(1);
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
-  const compactRowHeight = 86;
+  const compactRowHeight = 94;
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
 

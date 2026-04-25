@@ -51,7 +51,7 @@ function DrawerContent({ className, hideHandle = false, children, ...props }: Dr
       aria-modal="false"
       className={cn(
         "flex min-h-0 flex-col overflow-hidden border border-border bg-background shadow-lg outline-none",
-        "rounded-xl",
+        "rounded-lg",
         className,
       )}
       {...props}

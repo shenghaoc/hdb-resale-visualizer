@@ -28,9 +28,11 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { GlobalHeader } from "@/components/StatsBar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const MapView = lazy(() =>
   import("@/components/MapView").then((m) => ({ default: m.MapView })),
@@ -637,8 +639,16 @@ function App() {
     <>
       <main className="relative h-dvh w-full overflow-hidden">
         <div className="absolute inset-0">{mapContent}</div>
+        <a
+          className="map-attribution-link"
+          href="https://www.onemap.gov.sg/home"
+          rel="noreferrer"
+          target="_blank"
+        >
+          © OneMap contributors
+        </a>
 
-        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-4 overflow-hidden p-4 pb-20 lg:p-6 lg:pb-6">
+        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+var(--mobile-map-attrib-height)+env(safe-area-inset-bottom,0px)+1rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
           {isDesktop && (
             <div className="pointer-events-auto absolute left-6 top-6 z-20">
               <Button
@@ -690,50 +700,53 @@ function App() {
             <section className="pointer-events-none relative min-h-0 flex-1">
               <aside
                 id="desktop-panel"
-                className={`pointer-events-auto absolute left-0 top-0 h-full w-[min(46rem,62vw)] max-w-[96vw] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-                  isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"
-                }`}
+                className={cn(
+                  "pointer-events-auto absolute left-0 top-0 h-full w-[min(46rem,62vw)] max-w-[96vw] transition-transform duration-300 ease-out",
+                  isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]",
+                )}
                 {...(!isDesktopPanelOpen && { inert: true })}
               >
-                <Card className="flex h-full min-h-0 flex-col border-border/70 bg-background/88 shadow-sm backdrop-blur-sm">
-                  <CardContent className="flex min-h-0 flex-1 flex-col p-3">
-                    <Tabs
-                      value={desktopTab}
-                      onValueChange={(value) => setDesktopTab(value as DesktopTab)}
-                      className="flex h-full flex-col overflow-hidden"
+                <div className="flex h-full min-h-0 flex-col overflow-hidden border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-md">
+                  <Tabs
+                    value={desktopTab}
+                    onValueChange={(value) => setDesktopTab(value as DesktopTab)}
+                    className="flex h-full flex-col overflow-hidden"
+                  >
+                    <TabsList className="grid w-full shrink-0 grid-cols-3">
+                      <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
+                      <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
+                      <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
+                    </TabsList>
+                    <TabsContent
+                      value="filters"
+                      className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1"
                     >
-                      <TabsList className="grid w-full shrink-0 grid-cols-3">
-                        <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
-                        <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
-                        <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
-                      </TabsList>
-                      <TabsContent
-                        value="filters"
-                        className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1"
-                      >
-                        {filterContent}
-                      </TabsContent>
-                      <TabsContent value="results" className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
-                        <div className="flex min-h-0 flex-1 flex-col gap-4">
-                          {selectedDetailContent}
-                          <div
-                            className={`min-h-0 flex-1 flex-col ${
-                              detailVisible || detailLoading ? "hidden" : "flex"
-                            }`}
-                          >
-                            {resultsPaneContent}
-                          </div>
+                      {filterContent}
+                    </TabsContent>
+                    <TabsContent
+                      value="results"
+                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1"
+                    >
+                      <div className="flex min-h-0 flex-1 flex-col gap-4">
+                        {selectedDetailContent}
+                        <div
+                          className={cn(
+                            "min-h-0 flex-1 flex-col",
+                            detailVisible || detailLoading ? "hidden" : "flex",
+                          )}
+                        >
+                          {resultsPaneContent}
                         </div>
-                      </TabsContent>
-                      <TabsContent
-                        value="saved"
-                        className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden"
-                      >
-                        {savedContent}
-                      </TabsContent>
-                    </Tabs>
-                  </CardContent>
-                </Card>
+                      </div>
+                    </TabsContent>
+                    <TabsContent
+                      value="saved"
+                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden"
+                    >
+                      {savedContent}
+                    </TabsContent>
+                  </Tabs>
+                </div>
               </aside>
             </section>
           ) : (
@@ -741,7 +754,7 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-2 shadow-sm backdrop-blur-sm"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden border border-border/70 bg-background/94 p-2 shadow-sm backdrop-blur-md"
                 >
                   {mobileTab === "filters" && (
                     <div id="mobile-filters-content" className="h-full overflow-y-auto pr-1">{filterContent}</div>
@@ -750,9 +763,10 @@ function App() {
                     <div id="mobile-results-content" className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
                       {selectedDetailContent}
                       <div
-                        className={`min-h-0 flex-1 flex-col ${
-                          detailVisible || detailLoading ? "hidden" : "flex"
-                        }`}
+                        className={cn(
+                          "min-h-0 flex-1 flex-col",
+                          detailVisible || detailLoading ? "hidden" : "flex",
+                        )}
                       >
                         {resultsPaneContent}
                       </div>
@@ -770,38 +784,48 @@ function App() {
 
       {/* Mobile bottom tab bar */}
       {!isDesktop && (
-        <nav className="mobile-tab-bar">
-          <button
+        <nav className="mobile-tab-bar" aria-label={t("app.title")}>
+          <Button
             type="button"
+            variant={mobileTab === "filters" ? "secondary" : "ghost"}
+            size="sm"
             data-active={mobileTab === "filters"}
             aria-expanded={mobileTab === "filters"}
             aria-controls={mobileTab === "filters" ? "mobile-filters-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "filters" ? null : "filters"))}
           >
-            <SlidersHorizontal />
-            {t("tab.filters")}
-          </button>
-          <button
+            <SlidersHorizontal data-icon />
+            <span>{t("tab.filters")}</span>
+          </Button>
+          <Button
             type="button"
+            variant={mobileTab === "results" ? "secondary" : "ghost"}
+            size="sm"
             data-active={mobileTab === "results"}
             aria-expanded={mobileTab === "results"}
             aria-controls={mobileTab === "results" ? "mobile-results-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "results" ? null : "results"))}
           >
-            <List />
-            {t("tab.results")}
-          </button>
-          <button
+            <List data-icon />
+            <span>{t("tab.results")}</span>
+          </Button>
+          <Button
             type="button"
+            variant={mobileTab === "saved" ? "secondary" : "ghost"}
+            size="sm"
             data-active={mobileTab === "saved"}
             aria-expanded={mobileTab === "saved"}
             aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
-            <Bookmark />
-            {t("tab.saved")}
-            {shortlist.items.length > 0 ? ` (${shortlist.items.length})` : ""}
-          </button>
+            <Bookmark data-icon className={mobileTab === "saved" ? "fill-current" : ""} />
+            <span>{t("tab.saved")}</span>
+            {shortlist.items.length > 0 ? (
+              <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
+                {shortlist.items.length}
+              </Badge>
+            ) : null}
+          </Button>
         </nav>
       )}
     </>
