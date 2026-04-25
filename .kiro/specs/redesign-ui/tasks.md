@@ -35,3 +35,6 @@
 - [x] **Task 14: Geolocate Integration**: Add a Geolocate control to the map UI with custom styling.
 - [x] **Task 15: Copy All Summary**: Implement a "Copy All" button in `ShortlistDrawer` that formats the entire shortlist as a Markdown table for easy sharing.
 - [x] **Task 16: Shortlist Market Badges**: Add tiny "Price Rank" and "MRT Rank" badges to the Shortlist cards for immediate side-by-side ranking comparison.
+
+## Phase 7: Mobile Viewport Stability Hotfixes
+- [x] Pin the app shell to viewport bounds so mobile browser zoom/tilt/resize cannot expose background gaps between map content and the bottom tab bar.

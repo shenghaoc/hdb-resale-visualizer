@@ -637,7 +637,7 @@ function App() {
 
   return (
     <>
-      <main className="relative h-dvh w-full overflow-hidden">
+      <main className="fixed inset-0 w-full overflow-hidden">
         <div className="absolute inset-0">{mapContent}</div>
         <a
           className="map-attribution-link"
