@@ -518,6 +518,7 @@ function App() {
                 className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 aria-expanded={isDesktopPanelOpen}
+                aria-controls="desktop-panel"
               >
                 {isDesktopPanelOpen ? (
                   <PanelLeftClose className="size-4" />
@@ -545,9 +546,11 @@ function App() {
           {isDesktop ? (
             <section className="pointer-events-none relative min-h-0 flex-1">
               <aside
+                id="desktop-panel"
                 className={`pointer-events-auto absolute left-0 top-0 h-full w-[min(34rem,48vw)] max-w-[96vw] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
                   isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]"
                 }`}
+                {...(!isDesktopPanelOpen && { inert: true })}
               >
                 <Card className="flex h-full min-h-0 flex-col border-border/70 bg-background/88 shadow-sm backdrop-blur-sm">
                   <CardContent className="flex min-h-0 flex-1 flex-col p-3">
@@ -593,12 +596,15 @@ function App() {
           ) : (
             <section className="pointer-events-none relative min-h-0 flex-1">
               {mobileTab && (
-                <div className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm">
+                <div 
+                  id="mobile-panel"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm"
+                >
                   {mobileTab === "filters" && (
-                    <div className="h-full overflow-y-auto pr-1">{filterContent}</div>
+                    <div id="mobile-filters-content" className="h-full overflow-y-auto pr-1">{filterContent}</div>
                   )}
                   {mobileTab === "results" && (
-                    <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
+                    <div id="mobile-results-content" className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
                       {selectedDetailContent}
                       <div
                         className={`min-h-0 flex-1 flex-col ${
@@ -610,7 +616,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div className="h-full min-h-0 overflow-hidden">{savedContent}</div>
+                    <div id="mobile-saved-content" className="h-full min-h-0 overflow-hidden">{savedContent}</div>
                   )}
                 </div>
               )}
@@ -626,6 +632,7 @@ function App() {
             type="button"
             data-active={mobileTab === "filters"}
             aria-expanded={mobileTab === "filters"}
+            aria-controls="mobile-filters-content"
             onClick={() => setMobileTab((current) => (current === "filters" ? null : "filters"))}
           >
             <SlidersHorizontal />
@@ -635,6 +642,7 @@ function App() {
             type="button"
             data-active={mobileTab === "results"}
             aria-expanded={mobileTab === "results"}
+            aria-controls="mobile-results-content"
             onClick={() => setMobileTab((current) => (current === "results" ? null : "results"))}
           >
             <List />
@@ -644,6 +652,7 @@ function App() {
             type="button"
             data-active={mobileTab === "saved"}
             aria-expanded={mobileTab === "saved"}
+            aria-controls="mobile-saved-content"
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
             <Bookmark />
