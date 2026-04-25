@@ -225,9 +225,15 @@ function App() {
       ),
     [blocks, mapFilters.mrtMax, mapFilters.search],
   );
+  const hasResultScope = Boolean(
+    filters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
+  );
+  const hasMapMarkerScope = Boolean(
+    mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
+  );
   const filteredBlocks = useMemo(
     () =>
-      resultsVisible
+      resultsVisible && hasResultScope
         ? blocks.filter((block) => {
             if (!matchesFilter(block, stableFilters, geographicIntent)) {
               return false;
@@ -237,20 +243,31 @@ function App() {
               : true;
           })
         : [],
-    [blocks, geographicIntent, resultsVisible, stableFilters],
+    [blocks, geographicIntent, hasResultScope, resultsVisible, stableFilters],
   );
-  const mapFilteredBlocks = useMemo(
-    () =>
-      blocks.filter((block) => {
+  const mapFilteredBlocks = useMemo(() => {
+    const scopedBlocks = hasMapMarkerScope
+      ? blocks.filter((block) => {
         if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
           return false;
         }
         return mapGeographicIntent
           ? matchesGeographicSearchIntent(block, mapGeographicIntent)
           : true;
-      }),
-    [blocks, mapFilters, mapGeographicIntent],
-  );
+      })
+      : [];
+
+    if (!selectedAddressKey) {
+      return scopedBlocks;
+    }
+
+    if (scopedBlocks.some((block) => block.addressKey === selectedAddressKey)) {
+      return scopedBlocks;
+    }
+
+    const selected = getSelectionByAddressKey(blocks, selectedAddressKey);
+    return selected ? [...scopedBlocks, selected] : scopedBlocks;
+  }, [blocks, hasMapMarkerScope, mapFilters, mapGeographicIntent, selectedAddressKey]);
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
     [shortlist.items],
@@ -462,8 +479,11 @@ function App() {
         autoFitKey={
           mapGeographicIntent
             ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
+            : mapFilters.search.trim()
+              ? `search:${mapFilters.search.trim().toLowerCase()}`
             : null
         }
+        showBlockMarkers={hasMapMarkerScope}
         onMapInteract={handleMapInteract}
         t={t}
       />
@@ -492,7 +512,7 @@ function App() {
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
       <ResultsPane
         blocks={filteredBlocks}
-        hasTownFilter={!!filters.town || !!filters.search}
+        hasResultScope={hasResultScope}
         onSelect={handleSelectAddress}
         onToggleShortlist={handleToggleShortlist}
         selectedAddressKey={selectedAddressKey}

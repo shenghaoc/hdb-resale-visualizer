@@ -117,6 +117,10 @@ export function buildFixtureArtifacts() {
     propertyInfo: fixturePropertyInfo,
     mrtExits: fixtureMrtExits,
     geocodes: fixtureGeocodes,
+    schools: undefined,
+    hawkers: undefined,
+    supermarkets: undefined,
+    parks: undefined,
     metadata: {
       resaleCollectionId: "189",
       resaleDatasetIds: ["fixture"],

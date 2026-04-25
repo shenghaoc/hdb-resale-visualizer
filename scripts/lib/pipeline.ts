@@ -3,6 +3,7 @@ import type {
   AddressDetailSummary,
   AddressDetailTransaction,
   BlockSummary,
+  ComparisonArtifact,
   Manifest,
   TownFlatTypeTrendPoint,
 } from "@/types/data";
@@ -80,7 +81,23 @@ export type BuildArtifactsInput = {
   propertyInfo: PropertyInfo[];
   mrtExits: MrtExit[];
   geocodes: Record<string, GeocodeEntry>;
+  schools?: SchoolLocation[];
+  hawkers?: AmenityLocation[];
+  supermarkets?: AmenityLocation[];
+  parks?: AmenityLocation[];
   metadata: Manifest["sources"];
+};
+
+export type SchoolLocation = {
+  name: string;
+  lat: number;
+  lng: number;
+};
+
+export type AmenityLocation = {
+  name: string;
+  lat: number;
+  lng: number;
 };
 
 export type GeneratedArtifacts = {
@@ -88,6 +105,7 @@ export type GeneratedArtifacts = {
   blockSummaries: BlockSummary[];
   details: Record<string, AddressDetail>;
   townFlatTypeTrend: TownFlatTypeTrendPoint[];
+  comparisons?: Record<string, ComparisonArtifact>;
 };
 
 export function normalizeText(value: string): string {
@@ -176,6 +194,46 @@ function getModeYear(values: number[]) {
   }
 
   return mode;
+}
+
+function countAmenitiesWithinDistance(
+  amenities: AmenityLocation[],
+  blockCoords: { lat: number; lng: number },
+  distanceMeters: number,
+): number {
+  return amenities.filter((amenity) => {
+    const distance = haversineDistanceMeters(blockCoords, { lat: amenity.lat, lng: amenity.lng });
+    return distance <= distanceMeters;
+  }).length;
+}
+
+function findNearestAmenity(
+  amenities: AmenityLocation[],
+  blockCoords: { lat: number; lng: number },
+): number | null {
+  if (amenities.length === 0) {
+    return null;
+  }
+
+  let minDistance = Infinity;
+  for (const amenity of amenities) {
+    const distance = haversineDistanceMeters(blockCoords, { lat: amenity.lat, lng: amenity.lng });
+    if (distance < minDistance) {
+      minDistance = distance;
+    }
+  }
+
+  return minDistance === Infinity ? null : Math.round(minDistance);
+}
+
+function calculatePercentile(value: number, values: number[]): number {
+  if (values.length === 0) {
+    return 50;
+  }
+
+  const sorted = [...values].sort((a, b) => a - b);
+  const count = sorted.filter((v) => v <= value).length;
+  return Math.round((count / sorted.length) * 100);
 }
 
 function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | null | undefined) {
@@ -281,6 +339,10 @@ export function buildArtifacts({
   propertyInfo,
   mrtExits,
   geocodes,
+  schools,
+  hawkers,
+  supermarkets,
+  parks,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
   const grouped = new Map<string, ResaleTransaction[]>();
@@ -458,6 +520,162 @@ export function buildArtifacts({
   });
   const filterOptions = buildFilterOptions(blockSummaries);
 
+  // Generate comparison artifacts if amenity data is available
+  const comparisons: Record<string, ComparisonArtifact> = {};
+  const schoolsData: AmenityLocation[] = schools ?? [];
+  const hawkersData: AmenityLocation[] = hawkers ?? [];
+  const supermarketsData: AmenityLocation[] = supermarkets ?? [];
+  const parksData: AmenityLocation[] = parks ?? [];
+  const hasAmenityData =
+    schoolsData.length > 0 ||
+    hawkersData.length > 0 ||
+    supermarketsData.length > 0 ||
+    parksData.length > 0;
+
+  if (hasAmenityData) {
+    // Group transactions by town and flat type for percentile calculation
+    const townFlatTypeMetrics = new Map<
+      string,
+      {
+        prices: number[];
+        pricesPerSqm: number[];
+        leases: number[];
+        mrtDistances: number[];
+        transactionCounts: number[];
+        recencies: number[];
+      }
+    >();
+
+    for (const [addressKey, blockTransactions] of grouped.entries()) {
+      const latest = blockTransactions[0];
+      if (!latest) continue;
+
+      const key = `${latest.town}__${latest.flatType}`;
+      const metrics = townFlatTypeMetrics.get(key) ?? {
+        prices: [],
+        pricesPerSqm: [],
+        leases: [],
+        mrtDistances: [],
+        transactionCounts: [],
+        recencies: [],
+      };
+
+      const sortedTransactions = [...blockTransactions].sort((left, right) =>
+        right.month.localeCompare(left.month),
+      );
+      const summaryWindow = sortedTransactions.filter(
+        (transaction) => transaction.month >= recentThreshold,
+      );
+      const sourceWindow = summaryWindow.length > 0 ? summaryWindow : sortedTransactions;
+
+      metrics.prices.push(median(sourceWindow.map((t) => t.resalePrice)));
+      metrics.pricesPerSqm.push(median(sourceWindow.map((t) => t.pricePerSqm)));
+      metrics.leases.push(sortedTransactions[0].leaseCommenceDate);
+
+      const geocode = geocodes[addressKey];
+      if (geocode) {
+        let minMrtDistance = Infinity;
+        for (const exit of mrtExits) {
+          const distance = haversineDistanceMeters(
+            { lat: geocode.lat, lng: geocode.lng },
+            { lat: exit.lat, lng: exit.lng },
+          );
+          minMrtDistance = Math.min(minMrtDistance, distance);
+        }
+        metrics.mrtDistances.push(minMrtDistance === Infinity ? 0 : minMrtDistance);
+      }
+
+      metrics.transactionCounts.push(sourceWindow.length);
+
+      // Calculate recency as months since latest transaction
+      const latestMonth = sortedTransactions[0].month;
+      const maxMonthDate = new Date(maxMonth + "-01");
+      const latestMonthDate = new Date(latestMonth + "-01");
+      const monthsDiff = Math.max(
+        0,
+        (maxMonthDate.getFullYear() - latestMonthDate.getFullYear()) * 12 +
+          (maxMonthDate.getMonth() - latestMonthDate.getMonth()),
+      );
+      metrics.recencies.push(monthsDiff);
+
+      townFlatTypeMetrics.set(key, metrics);
+    }
+
+    // Generate comparison artifacts
+    for (const [addressKey, blockTransactions] of grouped.entries()) {
+      const latest = blockTransactions[0];
+      if (!latest) continue;
+
+      const geocode = geocodes[addressKey];
+      if (!geocode) continue;
+
+      const key = `${latest.town}__${latest.flatType}`;
+      const metrics = townFlatTypeMetrics.get(key);
+      if (!metrics) continue;
+
+      const sortedTransactions = [...blockTransactions].sort((left, right) =>
+        right.month.localeCompare(left.month),
+      );
+      const summaryWindow = sortedTransactions.filter(
+        (transaction) => transaction.month >= recentThreshold,
+      );
+      const sourceWindow = summaryWindow.length > 0 ? summaryWindow : sortedTransactions;
+
+      const medianPrice = median(sourceWindow.map((t) => t.resalePrice));
+      const medianPricePerSqm = median(sourceWindow.map((t) => t.pricePerSqm));
+      const leaseYear = sortedTransactions[0].leaseCommenceDate;
+
+      let minMrtDistance = Infinity;
+      for (const exit of mrtExits) {
+        const distance = haversineDistanceMeters(
+          { lat: geocode.lat, lng: geocode.lng },
+          { lat: exit.lat, lng: exit.lng },
+        );
+        minMrtDistance = Math.min(minMrtDistance, distance);
+      }
+
+      const transactionCount = sourceWindow.length;
+      const latestMonth = sortedTransactions[0].month;
+      const maxMonthDate = new Date(maxMonth + "-01");
+      const latestMonthDate = new Date(latestMonth + "-01");
+      const monthsDiff = Math.max(
+        0,
+        (maxMonthDate.getFullYear() - latestMonthDate.getFullYear()) * 12 +
+          (maxMonthDate.getMonth() - latestMonthDate.getMonth()),
+      );
+
+      const amenities = {
+        primarySchoolsWithin1km: countAmenitiesWithinDistance(schoolsData, geocode, 1000),
+        primarySchoolsWithin2km: countAmenitiesWithinDistance(schoolsData, geocode, 2000),
+        nearestPrimarySchoolMeters: findNearestAmenity(schoolsData, geocode),
+        hawkerCentresWithin1km: countAmenitiesWithinDistance(hawkersData, geocode, 1000),
+        nearestHawkerCentreMeters: findNearestAmenity(hawkersData, geocode),
+        supermarketsWithin1km: countAmenitiesWithinDistance(supermarketsData, geocode, 1000),
+        nearestSupermarketMeters: findNearestAmenity(supermarketsData, geocode),
+        parksWithin1km: countAmenitiesWithinDistance(parksData, geocode, 1000),
+        nearestParkMeters: findNearestAmenity(parksData, geocode),
+      };
+
+      const percentileRanks = {
+        pricePercentile: calculatePercentile(medianPrice, metrics.prices),
+        pricePerSqmPercentile: calculatePercentile(medianPricePerSqm, metrics.pricesPerSqm),
+        leasePercentile: calculatePercentile(leaseYear, metrics.leases),
+        mrtDistancePercentile: 100 - calculatePercentile(minMrtDistance, metrics.mrtDistances),
+        transactionCountPercentile: calculatePercentile(transactionCount, metrics.transactionCounts),
+        recencyPercentile: 100 - calculatePercentile(monthsDiff, metrics.recencies),
+      };
+
+      comparisons[addressKey] = {
+        addressKey,
+        town: latest.town,
+        flatType: latest.flatType,
+        amenities,
+        percentileRanks,
+        generatedAt: new Date().toISOString(),
+      };
+    }
+  }
+
   const manifest: Manifest = {
     schemaVersion: "2.0.0",
     generatedAt: new Date().toISOString(),
@@ -472,6 +690,7 @@ export function buildArtifacts({
       transactions: transactions.length,
       towns: filterOptions.towns.length,
       mrtStations: new Set(mrtExits.map((exit) => exit.stationName)).size,
+      comparisons: Object.keys(comparisons).length,
     },
   };
 
@@ -480,5 +699,6 @@ export function buildArtifacts({
     blockSummaries,
     details,
     townFlatTypeTrend,
+    comparisons: Object.keys(comparisons).length > 0 ? comparisons : undefined,
   };
 }

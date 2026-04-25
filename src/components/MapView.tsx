@@ -21,6 +21,7 @@ type MapViewProps = {
   selectedAddressKey: string | null;
   townFilter?: string | null;
   autoFitKey?: string | null;
+  showBlockMarkers?: boolean;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
   t: Translator;
@@ -195,6 +196,7 @@ export function MapView({
   selectedAddressKey,
   townFilter,
   autoFitKey,
+  showBlockMarkers = false,
   onSelect,
   onMapInteract,
   t,
@@ -215,7 +217,8 @@ export function MapView({
 
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
-  const shouldShowTownBubbles = Boolean(debouncedTownFilter);
+  const debouncedShowBlockMarkers = useDebouncedValue(showBlockMarkers, 200);
+  const shouldShowBlockMarkers = Boolean(debouncedShowBlockMarkers);
 
   // Keep callbacks and t refs fresh without triggering map recreation
   useEffect(() => {
@@ -768,7 +771,7 @@ export function MapView({
     }
 
     const applyVisibility = () => {
-      const visibility = shouldShowTownBubbles ? "visible" : "none";
+      const visibility = shouldShowBlockMarkers ? "visible" : "none";
       for (const layerId of ["clusters", "cluster-count", "unclustered-point"]) {
         if (map.getLayer(layerId)) {
           map.setLayoutProperty(layerId, "visibility", visibility);
@@ -782,7 +785,7 @@ export function MapView({
     }
 
     void map.once("load", applyVisibility);
-  }, [shouldShowTownBubbles]);
+  }, [shouldShowBlockMarkers]);
 
   // Update the GeoJSON source data when blocks change
   useEffect(() => {

@@ -59,3 +59,24 @@ export const oneMapResponseSchema = z.object({
     )
     .default([]),
 });
+
+export const schoolRowSchema = z.object({
+  school_name: z.string(),
+  postal_code: z.string().optional(),
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
+});
+
+export const geoJsonFeatureSchema = z.object({
+  type: z.literal("Feature"),
+  geometry: z.object({
+    type: z.literal("Point"),
+    coordinates: z.tuple([z.number(), z.number()]),
+  }),
+  properties: z.record(z.string(), z.unknown()),
+});
+
+export const geoJsonCollectionSchema = z.object({
+  type: z.literal("FeatureCollection"),
+  features: z.array(geoJsonFeatureSchema),
+});

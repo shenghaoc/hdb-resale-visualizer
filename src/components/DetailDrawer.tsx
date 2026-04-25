@@ -3,17 +3,13 @@ import {
   Bookmark,
   Clock3,
   Coins,
-  Compass,
-  GraduationCap,
   History,
   Info,
   MapPin,
   Maximize2,
-  Store,
   Table,
   TrainFront,
   TrendingUp,
-  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
@@ -242,75 +238,23 @@ export function DetailDrawer({
                           ))}
                         </div>
                       </div>
-	                      <div className="flex items-center justify-between p-4">
-	                        <span className="text-sm font-medium text-muted-foreground">
-	                          {t("filters.floorAreaRange")}
-	                        </span>
-	                        <span className="font-heading text-sm font-bold">
-	                          {currentSummary
-	                            ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
-	                                currentSummary.floorAreaRange[1],
-	                              )} ${t("unit.sqm", { value: "" }).trim()}`
-	                            : "..."}
-	                        </span>
-	                      </div>
-	                      <div className="flex items-center justify-between p-4">
-	                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-	                          <Compass className="size-3.5" />
-	                          Orientation
-	                        </span>
-	                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
-	                          Pipeline coming soon
-	                        </Badge>
-	                      </div>
-	                      <div className="flex items-center justify-between p-4">
-	                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-	                          <Users className="size-3.5" />
-	                          EIP Quota Status
-	                        </span>
-	                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
-	                          Pipeline coming soon
-	                        </Badge>
-	                      </div>
-	                    </CardContent>
-	                  </Card>
-	                </section>
+                      <div className="flex items-center justify-between p-4">
+                        <span className="text-sm font-medium text-muted-foreground">
+                          {t("filters.floorAreaRange")}
+                        </span>
+                        <span className="font-heading text-sm font-bold">
+                          {currentSummary
+                            ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
+                                currentSummary.floorAreaRange[1],
+                              )} ${t("unit.sqm", { value: "" }).trim()}`
+                            : "..."}
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </section>
 
-                        {/* Environment & Amenities */}
-                        <section>
-                        <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
-                        <MapPin className="size-4" />
-                        Environment & Amenities
-                        </h3>
-                        <div className="grid gap-4 sm:grid-cols-2">
-                        <Card className="border-border/40 bg-muted/20 shadow-none">
-                        <CardHeader className="p-4 pb-2">
-                          <CardDescription className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em]">
-                            <GraduationCap className="size-3.5 text-primary/70" />
-                            Primary Schools
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="p-4 pt-0">
-                          <p className="text-xs italic text-muted-foreground/60">
-                            Data pipeline for 1km/2km school proximity is coming soon.
-                          </p>
-                        </CardContent>
-                        </Card>
-                        <Card className="border-border/40 bg-muted/20 shadow-none">
-                        <CardHeader className="p-4 pb-2">
-                          <CardDescription className="flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em]">
-                            <Store className="size-3.5 text-primary/70" />
-                            Local Amenities
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="p-4 pt-0">
-                          <p className="text-xs italic text-muted-foreground/60">
-                            Data pipeline for nearby markets and hawkers is coming soon.
-                          </p>
-                        </CardContent>
-                        </Card>
-                        </div>
-                        </section>
+
 
               </TabsContent>
 

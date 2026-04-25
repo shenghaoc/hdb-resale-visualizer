@@ -6,7 +6,7 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
   await expect(page.getByTestId("global-header")).toBeVisible();
   await expect(page.getByTestId("map-view")).toBeVisible();
 
-  await page.getByPlaceholder("e.g. 447 or Bedok Reservoir").fill("BEDOK");
+  await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
   const resultsTab = page.getByRole("tab", { name: "Results" });
   const savedTab = page.getByRole("tab", { name: "Saved" });
@@ -38,7 +38,7 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await page.goto("/");
 
   await page.getByRole("button", { name: "Filters" }).click();
-  await page.getByPlaceholder("e.g. 447 or Bedok Reservoir").fill("BEDOK");
+  await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
   const resultsButton = page.getByRole("button", { name: "Results" });

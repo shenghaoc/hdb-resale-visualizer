@@ -86,6 +86,10 @@ export type Manifest = {
     resaleDatasetIds: string[];
     propertyDatasetId: string;
     mrtDatasetId: string;
+    moeSchoolDatasetId?: string;
+    neaHawkerDatasetId?: string;
+    sfaSupermarketDatasetId?: string;
+    nparksParksDatasetId?: string;
     lastUpdatedAt: string;
   };
   filterOptions: FilterOptions;
@@ -94,6 +98,7 @@ export type Manifest = {
     transactions: number;
     towns: number;
     mrtStations: number;
+    comparisons?: number;
   };
 };
 
@@ -118,4 +123,34 @@ export type ShortlistItem = {
   notes: string;
   targetPrice: number | null;
   addedAt: string;
+};
+
+export type AmenityComparison = {
+  primarySchoolsWithin1km: number;
+  primarySchoolsWithin2km: number;
+  nearestPrimarySchoolMeters: number | null;
+  hawkerCentresWithin1km: number;
+  nearestHawkerCentreMeters: number | null;
+  supermarketsWithin1km: number;
+  nearestSupermarketMeters: number | null;
+  parksWithin1km: number;
+  nearestParkMeters: number | null;
+};
+
+export type PercentileRanks = {
+  pricePercentile: number;
+  pricePerSqmPercentile: number;
+  leasePercentile: number;
+  mrtDistancePercentile: number;
+  transactionCountPercentile: number;
+  recencyPercentile: number;
+};
+
+export type ComparisonArtifact = {
+  addressKey: string;
+  town: string;
+  flatType: string;
+  amenities: AmenityComparison;
+  percentileRanks: PercentileRanks;
+  generatedAt: string;
 };

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Papa from "papaparse";
-import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema } from "./lib/schemas";
+import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
 import {
   buildMrtStationsGeoJson,
   buildArtifacts,
@@ -23,6 +23,10 @@ const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
 const RESALE_COLLECTION_ID = "189";
 const PROPERTY_DATASET_ID = "d_17f5382f26140b1fdae0ba2ef6239d2f";
 const MRT_DATASET_ID = "d_b39d3a0871985372d7e1637193335da5";
+const MOE_SCHOOL_DATASET_ID = "d_688b934f82c1059ed0a6993d2a829089";
+const NEA_HAWKER_DATASET_ID = "d_4a086da0a5553be1d89383cd90d07ecd";
+const SFA_SUPERMARKET_DATASET_ID = "d_cac2c32f01960a3ad7202a99c27268a0";
+const NPARKS_PARKS_DATASET_ID = "d_0542d48f0991541706b58059381a6eca";
 const ONEMAP_SEARCH_ENDPOINT =
   process.env.ONEMAP_SEARCH_ENDPOINT ??
   "https://www.onemap.gov.sg/api/common/elastic/search";
@@ -290,6 +294,86 @@ function normalizeMrtFeatures(geoJson: RawGeoJson): MrtExit[] {
     }));
 }
 
+async function normalizeSchoolRows(
+  rows: Record<string, string>[],
+  geocodeCache: GeocodeCacheFile,
+  options: { skipGeocoding: boolean },
+) {
+  const schools: Array<{ name: string; lat: number; lng: number }> = [];
+
+  for (const row of rows) {
+    const parsed = schoolRowSchema.safeParse(row);
+    if (!parsed.success) {
+      continue;
+    }
+
+    const schoolName = parsed.data.school_name.trim();
+    const lat = parsed.data.latitude ? Number(parsed.data.latitude) : null;
+    const lng = parsed.data.longitude ? Number(parsed.data.longitude) : null;
+
+    if (lat !== null && lng !== null && Number.isFinite(lat) && Number.isFinite(lng)) {
+      schools.push({ name: schoolName, lat, lng });
+      continue;
+    }
+
+    const postalCode = parsed.data.postal_code?.trim();
+    const cacheKey = `school:${normalizeText(schoolName)}${postalCode ? `:${postalCode}` : ""}`;
+    const cached = geocodeCache.entries[cacheKey];
+    if (cached) {
+      schools.push({ name: schoolName, lat: cached.lat, lng: cached.lng });
+      continue;
+    }
+
+    if (options.skipGeocoding) {
+      continue;
+    }
+
+    const searchValue = postalCode
+      ? `${postalCode} SINGAPORE`
+      : `${schoolName} SINGAPORE`;
+
+    try {
+      const geocode = await geocodeAddress(searchValue);
+      if (!geocode) {
+        continue;
+      }
+
+      geocodeCache.entries[cacheKey] = geocode;
+      schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng });
+      await sleep(300);
+    } catch (error) {
+      console.warn(
+        `School geocode failed for ${schoolName}: ${
+          error instanceof Error ? error.message : "unknown error"
+        }`,
+      );
+    }
+  }
+
+  return schools;
+}
+
+function normalizeAmenityGeoJson(geoJson: RawGeoJson): Array<{ name: string; lat: number; lng: number }> {
+  return geoJson.features
+    .map((feature) => {
+      const parsed = geoJsonFeatureSchema.safeParse(feature);
+      if (!parsed.success) {
+        return null;
+      }
+
+      const coords = parsed.data.geometry.coordinates;
+      const props = parsed.data.properties;
+      const name = (props.NAME ?? props.name ?? "Unknown") as string;
+
+      return {
+        name: String(name),
+        lat: coords[1],
+        lng: coords[0],
+      };
+    })
+    .filter((item): item is { name: string; lat: number; lng: number } => item !== null);
+}
+
 async function writeJson(filePath: string, value: unknown) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, JSON.stringify(value, null, 2));
@@ -305,6 +389,8 @@ async function main() {
   const force = process.argv.includes("--force");
   const skipGeocoding =
     process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
+  const skipAmenities =
+    process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
   await ensureDirectories();
 
   const resaleCollection = await fetchCollectionMetadata();
@@ -341,8 +427,43 @@ async function main() {
     transactions,
   );
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
-
   const geocodeCache = await loadGeocodeCache();
+
+  // Fetch amenity data if not skipped
+  let schools: Array<{ name: string; lat: number; lng: number }> | undefined;
+  let hawkers: Array<{ name: string; lat: number; lng: number }> | undefined;
+  let supermarkets: Array<{ name: string; lat: number; lng: number }> | undefined;
+  let parks: Array<{ name: string; lat: number; lng: number }> | undefined;
+
+  if (!skipAmenities) {
+    try {
+      console.log("Fetching amenity data...");
+      const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
+      await sleep(2600);
+      schools = await normalizeSchoolRows(schoolRows, geocodeCache, { skipGeocoding });
+
+      const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
+      await sleep(2600);
+      hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
+
+      const supermarketGeoJson = await fetchGeoJson(SFA_SUPERMARKET_DATASET_ID);
+      await sleep(2600);
+      supermarkets = normalizeAmenityGeoJson(supermarketGeoJson);
+
+      const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
+      await sleep(2600);
+      parks = normalizeAmenityGeoJson(parksGeoJson);
+
+      console.log(
+        `Loaded ${schools.length} schools, ${hawkers.length} hawkers, ${supermarkets.length} supermarkets, ${parks.length} parks.`,
+      );
+    } catch (error) {
+      console.warn(
+        `Failed to fetch amenity data: ${error instanceof Error ? error.message : "unknown error"}. Continuing without amenities.`,
+      );
+    }
+  }
+
   const uniqueAddresses = new Map(
     transactions.map((transaction) => [
       transaction.addressKey,
@@ -411,11 +532,19 @@ async function main() {
     propertyInfo,
     mrtExits,
     geocodes: geocodeCache.entries,
+    schools,
+    hawkers,
+    supermarkets,
+    parks,
     metadata: {
       resaleCollectionId: RESALE_COLLECTION_ID,
       resaleDatasetIds: resaleCollection.childDatasets,
       propertyDatasetId: PROPERTY_DATASET_ID,
       mrtDatasetId: MRT_DATASET_ID,
+      moeSchoolDatasetId: MOE_SCHOOL_DATASET_ID,
+      neaHawkerDatasetId: NEA_HAWKER_DATASET_ID,
+      sfaSupermarketDatasetId: SFA_SUPERMARKET_DATASET_ID,
+      nparksParksDatasetId: NPARKS_PARKS_DATASET_ID,
       lastUpdatedAt: resaleCollection.lastUpdatedAt,
     },
   });
@@ -425,6 +554,18 @@ async function main() {
   await writeJson(path.join(TRENDS_DIR, "town-flat-type.json"), artifacts.townFlatTypeTrend);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-exits.geojson"), mrtGeoJson);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-stations.geojson"), buildMrtStationsGeoJson(mrtExits));
+
+  if (artifacts.comparisons) {
+    const comparisonsDir = path.join(PUBLIC_DATA_DIR, "comparisons");
+    await fs.rm(comparisonsDir, { recursive: true, force: true });
+    await fs.mkdir(comparisonsDir, { recursive: true });
+
+    for (const [addressKey, comparison] of Object.entries(artifacts.comparisons)) {
+      await writeJson(path.join(comparisonsDir, `${addressKey}.json`), comparison);
+    }
+
+    console.log(`Generated ${Object.keys(artifacts.comparisons).length} comparison artifacts.`);
+  }
 
   await fs.rm(DETAILS_DIR, { recursive: true, force: true });
   await fs.mkdir(DETAILS_DIR, { recursive: true });

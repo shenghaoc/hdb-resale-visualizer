@@ -31,7 +31,7 @@ import {
 
 type ResultsPaneProps = {
   blocks: BlockSummary[];
-  hasTownFilter: boolean;
+  hasResultScope: boolean;
   selectedAddressKey: string | null;
   shortlistKeys: Set<string>;
   onSelect: (addressKey: string) => void;
@@ -243,7 +243,7 @@ const BlockCard = memo(function BlockCard({
 
 export function ResultsPane({
   blocks,
-  hasTownFilter,
+  hasResultScope,
   selectedAddressKey,
   shortlistKeys,
   onSelect,
@@ -277,7 +277,7 @@ export function ResultsPane({
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
-    if (!isCompact || !hasTownFilter) {
+    if (!isCompact || !hasResultScope) {
       return;
     }
 
@@ -308,7 +308,7 @@ export function ResultsPane({
       scroller.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateViewport);
     };
-  }, [hasTownFilter, isCompact, scrollParent, sortedBlocks.length]);
+  }, [hasResultScope, isCompact, scrollParent, sortedBlocks.length]);
 
   const [prevBlocks, setPrevBlocks] = useState(blocks);
   if (blocks !== prevBlocks) {
@@ -398,8 +398,8 @@ export function ResultsPane({
               <CardTitle className="text-2xl">{t("results.filteredBlocks")}</CardTitle>
             </div>
             <CardAction className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
-              {hasTownFilter ? <Badge>{t("results.shown", { count: blocks.length })}</Badge> : null}
-              {hasTownFilter ? (
+              {hasResultScope ? <Badge>{t("results.shown", { count: blocks.length })}</Badge> : null}
+              {hasResultScope ? (
                 <div className="flex min-w-[14rem] items-center gap-3">
                   <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     <ArrowUpDown className="size-3.5" />
@@ -429,7 +429,7 @@ export function ResultsPane({
           </div>
         </CardHeader>
         <CardContent className="flex min-h-0 flex-1 flex-col pt-4">
-          {!hasTownFilter ? (
+          {!hasResultScope ? (
             <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
               <ArrowUpDown className="size-6 opacity-40" />
               <p className="text-sm font-medium">{t("results.selectTown")}</p>
