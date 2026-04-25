@@ -4,9 +4,9 @@ import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import ReactEChartsCore from "echarts-for-react/lib/core";
-import { Download, Link2, Target, TrainFront, X } from "lucide-react";
+import { Copy, Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
+import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber, formatRemainingLease } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
@@ -127,6 +127,28 @@ export function ShortlistDrawer({
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
     void navigator.clipboard.writeText(url);
     alert(t("shortlist.shareCopied"));
+  }
+
+  function handleCopySummary() {
+    const header = `| Address | Median Price | Target Price | Lease | MRT | Schools (1km) | Hawkers (1km) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`;
+    const body = rows
+      .map((row) => {
+        const address = `${row.block.block} ${row.block.streetName}`;
+        const median = formatCurrency(row.block.medianPrice, locale);
+        const target = row.item.targetPrice ? formatCurrency(row.item.targetPrice, locale) : "-";
+        const lease = formatRemainingLease(row.block.leaseCommenceRange, t);
+        const mrt = row.block.nearestMrt
+          ? formatMeters(row.block.nearestMrt.distanceMeters, t, locale)
+          : "-";
+        const schools = row.comparison?.amenities.primarySchoolsWithin1km ?? "-";
+        const hawkers = row.comparison?.amenities.hawkerCentresWithin1km ?? "-";
+        return `| ${address} | ${median} | ${target} | ${lease} | ${mrt} | ${schools} | ${hawkers} |`;
+      })
+      .join("\n");
+
+    const summary = `${header}\n${body}`;
+    void navigator.clipboard.writeText(summary);
+    alert(t("shortlist.summaryCopied"));
   }
 
   function handleExportCsv() {
@@ -309,6 +331,10 @@ export function ShortlistDrawer({
                     <Link2 data-icon="inline-start" />
                     {t("shortlist.shareLink")}
                   </Button>
+                  <Button variant="outline" size="xs" onClick={handleCopySummary} type="button">
+                    <Copy data-icon="inline-start" />
+                    {t("shortlist.copySummary")}
+                  </Button>
                 </ButtonGroup>
               </div>
             </div>
@@ -382,7 +408,11 @@ export function ShortlistDrawer({
                     const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
 
                     return (
-                      <Card key={row.item.addressKey} className="bg-muted/40">
+                      <Card
+                        key={row.item.addressKey}
+                        className="animate-fade-in-up bg-muted/40"
+                        style={{ animationDelay: `${index * 60}ms` }}
+                      >
                         <CardHeader className="gap-3 border-b border-border/60 pb-5">
                           <div className="flex flex-wrap items-start gap-3">
                             <div className="flex flex-1 flex-col gap-2">
@@ -390,12 +420,46 @@ export function ShortlistDrawer({
                                 {row.block.block} {row.block.streetName}
                               </CardTitle>
                               <div className="flex flex-wrap items-center gap-2">
-                                <Badge variant="secondary">
+                                <Badge variant="secondary" className="h-5 text-[0.65rem]">
                                   {t("shortlist.compare.rank", { rank: index + 1 })}
                                 </Badge>
                                 <span className="text-xs text-muted-foreground">
                                   {getRankingMetricLabel(row)}
                                 </span>
+                                {row.comparison && (
+                                  <>
+                                    <Badge
+                                      variant={
+                                        row.comparison.percentileRanks.pricePercentile <= 25
+                                          ? "default"
+                                          : "outline"
+                                      }
+                                      className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
+                                    >
+                                      {t("detail.rank.price")}:{" "}
+                                      {t("detail.topPercentile", {
+                                        value: Math.round(
+                                          row.comparison.percentileRanks.pricePercentile,
+                                        ),
+                                      })}
+                                    </Badge>
+                                    <Badge
+                                      variant={
+                                        row.comparison.percentileRanks.mrtDistancePercentile >= 75
+                                          ? "default"
+                                          : "outline"
+                                      }
+                                      className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
+                                    >
+                                      {t("detail.rank.mrt")}:{" "}
+                                      {t("detail.topPercentile", {
+                                        value: Math.round(
+                                          100 - row.comparison.percentileRanks.mrtDistancePercentile,
+                                        ),
+                                      })}
+                                    </Badge>
+                                  </>
+                                )}
                               </div>
                             </div>
                             <Button

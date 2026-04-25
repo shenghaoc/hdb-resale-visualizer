@@ -91,10 +91,10 @@ export function FilterPanel(props: FilterPanelProps) {
 
   return (
     <aside data-testid="filters-panel">
-      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
-        <CardHeader className="border-b border-border px-3 py-2 sm:px-4">
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
+        <CardHeader className="border-b border-border/30 bg-muted/20 px-3 py-2.5 sm:px-4">
           <div className="flex min-w-0 items-center gap-2">
-            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+            <CardTitle className="mr-auto min-w-0 truncate text-[0.7rem] font-bold uppercase leading-none tracking-[0.16em] text-muted-foreground">
               {t("filters.title")}
             </CardTitle>
             <CardAction>
@@ -102,7 +102,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 onClick={onReset}
                 size="xs"
                 variant="ghost"
-                className="h-7 px-2 text-[0.65rem]"
+                className="h-7 px-2 text-[0.65rem] font-bold uppercase tracking-wider"
               >
                 {t("filters.reset")}
               </Button>
@@ -110,10 +110,10 @@ export function FilterPanel(props: FilterPanelProps) {
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-4 px-3 pt-3 sm:px-4">
-          <FieldGroup className="gap-5 pb-4">
-            <FieldSet className="gap-3">
-              <FieldLegend>{t("filters.coreCriteria")}</FieldLegend>
+        <CardContent className="flex flex-col gap-6 px-3 pt-4 sm:px-4">
+          <FieldGroup className="gap-5">
+            <FieldSet className="gap-4">
+              <FieldLegend className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">{t("filters.coreCriteria")}</FieldLegend>
               <Field>
                 <FieldContent>
                   <FieldLabel htmlFor="search">{t("filters.searchLabel")}</FieldLabel>
@@ -149,7 +149,7 @@ export function FilterPanel(props: FilterPanelProps) {
               </div>
 
               <FieldSet className="gap-3">
-                <FieldLegend>{t("filters.budgetRange")}</FieldLegend>
+                <FieldLegend className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">{t("filters.budgetRange")}</FieldLegend>
                 <div className="grid gap-4 lg:grid-cols-2">
                   <Field>
                     <FieldContent>
@@ -255,7 +255,7 @@ export function FilterPanel(props: FilterPanelProps) {
             </FieldSet>
 
             <FieldSet className="gap-4">
-              <FieldLegend>{t("filters.advancedRefinements")}</FieldLegend>
+              <FieldLegend className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">{t("filters.advancedRefinements")}</FieldLegend>
               <SelectField
                 allLabel={t("filters.allModels")}
                 label={t("filters.flatModel")}
@@ -265,7 +265,7 @@ export function FilterPanel(props: FilterPanelProps) {
               />
 
               <FieldSet className="gap-3">
-                <FieldLegend>{t("filters.floorAreaRange")}</FieldLegend>
+                <FieldLegend className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">{t("filters.floorAreaRange")}</FieldLegend>
                 <div className="grid gap-4 lg:grid-cols-2">
                   <Field>
                     <FieldContent>
@@ -320,13 +320,13 @@ export function FilterPanel(props: FilterPanelProps) {
                 </div>
               </FieldSet>
 
-              <FieldSet className="gap-2">
+              <FieldSet className="gap-3">
                 <FieldLegend className="sr-only">{t("filters.transactionWindow")}</FieldLegend>
-                <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-2">
-                  <span className="text-sm font-semibold" aria-hidden="true">
+                <div className="flex items-center justify-between gap-3 border-b border-border/30 pb-2.5">
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted-foreground" aria-hidden="true">
                     {t("filters.transactionWindow")}
                   </span>
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="h-5 text-[0.6rem] font-bold">
                     {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>

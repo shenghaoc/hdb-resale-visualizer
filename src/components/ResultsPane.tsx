@@ -63,6 +63,7 @@ function getSortValue(block: BlockSummary, mode: SortMode) {
 
 const BlockCard = memo(function BlockCard({
   block,
+  index,
   isFeatured = false,
   isSaved,
   isCompact = false,
@@ -70,6 +71,7 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist,
 }: {
   block: BlockSummary;
+  index: number;
   isFeatured?: boolean;
   isSaved: boolean;
   isCompact?: boolean;
@@ -85,19 +87,20 @@ const BlockCard = memo(function BlockCard({
         data-state={isFeatured ? "selected" : "idle"}
         variant="outline"
         className={cn(
-          "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
-          isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
-          "h-[94px] min-h-[94px] max-h-[94px] gap-2 px-3 py-2.5",
+          "animate-fade-in-up cursor-pointer border-border/20 bg-white transition-all duration-200 hover:border-primary/20 hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)]",
+          isFeatured && "border-primary/30 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
+          "h-[100px] min-h-[100px] max-h-[100px] gap-2.5 px-3 py-3",
         )}
+        style={{ animationDelay: `${index * 40}ms` }}
         onClick={() => onSelect(block.addressKey)}
       >
         <ItemHeader className="basis-full min-w-0">
           <ItemContent className="min-w-0">
-            <div className="result-address flex min-w-0 flex-col">
-              <strong className="truncate font-heading text-base font-semibold leading-tight">
+            <div className="result-address flex min-w-0 flex-col gap-1">
+              <strong className="truncate font-heading text-[0.95rem] font-bold leading-tight tracking-tight">
                 {block.block} {block.streetName}
               </strong>
-              <span className="truncate text-[0.6rem] font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="truncate text-[0.58rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
                 {block.town}
               </span>
             </div>
@@ -111,30 +114,30 @@ const BlockCard = memo(function BlockCard({
                 onToggleShortlist(block.addressKey);
               }}
               type="button"
-              className="size-7 p-0"
+              className="size-8 p-0"
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
-              <Bookmark data-icon className={isSaved ? "fill-current" : ""} />
+              <Bookmark data-icon className={cn("size-4", isSaved && "fill-current")} />
             </Button>
           </ItemActions>
         </ItemHeader>
-        <div className="flex w-full min-w-0 items-center justify-between border-t border-border/40 pt-2">
+        <div className="flex w-full min-w-0 items-center justify-between border-t border-border/20 pt-2.5">
           <div className="flex min-w-0 items-baseline gap-1.5">
-            <span className="shrink-0 text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+            <span className="shrink-0 text-[0.58rem] font-bold uppercase tracking-[0.16em] text-muted-foreground/60">
               {t("results.median")}:{" "}
             </span>
-            <strong className="truncate font-heading text-sm font-semibold">
+            <strong className="truncate font-heading text-[0.9rem] font-bold tracking-tight">
               {formatCompactCurrency(block.medianPrice, locale)}
             </strong>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.6rem]">
+            <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.58rem] font-bold">
               {block.flatTypes[0]}
             </Badge>
             {block.nearestMrt && (
-              <span className="text-[0.65rem] font-medium text-muted-foreground">
-                {formatMeters(block.nearestMrt.distanceMeters, t, locale)} {t("results.toMrt")}
+              <span className="text-[0.62rem] font-medium text-muted-foreground">
+                {formatMeters(block.nearestMrt.distanceMeters, t, locale)}
               </span>
             )}
           </div>
@@ -148,11 +151,13 @@ const BlockCard = memo(function BlockCard({
       data-state={isFeatured ? "selected" : "idle"}
       variant="outline"
       className={cn(
-        "cursor-pointer bg-card transition-transform duration-150 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-muted/40",
-        isFeatured && "border-foreground/20 bg-muted/40 shadow-sm",
+        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-white p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)]",
+        isFeatured && "border-primary/30 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
+      style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}
     >
+
       <ItemHeader>
         <ItemContent>
           <div className="result-address flex flex-col gap-1">
@@ -390,19 +395,19 @@ export function ResultsPane({
 
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
-        <CardHeader className="border-b border-border px-3 py-2 sm:px-4">
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
+        <CardHeader className="border-b border-border/30 bg-muted/20 px-3 py-2.5 sm:px-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+            <CardTitle className="mr-auto min-w-0 truncate text-[0.7rem] font-bold uppercase leading-none tracking-[0.16em] text-muted-foreground">
               {t("results.filteredBlocks")}
             </CardTitle>
             {hasResultScope ? (
               <>
-                <Badge className="h-6 shrink-0 px-2 text-[0.65rem]">
+                <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
                 <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:flex-none">
-                  <span className="inline-flex shrink-0 items-center gap-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
                     <ArrowUpDown className="size-3" />
                     {t("results.sort")}
                   </span>
@@ -457,17 +462,20 @@ export function ResultsPane({
                       : undefined
                   }
                 >
-                  {(shouldVirtualize ? virtualBlocks : isCompact ? sortedBlocks : currentBlocks).map((block) => (
-                    <BlockCard
-                      key={block.addressKey}
-                      block={block}
-                      isFeatured={block.addressKey === selectedAddressKey}
-                      isSaved={shortlistKeys.has(block.addressKey)}
-                      isCompact={isCompact}
-                      onSelect={onSelect}
-                      onToggleShortlist={onToggleShortlist}
-                    />
-                  ))}
+                  {(shouldVirtualize ? virtualBlocks : isCompact ? sortedBlocks : currentBlocks).map(
+                    (block, idx) => (
+                      <BlockCard
+                        key={block.addressKey}
+                        index={idx}
+                        block={block}
+                        isFeatured={block.addressKey === selectedAddressKey}
+                        isSaved={shortlistKeys.has(block.addressKey)}
+                        isCompact={isCompact}
+                        onSelect={onSelect}
+                        onToggleShortlist={onToggleShortlist}
+                      />
+                    ),
+                  )}
                 </ItemGroup>
                 {!isCompact ? renderPagination() : null}
               </div>

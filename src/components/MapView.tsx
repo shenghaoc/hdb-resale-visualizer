@@ -64,6 +64,35 @@ type MrtStationsGeoJson = GeoJSON.FeatureCollection<
   { stationName?: string; lines?: string[] }
 >;
 
+function createCircleGeoJson(
+  center: { lat: number; lng: number },
+  radiusKm: number,
+): GeoJSON.Feature<GeoJSON.Polygon> {
+  const points = 64;
+  const coords = [];
+  const kmPerDegreeLat = 111.32;
+  const kmPerDegreeLng = 111.32 * Math.cos((center.lat * Math.PI) / 180);
+
+  for (let i = 0; i <= points; i++) {
+    const angle = (i * 360) / points;
+    const rad = (angle * Math.PI) / 180;
+    const dx = radiusKm * Math.cos(rad);
+    const dy = radiusKm * Math.sin(rad);
+    coords.push([center.lng + dx / kmPerDegreeLng, center.lat + dy / kmPerDegreeLat]);
+  }
+
+  return {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [coords],
+    },
+    properties: {
+      radius: radiusKm,
+    },
+  };
+}
+
 function normalizeStationName(stationName: string): string {
   return stationName
     .toUpperCase()
@@ -274,6 +303,16 @@ export function MapView({
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
+    map.addControl(
+      new maplibregl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+        showUserLocation: true,
+      }),
+      "top-right",
+    );
     map.doubleClickZoom.disable();
 
     const popup = new Popup({
@@ -298,6 +337,11 @@ export function MapView({
       map.addSource("mrt-exits", {
         type: "geojson",
         data: "/data/mrt-exits.geojson",
+      });
+
+      map.addSource("radius", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
       });
 
       void fetch("/data/mrt-stations.geojson")
@@ -397,11 +441,40 @@ export function MapView({
           "text-color": "#0f172a",
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.25,
-        },
-      });
+          },
+          });
 
-      map.addLayer({
-        id: "mrt-symbol",
+          map.addLayer(
+          {
+          id: "radius-fill",
+          type: "fill",
+          source: "radius",
+          paint: {
+            "fill-color": "#2563eb",
+            "fill-opacity": 0.05,
+          },
+          },
+          "mrt-lines",
+          );
+
+          map.addLayer(
+          {
+          id: "radius-outline",
+          type: "line",
+          source: "radius",
+          paint: {
+            "line-color": "#2563eb",
+            "line-width": 1,
+            "line-dasharray": [3, 3],
+            "line-opacity": 0.25,
+          },
+          },
+          "mrt-lines",
+          );
+
+          map.addLayer({
+          id: "block-clusters",
+
         type: "symbol",
         source: "mrt-stations",
         layout: {
@@ -875,6 +948,53 @@ export function MapView({
     map.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
     map.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
   }, [selectedAddressKey]);
+
+  // Update the radius circles when selection changes
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
+
+    function updateRadius() {
+      const mapInstance = mapRef.current;
+      if (!mapInstance) {
+        return;
+      }
+
+      const source = mapInstance.getSource("radius");
+      if (!isGeoJsonDataSourceLike(source)) {
+        return;
+      }
+
+      if (!selectedAddressKey) {
+        source.setData({ type: "FeatureCollection", features: [] });
+        return;
+      }
+
+      const selectedBlock = blocks.find((b) => b.addressKey === selectedAddressKey);
+      if (!selectedBlock) {
+        source.setData({ type: "FeatureCollection", features: [] });
+        return;
+      }
+
+      const features: GeoJSON.Feature[] = [
+        createCircleGeoJson(selectedBlock.coordinates, 1),
+        createCircleGeoJson(selectedBlock.coordinates, 2),
+      ];
+
+      source.setData({
+        type: "FeatureCollection",
+        features,
+      });
+    }
+
+    if (map.isStyleLoaded()) {
+      updateRadius();
+    } else {
+      void map.once("load", updateRadius);
+    }
+  }, [selectedAddressKey, blocks]);
 
   return <div className="map-view" data-testid="map-view" ref={containerRef} />;
 }

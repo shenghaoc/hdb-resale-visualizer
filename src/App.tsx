@@ -654,7 +654,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/70 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
                 aria-expanded={isDesktopPanelOpen}
                 aria-controls="desktop-panel"
@@ -673,7 +673,7 @@ function App() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 border-border/70 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
+                className="h-9 border-border/20 bg-white/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
                 onClick={() => setIsHeaderVisible(true)}
               >
                 <Info data-icon="inline-start" />
@@ -706,26 +706,26 @@ function App() {
                 )}
                 {...(!isDesktopPanelOpen && { inert: true })}
               >
-                <div className="flex h-full min-h-0 flex-col overflow-hidden border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-md">
+                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-white/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
                   <Tabs
                     value={desktopTab}
                     onValueChange={(value) => setDesktopTab(value as DesktopTab)}
                     className="flex h-full flex-col overflow-hidden"
                   >
-                    <TabsList className="grid w-full shrink-0 grid-cols-3">
-                      <TabsTrigger value="filters">{t("tab.filters")}</TabsTrigger>
-                      <TabsTrigger value="results">{t("tab.results")}</TabsTrigger>
-                      <TabsTrigger value="saved">{t("tab.saved")}</TabsTrigger>
+                    <TabsList className="grid w-full shrink-0 grid-cols-3 bg-muted/30">
+                      <TabsTrigger value="filters" className="text-xs font-bold uppercase tracking-wider">{t("tab.filters")}</TabsTrigger>
+                      <TabsTrigger value="results" className="text-xs font-bold uppercase tracking-wider">{t("tab.results")}</TabsTrigger>
+                      <TabsTrigger value="saved" className="text-xs font-bold uppercase tracking-wider">{t("tab.saved")}</TabsTrigger>
                     </TabsList>
                     <TabsContent
                       value="filters"
-                      className="mt-3 min-h-0 flex-1 overflow-y-auto pr-1"
+                      className="mt-3 min-h-0 flex-1 overflow-y-auto px-3"
                     >
                       {filterContent}
                     </TabsContent>
                     <TabsContent
                       value="results"
-                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1"
+                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto px-3"
                     >
                       <div className="flex min-h-0 flex-1 flex-col gap-4">
                         {selectedDetailContent}
@@ -741,7 +741,7 @@ function App() {
                     </TabsContent>
                     <TabsContent
                       value="saved"
-                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden"
+                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden px-3"
                     >
                       {savedContent}
                     </TabsContent>
@@ -754,13 +754,13 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden border border-border/70 bg-background/94 p-2 shadow-sm backdrop-blur-md"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-white/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
                 >
                   {mobileTab === "filters" && (
-                    <div id="mobile-filters-content" className="h-full overflow-y-auto pr-1">{filterContent}</div>
+                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3">{filterContent}</div>
                   )}
                   {mobileTab === "results" && (
-                    <div id="mobile-results-content" className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto">
+                    <div id="mobile-results-content" className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3">
                       {selectedDetailContent}
                       <div
                         className={cn(
@@ -773,7 +773,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden">{savedContent}</div>
+                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3">{savedContent}</div>
                   )}
                 </div>
               )}
