@@ -517,6 +517,7 @@ function App() {
                 type="button"
                 className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-border/70 bg-background/85 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground shadow-sm backdrop-blur-sm transition-colors hover:text-foreground"
                 onClick={() => setIsDesktopPanelOpen((current) => !current)}
+                aria-expanded={isDesktopPanelOpen}
               >
                 {isDesktopPanelOpen ? (
                   <PanelLeftClose className="size-4" />
@@ -624,6 +625,7 @@ function App() {
           <button
             type="button"
             data-active={mobileTab === "filters"}
+            aria-expanded={mobileTab === "filters"}
             onClick={() => setMobileTab((current) => (current === "filters" ? null : "filters"))}
           >
             <SlidersHorizontal />
@@ -632,6 +634,7 @@ function App() {
           <button
             type="button"
             data-active={mobileTab === "results"}
+            aria-expanded={mobileTab === "results"}
             onClick={() => setMobileTab((current) => (current === "results" ? null : "results"))}
           >
             <List />
@@ -640,6 +643,7 @@ function App() {
           <button
             type="button"
             data-active={mobileTab === "saved"}
+            aria-expanded={mobileTab === "saved"}
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
             <Bookmark />
