@@ -2,6 +2,7 @@ import { DATA_BASE_PATH } from "@/lib/constants";
 import type {
   AddressDetail,
   BlockSummary,
+  ComparisonArtifact,
   Manifest,
   TownFlatTypeTrendPoint,
 } from "@/types/data";
@@ -30,4 +31,17 @@ export function fetchTownFlatTypeTrends() {
 
 export function fetchAddressDetail(addressKey: string) {
   return fetchJson<AddressDetail>(`${DATA_BASE_PATH}/details/${addressKey}.json`);
+}
+
+export async function fetchComparisonArtifact(addressKey: string): Promise<ComparisonArtifact | null> {
+  try {
+    return await fetchJson<ComparisonArtifact>(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`);
+  } catch (error) {
+    // Return null if comparison data doesn't exist yet
+    if (error instanceof Error && error.message.includes('404')) {
+      return null;
+    }
+    // Re-throw other errors (network issues, etc.)
+    throw error;
+  }
 }

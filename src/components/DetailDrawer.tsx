@@ -3,18 +3,22 @@ import {
   Bookmark,
   Clock3,
   Coins,
+  GraduationCap,
   History,
   Info,
   MapPin,
   Maximize2,
+  ShoppingCart,
   Table,
   TrainFront,
   TrendingUp,
+  Trees,
+  UtensilsCrossed,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatMeters, formatMonth, formatRemainingLease } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
-import type { AddressDetail, BlockSummary } from "@/types/data";
+import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,7 +39,9 @@ const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.T
 type DetailDrawerProps = {
   selectedBlock: BlockSummary | null;
   detail: AddressDetail | null;
+  comparison: ComparisonArtifact | null;
   isLoading: boolean;
+  isComparisonLoading: boolean;
   isSaved: boolean;
   onClose: () => void;
   onToggleShortlist: () => void;
@@ -44,7 +50,9 @@ type DetailDrawerProps = {
 export function DetailDrawer({
   selectedBlock,
   detail,
+  comparison,
   isLoading,
+  isComparisonLoading,
   isSaved,
   onClose,
   onToggleShortlist,
@@ -252,6 +260,273 @@ export function DetailDrawer({
                       </div>
                     </CardContent>
                   </Card>
+                </section>
+
+                {/* Nearby Amenities */}
+                <section>
+                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                    <Trees className="size-4" />
+                    Nearby Amenities
+                  </h3>
+                  {isComparisonLoading ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                        />
+                      ))}
+                    </div>
+                  ) : comparison ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <GraduationCap className="size-4 text-primary/70" />
+                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                              Schools
+                            </span>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-sm font-bold">
+                              {comparison.amenities.primarySchoolsWithin1km} within 1km
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {comparison.amenities.primarySchoolsWithin2km} within 2km
+                            </div>
+                            {comparison.amenities.nearestPrimarySchoolMeters && (
+                              <div className="text-xs text-muted-foreground">
+                                Nearest: {formatMeters(comparison.amenities.nearestPrimarySchoolMeters, t, locale)}
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <UtensilsCrossed className="size-4 text-primary/70" />
+                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                              Hawkers
+                            </span>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-sm font-bold">
+                              {comparison.amenities.hawkerCentresWithin1km} within 1km
+                            </div>
+                            {comparison.amenities.nearestHawkerCentreMeters && (
+                              <div className="text-xs text-muted-foreground">
+                                Nearest: {formatMeters(comparison.amenities.nearestHawkerCentreMeters, t, locale)}
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <ShoppingCart className="size-4 text-primary/70" />
+                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                              Supermarkets
+                            </span>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-sm font-bold">
+                              {comparison.amenities.supermarketsWithin1km} within 1km
+                            </div>
+                            {comparison.amenities.nearestSupermarketMeters && (
+                              <div className="text-xs text-muted-foreground">
+                                Nearest: {formatMeters(comparison.amenities.nearestSupermarketMeters, t, locale)}
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Trees className="size-4 text-primary/70" />
+                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                              Parks
+                            </span>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-sm font-bold">
+                              {comparison.amenities.parksWithin1km} within 1km
+                            </div>
+                            {comparison.amenities.nearestParkMeters && (
+                              <div className="text-xs text-muted-foreground">
+                                Nearest: {formatMeters(comparison.amenities.nearestParkMeters, t, locale)}
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <p className="py-4 text-sm text-muted-foreground italic">
+                      Amenity comparison data not available yet.
+                    </p>
+                  )}
+                </section>
+
+                {/* Market Percentiles */}
+                <section>
+                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                    <TrendingUp className="size-4" />
+                    Market Percentiles
+                  </h3>
+                  {isComparisonLoading ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                        />
+                      ))}
+                    </div>
+                  ) : comparison ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Price Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.pricePercentile <= 25
+                                  ? "default"
+                                  : comparison.percentileRanks.pricePercentile <= 75
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.pricePercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Price/sqm Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.pricePerSqmPercentile <= 25
+                                  ? "default"
+                                  : comparison.percentileRanks.pricePerSqmPercentile <= 75
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.pricePerSqmPercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Lease Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.leasePercentile >= 75
+                                  ? "default"
+                                  : comparison.percentileRanks.leasePercentile >= 25
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.leasePercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              MRT Access Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.mrtDistancePercentile >= 75
+                                  ? "default"
+                                  : comparison.percentileRanks.mrtDistancePercentile >= 25
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.mrtDistancePercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Liquidity Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.transactionCountPercentile >= 75
+                                  ? "default"
+                                  : comparison.percentileRanks.transactionCountPercentile >= 25
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.transactionCountPercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card className="border-border/40 bg-card/50 shadow-none">
+                        <CardContent className="p-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Recency Rank
+                            </span>
+                            <Badge
+                              variant={
+                                comparison.percentileRanks.recencyPercentile >= 75
+                                  ? "default"
+                                  : comparison.percentileRanks.recencyPercentile >= 25
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                              className="h-5 text-[0.6rem] font-bold"
+                            >
+                              {Math.round(comparison.percentileRanks.recencyPercentile)}%
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <p className="py-4 text-sm text-muted-foreground italic">
+                      Market percentile data not available yet.
+                    </p>
+                  )}
                 </section>
 
 

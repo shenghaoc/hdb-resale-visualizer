@@ -20,7 +20,6 @@ type GlobalHeaderProps = {
   testId?: string;
   isVisible?: boolean;
   onDismiss?: () => void;
-  onShow?: () => void;
 };
 
 export function GlobalHeader({
@@ -28,27 +27,14 @@ export function GlobalHeader({
   testId = "global-header",
   isVisible = true,
   onDismiss,
-  onShow,
 }: GlobalHeaderProps) {
   const { locale, setLocale, t } = useI18n();
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
 
   if (!isVisible) {
-    return (
-      <div data-testid={testId} className="flex">
-        <Button
-          type="button"
-          size="icon"
-          variant="outline"
-          className="size-9 border-border/70 bg-background/85 shadow-sm backdrop-blur-sm"
-          onClick={onShow}
-          aria-label="Show header info"
-        >
-          <Info data-icon />
-        </Button>
-      </div>
-    );
+    return null;
   }
+
 
   return (
     <header data-testid={testId}>

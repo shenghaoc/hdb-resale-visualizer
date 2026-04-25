@@ -5,7 +5,7 @@ import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   HEADER_DISMISSED_STORAGE_KEY,
 } from "@/lib/constants";
-import { fetchAddressDetail, fetchBlockSummaries, fetchManifest } from "@/lib/data";
+import { fetchAddressDetail, fetchBlockSummaries, fetchComparisonArtifact, fetchManifest } from "@/lib/data";
 import {
   getSelectionByAddressKey,
   matchesFilter,
@@ -20,6 +20,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import type {
   AddressDetail,
   BlockSummary,
+  ComparisonArtifact,
   FilterState,
   Manifest,
 } from "@/types/data";
@@ -51,6 +52,11 @@ type LoadedDetail = {
   data: AddressDetail | null;
 };
 
+type LoadedComparison = {
+  addressKey: string;
+  data: ComparisonArtifact | null;
+};
+
 function App() {
   const { t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -66,9 +72,12 @@ function App() {
     };
   });
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
+  const [comparison, setComparison] = useState<LoadedComparison | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
+  const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(filters.selectedAddressKey));
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>({});
+  const [shortlistComparisons, setShortlistComparisons] = useState<Record<string, ComparisonArtifact | null>>({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -182,6 +191,39 @@ function App() {
     };
   }, [selectedAddressKey]);
 
+  useEffect(() => {
+    if (!selectedAddressKey) {
+      return;
+    }
+
+    let isMounted = true;
+
+    void fetchComparisonArtifact(selectedAddressKey)
+      .then((nextComparison) => {
+        if (!isMounted) {
+          return;
+        }
+
+        setComparison({ addressKey: selectedAddressKey, data: nextComparison });
+      })
+      .catch(() => {
+        if (!isMounted) {
+          return;
+        }
+
+        setComparison({ addressKey: selectedAddressKey, data: null });
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsComparisonLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedAddressKey]);
+
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
@@ -278,8 +320,11 @@ function App() {
   );
   const detailVisible = Boolean(selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
+  const comparisonLoading = detailVisible && isComparisonLoading;
   const selectedDetail =
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
+  const selectedComparison =
+    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
   const shortlistRows = useMemo(
     () => {
       if (!savedVisible) {
@@ -306,6 +351,11 @@ function App() {
               (selectedDetail?.summary.addressKey === item.addressKey
                 ? selectedDetail.monthlyTrend
                 : []),
+            comparison:
+              shortlistComparisons[item.addressKey] ??
+              (selectedComparison?.addressKey === item.addressKey
+                ? selectedComparison
+                : null),
           };
         })
         .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
@@ -326,7 +376,7 @@ function App() {
           return left.item.addedAt.localeCompare(right.item.addedAt);
         });
     },
-    [blocks, savedVisible, selectedDetail, shortlist.items, shortlistDetails],
+    [blocks, savedVisible, selectedDetail, selectedComparison, shortlist.items, shortlistDetails, shortlistComparisons],
   );
 
   useEffect(() => {
@@ -373,11 +423,57 @@ function App() {
     };
   }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
 
+  useEffect(() => {
+    if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
+      return;
+    }
+
+    const missingComparisonKeys = shortlist.items
+      .map((item) => item.addressKey)
+      .filter((addressKey) => !(addressKey in shortlistComparisons));
+
+    if (missingComparisonKeys.length === 0) {
+      return;
+    }
+
+    let isMounted = true;
+
+    void Promise.all(
+      missingComparisonKeys.map(async (addressKey) => {
+        try {
+          const nextComparison = await fetchComparisonArtifact(addressKey);
+          return [addressKey, nextComparison] as const;
+        } catch {
+          return [addressKey, null] as const;
+        }
+      }),
+    ).then((entries) => {
+      if (!isMounted) {
+        return;
+      }
+
+      setShortlistComparisons((current) => {
+        const next = { ...current };
+        for (const [addressKey, comparisonData] of entries) {
+          next[addressKey] = comparisonData;
+        }
+
+        return next;
+      });
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistComparisons]);
+
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     if ("selectedAddressKey" in patch) {
       setIsDetailLoading(Boolean(patch.selectedAddressKey));
+      setIsComparisonLoading(Boolean(patch.selectedAddressKey));
       if (!patch.selectedAddressKey) {
         setDetail(null);
+        setComparison(null);
       }
     }
 
@@ -462,7 +558,9 @@ function App() {
       onChange={patchFilters}
       onReset={() => {
         setDetail(null);
+        setComparison(null);
         setIsDetailLoading(false);
+        setIsComparisonLoading(false);
         setFilters(DEFAULT_FILTERS);
       }}
       options={manifest.filterOptions}
@@ -495,8 +593,10 @@ function App() {
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
         <DetailDrawer
           detail={selectedDetail}
+          comparison={selectedComparison}
           selectedBlock={selectedBlock}
           isLoading={detailLoading}
+          isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
           onClose={() => patchFilters({ selectedAddressKey: null })}
           onToggleShortlist={() => {

@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/i18n";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
-import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ShortlistItem } from "@/types/data";
+import type { AddressDetailSummary, AddressTrendPoint, BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -30,6 +30,7 @@ type ShortlistRow = {
   block: BlockSummary;
   detailSummary: AddressDetailSummary | null;
   monthlyTrend: AddressTrendPoint[];
+  comparison: ComparisonArtifact | null;
 };
 
 type ShortlistDrawerProps = {
@@ -478,6 +479,80 @@ export function ShortlistDrawer({
                               </span>
                             </div>
                           </div>
+
+                          {row.comparison ? (
+                            <div className="grid gap-4 sm:grid-cols-2">
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  {t("shortlist.primarySchools")}
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {t("shortlist.schoolsWithin", {
+                                    count1km: row.comparison.amenities.primarySchoolsWithin1km,
+                                    count2km: row.comparison.amenities.primarySchoolsWithin2km,
+                                  })}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {row.comparison.amenities.nearestPrimarySchoolMeters !== null
+                                    ? t("shortlist.nearestDistance", {
+                                        distance: formatMeters(row.comparison.amenities.nearestPrimarySchoolMeters, t, locale),
+                                      })
+                                    : t("shortlist.noNearbySchools")}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  {t("shortlist.amenities")}
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {t("shortlist.amenityCounts", {
+                                    hawkers: row.comparison.amenities.hawkerCentresWithin1km,
+                                    supermarkets: row.comparison.amenities.supermarketsWithin1km,
+                                    parks: row.comparison.amenities.parksWithin1km,
+                                  })}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {t("shortlist.within1km")}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  {t("shortlist.pricePercentile")}
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {t("shortlist.percentileValue", {
+                                    value: Math.round(row.comparison.percentileRanks.pricePercentile),
+                                  })}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {t("shortlist.percentileContext", {
+                                    town: row.comparison.town,
+                                    flatType: row.comparison.flatType,
+                                  })}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-2">
+                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                                  {t("shortlist.locationPercentiles")}
+                                </span>
+                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+                                  {t("shortlist.locationPercentileValues", {
+                                    mrt: Math.round(row.comparison.percentileRanks.mrtDistancePercentile),
+                                    lease: Math.round(row.comparison.percentileRanks.leasePercentile),
+                                  })}
+                                </strong>
+                                <span className="text-sm text-muted-foreground">
+                                  {t("shortlist.mrtLeaseContext")}
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="rounded-lg border border-dashed border-border/60 p-4">
+                              <p className="text-sm text-muted-foreground text-center">
+                                {t("shortlist.comparisonDataLoading")}
+                              </p>
+                            </div>
+                          )}
 
                           <div className="grid gap-4 sm:grid-cols-2">
                             <div className="flex flex-col gap-2">

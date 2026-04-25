@@ -9,12 +9,14 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchAddressDetail: vi.fn(),
+  fetchComparisonArtifact: vi.fn(),
 }));
 
 vi.mock("@/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
   fetchBlockSummaries: dataMocks.fetchBlockSummaries,
   fetchAddressDetail: dataMocks.fetchAddressDetail,
+  fetchComparisonArtifact: dataMocks.fetchComparisonArtifact,
 }));
 
 vi.mock("@/hooks/useMediaQuery", () => ({
@@ -158,6 +160,7 @@ describe("App detail loading", () => {
       monthlyTrend: [],
       transactions: [],
     });
+    dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
     Object.defineProperty(window, "localStorage", {
       value: {
         getItem: vi.fn(() => null),
