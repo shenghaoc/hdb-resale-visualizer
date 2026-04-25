@@ -596,7 +596,7 @@ function App() {
           ) : (
             <section className="pointer-events-none relative min-h-0 flex-1">
               {mobileTab && (
-                <div 
+                <div
                   id="mobile-panel"
                   className="pointer-events-auto absolute inset-0 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-3 shadow-sm backdrop-blur-sm"
                 >
@@ -632,7 +632,7 @@ function App() {
             type="button"
             data-active={mobileTab === "filters"}
             aria-expanded={mobileTab === "filters"}
-            aria-controls="mobile-filters-content"
+            aria-controls={mobileTab === "filters" ? "mobile-filters-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "filters" ? null : "filters"))}
           >
             <SlidersHorizontal />
@@ -642,7 +642,7 @@ function App() {
             type="button"
             data-active={mobileTab === "results"}
             aria-expanded={mobileTab === "results"}
-            aria-controls="mobile-results-content"
+            aria-controls={mobileTab === "results" ? "mobile-results-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "results" ? null : "results"))}
           >
             <List />
@@ -652,7 +652,7 @@ function App() {
             type="button"
             data-active={mobileTab === "saved"}
             aria-expanded={mobileTab === "saved"}
-            aria-controls="mobile-saved-content"
+            aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
             onClick={() => setMobileTab((current) => (current === "saved" ? null : "saved"))}
           >
             <Bookmark />
