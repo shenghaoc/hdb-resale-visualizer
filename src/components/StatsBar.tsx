@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info, Languages, Moon, Sun, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -28,19 +28,32 @@ export function GlobalHeader({
   isVisible = true,
   onDismiss,
 }: GlobalHeaderProps) {
+  const THEME_STORAGE_KEY = "hdb-resale-theme";
   const { locale, setLocale, t } = useI18n();
   const [mobileInfoOpen, setMobileInfoOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+      const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+      if (storedTheme === "dark" || storedTheme === "light") {
+        return storedTheme;
+      }
+      if (document.documentElement.classList.contains("dark")) {
+        return "dark";
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
     }
     return "light";
   });
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
+
   const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
   };
 
   if (!isVisible) {
@@ -52,7 +65,7 @@ export function GlobalHeader({
     <header data-testid={testId}>
       <Card
         size="sm"
-        className="overflow-visible border border-border/20 bg-white/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px]"
+        className="overflow-visible border border-border/20 bg-background/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px]"
       >
         <CardHeader className="flex-row items-center justify-between gap-4 px-3 py-2.5">
           <div className="flex flex-col gap-0.5">
@@ -91,7 +104,7 @@ export function GlobalHeader({
               </Button>
 
               <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-                <SelectTrigger className="h-7 min-w-20 border-border/30 bg-white/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm">
+                <SelectTrigger className="h-7 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm">
                   <div className="flex items-center gap-1.5">
                     <Languages data-icon className="size-3 opacity-60" />
                     <SelectValue placeholder={t("language.label")} />
