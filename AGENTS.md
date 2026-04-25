@@ -11,6 +11,7 @@ This repository uses the **Kiro workflow** for agent-led development. The source
 ## Steering Roadmap
 - [Product Vision](.kiro/steering/product.md)
 - [Technical Constraints](.kiro/steering/tech.md)
+- [Data Pipeline & Architecture](.kiro/steering/pipeline.md)
 - [Repository Structure](.kiro/steering/structure.md)
 - [UI/UX Standards](.kiro/steering/ui-standards.md)
 
