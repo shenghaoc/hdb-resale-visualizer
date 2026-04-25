@@ -4,7 +4,8 @@ import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import ReactEChartsCore from "echarts-for-react/lib/core";
-import { Copy, Download, Link2, Target, TrainFront, X } from "lucide-react";
+import { Check, Copy, Download, Link2, Target, TrainFront, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber, formatRemainingLease } from "@/lib/format";
@@ -91,7 +92,13 @@ export function ShortlistDrawer({
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const sortLabelId = useId();
+
+  const showCopied = (key: string) => {
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2000);
+  };
 
   function getRankingMetricLabel(row: ShortlistRow) {
     if (compareMode === "target-gap") {
@@ -124,12 +131,25 @@ export function ShortlistDrawer({
     return t("shortlist.compare.metric.mrt.missing");
   }
 
-  function handleShare() {
+  async function handleShare() {
     const params = new URLSearchParams(window.location.search);
     params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t("app.title"),
+          url: url,
+        });
+        return;
+      } catch (err) {
+        // Silently fail if share was cancelled or failed
+      }
+    }
+
     void navigator.clipboard.writeText(url);
-    alert(t("shortlist.shareCopied"));
+    showCopied("share");
   }
 
   function handleCopySummary() {
@@ -151,7 +171,7 @@ export function ShortlistDrawer({
 
     const summary = `${header}\n${body}`;
     void navigator.clipboard.writeText(summary);
-    alert(t("shortlist.summaryCopied"));
+    showCopied("summary");
   }
 
   function handleExportCsv() {
@@ -359,21 +379,41 @@ export function ShortlistDrawer({
               </Field>
               <div className="min-w-0 overflow-x-auto">
                 <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border">
-                  <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                  <Button variant="outline" size="sm" onClick={handleExportJson} type="button" className="lg:h-7 lg:px-3 lg:text-[0.6rem]">
                     <Download data-icon="inline-start" />
                     {t("shortlist.export.json")}
                   </Button>
-                  <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
+                  <Button variant="outline" size="sm" onClick={handleExportCsv} type="button" className="lg:h-7 lg:px-3 lg:text-[0.6rem]">
                     <Download data-icon="inline-start" />
                     {t("shortlist.export.csv")}
                   </Button>
-                  <Button variant="outline" size="xs" onClick={handleShare} type="button">
-                    <Link2 data-icon="inline-start" />
-                    {t("shortlist.shareLink")}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleShare}
+                    type="button"
+                    className={cn("lg:h-7 lg:px-3 lg:text-[0.6rem]", copiedKey === "share" ? "text-success" : "")}
+                  >
+                    {copiedKey === "share" ? (
+                      <Check data-icon="inline-start" />
+                    ) : (
+                      <Link2 data-icon="inline-start" />
+                    )}
+                    {copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLink")}
                   </Button>
-                  <Button variant="outline" size="xs" onClick={handleCopySummary} type="button">
-                    <Copy data-icon="inline-start" />
-                    {t("shortlist.copySummary")}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopySummary}
+                    type="button"
+                    className={cn("lg:h-7 lg:px-3 lg:text-[0.6rem]", copiedKey === "summary" ? "text-success" : "")}
+                  >
+                    {copiedKey === "summary" ? (
+                      <Check data-icon="inline-start" />
+                    ) : (
+                      <Copy data-icon="inline-start" />
+                    )}
+                    {copiedKey === "summary" ? t("shortlist.summaryCopied") : t("shortlist.copySummary")}
                   </Button>
                 </ButtonGroup>
               </div>
