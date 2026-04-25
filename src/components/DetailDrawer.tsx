@@ -4,6 +4,7 @@ import {
   Clock3,
   Coins,
   Compass,
+  Copy,
   GraduationCap,
   History,
   Info,
@@ -26,6 +27,7 @@ import {
   formatRemainingLease,
 } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
+import type { Translator } from "@/lib/i18n";
 import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -84,6 +86,61 @@ function PercentileBadge({
   );
 }
 
+function AmenityCard({
+  icon: Icon,
+  label,
+  count1km,
+  count2km,
+  nearestDistance,
+  nearestName,
+  t,
+  locale,
+}: {
+  icon: React.ElementType;
+  label: string;
+  count1km: number;
+  count2km?: number;
+  nearestDistance?: number | null;
+  nearestName?: string | null;
+  t: Translator;
+  locale: string;
+}) {
+  return (
+    <Card className="border-border/40 bg-card/50 shadow-none">
+      <CardContent className="p-3">
+        <div className="mb-2 flex items-center gap-2">
+          <Icon className="size-4 text-primary/70" />
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            {label}
+          </span>
+        </div>
+        <div className="flex flex-col gap-1">
+          <div className="text-sm font-bold">{t("detail.within1km", { count: count1km })}</div>
+          {count2km !== undefined && (
+            <div className="text-xs text-muted-foreground">
+              {t("detail.within2km", { count: count2km })}
+            </div>
+          )}
+          {nearestName ? (
+            <div className="line-clamp-1 text-xs text-muted-foreground">
+              {t("detail.nearestNamed", {
+                name: nearestName,
+                distance: formatMeters(nearestDistance ?? 0, t, locale),
+              })}
+            </div>
+          ) : nearestDistance ? (
+            <div className="text-xs text-muted-foreground">
+              {t("detail.nearest", {
+                distance: formatMeters(nearestDistance, t, locale),
+              })}
+            </div>
+          ) : null}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function DetailDrawer({
   selectedBlock,
   detail,
@@ -120,9 +177,26 @@ export function DetailDrawer({
                   </Badge>
                 )}
               </div>
-              <DrawerTitle className="text-left font-heading text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-                {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "..."}
-              </DrawerTitle>
+              <div className="flex w-full items-center justify-between gap-4">
+                <DrawerTitle className="min-w-0 truncate text-left font-heading text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                  {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "..."}
+                </DrawerTitle>
+                {currentSummary && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+                    onClick={() => {
+                      void navigator.clipboard.writeText(
+                        `${currentSummary.block} ${currentSummary.streetName} Singapore`,
+                      );
+                    }}
+                    title="Copy address"
+                  >
+                    <Copy className="size-4" />
+                  </Button>
+                )}
+              </div>
             </div>
             <Button
               variant="ghost"
@@ -333,145 +407,48 @@ export function DetailDrawer({
                   {isComparisonLoading ? (
                     <div className="grid grid-cols-2 gap-3">
                       {Array.from({ length: 4 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
-                        />
+                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
                       ))}
                     </div>
                   ) : comparison ? (
                     <div className="grid grid-cols-2 gap-3">
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <GraduationCap className="size-4 text-primary/70" />
-                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              {t("detail.amenity.schools")}
-                            </span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <div className="text-sm font-bold">
-                              {t("detail.within1km", {
-                                count: comparison.amenities.primarySchoolsWithin1km,
-                              })}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {t("detail.within2km", {
-                                count: comparison.amenities.primarySchoolsWithin2km,
-                              })}
-                            </div>
-                            {comparison.amenities.nearestPrimarySchools?.[0] ? (
-                              <div className="line-clamp-1 text-xs text-muted-foreground">
-                                {t("detail.nearestNamed", {
-                                  name: comparison.amenities.nearestPrimarySchools[0].name,
-                                  distance: formatMeters(
-                                    comparison.amenities.nearestPrimarySchools[0].distanceMeters,
-                                    t,
-                                    locale,
-                                  ),
-                                })}
-                              </div>
-                            ) : comparison.amenities.nearestPrimarySchoolMeters ? (
-                              <div className="text-xs text-muted-foreground">
-                                {t("detail.nearest", {
-                                  distance: formatMeters(
-                                    comparison.amenities.nearestPrimarySchoolMeters,
-                                    t,
-                                    locale,
-                                  ),
-                                })}
-                              </div>
-                            ) : null}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <AmenityCard
+                        icon={GraduationCap}
+                        label={t("detail.amenity.schools")}
+                        count1km={comparison.amenities.primarySchoolsWithin1km}
+                        count2km={comparison.amenities.primarySchoolsWithin2km}
+                        nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
+                        nearestName={comparison.amenities.nearestPrimarySchools?.[0]?.name}
+                        t={t}
+                        locale={locale}
+                      />
 
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <UtensilsCrossed className="size-4 text-primary/70" />
-                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              {t("detail.amenity.hawkers")}
-                            </span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <div className="text-sm font-bold">
-                              {t("detail.within1km", {
-                                count: comparison.amenities.hawkerCentresWithin1km,
-                              })}
-                            </div>
-                            {comparison.amenities.nearestHawkerCentreMeters && (
-                              <div className="text-xs text-muted-foreground">
-                                {t("detail.nearest", {
-                                  distance: formatMeters(
-                                    comparison.amenities.nearestHawkerCentreMeters,
-                                    t,
-                                    locale,
-                                  ),
-                                })}
-                              </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <AmenityCard
+                        icon={UtensilsCrossed}
+                        label={t("detail.amenity.hawkers")}
+                        count1km={comparison.amenities.hawkerCentresWithin1km}
+                        nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
+                        t={t}
+                        locale={locale}
+                      />
 
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <ShoppingCart className="size-4 text-primary/70" />
-                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              {t("detail.amenity.supermarkets")}
-                            </span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <div className="text-sm font-bold">
-                              {t("detail.within1km", {
-                                count: comparison.amenities.supermarketsWithin1km,
-                              })}
-                            </div>
-                            {comparison.amenities.nearestSupermarketMeters && (
-                              <div className="text-xs text-muted-foreground">
-                                {t("detail.nearest", {
-                                  distance: formatMeters(
-                                    comparison.amenities.nearestSupermarketMeters,
-                                    t,
-                                    locale,
-                                  ),
-                                })}
-                              </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <AmenityCard
+                        icon={ShoppingCart}
+                        label={t("detail.amenity.supermarkets")}
+                        count1km={comparison.amenities.supermarketsWithin1km}
+                        nearestDistance={comparison.amenities.nearestSupermarketMeters}
+                        t={t}
+                        locale={locale}
+                      />
 
-                      <Card className="border-border/40 bg-card/50 shadow-none">
-                        <CardContent className="p-3">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Trees className="size-4 text-primary/70" />
-                            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                              {t("detail.amenity.parks")}
-                            </span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <div className="text-sm font-bold">
-                              {t("detail.within1km", {
-                                count: comparison.amenities.parksWithin1km,
-                              })}
-                            </div>
-                            {comparison.amenities.nearestParkMeters && (
-                              <div className="text-xs text-muted-foreground">
-                                {t("detail.nearest", {
-                                  distance: formatMeters(
-                                    comparison.amenities.nearestParkMeters,
-                                    t,
-                                    locale,
-                                  ),
-                                })}
-                              </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <AmenityCard
+                        icon={Trees}
+                        label={t("detail.amenity.parks")}
+                        count1km={comparison.amenities.parksWithin1km}
+                        nearestDistance={comparison.amenities.nearestParkMeters}
+                        t={t}
+                        locale={locale}
+                      />
                     </div>
                   ) : (
                     <p className="py-4 text-sm text-muted-foreground italic">

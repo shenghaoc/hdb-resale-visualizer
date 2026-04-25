@@ -91,23 +91,28 @@ export function FilterPanel(props: FilterPanelProps) {
 
   return (
     <aside data-testid="filters-panel">
-      <Card size="sm" className="bg-background">
-        <CardHeader className="gap-3 border-b border-border pb-6">
-          <div className="flex flex-wrap items-start gap-4">
-            <div className="flex flex-1 flex-col gap-1">
-              <CardTitle className="text-2xl">{t("filters.title")}</CardTitle>
-            </div>
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
+        <CardHeader className="border-b border-border px-3 py-2 sm:px-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+              {t("filters.title")}
+            </CardTitle>
             <CardAction>
-              <Button onClick={onReset} size="sm" variant="ghost">
+              <Button
+                onClick={onReset}
+                size="xs"
+                variant="ghost"
+                className="h-7 px-2 text-[0.65rem]"
+              >
                 {t("filters.reset")}
               </Button>
             </CardAction>
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-4 pt-4">
-          <FieldGroup className="gap-7">
-            <FieldSet className="gap-4">
+        <CardContent className="flex flex-col gap-4 px-3 pt-3 sm:px-4">
+          <FieldGroup className="gap-5 pb-4">
+            <FieldSet className="gap-3">
               <FieldLegend>{t("filters.coreCriteria")}</FieldLegend>
               <Field>
                 <FieldContent>
