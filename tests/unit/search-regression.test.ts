@@ -3,17 +3,13 @@ import { matchesFilter } from "@/lib/filtering";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import type { BlockSummary } from "@/types/data";
 
-/**
- * Bug Condition Exploration Test for Search Matching Regression
- *
- * **Validates: Requirements 1.1, 1.2, 1.3, 1.4**
- *
- * This test MUST FAIL on unfixed code - failure confirms the bug exists.
- * The test encodes the expected behavior from Requirements 2.1, 2.2, 2.3, 2.4.
- * When the fix is implemented, this test will pass.
- */
+const EMPTY_FILTERS = {
+  ...DEFAULT_FILTERS,
+  budgetMin: null,
+  budgetMax: null,
+  remainingLeaseMin: null,
+};
 
-// Create a test block with Ang Mo Kio address
 const createAngMoKioBlock = (): BlockSummary => ({
   addressKey: "ang-mo-kio-101-ang-mo-kio-ave-3",
   town: "ANG MO KIO",
@@ -35,106 +31,77 @@ const createAngMoKioBlock = (): BlockSummary => ({
   },
 });
 
-describe("Search Matching Regression - Bug Condition Exploration", () => {
+describe("Search Matching Regression", () => {
   const block = createAngMoKioBlock();
 
-  describe("Bug 1.1: Out-of-order terms fail to match", () => {
-    it("FAILS on unfixed code: 'Kio Ang Mo' should match '101 Ang Mo Kio Ave 3'", () => {
-      // Requirement 2.1: Tokenized matching where all search terms are present in any order
+  describe("Out-of-order terms", () => {
+    it("matches 'Kio Ang Mo' against '101 Ang Mo Kio Ave 3'", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "Kio Ang Mo",
       });
-
-      // EXPECTED: true (all tokens "Kio", "Ang", "Mo" are present in address)
-      // ACTUAL on unfixed code: false (simple substring match fails)
       expect(result).toBe(true);
     });
 
-    it("FAILS on unfixed code: 'Ave Kio 101' should match '101 Ang Mo Kio Ave 3'", () => {
+    it("matches 'Ave Kio 101' against '101 Ang Mo Kio Ave 3'", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "Ave Kio 101",
       });
-
-      // EXPECTED: true (all tokens present in address in any order)
-      // ACTUAL on unfixed code: false
       expect(result).toBe(true);
     });
   });
 
-  describe("Bug 1.2: Abbreviations fail to match", () => {
-    it("FAILS on unfixed code: 'AMK' should match 'Ang Mo Kio' blocks", () => {
-      // Requirement 2.2: Alias expansion for common Singapore location abbreviations
+  describe("Abbreviations", () => {
+    it("matches 'AMK' against 'Ang Mo Kio' blocks", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "AMK",
       });
-
-      // EXPECTED: true (AMK is a common abbreviation for Ang Mo Kio)
-      // ACTUAL on unfixed code: false (no alias expansion)
       expect(result).toBe(true);
     });
 
-    it("FAILS on unfixed code: 'AMK 101' should match '101 Ang Mo Kio Ave 3'", () => {
+    it("matches 'AMK 101' against '101 Ang Mo Kio Ave 3'", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "AMK 101",
       });
-
-      // EXPECTED: true (AMK expands to Ang Mo Kio, 101 matches block number)
-      // ACTUAL on unfixed code: false
       expect(result).toBe(true);
     });
   });
 
-  describe("Bug 1.3: Minor typos fail to match", () => {
-    it("FAILS on unfixed code: 'Ang Mo Koi' should match 'Ang Mo Kio' blocks", () => {
-      // Requirement 2.3: Fuzzy matching with appropriate tolerance for minor typos
+  describe("Fuzzy matching", () => {
+    it("matches 'Ang Mo Koi' against 'Ang Mo Kio' blocks", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "Ang Mo Koi",
       });
-
-      // EXPECTED: true (single character typo 'i' vs 'o' in Kio)
-      // ACTUAL on unfixed code: false (no fuzzy matching)
       expect(result).toBe(true);
     });
 
-    it("FAILS on unfixed code: 'Ang Mo Kio' with typo 'Ang Mo Kiu' should match", () => {
+    it("matches 'Ang Mo Kiu' against 'Ang Mo Kio' blocks", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "Ang Mo Kiu",
       });
-
-      // EXPECTED: true (single character typo)
-      // ACTUAL on unfixed code: false
       expect(result).toBe(true);
     });
   });
 
-  describe("Bug 1.4: Substring not in exact '<block> <street>' order fails", () => {
-    it("FAILS on unfixed code: '101 Ang Mo' should match '101 Ang Mo Kio Ave 3'", () => {
-      // Requirement 2.4: Tokenized matching for multiple terms
+  describe("Tokenized matching", () => {
+    it("matches '101 Ang Mo' against '101 Ang Mo Kio Ave 3'", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "101 Ang Mo",
       });
-
-      // EXPECTED: true (both tokens present in address)
-      // ACTUAL on unfixed code: true (this might pass as substring)
-      // Note: This test documents expected behavior
       expect(result).toBe(true);
     });
 
-    it("FAILS on unfixed code: 'Ang Mo Kio 101' should match '101 Ang Mo Kio Ave 3'", () => {
+    it("matches 'Ang Mo Kio 101' against '101 Ang Mo Kio Ave 3'", () => {
       const result = matchesFilter(block, {
-        ...DEFAULT_FILTERS,
+        ...EMPTY_FILTERS,
         search: "Ang Mo Kio 101",
       });
-
-      // EXPECTED: true (all tokens present)
-      // ACTUAL on unfixed code: false (substring not in exact order)
       expect(result).toBe(true);
     });
   });

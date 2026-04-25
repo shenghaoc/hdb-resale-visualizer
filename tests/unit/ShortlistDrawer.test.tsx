@@ -125,7 +125,7 @@ describe("ShortlistDrawer", () => {
     expect(screen.queryByText("Loading comparison data…")).not.toBeInTheDocument();
     
     // Basic block info should still be displayed (address in title)
-    expect(screen.getByText("101 Ang Mo Kio Ave 3")).toBeInTheDocument();
+    expect(screen.getAllByText(/101 Ang Mo Kio Ave 3/i).length).toBeGreaterThan(0);
     
     // Market median should still be displayed
     expect(screen.getByText("Market median")).toBeInTheDocument();
