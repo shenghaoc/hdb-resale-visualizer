@@ -39,12 +39,12 @@ export function GlobalHeader({
 
 
   return (
-    <header data-testid={testId}>
+    <header data-testid={testId} className="pointer-events-none">
       <Card
         size="sm"
-        className="overflow-visible border border-border/20 bg-background/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px]"
+        className="overflow-visible border border-border/20 bg-background/85 px-0 py-0 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[16px] pointer-events-none"
       >
-        <CardHeader className="flex-row items-center justify-between gap-4 px-3 py-2.5">
+        <CardHeader className="pointer-events-none flex-row items-center justify-between gap-4 px-3 py-2.5">
           <div className="flex flex-col gap-0.5">
             <CardTitle className="text-base font-bold leading-tight tracking-tight sm:text-lg">
               {t("app.title")}
@@ -54,7 +54,7 @@ export function GlobalHeader({
             </Badge>
           </div>
 
-          <CardAction className="flex items-center gap-2">
+          <CardAction className="pointer-events-auto flex items-center gap-2">
             <div className="hidden items-center gap-3 md:flex">
               <Badge variant="secondary" className="h-5 text-[0.62rem] font-bold">
                 {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })}
@@ -119,7 +119,7 @@ export function GlobalHeader({
           </CardAction>
         </CardHeader>
         {mobileInfoOpen ? (
-          <div className="flex flex-col gap-2 border-t border-border/20 bg-muted/20 px-3 py-2 sm:hidden">
+          <div className="flex flex-col gap-2 border-t border-border/20 bg-muted/20 px-3 py-2 sm:hidden pointer-events-auto">
             <Badge variant="secondary" className="h-5 w-fit text-[0.6rem] font-bold">
               {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })}
             </Badge>

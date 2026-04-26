@@ -378,6 +378,12 @@
   box-shadow: none !important;
 }
 
+.map-view .maplibregl-ctrl-top-right {
+  right: 1.5rem;
+  top: 1.5rem;
+  z-index: 30;
+}
+
 .maplibregl-ctrl-group button {
   background: var(--card) !important;
 }
@@ -411,12 +417,11 @@
     -webkit-backdrop-filter: blur(10px);
   }
 
-  .maplibregl-ctrl-top-right {
-    top: auto;
+  .map-view .maplibregl-ctrl-top-right {
     right: 0.5rem;
-    bottom: calc(
-      var(--mobile-tab-bar-height) + var(--mobile-map-attrib-height) + env(safe-area-inset-bottom, 0px) + 0.75rem
-    );
+    top: calc(env(safe-area-inset-top, 0px) + 10rem);
+    bottom: auto;
+    z-index: 30;
   }
 
   .maplibregl-ctrl-top-right .maplibregl-ctrl {

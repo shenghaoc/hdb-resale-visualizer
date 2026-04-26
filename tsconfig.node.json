@@ -22,5 +22,6 @@
     "eslint.config.js",
     "scripts/**/*.ts",
     "tests/**/*.ts"
-  ]
+  ],
+  "exclude": ["tests/e2e/**"]
 }

@@ -708,7 +708,7 @@ function App() {
             </div>
           )}
           {!isHeaderVisible ? (
-            <div className="pointer-events-auto absolute right-4 top-4 z-20 lg:right-6 lg:top-6">
+            <div className="pointer-events-auto absolute right-4 top-16 z-10 lg:right-20 lg:top-6">
               <Button
                 variant="outline"
                 size="sm"
@@ -722,9 +722,9 @@ function App() {
           ) : null}
 
           {showMobileHeader ? (
-            <div className="flex flex-wrap items-start gap-3 lg:pl-36">
-              <div className="pointer-events-auto flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-                <div className="pointer-events-auto min-w-0 flex-1 basis-[22rem]">
+            <div className="pointer-events-none flex flex-wrap items-start gap-3 lg:pl-36 lg:pr-20">
+              <div className="pointer-events-none flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
+                <div className="pointer-events-none min-w-0 flex-1 basis-[22rem]">
                   <GlobalHeader
                     manifest={manifest}
                     isVisible={isHeaderVisible}
