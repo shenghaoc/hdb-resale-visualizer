@@ -672,7 +672,7 @@ function App() {
           © OneMap contributors
         </a>
 
-        <div className="pointer-events-none absolute inset-0 z-10 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+var(--mobile-map-attrib-height)+env(safe-area-inset-bottom,0px)+1rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
+        <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
           {isDesktop && (
             <div className="pointer-events-auto absolute left-6 top-6 z-20">
               <Button
@@ -790,14 +790,14 @@ function App() {
                   className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
                 >
                   {mobileTab === "filters" && (
-                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3">
+                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3 pb-12">
                       {filterContent}
                     </div>
                   )}
                   {mobileTab === "results" && (
                     <div
                       id="mobile-results-content"
-                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3"
+                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12"
                     >
                       {selectedDetailContent}
                       <div
@@ -811,7 +811,7 @@ function App() {
                     </div>
                   )}
                   {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3">
+                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-12">
                       {savedContent}
                     </div>
                   )}

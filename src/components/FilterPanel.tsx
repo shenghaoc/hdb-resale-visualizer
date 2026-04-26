@@ -111,7 +111,7 @@ export function FilterPanel(props: FilterPanelProps) {
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-6 px-3 pt-4 sm:px-4">
+        <CardContent className="flex flex-col gap-6 px-3 pt-4 pb-12 sm:px-4">
           <FieldGroup className="gap-5">
             <FieldSet className="gap-4">
               <FieldLegend className="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">{t("filters.coreCriteria")}</FieldLegend>
