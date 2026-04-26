@@ -9,7 +9,6 @@ import {
   History,
   Info,
   MapPin,
-  Maximize2,
   ShoppingCart,
   Table,
   TrainFront,
@@ -17,6 +16,7 @@ import {
   TrendingUp,
   Users,
   UtensilsCrossed,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -206,7 +206,7 @@ export function DetailDrawer({
               onClick={onClose}
               aria-label={t("app.close")}
             >
-              <Maximize2 data-icon />
+              <X data-icon />
             </Button>
           </DrawerHeader>
 
@@ -658,7 +658,14 @@ export function DetailDrawer({
                 variant={isSaved ? "secondary" : "default"}
               >
                 <Bookmark data-icon="inline-start" className={isSaved ? "fill-current" : ""} />
-                <span className="truncate">{isSaved ? t("detail.saved") : t("detail.save")}</span>
+                <span className="truncate">
+                  <span className="sm:hidden">
+                    {isSaved ? t("results.saved") : t("results.save")}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {isSaved ? t("detail.saved") : t("detail.save")}
+                  </span>
+                </span>
               </Button>
               <Button
                 variant="outline"
