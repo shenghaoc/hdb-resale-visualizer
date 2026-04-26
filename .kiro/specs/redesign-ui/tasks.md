@@ -40,3 +40,4 @@
 
 ## Phase 7: Mobile Viewport Stability Hotfixes
 - [x] Pin the app shell to viewport bounds so mobile browser zoom/tilt/resize cannot expose background gaps between map content and the bottom tab bar.
+- [x] Rebalance detail drawer action buttons and restore paginated result navigation on compact layouts.

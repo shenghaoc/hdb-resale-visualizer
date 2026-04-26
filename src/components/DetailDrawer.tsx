@@ -522,13 +522,17 @@ export function DetailDrawer({
                 className="mt-0 flex-1 flex flex-col gap-6 focus-visible:outline-none"
               >
                 <section>
-                  <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                  <h3 className="mb-4 flex items-center justify-between gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <span className="flex items-center gap-2">
                       <TrendingUp className="size-4" />
                       {t("detail.priceTrend", { count: 24 })}
                     </span>
-                    <Badge variant="outline" className="font-mono text-[0.65rem]">
-                      {t("shortlist.currencyCode")} / {t("unit.month")}
+                    <Badge
+                      variant="outline"
+                      className="shrink-0 whitespace-nowrap px-2 font-mono text-[0.7rem]"
+                    >
+                      {t("shortlist.currencyCode")}
+                      {t("unit.perMonth")}
                     </Badge>
                   </h3>
                   <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
@@ -646,19 +650,19 @@ export function DetailDrawer({
           </div>
 
           <div className="shrink-0 border-t border-border/40 bg-background/80 p-4 backdrop-blur-md sm:p-6">
-            <div className="mx-auto flex w-full gap-3 sm:gap-4">
+            <div className="mx-auto grid w-full grid-cols-2 gap-2.5 sm:gap-4">
               <Button
-                className="flex-1 gap-2 font-bold uppercase tracking-widest transition-all active:scale-[0.98]"
+                className="min-w-0 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
               >
                 <Bookmark data-icon="inline-start" className={isSaved ? "fill-current" : ""} />
-                {isSaved ? t("detail.saved") : t("detail.save")}
+                <span className="truncate">{isSaved ? t("detail.saved") : t("detail.save")}</span>
               </Button>
               <Button
                 variant="outline"
-                className="flex-1 gap-2 border-border/60 font-bold uppercase tracking-widest transition-all active:scale-[0.98]"
+                className="min-w-0 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 onClick={() => {
                   const url = new URL("https://www.google.com/maps/search/");
@@ -671,7 +675,7 @@ export function DetailDrawer({
                 }}
               >
                 <MapPin data-icon />
-                {t("detail.directions")}
+                <span className="truncate">{t("detail.directions")}</span>
               </Button>
             </div>
           </div>

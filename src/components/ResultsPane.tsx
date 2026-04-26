@@ -485,22 +485,20 @@ export function ResultsPane({
                       : undefined
                   }
                 >
-                  {(shouldVirtualize ? virtualBlocks : isCompact ? sortedBlocks : currentBlocks).map(
-                    (block, idx) => (
-                      <BlockCard
-                        key={block.addressKey}
-                        index={idx}
-                        block={block}
-                        isFeatured={block.addressKey === selectedAddressKey}
-                        isSaved={shortlistKeys.has(block.addressKey)}
-                        isCompact={isCompact}
-                        onSelect={onSelect}
-                        onToggleShortlist={onToggleShortlist}
-                      />
-                    ),
-                  )}
+                  {(shouldVirtualize ? virtualBlocks : currentBlocks).map((block, idx) => (
+                    <BlockCard
+                      key={block.addressKey}
+                      index={idx}
+                      block={block}
+                      isFeatured={block.addressKey === selectedAddressKey}
+                      isSaved={shortlistKeys.has(block.addressKey)}
+                      isCompact={isCompact}
+                      onSelect={onSelect}
+                      onToggleShortlist={onToggleShortlist}
+                    />
+                  ))}
                 </ItemGroup>
-                {!isCompact ? renderPagination() : null}
+                {!shouldVirtualize ? renderPagination() : null}
               </div>
             </div>
           )}
