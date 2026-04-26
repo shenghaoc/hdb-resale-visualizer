@@ -119,7 +119,7 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
-  const showMobileHeader = isDesktop || mobileTab === null;
+  const showMobileHeader = isDesktop;
 
   useEffect(() => {
     let isMounted = true;
@@ -707,7 +707,7 @@ function App() {
               </Button>
             </div>
           )}
-          {!isHeaderVisible ? (
+          {isDesktop && !isHeaderVisible ? (
             <div className="pointer-events-auto absolute right-4 top-16 z-10 lg:right-20 lg:top-6">
               <Button
                 variant="outline"
@@ -745,7 +745,7 @@ function App() {
                 )}
                 {...(!isDesktopPanelOpen && { inert: true })}
               >
-                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-card/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px]">
+                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-card/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px] dark:bg-card">
                   <Tabs
                     value={desktopTab}
                     onValueChange={(value) => setDesktopTab(value as DesktopTab)}
@@ -802,7 +802,7 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px]"
+                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] dark:bg-card"
                 >
                   {mobileTab === "filters" && (
                     <div id="mobile-filters-content" className="h-full overflow-y-auto p-3 pb-12">

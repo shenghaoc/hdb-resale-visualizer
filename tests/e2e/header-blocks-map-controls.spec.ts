@@ -133,20 +133,17 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await expectControlReceivesPointer(controls.geolocate, "Desktop geolocate");
   });
   
-  test("Mobile - Map controls should receive pointer events when header is visible", async ({ page }) => {
+  test("Mobile - Map controls should receive pointer events without a header overlay", async ({ page }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
     
     await waitForMapLoad(page);
-    await ensureHeaderVisible(page);
+    await expect(page.getByTestId("global-header")).toHaveCount(0);
     
     const controls = await getMapControlsInfo(page);
-    const overlapInfo = await checkControlsOverlapWithHeader(page);
     
-    console.log("Mobile overlap info:", overlapInfo);
-    
-    // On mobile, controls should have z-index: 30 but may still be blocked by header
+    // On mobile, controls stay above the map with no header hit target competing for clicks.
     const controlsZIndex = await page.evaluate(() => {
       const controlsElement = document.querySelector('.maplibregl-ctrl-top-right');
       return controlsElement ? window.getComputedStyle(controlsElement).zIndex : null;

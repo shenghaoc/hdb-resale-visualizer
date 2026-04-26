@@ -523,7 +523,7 @@ export function ShortlistDrawer({
                         <Card
                           key={row.item.addressKey}
                           role="listitem"
-                          className="animate-fade-in-up border-border/30 bg-white/50 shadow-sm backdrop-blur-sm transition-all hover:bg-white"
+                          className="animate-fade-in-up border-border/55 bg-popover/90 shadow-[0_8px_24px_rgba(0,0,0,0.14)] backdrop-blur-sm transition-all hover:bg-popover"
                           style={{ animationDelay: `${index * 60}ms` }}
                         >
                           <CardHeader className="gap-3 border-b border-border/20 pb-4">

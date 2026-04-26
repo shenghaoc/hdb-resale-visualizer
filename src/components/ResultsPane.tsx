@@ -89,8 +89,8 @@ const BlockCard = memo(function BlockCard({
         role="listitem"
         aria-selected={isFeatured}
         className={cn(
-          "animate-fade-in-up cursor-pointer border-border/20 bg-card transition-all duration-200 hover:border-primary/20 hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)]",
-          isFeatured && "border-primary/30 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
+          "animate-fade-in-up cursor-pointer border-border/30 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)]",
+          isFeatured && "border-primary/45 bg-accent/30 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
           "h-[100px] min-h-[100px] max-h-[100px] gap-2.5 px-3 py-3",
         )}
         style={{ animationDelay: `${index * 40}ms` }}
@@ -155,8 +155,8 @@ const BlockCard = memo(function BlockCard({
       role="listitem"
       aria-selected={isFeatured}
       className={cn(
-        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-white p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)]",
-        isFeatured && "border-primary/30 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
+        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)]",
+        isFeatured && "border-primary/45 bg-accent/30 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
       style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}

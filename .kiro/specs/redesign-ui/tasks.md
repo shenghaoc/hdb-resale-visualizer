@@ -41,3 +41,7 @@
 ## Phase 7: Mobile Viewport Stability Hotfixes
 - [x] Pin the app shell to viewport bounds so mobile browser zoom/tilt/resize cannot expose background gaps between map content and the bottom tab bar.
 - [x] Rebalance detail drawer action buttons and restore paginated result navigation on compact layouts.
+
+## Phase 8: Dark Mode & Mobile Map Polish
+- [x] Remove the mobile header overlay from the default map view so map controls remain unobstructed.
+- [x] Restyle the dark-mode base map with a night-map treatment instead of a plain dimming filter.

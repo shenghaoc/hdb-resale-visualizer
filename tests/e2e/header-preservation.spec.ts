@@ -170,41 +170,15 @@ test.describe("Preservation: Header Controls Continue to Function", () => {
     await expect(elements.header).toBeVisible();
   });
   
-  test("Property: Mobile info toggle shows/hides metadata on mobile devices", async ({ page }) => {
+  test("Property: Mobile map view omits the header overlay", async ({ page }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
     await waitForAppLoad(page);
-    await ensureHeaderVisible(page);
-    
-    const elements = await getHeaderElements(page);
-    
-    // Check if mobile info toggle is visible on mobile
-    const mobileInfoToggleVisible = await elements.mobileInfoToggle.isVisible();
-    console.log("Mobile info toggle visible:", mobileInfoToggleVisible);
-    
-    if (mobileInfoToggleVisible) {
-      // PRESERVATION ASSERTION: Mobile info toggle should be clickable
-      await expect(elements.mobileInfoToggle).toBeVisible();
-      
-      // Test that clicking doesn't cause errors
-      await elements.mobileInfoToggle.click();
-      await page.waitForTimeout(300);
-      
-      // Verify toggle is still clickable after first click
-      await expect(elements.mobileInfoToggle).toBeVisible();
-      
-      // Click again to test both states
-      await elements.mobileInfoToggle.click();
-      await page.waitForTimeout(300);
-      
-      // PRESERVATION ASSERTION: Toggle should remain functional
-      await expect(elements.mobileInfoToggle).toBeVisible();
-      
-      console.log("Mobile info toggle functionality verified");
-    } else {
-      console.log("Mobile info toggle not visible on mobile - this may be expected behavior");
-    }
+
+    await expect(page.getByTestId("global-header")).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
+    await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
   });
   
   test("Property: Visual styling (backdrop blur, transparency, shadows) renders correctly", async ({ page }) => {
@@ -281,13 +255,11 @@ test.describe("Property-Based Preservation Tests", () => {
     await page.goto("/");
     await waitForAppLoad(page);
     
-    // Property-based test: Generate different viewport sizes
+    // Property-based test: Generate desktop/tablet viewport sizes where the header is present
     const viewportSizes = [
       { width: 1920, height: 1080 }, // Large desktop
       { width: 1280, height: 720 },  // Standard desktop
-      { width: 768, height: 1024 },  // Tablet
-      { width: 390, height: 844 },   // Mobile
-      { width: 320, height: 568 }    // Small mobile
+      { width: 1024, height: 768 }   // Minimum desktop shell
     ];
     
     for (const viewport of viewportSizes) {
@@ -315,6 +287,28 @@ test.describe("Property-Based Preservation Tests", () => {
       // Reset theme for next iteration
       await elements.themeToggle.click();
       await page.waitForTimeout(200);
+    }
+  });
+
+  test("Property: Header stays absent across mobile viewport sizes", async ({ page }) => {
+    await page.goto("/");
+    await waitForAppLoad(page);
+
+    const viewportSizes = [
+      { width: 768, height: 1024 }, // Tablet below desktop shell
+      { width: 390, height: 844 },  // Mobile
+      { width: 320, height: 568 }   // Small mobile
+    ];
+
+    for (const viewport of viewportSizes) {
+      console.log(`Testing mobile viewport: ${viewport.width}x${viewport.height}`);
+
+      await page.setViewportSize(viewport);
+      await page.waitForTimeout(300);
+
+      await expect(page.getByTestId("global-header")).toHaveCount(0);
+      await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
+      await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
     }
   });
   

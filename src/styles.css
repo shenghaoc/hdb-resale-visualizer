@@ -59,7 +59,7 @@
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
   
   /* Avenue Logic Design System - Precision Navigator */
-  --background: #f6fafe;
+  --background: #f7faf9;
   --foreground: #171c1f;
   --card: #ffffff;
   --card-foreground: #171c1f;
@@ -67,18 +67,18 @@
   --popover-foreground: #171c1f;
   --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #e4e9ed;
+  --secondary: #e3ebe8;
   --secondary-foreground: #171c1f;
-  --muted: #f0f4f8;
+  --muted: #eef4f2;
   --muted-foreground: #434655;
-  --accent: #dbe1ff;
-  --accent-foreground: #00174b;
+  --accent: #dcece8;
+  --accent-foreground: #16372f;
   --destructive: #ba1a1a;
   --destructive-foreground: #ffffff;
   --success: #62a34b;
   --success-foreground: #ffffff;
-  --border: #c3c6d7;
-  --input: #dfe3e7;
+  --border: #c3cec9;
+  --input: #dbe4e1;
   --ring: #2563eb;
   --chart-1: #2563eb;
   --chart-2: #495c95;
@@ -86,7 +86,7 @@
   --chart-4: #acbfff;
   --chart-5: #dbe1ff;
   --radius: 0.5rem;
-  --sidebar: #f6fafe;
+  --sidebar: #f7faf9;
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
@@ -97,34 +97,33 @@
 }
 
 .dark {
-  /* Refined Dark Mode Palette following expert guidelines */
-  --background: #0f1115; /* Near-black */
-  --foreground: #e0e0e0; /* 88% white for comfort */
-  --card: #1a1d23; /* Elevated surface */
-  --card-foreground: #e0e0e0;
-  --popover: #22262e; /* Further elevation */
-  --popover-foreground: #e0e0e0;
+  --background: #101413;
+  --foreground: #e4e7e4;
+  --card: #191f1d;
+  --card-foreground: #e4e7e4;
+  --popover: #202724;
+  --popover-foreground: #e4e7e4;
   --primary: #79a6ff; /* Desaturated + Brightened blue */
   --primary-foreground: #081224;
-  --secondary: #1f232b;
-  --secondary-foreground: #dce7ff;
-  --muted: #1a1d23;
-  --muted-foreground: #94a3b8; /* Softer secondary text */
-  --accent: #1f2b42;
-  --accent-foreground: #dce7ff;
+  --secondary: #24302c;
+  --secondary-foreground: #dce9e4;
+  --muted: #202724;
+  --muted-foreground: #9baaa4;
+  --accent: #243931;
+  --accent-foreground: #d8f2e7;
   --destructive: #ff6b6b;
   --destructive-foreground: #2a0c0c;
-  --success: #7ecb63;
-  --success-foreground: #0e2410;
-  --border: rgba(255, 255, 255, 0.08); /* Subtle light borders */
-  --input: #2a3344;
+  --success: #87c96d;
+  --success-foreground: #102412;
+  --border: rgba(222, 232, 225, 0.11);
+  --input: #2b3934;
   --ring: #79a6ff;
   --chart-1: #79a6ff;
   --chart-2: #9bb7ff;
   --chart-3: #4f6d9f;
   --chart-4: #7f99d6;
   --chart-5: #b9cbff;
-  --sidebar: #0f1115;
+  --sidebar: #101413;
 }
 
 @layer base {
@@ -172,26 +171,47 @@
 }
 
 .map-view {
+  position: relative;
+  isolation: isolate;
   min-height: clamp(16rem, 55vh, 28rem);
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background: #edf0eb;
 }
 
 .dark .map-view .maplibregl-canvas {
-  /* Improved dark mode filter - more natural looking */
-  filter: invert(1) hue-rotate(180deg) brightness(1.1) contrast(0.9) saturate(0.8);
+  filter: invert(0.9) hue-rotate(178deg) brightness(0.78) contrast(0.95) saturate(0.62)
+    sepia(0.08);
+}
+
+.dark .map-view {
+  background: #0c1414;
+}
+
+.dark .map-view::before,
+.dark .map-view::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+}
+
+.dark .map-view::before {
+  background:
+    radial-gradient(circle at 70% 24%, rgba(82, 116, 170, 0.16), transparent 24rem),
+    linear-gradient(135deg, rgba(5, 28, 25, 0.18), rgba(26, 20, 48, 0.16));
+  mix-blend-mode: soft-light;
+}
+
+.dark .map-view::after {
+  box-shadow: inset 0 0 92px rgba(0, 0, 0, 0.16);
 }
 
 .dark .map-view .maplibregl-marker,
 .dark .map-view .maplibregl-popup {
   filter: none;
-}
-
-/* Compensate markers and popups to preserve their intended colors against the inverted map */
-.dark .map-view .maplibregl-marker > *,
-.dark .map-view .maplibregl-popup-content {
-  filter: invert(1) hue-rotate(180deg) brightness(0.9);
 }
 
 .map-attribution-link {
@@ -419,7 +439,7 @@
 
   .map-view .maplibregl-ctrl-top-right {
     right: 0.5rem;
-    top: calc(env(safe-area-inset-top, 0px) + 10rem);
+    top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
     bottom: auto;
     z-index: 30;
   }
