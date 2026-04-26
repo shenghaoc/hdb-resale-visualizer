@@ -531,7 +531,8 @@ export function DetailDrawer({
                       variant="outline"
                       className="shrink-0 whitespace-nowrap px-2 font-mono text-[0.7rem]"
                     >
-                      {t("shortlist.currencyCode")}/mo
+                      {t("shortlist.currencyCode")}
+                      {t("unit.perMonth")}
                     </Badge>
                   </h3>
                   <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
