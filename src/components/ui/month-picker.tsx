@@ -23,16 +23,17 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
   const { locale, t } = useI18n()
   const [open, setOpen] = React.useState(false)
   
-  // Set initial viewYear to the selected year, or maxYear if none is selected
+  // Parse range bounds
   const minYear = parseInt(minMonth.split("-")[0], 10)
   const maxYear = parseInt(maxMonth.split("-")[0], 10)
   
   const [viewYear, setViewYear] = React.useState(() => {
     if (value) return parseInt(value.split("-")[0], 10)
+    // Default to the year of the latest available data
     return maxYear
   })
 
-  // Sync viewYear when popover opens so it matches the value, unless value is null
+  // Sync viewYear when popover opens so it matches the value, if set
   React.useEffect(() => {
     if (open && value) {
       setViewYear(parseInt(value.split("-")[0], 10))
@@ -40,17 +41,25 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
   }, [open, value])
 
   const handleMonthClick = (monthIndex: number) => {
-    const newMonth = String(monthIndex + 1).padStart(2, '0')
-    const newValue = `${viewYear}-${newMonth}`
+    const monthStr = String(monthIndex + 1).padStart(2, '0')
+    const newValue = `${viewYear}-${monthStr}`
+    
+    // Strict enforcement: do nothing if month is outside range
+    if (newValue < minMonth || newValue > maxMonth) {
+      return
+    }
+    
     onChange(newValue)
     setOpen(false)
   }
 
-  const handlePreviousYear = () => {
+  const handlePreviousYear = (e: React.MouseEvent) => {
+    e.stopPropagation()
     setViewYear(y => Math.max(minYear, y - 1))
   }
 
-  const handleNextYear = () => {
+  const handleNextYear = (e: React.MouseEvent) => {
+    e.stopPropagation()
     setViewYear(y => Math.min(maxYear, y + 1))
   }
 
@@ -65,37 +74,41 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
           id={id}
           variant="outline"
           className={cn(
-            "w-full justify-start text-left font-normal bg-background px-3",
+            "group w-full justify-start text-left font-normal bg-background/50 px-3 hover:bg-background transition-all border-border/40",
             !value && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 size-4" data-icon="inline-start" />
-          {value ? formatMonth(value, locale) : (placeholder || t("filters.selectMonth", { defaultValue: "Select month" }))}
+          <CalendarIcon className="mr-2 size-4 text-muted-foreground group-hover:text-primary transition-colors" data-icon="inline-start" />
+          <span className="truncate">
+            {value ? formatMonth(value, locale) : (placeholder || t("filters.selectMonth", { defaultValue: "Select month" }))}
+          </span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-64 p-3" align="start">
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-border/50">
+      <PopoverContent className="w-[280px] p-0 shadow-xl border-border/20 backdrop-blur-xl bg-popover/95" align="start">
+        <div className="flex items-center justify-between p-3 border-b border-border/10">
           <Button
             variant="ghost"
-            size="icon-xs"
+            size="icon"
             onClick={handlePreviousYear}
             disabled={viewYear <= minYear}
-            className="hover:bg-muted"
+            className="size-8 rounded-full hover:bg-muted"
           >
-            <ChevronLeft />
+            <ChevronLeft className="size-4" />
           </Button>
-          <div className="font-semibold text-sm select-none">{viewYear}</div>
+          <div className="font-bold text-sm tracking-widest uppercase text-foreground/90 select-none">
+            {viewYear}
+          </div>
           <Button
             variant="ghost"
-            size="icon-xs"
+            size="icon"
             onClick={handleNextYear}
             disabled={viewYear >= maxYear}
-            className="hover:bg-muted"
+            className="size-8 rounded-full hover:bg-muted"
           >
-            <ChevronRight />
+            <ChevronRight className="size-4" />
           </Button>
         </div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="p-3 grid grid-cols-3 gap-2.5">
           {months.map((monthStr, index) => {
             const currentMonthStr = `${viewYear}-${String(index + 1).padStart(2, '0')}`
             const isDisabled = currentMonthStr < minMonth || currentMonthStr > maxMonth
@@ -105,12 +118,14 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
               <Button
                 key={index}
                 variant={isSelected ? "default" : "ghost"}
-                size="sm"
                 disabled={isDisabled}
                 onClick={() => handleMonthClick(index)}
                 className={cn(
-                  "h-8 px-0 text-xs font-medium w-full rounded-md transition-colors",
-                  isSelected ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "hover:bg-muted"
+                  "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-all",
+                  isSelected 
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90" 
+                    : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",
+                  isDisabled && "opacity-20 grayscale cursor-not-allowed"
                 )}
               >
                 {monthStr}
@@ -119,11 +134,11 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
           })}
         </div>
         {value && (
-          <div className="mt-3 pt-3 border-t border-border/50">
+          <div className="p-2 border-t border-border/10 bg-muted/20">
             <Button
               variant="ghost"
               size="sm"
-              className="w-full text-xs text-muted-foreground hover:text-foreground h-8"
+              className="w-full text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
               onClick={() => {
                 onChange(null)
                 setOpen(false)

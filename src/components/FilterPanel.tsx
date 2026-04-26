@@ -340,7 +340,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         value={filters.startMonth}
                         onChange={(value) => onChange({ startMonth: value })}
                         minMonth={minMonth}
-                        maxMonth={maxMonth}
+                        maxMonth={filters.endMonth ?? maxMonth}
                       />
                     </FieldContent>
                   </Field>
@@ -351,7 +351,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         id="end-month"
                         value={filters.endMonth}
                         onChange={(value) => onChange({ endMonth: value })}
-                        minMonth={minMonth}
+                        minMonth={filters.startMonth ?? minMonth}
                         maxMonth={maxMonth}
                       />
                     </FieldContent>
