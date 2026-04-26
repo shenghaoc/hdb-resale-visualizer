@@ -363,7 +363,20 @@ export function resolveGeographicSearchIntent(
   query: string,
   blocks: BlockSummary[],
   radiusMeters: number,
+  userLocation?: Coordinates | null,
+  nearMeQuery?: string,
 ): GeographicSearchIntent | null {
+  const normalizedQuery = normalizeSearchText(query);
+  const normalizedNearMe = nearMeQuery ? normalizeSearchText(nearMeQuery) : "near me";
+
+  if ((normalizedQuery === "near me" || normalizedQuery === normalizedNearMe) && userLocation) {
+    return {
+      type: "coordinates",
+      coordinates: userLocation,
+      radiusMeters,
+    };
+  }
+
   const coordinates = parseCoordinateSearch(query);
   if (coordinates) {
     return {

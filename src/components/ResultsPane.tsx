@@ -86,6 +86,8 @@ const BlockCard = memo(function BlockCard({
       <Item
         data-state={isFeatured ? "selected" : "idle"}
         variant="outline"
+        role="listitem"
+        aria-selected={isFeatured}
         className={cn(
           "animate-fade-in-up cursor-pointer border-border/20 bg-card transition-all duration-200 hover:border-primary/20 hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)]",
           isFeatured && "border-primary/30 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
@@ -150,13 +152,16 @@ const BlockCard = memo(function BlockCard({
     <Item
       data-state={isFeatured ? "selected" : "idle"}
       variant="outline"
+      role="listitem"
+      aria-selected={isFeatured}
       className={cn(
-        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-card p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)]",
+        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-white p-4 transition-all duration-200 hover:border-primary/20 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)]",
         isFeatured && "border-primary/30 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
       style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}
     >
+
 
       <ItemHeader>
         <ItemContent>

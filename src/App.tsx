@@ -34,6 +34,7 @@ import type {
   AddressDetail,
   BlockSummary,
   ComparisonArtifact,
+  Coordinates,
   FilterState,
   Manifest,
 } from "@/types/data";
@@ -74,6 +75,7 @@ function App() {
   const { t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
+  const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [filters, setFilters] = useState<FilterState>(() => {
     if (typeof window === "undefined") {
       return DEFAULT_FILTERS;
@@ -274,8 +276,10 @@ function App() {
         filters.search,
         blocks,
         filters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+        userLocation,
+        t("filters.nearMe"),
       ),
-    [blocks, filters.mrtMax, filters.search],
+    [blocks, filters.mrtMax, filters.search, userLocation, t],
   );
   const mapGeographicIntent = useMemo(
     () =>
@@ -283,8 +287,10 @@ function App() {
         mapFilters.search,
         blocks,
         mapFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+        userLocation,
+        t("filters.nearMe"),
       ),
-    [blocks, mapFilters.mrtMax, mapFilters.search],
+    [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
   const hasResultScope = Boolean(
     filters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
@@ -524,6 +530,14 @@ function App() {
     [toggleShortlist],
   );
 
+  const handleGeolocate = useCallback(
+    (coords: Coordinates) => {
+      setUserLocation(coords);
+      patchFilters({ search: t("filters.nearMe") });
+    },
+    [patchFilters, t],
+  );
+
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
       setIsHeaderVisible(false);
@@ -609,6 +623,7 @@ function App() {
         }
         showBlockMarkers={hasMapMarkerScope}
         onMapInteract={handleMapInteract}
+        onGeolocate={handleGeolocate}
         t={t}
       />
     </Suspense>

@@ -36,9 +36,13 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
   // Sync viewYear when popover opens so it matches the value, if set
   React.useEffect(() => {
     if (open && value) {
-      setViewYear(parseInt(value.split("-")[0], 10))
+      const year = parseInt(value.split("-")[0], 10);
+      if (viewYear !== year) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setViewYear(year);
+      }
     }
-  }, [open, value])
+  }, [open, value, viewYear]);
 
   const handleMonthClick = (monthIndex: number) => {
     const monthStr = String(monthIndex + 1).padStart(2, '0')

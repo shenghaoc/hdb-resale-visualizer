@@ -13,7 +13,7 @@ import {
 } from "@/lib/mrt-colors";
 import { MRT_LINE_SEQUENCES } from "@/lib/mrt-line-sequences";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import type { BlockSummary } from "@/types/data";
+import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
 type MapViewProps = {
@@ -24,6 +24,7 @@ type MapViewProps = {
   showBlockMarkers?: boolean;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
+  onGeolocate?: (coords: Coordinates) => void;
   t: Translator;
 };
 
@@ -65,7 +66,7 @@ type MrtStationsGeoJson = GeoJSON.FeatureCollection<
 >;
 
 function createCircleGeoJson(
-  center: { lat: number; lng: number },
+  center: Coordinates,
   radiusKm: number,
 ): GeoJSON.Feature<GeoJSON.Polygon> {
   const points = 64;
@@ -228,12 +229,14 @@ export function MapView({
   showBlockMarkers = false,
   onSelect,
   onMapInteract,
+  onGeolocate,
   t,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const onMapInteractRef = useRef(onMapInteract);
+  const onGeolocateRef = useRef(onGeolocate);
   const tRef = useRef(t);
   const popupRef = useRef<Popup | null>(null);
   const prefersReducedMotionRef = useRef(false);
@@ -257,6 +260,10 @@ export function MapView({
   useEffect(() => {
     onMapInteractRef.current = onMapInteract;
   }, [onMapInteract]);
+
+  useEffect(() => {
+    onGeolocateRef.current = onGeolocate;
+  });
 
   useEffect(() => {
     tRef.current = t;
@@ -304,17 +311,27 @@ export function MapView({
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");
-    map.addControl(
-      new maplibregl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        // One-shot geolocation only. Do not keep tracking while the user moves.
-        trackUserLocation: false,
-        showUserLocation: true,
-      }),
-      "top-right",
-    );
+
+    const geolocate = new maplibregl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // One-shot geolocation only. Do not keep tracking while the user moves.
+      trackUserLocation: false,
+      showUserLocation: true,
+    });
+
+    geolocate.on("geolocate", (e: unknown) => {
+      const event = e as { coords: { latitude: number; longitude: number } };
+      const { latitude, longitude } = event.coords;
+      const callback = onGeolocateRef.current;
+      if (callback) {
+        callback({ lat: latitude, lng: longitude });
+      }
+    });
+
+    map.addControl(geolocate, "top-right");
+
     map.doubleClickZoom.disable();
 
     const popup = new Popup({

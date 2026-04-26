@@ -81,7 +81,10 @@ export function GlobalHeader({
               </Button>
 
               <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-                <SelectTrigger className="h-7 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm">
+                <SelectTrigger
+                  aria-label={t("language.label")}
+                  className="h-7 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm"
+                >
                   <div className="flex items-center gap-1.5">
                     <Languages data-icon className="size-3 opacity-60" />
                     <SelectValue placeholder={t("language.label")} />

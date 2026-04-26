@@ -206,4 +206,22 @@ describe("matchesFilter", () => {
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
+
+  it("detects localized 'Near me' search and applies user location radius", () => {
+    expect(alpha).toBeTruthy();
+    expect(beta).toBeTruthy();
+
+    const userLocation = { lat: 1.3339, lng: 103.9372 }; // Bedok block coordinates
+    const query = "Near me";
+    const intent = resolveGeographicSearchIntent(query, artifact.blockSummaries, 1200, userLocation, "Near me");
+
+    expect(intent).toEqual({
+      type: "coordinates",
+      coordinates: userLocation,
+      radiusMeters: 1200,
+    });
+
+    expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(true);
+    expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(false);
+  });
 });

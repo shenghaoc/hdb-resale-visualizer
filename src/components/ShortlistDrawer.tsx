@@ -79,9 +79,6 @@ function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | 
   };
 }
 
-// Note: Lease context is block-level data, not per-transaction.
-// All units in a block share the same lease commencement range.
-
 export function ShortlistDrawer({
   isOpen,
   rows,
@@ -143,7 +140,7 @@ export function ShortlistDrawer({
           url: url,
         });
         return;
-      } catch (err) {
+      } catch {
         // Silently fail if share was cancelled or failed
       }
     }
@@ -334,13 +331,13 @@ export function ShortlistDrawer({
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0">
-        <CardHeader className="gap-2 border-b border-border px-3 py-2 sm:px-4">
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 bg-background py-0 shadow-none border-none">
+        <CardHeader className="gap-2 border-b border-border/30 bg-muted/20 px-3 py-2.5 sm:px-4 shrink-0">
           <div className="flex min-w-0 items-center gap-2">
-            <CardTitle className="mr-auto min-w-0 truncate text-sm leading-none tracking-[0.12em]">
+            <CardTitle className="mr-auto min-w-0 truncate text-[0.7rem] font-bold uppercase leading-none tracking-[0.16em] text-muted-foreground">
               {t("shortlist.title")}
             </CardTitle>
-            <Badge className="h-6 shrink-0 px-2 text-[0.65rem]">
+            <Badge className="h-6 shrink-0 px-2 text-[0.65rem] font-bold uppercase tracking-wider">
               {t("shortlist.savedCount", { count: rows.length })}
             </Badge>
             <Button
@@ -348,7 +345,9 @@ export function ShortlistDrawer({
               size="xs"
               variant="ghost"
               type="button"
-              className="h-7 shrink-0 px-2 text-[0.65rem]"
+              className="h-7 shrink-0 px-2 text-[0.65rem] font-bold uppercase tracking-wider"
+              aria-expanded={isOpen}
+              aria-controls="shortlist-content"
             >
               {isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
             </Button>
@@ -367,36 +366,54 @@ export function ShortlistDrawer({
                   onValueChange={(value) => setCompareMode(value as CompareMode)}
                 >
                   <SelectTrigger
-                    className="h-8 min-w-0 flex-1 sm:w-[10.5rem]"
+                    className="h-8 min-w-0 flex-1 sm:w-[10.5rem] border-border/30 bg-background/60 shadow-sm"
                     aria-labelledby={sortLabelId}
                   >
                     <SelectValue />
                   </SelectTrigger>
 
                   <SelectContent>
-                    <SelectItem value="target-gap">{t(compareModeLabels["target-gap"])}</SelectItem>
-                    <SelectItem value="median">{t(compareModeLabels.median)}</SelectItem>
-                    <SelectItem value="lease">{t(compareModeLabels.lease)}</SelectItem>
-                    <SelectItem value="mrt">{t(compareModeLabels.mrt)}</SelectItem>
+                    <SelectItem value="target-gap" className="text-xs">{t(compareModeLabels["target-gap"])}</SelectItem>
+                    <SelectItem value="median" className="text-xs">{t(compareModeLabels.median)}</SelectItem>
+                    <SelectItem value="lease" className="text-xs">{t(compareModeLabels.lease)}</SelectItem>
+                    <SelectItem value="mrt" className="text-xs">{t(compareModeLabels.mrt)}</SelectItem>
                   </SelectContent>
                 </Select>
               </Field>
               <div className="min-w-0 overflow-x-auto">
-                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border">
-                  <Button variant="outline" size="sm" onClick={handleExportJson} type="button" className="lg:h-7 lg:px-3 lg:text-[0.6rem]">
+                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border-border/30">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportJson}
+                    type="button"
+                    className="h-8 border-border/30 bg-background/60 px-3 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm backdrop-blur-sm"
+                    aria-label={t("shortlist.export.jsonLabel") || "Export as JSON"}
+                  >
                     <Download data-icon="inline-start" />
                     {t("shortlist.export.json")}
                   </Button>
-                  <Button variant="outline" size="sm" onClick={handleExportCsv} type="button" className="lg:h-7 lg:px-3 lg:text-[0.6rem]">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportCsv}
+                    type="button"
+                    className="h-8 border-border/30 bg-background/60 px-3 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm backdrop-blur-sm"
+                    aria-label={t("shortlist.export.csvLabel") || "Export as CSV"}
+                  >
                     <Download data-icon="inline-start" />
                     {t("shortlist.export.csv")}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleShare}
+                    onClick={() => void handleShare()}
                     type="button"
-                    className={cn("lg:h-7 lg:px-3 lg:text-[0.6rem]", copiedKey === "share" ? "text-success" : "")}
+                    className={cn(
+                      "h-8 border-border/30 bg-background/60 px-3 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm backdrop-blur-sm transition-colors",
+                      copiedKey === "share" ? "text-primary" : ""
+                    )}
+                    aria-label={t("shortlist.shareLinkLabel") || "Copy share link"}
                   >
                     {copiedKey === "share" ? (
                       <Check data-icon="inline-start" />
@@ -410,7 +427,11 @@ export function ShortlistDrawer({
                     size="sm"
                     onClick={handleCopySummary}
                     type="button"
-                    className={cn("lg:h-7 lg:px-3 lg:text-[0.6rem]", copiedKey === "summary" ? "text-success" : "")}
+                    className={cn(
+                      "h-8 border-border/30 bg-background/60 px-3 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm backdrop-blur-sm transition-colors",
+                      copiedKey === "summary" ? "text-primary" : ""
+                    )}
+                    aria-label={t("shortlist.copySummaryLabel") || "Copy Markdown summary"}
                   >
                     {copiedKey === "summary" ? (
                       <Check data-icon="inline-start" />
@@ -426,29 +447,31 @@ export function ShortlistDrawer({
         </CardHeader>
 
         {isOpen ? (
-          <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 pt-3 sm:px-4">
+          <CardContent id="shortlist-content" className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 pt-3 pb-12 sm:px-4">
             {rows.length === 0 ? (
-              <div className="empty-state pt-8">{t("shortlist.emptyState")}</div>
+              <div className="empty-state pt-12 text-center text-sm text-muted-foreground italic">
+                {t("shortlist.emptyState")}
+              </div>
             ) : (
               <ScrollArea className="flex-1 min-h-0 pr-3" data-testid="shortlist-scroll-container">
                 <div className="flex flex-col gap-4 py-4">
-                  <Card className="bg-muted/40">
-                    <CardContent className="grid gap-3 pt-4 sm:grid-cols-3">
+                  <Card className="border-border/30 bg-muted/10 shadow-none">
+                    <CardContent className="grid gap-4 pt-4 sm:grid-cols-3">
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/80">
                           {t("shortlist.lowestMedian")}
                         </span>
-                        <strong>
+                        <strong className="text-sm font-bold tracking-tight">
                           {highlights.cheapest
                             ? `${highlights.cheapest.block.block} ${highlights.cheapest.block.streetName}`
                             : t("shortlist.na")}
                         </strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/80">
                           {t("shortlist.newestLease")}
                         </span>
-                        <strong>
+                        <strong className="text-sm font-bold tracking-tight">
                           {highlights.newestLease
                             ? t("shortlist.commence", {
                                 year: highlights.newestLease.block.leaseCommenceRange[1],
@@ -457,10 +480,10 @@ export function ShortlistDrawer({
                         </strong>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/80">
                           {t("shortlist.closestMrt")}
                         </span>
-                        <strong>
+                        <strong className="text-sm font-bold tracking-tight">
                           {highlights.nearestMrt?.block.nearestMrt
                             ? `${highlights.nearestMrt.block.nearestMrt.stationName} • ${formatMeters(highlights.nearestMrt.block.nearestMrt.distanceMeters, t, locale)}`
                             : t("shortlist.na")}
@@ -469,12 +492,16 @@ export function ShortlistDrawer({
                     </CardContent>
                   </Card>
                   {compareOption ? (
-                    <Card className="bg-muted/40">
+                    <Card className="border-border/30 bg-muted/10 shadow-none">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-base">{t("shortlist.compareTrendsTitle")}</CardTitle>
+                        <CardTitle className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                          {t("shortlist.compareTrendsTitle")}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="pt-0">
-                        <p id="compare-trends-hint" className="pb-3 text-xs text-muted-foreground">{t("shortlist.compareTrendsHint")}</p>
+                        <p id="compare-trends-hint" className="pb-3 text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                          {t("shortlist.compareTrendsHint")}
+                        </p>
                         <ReactEChartsCore
                           echarts={echarts}
                           notMerge
@@ -488,285 +515,291 @@ export function ShortlistDrawer({
                     </Card>
                   ) : null}
 
-                  {rankedRows.map((row, index) => {
-                    const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
+                  <div className="flex flex-col gap-4" role="list">
+                    {rankedRows.map((row, index) => {
+                      const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
 
-                    return (
-                      <Card
-                        key={row.item.addressKey}
-                        className="animate-fade-in-up bg-muted/40"
-                        style={{ animationDelay: `${index * 60}ms` }}
-                      >
-                        <CardHeader className="gap-3 border-b border-border/60 pb-5">
-                          <div className="flex flex-wrap items-start gap-3">
-                            <div className="flex flex-1 flex-col gap-2">
-                              <CardTitle className="text-xl">
-                                {row.block.block} {row.block.streetName}
-                              </CardTitle>
-                              <div className="flex flex-wrap items-center gap-2">
-                                <Badge variant="secondary" className="h-5 text-[0.65rem]">
-                                  {t("shortlist.compare.rank", { rank: index + 1 })}
-                                </Badge>
-                                <span className="text-xs text-muted-foreground">
-                                  {getRankingMetricLabel(row)}
-                                </span>
-                                {row.comparison && (
-                                  <>
-                                    <Badge
-                                      variant={
-                                        row.comparison.percentileRanks.pricePercentile <= 25
-                                          ? "default"
-                                          : "outline"
-                                      }
-                                      className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
-                                    >
-                                      {t("detail.rank.price")}:{" "}
-                                      {t("detail.topPercentile", {
-                                        value: Math.round(
-                                          row.comparison.percentileRanks.pricePercentile,
-                                        ),
-                                      })}
-                                    </Badge>
-                                    <Badge
-                                      variant={
-                                        row.comparison.percentileRanks.mrtDistancePercentile >= 75
-                                          ? "default"
-                                          : "outline"
-                                      }
-                                      className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
-                                    >
-                                      {t("detail.rank.mrt")}:{" "}
-                                      {t("detail.topPercentile", {
-                                        value: Math.round(
-                                          100 - row.comparison.percentileRanks.mrtDistancePercentile,
-                                        ),
-                                      })}
-                                    </Badge>
-                                  </>
-                                )}
+                      return (
+                        <Card
+                          key={row.item.addressKey}
+                          role="listitem"
+                          className="animate-fade-in-up border-border/30 bg-white/50 shadow-sm backdrop-blur-sm transition-all hover:bg-white"
+                          style={{ animationDelay: `${index * 60}ms` }}
+                        >
+                          <CardHeader className="gap-3 border-b border-border/20 pb-4">
+                            <div className="flex flex-wrap items-start gap-3">
+                              <div className="flex flex-1 flex-col gap-1.5">
+                                <CardTitle className="text-lg font-bold tracking-tight">
+                                  {row.block.block} {row.block.streetName}
+                                </CardTitle>
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <Badge variant="secondary" className="h-5 text-[0.6rem] font-bold">
+                                    {t("shortlist.compare.rank", { rank: index + 1 })}
+                                  </Badge>
+                                  <span className="text-[0.65rem] font-bold uppercase tracking-wider text-muted-foreground">
+                                    {getRankingMetricLabel(row)}
+                                  </span>
+                                  {row.comparison && (
+                                    <>
+                                      <Badge
+                                        variant={
+                                          row.comparison.percentileRanks.pricePercentile <= 25
+                                            ? "default"
+                                            : "outline"
+                                        }
+                                        className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
+                                      >
+                                        {t("detail.rank.price")}:{" "}
+                                        {t("detail.topPercentile", {
+                                          value: Math.round(
+                                            row.comparison.percentileRanks.pricePercentile,
+                                          ),
+                                        })}
+                                      </Badge>
+                                      <Badge
+                                        variant={
+                                          row.comparison.percentileRanks.mrtDistancePercentile >= 75
+                                            ? "default"
+                                            : "outline"
+                                        }
+                                        className="h-5 border-border/60 text-[0.6rem] font-bold uppercase"
+                                      >
+                                        {t("detail.rank.mrt")}:{" "}
+                                        {t("detail.topPercentile", {
+                                          value: Math.round(
+                                            100 - row.comparison.percentileRanks.mrtDistancePercentile,
+                                          ),
+                                        })}
+                                      </Badge>
+                                    </>
+                                  )}
+                                </div>
                               </div>
+                              <Button
+                                size="xs"
+                                variant="ghost"
+                                onClick={() => onRemove(row.item.addressKey)}
+                                type="button"
+                                className="h-8 px-2 text-muted-foreground hover:text-destructive"
+                                aria-label={t("shortlist.remove")}
+                              >
+                                <X data-icon className="size-4" />
+                              </Button>
                             </div>
-                            <Button
-                              size="xs"
-                              variant="ghost"
-                              onClick={() => onRemove(row.item.addressKey)}
-                              type="button"
-                            >
-                              <X data-icon="inline-start" />
-                              {t("shortlist.remove")}
-                            </Button>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="flex flex-col gap-5 pt-5">
-                          <div className="grid gap-4 sm:grid-cols-3">
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                {t("shortlist.marketMedian")}
-                              </span>
-                              <strong className="font-heading text-2xl font-semibold">
-                                {formatCompactCurrency(row.block.medianPrice, locale)}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {formatCurrency(row.block.medianPrice, locale)}
-                              </span>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                {t("shortlist.pricePerSqft")}
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {row.detailSummary
-                                  ? row.detailSummary.pricePerSqftMedian !== null
-                                    ? formatCurrency(row.detailSummary.pricePerSqftMedian, locale)
-                                    : t("shortlist.na")
-                                  : t("shortlist.loadingMetrics")}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {row.detailSummary
-                                  ? t("shortlist.pricePerSqm", {
-                                      value: formatNumber(
-                                        row.detailSummary.pricePerSqmMedian,
-                                        0,
-                                        locale,
-                                      ),
-                                    })
-                                  : t("shortlist.loadingMetrics")}
-                              </span>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                {t("shortlist.areaRange")}
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {t("shortlist.areaRangeValue", {
-                                  min: formatNumber(row.block.floorAreaRange[0], 1, locale),
-                                  max: formatNumber(row.block.floorAreaRange[1], 1, locale),
-                                })}
-                              </strong>
-                              <span className="text-sm text-muted-foreground">
-                                {row.block.flatTypes.join(", ")}
-                              </span>
-                            </div>
-                          </div>
-
-                          {row.comparison && (
-                            <div className="grid gap-4 sm:grid-cols-2">
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.primarySchools")}
+                          </CardHeader>
+                          <CardContent className="flex flex-col gap-6 pt-5">
+                            <div className="grid gap-4 sm:grid-cols-3">
+                              <div className="flex flex-col gap-1.5">
+                                <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                  {t("shortlist.marketMedian")}
                                 </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.schoolsWithin", {
-                                    count1km: row.comparison.amenities.primarySchoolsWithin1km,
-                                    count2km: row.comparison.amenities.primarySchoolsWithin2km,
-                                  })}
+                                <strong className="font-heading text-xl font-bold tracking-tight">
+                                  {formatCompactCurrency(row.block.medianPrice, locale)}
                                 </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {row.comparison.amenities.nearestPrimarySchools?.[0]
-                                    ? t("shortlist.nearestNamedDistance", {
-                                        name: row.comparison.amenities.nearestPrimarySchools[0].name,
-                                        distance: formatMeters(
-                                          row.comparison.amenities.nearestPrimarySchools[0].distanceMeters,
-                                          t,
+                                <span className="text-[0.65rem] font-medium text-muted-foreground/60">
+                                  {formatCurrency(row.block.medianPrice, locale)}
+                                </span>
+                              </div>
+                              <div className="flex flex-col gap-1.5">
+                                <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                  {t("shortlist.pricePerSqft")}
+                                </span>
+                                <strong className="text-sm font-bold tracking-tight">
+                                  {row.detailSummary
+                                    ? row.detailSummary.pricePerSqftMedian !== null
+                                      ? formatCurrency(row.detailSummary.pricePerSqftMedian, locale)
+                                      : t("shortlist.na")
+                                    : t("shortlist.loadingMetrics")}
+                                </strong>
+                                <span className="text-[0.65rem] font-medium text-muted-foreground/60">
+                                  {row.detailSummary
+                                    ? t("shortlist.pricePerSqm", {
+                                        value: formatNumber(
+                                          row.detailSummary.pricePerSqmMedian,
+                                          0,
                                           locale,
                                         ),
                                       })
-                                    : row.comparison.amenities.nearestPrimarySchoolMeters !== null
-                                    ? t("shortlist.nearestDistance", {
-                                        distance: formatMeters(row.comparison.amenities.nearestPrimarySchoolMeters, t, locale),
-                                      })
-                                    : t("shortlist.noNearbySchools")}
+                                    : t("shortlist.loadingMetrics")}
                                 </span>
                               </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.amenities")}
+                              <div className="flex flex-col gap-1.5">
+                                <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                  {t("shortlist.areaRange")}
                                 </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.amenityCounts", {
-                                    hawkers: row.comparison.amenities.hawkerCentresWithin1km,
-                                    supermarkets: row.comparison.amenities.supermarketsWithin1km,
-                                    parks: row.comparison.amenities.parksWithin1km,
+                                <strong className="text-sm font-bold tracking-tight">
+                                  {t("shortlist.areaRangeValue", {
+                                    min: formatNumber(row.block.floorAreaRange[0], 1, locale),
+                                    max: formatNumber(row.block.floorAreaRange[1], 1, locale),
                                   })}
                                 </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.within1km")}
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.pricePercentile")}
-                                </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.percentileValue", {
-                                    value: Math.round(row.comparison.percentileRanks.pricePercentile),
-                                  })}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.percentileContext", {
-                                    town: row.comparison.town,
-                                    flatType: row.comparison.flatType,
-                                  })}
-                                </span>
-                              </div>
-                              <div className="flex flex-col gap-2">
-                                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                  {t("shortlist.locationPercentiles")}
-                                </span>
-                                <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                  {t("shortlist.locationPercentileValues", {
-                                    mrt: Math.round(row.comparison.percentileRanks.mrtDistancePercentile),
-                                    lease: Math.round(row.comparison.percentileRanks.leasePercentile),
-                                  })}
-                                </strong>
-                                <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.mrtLeaseContext")}
+                                <span className="text-[0.65rem] font-medium text-muted-foreground/60">
+                                  {row.block.flatTypes.join(", ")}
                                 </span>
                               </div>
                             </div>
-                          )}
 
-                          <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="flex flex-col gap-2">
-                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                <TrainFront className="size-3.5" />
-                                {t("results.nearestMrt")}
-                              </span>
-                              <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-                                {row.block.nearestMrt
-                                  ? `${row.block.nearestMrt.stationName} • ${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}`
-                                  : t("results.noMatch")}
-                              </strong>
-                              {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
-                                <span className="text-sm text-muted-foreground">
-                                  {t("results.alsoNear", {
-                                    stations: (row.block.nearbyMrts ?? [])
-                                      .slice(1)
-                                      .map((station) => station.stationName)
-                                      .join(", "),
-                                  })}
-                                </span>
-                              ) : null}
-                            </div>
-                            <div className="flex flex-col gap-2">
-                              <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                                <Target className="size-3.5" />
-                                {t("shortlist.gapVsTarget")}
-                              </span>
-                              {gapInfo ? (
-                                <>
-                                  <strong
-                                    className={
-                                      gapInfo.tone === "positive"
-                                        ? "text-success"
-                                        : "text-destructive"
-                                    }
-                                  >
-                                    {formatCurrency(gapInfo.amount, locale)}
-                                  </strong>
-                                  <span className="text-sm text-muted-foreground">
-                                    {t(gapInfo.labelKey)}
+                            {row.comparison && (
+                              <div className="grid gap-5 sm:grid-cols-2">
+                                <div className="flex flex-col gap-1.5">
+                                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                    {t("shortlist.primarySchools")}
                                   </span>
-                                </>
-                              ) : (
-                                <span className="text-sm text-muted-foreground">
-                                  {t("shortlist.enterTargetToCompare")}
-                                </span>
-                              )}
-                            </div>
-                          </div>
+                                  <strong className="text-sm font-bold tracking-tight">
+                                    {t("shortlist.schoolsWithin", {
+                                      count1km: row.comparison.amenities.primarySchoolsWithin1km,
+                                      count2km: row.comparison.amenities.primarySchoolsWithin2km,
+                                    })}
+                                  </strong>
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {row.comparison.amenities.nearestPrimarySchools?.[0]
+                                      ? t("shortlist.nearestNamedDistance", {
+                                          name: row.comparison.amenities.nearestPrimarySchools[0].name,
+                                          distance: formatMeters(
+                                            row.comparison.amenities.nearestPrimarySchools[0].distanceMeters,
+                                            t,
+                                            locale,
+                                          ),
+                                        })
+                                      : row.comparison.amenities.nearestPrimarySchoolMeters !== null
+                                      ? t("shortlist.nearestDistance", {
+                                          distance: formatMeters(row.comparison.amenities.nearestPrimarySchoolMeters, t, locale),
+                                        })
+                                      : t("shortlist.noNearbySchools")}
+                                  </span>
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                    {t("shortlist.amenities")}
+                                  </span>
+                                  <strong className="text-sm font-bold tracking-tight">
+                                    {t("shortlist.amenityCounts", {
+                                      hawkers: row.comparison.amenities.hawkerCentresWithin1km,
+                                      supermarkets: row.comparison.amenities.supermarketsWithin1km,
+                                      parks: row.comparison.amenities.parksWithin1km,
+                                    })}
+                                  </strong>
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {t("shortlist.within1km")}
+                                  </span>
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                    {t("shortlist.pricePercentile")}
+                                  </span>
+                                  <strong className="text-sm font-bold tracking-tight">
+                                    {t("shortlist.percentileValue", {
+                                      value: Math.round(row.comparison.percentileRanks.pricePercentile),
+                                    })}
+                                  </strong>
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {t("shortlist.percentileContext", {
+                                      town: row.comparison.town,
+                                      flatType: row.comparison.flatType,
+                                    })}
+                                  </span>
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                    {t("shortlist.locationPercentiles")}
+                                  </span>
+                                  <strong className="text-sm font-bold tracking-tight">
+                                    {t("shortlist.locationPercentileValues", {
+                                      mrt: Math.round(row.comparison.percentileRanks.mrtDistancePercentile),
+                                      lease: Math.round(row.comparison.percentileRanks.leasePercentile),
+                                    })}
+                                  </strong>
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {t("shortlist.mrtLeaseContext")}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
 
-                          <Field>
-                            <FieldContent>
-                              <FieldLabel htmlFor={`target-${row.item.addressKey}`}>
-                                {t("shortlist.yourTargetPrice")}
-                              </FieldLabel>
-                              <InputGroup>
-                                <InputGroupAddon align="inline-start">
-                                  <InputGroupText>{t("shortlist.currencyCode")}</InputGroupText>
-                                </InputGroupAddon>
-                                <InputGroupInput
-                                  id={`target-${row.item.addressKey}`}
-                                  inputMode="numeric"
-                                  placeholder={t("shortlist.targetPricePlaceholder")}
-                                  type="number"
-                                  value={row.item.targetPrice ?? ""}
-                                  onChange={(event) =>
-                                    onUpdate(row.item.addressKey, {
-                                      targetPrice:
-                                        event.target.value === ""
-                                          ? null
-                                          : Number(event.target.value),
-                                    })
-                                  }
-                                />
-                              </InputGroup>
-                            </FieldContent>
-                          </Field>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div className="flex flex-col gap-1.5">
+                                <span className="inline-flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                  <TrainFront className="size-3.5" />
+                                  {t("results.nearestMrt")}
+                                </span>
+                                <strong className="text-sm font-bold tracking-tight">
+                                  {row.block.nearestMrt
+                                    ? `${row.block.nearestMrt.stationName} • ${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}`
+                                    : t("results.noMatch")}
+                                </strong>
+                                {(row.block.nearbyMrts?.length ?? 0) > 1 ? (
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {t("results.alsoNear", {
+                                      stations: (row.block.nearbyMrts ?? [])
+                                        .slice(1)
+                                        .map((station) => station.stationName)
+                                        .join(", "),
+                                  })}
+                                  </span>
+                                ) : null}
+                              </div>
+                              <div className="flex flex-col gap-1.5">
+                                <span className="inline-flex items-center gap-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/70">
+                                  <Target className="size-3.5" />
+                                  {t("shortlist.gapVsTarget")}
+                                </span>
+                                {gapInfo ? (
+                                  <>
+                                    <strong
+                                      className={cn(
+                                        "text-sm font-bold tracking-tight",
+                                        gapInfo.tone === "positive"
+                                          ? "text-success"
+                                          : "text-destructive"
+                                      )}
+                                    >
+                                      {formatCurrency(gapInfo.amount, locale)}
+                                    </strong>
+                                    <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                      {t(gapInfo.labelKey)}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
+                                    {t("shortlist.enterTargetToCompare")}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <Field>
+                              <FieldContent>
+                                <FieldLabel htmlFor={`target-${row.item.addressKey}`} className="text-[0.6rem] font-bold uppercase tracking-[0.12em] text-muted-foreground/80">
+                                  {t("shortlist.yourTargetPrice")}
+                                </FieldLabel>
+                                <InputGroup>
+                                  <InputGroupAddon align="inline-start" className="border-border/30 bg-muted/10 px-2.5">
+                                    <InputGroupText className="text-[0.65rem] font-bold">{t("shortlist.currencyCode")}</InputGroupText>
+                                  </InputGroupAddon>
+                                  <InputGroupInput
+                                    id={`target-${row.item.addressKey}`}
+                                    inputMode="numeric"
+                                    placeholder={t("shortlist.targetPricePlaceholder")}
+                                    type="number"
+                                    value={row.item.targetPrice ?? ""}
+                                    className="border-border/30 bg-transparent text-sm font-bold"
+                                    onChange={(event) =>
+                                      onUpdate(row.item.addressKey, {
+                                        targetPrice:
+                                          event.target.value === ""
+                                            ? null
+                                            : Number(event.target.value),
+                                      })
+                                    }
+                                  />
+                                </InputGroup>
+                              </FieldContent>
+                            </Field>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
                 </div>
               </ScrollArea>
             )}
