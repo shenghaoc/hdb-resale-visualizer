@@ -1,5 +1,4 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { MAX_LEASE_DURATION, getCurrentYear } from '@/lib/constants';
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -43,17 +42,17 @@ type ResultsPaneProps = {
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
 
-// Removed module-level CURRENT_YEAR; using getCurrentYear() helper.
+// Optimization: Cache current year to avoid instantiating new Date() in array sort loops
+const CURRENT_YEAR = new Date().getFullYear();
 
 function getSortValue(block: BlockSummary, mode: SortMode) {
-  const currentYear = getCurrentYear();
   switch (mode) {
     case "median-asc":
       return block.medianPrice;
     case "median-desc":
       return -block.medianPrice;
     case "lease-desc":
-      return -(MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]));
+      return -(99 - (CURRENT_YEAR - block.leaseCommenceRange[1]));
     case "mrt-asc":
       return block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
     case "latest-desc":
