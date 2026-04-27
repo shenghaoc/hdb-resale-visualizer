@@ -30,8 +30,9 @@ export function TrendChart({ points }: TrendChartProps) {
 
   const option = useMemo(() => {
     const prices = points.map((p) => p.medianPrice);
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
+    const filteredPrices = prices.filter((p) => !Number.isNaN(p));
+    const minPrice = filteredPrices.length > 0 ? Math.min(...filteredPrices) : 0;
+    const maxPrice = filteredPrices.length > 0 ? Math.max(...filteredPrices) : 0;
     const range = maxPrice - minPrice;
 
     // Use a baseline that highlights fluctuations while maintaining context
@@ -125,7 +126,8 @@ export function TrendChart({ points }: TrendChartProps) {
           },
           data: points.map((point) => point.medianPrice),
           tooltip: {
-            valueFormatter: (value: number) => formatCompactCurrency(value),
+            valueFormatter: (value: number) =>
+              isNaN(value) ? "–" : formatCompactCurrency(value),
           },
         },
         {
@@ -138,7 +140,8 @@ export function TrendChart({ points }: TrendChartProps) {
           },
           data: points.map((point) => point.transactionCount),
           tooltip: {
-            valueFormatter: (value: number) => `${value} txns`,
+            valueFormatter: (value: number) =>
+              isNaN(value) ? "–" : `${value} txns`,
           },
         },
       ],

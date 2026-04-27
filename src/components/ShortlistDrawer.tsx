@@ -269,7 +269,10 @@ export function ShortlistDrawer({
         smooth: true,
         showSymbol: false,
         lineStyle: { width: 2.5 },
-        data: months.map((month) => monthToPrice.get(month) ?? null),
+        data: months.map((month) => {
+          const price = monthToPrice.get(month) ?? null;
+          return price !== null && !isNaN(price) ? price : null;
+        }),
       };
     });
 
@@ -299,7 +302,9 @@ export function ShortlistDrawer({
           color: colors.popoverForeground,
         },
         valueFormatter: (value: number | null) =>
-          value === null ? t("shortlist.na") : formatCompactCurrency(value),
+          value === null || Number.isNaN(value)
+            ? t("shortlist.na")
+            : formatCompactCurrency(value),
       },
       legend: {
         type: "scroll",
