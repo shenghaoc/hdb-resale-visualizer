@@ -9,8 +9,8 @@
       "lat": 1.37554033809538,
       "lng": 103.887475138873
     },
-    "medianPrice": 527500,
-    "transactionCount": 4,
+    "medianPrice": 525000,
+    "transactionCount": 5,
     "floorAreaRange": [
       84,
       90
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-11",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      503750,
-      552500
+      505000,
+      550000
     ],
-    "pricePerSqmMedian": 6095.84,
-    "pricePerSqftMedian": 566.32
+    "pricePerSqmMedian": 6011.9,
+    "pricePerSqftMedian": 558.52
   },
   "monthlyTrend": [
     {
@@ -722,9 +722,28 @@
       "medianPrice": 560000,
       "transactionCount": 1,
       "medianPricePerSqm": 6666.67
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 525000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5898.88
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-697-hougang-st-61-2026-04-224842",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 89,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 01 month",
+      "resalePrice": 525000,
+      "pricePerSqm": 5898.88,
+      "pricePerSqft": 548.02
+    },
     {
       "id": "hougang-697-hougang-st-61-2025-07-205875",
       "month": "2025-07",
@@ -971,19 +990,6 @@
       "resalePrice": 325000,
       "pricePerSqm": 3869.05,
       "pricePerSqft": 359.45
-    },
-    {
-      "id": "hougang-697-hougang-st-61-2018-11-39410",
-      "month": "2018-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 84,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "67 years 07 months",
-      "resalePrice": 330000,
-      "pricePerSqm": 3928.57,
-      "pricePerSqft": 364.98
     }
   ]
 }

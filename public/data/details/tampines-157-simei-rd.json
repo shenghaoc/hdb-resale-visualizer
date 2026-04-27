@@ -9,8 +9,8 @@
       "lat": 1.34462159576141,
       "lng": 103.959417493708
     },
-    "medianPrice": 650000,
-    "transactionCount": 3,
+    "medianPrice": 649000,
+    "transactionCount": 4,
     "floorAreaRange": [
       90,
       129
@@ -19,10 +19,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-01",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      647500,
-      672500
+      647250,
+      661250
     ],
-    "pricePerSqmMedian": 6201.92,
-    "pricePerSqftMedian": 576.18
+    "pricePerSqmMedian": 6216.35,
+    "pricePerSqftMedian": 577.52
   },
   "monthlyTrend": [
     {
@@ -497,9 +497,28 @@
       "medianPrice": 645000,
       "transactionCount": 1,
       "medianPricePerSqm": 6201.92
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 648000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6230.77
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-157-simei-rd-2026-04-227861",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "61 years 11 months",
+      "resalePrice": 648000,
+      "pricePerSqm": 6230.77,
+      "pricePerSqft": 578.86
+    },
     {
       "id": "tampines-157-simei-rd-2025-08-216013",
       "month": "2025-08",
@@ -644,7 +663,7 @@
       "pricePerSqft": 393.05
     },
     {
-      "id": "tampines-157-simei-rd-2016-08-969218",
+      "id": "tampines-157-simei-rd-2016-08-969334",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -657,7 +676,7 @@
       "pricePerSqft": 446.65
     },
     {
-      "id": "tampines-157-simei-rd-2015-02-940877",
+      "id": "tampines-157-simei-rd-2015-02-940993",
       "month": "2015-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -670,7 +689,7 @@
       "pricePerSqft": 419.85
     },
     {
-      "id": "tampines-157-simei-rd-2014-03-638574",
+      "id": "tampines-157-simei-rd-2014-03-638690",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -683,7 +702,7 @@
       "pricePerSqft": 401.98
     },
     {
-      "id": "tampines-157-simei-rd-2014-03-638576",
+      "id": "tampines-157-simei-rd-2014-03-638692",
       "month": "2014-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -696,7 +715,7 @@
       "pricePerSqft": 466.58
     },
     {
-      "id": "tampines-157-simei-rd-2013-05-626081",
+      "id": "tampines-157-simei-rd-2013-05-626197",
       "month": "2013-05",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -709,7 +728,7 @@
       "pricePerSqft": 462.73
     },
     {
-      "id": "tampines-157-simei-rd-2012-10-615673",
+      "id": "tampines-157-simei-rd-2012-10-615789",
       "month": "2012-10",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -722,7 +741,7 @@
       "pricePerSqft": 475.24
     },
     {
-      "id": "tampines-157-simei-rd-2012-01-597261",
+      "id": "tampines-157-simei-rd-2012-01-597377",
       "month": "2012-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -735,7 +754,7 @@
       "pricePerSqft": 409.13
     },
     {
-      "id": "tampines-157-simei-rd-2011-10-592456",
+      "id": "tampines-157-simei-rd-2011-10-592572",
       "month": "2011-10",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -746,19 +765,6 @@
       "resalePrice": 572000,
       "pricePerSqm": 4434.11,
       "pricePerSqft": 411.94
-    },
-    {
-      "id": "tampines-157-simei-rd-2011-08-588980",
-      "month": "2011-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years",
-      "resalePrice": 460000,
-      "pricePerSqm": 4423.08,
-      "pricePerSqft": 410.92
     }
   ]
 }

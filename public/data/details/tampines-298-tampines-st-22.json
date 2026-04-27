@@ -9,8 +9,8 @@
       "lat": 1.35178748673912,
       "lng": 103.95475675786
     },
-    "medianPrice": 690000,
-    "transactionCount": 5,
+    "medianPrice": 685000,
+    "transactionCount": 6,
     "floorAreaRange": [
       97,
       130
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      670000,
-      707000
+      672500,
+      702750
     ],
-    "pricePerSqmMedian": 5611.11,
-    "pricePerSqftMedian": 521.29
+    "pricePerSqmMedian": 5615.47,
+    "pricePerSqftMedian": 521.69
   },
   "monthlyTrend": [
     {
@@ -898,9 +898,28 @@
       "medianPrice": 760000,
       "transactionCount": 1,
       "medianPricePerSqm": 6280.99
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5619.83
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-298-tampines-st-22-2026-04-228198",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years",
+      "resalePrice": 680000,
+      "pricePerSqm": 5619.83,
+      "pricePerSqft": 522.1
+    },
     {
       "id": "tampines-298-tampines-st-22-2025-10-217186",
       "month": "2025-10",
@@ -1147,19 +1166,6 @@
       "resalePrice": 560000,
       "pricePerSqm": 4552.85,
       "pricePerSqft": 422.97
-    },
-    {
-      "id": "tampines-298-tampines-st-22-2021-10-111203",
-      "month": "2021-10",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "62 years 06 months",
-      "resalePrice": 545000,
-      "pricePerSqm": 4504.13,
-      "pricePerSqft": 418.45
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.37781568057175,
       "lng": 103.891282467147
     },
-    "medianPrice": 650000,
-    "transactionCount": 6,
+    "medianPrice": 630000,
+    "transactionCount": 7,
     "floorAreaRange": [
       104,
       121
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      611250,
-      698500
+      602500,
+      689000
     ],
-    "pricePerSqmMedian": 5834.27,
-    "pricePerSqftMedian": 542.03
+    "pricePerSqmMedian": 5817.31,
+    "pricePerSqftMedian": 540.45
   },
   "monthlyTrend": [
     {
@@ -679,14 +679,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 605000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5817.31
+      "medianPrice": 602500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5793.27
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-540-hougang-ave-8-2026-04-224766",
+      "id": "hougang-540-hougang-ave-8-2026-04-224805",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -699,7 +699,20 @@
       "pricePerSqft": 540.45
     },
     {
-      "id": "hougang-540-hougang-ave-8-2026-03-224871",
+      "id": "hougang-540-hougang-ave-8-2026-04-224806",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 07 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 5769.23,
+      "pricePerSqft": 535.98
+    },
+    {
+      "id": "hougang-540-hougang-ave-8-2026-03-224916",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -931,19 +944,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 3942.31,
       "pricePerSqft": 366.25
-    },
-    {
-      "id": "hougang-540-hougang-ave-8-2018-01-20886",
-      "month": "2018-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "70 years 10 months",
-      "resalePrice": 400000,
-      "pricePerSqm": 3846.15,
-      "pricePerSqft": 357.32
     }
   ]
 }

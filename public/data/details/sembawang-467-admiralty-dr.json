@@ -10,7 +10,7 @@
       "lng": 103.814425933159
     },
     "medianPrice": 620000,
-    "transactionCount": 9,
+    "transactionCount": 11,
     "floorAreaRange": [
       102,
       142
@@ -52,8 +52,8 @@
       }
     ],
     "priceIqr": [
-      570000,
-      688888
+      560944,
+      679444
     ],
     "pricePerSqmMedian": 5145.99,
     "pricePerSqftMedian": 478.08
@@ -637,14 +637,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 688888,
-      "transactionCount": 1,
+      "medianPrice": 670000,
+      "transactionCount": 3,
       "medianPricePerSqm": 5028.38
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-467-admiralty-dr-2026-04-227020",
+      "id": "sembawang-467-admiralty-dr-2026-04-226884",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 102,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 550000,
+      "pricePerSqm": 5392.16,
+      "pricePerSqft": 500.95
+    },
+    {
+      "id": "sembawang-467-admiralty-dr-2026-04-227088",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -655,6 +668,19 @@
       "resalePrice": 688888,
       "pricePerSqm": 5028.38,
       "pricePerSqft": 467.15
+    },
+    {
+      "id": "sembawang-467-admiralty-dr-2026-04-227089",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 137,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 03 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 4890.51,
+      "pricePerSqft": 454.34
     },
     {
       "id": "sembawang-467-admiralty-dr-2025-10-213267",
@@ -876,32 +902,6 @@
       "resalePrice": 520000,
       "pricePerSqm": 4521.74,
       "pricePerSqft": 420.08
-    },
-    {
-      "id": "sembawang-467-admiralty-dr-2022-12-134203",
-      "month": "2022-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 102,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "77 years 09 months",
-      "resalePrice": 504000,
-      "pricePerSqm": 4941.18,
-      "pricePerSqft": 459.05
-    },
-    {
-      "id": "sembawang-467-admiralty-dr-2022-10-134038",
-      "month": "2022-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 102,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "77 years 09 months",
-      "resalePrice": 472500,
-      "pricePerSqm": 4632.35,
-      "pricePerSqft": 430.36
     }
   ]
 }

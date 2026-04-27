@@ -9,8 +9,8 @@
       "lat": 1.42814009724191,
       "lng": 103.774574393421
     },
-    "medianPrice": 1049000,
-    "transactionCount": 2,
+    "medianPrice": 1030000,
+    "transactionCount": 3,
     "floorAreaRange": [
       68,
       179
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,11 +55,11 @@
       }
     ],
     "priceIqr": [
-      1039500,
-      1058500
+      725000,
+      1049000
     ],
-    "pricePerSqmMedian": 5926.56,
-    "pricePerSqftMedian": 550.6
+    "pricePerSqmMedian": 6033.9,
+    "pricePerSqftMedian": 560.57
   },
   "monthlyTrend": [
     {
@@ -421,11 +421,30 @@
       "medianPrice": 1068000,
       "transactionCount": 1,
       "medianPricePerSqm": 6033.9
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6176.47
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-420-woodlands-st-41-2026-01-229116",
+      "id": "woodlands-420-woodlands-st-41-2026-04-228725",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years 06 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6176.47,
+      "pricePerSqft": 573.81
+    },
+    {
+      "id": "woodlands-420-woodlands-st-41-2026-01-229226",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -659,7 +678,7 @@
       "pricePerSqft": 319.67
     },
     {
-      "id": "woodlands-420-woodlands-st-41-2016-06-965873",
+      "id": "woodlands-420-woodlands-st-41-2016-06-965989",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -670,19 +689,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 3367.35,
       "pricePerSqft": 312.84
-    },
-    {
-      "id": "woodlands-420-woodlands-st-41-2016-06-965941",
-      "month": "2016-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 137,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "78",
-      "resalePrice": 450000,
-      "pricePerSqm": 3284.67,
-      "pricePerSqft": 305.16
     }
   ]
 }

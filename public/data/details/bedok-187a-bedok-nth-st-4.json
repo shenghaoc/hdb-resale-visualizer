@@ -9,8 +9,8 @@
       "lat": 1.33087094745916,
       "lng": 103.940210775064
     },
-    "medianPrice": 876000,
-    "transactionCount": 11,
+    "medianPrice": 873000,
+    "transactionCount": 12,
     "floorAreaRange": [
       93,
       113
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      843444,
-      911500
+      845722,
+      899750
     ],
-    "pricePerSqmMedian": 9115.04,
-    "pricePerSqftMedian": 846.82
+    "pricePerSqmMedian": 9116.66,
+    "pricePerSqftMedian": 846.97
   },
   "monthlyTrend": [
     {
@@ -193,14 +193,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 838888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9020.3
+      "medianPrice": 849444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9133.81
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-187a-bedok-nth-st-4-2026-04-222566",
+      "id": "bedok-187a-bedok-nth-st-4-2026-04-222574",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -213,7 +213,20 @@
       "pricePerSqft": 838.01
     },
     {
-      "id": "bedok-187a-bedok-nth-st-4-2026-03-222560",
+      "id": "bedok-187a-bedok-nth-st-4-2026-04-222575",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 08 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 9247.31,
+      "pricePerSqft": 859.1
+    },
+    {
+      "id": "bedok-187a-bedok-nth-st-4-2026-03-222568",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -226,7 +239,7 @@
       "pricePerSqft": 869.09
     },
     {
-      "id": "bedok-187a-bedok-nth-st-4-2026-01-222551",
+      "id": "bedok-187a-bedok-nth-st-4-2026-01-222559",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -445,19 +458,6 @@
       "resalePrice": 852000,
       "pricePerSqm": 9161.29,
       "pricePerSqft": 851.11
-    },
-    {
-      "id": "bedok-187a-bedok-nth-st-4-2023-12-145748",
-      "month": "2023-12",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 113,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 01 month",
-      "resalePrice": 952500,
-      "pricePerSqm": 8429.2,
-      "pricePerSqft": 783.1
     }
   ]
 }

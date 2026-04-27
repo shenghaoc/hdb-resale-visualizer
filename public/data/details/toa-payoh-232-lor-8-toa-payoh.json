@@ -9,8 +9,8 @@
       "lat": 1.33757187318717,
       "lng": 103.85884393026
     },
-    "medianPrice": 366500,
-    "transactionCount": 10,
+    "medianPrice": 365000,
+    "transactionCount": 11,
     "floorAreaRange": [
       65,
       76
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      349500,
-      382750
+      344000,
+      382500
     ],
-    "pricePerSqmMedian": 5638.46,
-    "pricePerSqftMedian": 523.83
+    "pricePerSqmMedian": 5615.38,
+    "pricePerSqftMedian": 521.69
   },
   "monthlyTrend": [
     {
@@ -1055,14 +1055,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 352500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5423.08
+      "medianPrice": 343000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5276.92
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-232-lor-8-toa-payoh-2026-04-228346",
+      "id": "toa-payoh-232-lor-8-toa-payoh-2026-04-228442",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1075,7 +1075,7 @@
       "pricePerSqft": 485.95
     },
     {
-      "id": "toa-payoh-232-lor-8-toa-payoh-2026-04-228347",
+      "id": "toa-payoh-232-lor-8-toa-payoh-2026-04-228443",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1088,7 +1088,20 @@
       "pricePerSqft": 521.69
     },
     {
-      "id": "toa-payoh-232-lor-8-toa-payoh-2026-01-228341",
+      "id": "toa-payoh-232-lor-8-toa-payoh-2026-04-228445",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 07 months",
+      "resalePrice": 343000,
+      "pricePerSqm": 5276.92,
+      "pricePerSqft": 490.24
+    },
+    {
+      "id": "toa-payoh-232-lor-8-toa-payoh-2026-01-228437",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1307,19 +1320,6 @@
       "resalePrice": 260000,
       "pricePerSqm": 4000,
       "pricePerSqft": 371.61
-    },
-    {
-      "id": "toa-payoh-232-lor-8-toa-payoh-2020-07-75059",
-      "month": "2020-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "55 years 05 months",
-      "resalePrice": 240000,
-      "pricePerSqm": 3692.31,
-      "pricePerSqft": 343.03
     }
   ]
 }

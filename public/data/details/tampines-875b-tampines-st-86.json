@@ -9,8 +9,8 @@
       "lat": 1.35291999213671,
       "lng": 103.929501131497
     },
-    "medianPrice": 871667,
-    "transactionCount": 2,
+    "medianPrice": 783333,
+    "transactionCount": 3,
     "floorAreaRange": [
       93,
       113
@@ -19,10 +19,10 @@
       2020,
       2020
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2025-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      827500,
-      915833
+      781667,
+      871667
     ],
-    "pricePerSqmMedian": 8459.26,
-    "pricePerSqftMedian": 785.89
+    "pricePerSqmMedian": 8422.94,
+    "pricePerSqftMedian": 782.52
   },
   "monthlyTrend": [
     {
@@ -70,11 +70,30 @@
       "medianPrice": 783333,
       "transactionCount": 1,
       "medianPricePerSqm": 8422.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 780000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8387.1
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-875b-tampines-st-86-2026-02-228014",
+      "id": "tampines-875b-tampines-st-86-2026-04-228107",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 06 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 8387.1,
+      "pricePerSqft": 779.19
+    },
+    {
+      "id": "tampines-875b-tampines-st-86-2026-02-228103",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",

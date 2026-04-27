@@ -9,8 +9,8 @@
       "lat": 1.38763106364664,
       "lng": 103.908232918823
     },
-    "medianPrice": 590000,
-    "transactionCount": 5,
+    "medianPrice": 594000,
+    "transactionCount": 6,
     "floorAreaRange": [
       90,
       112
@@ -19,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-10",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      585000,
-      650000
+      586250,
+      637000
     ],
-    "pricePerSqmMedian": 5829.79,
-    "pricePerSqftMedian": 541.61
+    "pricePerSqmMedian": 5816.68,
+    "pricePerSqftMedian": 540.39
   },
   "monthlyTrend": [
     {
@@ -501,11 +501,30 @@
       "medianPrice": 650000,
       "transactionCount": 1,
       "medianPricePerSqm": 5803.57
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 598000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5387.39
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-157b-rivervale-cres-2026-03-227482",
+      "id": "sengkang-157b-rivervale-cres-2026-04-227562",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 111,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 06 months",
+      "resalePrice": 598000,
+      "pricePerSqm": 5387.39,
+      "pricePerSqft": 500.51
+    },
+    {
+      "id": "sengkang-157b-rivervale-cres-2026-03-227559",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -518,7 +537,7 @@
       "pricePerSqft": 539.17
     },
     {
-      "id": "sengkang-157b-rivervale-cres-2026-01-227474",
+      "id": "sengkang-157b-rivervale-cres-2026-01-227551",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -750,19 +769,6 @@
       "resalePrice": 367500,
       "pricePerSqm": 4083.33,
       "pricePerSqft": 379.35
-    },
-    {
-      "id": "sengkang-157b-rivervale-cres-2019-11-61781",
-      "month": "2019-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 112,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "82 years 11 months",
-      "resalePrice": 442000,
-      "pricePerSqm": 3946.43,
-      "pricePerSqft": 366.64
     }
   ]
 }

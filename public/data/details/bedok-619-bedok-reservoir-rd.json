@@ -9,8 +9,8 @@
       "lat": 1.33345012881091,
       "lng": 103.917708768303
     },
-    "medianPrice": 385000,
-    "transactionCount": 2,
+    "medianPrice": 400000,
+    "transactionCount": 3,
     "floorAreaRange": [
       68,
       103
@@ -19,10 +19,10 @@
       1980,
       1980
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-08",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      377500,
-      392500
+      385000,
+      406944
     ],
-    "pricePerSqmMedian": 5661.77,
-    "pricePerSqftMedian": 526
+    "pricePerSqmMedian": 5882.35,
+    "pricePerSqftMedian": 546.49
   },
   "monthlyTrend": [
     {
@@ -621,11 +621,30 @@
       "medianPrice": 400000,
       "transactionCount": 1,
       "medianPricePerSqm": 5882.35
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 413888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6086.59
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-619-bedok-reservoir-rd-2026-02-222445",
+      "id": "bedok-619-bedok-reservoir-rd-2026-04-222462",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "53 years 11 months",
+      "resalePrice": 413888,
+      "pricePerSqm": 6086.59,
+      "pricePerSqft": 565.46
+    },
+    {
+      "id": "bedok-619-bedok-reservoir-rd-2026-02-222450",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -859,7 +878,7 @@
       "pricePerSqft": 396.2
     },
     {
-      "id": "bedok-619-bedok-reservoir-rd-2013-08-629334",
+      "id": "bedok-619-bedok-reservoir-rd-2013-08-629450",
       "month": "2013-08",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -870,19 +889,6 @@
       "resalePrice": 445000,
       "pricePerSqm": 4320.39,
       "pricePerSqft": 401.38
-    },
-    {
-      "id": "bedok-619-bedok-reservoir-rd-2013-06-626500",
-      "month": "2013-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "54 years",
-      "resalePrice": 340000,
-      "pricePerSqm": 5000,
-      "pricePerSqft": 464.52
     }
   ]
 }

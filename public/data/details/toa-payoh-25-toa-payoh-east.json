@@ -10,7 +10,7 @@
       "lng": 103.856981751253
     },
     "medianPrice": 360000,
-    "transactionCount": 12,
+    "transactionCount": 13,
     "floorAreaRange": [
       67,
       67
@@ -19,10 +19,10 @@
       1970,
       1970
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -51,7 +51,7 @@
     ],
     "priceIqr": [
       350000,
-      367000
+      370000
     ],
     "pricePerSqmMedian": 5373.13,
     "pricePerSqftMedian": 499.18
@@ -1142,9 +1142,28 @@
       "medianPrice": 340000,
       "transactionCount": 1,
       "medianPricePerSqm": 5074.63
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 385000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5746.27
     }
   ],
   "recentTransactions": [
+    {
+      "id": "toa-payoh-25-toa-payoh-east-2026-04-228466",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1971,
+      "remainingLease": "43 years 09 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 5746.27,
+      "pricePerSqft": 533.85
+    },
     {
       "id": "toa-payoh-25-toa-payoh-east-2025-12-217970",
       "month": "2025-12",
@@ -1391,19 +1410,6 @@
       "resalePrice": 316888,
       "pricePerSqm": 4729.67,
       "pricePerSqft": 439.4
-    },
-    {
-      "id": "toa-payoh-25-toa-payoh-east-2023-03-164671",
-      "month": "2023-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1971,
-      "remainingLease": "46 years 11 months",
-      "resalePrice": 325000,
-      "pricePerSqm": 4850.75,
-      "pricePerSqft": 450.65
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.39019936957333,
       "lng": 103.894575868856
     },
-    "medianPrice": 945000,
-    "transactionCount": 6,
+    "medianPrice": 940000,
+    "transactionCount": 7,
     "floorAreaRange": [
       92,
       112
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      880000,
-      959375
+      845000,
+      956250
     ],
-    "pricePerSqmMedian": 8688.18,
-    "pricePerSqftMedian": 807.16
+    "pricePerSqmMedian": 8782.61,
+    "pricePerSqftMedian": 815.93
   },
   "monthlyTrend": [
     {
@@ -174,14 +174,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 950000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8482.14
+      "medianPrice": 890000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8751.94
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-216d-compassvale-dr-2026-04-227419",
+      "id": "sengkang-216d-compassvale-dr-2026-04-227237",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 830000,
+      "pricePerSqm": 9021.74,
+      "pricePerSqft": 838.15
+    },
+    {
+      "id": "sengkang-216d-compassvale-dr-2026-04-227496",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -194,7 +207,7 @@
       "pricePerSqft": 788.02
     },
     {
-      "id": "sengkang-216d-compassvale-dr-2026-01-227411",
+      "id": "sengkang-216d-compassvale-dr-2026-01-227488",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -207,7 +220,7 @@
       "pricePerSqft": 779.72
     },
     {
-      "id": "sengkang-216d-compassvale-dr-2026-01-227412",
+      "id": "sengkang-216d-compassvale-dr-2026-01-227489",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -426,19 +439,6 @@
       "resalePrice": 785000,
       "pricePerSqm": 7008.93,
       "pricePerSqft": 651.15
-    },
-    {
-      "id": "sengkang-216d-compassvale-dr-2021-09-108558",
-      "month": "2021-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 92,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "94 years 09 months",
-      "resalePrice": 655000,
-      "pricePerSqm": 7119.57,
-      "pricePerSqft": 661.43
     }
   ]
 }

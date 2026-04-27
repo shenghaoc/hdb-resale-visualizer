@@ -9,8 +9,8 @@
       "lat": 1.34395979895533,
       "lng": 103.701895501679
     },
-    "medianPrice": 740000,
-    "transactionCount": 3,
+    "medianPrice": 749000,
+    "transactionCount": 4,
     "floorAreaRange": [
       125,
       127
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      710000,
-      750000
+      725000,
+      758500
     ],
-    "pricePerSqmMedian": 5920,
-    "pricePerSqftMedian": 549.99
+    "pricePerSqmMedian": 5992,
+    "pricePerSqftMedian": 556.67
   },
   "monthlyTrend": [
     {
@@ -353,14 +353,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 680000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5440
+      "medianPrice": 719000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5752
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-671b-jurong-west-st-65-2026-04-225539",
+      "id": "jurong-west-671b-jurong-west-st-65-2026-04-225590",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -371,6 +371,19 @@
       "resalePrice": 680000,
       "pricePerSqm": 5440,
       "pricePerSqft": 505.39
+    },
+    {
+      "id": "jurong-west-671b-jurong-west-st-65-2026-04-225591",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 125,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 03 months",
+      "resalePrice": 758000,
+      "pricePerSqm": 6064,
+      "pricePerSqft": 563.36
     },
     {
       "id": "jurong-west-671b-jurong-west-st-65-2025-11-208351",
@@ -605,19 +618,6 @@
       "resalePrice": 525000,
       "pricePerSqm": 4166.67,
       "pricePerSqft": 387.1
-    },
-    {
-      "id": "jurong-west-671b-jurong-west-st-65-2019-07-53453",
-      "month": "2019-07",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 126,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 2002,
-      "remainingLease": "82 years",
-      "resalePrice": 550000,
-      "pricePerSqm": 4365.08,
-      "pricePerSqft": 405.53
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.31935026360524,
       "lng": 103.943632360195
     },
-    "medianPrice": 406500,
-    "transactionCount": 6,
+    "medianPrice": 403000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       134
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      376750,
-      417500
+      384000,
+      415000
     ],
-    "pricePerSqmMedian": 5805.97,
-    "pricePerSqftMedian": 539.39
+    "pricePerSqmMedian": 5970.15,
+    "pricePerSqftMedian": 554.65
   },
   "monthlyTrend": [
     {
@@ -929,9 +929,28 @@
       "medianPrice": 443000,
       "transactionCount": 1,
       "medianPricePerSqm": 6611.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5970.15
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-69-bedok-sth-ave-3-2026-04-222470",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "50 years 10 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 5970.15,
+      "pricePerSqft": 554.65
+    },
     {
       "id": "bedok-69-bedok-sth-ave-3-2025-11-198379",
       "month": "2025-11",
@@ -1178,19 +1197,6 @@
       "resalePrice": 390000,
       "pricePerSqm": 4239.13,
       "pricePerSqft": 393.83
-    },
-    {
-      "id": "bedok-69-bedok-sth-ave-3-2019-02-43679",
-      "month": "2019-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "58 years",
-      "resalePrice": 230000,
-      "pricePerSqm": 3432.84,
-      "pricePerSqft": 318.92
     }
   ]
 }

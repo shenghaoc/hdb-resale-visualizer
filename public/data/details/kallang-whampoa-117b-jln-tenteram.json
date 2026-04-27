@@ -9,8 +9,8 @@
       "lat": 1.32816494843873,
       "lng": 103.860801944702
     },
-    "medianPrice": 815000,
-    "transactionCount": 27,
+    "medianPrice": 817500,
+    "transactionCount": 28,
     "floorAreaRange": [
       67,
       93
@@ -19,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-07",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      633444,
-      845000
+      634222,
+      845250
     ],
-    "pricePerSqmMedian": 9104.48,
-    "pricePerSqftMedian": 845.83
+    "pricePerSqmMedian": 9179.1,
+    "pricePerSqftMedian": 852.77
   },
   "monthlyTrend": [
     {
@@ -303,11 +303,30 @@
       "medianPrice": 776500,
       "transactionCount": 2,
       "medianPricePerSqm": 9705.58
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 918888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9880.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225601",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-04-225730",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "25 TO 27",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 07 months",
+      "resalePrice": 918888,
+      "pricePerSqm": 9880.52,
+      "pricePerSqft": 917.93
+    },
+    {
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225653",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "22 TO 24",
@@ -320,7 +339,7 @@
       "pricePerSqft": 901.3
     },
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225675",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-03-225728",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -333,7 +352,7 @@
       "pricePerSqft": 902.06
     },
     {
-      "id": "kallang-whampoa-117b-jln-tenteram-2026-01-225598",
+      "id": "kallang-whampoa-117b-jln-tenteram-2026-01-225650",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -552,19 +571,6 @@
       "resalePrice": 846000,
       "pricePerSqm": 9096.77,
       "pricePerSqft": 845.12
-    },
-    {
-      "id": "kallang-whampoa-117b-jln-tenteram-2024-08-182854",
-      "month": "2024-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "92 years 04 months",
-      "resalePrice": 545000,
-      "pricePerSqm": 8134.33,
-      "pricePerSqft": 755.7
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.4013435609028,
       "lng": 103.90312699575
     },
-    "medianPrice": 723000,
-    "transactionCount": 13,
+    "medianPrice": 720500,
+    "transactionCount": 14,
     "floorAreaRange": [
       70,
       99
@@ -19,10 +19,10 @@
       2011,
       2011
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2016-12",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      688888,
-      738888
+      635722,
+      736166
     ],
-    "pricePerSqmMedian": 7610.53,
-    "pricePerSqftMedian": 707.04
+    "pricePerSqmMedian": 7519.55,
+    "pricePerSqftMedian": 698.59
   },
   "monthlyTrend": [
     {
@@ -345,11 +345,30 @@
       "medianPrice": 758000,
       "transactionCount": 1,
       "medianPricePerSqm": 7895.83
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6164.38
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-289b-punggol-pl-2026-01-226280",
+      "id": "punggol-289b-punggol-pl-2026-04-226159",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 73,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "85 years 11 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 6164.38,
+      "pricePerSqft": 572.69
+    },
+    {
+      "id": "punggol-289b-punggol-pl-2026-01-226340",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -594,19 +613,6 @@
       "resalePrice": 646000,
       "pricePerSqm": 6591.84,
       "pricePerSqft": 612.4
-    },
-    {
-      "id": "punggol-289b-punggol-pl-2023-06-157903",
-      "month": "2023-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 96,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "88 years 10 months",
-      "resalePrice": 663000,
-      "pricePerSqm": 6906.25,
-      "pricePerSqft": 641.61
     }
   ]
 }

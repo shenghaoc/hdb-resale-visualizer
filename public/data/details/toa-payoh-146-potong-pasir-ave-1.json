@@ -9,8 +9,8 @@
       "lat": 1.3318007826539,
       "lng": 103.867242849282
     },
-    "medianPrice": 711944,
-    "transactionCount": 6,
+    "medianPrice": 660000,
+    "transactionCount": 7,
     "floorAreaRange": [
       64,
       93
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2012-10",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      627500,
-      791138
+      630000,
+      790388
     ],
-    "pricePerSqmMedian": 9327.49,
-    "pricePerSqftMedian": 866.56
+    "pricePerSqmMedian": 9656.25,
+    "pricePerSqftMedian": 897.1
   },
   "monthlyTrend": [
     {
@@ -183,9 +183,28 @@
       "medianPrice": 635000,
       "transactionCount": 1,
       "medianPricePerSqm": 9921.88
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10312.5
     }
   ],
   "recentTransactions": [
+    {
+      "id": "toa-payoh-146-potong-pasir-ave-1-2026-04-228453",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 05 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 10312.5,
+      "pricePerSqft": 958.06
+    },
     {
       "id": "toa-payoh-146-potong-pasir-ave-1-2025-12-217911",
       "month": "2025-12",
@@ -432,19 +451,6 @@
       "resalePrice": 388000,
       "pricePerSqm": 6062.5,
       "pricePerSqft": 563.23
-    },
-    {
-      "id": "toa-payoh-146-potong-pasir-ave-1-2015-07-948638",
-      "month": "2015-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 93,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "82",
-      "resalePrice": 510000,
-      "pricePerSqm": 5483.87,
-      "pricePerSqft": 509.47
     }
   ]
 }

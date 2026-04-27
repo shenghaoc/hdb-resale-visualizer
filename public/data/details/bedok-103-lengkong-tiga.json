@@ -9,8 +9,8 @@
       "lat": 1.32585546338587,
       "lng": 103.910598910975
     },
-    "medianPrice": 452000,
-    "transactionCount": 87,
+    "medianPrice": 1058000,
+    "transactionCount": 1,
     "floorAreaRange": [
       104,
       130
@@ -19,10 +19,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2023-05",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-10",
-      "2023-05"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      390000,
-      609000
+      1058000,
+      1058000
     ],
-    "pricePerSqmMedian": 3825.4,
-    "pricePerSqftMedian": 355.39
+    "pricePerSqmMedian": 8743.8,
+    "pricePerSqftMedian": 812.33
   },
   "monthlyTrend": [
     {
@@ -490,9 +490,28 @@
       "medianPrice": 668000,
       "transactionCount": 1,
       "medianPricePerSqm": 6423.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1058000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8743.8
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-103-lengkong-tiga-2026-04-222723",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "61 years 09 months",
+      "resalePrice": 1058000,
+      "pricePerSqm": 8743.8,
+      "pricePerSqft": 812.33
+    },
     {
       "id": "bedok-103-lengkong-tiga-2023-05-145002",
       "month": "2023-05",
@@ -715,7 +734,7 @@
       "pricePerSqft": 579.72
     },
     {
-      "id": "bedok-103-lengkong-tiga-2016-06-964430",
+      "id": "bedok-103-lengkong-tiga-2016-06-964546",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -728,7 +747,7 @@
       "pricePerSqft": 571.71
     },
     {
-      "id": "bedok-103-lengkong-tiga-2016-03-959100",
+      "id": "bedok-103-lengkong-tiga-2016-03-959216",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -739,19 +758,6 @@
       "resalePrice": 750000,
       "pricePerSqm": 6198.35,
       "pricePerSqft": 575.85
-    },
-    {
-      "id": "bedok-103-lengkong-tiga-2015-01-938815",
-      "month": "2015-01",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "73",
-      "resalePrice": 688000,
-      "pricePerSqm": 5685.95,
-      "pricePerSqft": 528.24
     }
   ]
 }

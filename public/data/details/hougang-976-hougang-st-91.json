@@ -9,8 +9,8 @@
       "lat": 1.37721886173328,
       "lng": 103.880281765819
     },
-    "medianPrice": 528000,
-    "transactionCount": 1,
+    "medianPrice": 594000,
+    "transactionCount": 2,
     "floorAreaRange": [
       100,
       121
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2024-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-11",
-      "2024-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      528000,
-      528000
+      561000,
+      627000
     ],
-    "pricePerSqmMedian": 5227.72,
-    "pricePerSqftMedian": 485.67
+    "pricePerSqmMedian": 5881.18,
+    "pricePerSqftMedian": 546.38
   },
   "monthlyTrend": [
     {
@@ -322,9 +322,28 @@
       "medianPrice": 528000,
       "transactionCount": 1,
       "medianPricePerSqm": 5227.72
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 660000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6534.65
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-976-hougang-st-91-2026-04-224850",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 101,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 07 months",
+      "resalePrice": 660000,
+      "pricePerSqm": 6534.65,
+      "pricePerSqft": 607.09
+    },
     {
       "id": "hougang-976-hougang-st-91-2024-06-179002",
       "month": "2024-06",
@@ -571,19 +590,6 @@
       "resalePrice": 390000,
       "pricePerSqm": 3900,
       "pricePerSqft": 362.32
-    },
-    {
-      "id": "hougang-976-hougang-st-91-2017-03-2927",
-      "month": "2017-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "81 years 08 months",
-      "resalePrice": 378000,
-      "pricePerSqm": 3742.57,
-      "pricePerSqft": 347.7
     }
   ]
 }

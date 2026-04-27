@@ -9,8 +9,8 @@
       "lat": 1.32287761525628,
       "lng": 103.811647694363
     },
-    "medianPrice": 631500,
-    "transactionCount": 6,
+    "medianPrice": 625000,
+    "transactionCount": 7,
     "floorAreaRange": [
       76,
       91
@@ -19,10 +19,10 @@
       1973,
       1973
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      568750,
-      662000
+      547500,
+      654000
     ],
-    "pricePerSqmMedian": 6939.56,
-    "pricePerSqftMedian": 644.71
+    "pricePerSqmMedian": 7010.99,
+    "pricePerSqftMedian": 651.34
   },
   "monthlyTrend": [
     {
@@ -897,9 +897,28 @@
       "medianPrice": 670000,
       "transactionCount": 1,
       "medianPricePerSqm": 7362.64
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 545000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7171.05
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-timah-3-queen-s-rd-2026-04-223841",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "47 years",
+      "resalePrice": 545000,
+      "pricePerSqm": 7171.05,
+      "pricePerSqft": 666.21
+    },
     {
       "id": "bukit-timah-3-queen-s-rd-2025-09-202585",
       "month": "2025-09",
@@ -1146,19 +1165,6 @@
       "resalePrice": 528000,
       "pricePerSqm": 5802.2,
       "pricePerSqft": 539.04
-    },
-    {
-      "id": "bukit-timah-3-queen-s-rd-2022-03-122345",
-      "month": "2022-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 91,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "51 years 02 months",
-      "resalePrice": 580000,
-      "pricePerSqm": 6373.63,
-      "pricePerSqft": 592.13
     }
   ]
 }

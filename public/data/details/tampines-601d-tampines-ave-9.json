@@ -9,8 +9,8 @@
       "lat": 1.36137294343434,
       "lng": 103.936587995929
     },
-    "medianPrice": 685000,
-    "transactionCount": 14,
+    "medianPrice": 640000,
+    "transactionCount": 15,
     "floorAreaRange": [
       68,
       112
@@ -19,10 +19,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2024-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      609166,
-      778166
+      609444,
+      765444
     ],
-    "pricePerSqmMedian": 8710.07,
-    "pricePerSqftMedian": 809.19
+    "pricePerSqmMedian": 8823.53,
+    "pricePerSqftMedian": 819.73
   },
   "monthlyTrend": [
     {
@@ -131,11 +131,30 @@
       "medianPrice": 624000,
       "transactionCount": 2,
       "medianPricePerSqm": 9176.47
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 628888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9248.35
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-601d-tampines-ave-9-2026-01-227666",
+      "id": "tampines-601d-tampines-ave-9-2026-04-227751",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "92 years 10 months",
+      "resalePrice": 628888,
+      "pricePerSqm": 9248.35,
+      "pricePerSqft": 859.2
+    },
+    {
+      "id": "tampines-601d-tampines-ave-9-2026-01-227746",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -148,7 +167,7 @@
       "pricePerSqft": 830.66
     },
     {
-      "id": "tampines-601d-tampines-ave-9-2026-01-227667",
+      "id": "tampines-601d-tampines-ave-9-2026-01-227747",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",

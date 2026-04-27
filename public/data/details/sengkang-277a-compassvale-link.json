@@ -9,8 +9,8 @@
       "lat": 1.38186369165368,
       "lng": 103.894481478264
     },
-    "medianPrice": 798000,
-    "transactionCount": 13,
+    "medianPrice": 808000,
+    "transactionCount": 14,
     "floorAreaRange": [
       90,
       92
@@ -19,10 +19,10 @@
       2008,
       2008
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2013-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      765000,
-      850000
+      766250,
+      845750
     ],
-    "pricePerSqmMedian": 8698.76,
-    "pricePerSqftMedian": 808.14
+    "pricePerSqmMedian": 8876.56,
+    "pricePerSqftMedian": 824.66
   },
   "monthlyTrend": [
     {
@@ -362,11 +362,30 @@
       "medianPrice": 850000,
       "transactionCount": 1,
       "medianPricePerSqm": 9444.44
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 818888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9098.76
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-277a-compassvale-link-2026-01-227178",
+      "id": "sengkang-277a-compassvale-link-2026-04-227264",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 90,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2009,
+      "remainingLease": "82 years 02 months",
+      "resalePrice": 818888,
+      "pricePerSqm": 9098.76,
+      "pricePerSqft": 845.3
+    },
+    {
+      "id": "sengkang-277a-compassvale-link-2026-01-227251",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -611,19 +630,6 @@
       "resalePrice": 618000,
       "pricePerSqm": 6717.39,
       "pricePerSqft": 624.07
-    },
-    {
-      "id": "sengkang-277a-compassvale-link-2021-08-105946",
-      "month": "2021-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 90,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2009,
-      "remainingLease": "86 years 11 months",
-      "resalePrice": 562000,
-      "pricePerSqm": 6244.44,
-      "pricePerSqft": 580.13
     }
   ]
 }

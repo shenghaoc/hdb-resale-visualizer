@@ -9,8 +9,8 @@
       "lat": 1.33950753135564,
       "lng": 103.855914162743
     },
-    "medianPrice": 380000,
-    "transactionCount": 3,
+    "medianPrice": 370000,
+    "transactionCount": 4,
     "floorAreaRange": [
       59,
       76
@@ -19,10 +19,10 @@
       1975,
       1975
     ],
-    "latestMonth": "2025-05",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-05"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      370000,
-      399000
+      356500,
+      389500
     ],
-    "pricePerSqmMedian": 5538.46,
-    "pricePerSqftMedian": 514.54
+    "pricePerSqmMedian": 5519.23,
+    "pricePerSqftMedian": 512.75
   },
   "monthlyTrend": [
     {
@@ -854,9 +854,28 @@
       "medianPrice": 380000,
       "transactionCount": 1,
       "medianPricePerSqm": 5846.15
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 346000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5323.08
     }
   ],
   "recentTransactions": [
+    {
+      "id": "toa-payoh-225-lor-8-toa-payoh-2026-04-228444",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "49 years 01 month",
+      "resalePrice": 346000,
+      "pricePerSqm": 5323.08,
+      "pricePerSqft": 494.53
+    },
     {
       "id": "toa-payoh-225-lor-8-toa-payoh-2025-05-217858",
       "month": "2025-05",
@@ -1103,19 +1122,6 @@
       "resalePrice": 225000,
       "pricePerSqm": 3461.54,
       "pricePerSqft": 321.59
-    },
-    {
-      "id": "toa-payoh-225-lor-8-toa-payoh-2019-09-57916",
-      "month": "2019-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "55 years 08 months",
-      "resalePrice": 210000,
-      "pricePerSqm": 3230.77,
-      "pricePerSqft": 300.15
     }
   ]
 }

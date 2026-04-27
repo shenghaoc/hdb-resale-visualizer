@@ -9,8 +9,8 @@
       "lat": 1.41914050825031,
       "lng": 103.832592353312
     },
-    "medianPrice": 700000,
-    "transactionCount": 3,
+    "medianPrice": 659000,
+    "transactionCount": 4,
     "floorAreaRange": [
       83,
       124
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-08",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      651500,
-      710000
+      614250,
+      705000
     ],
-    "pricePerSqmMedian": 5854.37,
-    "pricePerSqftMedian": 543.89
+    "pricePerSqmMedian": 5796.03,
+    "pricePerSqftMedian": 538.47
   },
   "monthlyTrend": [
     {
@@ -611,9 +611,28 @@
       "medianPrice": 603000,
       "transactionCount": 1,
       "medianPricePerSqm": 5854.37
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 618000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5065.57
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-799-yishun-ring-rd-2026-04-229678",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "59 years 09 months",
+      "resalePrice": 618000,
+      "pricePerSqm": 5065.57,
+      "pricePerSqft": 470.61
+    },
     {
       "id": "yishun-799-yishun-ring-rd-2025-10-221373",
       "month": "2025-10",
@@ -849,7 +868,7 @@
       "pricePerSqft": 369.33
     },
     {
-      "id": "yishun-799-yishun-ring-rd-2016-01-957690",
+      "id": "yishun-799-yishun-ring-rd-2016-01-957806",
       "month": "2016-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -860,19 +879,6 @@
       "resalePrice": 352000,
       "pricePerSqm": 4240.96,
       "pricePerSqft": 394
-    },
-    {
-      "id": "yishun-799-yishun-ring-rd-2015-07-948868",
-      "month": "2015-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "70",
-      "resalePrice": 545000,
-      "pricePerSqm": 4504.13,
-      "pricePerSqft": 418.45
     }
   ]
 }

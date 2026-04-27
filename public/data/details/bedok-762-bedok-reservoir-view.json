@@ -9,8 +9,8 @@
       "lat": 1.33621988981785,
       "lng": 103.934327587356
     },
-    "medianPrice": 788000,
-    "transactionCount": 9,
+    "medianPrice": 786500,
+    "transactionCount": 10,
     "floorAreaRange": [
       105,
       117
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2004-05",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      780000,
-      800000
+      780750,
+      799500
     ],
-    "pricePerSqmMedian": 7347.83,
-    "pricePerSqftMedian": 682.64
+    "pricePerSqmMedian": 7388.2,
+    "pricePerSqftMedian": 686.39
   },
   "monthlyTrend": [
     {
@@ -519,11 +519,30 @@
       "medianPrice": 863000,
       "transactionCount": 1,
       "medianPricePerSqm": 7504.35
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 785000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7476.19
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-762-bedok-reservoir-view-2026-03-222677",
+      "id": "bedok-762-bedok-reservoir-view-2026-04-222624",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 08 months",
+      "resalePrice": 785000,
+      "pricePerSqm": 7476.19,
+      "pricePerSqft": 694.56
+    },
+    {
+      "id": "bedok-762-bedok-reservoir-view-2026-03-222692",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -768,19 +787,6 @@
       "resalePrice": 650000,
       "pricePerSqm": 5652.17,
       "pricePerSqft": 525.1
-    },
-    {
-      "id": "bedok-762-bedok-reservoir-view-2019-08-54707",
-      "month": "2019-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 105,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "80 years 04 months",
-      "resalePrice": 481500,
-      "pricePerSqm": 4585.71,
-      "pricePerSqft": 426.03
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.31659507864197,
       "lng": 103.879545641729
     },
-    "medianPrice": 673000,
-    "transactionCount": 7,
+    "medianPrice": 666500,
+    "transactionCount": 6,
     "floorAreaRange": [
       68,
       68
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      645000,
-      721500
+      637500,
+      712000
     ],
-    "pricePerSqmMedian": 9897.06,
-    "pricePerSqftMedian": 919.47
+    "pricePerSqmMedian": 9801.47,
+    "pricePerSqftMedian": 910.59
   },
   "monthlyTrend": [
     {
@@ -197,27 +197,14 @@
     },
     {
       "month": "2026-03",
-      "medianPrice": 726944,
-      "transactionCount": 2,
-      "medianPricePerSqm": 10690.35
+      "medianPrice": 735888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10821.88
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-63-sims-pl-2026-03-224455",
-      "month": "2026-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "89 years 11 months",
-      "resalePrice": 718000,
-      "pricePerSqm": 10558.82,
-      "pricePerSqft": 980.95
-    },
-    {
-      "id": "geylang-63-sims-pl-2026-03-224456",
+      "id": "geylang-63-sims-pl-2026-03-224492",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",
@@ -230,7 +217,7 @@
       "pricePerSqft": 1005.39
     },
     {
-      "id": "geylang-63-sims-pl-2026-01-224454",
+      "id": "geylang-63-sims-pl-2026-01-224491",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -462,6 +449,19 @@
       "resalePrice": 530000,
       "pricePerSqm": 7794.12,
       "pricePerSqft": 724.1
+    },
+    {
+      "id": "geylang-63-sims-pl-2021-09-107441",
+      "month": "2021-09",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 68,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "94 years 04 months",
+      "resalePrice": 510000,
+      "pricePerSqm": 7500,
+      "pricePerSqft": 696.77
     }
   ]
 }

@@ -10,7 +10,7 @@
       "lng": 103.77958246528
     },
     "medianPrice": 915000,
-    "transactionCount": 3,
+    "transactionCount": 4,
     "floorAreaRange": [
       64,
       164
@@ -54,11 +54,11 @@
       }
     ],
     "priceIqr": [
-      812500,
-      915000
+      863750,
+      923250
     ],
-    "pricePerSqmMedian": 5579.27,
-    "pricePerSqftMedian": 518.33
+    "pricePerSqmMedian": 5596.39,
+    "pricePerSqftMedian": 519.92
   },
   "monthlyTrend": [
     {
@@ -489,14 +489,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 710000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5378.79
+      "medianPrice": 829000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5597.37
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-326-woodlands-st-32-2026-04-229060",
+      "id": "woodlands-326-woodlands-st-32-2026-04-229169",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -507,6 +507,19 @@
       "resalePrice": 710000,
       "pricePerSqm": 5378.79,
       "pricePerSqft": 499.71
+    },
+    {
+      "id": "woodlands-326-woodlands-st-32-2026-04-229225",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 163,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "67 years 09 months",
+      "resalePrice": 948000,
+      "pricePerSqm": 5815.95,
+      "pricePerSqft": 540.32
     },
     {
       "id": "woodlands-326-woodlands-st-32-2025-01-220305",
@@ -741,19 +754,6 @@
       "resalePrice": 595000,
       "pricePerSqm": 3628.05,
       "pricePerSqft": 337.06
-    },
-    {
-      "id": "woodlands-326-woodlands-st-32-2016-05-964001",
-      "month": "2016-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 75,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "77",
-      "resalePrice": 263000,
-      "pricePerSqm": 3506.67,
-      "pricePerSqft": 325.78
     }
   ]
 }

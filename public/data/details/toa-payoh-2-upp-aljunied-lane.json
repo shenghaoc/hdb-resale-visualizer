@@ -9,8 +9,8 @@
       "lat": 1.33398953306499,
       "lng": 103.878963482772
     },
-    "medianPrice": 309944,
-    "transactionCount": 4,
+    "medianPrice": 319888,
+    "transactionCount": 5,
     "floorAreaRange": [
       57,
       57
@@ -19,10 +19,10 @@
       1968,
       1968
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-12",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -51,10 +51,10 @@
     ],
     "priceIqr": [
       300000,
-      324916
+      321888
     ],
-    "pricePerSqmMedian": 5437.61,
-    "pricePerSqftMedian": 505.17
+    "pricePerSqmMedian": 5612.07,
+    "pricePerSqftMedian": 521.38
   },
   "monthlyTrend": [
     {
@@ -644,11 +644,30 @@
       "medianPrice": 300000,
       "transactionCount": 1,
       "medianPricePerSqm": 5263.16
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 321888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5647.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-2-upp-aljunied-lane-2026-03-228372",
+      "id": "toa-payoh-2-upp-aljunied-lane-2026-04-228473",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 57,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1968,
+      "remainingLease": "41 years 02 months",
+      "resalePrice": 321888,
+      "pricePerSqm": 5647.16,
+      "pricePerSqft": 524.64
+    },
+    {
+      "id": "toa-payoh-2-upp-aljunied-lane-2026-03-228472",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -661,7 +680,7 @@
       "pricePerSqft": 488.96
     },
     {
-      "id": "toa-payoh-2-upp-aljunied-lane-2026-02-228371",
+      "id": "toa-payoh-2-upp-aljunied-lane-2026-02-228471",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -869,7 +888,7 @@
       "pricePerSqft": 423.77
     },
     {
-      "id": "toa-payoh-2-upp-aljunied-lane-2016-05-963967",
+      "id": "toa-payoh-2-upp-aljunied-lane-2016-05-964083",
       "month": "2016-05",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -882,7 +901,7 @@
       "pricePerSqft": 456.37
     },
     {
-      "id": "toa-payoh-2-upp-aljunied-lane-2015-12-956245",
+      "id": "toa-payoh-2-upp-aljunied-lane-2015-12-956361",
       "month": "2015-12",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -893,19 +912,6 @@
       "resalePrice": 265000,
       "pricePerSqm": 4649.12,
       "pricePerSqft": 431.92
-    },
-    {
-      "id": "toa-payoh-2-upp-aljunied-lane-2015-10-953316",
-      "month": "2015-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 57,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1968,
-      "remainingLease": "51",
-      "resalePrice": 260000,
-      "pricePerSqm": 4561.4,
-      "pricePerSqft": 423.77
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.37193962542694,
       "lng": 103.955451668479
     },
-    "medianPrice": 636000,
-    "transactionCount": 6,
+    "medianPrice": 640000,
+    "transactionCount": 7,
     "floorAreaRange": [
       103,
       122
@@ -19,10 +19,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1994-10",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      630500,
-      646000
+      631000,
+      656500
     ],
-    "pricePerSqmMedian": 6091.03,
-    "pricePerSqftMedian": 565.88
+    "pricePerSqmMedian": 6116.5,
+    "pricePerSqftMedian": 568.24
   },
   "monthlyTrend": [
     {
@@ -850,11 +850,30 @@
       "medianPrice": 632000,
       "transactionCount": 1,
       "medianPricePerSqm": 6135.92
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6333.33
     }
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-417-pasir-ris-dr-6-2026-03-225838",
+      "id": "pasir-ris-417-pasir-ris-dr-6-2026-04-225897",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1990,
+      "remainingLease": "62 years 10 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 6333.33,
+      "pricePerSqft": 588.39
+    },
+    {
+      "id": "pasir-ris-417-pasir-ris-dr-6-2026-03-225892",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1099,19 +1118,6 @@
       "resalePrice": 395000,
       "pricePerSqm": 3834.95,
       "pricePerSqft": 356.28
-    },
-    {
-      "id": "pasir-ris-417-pasir-ris-dr-6-2018-12-41369",
-      "month": "2018-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1990,
-      "remainingLease": "70 years 02 months",
-      "resalePrice": 400000,
-      "pricePerSqm": 3809.52,
-      "pricePerSqft": 353.92
     }
   ]
 }

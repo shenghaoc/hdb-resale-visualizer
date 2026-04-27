@@ -9,8 +9,8 @@
       "lat": 1.27688315064164,
       "lng": 103.830883904963
     },
-    "medianPrice": 455000,
-    "transactionCount": 5,
+    "medianPrice": 447500,
+    "transactionCount": 6,
     "floorAreaRange": [
       67,
       156
@@ -19,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -54,10 +54,10 @@
     ],
     "priceIqr": [
       440000,
-      458000
+      457250
     ],
-    "pricePerSqmMedian": 6791.04,
-    "pricePerSqftMedian": 630.91
+    "pricePerSqmMedian": 6679.1,
+    "pricePerSqftMedian": 620.51
   },
   "monthlyTrend": [
     {
@@ -611,11 +611,30 @@
       "medianPrice": 468000,
       "transactionCount": 1,
       "medianPricePerSqm": 6985.07
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 420000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6268.66
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-148-silat-ave-2026-03-223349",
+      "id": "bukit-merah-148-silat-ave-2026-04-223373",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "55 years 06 months",
+      "resalePrice": 420000,
+      "pricePerSqm": 6268.66,
+      "pricePerSqft": 582.38
+    },
+    {
+      "id": "bukit-merah-148-silat-ave-2026-03-223372",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -860,19 +879,6 @@
       "resalePrice": 308000,
       "pricePerSqm": 4597.01,
       "pricePerSqft": 427.08
-    },
-    {
-      "id": "bukit-merah-148-silat-ave-2018-09-35146",
-      "month": "2018-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1982,
-      "remainingLease": "63 years 01 month",
-      "resalePrice": 365000,
-      "pricePerSqm": 5447.76,
-      "pricePerSqft": 506.11
     }
   ]
 }

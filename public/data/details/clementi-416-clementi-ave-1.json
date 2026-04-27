@@ -9,8 +9,8 @@
       "lat": 1.31033592235344,
       "lng": 103.771355673383
     },
-    "medianPrice": 1003444,
-    "transactionCount": 16,
+    "medianPrice": 1018888,
+    "transactionCount": 17,
     "floorAreaRange": [
       99,
       121
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      958666,
-      1161972
+      958888,
+      1182888
     ],
-    "pricePerSqmMedian": 9584.44,
-    "pricePerSqftMedian": 890.42
+    "pricePerSqmMedian": 9588.88,
+    "pricePerSqftMedian": 890.84
   },
   "monthlyTrend": [
     {
@@ -379,14 +379,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 958888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9588.88
+      "medianPrice": 1083444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 10139.58
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-416-clementi-ave-1-2026-04-224281",
+      "id": "clementi-416-clementi-ave-1-2026-04-224316",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -399,7 +399,20 @@
       "pricePerSqft": 890.84
     },
     {
-      "id": "clementi-416-clementi-ave-1-2026-03-224278",
+      "id": "clementi-416-clementi-ave-1-2026-04-224373",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "31 TO 33",
+      "floorAreaSqm": 113,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2013,
+      "remainingLease": "86 years 05 months",
+      "resalePrice": 1208000,
+      "pricePerSqm": 10690.27,
+      "pricePerSqft": 993.16
+    },
+    {
+      "id": "clementi-416-clementi-ave-1-2026-03-224313",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "25 TO 27",
@@ -631,19 +644,6 @@
       "resalePrice": 805000,
       "pricePerSqm": 8050,
       "pricePerSqft": 747.87
-    },
-    {
-      "id": "clementi-416-clementi-ave-1-2022-08-124450",
-      "month": "2022-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2013,
-      "remainingLease": "90 years 02 months",
-      "resalePrice": 785000,
-      "pricePerSqm": 7850,
-      "pricePerSqft": 729.29
     }
   ]
 }

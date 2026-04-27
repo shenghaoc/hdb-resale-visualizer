@@ -9,8 +9,8 @@
       "lat": 1.36255043035847,
       "lng": 103.745770795352
     },
-    "medianPrice": 410000,
-    "transactionCount": 7,
+    "medianPrice": 445000,
+    "transactionCount": 8,
     "floorAreaRange": [
       68,
       99
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      380000,
+      382500,
       495000
     ],
-    "pricePerSqmMedian": 5514.71,
-    "pricePerSqftMedian": 512.33
+    "pricePerSqmMedian": 5500,
+    "pricePerSqftMedian": 510.97
   },
   "monthlyTrend": [
     {
@@ -879,11 +879,30 @@
       "medianPrice": 385000,
       "transactionCount": 1,
       "medianPricePerSqm": 5661.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 490000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5212.77
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-420-bt-batok-west-ave-2-2026-03-222934",
+      "id": "bukit-batok-420-bt-batok-west-ave-2-2026-04-223055",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 94,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 01 month",
+      "resalePrice": 490000,
+      "pricePerSqm": 5212.77,
+      "pricePerSqft": 484.28
+    },
+    {
+      "id": "bukit-batok-420-bt-batok-west-ave-2-2026-03-222953",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1128,19 +1147,6 @@
       "resalePrice": 228000,
       "pricePerSqm": 3352.94,
       "pricePerSqft": 311.5
-    },
-    {
-      "id": "bukit-batok-420-bt-batok-west-ave-2-2019-06-50788",
-      "month": "2019-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "67 years 11 months",
-      "resalePrice": 242000,
-      "pricePerSqm": 3558.82,
-      "pricePerSqft": 330.63
     }
   ]
 }

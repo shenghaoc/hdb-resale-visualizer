@@ -9,8 +9,8 @@
       "lat": 1.35674170789189,
       "lng": 103.939692399456
     },
-    "medianPrice": 643444,
-    "transactionCount": 10,
+    "medianPrice": 645000,
+    "transactionCount": 11,
     "floorAreaRange": [
       61,
       84
@@ -19,10 +19,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-09",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      617500,
-      688500
+      625000,
+      685000
     ],
-    "pricePerSqmMedian": 10424.47,
-    "pricePerSqftMedian": 968.47
+    "pricePerSqmMedian": 10491.8,
+    "pricePerSqftMedian": 974.72
   },
   "monthlyTrend": [
     {
@@ -261,11 +261,30 @@
       "medianPrice": 678000,
       "transactionCount": 1,
       "medianPricePerSqm": 10935.48
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 645000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10573.77
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-520c-tampines-ctrl-8-2026-03-227673",
+      "id": "tampines-520c-tampines-ctrl-8-2026-04-227756",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 61,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2014,
+      "remainingLease": "87 years 03 months",
+      "resalePrice": 645000,
+      "pricePerSqm": 10573.77,
+      "pricePerSqft": 982.34
+    },
+    {
+      "id": "tampines-520c-tampines-ctrl-8-2026-03-227755",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -510,19 +529,6 @@
       "resalePrice": 515000,
       "pricePerSqm": 8306.45,
       "pricePerSqft": 771.7
-    },
-    {
-      "id": "tampines-520c-tampines-ctrl-8-2022-07-137888",
-      "month": "2022-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 61,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2014,
-      "remainingLease": "91 years",
-      "resalePrice": 548000,
-      "pricePerSqm": 8983.61,
-      "pricePerSqft": 834.61
     }
   ]
 }

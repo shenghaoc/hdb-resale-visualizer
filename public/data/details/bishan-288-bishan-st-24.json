@@ -9,8 +9,8 @@
       "lat": 1.35692385325352,
       "lng": 103.845156525793
     },
-    "medianPrice": 1040000,
-    "transactionCount": 7,
+    "medianPrice": 1079000,
+    "transactionCount": 8,
     "floorAreaRange": [
       100,
       123
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      904000,
-      1128000
+      942000,
+      1138222
     ],
-    "pricePerSqmMedian": 8455.28,
-    "pricePerSqftMedian": 785.52
+    "pricePerSqmMedian": 8847.48,
+    "pricePerSqftMedian": 821.95
   },
   "monthlyTrend": [
     {
@@ -618,14 +618,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 1138888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9259.25
+      "medianPrice": 1140444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9348.64
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-288-bishan-st-24-2026-04-222818",
+      "id": "bishan-288-bishan-st-24-2026-04-222834",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -636,6 +636,19 @@
       "resalePrice": 1138888,
       "pricePerSqm": 9259.25,
       "pricePerSqft": 860.21
+    },
+    {
+      "id": "bishan-288-bishan-st-24-2026-04-222835",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 121,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 02 months",
+      "resalePrice": 1142000,
+      "pricePerSqm": 9438.02,
+      "pricePerSqft": 876.82
     },
     {
       "id": "bishan-288-bishan-st-24-2025-12-199478",
@@ -870,19 +883,6 @@
       "resalePrice": 750000,
       "pricePerSqm": 7281.55,
       "pricePerSqft": 676.48
-    },
-    {
-      "id": "bishan-288-bishan-st-24-2020-02-66346",
-      "month": "2020-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 100,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "77 years 04 months",
-      "resalePrice": 615000,
-      "pricePerSqm": 6150,
-      "pricePerSqft": 571.35
     }
   ]
 }

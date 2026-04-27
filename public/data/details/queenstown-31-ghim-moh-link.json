@@ -9,8 +9,8 @@
       "lat": 1.30960366323024,
       "lng": 103.784023479632
     },
-    "medianPrice": 1055000,
-    "transactionCount": 18,
+    "medianPrice": 1060000,
+    "transactionCount": 19,
     "floorAreaRange": [
       93,
       93
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      1034850,
-      1133500
+      1035900,
+      1133000
     ],
-    "pricePerSqmMedian": 11344.08,
-    "pricePerSqftMedian": 1053.91
+    "pricePerSqmMedian": 11397.85,
+    "pricePerSqftMedian": 1058.9
   },
   "monthlyTrend": [
     {
@@ -203,14 +203,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 940000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 10107.53
+      "medianPrice": 1034000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11118.28
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-31-ghim-moh-link-2026-04-226687",
+      "id": "queenstown-31-ghim-moh-link-2026-04-226749",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -223,7 +223,20 @@
       "pricePerSqft": 939.02
     },
     {
-      "id": "queenstown-31-ghim-moh-link-2026-02-226685",
+      "id": "queenstown-31-ghim-moh-link-2026-04-226750",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "37 TO 39",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 03 months",
+      "resalePrice": 1128000,
+      "pricePerSqm": 12129.03,
+      "pricePerSqft": 1126.83
+    },
+    {
+      "id": "queenstown-31-ghim-moh-link-2026-02-226747",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -236,7 +249,7 @@
       "pricePerSqft": 1048.91
     },
     {
-      "id": "queenstown-31-ghim-moh-link-2026-01-226678",
+      "id": "queenstown-31-ghim-moh-link-2026-01-226740",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "31 TO 33",
@@ -249,7 +262,7 @@
       "pricePerSqft": 1203.74
     },
     {
-      "id": "queenstown-31-ghim-moh-link-2026-01-226681",
+      "id": "queenstown-31-ghim-moh-link-2026-01-226743",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -455,19 +468,6 @@
       "resalePrice": 845000,
       "pricePerSqm": 9086.02,
       "pricePerSqft": 844.12
-    },
-    {
-      "id": "queenstown-31-ghim-moh-link-2023-11-159468",
-      "month": "2023-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "93 years 08 months",
-      "resalePrice": 820000,
-      "pricePerSqm": 8817.2,
-      "pricePerSqft": 819.15
     }
   ]
 }

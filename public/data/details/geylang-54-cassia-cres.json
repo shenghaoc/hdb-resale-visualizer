@@ -9,8 +9,8 @@
       "lat": 1.31004800551081,
       "lng": 103.884678198119
     },
-    "medianPrice": 567500,
-    "transactionCount": 4,
+    "medianPrice": 605000,
+    "transactionCount": 5,
     "floorAreaRange": [
       67,
       101
@@ -19,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-09",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      515000,
-      616250
+      530000,
+      650000
     ],
-    "pricePerSqmMedian": 7196.49,
-    "pricePerSqftMedian": 668.58
+    "pricePerSqmMedian": 7014.93,
+    "pricePerSqftMedian": 651.71
   },
   "monthlyTrend": [
     {
@@ -849,9 +849,28 @@
       "medianPrice": 590000,
       "transactionCount": 2,
       "medianPricePerSqm": 7173.05
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6732.67
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-54-cassia-cres-2026-04-224508",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 101,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 03 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 6732.67,
+      "pricePerSqft": 625.49
+    },
     {
       "id": "geylang-54-cassia-cres-2025-09-204463",
       "month": "2025-09",
@@ -1098,19 +1117,6 @@
       "resalePrice": 612000,
       "pricePerSqm": 6059.41,
       "pricePerSqft": 562.94
-    },
-    {
-      "id": "geylang-54-cassia-cres-2019-08-55159",
-      "month": "2019-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 101,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "63 years",
-      "resalePrice": 533888,
-      "pricePerSqm": 5286.02,
-      "pricePerSqft": 491.09
     }
   ]
 }

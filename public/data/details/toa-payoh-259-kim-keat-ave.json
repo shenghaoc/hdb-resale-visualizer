@@ -9,8 +9,8 @@
       "lat": 1.33389588710225,
       "lng": 103.857558824931
     },
-    "medianPrice": 690000,
-    "transactionCount": 11,
+    "medianPrice": 691944,
+    "transactionCount": 12,
     "floorAreaRange": [
       103,
       128
@@ -19,10 +19,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-10",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,7 +53,7 @@
     ],
     "priceIqr": [
       680000,
-      787502
+      786251
     ],
     "pricePerSqmMedian": 6538.46,
     "pricePerSqftMedian": 607.44
@@ -514,11 +514,30 @@
       "medianPrice": 702000,
       "transactionCount": 1,
       "medianPricePerSqm": 6750
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 693888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6736.78
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-259-kim-keat-ave-2026-03-228419",
+      "id": "toa-payoh-259-kim-keat-ave-2026-04-228522",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "61 years 10 months",
+      "resalePrice": 693888,
+      "pricePerSqm": 6736.78,
+      "pricePerSqft": 625.87
+    },
+    {
+      "id": "toa-payoh-259-kim-keat-ave-2026-03-228521",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -531,7 +550,7 @@
       "pricePerSqft": 627.1
     },
     {
-      "id": "toa-payoh-259-kim-keat-ave-2026-01-228418",
+      "id": "toa-payoh-259-kim-keat-ave-2026-01-228520",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -763,19 +782,6 @@
       "resalePrice": 440000,
       "pricePerSqm": 4230.77,
       "pricePerSqft": 393.05
-    },
-    {
-      "id": "toa-payoh-259-kim-keat-ave-2017-11-18629",
-      "month": "2017-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "70 years 03 months",
-      "resalePrice": 640000,
-      "pricePerSqm": 5245.9,
-      "pricePerSqft": 487.36
     }
   ]
 }
