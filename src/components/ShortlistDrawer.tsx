@@ -183,8 +183,16 @@ export function ShortlistDrawer({
       t("shortlist.export.mrtDistance"),
       t("shortlist.export.notes"),
     ];
-    const csvRows = rows.map((row) =>
-      [
+    const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
+    const csvRows = rows.map((row) => {
+      // 🛡️ Sentinel Security Fix: Prevent CSV Formula Injection
+      // User notes might contain malicious spreadsheet formulas. Since shortlists
+      // can be imported via URLs, an attacker could craft a link that injects
+      // a formula into the victim's export. We prepend a single quote to notes
+      // starting with formula triggers to force them to be treated as plain text.
+      const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r]/, "'$&");
+
+      return [
         `"${row.block.block} ${row.block.streetName}"`,
         row.block.medianPrice,
         row.item.targetPrice ?? "",
@@ -193,10 +201,10 @@ export function ShortlistDrawer({
         row.comparison?.amenities.supermarketsWithin1km ?? "",
         row.comparison?.amenities.parksWithin1km ?? "",
         row.block.nearestMrt?.distanceMeters ?? "",
-        `"${(row.item.notes || "").replace(/"/g, '""')}"`,
-      ].join(","),
-    );
-    const csvContent = [headers.join(","), ...csvRows].join("\n");
+        `"${safeNotes.replace(/"/g, '""')}"`,
+      ].join(",");
+    });
+    const csvContent = [escapedHeaders.join(","), ...csvRows].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
