@@ -96,7 +96,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             onClick={handlePreviousYear}
             disabled={viewYear <= minYear}
             className="size-8 rounded-full hover:bg-muted"
-            aria-label={t("filters.previousYear")}
+            aria-label={t("filters.previousYear", { defaultValue: "Previous year" })}
           >
             <ChevronLeft className="size-4" />
           </Button>
@@ -109,7 +109,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             onClick={handleNextYear}
             disabled={viewYear >= maxYear}
             className="size-8 rounded-full hover:bg-muted"
-            aria-label={t("filters.nextYear")}
+            aria-label={t("filters.nextYear", { defaultValue: "Next year" })}
           >
             <ChevronRight className="size-4" />
           </Button>
