@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useState, useRef } from "react";
+import { startTransition, Suspense, useState, useRef, useEffect } from "react";
 import {
   Bookmark,
   Check,
@@ -156,6 +156,14 @@ export function DetailDrawer({
   const [activeTab, setActiveTab] = useState("overview");
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
