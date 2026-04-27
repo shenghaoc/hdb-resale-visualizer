@@ -17,9 +17,11 @@ interface MonthPickerProps {
   maxMonth: string // "YYYY-MM"
   placeholder?: string
   id?: string
+  previousYearLabel?: string
+  nextYearLabel?: string
 }
 
-export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, id }: MonthPickerProps) {
+export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, id, previousYearLabel, nextYearLabel }: MonthPickerProps) {
   const { locale, t } = useI18n()
   const [open, setOpen] = React.useState(false)
   
@@ -96,7 +98,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             onClick={handlePreviousYear}
             disabled={viewYear <= minYear}
             className="size-8 rounded-full hover:bg-muted"
-            aria-label={t("filters.previousYear", { defaultValue: "Previous year" })}
+            aria-label={previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })}
           >
             <ChevronLeft className="size-4" />
           </Button>
@@ -109,7 +111,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             onClick={handleNextYear}
             disabled={viewYear >= maxYear}
             className="size-8 rounded-full hover:bg-muted"
-            aria-label={t("filters.nextYear", { defaultValue: "Next year" })}
+            aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
           >
             <ChevronRight className="size-4" />
           </Button>
