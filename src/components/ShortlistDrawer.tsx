@@ -183,6 +183,7 @@ export function ShortlistDrawer({
       t("shortlist.export.mrtDistance"),
       t("shortlist.export.notes"),
     ];
+    const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
     const csvRows = rows.map((row) => {
       // 🛡️ Sentinel Security Fix: Prevent CSV Formula Injection
       // User notes might contain malicious spreadsheet formulas. Since shortlists
@@ -203,7 +204,6 @@ export function ShortlistDrawer({
         `"${safeNotes.replace(/"/g, '""')}"`,
       ].join(",");
     });
-    const escapedHeaders = headers.map((h) => `"${h.replace(/"/g, '""')}"`);
     const csvContent = [escapedHeaders.join(","), ...csvRows].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
