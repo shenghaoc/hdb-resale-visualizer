@@ -9,3 +9,7 @@
 ## 2026-04-25 - React.memo on List Item Components
 **Learning:** Long lists of complex components, like `BlockCard` in `ResultsPane`, can re-render every item when parent state changes unless both the item component and function props are stable.
 **Action:** Wrap list item components in `React.memo`, memoize callbacks passed into those items, and memoize custom hook return objects when callers keep the object reference.
+
+## 2026-04-26 - Short-Circuiting Array Filtering Operations
+**Learning:** The order of logical conditions inside hot loops (like array filtering over 50,000+ items) heavily impacts performance. Placing expensive string manipulations or tokenizations before cheap comparison operations (like simple equality or bounds checks) will unnecessarily compute expensive regex for blocks that would have been rejected anyway. Also instantiating objects like `new Date()` within these loops adds significant GC and evaluation overhead.
+**Action:** When creating filtering chains for large arrays, always place cheap bounds checks (`===`, `<`, `>`) first to short-circuit evaluation. Defer the most expensive operations (like full-text search tokenization) to the absolute end. Hoist repetitive object instantiations (like calculating the current year) outside of the loop entirely.
