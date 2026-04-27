@@ -6,10 +6,15 @@ on:
     paths:
       - "src/**"
       - "scripts/**"
+      - ".github/**"
       - "*.ts"
       - "*.tsx"
       - "*.js"
       - "*.jsx"
+      - "*.json"
+      - "*.toml"
+      - "*.yml"
+      - "*.yaml"
 
 jobs:
   claude-review:
