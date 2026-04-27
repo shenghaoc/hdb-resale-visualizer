@@ -9,3 +9,7 @@
 ## 2026-04-25 - React.memo on List Item Components
 **Learning:** Long lists of complex components, like `BlockCard` in `ResultsPane`, can re-render every item when parent state changes unless both the item component and function props are stable.
 **Action:** Wrap list item components in `React.memo`, memoize callbacks passed into those items, and memoize custom hook return objects when callers keep the object reference.
+
+## 2024-06-26 - Date Instantiation in Hot Loops
+**Learning:** Instantiating `new Date()` (or calling `.getFullYear()`) inside of hot paths like sorting comparison functions (`getSortValue`) or array map/filter callbacks over thousands of items creates unnecessary object allocations and slows down array processing significantly relative to pure comparisons.
+**Action:** Always hoist `new Date()` allocations outside of loops, or to module-level constants if the value only changes across long time scales (like `currentYear`), to prevent redundant Date object creation during large array iterations.

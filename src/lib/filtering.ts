@@ -359,6 +359,9 @@ function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
   return earthRadiusMeters * c;
 }
 
+// Optimization: Cache current year to avoid instantiating new Date() in array filter loops
+const CURRENT_YEAR = new Date().getFullYear();
+
 export function resolveGeographicSearchIntent(
   query: string,
   blocks: BlockSummary[],
@@ -466,8 +469,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const currentYear = new Date().getFullYear();
-    const maxRemainingLease = 99 - (currentYear - block.leaseCommenceRange[1]);
+    const maxRemainingLease = 99 - (CURRENT_YEAR - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }

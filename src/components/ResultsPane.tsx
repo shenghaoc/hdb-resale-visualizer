@@ -42,16 +42,17 @@ type ResultsPaneProps = {
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
 
-function getSortValue(block: BlockSummary, mode: SortMode) {
-  const currentYear = new Date().getFullYear();
+// Optimization: Cache current year to avoid instantiating new Date() in array sort loops
+const CURRENT_YEAR = new Date().getFullYear();
 
+function getSortValue(block: BlockSummary, mode: SortMode) {
   switch (mode) {
     case "median-asc":
       return block.medianPrice;
     case "median-desc":
       return -block.medianPrice;
     case "lease-desc":
-      return -(99 - (currentYear - block.leaseCommenceRange[1]));
+      return -(99 - (CURRENT_YEAR - block.leaseCommenceRange[1]));
     case "mrt-asc":
       return block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
     case "latest-desc":
