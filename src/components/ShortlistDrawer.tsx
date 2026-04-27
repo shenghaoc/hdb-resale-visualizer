@@ -203,7 +203,8 @@ export function ShortlistDrawer({
         `"${safeNotes.replace(/"/g, '""')}"`,
       ].join(",");
     });
-    const csvContent = [headers.join(","), ...csvRows].join("\n");
+    const escapedHeaders = headers.map((h) => `"${h.replace(/"/g, '""')}"`);
+    const csvContent = [escapedHeaders.join(","), ...csvRows].join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
