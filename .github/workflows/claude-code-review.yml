@@ -35,8 +35,10 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # Pin plugin version once stable; currently tracks claude-code-plugins branch
-          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
-          plugins: 'code-review@claude-code-plugins'
-          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
+          prompt: |
+            Review the changed files in this PR for bugs, type errors, and violations of the
+            architectural constraints in CLAUDE.md (zero runtime APIs, build-time data only,
+            no geocoding in src/, browser-local state). Skip generated files under public/data/.
+            Post inline comments on specific lines where issues exist, and a brief overall summary.
+            Do not approve or merge. Do not commit, push, or modify any file.
           claude_args: '--max-turns 5'
