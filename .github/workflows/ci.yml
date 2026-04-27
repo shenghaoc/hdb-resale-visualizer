@@ -11,10 +11,10 @@ on:
       - "package.json"
       - "bun.lock"
       - "tsconfig*.json"
-      - "vite.config.ts"
-      - "playwright.config.ts"
-      - "eslint.config.js"
-      - "vitest.config.ts"
+      - "vite.config.*"
+      - "playwright.config.*"
+      - "eslint.config.*"
+      - "vitest.config.*"
   push:
     branches:
       - main
@@ -28,10 +28,10 @@ on:
       - "package.json"
       - "bun.lock"
       - "tsconfig*.json"
-      - "vite.config.ts"
-      - "playwright.config.ts"
-      - "eslint.config.js"
-      - "vitest.config.ts"
+      - "vite.config.*"
+      - "playwright.config.*"
+      - "eslint.config.*"
+      - "vitest.config.*"
 
 permissions:
   contents: read
