@@ -183,7 +183,17 @@ function isNearMatch(left: string, right: string): boolean {
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
 let blockTokensCache = new WeakMap<BlockSummary, string[]>();
+let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
+
+function getCanonicalFlatTypes(block: BlockSummary): string[] {
+  let canonical = blockCanonicalFlatTypesCache.get(block);
+  if (!canonical) {
+    canonical = block.flatTypes.map(canonicalFlatType);
+    blockCanonicalFlatTypesCache.set(block, canonical);
+  }
+  return canonical;
+}
 
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
@@ -425,6 +435,7 @@ export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, string[]>();
+  blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
 }
 
@@ -491,7 +502,7 @@ export function matchesFilter(
 
   if (filters.flatType) {
     const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
-    if (!block.flatTypes.some((type) => canonicalFlatType(type) === canonicalSelectedFlatType)) {
+    if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
       return false;
     }
   }
