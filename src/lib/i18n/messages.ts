@@ -218,7 +218,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.within1km": "{count} within 1km",
     "detail.within2km": "{count} within 2km",
     "detail.nearest": "Nearest: {distance}",
-    "detail.nearestNamed": "{name}：{distance}",
+    "detail.nearestNamed": "{name}: {distance}",
     "detail.amenity.schools": "Schools",
     "detail.amenity.hawkers": "Hawkers",
     "detail.amenity.supermarkets": "Supermarkets",
@@ -459,6 +459,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.rank.recency": "活跃度排名",
     "detail.noComparisonData": "暂无设施数据",
     "detail.noPercentileData": "暂无排名数据",
-    "detail.copiedAddress": "Copied!",
+    "detail.copiedAddress": "已复制！",
   },
 };

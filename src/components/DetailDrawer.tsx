@@ -208,7 +208,7 @@ export function DetailDrawer({
                       copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
                     }}
                     title={isCopied ? t("detail.copiedAddress") || "Copied!" : "Copy address"}
-                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress") || "Copy address to clipboard"}
+                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress")}
                   >
                     {isCopied ? <Check data-icon /> : <Copy data-icon />}
                   </Button>
