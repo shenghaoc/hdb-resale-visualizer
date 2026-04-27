@@ -429,7 +429,7 @@ export function ResultsPane({
                 <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
-                <div className="flex min-w-0 flex-1 items-center justify-end gap-2 sm:flex-none">
+                <div className="flex min-w-0 basis-full items-center gap-2 sm:flex-none">
                   <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
                     <ArrowUpDown className="size-3" />
                     {t("results.sort")}

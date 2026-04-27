@@ -35,3 +35,19 @@ The GlobalHeader card component is blocking user interaction with MapLibre GL JS
 3.5 WHEN the desktop panel toggle button is visible THEN it SHALL CONTINUE TO function independently of the header
 
 3.6 WHEN the header has backdrop blur and transparency effects THEN these visual styles SHALL CONTINUE TO render correctly
+
+## UI Polish & Responsiveness (Review Feedback)
+
+### Detail Drawer
+
+4.1 WHEN the DetailDrawer is open THEN the close button SHALL display an 'X' icon (Lucide X) instead of a 'Maximize2' icon
+
+4.2 WHEN viewing the DetailDrawer on mobile devices (width < 640px) THEN the shortlist button SHALL use compact labels ("Save" / "Saved") to prevent text truncation
+
+4.3 WHEN viewing the DetailDrawer on desktop devices (width >= 640px) THEN the shortlist button SHALL use full descriptive labels ("Add to shortlist" / "Saved to Shortlist")
+
+### Results Pane
+
+5.1 WHEN viewing the ResultsPane on mobile devices THEN the sort controls SHALL wrap to a new line (using basis-full) to ensure the sort select value remains fully visible without clipping
+
+5.2 The Results header sort container SHALL use simplified Tailwind classes by removing redundant properties (`sm:basis-auto`, `justify-end`) while maintaining the desired layout behavior

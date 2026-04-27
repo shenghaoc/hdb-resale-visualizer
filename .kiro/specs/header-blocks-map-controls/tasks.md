@@ -72,3 +72,13 @@
   - Verify no console errors or warnings appear
   - Test manually on different viewport sizes to ensure fix works universally
   - Ask the user if questions arise or if additional testing is needed
+
+- [x] 5. UI Polish & Responsiveness (Review Feedback)
+  - [x] 5.1 Correct DetailDrawer close icon
+    - Replace `Maximize2` with `X` icon in `DetailDrawer.tsx`
+  - [x] 5.2 Implement responsive shortlist labels
+    - Update `DetailDrawer.tsx` to use `t("results.save")`/`t("results.saved")` on mobile and full labels on desktop
+  - [x] 5.3 Fix Results header truncation
+    - Update `ResultsPane.tsx` to use `basis-full` for the sort select container on mobile
+  - [x] 5.4 Simplify redundant Tailwind classes
+    - Remove `sm:basis-auto` and `justify-end` from the Results header sort container in `ResultsPane.tsx`
