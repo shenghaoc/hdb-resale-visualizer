@@ -2,8 +2,7 @@ import type { Locale, Translator } from "@/lib/i18n";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 
-// Optimization: Cache current year to avoid instantiating new Date() during list rendering
-const CURRENT_YEAR = new Date().getFullYear();
+// Removed module-level CURRENT_YEAR; using getCurrentYear() helper.
 
 function resolveLocale(locale?: Locale) {
   return locale ?? DEFAULT_LOCALE;
@@ -52,9 +51,12 @@ export function formatMonth(month: string, locale?: Locale): string {
   }).format(date);
 }
 
+import { MAX_LEASE_DURATION, getCurrentYear } from '@/lib/constants';
+
 export function formatRemainingLease(leaseCommenceRange: [number, number], t: Translator): string {
-  const minLease = 99 - (CURRENT_YEAR - leaseCommenceRange[0]);
-  const maxLease = 99 - (CURRENT_YEAR - leaseCommenceRange[1]);
+  const currentYear = getCurrentYear();
+  const minLease = MAX_LEASE_DURATION - (currentYear - leaseCommenceRange[0]);
+  const maxLease = MAX_LEASE_DURATION - (currentYear - leaseCommenceRange[1]);
   if (minLease === maxLease) {
     return t("unit.years", { value: maxLease });
   }

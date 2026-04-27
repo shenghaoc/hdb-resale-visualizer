@@ -1,4 +1,5 @@
 import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
+import { MAX_LEASE_DURATION, getCurrentYear } from '@/lib/constants';
 import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
@@ -359,8 +360,7 @@ function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
   return earthRadiusMeters * c;
 }
 
-// Optimization: Cache current year to avoid instantiating new Date() in array filter loops
-const CURRENT_YEAR = new Date().getFullYear();
+// Removed module-level CURRENT_YEAR; use getCurrentYear() per operation.
 
 export function resolveGeographicSearchIntent(
   query: string,
@@ -469,7 +469,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const maxRemainingLease = 99 - (CURRENT_YEAR - block.leaseCommenceRange[1]);
+    const maxRemainingLease = MAX_LEASE_DURATION - (getCurrentYear() - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }
