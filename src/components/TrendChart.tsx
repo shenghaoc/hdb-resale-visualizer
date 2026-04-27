@@ -30,8 +30,9 @@ export function TrendChart({ points }: TrendChartProps) {
 
   const option = useMemo(() => {
     const prices = points.map((p) => p.medianPrice);
-    const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
-    const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
+    const filteredPrices = prices.filter((p) => !Number.isNaN(p));
+    const minPrice = filteredPrices.length > 0 ? Math.min(...filteredPrices) : 0;
+    const maxPrice = filteredPrices.length > 0 ? Math.max(...filteredPrices) : 0;
     const range = maxPrice - minPrice;
 
     // Use a baseline that highlights fluctuations while maintaining context

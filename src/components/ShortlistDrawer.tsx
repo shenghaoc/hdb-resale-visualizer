@@ -302,7 +302,7 @@ export function ShortlistDrawer({
           color: colors.popoverForeground,
         },
         valueFormatter: (value: number | null) =>
-          value === null || (typeof value === "number" && isNaN(value))
+          value === null || Number.isNaN(value)
             ? t("shortlist.na")
             : formatCompactCurrency(value),
       },
