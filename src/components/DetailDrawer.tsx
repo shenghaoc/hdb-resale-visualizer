@@ -1,6 +1,7 @@
-import { startTransition, Suspense, useState } from "react";
+import { startTransition, Suspense, useState, useRef } from "react";
 import {
   Bookmark,
+  Check,
   Clock3,
   Coins,
   Compass,
@@ -153,6 +154,8 @@ export function DetailDrawer({
 }: DetailDrawerProps) {
   const { locale, t } = useI18n();
   const [activeTab, setActiveTab] = useState("overview");
+  const [isCopied, setIsCopied] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
@@ -185,16 +188,21 @@ export function DetailDrawer({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="shrink-0 text-muted-foreground hover:text-foreground"
+                    className={cn("shrink-0 transition-colors", isCopied ? "text-primary hover:text-primary" : "text-muted-foreground hover:text-foreground")}
                     onClick={() => {
                       void navigator.clipboard.writeText(
                         `${currentSummary.block} ${currentSummary.streetName} Singapore`,
                       );
+                      setIsCopied(true);
+                      if (copyTimeoutRef.current) {
+                        clearTimeout(copyTimeoutRef.current);
+                      }
+                      copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
                     }}
-                    title="Copy address"
-                    aria-label={t("detail.copyAddress") || "Copy address to clipboard"}
+                    title={isCopied ? t("detail.copiedAddress") || "Copied!" : "Copy address"}
+                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress") || "Copy address to clipboard"}
                   >
-                    <Copy data-icon />
+                    {isCopied ? <Check data-icon /> : <Copy data-icon />}
                   </Button>
                 )}
               </div>
