@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useState, useRef } from "react";
+import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import {
   Bookmark,
   Check,
@@ -160,6 +160,33 @@ export function DetailDrawer({
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleCopyAddress = () => {
+    if (!currentSummary) {
+      return;
+    }
+
+    void navigator.clipboard
+      .writeText(`${currentSummary.block} ${currentSummary.streetName} Singapore`)
+      .then(() => {
+        setIsCopied(true);
+        if (copyTimeoutRef.current) {
+          clearTimeout(copyTimeoutRef.current);
+        }
+        copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch(() => {
+        setIsCopied(false);
+      });
+  };
+
   return (
     <Drawer open={Boolean(selectedBlock)} onClose={onClose} dismissible={false}>
       <DrawerContent
@@ -189,18 +216,9 @@ export function DetailDrawer({
                     variant="ghost"
                     size="icon"
                     className={cn("shrink-0 transition-colors", isCopied ? "text-primary hover:text-primary" : "text-muted-foreground hover:text-foreground")}
-                    onClick={() => {
-                      void navigator.clipboard.writeText(
-                        `${currentSummary.block} ${currentSummary.streetName} Singapore`,
-                      );
-                      setIsCopied(true);
-                      if (copyTimeoutRef.current) {
-                        clearTimeout(copyTimeoutRef.current);
-                      }
-                      copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
-                    }}
-                    title={isCopied ? t("detail.copiedAddress") || "Copied!" : "Copy address"}
-                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress") || "Copy address to clipboard"}
+                    onClick={handleCopyAddress}
+                    title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
+                    aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
                     {isCopied ? <Check data-icon /> : <Copy data-icon />}
                   </Button>

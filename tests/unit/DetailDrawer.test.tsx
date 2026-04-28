@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DetailDrawer } from "@/components/DetailDrawer";
 import { I18nProvider } from "@/lib/i18n";
 import type { BlockSummary, ComparisonArtifact } from "@/types/data";
@@ -58,6 +58,23 @@ const mockComparison: ComparisonArtifact = {
 };
 
 describe("DetailDrawer", () => {
+  const writeText = vi.fn();
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    writeText.mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+  });
+
+  afterEach(() => {
+    vi.clearAllTimers();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it("renders amenity sections when comparison data is available", () => {
     render(
       <I18nProvider>
@@ -176,5 +193,72 @@ describe("DetailDrawer", () => {
     // Check that fallback messages are shown
     expect(screen.getByText("Amenity comparison data not available yet.")).toBeInTheDocument();
     expect(screen.getByText("Market percentile data not available yet.")).toBeInTheDocument();
+  });
+
+  it("shows copied feedback only after clipboard write succeeds", async () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={null}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    const copyButton = screen.getByRole("button", { name: "Copy address to clipboard" });
+    fireEvent.click(copyButton);
+
+    expect(writeText).toHaveBeenCalledWith("101 BEDOK NTH AVE 4 Singapore");
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(
+      screen.getByRole("button", { name: "Address copied to clipboard" })
+    ).toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(
+      screen.getByRole("button", { name: "Copy address to clipboard" })
+    ).toBeInTheDocument();
+  });
+
+  it("keeps copy feedback hidden when clipboard write fails", async () => {
+    writeText.mockRejectedValueOnce(new Error("Clipboard blocked"));
+
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={null}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Copy address to clipboard" }));
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(writeText).toHaveBeenCalledWith("101 BEDOK NTH AVE 4 Singapore");
+    expect(
+      screen.queryByRole("button", { name: "Address copied to clipboard" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Copy address to clipboard" })
+    ).toBeInTheDocument();
   });
 });
