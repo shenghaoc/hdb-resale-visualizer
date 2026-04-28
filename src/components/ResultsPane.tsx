@@ -1,15 +1,16 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { MAX_LEASE_DURATION, getCurrentYear } from '@/lib/constants';
 import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
 import {
   formatCompactCurrency,
   formatMeters,
   formatMonth,
   formatRemainingLease,
+  formatSqm,
 } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
+import { cn } from "@/lib/utils";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,49 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+function LeaseBar({ years, color = "currentColor", height = 3 }: { years: number; color?: string; height?: number }) {
+  const pct = Math.max(0, Math.min(1, years / MAX_LEASE_DURATION)) * 100;
+  return (
+    <div
+      className="bg-black/10 dark:bg-white/10"
+      style={{ position: "relative", height, borderRadius: height }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: `${pct}%`,
+          background: color,
+          borderRadius: height,
+        }}
+      />
+    </div>
+  );
+}
+
+function WalkDots({ meters, color = "currentColor" }: { meters: number; color?: string }) {
+  const filled = meters <= 300 ? 3 : meters <= 600 ? 2 : 1;
+  return (
+    <span style={{ display: "inline-flex", gap: 2.5, alignItems: "center" }}>
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: "50%",
+            background: color,
+            opacity: i < filled ? 1 : 0.2,
+            display: "block",
+          }}
+        />
+      ))}
+    </span>
+  );
+}
+
 type ResultsPaneProps = {
   blocks: BlockSummary[];
   hasResultScope: boolean;
@@ -43,8 +87,6 @@ type ResultsPaneProps = {
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
-
-// Removed module-level CURRENT_YEAR; using getCurrentYear() helper.
 
 function getSortValue(block: BlockSummary, mode: SortMode, currentYear: number) {
   switch (mode) {
@@ -82,6 +124,10 @@ const BlockCard = memo(function BlockCard({
   const nearbyStations = (block.nearbyMrts ?? []).slice(0, 2);
 
   if (isCompact) {
+    const currentYear = getCurrentYear();
+    const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
+    const sqm = Math.round((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2);
+    const mrtDist = block.nearestMrt?.distanceMeters;
     return (
       <Item
         data-state={isFeatured ? "selected" : "idle"}
@@ -91,23 +137,30 @@ const BlockCard = memo(function BlockCard({
         className={cn(
           "animate-fade-in-up cursor-pointer border-border/30 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)]",
           isFeatured && "border-primary/45 bg-accent/30 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
-          "h-[100px] min-h-[100px] max-h-[100px] gap-2.5 px-3 py-3",
+          "gap-0 px-3 py-2.5",
         )}
-        style={{ animationDelay: `${index * 40}ms` }}
+        style={{ animationDelay: `${index * 40}ms`, minHeight: 110 }}
         onClick={() => onSelect(block.addressKey)}
       >
-        <ItemHeader className="basis-full min-w-0">
-          <ItemContent className="min-w-0">
-            <div className="result-address flex min-w-0 flex-col gap-1">
-              <strong className="truncate font-heading text-[0.95rem] font-bold leading-tight tracking-tight">
-                {block.block} {block.streetName}
+        <div className="flex w-full min-w-0 items-start gap-2">
+          <div className="min-w-0 flex-1">
+            <strong className="block truncate font-heading text-[0.92rem] font-bold leading-snug tracking-tight">
+              {block.block} {block.streetName}
+            </strong>
+            <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+              {block.town}
+              {block.flatTypes.length > 0 ? ` · ${block.flatTypes[0]}` : ""}
+            </span>
+          </div>
+          <div className="flex shrink-0 items-start gap-2">
+            <div className="text-right">
+              <strong className="block font-heading text-[0.95rem] font-bold leading-snug tracking-tight">
+                {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
-              <span className="truncate text-[0.58rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                {localizeTownName(block.town, locale)}
+              <span className="text-[0.58rem] font-medium text-muted-foreground">
+                {block.transactionCount} txns
               </span>
             </div>
-          </ItemContent>
-          <ItemActions className="shrink-0">
             <Button
               size="xs"
               variant={isSaved ? "secondary" : "ghost"}
@@ -116,33 +169,30 @@ const BlockCard = memo(function BlockCard({
                 onToggleShortlist(block.addressKey);
               }}
               type="button"
-              className="size-8 p-0"
+              className="size-7 shrink-0 p-0"
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
-              <Bookmark data-icon className={cn("size-4", isSaved && "fill-current")} />
+              <Bookmark data-icon className={cn("size-3.5", isSaved && "fill-current")} />
             </Button>
-          </ItemActions>
-        </ItemHeader>
-        <div className="flex w-full min-w-0 items-center justify-between border-t border-border/20 pt-2.5">
-          <div className="flex min-w-0 items-baseline gap-1.5">
-            <span className="shrink-0 text-[0.58rem] font-bold uppercase tracking-[0.16em] text-muted-foreground/60">
-              {t("results.median")}:{" "}
+          </div>
+        </div>
+
+        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[0.6rem] font-medium text-muted-foreground">
+          <span>{formatSqm(sqm, t, locale)}</span>
+          {mrtDist !== undefined && mrtDist !== null && (
+            <span className="flex items-center gap-1">
+              <WalkDots meters={mrtDist} color="var(--color-primary)" />
+              <span>{formatMeters(mrtDist, t, locale)}</span>
             </span>
-            <strong className="truncate font-heading text-[0.9rem] font-bold tracking-tight">
-              {formatCompactCurrency(block.medianPrice, locale)}
-            </strong>
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.58rem] font-bold">
-              {localizeFlatType(block.flatTypes[0] ?? "", locale)}
-            </Badge>
-            {block.nearestMrt && (
-              <span className="text-[0.62rem] font-medium text-muted-foreground">
-                {formatMeters(block.nearestMrt.distanceMeters, t, locale)}
-              </span>
-            )}
-          </div>
+          )}
+          <span className="ml-auto">
+            {t("unit.years", { value: leaseYears > 0 ? leaseYears : "—" })} lease
+          </span>
+        </div>
+
+        <div className="mt-1.5 w-full">
+          <LeaseBar years={leaseYears > 0 ? leaseYears : 0} color="var(--color-primary)" height={2.5} />
         </div>
       </Item>
     );
@@ -161,8 +211,6 @@ const BlockCard = memo(function BlockCard({
       style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}
     >
-
-
       <ItemHeader>
         <ItemContent>
           <div className="result-address flex flex-col gap-1">
@@ -275,7 +323,7 @@ export function ResultsPane({
   const [currentPage, setCurrentPage] = useState(1);
   const [scrollTop, setScrollTop] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(0);
-  const compactRowHeight = 94;
+  const compactRowHeight = 110;
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
 
