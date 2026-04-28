@@ -250,4 +250,18 @@ describe("matchesFilter", () => {
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(false);
   });
+
+  it("still resolves station names when blocks load after an initial empty-array call", () => {
+    // Regression: stationNamesCache was poisoned by the first call with empty blocks (initial
+    // React state), causing geographic search to always return null even after blocks loaded.
+    const emptyIntent = resolveGeographicSearchIntent("near ang mo kio mrt", [], 800);
+    expect(emptyIntent).toBeNull();
+
+    const intent = resolveGeographicSearchIntent("near ang mo kio mrt", artifact.blockSummaries, 800);
+    expect(intent).toEqual({
+      type: "station",
+      stationName: "ANG MO KIO MRT STATION",
+      radiusMeters: 800,
+    });
+  });
 });

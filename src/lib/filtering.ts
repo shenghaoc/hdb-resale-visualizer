@@ -205,7 +205,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   let blockTokenValues = blockTokensCache.get(block);
   if (!blockTokenValues) {
     const searchableTokens = tokenizeSearchText(
-      `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
+      `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""} ${block.postalCode ?? ""}`,
     );
     blockTokenValues = searchableTokens.map((token) => token.value);
     blockTokensCache.set(block, blockTokenValues);
@@ -247,6 +247,10 @@ function normalizeStationName(stationName: string): string {
 function collectStationNames(blocks: BlockSummary[]): string[] {
   if (stationNamesCache) {
     return stationNamesCache;
+  }
+
+  if (blocks.length === 0) {
+    return [];
   }
 
   const stationNames = new Set<string>();
