@@ -679,9 +679,6 @@ export function DetailDrawer({
                     "query",
                     `${currentSummary?.block} ${currentSummary?.streetName} Singapore`,
                   );
-                  // 🛡️ Sentinel Security Fix: Prevent Reverse Tabnabbing
-                  // Adding noopener,noreferrer prevents the newly opened tab from
-                  // accessing the original window object via window.opener
                   window.open(url.toString(), "_blank", "noopener,noreferrer");
                 }}
               >

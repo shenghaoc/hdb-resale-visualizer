@@ -681,8 +681,6 @@ function App() {
         <a
           className="map-attribution-link"
           href="https://www.onemap.gov.sg/home"
-          // 🛡️ Sentinel Security Fix: Prevent Reverse Tabnabbing
-          // Added noopener in addition to noreferrer for explicit defense in depth
           rel="noopener noreferrer"
           target="_blank"
         >
