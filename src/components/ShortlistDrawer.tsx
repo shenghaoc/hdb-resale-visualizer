@@ -7,6 +7,7 @@ import ReactEChartsCore from "echarts-for-react/lib/core";
 import { Check, Copy, Download, Link2, Target, TrainFront, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
+import { localizeTownName } from "@/lib/i18n/domain";
 import { useTheme } from "@/hooks/useTheme";
 import { formatCompactCurrency, formatCurrency, formatMeters, formatNumber, formatRemainingLease } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
@@ -707,7 +708,7 @@ export function ShortlistDrawer({
                                   </strong>
                                   <span className="text-[0.65rem] font-medium text-muted-foreground/60 italic">
                                     {t("shortlist.percentileContext", {
-                                      town: row.comparison.town,
+                                      town: localizeTownName(row.comparison.town, locale),
                                       flatType: row.comparison.flatType,
                                     })}
                                   </span>
