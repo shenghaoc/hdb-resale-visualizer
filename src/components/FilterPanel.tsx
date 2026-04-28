@@ -1,6 +1,7 @@
 import { useId } from "react";
 import { formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { FilterOptions, FilterState } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,10 +54,18 @@ type SelectFieldProps = {
   allLabel: string;
   value: string;
   options: string[];
+  renderOptionLabel?: (value: string) => string;
   onChange: (value: string) => void;
 };
 
-function SelectField({ label, allLabel, value, options, onChange }: SelectFieldProps) {
+function SelectField({
+  label,
+  allLabel,
+  value,
+  options,
+  renderOptionLabel = (option) => option,
+  onChange,
+}: SelectFieldProps) {
   const labelId = useId();
   const triggerValue = value || ALL_VALUE;
 
@@ -75,7 +84,7 @@ function SelectField({ label, allLabel, value, options, onChange }: SelectFieldP
             <SelectItem value={ALL_VALUE}>{allLabel}</SelectItem>
             {options.map((option) => (
               <SelectItem key={option} value={option}>
-                {option}
+                {renderOptionLabel(option)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -137,6 +146,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   label={t("filters.town")}
                   options={options.towns}
                   value={filters.town}
+                  renderOptionLabel={(town) => localizeTownName(town, locale)}
                   onChange={(town) => onChange({ town })}
                 />
                 <SelectField
@@ -144,6 +154,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   label={t("filters.flatType")}
                   options={options.flatTypes}
                   value={filters.flatType}
+                  renderOptionLabel={(flatType) => localizeFlatType(flatType, locale)}
                   onChange={(flatType) => onChange({ flatType })}
                 />
               </div>

@@ -1,6 +1,7 @@
 import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
 import { MAX_LEASE_DURATION } from '@/lib/constants';
 import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
+import { resolveChineseSearchAliases } from "@/lib/i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
 const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [
@@ -41,7 +42,7 @@ const STATION_SEARCH_CUE_WORDS = new Set(["near", "nearby", "around", "mrt", "st
 const STATION_NAME_STOP_WORDS = new Set(["mrt", "station"]);
 
 function normalizeSearchText(value: string): string {
-  return value
+  return resolveChineseSearchAliases(value)
     .toLowerCase()
     .replace(/[^a-z0-9+]+/g, " ")
     .replace(/\s+/g, " ")

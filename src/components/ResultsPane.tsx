@@ -9,6 +9,7 @@ import {
   formatRemainingLease,
 } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -102,7 +103,7 @@ const BlockCard = memo(function BlockCard({
                 {block.block} {block.streetName}
               </strong>
               <span className="truncate text-[0.58rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                {block.town}
+                {localizeTownName(block.town, locale)}
               </span>
             </div>
           </ItemContent>
@@ -134,7 +135,7 @@ const BlockCard = memo(function BlockCard({
           </div>
           <div className="flex shrink-0 items-center gap-2">
             <Badge variant="secondary" className="h-4 px-1.5 py-0 text-[0.58rem] font-bold">
-              {block.flatTypes[0]}
+              {localizeFlatType(block.flatTypes[0] ?? "", locale)}
             </Badge>
             {block.nearestMrt && (
               <span className="text-[0.62rem] font-medium text-muted-foreground">
@@ -169,7 +170,7 @@ const BlockCard = memo(function BlockCard({
               {block.block} {block.streetName}
             </strong>
             <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
-              {block.town}
+              {localizeTownName(block.town, locale)}
             </span>
           </div>
         </ItemContent>
@@ -239,7 +240,7 @@ const BlockCard = memo(function BlockCard({
       <ItemFooter className="flex-wrap gap-2 border-t border-border/60 pt-4">
         {block.flatTypes.slice(0, 3).map((flatType) => (
           <Badge key={flatType} variant="secondary">
-            {flatType}
+            {localizeFlatType(flatType, locale)}
           </Badge>
         ))}
         <ItemDescription className="ml-auto text-right">

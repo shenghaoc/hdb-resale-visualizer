@@ -29,6 +29,7 @@ import {
 } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import type { Locale, Translator } from "@/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -199,7 +200,7 @@ export function DetailDrawer({
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="font-bold tracking-wider">
-                  {currentSummary?.town}
+                  {currentSummary ? localizeTownName(currentSummary.town, locale) : null}
                 </Badge>
                 {isLoading && (
                   <Badge variant="ghost" className="animate-pulse bg-muted/50">
@@ -215,7 +216,12 @@ export function DetailDrawer({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className={cn("shrink-0 transition-colors", isCopied ? "text-primary hover:text-primary" : "text-muted-foreground hover:text-foreground")}
+                    className={cn(
+                      "shrink-0 transition-colors",
+                      isCopied
+                        ? "text-primary hover:text-primary"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
                     onClick={handleCopyAddress}
                     title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                     aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
@@ -375,7 +381,7 @@ export function DetailDrawer({
                               variant="outline"
                               className="h-5 text-[0.6rem] font-bold uppercase"
                             >
-                              {type}
+                              {localizeFlatType(type, locale)}
                             </Badge>
                           ))}
                         </div>
@@ -597,7 +603,11 @@ export function DetailDrawer({
                             {t("detail.marketRank")}
                           </CardDescription>
                           <CardTitle className="text-xl font-bold tracking-tight">
-                            {t("detail.townAverage", { town: currentSummary?.town ?? "" })}
+                            {t("detail.townAverage", {
+                              town: currentSummary
+                                ? localizeTownName(currentSummary.town, locale)
+                                : "",
+                            })}
                           </CardTitle>
                         </div>
                         <div className="rounded-full bg-primary/5 p-2 text-primary">
@@ -607,7 +617,11 @@ export function DetailDrawer({
                     </CardHeader>
                     <CardContent className="px-4 pb-4 pt-0">
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        {t("detail.marketRankDescription", { town: currentSummary?.town ?? "" })}
+                        {t("detail.marketRankDescription", {
+                          town: currentSummary
+                            ? localizeTownName(currentSummary.town, locale)
+                            : "",
+                        })}
                       </p>
                     </CardContent>
                   </Card>

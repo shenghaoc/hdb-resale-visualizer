@@ -72,7 +72,7 @@ type LoadedComparison = {
 };
 
 function App() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
@@ -624,6 +624,7 @@ function App() {
         showBlockMarkers={hasMapMarkerScope}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
+        locale={locale}
         t={t}
       />
     </Suspense>
