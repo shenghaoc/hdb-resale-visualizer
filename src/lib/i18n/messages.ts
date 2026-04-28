@@ -213,6 +213,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.save": "Add to shortlist",
     "detail.directions": "Directions",
     "detail.copyAddress": "Copy address to clipboard",
+    "detail.copiedAddress": "Address copied to clipboard",
     "detail.nearbyAmenities": "Nearby Amenities",
     "detail.marketPercentiles": "Market Percentiles",
     "detail.within1km": "{count} within 1km",
@@ -231,7 +232,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.rank.recency": "Recency Rank",
     "detail.noComparisonData": "Amenity comparison data not available yet.",
     "detail.noPercentileData": "Market percentile data not available yet.",
-    "detail.copiedAddress": "Copied!",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -441,6 +441,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.save": "加入候选",
     "detail.directions": "路线",
     "detail.copyAddress": "复制地址到剪贴板",
+    "detail.copiedAddress": "地址已复制到剪贴板",
     "detail.nearbyAmenities": "周边设施",
     "detail.marketPercentiles": "市场排名",
     "detail.within1km": "1公里内 {count}",
@@ -459,6 +460,5 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.rank.recency": "活跃度排名",
     "detail.noComparisonData": "暂无设施数据",
     "detail.noPercentileData": "暂无排名数据",
-    "detail.copiedAddress": "已复制！",
   },
 };

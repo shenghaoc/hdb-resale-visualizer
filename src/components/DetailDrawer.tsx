@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useState, useRef, useEffect } from "react";
+import { startTransition, Suspense, useState, useRef } from "react";
 import {
   Bookmark,
   Check,
@@ -157,14 +157,6 @@ export function DetailDrawer({
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-    };
-  }, []);
-
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
@@ -208,7 +200,7 @@ export function DetailDrawer({
                       copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
                     }}
                     title={isCopied ? t("detail.copiedAddress") || "Copied!" : "Copy address"}
-                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress")}
+                    aria-label={isCopied ? t("detail.copiedAddress") || "Address copied to clipboard" : t("detail.copyAddress") || "Copy address to clipboard"}
                   >
                     {isCopied ? <Check data-icon /> : <Copy data-icon />}
                   </Button>

@@ -79,7 +79,9 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("Schools")).toBeInTheDocument();
     expect(screen.getByText("3 within 1km")).toBeInTheDocument();
     expect(screen.getByText("8 within 2km")).toBeInTheDocument();
-    expect(screen.getByText("BEDOK PRIMARY SCHOOL: 250 m")).toBeInTheDocument();
+    expect(screen.getByText((content, element) => {
+      return element?.textContent === "BEDOK PRIMARY SCHOOL: 250 m";
+    })).toBeInTheDocument();
     
     expect(screen.getByText("Hawkers")).toBeInTheDocument();
     expect(screen.getByText("2 within 1km")).toBeInTheDocument();
