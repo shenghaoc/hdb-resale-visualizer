@@ -463,8 +463,8 @@ export function MapView({
           },
           });
 
-          map.addLayer(
-          {
+      map.addLayer(
+        {
           id: "radius-fill",
           type: "fill",
           source: "radius",
@@ -472,12 +472,12 @@ export function MapView({
             "fill-color": "#2563eb",
             "fill-opacity": 0.05,
           },
-          },
-          "mrt-lines",
-          );
+        },
+        "mrt-lines",
+      );
 
-          map.addLayer(
-          {
+      map.addLayer(
+        {
           id: "radius-outline",
           type: "line",
           source: "radius",
@@ -487,24 +487,9 @@ export function MapView({
             "line-dasharray": [3, 3],
             "line-opacity": 0.25,
           },
-          },
-          "mrt-lines",
-          );
-
-          map.addLayer({
-          id: "block-clusters",
-
-        type: "symbol",
-        source: "mrt-stations",
-        layout: {
-          "text-field": "M",
-          "text-size": 9,
-          "text-font": ["Noto Sans Bold"],
         },
-        paint: {
-          "text-color": ["case", ["==", ["get", "isInterchange"], true], "#111827", "#fff"],
-        },
-      });
+        "mrt-lines",
+      );
 
       map.addLayer({
         id: "mrt-labels",
