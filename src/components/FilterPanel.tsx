@@ -340,6 +340,8 @@ export function FilterPanel(props: FilterPanelProps) {
                         onChange={(value) => onChange({ startMonth: value })}
                         minMonth={minMonth}
                         maxMonth={filters.endMonth ?? maxMonth}
+                        previousYearLabel={t("filters.previousYear")}
+                        nextYearLabel={t("filters.nextYear")}
                       />
                     </FieldContent>
                   </Field>
@@ -352,6 +354,8 @@ export function FilterPanel(props: FilterPanelProps) {
                         onChange={(value) => onChange({ endMonth: value })}
                         minMonth={filters.startMonth ?? minMonth}
                         maxMonth={maxMonth}
+                        previousYearLabel={t("filters.previousYear")}
+                        nextYearLabel={t("filters.nextYear")}
                       />
                     </FieldContent>
                   </Field>
