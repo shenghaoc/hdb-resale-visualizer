@@ -13,3 +13,7 @@
 ## 2026-04-26 - Short-Circuiting Array Filtering Operations
 **Learning:** The order of logical conditions inside hot loops (like array filtering over 50,000+ items) heavily impacts performance. Placing expensive string manipulations or tokenizations before cheap comparison operations (like simple equality or bounds checks) will unnecessarily compute expensive regex for blocks that would have been rejected anyway. Also instantiating objects like `new Date()` within these loops adds significant GC and evaluation overhead.
 **Action:** When creating filtering chains for large arrays, always place cheap bounds checks (`===`, `<`, `>`) first to short-circuit evaluation. Defer the most expensive operations (like full-text search tokenization) to the absolute end. Hoist repetitive object instantiations (like calculating the current year) outside of the loop entirely.
+
+## 2024-06-25 - Redundant Work Inside Sorting Callbacks
+**Learning:** Functions used within `Array.prototype.sort()` execute repeatedly (O(N log N)). In components like `ResultsPane`, evaluating properties inside the `sort` comparator — such as repeatedly fetching `getCurrentYear()` or doing string-to-number transformation via `.replace()` — adds substantial cumulative overhead across thousands of records.
+**Action:** Always hoist independent data evaluation outside the comparator function loop. Pass fixed primitives as parameters, and utilize JS native string comparisons directly (e.g. `YYYY-MM < YYYY-MM`) instead of parsing string dates into Numbers inside `sort`.

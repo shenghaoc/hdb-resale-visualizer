@@ -45,8 +45,7 @@ type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "lates
 
 // Removed module-level CURRENT_YEAR; using getCurrentYear() helper.
 
-function getSortValue(block: BlockSummary, mode: SortMode) {
-  const currentYear = getCurrentYear();
+function getSortValue(block: BlockSummary, mode: SortMode, currentYear: number) {
   switch (mode) {
     case "median-asc":
       return block.medianPrice;
@@ -56,8 +55,6 @@ function getSortValue(block: BlockSummary, mode: SortMode) {
       return -(MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]));
     case "mrt-asc":
       return block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-    case "latest-desc":
-      return -Number(block.latestMonth.replace("-", ""));
     default:
       return block.medianPrice;
   }
@@ -282,8 +279,15 @@ export function ResultsPane({
   const compactRowStride = compactRowHeight + compactRowGap;
 
   const sortedBlocks = useMemo(() => {
+    const currentYear = getCurrentYear();
     return [...blocks].sort((left, right) => {
-      return getSortValue(left, sortMode) - getSortValue(right, sortMode);
+      // ⚡ Bolt: Fast string comparison for dates avoiding string replacement and number parsing per item
+      if (sortMode === "latest-desc") {
+        if (left.latestMonth === right.latestMonth) return 0;
+        return left.latestMonth < right.latestMonth ? 1 : -1;
+      }
+
+      return getSortValue(left, sortMode, currentYear) - getSortValue(right, sortMode, currentYear);
     });
   }, [blocks, sortMode]);
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
