@@ -9,8 +9,8 @@
       "lat": 1.37607846692948,
       "lng": 103.74690311631
     },
-    "medianPrice": 645000,
-    "transactionCount": 5,
+    "medianPrice": 640000,
+    "transactionCount": 6,
     "floorAreaRange": [
       93,
       93
@@ -19,10 +19,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-10",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      623888,
-      648888
+      626666,
+      647916
     ],
-    "pricePerSqmMedian": 6935.48,
-    "pricePerSqftMedian": 644.33
+    "pricePerSqmMedian": 6881.72,
+    "pricePerSqftMedian": 639.34
   },
   "monthlyTrend": [
     {
@@ -230,9 +230,28 @@
       "medianPrice": 648888,
       "transactionCount": 1,
       "medianPricePerSqm": 6977.29
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 635000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6827.96
     }
   ],
   "recentTransactions": [
+    {
+      "id": "choa-chu-kang-815a-choa-chu-kang-ave-7-2026-04-224038",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 635000,
+      "pricePerSqm": 6827.96,
+      "pricePerSqft": 634.34
+    },
     {
       "id": "choa-chu-kang-815a-choa-chu-kang-ave-7-2025-09-203078",
       "month": "2025-09",
@@ -479,19 +498,6 @@
       "resalePrice": 538000,
       "pricePerSqm": 5784.95,
       "pricePerSqft": 537.44
-    },
-    {
-      "id": "choa-chu-kang-815a-choa-chu-kang-ave-7-2022-01-122710",
-      "month": "2022-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 563000,
-      "pricePerSqm": 6053.76,
-      "pricePerSqft": 562.41
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.3870334545891,
       "lng": 103.768120654409
     },
-    "medianPrice": 645000,
-    "transactionCount": 5,
+    "medianPrice": 652500,
+    "transactionCount": 6,
     "floorAreaRange": [
       101,
       121
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      620000,
-      660000
+      626250,
+      671250
     ],
-    "pricePerSqmMedian": 5454.55,
-    "pricePerSqftMedian": 506.74
+    "pricePerSqmMedian": 5511.59,
+    "pricePerSqftMedian": 512.04
   },
   "monthlyTrend": [
     {
@@ -574,9 +574,28 @@
       "medianPrice": 685000,
       "transactionCount": 1,
       "medianPricePerSqm": 5708.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 675000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5578.51
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-506-jelapang-rd-2026-04-223802",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 675000,
+      "pricePerSqm": 5578.51,
+      "pricePerSqft": 518.26
+    },
     {
       "id": "bukit-panjang-506-jelapang-rd-2025-12-202375",
       "month": "2025-12",
@@ -823,19 +842,6 @@
       "resalePrice": 490000,
       "pricePerSqm": 4049.59,
       "pricePerSqft": 376.22
-    },
-    {
-      "id": "bukit-panjang-506-jelapang-rd-2020-10-80816",
-      "month": "2020-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 102,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "76 years 07 months",
-      "resalePrice": 325000,
-      "pricePerSqm": 3186.27,
-      "pricePerSqft": 296.01
     }
   ]
 }

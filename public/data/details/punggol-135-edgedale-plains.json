@@ -9,8 +9,8 @@
       "lat": 1.39209206159846,
       "lng": 103.910022480355
     },
-    "medianPrice": 610000,
-    "transactionCount": 9,
+    "medianPrice": 608500,
+    "transactionCount": 10,
     "floorAreaRange": [
       90,
       112
@@ -19,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-09",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      605000,
-      625000
+      586250,
+      624500
     ],
-    "pricePerSqmMedian": 5612.61,
-    "pricePerSqftMedian": 521.43
+    "pricePerSqmMedian": 5621.62,
+    "pricePerSqftMedian": 522.26
   },
   "monthlyTrend": [
     {
@@ -705,11 +705,30 @@
       "medianPrice": 610000,
       "transactionCount": 1,
       "medianPricePerSqm": 5495.5
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 565000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6208.79
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-135-edgedale-plains-2026-03-226465",
+      "id": "punggol-135-edgedale-plains-2026-04-226272",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 91,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 07 months",
+      "resalePrice": 565000,
+      "pricePerSqm": 6208.79,
+      "pricePerSqft": 576.82
+    },
+    {
+      "id": "punggol-135-edgedale-plains-2026-03-226538",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -722,7 +741,7 @@
       "pricePerSqft": 510.55
     },
     {
-      "id": "punggol-135-edgedale-plains-2026-02-226461",
+      "id": "punggol-135-edgedale-plains-2026-02-226534",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -954,19 +973,6 @@
       "resalePrice": 550000,
       "pricePerSqm": 4910.71,
       "pricePerSqft": 456.22
-    },
-    {
-      "id": "punggol-135-edgedale-plains-2022-05-131414",
-      "month": "2022-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 111,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "80 years 07 months",
-      "resalePrice": 468888,
-      "pricePerSqm": 4224.22,
-      "pricePerSqft": 392.44
     }
   ]
 }

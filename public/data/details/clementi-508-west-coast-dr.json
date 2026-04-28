@@ -9,8 +9,8 @@
       "lat": 1.31165973523805,
       "lng": 103.761761494233
     },
-    "medianPrice": 412000,
-    "transactionCount": 3,
+    "medianPrice": 381000,
+    "transactionCount": 4,
     "floorAreaRange": [
       67,
       162
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      381000,
-      414500
+      350000,
+      413250
     ],
-    "pricePerSqmMedian": 6149.25,
-    "pricePerSqftMedian": 571.28
+    "pricePerSqmMedian": 5686.57,
+    "pricePerSqftMedian": 528.29
   },
   "monthlyTrend": [
     {
@@ -1049,9 +1049,28 @@
       "medianPrice": 417000,
       "transactionCount": 1,
       "medianPricePerSqm": 6223.88
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 350000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5223.88
     }
   ],
   "recentTransactions": [
+    {
+      "id": "clementi-508-west-coast-dr-2026-04-224342",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 04 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 5223.88,
+      "pricePerSqft": 485.31
+    },
     {
       "id": "clementi-508-west-coast-dr-2025-08-204048",
       "month": "2025-08",
@@ -1298,19 +1317,6 @@
       "resalePrice": 275000,
       "pricePerSqm": 4104.48,
       "pricePerSqft": 381.32
-    },
-    {
-      "id": "clementi-508-west-coast-dr-2018-05-26966",
-      "month": "2018-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "59 years 03 months",
-      "resalePrice": 288000,
-      "pricePerSqm": 4298.51,
-      "pricePerSqft": 399.34
     }
   ]
 }

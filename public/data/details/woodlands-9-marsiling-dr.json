@@ -9,8 +9,8 @@
       "lat": 1.44129152941254,
       "lng": 103.776449738052
     },
-    "medianPrice": 274500,
-    "transactionCount": 114,
+    "medianPrice": 460000,
+    "transactionCount": 1,
     "floorAreaRange": [
       117,
       120
@@ -19,10 +19,10 @@
       1975,
       1975
     ],
-    "latestMonth": "2023-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2023-08"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      225500,
-      339750
+      460000,
+      460000
     ],
-    "pricePerSqmMedian": 2311.54,
-    "pricePerSqftMedian": 214.75
+    "pricePerSqmMedian": 3931.62,
+    "pricePerSqftMedian": 365.26
   },
   "monthlyTrend": [
     {
@@ -620,9 +620,28 @@
       "medianPrice": 480000,
       "transactionCount": 1,
       "medianPricePerSqm": 4102.56
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 460000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 3931.62
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-9-marsiling-dr-2026-04-229121",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 117,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1976,
+      "remainingLease": "48 years 09 months",
+      "resalePrice": 460000,
+      "pricePerSqm": 3931.62,
+      "pricePerSqft": 365.26
+    },
     {
       "id": "woodlands-9-marsiling-dr-2023-08-166582",
       "month": "2023-08",
@@ -845,7 +864,7 @@
       "pricePerSqft": 274.84
     },
     {
-      "id": "woodlands-9-marsiling-dr-2016-01-957728",
+      "id": "woodlands-9-marsiling-dr-2016-01-957840",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -858,7 +877,7 @@
       "pricePerSqft": 267.1
     },
     {
-      "id": "woodlands-9-marsiling-dr-2015-07-948838",
+      "id": "woodlands-9-marsiling-dr-2015-07-948950",
       "month": "2015-07",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -869,19 +888,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 3504.27,
       "pricePerSqft": 325.56
-    },
-    {
-      "id": "woodlands-9-marsiling-dr-2015-06-947300",
-      "month": "2015-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 117,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1976,
-      "remainingLease": "59",
-      "resalePrice": 340000,
-      "pricePerSqm": 2905.98,
-      "pricePerSqft": 269.97
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.35253849426887,
       "lng": 103.878702628192
     },
-    "medianPrice": 708888,
-    "transactionCount": 5,
+    "medianPrice": 704888,
+    "transactionCount": 6,
     "floorAreaRange": [
       101,
       123
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      700888,
-      720000
+      696472,
+      717222
     ],
-    "pricePerSqmMedian": 6882.41,
-    "pricePerSqftMedian": 639.4
+    "pricePerSqmMedian": 6843.57,
+    "pricePerSqftMedian": 635.79
   },
   "monthlyTrend": [
     {
@@ -538,11 +538,30 @@
       "medianPrice": 716500,
       "transactionCount": 2,
       "medianPricePerSqm": 6956.31
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 695000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6747.57
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-161-hougang-st-11-2026-02-224819",
+      "id": "hougang-161-hougang-st-11-2026-04-224867",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 103,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 08 months",
+      "resalePrice": 695000,
+      "pricePerSqm": 6747.57,
+      "pricePerSqft": 626.87
+    },
+    {
+      "id": "hougang-161-hougang-st-11-2026-02-224864",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -555,7 +574,7 @@
       "pricePerSqft": 665.66
     },
     {
-      "id": "hougang-161-hougang-st-11-2026-02-224820",
+      "id": "hougang-161-hougang-st-11-2026-02-224865",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -787,19 +806,6 @@
       "resalePrice": 532000,
       "pricePerSqm": 5165.05,
       "pricePerSqft": 479.85
-    },
-    {
-      "id": "hougang-161-hougang-st-11-2021-08-104873",
-      "month": "2021-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 103,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "75 years 05 months",
-      "resalePrice": 518000,
-      "pricePerSqm": 5029.13,
-      "pricePerSqft": 467.22
     }
   ]
 }

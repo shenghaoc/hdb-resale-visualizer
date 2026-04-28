@@ -9,8 +9,8 @@
       "lat": 1.35560353232848,
       "lng": 103.954652057339
     },
-    "medianPrice": 456500,
-    "transactionCount": 2,
+    "medianPrice": 478000,
+    "transactionCount": 3,
     "floorAreaRange": [
       67,
       98
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      445750,
-      467250
+      456500,
+      544000
     ],
-    "pricePerSqmMedian": 6813.43,
-    "pricePerSqftMedian": 632.99
+    "pricePerSqmMedian": 6492.54,
+    "pricePerSqftMedian": 603.18
   },
   "monthlyTrend": [
     {
@@ -429,11 +429,30 @@
       "medianPrice": 478000,
       "transactionCount": 1,
       "medianPricePerSqm": 7134.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 610000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6354.17
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-228-tampines-st-23-2026-03-227806",
+      "id": "tampines-228-tampines-st-23-2026-04-228088",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 96,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 09 months",
+      "resalePrice": 610000,
+      "pricePerSqm": 6354.17,
+      "pricePerSqft": 590.32
+    },
+    {
+      "id": "tampines-228-tampines-st-23-2026-03-227896",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -563,7 +582,7 @@
       "pricePerSqft": 396.77
     },
     {
-      "id": "tampines-228-tampines-st-23-2016-04-962136",
+      "id": "tampines-228-tampines-st-23-2016-04-962248",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -576,7 +595,7 @@
       "pricePerSqft": 404.58
     },
     {
-      "id": "tampines-228-tampines-st-23-2015-11-954863",
+      "id": "tampines-228-tampines-st-23-2015-11-954975",
       "month": "2015-11",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -589,7 +608,7 @@
       "pricePerSqft": 443.72
     },
     {
-      "id": "tampines-228-tampines-st-23-2014-01-636327",
+      "id": "tampines-228-tampines-st-23-2014-01-636439",
       "month": "2014-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -602,7 +621,7 @@
       "pricePerSqft": 488.09
     },
     {
-      "id": "tampines-228-tampines-st-23-2013-10-632928",
+      "id": "tampines-228-tampines-st-23-2013-10-633040",
       "month": "2013-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -615,7 +634,7 @@
       "pricePerSqft": 424.56
     },
     {
-      "id": "tampines-228-tampines-st-23-2012-08-611968",
+      "id": "tampines-228-tampines-st-23-2012-08-612080",
       "month": "2012-08",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -628,7 +647,7 @@
       "pricePerSqft": 419.56
     },
     {
-      "id": "tampines-228-tampines-st-23-2012-05-605688",
+      "id": "tampines-228-tampines-st-23-2012-05-605800",
       "month": "2012-05",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 05",
@@ -641,7 +660,7 @@
       "pricePerSqft": 437.54
     },
     {
-      "id": "tampines-228-tampines-st-23-2011-04-581313",
+      "id": "tampines-228-tampines-st-23-2011-04-581425",
       "month": "2011-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -654,7 +673,7 @@
       "pricePerSqft": 424.3
     },
     {
-      "id": "tampines-228-tampines-st-23-2010-08-563162",
+      "id": "tampines-228-tampines-st-23-2010-08-563274",
       "month": "2010-08",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -667,7 +686,7 @@
       "pricePerSqft": 383.1
     },
     {
-      "id": "tampines-228-tampines-st-23-2010-04-549946",
+      "id": "tampines-228-tampines-st-23-2010-04-550058",
       "month": "2010-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -678,19 +697,6 @@
       "resalePrice": 340000,
       "pricePerSqm": 3541.67,
       "pricePerSqft": 329.03
-    },
-    {
-      "id": "tampines-228-tampines-st-23-2009-11-535689",
-      "month": "2009-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years",
-      "resalePrice": 266000,
-      "pricePerSqm": 3970.15,
-      "pricePerSqft": 368.84
     }
   ]
 }

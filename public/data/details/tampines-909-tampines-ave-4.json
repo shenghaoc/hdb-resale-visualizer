@@ -9,8 +9,8 @@
       "lat": 1.35019740098746,
       "lng": 103.939407095255
     },
-    "medianPrice": 470000,
-    "transactionCount": 7,
+    "medianPrice": 549000,
+    "transactionCount": 8,
     "floorAreaRange": [
       73,
       146
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      459000,
-      664444
+      462000,
+      656666
     ],
-    "pricePerSqmMedian": 6369.86,
-    "pricePerSqftMedian": 591.78
+    "pricePerSqmMedian": 6287.67,
+    "pricePerSqftMedian": 584.14
   },
   "monthlyTrend": [
     {
@@ -866,14 +866,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 453000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6205.48
+      "medianPrice": 540500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6093.22
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-909-tampines-ave-4-2026-04-227740",
+      "id": "tampines-909-tampines-ave-4-2026-04-227830",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -884,6 +884,19 @@
       "resalePrice": 453000,
       "pricePerSqm": 6205.48,
       "pricePerSqft": 576.51
+    },
+    {
+      "id": "tampines-909-tampines-ave-4-2026-04-227976",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years",
+      "resalePrice": 628000,
+      "pricePerSqm": 5980.95,
+      "pricePerSqft": 555.65
     },
     {
       "id": "tampines-909-tampines-ave-4-2025-07-216116",
@@ -1118,19 +1131,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 4125,
       "pricePerSqft": 383.23
-    },
-    {
-      "id": "tampines-909-tampines-ave-4-2020-05-70455",
-      "month": "2020-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 79,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "62 years 11 months",
-      "resalePrice": 365000,
-      "pricePerSqm": 4620.25,
-      "pricePerSqft": 429.24
     }
   ]
 }

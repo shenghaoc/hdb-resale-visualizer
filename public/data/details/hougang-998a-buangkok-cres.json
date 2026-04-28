@@ -9,8 +9,8 @@
       "lat": 1.38375782968293,
       "lng": 103.880172193688
     },
-    "medianPrice": 388444,
-    "transactionCount": 24,
+    "medianPrice": 390000,
+    "transactionCount": 25,
     "floorAreaRange": [
       38,
       94
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      374416,
-      626250
+      375888,
+      630000
     ],
-    "pricePerSqmMedian": 7712.76,
-    "pricePerSqftMedian": 716.55
+    "pricePerSqmMedian": 7553.19,
+    "pricePerSqftMedian": 701.72
   },
   "monthlyTrend": [
     {
@@ -193,14 +193,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 386000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8212.77
+      "medianPrice": 528000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7708.53
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-998a-buangkok-cres-2026-04-224615",
+      "id": "hougang-998a-buangkok-cres-2026-04-224658",
       "month": "2026-04",
       "flatType": "2 ROOM",
       "storeyRange": "07 TO 09",
@@ -213,7 +213,20 @@
       "pricePerSqft": 762.99
     },
     {
-      "id": "hougang-998a-buangkok-cres-2026-01-224609",
+      "id": "hougang-998a-buangkok-cres-2026-04-224767",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 08 months",
+      "resalePrice": 670000,
+      "pricePerSqm": 7204.3,
+      "pricePerSqft": 669.3
+    },
+    {
+      "id": "hougang-998a-buangkok-cres-2026-01-224652",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -445,19 +458,6 @@
       "resalePrice": 500000,
       "pricePerSqm": 7352.94,
       "pricePerSqft": 683.11
-    },
-    {
-      "id": "hougang-998a-buangkok-cres-2024-08-179232",
-      "month": "2024-08",
-      "flatType": "2 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 47,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 05 months",
-      "resalePrice": 386888,
-      "pricePerSqm": 8231.66,
-      "pricePerSqft": 764.75
     }
   ]
 }

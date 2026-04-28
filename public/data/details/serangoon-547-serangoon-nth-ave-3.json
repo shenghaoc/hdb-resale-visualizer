@@ -9,8 +9,8 @@
       "lat": 1.37375213159225,
       "lng": 103.87064478064
     },
-    "medianPrice": 671500,
-    "transactionCount": 2,
+    "medianPrice": 685000,
+    "transactionCount": 3,
     "floorAreaRange": [
       100,
       121
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      664750,
-      678250
+      671500,
+      701500
     ],
-    "pricePerSqmMedian": 6168.15,
-    "pricePerSqftMedian": 573.04
+    "pricePerSqmMedian": 6580,
+    "pricePerSqftMedian": 611.3
   },
   "monthlyTrend": [
     {
@@ -553,14 +553,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 658000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6580
+      "medianPrice": 688000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6880
     }
   ],
   "recentTransactions": [
     {
-      "id": "serangoon-547-serangoon-nth-ave-3-2026-04-227696",
+      "id": "serangoon-547-serangoon-nth-ave-3-2026-04-227785",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -571,6 +571,19 @@
       "resalePrice": 658000,
       "pricePerSqm": 6580,
       "pricePerSqft": 611.3
+    },
+    {
+      "id": "serangoon-547-serangoon-nth-ave-3-2026-04-227786",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 07 months",
+      "resalePrice": 718000,
+      "pricePerSqm": 7180,
+      "pricePerSqft": 667.04
     },
     {
       "id": "serangoon-547-serangoon-nth-ave-3-2024-06-190088",
@@ -805,19 +818,6 @@
       "resalePrice": 558000,
       "pricePerSqm": 4689.08,
       "pricePerSqft": 435.63
-    },
-    {
-      "id": "serangoon-547-serangoon-nth-ave-3-2018-11-40165",
-      "month": "2018-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 119,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "78 years",
-      "resalePrice": 428000,
-      "pricePerSqm": 3596.64,
-      "pricePerSqft": 334.14
     }
   ]
 }

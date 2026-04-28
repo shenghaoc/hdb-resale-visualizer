@@ -9,8 +9,8 @@
       "lat": 1.34984856223626,
       "lng": 103.722671026586
     },
-    "medianPrice": 502000,
-    "transactionCount": 3,
+    "medianPrice": 488500,
+    "transactionCount": 4,
     "floorAreaRange": [
       91,
       92
@@ -19,10 +19,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2024-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-07",
-      "2024-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      488500,
-      506000
+      474500,
+      504000
     ],
-    "pricePerSqmMedian": 5516.48,
-    "pricePerSqftMedian": 512.5
+    "pricePerSqmMedian": 5357.14,
+    "pricePerSqftMedian": 497.69
   },
   "monthlyTrend": [
     {
@@ -728,9 +728,28 @@
       "medianPrice": 510000,
       "transactionCount": 1,
       "medianPricePerSqm": 5604.4
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 473000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5197.8
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-466-jurong-west-st-41-2026-04-225345",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 91,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 09 months",
+      "resalePrice": 473000,
+      "pricePerSqm": 5197.8,
+      "pricePerSqft": 482.89
+    },
     {
       "id": "jurong-west-466-jurong-west-st-41-2024-12-182184",
       "month": "2024-12",
@@ -914,7 +933,7 @@
       "pricePerSqft": 369.59
     },
     {
-      "id": "jurong-west-466-jurong-west-st-41-2016-08-968643",
+      "id": "jurong-west-466-jurong-west-st-41-2016-08-968755",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -927,7 +946,7 @@
       "pricePerSqft": 380.8
     },
     {
-      "id": "jurong-west-466-jurong-west-st-41-2016-04-961504",
+      "id": "jurong-west-466-jurong-west-st-41-2016-04-961616",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -940,7 +959,7 @@
       "pricePerSqft": 365.49
     },
     {
-      "id": "jurong-west-466-jurong-west-st-41-2016-04-961522",
+      "id": "jurong-west-466-jurong-west-st-41-2016-04-961634",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -953,7 +972,7 @@
       "pricePerSqft": 398.16
     },
     {
-      "id": "jurong-west-466-jurong-west-st-41-2015-06-946567",
+      "id": "jurong-west-466-jurong-west-st-41-2015-06-946679",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -966,7 +985,7 @@
       "pricePerSqft": 375.7
     },
     {
-      "id": "jurong-west-466-jurong-west-st-41-2015-06-946573",
+      "id": "jurong-west-466-jurong-west-st-41-2015-06-946685",
       "month": "2015-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -977,19 +996,6 @@
       "resalePrice": 375000,
       "pricePerSqm": 4120.88,
       "pricePerSqft": 382.84
-    },
-    {
-      "id": "jurong-west-466-jurong-west-st-41-2014-05-641200",
-      "month": "2014-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 91,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years",
-      "resalePrice": 390000,
-      "pricePerSqm": 4285.71,
-      "pricePerSqft": 398.16
     }
   ]
 }

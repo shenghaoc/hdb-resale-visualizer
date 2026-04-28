@@ -9,8 +9,8 @@
       "lat": 1.43389740955882,
       "lng": 103.795730926437
     },
-    "medianPrice": 538800,
-    "transactionCount": 5,
+    "medianPrice": 544400,
+    "transactionCount": 6,
     "floorAreaRange": [
       91,
       96
@@ -19,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-01",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -50,8 +50,8 @@
       }
     ],
     "priceIqr": [
-      538000,
-      556888
+      538200,
+      555166
     ],
     "pricePerSqmMedian": 5912.09,
     "pricePerSqftMedian": 549.25
@@ -572,9 +572,28 @@
       "medianPrice": 538000,
       "transactionCount": 1,
       "medianPricePerSqm": 5912.09
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 550000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6043.96
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-617-woodlands-ave-4-2026-04-228874",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 91,
+      "flatModel": "MODEL A2",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years",
+      "resalePrice": 550000,
+      "pricePerSqm": 6043.96,
+      "pricePerSqft": 561.5
+    },
     {
       "id": "woodlands-617-woodlands-ave-4-2025-11-218953",
       "month": "2025-11",
@@ -821,19 +840,6 @@
       "resalePrice": 320000,
       "pricePerSqm": 3478.26,
       "pricePerSqft": 323.14
-    },
-    {
-      "id": "woodlands-617-woodlands-ave-4-2018-11-40397",
-      "month": "2018-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 95,
-      "flatModel": "MODEL A2",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "78 years 05 months",
-      "resalePrice": 302000,
-      "pricePerSqm": 3178.95,
-      "pricePerSqft": 295.33
     }
   ]
 }

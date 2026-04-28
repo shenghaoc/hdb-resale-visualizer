@@ -9,8 +9,8 @@
       "lat": 1.41817361528574,
       "lng": 103.836190364674
     },
-    "medianPrice": 279000,
-    "transactionCount": 117,
+    "medianPrice": 530000,
+    "transactionCount": 1,
     "floorAreaRange": [
       83,
       121
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2024-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-11",
-      "2024-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      200000,
-      368000
+      530000,
+      530000
     ],
-    "pricePerSqmMedian": 2644.63,
-    "pricePerSqftMedian": 245.69
+    "pricePerSqmMedian": 6385.54,
+    "pricePerSqftMedian": 593.24
   },
   "monthlyTrend": [
     {
@@ -617,9 +617,28 @@
       "medianPrice": 480000,
       "transactionCount": 1,
       "medianPricePerSqm": 5783.13
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 530000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6385.54
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-625-yishun-st-61-2026-04-229717",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 83,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 02 months",
+      "resalePrice": 530000,
+      "pricePerSqm": 6385.54,
+      "pricePerSqft": 593.24
+    },
     {
       "id": "yishun-625-yishun-st-61-2024-03-195532",
       "month": "2024-03",
@@ -764,7 +783,7 @@
       "pricePerSqft": 364.7
     },
     {
-      "id": "yishun-625-yishun-st-61-2016-08-969628",
+      "id": "yishun-625-yishun-st-61-2016-08-969740",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -777,7 +796,7 @@
       "pricePerSqft": 362.4
     },
     {
-      "id": "yishun-625-yishun-st-61-2016-04-962518",
+      "id": "yishun-625-yishun-st-61-2016-04-962630",
       "month": "2016-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -790,7 +809,7 @@
       "pricePerSqft": 345.51
     },
     {
-      "id": "yishun-625-yishun-st-61-2016-03-960682",
+      "id": "yishun-625-yishun-st-61-2016-03-960794",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -803,7 +822,7 @@
       "pricePerSqft": 341.67
     },
     {
-      "id": "yishun-625-yishun-st-61-2016-01-957843",
+      "id": "yishun-625-yishun-st-61-2016-01-957955",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -816,7 +835,7 @@
       "pricePerSqft": 383.9
     },
     {
-      "id": "yishun-625-yishun-st-61-2013-12-635474",
+      "id": "yishun-625-yishun-st-61-2013-12-635586",
       "month": "2013-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -829,7 +848,7 @@
       "pricePerSqft": 451.08
     },
     {
-      "id": "yishun-625-yishun-st-61-2013-12-635475",
+      "id": "yishun-625-yishun-st-61-2013-12-635587",
       "month": "2013-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -842,7 +861,7 @@
       "pricePerSqft": 470.11
     },
     {
-      "id": "yishun-625-yishun-st-61-2013-04-624871",
+      "id": "yishun-625-yishun-st-61-2013-04-624983",
       "month": "2013-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -855,7 +874,7 @@
       "pricePerSqft": 457.13
     },
     {
-      "id": "yishun-625-yishun-st-61-2013-04-624883",
+      "id": "yishun-625-yishun-st-61-2013-04-624995",
       "month": "2013-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -866,19 +885,6 @@
       "resalePrice": 451000,
       "pricePerSqm": 5125,
       "pricePerSqft": 476.13
-    },
-    {
-      "id": "yishun-625-yishun-st-61-2012-12-619361",
-      "month": "2012-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 83,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "60 years",
-      "resalePrice": 415000,
-      "pricePerSqm": 5000,
-      "pricePerSqft": 464.52
     }
   ]
 }

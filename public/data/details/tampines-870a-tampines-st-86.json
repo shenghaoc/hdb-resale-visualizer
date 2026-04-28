@@ -9,8 +9,8 @@
       "lat": 1.35608700205895,
       "lng": 103.931752248401
     },
-    "medianPrice": 735000,
-    "transactionCount": 12,
+    "medianPrice": 745000,
+    "transactionCount": 13,
     "floorAreaRange": [
       93,
       114
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      717500,
-      776472
+      720000,
+      855888
     ],
-    "pricePerSqmMedian": 7716.03,
-    "pricePerSqftMedian": 716.85
+    "pricePerSqmMedian": 7719.3,
+    "pricePerSqftMedian": 717.15
   },
   "monthlyTrend": [
     {
@@ -301,14 +301,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 725000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7712.77
+      "medianPrice": 818444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7855.9
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-870a-tampines-st-86-2026-04-228106",
+      "id": "tampines-870a-tampines-st-86-2026-04-228204",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -321,7 +321,20 @@
       "pricePerSqft": 716.54
     },
     {
-      "id": "tampines-870a-tampines-st-86-2026-03-228104",
+      "id": "tampines-870a-tampines-st-86-2026-04-228378",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 114,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "89 years 11 months",
+      "resalePrice": 911888,
+      "pricePerSqm": 7999.02,
+      "pricePerSqft": 743.13
+    },
+    {
+      "id": "tampines-870a-tampines-st-86-2026-03-228202",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -334,7 +347,7 @@
       "pricePerSqft": 701.72
     },
     {
-      "id": "tampines-870a-tampines-st-86-2026-03-228278",
+      "id": "tampines-870a-tampines-st-86-2026-03-228377",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -553,19 +566,6 @@
       "resalePrice": 850000,
       "pricePerSqm": 7522.12,
       "pricePerSqft": 698.83
-    },
-    {
-      "id": "tampines-870a-tampines-st-86-2023-08-163985",
-      "month": "2023-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 94,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "92 years 07 months",
-      "resalePrice": 660000,
-      "pricePerSqm": 7021.28,
-      "pricePerSqft": 652.3
     }
   ]
 }

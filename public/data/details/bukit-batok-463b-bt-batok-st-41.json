@@ -10,7 +10,7 @@
       "lng": 103.742307951488
     },
     "medianPrice": 710000,
-    "transactionCount": 33,
+    "transactionCount": 34,
     "floorAreaRange": [
       93,
       113
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      673000,
-      823888
+      670750,
+      822916
     ],
-    "pricePerSqmMedian": 7256.64,
-    "pricePerSqftMedian": 674.16
+    "pricePerSqmMedian": 7246.6,
+    "pricePerSqftMedian": 673.23
   },
   "monthlyTrend": [
     {
@@ -127,14 +127,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 801944,
-      "transactionCount": 2,
-      "medianPricePerSqm": 7096.84
+      "medianPrice": 780000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 7182.8
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-04-223211",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-04-223066",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2021,
+      "remainingLease": "94 years 03 months",
+      "resalePrice": 668000,
+      "pricePerSqm": 7182.8,
+      "pricePerSqft": 667.3
+    },
+    {
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-04-223230",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -147,7 +160,7 @@
       "pricePerSqft": 641.28
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-04-223212",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-04-223231",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -160,7 +173,7 @@
       "pricePerSqft": 677.36
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-03-223050",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-03-223064",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -173,7 +186,7 @@
       "pricePerSqft": 669.3
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-02-223210",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-02-223229",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -186,7 +199,7 @@
       "pricePerSqft": 651.05
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223207",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223226",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -199,7 +212,7 @@
       "pricePerSqft": 679.01
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223208",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223227",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -212,7 +225,7 @@
       "pricePerSqft": 665.94
     },
     {
-      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223209",
+      "id": "bukit-batok-463b-bt-batok-st-41-2026-01-223228",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -379,19 +392,6 @@
       "resalePrice": 782000,
       "pricePerSqm": 8408.6,
       "pricePerSqft": 781.19
-    },
-    {
-      "id": "bukit-batok-463b-bt-batok-st-41-2025-06-200168",
-      "month": "2025-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2021,
-      "remainingLease": "95 years 01 month",
-      "resalePrice": 620000,
-      "pricePerSqm": 6666.67,
-      "pricePerSqft": 619.35
     }
   ]
 }

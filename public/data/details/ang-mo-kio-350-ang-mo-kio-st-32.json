@@ -9,8 +9,8 @@
       "lat": 1.36371311763063,
       "lng": 103.850044231877
     },
-    "medianPrice": 855000,
-    "transactionCount": 7,
+    "medianPrice": 843444,
+    "transactionCount": 8,
     "floorAreaRange": [
       90,
       110
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      820944,
-      934000
+      803750,
+      931000
     ],
-    "pricePerSqmMedian": 8545.45,
-    "pricePerSqftMedian": 793.9
+    "pricePerSqmMedian": 8535.89,
+    "pricePerSqftMedian": 793.01
   },
   "monthlyTrend": [
     {
@@ -547,14 +547,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 928000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8436.36
+      "medianPrice": 856500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8349.76
     }
   ],
   "recentTransactions": [
     {
-      "id": "ang-mo-kio-350-ang-mo-kio-st-32-2026-04-222335",
+      "id": "ang-mo-kio-350-ang-mo-kio-st-32-2026-04-222283",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 95,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 09 months",
+      "resalePrice": 785000,
+      "pricePerSqm": 8263.16,
+      "pricePerSqft": 767.67
+    },
+    {
+      "id": "ang-mo-kio-350-ang-mo-kio-st-32-2026-04-222340",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -799,19 +812,6 @@
       "resalePrice": 682000,
       "pricePerSqm": 6200,
       "pricePerSqft": 576
-    },
-    {
-      "id": "ang-mo-kio-350-ang-mo-kio-st-32-2020-04-69776",
-      "month": "2020-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "80 years 09 months",
-      "resalePrice": 572000,
-      "pricePerSqm": 6355.56,
-      "pricePerSqft": 590.45
     }
   ]
 }

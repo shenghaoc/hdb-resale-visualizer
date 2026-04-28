@@ -9,8 +9,8 @@
       "lat": 1.39025909742147,
       "lng": 103.909624930156
     },
-    "medianPrice": 512500,
-    "transactionCount": 8,
+    "medianPrice": 510000,
+    "transactionCount": 9,
     "floorAreaRange": [
       47,
       67
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      433500,
-      525472
+      385000,
+      525000
     ],
-    "pricePerSqmMedian": 7761.19,
-    "pricePerSqftMedian": 721.04
+    "pricePerSqmMedian": 7835.82,
+    "pricePerSqftMedian": 727.97
   },
   "monthlyTrend": [
     {
@@ -330,14 +330,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 536000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8000
+      "medianPrice": 460500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8095.74
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-180a-rivervale-cres-2026-04-227160",
+      "id": "sengkang-180a-rivervale-cres-2026-04-227193",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "87 years 11 months",
+      "resalePrice": 385000,
+      "pricePerSqm": 8191.49,
+      "pricePerSqft": 761.02
+    },
+    {
+      "id": "sengkang-180a-rivervale-cres-2026-04-227245",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -350,7 +363,7 @@
       "pricePerSqft": 743.23
     },
     {
-      "id": "sengkang-180a-rivervale-cres-2026-02-227159",
+      "id": "sengkang-180a-rivervale-cres-2026-02-227244",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -582,19 +595,6 @@
       "resalePrice": 420000,
       "pricePerSqm": 6268.66,
       "pricePerSqft": 582.38
-    },
-    {
-      "id": "sengkang-180a-rivervale-cres-2022-08-135646",
-      "month": "2022-08",
-      "flatType": "2 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 47,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "91 years 08 months",
-      "resalePrice": 330000,
-      "pricePerSqm": 7021.28,
-      "pricePerSqft": 652.3
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.36345258509225,
       "lng": 103.958901731763
     },
-    "medianPrice": 355000,
-    "transactionCount": 7,
+    "medianPrice": 475000,
+    "transactionCount": 8,
     "floorAreaRange": [
       55,
       128
@@ -19,10 +19,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1998-09",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -54,11 +54,11 @@
       }
     ],
     "priceIqr": [
-      340000,
-      597500
+      345000,
+      603750
     ],
-    "pricePerSqmMedian": 5909.09,
-    "pricePerSqftMedian": 548.97
+    "pricePerSqmMedian": 5750,
+    "pricePerSqftMedian": 534.19
   },
   "monthlyTrend": [
     {
@@ -690,9 +690,28 @@
       "medianPrice": 350000,
       "transactionCount": 1,
       "medianPricePerSqm": 6363.64
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 700000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5468.75
     }
   ],
   "recentTransactions": [
+    {
+      "id": "pasir-ris-142-pasir-ris-st-11-2026-04-226050",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 128,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "67 years",
+      "resalePrice": 700000,
+      "pricePerSqm": 5468.75,
+      "pricePerSqft": 508.06
+    },
     {
       "id": "pasir-ris-142-pasir-ris-st-11-2025-11-209360",
       "month": "2025-11",
@@ -939,19 +958,6 @@
       "resalePrice": 383500,
       "pricePerSqm": 3550.93,
       "pricePerSqft": 329.89
-    },
-    {
-      "id": "pasir-ris-142-pasir-ris-st-11-2018-11-39740",
-      "month": "2018-11",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 128,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1994,
-      "remainingLease": "74 years 06 months",
-      "resalePrice": 445000,
-      "pricePerSqm": 3476.56,
-      "pricePerSqft": 322.98
     }
   ]
 }

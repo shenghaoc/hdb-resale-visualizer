@@ -9,8 +9,8 @@
       "lat": 1.37908544061279,
       "lng": 103.737542449427
     },
-    "medianPrice": 596444,
-    "transactionCount": 6,
+    "medianPrice": 620000,
+    "transactionCount": 7,
     "floorAreaRange": [
       100,
       121
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      533000,
-      657722
+      536000,
+      655444
     ],
-    "pricePerSqmMedian": 5372.79,
-    "pricePerSqftMedian": 499.15
+    "pricePerSqmMedian": 5366.34,
+    "pricePerSqftMedian": 498.55
   },
   "monthlyTrend": [
     {
@@ -505,14 +505,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 530000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5247.52
+      "medianPrice": 575000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5185.75
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-472-choa-chu-kang-ave-3-2026-04-223960",
+      "id": "choa-chu-kang-472-choa-chu-kang-ave-3-2026-04-223992",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -523,6 +523,19 @@
       "resalePrice": 530000,
       "pricePerSqm": 5247.52,
       "pricePerSqft": 487.51
+    },
+    {
+      "id": "choa-chu-kang-472-choa-chu-kang-ave-3-2026-04-224148",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years",
+      "resalePrice": 620000,
+      "pricePerSqm": 5123.97,
+      "pricePerSqft": 476.03
     },
     {
       "id": "choa-chu-kang-472-choa-chu-kang-ave-3-2025-11-203398",
@@ -757,19 +770,6 @@
       "resalePrice": 405000,
       "pricePerSqm": 3375,
       "pricePerSqft": 313.55
-    },
-    {
-      "id": "choa-chu-kang-472-choa-chu-kang-ave-3-2018-10-37286",
-      "month": "2018-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "79 years 06 months",
-      "resalePrice": 322888,
-      "pricePerSqm": 3196.91,
-      "pricePerSqft": 297
     }
   ]
 }

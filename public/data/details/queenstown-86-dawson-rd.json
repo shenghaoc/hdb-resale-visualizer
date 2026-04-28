@@ -9,8 +9,8 @@
       "lat": 1.29564903068441,
       "lng": 103.810230517871
     },
-    "medianPrice": 1091944,
-    "transactionCount": 18,
+    "medianPrice": 1100000,
+    "transactionCount": 19,
     "floorAreaRange": [
       83,
       108
@@ -19,10 +19,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-04",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      1025834,
-      1158750
+      1033889,
+      1157500
     ],
-    "pricePerSqmMedian": 13010.92,
-    "pricePerSqftMedian": 1208.76
+    "pricePerSqmMedian": 12962.96,
+    "pricePerSqftMedian": 1204.3
   },
   "monthlyTrend": [
     {
@@ -357,11 +357,30 @@
       "medianPrice": 1055000,
       "transactionCount": 2,
       "medianPricePerSqm": 12389.56
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1120000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10769.23
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-86-dawson-rd-2026-03-226722",
+      "id": "queenstown-86-dawson-rd-2026-04-226865",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 104,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 04 months",
+      "resalePrice": 1120000,
+      "pricePerSqm": 10769.23,
+      "pricePerSqft": 1000.5
+    },
+    {
+      "id": "queenstown-86-dawson-rd-2026-03-226802",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -374,7 +393,7 @@
       "pricePerSqft": 1063.35
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-03-226727",
+      "id": "queenstown-86-dawson-rd-2026-03-226807",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -387,7 +406,7 @@
       "pricePerSqft": 1238.71
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-02-226715",
+      "id": "queenstown-86-dawson-rd-2026-02-226795",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -400,7 +419,7 @@
       "pricePerSqft": 1253.63
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-02-226718",
+      "id": "queenstown-86-dawson-rd-2026-02-226798",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -413,7 +432,7 @@
       "pricePerSqft": 1083.87
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-02-226720",
+      "id": "queenstown-86-dawson-rd-2026-02-226800",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "22 TO 24",
@@ -426,7 +445,7 @@
       "pricePerSqft": 1196.42
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-01-226709",
+      "id": "queenstown-86-dawson-rd-2026-01-226789",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "43 TO 45",
@@ -439,7 +458,7 @@
       "pricePerSqft": 1359.97
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-01-226711",
+      "id": "queenstown-86-dawson-rd-2026-01-226791",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "40 TO 42",
@@ -452,7 +471,7 @@
       "pricePerSqft": 1228.03
     },
     {
-      "id": "queenstown-86-dawson-rd-2026-01-226712",
+      "id": "queenstown-86-dawson-rd-2026-01-226792",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "28 TO 30",
@@ -606,19 +625,6 @@
       "resalePrice": 923000,
       "pricePerSqm": 11120.48,
       "pricePerSqft": 1033.13
-    },
-    {
-      "id": "queenstown-86-dawson-rd-2024-04-186274",
-      "month": "2024-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 83,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "91 years 05 months",
-      "resalePrice": 1038000,
-      "pricePerSqm": 12506.02,
-      "pricePerSqft": 1161.85
     }
   ]
 }

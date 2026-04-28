@@ -9,8 +9,8 @@
       "lat": 1.36429559341709,
       "lng": 103.962306880543
     },
-    "medianPrice": 880000,
-    "transactionCount": 1,
+    "medianPrice": 870000,
+    "transactionCount": 2,
     "floorAreaRange": [
       146,
       149
@@ -19,10 +19,10 @@
       1993,
       1993
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1996-01",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      880000,
-      880000
+      865000,
+      875000
     ],
-    "pricePerSqmMedian": 5906.04,
-    "pricePerSqftMedian": 548.69
+    "pricePerSqmMedian": 5858.43,
+    "pricePerSqftMedian": 544.27
   },
   "monthlyTrend": [
     {
@@ -278,9 +278,28 @@
       "medianPrice": 880000,
       "transactionCount": 1,
       "medianPricePerSqm": 5906.04
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 860000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5810.81
     }
   ],
   "recentTransactions": [
+    {
+      "id": "pasir-ris-160-pasir-ris-st-13-2026-04-226124",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 148,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "67 years 11 months",
+      "resalePrice": 860000,
+      "pricePerSqm": 5810.81,
+      "pricePerSqft": 539.84
+    },
     {
       "id": "pasir-ris-160-pasir-ris-st-13-2025-07-209912",
       "month": "2025-07",
@@ -425,7 +444,7 @@
       "pricePerSqft": 343.61
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2012-08-611579",
+      "id": "pasir-ris-160-pasir-ris-st-13-2012-08-611691",
       "month": "2012-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -438,7 +457,7 @@
       "pricePerSqft": 367.22
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2011-07-586895",
+      "id": "pasir-ris-160-pasir-ris-st-13-2011-07-587007",
       "month": "2011-07",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -451,7 +470,7 @@
       "pricePerSqft": 355.4
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2011-05-582899",
+      "id": "pasir-ris-160-pasir-ris-st-13-2011-05-583011",
       "month": "2011-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -464,7 +483,7 @@
       "pricePerSqft": 355.95
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2010-06-555470",
+      "id": "pasir-ris-160-pasir-ris-st-13-2010-06-555582",
       "month": "2010-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -477,7 +496,7 @@
       "pricePerSqft": 286.82
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2010-06-555471",
+      "id": "pasir-ris-160-pasir-ris-st-13-2010-06-555583",
       "month": "2010-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -490,7 +509,7 @@
       "pricePerSqft": 279.98
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2010-04-549326",
+      "id": "pasir-ris-160-pasir-ris-st-13-2010-04-549438",
       "month": "2010-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -503,7 +522,7 @@
       "pricePerSqft": 299.07
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2006-09-446973",
+      "id": "pasir-ris-160-pasir-ris-st-13-2006-09-447085",
       "month": "2006-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -516,7 +535,7 @@
       "pricePerSqft": 195.85
     },
     {
-      "id": "pasir-ris-160-pasir-ris-st-13-2005-03-403727",
+      "id": "pasir-ris-160-pasir-ris-st-13-2005-03-403839",
       "month": "2005-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -527,19 +546,6 @@
       "resalePrice": 310000,
       "pricePerSqm": 2094.59,
       "pricePerSqft": 194.59
-    },
-    {
-      "id": "pasir-ris-160-pasir-ris-st-13-2003-12-366543",
-      "month": "2003-12",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 146,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "68 years",
-      "resalePrice": 365000,
-      "pricePerSqm": 2500,
-      "pricePerSqft": 232.26
     }
   ]
 }

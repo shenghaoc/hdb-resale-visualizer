@@ -10,7 +10,7 @@
       "lng": 103.88323543756
     },
     "medianPrice": 918000,
-    "transactionCount": 11,
+    "transactionCount": 12,
     "floorAreaRange": [
       101,
       120
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2000-12",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      835944,
-      945000
+      838916,
+      942500
     ],
-    "pricePerSqmMedian": 8650,
-    "pricePerSqftMedian": 803.61
+    "pricePerSqmMedian": 8825,
+    "pricePerSqftMedian": 819.87
   },
   "monthlyTrend": [
     {
@@ -718,11 +718,30 @@
       "medianPrice": 950000,
       "transactionCount": 1,
       "medianPricePerSqm": 9223.3
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 918000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9000
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-56-cassia-cres-2026-03-224506",
+      "id": "geylang-56-cassia-cres-2026-04-224549",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 10 months",
+      "resalePrice": 918000,
+      "pricePerSqm": 9000,
+      "pricePerSqft": 836.13
+    },
+    {
+      "id": "geylang-56-cassia-cres-2026-03-224546",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -735,7 +754,7 @@
       "pricePerSqft": 856.87
     },
     {
-      "id": "geylang-56-cassia-cres-2026-01-224503",
+      "id": "geylang-56-cassia-cres-2026-01-224543",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -967,19 +986,6 @@
       "resalePrice": 760000,
       "pricePerSqm": 7378.64,
       "pricePerSqft": 685.5
-    },
-    {
-      "id": "geylang-56-cassia-cres-2021-09-107457",
-      "month": "2021-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 102,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "75 years 06 months",
-      "resalePrice": 706000,
-      "pricePerSqm": 6921.57,
-      "pricePerSqft": 643.04
     }
   ]
 }

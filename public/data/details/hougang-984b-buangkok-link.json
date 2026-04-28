@@ -9,8 +9,8 @@
       "lat": 1.38209501456331,
       "lng": 103.880612695677
     },
-    "medianPrice": 657500,
-    "transactionCount": 6,
+    "medianPrice": 650000,
+    "transactionCount": 7,
     "floorAreaRange": [
       110,
       110
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      640625,
-      674750
+      613750,
+      671500
     ],
-    "pricePerSqmMedian": 5977.27,
-    "pricePerSqftMedian": 555.31
+    "pricePerSqmMedian": 5909.09,
+    "pricePerSqftMedian": 548.97
   },
   "monthlyTrend": [
     {
@@ -437,14 +437,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 695000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6318.18
+      "medianPrice": 642500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5840.91
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-984b-buangkok-link-2026-04-224888",
+      "id": "hougang-984b-buangkok-link-2026-04-224936",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -457,7 +457,20 @@
       "pricePerSqft": 586.98
     },
     {
-      "id": "hougang-984b-buangkok-link-2026-01-224885",
+      "id": "hougang-984b-buangkok-link-2026-04-224937",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 110,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2004,
+      "remainingLease": "76 years 11 months",
+      "resalePrice": 590000,
+      "pricePerSqm": 5363.64,
+      "pricePerSqft": 498.3
+    },
+    {
+      "id": "hougang-984b-buangkok-link-2026-01-224933",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -470,7 +483,7 @@
       "pricePerSqft": 561.64
     },
     {
-      "id": "hougang-984b-buangkok-link-2026-01-224886",
+      "id": "hougang-984b-buangkok-link-2026-01-224934",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -689,19 +702,6 @@
       "resalePrice": 428000,
       "pricePerSqm": 3890.91,
       "pricePerSqft": 361.48
-    },
-    {
-      "id": "hougang-984b-buangkok-link-2020-12-86020",
-      "month": "2020-12",
-      "flatType": "5 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 110,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 2004,
-      "remainingLease": "82 years 04 months",
-      "resalePrice": 465000,
-      "pricePerSqm": 4227.27,
-      "pricePerSqft": 392.73
     }
   ]
 }

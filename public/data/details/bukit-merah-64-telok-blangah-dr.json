@@ -9,8 +9,8 @@
       "lat": 1.27450639323765,
       "lng": 103.810535503194
     },
-    "medianPrice": 473000,
-    "transactionCount": 11,
+    "medianPrice": 481500,
+    "transactionCount": 12,
     "floorAreaRange": [
       67,
       163
@@ -19,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
       }
     ],
     "priceIqr": [
-      439000,
-      506500
+      441000,
+      503000
     ],
-    "pricePerSqmMedian": 6463.41,
-    "pricePerSqftMedian": 600.47
+    "pricePerSqmMedian": 6477.98,
+    "pricePerSqftMedian": 601.83
   },
   "monthlyTrend": [
     {
@@ -1115,11 +1115,30 @@
       "medianPrice": 425000,
       "transactionCount": 1,
       "medianPricePerSqm": 6343.28
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 498000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7432.84
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-64-telok-blangah-dr-2026-01-223396",
+      "id": "bukit-merah-64-telok-blangah-dr-2026-04-223425",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 04 months",
+      "resalePrice": 498000,
+      "pricePerSqm": 7432.84,
+      "pricePerSqft": 690.53
+    },
+    {
+      "id": "bukit-merah-64-telok-blangah-dr-2026-01-223418",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1364,19 +1383,6 @@
       "resalePrice": 518900,
       "pricePerSqm": 6328.05,
       "pricePerSqft": 587.9
-    },
-    {
-      "id": "bukit-merah-64-telok-blangah-dr-2023-02-147662",
-      "month": "2023-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 92,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "54 years 05 months",
-      "resalePrice": 500000,
-      "pricePerSqm": 5434.78,
-      "pricePerSqft": 504.91
     }
   ]
 }

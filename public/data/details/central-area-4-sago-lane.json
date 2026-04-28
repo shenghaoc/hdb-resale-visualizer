@@ -9,8 +9,8 @@
       "lat": 1.28180062242257,
       "lng": 103.842908159495
     },
-    "medianPrice": 470000,
-    "transactionCount": 4,
+    "medianPrice": 460000,
+    "transactionCount": 5,
     "floorAreaRange": [
       57,
       137
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      450000,
-      485000
+      440888,
+      480000
     ],
-    "pricePerSqmMedian": 7415.56,
-    "pricePerSqftMedian": 688.93
+    "pricePerSqmMedian": 7462.69,
+    "pricePerSqftMedian": 693.31
   },
   "monthlyTrend": [
     {
@@ -1013,14 +1013,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 500000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7462.69
+      "medianPrice": 470444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7598.78
     }
   ],
   "recentTransactions": [
     {
-      "id": "central-area-4-sago-lane-2026-04-223864",
+      "id": "central-area-4-sago-lane-2026-04-223894",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -1031,6 +1031,19 @@
       "resalePrice": 500000,
       "pricePerSqm": 7462.69,
       "pricePerSqft": 693.31
+    },
+    {
+      "id": "central-area-4-sago-lane-2026-04-223895",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 57,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "47 years 03 months",
+      "resalePrice": 440888,
+      "pricePerSqm": 7734.88,
+      "pricePerSqft": 718.59
     },
     {
       "id": "central-area-4-sago-lane-2025-01-202648",
@@ -1265,19 +1278,6 @@
       "resalePrice": 353000,
       "pricePerSqm": 6192.98,
       "pricePerSqft": 575.35
-    },
-    {
-      "id": "central-area-4-sago-lane-2021-06-99477",
-      "month": "2021-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "19 TO 21",
-      "floorAreaSqm": 67,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "52 years 03 months",
-      "resalePrice": 508000,
-      "pricePerSqm": 7582.09,
-      "pricePerSqft": 704.4
     }
   ]
 }

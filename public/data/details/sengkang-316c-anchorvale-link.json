@@ -9,8 +9,8 @@
       "lat": 1.39316162628404,
       "lng": 103.888370952522
     },
-    "medianPrice": 742500,
-    "transactionCount": 6,
+    "medianPrice": 800000,
+    "transactionCount": 7,
     "floorAreaRange": [
       110,
       125
@@ -19,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2007-09",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      666250,
-      830000
+      672500,
+      842500
     ],
-    "pricePerSqmMedian": 6313.64,
-    "pricePerSqftMedian": 586.56
+    "pricePerSqmMedian": 6400,
+    "pricePerSqftMedian": 594.58
   },
   "monthlyTrend": [
     {
@@ -369,9 +369,28 @@
       "medianPrice": 685000,
       "transactionCount": 1,
       "medianPricePerSqm": 6227.27
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6800
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-316c-anchorvale-link-2026-04-227694",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "76 years 01 month",
+      "resalePrice": 850000,
+      "pricePerSqm": 6800,
+      "pricePerSqft": 631.74
+    },
     {
       "id": "sengkang-316c-anchorvale-link-2025-06-214584",
       "month": "2025-06",
@@ -607,7 +626,7 @@
       "pricePerSqft": 422.15
     },
     {
-      "id": "sengkang-316c-anchorvale-link-2016-05-963908",
+      "id": "sengkang-316c-anchorvale-link-2016-05-964020",
       "month": "2016-05",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -618,19 +637,6 @@
       "resalePrice": 555000,
       "pricePerSqm": 4440,
       "pricePerSqft": 412.49
-    },
-    {
-      "id": "sengkang-316c-anchorvale-link-2015-12-956188",
-      "month": "2015-12",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 125,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "86",
-      "resalePrice": 525000,
-      "pricePerSqm": 4200,
-      "pricePerSqft": 390.19
     }
   ]
 }

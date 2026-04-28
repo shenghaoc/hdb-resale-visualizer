@@ -9,8 +9,8 @@
       "lat": 1.3841841461098,
       "lng": 103.766434636885
     },
-    "medianPrice": 930000,
-    "transactionCount": 7,
+    "medianPrice": 929000,
+    "transactionCount": 8,
     "floorAreaRange": [
       141,
       145
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-02",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      843750,
+      849375,
       935000
     ],
-    "pricePerSqmMedian": 6448.28,
-    "pricePerSqftMedian": 599.07
+    "pricePerSqmMedian": 6446.36,
+    "pricePerSqftMedian": 598.89
   },
   "monthlyTrend": [
     {
@@ -597,11 +597,30 @@
       "medianPrice": 930000,
       "transactionCount": 1,
       "medianPricePerSqm": 6595.74
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 928000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6444.44
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-503-jelapang-rd-2026-02-223822",
+      "id": "bukit-panjang-503-jelapang-rd-2026-04-223853",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 144,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 928000,
+      "pricePerSqm": 6444.44,
+      "pricePerSqft": 598.71
+    },
+    {
+      "id": "bukit-panjang-503-jelapang-rd-2026-02-223851",
       "month": "2026-02",
       "flatType": "EXECUTIVE",
       "storeyRange": "16 TO 18",
@@ -846,19 +865,6 @@
       "resalePrice": 818000,
       "pricePerSqm": 5680.56,
       "pricePerSqft": 527.74
-    },
-    {
-      "id": "bukit-panjang-503-jelapang-rd-2021-07-101850",
-      "month": "2021-07",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 144,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "75 years 09 months",
-      "resalePrice": 700000,
-      "pricePerSqm": 4861.11,
-      "pricePerSqft": 451.61
     }
   ]
 }

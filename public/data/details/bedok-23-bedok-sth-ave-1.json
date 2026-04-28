@@ -10,7 +10,7 @@
       "lng": 103.932762614007
     },
     "medianPrice": 465000,
-    "transactionCount": 11,
+    "transactionCount": 12,
     "floorAreaRange": [
       73,
       98
@@ -19,10 +19,10 @@
       1976,
       1976
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,8 +51,8 @@
       }
     ],
     "priceIqr": [
-      450000,
-      503000
+      452500,
+      496500
     ],
     "pricePerSqmMedian": 6369.86,
     "pricePerSqftMedian": 591.78
@@ -975,11 +975,30 @@
       "medianPrice": 485000,
       "transactionCount": 1,
       "medianPricePerSqm": 6643.84
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 465000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6369.86
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-23-bedok-sth-ave-1-2026-01-222464",
+      "id": "bedok-23-bedok-sth-ave-1-2026-04-222475",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 73,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1977,
+      "remainingLease": "50 years 01 month",
+      "resalePrice": 465000,
+      "pricePerSqm": 6369.86,
+      "pricePerSqft": 591.78
+    },
+    {
+      "id": "bedok-23-bedok-sth-ave-1-2026-01-222469",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1224,19 +1243,6 @@
       "resalePrice": 372000,
       "pricePerSqm": 5095.89,
       "pricePerSqft": 473.42
-    },
-    {
-      "id": "bedok-23-bedok-sth-ave-1-2022-05-118211",
-      "month": "2022-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 73,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1977,
-      "remainingLease": "54 years",
-      "resalePrice": 403000,
-      "pricePerSqm": 5520.55,
-      "pricePerSqft": 512.88
     }
   ]
 }

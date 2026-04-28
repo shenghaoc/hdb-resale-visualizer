@@ -9,8 +9,8 @@
       "lat": 1.2870169493471,
       "lng": 103.830303346649
     },
-    "medianPrice": 1268888,
-    "transactionCount": 7,
+    "medianPrice": 1169444,
+    "transactionCount": 8,
     "floorAreaRange": [
       90,
       115
@@ -19,10 +19,10 @@
       2003,
       2003
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-03",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      963444,
-      1311500
+      975722,
+      1310750
     ],
-    "pricePerSqmMedian": 11033.81,
-    "pricePerSqftMedian": 1025.08
+    "pricePerSqmMedian": 10866.9,
+    "pricePerSqftMedian": 1009.57
   },
   "monthlyTrend": [
     {
@@ -436,11 +436,30 @@
       "medianPrice": 1345000,
       "transactionCount": 1,
       "medianPricePerSqm": 11695.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1070000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 10700
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-8b-boon-tiong-rd-2026-02-223534",
+      "id": "bukit-merah-8b-boon-tiong-rd-2026-04-223447",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2005,
+      "remainingLease": "78 years 06 months",
+      "resalePrice": 1070000,
+      "pricePerSqm": 10700,
+      "pricePerSqft": 994.06
+    },
+    {
+      "id": "bukit-merah-8b-boon-tiong-rd-2026-02-223560",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -453,7 +472,7 @@
       "pricePerSqft": 1086.56
     },
     {
-      "id": "bukit-merah-8b-boon-tiong-rd-2026-01-223532",
+      "id": "bukit-merah-8b-boon-tiong-rd-2026-01-223558",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -685,19 +704,6 @@
       "resalePrice": 720000,
       "pricePerSqm": 7200,
       "pricePerSqft": 668.9
-    },
-    {
-      "id": "bukit-merah-8b-boon-tiong-rd-2020-11-83168",
-      "month": "2020-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2005,
-      "remainingLease": "83 years 11 months",
-      "resalePrice": 665000,
-      "pricePerSqm": 7388.89,
-      "pricePerSqft": 686.45
     }
   ]
 }

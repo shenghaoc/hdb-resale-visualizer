@@ -9,8 +9,8 @@
       "lat": 1.34350781906318,
       "lng": 103.702815760303
     },
-    "medianPrice": 740000,
-    "transactionCount": 3,
+    "medianPrice": 759000,
+    "transactionCount": 4,
     "floorAreaRange": [
       130,
       130
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-03",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,11 +50,11 @@
       }
     ],
     "priceIqr": [
-      737500,
-      759000
+      738750,
+      782250
     ],
-    "pricePerSqmMedian": 5692.31,
-    "pricePerSqftMedian": 528.83
+    "pricePerSqmMedian": 5838.47,
+    "pricePerSqftMedian": 542.41
   },
   "monthlyTrend": [
     {
@@ -332,9 +332,28 @@
       "medianPrice": 759000,
       "transactionCount": 2,
       "medianPricePerSqm": 5838.47
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 795000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6115.38
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-669c-jurong-west-st-64-2026-04-225648",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 795000,
+      "pricePerSqm": 6115.38,
+      "pricePerSqft": 568.14
+    },
     {
       "id": "jurong-west-669c-jurong-west-st-64-2025-03-208318",
       "month": "2025-03",
@@ -581,19 +600,6 @@
       "resalePrice": 510000,
       "pricePerSqm": 3923.08,
       "pricePerSqft": 364.47
-    },
-    {
-      "id": "jurong-west-669c-jurong-west-st-64-2019-03-45754",
-      "month": "2019-03",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 130,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "80 years 04 months",
-      "resalePrice": 520000,
-      "pricePerSqm": 4000,
-      "pricePerSqft": 371.61
     }
   ]
 }

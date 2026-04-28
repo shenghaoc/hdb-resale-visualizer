@@ -9,8 +9,8 @@
       "lat": 1.38947868254873,
       "lng": 103.893278837452
     },
-    "medianPrice": 760888,
-    "transactionCount": 11,
+    "medianPrice": 734888,
+    "transactionCount": 12,
     "floorAreaRange": [
       67,
       92
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      583000,
-      818444
+      585500,
+      817666
     ],
-    "pricePerSqmMedian": 8647.06,
-    "pricePerSqftMedian": 803.34
+    "pricePerSqmMedian": 8573.53,
+    "pricePerSqftMedian": 796.51
   },
   "monthlyTrend": [
     {
@@ -222,14 +222,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 578000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8500
+      "medianPrice": 623000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7880.43
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-215a-compassvale-dr-2026-04-227132",
+      "id": "sengkang-215a-compassvale-dr-2026-04-227217",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -242,7 +242,20 @@
       "pricePerSqft": 789.68
     },
     {
-      "id": "sengkang-215a-compassvale-dr-2026-03-227131",
+      "id": "sengkang-215a-compassvale-dr-2026-04-227323",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 668000,
+      "pricePerSqm": 7260.87,
+      "pricePerSqft": 674.56
+    },
+    {
+      "id": "sengkang-215a-compassvale-dr-2026-03-227216",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -474,19 +487,6 @@
       "resalePrice": 675000,
       "pricePerSqm": 7336.96,
       "pricePerSqft": 681.63
-    },
-    {
-      "id": "sengkang-215a-compassvale-dr-2022-07-135484",
-      "month": "2022-07",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 68,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "93 years 11 months",
-      "resalePrice": 509888,
-      "pricePerSqm": 7498.35,
-      "pricePerSqft": 696.62
     }
   ]
 }

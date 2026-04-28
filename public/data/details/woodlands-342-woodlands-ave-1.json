@@ -9,8 +9,8 @@
       "lat": 1.43195720779723,
       "lng": 103.781112463558
     },
-    "medianPrice": 720000,
-    "transactionCount": 4,
+    "medianPrice": 940000,
+    "transactionCount": 5,
     "floorAreaRange": [
       69,
       179
@@ -55,11 +55,11 @@
       }
     ],
     "priceIqr": [
-      478750,
-      975000
+      500000,
+      1080000
     ],
-    "pricePerSqmMedian": 5666.82,
-    "pricePerSqftMedian": 526.47
+    "pricePerSqmMedian": 6014.49,
+    "pricePerSqftMedian": 558.77
   },
   "monthlyTrend": [
     {
@@ -424,14 +424,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 1080000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6033.52
+      "medianPrice": 1090000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6124.1
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-342-woodlands-ave-1-2026-04-229194",
+      "id": "woodlands-342-woodlands-ave-1-2026-04-229301",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -442,6 +442,19 @@
       "resalePrice": 1080000,
       "pricePerSqm": 6033.52,
       "pricePerSqft": 560.53
+    },
+    {
+      "id": "woodlands-342-woodlands-ave-1-2026-04-229302",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 177,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1995,
+      "remainingLease": "68 years 01 month",
+      "resalePrice": 1100000,
+      "pricePerSqm": 6214.69,
+      "pricePerSqft": 577.36
     },
     {
       "id": "woodlands-342-woodlands-ave-1-2025-01-218910",
@@ -626,7 +639,7 @@
       "pricePerSqft": 361.11
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-09-971215",
+      "id": "woodlands-342-woodlands-ave-1-2016-09-971327",
       "month": "2016-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -639,7 +652,7 @@
       "pricePerSqft": 346.42
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-06-966085",
+      "id": "woodlands-342-woodlands-ave-1-2016-06-966197",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -652,7 +665,7 @@
       "pricePerSqft": 388.41
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2016-01-957758",
+      "id": "woodlands-342-woodlands-ave-1-2016-01-957870",
       "month": "2016-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -665,7 +678,7 @@
       "pricePerSqft": 355.56
     },
     {
-      "id": "woodlands-342-woodlands-ave-1-2014-11-650177",
+      "id": "woodlands-342-woodlands-ave-1-2014-11-650289",
       "month": "2014-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "07 TO 09",
@@ -676,19 +689,6 @@
       "resalePrice": 720000,
       "pricePerSqm": 4067.8,
       "pricePerSqft": 377.91
-    },
-    {
-      "id": "woodlands-342-woodlands-ave-1-2013-08-630595",
-      "month": "2013-08",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 177,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1995,
-      "remainingLease": "68 years",
-      "resalePrice": 755000,
-      "pricePerSqm": 4265.54,
-      "pricePerSqft": 396.28
     }
   ]
 }

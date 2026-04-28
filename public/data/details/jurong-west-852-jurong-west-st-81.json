@@ -9,8 +9,8 @@
       "lat": 1.34744674941805,
       "lng": 103.692827949719
     },
-    "medianPrice": 509888,
-    "transactionCount": 9,
+    "medianPrice": 508944,
+    "transactionCount": 10,
     "floorAreaRange": [
       107,
       128
@@ -19,10 +19,10 @@
       1994,
       1994
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1999-09",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      500000,
-      520000
+      501750,
+      517500
     ],
-    "pricePerSqmMedian": 4738.32,
-    "pricePerSqftMedian": 440.2
+    "pricePerSqmMedian": 4742.99,
+    "pricePerSqftMedian": 440.63
   },
   "monthlyTrend": [
     {
@@ -604,11 +604,30 @@
       "medianPrice": 510000,
       "transactionCount": 1,
       "medianPricePerSqm": 4766.36
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 508000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4747.66
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-852-jurong-west-st-81-2026-03-225373",
+      "id": "jurong-west-852-jurong-west-st-81-2026-04-225437",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 107,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 01 month",
+      "resalePrice": 508000,
+      "pricePerSqm": 4747.66,
+      "pricePerSqft": 441.07
+    },
+    {
+      "id": "jurong-west-852-jurong-west-st-81-2026-03-225433",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -853,19 +872,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 2880,
       "pricePerSqft": 267.56
-    },
-    {
-      "id": "jurong-west-852-jurong-west-st-81-2019-09-57240",
-      "month": "2019-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 107,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "75 years 08 months",
-      "resalePrice": 285000,
-      "pricePerSqm": 2663.55,
-      "pricePerSqft": 247.45
     }
   ]
 }

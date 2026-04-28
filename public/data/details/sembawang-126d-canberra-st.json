@@ -9,8 +9,8 @@
       "lat": 1.4465750273277,
       "lng": 103.834792499436
     },
-    "medianPrice": 689444,
-    "transactionCount": 30,
+    "medianPrice": 690000,
+    "transactionCount": 31,
     "floorAreaRange": [
       93,
       116
@@ -19,10 +19,10 @@
       2019,
       2019
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2025-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      669100,
-      723750
+      669400,
+      727500
     ],
-    "pricePerSqmMedian": 7301.75,
-    "pricePerSqftMedian": 678.36
+    "pricePerSqmMedian": 7311.83,
+    "pricePerSqftMedian": 679.29
   },
   "monthlyTrend": [
     {
@@ -124,11 +124,30 @@
       "medianPrice": 700000,
       "transactionCount": 2,
       "medianPricePerSqm": 6674.08
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 725000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7795.7
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-126d-canberra-st-2026-02-226922",
+      "id": "sembawang-126d-canberra-st-2026-04-227021",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 06 months",
+      "resalePrice": 725000,
+      "pricePerSqm": 7795.7,
+      "pricePerSqft": 724.24
+    },
+    {
+      "id": "sembawang-126d-canberra-st-2026-02-227005",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -141,7 +160,7 @@
       "pricePerSqft": 599.38
     },
     {
-      "id": "sembawang-126d-canberra-st-2026-02-227038",
+      "id": "sembawang-126d-canberra-st-2026-02-227122",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -373,19 +392,6 @@
       "resalePrice": 683000,
       "pricePerSqm": 7344.09,
       "pricePerSqft": 682.29
-    },
-    {
-      "id": "sembawang-126d-canberra-st-2025-03-212593",
-      "month": "2025-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 08 months",
-      "resalePrice": 668800,
-      "pricePerSqm": 7191.4,
-      "pricePerSqft": 668.1
     }
   ]
 }

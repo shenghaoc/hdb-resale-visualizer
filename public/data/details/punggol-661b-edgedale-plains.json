@@ -9,8 +9,8 @@
       "lat": 1.40248564833205,
       "lng": 103.916751438225
     },
-    "medianPrice": 791888,
-    "transactionCount": 5,
+    "medianPrice": 806444,
+    "transactionCount": 6,
     "floorAreaRange": [
       92,
       112
@@ -19,10 +19,10 @@
       2016,
       2016
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2021-07",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,11 +51,11 @@
       }
     ],
     "priceIqr": [
-      768000,
-      850000
+      773972,
+      842750
     ],
-    "pricePerSqmMedian": 7589.29,
-    "pricePerSqftMedian": 705.07
+    "pricePerSqmMedian": 7459.82,
+    "pricePerSqftMedian": 693.04
   },
   "monthlyTrend": [
     {
@@ -201,11 +201,30 @@
       "medianPrice": 708000,
       "transactionCount": 1,
       "medianPricePerSqm": 7695.65
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 821000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7330.36
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-661b-edgedale-plains-2026-02-226189",
+      "id": "punggol-661b-edgedale-plains-2026-04-226547",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 112,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 821000,
+      "pricePerSqm": 7330.36,
+      "pricePerSqft": 681.01
+    },
+    {
+      "id": "punggol-661b-edgedale-plains-2026-02-226261",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -450,19 +469,6 @@
       "resalePrice": 518000,
       "pricePerSqm": 5630.43,
       "pricePerSqft": 523.09
-    },
-    {
-      "id": "punggol-661b-edgedale-plains-2022-03-131102",
-      "month": "2022-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 92,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "94 years 03 months",
-      "resalePrice": 495000,
-      "pricePerSqm": 5380.43,
-      "pricePerSqft": 499.86
     }
   ]
 }

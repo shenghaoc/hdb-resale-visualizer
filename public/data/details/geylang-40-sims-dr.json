@@ -9,8 +9,8 @@
       "lat": 1.31747603013691,
       "lng": 103.876354059117
     },
-    "medianPrice": 732500,
-    "transactionCount": 6,
+    "medianPrice": 720000,
+    "transactionCount": 7,
     "floorAreaRange": [
       103,
       124
@@ -19,10 +19,10 @@
       1989,
       1989
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-02",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
       }
     ],
     "priceIqr": [
-      690000,
-      752500
+      674000,
+      750000
     ],
-    "pricePerSqmMedian": 6281.76,
-    "pricePerSqftMedian": 583.6
+    "pricePerSqmMedian": 6188.52,
+    "pricePerSqftMedian": 574.93
   },
   "monthlyTrend": [
     {
@@ -658,11 +658,30 @@
       "medianPrice": 680000,
       "transactionCount": 1,
       "medianPricePerSqm": 6601.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 632000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5798.17
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-40-sims-dr-2026-01-224564",
+      "id": "geylang-40-sims-dr-2026-04-224608",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1990,
+      "remainingLease": "63 years 02 months",
+      "resalePrice": 632000,
+      "pricePerSqm": 5798.17,
+      "pricePerSqft": 538.67
+    },
+    {
+      "id": "geylang-40-sims-dr-2026-01-224605",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -907,19 +926,6 @@
       "resalePrice": 528000,
       "pricePerSqm": 4258.06,
       "pricePerSqft": 395.59
-    },
-    {
-      "id": "geylang-40-sims-dr-2017-04-4784",
-      "month": "2017-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1990,
-      "remainingLease": "72 years 02 months",
-      "resalePrice": 565000,
-      "pricePerSqm": 4631.15,
-      "pricePerSqft": 430.25
     }
   ]
 }
