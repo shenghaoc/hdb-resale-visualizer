@@ -50,26 +50,6 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           additional_permissions: |
             actions: read
-          prompt: |
-            Read and follow the repository policy in @CLAUDE.md and @AGENTS.md before starting.
-
-            Key architectural constraints:
-            - 100% static frontend (Bun-only, no backend routes)
-            - All data precomputed in `scripts/sync-data.ts` → `public/data/` artifacts
-            - No runtime fetching or geocoding (must use precomputed build artifacts)
-            - TypeScript strict mode, React 19 best practices
-            - OneMap attribution must be preserved on map renders
-            - No price-prediction or forecasting features
-
-            When reviewing code or providing implementation guidance:
-            - Catch functional bugs, logic errors, and edge cases
-            - Flag React performance issues (unnecessary rerenders, missing memoization, expensive render-path work)
-            - Enforce TypeScript strictness (no `any`, exhaustive checks)
-            - Verify data pipeline contracts (schema alignment between scripts and src)
-            - Alert on package-manager drift (Bun-only, no npm/yarn/pnpm lockfiles)
-            - Block runtime API calls for core domain data
-            - Require tests for non-trivial logic changes
-            - Skip nitpicks unless they materially hurt readability
           claude_args: '--max-turns 25'
           settings: |
             {
