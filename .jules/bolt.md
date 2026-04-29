@@ -17,3 +17,7 @@
 ## 2024-06-25 - Redundant Work Inside Sorting Callbacks
 **Learning:** Functions used within `Array.prototype.sort()` execute repeatedly (O(N log N)). In components like `ResultsPane`, evaluating properties inside the `sort` comparator — such as repeatedly fetching `getCurrentYear()` or doing string-to-number transformation via `.replace()` — adds substantial cumulative overhead across thousands of records.
 **Action:** Always hoist independent data evaluation outside the comparator function loop. Pass fixed primitives as parameters, and utilize JS native string comparisons directly (e.g. `YYYY-MM < YYYY-MM`) instead of parsing string dates into Numbers inside `sort`.
+
+## 2024-05-18 - Heavy Intl Object Instantiations in Formatting
+**Learning:** `Intl.NumberFormat` and `Intl.DateTimeFormat` are known to be slow to instantiate. In a map/search application where formatting functions like `formatCompactCurrency`, `formatCurrency`, `formatMonth`, and `formatNumber` are called thousands of times inside loops or renders, this creates a significant performance bottleneck (e.g. from 3000ms down to 45ms per 50,000 calls).
+**Action:** Always memoize and cache the `Intl` formatter instances (e.g., using a Map with a key derived from locale and options) so that they are reused across formatting calls.
