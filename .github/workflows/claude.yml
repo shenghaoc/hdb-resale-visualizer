@@ -50,7 +50,7 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           additional_permissions: |
             actions: read
-          claude_args: '--max-turns 10'
+          claude_args: '--max-turns 25'
           settings: |
             {
               "permissions": {
