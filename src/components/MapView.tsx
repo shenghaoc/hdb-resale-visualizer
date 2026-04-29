@@ -4,14 +4,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { ONEMAP_ATTRIBUTION, ONEMAP_TILE_URL } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
-import {
-  DEFAULT_STATION_COLOR,
-  MRT_LINE_CODES,
-  MRT_LINE_COLORS,
-  MRT_LINE_FALLBACK_COLOR,
-  type MrtLineCode,
-} from "@/lib/mrt-colors";
-import { MRT_LINE_SEQUENCES } from "@/lib/mrt-line-sequences";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
@@ -60,11 +52,6 @@ type GeoJsonDataSourceLike = {
   setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
 };
 
-type MrtStationsGeoJson = GeoJSON.FeatureCollection<
-  GeoJSON.Point,
-  { stationName?: string; lines?: string[] }
->;
-
 function createCircleGeoJson(
   center: Coordinates,
   radiusKm: number,
@@ -94,13 +81,6 @@ function createCircleGeoJson(
   };
 }
 
-function normalizeStationName(stationName: string): string {
-  return stationName
-    .toUpperCase()
-    .replace(/\s+(MRT|LRT)\s+STATION$/u, "")
-    .trim();
-}
-
 function toMrtExitPopupProperties(properties: unknown): MrtExitPopupProperties {
   if (!properties || typeof properties !== "object") {
     return {};
@@ -111,54 +91,6 @@ function toMrtExitPopupProperties(properties: unknown): MrtExitPopupProperties {
     STATION_NA: typeof record.STATION_NA === "string" ? record.STATION_NA : undefined,
     EXIT_CODE: typeof record.EXIT_CODE === "string" ? record.EXIT_CODE : undefined,
   };
-}
-
-function buildMrtLineFeatures(
-  stationsGeoJson: MrtStationsGeoJson,
-): GeoJSON.FeatureCollection<GeoJSON.LineString, { lineCode: MrtLineCode }> {
-  const stationCoordinates = new Map<string, [number, number]>();
-  for (const feature of stationsGeoJson.features) {
-    if (!feature.geometry || feature.geometry.type !== "Point") {
-      continue;
-    }
-
-    const stationName = feature.properties?.stationName;
-    if (!stationName) {
-      continue;
-    }
-
-    const [lng, lat] = feature.geometry.coordinates;
-    if (typeof lng !== "number" || typeof lat !== "number") {
-      continue;
-    }
-
-    stationCoordinates.set(normalizeStationName(stationName), [lng, lat]);
-  }
-
-  const features: GeoJSON.Feature<GeoJSON.LineString, { lineCode: MrtLineCode }>[] = [];
-  for (const lineCode of MRT_LINE_CODES) {
-    const branches = MRT_LINE_SEQUENCES[lineCode];
-    for (const branch of branches) {
-      for (let index = 0; index < branch.length - 1; index += 1) {
-        const from = stationCoordinates.get(branch[index]);
-        const to = stationCoordinates.get(branch[index + 1]);
-        if (!from || !to) {
-          continue;
-        }
-
-        features.push({
-          type: "Feature",
-          properties: { lineCode },
-          geometry: {
-            type: "LineString",
-            coordinates: [from, to],
-          },
-        });
-      }
-    }
-  }
-
-  return { type: "FeatureCollection", features };
 }
 
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
@@ -244,7 +176,6 @@ export function MapView({
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
 
-
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
 
@@ -275,7 +206,6 @@ export function MapView({
       return;
     }
 
-    let isMapMounted = true;
     prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const map = new maplibregl.Map({
       container: containerRef.current,
@@ -348,11 +278,6 @@ export function MapView({
         data: "/data/mrt-stations.geojson",
       });
 
-      map.addSource("mrt-lines", {
-        type: "geojson",
-        data: { type: "FeatureCollection", features: [] },
-      });
-
       map.addSource("mrt-exits", {
         type: "geojson",
         data: "/data/mrt-exits.geojson",
@@ -363,71 +288,19 @@ export function MapView({
         data: { type: "FeatureCollection", features: [] },
       });
 
-      void fetch("/data/mrt-stations.geojson")
-        .then((response) => response.json() as Promise<MrtStationsGeoJson>)
-        .then((stationsGeoJson) => {
-          if (!isMapMounted || mapRef.current !== map) {
-            return;
-          }
-
-          const source = map.getSource("mrt-lines");
-          if (!isGeoJsonDataSourceLike(source)) {
-            return;
-          }
-
-          source.setData(buildMrtLineFeatures(stationsGeoJson));
-        });
-
-      map.addLayer({
-        id: "mrt-lines",
-        type: "line",
-        source: "mrt-lines",
-        layout: {
-          "line-cap": "round",
-          "line-join": "round",
-        },
-        paint: {
-          "line-color": [
-            "match",
-            ["get", "lineCode"],
-            "NSL",
-            MRT_LINE_COLORS.NSL,
-            "EWL",
-            MRT_LINE_COLORS.EWL,
-            "NEL",
-            MRT_LINE_COLORS.NEL,
-            "CCL",
-            MRT_LINE_COLORS.CCL,
-            "DTL",
-            MRT_LINE_COLORS.DTL,
-            "TEL",
-            MRT_LINE_COLORS.TEL,
-            MRT_LINE_FALLBACK_COLOR,
-          ],
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 14, 4, 18, 6],
-          "line-opacity": 0.75,
-        },
-      });
-
       map.addLayer({
         id: "mrt-icons",
-        type: "circle",
+        type: "symbol",
         source: "mrt-stations",
+        layout: {
+          "text-field": "🚇",
+          "text-size": ["interpolate", ["linear"], ["zoom"], 10, 11, 14, 14, 18, 18],
+          "text-allow-overlap": true,
+        },
         paint: {
-          "circle-radius": ["case", ["==", ["get", "isInterchange"], true], 8, 7],
-          "circle-color": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            "#fff",
-            ["coalesce", ["get", "color"], DEFAULT_STATION_COLOR],
-          ],
-          "circle-stroke-width": ["case", ["==", ["get", "isInterchange"], true], 2.5, 1.5],
-          "circle-stroke-color": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            "#111827",
-            "#fff",
-          ],
+          "text-color": "#0f172a",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 1.25,
         },
       });
 
@@ -460,11 +333,11 @@ export function MapView({
           "text-color": "#0f172a",
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.25,
-          },
-          });
+        },
+      });
 
-          map.addLayer(
-          {
+      map.addLayer(
+        {
           id: "radius-fill",
           type: "fill",
           source: "radius",
@@ -472,12 +345,12 @@ export function MapView({
             "fill-color": "#2563eb",
             "fill-opacity": 0.05,
           },
-          },
-          "mrt-lines",
-          );
+        },
+        "mrt-icons",
+      );
 
-          map.addLayer(
-          {
+      map.addLayer(
+        {
           id: "radius-outline",
           type: "line",
           source: "radius",
@@ -487,24 +360,9 @@ export function MapView({
             "line-dasharray": [3, 3],
             "line-opacity": 0.25,
           },
-          },
-          "mrt-lines",
-          );
-
-          map.addLayer({
-          id: "block-clusters",
-
-        type: "symbol",
-        source: "mrt-stations",
-        layout: {
-          "text-field": "M",
-          "text-size": 9,
-          "text-font": ["Noto Sans Bold"],
         },
-        paint: {
-          "text-color": ["case", ["==", ["get", "isInterchange"], true], "#111827", "#fff"],
-        },
-      });
+        "mrt-icons",
+      );
 
       map.addLayer({
         id: "mrt-labels",
@@ -849,7 +707,6 @@ export function MapView({
     mapRef.current = map;
 
     return () => {
-      isMapMounted = false;
       popup.remove();
       map.remove();
       mapRef.current = null;
