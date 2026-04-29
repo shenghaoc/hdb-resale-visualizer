@@ -9,14 +9,28 @@ function resolveLocale(locale?: Locale) {
 
 // ⚡ Bolt: Cache Intl objects since their instantiation is slow (~2-3ms).
 // Reusing them reduces formatter time from ~3000ms to ~45ms per 50,000 calls.
-const intlCache = new Map<string, Intl.NumberFormat | Intl.DateTimeFormat>();
+const FORMATTER_CACHE_LIMIT = 128;
+const numberFormatCache = new Map<string, Intl.NumberFormat>();
+const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
+
+function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
+  if (cache.size < limit) {
+    return;
+  }
+
+  const oldestKey = cache.keys().next().value;
+  if (oldestKey !== undefined) {
+    cache.delete(oldestKey);
+  }
+}
 
 function getNumberFormat(locale: Locale, options: Intl.NumberFormatOptions): Intl.NumberFormat {
-  const key = `nf-${locale}-${JSON.stringify(options)}`;
-  let formatter = intlCache.get(key) as Intl.NumberFormat | undefined;
+  const key = `${locale}-${JSON.stringify(options)}`;
+  let formatter = numberFormatCache.get(key);
   if (!formatter) {
     formatter = new Intl.NumberFormat(locale, options);
-    intlCache.set(key, formatter);
+    evictCacheIfNeeded(numberFormatCache, FORMATTER_CACHE_LIMIT);
+    numberFormatCache.set(key, formatter);
   }
   return formatter;
 }
@@ -25,17 +39,19 @@ function getDateTimeFormat(
   locale: Locale,
   options: Intl.DateTimeFormatOptions
 ): Intl.DateTimeFormat {
-  const key = `dtf-${locale}-${JSON.stringify(options)}`;
-  let formatter = intlCache.get(key) as Intl.DateTimeFormat | undefined;
+  const key = `${locale}-${JSON.stringify(options)}`;
+  let formatter = dateTimeFormatCache.get(key);
   if (!formatter) {
     formatter = new Intl.DateTimeFormat(locale, options);
-    intlCache.set(key, formatter);
+    evictCacheIfNeeded(dateTimeFormatCache, FORMATTER_CACHE_LIMIT);
+    dateTimeFormatCache.set(key, formatter);
   }
   return formatter;
 }
 
 export function resetFormatCachesForTests(): void {
-  intlCache.clear();
+  numberFormatCache.clear();
+  dateTimeFormatCache.clear();
 }
 
 export function formatCurrency(value: number, locale?: Locale): string {
