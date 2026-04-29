@@ -176,7 +176,6 @@ export function MapView({
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
 
-
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
 
@@ -334,8 +333,8 @@ export function MapView({
           "text-color": "#0f172a",
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.25,
-          },
-          });
+        },
+      });
 
       map.addLayer(
         {
