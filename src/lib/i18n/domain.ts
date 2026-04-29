@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n/types";
 
 type DomainCategory = "town" | "flatType";
 
@@ -9,6 +9,7 @@ type SearchAliases = Record<string, string>;
 type DomainLocaleConfig = {
   translations: DomainTranslations;
   searchAliases: SearchAliases;
+  searchAliasPattern?: RegExp;
 };
 
 const EMPTY_TRANSLATIONS: DomainTranslations = {
@@ -24,6 +25,7 @@ const DOMAIN_I18N_CONFIG: Record<Locale, DomainLocaleConfig> = {
     searchAliases: EMPTY_SEARCH_ALIASES,
   },
   "zh-SG": {
+    searchAliasPattern: /[\u3400-\u9fff]/,
     translations: {
       town: {
         "ANG MO KIO": "宏茂桥",
@@ -127,8 +129,16 @@ export function resolveMultilingualSearchAliases(input: string): string {
   let normalized = input;
 
   for (const localeConfig of Object.values(DOMAIN_I18N_CONFIG)) {
-    for (const [source, target] of Object.entries(localeConfig.searchAliases)) {
-      normalized = normalized.replaceAll(source, target);
+    if (localeConfig.searchAliasPattern && !localeConfig.searchAliasPattern.test(normalized)) {
+      continue;
+    }
+
+    const sortedAliases = Object.entries(localeConfig.searchAliases).sort(
+      ([left], [right]) => right.length - left.length,
+    );
+
+    for (const [source, target] of sortedAliases) {
+      normalized = normalized.replaceAll(source, ` ${target} `);
     }
   }
 

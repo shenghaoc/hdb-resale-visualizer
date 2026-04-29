@@ -1,4 +1,4 @@
-import type { Locale, Translator } from "@/lib/i18n";
+import type { Locale, Translator } from "@/lib/i18n/types";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 
