@@ -7,6 +7,8 @@ import { toGeoJson } from "@/lib/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
+import { localizeTownName } from "@/lib/i18n/domain";
+import type { Locale } from "@/lib/i18n";
 
 type MapViewProps = {
   blocks: BlockSummary[];
@@ -18,6 +20,7 @@ type MapViewProps = {
   onMapInteract?: (interactionType?: "background" | "feature") => void;
   onGeolocate?: (coords: Coordinates) => void;
   t: Translator;
+  locale: Locale;
 };
 
 const SINGAPORE_BOUNDS: LngLatBoundsLike = [
@@ -163,6 +166,7 @@ export function MapView({
   onMapInteract,
   onGeolocate,
   t,
+  locale,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -170,6 +174,7 @@ export function MapView({
   const onMapInteractRef = useRef(onMapInteract);
   const onGeolocateRef = useRef(onGeolocate);
   const tRef = useRef(t);
+  const localeRef = useRef(locale);
   const popupRef = useRef<Popup | null>(null);
   const prefersReducedMotionRef = useRef(false);
   const hasInitialFitRef = useRef(false);
@@ -199,6 +204,9 @@ export function MapView({
   useEffect(() => {
     tRef.current = t;
   }, [t]);
+  useEffect(() => {
+    localeRef.current = locale;
+  }, [locale]);
 
   // Create the map ONCE on mount
   useEffect(() => {
@@ -619,7 +627,7 @@ export function MapView({
         }
 
         const townEl = document.createElement("p");
-        townEl.textContent = town;
+        townEl.textContent = localizeTownName(town, localeRef.current);
         container.appendChild(townEl);
 
         const infoEl = document.createElement("p");
@@ -679,7 +687,7 @@ export function MapView({
         if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
         const props = toMrtExitPopupProperties(feature.properties);
-        const stationName = props.STATION_NA ?? "MRT Station";
+        const stationName = props.STATION_NA ?? tRef.current("map.mrtStation");
         const exitCode = props.EXIT_CODE;
         const [lng, lat] = feature.geometry.coordinates;
 
@@ -880,7 +888,7 @@ export function MapView({
       data-testid="map-view"
       ref={containerRef}
       role="application"
-      aria-label={t("map.ariaLabel") || "Singapore HDB Resale Map"}
+      aria-label={t("map.ariaLabel")}
     />
   );
 }

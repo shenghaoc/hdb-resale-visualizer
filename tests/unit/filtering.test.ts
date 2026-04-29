@@ -189,6 +189,32 @@ describe("matchesFilter", () => {
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
 
+  it("detects concatenated Chinese MRT station queries", () => {
+    expect(alpha).toBeTruthy();
+
+    const intent = resolveGeographicSearchIntent("宏茂桥地铁", artifact.blockSummaries, 800);
+
+    expect(intent).toEqual({
+      type: "station",
+      stationName: "ANG MO KIO MRT STATION",
+      radiusMeters: 800,
+    });
+  });
+
+  it("preserves Chinese alias token boundaries for block search", () => {
+    expect(alpha).toBeTruthy();
+
+    expect(
+      matchesFilter(alpha!, {
+        ...DEFAULT_FILTERS,
+        budgetMin: null,
+        budgetMax: null,
+        remainingLeaseMin: null,
+        search: "宏茂桥",
+      }),
+    ).toBe(true);
+  });
+
   it("detects coordinate search and filters blocks by radius", () => {
     expect(alpha).toBeTruthy();
     expect(beta).toBeTruthy();
