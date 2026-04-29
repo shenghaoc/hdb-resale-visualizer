@@ -26,6 +26,11 @@ type SearchToken = {
   isNumericPrefix: boolean;
 };
 
+type BlockSearchTokens = {
+  values: string[];
+  postalCode: string | null;
+};
+
 export type GeographicSearchIntent =
   | {
       type: "station";
@@ -181,9 +186,17 @@ function isNearMatch(left: string, right: string): boolean {
   return edits <= 1;
 }
 
+function isPostalCodeSearchToken(value: string): boolean {
+  return /^\d{3,6}$/.test(value);
+}
+
+function shouldAllowReverseTokenMatch(value: string): boolean {
+  return !/^\d{3,}$/.test(value);
+}
+
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
-let blockTokensCache = new WeakMap<BlockSummary, string[]>();
+let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
 
@@ -202,25 +215,39 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
     return true;
   }
 
-  let blockTokenValues = blockTokensCache.get(block);
-  if (!blockTokenValues) {
+  let blockTokens = blockTokensCache.get(block);
+  if (!blockTokens) {
     const searchableTokens = tokenizeSearchText(
-      `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""} ${block.postalCode ?? ""}`,
+      `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
     );
-    blockTokenValues = searchableTokens.map((token) => token.value);
-    blockTokensCache.set(block, blockTokenValues);
+    blockTokens = {
+      values: searchableTokens.map((token) => token.value),
+      postalCode: block.postalCode ? normalizeSearchText(block.postalCode) : null,
+    };
+    blockTokensCache.set(block, blockTokens);
   }
 
   return searchTokens.every((searchToken) => {
+    const postalCodeMatches =
+      blockTokens.postalCode !== null &&
+      isPostalCodeSearchToken(searchToken.value) &&
+      blockTokens.postalCode.startsWith(searchToken.value);
+
     if (searchToken.isNumericPrefix) {
-      return blockTokenValues.some((candidate) => candidate.startsWith(searchToken.value));
+      return (
+        postalCodeMatches ||
+        blockTokens.values.some((candidate) => candidate.startsWith(searchToken.value))
+      );
     }
 
-    return blockTokenValues.some(
-      (candidate) =>
-        candidate.includes(searchToken.value) ||
-        searchToken.value.includes(candidate) ||
-        isNearMatch(candidate, searchToken.value),
+    return (
+      postalCodeMatches ||
+      blockTokens.values.some(
+        (candidate) =>
+          candidate.includes(searchToken.value) ||
+          (shouldAllowReverseTokenMatch(searchToken.value) && searchToken.value.includes(candidate)) ||
+          isNearMatch(candidate, searchToken.value),
+      )
     );
   });
 }
@@ -439,7 +466,7 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
-  blockTokensCache = new WeakMap<BlockSummary, string[]>();
+  blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
 }

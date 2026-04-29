@@ -121,6 +121,16 @@ describe("Search Matching Regression", () => {
       expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "760200" })).toBe(false);
     });
 
+    it("does not match an unrelated block just because its number is inside the postal code", () => {
+      const unrelatedBlock = {
+        ...block,
+        addressKey: "ang-mo-kio-101-no-postal-match",
+        postalCode: "760200",
+      };
+
+      expect(matchesFilter(unrelatedBlock, { ...EMPTY_FILTERS, search: "560101" })).toBe(false);
+    });
+
     it("matches postal code combined with street name", () => {
       expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "560101 ang mo kio" })).toBe(true);
     });
