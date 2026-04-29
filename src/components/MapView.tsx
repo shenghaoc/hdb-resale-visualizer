@@ -41,10 +41,6 @@ type MrtPopupProperties = {
   lines?: string | string[];
 };
 
-type MrtExitPopupProperties = {
-  STATION_NA?: string;
-  EXIT_CODE?: string;
-};
 
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
@@ -84,17 +80,6 @@ function createCircleGeoJson(
   };
 }
 
-function toMrtExitPopupProperties(properties: unknown): MrtExitPopupProperties {
-  if (!properties || typeof properties !== "object") {
-    return {};
-  }
-
-  const record = properties as Record<string, unknown>;
-  return {
-    STATION_NA: typeof record.STATION_NA === "string" ? record.STATION_NA : undefined,
-    EXIT_CODE: typeof record.EXIT_CODE === "string" ? record.EXIT_CODE : undefined,
-  };
-}
 
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
   GeoJSON.Point,
@@ -312,19 +297,6 @@ export function MapView({
         },
       });
 
-      map.addLayer({
-        id: "mrt-exits",
-        type: "circle",
-        source: "mrt-exits",
-        minzoom: 16,
-        paint: {
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 16, 2.5, 18, 4.5],
-          "circle-color": "#ffffff",
-          "circle-stroke-width": 1.5,
-          "circle-stroke-color": "#0f172a",
-          "circle-opacity": 0.95,
-        },
-      });
 
       map.addLayer({
         id: "mrt-exit-labels",
@@ -681,35 +653,7 @@ export function MapView({
         popup.remove();
       });
 
-      map.on("mouseenter", "mrt-exits", (event) => {
-        map.getCanvas().style.cursor = "pointer";
-        const feature = event.features?.[0];
-        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
 
-        const props = toMrtExitPopupProperties(feature.properties);
-        const stationName = props.STATION_NA ?? tRef.current("map.mrtStation");
-        const exitCode = props.EXIT_CODE;
-        const [lng, lat] = feature.geometry.coordinates;
-
-        const container = document.createElement("div");
-        const nameEl = document.createElement("strong");
-        nameEl.textContent = stationName;
-        container.appendChild(nameEl);
-
-        if (exitCode) {
-          const exitEl = document.createElement("p");
-          exitEl.className = "opacity-80 mt-1";
-          exitEl.textContent = exitCode;
-          container.appendChild(exitEl);
-        }
-
-        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
-      });
-
-      map.on("mouseleave", "mrt-exits", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
-      });
     });
 
     mapRef.current = map;
