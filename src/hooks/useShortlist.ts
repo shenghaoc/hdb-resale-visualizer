@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { hasCloudSyncConfig, pullShortlistFromCloud, signInWithPassword, syncShortlistToCloud, type AuthSession } from "@/lib/cloudSync";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
@@ -44,6 +45,8 @@ function readInitialShortlist(): InitialShortlistState {
 }
 
 export function useShortlist() {
+  const [session, setSession] = useState<AuthSession | null>(null);
+  const [cloudStatus, setCloudStatus] = useState<string>("Local only");
   const [initialState] = useState(readInitialShortlist);
   const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
 
@@ -60,7 +63,9 @@ export function useShortlist() {
 
   useEffect(() => {
     saveShortlist(safeStorage, items);
-  }, [items]);
+    if (!session) return;
+    void syncShortlistToCloud(session, items).then(() => setCloudStatus("Synced to Supabase")).catch((error) => setCloudStatus(`Sync failed: ${error instanceof Error ? error.message : "Unknown error"}`));
+  }, [items, session]);
 
   const toggle = useCallback((addressKey: string) => {
     setItems((current) => toggleShortlistItem(current, addressKey));
@@ -79,6 +84,25 @@ export function useShortlist() {
     );
   }, []);
 
+
+
+  const signIn = useCallback(async (email: string, password: string) => {
+    const nextSession = await signInWithPassword(email, password);
+    setSession(nextSession);
+    const cloud = await pullShortlistFromCloud(nextSession);
+    if (cloud && cloud.length > 0) {
+      setItems(cloud);
+    } else {
+      await syncShortlistToCloud(nextSession, items);
+    }
+    setCloudStatus(`Connected as ${nextSession.email}`);
+  }, [items]);
+
+  const signOut = useCallback(() => {
+    setSession(null);
+    setCloudStatus("Local only");
+  }, []);
+
   const has = useCallback((addressKey: string) => {
     return items.some((item) => item.addressKey === addressKey);
   }, [items]);
@@ -89,7 +113,12 @@ export function useShortlist() {
       toggle,
       update,
       has,
+      signIn,
+      signOut,
+      session,
+      cloudStatus,
+      hasCloudSyncConfig,
     }),
-    [items, toggle, update, has],
+    [items, toggle, update, has, signIn, signOut, session, cloudStatus],
   );
 }

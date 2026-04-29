@@ -58,6 +58,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -120,6 +121,8 @@ function App() {
   >({});
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   type DesktopTab = "filters" | "results" | "saved";
@@ -138,6 +141,12 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
+
+  const handleLogin = useCallback(() => {
+    void shortlist.signIn(email, password).catch((error) => {
+      setError(error instanceof Error ? error.message : "Failed to sign in");
+    });
+  }, [email, password, shortlist]);
 
   useEffect(() => {
     let isMounted = true;
@@ -894,6 +903,39 @@ function App() {
                 {t("app.showHeader")}
               </Button>
             </div>
+          ) : null}
+
+          {shortlist.hasCloudSyncConfig ? (
+            <Card className="pointer-events-auto absolute right-3 top-[4.25rem] z-30 w-[min(22rem,calc(100vw-1.5rem))] border-border/25 bg-background/92 shadow-[0_4px_20px_rgba(23,28,31,0.08)] backdrop-blur-[20px] lg:right-6 lg:top-6">
+              <CardHeader className="gap-1 p-3 pb-2">
+                <CardTitle className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                  Cloud sync
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Optional backup for Saved flats.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-2 p-3 pt-0 sm:grid-cols-[1fr_1fr_auto_auto]">
+                <Input
+                  placeholder="Email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+                <Input
+                  placeholder="Password"
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                <Button onClick={handleLogin}>Login</Button>
+                <Button variant="outline" onClick={shortlist.signOut}>
+                  Logout
+                </Button>
+                <p className="text-xs text-muted-foreground sm:col-span-full">
+                  {shortlist.cloudStatus}
+                </p>
+              </CardContent>
+            </Card>
           ) : null}
 
           {isDesktop ? (
