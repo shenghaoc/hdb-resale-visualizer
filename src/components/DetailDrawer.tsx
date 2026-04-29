@@ -705,7 +705,7 @@ export function DetailDrawer({
                     "query",
                     `${currentSummary?.block} ${currentSummary?.streetName} Singapore`,
                   );
-                  window.open(url.toString(), "_blank");
+                  window.open(url.toString(), "_blank", "noopener,noreferrer");
                 }}
               >
                 <MapPin data-icon />

@@ -681,7 +681,7 @@ function App() {
         <a
           className="map-attribution-link"
           href="https://www.onemap.gov.sg/home"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           target="_blank"
         >
           © OneMap contributors
