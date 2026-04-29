@@ -9,8 +9,8 @@
       "lat": 1.36311517141264,
       "lng": 103.936402646417
     },
-    "medianPrice": 751500,
-    "transactionCount": 24,
+    "medianPrice": 755000,
+    "transactionCount": 25,
     "floorAreaRange": [
       68,
       120
@@ -53,12 +53,13 @@
         "distanceMeters": 1954
       }
     ],
+    "postalCode": "523608",
     "priceIqr": [
-      617500,
-      802000
+      620000,
+      800000
     ],
-    "pricePerSqmMedian": 8282.02,
-    "pricePerSqftMedian": 769.42
+    "pricePerSqmMedian": 8225.81,
+    "pricePerSqftMedian": 764.2
   },
   "monthlyTrend": [
     {
@@ -141,14 +142,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 790000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8494.62
+      "medianPrice": 785000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7497.31
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-608c-tampines-nth-dr-1-2026-04-228053",
+      "id": "tampines-608c-tampines-nth-dr-1-2026-04-228128",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -161,7 +162,20 @@
       "pricePerSqft": 789.18
     },
     {
-      "id": "tampines-608c-tampines-nth-dr-1-2026-01-228270",
+      "id": "tampines-608c-tampines-nth-dr-1-2026-04-228366",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "3GEN",
+      "leaseCommenceDate": 2020,
+      "remainingLease": "93 years 06 months",
+      "resalePrice": 780000,
+      "pricePerSqm": 6500,
+      "pricePerSqft": 603.87
+    },
+    {
+      "id": "tampines-608c-tampines-nth-dr-1-2026-01-228347",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -393,19 +407,6 @@
       "resalePrice": 610000,
       "pricePerSqm": 8970.59,
       "pricePerSqft": 833.4
-    },
-    {
-      "id": "tampines-608c-tampines-nth-dr-1-2025-01-217028",
-      "month": "2025-01",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 113,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 2020,
-      "remainingLease": "94 years 11 months",
-      "resalePrice": 922000,
-      "pricePerSqm": 8159.29,
-      "pricePerSqft": 758.02
     }
   ]
 }

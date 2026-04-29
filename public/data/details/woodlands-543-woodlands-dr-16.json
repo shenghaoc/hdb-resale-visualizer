@@ -10,7 +10,7 @@
       "lng": 103.793734505831
     },
     "medianPrice": 660000,
-    "transactionCount": 8,
+    "transactionCount": 9,
     "floorAreaRange": [
       101,
       121
@@ -51,12 +51,13 @@
         "distanceMeters": 1518
       }
     ],
+    "postalCode": "730543",
     "priceIqr": [
-      584750,
-      702000
+      588000,
+      700000
     ],
-    "pricePerSqmMedian": 5757.42,
-    "pricePerSqftMedian": 534.88
+    "pricePerSqmMedian": 5782.61,
+    "pricePerSqftMedian": 537.22
   },
   "monthlyTrend": [
     {
@@ -547,14 +548,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 624000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5660.89
+      "medianPrice": 660000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5782.61
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-04-228952",
+      "id": "woodlands-543-woodlands-dr-16-2026-04-229038",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -567,7 +568,7 @@
       "pricePerSqft": 540.86
     },
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-04-229179",
+      "id": "woodlands-543-woodlands-dr-16-2026-04-229271",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -580,7 +581,20 @@
       "pricePerSqft": 510.97
     },
     {
-      "id": "woodlands-543-woodlands-dr-16-2026-01-228936",
+      "id": "woodlands-543-woodlands-dr-16-2026-04-229274",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 115,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 5782.61,
+      "pricePerSqft": 537.22
+    },
+    {
+      "id": "woodlands-543-woodlands-dr-16-2026-01-229022",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -799,19 +813,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 3719.01,
       "pricePerSqft": 345.51
-    },
-    {
-      "id": "woodlands-543-woodlands-dr-16-2019-06-52220",
-      "month": "2019-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "80 years 01 month",
-      "resalePrice": 320000,
-      "pricePerSqm": 3168.32,
-      "pricePerSqft": 294.35
     }
   ]
 }

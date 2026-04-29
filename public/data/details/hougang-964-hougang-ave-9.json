@@ -9,8 +9,8 @@
       "lat": 1.37715825014895,
       "lng": 103.87752355745
     },
-    "medianPrice": 620000,
-    "transactionCount": 3,
+    "medianPrice": 647500,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       121
@@ -51,12 +51,13 @@
         "distanceMeters": 1679
       }
     ],
+    "postalCode": "530964",
     "priceIqr": [
-      575000,
-      647500
+      597500,
+      695972
     ],
-    "pricePerSqmMedian": 5578.51,
-    "pricePerSqftMedian": 518.26
+    "pricePerSqmMedian": 5889.26,
+    "pricePerSqftMedian": 547.13
   },
   "monthlyTrend": [
     {
@@ -439,14 +440,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 530000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5247.52
+      "medianPrice": 644444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5759.66
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-964-hougang-ave-9-2026-04-224859",
+      "id": "hougang-964-hougang-ave-9-2026-04-224889",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -457,6 +458,19 @@
       "resalePrice": 530000,
       "pricePerSqm": 5247.52,
       "pricePerSqft": 487.51
+    },
+    {
+      "id": "hougang-964-hougang-ave-9-2026-04-225003",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 05 months",
+      "resalePrice": 758888,
+      "pricePerSqm": 6271.8,
+      "pricePerSqft": 582.67
     },
     {
       "id": "hougang-964-hougang-ave-9-2025-04-205794",
@@ -691,19 +705,6 @@
       "resalePrice": 478888,
       "pricePerSqm": 3957.75,
       "pricePerSqft": 367.69
-    },
-    {
-      "id": "hougang-964-hougang-ave-9-2016-12-975226",
-      "month": "2016-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "81",
-      "resalePrice": 388888,
-      "pricePerSqm": 3888.88,
-      "pricePerSqft": 361.29
     }
   ]
 }

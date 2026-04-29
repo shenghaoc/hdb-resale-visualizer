@@ -9,8 +9,8 @@
       "lat": 1.34720576651075,
       "lng": 103.946641750013
     },
-    "medianPrice": 469000,
-    "transactionCount": 6,
+    "medianPrice": 460000,
+    "transactionCount": 7,
     "floorAreaRange": [
       75,
       105
@@ -19,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2025-04",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-04"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -50,12 +50,13 @@
         "distanceMeters": 944
       }
     ],
+    "postalCode": "520104",
     "priceIqr": [
-      433750,
-      565750
+      437500,
+      536500
     ],
-    "pricePerSqmMedian": 5745.19,
-    "pricePerSqftMedian": 533.75
+    "pricePerSqmMedian": 5769.23,
+    "pricePerSqftMedian": 535.98
   },
   "monthlyTrend": [
     {
@@ -837,9 +838,28 @@
       "medianPrice": 597500,
       "transactionCount": 2,
       "medianPricePerSqm": 5745.19
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 450000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6000
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-104-tampines-st-11-2026-04-227930",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 75,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "55 years 06 months",
+      "resalePrice": 450000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
     {
       "id": "tampines-104-tampines-st-11-2025-04-216421",
       "month": "2025-04",
@@ -1086,19 +1106,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 4285.71,
       "pricePerSqft": 398.16
-    },
-    {
-      "id": "tampines-104-tampines-st-11-2017-01-953",
-      "month": "2017-01",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1982,
-      "remainingLease": "64 years 09 months",
-      "resalePrice": 420000,
-      "pricePerSqm": 4000,
-      "pricePerSqft": 371.61
     }
   ]
 }

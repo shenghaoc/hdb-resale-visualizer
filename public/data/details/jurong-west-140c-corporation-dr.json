@@ -9,8 +9,8 @@
       "lat": 1.32754362846391,
       "lng": 103.724285977296
     },
-    "medianPrice": 375000,
-    "transactionCount": 19,
+    "medianPrice": 381500,
+    "transactionCount": 20,
     "floorAreaRange": [
       47,
       93
@@ -19,10 +19,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 2071
       }
     ],
+    "postalCode": "613140",
     "priceIqr": [
-      352500,
-      624000
+      353750,
+      638500
     ],
-    "pricePerSqmMedian": 7276.6,
-    "pricePerSqftMedian": 676.02
+    "pricePerSqmMedian": 7204.48,
+    "pricePerSqftMedian": 669.32
   },
   "monthlyTrend": [
     {
@@ -184,11 +185,30 @@
       "medianPrice": 358888,
       "transactionCount": 1,
       "medianPricePerSqm": 7635.91
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 655000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7043.01
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-140c-corporation-dr-2026-03-225189",
+      "id": "jurong-west-140c-corporation-dr-2026-04-225352",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 02 months",
+      "resalePrice": 655000,
+      "pricePerSqm": 7043.01,
+      "pricePerSqft": 654.32
+    },
+    {
+      "id": "jurong-west-140c-corporation-dr-2026-03-225224",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "13 TO 15",
@@ -433,19 +453,6 @@
       "resalePrice": 305000,
       "pricePerSqm": 6489.36,
       "pricePerSqft": 602.88
-    },
-    {
-      "id": "jurong-west-140c-corporation-dr-2024-03-180711",
-      "month": "2024-03",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 04 months",
-      "resalePrice": 427000,
-      "pricePerSqm": 6279.41,
-      "pricePerSqft": 583.38
     }
   ]
 }

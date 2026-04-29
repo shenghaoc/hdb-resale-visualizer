@@ -9,8 +9,8 @@
       "lat": 1.35251107659385,
       "lng": 103.935059005284
     },
-    "medianPrice": 475000,
-    "transactionCount": 5,
+    "medianPrice": 483944,
+    "transactionCount": 6,
     "floorAreaRange": [
       74,
       108
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-02",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -50,12 +50,13 @@
         "distanceMeters": 1783
       }
     ],
+    "postalCode": "520847",
     "priceIqr": [
-      460000,
-      615000
+      463750,
+      584472
     ],
-    "pricePerSqmMedian": 6189.19,
-    "pricePerSqftMedian": 575
+    "pricePerSqmMedian": 6202.7,
+    "pricePerSqftMedian": 576.25
   },
   "monthlyTrend": [
     {
@@ -801,9 +802,28 @@
       "medianPrice": 475000,
       "transactionCount": 1,
       "medianPricePerSqm": 6418.92
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 492888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6660.65
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-847-tampines-st-83-2026-04-228013",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years 06 months",
+      "resalePrice": 492888,
+      "pricePerSqm": 6660.65,
+      "pricePerSqft": 618.8
+    },
     {
       "id": "tampines-847-tampines-st-83-2025-12-215978",
       "month": "2025-12",
@@ -1050,19 +1070,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 4285.71,
       "pricePerSqft": 398.16
-    },
-    {
-      "id": "tampines-847-tampines-st-83-2018-09-36401",
-      "month": "2018-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 108,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "68 years 02 months",
-      "resalePrice": 458000,
-      "pricePerSqm": 4240.74,
-      "pricePerSqft": 393.98
     }
   ]
 }

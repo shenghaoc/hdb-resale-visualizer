@@ -9,8 +9,8 @@
       "lat": 1.43882635430604,
       "lng": 103.799297445551
     },
-    "medianPrice": 820000,
-    "transactionCount": 5,
+    "medianPrice": 829000,
+    "transactionCount": 6,
     "floorAreaRange": [
       130,
       131
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2004-12",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -49,12 +49,13 @@
         "distanceMeters": 1373
       }
     ],
+    "postalCode": "730670",
     "priceIqr": [
-      800000,
-      838000
+      805000,
+      847000
     ],
-    "pricePerSqmMedian": 6307.69,
-    "pricePerSqftMedian": 586
+    "pricePerSqmMedian": 6376.92,
+    "pricePerSqftMedian": 592.43
   },
   "monthlyTrend": [
     {
@@ -476,11 +477,30 @@
       "medianPrice": 820000,
       "transactionCount": 1,
       "medianPricePerSqm": 6307.69
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 850000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6538.46
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-670-woodlands-dr-71-2026-01-229318",
+      "id": "woodlands-670-woodlands-dr-71-2026-04-229412",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 850000,
+      "pricePerSqm": 6538.46,
+      "pricePerSqft": 607.44
+    },
+    {
+      "id": "woodlands-670-woodlands-dr-71-2026-01-229411",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -725,19 +745,6 @@
       "resalePrice": 458000,
       "pricePerSqm": 3496.18,
       "pricePerSqft": 324.81
-    },
-    {
-      "id": "woodlands-670-woodlands-dr-71-2019-01-43485",
-      "month": "2019-01",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 130,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "80 years 07 months",
-      "resalePrice": 470000,
-      "pricePerSqm": 3615.38,
-      "pricePerSqft": 335.88
     }
   ]
 }

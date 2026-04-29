@@ -9,8 +9,8 @@
       "lat": 1.35339365971468,
       "lng": 103.722445654654
     },
-    "medianPrice": 548000,
-    "transactionCount": 3,
+    "medianPrice": 559000,
+    "transactionCount": 4,
     "floorAreaRange": [
       103,
       137
@@ -19,10 +19,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -50,12 +50,13 @@
         "distanceMeters": 2453
       }
     ],
+    "postalCode": "640402",
     "priceIqr": [
-      519000,
-      559000
+      533500,
+      577500
     ],
-    "pricePerSqmMedian": 4191.18,
-    "pricePerSqftMedian": 389.37
+    "pricePerSqmMedian": 4351.23,
+    "pricePerSqftMedian": 404.24
   },
   "monthlyTrend": [
     {
@@ -465,11 +466,30 @@
       "medianPrice": 570000,
       "transactionCount": 1,
       "medianPricePerSqm": 4191.18
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4511.28
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-402-jurong-west-st-42-2026-01-225523",
+      "id": "jurong-west-402-jurong-west-st-42-2026-04-225574",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 133,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 04 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 4511.28,
+      "pricePerSqft": 419.11
+    },
+    {
+      "id": "jurong-west-402-jurong-west-st-42-2026-01-225567",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -599,7 +619,7 @@
       "pricePerSqft": 252.36
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2016-11-973853",
+      "id": "jurong-west-402-jurong-west-st-42-2016-11-973958",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -612,7 +632,7 @@
       "pricePerSqft": 309.77
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2016-08-968742",
+      "id": "jurong-west-402-jurong-west-st-42-2016-08-968847",
       "month": "2016-08",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -625,7 +645,7 @@
       "pricePerSqft": 319.3
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2016-07-967008",
+      "id": "jurong-west-402-jurong-west-st-42-2016-07-967113",
       "month": "2016-07",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -638,7 +658,7 @@
       "pricePerSqft": 352.85
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2016-06-965341",
+      "id": "jurong-west-402-jurong-west-st-42-2016-06-965446",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -651,7 +671,7 @@
       "pricePerSqft": 307.61
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2015-05-945004",
+      "id": "jurong-west-402-jurong-west-st-42-2015-05-945109",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -664,7 +684,7 @@
       "pricePerSqft": 338.24
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2015-01-939529",
+      "id": "jurong-west-402-jurong-west-st-42-2015-01-939634",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -677,7 +697,7 @@
       "pricePerSqft": 324.81
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2013-07-628631",
+      "id": "jurong-west-402-jurong-west-st-42-2013-07-628736",
       "month": "2013-07",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -690,7 +710,7 @@
       "pricePerSqft": 343.88
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2012-07-609381",
+      "id": "jurong-west-402-jurong-west-st-42-2012-07-609486",
       "month": "2012-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -703,7 +723,7 @@
       "pricePerSqft": 308.52
     },
     {
-      "id": "jurong-west-402-jurong-west-st-42-2010-05-552157",
+      "id": "jurong-west-402-jurong-west-st-42-2010-05-552262",
       "month": "2010-05",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -714,19 +734,6 @@
       "resalePrice": 373000,
       "pricePerSqm": 2804.51,
       "pricePerSqft": 260.55
-    },
-    {
-      "id": "jurong-west-402-jurong-west-st-42-2009-12-537737",
-      "month": "2009-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "57 years",
-      "resalePrice": 308000,
-      "pricePerSqm": 2961.54,
-      "pricePerSqft": 275.14
     }
   ]
 }

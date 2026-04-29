@@ -9,8 +9,8 @@
       "lat": 1.44365656317263,
       "lng": 103.803047711815
     },
-    "medianPrice": 837500,
-    "transactionCount": 6,
+    "medianPrice": 850000,
+    "transactionCount": 7,
     "floorAreaRange": [
       140,
       144
@@ -50,12 +50,13 @@
         "distanceMeters": 1946
       }
     ],
+    "postalCode": "730797",
     "priceIqr": [
-      821250,
-      872500
+      822500,
+      875000
     ],
-    "pricePerSqmMedian": 5921.99,
-    "pricePerSqftMedian": 550.17
+    "pricePerSqmMedian": 6028.37,
+    "pricePerSqftMedian": 560.05
   },
   "monthlyTrend": [
     {
@@ -474,14 +475,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 880000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6241.13
+      "medianPrice": 875000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6205.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-797-woodlands-dr-72-2026-04-229320",
+      "id": "woodlands-797-woodlands-dr-72-2026-04-229414",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -494,7 +495,20 @@
       "pricePerSqft": 579.82
     },
     {
-      "id": "woodlands-797-woodlands-dr-72-2026-01-229319",
+      "id": "woodlands-797-woodlands-dr-72-2026-04-229415",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 06 months",
+      "resalePrice": 870000,
+      "pricePerSqm": 6170.21,
+      "pricePerSqft": 573.23
+    },
+    {
+      "id": "woodlands-797-woodlands-dr-72-2026-01-229413",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "01 TO 03",
@@ -726,19 +740,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 3706.29,
       "pricePerSqft": 344.33
-    },
-    {
-      "id": "woodlands-797-woodlands-dr-72-2018-09-36666",
-      "month": "2018-09",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 141,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "78 years 01 month",
-      "resalePrice": 515000,
-      "pricePerSqm": 3652.48,
-      "pricePerSqft": 339.33
     }
   ]
 }

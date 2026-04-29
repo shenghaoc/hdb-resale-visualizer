@@ -9,8 +9,8 @@
       "lat": 1.3441061022632,
       "lng": 103.713719208827
     },
-    "medianPrice": 600000,
-    "transactionCount": 3,
+    "medianPrice": 610444,
+    "transactionCount": 4,
     "floorAreaRange": [
       68,
       93
@@ -19,10 +19,10 @@
       2014,
       2014
     ],
-    "latestMonth": "2025-07",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2019-07",
-      "2025-07"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -50,12 +50,13 @@
         "distanceMeters": 1972
       }
     ],
+    "postalCode": "641197",
     "priceIqr": [
-      550000,
-      620000
+      575000,
+      625666
     ],
-    "pricePerSqmMedian": 6881.72,
-    "pricePerSqftMedian": 639.33
+    "pricePerSqmMedian": 6778.97,
+    "pricePerSqftMedian": 629.79
   },
   "monthlyTrend": [
     {
@@ -213,9 +214,28 @@
       "medianPrice": 500000,
       "transactionCount": 1,
       "medianPricePerSqm": 7352.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 620888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6676.22
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-197a-boon-lay-dr-2026-04-225350",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years",
+      "resalePrice": 620888,
+      "pricePerSqm": 6676.22,
+      "pricePerSqft": 620.24
+    },
     {
       "id": "jurong-west-197a-boon-lay-dr-2025-07-206914",
       "month": "2025-07",
@@ -462,19 +482,6 @@
       "resalePrice": 332000,
       "pricePerSqm": 4882.35,
       "pricePerSqft": 453.59
-    },
-    {
-      "id": "jurong-west-197a-boon-lay-dr-2020-06-71622",
-      "month": "2020-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "94 years",
-      "resalePrice": 440000,
-      "pricePerSqm": 4731.18,
-      "pricePerSqft": 439.54
     }
   ]
 }

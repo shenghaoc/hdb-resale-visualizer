@@ -9,8 +9,8 @@
       "lat": 1.34202424550408,
       "lng": 103.739009746539
     },
-    "medianPrice": 392500,
-    "transactionCount": 8,
+    "medianPrice": 400000,
+    "transactionCount": 9,
     "floorAreaRange": [
       68,
       95
@@ -19,10 +19,10 @@
       1982,
       1982
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -50,9 +50,10 @@
         "distanceMeters": 1329
       }
     ],
+    "postalCode": "600247",
     "priceIqr": [
-      383750,
-      407500
+      385000,
+      415000
     ],
     "pricePerSqmMedian": 5661.76,
     "pricePerSqftMedian": 526
@@ -1155,11 +1156,30 @@
       "medianPrice": 385000,
       "transactionCount": 1,
       "medianPricePerSqm": 5661.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 425000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5059.52
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-247-jurong-east-st-24-2026-03-225064",
+      "id": "jurong-east-247-jurong-east-st-24-2026-04-225101",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 84,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 02 months",
+      "resalePrice": 425000,
+      "pricePerSqm": 5059.52,
+      "pricePerSqft": 470.05
+    },
+    {
+      "id": "jurong-east-247-jurong-east-st-24-2026-03-225097",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1172,7 +1192,7 @@
       "pricePerSqft": 526
     },
     {
-      "id": "jurong-east-247-jurong-east-st-24-2026-01-225054",
+      "id": "jurong-east-247-jurong-east-st-24-2026-01-225087",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1404,19 +1424,6 @@
       "resalePrice": 258000,
       "pricePerSqm": 3794.12,
       "pricePerSqft": 352.49
-    },
-    {
-      "id": "jurong-east-247-jurong-east-st-24-2019-11-61166",
-      "month": "2019-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "62 years 07 months",
-      "resalePrice": 250000,
-      "pricePerSqm": 3676.47,
-      "pricePerSqft": 341.56
     }
   ]
 }

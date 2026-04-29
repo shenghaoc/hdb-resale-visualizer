@@ -9,8 +9,8 @@
       "lat": 1.3696172178659,
       "lng": 103.896612783518
     },
-    "medianPrice": 645044,
-    "transactionCount": 6,
+    "medianPrice": 660000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       92
@@ -50,12 +50,13 @@
         "distanceMeters": 1612
       }
     ],
+    "postalCode": "537365",
     "priceIqr": [
-      557272,
-      767916
+      581544,
+      799444
     ],
-    "pricePerSqmMedian": 8988.52,
-    "pricePerSqftMedian": 835.06
+    "pricePerSqmMedian": 8737.91,
+    "pricePerSqftMedian": 811.78
   },
   "monthlyTrend": [
     {
@@ -168,14 +169,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 660000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 9850.75
+      "medianPrice": 727500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 9246.02
     }
   ],
   "recentTransactions": [
     {
-      "id": "hougang-365d-upp-serangoon-rd-2026-04-224747",
+      "id": "hougang-365d-upp-serangoon-rd-2026-04-224776",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -188,7 +189,20 @@
       "pricePerSqft": 915.17
     },
     {
-      "id": "hougang-365d-upp-serangoon-rd-2026-02-224746",
+      "id": "hougang-365d-upp-serangoon-rd-2026-04-224954",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "90 years 10 months",
+      "resalePrice": 795000,
+      "pricePerSqm": 8641.3,
+      "pricePerSqft": 802.8
+    },
+    {
+      "id": "hougang-365d-upp-serangoon-rd-2026-02-224775",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -420,19 +434,6 @@
       "resalePrice": 628000,
       "pricePerSqm": 6826.09,
       "pricePerSqft": 634.16
-    },
-    {
-      "id": "hougang-365d-upp-serangoon-rd-2022-02-125529",
-      "month": "2022-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "95 years",
-      "resalePrice": 633000,
-      "pricePerSqm": 6880.43,
-      "pricePerSqft": 639.21
     }
   ]
 }

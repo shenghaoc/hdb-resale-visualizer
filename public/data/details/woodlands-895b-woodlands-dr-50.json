@@ -9,8 +9,8 @@
       "lat": 1.4356389803296,
       "lng": 103.791654565327
     },
-    "medianPrice": 635000,
-    "transactionCount": 3,
+    "medianPrice": 601500,
+    "transactionCount": 4,
     "floorAreaRange": [
       97,
       123
@@ -19,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-03",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1107
       }
     ],
+    "postalCode": "731895",
     "priceIqr": [
-      599500,
-      665944
+      567000,
+      650472
     ],
-    "pricePerSqmMedian": 5665.76,
-    "pricePerSqftMedian": 526.37
+    "pricePerSqmMedian": 5681.36,
+    "pricePerSqftMedian": 527.82
   },
   "monthlyTrend": [
     {
@@ -466,9 +467,28 @@
       "medianPrice": 564000,
       "transactionCount": 1,
       "medianPricePerSqm": 5696.97
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 568000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5737.37
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-895b-woodlands-dr-50-2026-04-229084",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 99,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "69 years 11 months",
+      "resalePrice": 568000,
+      "pricePerSqm": 5737.37,
+      "pricePerSqft": 533.02
+    },
     {
       "id": "woodlands-895b-woodlands-dr-50-2025-12-219293",
       "month": "2025-12",
@@ -665,7 +685,7 @@
       "pricePerSqft": 342.52
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2016-04-962446",
+      "id": "woodlands-895b-woodlands-dr-50-2016-04-962551",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -678,7 +698,7 @@
       "pricePerSqft": 342.52
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2016-02-959040",
+      "id": "woodlands-895b-woodlands-dr-50-2016-02-959145",
       "month": "2016-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -691,7 +711,7 @@
       "pricePerSqft": 357.54
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2015-12-956526",
+      "id": "woodlands-895b-woodlands-dr-50-2015-12-956631",
       "month": "2015-12",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -704,7 +724,7 @@
       "pricePerSqft": 352.84
     },
     {
-      "id": "woodlands-895b-woodlands-dr-50-2015-10-953655",
+      "id": "woodlands-895b-woodlands-dr-50-2015-10-953760",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -715,19 +735,6 @@
       "resalePrice": 383000,
       "pricePerSqm": 3868.69,
       "pricePerSqft": 359.41
-    },
-    {
-      "id": "woodlands-895b-woodlands-dr-50-2015-09-951891",
-      "month": "2015-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 99,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "80",
-      "resalePrice": 366000,
-      "pricePerSqm": 3696.97,
-      "pricePerSqft": 343.46
     }
   ]
 }

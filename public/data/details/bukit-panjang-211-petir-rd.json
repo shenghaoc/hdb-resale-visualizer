@@ -9,8 +9,8 @@
       "lat": 1.37466415529251,
       "lng": 103.77614521146
     },
-    "medianPrice": 640000,
-    "transactionCount": 1,
+    "medianPrice": 607500,
+    "transactionCount": 2,
     "floorAreaRange": [
       122,
       132
@@ -19,10 +19,10 @@
       1987,
       1987
     ],
-    "latestMonth": "2024-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-03",
-      "2024-11"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -49,12 +49,13 @@
         "distanceMeters": 1090
       }
     ],
+    "postalCode": "670211",
     "priceIqr": [
-      640000,
-      640000
+      591250,
+      623750
     ],
-    "pricePerSqmMedian": 5245.9,
-    "pricePerSqftMedian": 487.36
+    "pricePerSqmMedian": 4979.5,
+    "pricePerSqftMedian": 462.61
   },
   "monthlyTrend": [
     {
@@ -350,9 +351,28 @@
       "medianPrice": 640000,
       "transactionCount": 1,
       "medianPricePerSqm": 5245.9
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 575000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 4713.11
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-211-petir-rd-2026-04-223826",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 03 months",
+      "resalePrice": 575000,
+      "pricePerSqm": 4713.11,
+      "pricePerSqft": 437.86
+    },
     {
       "id": "bukit-panjang-211-petir-rd-2024-11-175449",
       "month": "2024-11",
@@ -510,7 +530,7 @@
       "pricePerSqft": 365.52
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2016-06-964870",
+      "id": "bukit-panjang-211-petir-rd-2016-06-964975",
       "month": "2016-06",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -523,7 +543,7 @@
       "pricePerSqft": 362.46
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2016-03-959553",
+      "id": "bukit-panjang-211-petir-rd-2016-03-959658",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -536,7 +556,7 @@
       "pricePerSqft": 346.48
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2016-03-959557",
+      "id": "bukit-panjang-211-petir-rd-2016-03-959662",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -549,7 +569,7 @@
       "pricePerSqft": 358.94
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2014-12-650737",
+      "id": "bukit-panjang-211-petir-rd-2014-12-650842",
       "month": "2014-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -562,7 +582,7 @@
       "pricePerSqft": 384.56
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2013-08-629763",
+      "id": "bukit-panjang-211-petir-rd-2013-08-629868",
       "month": "2013-08",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -575,7 +595,7 @@
       "pricePerSqft": 356.13
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2013-07-628281",
+      "id": "bukit-panjang-211-petir-rd-2013-07-628386",
       "month": "2013-07",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -588,7 +608,7 @@
       "pricePerSqft": 397.5
     },
     {
-      "id": "bukit-panjang-211-petir-rd-2012-06-606795",
+      "id": "bukit-panjang-211-petir-rd-2012-06-606900",
       "month": "2012-06",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -599,19 +619,6 @@
       "resalePrice": 468000,
       "pricePerSqm": 3836.07,
       "pricePerSqft": 356.38
-    },
-    {
-      "id": "bukit-panjang-211-petir-rd-2010-09-564722",
-      "month": "2010-09",
-      "flatType": "5 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "61 years",
-      "resalePrice": 380000,
-      "pricePerSqm": 3114.75,
-      "pricePerSqft": 289.37
     }
   ]
 }

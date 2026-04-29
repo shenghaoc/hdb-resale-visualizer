@@ -9,8 +9,8 @@
       "lat": 1.34645396448389,
       "lng": 103.716657742535
     },
-    "medianPrice": 728000,
-    "transactionCount": 1,
+    "medianPrice": 696500,
+    "transactionCount": 2,
     "floorAreaRange": [
       118,
       118
@@ -19,10 +19,10 @@
       1981,
       1981
     ],
-    "latestMonth": "2024-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-05",
-      "2024-11"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -49,12 +49,13 @@
         "distanceMeters": 1787
       }
     ],
+    "postalCode": "640522",
     "priceIqr": [
-      728000,
-      728000
+      680750,
+      712250
     ],
-    "pricePerSqmMedian": 6169.49,
-    "pricePerSqftMedian": 573.17
+    "pricePerSqmMedian": 5902.54,
+    "pricePerSqftMedian": 548.37
   },
   "monthlyTrend": [
     {
@@ -572,9 +573,28 @@
       "medianPrice": 728000,
       "transactionCount": 1,
       "medianPricePerSqm": 6169.49
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 665000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5635.59
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-522-jurong-west-st-52-2026-04-225578",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "22 TO 24",
+      "floorAreaSqm": 118,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "55 years 03 months",
+      "resalePrice": 665000,
+      "pricePerSqm": 5635.59,
+      "pricePerSqft": 523.56
+    },
     {
       "id": "jurong-west-522-jurong-west-st-52-2024-11-182121",
       "month": "2024-11",
@@ -719,7 +739,7 @@
       "pricePerSqft": 452.71
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2016-08-968828",
+      "id": "jurong-west-522-jurong-west-st-52-2016-08-968933",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -732,7 +752,7 @@
       "pricePerSqft": 429.09
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2016-03-959985",
+      "id": "jurong-west-522-jurong-west-st-52-2016-03-960090",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -745,7 +765,7 @@
       "pricePerSqft": 397.59
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2015-06-946761",
+      "id": "jurong-west-522-jurong-west-st-52-2015-06-946866",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -758,7 +778,7 @@
       "pricePerSqft": 409.4
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2015-04-943495",
+      "id": "jurong-west-522-jurong-west-st-52-2015-04-943600",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -771,7 +791,7 @@
       "pricePerSqft": 410.98
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2015-01-939543",
+      "id": "jurong-west-522-jurong-west-st-52-2015-01-939648",
       "month": "2015-01",
       "flatType": "5 ROOM",
       "storeyRange": "22 TO 24",
@@ -784,7 +804,7 @@
       "pricePerSqft": 436.96
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2014-04-639911",
+      "id": "jurong-west-522-jurong-west-st-52-2014-04-640016",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "25 TO 27",
@@ -797,7 +817,7 @@
       "pricePerSqft": 455.07
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2013-04-624181",
+      "id": "jurong-west-522-jurong-west-st-52-2013-04-624286",
       "month": "2013-04",
       "flatType": "5 ROOM",
       "storeyRange": "19 TO 21",
@@ -810,7 +830,7 @@
       "pricePerSqft": 493.49
     },
     {
-      "id": "jurong-west-522-jurong-west-st-52-2011-08-588737",
+      "id": "jurong-west-522-jurong-west-st-52-2011-08-588842",
       "month": "2011-08",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -821,19 +841,6 @@
       "resalePrice": 545000,
       "pricePerSqm": 4618.64,
       "pricePerSqft": 429.09
-    },
-    {
-      "id": "jurong-west-522-jurong-west-st-52-2011-07-586823",
-      "month": "2011-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 118,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1982,
-      "remainingLease": "55 years",
-      "resalePrice": 513000,
-      "pricePerSqm": 4347.46,
-      "pricePerSqft": 403.89
     }
   ]
 }

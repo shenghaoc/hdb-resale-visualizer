@@ -9,8 +9,8 @@
       "lat": 1.28362146974577,
       "lng": 103.825391035279
     },
-    "medianPrice": 970044,
-    "transactionCount": 12,
+    "medianPrice": 1000000,
+    "transactionCount": 13,
     "floorAreaRange": [
       90,
       110
@@ -19,10 +19,10 @@
       2007,
       2007
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2010-10",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1116
       }
     ],
+    "postalCode": "164025",
     "priceIqr": [
-      898750,
+      900000,
       1020000
     ],
-    "pricePerSqmMedian": 10286.36,
-    "pricePerSqftMedian": 955.63
+    "pricePerSqmMedian": 10409.09,
+    "pricePerSqftMedian": 967.04
   },
   "monthlyTrend": [
     {
@@ -514,11 +515,30 @@
       "medianPrice": 1082500,
       "transactionCount": 2,
       "medianPricePerSqm": 10871.21
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1020888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 11343.2
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-25b-jln-membina-2026-01-223495",
+      "id": "bukit-merah-25b-jln-membina-2026-04-223510",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 90,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2009,
+      "remainingLease": "81 years 09 months",
+      "resalePrice": 1020888,
+      "pricePerSqm": 11343.2,
+      "pricePerSqft": 1053.82
+    },
+    {
+      "id": "bukit-merah-25b-jln-membina-2026-01-223505",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "19 TO 21",
@@ -531,7 +551,7 @@
       "pricePerSqft": 1052.9
     },
     {
-      "id": "bukit-merah-25b-jln-membina-2026-01-223585",
+      "id": "bukit-merah-25b-jln-membina-2026-01-223596",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -763,19 +783,6 @@
       "resalePrice": 783000,
       "pricePerSqm": 8700,
       "pricePerSqft": 808.26
-    },
-    {
-      "id": "bukit-merah-25b-jln-membina-2022-11-121302",
-      "month": "2022-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 90,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2009,
-      "remainingLease": "85 years 03 months",
-      "resalePrice": 855000,
-      "pricePerSqm": 9500,
-      "pricePerSqft": 882.58
     }
   ]
 }

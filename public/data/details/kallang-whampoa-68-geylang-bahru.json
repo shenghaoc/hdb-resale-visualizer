@@ -9,8 +9,8 @@
       "lat": 1.32195385488883,
       "lng": 103.869843391813
     },
-    "medianPrice": 410000,
-    "transactionCount": 20,
+    "medianPrice": 408000,
+    "transactionCount": 21,
     "floorAreaRange": [
       59,
       151
@@ -51,12 +51,13 @@
         "distanceMeters": 1021
       }
     ],
+    "postalCode": "330068",
     "priceIqr": [
-      395116,
+      392800,
       430000
     ],
-    "pricePerSqmMedian": 6307.69,
-    "pricePerSqftMedian": 586
+    "pricePerSqmMedian": 6276.92,
+    "pricePerSqftMedian": 583.15
   },
   "monthlyTrend": [
     {
@@ -1633,14 +1634,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 430000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6615.38
+      "medianPrice": 410000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6307.69
     }
   ],
   "recentTransactions": [
     {
-      "id": "kallang-whampoa-68-geylang-bahru-2026-04-225709",
+      "id": "kallang-whampoa-68-geylang-bahru-2026-04-225756",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -1653,7 +1654,20 @@
       "pricePerSqft": 614.59
     },
     {
-      "id": "kallang-whampoa-68-geylang-bahru-2026-02-225706",
+      "id": "kallang-whampoa-68-geylang-bahru-2026-04-225757",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 65,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "47 years 03 months",
+      "resalePrice": 390000,
+      "pricePerSqm": 6000,
+      "pricePerSqft": 557.42
+    },
+    {
+      "id": "kallang-whampoa-68-geylang-bahru-2026-02-225753",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -1885,19 +1899,6 @@
       "resalePrice": 370500,
       "pricePerSqm": 5700,
       "pricePerSqft": 529.55
-    },
-    {
-      "id": "kallang-whampoa-68-geylang-bahru-2024-06-182642",
-      "month": "2024-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "49 years 02 months",
-      "resalePrice": 395888,
-      "pricePerSqm": 6090.58,
-      "pricePerSqft": 565.83
     }
   ]
 }

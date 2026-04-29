@@ -9,8 +9,8 @@
       "lat": 1.3188425968422,
       "lng": 103.856837677166
     },
-    "medianPrice": 644000,
-    "transactionCount": 5,
+    "medianPrice": 752000,
+    "transactionCount": 6,
     "floorAreaRange": [
       64,
       130
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-05",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-02",
-      "2025-05"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,12 +53,13 @@
         "distanceMeters": 888
       }
     ],
+    "postalCode": "320122",
     "priceIqr": [
-      638000,
-      860000
+      639500,
+      890000
     ],
-    "pricePerSqmMedian": 7530.12,
-    "pricePerSqftMedian": 699.57
+    "pricePerSqmMedian": 7562.68,
+    "pricePerSqftMedian": 702.6
   },
   "monthlyTrend": [
     {
@@ -516,9 +517,28 @@
       "medianPrice": 860000,
       "transactionCount": 1,
       "medianPricePerSqm": 6825.4
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 970000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7698.41
     }
   ],
   "recentTransactions": [
+    {
+      "id": "kallang-whampoa-122-mcnair-rd-2026-04-225917",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 126,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 970000,
+      "pricePerSqm": 7698.41,
+      "pricePerSqft": 715.21
+    },
     {
       "id": "kallang-whampoa-122-mcnair-rd-2025-05-209144",
       "month": "2025-05",
@@ -689,7 +709,7 @@
       "pricePerSqft": 442.18
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2016-07-967121",
+      "id": "kallang-whampoa-122-mcnair-rd-2016-07-967226",
       "month": "2016-07",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -702,7 +722,7 @@
       "pricePerSqft": 483.71
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2016-06-965405",
+      "id": "kallang-whampoa-122-mcnair-rd-2016-06-965510",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -715,7 +735,7 @@
       "pricePerSqft": 541.62
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2016-04-961747",
+      "id": "kallang-whampoa-122-mcnair-rd-2016-04-961852",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -728,7 +748,7 @@
       "pricePerSqft": 442.18
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2016-03-960052",
+      "id": "kallang-whampoa-122-mcnair-rd-2016-03-960157",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -741,7 +761,7 @@
       "pricePerSqft": 500.25
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2015-12-956000",
+      "id": "kallang-whampoa-122-mcnair-rd-2015-12-956105",
       "month": "2015-12",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -754,7 +774,7 @@
       "pricePerSqft": 493.55
     },
     {
-      "id": "kallang-whampoa-122-mcnair-rd-2015-04-943537",
+      "id": "kallang-whampoa-122-mcnair-rd-2015-04-943642",
       "month": "2015-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -765,19 +785,6 @@
       "resalePrice": 450000,
       "pricePerSqm": 5357.14,
       "pricePerSqft": 497.7
-    },
-    {
-      "id": "kallang-whampoa-122-mcnair-rd-2014-08-645362",
-      "month": "2014-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "60 years",
-      "resalePrice": 510000,
-      "pricePerSqm": 4903.85,
-      "pricePerSqft": 455.58
     }
   ]
 }

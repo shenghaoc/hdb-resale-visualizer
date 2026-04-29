@@ -10,7 +10,7 @@
       "lng": 103.771717424957
     },
     "medianPrice": 610000,
-    "transactionCount": 12,
+    "transactionCount": 13,
     "floorAreaRange": [
       68,
       93
@@ -50,12 +50,13 @@
         "distanceMeters": 787
       }
     ],
+    "postalCode": "670459",
     "priceIqr": [
-      603750,
-      625222
+      605000,
+      625000
     ],
-    "pricePerSqmMedian": 6639.78,
-    "pricePerSqftMedian": 616.86
+    "pricePerSqmMedian": 6666.67,
+    "pricePerSqftMedian": 619.35
   },
   "monthlyTrend": [
     {
@@ -264,14 +265,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 643944,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6924.13
+      "medianPrice": 625888,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6729.98
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-459-segar-rd-2026-04-223741",
+      "id": "bukit-panjang-459-segar-rd-2026-04-223752",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -284,7 +285,7 @@
       "pricePerSqft": 661.31
     },
     {
-      "id": "bukit-panjang-459-segar-rd-2026-04-223742",
+      "id": "bukit-panjang-459-segar-rd-2026-04-223753",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -297,7 +298,20 @@
       "pricePerSqft": 625.24
     },
     {
-      "id": "bukit-panjang-459-segar-rd-2026-01-223722",
+      "id": "bukit-panjang-459-segar-rd-2026-04-223755",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 04 months",
+      "resalePrice": 620000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
+    {
+      "id": "bukit-panjang-459-segar-rd-2026-01-223733",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -516,19 +530,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 5698.92,
       "pricePerSqft": 529.45
-    },
-    {
-      "id": "bukit-panjang-459-segar-rd-2023-02-148622",
-      "month": "2023-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 93,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "91 years 07 months",
-      "resalePrice": 520000,
-      "pricePerSqm": 5591.4,
-      "pricePerSqft": 519.46
     }
   ]
 }

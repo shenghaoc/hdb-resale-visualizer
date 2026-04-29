@@ -9,8 +9,8 @@
       "lat": 1.33866294623076,
       "lng": 103.745669515937
     },
-    "medianPrice": 766944,
-    "transactionCount": 2,
+    "medianPrice": 810000,
+    "transactionCount": 3,
     "floorAreaRange": [
       100,
       123
@@ -51,12 +51,13 @@
         "distanceMeters": 1402
       }
     ],
+    "postalCode": "601286",
     "priceIqr": [
-      722472,
-      811416
+      744000,
+      832944
     ],
-    "pricePerSqmMedian": 6738.83,
-    "pricePerSqftMedian": 626.06
+    "pricePerSqmMedian": 6585.37,
+    "pricePerSqftMedian": 611.8
   },
   "monthlyTrend": [
     {
@@ -421,14 +422,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 678000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6519.23
+      "medianPrice": 744000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6552.3
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-east-286a-toh-guan-rd-2026-04-225133",
+      "id": "jurong-east-286a-toh-guan-rd-2026-04-225167",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -441,7 +442,20 @@
       "pricePerSqft": 605.66
     },
     {
-      "id": "jurong-east-286a-toh-guan-rd-2026-01-225164",
+      "id": "jurong-east-286a-toh-guan-rd-2026-04-225205",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 07 months",
+      "resalePrice": 810000,
+      "pricePerSqm": 6585.37,
+      "pricePerSqft": 611.8
+    },
+    {
+      "id": "jurong-east-286a-toh-guan-rd-2026-01-225198",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -673,19 +687,6 @@
       "resalePrice": 503000,
       "pricePerSqm": 5030,
       "pricePerSqft": 467.3
-    },
-    {
-      "id": "jurong-east-286a-toh-guan-rd-2017-05-6805",
-      "month": "2017-05",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 123,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "80 years 06 months",
-      "resalePrice": 658000,
-      "pricePerSqm": 5349.59,
-      "pricePerSqft": 496.99
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.34740957043624,
       "lng": 103.848054589423
     },
-    "medianPrice": 563000,
-    "transactionCount": 6,
+    "medianPrice": 548000,
+    "transactionCount": 7,
     "floorAreaRange": [
       64,
       104
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-11",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 890
       }
     ],
+    "postalCode": "570110",
     "priceIqr": [
-      536000,
-      692000
+      535000,
+      654000
     ],
-    "pricePerSqmMedian": 8437.5,
-    "pricePerSqftMedian": 783.87
+    "pricePerSqmMedian": 8406.25,
+    "pricePerSqftMedian": 780.97
   },
   "monthlyTrend": [
     {
@@ -796,9 +797,28 @@
       "medianPrice": 520000,
       "transactionCount": 1,
       "medianPricePerSqm": 8125
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 538000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8406.25
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bishan-110-bishan-st-12-2026-04-222748",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "58 years 10 months",
+      "resalePrice": 538000,
+      "pricePerSqm": 8406.25,
+      "pricePerSqft": 780.97
+    },
     {
       "id": "bishan-110-bishan-st-12-2025-12-199174",
       "month": "2025-12",
@@ -1034,7 +1054,7 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "bishan-110-bishan-st-12-2016-11-973256",
+      "id": "bishan-110-bishan-st-12-2016-11-973361",
       "month": "2016-11",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1045,19 +1065,6 @@
       "resalePrice": 404000,
       "pricePerSqm": 6312.5,
       "pricePerSqft": 586.45
-    },
-    {
-      "id": "bishan-110-bishan-st-12-2016-05-962849",
-      "month": "2016-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "68",
-      "resalePrice": 610000,
-      "pricePerSqm": 5865.38,
-      "pricePerSqft": 544.91
     }
   ]
 }

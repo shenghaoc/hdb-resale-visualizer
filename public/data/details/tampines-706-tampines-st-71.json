@@ -9,8 +9,8 @@
       "lat": 1.35750385698395,
       "lng": 103.937559746526
     },
-    "medianPrice": 710000,
-    "transactionCount": 6,
+    "medianPrice": 730000,
+    "transactionCount": 7,
     "floorAreaRange": [
       99,
       120
@@ -19,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-01",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1891
       }
     ],
+    "postalCode": "520706",
     "priceIqr": [
-      668166,
-      768166
+      675444,
+      770444
     ],
-    "pricePerSqmMedian": 6591.52,
-    "pricePerSqftMedian": 612.38
+    "pricePerSqmMedian": 6507.4,
+    "pricePerSqftMedian": 604.56
   },
   "monthlyTrend": [
     {
@@ -478,11 +479,30 @@
       "medianPrice": 780888,
       "transactionCount": 1,
       "medianPricePerSqm": 6507.4
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 760000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6333.33
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-706-tampines-st-71-2026-03-228351",
+      "id": "tampines-706-tampines-st-71-2026-04-228434",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1997,
+      "remainingLease": "70 years 03 months",
+      "resalePrice": 760000,
+      "pricePerSqm": 6333.33,
+      "pricePerSqft": 588.39
+    },
+    {
+      "id": "tampines-706-tampines-st-71-2026-03-228430",
       "month": "2026-03",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -727,19 +747,6 @@
       "resalePrice": 582000,
       "pricePerSqm": 4850,
       "pricePerSqft": 450.58
-    },
-    {
-      "id": "tampines-706-tampines-st-71-2017-08-13059",
-      "month": "2017-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 99,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1997,
-      "remainingLease": "78 years 11 months",
-      "resalePrice": 458000,
-      "pricePerSqm": 4626.26,
-      "pricePerSqft": 429.79
     }
   ]
 }

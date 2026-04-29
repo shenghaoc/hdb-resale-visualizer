@@ -9,8 +9,8 @@
       "lat": 1.33908702611922,
       "lng": 103.772569349944
     },
-    "medianPrice": 969000,
-    "transactionCount": 4,
+    "medianPrice": 968000,
+    "transactionCount": 5,
     "floorAreaRange": [
       104,
       122
@@ -19,10 +19,10 @@
       1987,
       1987
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-06",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1804
       }
     ],
+    "postalCode": "590014",
     "priceIqr": [
-      953500,
-      1022222
+      950000,
+      970000
     ],
-    "pricePerSqmMedian": 9317.31,
-    "pricePerSqftMedian": 865.61
+    "pricePerSqmMedian": 9307.69,
+    "pricePerSqftMedian": 864.71
   },
   "monthlyTrend": [
     {
@@ -700,11 +701,30 @@
       "medianPrice": 939000,
       "transactionCount": 2,
       "medianPricePerSqm": 9028.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 950000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9134.62
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-03-223873",
+      "id": "bukit-timah-14-toh-yi-dr-2026-04-223892",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 104,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 05 months",
+      "resalePrice": 950000,
+      "pricePerSqm": 9134.62,
+      "pricePerSqft": 848.63
+    },
+    {
+      "id": "bukit-timah-14-toh-yi-dr-2026-03-223888",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -717,7 +737,7 @@
       "pricePerSqft": 864.71
     },
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-03-223874",
+      "id": "bukit-timah-14-toh-yi-dr-2026-03-223889",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -730,7 +750,7 @@
       "pricePerSqft": 812.9
     },
     {
-      "id": "bukit-timah-14-toh-yi-dr-2026-01-223872",
+      "id": "bukit-timah-14-toh-yi-dr-2026-01-223887",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "13 TO 15",
@@ -949,19 +969,6 @@
       "resalePrice": 825000,
       "pricePerSqm": 6762.3,
       "pricePerSqft": 628.24
-    },
-    {
-      "id": "bukit-timah-14-toh-yi-dr-2018-03-23219",
-      "month": "2018-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "69 years 06 months",
-      "resalePrice": 650000,
-      "pricePerSqm": 6250,
-      "pricePerSqft": 580.64
     }
   ]
 }

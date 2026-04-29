@@ -9,8 +9,8 @@
       "lat": 1.44066510879797,
       "lng": 103.787309555166
     },
-    "medianPrice": 869000,
-    "transactionCount": 4,
+    "medianPrice": 878000,
+    "transactionCount": 5,
     "floorAreaRange": [
       73,
       192
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2024-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-08",
-      "2024-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,12 +52,13 @@
         "distanceMeters": 1471
       }
     ],
+    "postalCode": "730805",
     "priceIqr": [
-      747722,
-      935500
+      860000,
+      1108000
     ],
-    "pricePerSqmMedian": 5810.59,
-    "pricePerSqftMedian": 539.82
+    "pricePerSqmMedian": 5850.34,
+    "pricePerSqftMedian": 543.51
   },
   "monthlyTrend": [
     {
@@ -455,9 +456,28 @@
       "medianPrice": 1108000,
       "transactionCount": 1,
       "medianPricePerSqm": 5770.83
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1180000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6243.39
     }
   ],
   "recentTransactions": [
+    {
+      "id": "woodlands-805-woodlands-st-81-2026-04-229437",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 189,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1994,
+      "remainingLease": "66 years 09 months",
+      "resalePrice": 1180000,
+      "pricePerSqm": 6243.39,
+      "pricePerSqft": 580.03
+    },
     {
       "id": "woodlands-805-woodlands-st-81-2024-08-194496",
       "month": "2024-08",
@@ -704,19 +724,6 @@
       "resalePrice": 700000,
       "pricePerSqm": 3703.7,
       "pricePerSqft": 344.09
-    },
-    {
-      "id": "woodlands-805-woodlands-st-81-2018-12-41973",
-      "month": "2018-12",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 176,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1994,
-      "remainingLease": "74 years 01 month",
-      "resalePrice": 675000,
-      "pricePerSqm": 3835.23,
-      "pricePerSqft": 356.3
     }
   ]
 }

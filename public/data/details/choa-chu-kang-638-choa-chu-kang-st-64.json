@@ -9,8 +9,8 @@
       "lat": 1.39780651380058,
       "lng": 103.748372512668
     },
-    "medianPrice": 640000,
-    "transactionCount": 3,
+    "medianPrice": 680000,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       215
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-07",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,12 +52,13 @@
         "distanceMeters": 1484
       }
     ],
+    "postalCode": "680638",
     "priceIqr": [
-      637500,
-      680000
+      638750,
+      732500
     ],
-    "pricePerSqmMedian": 6350,
-    "pricePerSqftMedian": 589.93
+    "pricePerSqmMedian": 6305.08,
+    "pricePerSqftMedian": 585.76
   },
   "monthlyTrend": [
     {
@@ -389,11 +390,30 @@
       "medianPrice": 635000,
       "transactionCount": 1,
       "medianPricePerSqm": 6350
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 770000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6260.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2026-01-224095",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2026-04-224246",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 123,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 09 months",
+      "resalePrice": 770000,
+      "pricePerSqm": 6260.16,
+      "pricePerSqft": 581.59
+    },
+    {
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2026-01-224114",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -588,7 +608,7 @@
       "pricePerSqft": 417.69
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2016-06-964951",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2016-06-965056",
       "month": "2016-06",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -601,7 +621,7 @@
       "pricePerSqft": 438.5
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2015-03-941706",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2015-03-941811",
       "month": "2015-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -614,7 +634,7 @@
       "pricePerSqft": 459.87
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2014-04-639557",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2014-04-639662",
       "month": "2014-04",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -627,7 +647,7 @@
       "pricePerSqft": 481.89
     },
     {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2013-02-621422",
+      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2013-02-621527",
       "month": "2013-02",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -638,19 +658,6 @@
       "resalePrice": 613000,
       "pricePerSqm": 4983.74,
       "pricePerSqft": 463.01
-    },
-    {
-      "id": "choa-chu-kang-638-choa-chu-kang-st-64-2012-10-614915",
-      "month": "2012-10",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 123,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "71 years",
-      "resalePrice": 598000,
-      "pricePerSqm": 4861.79,
-      "pricePerSqft": 451.68
     }
   ]
 }

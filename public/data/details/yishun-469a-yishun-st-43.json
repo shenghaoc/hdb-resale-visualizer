@@ -10,7 +10,7 @@
       "lng": 103.852385726656
     },
     "medianPrice": 390000,
-    "transactionCount": 19,
+    "transactionCount": 20,
     "floorAreaRange": [
       38,
       93
@@ -19,10 +19,10 @@
       2018,
       2018
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2023-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "2 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 3214
       }
     ],
+    "postalCode": "761469",
     "priceIqr": [
-      356500,
-      572500
+      359750,
+      575000
     ],
-    "pricePerSqmMedian": 7234.04,
-    "pricePerSqftMedian": 672.07
+    "pricePerSqmMedian": 7180.85,
+    "pricePerSqftMedian": 667.13
   },
   "monthlyTrend": [
     {
@@ -154,11 +155,30 @@
       "medianPrice": 477500,
       "transactionCount": 2,
       "medianPricePerSqm": 7081.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 615000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6612.9
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-469a-yishun-st-43-2026-03-229361",
+      "id": "yishun-469a-yishun-st-43-2026-04-229791",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years 07 months",
+      "resalePrice": 615000,
+      "pricePerSqm": 6612.9,
+      "pricePerSqft": 614.36
+    },
+    {
+      "id": "yishun-469a-yishun-st-43-2026-03-229459",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "01 TO 03",
@@ -171,7 +191,7 @@
       "pricePerSqft": 731.37
     },
     {
-      "id": "yishun-469a-yishun-st-43-2026-03-229687",
+      "id": "yishun-469a-yishun-st-43-2026-03-229789",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -184,7 +204,7 @@
       "pricePerSqft": 584.39
     },
     {
-      "id": "yishun-469a-yishun-st-43-2026-01-229360",
+      "id": "yishun-469a-yishun-st-43-2026-01-229458",
       "month": "2026-01",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -403,19 +423,6 @@
       "resalePrice": 555000,
       "pricePerSqm": 5967.74,
       "pricePerSqft": 554.42
-    },
-    {
-      "id": "yishun-469a-yishun-st-43-2024-04-195631",
-      "month": "2024-04",
-      "flatType": "2 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 47,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 08 months",
-      "resalePrice": 335288,
-      "pricePerSqm": 7133.79,
-      "pricePerSqft": 662.75
     }
   ]
 }

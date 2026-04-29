@@ -9,8 +9,8 @@
       "lat": 1.33390202913472,
       "lng": 103.913274271807
     },
-    "medianPrice": 910000,
-    "transactionCount": 3,
+    "medianPrice": 937500,
+    "transactionCount": 4,
     "floorAreaRange": [
       141,
       151
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -50,12 +50,13 @@
         "distanceMeters": 1418
       }
     ],
+    "postalCode": "470137",
     "priceIqr": [
       910000,
-      937500
+      995972
     ],
-    "pricePerSqmMedian": 6363.64,
-    "pricePerSqftMedian": 591.2
+    "pricePerSqmMedian": 6555.94,
+    "pricePerSqftMedian": 609.07
   },
   "monthlyTrend": [
     {
@@ -609,11 +610,30 @@
       "medianPrice": 965000,
       "transactionCount": 1,
       "medianPricePerSqm": 6748.25
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1088888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7211.18
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-137-bedok-reservoir-rd-2026-03-222737",
+      "id": "bedok-137-bedok-reservoir-rd-2026-04-222741",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 151,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "59 years 09 months",
+      "resalePrice": 1088888,
+      "pricePerSqm": 7211.18,
+      "pricePerSqft": 669.94
+    },
+    {
+      "id": "bedok-137-bedok-reservoir-rd-2026-03-222739",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -858,19 +878,6 @@
       "resalePrice": 615000,
       "pricePerSqm": 4300.7,
       "pricePerSqft": 399.55
-    },
-    {
-      "id": "bedok-137-bedok-reservoir-rd-2018-02-21690",
-      "month": "2018-02",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 150,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "68 years",
-      "resalePrice": 645000,
-      "pricePerSqm": 4300,
-      "pricePerSqft": 399.48
     }
   ]
 }

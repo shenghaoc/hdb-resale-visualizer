@@ -9,8 +9,8 @@
       "lat": 1.44096063753942,
       "lng": 103.804726530731
     },
-    "medianPrice": 605000,
-    "transactionCount": 5,
+    "medianPrice": 597500,
+    "transactionCount": 6,
     "floorAreaRange": [
       101,
       125
@@ -50,12 +50,13 @@
         "distanceMeters": 1882
       }
     ],
+    "postalCode": "734682",
     "priceIqr": [
-      590000,
+      586250,
       605000
     ],
-    "pricePerSqmMedian": 5490.2,
-    "pricePerSqftMedian": 510.06
+    "pricePerSqmMedian": 5530.82,
+    "pricePerSqftMedian": 513.83
   },
   "monthlyTrend": [
     {
@@ -480,14 +481,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 560000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5490.2
+      "medianPrice": 572500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5530.82
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-682d-woodlands-dr-73-2026-04-229037",
+      "id": "woodlands-682d-woodlands-dr-73-2026-04-229126",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -498,6 +499,19 @@
       "resalePrice": 560000,
       "pricePerSqm": 5490.2,
       "pricePerSqft": 510.06
+    },
+    {
+      "id": "woodlands-682d-woodlands-dr-73-2026-04-229128",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "72 years 10 months",
+      "resalePrice": 585000,
+      "pricePerSqm": 5571.43,
+      "pricePerSqft": 517.6
     },
     {
       "id": "woodlands-682d-woodlands-dr-73-2025-02-220019",
@@ -732,19 +746,6 @@
       "resalePrice": 428000,
       "pricePerSqm": 3566.67,
       "pricePerSqft": 331.35
-    },
-    {
-      "id": "woodlands-682d-woodlands-dr-73-2019-05-50289",
-      "month": "2019-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 105,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "79 years 09 months",
-      "resalePrice": 322000,
-      "pricePerSqm": 3066.67,
-      "pricePerSqft": 284.9
     }
   ]
 }

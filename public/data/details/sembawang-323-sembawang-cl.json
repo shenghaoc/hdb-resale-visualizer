@@ -9,8 +9,8 @@
       "lat": 1.44509125244238,
       "lng": 103.81807503418
     },
-    "medianPrice": 668000,
-    "transactionCount": 3,
+    "medianPrice": 674000,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       123
@@ -19,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-12",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1925
       }
     ],
+    "postalCode": "750323",
     "priceIqr": [
-      640500,
-      685000
+      654250,
+      685500
     ],
-    "pricePerSqmMedian": 5613.45,
-    "pricePerSqftMedian": 521.51
+    "pricePerSqmMedian": 5570.95,
+    "pricePerSqftMedian": 517.56
   },
   "monthlyTrend": [
     {
@@ -502,9 +503,28 @@
       "medianPrice": 702000,
       "transactionCount": 1,
       "medianPricePerSqm": 5707.32
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5528.46
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sembawang-323-sembawang-cl-2026-04-227207",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 123,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 01 month",
+      "resalePrice": 680000,
+      "pricePerSqm": 5528.46,
+      "pricePerSqft": 513.61
+    },
     {
       "id": "sembawang-323-sembawang-cl-2025-06-213177",
       "month": "2025-06",
@@ -688,7 +708,7 @@
       "pricePerSqft": 306.58
     },
     {
-      "id": "sembawang-323-sembawang-cl-2016-03-960269",
+      "id": "sembawang-323-sembawang-cl-2016-03-960374",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -701,7 +721,7 @@
       "pricePerSqft": 343.49
     },
     {
-      "id": "sembawang-323-sembawang-cl-2015-11-954791",
+      "id": "sembawang-323-sembawang-cl-2015-11-954896",
       "month": "2015-11",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -714,7 +734,7 @@
       "pricePerSqft": 278.71
     },
     {
-      "id": "sembawang-323-sembawang-cl-2015-10-953239",
+      "id": "sembawang-323-sembawang-cl-2015-10-953344",
       "month": "2015-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -727,7 +747,7 @@
       "pricePerSqft": 332.34
     },
     {
-      "id": "sembawang-323-sembawang-cl-2015-06-947018",
+      "id": "sembawang-323-sembawang-cl-2015-06-947123",
       "month": "2015-06",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -740,7 +760,7 @@
       "pricePerSqft": 323.27
     },
     {
-      "id": "sembawang-323-sembawang-cl-2015-05-945293",
+      "id": "sembawang-323-sembawang-cl-2015-05-945398",
       "month": "2015-05",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -751,19 +771,6 @@
       "resalePrice": 372000,
       "pricePerSqm": 3720,
       "pricePerSqft": 345.6
-    },
-    {
-      "id": "sembawang-323-sembawang-cl-2015-02-940923",
-      "month": "2015-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "83",
-      "resalePrice": 355000,
-      "pricePerSqm": 3514.85,
-      "pricePerSqft": 326.54
     }
   ]
 }

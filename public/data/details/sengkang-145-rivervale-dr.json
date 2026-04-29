@@ -9,8 +9,8 @@
       "lat": 1.38990044873734,
       "lng": 103.90607033433
     },
-    "medianPrice": 588888,
-    "transactionCount": 3,
+    "medianPrice": 633444,
+    "transactionCount": 4,
     "floorAreaRange": [
       100,
       122
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-06",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 781
       }
     ],
+    "postalCode": "540145",
     "priceIqr": [
-      566944,
-      633444
+      577916,
+      686000
     ],
-    "pricePerSqmMedian": 5450,
-    "pricePerSqftMedian": 506.32
+    "pricePerSqmMedian": 5503.69,
+    "pricePerSqftMedian": 511.31
   },
   "monthlyTrend": [
     {
@@ -508,9 +509,28 @@
       "medianPrice": 678000,
       "transactionCount": 1,
       "medianPricePerSqm": 5557.38
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 710000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5819.67
     }
   ],
   "recentTransactions": [
+    {
+      "id": "sengkang-145-rivervale-dr-2026-04-227733",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 122,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years 08 months",
+      "resalePrice": 710000,
+      "pricePerSqm": 5819.67,
+      "pricePerSqft": 540.67
+    },
     {
       "id": "sengkang-145-rivervale-dr-2025-03-214988",
       "month": "2025-03",
@@ -757,19 +777,6 @@
       "resalePrice": 355000,
       "pricePerSqm": 3550,
       "pricePerSqft": 329.81
-    },
-    {
-      "id": "sengkang-145-rivervale-dr-2018-06-29596",
-      "month": "2018-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "80 years 07 months",
-      "resalePrice": 350000,
-      "pricePerSqm": 3500,
-      "pricePerSqft": 325.16
     }
   ]
 }

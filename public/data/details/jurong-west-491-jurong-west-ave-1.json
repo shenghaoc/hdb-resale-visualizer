@@ -9,8 +9,8 @@
       "lat": 1.34958656573247,
       "lng": 103.72631531647
     },
-    "medianPrice": 435500,
-    "transactionCount": 6,
+    "medianPrice": 451000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       100
@@ -50,12 +50,13 @@
         "distanceMeters": 2440
       }
     ],
+    "postalCode": "640491",
     "priceIqr": [
-      416250,
-      471250
+      417500,
+      483000
     ],
-    "pricePerSqmMedian": 5459.48,
-    "pricePerSqftMedian": 507.2
+    "pricePerSqmMedian": 5247.31,
+    "pricePerSqftMedian": 487.49
   },
   "monthlyTrend": [
     {
@@ -924,14 +925,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 415000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6194.03
+      "medianPrice": 465000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5672.01
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-491-jurong-west-ave-1-2026-04-225236",
+      "id": "jurong-west-491-jurong-west-ave-1-2026-04-225272",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -942,6 +943,19 @@
       "resalePrice": 415000,
       "pricePerSqm": 6194.03,
       "pricePerSqft": 575.44
+    },
+    {
+      "id": "jurong-west-491-jurong-west-ave-1-2026-04-225360",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 100,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 05 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 5150,
+      "pricePerSqft": 478.45
     },
     {
       "id": "jurong-west-491-jurong-west-ave-1-2025-07-207280",
@@ -1176,19 +1190,6 @@
       "resalePrice": 273000,
       "pricePerSqm": 4074.63,
       "pricePerSqft": 378.55
-    },
-    {
-      "id": "jurong-west-491-jurong-west-ave-1-2016-12-975300",
-      "month": "2016-12",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 82,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "67",
-      "resalePrice": 315000,
-      "pricePerSqm": 3841.46,
-      "pricePerSqft": 356.88
     }
   ]
 }

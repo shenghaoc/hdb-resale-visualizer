@@ -9,8 +9,8 @@
       "lat": 1.28045561330579,
       "lng": 103.812317740785
     },
-    "medianPrice": 755000,
-    "transactionCount": 4,
+    "medianPrice": 740000,
+    "transactionCount": 5,
     "floorAreaRange": [
       100,
       116
@@ -51,12 +51,13 @@
         "distanceMeters": 1445
       }
     ],
+    "postalCode": "101104",
     "priceIqr": [
-      739250,
-      780000
+      738000,
+      770000
     ],
-    "pricePerSqmMedian": 7385,
-    "pricePerSqftMedian": 686.09
+    "pricePerSqmMedian": 7380,
+    "pricePerSqftMedian": 685.63
   },
   "monthlyTrend": [
     {
@@ -445,14 +446,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 737000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7370
+      "medianPrice": 737500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7375
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-merah-104a-depot-rd-2026-04-223467",
+      "id": "bukit-merah-104a-depot-rd-2026-04-223476",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -465,7 +466,20 @@
       "pricePerSqft": 684.7
     },
     {
-      "id": "bukit-merah-104a-depot-rd-2026-01-223463",
+      "id": "bukit-merah-104a-depot-rd-2026-04-223479",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 100,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2000,
+      "remainingLease": "73 years 03 months",
+      "resalePrice": 738000,
+      "pricePerSqm": 7380,
+      "pricePerSqft": 685.63
+    },
+    {
+      "id": "bukit-merah-104a-depot-rd-2026-01-223472",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -673,7 +687,7 @@
       "pricePerSqft": 553.38
     },
     {
-      "id": "bukit-merah-104a-depot-rd-2016-12-974983",
+      "id": "bukit-merah-104a-depot-rd-2016-12-975088",
       "month": "2016-12",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -686,7 +700,7 @@
       "pricePerSqft": 475.02
     },
     {
-      "id": "bukit-merah-104a-depot-rd-2016-11-973391",
+      "id": "bukit-merah-104a-depot-rd-2016-11-973496",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -697,19 +711,6 @@
       "resalePrice": 542500,
       "pricePerSqm": 5425,
       "pricePerSqft": 504
-    },
-    {
-      "id": "bukit-merah-104a-depot-rd-2016-10-971766",
-      "month": "2016-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2000,
-      "remainingLease": "82",
-      "resalePrice": 575000,
-      "pricePerSqm": 5750,
-      "pricePerSqft": 534.19
     }
   ]
 }

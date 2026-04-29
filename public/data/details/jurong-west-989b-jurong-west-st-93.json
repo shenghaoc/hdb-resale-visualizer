@@ -9,8 +9,8 @@
       "lat": 1.33587253338167,
       "lng": 103.694838223367
     },
-    "medianPrice": 629500,
-    "transactionCount": 4,
+    "medianPrice": 628000,
+    "transactionCount": 5,
     "floorAreaRange": [
       93,
       114
@@ -19,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2012-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -50,12 +50,13 @@
         "distanceMeters": 2004
       }
     ],
+    "postalCode": "642989",
     "priceIqr": [
-      622472,
-      631222
+      605888,
+      631000
     ],
-    "pricePerSqmMedian": 5624.5,
-    "pricePerSqftMedian": 522.53
+    "pricePerSqmMedian": 5641.86,
+    "pricePerSqftMedian": 524.15
   },
   "monthlyTrend": [
     {
@@ -261,9 +262,28 @@
       "medianPrice": 628000,
       "transactionCount": 1,
       "medianPricePerSqm": 5607.14
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 579888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6235.35
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-989b-jurong-west-st-93-2026-04-225506",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2008,
+      "remainingLease": "81 years 04 months",
+      "resalePrice": 579888,
+      "pricePerSqm": 6235.35,
+      "pricePerSqft": 579.28
+    },
     {
       "id": "jurong-west-989b-jurong-west-st-93-2025-12-208207",
       "month": "2025-12",
@@ -510,19 +530,6 @@
       "resalePrice": 461000,
       "pricePerSqm": 4043.86,
       "pricePerSqft": 375.69
-    },
-    {
-      "id": "jurong-west-989b-jurong-west-st-93-2018-07-31378",
-      "month": "2018-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 112,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2008,
-      "remainingLease": "89 years 01 month",
-      "resalePrice": 483000,
-      "pricePerSqm": 4312.5,
-      "pricePerSqft": 400.64
     }
   ]
 }

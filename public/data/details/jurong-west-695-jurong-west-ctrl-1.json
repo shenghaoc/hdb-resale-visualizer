@@ -9,8 +9,8 @@
       "lat": 1.34256318025628,
       "lng": 103.707422156902
     },
-    "medianPrice": 662500,
-    "transactionCount": 6,
+    "medianPrice": 655000,
+    "transactionCount": 7,
     "floorAreaRange": [
       100,
       147
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-11",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -51,12 +51,13 @@
         "distanceMeters": 1457
       }
     ],
+    "postalCode": "640695",
     "priceIqr": [
-      606250,
-      707500
+      599444,
+      695000
     ],
-    "pricePerSqmMedian": 5792.16,
-    "pricePerSqftMedian": 538.11
+    "pricePerSqmMedian": 5784.31,
+    "pricePerSqftMedian": 537.38
   },
   "monthlyTrend": [
     {
@@ -526,9 +527,28 @@
       "medianPrice": 655000,
       "transactionCount": 1,
       "medianPricePerSqm": 6179.25
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 608888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5744.23
     }
   ],
   "recentTransactions": [
+    {
+      "id": "jurong-west-695-jurong-west-ctrl-1-2026-04-225369",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 106,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 11 months",
+      "resalePrice": 608888,
+      "pricePerSqm": 5744.23,
+      "pricePerSqft": 533.66
+    },
     {
       "id": "jurong-west-695-jurong-west-ctrl-1-2025-08-207325",
       "month": "2025-08",
@@ -775,19 +795,6 @@
       "resalePrice": 630000,
       "pricePerSqm": 4285.71,
       "pricePerSqft": 398.16
-    },
-    {
-      "id": "jurong-west-695-jurong-west-ctrl-1-2019-12-63158",
-      "month": "2019-12",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 102,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "77 years 03 months",
-      "resalePrice": 465000,
-      "pricePerSqm": 4558.82,
-      "pricePerSqft": 423.53
     }
   ]
 }

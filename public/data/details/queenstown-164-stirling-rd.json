@@ -9,8 +9,8 @@
       "lat": 1.29151824833554,
       "lng": 103.802513058468
     },
-    "medianPrice": 359000,
-    "transactionCount": 6,
+    "medianPrice": 368000,
+    "transactionCount": 7,
     "floorAreaRange": [
       60,
       76
@@ -19,10 +19,10 @@
       1969,
       1969
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -49,9 +49,10 @@
         "distanceMeters": 1627
       }
     ],
+    "postalCode": "140164",
     "priceIqr": [
       350000,
-      369500
+      381500
     ],
     "pricePerSqmMedian": 5303.03,
     "pricePerSqftMedian": 492.67
@@ -716,11 +717,30 @@
       "medianPrice": 368000,
       "transactionCount": 1,
       "medianPricePerSqm": 5575.76
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 400000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5263.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "queenstown-164-stirling-rd-2026-02-226765",
+      "id": "queenstown-164-stirling-rd-2026-04-226829",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 76,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1970,
+      "remainingLease": "42 years 09 months",
+      "resalePrice": 400000,
+      "pricePerSqm": 5263.16,
+      "pricePerSqft": 488.96
+    },
+    {
+      "id": "queenstown-164-stirling-rd-2026-02-226822",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -965,19 +985,6 @@
       "resalePrice": 318000,
       "pricePerSqm": 4818.18,
       "pricePerSqft": 447.62
-    },
-    {
-      "id": "queenstown-164-stirling-rd-2019-02-44445",
-      "month": "2019-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 66,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1970,
-      "remainingLease": "50 years",
-      "resalePrice": 281000,
-      "pricePerSqm": 4257.58,
-      "pricePerSqft": 395.54
     }
   ]
 }

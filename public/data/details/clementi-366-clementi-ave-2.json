@@ -9,8 +9,8 @@
       "lat": 1.31254953553443,
       "lng": 103.771676380482
     },
-    "medianPrice": 340000,
-    "transactionCount": 47,
+    "medianPrice": 520000,
+    "transactionCount": 1,
     "floorAreaRange": [
       61,
       61
@@ -19,10 +19,10 @@
       2001,
       2001
     ],
-    "latestMonth": "2024-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2005-09",
-      "2024-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -49,12 +49,13 @@
         "distanceMeters": 2167
       }
     ],
+    "postalCode": "120366",
     "priceIqr": [
-      262000,
-      392500
+      520000,
+      520000
     ],
-    "pricePerSqmMedian": 5573.77,
-    "pricePerSqftMedian": 517.82
+    "pricePerSqmMedian": 8524.59,
+    "pricePerSqftMedian": 791.96
   },
   "monthlyTrend": [
     {
@@ -296,9 +297,28 @@
       "medianPrice": 488888,
       "transactionCount": 1,
       "medianPricePerSqm": 8014.56
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 520000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8524.59
     }
   ],
   "recentTransactions": [
+    {
+      "id": "clementi-366-clementi-ave-2-2026-04-224315",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 61,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2003,
+      "remainingLease": "75 years 10 months",
+      "resalePrice": 520000,
+      "pricePerSqm": 8524.59,
+      "pricePerSqft": 791.96
+    },
     {
       "id": "clementi-366-clementi-ave-2-2024-01-177096",
       "month": "2024-01",
@@ -456,7 +476,7 @@
       "pricePerSqft": 525.44
     },
     {
-      "id": "clementi-366-clementi-ave-2-2016-11-973581",
+      "id": "clementi-366-clementi-ave-2-2016-11-973686",
       "month": "2016-11",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -469,7 +489,7 @@
       "pricePerSqft": 517.82
     },
     {
-      "id": "clementi-366-clementi-ave-2-2016-04-961369",
+      "id": "clementi-366-clementi-ave-2-2016-04-961474",
       "month": "2016-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -482,7 +502,7 @@
       "pricePerSqft": 517.82
     },
     {
-      "id": "clementi-366-clementi-ave-2-2016-03-959712",
+      "id": "clementi-366-clementi-ave-2-2016-03-959817",
       "month": "2016-03",
       "flatType": "3 ROOM",
       "storeyRange": "19 TO 21",
@@ -495,7 +515,7 @@
       "pricePerSqft": 606.15
     },
     {
-      "id": "clementi-366-clementi-ave-2-2014-04-639567",
+      "id": "clementi-366-clementi-ave-2-2014-04-639672",
       "month": "2014-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -508,7 +528,7 @@
       "pricePerSqft": 593.97
     },
     {
-      "id": "clementi-366-clementi-ave-2-2014-04-639573",
+      "id": "clementi-366-clementi-ave-2-2014-04-639678",
       "month": "2014-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -521,7 +541,7 @@
       "pricePerSqft": 647.28
     },
     {
-      "id": "clementi-366-clementi-ave-2-2014-04-639574",
+      "id": "clementi-366-clementi-ave-2-2014-04-639679",
       "month": "2014-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -534,7 +554,7 @@
       "pricePerSqft": 647.28
     },
     {
-      "id": "clementi-366-clementi-ave-2-2012-11-616815",
+      "id": "clementi-366-clementi-ave-2-2012-11-616920",
       "month": "2012-11",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -545,19 +565,6 @@
       "resalePrice": 430000,
       "pricePerSqm": 7049.18,
       "pricePerSqft": 654.89
-    },
-    {
-      "id": "clementi-366-clementi-ave-2-2012-04-602567",
-      "month": "2012-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "06 TO 10",
-      "floorAreaSqm": 61,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2003,
-      "remainingLease": "76 years",
-      "resalePrice": 386000,
-      "pricePerSqm": 6327.87,
-      "pricePerSqft": 587.88
     }
   ]
 }

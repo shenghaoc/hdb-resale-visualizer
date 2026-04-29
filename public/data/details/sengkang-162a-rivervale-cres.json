@@ -9,8 +9,8 @@
       "lat": 1.39035961258595,
       "lng": 103.907636739734
     },
-    "medianPrice": 679944,
-    "transactionCount": 8,
+    "medianPrice": 659888,
+    "transactionCount": 9,
     "floorAreaRange": [
       93,
       113
@@ -51,12 +51,13 @@
         "distanceMeters": 669
       }
     ],
+    "postalCode": "541162",
     "priceIqr": [
-      638750,
-      721416
+      605000,
+      716888
     ],
-    "pricePerSqmMedian": 6504.9,
-    "pricePerSqftMedian": 604.33
+    "pricePerSqmMedian": 6504.42,
+    "pricePerSqftMedian": 604.28
   },
   "monthlyTrend": [
     {
@@ -181,14 +182,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 670000,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6504.9
+      "medianPrice": 605000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 6504.42
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-162a-rivervale-cres-2026-04-227459",
+      "id": "sengkang-162a-rivervale-cres-2026-04-227528",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -201,7 +202,20 @@
       "pricePerSqft": 604.37
     },
     {
-      "id": "sengkang-162a-rivervale-cres-2026-04-227646",
+      "id": "sengkang-162a-rivervale-cres-2026-04-227531",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years 01 month",
+      "resalePrice": 595000,
+      "pricePerSqm": 6397.85,
+      "pricePerSqft": 594.38
+    },
+    {
+      "id": "sengkang-162a-rivervale-cres-2026-04-227716",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -433,19 +447,6 @@
       "resalePrice": 540000,
       "pricePerSqm": 5806.45,
       "pricePerSqft": 539.44
-    },
-    {
-      "id": "sengkang-162a-rivervale-cres-2022-03-134720",
-      "month": "2022-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2017,
-      "remainingLease": "94 years 02 months",
-      "resalePrice": 500000,
-      "pricePerSqm": 5376.34,
-      "pricePerSqft": 499.48
     }
   ]
 }
