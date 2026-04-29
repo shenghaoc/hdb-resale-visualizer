@@ -279,14 +279,17 @@ export function ResultsPane({
   const compactRowStride = compactRowHeight + compactRowGap;
 
   const sortedBlocks = useMemo(() => {
-    const currentYear = getCurrentYear();
-    return [...blocks].sort((left, right) => {
-      // ⚡ Bolt: Fast string comparison for dates avoiding string replacement and number parsing per item
-      if (sortMode === "latest-desc") {
+    const sorted = [...blocks];
+
+    if (sortMode === "latest-desc") {
+      return sorted.sort((left, right) => {
         if (left.latestMonth === right.latestMonth) return 0;
         return left.latestMonth < right.latestMonth ? 1 : -1;
-      }
+      });
+    }
 
+    const currentYear = getCurrentYear();
+    return sorted.sort((left, right) => {
       return getSortValue(left, sortMode, currentYear) - getSortValue(right, sortMode, currentYear);
     });
   }, [blocks, sortMode]);
