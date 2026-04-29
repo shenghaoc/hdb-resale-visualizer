@@ -39,37 +39,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Run Claude Code Review
         id: claude-review
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: |
-            Review this pull request as a senior software engineer.
-            Check for functional bugs, code quality, maintainability, architecture, and project-rule compliance.
-            Read and follow CLAUDE.md and AGENTS.md for repo-specific review policies.
-
-            Check for:
-            - Functional bugs and logical errors
-            - Code quality, maintainability, and unnecessary complexity
-            - React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
-            - Data pipeline contract violations
-            - Bun/package-manager drift (Bun-only, no npm/yarn/pnpm lockfiles)
-            - Runtime fetching or runtime geocoding (must use precomputed build artifacts)
-            - Missing tests for non-trivial logic changes
-            - Weak TypeScript types and type safety issues
-
-            For this repo specifically:
-            - Do not approve PRs that introduce backend routes or runtime server-side logic
-            - Do not approve PRs that fetch core domain data from external APIs at runtime
-            - Do not approve PRs that break existing deployment assumptions
-            - Skip generated files under public/data/ (owned by scripts/sync-data.ts)
-            - Preserve map attribution requirements
-
-            Leave inline comments for concrete actionable issues.
-            If there are no actionable code quality issues, say "No actionable code quality issues found."
-          claude_args: "--max-turns 5"
+          show_full_output: 'true'
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
+          plugins: 'code-review@claude-code-plugins'
+          prompt: '/code-review:code-review https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment'
+          claude_args: '--max-turns 15'
