@@ -1,6 +1,7 @@
-import { startTransition, Suspense, useState } from "react";
+import { startTransition, Suspense, useEffect, useRef, useState } from "react";
 import {
   Bookmark,
+  Check,
   Clock3,
   Coins,
   Compass,
@@ -153,9 +154,38 @@ export function DetailDrawer({
 }: DetailDrawerProps) {
   const { locale, t } = useI18n();
   const [activeTab, setActiveTab] = useState("overview");
+  const [isCopied, setIsCopied] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleCopyAddress = () => {
+    if (!currentSummary) {
+      return;
+    }
+
+    void navigator.clipboard
+      .writeText(`${currentSummary.block} ${currentSummary.streetName} Singapore`)
+      .then(() => {
+        setIsCopied(true);
+        if (copyTimeoutRef.current) {
+          clearTimeout(copyTimeoutRef.current);
+        }
+        copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch(() => {
+        setIsCopied(false);
+      });
+  };
 
   return (
     <Drawer open={Boolean(selectedBlock)} onClose={onClose} dismissible={false}>
@@ -185,16 +215,12 @@ export function DetailDrawer({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="shrink-0 text-muted-foreground hover:text-foreground"
-                    onClick={() => {
-                      void navigator.clipboard.writeText(
-                        `${currentSummary.block} ${currentSummary.streetName} Singapore`,
-                      );
-                    }}
-                    title="Copy address"
-                    aria-label={t("detail.copyAddress") || "Copy address to clipboard"}
+                    className={cn("shrink-0 transition-colors", isCopied ? "text-primary hover:text-primary" : "text-muted-foreground hover:text-foreground")}
+                    onClick={handleCopyAddress}
+                    title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
+                    aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
-                    <Copy data-icon />
+                    {isCopied ? <Check data-icon /> : <Copy data-icon />}
                   </Button>
                 )}
               </div>
