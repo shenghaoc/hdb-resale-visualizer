@@ -41,7 +41,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Run Claude Code Review
         id: claude-review
@@ -52,4 +52,4 @@ jobs:
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
           prompt: '/code-review:code-review https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment'
-          claude_args: '--max-turns 15'
+          claude_args: '--max-turns 5'

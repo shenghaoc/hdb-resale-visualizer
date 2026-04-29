@@ -12,6 +12,24 @@ Use `AGENTS.md` as the authoritative policy for this repository.
 - Keep OneMap attribution visible whenever the map is rendered.
 - This is not a price prediction product; do not add forecasting features.
 
+## Code Review Standards
+
+When reviewing pull requests:
+- Check for functional correctness and logical bugs
+- Verify code quality, maintainability, and unnecessary complexity
+- Review React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
+- Validate data pipeline contract violations (precomputed artifacts in `public/data/`)
+- Enforce Bun-only package manager (no npm/yarn/pnpm lockfiles)
+- Prevent runtime fetching or runtime geocoding (use precomputed build artifacts)
+- Verify tests for non-trivial logic changes
+- Check TypeScript types and type safety
+
+Do not approve PRs that:
+- Introduce backend routes or runtime server-side logic
+- Fetch core domain data from external APIs at runtime
+- Break existing deployment assumptions or map attribution
+- Include generated files under `public/data/` (owned by `scripts/sync-data.ts`)
+
 ## Completion checks
 
 Run before submitting changes:
