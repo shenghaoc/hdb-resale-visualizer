@@ -46,6 +46,18 @@ async function mockComparisonArtifacts(page: Page) {
   });
 }
 
+function firstResultCard(page: Page) {
+  return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
+}
+
+async function resultCardAddressText(card: ReturnType<Page["locator"]>) {
+  const desktopAddress = card.locator(".result-address strong");
+  if ((await desktopAddress.count()) > 0) {
+    return await desktopAddress.first().textContent();
+  }
+  return await card.locator("strong").first().textContent();
+}
+
 test("keeps selection in results and only shows shortlisted blocks in saved", async ({ page }) => {
   await page.goto("/");
 
@@ -60,11 +72,8 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
   await resultsTab.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
-  const firstResult = page
-    .locator("[data-testid='results-pane'] [data-slot='item']")
-    .filter({ has: page.locator(".result-address strong") })
-    .first();
-  const rowAddress = await firstResult.locator(".result-address strong").textContent();
+  const firstResult = firstResultCard(page);
+  const rowAddress = await resultCardAddressText(firstResult);
   await firstResult.click();
 
   await expect(resultsTab).toHaveAttribute("data-state", "active");
@@ -93,11 +102,8 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await resultsButton.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
-  const firstResult = page
-    .locator("[data-testid='results-pane'] [data-slot='item']")
-    .filter({ has: page.locator(".result-address strong") })
-    .first();
-  const rowAddress = await firstResult.locator(".result-address strong").textContent();
+  const firstResult = firstResultCard(page);
+  const rowAddress = await resultCardAddressText(firstResult);
   await firstResult.click();
 
   await expect(resultsButton).toHaveAttribute("data-active", "true");
@@ -122,11 +128,8 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await resultsTab.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
-  const firstResult = page
-    .locator("[data-testid='results-pane'] [data-slot='item']")
-    .filter({ has: page.locator(".result-address strong") })
-    .first();
-  const rowAddress = await firstResult.locator(".result-address strong").textContent();
+  const firstResult = firstResultCard(page);
+  const rowAddress = await resultCardAddressText(firstResult);
   await firstResult.click();
 
   const detailDrawer = page.getByTestId("detail-drawer");

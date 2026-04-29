@@ -71,6 +71,12 @@ type LoadedComparison = {
   data: ComparisonArtifact | null;
 };
 
+type MobileFilterChip = {
+  key: string;
+  label: string;
+  onRemove: () => void;
+};
+
 function App() {
   const { locale, t } = useI18n();
   const [manifest, setManifest] = useState<Manifest | null>(null);
@@ -92,6 +98,7 @@ function App() {
   const [isComparisonLoading, setIsComparisonLoading] = useState(() =>
     Boolean(filters.selectedAddressKey),
   );
+  const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
     {},
@@ -511,6 +518,54 @@ function App() {
     });
   }, []);
 
+  const mobileFilterChips = useMemo<MobileFilterChip[]>(() => {
+    const chips: MobileFilterChip[] = [];
+
+    if (filters.town) {
+      chips.push({
+        key: "town",
+        label: filters.town,
+        onRemove: () => patchFilters({ town: "" }),
+      });
+    }
+
+    if (filters.flatType) {
+      chips.push({
+        key: "flatType",
+        label: filters.flatType,
+        onRemove: () => patchFilters({ flatType: "" }),
+      });
+    }
+
+    if (filters.budgetMin !== null || filters.budgetMax !== null) {
+      const lo = filters.budgetMin ? `S$${Math.round(filters.budgetMin / 1000)}K` : "";
+      const hi = filters.budgetMax ? `S$${Math.round(filters.budgetMax / 1000)}K` : "";
+      chips.push({
+        key: "budget",
+        label: lo && hi ? `${lo}–${hi}` : lo || hi,
+        onRemove: () => patchFilters({ budgetMin: null, budgetMax: null }),
+      });
+    }
+
+    if (filters.remainingLeaseMin !== null) {
+      chips.push({
+        key: "remainingLeaseMin",
+        label: `≥${filters.remainingLeaseMin}yr`,
+        onRemove: () => patchFilters({ remainingLeaseMin: null }),
+      });
+    }
+
+    if (filters.mrtMax !== null) {
+      chips.push({
+        key: "mrtMax",
+        label: `≤${filters.mrtMax}m MRT`,
+        onRemove: () => patchFilters({ mrtMax: null }),
+      });
+    }
+
+    return chips;
+  }, [filters, patchFilters]);
+
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
       if (isDesktop) {
@@ -687,6 +742,84 @@ function App() {
         >
           © OneMap contributors
         </a>
+
+        {/* Mobile collapsible header pill */}
+        {!isDesktop && manifest && (
+          <div className="pointer-events-auto absolute left-3 top-3 z-30 max-w-[70vw]">
+            <button
+              type="button"
+              aria-expanded={isMobileHeaderOpen}
+              onClick={() => setIsMobileHeaderOpen((o) => !o)}
+              className="flex items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] text-left transition-all"
+            >
+              {!isMobileHeaderOpen ? (
+                <>
+                  <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
+                  <span className="text-[0.7rem] font-bold leading-none">{t("app.title")}</span>
+                  <span className="text-[0.6rem] font-medium text-muted-foreground">
+                    · {manifest.counts.transactions.toLocaleString()}
+                  </span>
+                </>
+              ) : (
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[0.82rem] font-bold leading-tight tracking-tight">{t("app.title")}</span>
+                  <span className="text-[0.6rem] font-medium text-muted-foreground">
+                    {manifest.counts.transactions.toLocaleString()} {t("stats.txns", { count: "" }).trim()} · OneMap
+                  </span>
+                </div>
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Price-color map legend — only when map is visible (no mobile panel open) */}
+        {hasMapMarkerScope && (isDesktop || mobileTab === null) && (
+          <div
+            role="img"
+            aria-label="Map legend: median price colour ramp from S$400K (low) to S$1.3M+ (high)"
+            className="pointer-events-none absolute z-25 rounded-lg border border-border/20 bg-background/90 p-2 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[20px]"
+            style={{ bottom: isDesktop ? "4rem" : "8rem", right: isDesktop ? "4.5rem" : "0.75rem" }}
+          >
+            <p className="mb-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">Median S$</p>
+            <div
+              aria-hidden="true"
+              className="h-1.5 w-20 rounded-full"
+              style={{ background: "linear-gradient(90deg, #3a8a6f, #9bb368, #d4a44e, #d97757, #a83232)" }}
+            />
+            <div aria-hidden="true" className="mt-0.5 flex justify-between text-[0.55rem] font-medium text-muted-foreground">
+              <span>400K</span><span>1.3M</span>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile active filter chip strip */}
+        {!isDesktop && (mobileFilterChips.length > 0 || filters.search) && (
+          <div
+            role="toolbar"
+            aria-label={t("filters.title")}
+            className="pointer-events-auto absolute z-25 top-[3.6rem] left-0 right-0 flex gap-2 overflow-x-auto px-3 pb-1"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {mobileFilterChips.map((chip) => (
+              <button
+                key={chip.key}
+                type="button"
+                aria-label={`Remove filter: ${chip.label}`}
+                onClick={chip.onRemove}
+                className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px]"
+              >
+                {chip.label} <span aria-hidden="true" className="opacity-70">×</span>
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setMobileTab("filters")}
+              className="flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px]"
+            >
+              <SlidersHorizontal className="size-3" aria-hidden="true" /> {t("tab.filters")}
+            </button>
+          </div>
+        )}
 
         <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
           {isDesktop && (
