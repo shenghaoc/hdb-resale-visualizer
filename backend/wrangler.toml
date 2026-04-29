@@ -1,0 +1,7 @@
+name = "hdb-resale-visualizer-backend"
+main = "src/index.ts"
+compatibility_date = "2026-04-29"
+
+[vars]
+# Set this to your frontend origin in production, e.g. https://your-app.pages.dev
+APP_ORIGIN = ""

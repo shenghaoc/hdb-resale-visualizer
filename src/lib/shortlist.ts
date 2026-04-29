@@ -95,5 +95,5 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
       targetPrice: null,
       addedAt: new Date().toISOString(),
     },
-  ].slice(-4);
+  ];
 }

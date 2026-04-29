@@ -118,6 +118,8 @@ test-results
 .wrangler
 
 # Spirit of Kiro supplemental ignores
+.aiEditorAgent
+.aiEditorAgentDebug
 bun-tests.xml
 *.spec.md
 *.code-workspace
@@ -138,4 +140,4 @@ Thumbs.db
 .env.*.local
 
 # Claude Code local files
-.claude/worktrees/
+.claude/

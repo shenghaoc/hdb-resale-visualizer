@@ -88,9 +88,22 @@ Optional environment variables:
 DATA_GOV_API_KEY=...
 ONEMAP_SEARCH_ENDPOINT=https://www.onemap.gov.sg/api/common/elastic/search
 GEOCODE_CONCURRENCY=10
+# Optional cloud sync (frontend-safe values only)
+VITE_SUPABASE_URL=https://<project-ref>.supabase.co
+VITE_SUPABASE_ANON_KEY=<supabase-anon-public-key>
+VITE_BACKEND_URL=https://<your-backend-domain>
 ```
 
 `DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
+
+### Supabase key safety (important)
+
+- `VITE_*` environment variables are bundled into frontend JavaScript. Treat them as public.
+- Only put the Supabase **anon/public** key in `VITE_SUPABASE_ANON_KEY`.
+- Never place a `service_role` key in any frontend variable or committed file.
+- Keep service-role keys only in server-side environments (CI secrets, Cloudflare worker secrets, backend runtime).
+- This repo includes a runtime guard that rejects a misconfigured `service_role` key in frontend env.
+- Frontend shortlist sync should call the backend API (`VITE_BACKEND_URL`) instead of direct service-role DB access.
 
 ## Deployment
 
@@ -103,3 +116,7 @@ GEOCODE_CONCURRENCY=10
 - This is not a prediction product.
 - Coordinates are resolved during artifact generation, never in the browser.
 - OneMap attribution must remain visible when the map is rendered.
+
+## Backend location
+
+There is now an explicit backend scaffold under `backend/` so frontend and backend code can coexist in this Kiro project. See `backend/README.md` and `backend/src/index.ts`.
