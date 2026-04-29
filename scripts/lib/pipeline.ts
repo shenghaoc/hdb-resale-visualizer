@@ -514,6 +514,7 @@ export function buildArtifacts({
       flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
       nearestMrt,
       nearbyMrts,
+      postalCode: geocode.postalCode ?? null,
     };
     const detailSummary: AddressDetailSummary = {
       ...summary,

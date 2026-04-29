@@ -25,6 +25,7 @@ export type BlockSummary = {
   flatModels: string[];
   nearestMrt: NearestMrt | null;
   nearbyMrts?: NearestMrt[];
+  postalCode?: string | null;
 };
 
 export type AddressDetailSummary = BlockSummary & {

@@ -24,6 +24,13 @@ const TOKEN_NORMALIZATIONS = new Map<string, string>([
 type SearchToken = {
   value: string;
   isNumericPrefix: boolean;
+  isPostalCodeCandidate: boolean;
+  allowReverseMatch: boolean;
+};
+
+type BlockSearchTokens = {
+  values: string[];
+  postalCode: string | null;
 };
 
 export type GeographicSearchIntent =
@@ -60,6 +67,15 @@ function resolveSearchAliases(value: string): string {
 
 function normalizeToken(token: string): string {
   return TOKEN_NORMALIZATIONS.get(token) ?? token;
+}
+
+function createSearchToken(value: string, isNumericPrefix: boolean): SearchToken {
+  return {
+    value,
+    isNumericPrefix,
+    isPostalCodeCandidate: /^\d{3,6}$/.test(value),
+    allowReverseMatch: !/^\d{3,}$/.test(value),
+  };
 }
 
 const TOKENIZATION_CACHE_LIMIT = 10_000;
@@ -99,15 +115,9 @@ function tokenizeSearchText(value: string): SearchToken[] {
     .map((token) => {
       const numericPrefixMatch = token.match(/^(\d+)\+$/);
       if (numericPrefixMatch) {
-        return {
-          value: numericPrefixMatch[1] ?? token,
-          isNumericPrefix: true,
-        };
+        return createSearchToken(numericPrefixMatch[1] ?? token, true);
       }
-      return {
-        value: normalizeToken(token),
-        isNumericPrefix: false,
-      };
+      return createSearchToken(normalizeToken(token), false);
     });
 
   // Limit cache size to prevent memory leaks from arbitrary search inputs.
@@ -183,7 +193,7 @@ function isNearMatch(left: string, right: string): boolean {
 
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
-let blockTokensCache = new WeakMap<BlockSummary, string[]>();
+let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
 
@@ -202,25 +212,39 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
     return true;
   }
 
-  let blockTokenValues = blockTokensCache.get(block);
-  if (!blockTokenValues) {
+  let blockTokens = blockTokensCache.get(block);
+  if (!blockTokens) {
     const searchableTokens = tokenizeSearchText(
       `${block.block} ${block.streetName} ${block.town} ${block.displayName ?? ""}`,
     );
-    blockTokenValues = searchableTokens.map((token) => token.value);
-    blockTokensCache.set(block, blockTokenValues);
+    blockTokens = {
+      values: searchableTokens.map((token) => token.value),
+      postalCode: block.postalCode ? normalizeSearchText(block.postalCode) : null,
+    };
+    blockTokensCache.set(block, blockTokens);
   }
 
   return searchTokens.every((searchToken) => {
+    const postalCodeMatches =
+      blockTokens.postalCode !== null &&
+      searchToken.isPostalCodeCandidate &&
+      blockTokens.postalCode.startsWith(searchToken.value);
+
     if (searchToken.isNumericPrefix) {
-      return blockTokenValues.some((candidate) => candidate.startsWith(searchToken.value));
+      return (
+        postalCodeMatches ||
+        blockTokens.values.some((candidate) => candidate.startsWith(searchToken.value))
+      );
     }
 
-    return blockTokenValues.some(
-      (candidate) =>
-        candidate.includes(searchToken.value) ||
-        searchToken.value.includes(candidate) ||
-        isNearMatch(candidate, searchToken.value),
+    return (
+      postalCodeMatches ||
+      blockTokens.values.some(
+        (candidate) =>
+          candidate.includes(searchToken.value) ||
+          (searchToken.allowReverseMatch && searchToken.value.includes(candidate)) ||
+          isNearMatch(candidate, searchToken.value),
+      )
     );
   });
 }
@@ -247,6 +271,10 @@ function normalizeStationName(stationName: string): string {
 function collectStationNames(blocks: BlockSummary[]): string[] {
   if (stationNamesCache) {
     return stationNamesCache;
+  }
+
+  if (blocks.length === 0) {
+    return [];
   }
 
   const stationNames = new Set<string>();
@@ -435,7 +463,7 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
-  blockTokensCache = new WeakMap<BlockSummary, string[]>();
+  blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
 }

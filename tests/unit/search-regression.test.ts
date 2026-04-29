@@ -29,6 +29,7 @@ const createAngMoKioBlock = (): BlockSummary => ({
     stationName: "ANG MO KIO MRT STATION",
     distanceMeters: 500,
   },
+  postalCode: "560101",
 });
 
 describe("Search Matching Regression", () => {
@@ -103,6 +104,41 @@ describe("Search Matching Regression", () => {
         search: "Ang Mo Kio 101",
       });
       expect(result).toBe(true);
+    });
+  });
+
+  describe("Postal code search", () => {
+    it("matches exact 6-digit postal code", () => {
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "560101" })).toBe(true);
+    });
+
+    it("matches postal code prefix (first 3 digits = sector)", () => {
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "560" })).toBe(true);
+    });
+
+    it("does not match a clearly unrelated postal code", () => {
+      // "760200" shares no substrings with block "101" or postalCode "560101"
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "760200" })).toBe(false);
+    });
+
+    it("does not match an unrelated block just because its number is inside the postal code", () => {
+      const unrelatedBlock = {
+        ...block,
+        addressKey: "ang-mo-kio-101-no-postal-match",
+        postalCode: "760200",
+      };
+
+      expect(matchesFilter(unrelatedBlock, { ...EMPTY_FILTERS, search: "560101" })).toBe(false);
+    });
+
+    it("matches postal code combined with street name", () => {
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "560101 ang mo kio" })).toBe(true);
+    });
+
+    it("returns no match when block has no postal code and query is postal-like with no overlap", () => {
+      // Block number is "101"; "760200" has no overlap with "101" or "ang mo kio"
+      const blockWithoutPostal = { ...block, postalCode: null };
+      expect(matchesFilter(blockWithoutPostal, { ...EMPTY_FILTERS, search: "760200" })).toBe(false);
     });
   });
 });
