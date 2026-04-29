@@ -13,14 +13,16 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
  */
 
 async function waitForMapLoad(page: Page) {
-  // Wait for map to be visible and loaded
-  await expect(page.getByTestId("map-view")).toBeVisible();
+  // Wait for map shell and controls to be visible and loaded.
+  await expect(
+    page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
+  ).toBeVisible({ timeout: 20_000 });
   
   // Wait for map controls to be rendered
-  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 10000 });
+  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
   
   // Wait a bit more for map to fully initialize
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(400);
 }
 
 async function ensureHeaderVisible(page: Page) {

@@ -15,9 +15,12 @@ import { expect, test, type Page, type ElementHandle } from "@playwright/test";
  */
 
 async function waitForAppLoad(page: Page) {
-  // Wait for the app to be fully loaded
-  await expect(page.getByTestId("map-view")).toBeVisible();
-  await page.waitForTimeout(1000); // Allow for initialization
+  // Wait for the map shell to mount and expose controls.
+  await expect(
+    page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
+  ).toBeVisible({ timeout: 20_000 });
+  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
+  await page.waitForTimeout(400); // Allow controls/header wiring to settle
 }
 
 async function ensureHeaderVisible(page: Page) {

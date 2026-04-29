@@ -1,5 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
 
+test.describe.configure({
+  mode: "serial",
+  timeout: 60_000,
+});
+
 const comparisonFixture = {
   addressKey: "fixture-address",
   town: "BEDOK",
@@ -61,8 +66,10 @@ async function resultCardAddressText(card: ReturnType<Page["locator"]>) {
 test("keeps selection in results and only shows shortlisted blocks in saved", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByTestId("global-header")).toBeVisible();
-  await expect(page.getByTestId("map-view")).toBeVisible();
+  await expect(page.getByTestId("global-header")).toBeVisible({ timeout: 15_000 });
+  await expect(
+    page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
+  ).toBeVisible({ timeout: 20_000 });
 
   await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
