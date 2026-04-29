@@ -24,6 +24,8 @@ const TOKEN_NORMALIZATIONS = new Map<string, string>([
 type SearchToken = {
   value: string;
   isNumericPrefix: boolean;
+  isPostalCodeCandidate: boolean;
+  allowReverseMatch: boolean;
 };
 
 type BlockSearchTokens = {
@@ -67,6 +69,15 @@ function normalizeToken(token: string): string {
   return TOKEN_NORMALIZATIONS.get(token) ?? token;
 }
 
+function createSearchToken(value: string, isNumericPrefix: boolean): SearchToken {
+  return {
+    value,
+    isNumericPrefix,
+    isPostalCodeCandidate: /^\d{3,6}$/.test(value),
+    allowReverseMatch: !/^\d{3,}$/.test(value),
+  };
+}
+
 const TOKENIZATION_CACHE_LIMIT = 10_000;
 
 function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
@@ -104,15 +115,9 @@ function tokenizeSearchText(value: string): SearchToken[] {
     .map((token) => {
       const numericPrefixMatch = token.match(/^(\d+)\+$/);
       if (numericPrefixMatch) {
-        return {
-          value: numericPrefixMatch[1] ?? token,
-          isNumericPrefix: true,
-        };
+        return createSearchToken(numericPrefixMatch[1] ?? token, true);
       }
-      return {
-        value: normalizeToken(token),
-        isNumericPrefix: false,
-      };
+      return createSearchToken(normalizeToken(token), false);
     });
 
   // Limit cache size to prevent memory leaks from arbitrary search inputs.
@@ -186,14 +191,6 @@ function isNearMatch(left: string, right: string): boolean {
   return edits <= 1;
 }
 
-function isPostalCodeSearchToken(value: string): boolean {
-  return /^\d{3,6}$/.test(value);
-}
-
-function shouldAllowReverseTokenMatch(value: string): boolean {
-  return !/^\d{3,}$/.test(value);
-}
-
 // Cache block token values independently since block references might change
 // but their underlying string values are stable.
 let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
@@ -230,7 +227,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   return searchTokens.every((searchToken) => {
     const postalCodeMatches =
       blockTokens.postalCode !== null &&
-      isPostalCodeSearchToken(searchToken.value) &&
+      searchToken.isPostalCodeCandidate &&
       blockTokens.postalCode.startsWith(searchToken.value);
 
     if (searchToken.isNumericPrefix) {
@@ -245,7 +242,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
       blockTokens.values.some(
         (candidate) =>
           candidate.includes(searchToken.value) ||
-          (shouldAllowReverseTokenMatch(searchToken.value) && searchToken.value.includes(candidate)) ||
+          (searchToken.allowReverseMatch && searchToken.value.includes(candidate)) ||
           isNearMatch(candidate, searchToken.value),
       )
     );
