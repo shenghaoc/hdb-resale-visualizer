@@ -295,11 +295,12 @@ export function MapView({
         id: "mrt-icons",
         type: "symbol",
         source: "mrt-stations",
-        filter: ["in", " MRT STATION", ["get", "stationName"]],
         layout: {
           "text-field": "🚇",
-          "text-size": ["interpolate", ["linear"], ["zoom"], 10, 11, 14, 14, 18, 18],
-          "text-allow-overlap": true,
+          "text-size": ["interpolate", ["linear"], ["zoom"], 10, 11, 13, 13],
+          "text-allow-overlap": false,
+          "symbol-sort-key": ["case", ["==", ["get", "isInterchange"], true], 1, 0],
+          "symbol-z-order": "source",
         },
         paint: {
           "text-color": "#0f172a",
@@ -360,7 +361,6 @@ export function MapView({
         type: "symbol",
         source: "mrt-stations",
         minzoom: 14,
-        filter: ["in", " MRT STATION", ["get", "stationName"]],
         layout: {
           "text-field": ["get", "stationName"],
           "text-size": 10,
@@ -383,8 +383,8 @@ export function MapView({
         id: "mrt-interchange-lines",
         type: "symbol",
         source: "mrt-stations",
-        minzoom: 12,
-        filter: ["all", ["==", ["get", "isInterchange"], true], ["in", " MRT STATION", ["get", "stationName"]]],
+        minzoom: 14,
+        filter: ["==", ["get", "isInterchange"], true],
         layout: {
           "text-field": [
             "case",
@@ -492,7 +492,9 @@ export function MapView({
           "text-offset": [0, -2.2],
           "text-anchor": "bottom",
           "text-max-width": 16,
-          "text-allow-overlap": true,
+          "text-allow-overlap": false,
+          "symbol-sort-key": ["case", ["==", ["get", "isInterchange"], true], 1, 0],
+          "symbol-z-order": "source",
           "text-ignore-placement": true,
         },
         paint: {
