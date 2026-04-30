@@ -133,8 +133,8 @@ const BlockCard = memo(function BlockCard({
               {block.block} {block.streetName}
             </strong>
             <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-              {block.town}
-              {block.flatTypes.length > 0 ? ` · ${block.flatTypes[0]}` : ""}
+              {localizeTownName(block.town, locale)}
+              {block.flatTypes.length > 0 ? ` · ${localizeFlatType(block.flatTypes[0], locale)}` : ""}
             </span>
           </div>
           <div className="flex shrink-0 items-start gap-2">

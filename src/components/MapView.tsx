@@ -1,7 +1,16 @@
 import { useEffect, useMemo, useRef } from "react";
-import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
+import maplibregl, {
+  ExpressionSpecification,
+  LngLatBoundsLike,
+  Map as MapLibreMap,
+  Popup,
+} from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { ONEMAP_ATTRIBUTION, ONEMAP_TILE_URL } from "@/lib/constants";
+import {
+  MEDIAN_PRICE_COLOR_EXPRESSION,
+  ONEMAP_ATTRIBUTION,
+  ONEMAP_TILE_URL,
+} from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -440,21 +449,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": [
-            "interpolate",
-            ["linear"],
-            ["get", "median_price"],
-            400000,
-            "#3a8a6f",
-            600000,
-            "#9bb368",
-            800000,
-            "#d4a44e",
-            1000000,
-            "#d97757",
-            1300000,
-            "#a83232",
-          ],
+          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as ExpressionSpecification,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",

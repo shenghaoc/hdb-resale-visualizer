@@ -28,6 +28,20 @@ export const DATA_BASE_PATH = "/data";
 export const ONEMAP_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png";
 export const ONEMAP_ATTRIBUTION = '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
 export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1000;
+export const MEDIAN_PRICE_COLOR_STOPS = [
+  { price: 400000, color: "#3a8a6f" },
+  { price: 600000, color: "#9bb368" },
+  { price: 800000, color: "#d4a44e" },
+  { price: 1000000, color: "#d97757" },
+  { price: 1300000, color: "#a83232" },
+] as const;
+export const MEDIAN_PRICE_COLOR_EXPRESSION = [
+  "interpolate",
+  ["linear"],
+  ["get", "median_price"],
+  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
+];
+export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 /**
  * Query state configuration.

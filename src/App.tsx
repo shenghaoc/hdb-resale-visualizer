@@ -12,6 +12,7 @@ import {
   DEFAULT_FILTERS,
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   HEADER_DISMISSED_STORAGE_KEY,
+  MEDIAN_PRICE_LEGEND_GRADIENT,
 } from "@/lib/constants";
 import {
   fetchAddressDetail,
@@ -25,6 +26,7 @@ import {
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
+import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/types";
@@ -527,61 +529,15 @@ function App() {
     });
   }, []);
 
-  const mobileFilterChips = useMemo<MobileFilterChip[]>(() => {
-    const chips: MobileFilterChip[] = [];
-
-    if (filters.search.trim()) {
-      chips.push({
-        key: "search",
-        label: filters.search.trim(),
-        onRemove: () => patchFilters({ search: "" }),
-      });
-    }
-
-    if (filters.town) {
-      chips.push({
-        key: "town",
-        label: filters.town,
-        onRemove: () => patchFilters({ town: "" }),
-      });
-    }
-
-    if (filters.flatType) {
-      chips.push({
-        key: "flatType",
-        label: filters.flatType,
-        onRemove: () => patchFilters({ flatType: "" }),
-      });
-    }
-
-    if (filters.budgetMin !== null || filters.budgetMax !== null) {
-      const lo = filters.budgetMin ? `S$${Math.round(filters.budgetMin / 1000)}K` : "";
-      const hi = filters.budgetMax ? `S$${Math.round(filters.budgetMax / 1000)}K` : "";
-      chips.push({
-        key: "budget",
-        label: lo && hi ? `${lo}–${hi}` : lo || hi,
-        onRemove: () => patchFilters({ budgetMin: null, budgetMax: null }),
-      });
-    }
-
-    if (filters.remainingLeaseMin !== null) {
-      chips.push({
-        key: "remainingLeaseMin",
-        label: `≥${filters.remainingLeaseMin}yr`,
-        onRemove: () => patchFilters({ remainingLeaseMin: null }),
-      });
-    }
-
-    if (filters.mrtMax !== null) {
-      chips.push({
-        key: "mrtMax",
-        label: `≤${filters.mrtMax}m MRT`,
-        onRemove: () => patchFilters({ mrtMax: null }),
-      });
-    }
-
-    return chips;
-  }, [filters, patchFilters]);
+  const mobileFilterChips = useMemo<MobileFilterChip[]>(
+    () =>
+      getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
+        key: chip.key,
+        label: chip.label,
+        onRemove: () => patchFilters(chip.clearPatch),
+      })),
+    [filters, locale, patchFilters, t],
+  );
 
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
@@ -873,7 +829,7 @@ function App() {
             <div
               aria-hidden="true"
               className="h-1.5 w-20 rounded-full"
-              style={{ background: "linear-gradient(90deg, #3a8a6f, #9bb368, #d4a44e, #d97757, #a83232)" }}
+              style={{ background: MEDIAN_PRICE_LEGEND_GRADIENT }}
             />
             <div aria-hidden="true" className="mt-0.5 flex justify-between text-[0.55rem] font-medium text-muted-foreground">
               <span>400K</span><span>1.3M</span>
@@ -895,7 +851,7 @@ function App() {
               <button
                 key={chip.key}
                 type="button"
-                aria-label={`Remove filter: ${chip.label}`}
+                aria-label={t("filters.removeChip", { label: chip.label })}
                 onClick={chip.onRemove}
                 className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px]"
               >
