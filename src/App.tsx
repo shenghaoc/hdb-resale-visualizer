@@ -1,11 +1,12 @@
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bookmark,
-  Info,
+  Languages,
   List,
-  PanelLeftClose,
-  PanelLeftOpen,
+  Moon,
   SlidersHorizontal,
+  Sun,
+  X,
 } from "lucide-react";
 import {
   DEFAULT_FILTERS,
@@ -26,10 +27,13 @@ import {
 } from "@/lib/filtering";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n/types";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useTheme } from "@/hooks/useTheme";
 import { safeStorage } from "@/lib/storage";
+import { formatDateTime, formatMonth } from "@/lib/format";
 import type {
   AddressDetail,
   BlockSummary,
@@ -41,11 +45,16 @@ import type {
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
-import { GlobalHeader } from "@/components/StatsBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
@@ -78,7 +87,8 @@ type MobileFilterChip = {
 };
 
 function App() {
-  const { locale, t } = useI18n();
+  const { locale, setLocale, t } = useI18n();
+  const { theme, toggleTheme } = useTheme();
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
@@ -126,7 +136,6 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
-  const showMobileHeader = isDesktop;
 
   useEffect(() => {
     let isMounted = true;
@@ -521,6 +530,14 @@ function App() {
   const mobileFilterChips = useMemo<MobileFilterChip[]>(() => {
     const chips: MobileFilterChip[] = [];
 
+    if (filters.search.trim()) {
+      chips.push({
+        key: "search",
+        label: filters.search.trim(),
+        onRemove: () => patchFilters({ search: "" }),
+      });
+    }
+
     if (filters.town) {
       chips.push({
         key: "town",
@@ -714,7 +731,7 @@ function App() {
         onToggleShortlist={handleToggleShortlist}
         selectedAddressKey={selectedAddressKey}
         shortlistKeys={shortlistKeySet}
-        isCompact={!isDesktop}
+        isCompact
       />
     </Suspense>
   ) : null;
@@ -743,34 +760,106 @@ function App() {
           © OneMap contributors
         </a>
 
-        {/* Mobile collapsible header pill */}
-        {!isDesktop && manifest && (
-          <div className="pointer-events-auto absolute left-3 top-3 z-30 max-w-[70vw]">
+        {(!isDesktop || isHeaderVisible) && manifest ? (
+          <header
+            data-testid={isDesktop ? "global-header" : undefined}
+            className={cn(
+              "pointer-events-auto absolute z-30 flex items-start gap-2",
+              isDesktop ? "left-6 top-6 max-w-[min(42rem,calc(100vw-12rem))]" : "left-3 top-3 max-w-[70vw]",
+            )}
+          >
             <button
               type="button"
               aria-expanded={isMobileHeaderOpen}
               onClick={() => setIsMobileHeaderOpen((o) => !o)}
-              className="flex items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] text-left transition-all"
+              className={cn(
+                "flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all",
+                isMobileHeaderOpen && "items-start",
+              )}
             >
               {!isMobileHeaderOpen ? (
                 <>
                   <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
-                  <span className="text-[0.7rem] font-bold leading-none">{t("app.title")}</span>
-                  <span className="text-[0.6rem] font-medium text-muted-foreground">
-                    · {manifest.counts.transactions.toLocaleString()}
+                  <h1 className="truncate text-[0.7rem] font-bold leading-none">
+                    {t("app.title")}
+                  </h1>
+                  <Badge variant="outline" className="h-5 shrink-0 border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold">
+                    {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
+                  </Badge>
+                  <span className="hidden text-[0.6rem] font-medium text-muted-foreground sm:inline">
+                    · {manifest.counts.transactions.toLocaleString(locale)}
                   </span>
                 </>
               ) : (
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[0.82rem] font-bold leading-tight tracking-tight">{t("app.title")}</span>
-                  <span className="text-[0.6rem] font-medium text-muted-foreground">
-                    {manifest.counts.transactions.toLocaleString()} {t("stats.txns", { count: "" }).trim()} · OneMap
-                  </span>
+                <div className="flex min-w-0 flex-col gap-1">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
+                    <h1 className="truncate text-[0.82rem] font-bold leading-tight">
+                      {t("app.title")}
+                    </h1>
+                  </div>
+                  <Badge variant="outline" className="h-5 w-fit border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold">
+                    {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
+                  </Badge>
+                  <p className="text-[0.6rem] font-medium text-muted-foreground">
+                    {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })} ·{" "}
+                    {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })} · OneMap
+                  </p>
                 </div>
               )}
             </button>
-          </div>
-        )}
+
+            {isDesktop ? (
+              <div className="flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px]">
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="size-8 p-0 text-muted-foreground hover:text-foreground"
+                  onClick={toggleTheme}
+                  aria-label="Toggle theme"
+                >
+                  {theme === "light" ? (
+                    <Moon data-icon className="size-4" />
+                  ) : (
+                    <Sun data-icon className="size-4" />
+                  )}
+                </Button>
+
+                <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
+                  <SelectTrigger
+                    aria-label={t("language.label")}
+                    className="h-8 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <Languages data-icon className="size-3 opacity-60" />
+                      <SelectValue placeholder={t("language.label")} />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent align="end">
+                    <SelectItem value="en-SG" className="text-xs">
+                      {t("language.en")}
+                    </SelectItem>
+                    <SelectItem value="zh-SG" className="text-xs">
+                      {t("language.zh")}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="size-8 p-0 text-muted-foreground hover:text-foreground"
+                  onClick={() => setIsHeaderVisible(false)}
+                  aria-label="Dismiss header"
+                >
+                  <X data-icon className="size-4" />
+                </Button>
+              </div>
+            ) : null}
+          </header>
+        ) : null}
 
         {/* Price-color map legend — only when map is visible (no mobile panel open) */}
         {hasMapMarkerScope && (isDesktop || mobileTab === null) && (
@@ -792,12 +881,14 @@ function App() {
           </div>
         )}
 
-        {/* Mobile active filter chip strip */}
-        {!isDesktop && (mobileFilterChips.length > 0 || filters.search) && (
+        {(mobileFilterChips.length > 0 || filters.search) && (
           <div
             role="toolbar"
             aria-label={t("filters.title")}
-            className="pointer-events-auto absolute z-25 top-[3.6rem] left-0 right-0 flex gap-2 overflow-x-auto px-3 pb-1"
+            className={cn(
+              "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1",
+              isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-0 top-[3.6rem] px-3",
+            )}
             style={{ scrollbarWidth: "none" }}
           >
             {mobileFilterChips.map((chip) => (
@@ -813,7 +904,14 @@ function App() {
             ))}
             <button
               type="button"
-              onClick={() => setMobileTab("filters")}
+              onClick={() => {
+                if (isDesktop) {
+                  setDesktopTab("filters");
+                  setIsDesktopPanelOpen(true);
+                  return;
+                }
+                setMobileTab("filters");
+              }}
               className="flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px]"
             >
               <SlidersHorizontal className="size-3" aria-hidden="true" /> {t("tab.filters")}
@@ -822,97 +920,44 @@ function App() {
         )}
 
         <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
-          {isDesktop && (
-            <div className="pointer-events-auto absolute left-6 top-6 z-20">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
-                onClick={() => setIsDesktopPanelOpen((current) => !current)}
-                aria-expanded={isDesktopPanelOpen}
-                aria-controls="desktop-panel"
-              >
-                {isDesktopPanelOpen ? (
-                  <PanelLeftClose data-icon="inline-start" />
-                ) : (
-                  <PanelLeftOpen data-icon="inline-start" />
-                )}
-                {isDesktopPanelOpen ? t("app.hidePanel") : t("app.showPanel")}
-              </Button>
-            </div>
-          )}
           {isDesktop && !isHeaderVisible ? (
-            <div className="pointer-events-auto absolute right-4 top-16 z-10 lg:right-20 lg:top-6">
+            <div className="pointer-events-auto absolute left-6 top-6 z-30">
               <Button
                 variant="outline"
-                size="sm"
-                className="h-9 border-border/20 bg-background/85 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_2px_8px_rgba(23,28,31,0.04)] backdrop-blur-[12px] transition-colors hover:text-foreground"
+                size="xs"
+                className="h-8 rounded-xl border-border/20 bg-background/90 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-colors hover:text-foreground"
                 onClick={() => setIsHeaderVisible(true)}
               >
-                <Info data-icon="inline-start" />
                 {t("app.showHeader")}
               </Button>
             </div>
           ) : null}
 
-          {showMobileHeader ? (
-            <div className="pointer-events-none flex flex-wrap items-start gap-3 lg:pl-36 lg:pr-20">
-              <div className="pointer-events-none flex min-w-0 flex-1 flex-wrap items-stretch gap-2">
-                <div className="pointer-events-none min-w-0 flex-1 basis-[22rem]">
-                  <GlobalHeader
-                    manifest={manifest}
-                    isVisible={isHeaderVisible}
-                    onDismiss={() => setIsHeaderVisible(false)}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : null}
-
           {isDesktop ? (
             <section className="pointer-events-none relative min-h-0 flex-1">
-              <aside
-                id="desktop-panel"
-                className={cn(
-                  "pointer-events-auto absolute left-0 top-0 h-full w-[min(46rem,62vw)] max-w-[96vw] transition-transform duration-300 ease-out",
-                  isDesktopPanelOpen ? "translate-x-0" : "-translate-x-[calc(100%+1rem)]",
-                )}
-                {...(!isDesktopPanelOpen && { inert: true })}
-              >
-                <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-border/20 bg-card/94 shadow-[0_4px_24px_rgba(23,28,31,0.06)] backdrop-blur-[20px] dark:bg-card">
-                  <Tabs
-                    value={desktopTab}
-                    onValueChange={(value) => setDesktopTab(value as DesktopTab)}
-                    className="flex h-full flex-col overflow-hidden"
-                  >
-                    <TabsList className="grid w-full shrink-0 grid-cols-3 bg-muted/30">
-                      <TabsTrigger
-                        value="filters"
-                        className="text-xs font-bold uppercase tracking-wider"
-                      >
-                        {t("tab.filters")}
-                      </TabsTrigger>
-                      <TabsTrigger
-                        value="results"
-                        className="text-xs font-bold uppercase tracking-wider"
-                      >
-                        {t("tab.results")}
-                      </TabsTrigger>
-                      <TabsTrigger
-                        value="saved"
-                        className="text-xs font-bold uppercase tracking-wider"
-                      >
-                        {t("tab.saved")}
-                      </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="filters" className="mt-3 min-h-0 flex-1 overflow-y-auto px-3">
+              {isDesktopPanelOpen ? (
+                <aside
+                  id="desktop-panel"
+                  className={cn(
+                    "pointer-events-auto absolute bottom-16 left-0 flex max-h-[min(44rem,calc(100vh-8rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] dark:bg-card",
+                    desktopTab === "saved"
+                      ? "w-[min(44rem,48vw)]"
+                      : desktopTab === "results"
+                        ? "w-[min(34rem,38vw)]"
+                        : "w-[min(30rem,34vw)]",
+                  )}
+                >
+                  <div className="flex h-full min-h-0 flex-col">
+                    {desktopTab === "filters" ? (
+                      <div id="desktop-filters-content" className="h-full overflow-y-auto p-3 pb-8">
                       {filterContent}
-                    </TabsContent>
-                    <TabsContent
-                      value="results"
-                      className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto px-3"
-                    >
-                      <div className="flex min-h-0 flex-1 flex-col gap-4">
+                      </div>
+                    ) : null}
+                    {desktopTab === "results" ? (
+                      <div
+                        id="desktop-results-content"
+                        className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8"
+                      >
                         {selectedDetailContent}
                         <div
                           className={cn(
@@ -923,13 +968,15 @@ function App() {
                           {resultsPaneContent}
                         </div>
                       </div>
-                    </TabsContent>
-                    <TabsContent value="saved" className="mt-3 flex min-h-0 flex-1 flex-col overflow-hidden px-3">
-                      {savedContent}
-                    </TabsContent>
-                  </Tabs>
-                </div>
-              </aside>
+                    ) : null}
+                    {desktopTab === "saved" ? (
+                      <div id="desktop-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8">
+                        {savedContent}
+                      </div>
+                    ) : null}
+                  </div>
+                </aside>
+              ) : null}
             </section>
           ) : (
             <section className="pointer-events-none relative min-h-0 flex-1">
@@ -970,6 +1017,61 @@ function App() {
           )}
         </div>
       </main>
+
+      {isDesktop && (
+        <nav className="desktop-tab-bar" aria-label={t("app.title")}>
+          <Button
+            type="button"
+            variant={desktopTab === "filters" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            size="sm"
+            data-active={desktopTab === "filters" && isDesktopPanelOpen}
+            aria-expanded={desktopTab === "filters" && isDesktopPanelOpen}
+            aria-controls={desktopTab === "filters" && isDesktopPanelOpen ? "desktop-filters-content" : undefined}
+            onClick={() => {
+              setDesktopTab("filters");
+              setIsDesktopPanelOpen((current) => (desktopTab === "filters" ? !current : true));
+            }}
+          >
+            <SlidersHorizontal data-icon />
+            <span>{t("tab.filters")}</span>
+          </Button>
+          <Button
+            type="button"
+            variant={desktopTab === "results" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            size="sm"
+            data-active={desktopTab === "results" && isDesktopPanelOpen}
+            aria-expanded={desktopTab === "results" && isDesktopPanelOpen}
+            aria-controls={desktopTab === "results" && isDesktopPanelOpen ? "desktop-results-content" : undefined}
+            onClick={() => {
+              setDesktopTab("results");
+              setIsDesktopPanelOpen((current) => (desktopTab === "results" ? !current : true));
+            }}
+          >
+            <List data-icon />
+            <span>{t("tab.results")}</span>
+          </Button>
+          <Button
+            type="button"
+            variant={desktopTab === "saved" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            size="sm"
+            data-active={desktopTab === "saved" && isDesktopPanelOpen}
+            aria-expanded={desktopTab === "saved" && isDesktopPanelOpen}
+            aria-controls={desktopTab === "saved" && isDesktopPanelOpen ? "desktop-saved-content" : undefined}
+            onClick={() => {
+              setDesktopTab("saved");
+              setIsDesktopPanelOpen((current) => (desktopTab === "saved" ? !current : true));
+            }}
+          >
+            <Bookmark data-icon className={desktopTab === "saved" && isDesktopPanelOpen ? "fill-current" : ""} />
+            <span>{t("tab.saved")}</span>
+            {shortlist.items.length > 0 ? (
+              <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
+                {shortlist.items.length}
+              </Badge>
+            ) : null}
+          </Button>
+        </nav>
+      )}
 
       {/* Mobile bottom tab bar */}
       {!isDesktop && (

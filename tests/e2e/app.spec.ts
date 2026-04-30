@@ -63,6 +63,10 @@ async function resultCardAddressText(card: ReturnType<Page["locator"]>) {
   return await card.locator("strong").first().textContent();
 }
 
+function desktopNavButton(page: Page, label: string) {
+  return page.locator(".desktop-tab-bar").getByRole("button", { name: label });
+}
+
 test("keeps selection in results and only shows shortlisted blocks in saved", async ({ page }) => {
   await page.goto("/");
 
@@ -73,8 +77,8 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
 
   await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
-  const resultsTab = page.getByRole("tab", { name: "Results" });
-  const savedTab = page.getByRole("tab", { name: "Saved" });
+  const resultsTab = desktopNavButton(page, "Results");
+  const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
 
   await resultsTab.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
@@ -83,8 +87,8 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
   const rowAddress = await resultCardAddressText(firstResult);
   await firstResult.click();
 
-  await expect(resultsTab).toHaveAttribute("data-state", "active");
-  await expect(savedTab).toHaveAttribute("data-state", "inactive");
+  await expect(resultsTab).toHaveAttribute("data-active", "true");
+  await expect(savedTab).toHaveAttribute("data-active", "false");
   await expect(page.getByTestId("detail-drawer")).toContainText(rowAddress ?? "");
   await expect(page.getByTestId("shortlist-drawer")).toHaveCount(0);
 
@@ -129,8 +133,8 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
-  const resultsTab = page.getByRole("tab", { name: "Results" });
-  const savedTab = page.getByRole("tab", { name: "Saved" });
+  const resultsTab = desktopNavButton(page, "Results");
+  const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
 
   await resultsTab.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();

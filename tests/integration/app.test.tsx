@@ -182,7 +182,7 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await user.click(await screen.findByRole("tab", { name: "Results" }));
+    await user.click(await screen.findByRole("button", { name: "Results" }));
     await screen.findByTestId("results-pane");
 
     await user.click(screen.getByRole("button", { name: "Select block" }));
@@ -225,7 +225,7 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await user.click(await screen.findByRole("tab", { name: "Results" }));
+    await user.click(await screen.findByRole("button", { name: "Results" }));
     await screen.findByTestId("results-pane");
 
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
