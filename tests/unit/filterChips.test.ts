@@ -41,7 +41,7 @@ describe("getActiveFilterChipDescriptors", () => {
     expect(chips).toEqual([
       {
         key: "budget",
-        label: "$0–$400K",
+        label: "S$0K–S$400K",
         clearPatch: { budgetMin: null, budgetMax: null },
       },
     ]);

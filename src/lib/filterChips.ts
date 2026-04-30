@@ -1,4 +1,4 @@
-import { formatCompactCurrency, formatNumber } from "@/lib/format";
+import { formatNumber } from "@/lib/format";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { Locale, Translator } from "@/lib/i18n/types";
 import type { FilterState } from "@/types/data";
@@ -8,6 +8,10 @@ export type ActiveFilterChipDescriptor = {
   label: string;
   clearPatch: Partial<FilterState>;
 };
+
+function formatBudgetChipCurrency(value: number, locale: Locale): string {
+  return `S$${formatNumber(Math.round(value / 1000), 0, locale)}K`;
+}
 
 export function getActiveFilterChipDescriptors(
   filters: FilterState,
@@ -41,8 +45,8 @@ export function getActiveFilterChipDescriptors(
   }
 
   if (filters.budgetMin !== null || filters.budgetMax !== null) {
-    const lo = filters.budgetMin !== null ? formatCompactCurrency(filters.budgetMin, locale) : "";
-    const hi = filters.budgetMax !== null ? formatCompactCurrency(filters.budgetMax, locale) : "";
+    const lo = filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale) : "";
+    const hi = filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale) : "";
     chips.push({
       key: "budget",
       label: lo && hi ? `${lo}–${hi}` : lo || hi,
