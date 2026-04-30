@@ -192,6 +192,7 @@ function App() {
         : null;
 
     const effectiveTown = townFilter || detectedTownForDeepLink;
+    const allTowns = manifest.filterOptions.towns;
 
     async function loadBlocks() {
       try {
@@ -200,7 +201,6 @@ function App() {
         if (effectiveTown) {
           nextBlocks = await fetchBlocksByTown(effectiveTown);
         } else if (hasGeographic) {
-          const allTowns = manifest.filterOptions.towns;
           const blocksByTown = await Promise.all(
             allTowns.map(async (town) => {
               try {
