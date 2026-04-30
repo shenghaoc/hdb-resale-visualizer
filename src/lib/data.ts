@@ -25,9 +25,15 @@ export function fetchBlockSummaries() {
   return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/block-summaries.json`);
 }
 
+export function townToFilename(town: string): string {
+  return town
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function fetchBlocksByTown(town: string) {
-  const townFilename = town.toLowerCase().replace(/\s+/g, "-");
-  return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/blocks/${townFilename}.json`);
+  return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`);
 }
 
 export function fetchTownFlatTypeTrends() {

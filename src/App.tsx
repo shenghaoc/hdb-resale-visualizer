@@ -16,10 +16,10 @@ import {
 } from "@/lib/constants";
 import {
   fetchAddressDetail,
-  fetchBlockSummaries,
   fetchBlocksByTown,
   fetchComparisonArtifact,
   fetchManifest,
+  townToFilename,
 } from "@/lib/data";
 import {
   getSelectionByAddressKey,
@@ -139,6 +139,10 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
+  const showMobileHeader = isDesktop;
+  // Debounce search for the map only so list interactions stay in sync with
+  // the visible result rows while the heavier map updates trail slightly.
+  const debouncedSearch = useDebouncedValue(filters.search, 200);
 
   useEffect(() => {
     let isMounted = true;
@@ -175,14 +179,26 @@ function App() {
 
     let isMounted = true;
     const townFilter = filters.town;
-    const hasGeographic = filters.search.trim() || userLocation;
+    const hasGeographic = Boolean(debouncedSearch.trim() || userLocation);
+
+    // When a deep link opens with ?selected=... but no town/geo filter, detect
+    // which town the address belongs to so the block summary can be resolved.
+    const detectedTownForDeepLink =
+      !townFilter && !hasGeographic && selectedAddressKey
+        ? manifest.filterOptions.towns
+            .slice()
+            .sort((a, b) => b.length - a.length)
+            .find((town) => selectedAddressKey.startsWith(townToFilename(town) + "-")) ?? null
+        : null;
+
+    const effectiveTown = townFilter || detectedTownForDeepLink;
 
     async function loadBlocks() {
       try {
         let nextBlocks: BlockSummary[] = [];
 
-        if (townFilter) {
-          nextBlocks = await fetchBlocksByTown(townFilter);
+        if (effectiveTown) {
+          nextBlocks = await fetchBlocksByTown(effectiveTown);
         } else if (hasGeographic) {
           const allTowns = manifest.filterOptions.towns;
           const blocksByTown = await Promise.all(
@@ -195,8 +211,6 @@ function App() {
             }),
           );
           nextBlocks = blocksByTown.flat();
-        } else {
-          nextBlocks = [];
         }
 
         if (!isMounted) {
@@ -218,7 +232,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [manifest, filters.town, filters.search, userLocation]);
+  }, [manifest, filters.town, debouncedSearch, userLocation, selectedAddressKey]);
 
   useEffect(() => {
     const nextSearch = serializeFilters(filters);
@@ -312,9 +326,6 @@ function App() {
     };
   }, [selectedAddressKey]);
 
-  // Debounce search for the map only so list interactions stay in sync with
-  // the visible result rows while the heavier map updates trail slightly.
-  const debouncedSearch = useDebouncedValue(filters.search, 200);
   const stableFilters = useMemo(
     () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

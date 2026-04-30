@@ -136,6 +136,13 @@ export function normalizeText(value: string): string {
   return value.trim().replace(/\s+/g, " ").toUpperCase();
 }
 
+export function townToFilename(town: string): string {
+  return town
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function makeAddressKey(town: string, block: string, streetName: string): string {
   const source = `${normalizeText(town)}-${normalizeText(block)}-${normalizeText(streetName)}`;
 

@@ -8,6 +8,7 @@ import {
   makeAddressKey,
   normalizeText,
   parseRemainingLease,
+  townToFilename,
   type GeocodeCacheFile,
   type MrtExit,
   type PropertyInfo,
@@ -575,8 +576,7 @@ async function main() {
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
 
   for (const [town, blocks] of Object.entries(artifacts.blocksByTown)) {
-    const townFilename = town.toLowerCase().replace(/\s+/g, "-");
-    await writeJson(path.join(BLOCKS_DIR, `${townFilename}.json`), blocks);
+    await writeJson(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), blocks);
   }
 
   console.log(`Generated ${Object.keys(artifacts.blocksByTown).length} town-indexed block files.`);
