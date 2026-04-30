@@ -295,6 +295,7 @@ export function MapView({
         id: "mrt-icons",
         type: "symbol",
         source: "mrt-stations",
+        filter: ["in", " MRT STATION", ["get", "stationName"]],
         layout: {
           "text-field": "🚇",
           "text-size": ["interpolate", ["linear"], ["zoom"], 10, 11, 14, 14, 18, 18],
@@ -359,6 +360,7 @@ export function MapView({
         type: "symbol",
         source: "mrt-stations",
         minzoom: 14,
+        filter: ["in", " MRT STATION", ["get", "stationName"]],
         layout: {
           "text-field": ["get", "stationName"],
           "text-size": 10,
@@ -382,7 +384,7 @@ export function MapView({
         type: "symbol",
         source: "mrt-stations",
         minzoom: 12,
-        filter: ["==", ["get", "isInterchange"], true],
+        filter: ["all", ["==", ["get", "isInterchange"], true], ["in", " MRT STATION", ["get", "stationName"]]],
         layout: {
           "text-field": [
             "case",
