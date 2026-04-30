@@ -1,17 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
-import maplibregl, {
-  ExpressionSpecification,
-  LngLatBoundsLike,
-  Map as MapLibreMap,
-  Popup,
-} from "maplibre-gl";
+import { useEffect, useMemo, useRef, useState } from "react";
+import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import {
-  MEDIAN_PRICE_COLOR_EXPRESSION,
-  ONEMAP_ATTRIBUTION,
-  ONEMAP_TILE_URL,
-  PRIMARY_BLUE,
-} from "@/lib/constants";
+import { ONEMAP_ATTRIBUTION, ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -46,12 +36,6 @@ type PopupProperties = {
   transaction_count?: number;
 };
 
-type MrtPopupProperties = {
-  stationName?: string;
-  lines?: string | string[];
-};
-
-
 type GeoJsonSourceLike = {
   setData(data: ReturnType<typeof toGeoJson>): void;
   getClusterExpansionZoom(clusterId: number): Promise<number>;
@@ -59,6 +43,10 @@ type GeoJsonSourceLike = {
 
 type GeoJsonDataSourceLike = {
   setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
+};
+
+type RasterSourceLike = {
+  setTiles(tiles: string[]): void;
 };
 
 function createCircleGeoJson(
@@ -116,41 +104,6 @@ function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLi
   return !!source && typeof source === "object" && "setData" in source;
 }
 
-function parseMrtLines(lines: MrtPopupProperties["lines"]): string[] {
-  if (Array.isArray(lines)) {
-    return lines.filter((line): line is string => typeof line === "string");
-  }
-
-  if (typeof lines !== "string") {
-    return [];
-  }
-
-  try {
-    const parsed: unknown = JSON.parse(lines);
-    return Array.isArray(parsed)
-      ? parsed.filter((line): line is string => typeof line === "string")
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-function toMrtPopupProperties(properties: unknown): MrtPopupProperties {
-  if (!properties || typeof properties !== "object") {
-    return {};
-  }
-
-  const record = properties as Record<string, unknown>;
-  const stationName =
-    typeof record.stationName === "string" ? record.stationName : undefined;
-  const lines =
-    typeof record.lines === "string" || Array.isArray(record.lines)
-      ? record.lines
-      : undefined;
-
-  return { stationName, lines };
-}
-
 export function MapView({
   blocks,
   selectedAddressKey,
@@ -175,6 +128,9 @@ export function MapView({
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    typeof document !== "undefined" ? document.documentElement.classList.contains("dark") : false,
+  );
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -203,6 +159,24 @@ export function MapView({
     localeRef.current = locale;
   }, [locale]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    const root = document.documentElement;
+    const updateTheme = () => setIsDarkMode(root.classList.contains("dark"));
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   // Create the map ONCE on mount
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -227,7 +201,7 @@ export function MapView({
         sources: {
           onemap: {
             type: "raster",
-            tiles: [ONEMAP_TILE_URL],
+            tiles: [isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
             tileSize: 256,
             maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
@@ -276,139 +250,30 @@ export function MapView({
     popupRef.current = popup;
 
     map.on("load", () => {
-      map.addSource("mrt-stations", {
-        type: "geojson",
-        data: "/data/mrt-stations.geojson",
-      });
-
-      map.addSource("mrt-exits", {
-        type: "geojson",
-        data: "/data/mrt-exits.geojson",
-      });
-
       map.addSource("radius", {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },
       });
 
       map.addLayer({
-        id: "mrt-icons",
-        type: "symbol",
-        source: "mrt-stations",
-        layout: {
-          "text-field": "🚇",
-          "text-size": ["interpolate", ["linear"], ["zoom"], 10, 11, 13, 13],
-          "text-allow-overlap": false,
-          "symbol-sort-key": ["case", ["==", ["get", "isInterchange"], true], 1, 0],
-          "symbol-z-order": "source",
-        },
+        id: "radius-fill",
+        type: "fill",
+        source: "radius",
         paint: {
-          "text-color": "#0f172a",
-          "text-halo-color": "#ffffff",
-          "text-halo-width": 1.25,
-        },
-      });
-
-
-      map.addLayer({
-        id: "mrt-exit-labels",
-        type: "symbol",
-        source: "mrt-exits",
-        minzoom: 17,
-        layout: {
-          "text-field": ["get", "EXIT_CODE"],
-          "text-size": 10,
-          "text-offset": [0, 1],
-          "text-anchor": "top",
-        },
-        paint: {
-          "text-color": "#0f172a",
-          "text-halo-color": "#ffffff",
-          "text-halo-width": 1.25,
-        },
-      });
-
-      map.addLayer(
-        {
-          id: "radius-fill",
-          type: "fill",
-          source: "radius",
-          paint: {
-            "fill-color": PRIMARY_BLUE,
-            "fill-opacity": 0.05,
-          },
-        },
-        "mrt-icons",
-      );
-
-      map.addLayer(
-        {
-          id: "radius-outline",
-          type: "line",
-          source: "radius",
-          paint: {
-            "line-color": PRIMARY_BLUE,
-            "line-width": 1,
-            "line-dasharray": [3, 3],
-            "line-opacity": 0.25,
-          },
-        },
-        "mrt-icons",
-      );
-
-      map.addLayer({
-        id: "mrt-labels",
-        type: "symbol",
-        source: "mrt-stations",
-        minzoom: 14,
-        layout: {
-          "text-field": ["get", "stationName"],
-          "text-size": 10,
-          "text-offset": [0, 1.2],
-          "text-anchor": "top",
-        },
-        paint: {
-          "text-color": [
-            "case",
-            ["==", ["get", "isInterchange"], true],
-            "#111827",
-            ["coalesce", ["get", "color"], "#1e40af"],
-          ],
-          "text-halo-color": "#fff",
-          "text-halo-width": 1.5,
+          "fill-color": "#2563eb",
+          "fill-opacity": 0.05,
         },
       });
 
       map.addLayer({
-        id: "mrt-interchange-lines",
-        type: "symbol",
-        source: "mrt-stations",
-        minzoom: 14,
-        filter: ["==", ["get", "isInterchange"], true],
-        layout: {
-          "text-field": [
-            "case",
-            [">=", ["length", ["get", "lines"]], 3],
-            [
-              "concat",
-              ["at", 0, ["get", "lines"]],
-              "/",
-              ["at", 1, ["get", "lines"]],
-              "/",
-              ["at", 2, ["get", "lines"]],
-            ],
-            [">=", ["length", ["get", "lines"]], 2],
-            ["concat", ["at", 0, ["get", "lines"]], "/", ["at", 1, ["get", "lines"]]],
-            ["at", 0, ["get", "lines"]],
-          ],
-          "text-size": 9,
-          "text-offset": [0, -1.3],
-          "text-anchor": "bottom",
-        },
+        id: "radius-outline",
+        type: "line",
+        source: "radius",
         paint: {
-          "text-color": "#111827",
-          "text-halo-color": "#fff",
-          "text-halo-width": 1.5,
+          "line-color": "#2563eb",
+          "line-width": 1,
+          "line-dasharray": [3, 3],
+          "line-opacity": 0.25,
         },
       });
 
@@ -426,7 +291,7 @@ export function MapView({
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": PRIMARY_BLUE,
+          "circle-color": "#2563eb",
           "circle-radius": ["step", ["get", "point_count"], 16, 10, 20, 30, 28, 100, 36],
           "circle-opacity": 0.9,
         },
@@ -452,7 +317,21 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as ExpressionSpecification,
+          "circle-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "median_price"],
+            400000,
+            "#3a8a6f",
+            600000,
+            "#9bb368",
+            800000,
+            "#d4a44e",
+            1000000,
+            "#d97757",
+            1300000,
+            "#a83232",
+          ],
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
@@ -493,9 +372,7 @@ export function MapView({
           "text-anchor": "bottom",
           "text-max-width": 16,
           "text-allow-overlap": false,
-          "symbol-sort-key": ["case", ["==", ["get", "isInterchange"], true], 1, 0],
-          "symbol-z-order": "source",
-          "text-ignore-placement": true,
+          "text-ignore-placement": false,
         },
         paint: {
           "text-color": "#1e3a8a",
@@ -624,38 +501,6 @@ export function MapView({
         map.getCanvas().style.cursor = "";
       });
 
-      map.on("mouseenter", "mrt-icons", (event) => {
-        map.getCanvas().style.cursor = "pointer";
-        const feature = event.features?.[0];
-        if (!feature || !feature.geometry || feature.geometry.type !== "Point") return;
-
-        const props = toMrtPopupProperties(feature.properties);
-        const stationName = props.stationName ?? tRef.current("map.mrtStation");
-        const lines = parseMrtLines(props.lines);
-        const [lng, lat] = feature.geometry.coordinates;
-
-        const container = document.createElement("div");
-
-        const nameEl = document.createElement("strong");
-        nameEl.textContent = stationName;
-        container.appendChild(nameEl);
-
-        if (lines.length) {
-          const linesEl = document.createElement("p");
-          linesEl.className = "whitespace-nowrap opacity-80 mt-1";
-          linesEl.textContent = lines.join(" • ");
-          container.appendChild(linesEl);
-        }
-
-        popup.setLngLat([lng, lat]).setDOMContent(container).addTo(map);
-      });
-
-      map.on("mouseleave", "mrt-icons", () => {
-        map.getCanvas().style.cursor = "";
-        popup.remove();
-      });
-
-
     });
 
     mapRef.current = map;
@@ -667,6 +512,20 @@ export function MapView({
       popupRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) {
+      return;
+    }
+
+    const source = map.getSource("onemap") as RasterSourceLike | undefined;
+    if (!source || typeof source.setTiles !== "function") {
+      return;
+    }
+
+    source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
+  }, [isDarkMode]);
 
   useEffect(() => {
     const map = mapRef.current;
