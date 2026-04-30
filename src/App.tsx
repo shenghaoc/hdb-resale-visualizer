@@ -891,22 +891,26 @@ function App() {
 
           {isDesktop ? (
             <section className="pointer-events-none relative min-h-0 flex-1">
-              {isDesktopPanelOpen ? (
-                <aside
-                  id="desktop-panel"
-                  className={cn(
-                    "pointer-events-auto absolute bottom-16 left-0 flex max-h-[min(44rem,calc(100vh-8rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] dark:bg-card",
-                    desktopTab === "saved"
-                      ? "w-[min(44rem,48vw)]"
-                      : desktopTab === "results"
-                        ? "w-[min(34rem,38vw)]"
-                        : "w-[min(30rem,34vw)]",
-                  )}
-                >
+              <aside
+                id="desktop-panel"
+                aria-hidden={!isDesktopPanelOpen}
+                className={cn(
+                  "pointer-events-auto absolute bottom-20 left-0 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
+                  isDesktopPanelOpen
+                    ? "translate-y-0 opacity-100"
+                    : "pointer-events-none translate-y-6 opacity-0",
+                  desktopTab === "saved"
+                    ? "w-[min(44rem,48vw)]"
+                    : desktopTab === "results"
+                      ? "w-[min(34rem,38vw)]"
+                      : "w-[min(30rem,34vw)]",
+                )}
+              >
+                {isDesktopPanelOpen ? (
                   <div className="flex h-full min-h-0 flex-col">
                     {desktopTab === "filters" ? (
                       <div id="desktop-filters-content" className="h-full overflow-y-auto p-3 pb-8">
-                      {filterContent}
+                        {filterContent}
                       </div>
                     ) : null}
                     {desktopTab === "results" ? (
@@ -926,13 +930,16 @@ function App() {
                       </div>
                     ) : null}
                     {desktopTab === "saved" ? (
-                      <div id="desktop-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8">
+                      <div
+                        id="desktop-saved-content"
+                        className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
+                      >
                         {savedContent}
                       </div>
                     ) : null}
                   </div>
-                </aside>
-              ) : null}
+                ) : null}
+              </aside>
             </section>
           ) : (
             <section className="pointer-events-none relative min-h-0 flex-1">
