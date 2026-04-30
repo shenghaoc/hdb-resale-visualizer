@@ -9,8 +9,8 @@
       "lat": 1.40181105531617,
       "lng": 103.890815263088
     },
-    "medianPrice": 719000,
-    "transactionCount": 8,
+    "medianPrice": 688000,
+    "transactionCount": 9,
     "floorAreaRange": [
       93,
       113
@@ -19,10 +19,10 @@
       2017,
       2017
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2022-12",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "822233",
     "priceIqr": [
-      672000,
-      786250
+      648000,
+      780000
     ],
-    "pricePerSqmMedian": 6773.9,
-    "pricePerSqftMedian": 629.32
+    "pricePerSqmMedian": 6805.25,
+    "pricePerSqftMedian": 632.23
   },
   "monthlyTrend": [
     {
@@ -149,11 +149,30 @@
       "medianPrice": 805000,
       "transactionCount": 1,
       "medianPricePerSqm": 7123.89
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 632888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6805.25
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-233b-sumang-lane-2026-02-226695",
+      "id": "punggol-233b-sumang-lane-2026-04-226622",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 07 months",
+      "resalePrice": 632888,
+      "pricePerSqm": 6805.25,
+      "pricePerSqft": 632.23
+    },
+    {
+      "id": "punggol-233b-sumang-lane-2026-02-226757",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -398,19 +417,6 @@
       "resalePrice": 578888,
       "pricePerSqm": 6224.6,
       "pricePerSqft": 578.29
-    },
-    {
-      "id": "punggol-233b-sumang-lane-2023-05-157686",
-      "month": "2023-05",
-      "flatType": "4 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "94 years 07 months",
-      "resalePrice": 590000,
-      "pricePerSqm": 6344.09,
-      "pricePerSqft": 589.39
     }
   ]
 }

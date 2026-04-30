@@ -9,8 +9,8 @@
       "lat": 1.35380840642139,
       "lng": 103.947114964145
     },
-    "medianPrice": 508888,
-    "transactionCount": 5,
+    "medianPrice": 511944,
+    "transactionCount": 6,
     "floorAreaRange": [
       74,
       108
@@ -52,11 +52,11 @@
     ],
     "postalCode": "521244",
     "priceIqr": [
-      493888,
-      688000
+      497638,
+      644750
     ],
-    "pricePerSqmMedian": 6674.16,
-    "pricePerSqftMedian": 620.05
+    "pricePerSqmMedian": 6775.51,
+    "pricePerSqftMedian": 629.46
   },
   "monthlyTrend": [
     {
@@ -883,14 +883,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 688000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6552.38
+      "medianPrice": 601500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6755.92
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-244-tampines-st-21-2026-04-228149",
+      "id": "tampines-244-tampines-st-21-2026-04-228030",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 02 months",
+      "resalePrice": 515000,
+      "pricePerSqm": 6959.46,
+      "pricePerSqft": 646.56
+    },
+    {
+      "id": "tampines-244-tampines-st-21-2026-04-228229",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1135,19 +1148,6 @@
       "resalePrice": 520888,
       "pricePerSqm": 4960.84,
       "pricePerSqft": 460.88
-    },
-    {
-      "id": "tampines-244-tampines-st-21-2018-09-36358",
-      "month": "2018-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 74,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "64 years 09 months",
-      "resalePrice": 375000,
-      "pricePerSqm": 5067.57,
-      "pricePerSqft": 470.79
     }
   ]
 }

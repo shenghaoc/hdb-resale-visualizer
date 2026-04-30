@@ -9,8 +9,8 @@
       "lat": 1.34186637511517,
       "lng": 103.952019442211
     },
-    "medianPrice": 888000,
-    "transactionCount": 1,
+    "medianPrice": 804000,
+    "transactionCount": 2,
     "floorAreaRange": [
       98,
       122
@@ -19,10 +19,10 @@
       1995,
       1995
     ],
-    "latestMonth": "2025-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2000-07",
-      "2025-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "520254",
     "priceIqr": [
-      888000,
-      888000
+      762000,
+      846000
     ],
-    "pricePerSqmMedian": 7525.42,
-    "pricePerSqftMedian": 699.14
+    "pricePerSqmMedian": 7399.07,
+    "pricePerSqftMedian": 687.4
   },
   "monthlyTrend": [
     {
@@ -527,9 +527,28 @@
       "medianPrice": 888000,
       "transactionCount": 1,
       "medianPricePerSqm": 7525.42
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 720000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7272.73
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-254-simei-st-1-2026-04-228114",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 99,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1996,
+      "remainingLease": "69 years 05 months",
+      "resalePrice": 720000,
+      "pricePerSqm": 7272.73,
+      "pricePerSqft": 675.66
+    },
     {
       "id": "tampines-254-simei-st-1-2025-01-216908",
       "month": "2025-01",
@@ -776,19 +795,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 5353.54,
       "pricePerSqft": 497.36
-    },
-    {
-      "id": "tampines-254-simei-st-1-2016-11-974469",
-      "month": "2016-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 98,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1996,
-      "remainingLease": "78",
-      "resalePrice": 508000,
-      "pricePerSqm": 5183.67,
-      "pricePerSqft": 481.58
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.27573843980494,
       "lng": 103.80918938464
     },
-    "medianPrice": 438888,
-    "transactionCount": 83,
+    "medianPrice": 770000,
+    "transactionCount": 1,
     "floorAreaRange": [
       117,
       121
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2022-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2022-12"
+      "2026-04"
     ],
     "flatTypes": [
       "5 ROOM"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "100073",
     "priceIqr": [
-      385500,
-      595000
+      770000,
+      770000
     ],
-    "pricePerSqmMedian": 3751.18,
-    "pricePerSqftMedian": 348.5
+    "pricePerSqmMedian": 6581.2,
+    "pricePerSqftMedian": 611.41
   },
   "monthlyTrend": [
     {
@@ -513,9 +513,28 @@
       "medianPrice": 708888,
       "transactionCount": 1,
       "medianPricePerSqm": 6058.87
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 770000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6581.2
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-merah-73-telok-blangah-hts-2026-04-223642",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 117,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "50 years 09 months",
+      "resalePrice": 770000,
+      "pricePerSqm": 6581.2,
+      "pricePerSqft": 611.41
+    },
     {
       "id": "bukit-merah-73-telok-blangah-hts-2022-12-121348",
       "month": "2022-12",
@@ -686,7 +705,7 @@
       "pricePerSqft": 456.58
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2016-08-968337",
+      "id": "bukit-merah-73-telok-blangah-hts-2016-08-968439",
       "month": "2016-08",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -699,7 +718,7 @@
       "pricePerSqft": 559.8
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2016-03-959589",
+      "id": "bukit-merah-73-telok-blangah-hts-2016-03-959691",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -712,7 +731,7 @@
       "pricePerSqft": 562.18
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2015-12-955674",
+      "id": "bukit-merah-73-telok-blangah-hts-2015-12-955776",
       "month": "2015-12",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -725,7 +744,7 @@
       "pricePerSqft": 539.95
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2013-12-634937",
+      "id": "bukit-merah-73-telok-blangah-hts-2013-12-635039",
       "month": "2013-12",
       "flatType": "5 ROOM",
       "storeyRange": "13 TO 15",
@@ -738,7 +757,7 @@
       "pricePerSqft": 575.68
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2013-10-632403",
+      "id": "bukit-merah-73-telok-blangah-hts-2013-10-632505",
       "month": "2013-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -751,7 +770,7 @@
       "pricePerSqft": 546.3
     },
     {
-      "id": "bukit-merah-73-telok-blangah-hts-2013-02-621444",
+      "id": "bukit-merah-73-telok-blangah-hts-2013-02-621546",
       "month": "2013-02",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -762,19 +781,6 @@
       "resalePrice": 713000,
       "pricePerSqm": 6094.02,
       "pricePerSqft": 566.15
-    },
-    {
-      "id": "bukit-merah-73-telok-blangah-hts-2012-04-602406",
-      "month": "2012-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "06 TO 10",
-      "floorAreaSqm": 117,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "51 years",
-      "resalePrice": 690000,
-      "pricePerSqm": 5897.44,
-      "pricePerSqft": 547.89
     }
   ]
 }

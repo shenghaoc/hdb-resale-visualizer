@@ -9,8 +9,8 @@
       "lat": 1.36215691970023,
       "lng": 103.744946718558
     },
-    "medianPrice": 390000,
-    "transactionCount": 5,
+    "medianPrice": 437500,
+    "transactionCount": 6,
     "floorAreaRange": [
       68,
       99
@@ -19,10 +19,10 @@
       1985,
       1985
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-06",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,10 +53,10 @@
     "postalCode": "650423",
     "priceIqr": [
       390000,
-      485000
+      496250
     ],
-    "pricePerSqmMedian": 5735.29,
-    "pricePerSqftMedian": 532.83
+    "pricePerSqmMedian": 5553.82,
+    "pricePerSqftMedian": 515.97
   },
   "monthlyTrend": [
     {
@@ -892,11 +892,30 @@
       "medianPrice": 390000,
       "transactionCount": 1,
       "medianPricePerSqm": 5735.29
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5319.15
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2026-02-222967",
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2026-04-223093",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 94,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 04 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 5319.15,
+      "pricePerSqft": 494.17
+    },
+    {
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2026-02-222979",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1130,7 +1149,7 @@
       "pricePerSqft": 340.97
     },
     {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-11-973430",
+      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-11-973532",
       "month": "2016-11",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -1141,19 +1160,6 @@
       "resalePrice": 330000,
       "pricePerSqm": 3510.64,
       "pricePerSqft": 326.15
-    },
-    {
-      "id": "bukit-batok-423-bt-batok-west-ave-2-2016-10-971779",
-      "month": "2016-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 74,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "70",
-      "resalePrice": 260000,
-      "pricePerSqm": 3513.51,
-      "pricePerSqft": 326.42
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.43445536966004,
       "lng": 103.79641239237
     },
-    "medianPrice": 563000,
-    "transactionCount": 5,
+    "medianPrice": 559000,
+    "transactionCount": 6,
     "floorAreaRange": [
       101,
       122
@@ -53,11 +53,11 @@
     ],
     "postalCode": "730614",
     "priceIqr": [
-      540000,
-      650000
+      543750,
+      628250
     ],
-    "pricePerSqmMedian": 5416.67,
-    "pricePerSqftMedian": 503.23
+    "pricePerSqmMedian": 5428.93,
+    "pricePerSqftMedian": 504.37
   },
   "monthlyTrend": [
     {
@@ -482,14 +482,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 670000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5491.8
+      "medianPrice": 612500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 5466.49
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-614-woodlands-ave-4-2026-04-229229",
+      "id": "woodlands-614-woodlands-ave-4-2026-04-229048",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 102,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 04 months",
+      "resalePrice": 555000,
+      "pricePerSqm": 5441.18,
+      "pricePerSqft": 505.5
+    },
+    {
+      "id": "woodlands-614-woodlands-ave-4-2026-04-229321",
       "month": "2026-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -734,19 +747,6 @@
       "resalePrice": 410000,
       "pricePerSqm": 3388.43,
       "pricePerSqft": 314.8
-    },
-    {
-      "id": "woodlands-614-woodlands-ave-4-2018-06-29968",
-      "month": "2018-06",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 101,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "79 years 03 months",
-      "resalePrice": 300000,
-      "pricePerSqm": 2970.3,
-      "pricePerSqft": 275.95
     }
   ]
 }

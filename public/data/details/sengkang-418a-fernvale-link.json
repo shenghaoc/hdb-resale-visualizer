@@ -9,8 +9,8 @@
       "lat": 1.39100745746343,
       "lng": 103.879606736157
     },
-    "medianPrice": 430000,
-    "transactionCount": 18,
+    "medianPrice": 395888,
+    "transactionCount": 19,
     "floorAreaRange": [
       38,
       68
@@ -53,11 +53,11 @@
     ],
     "postalCode": "791418",
     "priceIqr": [
-      378500,
-      508375
+      379000,
+      507250
     ],
-    "pricePerSqmMedian": 8177.41,
-    "pricePerSqftMedian": 759.7
+    "pricePerSqmMedian": 8205.88,
+    "pricePerSqftMedian": 762.35
   },
   "monthlyTrend": [
     {
@@ -278,14 +278,27 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 505000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 7426.47
+      "medianPrice": 450444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7924.81
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-418a-fernvale-link-2026-04-227294",
+      "id": "sengkang-418a-fernvale-link-2026-04-227323",
+      "month": "2026-04",
+      "flatType": "2 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 47,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years 04 months",
+      "resalePrice": 395888,
+      "pricePerSqm": 8423.15,
+      "pricePerSqft": 782.54
+    },
+    {
+      "id": "sengkang-418a-fernvale-link-2026-04-227363",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -298,7 +311,7 @@
       "pricePerSqft": 689.94
     },
     {
-      "id": "sengkang-418a-fernvale-link-2026-03-227254",
+      "id": "sengkang-418a-fernvale-link-2026-03-227322",
       "month": "2026-03",
       "flatType": "2 ROOM",
       "storeyRange": "10 TO 12",
@@ -530,19 +543,6 @@
       "resalePrice": 340000,
       "pricePerSqm": 8947.37,
       "pricePerSqft": 831.24
-    },
-    {
-      "id": "sengkang-418a-fernvale-link-2024-02-187990",
-      "month": "2024-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2018,
-      "remainingLease": "93 years 06 months",
-      "resalePrice": 455888,
-      "pricePerSqm": 6704.24,
-      "pricePerSqft": 622.84
     }
   ]
 }

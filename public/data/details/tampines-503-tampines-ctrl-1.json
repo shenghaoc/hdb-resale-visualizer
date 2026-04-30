@@ -9,8 +9,8 @@
       "lat": 1.3558033565401,
       "lng": 103.945102946956
     },
-    "medianPrice": 635000,
-    "transactionCount": 3,
+    "medianPrice": 673444,
+    "transactionCount": 4,
     "floorAreaRange": [
       90,
       122
@@ -54,11 +54,11 @@
     ],
     "postalCode": "520503",
     "priceIqr": [
-      621500,
-      701944
+      628250,
+      726138
     ],
-    "pricePerSqmMedian": 6333.33,
-    "pricePerSqftMedian": 588.39
+    "pricePerSqmMedian": 6432.2,
+    "pricePerSqftMedian": 597.58
   },
   "monthlyTrend": [
     {
@@ -585,14 +585,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 635000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6755.32
+      "medianPrice": 673444,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6643.2
     }
   ],
   "recentTransactions": [
     {
-      "id": "tampines-503-tampines-ctrl-1-2026-04-228090",
+      "id": "tampines-503-tampines-ctrl-1-2026-04-228169",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -605,7 +605,20 @@
       "pricePerSqft": 627.59
     },
     {
-      "id": "tampines-503-tampines-ctrl-1-2026-01-228089",
+      "id": "tampines-503-tampines-ctrl-1-2026-04-228170",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 109,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1990,
+      "remainingLease": "62 years 10 months",
+      "resalePrice": 711888,
+      "pricePerSqm": 6531.08,
+      "pricePerSqft": 606.76
+    },
+    {
+      "id": "tampines-503-tampines-ctrl-1-2026-01-228168",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -800,7 +813,7 @@
       "pricePerSqft": 396.87
     },
     {
-      "id": "tampines-503-tampines-ctrl-1-2016-12-975882",
+      "id": "tampines-503-tampines-ctrl-1-2016-12-975984",
       "month": "2016-12",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -813,7 +826,7 @@
       "pricePerSqft": 360.79
     },
     {
-      "id": "tampines-503-tampines-ctrl-1-2016-04-962380",
+      "id": "tampines-503-tampines-ctrl-1-2016-04-962482",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -826,7 +839,7 @@
       "pricePerSqft": 396.33
     },
     {
-      "id": "tampines-503-tampines-ctrl-1-2015-11-955124",
+      "id": "tampines-503-tampines-ctrl-1-2015-11-955226",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -837,19 +850,6 @@
       "resalePrice": 492000,
       "pricePerSqm": 4776.7,
       "pricePerSqft": 443.77
-    },
-    {
-      "id": "tampines-503-tampines-ctrl-1-2015-07-948922",
-      "month": "2015-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 122,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1990,
-      "remainingLease": "73",
-      "resalePrice": 633000,
-      "pricePerSqm": 5188.52,
-      "pricePerSqft": 482.03
     }
   ]
 }

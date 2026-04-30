@@ -9,8 +9,8 @@
       "lat": 1.32932082372457,
       "lng": 103.888071748726
     },
-    "medianPrice": 972800,
-    "transactionCount": 13,
+    "medianPrice": 976400,
+    "transactionCount": 14,
     "floorAreaRange": [
       67,
       93
@@ -52,11 +52,11 @@
     ],
     "postalCode": "371018",
     "priceIqr": [
-      733888,
-      995000
+      770416,
+      996417
     ],
-    "pricePerSqmMedian": 10698.92,
-    "pricePerSqftMedian": 993.96
+    "pricePerSqmMedian": 10707.67,
+    "pricePerSqftMedian": 994.78
   },
   "monthlyTrend": [
     {
@@ -235,14 +235,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 733888,
-      "transactionCount": 1,
-      "medianPricePerSqm": 10953.55
+      "medianPrice": 896388,
+      "transactionCount": 2,
+      "medianPricePerSqm": 11169.72
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-18a-circuit-rd-2026-04-224515",
+      "id": "geylang-18a-circuit-rd-2026-04-224550",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "13 TO 15",
@@ -255,7 +255,20 @@
       "pricePerSqft": 1017.62
     },
     {
-      "id": "geylang-18a-circuit-rd-2026-01-224494",
+      "id": "geylang-18a-circuit-rd-2026-04-224630",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "16 TO 18",
+      "floorAreaSqm": 93,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years 07 months",
+      "resalePrice": 1058888,
+      "pricePerSqm": 11385.89,
+      "pricePerSqft": 1057.79
+    },
+    {
+      "id": "geylang-18a-circuit-rd-2026-01-224529",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -268,7 +281,7 @@
       "pricePerSqft": 995.59
     },
     {
-      "id": "geylang-18a-circuit-rd-2026-01-224579",
+      "id": "geylang-18a-circuit-rd-2026-01-224617",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -281,7 +294,7 @@
       "pricePerSqft": 917.93
     },
     {
-      "id": "geylang-18a-circuit-rd-2026-01-224582",
+      "id": "geylang-18a-circuit-rd-2026-01-224620",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -487,19 +500,6 @@
       "resalePrice": 570000,
       "pricePerSqm": 8507.46,
       "pricePerSqft": 790.37
-    },
-    {
-      "id": "geylang-18a-circuit-rd-2022-09-125129",
-      "month": "2022-09",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 93,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "93 years 03 months",
-      "resalePrice": 812000,
-      "pricePerSqm": 8731.18,
-      "pricePerSqft": 811.15
     }
   ]
 }

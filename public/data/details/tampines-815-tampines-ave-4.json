@@ -9,8 +9,8 @@
       "lat": 1.34734692651401,
       "lng": 103.937409006158
     },
-    "medianPrice": 725000,
-    "transactionCount": 3,
+    "medianPrice": 737500,
+    "transactionCount": 4,
     "floorAreaRange": [
       98,
       124
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "520815",
     "priceIqr": [
-      692500,
-      765000
+      708750,
+      763750
     ],
-    "pricePerSqmMedian": 5991.74,
-    "pricePerSqftMedian": 556.65
+    "pricePerSqmMedian": 6095.05,
+    "pricePerSqftMedian": 566.25
   },
   "monthlyTrend": [
     {
@@ -611,9 +611,28 @@
       "medianPrice": 805000,
       "transactionCount": 1,
       "medianPricePerSqm": 6491.94
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6198.35
     }
   ],
   "recentTransactions": [
+    {
+      "id": "tampines-815-tampines-ave-4-2026-04-228388",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 11 months",
+      "resalePrice": 750000,
+      "pricePerSqm": 6198.35,
+      "pricePerSqft": 575.85
+    },
     {
       "id": "tampines-815-tampines-ave-4-2025-12-216955",
       "month": "2025-12",
@@ -860,19 +879,6 @@
       "resalePrice": 532800,
       "pricePerSqm": 4403.31,
       "pricePerSqft": 409.08
-    },
-    {
-      "id": "tampines-815-tampines-ave-4-2019-04-48118",
-      "month": "2019-04",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "64 years 11 months",
-      "resalePrice": 540000,
-      "pricePerSqm": 4462.81,
-      "pricePerSqft": 414.61
     }
   ]
 }

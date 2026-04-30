@@ -9,8 +9,8 @@
       "lat": 1.32901430131171,
       "lng": 103.925667777871
     },
-    "medianPrice": 395000,
-    "transactionCount": 5,
+    "medianPrice": 396500,
+    "transactionCount": 6,
     "floorAreaRange": [
       68,
       92
@@ -19,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,7 +53,7 @@
     "postalCode": "461044",
     "priceIqr": [
       395000,
-      420000
+      414500
     ],
     "pricePerSqmMedian": 5808.82,
     "pricePerSqftMedian": 539.66
@@ -1174,11 +1174,30 @@
       "medianPrice": 395000,
       "transactionCount": 1,
       "medianPricePerSqm": 5808.82
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 398000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5852.94
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-44-chai-chee-st-2026-02-222494",
+      "id": "bedok-44-chai-chee-st-2026-04-222501",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "53 years 01 month",
+      "resalePrice": 398000,
+      "pricePerSqm": 5852.94,
+      "pricePerSqft": 543.76
+    },
+    {
+      "id": "bedok-44-chai-chee-st-2026-02-222499",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1423,19 +1442,6 @@
       "resalePrice": 290000,
       "pricePerSqm": 4264.71,
       "pricePerSqft": 396.2
-    },
-    {
-      "id": "bedok-44-chai-chee-st-2020-09-78029",
-      "month": "2020-09",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "58 years 09 months",
-      "resalePrice": 280000,
-      "pricePerSqm": 4117.65,
-      "pricePerSqft": 382.54
     }
   ]
 }

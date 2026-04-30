@@ -9,8 +9,8 @@
       "lat": 1.35637063078371,
       "lng": 103.849221049026
     },
-    "medianPrice": 822000,
-    "transactionCount": 3,
+    "medianPrice": 868500,
+    "transactionCount": 4,
     "floorAreaRange": [
       103,
       137
@@ -19,10 +19,10 @@
       1990,
       1990
     ],
-    "latestMonth": "2025-05",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1995-07",
-      "2025-05"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "570216",
     "priceIqr": [
-      798500,
-      932500
+      810250,
+      947000
     ],
-    "pricePerSqmMedian": 7613.14,
-    "pricePerSqftMedian": 707.28
+    "pricePerSqmMedian": 7796.86,
+    "pricePerSqftMedian": 724.35
   },
   "monthlyTrend": [
     {
@@ -424,9 +424,28 @@
       "medianPrice": 775000,
       "transactionCount": 1,
       "medianPricePerSqm": 7524.27
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 915000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8026.32
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bishan-216-bishan-st-23-2026-04-222827",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 114,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1992,
+      "remainingLease": "64 years 11 months",
+      "resalePrice": 915000,
+      "pricePerSqm": 8026.32,
+      "pricePerSqft": 745.67
+    },
     {
       "id": "bishan-216-bishan-st-23-2025-05-199335",
       "month": "2025-05",
@@ -597,7 +616,7 @@
       "pricePerSqft": 527.58
     },
     {
-      "id": "bishan-216-bishan-st-23-2016-11-973386",
+      "id": "bishan-216-bishan-st-23-2016-11-973488",
       "month": "2016-11",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -610,7 +629,7 @@
       "pricePerSqft": 526.9
     },
     {
-      "id": "bishan-216-bishan-st-23-2016-04-961137",
+      "id": "bishan-216-bishan-st-23-2016-04-961239",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -623,7 +642,7 @@
       "pricePerSqft": 523.14
     },
     {
-      "id": "bishan-216-bishan-st-23-2016-03-959454",
+      "id": "bishan-216-bishan-st-23-2016-03-959556",
       "month": "2016-03",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -636,7 +655,7 @@
       "pricePerSqft": 563.73
     },
     {
-      "id": "bishan-216-bishan-st-23-2016-01-956947",
+      "id": "bishan-216-bishan-st-23-2016-01-957049",
       "month": "2016-01",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -649,7 +668,7 @@
       "pricePerSqft": 522.16
     },
     {
-      "id": "bishan-216-bishan-st-23-2015-11-954081",
+      "id": "bishan-216-bishan-st-23-2015-11-954183",
       "month": "2015-11",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -662,7 +681,7 @@
       "pricePerSqft": 504.22
     },
     {
-      "id": "bishan-216-bishan-st-23-2015-10-952384",
+      "id": "bishan-216-bishan-st-23-2015-10-952486",
       "month": "2015-10",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -673,19 +692,6 @@
       "resalePrice": 528000,
       "pricePerSqm": 4631.58,
       "pricePerSqft": 430.29
-    },
-    {
-      "id": "bishan-216-bishan-st-23-2014-10-647777",
-      "month": "2014-10",
-      "flatType": "4 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 103,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1992,
-      "remainingLease": "65 years",
-      "resalePrice": 576000,
-      "pricePerSqm": 5592.23,
-      "pricePerSqft": 519.54
     }
   ]
 }

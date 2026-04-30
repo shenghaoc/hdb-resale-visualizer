@@ -9,8 +9,8 @@
       "lat": 1.37612888392923,
       "lng": 103.882894860894
     },
-    "medianPrice": 702500,
-    "transactionCount": 6,
+    "medianPrice": 725000,
+    "transactionCount": 7,
     "floorAreaRange": [
       100,
       120
@@ -19,10 +19,10 @@
       1996,
       1996
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2001-12",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "530923",
     "priceIqr": [
-      620000,
-      742916
+      640000,
+      744444
     ],
-    "pricePerSqmMedian": 6020.84,
-    "pricePerSqftMedian": 559.36
+    "pricePerSqmMedian": 6041.67,
+    "pricePerSqftMedian": 561.29
   },
   "monthlyTrend": [
     {
@@ -491,9 +491,28 @@
       "medianPrice": 770000,
       "transactionCount": 1,
       "medianPricePerSqm": 6416.67
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 740000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6166.67
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-923-hougang-ave-9-2026-04-225046",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 120,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "70 years 10 months",
+      "resalePrice": 740000,
+      "pricePerSqm": 6166.67,
+      "pricePerSqft": 572.9
+    },
     {
       "id": "hougang-923-hougang-ave-9-2025-09-206130",
       "month": "2025-09",
@@ -740,19 +759,6 @@
       "resalePrice": 367000,
       "pricePerSqm": 3670,
       "pricePerSqft": 340.95
-    },
-    {
-      "id": "hougang-923-hougang-ave-9-2017-11-17644",
-      "month": "2017-11",
-      "flatType": "4 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 100,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "79 years 03 months",
-      "resalePrice": 378000,
-      "pricePerSqm": 3780,
-      "pricePerSqft": 351.17
     }
   ]
 }

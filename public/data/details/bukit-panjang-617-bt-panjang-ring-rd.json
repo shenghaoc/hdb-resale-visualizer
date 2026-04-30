@@ -9,8 +9,8 @@
       "lat": 1.38565259545477,
       "lng": 103.762825738906
     },
-    "medianPrice": 840000,
-    "transactionCount": 3,
+    "medianPrice": 857500,
+    "transactionCount": 4,
     "floorAreaRange": [
       130,
       131
@@ -51,11 +51,11 @@
     ],
     "postalCode": "670617",
     "priceIqr": [
-      835000,
-      857500
+      837500,
+      878750
     ],
-    "pricePerSqmMedian": 6412.21,
-    "pricePerSqftMedian": 595.71
+    "pricePerSqmMedian": 6571.49,
+    "pricePerSqftMedian": 610.51
   },
   "monthlyTrend": [
     {
@@ -252,14 +252,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 830000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6384.62
+      "medianPrice": 860000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6615.39
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-617-bt-panjang-ring-rd-2026-04-223858",
+      "id": "bukit-panjang-617-bt-panjang-ring-rd-2026-04-223884",
       "month": "2026-04",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -270,6 +270,19 @@
       "resalePrice": 830000,
       "pricePerSqm": 6384.62,
       "pricePerSqft": 593.15
+    },
+    {
+      "id": "bukit-panjang-617-bt-panjang-ring-rd-2026-04-223885",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 130,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 2001,
+      "remainingLease": "74 years 06 months",
+      "resalePrice": 890000,
+      "pricePerSqm": 6846.15,
+      "pricePerSqft": 636.03
     },
     {
       "id": "bukit-panjang-617-bt-panjang-ring-rd-2025-07-202501",
@@ -480,7 +493,7 @@
       "pricePerSqft": 375.19
     },
     {
-      "id": "bukit-panjang-617-bt-panjang-ring-rd-2016-08-968407",
+      "id": "bukit-panjang-617-bt-panjang-ring-rd-2016-08-968509",
       "month": "2016-08",
       "flatType": "EXECUTIVE",
       "storeyRange": "19 TO 21",
@@ -493,7 +506,7 @@
       "pricePerSqft": 417
     },
     {
-      "id": "bukit-panjang-617-bt-panjang-ring-rd-2015-09-950994",
+      "id": "bukit-panjang-617-bt-panjang-ring-rd-2015-09-951096",
       "month": "2015-09",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -504,19 +517,6 @@
       "resalePrice": 550000,
       "pricePerSqm": 4230.77,
       "pricePerSqft": 393.05
-    },
-    {
-      "id": "bukit-panjang-617-bt-panjang-ring-rd-2015-07-948038",
-      "month": "2015-07",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 130,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 2001,
-      "remainingLease": "85",
-      "resalePrice": 565000,
-      "pricePerSqm": 4346.15,
-      "pricePerSqft": 403.77
     }
   ]
 }

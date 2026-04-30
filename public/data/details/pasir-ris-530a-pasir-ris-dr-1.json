@@ -9,8 +9,8 @@
       "lat": 1.37114053931458,
       "lng": 103.949850548422
     },
-    "medianPrice": 800000,
-    "transactionCount": 6,
+    "medianPrice": 820000,
+    "transactionCount": 7,
     "floorAreaRange": [
       65,
       105
@@ -19,10 +19,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-09",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "511530",
     "priceIqr": [
-      772500,
-      842500
+      775000,
+      840000
     ],
-    "pricePerSqmMedian": 9302.33,
-    "pricePerSqftMedian": 864.22
+    "pricePerSqmMedian": 9534.88,
+    "pricePerSqftMedian": 885.82
   },
   "monthlyTrend": [
     {
@@ -275,11 +275,30 @@
       "medianPrice": 770000,
       "transactionCount": 1,
       "medianPricePerSqm": 8953.49
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 830000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 9651.16
     }
   ],
   "recentTransactions": [
     {
-      "id": "pasir-ris-530a-pasir-ris-dr-1-2026-03-225986",
+      "id": "pasir-ris-530a-pasir-ris-dr-1-2026-04-226043",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 86,
+      "flatModel": "DBSS",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 02 months",
+      "resalePrice": 830000,
+      "pricePerSqm": 9651.16,
+      "pricePerSqft": 896.62
+    },
+    {
+      "id": "pasir-ris-530a-pasir-ris-dr-1-2026-03-226041",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -524,19 +543,6 @@
       "resalePrice": 765000,
       "pricePerSqm": 7285.71,
       "pricePerSqft": 676.87
-    },
-    {
-      "id": "pasir-ris-530a-pasir-ris-dr-1-2023-04-156424",
-      "month": "2023-04",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 86,
-      "flatModel": "DBSS",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "91 years 02 months",
-      "resalePrice": 636000,
-      "pricePerSqm": 7395.35,
-      "pricePerSqft": 687.05
     }
   ]
 }

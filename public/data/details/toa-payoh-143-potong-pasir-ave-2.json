@@ -9,8 +9,8 @@
       "lat": 1.33290762111116,
       "lng": 103.866168845292
     },
-    "medianPrice": 625000,
-    "transactionCount": 9,
+    "medianPrice": 612500,
+    "transactionCount": 10,
     "floorAreaRange": [
       74,
       160
@@ -19,10 +19,10 @@
       1983,
       1983
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-10",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,10 +55,10 @@
     "postalCode": "350143",
     "priceIqr": [
       600000,
-      745000
+      732500
     ],
-    "pricePerSqmMedian": 7795.45,
-    "pricePerSqftMedian": 724.22
+    "pricePerSqmMedian": 7951.78,
+    "pricePerSqftMedian": 738.75
   },
   "monthlyTrend": [
     {
@@ -870,11 +870,30 @@
       "medianPrice": 741250,
       "transactionCount": 2,
       "medianPricePerSqm": 8120.7
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 600000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8108.11
     }
   ],
   "recentTransactions": [
     {
-      "id": "toa-payoh-143-potong-pasir-ave-2-2026-01-228639",
+      "id": "toa-payoh-143-potong-pasir-ave-2-2026-04-228724",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 74,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 600000,
+      "pricePerSqm": 8108.11,
+      "pricePerSqft": 753.27
+    },
+    {
+      "id": "toa-payoh-143-potong-pasir-ave-2-2026-01-228723",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -887,7 +906,7 @@
       "pricePerSqft": 784.65
     },
     {
-      "id": "toa-payoh-143-potong-pasir-ave-2-2026-01-228758",
+      "id": "toa-payoh-143-potong-pasir-ave-2-2026-01-228846",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -1119,19 +1138,6 @@
       "resalePrice": 483000,
       "pricePerSqm": 6527.03,
       "pricePerSqft": 606.38
-    },
-    {
-      "id": "toa-payoh-143-potong-pasir-ave-2-2021-07-103615",
-      "month": "2021-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "62 years",
-      "resalePrice": 597500,
-      "pricePerSqm": 5745.19,
-      "pricePerSqft": 533.75
     }
   ]
 }

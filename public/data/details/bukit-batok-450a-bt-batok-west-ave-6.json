@@ -9,8 +9,8 @@
       "lat": 1.35279091158198,
       "lng": 103.744536033565
     },
-    "medianPrice": 430000,
-    "transactionCount": 16,
+    "medianPrice": 470000,
+    "transactionCount": 17,
     "floorAreaRange": [
       38,
       67
@@ -53,11 +53,11 @@
     ],
     "postalCode": "651450",
     "priceIqr": [
-      373250,
-      511250
+      375000,
+      510000
     ],
-    "pricePerSqmMedian": 7981.9,
-    "pricePerSqftMedian": 741.55
+    "pricePerSqmMedian": 7978.72,
+    "pricePerSqftMedian": 741.25
   },
   "monthlyTrend": [
     {
@@ -218,14 +218,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 540000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8059.7
+      "medianPrice": 510000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 7611.94
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-batok-450a-bt-batok-west-ave-6-2026-04-222982",
+      "id": "bukit-batok-450a-bt-batok-west-ave-6-2026-04-222994",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -238,7 +238,20 @@
       "pricePerSqft": 748.77
     },
     {
-      "id": "bukit-batok-450a-bt-batok-west-ave-6-2026-02-222873",
+      "id": "bukit-batok-450a-bt-batok-west-ave-6-2026-04-222996",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2019,
+      "remainingLease": "92 years",
+      "resalePrice": 480000,
+      "pricePerSqm": 7164.18,
+      "pricePerSqft": 665.57
+    },
+    {
+      "id": "bukit-batok-450a-bt-batok-west-ave-6-2026-02-222884",
       "month": "2026-02",
       "flatType": "2 ROOM",
       "storeyRange": "04 TO 06",
@@ -470,19 +483,6 @@
       "resalePrice": 362000,
       "pricePerSqm": 7702.13,
       "pricePerSqft": 715.55
-    },
-    {
-      "id": "bukit-batok-450a-bt-batok-west-ave-6-2024-01-171924",
-      "month": "2024-01",
-      "flatType": "2 ROOM",
-      "storeyRange": "16 TO 18",
-      "floorAreaSqm": 47,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2019,
-      "remainingLease": "94 years 03 months",
-      "resalePrice": 372000,
-      "pricePerSqm": 7914.89,
-      "pricePerSqft": 735.32
     }
   ]
 }

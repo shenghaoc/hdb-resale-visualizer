@@ -9,8 +9,8 @@
       "lat": 1.43553062556873,
       "lng": 103.84167355912
     },
-    "medianPrice": 482500,
-    "transactionCount": 4,
+    "medianPrice": 475000,
+    "transactionCount": 5,
     "floorAreaRange": [
       84,
       105
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -52,11 +52,11 @@
     ],
     "postalCode": "760250",
     "priceIqr": [
-      470000,
-      495000
+      455000,
+      490000
     ],
-    "pricePerSqmMedian": 5535.72,
-    "pricePerSqftMedian": 514.29
+    "pricePerSqmMedian": 5416.67,
+    "pricePerSqftMedian": 503.23
   },
   "monthlyTrend": [
     {
@@ -844,11 +844,30 @@
       "medianPrice": 490000,
       "transactionCount": 1,
       "medianPricePerSqm": 5833.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 455000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5416.67
     }
   ],
   "recentTransactions": [
     {
-      "id": "yishun-250-yishun-ave-9-2026-03-229677",
+      "id": "yishun-250-yishun-ave-9-2026-04-229781",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 84,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "58 years 01 month",
+      "resalePrice": 455000,
+      "pricePerSqm": 5416.67,
+      "pricePerSqft": 503.23
+    },
+    {
+      "id": "yishun-250-yishun-ave-9-2026-03-229774",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -1093,19 +1112,6 @@
       "resalePrice": 300000,
       "pricePerSqm": 3571.43,
       "pricePerSqft": 331.8
-    },
-    {
-      "id": "yishun-250-yishun-ave-9-2018-03-24597",
-      "month": "2018-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 104,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "66 years 02 months",
-      "resalePrice": 335000,
-      "pricePerSqm": 3221.15,
-      "pricePerSqft": 299.26
     }
   ]
 }

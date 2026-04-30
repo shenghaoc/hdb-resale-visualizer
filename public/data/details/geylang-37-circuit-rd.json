@@ -9,8 +9,8 @@
       "lat": 1.32817733374331,
       "lng": 103.886486362837
     },
-    "medianPrice": 343000,
-    "transactionCount": 4,
+    "medianPrice": 338000,
+    "transactionCount": 5,
     "floorAreaRange": [
       58,
       62
@@ -19,10 +19,10 @@
       1965,
       1965
     ],
-    "latestMonth": "2025-09",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2010-08",
-      "2025-09"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "370037",
     "priceIqr": [
-      335250,
-      350722
+      327000,
+      348000
     ],
-    "pricePerSqmMedian": 5913.8,
-    "pricePerSqftMedian": 549.41
+    "pricePerSqmMedian": 5827.59,
+    "pricePerSqftMedian": 541.4
   },
   "monthlyTrend": [
     {
@@ -327,9 +327,28 @@
       "medianPrice": 358888,
       "transactionCount": 1,
       "medianPricePerSqm": 6082.85
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 308000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5310.34
     }
   ],
   "recentTransactions": [
+    {
+      "id": "geylang-37-circuit-rd-2026-04-224560",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 58,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1972,
+      "remainingLease": "45 years 07 months",
+      "resalePrice": 308000,
+      "pricePerSqm": 5310.34,
+      "pricePerSqft": 493.35
+    },
     {
       "id": "geylang-37-circuit-rd-2025-09-204548",
       "month": "2025-09",
@@ -576,19 +595,6 @@
       "resalePrice": 210000,
       "pricePerSqm": 3620.69,
       "pricePerSqft": 336.37
-    },
-    {
-      "id": "geylang-37-circuit-rd-2018-08-33353",
-      "month": "2018-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 58,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1972,
-      "remainingLease": "53 years 04 months",
-      "resalePrice": 250000,
-      "pricePerSqm": 4310.34,
-      "pricePerSqft": 400.44
     }
   ]
 }

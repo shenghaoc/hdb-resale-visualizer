@@ -9,8 +9,8 @@
       "lat": 1.43469554286276,
       "lng": 103.791048679069
     },
-    "medianPrice": 665000,
-    "transactionCount": 8,
+    "medianPrice": 675000,
+    "transactionCount": 9,
     "floorAreaRange": [
       107,
       147
@@ -19,10 +19,10 @@
       1998,
       1998
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-03",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "730516",
     "priceIqr": [
-      614500,
-      707222
+      626000,
+      700000
     ],
-    "pricePerSqmMedian": 5510.28,
-    "pricePerSqftMedian": 511.92
+    "pricePerSqmMedian": 5440,
+    "pricePerSqftMedian": 505.39
   },
   "monthlyTrend": [
     {
@@ -623,11 +623,30 @@
       "medianPrice": 575000,
       "transactionCount": 1,
       "medianPricePerSqm": 5373.83
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 680000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5440
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-516-woodlands-dr-14-2026-02-229014",
+      "id": "woodlands-516-woodlands-dr-14-2026-04-229354",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 125,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "71 years 11 months",
+      "resalePrice": 680000,
+      "pricePerSqm": 5440,
+      "pricePerSqft": 505.39
+    },
+    {
+      "id": "woodlands-516-woodlands-dr-14-2026-02-229104",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -872,19 +891,6 @@
       "resalePrice": 470000,
       "pricePerSqm": 3760,
       "pricePerSqft": 349.32
-    },
-    {
-      "id": "woodlands-516-woodlands-dr-14-2019-07-54316",
-      "month": "2019-07",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 107,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "78 years 08 months",
-      "resalePrice": 390000,
-      "pricePerSqm": 3644.86,
-      "pricePerSqft": 338.62
     }
   ]
 }

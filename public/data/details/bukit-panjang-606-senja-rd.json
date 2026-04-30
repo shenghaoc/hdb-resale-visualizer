@@ -9,8 +9,8 @@
       "lat": 1.38129574701623,
       "lng": 103.761571341904
     },
-    "medianPrice": 880000,
-    "transactionCount": 9,
+    "medianPrice": 875000,
+    "transactionCount": 10,
     "floorAreaRange": [
       99,
       121
@@ -19,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-11",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2003-08",
-      "2025-11"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,8 +53,8 @@
     ],
     "postalCode": "670606",
     "priceIqr": [
-      862000,
-      900000
+      843166,
+      895000
     ],
     "pricePerSqmMedian": 7333.33,
     "pricePerSqftMedian": 681.29
@@ -527,9 +527,28 @@
       "medianPrice": 880000,
       "transactionCount": 1,
       "medianPricePerSqm": 7333.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 750000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7575.76
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bukit-panjang-606-senja-rd-2026-04-223811",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "19 TO 21",
+      "floorAreaSqm": 99,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1999,
+      "remainingLease": "72 years",
+      "resalePrice": 750000,
+      "pricePerSqm": 7575.76,
+      "pricePerSqft": 703.81
+    },
     {
       "id": "bukit-panjang-606-senja-rd-2025-11-202488",
       "month": "2025-11",
@@ -776,19 +795,6 @@
       "resalePrice": 730000,
       "pricePerSqm": 6083.33,
       "pricePerSqft": 565.16
-    },
-    {
-      "id": "bukit-panjang-606-senja-rd-2022-03-121594",
-      "month": "2022-03",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 99,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1999,
-      "remainingLease": "76 years 02 months",
-      "resalePrice": 510000,
-      "pricePerSqm": 5151.52,
-      "pricePerSqft": 478.59
     }
   ]
 }

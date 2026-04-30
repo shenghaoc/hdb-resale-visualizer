@@ -9,8 +9,8 @@
       "lat": 1.34771611238472,
       "lng": 103.725087068634
     },
-    "medianPrice": 440000,
-    "transactionCount": 5,
+    "medianPrice": 431000,
+    "transactionCount": 7,
     "floorAreaRange": [
       73,
       106
@@ -52,11 +52,11 @@
     ],
     "postalCode": "640477",
     "priceIqr": [
-      431000,
-      512000
+      401000,
+      476000
     ],
-    "pricePerSqmMedian": 5547.95,
-    "pricePerSqftMedian": 515.42
+    "pricePerSqmMedian": 5490.2,
+    "pricePerSqftMedian": 510.06
   },
   "monthlyTrend": [
     {
@@ -871,14 +871,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 405000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 5547.95
+      "medianPrice": 397000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5438.36
     }
   ],
   "recentTransactions": [
     {
-      "id": "jurong-west-477-jurong-west-st-41-2026-04-225287",
+      "id": "jurong-west-477-jurong-west-st-41-2026-04-225332",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -889,6 +889,32 @@
       "resalePrice": 405000,
       "pricePerSqm": 5547.95,
       "pricePerSqft": 515.42
+    },
+    {
+      "id": "jurong-west-477-jurong-west-st-41-2026-04-225335",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 73,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 392000,
+      "pricePerSqm": 5369.86,
+      "pricePerSqft": 498.88
+    },
+    {
+      "id": "jurong-west-477-jurong-west-st-41-2026-04-225336",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 73,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1984,
+      "remainingLease": "57 years 03 months",
+      "resalePrice": 397000,
+      "pricePerSqm": 5438.36,
+      "pricePerSqft": 505.24
     },
     {
       "id": "jurong-west-477-jurong-west-st-41-2025-10-207365",
@@ -1110,32 +1136,6 @@
       "resalePrice": 266000,
       "pricePerSqm": 3643.84,
       "pricePerSqft": 338.52
-    },
-    {
-      "id": "jurong-west-477-jurong-west-st-41-2018-06-29075",
-      "month": "2018-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 73,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "65 years 02 months",
-      "resalePrice": 280000,
-      "pricePerSqm": 3835.62,
-      "pricePerSqft": 356.34
-    },
-    {
-      "id": "jurong-west-477-jurong-west-st-41-2018-04-25464",
-      "month": "2018-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 73,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1984,
-      "remainingLease": "65 years 03 months",
-      "resalePrice": 293500,
-      "pricePerSqm": 4020.55,
-      "pricePerSqft": 373.52
     }
   ]
 }

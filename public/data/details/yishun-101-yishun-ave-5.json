@@ -9,8 +9,8 @@
       "lat": 1.4305357538408,
       "lng": 103.827667722074
     },
-    "medianPrice": 375000,
-    "transactionCount": 2,
+    "medianPrice": 395000,
+    "transactionCount": 3,
     "floorAreaRange": [
       67,
       90
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2024-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2024-06"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "760101",
     "priceIqr": [
-      365000,
-      385000
+      375000,
+      440000
     ],
-    "pricePerSqmMedian": 5514.7,
-    "pricePerSqftMedian": 512.34
+    "pricePerSqmMedian": 5388.89,
+    "pricePerSqftMedian": 500.64
   },
   "monthlyTrend": [
     {
@@ -904,9 +904,28 @@
       "medianPrice": 395000,
       "transactionCount": 1,
       "medianPricePerSqm": 5808.82
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 485000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5388.89
     }
   ],
   "recentTransactions": [
+    {
+      "id": "yishun-101-yishun-ave-5-2026-04-229744",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 90,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 02 months",
+      "resalePrice": 485000,
+      "pricePerSqm": 5388.89,
+      "pricePerSqft": 500.64
+    },
     {
       "id": "yishun-101-yishun-ave-5-2024-06-195962",
       "month": "2024-06",
@@ -1153,19 +1172,6 @@
       "resalePrice": 235000,
       "pricePerSqm": 3507.46,
       "pricePerSqft": 325.85
-    },
-    {
-      "id": "yishun-101-yishun-ave-5-2019-05-50420",
-      "month": "2019-05",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "58 years 01 month",
-      "resalePrice": 240000,
-      "pricePerSqm": 3529.41,
-      "pricePerSqft": 327.89
     }
   ]
 }

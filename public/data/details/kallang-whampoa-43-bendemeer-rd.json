@@ -9,8 +9,8 @@
       "lat": 1.32112499272338,
       "lng": 103.865833285976
     },
-    "medianPrice": 418000,
-    "transactionCount": 5,
+    "medianPrice": 421500,
+    "transactionCount": 6,
     "floorAreaRange": [
       63,
       126
@@ -19,10 +19,10 @@
       1968,
       1968
     ],
-    "latestMonth": "2025-08",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2025-08"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "330043",
     "priceIqr": [
-      406000,
-      425000
+      409000,
+      431000
     ],
-    "pricePerSqmMedian": 5666.67,
-    "pricePerSqftMedian": 526.45
+    "pricePerSqmMedian": 5720,
+    "pricePerSqftMedian": 531.4
   },
   "monthlyTrend": [
     {
@@ -1265,9 +1265,28 @@
       "medianPrice": 406000,
       "transactionCount": 1,
       "medianPricePerSqm": 6444.44
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 500000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6666.67
     }
   ],
   "recentTransactions": [
+    {
+      "id": "kallang-whampoa-43-bendemeer-rd-2026-04-225787",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 75,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1981,
+      "remainingLease": "53 years 09 months",
+      "resalePrice": 500000,
+      "pricePerSqm": 6666.67,
+      "pricePerSqft": 619.35
+    },
     {
       "id": "kallang-whampoa-43-bendemeer-rd-2025-08-208447",
       "month": "2025-08",
@@ -1514,19 +1533,6 @@
       "resalePrice": 305000,
       "pricePerSqm": 4841.27,
       "pricePerSqft": 449.77
-    },
-    {
-      "id": "kallang-whampoa-43-bendemeer-rd-2021-11-112843",
-      "month": "2021-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 63,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1981,
-      "remainingLease": "58 years 03 months",
-      "resalePrice": 308000,
-      "pricePerSqm": 4888.89,
-      "pricePerSqft": 454.19
     }
   ]
 }

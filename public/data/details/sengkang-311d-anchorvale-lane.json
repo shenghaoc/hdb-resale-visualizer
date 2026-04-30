@@ -9,8 +9,8 @@
       "lat": 1.39185683967752,
       "lng": 103.884702425227
     },
-    "medianPrice": 647888,
-    "transactionCount": 3,
+    "medianPrice": 608944,
+    "transactionCount": 4,
     "floorAreaRange": [
       89,
       112
@@ -19,10 +19,10 @@
       2000,
       2000
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2006-03",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "544311",
     "priceIqr": [
-      608944,
-      650444
+      567500,
+      649166
     ],
-    "pricePerSqmMedian": 5882.88,
-    "pricePerSqftMedian": 546.54
+    "pricePerSqmMedian": 5952.19,
+    "pricePerSqftMedian": 552.98
   },
   "monthlyTrend": [
     {
@@ -436,11 +436,30 @@
       "medianPrice": 611500,
       "transactionCount": 2,
       "medianPricePerSqm": 6005.95
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 560000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6021.51
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-311d-anchorvale-lane-2026-01-227335",
+      "id": "sengkang-311d-anchorvale-lane-2026-04-227409",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2002,
+      "remainingLease": "75 years 07 months",
+      "resalePrice": 560000,
+      "pricePerSqm": 6021.51,
+      "pricePerSqft": 559.42
+    },
+    {
+      "id": "sengkang-311d-anchorvale-lane-2026-01-227404",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -453,7 +472,7 @@
       "pricePerSqft": 569.41
     },
     {
-      "id": "sengkang-311d-anchorvale-lane-2026-01-227603",
+      "id": "sengkang-311d-anchorvale-lane-2026-01-227675",
       "month": "2026-01",
       "flatType": "5 ROOM",
       "storeyRange": "16 TO 18",
@@ -685,19 +704,6 @@
       "resalePrice": 360000,
       "pricePerSqm": 4000,
       "pricePerSqft": 371.61
-    },
-    {
-      "id": "sengkang-311d-anchorvale-lane-2017-06-9239",
-      "month": "2017-06",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 111,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2002,
-      "remainingLease": "84 years 05 months",
-      "resalePrice": 396000,
-      "pricePerSqm": 3567.57,
-      "pricePerSqft": 331.44
     }
   ]
 }

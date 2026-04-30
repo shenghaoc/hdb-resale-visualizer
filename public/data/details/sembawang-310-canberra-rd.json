@@ -9,8 +9,8 @@
       "lat": 1.44703561029032,
       "lng": 103.82209866943
     },
-    "medianPrice": 920000,
-    "transactionCount": 3,
+    "medianPrice": 900000,
+    "transactionCount": 4,
     "floorAreaRange": [
       141,
       143
@@ -19,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-08",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "750310",
     "priceIqr": [
-      900000,
-      932500
+      860000,
+      926250
     ],
-    "pricePerSqmMedian": 6524.82,
-    "pricePerSqftMedian": 606.18
+    "pricePerSqmMedian": 6361,
+    "pricePerSqftMedian": 590.96
   },
   "monthlyTrend": [
     {
@@ -459,11 +459,30 @@
       "medianPrice": 920000,
       "transactionCount": 1,
       "medianPricePerSqm": 6524.82
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 800000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5633.8
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-310-canberra-rd-2026-03-227244",
+      "id": "sembawang-310-canberra-rd-2026-04-227313",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 142,
+      "flatModel": "MAISONETTE",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 06 months",
+      "resalePrice": 800000,
+      "pricePerSqm": 5633.8,
+      "pricePerSqft": 523.4
+    },
+    {
+      "id": "sembawang-310-canberra-rd-2026-03-227311",
       "month": "2026-03",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -476,7 +495,7 @@
       "pricePerSqft": 606.18
     },
     {
-      "id": "sembawang-310-canberra-rd-2026-01-227240",
+      "id": "sembawang-310-canberra-rd-2026-01-227307",
       "month": "2026-01",
       "flatType": "EXECUTIVE",
       "storeyRange": "13 TO 15",
@@ -671,7 +690,7 @@
       "pricePerSqft": 357.32
     },
     {
-      "id": "sembawang-310-canberra-rd-2016-12-975718",
+      "id": "sembawang-310-canberra-rd-2016-12-975820",
       "month": "2016-12",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -684,7 +703,7 @@
       "pricePerSqft": 358.53
     },
     {
-      "id": "sembawang-310-canberra-rd-2016-11-974269",
+      "id": "sembawang-310-canberra-rd-2016-11-974371",
       "month": "2016-11",
       "flatType": "EXECUTIVE",
       "storeyRange": "10 TO 12",
@@ -697,7 +716,7 @@
       "pricePerSqft": 378.86
     },
     {
-      "id": "sembawang-310-canberra-rd-2016-06-965786",
+      "id": "sembawang-310-canberra-rd-2016-06-965888",
       "month": "2016-06",
       "flatType": "EXECUTIVE",
       "storeyRange": "04 TO 06",
@@ -708,19 +727,6 @@
       "resalePrice": 550000,
       "pricePerSqm": 3873.24,
       "pricePerSqft": 359.84
-    },
-    {
-      "id": "sembawang-310-canberra-rd-2014-08-645648",
-      "month": "2014-08",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 143,
-      "flatModel": "MAISONETTE",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "71 years",
-      "resalePrice": 555000,
-      "pricePerSqm": 3881.12,
-      "pricePerSqft": 360.57
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.31844233518161,
       "lng": 103.856349883909
     },
-    "medianPrice": 510000,
-    "transactionCount": 7,
+    "medianPrice": 509000,
+    "transactionCount": 8,
     "floorAreaRange": [
       64,
       95
@@ -19,10 +19,10 @@
       1986,
       1986
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1991-11",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "320123",
     "priceIqr": [
-      499000,
-      607500
+      489722,
+      561250
     ],
-    "pricePerSqmMedian": 7937.5,
-    "pricePerSqftMedian": 737.42
+    "pricePerSqmMedian": 7796.88,
+    "pricePerSqftMedian": 724.36
   },
   "monthlyTrend": [
     {
@@ -724,9 +724,28 @@
       "medianPrice": 490000,
       "transactionCount": 1,
       "medianPricePerSqm": 7656.25
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 488000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7625
     }
   ],
   "recentTransactions": [
+    {
+      "id": "kallang-whampoa-123-mcnair-rd-2026-04-225827",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1987,
+      "remainingLease": "60 years",
+      "resalePrice": 488000,
+      "pricePerSqm": 7625,
+      "pricePerSqft": 708.39
+    },
     {
       "id": "kallang-whampoa-123-mcnair-rd-2025-12-208637",
       "month": "2025-12",
@@ -973,19 +992,6 @@
       "resalePrice": 356000,
       "pricePerSqm": 5562.5,
       "pricePerSqft": 516.77
-    },
-    {
-      "id": "kallang-whampoa-123-mcnair-rd-2017-02-1722",
-      "month": "2017-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 64,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1987,
-      "remainingLease": "69 years 02 months",
-      "resalePrice": 398000,
-      "pricePerSqm": 6218.75,
-      "pricePerSqft": 577.74
     }
   ]
 }

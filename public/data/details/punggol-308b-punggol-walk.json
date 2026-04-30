@@ -9,8 +9,8 @@
       "lat": 1.40776676808472,
       "lng": 103.89958085133
     },
-    "medianPrice": 707000,
-    "transactionCount": 23,
+    "medianPrice": 706000,
+    "transactionCount": 24,
     "floorAreaRange": [
       67,
       112
@@ -19,10 +19,10 @@
       2015,
       2015
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2020-03",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "822308",
     "priceIqr": [
-      657944,
-      789400
+      658972,
+      767200
     ],
-    "pricePerSqmMedian": 7723.21,
-    "pricePerSqftMedian": 717.51
+    "pricePerSqmMedian": 7703.99,
+    "pricePerSqftMedian": 715.73
   },
   "monthlyTrend": [
     {
@@ -383,11 +383,30 @@
       "medianPrice": 730000,
       "transactionCount": 1,
       "medianPricePerSqm": 7934.78
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 699000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 7597.83
     }
   ],
   "recentTransactions": [
     {
-      "id": "punggol-308b-punggol-walk-2026-03-226519",
+      "id": "punggol-308b-punggol-walk-2026-04-226586",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 92,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2016,
+      "remainingLease": "89 years",
+      "resalePrice": 699000,
+      "pricePerSqm": 7597.83,
+      "pricePerSqft": 705.86
+    },
+    {
+      "id": "punggol-308b-punggol-walk-2026-03-226578",
       "month": "2026-03",
       "flatType": "4 ROOM",
       "storeyRange": "16 TO 18",
@@ -400,7 +419,7 @@
       "pricePerSqft": 737.17
     },
     {
-      "id": "punggol-308b-punggol-walk-2026-02-226287",
+      "id": "punggol-308b-punggol-walk-2026-02-226346",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "16 TO 18",
@@ -413,7 +432,7 @@
       "pricePerSqft": 829.04
     },
     {
-      "id": "punggol-308b-punggol-walk-2026-02-226681",
+      "id": "punggol-308b-punggol-walk-2026-02-226743",
       "month": "2026-02",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -426,7 +445,7 @@
       "pricePerSqft": 717.51
     },
     {
-      "id": "punggol-308b-punggol-walk-2026-01-226501",
+      "id": "punggol-308b-punggol-walk-2026-01-226560",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -632,19 +651,6 @@
       "resalePrice": 852000,
       "pricePerSqm": 7607.14,
       "pricePerSqft": 706.73
-    },
-    {
-      "id": "punggol-308b-punggol-walk-2024-08-185267",
-      "month": "2024-08",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2016,
-      "remainingLease": "90 years 08 months",
-      "resalePrice": 530000,
-      "pricePerSqm": 7910.45,
-      "pricePerSqft": 734.91
     }
   ]
 }

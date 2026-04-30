@@ -9,8 +9,8 @@
       "lat": 1.348845490498,
       "lng": 103.875224639926
     },
-    "medianPrice": 818000,
-    "transactionCount": 1,
+    "medianPrice": 841500,
+    "transactionCount": 2,
     "floorAreaRange": [
       94,
       121
@@ -19,10 +19,10 @@
       1988,
       1988
     ],
-    "latestMonth": "2025-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1993-11",
-      "2025-03"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -54,11 +54,11 @@
     ],
     "postalCode": "550421",
     "priceIqr": [
-      818000,
-      818000
+      829750,
+      853250
     ],
-    "pricePerSqmMedian": 6760.33,
-    "pricePerSqftMedian": 628.06
+    "pricePerSqmMedian": 7499.22,
+    "pricePerSqftMedian": 696.7
   },
   "monthlyTrend": [
     {
@@ -516,9 +516,28 @@
       "medianPrice": 818000,
       "transactionCount": 1,
       "medianPricePerSqm": 6760.33
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 865000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8238.1
     }
   ],
   "recentTransactions": [
+    {
+      "id": "serangoon-421-serangoon-ctrl-2026-04-227919",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 105,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1989,
+      "remainingLease": "62 years 01 month",
+      "resalePrice": 865000,
+      "pricePerSqm": 8238.1,
+      "pricePerSqft": 765.34
+    },
     {
       "id": "serangoon-421-serangoon-ctrl-2025-03-215524",
       "month": "2025-03",
@@ -715,7 +734,7 @@
       "pricePerSqft": 575.51
     },
     {
-      "id": "serangoon-421-serangoon-ctrl-2016-04-962294",
+      "id": "serangoon-421-serangoon-ctrl-2016-04-962396",
       "month": "2016-04",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -728,7 +747,7 @@
       "pricePerSqft": 548.4
     },
     {
-      "id": "serangoon-421-serangoon-ctrl-2015-09-951784",
+      "id": "serangoon-421-serangoon-ctrl-2015-09-951886",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -741,7 +760,7 @@
       "pricePerSqft": 560.49
     },
     {
-      "id": "serangoon-421-serangoon-ctrl-2015-01-939965",
+      "id": "serangoon-421-serangoon-ctrl-2015-01-940067",
       "month": "2015-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -754,7 +773,7 @@
       "pricePerSqft": 439.41
     },
     {
-      "id": "serangoon-421-serangoon-ctrl-2014-10-648738",
+      "id": "serangoon-421-serangoon-ctrl-2014-10-648840",
       "month": "2014-10",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -765,19 +784,6 @@
       "resalePrice": 738000,
       "pricePerSqm": 6099.17,
       "pricePerSqft": 566.63
-    },
-    {
-      "id": "serangoon-421-serangoon-ctrl-2014-08-645755",
-      "month": "2014-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 105,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1989,
-      "remainingLease": "62 years",
-      "resalePrice": 528000,
-      "pricePerSqm": 5028.57,
-      "pricePerSqft": 467.17
     }
   ]
 }

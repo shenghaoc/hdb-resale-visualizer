@@ -9,8 +9,8 @@
       "lat": 1.45599869513743,
       "lng": 103.813971735671
     },
-    "medianPrice": 483944,
-    "transactionCount": 12,
+    "medianPrice": 475000,
+    "transactionCount": 13,
     "floorAreaRange": [
       67,
       92
@@ -52,11 +52,11 @@
     ],
     "postalCode": "752463",
     "priceIqr": [
-      464500,
-      506250
+      470000,
+      505000
     ],
-    "pricePerSqmMedian": 6850.75,
-    "pricePerSqftMedian": 636.46
+    "pricePerSqmMedian": 7014.93,
+    "pricePerSqftMedian": 651.71
   },
   "monthlyTrend": [
     {
@@ -301,14 +301,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 440000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 6567.16
+      "medianPrice": 457500,
+      "transactionCount": 2,
+      "medianPricePerSqm": 6828.35
     }
   ],
   "recentTransactions": [
     {
-      "id": "sembawang-463b-sembawang-dr-2026-04-227018",
+      "id": "sembawang-463b-sembawang-dr-2026-04-227083",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -321,7 +321,20 @@
       "pricePerSqft": 610.11
     },
     {
-      "id": "sembawang-463b-sembawang-dr-2026-03-227016",
+      "id": "sembawang-463b-sembawang-dr-2026-04-227084",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 67,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 01 month",
+      "resalePrice": 475000,
+      "pricePerSqm": 7089.55,
+      "pricePerSqft": 658.64
+    },
+    {
+      "id": "sembawang-463b-sembawang-dr-2026-03-227081",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "22 TO 24",
@@ -334,7 +347,7 @@
       "pricePerSqft": 700.24
     },
     {
-      "id": "sembawang-463b-sembawang-dr-2026-02-227014",
+      "id": "sembawang-463b-sembawang-dr-2026-02-227079",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "04 TO 06",
@@ -347,7 +360,7 @@
       "pricePerSqft": 610.11
     },
     {
-      "id": "sembawang-463b-sembawang-dr-2026-01-227013",
+      "id": "sembawang-463b-sembawang-dr-2026-01-227078",
       "month": "2026-01",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -553,19 +566,6 @@
       "resalePrice": 505000,
       "pricePerSqm": 5489.13,
       "pricePerSqft": 509.96
-    },
-    {
-      "id": "sembawang-463b-sembawang-dr-2022-01-133471",
-      "month": "2022-01",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 67,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "92 years 05 months",
-      "resalePrice": 370000,
-      "pricePerSqm": 5522.39,
-      "pricePerSqft": 513.05
     }
   ]
 }

@@ -9,8 +9,8 @@
       "lat": 1.30492724290307,
       "lng": 103.763519401903
     },
-    "medianPrice": 404054,
-    "transactionCount": 10,
+    "medianPrice": 405000,
+    "transactionCount": 11,
     "floorAreaRange": [
       68,
       163
@@ -19,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2025-10",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-10"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -55,11 +55,11 @@
     ],
     "postalCode": "120729",
     "priceIqr": [
-      398500,
-      432000
+      399000,
+      425000
     ],
-    "pricePerSqmMedian": 5794.11,
-    "pricePerSqftMedian": 538.3
+    "pricePerSqmMedian": 5852.94,
+    "pricePerSqftMedian": 543.76
   },
   "monthlyTrend": [
     {
@@ -1135,9 +1135,28 @@
       "medianPrice": 408000,
       "transactionCount": 1,
       "medianPricePerSqm": 6000
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6029.41
     }
   ],
   "recentTransactions": [
+    {
+      "id": "clementi-729-clementi-west-st-2-2026-04-224392",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 68,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1983,
+      "remainingLease": "56 years 06 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 6029.41,
+      "pricePerSqft": 560.15
+    },
     {
       "id": "clementi-729-clementi-west-st-2-2025-10-204033",
       "month": "2025-10",
@@ -1384,19 +1403,6 @@
       "resalePrice": 382200,
       "pricePerSqm": 5620.59,
       "pricePerSqft": 522.17
-    },
-    {
-      "id": "clementi-729-clementi-west-st-2-2023-02-150740",
-      "month": "2023-02",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 68,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1983,
-      "remainingLease": "59 years 09 months",
-      "resalePrice": 368000,
-      "pricePerSqm": 5411.76,
-      "pricePerSqft": 502.77
     }
   ]
 }

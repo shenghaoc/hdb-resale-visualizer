@@ -9,8 +9,8 @@
       "lat": 1.32503135532498,
       "lng": 103.903282423724
     },
-    "medianPrice": 365000,
-    "transactionCount": 8,
+    "medianPrice": 360000,
+    "transactionCount": 9,
     "floorAreaRange": [
       66,
       75
@@ -51,11 +51,11 @@
     ],
     "postalCode": "400021",
     "priceIqr": [
-      351250,
-      377750
+      350000,
+      375000
     ],
-    "pricePerSqmMedian": 5530.31,
-    "pricePerSqftMedian": 513.78
+    "pricePerSqmMedian": 5454.55,
+    "pricePerSqftMedian": 506.74
   },
   "monthlyTrend": [
     {
@@ -1104,14 +1104,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 347500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 5265.16
+      "medianPrice": 350000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5303.03
     }
   ],
   "recentTransactions": [
     {
-      "id": "geylang-21-eunos-cres-2026-04-224533",
+      "id": "geylang-21-eunos-cres-2026-04-224570",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "10 TO 12",
@@ -1124,7 +1124,7 @@
       "pricePerSqft": 499.71
     },
     {
-      "id": "geylang-21-eunos-cres-2026-04-224535",
+      "id": "geylang-21-eunos-cres-2026-04-224572",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "01 TO 03",
@@ -1137,7 +1137,20 @@
       "pricePerSqft": 478.59
     },
     {
-      "id": "geylang-21-eunos-cres-2026-02-224530",
+      "id": "geylang-21-eunos-cres-2026-04-224573",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 66,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1982,
+      "remainingLease": "54 years 11 months",
+      "resalePrice": 350000,
+      "pricePerSqm": 5303.03,
+      "pricePerSqft": 492.67
+    },
+    {
+      "id": "geylang-21-eunos-cres-2026-02-224567",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1356,19 +1369,6 @@
       "resalePrice": 290000,
       "pricePerSqm": 4393.94,
       "pricePerSqft": 408.21
-    },
-    {
-      "id": "geylang-21-eunos-cres-2021-04-95388",
-      "month": "2021-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 66,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1982,
-      "remainingLease": "59 years 10 months",
-      "resalePrice": 250000,
-      "pricePerSqm": 3787.88,
-      "pricePerSqft": 351.91
     }
   ]
 }

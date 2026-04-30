@@ -9,8 +9,8 @@
       "lat": 1.44800009031143,
       "lng": 103.801700391926
     },
-    "medianPrice": 575000,
-    "transactionCount": 9,
+    "medianPrice": 571889,
+    "transactionCount": 10,
     "floorAreaRange": [
       92,
       92
@@ -51,11 +51,11 @@
     ],
     "postalCode": "735780",
     "priceIqr": [
-      555000,
-      592000
+      543750,
+      591500
     ],
-    "pricePerSqmMedian": 6250,
-    "pricePerSqftMedian": 580.64
+    "pricePerSqmMedian": 6216.18,
+    "pricePerSqftMedian": 577.5
   },
   "monthlyTrend": [
     {
@@ -294,14 +294,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 557500,
-      "transactionCount": 2,
-      "medianPricePerSqm": 6059.78
+      "medianPrice": 540000,
+      "transactionCount": 3,
+      "medianPricePerSqm": 5869.57
     }
   ],
   "recentTransactions": [
     {
-      "id": "woodlands-780e-woodlands-cres-2026-04-229006",
+      "id": "woodlands-780e-woodlands-cres-2026-04-229095",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "01 TO 03",
@@ -314,7 +314,7 @@
       "pricePerSqft": 545.3
     },
     {
-      "id": "woodlands-780e-woodlands-cres-2026-04-229008",
+      "id": "woodlands-780e-woodlands-cres-2026-04-229097",
       "month": "2026-04",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -327,7 +327,20 @@
       "pricePerSqft": 580.64
     },
     {
-      "id": "woodlands-780e-woodlands-cres-2026-02-229004",
+      "id": "woodlands-780e-woodlands-cres-2026-04-229098",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 92,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 2015,
+      "remainingLease": "88 years 03 months",
+      "resalePrice": 512000,
+      "pricePerSqm": 5565.22,
+      "pricePerSqft": 517.03
+    },
+    {
+      "id": "woodlands-780e-woodlands-cres-2026-02-229093",
       "month": "2026-02",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -546,19 +559,6 @@
       "resalePrice": 495000,
       "pricePerSqm": 5380.43,
       "pricePerSqft": 499.86
-    },
-    {
-      "id": "woodlands-780e-woodlands-cres-2022-02-139727",
-      "month": "2022-02",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 92,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 2015,
-      "remainingLease": "92 years 06 months",
-      "resalePrice": 480000,
-      "pricePerSqm": 5217.39,
-      "pricePerSqft": 484.71
     }
   ]
 }

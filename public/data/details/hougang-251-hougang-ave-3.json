@@ -9,8 +9,8 @@
       "lat": 1.35995683095297,
       "lng": 103.89162926387
     },
-    "medianPrice": 629888,
-    "transactionCount": 1,
+    "medianPrice": 656444,
+    "transactionCount": 2,
     "floorAreaRange": [
       98,
       125
@@ -19,10 +19,10 @@
       1984,
       1984
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "530251",
     "priceIqr": [
-      629888,
-      629888
+      643166,
+      669722
     ],
-    "pricePerSqmMedian": 5205.69,
-    "pricePerSqftMedian": 483.62
+    "pricePerSqmMedian": 5425.16,
+    "pricePerSqftMedian": 504.01
   },
   "monthlyTrend": [
     {
@@ -647,9 +647,28 @@
       "medianPrice": 629888,
       "transactionCount": 1,
       "medianPricePerSqm": 5205.69
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 683000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5644.63
     }
   ],
   "recentTransactions": [
+    {
+      "id": "hougang-251-hougang-ave-3-2026-04-225022",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 121,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1985,
+      "remainingLease": "57 years 10 months",
+      "resalePrice": 683000,
+      "pricePerSqm": 5644.63,
+      "pricePerSqft": 524.4
+    },
     {
       "id": "hougang-251-hougang-ave-3-2025-06-206063",
       "month": "2025-06",
@@ -820,7 +839,7 @@
       "pricePerSqft": 337.83
     },
     {
-      "id": "hougang-251-hougang-ave-3-2016-09-970494",
+      "id": "hougang-251-hougang-ave-3-2016-09-970596",
       "month": "2016-09",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -833,7 +852,7 @@
       "pricePerSqft": 364.98
     },
     {
-      "id": "hougang-251-hougang-ave-3-2016-05-963459",
+      "id": "hougang-251-hougang-ave-3-2016-05-963561",
       "month": "2016-05",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -846,7 +865,7 @@
       "pricePerSqft": 326.31
     },
     {
-      "id": "hougang-251-hougang-ave-3-2016-03-959940",
+      "id": "hougang-251-hougang-ave-3-2016-03-960042",
       "month": "2016-03",
       "flatType": "5 ROOM",
       "storeyRange": "01 TO 03",
@@ -859,7 +878,7 @@
       "pricePerSqft": 307.12
     },
     {
-      "id": "hougang-251-hougang-ave-3-2015-09-951235",
+      "id": "hougang-251-hougang-ave-3-2015-09-951337",
       "month": "2015-09",
       "flatType": "5 ROOM",
       "storeyRange": "10 TO 12",
@@ -872,7 +891,7 @@
       "pricePerSqft": 368.54
     },
     {
-      "id": "hougang-251-hougang-ave-3-2015-04-943429",
+      "id": "hougang-251-hougang-ave-3-2015-04-943531",
       "month": "2015-04",
       "flatType": "5 ROOM",
       "storeyRange": "07 TO 09",
@@ -885,7 +904,7 @@
       "pricePerSqft": 385.65
     },
     {
-      "id": "hougang-251-hougang-ave-3-2013-09-631360",
+      "id": "hougang-251-hougang-ave-3-2013-09-631462",
       "month": "2013-09",
       "flatType": "5 ROOM",
       "storeyRange": "04 TO 06",
@@ -896,19 +915,6 @@
       "resalePrice": 530000,
       "pricePerSqm": 4274.19,
       "pricePerSqft": 397.09
-    },
-    {
-      "id": "hougang-251-hougang-ave-3-2012-09-613368",
-      "month": "2012-09",
-      "flatType": "5 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 121,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1985,
-      "remainingLease": "58 years",
-      "resalePrice": 520000,
-      "pricePerSqm": 4297.52,
-      "pricePerSqft": 399.25
     }
   ]
 }

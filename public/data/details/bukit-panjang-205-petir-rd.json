@@ -9,8 +9,8 @@
       "lat": 1.37343025396585,
       "lng": 103.773924079454
     },
-    "medianPrice": 446500,
-    "transactionCount": 2,
+    "medianPrice": 435000,
+    "transactionCount": 3,
     "floorAreaRange": [
       73,
       103
@@ -19,10 +19,10 @@
       1987,
       1987
     ],
-    "latestMonth": "2026-03",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1992-11",
-      "2026-03"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "670205",
     "priceIqr": [
-      437250,
-      455750
+      431500,
+      450000
     ],
-    "pricePerSqmMedian": 6116.43,
-    "pricePerSqftMedian": 568.24
+    "pricePerSqmMedian": 5958.9,
+    "pricePerSqftMedian": 553.6
   },
   "monthlyTrend": [
     {
@@ -706,11 +706,30 @@
       "medianPrice": 428000,
       "transactionCount": 1,
       "medianPricePerSqm": 5863.01
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 435000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5958.9
     }
   ],
   "recentTransactions": [
     {
-      "id": "bukit-panjang-205-petir-rd-2026-03-223645",
+      "id": "bukit-panjang-205-petir-rd-2026-04-223672",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 73,
+      "flatModel": "MODEL A",
+      "leaseCommenceDate": 1988,
+      "remainingLease": "61 years 08 months",
+      "resalePrice": 435000,
+      "pricePerSqm": 5958.9,
+      "pricePerSqft": 553.6
+    },
+    {
+      "id": "bukit-panjang-205-petir-rd-2026-03-223669",
       "month": "2026-03",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -955,19 +974,6 @@
       "resalePrice": 240000,
       "pricePerSqm": 3287.67,
       "pricePerSqft": 305.43
-    },
-    {
-      "id": "bukit-panjang-205-petir-rd-2019-11-60823",
-      "month": "2019-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 73,
-      "flatModel": "MODEL A",
-      "leaseCommenceDate": 1988,
-      "remainingLease": "68 years",
-      "resalePrice": 275000,
-      "pricePerSqm": 3767.12,
-      "pricePerSqft": 349.98
     }
   ]
 }

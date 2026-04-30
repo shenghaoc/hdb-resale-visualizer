@@ -9,8 +9,8 @@
       "lat": 1.34740957043624,
       "lng": 103.848054589423
     },
-    "medianPrice": 548000,
-    "transactionCount": 7,
+    "medianPrice": 559000,
+    "transactionCount": 8,
     "floorAreaRange": [
       64,
       104
@@ -53,11 +53,11 @@
     ],
     "postalCode": "570110",
     "priceIqr": [
-      535000,
-      654000
+      536500,
+      616000
     ],
-    "pricePerSqmMedian": 8406.25,
-    "pricePerSqftMedian": 780.97
+    "pricePerSqmMedian": 8484.38,
+    "pricePerSqftMedian": 788.23
   },
   "monthlyTrend": [
     {
@@ -800,14 +800,14 @@
     },
     {
       "month": "2026-04",
-      "medianPrice": 538000,
-      "transactionCount": 1,
-      "medianPricePerSqm": 8406.25
+      "medianPrice": 554000,
+      "transactionCount": 2,
+      "medianPricePerSqm": 8656.25
     }
   ],
   "recentTransactions": [
     {
-      "id": "bishan-110-bishan-st-12-2026-04-222748",
+      "id": "bishan-110-bishan-st-12-2026-04-222755",
       "month": "2026-04",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -818,6 +818,19 @@
       "resalePrice": 538000,
       "pricePerSqm": 8406.25,
       "pricePerSqft": 780.97
+    },
+    {
+      "id": "bishan-110-bishan-st-12-2026-04-222756",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 64,
+      "flatModel": "SIMPLIFIED",
+      "leaseCommenceDate": 1986,
+      "remainingLease": "58 years 10 months",
+      "resalePrice": 570000,
+      "pricePerSqm": 8906.25,
+      "pricePerSqft": 827.42
     },
     {
       "id": "bishan-110-bishan-st-12-2025-12-199174",
@@ -1052,19 +1065,6 @@
       "resalePrice": 400000,
       "pricePerSqm": 6250,
       "pricePerSqft": 580.64
-    },
-    {
-      "id": "bishan-110-bishan-st-12-2016-11-973361",
-      "month": "2016-11",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 64,
-      "flatModel": "SIMPLIFIED",
-      "leaseCommenceDate": 1986,
-      "remainingLease": "68",
-      "resalePrice": 404000,
-      "pricePerSqm": 6312.5,
-      "pricePerSqft": 586.45
     }
   ]
 }

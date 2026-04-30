@@ -9,8 +9,8 @@
       "lat": 1.37179067644703,
       "lng": 103.854961173992
     },
-    "medianPrice": 462000,
-    "transactionCount": 3,
+    "medianPrice": 428500,
+    "transactionCount": 4,
     "floorAreaRange": [
       67,
       163
@@ -19,10 +19,10 @@
       1979,
       1979
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -54,11 +54,11 @@
     ],
     "postalCode": "560578",
     "priceIqr": [
-      422500,
-      488500
+      392000,
+      475250
     ],
-    "pricePerSqmMedian": 5716.42,
-    "pricePerSqftMedian": 531.07
+    "pricePerSqmMedian": 5805.97,
+    "pricePerSqftMedian": 539.39
   },
   "monthlyTrend": [
     {
@@ -906,9 +906,28 @@
       "medianPrice": 383000,
       "transactionCount": 1,
       "medianPricePerSqm": 5716.42
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 395000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5895.52
     }
   ],
   "recentTransactions": [
+    {
+      "id": "ang-mo-kio-578-ang-mo-kio-ave-10-2026-04-222123",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1980,
+      "remainingLease": "52 years 09 months",
+      "resalePrice": 395000,
+      "pricePerSqm": 5895.52,
+      "pricePerSqft": 547.71
+    },
     {
       "id": "ang-mo-kio-578-ang-mo-kio-ave-10-2026-01-222091",
       "month": "2026-01",
@@ -1155,19 +1174,6 @@
       "resalePrice": 275000,
       "pricePerSqm": 4104.48,
       "pricePerSqft": 381.32
-    },
-    {
-      "id": "ang-mo-kio-578-ang-mo-kio-ave-10-2017-10-15208",
-      "month": "2017-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "13 TO 15",
-      "floorAreaSqm": 81,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1980,
-      "remainingLease": "61 years 03 months",
-      "resalePrice": 390000,
-      "pricePerSqm": 4814.81,
-      "pricePerSqft": 447.31
     }
   ]
 }

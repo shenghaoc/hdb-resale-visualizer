@@ -10,7 +10,7 @@
       "lng": 103.926488452026
     },
     "medianPrice": 410000,
-    "transactionCount": 6,
+    "transactionCount": 7,
     "floorAreaRange": [
       65,
       73
@@ -19,10 +19,10 @@
       1973,
       1973
     ],
-    "latestMonth": "2026-02",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-02"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "461040",
     "priceIqr": [
-      385000,
-      427500
+      390000,
+      425000
     ],
-    "pricePerSqmMedian": 6076.93,
-    "pricePerSqftMedian": 564.57
+    "pricePerSqmMedian": 6000,
+    "pricePerSqftMedian": 557.42
   },
   "monthlyTrend": [
     {
@@ -861,11 +861,30 @@
       "medianPrice": 380000,
       "transactionCount": 1,
       "medianPricePerSqm": 5846.15
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 410000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5616.44
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-40-chai-chee-ave-2026-02-222479",
+      "id": "bedok-40-chai-chee-ave-2026-04-222484",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 73,
+      "flatModel": "IMPROVED",
+      "leaseCommenceDate": 1974,
+      "remainingLease": "46 years 09 months",
+      "resalePrice": 410000,
+      "pricePerSqm": 5616.44,
+      "pricePerSqft": 521.78
+    },
+    {
+      "id": "bedok-40-chai-chee-ave-2026-02-222483",
       "month": "2026-02",
       "flatType": "3 ROOM",
       "storeyRange": "07 TO 09",
@@ -1110,19 +1129,6 @@
       "resalePrice": 280000,
       "pricePerSqm": 4307.69,
       "pricePerSqft": 400.2
-    },
-    {
-      "id": "bedok-40-chai-chee-ave-2017-10-15265",
-      "month": "2017-10",
-      "flatType": "3 ROOM",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 65,
-      "flatModel": "IMPROVED",
-      "leaseCommenceDate": 1974,
-      "remainingLease": "55 years 03 months",
-      "resalePrice": 320000,
-      "pricePerSqm": 4923.08,
-      "pricePerSqft": 457.37
     }
   ]
 }

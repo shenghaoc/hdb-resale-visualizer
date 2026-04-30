@@ -9,8 +9,8 @@
       "lat": 1.3857519775168,
       "lng": 103.894255028725
     },
-    "medianPrice": 769000,
-    "transactionCount": 8,
+    "medianPrice": 770000,
+    "transactionCount": 9,
     "floorAreaRange": [
       93,
       93
@@ -19,10 +19,10 @@
       2008,
       2008
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2013-04",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "541270",
     "priceIqr": [
-      759500,
-      785000
+      766000,
+      793000
     ],
-    "pricePerSqmMedian": 8268.81,
-    "pricePerSqftMedian": 768.2
+    "pricePerSqmMedian": 8279.57,
+    "pricePerSqftMedian": 769.2
   },
   "monthlyTrend": [
     {
@@ -417,11 +417,30 @@
       "medianPrice": 825888,
       "transactionCount": 1,
       "medianPricePerSqm": 8880.52
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 793000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8526.88
     }
   ],
   "recentTransactions": [
     {
-      "id": "sengkang-270a-sengkang-ctrl-2026-01-227555",
+      "id": "sengkang-270a-sengkang-ctrl-2026-04-227633",
+      "month": "2026-04",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 93,
+      "flatModel": "PREMIUM APARTMENT",
+      "leaseCommenceDate": 2010,
+      "remainingLease": "83 years 01 month",
+      "resalePrice": 793000,
+      "pricePerSqm": 8526.88,
+      "pricePerSqft": 792.17
+    },
+    {
+      "id": "sengkang-270a-sengkang-ctrl-2026-01-227626",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "07 TO 09",
@@ -666,19 +685,6 @@
       "resalePrice": 485000,
       "pricePerSqm": 5215.05,
       "pricePerSqft": 484.49
-    },
-    {
-      "id": "sengkang-270a-sengkang-ctrl-2021-08-105942",
-      "month": "2021-08",
-      "flatType": "4 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 93,
-      "flatModel": "PREMIUM APARTMENT",
-      "leaseCommenceDate": 2010,
-      "remainingLease": "87 years 09 months",
-      "resalePrice": 560000,
-      "pricePerSqm": 6021.51,
-      "pricePerSqft": 559.42
     }
   ]
 }

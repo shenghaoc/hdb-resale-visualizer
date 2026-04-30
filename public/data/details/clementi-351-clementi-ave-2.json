@@ -9,8 +9,8 @@
       "lat": 1.31535006995344,
       "lng": 103.770861377512
     },
-    "medianPrice": 412500,
-    "transactionCount": 6,
+    "medianPrice": 410000,
+    "transactionCount": 7,
     "floorAreaRange": [
       67,
       92
@@ -19,10 +19,10 @@
       1977,
       1977
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-05",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -52,11 +52,11 @@
     ],
     "postalCode": "120351",
     "priceIqr": [
-      402500,
-      546250
+      404000,
+      502500
     ],
-    "pricePerSqmMedian": 6156.72,
-    "pricePerSqftMedian": 571.98
+    "pricePerSqmMedian": 6119.4,
+    "pricePerSqftMedian": 568.51
   },
   "monthlyTrend": [
     {
@@ -1258,11 +1258,30 @@
       "medianPrice": 590000,
       "transactionCount": 1,
       "medianPricePerSqm": 6413.04
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 408000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 6089.55
     }
   ],
   "recentTransactions": [
     {
-      "id": "clementi-351-clementi-ave-2-2026-01-224379",
+      "id": "clementi-351-clementi-ave-2-2026-04-224346",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "01 TO 03",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1978,
+      "remainingLease": "51 years 05 months",
+      "resalePrice": 408000,
+      "pricePerSqm": 6089.55,
+      "pricePerSqft": 565.74
+    },
+    {
+      "id": "clementi-351-clementi-ave-2-2026-01-224412",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "04 TO 06",
@@ -1507,19 +1526,6 @@
       "resalePrice": 338000,
       "pricePerSqm": 5044.78,
       "pricePerSqft": 468.68
-    },
-    {
-      "id": "clementi-351-clementi-ave-2-2021-06-99627",
-      "month": "2021-06",
-      "flatType": "3 ROOM",
-      "storeyRange": "04 TO 06",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1978,
-      "remainingLease": "56 years 04 months",
-      "resalePrice": 330000,
-      "pricePerSqm": 4925.37,
-      "pricePerSqft": 457.58
     }
   ]
 }

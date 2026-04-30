@@ -9,8 +9,8 @@
       "lat": 1.35425419082461,
       "lng": 103.868542956652
     },
-    "medianPrice": 1000000,
-    "transactionCount": 1,
+    "medianPrice": 1065000,
+    "transactionCount": 2,
     "floorAreaRange": [
       140,
       141
@@ -19,10 +19,10 @@
       1997,
       1997
     ],
-    "latestMonth": "2025-06",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "2002-09",
-      "2025-06"
+      "2026-04"
     ],
     "flatTypes": [
       "EXECUTIVE"
@@ -51,11 +51,11 @@
     ],
     "postalCode": "551232",
     "priceIqr": [
-      1000000,
-      1000000
+      1032500,
+      1097500
     ],
-    "pricePerSqmMedian": 7142.86,
-    "pricePerSqftMedian": 663.59
+    "pricePerSqmMedian": 7578.52,
+    "pricePerSqftMedian": 704.07
   },
   "monthlyTrend": [
     {
@@ -411,9 +411,28 @@
       "medianPrice": 1000000,
       "transactionCount": 1,
       "medianPricePerSqm": 7142.86
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 1130000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 8014.18
     }
   ],
   "recentTransactions": [
+    {
+      "id": "serangoon-232a-serangoon-ave-2-2026-04-227957",
+      "month": "2026-04",
+      "flatType": "EXECUTIVE",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 141,
+      "flatModel": "APARTMENT",
+      "leaseCommenceDate": 1998,
+      "remainingLease": "71 years 02 months",
+      "resalePrice": 1130000,
+      "pricePerSqm": 8014.18,
+      "pricePerSqft": 744.54
+    },
     {
       "id": "serangoon-232a-serangoon-ave-2-2025-06-215583",
       "month": "2025-06",
@@ -660,19 +679,6 @@
       "resalePrice": 948000,
       "pricePerSqm": 6771.43,
       "pricePerSqft": 629.09
-    },
-    {
-      "id": "serangoon-232a-serangoon-ave-2-2017-05-7505",
-      "month": "2017-05",
-      "flatType": "EXECUTIVE",
-      "storeyRange": "07 TO 09",
-      "floorAreaSqm": 140,
-      "flatModel": "APARTMENT",
-      "leaseCommenceDate": 1998,
-      "remainingLease": "80 years 01 month",
-      "resalePrice": 938000,
-      "pricePerSqm": 6700,
-      "pricePerSqft": 622.45
     }
   ]
 }

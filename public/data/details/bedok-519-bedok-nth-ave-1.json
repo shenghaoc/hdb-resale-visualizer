@@ -9,8 +9,8 @@
       "lat": 1.33087614142097,
       "lng": 103.928059854349
     },
-    "medianPrice": 419000,
-    "transactionCount": 7,
+    "medianPrice": 415944,
+    "transactionCount": 8,
     "floorAreaRange": [
       67,
       162
@@ -19,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2026-01",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-02",
-      "2026-01"
+      "2026-04"
     ],
     "flatTypes": [
       "3 ROOM",
@@ -54,11 +54,11 @@
     ],
     "postalCode": "460519",
     "priceIqr": [
-      407944,
-      440000
+      396972,
+      437500
     ],
-    "pricePerSqmMedian": 6014.93,
-    "pricePerSqftMedian": 558.81
+    "pricePerSqmMedian": 5834.99,
+    "pricePerSqftMedian": 542.09
   },
   "monthlyTrend": [
     {
@@ -1200,11 +1200,30 @@
       "medianPrice": 515000,
       "transactionCount": 1,
       "medianPricePerSqm": 5597.83
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 378888,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5655.04
     }
   ],
   "recentTransactions": [
     {
-      "id": "bedok-519-bedok-nth-ave-1-2026-01-222508",
+      "id": "bedok-519-bedok-nth-ave-1-2026-04-222370",
+      "month": "2026-04",
+      "flatType": "3 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 67,
+      "flatModel": "NEW GENERATION",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "52 years 03 months",
+      "resalePrice": 378888,
+      "pricePerSqm": 5655.04,
+      "pricePerSqft": 525.37
+    },
+    {
+      "id": "bedok-519-bedok-nth-ave-1-2026-01-222514",
       "month": "2026-01",
       "flatType": "4 ROOM",
       "storeyRange": "10 TO 12",
@@ -1449,19 +1468,6 @@
       "resalePrice": 908000,
       "pricePerSqm": 5604.94,
       "pricePerSqft": 520.72
-    },
-    {
-      "id": "bedok-519-bedok-nth-ave-1-2022-04-118049",
-      "month": "2022-04",
-      "flatType": "3 ROOM",
-      "storeyRange": "01 TO 03",
-      "floorAreaSqm": 67,
-      "flatModel": "NEW GENERATION",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "56 years 04 months",
-      "resalePrice": 315000,
-      "pricePerSqm": 4701.49,
-      "pricePerSqft": 436.78
     }
   ]
 }

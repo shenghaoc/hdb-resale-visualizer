@@ -10,7 +10,7 @@
       "lng": 103.935397269548
     },
     "medianPrice": 675000,
-    "transactionCount": 11,
+    "transactionCount": 12,
     "floorAreaRange": [
       89,
       117
@@ -19,10 +19,10 @@
       1978,
       1978
     ],
-    "latestMonth": "2025-12",
+    "latestMonth": "2026-04",
     "availableDateRange": [
       "1990-01",
-      "2025-12"
+      "2026-04"
     ],
     "flatTypes": [
       "4 ROOM",
@@ -53,11 +53,11 @@
     ],
     "postalCode": "460139",
     "priceIqr": [
-      633000,
-      687500
+      636500,
+      686250
     ],
-    "pricePerSqmMedian": 5854.7,
-    "pricePerSqftMedian": 543.92
+    "pricePerSqmMedian": 5824.78,
+    "pricePerSqftMedian": 541.14
   },
   "monthlyTrend": [
     {
@@ -923,9 +923,28 @@
       "medianPrice": 675000,
       "transactionCount": 2,
       "medianPricePerSqm": 5769.24
+    },
+    {
+      "month": "2026-04",
+      "medianPrice": 675000,
+      "transactionCount": 1,
+      "medianPricePerSqm": 5769.23
     }
   ],
   "recentTransactions": [
+    {
+      "id": "bedok-139-bedok-nth-ave-3-2026-04-222684",
+      "month": "2026-04",
+      "flatType": "5 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 117,
+      "flatModel": "STANDARD",
+      "leaseCommenceDate": 1979,
+      "remainingLease": "51 years 09 months",
+      "resalePrice": 675000,
+      "pricePerSqm": 5769.23,
+      "pricePerSqft": 535.98
+    },
     {
       "id": "bedok-139-bedok-nth-ave-3-2025-12-198948",
       "month": "2025-12",
@@ -1172,19 +1191,6 @@
       "resalePrice": 458000,
       "pricePerSqm": 3914.53,
       "pricePerSqft": 363.67
-    },
-    {
-      "id": "bedok-139-bedok-nth-ave-3-2019-07-52626",
-      "month": "2019-07",
-      "flatType": "5 ROOM",
-      "storeyRange": "10 TO 12",
-      "floorAreaSqm": 117,
-      "flatModel": "STANDARD",
-      "leaseCommenceDate": 1979,
-      "remainingLease": "58 years 07 months",
-      "resalePrice": 482000,
-      "pricePerSqm": 4119.66,
-      "pricePerSqft": 382.73
     }
   ]
 }
