@@ -74,9 +74,10 @@ async function getHeaderVisualStyles(page: Page) {
 
 async function getHeaderContent(page: Page) {
   const header = page.getByTestId("global-header");
+  const titleLocator = header.locator("[data-testid='header-title'], [data-slot='card-title'], h1, h2, h3").first();
   
   return {
-    title: await header.locator("h1, h2, h3, [data-slot='card-title']").first().textContent(),
+    title: await titleLocator.textContent(),
     badges: await header.locator("[data-slot='badge'], .badge").allTextContents(),
     metadata: await header.locator("p").allTextContents()
   };

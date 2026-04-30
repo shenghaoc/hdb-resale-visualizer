@@ -736,9 +736,9 @@ function App() {
               {!isMobileHeaderOpen ? (
                 <>
                   <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
-                  <h1 className="truncate text-[0.7rem] font-bold leading-none">
+                  <span data-testid="header-title" className="truncate text-[0.7rem] font-bold leading-none">
                     {t("app.title")}
-                  </h1>
+                  </span>
                   <Badge variant="outline" className="h-5 shrink-0 border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold">
                     {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
                   </Badge>
@@ -750,9 +750,9 @@ function App() {
                 <div className="flex min-w-0 flex-col gap-1">
                   <div className="flex min-w-0 items-center gap-2">
                     <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
-                    <h1 className="truncate text-[0.82rem] font-bold leading-tight">
+                    <span data-testid="header-title" className="truncate text-[0.82rem] font-bold leading-tight">
                       {t("app.title")}
-                    </h1>
+                    </span>
                   </div>
                   <Badge variant="outline" className="h-5 w-fit border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold">
                     {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
