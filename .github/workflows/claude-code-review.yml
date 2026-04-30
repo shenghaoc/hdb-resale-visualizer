@@ -51,7 +51,6 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
-          allowedTools: 'Skill,WebFetch,Bash'
           prompt: |
             Read and follow the repository review policy in @CLAUDE.md and @AGENTS.md before starting.
 
@@ -78,4 +77,4 @@ jobs:
             Skip nitpicks (formatting, naming preferences) unless they materially hurt readability. Leave inline comments anchored to specific lines for every concrete actionable issue. Group related issues in a summary comment. If there are genuinely no actionable issues, say so explicitly.
 
             /code-review:code-review https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment
-          claude_args: '--max-turns 25'
+          claude_args: '--max-turns 25 --allowedTools Skill,WebFetch,Bash'
