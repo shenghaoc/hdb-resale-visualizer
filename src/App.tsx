@@ -17,6 +17,7 @@ import {
 import {
   fetchAddressDetail,
   fetchBlockSummaries,
+  fetchBlocksByTown,
   fetchComparisonArtifact,
   fetchManifest,
 } from "@/lib/data";
@@ -144,17 +145,13 @@ function App() {
 
     async function load() {
       try {
-        const [nextManifest, nextBlocks] = await Promise.all([
-          fetchManifest(),
-          fetchBlockSummaries(),
-        ]);
+        const nextManifest = await fetchManifest();
 
         if (!isMounted) {
           return;
         }
 
         setManifest(nextManifest);
-        setBlocks(nextBlocks);
       } catch (loadError) {
         if (!isMounted) {
           return;
@@ -170,6 +167,58 @@ function App() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!manifest) {
+      return;
+    }
+
+    let isMounted = true;
+    const townFilter = filters.town;
+    const hasGeographic = filters.search.trim() || userLocation;
+
+    async function loadBlocks() {
+      try {
+        let nextBlocks: BlockSummary[] = [];
+
+        if (townFilter) {
+          nextBlocks = await fetchBlocksByTown(townFilter);
+        } else if (hasGeographic) {
+          const allTowns = manifest.filterOptions.towns;
+          const blocksByTown = await Promise.all(
+            allTowns.map(async (town) => {
+              try {
+                return await fetchBlocksByTown(town);
+              } catch {
+                return [];
+              }
+            }),
+          );
+          nextBlocks = blocksByTown.flat();
+        } else {
+          nextBlocks = [];
+        }
+
+        if (!isMounted) {
+          return;
+        }
+
+        setBlocks(nextBlocks);
+      } catch (loadError) {
+        if (!isMounted) {
+          return;
+        }
+
+        setError(loadError instanceof Error ? loadError.message : "Failed to load blocks data");
+      }
+    }
+
+    void loadBlocks();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [manifest, filters.town, filters.search, userLocation]);
 
   useEffect(() => {
     const nextSearch = serializeFilters(filters);
