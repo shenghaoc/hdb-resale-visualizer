@@ -143,7 +143,10 @@ function App() {
     : mobileTab === "saved";
 
   const handleLogin = useCallback(() => {
-    void shortlist.signIn(email, password).catch((error) => {
+    setError(null);
+    void shortlist.signIn(email, password).then(() => {
+      setPassword("");
+    }).catch((error) => {
       setError(error instanceof Error ? error.message : "Failed to sign in");
     });
   }, [email, password, shortlist]);
@@ -916,21 +919,31 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-2 p-3 pt-0 sm:grid-cols-[1fr_1fr_auto_auto]">
-                <Input
-                  placeholder="Email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <Input
-                  placeholder="Password"
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                <Button onClick={handleLogin}>Login</Button>
-                <Button variant="outline" onClick={shortlist.signOut}>
-                  Logout
-                </Button>
+                {!shortlist.session ? (
+                  <>
+                    <Input
+                      placeholder="Email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <Input
+                      placeholder="Password"
+                      type="password"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <Button onClick={handleLogin}>Login</Button>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-2 sm:col-span-3">
+                    <span className="text-sm font-medium">Signed in as {shortlist.session.email}</span>
+                  </div>
+                )}
+                {shortlist.session ? (
+                  <Button variant="outline" onClick={shortlist.signOut}>
+                    Logout
+                  </Button>
+                ) : null}
                 <p className="text-xs text-muted-foreground sm:col-span-full">
                   {shortlist.cloudStatus}
                 </p>

@@ -81,6 +81,21 @@ export function saveShortlist(storage: Pick<Storage, "setItem">, items: Shortlis
   storage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(items));
 }
 
+export function mergeShortlists(local: ShortlistItem[], cloud: ShortlistItem[]): ShortlistItem[] {
+  const mergedMap = new Map<string, ShortlistItem>();
+
+  // Use a stable sort or timestamp check to handle conflicts
+  // We'll prioritize the one with the later addedAt
+  const allItems = [...local, ...cloud];
+  allItems.sort((a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime());
+
+  for (const item of allItems) {
+    mergedMap.set(item.addressKey, item);
+  }
+
+  return Array.from(mergedMap.values());
+}
+
 export function toggleShortlistItem(items: ShortlistItem[], addressKey: string): ShortlistItem[] {
   const existing = items.find((item) => item.addressKey === addressKey);
   if (existing) {

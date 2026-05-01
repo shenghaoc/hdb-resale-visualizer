@@ -89,21 +89,16 @@ DATA_GOV_API_KEY=...
 ONEMAP_SEARCH_ENDPOINT=https://www.onemap.gov.sg/api/common/elastic/search
 GEOCODE_CONCURRENCY=10
 # Optional cloud sync (frontend-safe values only)
-VITE_SUPABASE_URL=https://<project-ref>.supabase.co
-VITE_SUPABASE_ANON_KEY=<supabase-anon-public-key>
 VITE_BACKEND_URL=https://<your-backend-domain>
 ```
 
 `DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
 
-### Supabase key safety (important)
+### Cloud sync
 
 - `VITE_*` environment variables are bundled into frontend JavaScript. Treat them as public.
-- Only put the Supabase **anon/public** key in `VITE_SUPABASE_ANON_KEY`.
-- Never place a `service_role` key in any frontend variable or committed file.
-- Keep service-role keys only in server-side environments (CI secrets, Cloudflare worker secrets, backend runtime).
-- This repo includes a runtime guard that rejects a misconfigured `service_role` key in frontend env.
-- Frontend shortlist sync should call the backend API (`VITE_BACKEND_URL`) instead of direct service-role DB access.
+- `VITE_BACKEND_URL` enables optional Saved-flat sync through the Cloudflare Worker in `backend/`.
+- Keep backend secrets such as `JWT_SECRET` only in the Worker runtime.
 
 ## Deployment
 
