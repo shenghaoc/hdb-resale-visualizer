@@ -16,11 +16,12 @@ import {
 } from "@/lib/constants";
 import {
   fetchAddressDetail,
+  fetchBlockSummaries,
   fetchBlocksByTown,
   fetchComparisonArtifact,
   fetchManifest,
-  townToFilename,
 } from "@/lib/data";
+import { townToFilename } from "@/lib/utils";
 import {
   getSelectionByAddressKey,
   matchesFilter,
@@ -139,10 +140,14 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
-  const showMobileHeader = isDesktop;
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
+
+  const sortedTowns = useMemo(
+    () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
+    [manifest],
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -180,44 +185,43 @@ function App() {
     let isMounted = true;
     const townFilter = filters.town;
     const hasGeographic = Boolean(debouncedSearch.trim() || userLocation);
+    const totalBlocks = manifest.counts.blocks;
 
     // When a deep link opens with ?selected=... but no town/geo filter, detect
     // which town the address belongs to so the block summary can be resolved.
     const detectedTownForDeepLink =
       !townFilter && !hasGeographic && selectedAddressKey
-        ? manifest.filterOptions.towns
-            .slice()
-            .sort((a, b) => b.length - a.length)
-            .find((town) => selectedAddressKey.startsWith(townToFilename(town) + "-")) ?? null
+        ? sortedTowns.find((town) => selectedAddressKey.startsWith(townToFilename(town) + "-")) ??
+          null
         : null;
 
     const effectiveTown = townFilter || detectedTownForDeepLink;
-    const allTowns = manifest.filterOptions.towns;
 
     async function loadBlocks() {
       try {
-        let nextBlocks: BlockSummary[] = [];
+        const hasAllBlocks = blocks.length >= totalBlocks;
 
-        if (effectiveTown) {
-          nextBlocks = await fetchBlocksByTown(effectiveTown);
-        } else if (hasGeographic) {
-          const blocksByTown = await Promise.all(
-            allTowns.map(async (town) => {
-              try {
-                return await fetchBlocksByTown(town);
-              } catch {
-                return [];
-              }
-            }),
-          );
-          nextBlocks = blocksByTown.flat();
+        if (hasGeographic) {
+          if (hasAllBlocks) {
+            return;
+          }
+          const nextBlocks = await fetchBlockSummaries();
+          if (isMounted) {
+            setBlocks(nextBlocks);
+          }
+        } else if (effectiveTown) {
+          if (hasAllBlocks) {
+            return;
+          }
+          const alreadyHasTown = blocks.some((b) => b.town === effectiveTown);
+          if (alreadyHasTown) {
+            return;
+          }
+          const nextBlocks = await fetchBlocksByTown(effectiveTown);
+          if (isMounted) {
+            setBlocks(nextBlocks);
+          }
         }
-
-        if (!isMounted) {
-          return;
-        }
-
-        setBlocks(nextBlocks);
       } catch (loadError) {
         if (!isMounted) {
           return;
@@ -232,7 +236,15 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [manifest, filters.town, debouncedSearch, userLocation, selectedAddressKey]);
+  }, [
+    manifest,
+    filters.town,
+    debouncedSearch,
+    userLocation,
+    selectedAddressKey,
+    blocks,
+    sortedTowns,
+  ]);
 
   useEffect(() => {
     const nextSearch = serializeFilters(filters);
