@@ -55,6 +55,10 @@ type RasterSourceLike = {
   setTiles(tiles: string[]): void;
 };
 
+function getIsDarkFromDocument(): boolean {
+  return typeof document !== "undefined" && document.documentElement.classList.contains("dark");
+}
+
 function createCircleGeoJson(
   center: Coordinates,
   radiusKm: number,
@@ -134,9 +138,7 @@ export function MapView({
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(() =>
-    typeof document !== "undefined" ? document.documentElement.classList.contains("dark") : false,
-  );
+  const [isDarkMode, setIsDarkMode] = useState(getIsDarkFromDocument);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -207,7 +209,7 @@ export function MapView({
         sources: {
           onemap: {
             type: "raster",
-            tiles: [isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
+            tiles: [getIsDarkFromDocument() ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
             tileSize: 256,
             maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
@@ -363,8 +365,8 @@ export function MapView({
           "text-offset": [0, -2.2],
           "text-anchor": "bottom",
           "text-max-width": 16,
-          "text-allow-overlap": false,
-          "text-ignore-placement": false,
+          "text-allow-overlap": true,
+          "text-ignore-placement": true,
         },
         paint: {
           "text-color": "#1e3a8a",
@@ -511,12 +513,21 @@ export function MapView({
       return;
     }
 
-    const source = map.getSource("onemap") as RasterSourceLike | undefined;
-    if (!source || typeof source.setTiles !== "function") {
+    const applyTiles = () => {
+      const source = map.getSource("onemap") as RasterSourceLike | undefined;
+      if (!source || typeof source.setTiles !== "function") {
+        return false;
+      }
+
+      source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
+      return true;
+    };
+
+    if (applyTiles()) {
       return;
     }
 
-    source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
+    void map.once("load", applyTiles);
   }, [isDarkMode]);
 
   useEffect(() => {
