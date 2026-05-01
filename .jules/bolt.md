@@ -24,3 +24,7 @@
 ## 2024-05-18 - [ResultsPane Sorting Optimization]
 **Learning:** Calling a function containing a `switch` statement dynamically inside `Array.prototype.sort()` creates a massive performance penalty for large datasets due to O(N log N) evaluations of the `sortMode`. Moving the `if/else` logic outside the sort loop and providing inline comparators can speed up sorting significantly (~15-20%).
 **Action:** When sorting dynamic collections in React, always evaluate the sort conditions *outside* the `.sort()` comparator loop, returning specific, optimized comparators for each condition. Remove unnecessary operations from sort comparators (e.g. constant math like `MAX_LEASE_DURATION - (currentYear - value)` can just be sorted by `-value` or reversed).
+
+## 2026-04-26 - Geographic Search Intent Optimization
+**Learning:** Inside `matchesGeographicSearchIntent` (which runs in a hot loop when filtering thousands of blocks by MRT), spreading arrays (`[block.nearestMrt, ...(block.nearbyMrts ?? [])]`) and running `.filter()` creates substantial array allocation overhead. Furthermore, evaluating `normalizeStationName` before checking distance bounds unnecessarily computes regexes on stations that are out of range.
+**Action:** When filtering across multiple nested object lists per-item, evaluate items natively without spreading into intermediate arrays. Always evaluate cheap numeric comparisons (`distanceMeters <= radiusMeters`) before calling expensive normalizations or tokenizations.
