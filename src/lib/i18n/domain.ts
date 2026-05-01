@@ -10,6 +10,7 @@ type DomainLocaleConfig = {
   translations: DomainTranslations;
   searchAliases: SearchAliases;
   searchAliasPattern?: RegExp;
+  budgetDivisor: number;
 };
 
 const EMPTY_TRANSLATIONS: DomainTranslations = {
@@ -23,9 +24,11 @@ const DOMAIN_I18N_CONFIG: Record<Locale, DomainLocaleConfig> = {
   "en-SG": {
     translations: EMPTY_TRANSLATIONS,
     searchAliases: EMPTY_SEARCH_ALIASES,
+    budgetDivisor: 1000,
   },
   "zh-SG": {
     searchAliasPattern: /[\u3400-\u9fff]/,
+    budgetDivisor: 10000,
     translations: {
       town: {
         "ANG MO KIO": "宏茂桥",
@@ -123,6 +126,10 @@ export function localizeTownName(town: string, locale: Locale): string {
 
 export function localizeFlatType(flatType: string, locale: Locale): string {
   return formatLocalizedLabel(locale, flatType, getTranslation("flatType", flatType, locale));
+}
+
+export function getBudgetDivisor(locale: Locale): number {
+  return DOMAIN_I18N_CONFIG[locale].budgetDivisor;
 }
 
 export function resolveMultilingualSearchAliases(input: string): string {

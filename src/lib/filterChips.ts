@@ -1,5 +1,5 @@
 import { formatNumber } from "@/lib/format";
-import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
+import { getBudgetDivisor, localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { Locale, Translator } from "@/lib/i18n/types";
 import type { FilterState } from "@/types/data";
 
@@ -13,7 +13,7 @@ export type ActiveFilterChipDescriptor = {
 // Manual round-to-thousands + integer format produces clean "S$400K" labels for both locales.
 // S$ and K/万 are intentionally moved to translation dictionary.
 function formatBudgetChipCurrency(value: number, locale: Locale, t: Translator): string {
-  const divisor = Number(t("filters.chip.currencyDivisor", { defaultValue: "1000" }));
+  const divisor = getBudgetDivisor(locale);
   const displayValue = value / divisor;
   // Use maximumFractionDigits: 1 to show decimals only if present (e.g. 45.5万)
   const formatted = formatNumber(displayValue, 1, locale);
