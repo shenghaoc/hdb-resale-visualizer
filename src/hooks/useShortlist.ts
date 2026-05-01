@@ -97,16 +97,19 @@ export function useShortlist() {
     );
   }, []);
 
-  const signIn = useCallback(async (email: string, password: string) => {
-    const nextSession = await signInWithPassword(email, password);
-    setSession(nextSession);
-    const cloud = await pullShortlistFromCloud(nextSession);
-    const merged = mergeShortlists(items, cloud ?? []);
+  const signIn = useCallback(
+    async (email: string, password: string) => {
+      const nextSession = await signInWithPassword(email, password);
+      const cloud = await pullShortlistFromCloud(nextSession);
+      const merged = mergeShortlists(items, cloud ?? []);
 
-    setItems(merged);
-    await syncShortlistToCloud(nextSession, merged);
-    setCloudStatus(`Connected as ${nextSession.email}`);
-  }, [items]);
+      setItems(merged);
+      await syncShortlistToCloud(nextSession, merged);
+      setSession(nextSession);
+      setCloudStatus(`Connected as ${nextSession.email}`);
+    },
+    [items],
+  );
 
   const signOut = useCallback(() => {
     setSession(null);

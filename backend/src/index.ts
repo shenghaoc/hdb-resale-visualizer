@@ -35,7 +35,7 @@ app.use(
     allowHeaders: ["Content-Type", "Authorization"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
-    credentials: true,
+    credentials: false,
   })
 );
 
@@ -46,8 +46,15 @@ const loginSchema = z.object({
   password: z.string().min(6),
 });
 
+const itemSchema = z.object({
+  addressKey: z.string(),
+  notes: z.string().optional(),
+  targetPrice: z.number().nullable().optional(),
+  addedAt: z.string().optional(),
+});
+
 const shortlistSchema = z.object({
-  shortlist: z.array(z.any()),
+  shortlist: z.array(itemSchema),
 });
 
 // --- Helpers ---
@@ -125,7 +132,7 @@ app.post("/api/auth/login", zValidator("json", loginSchema), async (c) => {
 });
 
 // Protected routes
-app.use("/api/shortlist*", (c, next) => jwt({ secret: c.env.JWT_SECRET, alg: "HS256" })(c, next));
+app.use("/api/shortlist", (c, next) => jwt({ secret: c.env.JWT_SECRET, alg: "HS256" })(c, next));
 
 app.get("/api/shortlist", async (c) => {
   const payload = c.get("jwtPayload");
@@ -135,8 +142,17 @@ app.get("/api/shortlist", async (c) => {
     .bind(userId)
     .first<{ shortlist: string }>();
 
-  const shortlist = row ? (JSON.parse(row.shortlist) as unknown[]) : [];
-  return c.json({ shortlist });
+  if (!row) {
+    return c.json({ shortlist: [] });
+  }
+
+  try {
+    const raw = JSON.parse(row.shortlist);
+    const validated = z.array(itemSchema).parse(raw);
+    return c.json({ shortlist: validated });
+  } catch {
+    return c.json({ error: "Failed to parse saved data" }, 500);
+  }
 });
 
 app.put("/api/shortlist", zValidator("json", shortlistSchema), async (c) => {

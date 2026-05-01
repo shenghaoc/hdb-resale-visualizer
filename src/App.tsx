@@ -120,6 +120,7 @@ function App() {
     Record<string, ComparisonArtifact | null>
   >({});
   const [error, setError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -143,12 +144,15 @@ function App() {
     : mobileTab === "saved";
 
   const handleLogin = useCallback(() => {
-    setError(null);
-    void shortlist.signIn(email, password).then(() => {
-      setPassword("");
-    }).catch((error) => {
-      setError(error instanceof Error ? error.message : "Failed to sign in");
-    });
+    setAuthError(null);
+    void shortlist
+      .signIn(email, password)
+      .then(() => {
+        setPassword("");
+      })
+      .catch((error) => {
+        setAuthError(error instanceof Error ? error.message : "Failed to sign in");
+      });
   }, [email, password, shortlist]);
 
   useEffect(() => {
@@ -928,6 +932,7 @@ function App() {
                     Logout
                   </Button>
                 ) : null}
+                {authError && <p className="text-xs text-destructive sm:col-span-full">{authError}</p>}
                 <p className="text-xs text-muted-foreground sm:col-span-full">
                   {shortlist.cloudStatus}
                 </p>

@@ -29,16 +29,16 @@ async function request<T>(path: string, init: RequestInit): Promise<T> {
     },
   });
 
-  const payload = (await response.json().catch(() => null)) as unknown;
+  const payload = (await response.json().catch(() => ({}))) as Record<string, unknown>;
   if (!response.ok) {
-    let message = response.statusText;
-    if (typeof payload === "object" && payload !== null) {
-      const p = payload as Record<string, unknown>;
-      const candidate = p.msg || p.message || p.error_description || p.error;
-      if (typeof candidate === "string") {
-        message = candidate;
-      }
-    }
+    const candidate =
+      payload.message ||
+      payload.msg ||
+      payload.error_description ||
+      payload.error ||
+      response.statusText;
+
+    const message = typeof candidate === "string" ? candidate : JSON.stringify(candidate);
     throw new Error(message || "Request failed");
   }
 
