@@ -72,6 +72,7 @@ export function GlobalHeader({
                 className="size-7 p-0 text-muted-foreground hover:text-foreground"
                 onClick={toggleTheme}
                 aria-label={t("app.toggleTheme")}
+                title={t("app.toggleTheme")}
               >
                 {theme === "light" ? (
                   <Moon data-icon className="size-4" />
@@ -107,11 +108,21 @@ export function GlobalHeader({
                 className="size-7 p-0 sm:hidden"
                 onClick={() => setMobileInfoOpen((current) => !current)}
                 aria-label={t("app.toggleMetadata")}
+                title={t("app.toggleMetadata")}
+                aria-expanded={mobileInfoOpen}
               >
                 <Info data-icon className="size-4" />
               </Button>
               {onDismiss ? (
-                <Button type="button" size="icon" variant="ghost" className="size-7 p-0" onClick={onDismiss} aria-label={t("app.dismissHeader")}>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="size-7 p-0"
+                  onClick={onDismiss}
+                  aria-label={t("app.dismissHeader")}
+                  title={t("app.dismissHeader")}
+                >
                   <X data-icon className="size-4" />
                 </Button>
               ) : null}
