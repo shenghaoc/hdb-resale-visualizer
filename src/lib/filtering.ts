@@ -448,16 +448,27 @@ export function matchesGeographicSearchIntent(
     return computeDistanceMeters(block.coordinates, intent.coordinates) <= intent.radiusMeters;
   }
 
-  const stationRecords = [block.nearestMrt, ...(block.nearbyMrts ?? [])].filter(
-    (station): station is NonNullable<typeof station> => station !== null,
-  );
-
   const normalizedIntentName = normalizeStationName(intent.stationName);
-  return stationRecords.some(
-    (station) =>
-      normalizeStationName(station.stationName) === normalizedIntentName &&
-      station.distanceMeters <= intent.radiusMeters,
-  );
+
+  // ⚡ Bolt: Avoid intermediate array allocations and spreads in the hot filter loop.
+  // ⚡ Bolt: Check cheap numeric distance bounds before evaluating expensive station name normalization.
+  if (
+    block.nearestMrt !== null &&
+    block.nearestMrt.distanceMeters <= intent.radiusMeters &&
+    normalizeStationName(block.nearestMrt.stationName) === normalizedIntentName
+  ) {
+    return true;
+  }
+
+  if (block.nearbyMrts && block.nearbyMrts.length > 0) {
+    return block.nearbyMrts.some(
+      (station) =>
+        station.distanceMeters <= intent.radiusMeters &&
+        normalizeStationName(station.stationName) === normalizedIntentName
+    );
+  }
+
+  return false;
 }
 
 export function resetFilteringCachesForTests(): void {
