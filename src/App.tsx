@@ -891,7 +891,8 @@ function App() {
               <aside
                 id="desktop-panel"
                 aria-hidden={!isDesktopPanelOpen}
-                {...(!isDesktopPanelOpen ? { inert: "" } : {})}
+                {...(!isDesktopPanelOpen && { inert: true })}
+                data-open={isDesktopPanelOpen ? "true" : "false"}
                 className={cn(
                   "pointer-events-auto absolute bottom-20 left-6 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity,width] duration-200 ease-out dark:bg-card",
                   isDesktopPanelOpen
