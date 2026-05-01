@@ -331,8 +331,8 @@ export function ResultsPane({
       return sorted.sort((left, right) => right.leaseCommenceRange[1] - left.leaseCommenceRange[1]);
     } else if (sortMode === "mrt-asc") {
       return sorted.sort((left, right) => {
-        const leftDist = left.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-        const rightDist = right.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+        const leftDist = left.nearestMrt?.distanceMeters ?? Number.MAX_SAFE_INTEGER;
+        const rightDist = right.nearestMrt?.distanceMeters ?? Number.MAX_SAFE_INTEGER;
         return leftDist - rightDist;
       });
     }
