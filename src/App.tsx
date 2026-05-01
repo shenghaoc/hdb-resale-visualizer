@@ -82,7 +82,7 @@ type LoadedComparison = {
   data: ComparisonArtifact | null;
 };
 
-type MobileFilterChip = {
+type FilterChip = {
   key: string;
   label: string;
   onRemove: () => void;
@@ -529,7 +529,7 @@ function App() {
     });
   }, []);
 
-  const mobileFilterChips = useMemo<MobileFilterChip[]>(
+  const activeFilterChips = useMemo<FilterChip[]>(
     () =>
       getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
         key: chip.key,
@@ -838,7 +838,7 @@ function App() {
           </div>
         )}
 
-        {(mobileFilterChips.length > 0 || filters.search) && (
+        {activeFilterChips.length > 0 && (
           <div
             role="toolbar"
             aria-label={t("filters.title")}
@@ -848,7 +848,7 @@ function App() {
             )}
             style={{ scrollbarWidth: "none" }}
           >
-            {mobileFilterChips.map((chip) => (
+            {activeFilterChips.map((chip) => (
               <button
                 key={chip.key}
                 type="button"
@@ -898,7 +898,7 @@ function App() {
                 {...(!isDesktopPanelOpen && { inert: true })}
                 data-open={isDesktopPanelOpen ? "true" : "false"}
                 className={cn(
-                  "pointer-events-auto absolute bottom-20 left-6 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity,width] duration-200 ease-out dark:bg-card",
+                  "pointer-events-auto absolute bottom-20 left-6 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
                   isDesktopPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
