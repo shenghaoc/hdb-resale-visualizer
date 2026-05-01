@@ -343,10 +343,10 @@ export function ShortlistDrawer({
     const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
     const csvRows = rankedRows.map((row) => {
       // Security: Guard against CSV formula injection (CSV Injection/Formula Injection).
-      // If a cell begins with a formula prefix (=, +, -, @, \t, \r), we prefix it with a single quote
+      // If a cell begins with a formula prefix (=, +, -, @, \t, \r, |), we prefix it with a single quote
       // to ensure it is treated as literal text by spreadsheet software (Excel, Sheets, etc.).
       // This protects against malicious notes that could execute arbitrary commands or leak data.
-      const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r]/, "'$&");
+      const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r|]/, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
