@@ -138,6 +138,8 @@ export function MapView({
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
+  const lastAppliedThemeRef = useRef<boolean | null>(null);
+  const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(getIsDarkFromDocument);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
@@ -173,7 +175,7 @@ export function MapView({
     }
 
     const root = document.documentElement;
-    const updateTheme = () => setIsDarkMode(root.classList.contains("dark"));
+    const updateTheme = () => setIsDarkMode(getIsDarkFromDocument());
     updateTheme();
 
     const observer = new MutationObserver(updateTheme);
@@ -192,6 +194,7 @@ export function MapView({
     }
 
     prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const initialIsDark = getIsDarkFromDocument();
     const map = new maplibregl.Map({
       container: containerRef.current,
       attributionControl: false,
@@ -209,7 +212,7 @@ export function MapView({
         sources: {
           onemap: {
             type: "raster",
-            tiles: [getIsDarkFromDocument() ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
+            tiles: [initialIsDark ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
             tileSize: 256,
             maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
@@ -498,8 +501,13 @@ export function MapView({
     });
 
     mapRef.current = map;
+    lastAppliedThemeRef.current = initialIsDark;
 
     return () => {
+      if (pendingThemeLoadListenerRef.current) {
+        map.off("load", pendingThemeLoadListenerRef.current);
+        pendingThemeLoadListenerRef.current = null;
+      }
       popup.remove();
       map.remove();
       mapRef.current = null;
@@ -513,21 +521,44 @@ export function MapView({
       return;
     }
 
-    const applyTiles = () => {
-      const source = map.getSource("onemap") as RasterSourceLike | undefined;
-      if (!source || typeof source.setTiles !== "function") {
-        return false;
-      }
-
-      source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
-      return true;
-    };
-
-    if (applyTiles()) {
+    if (lastAppliedThemeRef.current === isDarkMode) {
       return;
     }
 
-    void map.once("load", applyTiles);
+    const applyTiles = () => {
+      const source = map.getSource("onemap") as RasterSourceLike | undefined;
+      if (!source || typeof source.setTiles !== "function") {
+        return;
+      }
+
+      source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
+      lastAppliedThemeRef.current = isDarkMode;
+    };
+
+    if (map.isStyleLoaded()) {
+      applyTiles();
+      return;
+    }
+
+    if (pendingThemeLoadListenerRef.current) {
+      map.off("load", pendingThemeLoadListenerRef.current);
+      pendingThemeLoadListenerRef.current = null;
+    }
+
+    const onLoad = () => {
+      pendingThemeLoadListenerRef.current = null;
+      applyTiles();
+    };
+
+    pendingThemeLoadListenerRef.current = onLoad;
+    void map.once("load", onLoad);
+
+    return () => {
+      if (pendingThemeLoadListenerRef.current) {
+        map.off("load", pendingThemeLoadListenerRef.current);
+        pendingThemeLoadListenerRef.current = null;
+      }
+    };
   }, [isDarkMode]);
 
   useEffect(() => {
