@@ -10,12 +10,12 @@ This folder is the backend counterpart for this Kiro project (frontend + backend
 ## Runtime
 
 - Cloudflare Worker style handler in `src/index.ts`.
-- Worker config lives in `backend/wrangler.toml`.
+- Worker config lives in `backend/wrangler.jsonc`.
 
 ## Required secrets (server-only)
 
 - `JWT_SECRET`: Used to sign and verify authentication tokens.
-- `DB`: The Cloudflare D1 database binding (configured in `wrangler.toml`).
+- `DB`: The Cloudflare D1 database binding (configured in `wrangler.jsonc`).
 
 Never expose these via `VITE_*` variables.
 
@@ -25,6 +25,16 @@ Never expose these via `VITE_*` variables.
 - `POST /api/auth/login`: Authenticate and obtain a JWT (supports auto-signup).
 - `GET /api/shortlist`: Retrieve the user's saved shortlist (Protected).
 - `PUT /api/shortlist`: Update the user's saved shortlist (Protected).
+
+## Frontend Setup
+
+To enable the optional login interface and cloud sync on the frontend, you must provide the backend URL to your Vite application by creating a `.env.local` file at the repository root:
+
+```env
+VITE_BACKEND_URL=http://localhost:8787
+```
+
+(Replace with your deployed Cloudflare Worker URL in production).
 
 ## Run / Deploy
 

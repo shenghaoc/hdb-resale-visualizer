@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hdb-resale-visualizer-backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-29",
+  "vars": {
+    "APP_ORIGIN": ""
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hdb-resale-visualizer-db",
+      "database_id": "your-database-id-here",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
