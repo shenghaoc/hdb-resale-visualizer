@@ -132,12 +132,8 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
-  const resultsVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "results"
-    : mobileTab === "results";
-  const savedVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "saved"
-    : mobileTab === "saved";
+  const resultsVisible = isDesktop ? desktopTab === "results" : mobileTab === "results";
+  const savedVisible = isDesktop ? desktopTab === "saved" : mobileTab === "saved";
 
   useEffect(() => {
     let isMounted = true;
@@ -706,6 +702,7 @@ function App() {
   return (
     <>
       <main className="fixed inset-0 w-full overflow-hidden">
+        <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
         <a
           className="map-attribution-link"
@@ -747,21 +744,21 @@ function App() {
                   </span>
                 </>
               ) : (
-                <div className="flex min-w-0 flex-col gap-1">
-                  <div className="flex min-w-0 items-center gap-2">
+                <span className="flex min-w-0 flex-col gap-1">
+                  <span className="flex min-w-0 items-center gap-2">
                     <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
                     <span data-testid="header-title" className="truncate text-[0.82rem] font-bold leading-tight">
                       {t("app.title")}
                     </span>
-                  </div>
+                  </span>
                   <Badge variant="outline" className="h-5 w-fit border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold">
                     {t("stats.dataThrough", { month: formatMonth(manifest.dataWindow.maxMonth, locale) })}
                   </Badge>
-                  <p className="text-[0.6rem] font-medium text-muted-foreground">
+                  <span className="text-[0.6rem] font-medium text-muted-foreground">
                     {t("stats.txns", { count: manifest.counts.transactions.toLocaleString(locale) })} ·{" "}
                     {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })} · OneMap
-                  </p>
-                </div>
+                  </span>
+                </span>
               )}
             </button>
 
@@ -773,7 +770,7 @@ function App() {
                   variant="ghost"
                   className="size-8 p-0 text-muted-foreground hover:text-foreground"
                   onClick={toggleTheme}
-                  aria-label="Toggle theme"
+                  aria-label={t("app.toggleTheme")}
                 >
                   {theme === "light" ? (
                     <Moon data-icon className="size-4" />
@@ -808,7 +805,7 @@ function App() {
                   variant="ghost"
                   className="size-8 p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setIsHeaderVisible(false)}
-                  aria-label="Dismiss header"
+                  aria-label={t("app.dismissHeader")}
                 >
                   <X data-icon className="size-4" />
                 </Button>
@@ -906,39 +903,37 @@ function App() {
                       : "w-[min(30rem,34vw)]",
                 )}
               >
-                {isDesktopPanelOpen ? (
-                  <div className="flex h-full min-h-0 flex-col">
-                    {desktopTab === "filters" ? (
-                      <div id="desktop-filters-content" className="h-full overflow-y-auto p-3 pb-8">
-                        {filterContent}
-                      </div>
-                    ) : null}
-                    {desktopTab === "results" ? (
+                <div className="flex h-full min-h-0 flex-col">
+                  {desktopTab === "filters" ? (
+                    <div id="desktop-filters-content" className="h-full overflow-y-auto p-3 pb-8">
+                      {filterContent}
+                    </div>
+                  ) : null}
+                  {desktopTab === "results" ? (
+                    <div
+                      id="desktop-results-content"
+                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8"
+                    >
+                      {selectedDetailContent}
                       <div
-                        id="desktop-results-content"
-                        className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8"
+                        className={cn(
+                          "min-h-0 flex-1 flex-col",
+                          detailVisible || detailLoading ? "hidden" : "flex",
+                        )}
                       >
-                        {selectedDetailContent}
-                        <div
-                          className={cn(
-                            "min-h-0 flex-1 flex-col",
-                            detailVisible || detailLoading ? "hidden" : "flex",
-                          )}
-                        >
-                          {resultsPaneContent}
-                        </div>
+                        {resultsPaneContent}
                       </div>
-                    ) : null}
-                    {desktopTab === "saved" ? (
-                      <div
-                        id="desktop-saved-content"
-                        className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
-                      >
-                        {savedContent}
-                      </div>
-                    ) : null}
-                  </div>
-                ) : null}
+                    </div>
+                  ) : null}
+                  {desktopTab === "saved" ? (
+                    <div
+                      id="desktop-saved-content"
+                      className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
+                    >
+                      {savedContent}
+                    </div>
+                  ) : null}
+                </div>
               </aside>
             </section>
           ) : (

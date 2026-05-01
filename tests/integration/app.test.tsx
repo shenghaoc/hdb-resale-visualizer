@@ -229,9 +229,8 @@ describe("App detail loading", () => {
     await screen.findByTestId("results-pane");
 
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
-
     await waitFor(() => {
-      expect(screen.queryByTestId("results-pane")).not.toBeInTheDocument();
+      expect(document.getElementById("desktop-panel")).toHaveAttribute("aria-hidden", "true");
     });
   });
 });

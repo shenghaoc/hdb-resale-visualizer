@@ -11,9 +11,13 @@ export type ActiveFilterChipDescriptor = {
 
 // Deliberately avoids Intl compact notation (which yields "S$400.0K" with maximumFractionDigits: 1).
 // Manual round-to-thousands + integer format produces clean "S$400K" labels for both locales.
-// S$ and K are intentionally hardcoded: this app targets SGD only (en-SG and zh-SG).
-function formatBudgetChipCurrency(value: number, locale: Locale): string {
-  return `S$${formatNumber(Math.round(value / 1000), 0, locale)}K`;
+// S$ and K/万 are intentionally moved to translation dictionary.
+function formatBudgetChipCurrency(value: number, locale: Locale, t: Translator): string {
+  const isChinese = locale === "zh-SG";
+  const displayValue = isChinese ? value / 10000 : value / 1000;
+  // Use maximumFractionDigits: 1 to show decimals only if present (e.g. 45.5万)
+  const formatted = formatNumber(displayValue, 1, locale);
+  return t("filters.chip.budget", { value: formatted });
 }
 
 export function getActiveFilterChipDescriptors(
@@ -23,10 +27,11 @@ export function getActiveFilterChipDescriptors(
 ): ActiveFilterChipDescriptor[] {
   const chips: ActiveFilterChipDescriptor[] = [];
 
-  if (filters.search.trim()) {
+  const trimmedSearch = filters.search.trim();
+  if (trimmedSearch) {
     chips.push({
       key: "search",
-      label: filters.search.trim(),
+      label: trimmedSearch,
       clearPatch: { search: "" },
     });
   }
@@ -48,8 +53,8 @@ export function getActiveFilterChipDescriptors(
   }
 
   if (filters.budgetMin !== null || filters.budgetMax !== null) {
-    const lo = filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale) : "";
-    const hi = filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale) : "";
+    const lo = filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale, t) : "";
+    const hi = filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale, t) : "";
     chips.push({
       key: "budget",
       label: lo && hi ? `${lo}–${hi}` : lo || hi,

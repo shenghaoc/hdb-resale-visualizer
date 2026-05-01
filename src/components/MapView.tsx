@@ -10,6 +10,7 @@ import {
   MEDIAN_PRICE_COLOR_EXPRESSION,
   ONEMAP_ATTRIBUTION,
   ONEMAP_TILE_URL,
+  PRIMARY_BLUE,
 } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
@@ -331,7 +332,7 @@ export function MapView({
           type: "fill",
           source: "radius",
           paint: {
-            "fill-color": "#2563eb",
+            "fill-color": PRIMARY_BLUE,
             "fill-opacity": 0.05,
           },
         },
@@ -344,7 +345,7 @@ export function MapView({
           type: "line",
           source: "radius",
           paint: {
-            "line-color": "#2563eb",
+            "line-color": PRIMARY_BLUE,
             "line-width": 1,
             "line-dasharray": [3, 3],
             "line-opacity": 0.25,
@@ -423,7 +424,7 @@ export function MapView({
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "#2563eb",
+          "circle-color": PRIMARY_BLUE,
           "circle-radius": ["step", ["get", "point_count"], 16, 10, 20, 30, 28, 100, 36],
           "circle-opacity": 0.9,
         },

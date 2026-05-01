@@ -12,6 +12,7 @@ import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
 import { useTheme } from "@/hooks/useTheme";
+import { PRIMARY_BLUE } from "@/lib/constants";
 
 echarts.use([
   LineChart,
@@ -42,7 +43,7 @@ export function TrendChart({ points, t }: TrendChartProps) {
 
     // Theme-aware colors
     const colors = {
-      primary: isDark ? "#79a6ff" : "#2563eb",
+      primary: isDark ? "#79a6ff" : PRIMARY_BLUE,
       chart2: isDark ? "#9bb7ff" : "#495c95",
       popover: isDark ? "#22262e" : "#ffffff",
       popoverForeground: isDark ? "#e0e0e0" : "#171c1f",
