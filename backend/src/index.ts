@@ -30,7 +30,10 @@ const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 app.use(
   "*",
   cors({
-    origin: (origin, c) => c.env.APP_ORIGIN || origin || "*",
+    origin: (origin, c) => {
+      const env = c.env as Env;
+      return env.APP_ORIGIN || origin || "*";
+    },
     allowMethods: ["GET", "POST", "PUT", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     exposeHeaders: ["Content-Length"],
@@ -71,7 +74,7 @@ async function hashPassword(password: string, salt?: Uint8Array): Promise<string
   const derivedBits = await crypto.subtle.deriveBits(
     {
       name: "PBKDF2",
-      salt: internalSalt as any,
+      salt: internalSalt as BufferSource,
       iterations: PBKDF2_ITERATIONS,
       hash: "SHA-256",
     },
@@ -132,7 +135,11 @@ app.post("/api/auth/login", zValidator("json", loginSchema), async (c) => {
 });
 
 // Protected routes
-app.use("/api/shortlist", (c, next) => jwt({ secret: c.env.JWT_SECRET, alg: "HS256" })(c, next));
+app.use("/api/shortlist", (c, next) => {
+  const env = c.env;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return jwt({ secret: env.JWT_SECRET, alg: "HS256" })(c, next);
+});
 
 app.get("/api/shortlist", async (c) => {
   const payload = c.get("jwtPayload");
@@ -147,7 +154,7 @@ app.get("/api/shortlist", async (c) => {
   }
 
   try {
-    const raw = JSON.parse(row.shortlist);
+    const raw = JSON.parse(row.shortlist) as unknown;
     const validated = z.array(itemSchema).parse(raw);
     return c.json({ shortlist: validated });
   } catch {
