@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
+import maplibregl, { ExpressionSpecification, LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { ONEMAP_ATTRIBUTION, ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/lib/constants";
+import {
+  MEDIAN_PRICE_COLOR_EXPRESSION,
+  ONEMAP_ATTRIBUTION,
+  ONEMAP_DEFAULT_TILE_URL,
+  ONEMAP_NIGHT_TILE_URL,
+  PRIMARY_BLUE,
+} from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -260,7 +266,7 @@ export function MapView({
         type: "fill",
         source: "radius",
         paint: {
-          "fill-color": "#2563eb",
+          "fill-color": PRIMARY_BLUE,
           "fill-opacity": 0.05,
         },
       });
@@ -270,7 +276,7 @@ export function MapView({
         type: "line",
         source: "radius",
         paint: {
-          "line-color": "#2563eb",
+          "line-color": PRIMARY_BLUE,
           "line-width": 1,
           "line-dasharray": [3, 3],
           "line-opacity": 0.25,
@@ -291,7 +297,7 @@ export function MapView({
         source: "blocks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": "#2563eb",
+          "circle-color": PRIMARY_BLUE,
           "circle-radius": ["step", ["get", "point_count"], 16, 10, 20, 30, 28, 100, 36],
           "circle-opacity": 0.9,
         },
@@ -317,21 +323,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": [
-            "interpolate",
-            ["linear"],
-            ["get", "median_price"],
-            400000,
-            "#3a8a6f",
-            600000,
-            "#9bb368",
-            800000,
-            "#d4a44e",
-            1000000,
-            "#d97757",
-            1300000,
-            "#a83232",
-          ],
+          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as ExpressionSpecification,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
