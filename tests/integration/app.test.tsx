@@ -8,15 +8,23 @@ import type { BlockSummary, Manifest } from "@/types/data";
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
+  fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
+  townToFilename: (town: string) =>
+    town
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, ""),
 }));
 
 vi.mock("@/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
   fetchBlockSummaries: dataMocks.fetchBlockSummaries,
+  fetchBlocksByTown: dataMocks.fetchBlocksByTown,
   fetchAddressDetail: dataMocks.fetchAddressDetail,
   fetchComparisonArtifact: dataMocks.fetchComparisonArtifact,
+  townToFilename: dataMocks.townToFilename,
 }));
 
 vi.mock("@/hooks/useMediaQuery", () => ({
@@ -160,6 +168,7 @@ describe("App detail loading", () => {
       monthlyTrend: [],
       transactions: [],
     });
+    dataMocks.fetchBlocksByTown.mockResolvedValue(blocks);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
     Object.defineProperty(window, "localStorage", {
       value: {

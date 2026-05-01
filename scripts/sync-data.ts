@@ -8,6 +8,7 @@ import {
   makeAddressKey,
   normalizeText,
   parseRemainingLease,
+  townToFilename,
   type GeocodeCacheFile,
   type MrtExit,
   type PropertyInfo,
@@ -17,6 +18,7 @@ import {
 
 const ROOT = process.cwd();
 const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
+const BLOCKS_DIR = path.join(PUBLIC_DATA_DIR, "blocks");
 const DETAILS_DIR = path.join(PUBLIC_DATA_DIR, "details");
 const TRENDS_DIR = path.join(PUBLIC_DATA_DIR, "trends");
 const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
@@ -569,6 +571,15 @@ async function main() {
   await writeJson(path.join(TRENDS_DIR, "town-flat-type.json"), artifacts.townFlatTypeTrend);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-exits.geojson"), mrtGeoJson);
   await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-stations.geojson"), buildMrtStationsGeoJson(mrtExits));
+
+  await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
+  await fs.mkdir(BLOCKS_DIR, { recursive: true });
+
+  for (const [town, blocks] of Object.entries(artifacts.blocksByTown)) {
+    await writeJson(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), blocks);
+  }
+
+  console.log(`Generated ${Object.keys(artifacts.blocksByTown).length} town-indexed block files.`);
 
   const comparisonsDir = path.join(PUBLIC_DATA_DIR, "comparisons");
   await fs.rm(comparisonsDir, { recursive: true, force: true });

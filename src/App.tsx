@@ -17,8 +17,10 @@ import {
 import {
   fetchAddressDetail,
   fetchBlockSummaries,
+  fetchBlocksByTown,
   fetchComparisonArtifact,
   fetchManifest,
+  townToFilename,
 } from "@/lib/data";
 import {
   getSelectionByAddressKey,
@@ -138,23 +140,27 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
+  // Debounce search for the map only so list interactions stay in sync with
+  // the visible result rows while the heavier map updates trail slightly.
+  const debouncedSearch = useDebouncedValue(filters.search, 200);
+
+  const sortedTowns = useMemo(
+    () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
+    [manifest],
+  );
 
   useEffect(() => {
     let isMounted = true;
 
     async function load() {
       try {
-        const [nextManifest, nextBlocks] = await Promise.all([
-          fetchManifest(),
-          fetchBlockSummaries(),
-        ]);
+        const nextManifest = await fetchManifest();
 
         if (!isMounted) {
           return;
         }
 
         setManifest(nextManifest);
-        setBlocks(nextBlocks);
       } catch (loadError) {
         if (!isMounted) {
           return;
@@ -170,6 +176,80 @@ function App() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!manifest) {
+      return;
+    }
+
+    let isMounted = true;
+    const townFilter = filters.town;
+    const hasGeographic = Boolean(debouncedSearch.trim() || userLocation);
+    const totalBlocks = manifest.counts.blocks;
+
+    // When a deep link opens with ?selected=... but no town/geo filter, detect
+    // which town the address belongs to so the block summary can be resolved.
+    const detectedTownForDeepLink =
+      !townFilter && !hasGeographic && selectedAddressKey
+        ? sortedTowns.find((town) => selectedAddressKey.startsWith(townToFilename(town) + "-")) ??
+          null
+        : null;
+
+    const effectiveTown = townFilter || detectedTownForDeepLink;
+
+    async function loadBlocks() {
+      try {
+        const hasAllBlocks = blocks.length >= totalBlocks;
+
+        if (hasGeographic) {
+          if (hasAllBlocks) {
+            return;
+          }
+          const nextBlocks = await fetchBlockSummaries();
+          if (isMounted) {
+            setBlocks(nextBlocks);
+          }
+        } else if (effectiveTown) {
+          if (hasAllBlocks) {
+            return;
+          }
+          const alreadyHasTown = blocks.some((b) => b.town === effectiveTown);
+          if (alreadyHasTown) {
+            return;
+          }
+          const nextBlocks = await fetchBlocksByTown(effectiveTown);
+          if (isMounted && Array.isArray(nextBlocks)) {
+            setBlocks((current) => {
+              if (current.length >= totalBlocks || current.some((b) => b.town === effectiveTown)) {
+                return current;
+              }
+              return [...current, ...nextBlocks];
+            });
+          }
+        }
+      } catch (loadError) {
+        if (!isMounted) {
+          return;
+        }
+
+        setError(loadError instanceof Error ? loadError.message : "Failed to load blocks data");
+      }
+    }
+
+    void loadBlocks();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [
+    manifest,
+    filters.town,
+    debouncedSearch,
+    userLocation,
+    selectedAddressKey,
+    blocks.length,
+    sortedTowns,
+  ]);
 
   useEffect(() => {
     const nextSearch = serializeFilters(filters);
@@ -263,9 +343,6 @@ function App() {
     };
   }, [selectedAddressKey]);
 
-  // Debounce search for the map only so list interactions stay in sync with
-  // the visible result rows while the heavier map updates trail slightly.
-  const debouncedSearch = useDebouncedValue(filters.search, 200);
   const stableFilters = useMemo(
     () => ({ ...filters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

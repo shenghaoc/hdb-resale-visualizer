@@ -104,6 +104,7 @@ export type AmenityLocation = {
 export type GeneratedArtifacts = {
   manifest: Manifest;
   blockSummaries: BlockSummary[];
+  blocksByTown: Record<string, BlockSummary[]>;
   details: Record<string, AddressDetail>;
   townFlatTypeTrend: TownFlatTypeTrendPoint[];
   comparisons?: Record<string, ComparisonArtifact>;
@@ -134,6 +135,8 @@ type ComparisonMetricPopulation = {
 export function normalizeText(value: string): string {
   return value.trim().replace(/\s+/g, " ").toUpperCase();
 }
+
+export { townToFilename } from "../../src/lib/utils";
 
 export function makeAddressKey(town: string, block: string, streetName: string): string {
   const source = `${normalizeText(town)}-${normalizeText(block)}-${normalizeText(streetName)}`;
@@ -602,6 +605,15 @@ export function buildArtifacts({
 
     return right.transactionCount - left.transactionCount;
   });
+
+  const blocksByTown: Record<string, BlockSummary[]> = {};
+  for (const block of blockSummaries) {
+    if (!blocksByTown[block.town]) {
+      blocksByTown[block.town] = [];
+    }
+    blocksByTown[block.town].push(block);
+  }
+
   const filterOptions = buildFilterOptions(blockSummaries);
 
   // Generate comparison artifacts if amenity data is available
@@ -745,6 +757,7 @@ export function buildArtifacts({
   return {
     manifest,
     blockSummaries,
+    blocksByTown,
     details,
     townFlatTypeTrend,
     comparisons: Object.keys(comparisons).length > 0 ? comparisons : undefined,
