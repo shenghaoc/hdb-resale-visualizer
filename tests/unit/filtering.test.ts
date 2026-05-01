@@ -6,7 +6,9 @@ import {
   matchesGeographicSearchIntent,
   resetFilteringCachesForTests,
   resolveGeographicSearchIntent,
+  type GeographicSearchIntent,
 } from "@/lib/filtering";
+import type { BlockSummary } from "@/types/data";
 import { buildFixtureArtifacts } from "../fixtures/pipeline";
 
 describe("matchesFilter", () => {
@@ -265,57 +267,92 @@ describe("matchesFilter", () => {
     });
   });
 
-    describe("matchesGeographicSearchIntent", () => {
-    it("should match nearbyMrt if nearestMrt is out of bounds or different", () => {
-      const intent = resolveGeographicSearchIntent("Station B", [{
-        nearestMrt: { stationName: "Station A", distanceMeters: 2000 },
-        nearbyMrts: [
-          { stationName: "Station C", distanceMeters: 500 },
-          { stationName: "Station B", distanceMeters: 800 }
-        ]
-      }] as any, 1000);
-
-      const block: any = {
-        nearestMrt: { stationName: "Station A", distanceMeters: 2000 },
-        nearbyMrts: [
-          { stationName: "Station C", distanceMeters: 500 },
-          { stationName: "Station B", distanceMeters: 800 }
-        ]
+  describe("matchesGeographicSearchIntent", () => {
+    it("matches blocks where the station is in nearbyMrts but not nearestMrt", () => {
+      const stationName = "LAKESIDE MRT STATION";
+      const intent: GeographicSearchIntent = {
+        type: "station",
+        stationName: stationName,
+        radiusMeters: 500,
       };
 
-      expect(matchesGeographicSearchIntent(block, {
-        type: "station",
-        stationName: "Station B",
-        radiusMeters: 1000
-      })).toBe(true);
+      const block: BlockSummary = {
+        ...alpha!,
+        nearestMrt: {
+          stationName: "JURONG EAST MRT STATION",
+          distanceMeters: 1000,
+        },
+        nearbyMrts: [
+          {
+            stationName: stationName,
+            distanceMeters: 400,
+          },
+        ],
+      };
+
+      expect(matchesGeographicSearchIntent(block, intent)).toBe(true);
     });
 
-    it("should match nearbyMrt if nearestMrt is null", () => {
-      const block: any = {
+    it("matches blocks where nearestMrt is null but a station in nearbyMrts matches", () => {
+      const stationName = "LAKESIDE MRT STATION";
+      const intent: GeographicSearchIntent = {
+        type: "station",
+        stationName: stationName,
+        radiusMeters: 500,
+      };
+
+      const block: BlockSummary = {
+        ...alpha!,
         nearestMrt: null,
         nearbyMrts: [
-          { stationName: "Station B", distanceMeters: 800 }
-        ]
+          {
+            stationName: stationName,
+            distanceMeters: 400,
+          },
+        ],
       };
-      expect(matchesGeographicSearchIntent(block, {
-        type: "station",
-        stationName: "Station B",
-        radiusMeters: 1000
-      })).toBe(true);
+
+      expect(matchesGeographicSearchIntent(block, intent)).toBe(true);
     });
 
-    it("should fail if nearest is wrong and nearby is out of bounds", () => {
-      const block: any = {
-        nearestMrt: { stationName: "Station A", distanceMeters: 100 },
-        nearbyMrts: [
-          { stationName: "Station B", distanceMeters: 800 }
-        ]
-      };
-      expect(matchesGeographicSearchIntent(block, {
+    it("matches blocks where nearestMrt has correct station name but exceeds radius, while another matching station is in nearbyMrts", () => {
+      const stationName = "LAKESIDE MRT STATION";
+      const intent: GeographicSearchIntent = {
         type: "station",
-        stationName: "Station B",
-        radiusMeters: 500
-      })).toBe(false);
+        stationName: stationName,
+        radiusMeters: 500,
+      };
+
+      const block: BlockSummary = {
+        ...alpha!,
+        nearestMrt: {
+          stationName: stationName,
+          distanceMeters: 600,
+        },
+        nearbyMrts: [
+          {
+            stationName: stationName,
+            distanceMeters: 450,
+          },
+        ],
+      };
+
+      expect(matchesGeographicSearchIntent(block, intent)).toBe(true);
+    });
+
+    it("fails if nearest is wrong and nearby is out of bounds", () => {
+      const block: BlockSummary = {
+        ...alpha!,
+        nearestMrt: { stationName: "JURONG EAST MRT STATION", distanceMeters: 100 },
+        nearbyMrts: [{ stationName: "LAKESIDE MRT STATION", distanceMeters: 800 }],
+      };
+      expect(
+        matchesGeographicSearchIntent(block, {
+          type: "station",
+          stationName: "LAKESIDE MRT STATION",
+          radiusMeters: 500,
+        }),
+      ).toBe(false);
     });
   });
 });
