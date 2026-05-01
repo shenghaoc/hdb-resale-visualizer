@@ -74,6 +74,19 @@ describe("shortlist ranking", () => {
     expect(ranked.map((row) => row.block.nearestMrt?.distanceMeters)).toEqual([280, 410, 620]);
   });
 
+  it("supports explicit ascending and descending median price modes", () => {
+    expect(rankShortlistRows(sampleRows, "median-asc").map((row) => row.block.medianPrice)).toEqual([
+      510000,
+      550000,
+      650000,
+    ]);
+    expect(rankShortlistRows(sampleRows, "median-desc").map((row) => row.block.medianPrice)).toEqual([
+      650000,
+      550000,
+      510000,
+    ]);
+  });
+
   it("falls back to deterministic tie-breakers when target gaps are unavailable", () => {
     const rowsWithoutTargets = [
       {

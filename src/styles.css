@@ -70,14 +70,14 @@
   --secondary: #e3ebe8;
   --secondary-foreground: #171c1f;
   --muted: #eef4f2;
-  --muted-foreground: #434655;
+  --muted-foreground: #6b7572;
   --accent: #dcece8;
   --accent-foreground: #16372f;
   --destructive: #ba1a1a;
   --destructive-foreground: #ffffff;
-  --success: #62a34b;
+  --success: #3a8a6f;
   --success-foreground: #ffffff;
-  --border: #c3cec9;
+  --border: rgba(23, 28, 31, 0.09);
   --input: #dbe4e1;
   --ring: #2563eb;
   --chart-1: #2563eb;
@@ -164,6 +164,61 @@
   min-height: 100vh;
   height: 100%;
   overflow: hidden;
+}
+
+.v2-panel {
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  background: color-mix(in oklab, var(--card) 94%, transparent);
+  box-shadow: 0 12px 32px rgba(23, 28, 31, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.v2-card {
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--card) 96%, transparent);
+  box-shadow: 0 2px 8px rgba(23, 28, 31, 0.04);
+}
+
+.v2-kicker {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.v2-section-title {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.v2-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.v2-scrollbar {
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 34%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.v2-scrollbar::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+.v2-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.v2-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 34%, transparent);
 }
 
 .eyebrow {
@@ -446,6 +501,14 @@
   right: 1.5rem;
   top: 1.5rem;
   z-index: 30;
+}
+
+.saved-dashboard-open .map-view .maplibregl-ctrl-top-right {
+  right: calc(min(44rem, 48vw) + 1.5rem);
+}
+
+.saved-dashboard-open .map-attribution-link {
+  right: calc(min(44rem, 48vw) + 0.75rem);
 }
 
 .maplibregl-ctrl-group button {

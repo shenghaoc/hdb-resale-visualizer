@@ -553,6 +553,20 @@ function App() {
     [isDesktop, patchFilters],
   );
 
+  const handleSelectShortlistAddress = useCallback(
+    (addressKey: string) => {
+      if (isDesktop) {
+        setIsDesktopPanelOpen(true);
+        setDesktopTab("saved");
+      } else {
+        setMobileTab(null);
+      }
+
+      patchFilters({ selectedAddressKey: addressKey });
+    },
+    [isDesktop, patchFilters],
+  );
+
   const handleToggleShortlist = useCallback(
     (addressKey: string) => toggleShortlist(addressKey),
     [toggleShortlist],
@@ -695,6 +709,7 @@ function App() {
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
+        onSelectAddress={handleSelectShortlistAddress}
         onRemove={(addressKey) => shortlist.toggle(addressKey)}
         onToggleOpen={() => setIsShortlistOpen((current) => !current)}
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
@@ -708,10 +723,16 @@ function App() {
     results: "w-[min(34rem,38vw)]",
     saved: "w-[min(44rem,48vw)]",
   };
+  const isSavedDashboardOpen = isDesktop && isDesktopPanelOpen && desktopTab === "saved";
 
   return (
     <>
-      <main className="fixed inset-0 w-full overflow-hidden">
+      <main
+        className={cn(
+          "fixed inset-0 w-full overflow-hidden",
+          isSavedDashboardOpen && "saved-dashboard-open",
+        )}
+      >
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
         <a
@@ -903,8 +924,12 @@ function App() {
                 aria-hidden={!isDesktopPanelOpen}
                 {...(!isDesktopPanelOpen && { inert: true })}
                 data-open={isDesktopPanelOpen ? "true" : "false"}
+                data-mode={desktopTab}
                 className={cn(
-                  "pointer-events-auto absolute bottom-20 left-6 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
+                  "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
+                  desktopTab === "saved"
+                    ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
+                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] rounded-2xl",
                   isDesktopPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
