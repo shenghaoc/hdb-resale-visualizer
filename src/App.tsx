@@ -955,7 +955,6 @@ function App() {
                       desktopTab === "results" ? "flex" : "hidden",
                     )}
                   >
-                    {selectedDetailContent}
                     <div
                       className={cn(
                         "min-h-0 flex-1 flex-col",
@@ -975,6 +974,8 @@ function App() {
                   >
                     {savedContent}
                   </div>
+                  {/* Always render detail at panel top-level so it survives tab unmounts */}
+                  {selectedDetailContent}
                 </div>
               </aside>
             </section>
@@ -995,7 +996,6 @@ function App() {
                       id="mobile-results-content"
                       className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12"
                     >
-                      {selectedDetailContent}
                       <div
                         className={cn(
                           "min-h-0 flex-1 flex-col",
@@ -1011,6 +1011,8 @@ function App() {
                       {savedContent}
                     </div>
                   )}
+                  {/* Always render detail at panel top-level so it survives tab unmounts */}
+                  {selectedDetailContent}
                 </div>
               )}
             </section>

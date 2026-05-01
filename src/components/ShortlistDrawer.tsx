@@ -225,7 +225,29 @@ export function ShortlistDrawer({
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
+  const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
   const sortLabelId = useId();
+
+  const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
+
+  const effectiveExpandedKey =
+    expandedKey === null
+      ? null
+      : rows.some((row) => row.item.addressKey === expandedKey)
+        ? expandedKey
+        : rows[0]?.item.addressKey ?? null;
+
+  // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
+  if (rows.length !== prevRowsCount) {
+    setPrevRowsCount(rows.length);
+    if (prevRowsCount === 0 && rows.length > 0 && expandedKey === null) {
+      // If we just added the first item and nothing is expanded, expand it for the cockpit experience
+      setExpandedKey(rows[0].item.addressKey);
+    } else if (expandedKey !== null && !rows.some((row) => row.item.addressKey === expandedKey)) {
+      // If the currently expanded item was removed, clear the stale key
+      setExpandedKey(rows[0]?.item.addressKey ?? null);
+    }
+  }
 
   const showCopied = (key: string) => {
     setCopiedKey(key);
@@ -319,8 +341,11 @@ export function ShortlistDrawer({
       t("shortlist.export.notes"),
     ];
     const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
-    const csvRows = rows.map((row) => {
-      // Guard against CSV formula injection if notes begin with spreadsheet formula prefixes.
+    const csvRows = rankedRows.map((row) => {
+      // Security: Guard against CSV formula injection (CSV Injection/Formula Injection).
+      // If a cell begins with a formula prefix (=, +, -, @, \t, \r), we prefix it with a single quote
+      // to ensure it is treated as literal text by spreadsheet software (Excel, Sheets, etc.).
+      // This protects against malicious notes that could execute arbitrary commands or leak data.
       const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r]/, "'$&");
 
       return [
@@ -357,12 +382,6 @@ export function ShortlistDrawer({
     link.click();
     URL.revokeObjectURL(url);
   }
-
-  const rankedRows = rankShortlistRows(rows, compareMode);
-  const effectiveExpandedKey =
-    expandedKey && rows.some((row) => row.item.addressKey === expandedKey)
-      ? expandedKey
-      : rows[0]?.item.addressKey ?? null;
 
   const highlights = useMemo(() => {
     const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
