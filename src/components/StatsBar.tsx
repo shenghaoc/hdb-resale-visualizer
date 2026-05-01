@@ -109,6 +109,7 @@ export function GlobalHeader({
                 onClick={() => setMobileInfoOpen((current) => !current)}
                 aria-label={t("app.toggleMetadata")}
                 title={t("app.toggleMetadata")}
+                aria-expanded={mobileInfoOpen}
               >
                 <Info data-icon className="size-4" />
               </Button>
