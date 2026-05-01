@@ -703,6 +703,12 @@ function App() {
     </Suspense>
   ) : null;
 
+  const desktopPanelWidths: Record<DesktopTab, string> = {
+    filters: "w-[min(30rem,34vw)]",
+    results: "w-[min(34rem,38vw)]",
+    saved: "w-[min(44rem,48vw)]",
+  };
+
   return (
     <>
       <main className="fixed inset-0 w-full overflow-hidden">
@@ -902,11 +908,7 @@ function App() {
                   isDesktopPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
-                  desktopTab === "saved"
-                    ? "w-[min(44rem,48vw)]"
-                    : desktopTab === "results"
-                      ? "w-[min(34rem,38vw)]"
-                      : "w-[min(30rem,34vw)]",
+                  desktopPanelWidths[desktopTab],
                 )}
               >
                 <div className="flex h-full min-h-0 flex-col">

@@ -13,8 +13,8 @@ export type ActiveFilterChipDescriptor = {
 // Manual round-to-thousands + integer format produces clean "S$400K" labels for both locales.
 // S$ and K/万 are intentionally moved to translation dictionary.
 function formatBudgetChipCurrency(value: number, locale: Locale, t: Translator): string {
-  const isChinese = locale === "zh-SG";
-  const displayValue = isChinese ? value / 10000 : value / 1000;
+  const divisor = Number(t("filters.chip.currencyDivisor", { defaultValue: "1000" }));
+  const displayValue = value / divisor;
   // Use maximumFractionDigits: 1 to show decimals only if present (e.g. 45.5万)
   const formatted = formatNumber(displayValue, 1, locale);
   return t("filters.chip.budget", { value: formatted });
