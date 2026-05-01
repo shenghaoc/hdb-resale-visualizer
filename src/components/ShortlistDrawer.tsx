@@ -596,6 +596,7 @@ export function ShortlistDrawer({
                                 type="button"
                                 className="h-8 px-2 text-muted-foreground hover:text-destructive"
                                 aria-label={t("shortlist.remove")}
+                                title={t("shortlist.remove")}
                               >
                                 <X data-icon className="size-4" />
                               </Button>
