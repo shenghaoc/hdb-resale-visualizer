@@ -358,6 +358,32 @@
   }
 }
 
+/* Filter chip micro-interactions (from refined design direction) */
+.filter-chip {
+  transition:
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.filter-chip:active {
+  transform: scale(0.96);
+}
+
+@keyframes filterChipPop {
+  0% { transform: scale(0.94); }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip {
+    transition: none;
+    animation: none;
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;

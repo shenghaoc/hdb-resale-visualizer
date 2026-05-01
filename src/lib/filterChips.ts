@@ -9,6 +9,9 @@ export type ActiveFilterChipDescriptor = {
   clearPatch: Partial<FilterState>;
 };
 
+// Deliberately avoids Intl compact notation (which yields "S$400.0K" with maximumFractionDigits: 1).
+// Manual round-to-thousands + integer format produces clean "S$400K" labels for both locales.
+// S$ and K are intentionally hardcoded: this app targets SGD only (en-SG and zh-SG).
 function formatBudgetChipCurrency(value: number, locale: Locale): string {
   return `S$${formatNumber(Math.round(value / 1000), 0, locale)}K`;
 }

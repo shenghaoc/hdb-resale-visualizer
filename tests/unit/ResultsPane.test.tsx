@@ -1,8 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { ResultsPane } from "@/components/ResultsPane";
 import { I18nProvider } from "@/lib/i18n";
 import type { BlockSummary } from "@/types/data";
+
+vi.mock("@/lib/storage", () => ({
+  safeStorage: {
+    getItem: (key: string) => (key === "hdb-resale-locale" ? "zh-SG" : null),
+    setItem: () => {},
+    removeItem: () => {},
+  },
+}));
 
 const block: BlockSummary = {
   addressKey: "bedok-101-bedok-nth-ave-4",
@@ -27,8 +35,6 @@ const block: BlockSummary = {
 
 describe("ResultsPane", () => {
   it("localizes compact-card town and flat type labels", () => {
-    window.localStorage.setItem("hdb-resale-locale", "zh-SG");
-
     render(
       <I18nProvider>
         <ResultsPane

@@ -853,7 +853,7 @@ function App() {
                 type="button"
                 aria-label={t("filters.removeChip", { label: chip.label })}
                 onClick={chip.onRemove}
-                className="flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px]"
+                className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px]"
               >
                 {chip.label} <span aria-hidden="true" className="opacity-70">×</span>
               </button>
@@ -868,7 +868,7 @@ function App() {
                 }
                 setMobileTab("filters");
               }}
-              className="flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px]"
+              className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px]"
             >
               <SlidersHorizontal className="size-3" aria-hidden="true" /> {t("tab.filters")}
             </button>
