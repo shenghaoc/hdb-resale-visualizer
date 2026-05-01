@@ -180,33 +180,8 @@
   background: #edf0eb;
 }
 
-.dark .map-view .maplibregl-canvas {
-  filter: invert(0.9) hue-rotate(178deg) brightness(0.78) contrast(0.95) saturate(0.62)
-    sepia(0.08);
-}
-
 .dark .map-view {
   background: #0c1414;
-}
-
-.dark .map-view::before,
-.dark .map-view::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  content: "";
-}
-
-.dark .map-view::before {
-  background:
-    radial-gradient(circle at 70% 24%, rgba(82, 116, 170, 0.16), transparent 24rem),
-    linear-gradient(135deg, rgba(5, 28, 25, 0.18), rgba(26, 20, 48, 0.16));
-  mix-blend-mode: soft-light;
-}
-
-.dark .map-view::after {
-  box-shadow: inset 0 0 92px rgba(0, 0, 0, 0.16);
 }
 
 .dark .map-view .maplibregl-marker,
