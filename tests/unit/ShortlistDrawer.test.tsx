@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { I18nProvider } from "@/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
@@ -71,6 +71,28 @@ const mockRow = {
   comparison: mockComparison,
 };
 
+const mockRowTwo = {
+  item: {
+    ...mockShortlistItem,
+    addressKey: "test-block-2",
+    addedAt: "2024-01-02T00:00:00Z",
+  },
+  block: {
+    ...mockBlock,
+    addressKey: "test-block-2",
+    block: "202",
+    streetName: "Bedok North St 1",
+  },
+  detailSummary: null,
+  monthlyTrend: [],
+  comparison: mockComparison
+    ? {
+        ...mockComparison,
+        addressKey: "test-block-2",
+      }
+    : null,
+};
+
 describe("ShortlistDrawer", () => {
   it("displays comparison data when available", () => {
     render(
@@ -81,6 +103,7 @@ describe("ShortlistDrawer", () => {
           onToggleOpen={() => {}}
           onRemove={() => {}}
           onUpdate={() => {}}
+          onSelectAddress={() => {}}
         />
       </I18nProvider>
     );
@@ -117,6 +140,7 @@ describe("ShortlistDrawer", () => {
           onToggleOpen={() => {}}
           onRemove={() => {}}
           onUpdate={() => {}}
+          onSelectAddress={() => {}}
         />
       </I18nProvider>
     );
@@ -127,8 +151,9 @@ describe("ShortlistDrawer", () => {
     // Basic block info should still be displayed (address in title)
     expect(screen.getAllByText(/101 Ang Mo Kio Ave 3/i).length).toBeGreaterThan(0);
     
-    // Market median should still be displayed
-    expect(screen.getByText("Market median")).toBeInTheDocument();
+    // Compact v2 card should still expose the map action and target controls.
+    expect(screen.getByText("View on map")).toBeInTheDocument();
+    expect(screen.getByLabelText("Your target price")).toBeInTheDocument();
   });
 
   it("handles empty shortlist correctly", () => {
@@ -140,10 +165,98 @@ describe("ShortlistDrawer", () => {
           onToggleOpen={() => {}}
           onRemove={() => {}}
           onUpdate={() => {}}
+          onSelectAddress={() => {}}
         />
       </I18nProvider>
     );
 
     expect(screen.getByText("Save up to four blocks to compare.")).toBeInTheDocument();
+  });
+
+  it("edits target price and can select a saved block on the map", () => {
+    const onUpdate = vi.fn();
+    const onSelectAddress = vi.fn();
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={onUpdate}
+          onSelectAddress={onSelectAddress}
+        />
+      </I18nProvider>
+    );
+
+    fireEvent.change(screen.getByLabelText("Your target price"), {
+      target: { value: "490000" },
+    });
+    expect(onUpdate).toHaveBeenCalledWith("test-block", { targetPrice: 490000 });
+
+    fireEvent.click(screen.getByRole("button", { name: "View on map" }));
+    expect(onSelectAddress).toHaveBeenCalledWith("test-block");
+  });
+
+  it("keeps a valid card expanded when shortlist rows change", () => {
+    const { rerender } = render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    const firstCardButton = screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i });
+    expect(firstCardButton).toHaveAttribute("aria-expanded", "true");
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow, mockRowTwo]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i }));
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute("aria-expanded", "true");
   });
 });

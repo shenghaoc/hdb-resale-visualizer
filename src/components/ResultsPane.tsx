@@ -27,6 +27,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -120,16 +121,16 @@ const BlockCard = memo(function BlockCard({
         role="listitem"
         aria-selected={isFeatured}
         className={cn(
-          "animate-fade-in-up cursor-pointer border-border/30 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
-          isFeatured && "border-primary/40 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
-          "gap-0 px-3 py-2.5",
+          "v2-card animate-fade-in-up cursor-pointer rounded-xl border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
+          isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
+          "gap-0 px-3 py-2",
         )}
-        style={{ animationDelay: `${index * 40}ms`, minHeight: 110 }}
+        style={{ animationDelay: `${index * 40}ms`, minHeight: 92 }}
         onClick={() => onSelect(block.addressKey)}
       >
         <div className="flex w-full min-w-0 items-start gap-2">
           <div className="min-w-0 flex-1">
-            <strong className="block truncate font-heading text-[0.92rem] font-bold leading-snug tracking-tight">
+              <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
               {block.block} {block.streetName}
             </strong>
             <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -139,7 +140,7 @@ const BlockCard = memo(function BlockCard({
           </div>
           <div className="flex shrink-0 items-start gap-2">
             <div className="text-right">
-              <strong className="block font-heading text-[0.95rem] font-bold leading-snug tracking-tight">
+              <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <span className="text-[0.58rem] font-medium text-muted-foreground">
@@ -154,7 +155,7 @@ const BlockCard = memo(function BlockCard({
                 onToggleShortlist(block.addressKey);
               }}
               type="button"
-              className="size-7 shrink-0 p-0"
+              className="size-7 shrink-0 rounded-lg p-0"
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
@@ -190,7 +191,7 @@ const BlockCard = memo(function BlockCard({
       role="listitem"
       aria-selected={isFeatured}
       className={cn(
-        "animate-fade-in-up group flex cursor-pointer flex-col gap-4 border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995]",
+        "v2-card animate-fade-in-up group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995]",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
       style={{ animationDelay: `${index * 50}ms` }}
@@ -199,7 +200,7 @@ const BlockCard = memo(function BlockCard({
       <ItemHeader>
         <ItemContent>
           <div className="result-address flex flex-col gap-1">
-            <strong className="font-heading text-xl font-semibold leading-none tracking-tight">
+            <strong className="font-heading text-xl font-extrabold leading-none tracking-tight">
               {block.block} {block.streetName}
             </strong>
             <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
@@ -230,7 +231,7 @@ const BlockCard = memo(function BlockCard({
             <WalletCards className="size-3.5" />
             {t("results.medianResale")}
           </span>
-          <strong className="font-heading text-2xl font-semibold">
+          <strong className="font-heading text-2xl font-extrabold v2-tabular">
             {formatCompactCurrency(block.medianPrice, locale)}
           </strong>
         </div>
@@ -474,9 +475,9 @@ export function ResultsPane({
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="border-b border-border/30 bg-muted/20 px-3 py-2.5 sm:px-4">
+        <CardHeader className="border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <CardTitle className="mr-auto min-w-0 truncate text-[0.7rem] font-bold uppercase leading-none tracking-[0.16em] text-muted-foreground">
+            <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("results.filteredBlocks")}
             </CardTitle>
             {hasResultScope ? (
@@ -485,7 +486,7 @@ export function ResultsPane({
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
                 <div className="flex min-w-0 basis-full items-center gap-2 sm:flex-none">
-                  <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
                     <ArrowUpDown className="size-3" />
                     {t("results.sort")}
                   </span>
@@ -496,15 +497,17 @@ export function ResultsPane({
                     }}
                     value={sortMode}
                   >
-                    <SelectTrigger className="h-8 min-w-0 flex-1 sm:w-[12.5rem]">
+                    <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {sortOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
+                      <SelectGroup>
+                        {sortOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
@@ -527,7 +530,7 @@ export function ResultsPane({
             <div className="flex min-h-0 flex-1 flex-col gap-4">
               <div
                 ref={listContainerRef}
-                className={cn("min-h-0 flex-1 pr-2", !scrollParent && "overflow-y-auto")}
+                className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
               >
                 <ItemGroup
                   className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}

@@ -4,7 +4,6 @@ import {
   Check,
   Clock3,
   Coins,
-  Compass,
   Copy,
   GraduationCap,
   History,
@@ -15,7 +14,6 @@ import {
   TrainFront,
   Trees,
   TrendingUp,
-  Users,
   UtensilsCrossed,
   X,
 } from "lucide-react";
@@ -70,21 +68,31 @@ function PercentileBadge({
 }) {
   const isGood = invert ? percentile >= 75 : percentile <= 25;
   const isMid = invert ? percentile >= 25 : percentile <= 75;
+  const rounded = Math.round(percentile);
 
   return (
-    <Card className="border-border/40 bg-card/50 shadow-none">
-      <CardContent className="p-3">
-        <div className="flex items-center justify-between">
-          <span className="text-xs font-medium text-muted-foreground">{label}</span>
-          <Badge
-            variant={isGood ? "default" : isMid ? "secondary" : "outline"}
-            className="h-5 text-[0.6rem] font-bold"
-          >
-            {Math.round(percentile)}%
-          </Badge>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="rounded-lg border border-border/40 bg-muted/20 p-3">
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+          {label}
+        </span>
+        <Badge
+          variant={isGood ? "default" : isMid ? "secondary" : "outline"}
+          className="h-5 text-[0.6rem] font-extrabold"
+        >
+          {rounded}%
+        </Badge>
+      </div>
+      <div className="h-1 overflow-hidden rounded-full bg-muted">
+        <div
+          className={cn(
+            "h-full rounded-full",
+            isGood ? "bg-success" : isMid ? "bg-primary" : "bg-destructive",
+          )}
+          style={{ width: `${Math.max(0, Math.min(100, rounded))}%` }}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -108,16 +116,16 @@ function AmenityCard({
   locale: Locale;
 }) {
   return (
-    <Card className="border-border/40 bg-card/50 shadow-none">
+    <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
       <CardContent className="p-3">
         <div className="mb-2 flex items-center gap-2">
           <Icon className="size-4 text-primary/70" />
-          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
             {label}
           </span>
         </div>
         <div className="flex flex-col gap-1">
-          <div className="text-sm font-bold">{t("detail.within1km", { count: count1km })}</div>
+          <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
           {count2km !== undefined && (
             <div className="text-xs text-muted-foreground">
               {t("detail.within2km", { count: count2km })}
@@ -192,11 +200,11 @@ export function DetailDrawer({
     <Drawer open={Boolean(selectedBlock)} onClose={onClose} dismissible={false}>
       <DrawerContent
         data-testid="detail-drawer"
-        className="h-full max-h-full sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
+        className="h-full max-h-full border-border/40 bg-card/95 backdrop-blur-xl sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
         hideHandle={true}
       >
         <div className="flex h-full flex-col overflow-hidden">
-          <DrawerHeader className="shrink-0 border-b border-border/40 pb-4 pr-12">
+          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pr-12 backdrop-blur-xl">
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="font-bold tracking-wider">
@@ -209,7 +217,7 @@ export function DetailDrawer({
                 )}
               </div>
               <div className="flex w-full items-center justify-between gap-4">
-                <DrawerTitle className="min-w-0 truncate text-left font-heading text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                <DrawerTitle className="min-w-0 truncate text-left font-heading text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
                   {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "..."}
                 </DrawerTitle>
                 {currentSummary && (
@@ -242,13 +250,13 @@ export function DetailDrawer({
             </Button>
           </DrawerHeader>
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-6 sm:px-6">
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4 sm:px-6 v2-scrollbar">
             <Tabs
               value={activeTab}
               onValueChange={(v) => startTransition(() => setActiveTab(v))}
               className="flex h-full flex-col"
             >
-              <TabsList className="mb-6 grid w-full grid-cols-3 bg-muted/30 p-1">
+              <TabsList className="mb-4 grid w-full grid-cols-3 rounded-xl bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
                   className="gap-2 text-xs font-semibold uppercase tracking-wider"
@@ -274,19 +282,19 @@ export function DetailDrawer({
 
               <TabsContent
                 value="overview"
-                className="mt-0 flex-1 flex flex-col gap-8 pb-8 focus-visible:outline-none"
+                className="mt-0 flex-1 flex flex-col gap-5 pb-8 focus-visible:outline-none"
               >
                 {/* Key Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  <Card className="border-border/40 bg-muted/20 shadow-none">
-                    <CardHeader className="p-4 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.14em]">
+                <div className="grid grid-cols-2 gap-3">
+                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
+                    <CardHeader className="p-3 pb-2">
+                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
                         <Coins className="size-3.5 text-primary/70" />
                         {t("results.medianResale")}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="font-heading text-2xl font-bold tracking-tight">
+                    <CardContent className="p-3 pt-0">
+                      <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
                         {currentSummary
                           ? formatCurrency(currentSummary.medianPrice, locale)
                           : "..."}
@@ -300,15 +308,15 @@ export function DetailDrawer({
                       ) : null}
                     </CardContent>
                   </Card>
-                  <Card className="border-border/40 bg-muted/20 shadow-none">
-                    <CardHeader className="p-4 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-[0.14em]">
+                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
+                    <CardHeader className="p-3 pb-2">
+                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
                         <Clock3 className="size-3.5 text-primary/70" />
                         {t("results.remainingLease")}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="font-heading text-sm font-bold tracking-tight">
+                    <CardContent className="p-3 pt-0">
+                      <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
                           : "..."}
@@ -319,7 +327,7 @@ export function DetailDrawer({
 
                 {/* MRT Connectivity */}
                 <section>
-                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <TrainFront className="size-4" />
                     {t("detail.connectivity")}
                   </h3>
@@ -364,13 +372,13 @@ export function DetailDrawer({
 
                 {/* Flat Types & Attributes */}
                 <section>
-                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <Table className="size-4" />
                     {t("detail.unitAttributes")}
                   </h3>
-                  <Card className="border-border/40 bg-card/50 shadow-none">
+                  <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
                     <CardContent className="divide-y divide-border/40 p-0">
-                      <div className="flex items-center justify-between p-4">
+                      <div className="flex items-center justify-between p-3">
                         <span className="text-sm font-medium text-muted-foreground">
                           {t("detail.availableLayouts")}
                         </span>
@@ -386,7 +394,7 @@ export function DetailDrawer({
                           ))}
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-4">
+                      <div className="flex items-center justify-between p-3">
                         <span className="text-sm font-medium text-muted-foreground">
                           {t("filters.flatModel")}
                         </span>
@@ -402,7 +410,7 @@ export function DetailDrawer({
                           ))}
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-4">
+                      <div className="flex items-center justify-between p-3">
                         <span className="text-sm font-medium text-muted-foreground">
                           {t("filters.floorAreaRange")}
                         </span>
@@ -414,31 +422,13 @@ export function DetailDrawer({
                             : "..."}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between p-4">
-                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                          <Compass className="size-3.5" />
-                          {t("detail.orientation")}
-                        </span>
-                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
-                          {t("detail.pipelineComingSoon")}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center justify-between p-4">
-                        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                          <Users className="size-3.5" />
-                          {t("detail.eipQuota")}
-                        </span>
-                        <Badge variant="ghost" className="text-[0.65rem] font-bold uppercase">
-                          {t("detail.pipelineComingSoon")}
-                        </Badge>
-                      </div>
                     </CardContent>
                   </Card>
                 </section>
 
                 {/* Nearby Amenities */}
                 <section>
-                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <Trees className="size-4" />
                     {t("detail.nearbyAmenities")}
                   </h3>
@@ -497,7 +487,7 @@ export function DetailDrawer({
 
                 {/* Market Percentiles */}
                 <section>
-                  <h3 className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <TrendingUp className="size-4" />
                     {t("detail.marketPercentiles")}
                   </h3>
