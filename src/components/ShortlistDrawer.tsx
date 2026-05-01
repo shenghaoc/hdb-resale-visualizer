@@ -130,7 +130,10 @@ function MiniSpark({
   color: string;
   points: AddressTrendPoint[];
 }) {
-  const values = points.slice(-12).map((point) => point.medianPrice);
+  const values = points
+    .slice(-12)
+    .map((point) => point.medianPrice)
+    .filter((v) => v != null && !Number.isNaN(v));
   if (values.length < 2) {
     return <span className="h-[18px] w-16 rounded-sm bg-muted/60" aria-hidden="true" />;
   }
@@ -432,7 +435,10 @@ export function ShortlistDrawer({
         smooth: true,
         showSymbol: false,
         lineStyle: { width: 2.25 },
-        data: months.map((month) => monthToPrice.get(month) ?? null),
+        data: months.map((month) => {
+          const price = monthToPrice.get(month);
+          return price != null && !Number.isNaN(price) ? price : null;
+        }),
       };
     });
 
