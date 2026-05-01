@@ -20,8 +20,8 @@ import {
   fetchBlocksByTown,
   fetchComparisonArtifact,
   fetchManifest,
+  townToFilename,
 } from "@/lib/data";
-import { townToFilename } from "@/lib/utils";
 import {
   getSelectionByAddressKey,
   matchesFilter,
