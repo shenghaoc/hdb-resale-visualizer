@@ -52,29 +52,7 @@ jobs:
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
           prompt: |
-            Read and follow the repository review policy in @CLAUDE.md and @AGENTS.md before starting.
-
-            Conduct a deep, detailed review of this pull request as a senior engineer. Do not stop at obvious bugs — examine architecture, performance, maintainability, and project-rule compliance. Aim for the depth of a thorough human reviewer (comparable to Codex Code Review or Gemini Code Assist defaults).
-
-            Areas to scrutinize:
-            - Functional correctness, edge cases, and logical errors
-            - Code quality, unnecessary complexity, duplicated logic, poor separation of concerns
-            - React performance: unnecessary rerenders, missing/incorrect memoization, expensive work in render paths, state/effect/lifecycle mistakes, stale closures, dependency-array bugs
-            - TypeScript: weak types, `any` usage, missing exhaustive checks, unsafe casts
-            - Data pipeline contracts: verify `public/data/` artifacts match frontend expectations, no schema drift between `scripts/sync-data.ts` and `src/`
-            - Test coverage for non-trivial logic changes
-            - Security and reliability concerns (input validation, error handling at boundaries)
-            - Accessibility regressions in UI changes
-
-            Repo-specific hard rules — flag any violation:
-            - Bun-only: no npm/yarn/pnpm lockfiles
-            - No backend routes or runtime server-side logic
-            - No runtime fetching or geocoding of core domain data (must use precomputed artifacts)
-            - Do not modify generated files under `public/data/` directly (owned by `scripts/sync-data.ts`)
-            - Preserve OneMap attribution wherever the map is rendered
-            - No price-prediction or forecasting features
-
-            Skip nitpicks (formatting, naming preferences) unless they materially hurt readability. Leave inline comments anchored to specific lines for every concrete actionable issue. Group related issues in a summary comment. If there are genuinely no actionable issues, say so explicitly.
-
             /code-review:code-review https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment
-          claude_args: '--max-turns 25 --allowedTools Skill,WebFetch,Bash'
+          claude_args: |
+            --max-turns 40
+            --allowedTools "Skill,Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*),mcp__github_inline_comment__create_inline_comment"
