@@ -138,7 +138,7 @@ export function MapView({
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
-  const lastAppliedThemeRef = useRef<boolean | null>(null);
+  const lastAppliedThemeRef = useRef<boolean>(getIsDarkFromDocument());
   const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(getIsDarkFromDocument);
 
