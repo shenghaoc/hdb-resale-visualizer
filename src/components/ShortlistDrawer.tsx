@@ -320,6 +320,7 @@ export function ShortlistDrawer({
     ];
     const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
     const csvRows = rows.map((row) => {
+      // Guard against CSV formula injection if notes begin with spreadsheet formula prefixes.
       const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r]/, "'$&");
 
       return [
@@ -346,7 +347,7 @@ export function ShortlistDrawer({
   }
 
   function handleExportJson() {
-    const blob = new Blob([JSON.stringify(rows.map((row) => row.item), null, 2)], {
+    const blob = new Blob([JSON.stringify(rankedRows.map((row) => row.item), null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(blob);
@@ -357,7 +358,11 @@ export function ShortlistDrawer({
     URL.revokeObjectURL(url);
   }
 
-  const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [compareMode, rows]);
+  const rankedRows = rankShortlistRows(rows, compareMode);
+  const effectiveExpandedKey =
+    expandedKey && rows.some((row) => row.item.addressKey === expandedKey)
+      ? expandedKey
+      : rows[0]?.item.addressKey ?? null;
 
   const highlights = useMemo(() => {
     const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
@@ -590,7 +595,7 @@ export function ShortlistDrawer({
                         <div className="v2-kicker">{highlight.label}</div>
                         <strong className="mt-1 block truncate text-xs font-extrabold tracking-tight">
                           {highlight.row
-                            ? `${highlight.row.block.block} ${highlight.row.block.streetName.split(" ")[0]}`
+                            ? `${highlight.row.block.block} ${highlight.row.block.streetName}`
                             : t("shortlist.na")}
                         </strong>
                         <span className="mt-0.5 block text-[0.66rem] font-extrabold text-primary">
@@ -623,7 +628,7 @@ export function ShortlistDrawer({
                   <div className="flex flex-col gap-3" role="list">
                     {rankedRows.map((row, index) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
-                      const isExpanded = expandedKey === row.item.addressKey;
+                      const isExpanded = effectiveExpandedKey === row.item.addressKey;
                       const accentColor =
                         index % 4 === 0
                           ? "var(--primary)"
