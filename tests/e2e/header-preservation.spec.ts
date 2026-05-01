@@ -15,9 +15,12 @@ import { expect, test, type Page, type ElementHandle } from "@playwright/test";
  */
 
 async function waitForAppLoad(page: Page) {
-  // Wait for the app to be fully loaded
-  await expect(page.getByTestId("map-view")).toBeVisible();
-  await page.waitForTimeout(1000); // Allow for initialization
+  // Wait for the map shell to mount and expose controls.
+  await expect(
+    page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
+  ).toBeVisible({ timeout: 20_000 });
+  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
+  await page.waitForTimeout(400); // Allow controls/header wiring to settle
 }
 
 async function ensureHeaderVisible(page: Page) {
@@ -71,9 +74,10 @@ async function getHeaderVisualStyles(page: Page) {
 
 async function getHeaderContent(page: Page) {
   const header = page.getByTestId("global-header");
+  const titleLocator = header.locator("[data-testid='header-title'], [data-slot='card-title'], h1, h2, h3").first();
   
   return {
-    title: await header.locator("h1, h2, h3, [data-slot='card-title']").first().textContent(),
+    title: await titleLocator.textContent(),
     badges: await header.locator("[data-slot='badge'], .badge").allTextContents(),
     metadata: await header.locator("p").allTextContents()
   };

@@ -1,3 +1,5 @@
+import { PRIMARY_BLUE } from "./constants";
+
 export const MRT_LINE_COLORS = {
   NSL: "#d11141",
   EWL: "#00a651",
@@ -9,7 +11,8 @@ export const MRT_LINE_COLORS = {
 
 export const MRT_LINE_FALLBACK_COLOR = "#64748b";
 export const LRT_LINE_COLOR = "#7c878e";
-export const DEFAULT_STATION_COLOR = "#2563eb";
+
+export const DEFAULT_STATION_COLOR = PRIMARY_BLUE;
 
 export type MrtLineCode = keyof typeof MRT_LINE_COLORS;
 export type RailLineCode = MrtLineCode | "LRT";

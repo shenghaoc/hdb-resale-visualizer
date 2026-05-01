@@ -10,7 +10,9 @@ import { CanvasRenderer } from "echarts/renderers";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
+import type { Translator } from "@/lib/i18n/types";
 import { useTheme } from "@/hooks/useTheme";
+import { PRIMARY_BLUE } from "@/lib/constants";
 
 echarts.use([
   LineChart,
@@ -23,9 +25,10 @@ echarts.use([
 
 type TrendChartProps = {
   points: AddressTrendPoint[];
+  t: Translator;
 };
 
-export function TrendChart({ points }: TrendChartProps) {
+export function TrendChart({ points, t }: TrendChartProps) {
   const { isDark } = useTheme();
 
   const option = useMemo(() => {
@@ -40,7 +43,7 @@ export function TrendChart({ points }: TrendChartProps) {
 
     // Theme-aware colors
     const colors = {
-      primary: isDark ? "#79a6ff" : "#2563eb",
+      primary: isDark ? "#79a6ff" : PRIMARY_BLUE,
       chart2: isDark ? "#9bb7ff" : "#495c95",
       popover: isDark ? "#22262e" : "#ffffff",
       popoverForeground: isDark ? "#e0e0e0" : "#171c1f",
@@ -141,12 +144,12 @@ export function TrendChart({ points }: TrendChartProps) {
           data: points.map((point) => point.transactionCount),
           tooltip: {
             valueFormatter: (value: number) =>
-              isNaN(value) ? "–" : `${value} txns`,
+              isNaN(value) ? "–" : t("stats.txns", { count: value }),
           },
         },
       ],
     };
-  }, [points, isDark]);
+  }, [points, isDark, t]);
 
 
   return (

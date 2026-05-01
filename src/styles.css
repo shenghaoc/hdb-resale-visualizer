@@ -310,9 +310,78 @@
   white-space: nowrap;
 }
 
+.desktop-tab-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  gap: 0.25rem;
+  border: 1px solid rgba(195, 198, 215, 0.3);
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--background) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.25rem;
+  box-shadow: 0 8px 24px rgba(23, 28, 31, 0.08);
+}
+
+.desktop-tab-bar [data-slot="button"] {
+  min-width: 6.75rem;
+  height: 2.625rem;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  transition: all 150ms ease;
+}
+
+.desktop-tab-bar [data-slot="button"][data-active="true"] {
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.08);
+}
+
 @media (min-width: 1024px) {
   .mobile-tab-bar {
     display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-tab-bar {
+    display: none;
+  }
+}
+
+/* Filter chip micro-interactions (from refined design direction) */
+.filter-chip {
+  animation: filterChipPop 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition:
+    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.filter-chip:active {
+  transform: scale(0.96);
+}
+
+@keyframes filterChipPop {
+  0% { transform: scale(0.94); }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip {
+    transition: none;
+    animation: none;
   }
 }
 

@@ -579,7 +579,7 @@ export function DetailDrawer({
                               </p>
                             </div>
                           }>
-                            <TrendChart points={detail.monthlyTrend.slice(-24)} />
+                            <TrendChart points={detail.monthlyTrend.slice(-24)} t={t} />
                           </Suspense>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
