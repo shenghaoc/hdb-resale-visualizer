@@ -4,8 +4,8 @@ This folder is the backend counterpart for this Kiro project (frontend + backend
 
 ## Why it exists
 
-- Keep privileged secrets (e.g. `SUPABASE_SERVICE_ROLE_KEY`) off the frontend.
-- Provide a place for authenticated write APIs, admin jobs, and server-side validations.
+- Keep privileged secrets (e.g. `JWT_SECRET`) off the frontend.
+- Provide a place for authenticated write APIs, persistent data (Cloudflare D1), and server-side validations.
 
 ## Runtime
 
@@ -14,17 +14,17 @@ This folder is the backend counterpart for this Kiro project (frontend + backend
 
 ## Required secrets (server-only)
 
-- `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `JWT_SECRET`: Used to sign and verify authentication tokens.
+- `DB`: The Cloudflare D1 database binding (configured in `wrangler.toml`).
 
 Never expose these via `VITE_*` variables.
 
 ## Current endpoints
 
 - `GET /api/health`
-- `GET /api/config`
-
-These are scaffolding endpoints to establish the backend boundary. The next step is to route shortlist sync through this API.
+- `POST /api/auth/login`: Authenticate and obtain a JWT (supports auto-signup).
+- `GET /api/shortlist`: Retrieve the user's saved shortlist (Protected).
+- `PUT /api/shortlist`: Update the user's saved shortlist (Protected).
 
 ## Run / Deploy
 
@@ -37,6 +37,6 @@ bun run backend:deploy
 
 Set runtime secrets/vars on Cloudflare Worker:
 
-- `SUPABASE_URL` (secret or plain var)
-- `SUPABASE_SERVICE_ROLE_KEY` (secret)
+- `JWT_SECRET` (secret)
 - `APP_ORIGIN` (plain var, e.g. your Pages domain)
+- `DB` (D1 database binding)

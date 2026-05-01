@@ -27,14 +27,17 @@ const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
 // --- Middleware ---
 
-app.use("*", (c, next) => cors({
-  origin: c.env.APP_ORIGIN || "*",
-  allowMethods: ["GET", "POST", "PUT", "OPTIONS"],
-  allowHeaders: ["Content-Type", "Authorization"],
-  exposeHeaders: ["Content-Length"],
-  maxAge: 600,
-  credentials: true,
-})(c, next)); // eslint-disable-line @typescript-eslint/no-unsafe-argument
+app.use(
+  "*",
+  cors({
+    origin: (origin, c) => c.env.APP_ORIGIN || origin || "*",
+    allowMethods: ["GET", "POST", "PUT", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  })
+);
 
 // --- Schemas ---
 
@@ -49,11 +52,42 @@ const shortlistSchema = z.object({
 
 // --- Helpers ---
 
-async function hashPassword(password: string): Promise<string> {
+const PBKDF2_ITERATIONS = 100000;
+const SALT_SIZE = 16;
+
+async function hashPassword(password: string, salt?: Uint8Array): Promise<string> {
   const msgUint8 = new TextEncoder().encode(password);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const internalSalt = salt || crypto.getRandomValues(new Uint8Array(SALT_SIZE));
+
+  const keyMaterial = await crypto.subtle.importKey("raw", msgUint8, "PBKDF2", false, ["deriveBits"]);
+
+  const derivedBits = await crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      salt: internalSalt as any,
+      iterations: PBKDF2_ITERATIONS,
+      hash: "SHA-256",
+    },
+    keyMaterial,
+    256
+  );
+
+  const hashArray = Array.from(new Uint8Array(derivedBits));
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  const saltHex = Array.from(internalSalt)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return `${saltHex}:${hashHex}`;
+}
+
+async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  const parts = storedHash.split(":");
+  if (parts.length !== 2) return false;
+  const [saltHex] = parts;
+  const salt = new Uint8Array((saltHex.match(/.{1,2}/g) || []).map((byte) => parseInt(byte, 16)));
+  const attemptHash = await hashPassword(password, salt);
+  return attemptHash === storedHash;
 }
 
 // --- Routes ---
@@ -63,7 +97,6 @@ app.get("/api/health", (c) => c.json({ ok: true, service: "hdb-resale-visualizer
 app.post("/api/auth/login", zValidator("json", loginSchema), async (c) => {
   const { email, password } = c.req.valid("json");
   const trimmedEmail = email.toLowerCase().trim();
-  const pwdHash = await hashPassword(password);
 
   let user = await c.env.DB.prepare("SELECT * FROM users WHERE email = ?")
     .bind(trimmedEmail)
@@ -72,20 +105,27 @@ app.post("/api/auth/login", zValidator("json", loginSchema), async (c) => {
   if (!user) {
     // Auto-signup
     const id = crypto.randomUUID();
+    const pwdHash = await hashPassword(password);
     await c.env.DB.prepare("INSERT INTO users (id, email, password_hash, created_at) VALUES (?, ?, ?, ?)")
       .bind(id, trimmedEmail, pwdHash, new Date().toISOString())
       .run();
     user = { id, email: trimmedEmail, password_hash: pwdHash };
-  } else if (user.password_hash !== pwdHash) {
-    return c.json({ error: "Invalid credentials" }, 401);
+  } else {
+    const isValid = await verifyPassword(password, user.password_hash);
+    if (!isValid) {
+      return c.json({ error: "Invalid credentials" }, 401);
+    }
   }
 
-  const token = await sign({ sub: user.id, email: user.email, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 }, c.env.JWT_SECRET);
+  const token = await sign(
+    { sub: user.id, email: user.email, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 },
+    c.env.JWT_SECRET
+  );
   return c.json({ access_token: token, user: { id: user.id, email: user.email } });
 });
 
 // Protected routes
-app.use("/api/shortlist/*", (c, next) => jwt({ secret: c.env.JWT_SECRET })(c, next)); // eslint-disable-line @typescript-eslint/no-unsafe-argument
+app.use("/api/shortlist*", (c, next) => jwt({ secret: c.env.JWT_SECRET, alg: "HS256" })(c, next));
 
 app.get("/api/shortlist", async (c) => {
   const payload = c.get("jwtPayload");
