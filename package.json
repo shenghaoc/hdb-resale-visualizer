@@ -13,7 +13,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "sync-data": "tsx scripts/sync-data.ts"
+    "sync-data": "tsx scripts/sync-data.ts",
+    "artifacts:download": "tsx scripts/sync-artifacts.ts download",
+    "artifacts:upload": "tsx scripts/sync-artifacts.ts upload"
   },
   "dependencies": {
     "@fontsource/noto-sans": "^5.2.10",

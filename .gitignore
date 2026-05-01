@@ -8,6 +8,8 @@ test-results
 *.log
 /.cache
 *.tsbuildinfo
+/public/data/*
+!/public/data/.gitkeep
 
 # Spirit of Kiro supplemental ignores
 .aiEditorAgent

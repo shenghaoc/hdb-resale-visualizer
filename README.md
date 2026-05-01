@@ -36,7 +36,13 @@ Install dependencies:
 bun install
 ```
 
-Generate or refresh the static data artifacts:
+Hydrate the local static data artifacts from Cloudflare R2:
+
+```bash
+bun run artifacts:download
+```
+
+Refresh artifacts directly from source datasets (maintainer workflow):
 
 ```bash
 bun run sync-data
@@ -61,6 +67,8 @@ bun run lint
 bun run test
 bun run test:e2e
 bun run sync-data
+bun run artifacts:download
+bun run artifacts:upload
 ```
 
 ## Data pipeline
@@ -73,7 +81,7 @@ bun run sync-data
 4. Normalizes addresses, prices, lease values, and monthly aggregates.
 5. Resolves block coordinates through OneMap and caches them in [data/cache/geocodes.json](data/cache/geocodes.json).
 6. Computes nearest MRT distance from LTA station exit points.
-7. Emits:
+7. Emits local artifacts under `public/data/` and can then package/upload them to R2:
    - [public/data/manifest.json](public/data/manifest.json)
    - [public/data/block-summaries.json](public/data/block-summaries.json)
    - [public/data/trends/town-flat-type.json](public/data/trends/town-flat-type.json)
@@ -88,6 +96,9 @@ Optional environment variables:
 DATA_GOV_API_KEY=...
 ONEMAP_SEARCH_ENDPOINT=https://www.onemap.gov.sg/api/common/elastic/search
 GEOCODE_CONCURRENCY=10
+R2_ARTIFACTS_PUBLIC_URL=https://<public-r2-domain>/hdb-resale-visualizer/public-data.tar.gz
+R2_ARTIFACTS_BUCKET=<r2-bucket-name>
+R2_ARTIFACTS_OBJECT_KEY=hdb-resale-visualizer/public-data.tar.gz
 ```
 
 `DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
@@ -96,7 +107,7 @@ GEOCODE_CONCURRENCY=10
 
 - `wrangler.toml` is configured for Cloudflare Pages static output.
 - `.github/workflows/ci.yml` runs typecheck, lint, unit/integration tests, e2e smoke, and production build.
-- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, commits changed artifacts, and optionally deploys to Cloudflare Pages when the relevant secrets exist.
+- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, uploads the artifact archive to R2, and optionally deploys to Cloudflare Pages when the relevant secrets exist.
 
 ## Notes
 

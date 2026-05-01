@@ -43,6 +43,8 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      R2_ARTIFACTS_OBJECT_KEY: hdb-resale-visualizer/public-data.tar.gz
 
     steps:
       - uses: actions/checkout@v6
@@ -53,6 +55,14 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Download artifact snapshot
+        env:
+          R2_ARTIFACTS_PUBLIC_URL: ${{ vars.R2_ARTIFACTS_PUBLIC_URL }}
+          R2_ARTIFACTS_BUCKET: ${{ vars.R2_ARTIFACTS_BUCKET }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bun run artifacts:download
 
       - name: Typecheck
         run: bun run typecheck
