@@ -717,7 +717,7 @@ function App() {
           <header
             data-testid={isDesktop ? "global-header" : undefined}
             className={cn(
-              "pointer-events-auto absolute z-30 flex items-start gap-2",
+              "pointer-events-none absolute z-30 flex items-start gap-2",
               isDesktop ? "left-6 top-6 max-w-[min(42rem,calc(100vw-12rem))]" : "left-3 top-3 max-w-[70vw]",
             )}
           >
@@ -726,7 +726,7 @@ function App() {
               aria-expanded={isMobileHeaderOpen}
               onClick={() => setIsMobileHeaderOpen((o) => !o)}
               className={cn(
-                "flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all",
+                "pointer-events-auto flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all",
                 isMobileHeaderOpen && "items-start",
               )}
             >
@@ -763,7 +763,7 @@ function App() {
             </button>
 
             {isDesktop ? (
-              <div className="flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px]">
+              <div className="pointer-events-auto flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px]">
                 <Button
                   type="button"
                   size="icon"
@@ -850,7 +850,7 @@ function App() {
                 type="button"
                 aria-label={t("filters.removeChip", { label: chip.label })}
                 onClick={chip.onRemove}
-                className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px] transition-all active:scale-95"
+                className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px] transition-all"
               >
                 {chip.label} <span aria-hidden="true" className="opacity-70">×</span>
               </button>
@@ -865,7 +865,7 @@ function App() {
                 }
                 setMobileTab("filters");
               }}
-              className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px] transition-all active:scale-95"
+              className="filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px] transition-all"
             >
               <SlidersHorizontal className="size-3" aria-hidden="true" /> {t("tab.filters")}
             </button>
@@ -891,7 +891,7 @@ function App() {
               <aside
                 id="desktop-panel"
                 aria-hidden={!isDesktopPanelOpen}
-                inert={!isDesktopPanelOpen}
+                {...(!isDesktopPanelOpen ? { inert: "" } : {})}
                 className={cn(
                   "pointer-events-auto absolute bottom-20 left-6 flex max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity,width] duration-200 ease-out dark:bg-card",
                   isDesktopPanelOpen
@@ -905,35 +905,44 @@ function App() {
                 )}
               >
                 <div className="flex h-full min-h-0 flex-col">
-                  {desktopTab === "filters" ? (
-                    <div id="desktop-filters-content" className="h-full overflow-y-auto p-3 pb-8">
-                      {filterContent}
-                    </div>
-                  ) : null}
-                  {desktopTab === "results" ? (
+                  <div
+                    id="desktop-filters-content"
+                    aria-hidden={desktopTab !== "filters"}
+                    className={cn(
+                      "h-full overflow-y-auto p-3 pb-8",
+                      desktopTab === "filters" ? "block" : "hidden",
+                    )}
+                  >
+                    {filterContent}
+                  </div>
+                  <div
+                    id="desktop-results-content"
+                    aria-hidden={desktopTab !== "results"}
+                    className={cn(
+                      "h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8",
+                      desktopTab === "results" ? "flex" : "hidden",
+                    )}
+                  >
+                    {selectedDetailContent}
                     <div
-                      id="desktop-results-content"
-                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8"
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "hidden" : "flex",
+                      )}
                     >
-                      {selectedDetailContent}
-                      <div
-                        className={cn(
-                          "min-h-0 flex-1 flex-col",
-                          detailVisible || detailLoading ? "hidden" : "flex",
-                        )}
-                      >
-                        {resultsPaneContent}
-                      </div>
+                      {resultsPaneContent}
                     </div>
-                  ) : null}
-                  {desktopTab === "saved" ? (
-                    <div
-                      id="desktop-saved-content"
-                      className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
-                    >
-                      {savedContent}
-                    </div>
-                  ) : null}
+                  </div>
+                  <div
+                    id="desktop-saved-content"
+                    aria-hidden={desktopTab !== "saved"}
+                    className={cn(
+                      "h-full min-h-0 flex-col overflow-hidden p-3 pb-8",
+                      desktopTab === "saved" ? "flex" : "hidden",
+                    )}
+                  >
+                    {savedContent}
+                  </div>
                 </div>
               </aside>
             </section>
