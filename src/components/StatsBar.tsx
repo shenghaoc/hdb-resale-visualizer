@@ -113,7 +113,15 @@ export function GlobalHeader({
                 <Info data-icon className="size-4" />
               </Button>
               {onDismiss ? (
-                <Button type="button" size="icon" variant="ghost" className="size-7 p-0" onClick={onDismiss} aria-label={t("app.dismissHeader")} title={t("app.dismissHeader")}>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="size-7 p-0"
+                  onClick={onDismiss}
+                  aria-label={t("app.dismissHeader")}
+                  title={t("app.dismissHeader")}
+                >
                   <X data-icon className="size-4" />
                 </Button>
               ) : null}
