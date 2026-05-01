@@ -218,8 +218,13 @@ function App() {
             return;
           }
           const nextBlocks = await fetchBlocksByTown(effectiveTown);
-          if (isMounted) {
-            setBlocks(nextBlocks);
+          if (isMounted && Array.isArray(nextBlocks)) {
+            setBlocks((current) => {
+              if (current.length >= totalBlocks || current.some((b) => b.town === effectiveTown)) {
+                return current;
+              }
+              return [...current, ...nextBlocks];
+            });
           }
         }
       } catch (loadError) {
@@ -242,7 +247,7 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks,
+    blocks.length,
     sortedTowns,
   ]);
 

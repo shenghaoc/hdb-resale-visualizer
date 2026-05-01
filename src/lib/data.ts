@@ -1,4 +1,5 @@
 import { DATA_BASE_PATH } from "@/lib/constants";
+import { townToFilename } from "@/lib/utils";
 import type {
   AddressDetail,
   BlockSummary,
@@ -17,19 +18,14 @@ async function fetchJson<T>(path: string): Promise<T> {
   return (await response.json()) as T;
 }
 
+export { townToFilename };
+
 export function fetchManifest() {
   return fetchJson<Manifest>(`${DATA_BASE_PATH}/manifest.json`);
 }
 
 export function fetchBlockSummaries() {
   return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/block-summaries.json`);
-}
-
-export function townToFilename(town: string): string {
-  return town
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 export function fetchBlocksByTown(town: string) {
