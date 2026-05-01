@@ -132,8 +132,12 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
-  const resultsVisible = isDesktop ? desktopTab === "results" : mobileTab === "results";
-  const savedVisible = isDesktop ? desktopTab === "saved" : mobileTab === "saved";
+  const resultsVisible = isDesktop
+    ? isDesktopPanelOpen && desktopTab === "results"
+    : mobileTab === "results";
+  const savedVisible = isDesktop
+    ? isDesktopPanelOpen && desktopTab === "saved"
+    : mobileTab === "saved";
 
   useEffect(() => {
     let isMounted = true;
@@ -920,7 +924,7 @@ function App() {
                     id="desktop-results-content"
                     aria-hidden={desktopTab !== "results"}
                     className={cn(
-                      "h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-8",
+                      "h-full min-h-0 flex-col gap-3 overflow-hidden p-3 pb-8",
                       desktopTab === "results" ? "flex" : "hidden",
                     )}
                   >

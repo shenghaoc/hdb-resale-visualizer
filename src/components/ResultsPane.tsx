@@ -143,7 +143,7 @@ const BlockCard = memo(function BlockCard({
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <span className="text-[0.58rem] font-medium text-muted-foreground">
-                {t("stats.txns", { count: block.transactionCount })}
+                {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
               </span>
             </div>
             <Button
@@ -277,7 +277,7 @@ const BlockCard = memo(function BlockCard({
           </Badge>
         ))}
         <ItemDescription className="ml-auto text-right">
-          {t("results.transactions", { count: block.transactionCount })}
+          {t("results.transactions", { count: block.transactionCount.toLocaleString(locale) })}
         </ItemDescription>
       </ItemFooter>
     </Item>
