@@ -71,6 +71,28 @@ const mockRow = {
   comparison: mockComparison,
 };
 
+const mockRowTwo = {
+  item: {
+    ...mockShortlistItem,
+    addressKey: "test-block-2",
+    addedAt: "2024-01-02T00:00:00Z",
+  },
+  block: {
+    ...mockBlock,
+    addressKey: "test-block-2",
+    block: "202",
+    streetName: "Bedok North St 1",
+  },
+  detailSummary: null,
+  monthlyTrend: [],
+  comparison: mockComparison
+    ? {
+        ...mockComparison,
+        addressKey: "test-block-2",
+      }
+    : null,
+};
+
 describe("ShortlistDrawer", () => {
   it("displays comparison data when available", () => {
     render(
@@ -175,5 +197,66 @@ describe("ShortlistDrawer", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "View on map" }));
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
+  });
+
+  it("keeps a valid card expanded when shortlist rows change", () => {
+    const { rerender } = render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    const firstCardButton = screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i });
+    expect(firstCardButton).toHaveAttribute("aria-expanded", "true");
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow, mockRowTwo]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i }));
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute("aria-expanded", "true");
   });
 });
