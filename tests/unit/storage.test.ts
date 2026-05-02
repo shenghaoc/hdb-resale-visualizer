@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { safeStorage } from '@/lib/storage';
+import { safeStorage } from '../../src/lib/storage';
 
 describe('safeStorage', () => {
   afterEach(() => {
