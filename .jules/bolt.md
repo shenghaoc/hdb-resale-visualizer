@@ -28,3 +28,6 @@
 ## 2026-04-26 - Geographic Search Intent Optimization
 **Learning:** Inside `matchesGeographicSearchIntent` (which runs in a hot loop when filtering thousands of blocks by MRT), spreading arrays (`[block.nearestMrt, ...(block.nearbyMrts ?? [])]`) and running `.filter()` creates substantial array allocation overhead. Furthermore, evaluating `normalizeStationName` before checking distance bounds unnecessarily computes regexes on stations that are out of range.
 **Action:** When filtering across multiple nested object lists per-item, evaluate items natively without spreading into intermediate arrays. Always evaluate cheap numeric comparisons (`distanceMeters <= radiusMeters`) before calling expensive normalizations or tokenizations.
+## 2024-05-02 - Added `useI18n` Hook Tests
+**Learning:** Testing a React hook requires using `@testing-library/react` and its `renderHook` method. To test a hook that relies on a Context Provider, you can pass a custom `wrapper` option to `renderHook` that renders the Provider around the hook. To catch expected errors and prevent them from cluttering the test output, `vi.spyOn(console, "error").mockImplementation(() => {})` can be used.
+**Action:** When testing hooks that consume contexts in the future, apply the `renderHook` with `wrapper` pattern.
