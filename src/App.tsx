@@ -1,3 +1,4 @@
+import pMap from "p-map";
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bookmark,
@@ -518,15 +519,17 @@ function App() {
 
     let isMounted = true;
 
-    void Promise.all(
-      missingAddressKeys.map(async (addressKey) => {
+        void pMap(
+      missingAddressKeys,
+      async (addressKey) => {
         try {
           const nextDetail = await fetchAddressDetail(addressKey);
           return [addressKey, nextDetail] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      }),
+      },
+      { concurrency: 5 }
     ).then((entries) => {
       if (!isMounted) {
         return;
@@ -562,15 +565,17 @@ function App() {
 
     let isMounted = true;
 
-    void Promise.all(
-      missingComparisonKeys.map(async (addressKey) => {
+        void pMap(
+      missingComparisonKeys,
+      async (addressKey) => {
         try {
           const nextComparison = await fetchComparisonArtifact(addressKey);
           return [addressKey, nextComparison] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      }),
+      },
+      { concurrency: 5 }
     ).then((entries) => {
       if (!isMounted) {
         return;
