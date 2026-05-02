@@ -248,6 +248,7 @@ function App() {
     userLocation,
     selectedAddressKey,
     blocks.length,
+    blocks,
     sortedTowns,
   ]);
 
