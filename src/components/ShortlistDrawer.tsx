@@ -522,6 +522,7 @@ export function ShortlistDrawer({
               aria-expanded={isOpen}
               aria-controls="shortlist-content"
               aria-label={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
+              title={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
             >
               <ChevronDown
                 data-icon
@@ -566,7 +567,8 @@ export function ShortlistDrawer({
                   variant="outline"
                   type="button"
                   className={cn("rounded-lg border-border/50 bg-card/80", copiedKey === "share" && "text-primary")}
-                  aria-label={t("shortlist.shareLinkLabel")}
+                  aria-label={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
+                  title={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
                 >
                   {copiedKey === "share" ? <Check data-icon /> : <Link2 data-icon />}
                 </Button>
