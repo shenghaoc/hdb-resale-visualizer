@@ -158,6 +158,8 @@ export function TrendChart({ points, t }: TrendChartProps) {
       notMerge
       option={option}
       style={{ height: 200, width: "100%" }}
+      aria-label={t("detail.priceTrend", { count: 24 })}
+      role="img"
     />
   );
 }
