@@ -159,7 +159,7 @@ const BlockCard = memo(function BlockCard({
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
-              <Bookmark data-icon className={cn("size-3.5", isSaved && "fill-current")} />
+              <Bookmark data-icon className={cn("size-3.5", isSaved && "fill-current")} aria-hidden="true" />
             </Button>
           </div>
         </div>
@@ -219,7 +219,7 @@ const BlockCard = memo(function BlockCard({
             }}
             type="button"
           >
-            <Bookmark data-icon="inline-start" />
+            <Bookmark data-icon="inline-start" aria-hidden="true" />
             {isSaved ? t("results.saved") : t("results.save")}
           </Button>
         </ItemActions>
@@ -228,7 +228,7 @@ const BlockCard = memo(function BlockCard({
       <div className="grid basis-full gap-4 border-t border-border/60 pt-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <WalletCards className="size-3.5" />
+            <WalletCards data-icon className="size-3.5" aria-hidden="true" />
             {t("results.medianResale")}
           </span>
           <strong className="font-heading text-2xl font-extrabold v2-tabular">
@@ -237,7 +237,7 @@ const BlockCard = memo(function BlockCard({
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <TrainFront className="size-3.5" />
+            <TrainFront data-icon className="size-3.5" aria-hidden="true" />
             {t("results.nearestMrt")}
           </span>
           <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
@@ -253,7 +253,7 @@ const BlockCard = memo(function BlockCard({
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <Coins className="size-3.5" />
+            <Coins data-icon className="size-3.5" aria-hidden="true" />
             {t("results.remainingLease")}
           </span>
           <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
@@ -262,7 +262,7 @@ const BlockCard = memo(function BlockCard({
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <Clock3 className="size-3.5" />
+            <Clock3 data-icon className="size-3.5" aria-hidden="true" />
             {t("results.latestMonth")}
           </span>
           <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
@@ -487,7 +487,7 @@ export function ResultsPane({
                 </Badge>
                 <div className="flex min-w-0 basis-full items-center gap-2 sm:flex-none">
                   <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
-                    <ArrowUpDown className="size-3" />
+                    <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
                     {t("results.sort")}
                   </span>
                   <Select
@@ -518,7 +518,7 @@ export function ResultsPane({
         <CardContent className="flex min-h-0 flex-1 flex-col px-3 pt-3 sm:px-4">
           {!hasResultScope ? (
             <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
-              <ArrowUpDown className="size-6 opacity-40" />
+              <ArrowUpDown data-icon className="size-6 opacity-40" aria-hidden="true" />
               <p className="text-sm font-medium">{t("results.selectTown")}</p>
               <p className="text-xs">{t("results.useTownFilter")}</p>
             </div>
