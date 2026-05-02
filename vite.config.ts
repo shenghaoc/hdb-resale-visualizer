@@ -15,9 +15,9 @@ export default defineConfig({
     modulePreload: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "vendor-maplibre": ["maplibre-gl"],
-          "vendor-echarts": ["echarts"],
+        manualChunks(id) {
+          if (id.includes("maplibre-gl")) return "vendor-maplibre";
+          if (id.includes("echarts")) return "vendor-echarts";
         },
       },
     },
