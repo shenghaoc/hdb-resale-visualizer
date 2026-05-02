@@ -1,4 +1,13 @@
-import pMap from "p-map";
+async function processInBatches<T, R>(items: T[], batchSize: number, processor: (item: T) => Promise<R>): Promise<R[]> {
+  const results: R[] = [];
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    const batchResults = await Promise.all(batch.map(processor));
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bookmark,
@@ -519,17 +528,17 @@ function App() {
 
     let isMounted = true;
 
-        void pMap(
+    void processInBatches(
       missingAddressKeys,
-      async (addressKey) => {
+      5,
+      async (addressKey: string) => {
         try {
           const nextDetail = await fetchAddressDetail(addressKey);
           return [addressKey, nextDetail] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      },
-      { concurrency: 5 }
+      }
     ).then((entries) => {
       if (!isMounted) {
         return;
@@ -565,17 +574,17 @@ function App() {
 
     let isMounted = true;
 
-        void pMap(
+    void processInBatches(
       missingComparisonKeys,
-      async (addressKey) => {
+      5,
+      async (addressKey: string) => {
         try {
           const nextComparison = await fetchComparisonArtifact(addressKey);
           return [addressKey, nextComparison] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      },
-      { concurrency: 5 }
+      }
     ).then((entries) => {
       if (!isMounted) {
         return;
