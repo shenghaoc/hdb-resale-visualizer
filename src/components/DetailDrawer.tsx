@@ -245,6 +245,7 @@ export function DetailDrawer({
               className="absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100"
               onClick={onClose}
               aria-label={t("app.close")}
+              title={t("app.close")}
             >
               <X data-icon />
             </Button>
