@@ -84,7 +84,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             !value && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 size-4 text-muted-foreground group-hover:text-primary transition-colors" data-icon="inline-start" />
+          <CalendarIcon className="mr-2 size-4 text-muted-foreground group-hover:text-primary transition-colors" data-icon="inline-start" aria-hidden="true" />
           <span className="truncate">
             {value ? formatMonth(value, locale) : (placeholder || t("filters.selectMonth", { defaultValue: "Select month" }))}
           </span>
@@ -101,7 +101,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             aria-label={previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })}
             title={previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })}
           >
-            <ChevronLeft className="size-4" />
+            <ChevronLeft data-icon className="size-4" aria-hidden="true" />
           </Button>
           <div className="font-bold text-sm tracking-widest uppercase text-foreground/90 select-none">
             {viewYear}
@@ -115,7 +115,7 @@ export function MonthPicker({ value, onChange, minMonth, maxMonth, placeholder, 
             aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
             title={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
           >
-            <ChevronRight className="size-4" />
+            <ChevronRight data-icon className="size-4" aria-hidden="true" />
           </Button>
         </div>
         <div className="p-3 grid grid-cols-3 gap-2.5">

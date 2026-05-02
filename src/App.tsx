@@ -268,7 +268,7 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks.length,
+    blocks,
     sortedTowns,
   ]);
 
@@ -633,20 +633,6 @@ function App() {
     [isDesktop, patchFilters],
   );
 
-  const handleSelectShortlistAddress = useCallback(
-    (addressKey: string) => {
-      if (isDesktop) {
-        setIsDesktopPanelOpen(true);
-        setDesktopTab("saved");
-      } else {
-        setMobileTab(null);
-      }
-
-      patchFilters({ selectedAddressKey: addressKey });
-    },
-    [isDesktop, patchFilters],
-  );
-
   const handleToggleShortlist = useCallback(
     (addressKey: string) => toggleShortlist(addressKey),
     [toggleShortlist],
@@ -789,7 +775,7 @@ function App() {
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
-        onSelectAddress={handleSelectShortlistAddress}
+        onSelectAddress={handleSelectAddress}
         onRemove={(addressKey) => shortlist.toggle(addressKey)}
         onToggleOpen={() => setIsShortlistOpen((current) => !current)}
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
@@ -950,8 +936,8 @@ function App() {
             role="toolbar"
             aria-label={t("filters.title")}
             className={cn(
-              "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1",
-              isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-0 top-[3.6rem] px-3",
+              "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+              isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(min(44rem,48vw)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
             )}
             style={{ scrollbarWidth: "none" }}
           >
@@ -1009,7 +995,7 @@ function App() {
                   "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
                   desktopTab === "saved"
                     ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
-                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] rounded-2xl",
+                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] rounded-2xl",
                   isDesktopPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
@@ -1043,6 +1029,15 @@ function App() {
                     >
                       {resultsPaneContent}
                     </div>
+                    {/* Render detail inline so it replaces results when active */}
+                    <div
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "flex" : "hidden",
+                      )}
+                    >
+                      {selectedDetailContent}
+                    </div>
                   </div>
                   <div
                     id="desktop-saved-content"
@@ -1054,8 +1049,6 @@ function App() {
                   >
                     {savedContent}
                   </div>
-                  {/* Always render detail at panel top-level so it survives tab unmounts */}
-                  {selectedDetailContent}
                 </div>
               </aside>
             </section>
@@ -1064,35 +1057,45 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] dark:bg-card"
+                  className={cn(
+                    "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all dark:bg-card",
+                    activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0"
+                  )}
                 >
-                  {mobileTab === "filters" && (
-                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3 pb-12">
-                      {filterContent}
-                    </div>
-                  )}
-                  {mobileTab === "results" && (
+                  <div
+                    id="mobile-filters-content"
+                    className={cn("h-full overflow-y-auto p-3 pb-12", mobileTab === "filters" ? "block" : "hidden")}
+                  >
+                    {filterContent}
+                  </div>
+                  <div
+                    id="mobile-results-content"
+                    className={cn("h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12", mobileTab === "results" ? "flex" : "hidden")}
+                  >
                     <div
-                      id="mobile-results-content"
-                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12"
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "hidden" : "flex",
+                      )}
                     >
-                      <div
-                        className={cn(
-                          "min-h-0 flex-1 flex-col",
-                          detailVisible || detailLoading ? "hidden" : "flex",
-                        )}
-                      >
-                        {resultsPaneContent}
-                      </div>
+                      {resultsPaneContent}
                     </div>
-                  )}
-                  {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-12">
-                      {savedContent}
+                    {/* Render detail inline so it replaces results when active */}
+                    <div
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "flex" : "hidden",
+                      )}
+                    >
+                      {selectedDetailContent}
                     </div>
-                  )}
-                  {/* Always render detail at panel top-level so it survives tab unmounts */}
-                  {selectedDetailContent}
+                  </div>
+                  <div
+                    id="mobile-saved-content"
+                    className={cn("h-full min-h-0 flex-col overflow-hidden p-3 pb-12", mobileTab === "saved" ? "flex" : "hidden")}
+                  >
+                    {savedContent}
+                  </div>
                 </div>
               )}
             </section>

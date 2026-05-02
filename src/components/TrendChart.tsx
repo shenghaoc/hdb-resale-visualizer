@@ -7,7 +7,7 @@ import {
   LegendComponent,
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import ReactEChartsCore from "echarts-for-react/lib/core";
+import ReactEChartsCore from "echarts-for-react/esm/core";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
@@ -158,6 +158,8 @@ export function TrendChart({ points, t }: TrendChartProps) {
       notMerge
       option={option}
       style={{ height: 200, width: "100%" }}
+      aria-label={t("detail.priceTrend", { count: 24 })}
+      role="img"
     />
   );
 }

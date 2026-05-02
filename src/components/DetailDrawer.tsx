@@ -119,7 +119,7 @@ function AmenityCard({
     <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
       <CardContent className="p-3">
         <div className="mb-2 flex items-center gap-2">
-          <Icon className="size-4 text-primary/70" />
+          <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
           <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
             {label}
           </span>
@@ -234,7 +234,7 @@ export function DetailDrawer({
                     title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                     aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
-                    {isCopied ? <Check data-icon /> : <Copy data-icon />}
+                    {isCopied ? <Check data-icon className="size-4" aria-hidden="true" /> : <Copy data-icon className="size-4" aria-hidden="true" />}
                   </Button>
                 )}
               </div>
@@ -247,7 +247,7 @@ export function DetailDrawer({
               aria-label={t("app.close")}
               title={t("app.close")}
             >
-              <X data-icon />
+              <X data-icon className="size-4" aria-hidden="true" />
             </Button>
           </DrawerHeader>
 
@@ -262,21 +262,21 @@ export function DetailDrawer({
                   value="overview"
                   className="gap-2 text-xs font-semibold uppercase tracking-wider"
                 >
-                  <Info className="size-3.5" />
+                  <Info data-icon className="size-3.5" aria-hidden="true" />
                   {t("detail.overview")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="trends"
                   className="gap-2 text-xs font-semibold uppercase tracking-wider"
                 >
-                  <TrendingUp className="size-3.5" />
+                  <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
                   {t("detail.trends")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="history"
                   className="gap-2 text-xs font-semibold uppercase tracking-wider"
                 >
-                  <History className="size-3.5" />
+                  <History data-icon className="size-3.5" aria-hidden="true" />
                   {t("detail.history")}
                 </TabsTrigger>
               </TabsList>
@@ -290,7 +290,7 @@ export function DetailDrawer({
                   <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
                     <CardHeader className="p-3 pb-2">
                       <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Coins className="size-3.5 text-primary/70" />
+                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.medianResale")}
                       </CardDescription>
                     </CardHeader>
@@ -312,7 +312,7 @@ export function DetailDrawer({
                   <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
                     <CardHeader className="p-3 pb-2">
                       <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Clock3 className="size-3.5 text-primary/70" />
+                        <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.remainingLease")}
                       </CardDescription>
                     </CardHeader>
@@ -329,7 +329,7 @@ export function DetailDrawer({
                 {/* MRT Connectivity */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <TrainFront className="size-4" />
+                    <TrainFront data-icon className="size-4" aria-hidden="true" />
                     {t("detail.connectivity")}
                   </h3>
                   <div className="flex flex-col gap-3">
@@ -374,7 +374,7 @@ export function DetailDrawer({
                 {/* Flat Types & Attributes */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <Table className="size-4" />
+                    <Table data-icon className="size-4" aria-hidden="true" />
                     {t("detail.unitAttributes")}
                   </h3>
                   <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
@@ -430,7 +430,7 @@ export function DetailDrawer({
                 {/* Nearby Amenities */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <Trees className="size-4" />
+                    <Trees data-icon className="size-4" aria-hidden="true" />
                     {t("detail.nearbyAmenities")}
                   </h3>
                   {isComparisonLoading ? (
@@ -489,7 +489,7 @@ export function DetailDrawer({
                 {/* Market Percentiles */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <TrendingUp className="size-4" />
+                    <TrendingUp data-icon className="size-4" aria-hidden="true" />
                     {t("detail.marketPercentiles")}
                   </h3>
                   {isComparisonLoading ? (
@@ -547,7 +547,7 @@ export function DetailDrawer({
                 <section>
                   <h3 className="mb-4 flex items-center justify-between gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <span className="flex items-center gap-2">
-                      <TrendingUp className="size-4" />
+                      <TrendingUp data-icon className="size-4" aria-hidden="true" />
                       {t("detail.priceTrend", { count: 24 })}
                     </span>
                     <Badge
@@ -564,7 +564,7 @@ export function DetailDrawer({
                         {detail ? (
                           <Suspense fallback={
                             <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                              <TrendingUp className="size-8 stroke-[1px] animate-pulse" />
+                              <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
                               <p className="text-xs font-medium tracking-widest uppercase">
                                 {t("detail.calculatingTrends")}
                               </p>
@@ -574,7 +574,7 @@ export function DetailDrawer({
                           </Suspense>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                            <TrendingUp className="size-8 stroke-[1px]" />
+                            <TrendingUp data-icon className="size-8 stroke-[1px]" aria-hidden="true" />
                             <p className="text-xs font-medium tracking-widest uppercase">
                               {t("detail.calculatingTrends")}
                             </p>
@@ -602,7 +602,7 @@ export function DetailDrawer({
                           </CardTitle>
                         </div>
                         <div className="rounded-full bg-primary/5 p-2 text-primary">
-                          <TrendingUp className="size-5" />
+                          <TrendingUp data-icon className="size-5" aria-hidden="true" />
                         </div>
                       </div>
                     </CardHeader>
@@ -623,7 +623,7 @@ export function DetailDrawer({
                 <section>
                   <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <span className="flex items-center gap-2">
-                      <History className="size-4" />
+                      <History data-icon className="size-4" aria-hidden="true" />
                       {t("detail.recentTransactions")}
                     </span>
                     <Badge variant="outline" className="font-mono text-[0.65rem]">
@@ -689,7 +689,7 @@ export function DetailDrawer({
                 variant={isSaved ? "secondary" : "default"}
                 aria-label={isSaved ? t("detail.saved") : t("detail.save")}
               >
-                <Bookmark data-icon="inline-start" className={isSaved ? "fill-current" : ""} />
+                <Bookmark data-icon="inline-start" className={cn("size-4", isSaved && "fill-current")} aria-hidden="true" />
                 <span className="truncate">
                   <span className="sm:hidden">
                     {isSaved ? t("results.saved") : t("results.save")}
@@ -713,7 +713,7 @@ export function DetailDrawer({
                   window.open(url.toString(), "_blank", "noopener,noreferrer");
                 }}
               >
-                <MapPin data-icon />
+                <MapPin data-icon className="size-4" aria-hidden="true" />
                 <span className="truncate">{t("detail.directions")}</span>
               </Button>
             </div>

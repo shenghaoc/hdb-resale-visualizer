@@ -75,9 +75,9 @@ export function GlobalHeader({
                 title={t("app.toggleTheme")}
               >
                 {theme === "light" ? (
-                  <Moon data-icon className="size-4" />
+                  <Moon data-icon className="size-4" aria-hidden="true" />
                 ) : (
-                  <Sun data-icon className="size-4" />
+                  <Sun data-icon className="size-4" aria-hidden="true" />
                 )}
               </Button>
 
@@ -87,7 +87,7 @@ export function GlobalHeader({
                   className="h-7 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm"
                 >
                   <div className="flex items-center gap-1.5">
-                    <Languages data-icon className="size-3 opacity-60" />
+                    <Languages data-icon className="size-3 opacity-60" aria-hidden="true" />
                     <SelectValue placeholder={t("language.label")} />
                   </div>
                 </SelectTrigger>
@@ -111,7 +111,7 @@ export function GlobalHeader({
                 title={t("app.toggleMetadata")}
                 aria-expanded={mobileInfoOpen}
               >
-                <Info data-icon className="size-4" />
+                <Info data-icon className="size-4" aria-hidden="true" />
               </Button>
               {onDismiss ? (
                 <Button
@@ -123,7 +123,7 @@ export function GlobalHeader({
                   aria-label={t("app.dismissHeader")}
                   title={t("app.dismissHeader")}
                 >
-                  <X data-icon className="size-4" />
+                  <X data-icon className="size-4" aria-hidden="true" />
                 </Button>
               ) : null}
             </div>

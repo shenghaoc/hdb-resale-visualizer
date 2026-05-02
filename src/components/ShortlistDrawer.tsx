@@ -3,7 +3,7 @@ import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import ReactEChartsCore from "echarts-for-react/lib/core";
+import ReactEChartsCore from "echarts-for-react/esm/core";
 import {
   ArrowUpDown,
   Check,
@@ -204,7 +204,7 @@ function AmenityTile({
   return (
     <div className="rounded-lg border border-border/40 bg-muted/20 p-2.5">
       <div className="flex items-center gap-1.5">
-        <Icon className="text-primary" data-icon />
+        <Icon data-icon className="size-3.5 text-primary" aria-hidden="true" />
         <strong className="text-xs font-extrabold tracking-tight">{count}</strong>
       </div>
       <div className="mt-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
@@ -526,7 +526,8 @@ export function ShortlistDrawer({
             >
               <ChevronDown
                 data-icon
-                className={cn("transition-transform", isOpen ? "rotate-180" : "rotate-0")}
+                className={cn("size-4 transition-transform", isOpen ? "rotate-180" : "rotate-0")}
+                aria-hidden="true"
               />
             </Button>
           </div>
@@ -546,7 +547,7 @@ export function ShortlistDrawer({
                       aria-labelledby={sortLabelId}
                       className="h-8 min-w-0 rounded-lg border-border/50 bg-card/80 px-2 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
                     >
-                      <ArrowUpDown data-icon="inline-start" />
+                      <ArrowUpDown data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -570,18 +571,22 @@ export function ShortlistDrawer({
                   aria-label={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
                   title={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
                 >
-                  {copiedKey === "share" ? <Check data-icon /> : <Link2 data-icon />}
+                  {copiedKey === "share" ? (
+                    <Check data-icon className="size-4" aria-hidden="true" />
+                  ) : (
+                    <Link2 data-icon className="size-4" aria-hidden="true" />
+                  )}
                 </Button>
               </div>
 
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
                 <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
-                    <Download data-icon="inline-start" />
+                    <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.json")}
                   </Button>
                   <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                    <Download data-icon="inline-start" />
+                    <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.csv")}
                   </Button>
                   <Button
@@ -592,9 +597,9 @@ export function ShortlistDrawer({
                     className={copiedKey === "summary" ? "text-primary" : undefined}
                   >
                     {copiedKey === "summary" ? (
-                      <Check data-icon="inline-start" />
+                      <Check data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     ) : (
-                      <Copy data-icon="inline-start" />
+                      <Copy data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     )}
                     {copiedKey === "summary" ? t("shortlist.summaryCopiedShort") : t("shortlist.copySummary")}
                   </Button>
@@ -752,7 +757,7 @@ export function ShortlistDrawer({
                                 aria-label={t("shortlist.remove")}
                                 title={t("shortlist.remove")}
                               >
-                                <X data-icon />
+                                <X data-icon className="size-4" aria-hidden="true" />
                               </Button>
                             </div>
                           </CardHeader>
@@ -971,7 +976,7 @@ export function ShortlistDrawer({
                                   className="rounded-lg border-border/50"
                                   onClick={() => onRemove(row.item.addressKey)}
                                 >
-                                  <X data-icon="inline-start" />
+                                  <X data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                                   {t("shortlist.remove")}
                                 </Button>
                                 <Button
@@ -980,7 +985,7 @@ export function ShortlistDrawer({
                                   className="rounded-lg"
                                   onClick={() => onSelectAddress(row.item.addressKey)}
                                 >
-                                  <MapPin data-icon="inline-start" />
+                                  <MapPin data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                                   {t("shortlist.viewOnMap")}
                                 </Button>
                               </div>
