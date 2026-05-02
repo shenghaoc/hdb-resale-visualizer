@@ -35,3 +35,7 @@
 ## 2025-05-02 - Testing `format.ts` and Intl format caching
 **Learning:** Pure formatting functions that make use of `Intl` APIs can be straightforward to test, but handling localized output correctly while checking for expected properties like inclusion of standard numbers or symbols avoids brittle tests that break across Node environments. The caching eviction of our custom objects was also tricky but easily triggered via varying simple arguments in a loop.
 **Action:** When testing UI/format utility functions, prefer string containment or regex checks rather than exact equality matching, particularly for formatted localized text or strings that may change representations based on engine versions. Always use dependency injection/mocking to deterministically control system parameters like date or `getCurrentYear` in tests.
+
+## 2024-05-18 - Utility Unit Tests Addition
+**Learning:** Testing simple utility functions like `cn` and `townToFilename` provides safety against regressions in core helpers that are used pervasively throughout the app. Testing `cn` explicitly confirms proper behavior for combining, resolving conflicts (via tailwind-merge), and dropping falsy inputs (via clsx).
+**Action:** Always include complete unit test suites for base utility functions to prevent subtle UI bugs and ensure components can trust basic helper assumptions.
