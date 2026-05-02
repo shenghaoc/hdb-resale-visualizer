@@ -190,9 +190,14 @@ function FieldError({
       return null
     }
 
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ]
+    const seen = new Set<string>()
+    const uniqueErrors = errors.filter((error): error is { message: string } => {
+      const msg = error?.message
+      if (!msg) return false
+      if (seen.has(msg)) return false
+      seen.add(msg)
+      return true
+    })
 
     if (uniqueErrors?.length == 1) {
       return uniqueErrors[0]?.message
