@@ -1,9 +1,0 @@
---- src/App.tsx
-+++ src/App.tsx
-@@ -248,6 +248,7 @@
-     userLocation,
-     selectedAddressKey,
-     blocks.length,
-+    blocks,
-     sortedTowns,
-   ]);
