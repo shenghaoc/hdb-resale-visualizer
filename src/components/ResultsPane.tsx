@@ -219,7 +219,7 @@ const BlockCard = memo(function BlockCard({
             }}
             type="button"
           >
-            <Bookmark data-icon="inline-start" aria-hidden="true" />
+            <Bookmark data-icon="inline-start" className="size-3.5" aria-hidden="true" />
             {isSaved ? t("results.saved") : t("results.save")}
           </Button>
         </ItemActions>

@@ -1,0 +1,7 @@
+$ tsc -b && vite build && bun run check:bundle
+src/App.tsx(251,5): error TS2304: Cannot find name 'totalBlocks'.
+src/App.tsx(252,5): error TS2304: Cannot find name 'hasGeographic'.
+src/App.tsx(253,5): error TS2304: Cannot find name 'effectiveTown'.
+src/App.tsx(251,5): error TS2304: Cannot find name 'totalBlocks'.
+src/App.tsx(252,5): error TS2304: Cannot find name 'hasGeographic'.
+src/App.tsx(253,5): error TS2304: Cannot find name 'effectiveTown'.

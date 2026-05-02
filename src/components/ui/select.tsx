@@ -51,7 +51,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon data-icon className="pointer-events-none size-3.5 text-muted-foreground" />
+        <ChevronDownIcon data-icon className="pointer-events-none size-3.5 text-muted-foreground" aria-hidden="true" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -122,7 +122,7 @@ function SelectItem({
     >
       <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <CheckIcon data-icon className="pointer-events-none" />
+          <CheckIcon data-icon className="pointer-events-none" aria-hidden="true" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -159,7 +159,7 @@ function SelectScrollUpButton({
       )}
       {...props}
     >
-      <ChevronUpIcon data-icon />
+      <ChevronUpIcon data-icon aria-hidden="true" />
     </SelectPrimitive.ScrollUpButton>
   )
 }
@@ -177,7 +177,7 @@ function SelectScrollDownButton({
       )}
       {...props}
     >
-      <ChevronDownIcon data-icon />
+      <ChevronDownIcon data-icon aria-hidden="true" />
     </SelectPrimitive.ScrollDownButton>
   )
 }
