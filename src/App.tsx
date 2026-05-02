@@ -945,13 +945,13 @@ function App() {
           </div>
         )}
 
-        {activeFilterChips.length > 0 && (
+        {activeFilterChips.length > 0 && (isDesktop || !mobileTab) && (
           <div
             role="toolbar"
             aria-label={t("filters.title")}
             className={cn(
-              "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1",
-              isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-0 top-[3.6rem] px-3",
+              "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+              isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(min(44rem,48vw)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
             )}
             style={{ scrollbarWidth: "none" }}
           >
@@ -1009,7 +1009,7 @@ function App() {
                   "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
                   desktopTab === "saved"
                     ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
-                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-10rem))] min-h-[24rem] rounded-2xl",
+                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] rounded-2xl",
                   isDesktopPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
