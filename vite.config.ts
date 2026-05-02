@@ -11,7 +11,19 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
+    modulePreload: {
+      resolveDependencies: (_filename, deps) =>
+        deps.filter((dep) => !/vendor-(?:maplibre|echarts)|(?:^|\/)(?:MapView|TrendChart)(?:-|\.)/.test(dep)),
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("/node_modules/maplibre-gl/")) return "vendor-maplibre";
+          if (id.includes("/node_modules/echarts/")) return "vendor-echarts";
+        },
+      },
+    },
   },
   server: {
     port: 5173,
