@@ -945,7 +945,7 @@ function App() {
           </div>
         )}
 
-        {activeFilterChips.length > 0 && (isDesktop || !mobileTab) && (
+        {activeFilterChips.length > 0 && (
           <div
             role="toolbar"
             aria-label={t("filters.title")}
@@ -1064,7 +1064,10 @@ function App() {
               {mobileTab && (
                 <div
                   id="mobile-panel"
-                  className="pointer-events-auto absolute inset-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] dark:bg-card"
+                  className={cn(
+                    "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all dark:bg-card",
+                    activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0"
+                  )}
                 >
                   {mobileTab === "filters" && (
                     <div id="mobile-filters-content" className="h-full overflow-y-auto p-3 pb-12">
