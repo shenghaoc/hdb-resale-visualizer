@@ -190,9 +190,10 @@ function FieldError({
       return null
     }
 
-    const seen = new Set<string | undefined>()
-    const uniqueErrors = errors.filter((error) => {
+    const seen = new Set<string>()
+    const uniqueErrors = errors.filter((error): error is { message: string } => {
       const msg = error?.message
+      if (!msg) return false
       if (seen.has(msg)) return false
       seen.add(msg)
       return true
