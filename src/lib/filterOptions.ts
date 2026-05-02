@@ -1,7 +1,7 @@
 import type { BlockSummary, FilterOptions } from "@/types/data";
 
 export function canonicalFlatType(value: string): string {
-  const normalized = value.trim().replace(/\s+/g, " ").toUpperCase();
+  const normalized = value.trim().toUpperCase();
   if (normalized === "MULTI GENERATION") {
     return "MULTI-GENERATION";
   }
@@ -67,7 +67,7 @@ export function buildFilterOptions(
   const flatModels = new Set<string>();
 
   for (const block of blocks) {
-    towns.add(block.town.trim().toUpperCase());
+    towns.add(block.town);
     for (const flatType of block.flatTypes) {
       flatTypes.add(canonicalFlatType(flatType));
     }

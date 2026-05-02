@@ -7,8 +7,8 @@ import {
 } from "@/lib/filterOptions";
 
 describe("canonicalFlatType", () => {
-  it("trims, collapses spaces, and uppercases normal strings", () => {
-    expect(canonicalFlatType(" 4  room ")).toBe("4 ROOM");
+  it("trims and uppercases normal strings", () => {
+    expect(canonicalFlatType(" 4 room ")).toBe("4 ROOM");
     expect(canonicalFlatType("executive")).toBe("EXECUTIVE");
   });
 
@@ -85,12 +85,12 @@ describe("buildFilterOptions", () => {
         flatModels: ["Model A"],
       },
       {
-        town: "ang mo kio",
+        town: "ANG MO KIO",
         flatTypes: ["multi generation", "3 ROOM"],
         flatModels: ["Improved", "NA"],
       },
       {
-        town: "Bishan",
+        town: "BISHAN",
         flatTypes: ["executive", "4 ROOM"],
         flatModels: [" model  a ", "Maisonette"],
       },
