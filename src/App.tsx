@@ -539,36 +539,25 @@ function App() {
 
     let isMounted = true;
 
-    void processWithConcurrency(
-      missingAddressKeys,
-      5,
-      async (addressKey: string) => {
-        try {
-          const nextDetail = await fetchAddressDetail(addressKey);
-          return [addressKey, nextDetail] as const;
-        } catch {
-          return [addressKey, null] as const;
+    // PERF: Update state incrementally as each promise resolves with controlled
+    // concurrency to avoid overwhelming the browser with too many simultaneous requests
+    void processWithConcurrency(missingAddressKeys, 5, async (addressKey) => {
+      try {
+        const nextDetail = await fetchAddressDetail(addressKey);
+        if (isMounted) {
+          setShortlistDetails((current) => ({ ...current, [addressKey]: nextDetail }));
+        }
+      } catch {
+        if (isMounted) {
+          setShortlistDetails((current) => ({ ...current, [addressKey]: null }));
         }
       }
-    ).then((entries) => {
-      if (!isMounted) {
-        return;
-      }
-
-      setShortlistDetails((current) => {
-        const next = { ...current };
-        for (const [addressKey, detailData] of entries) {
-          next[addressKey] = detailData;
-        }
-
-        return next;
-      });
     });
 
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   useEffect(() => {
     if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
@@ -585,36 +574,25 @@ function App() {
 
     let isMounted = true;
 
-    void processWithConcurrency(
-      missingComparisonKeys,
-      5,
-      async (addressKey: string) => {
-        try {
-          const nextComparison = await fetchComparisonArtifact(addressKey);
-          return [addressKey, nextComparison] as const;
-        } catch {
-          return [addressKey, null] as const;
+    // PERF: Update state incrementally as each promise resolves with controlled
+    // concurrency to avoid overwhelming the browser with too many simultaneous requests
+    void processWithConcurrency(missingComparisonKeys, 5, async (addressKey) => {
+      try {
+        const nextComparison = await fetchComparisonArtifact(addressKey);
+        if (isMounted) {
+          setShortlistComparisons((current) => ({ ...current, [addressKey]: nextComparison }));
+        }
+      } catch {
+        if (isMounted) {
+          setShortlistComparisons((current) => ({ ...current, [addressKey]: null }));
         }
       }
-    ).then((entries) => {
-      if (!isMounted) {
-        return;
-      }
-
-      setShortlistComparisons((current) => {
-        const next = { ...current };
-        for (const [addressKey, comparisonData] of entries) {
-          next[addressKey] = comparisonData;
-        }
-
-        return next;
-      });
     });
 
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistComparisons]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     if ("selectedAddressKey" in patch) {
