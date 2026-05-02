@@ -1,3 +1,13 @@
+async function processInBatches<T, R>(items: T[], batchSize: number, processor: (item: T) => Promise<R>): Promise<R[]> {
+  const results: R[] = [];
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    const batchResults = await Promise.all(batch.map(processor));
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bookmark,
@@ -60,27 +70,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-
-// Sliding window concurrency limiter — keeps exactly `concurrency` requests
-// in-flight at all times, unlike strict batching which stalls on the slowest
-// item in each batch before starting the next.
-async function processWithConcurrency<T, R>(
-  items: T[],
-  concurrency: number,
-  processor: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = Array<R>(items.length);
-  let currentIndex = 0;
-  const worker = async () => {
-    while (currentIndex < items.length) {
-      const i = currentIndex++;
-      results[i] = await processor(items[i]);
-    }
-  };
-  const limit = Math.max(1, Math.min(concurrency, items.length));
-  await Promise.all(Array.from({ length: limit }, worker));
-  return results;
-}
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -539,7 +528,7 @@ function App() {
 
     let isMounted = true;
 
-    void processWithConcurrency(
+    void processInBatches(
       missingAddressKeys,
       5,
       async (addressKey: string) => {
@@ -585,7 +574,7 @@ function App() {
 
     let isMounted = true;
 
-    void processWithConcurrency(
+    void processInBatches(
       missingComparisonKeys,
       5,
       async (addressKey: string) => {
