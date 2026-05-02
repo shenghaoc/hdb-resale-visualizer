@@ -1,5 +1,5 @@
 import type { FilterState } from "@/types/data";
-import type { DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
+import type { ExpressionSpecification } from "@maplibre/maplibre-gl-style-spec";
 
 /**
  * Shared numeric constants used across the codebase.
@@ -38,7 +38,7 @@ export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 1000000, color: "#d97757" },
   { price: 1300000, color: "#a83232" },
 ] as const;
-export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification<string> = [
+export const MEDIAN_PRICE_COLOR_EXPRESSION: ExpressionSpecification = [
   "interpolate",
   ["linear"],
   ["get", "median_price"],
