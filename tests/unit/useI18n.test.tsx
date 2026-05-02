@@ -1,3 +1,4 @@
+import React from 'react';
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useI18n } from "@/lib/i18n/useI18n";
