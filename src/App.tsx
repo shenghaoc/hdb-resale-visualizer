@@ -633,20 +633,6 @@ function App() {
     [isDesktop, patchFilters],
   );
 
-  const handleSelectShortlistAddress = useCallback(
-    (addressKey: string) => {
-      if (isDesktop) {
-        setIsDesktopPanelOpen(true);
-        setDesktopTab("saved");
-      } else {
-        setMobileTab(null);
-      }
-
-      patchFilters({ selectedAddressKey: addressKey });
-    },
-    [isDesktop, patchFilters],
-  );
-
   const handleToggleShortlist = useCallback(
     (addressKey: string) => toggleShortlist(addressKey),
     [toggleShortlist],
@@ -789,7 +775,7 @@ function App() {
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
       <ShortlistDrawer
         isOpen={isShortlistOpen}
-        onSelectAddress={handleSelectShortlistAddress}
+        onSelectAddress={handleSelectAddress}
         onRemove={(addressKey) => shortlist.toggle(addressKey)}
         onToggleOpen={() => setIsShortlistOpen((current) => !current)}
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
@@ -1043,6 +1029,15 @@ function App() {
                     >
                       {resultsPaneContent}
                     </div>
+                    {/* Render detail inline so it replaces results when active */}
+                    <div
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "flex" : "hidden",
+                      )}
+                    >
+                      {selectedDetailContent}
+                    </div>
                   </div>
                   <div
                     id="desktop-saved-content"
@@ -1054,8 +1049,6 @@ function App() {
                   >
                     {savedContent}
                   </div>
-                  {/* Always render detail at panel top-level so it survives tab unmounts */}
-                  {selectedDetailContent}
                 </div>
               </aside>
             </section>
@@ -1069,33 +1062,40 @@ function App() {
                     activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0"
                   )}
                 >
-                  {mobileTab === "filters" && (
-                    <div id="mobile-filters-content" className="h-full overflow-y-auto p-3 pb-12">
-                      {filterContent}
-                    </div>
-                  )}
-                  {mobileTab === "results" && (
+                  <div
+                    id="mobile-filters-content"
+                    className={cn("h-full overflow-y-auto p-3 pb-12", mobileTab === "filters" ? "block" : "hidden")}
+                  >
+                    {filterContent}
+                  </div>
+                  <div
+                    id="mobile-results-content"
+                    className={cn("h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12", mobileTab === "results" ? "flex" : "hidden")}
+                  >
                     <div
-                      id="mobile-results-content"
-                      className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12"
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "hidden" : "flex",
+                      )}
                     >
-                      <div
-                        className={cn(
-                          "min-h-0 flex-1 flex-col",
-                          detailVisible || detailLoading ? "hidden" : "flex",
-                        )}
-                      >
-                        {resultsPaneContent}
-                      </div>
+                      {resultsPaneContent}
                     </div>
-                  )}
-                  {mobileTab === "saved" && (
-                    <div id="mobile-saved-content" className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-12">
-                      {savedContent}
+                    {/* Render detail inline so it replaces results when active */}
+                    <div
+                      className={cn(
+                        "min-h-0 flex-1 flex-col",
+                        detailVisible || detailLoading ? "flex" : "hidden",
+                      )}
+                    >
+                      {selectedDetailContent}
                     </div>
-                  )}
-                  {/* Always render detail at panel top-level so it survives tab unmounts */}
-                  {selectedDetailContent}
+                  </div>
+                  <div
+                    id="mobile-saved-content"
+                    className={cn("h-full min-h-0 flex-col overflow-hidden p-3 pb-12", mobileTab === "saved" ? "flex" : "hidden")}
+                  >
+                    {savedContent}
+                  </div>
                 </div>
               )}
             </section>
