@@ -247,7 +247,7 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks,
+    blocks.length,
     sortedTowns,
   ]);
 

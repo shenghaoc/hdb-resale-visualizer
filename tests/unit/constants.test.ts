@@ -17,7 +17,8 @@ describe("constants", () => {
 
     it("should return another year when time changes", () => {
       vi.useFakeTimers();
-      vi.setSystemTime(new Date("2020-01-01T00:00:00Z"));
+      // Use local date constructor to avoid timezone issues at year boundaries
+      vi.setSystemTime(new Date(2020, 0, 1));
 
       expect(getCurrentYear()).toBe(2020);
     });
