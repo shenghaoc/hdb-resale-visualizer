@@ -37,8 +37,7 @@ export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 1000000, color: "#d97757" },
   { price: 1300000, color: "#a83232" },
 ] as const;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const MEDIAN_PRICE_COLOR_EXPRESSION: any = [
+export const MEDIAN_PRICE_COLOR_EXPRESSION = [
   "interpolate",
   ["linear"],
   ["get", "median_price"],
