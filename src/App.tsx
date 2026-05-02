@@ -61,6 +61,27 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+// Sliding window concurrency limiter — keeps exactly `concurrency` requests
+// in-flight at all times, unlike strict batching which stalls on the slowest
+// item in each batch before starting the next.
+async function processWithConcurrency<T, R>(
+  items: T[],
+  concurrency: number,
+  processor: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = Array<R>(items.length);
+  let currentIndex = 0;
+  const worker = async () => {
+    while (currentIndex < items.length) {
+      const i = currentIndex++;
+      results[i] = await processor(items[i]);
+    }
+  };
+  const limit = Math.max(1, Math.min(concurrency, items.length));
+  await Promise.all(Array.from({ length: limit }, worker));
+  return results;
+}
+
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
@@ -518,15 +539,17 @@ function App() {
 
     let isMounted = true;
 
-    void Promise.all(
-      missingAddressKeys.map(async (addressKey) => {
+    void processWithConcurrency(
+      missingAddressKeys,
+      5,
+      async (addressKey: string) => {
         try {
           const nextDetail = await fetchAddressDetail(addressKey);
           return [addressKey, nextDetail] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      }),
+      }
     ).then((entries) => {
       if (!isMounted) {
         return;
@@ -562,15 +585,17 @@ function App() {
 
     let isMounted = true;
 
-    void Promise.all(
-      missingComparisonKeys.map(async (addressKey) => {
+    void processWithConcurrency(
+      missingComparisonKeys,
+      5,
+      async (addressKey: string) => {
         try {
           const nextComparison = await fetchComparisonArtifact(addressKey);
           return [addressKey, nextComparison] as const;
         } catch {
           return [addressKey, null] as const;
         }
-      }),
+      }
     ).then((entries) => {
       if (!isMounted) {
         return;

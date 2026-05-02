@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { ExpressionSpecification, LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
+
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
   MEDIAN_PRICE_COLOR_EXPRESSION,
