@@ -14,7 +14,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1500,
     modulePreload: {
       resolveDependencies: (_filename, deps) =>
-        deps.filter((dep) => !/vendor-(?:maplibre|echarts)|MapView|TrendChart/.test(dep)),
+        deps.filter((dep) => !/vendor-(?:maplibre|echarts)|(?:^|\/)(?:MapView|TrendChart)(?:-|\.)/.test(dep)),
     },
     rollupOptions: {
       output: {
