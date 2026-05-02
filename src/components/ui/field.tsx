@@ -173,14 +173,16 @@ function FieldSeparator({
   )
 }
 
+interface FieldErrorProps extends React.ComponentProps<"div"> {
+  errors?: Array<{ message?: string } | undefined>
+}
+
 function FieldError({
   className,
   children,
   errors,
   ...props
-}: React.ComponentProps<"div"> & {
-  errors?: Array<{ message?: string } | undefined>
-}) {
+}: FieldErrorProps) {
   const content = useMemo(() => {
     if (children) {
       return children
@@ -199,7 +201,7 @@ function FieldError({
       return true
     })
 
-    if (uniqueErrors?.length == 1) {
+    if (uniqueErrors.length === 1) {
       return uniqueErrors[0]?.message
     }
 

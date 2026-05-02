@@ -39,3 +39,7 @@
 ## 2024-05-18 - Utility Unit Tests Addition
 **Learning:** Testing simple utility functions like `cn` and `townToFilename` provides safety against regressions in core helpers that are used pervasively throughout the app. Testing `cn` explicitly confirms proper behavior for combining, resolving conflicts (via tailwind-merge), and dropping falsy inputs (via clsx).
 **Action:** Always include complete unit test suites for base utility functions to prevent subtle UI bugs and ensure components can trust basic helper assumptions.
+
+## 2025-01-20 - Inline Types in Component Props
+**Learning:** Defining complex nested types directly inline in component props (such as `React.ComponentProps<"div"> & { errors?: Array<{ message?: string } | undefined> }`) can cause automated code health tools to misidentify syntax (like mistaking multiple `?` for a nested ternary operator) and reduces code readability.
+**Action:** Extract complex inline prop definitions into dedicated interface or type declarations above the component to improve readability and tooling accuracy.
