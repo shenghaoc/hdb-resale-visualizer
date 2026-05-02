@@ -60,6 +60,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -121,7 +122,10 @@ function App() {
     Record<string, ComparisonArtifact | null>
   >({});
   const [error, setError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
   const shortlist = useShortlist();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   type DesktopTab = "filters" | "results" | "saved";
@@ -140,6 +144,19 @@ function App() {
   const savedVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "saved"
     : mobileTab === "saved";
+
+  const handleLogin = useCallback(() => {
+    setAuthError(null);
+    void shortlist
+      .signIn(email, password)
+      .then(() => {
+        setPassword("");
+      })
+      .catch((error) => {
+        setAuthError(error instanceof Error ? error.message : "Failed to sign in");
+      });
+  }, [email, password, shortlist]);
+
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
@@ -474,23 +491,7 @@ function App() {
               (selectedComparison?.addressKey === item.addressKey ? selectedComparison : null),
           };
         })
-        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
-        .sort((left, right) => {
-          const leftGap =
-            left.item.targetPrice !== null
-              ? Math.abs(left.item.targetPrice - left.block.medianPrice)
-              : Number.POSITIVE_INFINITY;
-          const rightGap =
-            right.item.targetPrice !== null
-              ? Math.abs(right.item.targetPrice - right.block.medianPrice)
-              : Number.POSITIVE_INFINITY;
-
-          if (leftGap !== rightGap) {
-            return leftGap - rightGap;
-          }
-
-          return left.item.addedAt.localeCompare(right.item.addedAt);
-        });
+        .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
     },
     [
       blocks,
@@ -992,6 +993,50 @@ function App() {
                 {t("app.showHeader")}
               </Button>
             </div>
+          ) : null}
+
+          {shortlist.hasCloudSyncConfig ? (
+            <Card className="pointer-events-auto absolute right-3 top-[4.25rem] z-30 w-[min(22rem,calc(100vw-1.5rem))] border-border/25 bg-background/92 shadow-[0_4px_20px_rgba(23,28,31,0.08)] backdrop-blur-[20px] lg:right-6 lg:top-6">
+              <CardHeader className="gap-1 p-3 pb-2">
+                <CardTitle className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                  Cloud sync
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Optional backup for Saved flats.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-2 p-3 pt-0 sm:grid-cols-[1fr_1fr_auto_auto]">
+                {!shortlist.session ? (
+                  <>
+                    <Input
+                      placeholder="Email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <Input
+                      placeholder="Password"
+                      type="password"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <Button onClick={handleLogin}>Login</Button>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-2 sm:col-span-3">
+                    <span className="text-sm font-medium">Signed in as {shortlist.session.email}</span>
+                  </div>
+                )}
+                {shortlist.session ? (
+                  <Button variant="outline" onClick={shortlist.signOut}>
+                    Logout
+                  </Button>
+                ) : null}
+                {authError && <p className="text-xs text-destructive sm:col-span-full">{authError}</p>}
+                <p className="text-xs text-muted-foreground sm:col-span-full">
+                  {shortlist.cloudStatus}
+                </p>
+              </CardContent>
+            </Card>
           ) : null}
 
           {isDesktop ? (
