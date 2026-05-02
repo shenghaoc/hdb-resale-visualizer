@@ -328,6 +328,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as ExpressionSpecification,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
