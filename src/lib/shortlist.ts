@@ -1,38 +1,29 @@
+import { z } from "zod";
 import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
-type LegacyShortlistItem = {
-  addressKey: string;
-  notes?: unknown;
-  targetPrice?: unknown;
-  addedAt?: unknown;
-};
+const shortlistItemSchema = z.object({
+  addressKey: z.string(),
+  notes: z.string().catch(""),
+  targetPrice: z.number().nullable().catch(null),
+  addedAt: z.string().min(1).catch(() => new Date(0).toISOString()),
+});
 
-function isLegacyShortlistItem(value: unknown): value is LegacyShortlistItem {
-  if (typeof value !== "object" || value === null) {
-    return false;
-  }
-
-  const record = value as Record<string, unknown>;
-  return typeof record.addressKey === "string";
-}
+const shortlistSchema = z.array(z.unknown()).transform((arr) => {
+  return arr
+    .map((item) => {
+      const parsed = shortlistItemSchema.safeParse(item);
+      return parsed.success ? parsed.data : null;
+    })
+    .filter((item): item is ShortlistItem => item !== null);
+});
 
 export function parseShortlist(raw: unknown): ShortlistItem[] {
-  if (!Array.isArray(raw)) {
-    return [];
+  const parsed = shortlistSchema.safeParse(raw);
+  if (parsed.success) {
+    return parsed.data;
   }
-
-  return raw
-    .filter(isLegacyShortlistItem)
-    .map((item) => ({
-      addressKey: item.addressKey,
-      notes: typeof item.notes === "string" ? item.notes : "",
-      targetPrice: typeof item.targetPrice === "number" ? item.targetPrice : null,
-      addedAt:
-        typeof item.addedAt === "string" && item.addedAt.length > 0
-          ? item.addedAt
-          : new Date(0).toISOString(),
-    }));
+  return [];
 }
 
 function bytesToBase64(bytes: Uint8Array) {
