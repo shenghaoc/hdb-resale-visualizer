@@ -88,9 +88,17 @@ Optional environment variables:
 DATA_GOV_API_KEY=...
 ONEMAP_SEARCH_ENDPOINT=https://www.onemap.gov.sg/api/common/elastic/search
 GEOCODE_CONCURRENCY=10
+# Optional cloud sync (frontend-safe values only)
+VITE_BACKEND_URL=https://<your-backend-domain>
 ```
 
 `DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
+
+### Cloud sync
+
+- `VITE_*` environment variables are bundled into frontend JavaScript. Treat them as public.
+- `VITE_BACKEND_URL` enables optional Saved-flat sync through the Cloudflare Worker in `backend/`.
+- Keep backend secrets such as `JWT_SECRET` only in the Worker runtime.
 
 ## Deployment
 
@@ -103,3 +111,7 @@ GEOCODE_CONCURRENCY=10
 - This is not a prediction product.
 - Coordinates are resolved during artifact generation, never in the browser.
 - OneMap attribution must remain visible when the map is rendered.
+
+## Backend location
+
+There is now an explicit backend scaffold under `backend/` so frontend and backend code can coexist in this Kiro project. See `backend/README.md` and `backend/src/index.ts`.
