@@ -12,6 +12,15 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1500,
+    modulePreload: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-maplibre": ["maplibre-gl"],
+          "vendor-echarts": ["echarts"],
+        },
+      },
+    },
   },
   server: {
     port: 5173,
