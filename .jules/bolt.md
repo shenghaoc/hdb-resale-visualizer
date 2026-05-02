@@ -31,3 +31,7 @@
 ## 2024-05-02 - Added `useI18n` Hook Tests
 **Learning:** Testing a React hook requires using `@testing-library/react` and its `renderHook` method. To test a hook that relies on a Context Provider, you can pass a custom `wrapper` option to `renderHook` that renders the Provider around the hook. To catch expected errors and prevent them from cluttering the test output, `vi.spyOn(console, "error").mockImplementation(() => {})` can be used.
 **Action:** When testing hooks that consume contexts in the future, apply the `renderHook` with `wrapper` pattern.
+
+## 2025-05-02 - Testing `format.ts` and Intl format caching
+**Learning:** Pure formatting functions that make use of `Intl` APIs can be straightforward to test, but handling localized output correctly while checking for expected properties like inclusion of standard numbers or symbols avoids brittle tests that break across Node environments. The caching eviction of our custom objects was also tricky but easily triggered via varying simple arguments in a loop.
+**Action:** When testing UI/format utility functions, prefer string containment or regex checks rather than exact equality matching, particularly for formatted localized text or strings that may change representations based on engine versions. Always use dependency injection/mocking to deterministically control system parameters like date or `getCurrentYear` in tests.
