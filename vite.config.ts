@@ -12,7 +12,10 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1500,
-    modulePreload: false,
+    modulePreload: {
+      resolveDependencies: (_filename, deps) =>
+        deps.filter((dep) => !/vendor-(?:maplibre|echarts)|MapView|TrendChart/.test(dep)),
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {
