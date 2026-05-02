@@ -12,12 +12,6 @@ const shortlistItemSchema = z.object({
 const shortlistSchema = z.array(z.unknown()).transform((arr) => {
   return arr
     .map((item) => {
-      if (typeof item !== "object" || item === null) return null;
-
-      // We can use a record type cast to safely check properties
-      const record = item as Record<string, unknown>;
-      if (typeof record.addressKey !== "string") return null;
-
       const parsed = shortlistItemSchema.safeParse(item);
       return parsed.success ? parsed.data : null;
     })
