@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
+import maplibregl, { ExpressionSpecification, LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
@@ -329,8 +329,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as any,
+          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as ExpressionSpecification,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
