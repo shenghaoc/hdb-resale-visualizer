@@ -303,6 +303,9 @@ async function normalizeSchoolRows(
   options: { skipGeocoding: boolean },
 ) {
   const schools: SchoolLocation[] = [];
+  let primaryCount = 0;
+  let skippedNoCoords = 0;
+  let geocodedCount = 0;
 
   for (const row of rows) {
     const parsed = schoolRowSchema.safeParse(row);
@@ -319,6 +322,8 @@ async function normalizeSchoolRows(
     if (mainLevelCode !== "PRIMARY") {
       continue;
     }
+
+    primaryCount += 1;
 
     const lat = parsed.data.latitude ? Number(parsed.data.latitude) : null;
     const lng = parsed.data.longitude ? Number(parsed.data.longitude) : null;
@@ -340,6 +345,7 @@ async function normalizeSchoolRows(
     }
 
     if (options.skipGeocoding) {
+      skippedNoCoords += 1;
       continue;
     }
 
@@ -352,10 +358,13 @@ async function normalizeSchoolRows(
     try {
       const geocode = await geocodeAddress(searchValue);
       if (!geocode) {
+        console.warn(`School geocode returned no result for ${schoolName} (search: ${searchValue})`);
+        skippedNoCoords += 1;
         continue;
       }
 
       geocodeCache.entries[cacheKey] = geocode;
+      geocodedCount += 1;
       schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng, mainLevelCode });
       await sleep(300);
     } catch (error) {
@@ -364,10 +373,19 @@ async function normalizeSchoolRows(
           error instanceof Error ? error.message : "unknown error"
         }`,
       );
+      skippedNoCoords += 1;
     }
   }
 
-  return schools;
+  if (skippedNoCoords > 0) {
+    console.warn(
+      `⚠ ${skippedNoCoords}/${primaryCount} primary schools skipped (no coordinates and ${
+        options.skipGeocoding ? "geocoding disabled" : "geocoding failed"
+      }). Run without --skip-geocoding to resolve.`,
+    );
+  }
+
+  return { schools, geocodedCount };
 }
 
 function normalizeAmenityGeoJson(geoJson: RawGeoJson): Array<{ name: string; lat: number; lng: number }> {
@@ -457,7 +475,14 @@ async function main() {
       console.log("Fetching amenity data...");
       const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
       await sleep(2600);
-      schools = await normalizeSchoolRows(schoolRows, geocodeCache, { skipGeocoding });
+      const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, { skipGeocoding });
+      schools = schoolResult.schools;
+
+      // Flush geocode cache only if new school geocodes were added
+      if (schoolResult.geocodedCount > 0) {
+        geocodeCache.updatedAt = new Date().toISOString();
+        await saveGeocodeCache(geocodeCache);
+      }
 
       const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
       await sleep(2600);
