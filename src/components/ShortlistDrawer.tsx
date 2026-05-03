@@ -1,4 +1,4 @@
-import { useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import { useTheme } from "@/hooks/useTheme";
+import { useIMEComposition } from "@/hooks/useIMEComposition";
 import {
   formatCompactCurrency,
   formatCurrency,
@@ -212,6 +213,114 @@ function AmenityTile({
       </div>
       {note ? <div className="mt-1 line-clamp-1 text-[0.62rem] italic text-muted-foreground">{note}</div> : null}
     </div>
+  );
+}
+
+function ShortlistRowEditor({
+  addressKey,
+  notes,
+  targetPrice,
+  gapInfo,
+  onUpdate,
+}: {
+  addressKey: string;
+  notes: string;
+  targetPrice: number | null;
+  gapInfo: GapInfo | null;
+  onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
+}) {
+  const { locale, t } = useI18n();
+
+  const handleNotesChange = useCallback(
+    (value: string) => onUpdate(addressKey, { notes: value }),
+    [addressKey, onUpdate],
+  );
+
+  const handleTargetPriceChange = useCallback(
+    (value: string) =>
+      onUpdate(addressKey, { targetPrice: value === "" ? null : Number(value) }),
+    [addressKey, onUpdate],
+  );
+
+  const notesIME = useIMEComposition(handleNotesChange);
+  const targetPriceIME = useIMEComposition(handleTargetPriceChange);
+
+  return (
+    <>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field>
+          <FieldContent>
+            <FieldLabel
+              htmlFor={`target-${addressKey}`}
+              className="v2-section-title"
+            >
+              {t("shortlist.yourTargetPrice")}
+            </FieldLabel>
+            <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
+              <InputGroupAddon align="inline-start" className="px-2.5">
+                <InputGroupText className="text-[0.65rem] font-extrabold">
+                  {t("shortlist.currencyCode")}
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
+                id={`target-${addressKey}`}
+                inputMode="numeric"
+                placeholder={t("shortlist.targetPricePlaceholder")}
+                type="number"
+                value={targetPrice ?? ""}
+                className="text-sm font-bold"
+                onCompositionStart={targetPriceIME.onCompositionStart}
+                onCompositionEnd={targetPriceIME.onCompositionEnd}
+                onChange={targetPriceIME.onChange}
+              />
+            </InputGroup>
+          </FieldContent>
+        </Field>
+
+        <div className="flex flex-col gap-1.5">
+          <span className="v2-section-title">{t("shortlist.gapVsTarget")}</span>
+          {gapInfo ? (
+            <>
+              <strong
+                className={cn(
+                  "text-sm font-extrabold tracking-tight",
+                  gapInfo.tone === "positive" ? "text-success" : "text-destructive",
+                )}
+              >
+                {formatCurrency(gapInfo.amount, locale)}
+              </strong>
+              <span className="text-[0.65rem] font-medium text-muted-foreground">
+                {t(gapInfo.labelKey)}
+              </span>
+            </>
+          ) : (
+            <span className="text-[0.65rem] font-medium text-muted-foreground">
+              {t("shortlist.enterTargetToCompare")}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <Field>
+        <FieldContent>
+          <FieldLabel
+            htmlFor={`notes-${addressKey}`}
+            className="v2-section-title"
+          >
+            {t("shortlist.notes")}
+          </FieldLabel>
+          <Textarea
+            id={`notes-${addressKey}`}
+            value={notes}
+            placeholder={t("shortlist.notesPlaceholder")}
+            className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
+            onCompositionStart={notesIME.onCompositionStart}
+            onCompositionEnd={notesIME.onCompositionEnd}
+            onChange={notesIME.onChange}
+          />
+        </FieldContent>
+      </Field>
+    </>
   );
 }
 
@@ -891,82 +1000,13 @@ export function ShortlistDrawer({
                                 </div>
                               </div>
 
-                              <div className="grid gap-3 sm:grid-cols-2">
-                                <Field>
-                                  <FieldContent>
-                                    <FieldLabel
-                                      htmlFor={`target-${row.item.addressKey}`}
-                                      className="v2-section-title"
-                                    >
-                                      {t("shortlist.yourTargetPrice")}
-                                    </FieldLabel>
-                                    <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
-                                      <InputGroupAddon align="inline-start" className="px-2.5">
-                                        <InputGroupText className="text-[0.65rem] font-extrabold">
-                                          {t("shortlist.currencyCode")}
-                                        </InputGroupText>
-                                      </InputGroupAddon>
-                                      <InputGroupInput
-                                        id={`target-${row.item.addressKey}`}
-                                        inputMode="numeric"
-                                        placeholder={t("shortlist.targetPricePlaceholder")}
-                                        type="number"
-                                        value={row.item.targetPrice ?? ""}
-                                        className="text-sm font-bold"
-                                        onChange={(event) =>
-                                          onUpdate(row.item.addressKey, {
-                                            targetPrice:
-                                              event.target.value === "" ? null : Number(event.target.value),
-                                          })
-                                        }
-                                      />
-                                    </InputGroup>
-                                  </FieldContent>
-                                </Field>
-
-                                <div className="flex flex-col gap-1.5">
-                                  <span className="v2-section-title">{t("shortlist.gapVsTarget")}</span>
-                                  {gapInfo ? (
-                                    <>
-                                      <strong
-                                        className={cn(
-                                          "text-sm font-extrabold tracking-tight",
-                                          gapInfo.tone === "positive" ? "text-success" : "text-destructive",
-                                        )}
-                                      >
-                                        {formatCurrency(gapInfo.amount, locale)}
-                                      </strong>
-                                      <span className="text-[0.65rem] font-medium text-muted-foreground">
-                                        {t(gapInfo.labelKey)}
-                                      </span>
-                                    </>
-                                  ) : (
-                                    <span className="text-[0.65rem] font-medium text-muted-foreground">
-                                      {t("shortlist.enterTargetToCompare")}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-
-                              <Field>
-                                <FieldContent>
-                                  <FieldLabel
-                                    htmlFor={`notes-${row.item.addressKey}`}
-                                    className="v2-section-title"
-                                  >
-                                    {t("shortlist.notes")}
-                                  </FieldLabel>
-                                  <Textarea
-                                    id={`notes-${row.item.addressKey}`}
-                                    value={row.item.notes}
-                                    placeholder={t("shortlist.notesPlaceholder")}
-                                    className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
-                                    onChange={(event) =>
-                                      onUpdate(row.item.addressKey, { notes: event.target.value })
-                                    }
-                                  />
-                                </FieldContent>
-                              </Field>
+                              <ShortlistRowEditor
+                                addressKey={row.item.addressKey}
+                                notes={row.item.notes}
+                                targetPrice={row.item.targetPrice}
+                                gapInfo={gapInfo}
+                                onUpdate={onUpdate}
+                              />
 
                               <div className="grid grid-cols-2 gap-2">
                                 <Button
