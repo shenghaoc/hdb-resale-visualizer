@@ -1,4 +1,3 @@
-import path from "node:path";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
@@ -6,9 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
+    // Vite 8: use tsconfig paths instead of manual alias duplication
+    tsconfigPaths: true,
   },
   build: {
     chunkSizeWarningLimit: 1500,
@@ -16,7 +14,8 @@ export default defineConfig({
       resolveDependencies: (_filename, deps) =>
         deps.filter((dep) => !/vendor-(?:maplibre|echarts)|(?:^|\/)(?:MapView|TrendChart)(?:-|\.)/.test(dep)),
     },
-    rollupOptions: {
+    // Vite 8: rolldownOptions replaces the deprecated rollupOptions
+    rolldownOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("/node_modules/maplibre-gl/")) return "vendor-maplibre";
