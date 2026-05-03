@@ -182,3 +182,40 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(shortlistDrawer).toContainText("Location ranks");
   await expect(shortlistDrawer).toContainText("MRT: 80th • Lease: 45th");
 });
+
+test("shortlist items from prior sessions are visible without adding a new one", async ({ page }) => {
+  const shortlistKey = "hdb_resale_shortlist_v1";
+  const shortlistData = [
+    {
+      addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
+      notes: "Prior session note",
+      targetPrice: 500000,
+      addedAt: new Date().toISOString(),
+    },
+  ];
+
+  await page.goto("/");
+
+  // Set localStorage and reload to simulate a returning user
+  await page.evaluate(
+    ({ key, data }) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    },
+    { key: shortlistKey, data: shortlistData },
+  );
+
+  await page.reload();
+
+  await expect(page.getByTestId("global-header")).toBeVisible({ timeout: 15_000 });
+
+  // Click on "Saved" tab
+  const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
+  await savedTab.click();
+
+  // Expect the shortlisted item to be visible
+  await expect(page.getByTestId("shortlist-drawer")).toContainText("104A ANG MO KIO ST 11", {
+    timeout: 10_000,
+  });
+  await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
+});
+
