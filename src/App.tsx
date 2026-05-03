@@ -207,6 +207,7 @@ function App() {
     const townFilter = filters.town;
     const hasGeographic = Boolean(debouncedSearch.trim() || userLocation);
     const totalBlocks = manifest.counts.blocks;
+    const needsAllBlocks = hasGeographic || (savedVisible && shortlist.items.length > 0);
 
     // When a deep link opens with ?selected=... but no town/geo filter, detect
     // which town the address belongs to so the block summary can be resolved.
@@ -222,7 +223,7 @@ function App() {
       try {
         const hasAllBlocks = blocks.length >= totalBlocks;
 
-        if (hasGeographic) {
+        if (needsAllBlocks) {
           if (hasAllBlocks) {
             return;
           }
@@ -268,8 +269,10 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks,
+    blocks.length,
     sortedTowns,
+    savedVisible,
+    shortlist.items.length,
   ]);
 
   useEffect(() => {
