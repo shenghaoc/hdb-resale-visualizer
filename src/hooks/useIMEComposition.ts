@@ -1,4 +1,4 @@
-import { type ChangeEvent, type CompositionEvent, useCallback, useRef } from "react";
+import { type ChangeEvent, type CompositionEvent, useCallback, useEffect, useRef } from "react";
 
 /**
  * Tracks the browser's IME composition lifecycle and returns event handlers
@@ -21,8 +21,11 @@ import { type ChangeEvent, type CompositionEvent, useCallback, useRef } from "re
 export function useIMEComposition(callback: (value: string) => void) {
   // "Latest ref" pattern — always holds the current callback without
   // being a dependency of any handler, keeping all handlers stable.
+  // Updated in useEffect to satisfy react-hooks/refs (no ref writes during render).
   const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  useEffect(() => {
+    callbackRef.current = callback;
+  });
 
   const composingRef = useRef<boolean>(false);
 
