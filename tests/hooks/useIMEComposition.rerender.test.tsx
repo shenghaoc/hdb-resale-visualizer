@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import { useIMEComposition } from "../../src/hooks/useIMEComposition";
-import React from "react";
 
 function ControlledSearchInput({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const searchIME = useIMEComposition(onChange);
