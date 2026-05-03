@@ -158,7 +158,7 @@ describe("useIMEComposition — stable handler references (useCallback)", () => 
     expect(result.current.onChange).toBe(firstOnChange);
   });
 
-  it("updates onCompositionEnd and onChange when callback reference changes", () => {
+  it("keeps all handler references stable even when callback reference changes", () => {
     const callback1 = vi.fn();
     const callback2 = vi.fn();
 
@@ -171,17 +171,15 @@ describe("useIMEComposition — stable handler references (useCallback)", () => 
     const firstOnCompositionEnd = result.current.onCompositionEnd;
     const firstOnChange = result.current.onChange;
 
-    // Re-render with a different callback
+    // Re-render with a different callback — handlers must remain stable
+    // because the hook uses the "latest ref" pattern (callbackRef)
     rerender({ cb: callback2 });
 
-    // onCompositionStart has no deps on callback, so it stays stable
     expect(result.current.onCompositionStart).toBe(firstOnCompositionStart);
+    expect(result.current.onCompositionEnd).toBe(firstOnCompositionEnd);
+    expect(result.current.onChange).toBe(firstOnChange);
 
-    // onCompositionEnd and onChange depend on callback, so they should update
-    expect(result.current.onCompositionEnd).not.toBe(firstOnCompositionEnd);
-    expect(result.current.onChange).not.toBe(firstOnChange);
-
-    // Verify the new handlers use the new callback
+    // Verify the handlers now invoke the new callback
     act(() => result.current.onChange(makeChangeEvent("test")));
     expect(callback2).toHaveBeenCalledWith("test");
     expect(callback1).not.toHaveBeenCalled();

@@ -7,11 +7,23 @@ import { type ChangeEvent, type CompositionEvent, useCallback, useRef } from "re
  *
  * Non-IME keyboard input passes through `onChange` unchanged.
  *
+ * Uses the "latest ref" pattern so all returned handlers have an empty
+ * dependency array and remain stable for the lifetime of the component,
+ * regardless of whether the caller passes a stable or unstable callback.
+ *
  * Cross-browser note: Chrome fires `compositionend` before the final
- * `onChange`; Safari/Firefox fire it after. Using `currentTarget.value`
- * in `onCompositionEnd` ensures the committed value is captured in both cases.
+ * `onChange`; Safari/Firefox fire it after. The `composingRef` approach
+ * handles both: Chrome's trailing `onChange` is suppressed because
+ * `composingRef` is still `true` at that point (set to `false` only after
+ * the `onChange` guard runs), and Safari/Firefox's `onChange` is suppressed
+ * during composition then flushed via `onCompositionEnd`.
  */
 export function useIMEComposition(callback: (value: string) => void) {
+  // "Latest ref" pattern — always holds the current callback without
+  // being a dependency of any handler, keeping all handlers stable.
+  const callbackRef = useRef(callback);
+  callbackRef.current = callback;
+
   const composingRef = useRef<boolean>(false);
 
   const onCompositionStart = useCallback(() => {
@@ -21,18 +33,18 @@ export function useIMEComposition(callback: (value: string) => void) {
   const onCompositionEnd = useCallback(
     (e: CompositionEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       composingRef.current = false;
-      callback(e.currentTarget.value);
+      callbackRef.current(e.currentTarget.value);
     },
-    [callback],
+    [],
   );
 
   const onChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (!composingRef.current) {
-        callback(e.target.value);
+        callbackRef.current(e.currentTarget.value);
       }
     },
-    [callback],
+    [],
   );
 
   return { onCompositionStart, onCompositionEnd, onChange };

@@ -237,8 +237,10 @@ function ShortlistRowEditor({
   );
 
   const handleTargetPriceChange = useCallback(
-    (value: string) =>
-      onUpdate(addressKey, { targetPrice: value === "" ? null : Number(value) }),
+    (value: string) => {
+      const parsed = value === "" ? null : Number(value);
+      onUpdate(addressKey, { targetPrice: Number.isFinite(parsed) ? parsed : null });
+    },
     [addressKey, onUpdate],
   );
 
