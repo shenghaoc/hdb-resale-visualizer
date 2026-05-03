@@ -8,8 +8,8 @@ function parseJson<T>(content: string): T {
 }
 
 describe("Data Artifact Schema Preservation", () => {
-  const manifestPath = join(process.cwd(), "public/data/manifest.json");
-  const blockSummariesPath = join(process.cwd(), "public/data/block-summaries.json");
+  const manifestPath = join(process.cwd(), "tests/fixtures/public-data/manifest.json");
+  const blockSummariesPath = join(process.cwd(), "tests/fixtures/public-data/block-summaries.json");
 
   it("keeps manifest.json present and parseable", () => {
     expect(existsSync(manifestPath)).toBe(true);
@@ -112,7 +112,7 @@ describe("Data Artifact Schema Preservation", () => {
     const firstBlock = blockSummaries[0];
     const detailPath = join(
       process.cwd(),
-      "public/data/details",
+      "tests/fixtures/public-data/details",
       `${firstBlock.addressKey}.json`,
     );
     const detail = parseJson<AddressDetail>(readFileSync(detailPath, "utf-8"));
@@ -124,10 +124,10 @@ describe("Data Artifact Schema Preservation", () => {
   });
 
   it("keeps details and trend artifact directories present", () => {
-    expect(existsSync(join(process.cwd(), "public/data/details"))).toBe(true);
-    expect(existsSync(join(process.cwd(), "public/data/trends"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "tests/fixtures/public-data/details"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "tests/fixtures/public-data/trends"))).toBe(true);
     expect(
-      existsSync(join(process.cwd(), "public/data/trends/town-flat-type.json")),
+      existsSync(join(process.cwd(), "tests/fixtures/public-data/trends/town-flat-type.json")),
     ).toBe(true);
   });
 });

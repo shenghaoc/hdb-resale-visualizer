@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [103.9299, 1.3240] },
+      "properties": { "OBJECTID": 1, "STATION_NA": "BEDOK MRT STATION", "EXIT_CODE": "Exit A", "INC_CRC": "ABC123", "FMEL_UPD_D": "20251202172807" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [103.8388, 1.3718] },
+      "properties": { "OBJECTID": 2, "STATION_NA": "MAYFLOWER MRT STATION", "EXIT_CODE": "Exit A", "INC_CRC": "DEF456", "FMEL_UPD_D": "20251202172807" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [103.9099, 1.3245] },
+      "properties": { "OBJECTID": 3, "STATION_NA": "KEMBANGAN MRT STATION", "EXIT_CODE": "Exit A", "INC_CRC": "GHI789", "FMEL_UPD_D": "20251202172807" }
+    }
+  ]
+}
