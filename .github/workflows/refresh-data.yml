@@ -26,23 +26,20 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Restore geocode cache
+      - name: Restore pipeline cache
         uses: actions/cache/restore@v5
         with:
           path: |
             data/cache
             public/data/manifest.json
-          key: geocode-cache-${{ github.run_id }}
-          restore-keys: geocode-cache-
+          key: pipeline-cache-${{ github.run_id }}
+          restore-keys: pipeline-cache-
 
-      - name: Hash manifest before sync
+      - name: Record upstream timestamp before sync
         id: pre-sync
         run: |
-          if [ -f public/data/manifest.json ]; then
-            echo "hash=$(sha256sum public/data/manifest.json | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
-          else
-            echo "hash=" >> "$GITHUB_OUTPUT"
-          fi
+          prev=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+          echo "upstream_at=$prev" >> "$GITHUB_OUTPUT"
 
       - name: Sync official datasets
         env:
@@ -51,23 +48,19 @@ jobs:
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
 
-      - name: Save geocode cache
+      - name: Save pipeline cache
         uses: actions/cache/save@v5
         with:
           path: |
             data/cache
             public/data/manifest.json
-          key: geocode-cache-${{ github.run_id }}
+          key: pipeline-cache-${{ github.run_id }}
 
       - id: diff
         name: Detect data changes
         run: |
-          if [ -f public/data/manifest.json ]; then
-            new_hash=$(sha256sum public/data/manifest.json | cut -d' ' -f1)
-          else
-            new_hash=""
-          fi
-          if [ "$new_hash" != "${{ steps.pre-sync.outputs.hash }}" ]; then
+          new_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+          if [ "$new_at" != "${{ steps.pre-sync.outputs.upstream_at }}" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
