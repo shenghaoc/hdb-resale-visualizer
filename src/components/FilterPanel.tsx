@@ -1,5 +1,6 @@
-import { useId } from "react";
+import { useCallback, useId } from "react";
 import { formatMonth } from "@/lib/format";
+import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { FilterOptions, FilterState } from "@/types/data";
@@ -103,6 +104,13 @@ function SelectField({
 export function FilterPanel(props: FilterPanelProps) {
   const { filters, options, minMonth, maxMonth, onChange, onReset } = props;
   const { locale, t } = useI18n();
+  
+  const handleSearchChange = useCallback(
+    (value: string) => onChange({ search: value }),
+    [onChange],
+  );
+  
+  const searchIME = useIMEComposition(handleSearchChange);
 
   return (
     <aside data-testid="filters-panel">
@@ -136,8 +144,10 @@ export function FilterPanel(props: FilterPanelProps) {
                     <InputGroupInput
                       id="search"
                       placeholder={t("filters.searchPlaceholder")}
-                      value={filters.search}
-                      onChange={(event) => onChange({ search: event.target.value })}
+                      value={searchIME.localValue ?? filters.search}
+                      onCompositionStart={searchIME.onCompositionStart}
+                      onCompositionEnd={searchIME.onCompositionEnd}
+                      onChange={searchIME.onChange}
                     />
                     <InputGroupAddon align="inline-end">
                       <InputGroupText className="text-[0.65rem] font-extrabold uppercase tracking-[0.1em]">

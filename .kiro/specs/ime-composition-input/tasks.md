@@ -1,0 +1,119 @@
+# Implementation Plan
+
+- [x] 1. Write bug condition exploration test
+  - **Property 1: Bug Condition** - IME Composition Fires State Updates During Active Composition
+  - **CRITICAL**: This test MUST FAIL on unfixed code - failure confirms the bug exists
+  - **DO NOT attempt to fix the test or the code when it fails**
+  - **NOTE**: This test encodes the expected behavior - it will validate the fix when it passes after implementation
+  - **GOAL**: Surface counterexamples that demonstrate onChange handlers fire state-update callbacks during active IME composition
+  - **Scoped PBT Approach**: Scope the property to concrete IME composition sequences — simulate `compositionstart` → intermediate `onChange` events → `compositionend` on each affected input
+  - Test file: `tests/hooks/useIMEComposition.exploration.test.ts`
+  - Test setup:
+    - Create a minimal test component that renders an `<input>` with a bare `onChange` handler (mirroring current FilterPanel behavior)
+    - Use `@testing-library/react` to render and `fireEvent` to simulate composition lifecycle
+  - Test cases:
+    - Simulate `compositionstart` on input, then fire `onChange` with intermediate value "d" — assert callback is NOT called (from Bug Condition: `event.type = "change" AND compositionActive = true`)
+    - Simulate full Pinyin sequence: `compositionstart` → onChange("d") → onChange("da") → onChange("dab") → `compositionend` with "大巴窑" — assert callback called exactly once with "大巴窑"
+    - Simulate composition on textarea (notes) — assert `onUpdate` is NOT called during composition
+    - Simulate composition on number input (target price) — assert `onUpdate` is NOT called during composition
+  - Run test on UNFIXED code
+  - **EXPECTED OUTCOME**: Test FAILS (callbacks fire on every intermediate keystroke, proving the bug exists)
+  - Document counterexamples found (e.g., "callback invoked 7 times during composition instead of 0")
+  - Mark task complete when test is written, run, and failure is documented
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3_
+
+- [x] 2. Write preservation property tests (BEFORE implementing fix)
+  - **Property 2: Preservation** - Non-IME Input Passes Through Unchanged
+  - **IMPORTANT**: Follow observation-first methodology
+  - Test file: `tests/hooks/useIMEComposition.preservation.test.ts`
+  - Observe behavior on UNFIXED code for non-composing inputs:
+    - Observe: typing "toa payoh" character-by-character fires callback 9 times with each progressive value
+    - Observe: pasting "Bedok" fires callback once with "Bedok"
+    - Observe: clearing input (empty string) fires callback once with ""
+    - Observe: typing "500000" in target price fires callback on each digit
+  - Write property-based tests using `fast-check`:
+    - **Property**: For all arbitrary string values, when `onChange` fires with NO active composition, the callback is invoked exactly once with the exact `event.target.value` (no transformation, no suppression)
+    - Generate random strings via `fc.string()` and `fc.unicodeString()` — simulate non-composing `onChange` — assert callback called with identical value
+    - Generate random sequences of non-composing onChange events — assert callback call count equals event count
+    - Generate random numeric strings — simulate non-composing onChange on number input — assert callback receives exact string value
+  - Verify tests PASS on UNFIXED code (confirms baseline behavior to preserve)
+  - Mark task complete when tests are written, run, and passing on unfixed code
+  - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+
+- [x] 3. Implement IME composition fix
+
+  - [x] 3.1 Create `useIMEComposition` hook
+    - Create new file: `src/hooks/useIMEComposition.ts`
+    - Implement hook that accepts a `callback: (value: string) => void` parameter
+    - Maintain `composingRef` via `useRef<boolean>(false)` to track active composition state
+    - Return `{ onCompositionStart, onCompositionEnd, onChange }` handlers:
+      - `onCompositionStart`: Sets `composingRef.current = true`
+      - `onCompositionEnd`: Sets `composingRef.current = false`, invokes `callback(e.currentTarget.value)` — uses `currentTarget` for cross-browser safety (Chrome fires compositionend before final onChange; Safari/Firefox fire it after)
+      - `onChange`: If `composingRef.current` is `true`, suppress callback. If `false`, invoke `callback(e.target.value)` (pass-through)
+    - Wrap handlers in `useCallback` with appropriate dependency arrays
+    - Export hook as named export
+    - _Bug_Condition: isBugCondition(event) where event.type = "change" AND compositionActive = true_
+    - _Expected_Behavior: During composition, callback not invoked. On compositionend, callback invoked once with committed value._
+    - _Preservation: Non-composing onChange events pass through to callback immediately and identically_
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3_
+
+  - [x] 3.2 Wire hook into FilterPanel search input
+    - In `src/components/FilterPanel.tsx`, import `useIMEComposition` from `src/hooks/useIMEComposition`
+    - Call hook: `const imeHandlers = useIMEComposition((value) => onChange({ search: value }))`
+    - Replace bare `onChange={(event) => onChange({ search: event.target.value })}` on `InputGroupInput` with spread of hook handlers: `onCompositionStart={imeHandlers.onCompositionStart} onCompositionEnd={imeHandlers.onCompositionEnd} onChange={imeHandlers.onChange}`
+    - Verify `InputGroupInput` passes `onCompositionStart` and `onCompositionEnd` through to native `<input>` via `...props`
+    - _Bug_Condition: Search input onChange fires during IME composition_
+    - _Expected_Behavior: filters.search only updates on compositionend with committed value_
+    - _Preservation: Direct keyboard input continues to update filters.search on every keystroke_
+    - _Requirements: 2.1, 3.1, 3.4_
+
+  - [x] 3.3 Wire hook into ShortlistDrawer notes and target price inputs
+    - In `src/components/ShortlistDrawer.tsx`, the notes `Textarea` and target price `InputGroupInput` are rendered inside a loop over shortlist rows
+    - Extract a sub-component (e.g., `ShortlistRowEditor`) that receives `addressKey`, `notes`, `targetPrice`, and `onUpdate` as props — this ensures hooks can be called at the top level of the sub-component (rules-of-hooks compliance)
+    - In the sub-component:
+      - Call `useIMEComposition((value) => onUpdate(addressKey, { notes: value }))` for notes
+      - Call `useIMEComposition((value) => onUpdate(addressKey, { targetPrice: value === "" ? null : Number(value) }))` for target price
+      - Wire returned handlers onto `Textarea` and `InputGroupInput` respectively
+    - Verify `Textarea` component passes `onCompositionStart` and `onCompositionEnd` through to native `<textarea>` via `...props`
+    - _Bug_Condition: Notes/price onChange fires during IME composition_
+    - _Expected_Behavior: onUpdate only called on compositionend with committed value_
+    - _Preservation: Direct keyboard input continues to call onUpdate on every keystroke_
+    - _Requirements: 2.2, 2.3, 3.2, 3.3_
+
+  - [x] 3.4 Verify bug condition exploration test now passes
+    - **Property 1: Expected Behavior** - IME Composition Suppresses Intermediate Updates and Flushes on Commit
+    - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
+    - The test from task 1 encodes the expected behavior (callback not invoked during composition, invoked once on compositionend)
+    - When this test passes, it confirms the expected behavior is satisfied
+    - Run: `bun run test tests/hooks/useIMEComposition.exploration.test.ts`
+    - **EXPECTED OUTCOME**: Test PASSES (confirms bug is fixed)
+    - _Requirements: 2.1, 2.2, 2.3, 2.4_
+
+  - [x] 3.5 Verify preservation tests still pass
+    - **Property 2: Preservation** - Non-IME Input Passes Through Unchanged
+    - **IMPORTANT**: Re-run the SAME tests from task 2 - do NOT write new tests
+    - Run: `bun run test tests/hooks/useIMEComposition.preservation.test.ts`
+    - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions for non-IME input)
+    - Confirm all property-based tests still pass after fix (no regressions)
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+
+- [x] 4. Write unit tests for hook and integration tests
+  - Test file: `tests/hooks/useIMEComposition.test.ts`
+  - Unit tests for `useIMEComposition` hook in isolation:
+    - Multiple composition sessions in sequence each flush correctly
+    - Compositionend with empty string (user cancelled composition) invokes callback with ""
+    - Rapid composition start/end (single character commit) works correctly
+    - Hook returns stable handler references across re-renders (useCallback)
+  - Integration test file: `tests/components/FilterPanel.ime.test.tsx`
+    - Render FilterPanel with mock props, simulate full IME composition on search input, verify `onChange` prop not called during composition, called once on commit
+  - Integration test file: `tests/components/ShortlistDrawer.ime.test.tsx`
+    - Render ShortlistDrawer row editor, simulate IME composition on notes textarea, verify `onUpdate` not called during composition
+    - Render ShortlistDrawer row editor, simulate IME composition on target price input, verify `onUpdate` not called during composition
+  - Run all tests: `bun run test`
+  - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3_
+
+- [x] 5. Checkpoint - Ensure all tests pass
+  - Run full test suite: `bun run test`
+  - Run typecheck: `bun run typecheck`
+  - Run lint: `bun run lint`
+  - Ensure all tests pass, ask the user if questions arise.
