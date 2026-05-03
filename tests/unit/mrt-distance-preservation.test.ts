@@ -9,7 +9,7 @@ function parseJson<T>(content: string): T {
 }
 
 describe("MRT Distance Calculation Preservation", () => {
-  const blockSummariesPath = join(process.cwd(), "public/data/block-summaries.json");
+  const blockSummariesPath = join(process.cwd(), "tests/fixtures/public-data/block-summaries.json");
 
   it("keeps haversine accurate for known distances", () => {
     const point1 = { lat: 1.3521, lng: 103.8198 };

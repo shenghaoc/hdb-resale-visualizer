@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   reporter: [['html', { open: 'never' }]],
+  globalSetup: "./tests/e2e/global-setup.ts",
   testDir: "./tests/e2e",
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,

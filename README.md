@@ -71,14 +71,14 @@ bun run sync-data
 2. Downloads the CSV and GEOJSON source files through the official dataset download API.
 3. Validates raw rows with `zod`.
 4. Normalizes addresses, prices, lease values, and monthly aggregates.
-5. Resolves block coordinates through OneMap and caches them in [data/cache/geocodes.json](data/cache/geocodes.json).
+5. Resolves block coordinates through OneMap and caches them in `data/cache/geocodes.json` (preserved across CI runs via GitHub Actions cache; not tracked by git).
 6. Computes nearest MRT distance from LTA station exit points.
 7. Emits:
-   - [public/data/manifest.json](public/data/manifest.json)
-   - [public/data/block-summaries.json](public/data/block-summaries.json)
-   - [public/data/trends/town-flat-type.json](public/data/trends/town-flat-type.json)
-   - [public/data/mrt-exits.geojson](public/data/mrt-exits.geojson)
-   - [public/data/details](public/data/details)
+   - `public/data/manifest.json`
+   - `public/data/block-summaries.json`
+   - `public/data/trends/town-flat-type.json`
+   - `public/data/mrt-exits.geojson`
+   - `public/data/details/`
 
 ## Environment
 
@@ -96,7 +96,7 @@ GEOCODE_CONCURRENCY=10
 
 - `wrangler.toml` is configured for Cloudflare Pages static output.
 - `.github/workflows/ci.yml` runs typecheck, lint, unit/integration tests, e2e smoke, and production build.
-- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, commits changed artifacts, and optionally deploys to Cloudflare Pages when the relevant secrets exist.
+- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, and deploys directly to Cloudflare Pages when the relevant secrets exist. Artifacts are never committed to git.
 
 ## Notes
 
