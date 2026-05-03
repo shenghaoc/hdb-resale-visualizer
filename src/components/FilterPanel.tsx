@@ -144,7 +144,7 @@ export function FilterPanel(props: FilterPanelProps) {
                     <InputGroupInput
                       id="search"
                       placeholder={t("filters.searchPlaceholder")}
-                      value={filters.search}
+                      value={searchIME.localValue ?? filters.search}
                       onCompositionStart={searchIME.onCompositionStart}
                       onCompositionEnd={searchIME.onCompositionEnd}
                       onChange={searchIME.onChange}

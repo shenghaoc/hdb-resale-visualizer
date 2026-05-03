@@ -269,7 +269,7 @@ function ShortlistRowEditor({
                 inputMode="numeric"
                 placeholder={t("shortlist.targetPricePlaceholder")}
                 type="number"
-                value={targetPrice ?? ""}
+                value={targetPriceIME.localValue ?? (targetPrice ?? "")}
                 className="text-sm font-bold"
                 onCompositionStart={targetPriceIME.onCompositionStart}
                 onCompositionEnd={targetPriceIME.onCompositionEnd}
@@ -313,7 +313,7 @@ function ShortlistRowEditor({
           </FieldLabel>
           <Textarea
             id={`notes-${addressKey}`}
-            value={notes}
+            value={notesIME.localValue ?? notes}
             placeholder={t("shortlist.notesPlaceholder")}
             className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
             onCompositionStart={notesIME.onCompositionStart}
