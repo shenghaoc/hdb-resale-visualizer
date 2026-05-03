@@ -26,8 +26,6 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    // Forward browser console output to the terminal (useful for agent-driven debugging)
-    forwardConsole: true,
   },
   preview: {
     port: 4173,
