@@ -144,8 +144,9 @@ Thumbs.db
 # Gemini CLI local files
 .gemini/
 
-# Generated data artifacts — owned by scripts/sync-data.ts, deployed via CI
-# (kept in git as CI fixtures; not updated by the nightly workflow)
+# Generated data artifacts — owned by scripts/sync-data.ts, deployed directly
+# to Cloudflare Pages by CI. Never committed to git.
+# CI test fixtures live in tests/fixtures/public-data/ instead.
 public/data/
 
 # Geocode cache — preserved between CI runs via actions/cache, not git
