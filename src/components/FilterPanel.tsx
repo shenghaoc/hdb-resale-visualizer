@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useCallback, useId } from "react";
 import { formatMonth } from "@/lib/format";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
@@ -104,7 +104,13 @@ function SelectField({
 export function FilterPanel(props: FilterPanelProps) {
   const { filters, options, minMonth, maxMonth, onChange, onReset } = props;
   const { locale, t } = useI18n();
-  const searchIME = useIMEComposition((value) => onChange({ search: value }));
+  
+  const handleSearchChange = useCallback(
+    (value: string) => onChange({ search: value }),
+    [onChange],
+  );
+  
+  const searchIME = useIMEComposition(handleSearchChange);
 
   return (
     <aside data-testid="filters-panel">
