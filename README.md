@@ -74,11 +74,11 @@ bun run sync-data
 5. Resolves block coordinates through OneMap and caches them in `data/cache/geocodes.json` (preserved across CI runs via GitHub Actions cache; not tracked by git).
 6. Computes nearest MRT distance from LTA station exit points.
 7. Emits:
-   - [public/data/manifest.json](public/data/manifest.json)
-   - [public/data/block-summaries.json](public/data/block-summaries.json)
-   - [public/data/trends/town-flat-type.json](public/data/trends/town-flat-type.json)
-   - [public/data/mrt-exits.geojson](public/data/mrt-exits.geojson)
-   - [public/data/details](public/data/details)
+   - `public/data/manifest.json`
+   - `public/data/block-summaries.json`
+   - `public/data/trends/town-flat-type.json`
+   - `public/data/mrt-exits.geojson`
+   - `public/data/details/`
 
 ## Environment
 
