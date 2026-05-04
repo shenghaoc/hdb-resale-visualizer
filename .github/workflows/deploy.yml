@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+  pull_request:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: deploy-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -16,6 +17,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Skip deployment for fork PRs (secrets are not available)
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
 
     steps:
       - uses: actions/checkout@v6
@@ -50,6 +53,12 @@ jobs:
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
 
+      - name: Verify data artifacts
+        run: bun run check:data
+
+      - name: Build
+        run: bun run build:deploy
+
       - name: Save pipeline cache
         uses: actions/cache/save@v4
         with:
@@ -58,14 +67,13 @@ jobs:
             public/data
           key: pipeline-cache-${{ github.run_id }}
 
-      - name: Verify data artifacts
-        run: bun run check:data
-
-      - name: Build
-        run: bun run build:deploy
-
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: bunx wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch=main
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            bunx wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch="${{ github.head_ref }}"
+          else
+            bunx wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch=main
+          fi
