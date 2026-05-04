@@ -1,0 +1,54 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Restore pipeline cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: pipeline-cache-${{ github.sha }}
+          restore-keys: pipeline-cache-
+
+      - name: Sync official datasets
+        env:
+          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+          ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
+          GEOCODE_CONCURRENCY: "10"
+        run: bun run sync-data
+
+      - name: Verify data artifacts
+        run: bun run check:data
+
+      - name: Build
+        run: bun run build:deploy
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bunx wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch=main
