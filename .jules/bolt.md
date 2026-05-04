@@ -47,3 +47,7 @@
 ## 2024-05-18 - Caching String Outputs of Intl Formatters
 **Learning:** Even when `Intl` formatter instances are cached, calling their `.format()` method repeatedly in hot loops (e.g. for large list renders) or performing setup operations (like string splitting or Date instantiations in `formatMonth`) is computationally expensive (~100-150ms per 50,000 items). Since the underlying data (like months, or rounded prices) is highly repetitive, a significant amount of redundant formatting occurs.
 **Action:** In pure formatting functions handling repetitive data, implement an LRU-like Map to cache the actual string output based on the input value and locale. Returning the precomputed string rather than invoking the `.format()` logic reduces execution time by over 10x for repeated values.
+## 2023-10-27 - GeoJSON Object Allocation Spike
+
+**Learning:** When repeatedly mapping over thousands of items (e.g., frontend datasets of HDB blocks) to generate derived structures like GeoJSON features on filter changes, creating new objects on every render allocates megabytes of memory and blocks the main thread, causing GC spikes and UI stutter.
+**Action:** Use a `WeakMap` keyed by the original data reference (e.g. `BlockSummary`) to cache the generated objects (e.g., `GeoJsonFeature`), completely eliminating allocation overhead on subsequent mappings while avoiding memory leaks.
