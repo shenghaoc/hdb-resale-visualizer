@@ -24,14 +24,21 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Restore pipeline cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: data/cache
-          key: pipeline-cache-${{ github.sha }}
+          key: pipeline-cache-${{ github.run_id }}
           restore-keys: pipeline-cache-
 
       - name: Sync official datasets
@@ -40,6 +47,12 @@ jobs:
           ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
+
+      - name: Save pipeline cache
+        uses: actions/cache/save@v4
+        with:
+          path: data/cache
+          key: pipeline-cache-${{ github.run_id }}
 
       - name: Verify data artifacts
         run: bun run check:data
