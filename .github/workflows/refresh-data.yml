@@ -35,7 +35,7 @@ jobs:
         with:
           path: |
             data/cache
-            public/data/manifest.json
+            public/data
           key: pipeline-cache-${{ github.run_id }}
           restore-keys: pipeline-cache-
 
@@ -57,7 +57,7 @@ jobs:
         with:
           path: |
             data/cache
-            public/data/manifest.json
+            public/data
           key: pipeline-cache-${{ github.run_id }}
 
       - id: diff

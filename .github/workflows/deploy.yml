@@ -37,7 +37,9 @@ jobs:
       - name: Restore pipeline cache
         uses: actions/cache/restore@v4
         with:
-          path: data/cache
+          path: |
+            data/cache
+            public/data
           key: pipeline-cache-${{ github.run_id }}
           restore-keys: pipeline-cache-
 
@@ -51,7 +53,9 @@ jobs:
       - name: Save pipeline cache
         uses: actions/cache/save@v4
         with:
-          path: data/cache
+          path: |
+            data/cache
+            public/data
           key: pipeline-cache-${{ github.run_id }}
 
       - name: Verify data artifacts
