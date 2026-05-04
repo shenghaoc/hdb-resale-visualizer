@@ -7,6 +7,8 @@ const REQUIRED_ARTIFACTS = [
   "manifest.json",
   "block-summaries.json",
   "trends/town-flat-type.json",
+  "mrt-exits.geojson",
+  "mrt-stations.geojson",
 ];
 
 async function main() {
@@ -32,4 +34,7 @@ async function main() {
   );
 }
 
-void main();
+void main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

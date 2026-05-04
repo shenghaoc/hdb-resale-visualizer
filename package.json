@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "bun run sync-data && tsc -b && vite build && bun run check:bundle",
-    "build:deploy": "tsc -b && vite build && bun run check:bundle",
+    "build:deploy": "bun run check:data && tsc -b && vite build && bun run check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "check:data": "tsx scripts/check-data-artifacts.ts",
     "preview": "vite preview",
