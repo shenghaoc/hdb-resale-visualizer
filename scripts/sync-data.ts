@@ -33,7 +33,7 @@ const PROPERTY_DATASET_ID = "d_17f5382f26140b1fdae0ba2ef6239d2f";
 const MRT_DATASET_ID = "d_b39d3a0871985372d7e1637193335da5";
 const MOE_SCHOOL_DATASET_ID = "d_688b934f82c1059ed0a6993d2a829089";
 const NEA_HAWKER_DATASET_ID = "d_4a086da0a5553be1d89383cd90d07ecd";
-const SFA_SUPERMARKET_DATASET_ID = "d_cac2c32f01960a3ad7202a99c27268a0";
+const SFA_SUPERMARKET_DATASET_ID = "d_62512798a3af99711fd2c964860535a3";
 const NPARKS_PARKS_DATASET_ID = "d_0542d48f0991541706b58059381a6eca";
 
 type RawGeoJson = {
@@ -193,10 +193,13 @@ async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
     return null;
   }
 
+  const rawPostal = match.POSTAL?.trim();
+  const postalCode = rawPostal && rawPostal !== "NIL" ? rawPostal.padStart(6, "0") : null;
+
   return {
     lat: Number(match.LATITUDE),
     lng: Number(match.LONGITUDE),
-    postalCode: match.POSTAL ?? null,
+    postalCode,
     displayName: match.BUILDING ?? match.ADDRESS ?? null,
     searchValue,
   };
@@ -336,7 +339,8 @@ async function normalizeSchoolRows(
     }
 
     const address = parsed.data.address?.trim();
-    const postalCode = parsed.data.postal_code?.trim();
+    const rawPostal = parsed.data.postal_code?.trim();
+    const postalCode = rawPostal ? rawPostal.padStart(6, "0") : undefined;
     const cacheKey = `school:${normalizeText(schoolName)}${
       postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""
     }`;
