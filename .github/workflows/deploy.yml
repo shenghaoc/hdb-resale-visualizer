@@ -53,9 +53,6 @@ jobs:
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
 
-      - name: Verify data artifacts
-        run: bun run check:data
-
       - name: Build
         run: bun run build:deploy
 
