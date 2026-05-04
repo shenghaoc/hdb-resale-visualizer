@@ -88,5 +88,14 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
+      - name: Restore pipeline cache
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            data/cache
+            public/data
+          key: pipeline-cache-${{ github.run_id }}
+          restore-keys: pipeline-cache-
+
       - name: Production build
         run: bun run build
