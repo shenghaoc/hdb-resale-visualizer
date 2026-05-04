@@ -45,6 +45,20 @@ export const mrtFeatureSchema = z.object({
   }),
 });
 
+export const sgPostalCodeSchema = z
+  .string()
+  .optional()
+  .transform((val) => {
+    if (!val) return null;
+    const trimmed = val.trim();
+    if (trimmed === "" || trimmed === "NIL" || trimmed.toLowerCase() === "na") return null;
+    const digits = trimmed.replace(/\D/g, "");
+    if (digits.length > 0 && digits.length <= 6) {
+      return digits.padStart(6, "0");
+    }
+    return null;
+  });
+
 export const oneMapResponseSchema = z.object({
   found: z.union([z.string(), z.number()]).optional(),
   results: z
@@ -54,7 +68,7 @@ export const oneMapResponseSchema = z.object({
         LONGITUDE: z.string(),
         BUILDING: z.string().optional(),
         ADDRESS: z.string().optional(),
-        POSTAL: z.string().optional(),
+        POSTAL: sgPostalCodeSchema,
       }),
     )
     .default([]),
@@ -63,7 +77,7 @@ export const oneMapResponseSchema = z.object({
 export const schoolRowSchema = z.object({
   school_name: z.string(),
   address: z.string().optional(),
-  postal_code: z.string().optional(),
+  postal_code: sgPostalCodeSchema,
   mainlevel_code: z.string().optional(),
   latitude: z.string().optional(),
   longitude: z.string().optional(),

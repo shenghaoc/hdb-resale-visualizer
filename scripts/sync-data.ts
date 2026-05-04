@@ -193,13 +193,10 @@ async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
     return null;
   }
 
-  const rawPostal = match.POSTAL?.trim();
-  const postalCode = rawPostal && rawPostal !== "NIL" ? rawPostal.padStart(6, "0") : null;
-
   return {
     lat: Number(match.LATITUDE),
     lng: Number(match.LONGITUDE),
-    postalCode,
+    postalCode: match.POSTAL,
     displayName: match.BUILDING ?? match.ADDRESS ?? null,
     searchValue,
   };
@@ -339,8 +336,7 @@ async function normalizeSchoolRows(
     }
 
     const address = parsed.data.address?.trim();
-    const rawPostal = parsed.data.postal_code?.trim();
-    const postalCode = rawPostal ? rawPostal.padStart(6, "0") : undefined;
+    const postalCode = parsed.data.postal_code ?? undefined;
     const cacheKey = `school:${normalizeText(schoolName)}${
       postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""
     }`;
