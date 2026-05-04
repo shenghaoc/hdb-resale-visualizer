@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && bun run check:bundle",
+    "build": "bun run sync-data && tsc -b && vite build && bun run check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
