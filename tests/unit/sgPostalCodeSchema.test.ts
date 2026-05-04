@@ -32,6 +32,10 @@ describe("sgPostalCodeSchema", () => {
     expect(sgPostalCodeSchema.parse("Na")).toBeNull();
   });
 
+  it('returns null for dotted placeholders like "N.A."', () => {
+    expect(sgPostalCodeSchema.parse("N.A.")).toBeNull();
+  });
+
   it("strips non-digit characters and pads", () => {
     expect(sgPostalCodeSchema.parse("S088256")).toBe("088256");
   });

@@ -3,7 +3,7 @@ import path from "node:path";
 import Papa from "papaparse";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
 import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
-import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
+import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
 import {
   buildMrtStationsGeoJson,
   buildArtifacts,
@@ -33,7 +33,7 @@ const PROPERTY_DATASET_ID = "d_17f5382f26140b1fdae0ba2ef6239d2f";
 const MRT_DATASET_ID = "d_b39d3a0871985372d7e1637193335da5";
 const MOE_SCHOOL_DATASET_ID = "d_688b934f82c1059ed0a6993d2a829089";
 const NEA_HAWKER_DATASET_ID = "d_4a086da0a5553be1d89383cd90d07ecd";
-const SFA_SUPERMARKET_DATASET_ID = "d_62512798a3af99711fd2c964860535a3";
+const SFA_SUPERMARKET_DATASET_ID = "d_11edd0117280c5776651d7891114c88c";
 const NPARKS_PARKS_DATASET_ID = "d_0542d48f0991541706b58059381a6eca";
 
 type RawGeoJson = {
@@ -336,6 +336,7 @@ async function normalizeSchoolRows(
     }
 
     const address = parsed.data.address?.trim();
+    // `schoolRowSchema` already filters placeholder values and zero-pads short numeric codes.
     const postalCode = parsed.data.postal_code ?? undefined;
     const cacheKey = `school:${normalizeText(schoolName)}${
       postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""
@@ -409,6 +410,73 @@ function normalizeAmenityGeoJson(geoJson: RawGeoJson): Array<{ name: string; lat
       };
     })
     .filter((item): item is { name: string; lat: number; lng: number } => item !== null);
+}
+
+async function normalizeSupermarketRows(
+  rows: Record<string, string>[],
+  geocodeCache: GeocodeCacheFile,
+  options: { skipGeocoding: boolean },
+) {
+  const supermarkets: Array<{ name: string; lat: number; lng: number }> = [];
+  let skippedNoCoords = 0;
+  let geocodedCount = 0;
+
+  for (const row of rows) {
+    const parsed = supermarketRowSchema.safeParse(row);
+    if (!parsed.success) continue;
+
+    const name = parsed.data.licensee_name.trim();
+    if (!name) continue;
+
+    const postalCode = parsed.data.postal_code ?? undefined;
+    const street = parsed.data.street_name?.trim();
+    const block = parsed.data.block_house_num?.trim();
+    const address = [block, street].filter(Boolean).join(" ");
+    const normalizedName = normalizeText(name);
+    const cacheKeySuffix = (postalCode ?? normalizeText(address)) || normalizedName;
+
+    const cacheKey = `supermarket:${cacheKeySuffix}`;
+    const cached = geocodeCache.entries[cacheKey];
+    if (cached) {
+      supermarkets.push({ name, lat: cached.lat, lng: cached.lng });
+      continue;
+    }
+
+    if (options.skipGeocoding) {
+      skippedNoCoords += 1;
+      continue;
+    }
+
+    const searchValue = postalCode
+      ? `${postalCode} SINGAPORE`
+      : address
+        ? `${address} SINGAPORE`
+        : `${name} SINGAPORE`;
+
+    try {
+      const geocode = await geocodeAddress(searchValue);
+      if (!geocode) {
+        skippedNoCoords += 1;
+        continue;
+      }
+      geocodeCache.entries[cacheKey] = geocode;
+      geocodedCount += 1;
+      supermarkets.push({ name, lat: geocode.lat, lng: geocode.lng });
+      await sleep(300);
+    } catch {
+      skippedNoCoords += 1;
+    }
+  }
+
+  if (skippedNoCoords > 0) {
+    console.warn(
+      `⚠ ${skippedNoCoords}/${rows.length} supermarkets skipped (${
+        options.skipGeocoding ? "geocoding disabled" : "geocoding failed"
+      }).`,
+    );
+  }
+
+  return { supermarkets, geocodedCount };
 }
 
 async function writeJson(filePath: string, value: unknown) {
@@ -494,9 +562,15 @@ async function main() {
       await sleep(2600);
       hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
 
-      const supermarketGeoJson = await fetchGeoJson(SFA_SUPERMARKET_DATASET_ID);
+      const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
       await sleep(2600);
-      supermarkets = normalizeAmenityGeoJson(supermarketGeoJson);
+      const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, { skipGeocoding });
+      supermarkets = supermarketResult.supermarkets;
+
+      if (supermarketResult.geocodedCount > 0) {
+        geocodeCache.updatedAt = new Date().toISOString();
+        await saveGeocodeCache(geocodeCache);
+      }
 
       const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
       await sleep(2600);

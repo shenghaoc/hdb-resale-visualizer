@@ -83,6 +83,14 @@ export const schoolRowSchema = z.object({
   longitude: z.string().optional(),
 });
 
+export const supermarketRowSchema = z.object({
+  licensee_name: z.string(),
+  building_name: z.string().optional(),
+  block_house_num: z.string().optional(),
+  street_name: z.string().optional(),
+  postal_code: sgPostalCodeSchema,
+});
+
 export const geoJsonFeatureSchema = z.object({
   type: z.literal("Feature"),
   geometry: z.object({
