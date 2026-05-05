@@ -17,8 +17,8 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 This repo uses Kiro-style steering and specs. The canonical project intelligence lives in `.kiro/`:
 
 - `.kiro/steering/` — persistent product + architectural rules
-- `.kiro/specs/` — active or historical feature/bug workstreams
 - `.kiro/powers/` — tool capability and workflow bundles
+- `.kiro/specs/` — active or historical feature/bug workstreams
 - `docs/archive/` — historical working notes kept for reference (non-canonical)
 
 Top-level Markdown keeps one canonical instruction source (`AGENTS.md`) and optional model-specific entrypoints (`CLAUDE.md`, `GEMINI.md`) that redirect to the same Kiro guidance.
