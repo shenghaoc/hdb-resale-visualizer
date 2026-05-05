@@ -123,7 +123,8 @@ describe("Data Artifact Schema Preservation", () => {
     expect("priceIqr" in firstBlock).toBe(false);
   });
 
-  it("keeps details and trend artifact directories present", () => {
+  it("keeps block, detail, and trend artifact directories present", () => {
+    expect(existsSync(join(process.cwd(), "tests/fixtures/public-data/blocks"))).toBe(true);
     expect(existsSync(join(process.cwd(), "tests/fixtures/public-data/details"))).toBe(true);
     expect(existsSync(join(process.cwd(), "tests/fixtures/public-data/trends"))).toBe(true);
     expect(

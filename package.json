@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "bun run sync-data && tsc -b && vite build && bun run check:bundle",
+    "build:deploy": "bun run check:data && tsc -b && vite build && bun run check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
+    "check:data": "bun scripts/check-data-artifacts.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
-import type { BlockSummary, Manifest } from "@/types/data";
+import type { BlockSummary, Manifest, ShortlistItem } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -17,6 +17,26 @@ const dataMocks = vi.hoisted(() => ({
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, ""),
 }));
+
+const shortlistMocks = vi.hoisted(() => {
+  const state = {
+    items: [] as ShortlistItem[],
+    toggle: vi.fn(),
+    update: vi.fn(),
+  };
+
+  function setItems(nextItems: ShortlistItem[]) {
+    state.items = nextItems;
+  }
+
+  function reset() {
+    state.items = [];
+    state.toggle.mockReset();
+    state.update.mockReset();
+  }
+
+  return { state, setItems, reset };
+});
 
 vi.mock("@/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
@@ -33,10 +53,11 @@ vi.mock("@/hooks/useMediaQuery", () => ({
 
 vi.mock("@/hooks/useShortlist", () => ({
   useShortlist: () => ({
-    items: [],
-    has: () => false,
-    toggle: vi.fn(),
-    update: vi.fn(),
+    items: shortlistMocks.state.items,
+    has: (addressKey: string) =>
+      shortlistMocks.state.items.some((item: ShortlistItem) => item.addressKey === addressKey),
+    toggle: shortlistMocks.state.toggle,
+    update: shortlistMocks.state.update,
   }),
 }));
 
@@ -159,8 +180,20 @@ function createDeferredPromise<T>() {
   return { promise, resolve, reject };
 }
 
+function createShortlistItem(addressKey: string): ShortlistItem {
+  return {
+    addressKey,
+    notes: "",
+    targetPrice: null,
+    addedAt: "2026-05-05T00:00:00.000Z",
+  };
+}
+
 describe("App detail loading", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
+    shortlistMocks.reset();
+    window.history.replaceState({}, "", "/");
     dataMocks.fetchManifest.mockResolvedValue(manifest);
     dataMocks.fetchBlockSummaries.mockResolvedValue(blocks);
     dataMocks.fetchAddressDetail.mockResolvedValue({
@@ -240,6 +273,124 @@ describe("App detail loading", () => {
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
     await waitFor(() => {
       expect(document.getElementById("desktop-panel")).toHaveAttribute("aria-hidden", "true");
+    });
+  });
+
+  it("does not restart shortlist detail preloads while requests are still in flight", async () => {
+    const firstAddressKey = "jurong-west-601-jurong-west-st-62";
+    const secondAddressKey = "tampines-123-tampines-st-11";
+    const pendingDetail = createDeferredPromise<unknown>();
+
+    shortlistMocks.setItems([
+      createShortlistItem(firstAddressKey),
+      createShortlistItem(secondAddressKey),
+    ]);
+
+    dataMocks.fetchAddressDetail.mockImplementation((addressKey: string) => {
+      if (addressKey === firstAddressKey) {
+        return Promise.resolve({
+          summary: blocks[0],
+          monthlyTrend: [],
+          transactions: [],
+        });
+      }
+
+      if (addressKey === secondAddressKey) {
+        return pendingDetail.promise;
+      }
+
+      return Promise.resolve({
+        summary: blocks[0],
+        monthlyTrend: [],
+        transactions: [],
+      });
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: /saved/i }));
+
+    await waitFor(() => {
+      expect(dataMocks.fetchAddressDetail).toHaveBeenCalledWith(firstAddressKey);
+      expect(dataMocks.fetchAddressDetail).toHaveBeenCalledWith(secondAddressKey);
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    const detailCalls = dataMocks.fetchAddressDetail.mock.calls.map((call) => String(call[0]));
+    expect(detailCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
+    expect(detailCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+
+    pendingDetail.resolve({
+      summary: blocks[0],
+      monthlyTrend: [],
+      transactions: [],
+    });
+
+    await waitFor(() => {
+      const resolvedDetailCalls = dataMocks.fetchAddressDetail.mock.calls.map((call) =>
+        String(call[0]),
+      );
+      expect(resolvedDetailCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
+      expect(resolvedDetailCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+    });
+  });
+
+  it("does not restart shortlist comparison preloads while requests are still in flight", async () => {
+    const firstAddressKey = "jurong-west-601-jurong-west-st-62";
+    const secondAddressKey = "tampines-123-tampines-st-11";
+    const pendingComparison = createDeferredPromise<unknown>();
+
+    shortlistMocks.setItems([
+      createShortlistItem(firstAddressKey),
+      createShortlistItem(secondAddressKey),
+    ]);
+
+    dataMocks.fetchComparisonArtifact.mockImplementation((addressKey: string) => {
+      if (addressKey === firstAddressKey) {
+        return Promise.resolve(null);
+      }
+
+      if (addressKey === secondAddressKey) {
+        return pendingComparison.promise;
+      }
+
+      return Promise.resolve(null);
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: /saved/i }));
+
+    await waitFor(() => {
+      expect(dataMocks.fetchComparisonArtifact).toHaveBeenCalledWith(firstAddressKey);
+      expect(dataMocks.fetchComparisonArtifact).toHaveBeenCalledWith(secondAddressKey);
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    const comparisonCalls = dataMocks.fetchComparisonArtifact.mock.calls.map((call) =>
+      String(call[0]),
+    );
+    expect(comparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
+    expect(comparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+
+    pendingComparison.resolve(null);
+
+    await waitFor(() => {
+      const resolvedComparisonCalls = dataMocks.fetchComparisonArtifact.mock.calls.map((call) =>
+        String(call[0]),
+      );
+      expect(resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
+      expect(resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
     });
   });
 });
