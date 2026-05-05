@@ -86,6 +86,6 @@ Use official static sources only:
 1. HDB resale flat prices: https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view
 2. MOE general school information: https://data.gov.sg/datasets/d_688b934f82c1059ed0a6993d2a829089/view
 3. NEA hawker centres: https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view
-4. SFA supermarkets: https://data.gov.sg/datasets/d_cac2c32f01960a3ad7202a99c27268a0/view
+4. SFA supermarkets: https://data.gov.sg/datasets/d_62512798a3af99711fd2c964860535a3/view
 5. NParks parks: https://data.gov.sg/datasets/d_0542d48f0991541706b58059381a6eca/view
 6. LTA MRT station exits: https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view
