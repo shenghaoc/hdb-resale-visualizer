@@ -127,15 +127,16 @@ jobs:
               should_deploy=true
               target_branch="${{ github.head_ref }}"
             fi
-          elif [ "${{ github.ref_name }}" = "main" ]; then
+          elif [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             should_deploy=true
-            target_branch="main"
+            target_branch="${{ github.ref_name }}"
           fi
 
           echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
       - name: Restore pipeline cache
+        if: steps.deploy-target.outputs.should_deploy == 'true'
         uses: actions/cache/restore@v5
         with:
           path: |
@@ -145,6 +146,7 @@ jobs:
           restore-keys: pipeline-cache-
 
       - name: Sync official datasets
+        if: steps.deploy-target.outputs.should_deploy == 'true'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
