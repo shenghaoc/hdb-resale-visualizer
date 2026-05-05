@@ -322,7 +322,7 @@ describe("App detail loading", () => {
     });
     await new Promise((resolve) => setTimeout(resolve, 0));
     const detailCalls = dataMocks.fetchAddressDetail.mock.calls.map((call) => String(call[0]));
-    expect(detailCalls.filter((addressKey) => addressKey === firstAddressKey).length).toBeGreaterThanOrEqual(1);
+    expect(detailCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
     expect(detailCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
 
     pendingDetail.resolve({
@@ -335,9 +335,7 @@ describe("App detail loading", () => {
       const resolvedDetailCalls = dataMocks.fetchAddressDetail.mock.calls.map((call) =>
         String(call[0]),
       );
-      expect(
-        resolvedDetailCalls.filter((addressKey) => addressKey === firstAddressKey).length
-      ).toBeGreaterThanOrEqual(1);
+      expect(resolvedDetailCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
       expect(resolvedDetailCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
     });
   });
@@ -382,7 +380,7 @@ describe("App detail loading", () => {
     const comparisonCalls = dataMocks.fetchComparisonArtifact.mock.calls.map((call) =>
       String(call[0]),
     );
-    expect(comparisonCalls.filter((addressKey) => addressKey === firstAddressKey).length).toBeGreaterThanOrEqual(1);
+    expect(comparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
     expect(comparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
 
     pendingComparison.resolve(null);
@@ -391,9 +389,7 @@ describe("App detail loading", () => {
       const resolvedComparisonCalls = dataMocks.fetchComparisonArtifact.mock.calls.map((call) =>
         String(call[0]),
       );
-      expect(
-        resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey).length
-      ).toBeGreaterThanOrEqual(1);
+      expect(resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
       expect(resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
     });
   });
