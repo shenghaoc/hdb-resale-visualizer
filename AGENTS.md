@@ -19,6 +19,7 @@ Powers bundle steering with specific tool capabilities (MCP).
 Current initiatives follow the **Kiro Tech-Design-First** workflow. Specs are located in `.kiro/specs/` and follow a strict **Design → Requirements → Tasks** hierarchy.
 - [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — PR#35 tracking.
 - [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Visual grounding and sharing.
+- [**IME Composition Input**](.kiro/specs/ime-composition-input/tasks.md) — Input-composition bugfix track.
 
 ## ⚡ Automation (Hooks)
 Project-level automation triggers are defined in `.kiro/hooks/`. These hooks execute actions on file events or agent lifecycle stages.
