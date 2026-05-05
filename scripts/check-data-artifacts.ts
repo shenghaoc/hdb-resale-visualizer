@@ -1,23 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { REQUIRED_DATA_DIRECTORIES, REQUIRED_DATA_FILES } from "./lib/artifactContract";
 
 const DATA_DIR = path.join(process.cwd(), "public", "data");
-
-const REQUIRED_FILES = [
-  "manifest.json",
-  "block-summaries.json",
-  "trends/town-flat-type.json",
-  "mrt-exits.geojson",
-  "mrt-stations.geojson",
-];
-
-const REQUIRED_DIRS = ["blocks", "details"];
 
 async function main() {
   const missing: string[] = [];
   const emptyDirs: string[] = [];
 
-  for (const file of REQUIRED_FILES) {
+  for (const file of REQUIRED_DATA_FILES) {
     const fullPath = path.join(DATA_DIR, file);
     try {
       await fs.access(fullPath);
@@ -26,7 +17,7 @@ async function main() {
     }
   }
 
-  for (const dir of REQUIRED_DIRS) {
+  for (const dir of REQUIRED_DATA_DIRECTORIES) {
     const fullPath = path.join(DATA_DIR, dir);
     try {
       const entries = await fs.readdir(fullPath);
@@ -53,7 +44,7 @@ async function main() {
   }
 
   console.log(
-    `Data artifact check passed (${REQUIRED_FILES.length} files, ${REQUIRED_DIRS.length} directories verified).`,
+    `Data artifact check passed (${REQUIRED_DATA_FILES.length} files, ${REQUIRED_DATA_DIRECTORIES.length} directories verified).`,
   );
 }
 

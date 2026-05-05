@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
   Languages,
@@ -141,6 +141,10 @@ function App() {
   const [shortlistComparisons, setShortlistComparisons] = useState<
     Record<string, ComparisonArtifact | null>
   >({});
+  const shortlistDetailsRef = useRef<Record<string, AddressDetail | null>>({});
+  const shortlistComparisonsRef = useRef<Record<string, ComparisonArtifact | null>>({});
+  const shortlistDetailsInFlightRef = useRef<Set<string>>(new Set());
+  const shortlistComparisonsInFlightRef = useRef<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -169,6 +173,14 @@ function App() {
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
     [manifest],
   );
+
+  useEffect(() => {
+    shortlistDetailsRef.current = shortlistDetails;
+  }, [shortlistDetails]);
+
+  useEffect(() => {
+    shortlistComparisonsRef.current = shortlistComparisons;
+  }, [shortlistComparisons]);
 
   useEffect(() => {
     let isMounted = true;
@@ -534,7 +546,11 @@ function App() {
 
     const missingAddressKeys = shortlist.items
       .map((item) => item.addressKey)
-      .filter((addressKey) => !(addressKey in shortlistDetails));
+      .filter(
+        (addressKey) =>
+          !(addressKey in shortlistDetailsRef.current) &&
+          !shortlistDetailsInFlightRef.current.has(addressKey),
+      );
 
     if (missingAddressKeys.length === 0) {
       return;
@@ -545,6 +561,7 @@ function App() {
     // PERF: Update state incrementally as each promise resolves with controlled
     // concurrency to avoid overwhelming the browser with too many simultaneous requests
     void processWithConcurrency(missingAddressKeys, 5, async (addressKey) => {
+      shortlistDetailsInFlightRef.current.add(addressKey);
       try {
         const nextDetail = await fetchAddressDetail(addressKey);
         if (isMounted) {
@@ -554,13 +571,15 @@ function App() {
         if (isMounted) {
           setShortlistDetails((current) => ({ ...current, [addressKey]: null }));
         }
+      } finally {
+        shortlistDetailsInFlightRef.current.delete(addressKey);
       }
     });
 
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   useEffect(() => {
     if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
@@ -569,7 +588,11 @@ function App() {
 
     const missingComparisonKeys = shortlist.items
       .map((item) => item.addressKey)
-      .filter((addressKey) => !(addressKey in shortlistComparisons));
+      .filter(
+        (addressKey) =>
+          !(addressKey in shortlistComparisonsRef.current) &&
+          !shortlistComparisonsInFlightRef.current.has(addressKey),
+      );
 
     if (missingComparisonKeys.length === 0) {
       return;
@@ -580,6 +603,7 @@ function App() {
     // PERF: Update state incrementally as each promise resolves with controlled
     // concurrency to avoid overwhelming the browser with too many simultaneous requests
     void processWithConcurrency(missingComparisonKeys, 5, async (addressKey) => {
+      shortlistComparisonsInFlightRef.current.add(addressKey);
       try {
         const nextComparison = await fetchComparisonArtifact(addressKey);
         if (isMounted) {
@@ -589,13 +613,15 @@ function App() {
         if (isMounted) {
           setShortlistComparisons((current) => ({ ...current, [addressKey]: null }));
         }
+      } finally {
+        shortlistComparisonsInFlightRef.current.delete(addressKey);
       }
     });
 
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistComparisons]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     if ("selectedAddressKey" in patch) {

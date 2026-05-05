@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Papa from "papaparse";
+import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
 import {
   buildMrtStationsGeoJson,
@@ -20,7 +21,10 @@ const ROOT = process.cwd();
 const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
 const BLOCKS_DIR = path.join(PUBLIC_DATA_DIR, "blocks");
 const DETAILS_DIR = path.join(PUBLIC_DATA_DIR, "details");
-const TRENDS_DIR = path.join(PUBLIC_DATA_DIR, "trends");
+const TRENDS_DIR = path.join(
+  PUBLIC_DATA_DIR,
+  path.dirname(CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend),
+);
 const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
 
 const RESALE_COLLECTION_ID = "189";
@@ -591,11 +595,20 @@ async function main() {
     },
   });
 
-  await writeJson(path.join(PUBLIC_DATA_DIR, "manifest.json"), artifacts.manifest);
-  await writeJson(path.join(PUBLIC_DATA_DIR, "block-summaries.json"), artifacts.blockSummaries);
-  await writeJson(path.join(TRENDS_DIR, "town-flat-type.json"), artifacts.townFlatTypeTrend);
-  await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-exits.geojson"), mrtGeoJson);
-  await writeJson(path.join(PUBLIC_DATA_DIR, "mrt-stations.geojson"), buildMrtStationsGeoJson(mrtExits));
+  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.manifest), artifacts.manifest);
+  await writeJson(
+    path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.blockSummaries),
+    artifacts.blockSummaries,
+  );
+  await writeJson(
+    path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend),
+    artifacts.townFlatTypeTrend,
+  );
+  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtExits), mrtGeoJson);
+  await writeJson(
+    path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtStations),
+    buildMrtStationsGeoJson(mrtExits),
+  );
 
   await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
