@@ -269,7 +269,7 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks.length,
+    blocks,
     sortedTowns,
     savedVisible,
     shortlist.items.length,
@@ -560,7 +560,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items]);
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
 
   useEffect(() => {
     if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
@@ -595,7 +595,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items]);
+  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistComparisons]);
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     if ("selectedAddressKey" in patch) {
