@@ -418,7 +418,7 @@ function normalizeAmenityGeoJson(geoJson: RawGeoJson): Array<{ name: string; lat
 async function normalizeSupermarketRows(
   rows: Record<string, string>[],
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean },
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
 ) {
   const supermarkets: Array<{ name: string; lat: number; lng: number }> = [];
   let skippedNoCoords = 0;
@@ -457,7 +457,7 @@ async function normalizeSupermarketRows(
         : `${name} SINGAPORE`;
 
     try {
-      const geocode = await geocodeAddress(searchValue);
+      const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
       if (!geocode) {
         skippedNoCoords += 1;
         continue;
@@ -567,7 +567,10 @@ async function main() {
 
       const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
       await sleep(2600);
-      const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, { skipGeocoding });
+      const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, {
+        skipGeocoding,
+        geocodeEndpoint,
+      });
       supermarkets = supermarketResult.supermarkets;
 
       if (supermarketResult.geocodedCount > 0) {
