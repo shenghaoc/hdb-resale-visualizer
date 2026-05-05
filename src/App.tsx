@@ -558,10 +558,14 @@ function App() {
 
     let isMounted = true;
 
+    // Mark all keys as in-flight before starting concurrent processing
+    for (const key of missingAddressKeys) {
+      shortlistDetailsInFlightRef.current.add(key);
+    }
+
     // PERF: Update state incrementally as each promise resolves with controlled
     // concurrency to avoid overwhelming the browser with too many simultaneous requests
     void processWithConcurrency(missingAddressKeys, 5, async (addressKey) => {
-      shortlistDetailsInFlightRef.current.add(addressKey);
       try {
         const nextDetail = await fetchAddressDetail(addressKey);
         if (isMounted) {
@@ -600,10 +604,14 @@ function App() {
 
     let isMounted = true;
 
+    // Mark all keys as in-flight before starting concurrent processing
+    for (const key of missingComparisonKeys) {
+      shortlistComparisonsInFlightRef.current.add(key);
+    }
+
     // PERF: Update state incrementally as each promise resolves with controlled
     // concurrency to avoid overwhelming the browser with too many simultaneous requests
     void processWithConcurrency(missingComparisonKeys, 5, async (addressKey) => {
-      shortlistComparisonsInFlightRef.current.add(addressKey);
       try {
         const nextComparison = await fetchComparisonArtifact(addressKey);
         if (isMounted) {
