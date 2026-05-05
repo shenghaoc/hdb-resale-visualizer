@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Papa from "papaparse";
+import { makeSupermarketCacheKey } from "./lib/amenity";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
 import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
@@ -432,10 +433,7 @@ async function normalizeSupermarketRows(
     const street = parsed.data.street_name?.trim();
     const block = parsed.data.block_house_num?.trim();
     const address = [block, street].filter(Boolean).join(" ");
-    const normalizedName = normalizeText(name);
-    const cacheKeySuffix = (postalCode ?? normalizeText(address)) || normalizedName;
-
-    const cacheKey = `supermarket:${cacheKeySuffix}`;
+    const cacheKey = makeSupermarketCacheKey(postalCode, address, name);
     const cached = geocodeCache.entries[cacheKey];
     if (cached) {
       supermarkets.push({ name, lat: cached.lat, lng: cached.lng });
