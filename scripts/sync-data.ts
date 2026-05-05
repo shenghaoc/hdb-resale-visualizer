@@ -302,7 +302,7 @@ function normalizeMrtFeatures(geoJson: RawGeoJson): MrtExit[] {
 async function normalizeSchoolRows(
   rows: Record<string, string>[],
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean; geocodeEndpoint?: URL },
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
 ) {
   const schools: SchoolLocation[] = [];
   let primaryCount = 0;
@@ -358,13 +358,7 @@ async function normalizeSchoolRows(
         : `${schoolName} SINGAPORE`;
 
     try {
-      const geocodeEndpoint = options.geocodeEndpoint;
-      if (!geocodeEndpoint) {
-        skippedNoCoords += 1;
-        continue;
-      }
-
-      const geocode = await geocodeAddress(searchValue, geocodeEndpoint);
+      const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
       if (!geocode) {
         console.warn(`School geocode returned no result for ${schoolName} (search: ${searchValue})`);
         skippedNoCoords += 1;
@@ -434,7 +428,7 @@ async function main() {
     process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
   const skipAmenities =
     process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
-  const geocodeEndpoint = skipGeocoding ? undefined : resolveOneMapSearchEndpoint();
+  const geocodeEndpoint = resolveOneMapSearchEndpoint();
   await ensureDirectories();
 
   const resaleCollection = await fetchCollectionMetadata();
@@ -534,11 +528,6 @@ async function main() {
       `Skipping geocoding and using ${Object.keys(geocodeCache.entries).length} cached coordinates.`,
     );
   } else {
-    if (!geocodeEndpoint) {
-      throw new Error("Geocoding is enabled but no valid geocode endpoint is configured.");
-    }
-    const geocodeEndpointUrl = geocodeEndpoint;
-
     const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
     let nextIndex = 0;
     let completed = 0;
@@ -547,7 +536,8 @@ async function main() {
     console.log(
       `Geocoding ${missingAddresses.length} uncached addresses with concurrency ${concurrency}...`,
     );
-    console.log(`Using geocode endpoint: ${geocodeEndpointUrl.toString()}`);
+    const safeGeocodeEndpoint = `${geocodeEndpoint.origin}${geocodeEndpoint.pathname}`;
+    console.log(`Using geocode endpoint: ${safeGeocodeEndpoint}`);
 
     async function worker() {
       while (nextIndex < missingAddresses.length) {
@@ -556,7 +546,7 @@ async function main() {
         const [addressKey, searchValue] = missingAddresses[currentIndex];
 
         try {
-          const geocode = await geocodeAddress(searchValue, geocodeEndpointUrl);
+          const geocode = await geocodeAddress(searchValue, geocodeEndpoint);
           if (geocode) {
             geocodeCache.entries[addressKey] = geocode;
           }
@@ -620,6 +610,12 @@ async function main() {
     },
   });
 
+  validateGeneratedArtifacts({
+    blockSummariesCount: artifacts.blockSummaries.length,
+    detailCount: Object.keys(artifacts.details).length,
+    geocodeFailureCount,
+  });
+
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.manifest), artifacts.manifest);
   await writeJson(
     path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.blockSummaries),
@@ -663,12 +659,6 @@ async function main() {
   for (const [addressKey, detail] of Object.entries(artifacts.details)) {
     await writeJson(path.join(DETAILS_DIR, `${addressKey}.json`), detail);
   }
-
-  validateGeneratedArtifacts({
-    blockSummariesCount: artifacts.blockSummaries.length,
-    detailCount: Object.keys(artifacts.details).length,
-    geocodeFailureCount,
-  });
 
   console.log(
     `Generated ${artifacts.blockSummaries.length} block summaries and ${Object.keys(artifacts.details).length} detail files.`,
