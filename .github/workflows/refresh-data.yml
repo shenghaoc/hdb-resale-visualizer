@@ -48,7 +48,6 @@ jobs:
       - name: Sync official datasets
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
-          ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
 
