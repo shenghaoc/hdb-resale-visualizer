@@ -30,14 +30,26 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Compute pipeline cache key prefix
+        id: pipeline-cache
+        run: |
+          echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('bun.lock', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts', 'src/lib/mrt-colors.ts') }}" >> "$GITHUB_OUTPUT"
+
       - name: Restore pipeline cache
         uses: actions/cache/restore@v5
+        id: pipeline-cache-restore
         with:
           path: |
             data/cache
             public/data
-          key: pipeline-cache-${{ github.run_id }}
-          restore-keys: pipeline-cache-
+          key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
+          restore-keys: |
+            ${{ steps.pipeline-cache.outputs.prefix }}-
+
+      - name: Verify cached data artifacts
+        id: data-check
+        continue-on-error: true
+        run: bun run check:data
 
       - name: Record upstream timestamp before sync
         id: pre-sync
@@ -45,29 +57,55 @@ jobs:
           prev=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
           echo "upstream_at=$prev" >> "$GITHUB_OUTPUT"
 
+      - name: Sync official datasets (force)
+        if: steps.data-check.outcome != 'success'
+        env:
+          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+          GEOCODE_CONCURRENCY: "10"
+        run: bun run sync-data --force
+
       - name: Sync official datasets
+        if: steps.data-check.outcome == 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data
 
+      - id: diff
+        name: Detect data changes
+        run: |
+          new_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+          if [ "$new_at" != "${{ steps.pre-sync.outputs.upstream_at }}" ] || [ "${{ steps.data-check.outcome }}" != "success" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compute pipeline cache save key
+        if: steps.diff.outputs.changed == 'true'
+        id: pipeline-cache-save-key
+        run: |
+          upstream_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+          upstream_key=$(echo "$upstream_at" | tr -cd '0-9')
+          if [ -z "$upstream_key" ]; then
+            upstream_key="unknown"
+          fi
+          generated_at=$(jq -r '.generatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+          generated_key=$(echo "$generated_at" | tr -cd '0-9')
+          if [ -z "$generated_key" ]; then
+            generated_key="${{ github.run_id }}"
+          fi
+          echo "upstream_key=$upstream_key" >> "$GITHUB_OUTPUT"
+          echo "generated_key=$generated_key" >> "$GITHUB_OUTPUT"
+
       - name: Save pipeline cache
+        if: steps.diff.outputs.changed == 'true'
         uses: actions/cache/save@v5
         with:
           path: |
             data/cache
             public/data
-          key: pipeline-cache-${{ github.run_id }}
-
-      - id: diff
-        name: Detect data changes
-        run: |
-          new_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
-          if [ "$new_at" != "${{ steps.pre-sync.outputs.upstream_at }}" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          fi
+          key: ${{ steps.pipeline-cache.outputs.prefix }}-${{ steps.pipeline-cache-save-key.outputs.upstream_key }}-${{ steps.pipeline-cache-save-key.outputs.generated_key }}
 
       - name: Build app
         if: steps.diff.outputs.changed == 'true'
