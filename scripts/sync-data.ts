@@ -337,8 +337,10 @@ async function normalizeSchoolRows(
     }
 
     const address = parsed.data.address?.trim();
-    // `schoolRowSchema` already filters placeholder values and zero-pads short numeric codes.
-    const postalCode = parsed.data.postal_code ?? undefined;
+    const postalCode =
+      parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code)
+        ? parsed.data.postal_code
+        : undefined;
     const cacheKey = `school:${normalizeText(schoolName)}${
       postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""
     }`;
@@ -429,7 +431,10 @@ async function normalizeSupermarketRows(
     const name = parsed.data.licensee_name.trim();
     if (!name) continue;
 
-    const postalCode = parsed.data.postal_code ?? undefined;
+    const postalCode =
+      parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code)
+        ? parsed.data.postal_code
+        : undefined;
     const street = parsed.data.street_name?.trim();
     const block = parsed.data.block_house_num?.trim();
     const address = [block, street].filter(Boolean).join(" ");
