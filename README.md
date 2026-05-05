@@ -12,6 +12,18 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 - ECharts for block-level trend charts
 - Bun for package management, scripts, and CI
 
+## Kiro workflow and repository docs
+
+This repo uses Kiro-style steering and specs. The canonical project intelligence lives in `.kiro/`:
+
+- [`.kiro/steering/`](.kiro/steering/) — persistent product + architectural rules
+- [`.kiro/powers/`](.kiro/powers/) — tool capability and workflow bundles
+- [`.kiro/specs/`](.kiro/specs/) — active or historical feature/bug workstreams
+
+Historical working notes are kept in [`docs/archive/`](docs/archive/) (non-canonical).
+
+Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.md)) and optional model-specific entrypoints ([`CLAUDE.md`](CLAUDE.md), [`GEMINI.md`](GEMINI.md)) that redirect to the same Kiro guidance.
+
 ## What it does
 
 - Visualizes resale blocks as address points on a Singapore map
