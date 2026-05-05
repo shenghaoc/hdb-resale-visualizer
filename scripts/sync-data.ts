@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Papa from "papaparse";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
+import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
 import {
   buildMrtStationsGeoJson,
@@ -34,9 +35,6 @@ const MOE_SCHOOL_DATASET_ID = "d_688b934f82c1059ed0a6993d2a829089";
 const NEA_HAWKER_DATASET_ID = "d_4a086da0a5553be1d89383cd90d07ecd";
 const SFA_SUPERMARKET_DATASET_ID = "d_cac2c32f01960a3ad7202a99c27268a0";
 const NPARKS_PARKS_DATASET_ID = "d_0542d48f0991541706b58059381a6eca";
-const ONEMAP_SEARCH_ENDPOINT =
-  process.env.ONEMAP_SEARCH_ENDPOINT ??
-  "https://www.onemap.gov.sg/api/common/elastic/search";
 
 type RawGeoJson = {
   type: "FeatureCollection";
@@ -176,8 +174,8 @@ async function saveGeocodeCache(cache: GeocodeCacheFile) {
   await fs.writeFile(GEOCODE_CACHE_PATH, JSON.stringify(cache, null, 2));
 }
 
-async function geocodeAddress(searchValue: string) {
-  const url = new URL(ONEMAP_SEARCH_ENDPOINT);
+async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
+  const url = new URL(geocodeEndpoint);
   url.searchParams.set("searchVal", searchValue);
   url.searchParams.set("returnGeom", "Y");
   url.searchParams.set("getAddrDetails", "Y");
@@ -304,7 +302,7 @@ function normalizeMrtFeatures(geoJson: RawGeoJson): MrtExit[] {
 async function normalizeSchoolRows(
   rows: Record<string, string>[],
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean },
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
 ) {
   const schools: SchoolLocation[] = [];
   let primaryCount = 0;
@@ -360,7 +358,7 @@ async function normalizeSchoolRows(
         : `${schoolName} SINGAPORE`;
 
     try {
-      const geocode = await geocodeAddress(searchValue);
+      const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
       if (!geocode) {
         console.warn(`School geocode returned no result for ${schoolName} (search: ${searchValue})`);
         skippedNoCoords += 1;
@@ -430,6 +428,7 @@ async function main() {
     process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
   const skipAmenities =
     process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+  const geocodeEndpoint = resolveOneMapSearchEndpoint();
   await ensureDirectories();
 
   const resaleCollection = await fetchCollectionMetadata();
@@ -479,7 +478,10 @@ async function main() {
       console.log("Fetching amenity data...");
       const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
       await sleep(2600);
-      const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, { skipGeocoding });
+      const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, {
+        skipGeocoding,
+        geocodeEndpoint,
+      });
       schools = schoolResult.schools;
 
       // Flush geocode cache only if new school geocodes were added
@@ -519,6 +521,8 @@ async function main() {
   const missingAddresses = [...uniqueAddresses.entries()].filter(
     ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
   );
+  let geocodeFailureCount = 0;
+  const geocodeFailureSamples: string[] = [];
   if (skipGeocoding) {
     console.log(
       `Skipping geocoding and using ${Object.keys(geocodeCache.entries).length} cached coordinates.`,
@@ -532,6 +536,8 @@ async function main() {
     console.log(
       `Geocoding ${missingAddresses.length} uncached addresses with concurrency ${concurrency}...`,
     );
+    const safeGeocodeEndpoint = `${geocodeEndpoint.origin}${geocodeEndpoint.pathname}`;
+    console.log(`Using geocode endpoint: ${safeGeocodeEndpoint}`);
 
     async function worker() {
       while (nextIndex < missingAddresses.length) {
@@ -540,16 +546,17 @@ async function main() {
         const [addressKey, searchValue] = missingAddresses[currentIndex];
 
         try {
-          const geocode = await geocodeAddress(searchValue);
+          const geocode = await geocodeAddress(searchValue, geocodeEndpoint);
           if (geocode) {
             geocodeCache.entries[addressKey] = geocode;
           }
         } catch (error) {
-          console.warn(
-            `Geocode failed for ${searchValue}: ${
-              error instanceof Error ? error.message : "unknown error"
-            }`,
-          );
+          geocodeFailureCount += 1;
+          if (geocodeFailureSamples.length < 5) {
+            geocodeFailureSamples.push(
+              `${searchValue}: ${error instanceof Error ? error.message : "unknown error"}`,
+            );
+          }
         }
 
         completed += 1;
@@ -568,6 +575,14 @@ async function main() {
     await Promise.all(
       Array.from({ length: Math.min(concurrency, missingAddresses.length || 1) }, () => worker()),
     );
+  }
+
+  if (geocodeFailureCount > 0) {
+    const sampleSuffix =
+      geocodeFailureSamples.length > 0
+        ? ` Sample failures: ${geocodeFailureSamples.join(" | ")}`
+        : "";
+    console.warn(`Geocoding failed for ${geocodeFailureCount} addresses.${sampleSuffix}`);
   }
 
   geocodeCache.updatedAt = new Date().toISOString();
@@ -593,6 +608,12 @@ async function main() {
       nparksParksDatasetId: NPARKS_PARKS_DATASET_ID,
       lastUpdatedAt: resaleCollection.lastUpdatedAt,
     },
+  });
+
+  validateGeneratedArtifacts({
+    blockSummariesCount: artifacts.blockSummaries.length,
+    detailCount: Object.keys(artifacts.details).length,
+    geocodeFailureCount,
   });
 
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.manifest), artifacts.manifest);
