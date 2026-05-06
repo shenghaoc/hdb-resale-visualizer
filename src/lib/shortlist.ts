@@ -72,6 +72,23 @@ export function saveShortlist(storage: Pick<Storage, "setItem">, items: Shortlis
   storage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(items));
 }
 
+export function mergeShortlists(local: ShortlistItem[], cloud: ShortlistItem[]): ShortlistItem[] {
+  const mergedMap = new Map<string, ShortlistItem>();
+
+  const processItem = (item: ShortlistItem) => {
+    const existing = mergedMap.get(item.addressKey);
+    // If we don't have it, or the new one is newer, keep the newer one.
+    if (!existing || new Date(item.addedAt) > new Date(existing.addedAt)) {
+      mergedMap.set(item.addressKey, item);
+    }
+  };
+
+  local.forEach(processItem);
+  cloud.forEach(processItem);
+
+  return Array.from(mergedMap.values());
+}
+
 export function toggleShortlistItem(items: ShortlistItem[], addressKey: string): ShortlistItem[] {
   const existing = items.find((item) => item.addressKey === addressKey);
   if (existing) {
@@ -86,5 +103,5 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
       targetPrice: null,
       addedAt: new Date().toISOString(),
     },
-  ].slice(-4);
+  ];
 }

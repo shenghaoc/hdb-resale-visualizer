@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { hasCloudSyncConfig, pullShortlistFromCloud, signInWithPassword, syncShortlistToCloud, type AuthSession } from "@/lib/cloudSync";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
+  mergeShortlists,
   saveShortlist,
   toggleShortlistItem,
 } from "@/lib/shortlist";
 import type { ShortlistItem } from "@/types/data";
 import { safeStorage } from "@/lib/storage";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 type InitialShortlistState = {
   items: ShortlistItem[];
@@ -44,8 +47,11 @@ function readInitialShortlist(): InitialShortlistState {
 }
 
 export function useShortlist() {
+  const [session, setSession] = useState<AuthSession | null>(null);
+  const [cloudStatus, setCloudStatus] = useState<string>("Local only");
   const [initialState] = useState(readInitialShortlist);
   const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
+  const debouncedItems = useDebouncedValue(items, 1000);
 
   useEffect(() => {
     if (!initialState.shouldClearUrlParam) {
@@ -61,6 +67,18 @@ export function useShortlist() {
   useEffect(() => {
     saveShortlist(safeStorage, items);
   }, [items]);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+
+    void syncShortlistToCloud(session, debouncedItems)
+      .then(() => setCloudStatus("Synced to cloud"))
+      .catch((error) =>
+        setCloudStatus(`Sync failed: ${error instanceof Error ? error.message : "Unknown error"}`),
+      );
+  }, [debouncedItems, session]);
 
   const toggle = useCallback((addressKey: string) => {
     setItems((current) => toggleShortlistItem(current, addressKey));
@@ -79,6 +97,25 @@ export function useShortlist() {
     );
   }, []);
 
+  const signIn = useCallback(
+    async (email: string, password: string) => {
+      const nextSession = await signInWithPassword(email, password);
+      const cloud = await pullShortlistFromCloud(nextSession);
+      const merged = mergeShortlists(items, cloud ?? []);
+
+      setItems(merged);
+      await syncShortlistToCloud(nextSession, merged);
+      setSession(nextSession);
+      setCloudStatus(`Connected as ${nextSession.email}`);
+    },
+    [items],
+  );
+
+  const signOut = useCallback(() => {
+    setSession(null);
+    setCloudStatus("Local only");
+  }, []);
+
   const has = useCallback((addressKey: string) => {
     return items.some((item) => item.addressKey === addressKey);
   }, [items]);
@@ -89,7 +126,12 @@ export function useShortlist() {
       toggle,
       update,
       has,
+      signIn,
+      signOut,
+      session,
+      cloudStatus,
+      hasCloudSyncConfig,
     }),
-    [items, toggle, update, has],
+    [items, toggle, update, has, signIn, signOut, session, cloudStatus],
   );
 }
