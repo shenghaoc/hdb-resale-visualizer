@@ -1,15 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchAddressDetail, fetchComparisonArtifact } from "@/lib/data";
 import type { AddressDetail, ComparisonArtifact } from "@/types/data";
 
 type LoadedDetail = { addressKey: string; data: AddressDetail | null };
 type LoadedComparison = { addressKey: string; data: ComparisonArtifact | null };
 
+/**
+ * Loads detail and comparison artifacts for the currently selected address.
+ *
+ * Loading flags are derived from whether the stored artifact still matches the
+ * current `selectedAddressKey`, so callers only need to drive the key — no
+ * imperative `beginLoad` / `clear` dance is required to keep the UI in sync.
+ */
 export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [comparison, setComparison] = useState<LoadedComparison | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(selectedAddressKey));
-  const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(selectedAddressKey));
 
   useEffect(() => {
     if (!selectedAddressKey) {
@@ -17,21 +22,13 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
     }
 
     let isMounted = true;
-    void fetchAddressDetail(selectedAddressKey)
-      .then((nextDetail) => {
-        if (isMounted) {
-          setDetail({ addressKey: selectedAddressKey, data: nextDetail });
-        }
+
+    fetchAddressDetail(selectedAddressKey)
+      .then((data) => {
+        if (isMounted) setDetail({ addressKey: selectedAddressKey, data });
       })
       .catch(() => {
-        if (isMounted) {
-          setDetail({ addressKey: selectedAddressKey, data: null });
-        }
-      })
-      .finally(() => {
-        if (isMounted) {
-          setIsDetailLoading(false);
-        }
+        if (isMounted) setDetail({ addressKey: selectedAddressKey, data: null });
       });
 
     return () => {
@@ -45,21 +42,13 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
     }
 
     let isMounted = true;
-    void fetchComparisonArtifact(selectedAddressKey)
-      .then((nextComparison) => {
-        if (isMounted) {
-          setComparison({ addressKey: selectedAddressKey, data: nextComparison });
-        }
+
+    fetchComparisonArtifact(selectedAddressKey)
+      .then((data) => {
+        if (isMounted) setComparison({ addressKey: selectedAddressKey, data });
       })
       .catch(() => {
-        if (isMounted) {
-          setComparison({ addressKey: selectedAddressKey, data: null });
-        }
-      })
-      .finally(() => {
-        if (isMounted) {
-          setIsComparisonLoading(false);
-        }
+        if (isMounted) setComparison({ addressKey: selectedAddressKey, data: null });
       });
 
     return () => {
@@ -67,25 +56,12 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
     };
   }, [selectedAddressKey]);
 
-  const beginSelectionLoad = useCallback((addressKey: string | null) => {
-    const loading = Boolean(addressKey);
-    setIsDetailLoading(loading);
-    setIsComparisonLoading(loading);
-  }, []);
+  // Derive loading state: if a selection is active but the cached artifact is
+  // for a stale address key, we are still waiting for the new fetch to resolve.
+  const isDetailLoading =
+    Boolean(selectedAddressKey) && detail?.addressKey !== selectedAddressKey;
+  const isComparisonLoading =
+    Boolean(selectedAddressKey) && comparison?.addressKey !== selectedAddressKey;
 
-  const clearSelectedArtifacts = useCallback(() => {
-    setDetail(null);
-    setComparison(null);
-    setIsDetailLoading(false);
-    setIsComparisonLoading(false);
-  }, []);
-
-  return {
-    detail,
-    comparison,
-    isDetailLoading,
-    isComparisonLoading,
-    beginSelectionLoad,
-    clearSelectedArtifacts,
-  };
+  return { detail, comparison, isDetailLoading, isComparisonLoading };
 }

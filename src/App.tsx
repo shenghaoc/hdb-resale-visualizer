@@ -85,14 +85,10 @@ function App() {
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
-  // Break the clearSelectedArtifacts cycle: useUrlFilters needs it, but it
-  // comes from useSelectedBlockArtifacts which needs filters.selectedAddressKey.
-  const clearSelectedArtifactsRef = useRef<() => void>(() => {});
-  const stableClearSelected = useCallback(() => clearSelectedArtifactsRef.current(), []);
-  const { filters, patchFilters, resetFilters } = useUrlFilters({ clearSelectedArtifacts: stableClearSelected });
+  const { filters, patchFilters, resetFilters } = useUrlFilters();
   const selectedAddressKey = filters.selectedAddressKey;
-  const { detail, comparison, isDetailLoading, isComparisonLoading, beginSelectionLoad, clearSelectedArtifacts } = useSelectedBlockArtifacts(selectedAddressKey);
-  clearSelectedArtifactsRef.current = clearSelectedArtifacts;
+  const { detail, comparison, isDetailLoading, isComparisonLoading } =
+    useSelectedBlockArtifacts(selectedAddressKey);
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
@@ -269,10 +265,9 @@ function App() {
         setMobileTab("results");
       }
 
-      beginSelectionLoad(addressKey);
       patchFilters({ selectedAddressKey: addressKey });
     },
-    [beginSelectionLoad, isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
+    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
   );
 
   const handleToggleShortlist = useCallback(

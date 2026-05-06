@@ -1,9 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { fetchAddressDetail, fetchComparisonArtifact } from "@/lib/data";
-import type { AddressDetail, ComparisonArtifact, ShortlistItem } from "@/types/data";
+import type {
+  AddressDetail,
+  BlockSummary,
+  ComparisonArtifact,
+  ShortlistItem,
+} from "@/types/data";
 
 type ShortlistRowsArgs = {
-  blocks: Array<{ addressKey: string; medianPrice: number }>;
+  blocks: BlockSummary[];
   items: ShortlistItem[];
   savedVisible: boolean;
   selectedDetail: AddressDetail | null;

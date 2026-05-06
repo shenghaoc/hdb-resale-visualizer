@@ -29,9 +29,18 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> 
 
 export async function getDatasetDownloadUrl(datasetId: string) {
   const base = `https://api-open.data.gov.sg/v1/public/api/datasets/${datasetId}`;
-  try { await fetchJson(`${base}/initiate-download`, { method: "POST", body: JSON.stringify({}) }); } catch { /* noop: poll endpoint may still work */ }
+  try {
+    await fetchJson(`${base}/initiate-download`, {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+  } catch {
+    // Some datasets expose the file directly through poll-download without initiation.
+  }
   for (let attempt = 0; attempt < 8; attempt += 1) {
-    const payload = await fetchJson<{ code: number; data?: { url?: string } }>(`${base}/poll-download`);
+    const payload = await fetchJson<{ code: number; data?: { url?: string } }>(
+      `${base}/poll-download`,
+    );
     const url = payload.data?.url;
     if (url) return url;
     await sleep(1500);
