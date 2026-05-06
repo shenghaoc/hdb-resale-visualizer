@@ -1,0 +1,1 @@
+- [x] Fix the React Hook useEffect missing dependency error in App.tsx
