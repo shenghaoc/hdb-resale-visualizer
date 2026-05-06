@@ -13,13 +13,7 @@ import {
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
 } from "@/lib/constants";
-import {
-  fetchAddressDetail,
-  fetchBlockSummaries,
-  fetchBlocksByTown,
-  fetchComparisonArtifact,
-  townToFilename,
-} from "@/lib/data";
+
 import {
   getSelectionByAddressKey,
   matchesFilter,
@@ -34,14 +28,13 @@ import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState } from "@/hooks/usePanelState";
+import { usePanelState, type DesktopTab } from "@/hooks/usePanelState";
+import { useBlockLoading } from "@/hooks/useBlockLoading";
+import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
 import { safeStorage } from "@/lib/storage";
 import { formatDateTime, formatMonth } from "@/lib/format";
 import type {
-  AddressDetail,
-  BlockSummary,
-  ComparisonArtifact,
   Coordinates,
 } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
@@ -58,27 +51,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-
-// Sliding window concurrency limiter — keeps exactly `concurrency` requests
-// in-flight at all times, unlike strict batching which stalls on the slowest
-// item in each batch before starting the next.
-async function processWithConcurrency<T, R>(
-  items: T[],
-  concurrency: number,
-  processor: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = Array<R>(items.length);
-  let currentIndex = 0;
-  const worker = async () => {
-    while (currentIndex < items.length) {
-      const i = currentIndex++;
-      results[i] = await processor(items[i]);
-    }
-  };
-  const limit = Math.max(1, Math.min(concurrency, items.length));
-  await Promise.all(Array.from({ length: limit }, worker));
-  return results;
-}
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -103,133 +75,44 @@ function App() {
   const { locale, setLocale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const { manifest, error: manifestError } = useManifestData();
-  const [loadError, setLoadError] = useState<string | null>(null);
-  const error = manifestError ?? loadError;
-  const [blocks, setBlocks] = useState<BlockSummary[]>([]);
+  const error = manifestError;
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
-  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
-    {},
-  );
-  const [shortlistComparisons, setShortlistComparisons] = useState<
-    Record<string, ComparisonArtifact | null>
-  >({});
-  const shortlistDetailsRef = useRef<Record<string, AddressDetail | null>>({});
-  const shortlistComparisonsRef = useRef<Record<string, ComparisonArtifact | null>>({});
-  const shortlistDetailsInFlightRef = useRef<Set<string>>(new Set());
-  const shortlistComparisonsInFlightRef = useRef<Set<string>>(new Set());
   const shortlist = useShortlist();
   const { isDesktop, desktopTab, mobileTab, isDesktopPanelOpen, isShortlistOpen, resultsVisible, savedVisible, setDesktopTab, setMobileTab, setIsDesktopPanelOpen, setIsShortlistOpen } = usePanelState();
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
+  // Break the clearSelectedArtifacts cycle: useUrlFilters needs it, but it
+  // comes from useSelectedBlockArtifacts which needs filters.selectedAddressKey.
+  const clearSelectedArtifactsRef = useRef<() => void>(() => {});
+  const stableClearSelected = useCallback(() => clearSelectedArtifactsRef.current(), []);
+  const { filters, patchFilters, resetFilters } = useUrlFilters({ clearSelectedArtifacts: stableClearSelected });
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading, beginSelectionLoad, clearSelectedArtifacts } = useSelectedBlockArtifacts(selectedAddressKey);
-  const { filters, patchFilters, resetFilters } = useUrlFilters({ clearSelectedArtifacts });
+  clearSelectedArtifactsRef.current = clearSelectedArtifacts;
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
-  // Keep effect-local loaders on the latest caches without re-running them for
-  // every incremental state write.
-  const blocksRef = useRef(blocks);
-
-  useEffect(() => {
-    blocksRef.current = blocks;
-  }, [blocks]);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
     [manifest],
   );
 
-  useEffect(() => {
-    shortlistDetailsRef.current = shortlistDetails;
-  }, [shortlistDetails]);
-
-  useEffect(() => {
-    shortlistComparisonsRef.current = shortlistComparisons;
-  }, [shortlistComparisons]);
-
-
-
-  useEffect(() => {
-    if (!manifest) {
-      return;
-    }
-
-    let isMounted = true;
-    const townFilter = filters.town;
-    const hasGeographic = Boolean(debouncedSearch.trim() || userLocation);
-    const totalBlocks = manifest.counts.blocks;
-    const needsAllBlocks = hasGeographic || (savedVisible && shortlist.items.length > 0);
-
-    // When a deep link opens with ?selected=... but no town/geo filter, detect
-    // which town the address belongs to so the block summary can be resolved.
-    const detectedTownForDeepLink =
-      !townFilter && !hasGeographic && selectedAddressKey
-        ? sortedTowns.find((town) => selectedAddressKey.startsWith(townToFilename(town) + "-")) ??
-          null
-        : null;
-
-    const effectiveTown = townFilter || detectedTownForDeepLink;
-
-    async function loadBlocks() {
-      try {
-        const currentBlocks = blocksRef.current;
-        const hasAllBlocks = currentBlocks.length >= totalBlocks;
-
-        if (needsAllBlocks) {
-          if (hasAllBlocks) {
-            return;
-          }
-          const nextBlocks = await fetchBlockSummaries();
-          if (isMounted) {
-            setBlocks(nextBlocks);
-          }
-        } else if (effectiveTown) {
-          if (hasAllBlocks) {
-            return;
-          }
-          const alreadyHasTown = currentBlocks.some((b) => b.town === effectiveTown);
-          if (alreadyHasTown) {
-            return;
-          }
-          const nextBlocks = await fetchBlocksByTown(effectiveTown);
-          if (isMounted && Array.isArray(nextBlocks)) {
-            setBlocks((current) => {
-              if (current.length >= totalBlocks || current.some((b) => b.town === effectiveTown)) {
-                return current;
-              }
-              return [...current, ...nextBlocks];
-            });
-          }
-        }
-      } catch (loadError) {
-        if (!isMounted) {
-          return;
-        }
-
-        setLoadError(loadError instanceof Error ? loadError.message : "Failed to load blocks data");
-      }
-    }
-
-    void loadBlocks();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [
+  const { blocks, loadError } = useBlockLoading({
     manifest,
-    filters.town,
+    townFilter: filters.town,
     debouncedSearch,
-    userLocation,
+    userLocationPresent: Boolean(userLocation),
     selectedAddressKey,
     sortedTowns,
     savedVisible,
-    shortlist.items.length,
-  ]);
+    shortlistCount: shortlist.items.length,
+  });
+
 
 
   useEffect(() => {
@@ -357,157 +240,14 @@ function App() {
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
   const selectedComparison =
     selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
-  const shortlistRows = useMemo(
-    () => {
-      if (!savedVisible) {
-        return [];
-      }
-
-      return shortlist.items
-        .map((item) => {
-          const block = blocks.find((candidate) => candidate.addressKey === item.addressKey);
-          if (!block) {
-            return null;
-          }
-
-          return {
-            item,
-            block,
-            detailSummary:
-              shortlistDetails[item.addressKey]?.summary ??
-              (selectedDetail?.summary.addressKey === item.addressKey
-                ? selectedDetail.summary
-                : null),
-            monthlyTrend:
-              shortlistDetails[item.addressKey]?.monthlyTrend ??
-              (selectedDetail?.summary.addressKey === item.addressKey
-                ? selectedDetail.monthlyTrend
-                : []),
-            comparison:
-              shortlistComparisons[item.addressKey] ??
-              (selectedComparison?.addressKey === item.addressKey ? selectedComparison : null),
-          };
-        })
-        .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
-        .sort((left, right) => {
-          const leftGap =
-            left.item.targetPrice !== null
-              ? Math.abs(left.item.targetPrice - left.block.medianPrice)
-              : Number.POSITIVE_INFINITY;
-          const rightGap =
-            right.item.targetPrice !== null
-              ? Math.abs(right.item.targetPrice - right.block.medianPrice)
-              : Number.POSITIVE_INFINITY;
-
-          if (leftGap !== rightGap) {
-            return leftGap - rightGap;
-          }
-
-          return left.item.addedAt.localeCompare(right.item.addedAt);
-        });
-    },
-    [
-      blocks,
-      savedVisible,
-      selectedDetail,
-      selectedComparison,
-      shortlist.items,
-      shortlistDetails,
-      shortlistComparisons,
-    ],
-  );
-
-  useEffect(() => {
-    if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
-      return;
-    }
-
-    const missingAddressKeys = shortlist.items
-      .map((item) => item.addressKey)
-      .filter(
-        (addressKey) =>
-          !(addressKey in shortlistDetailsRef.current) &&
-          !shortlistDetailsInFlightRef.current.has(addressKey),
-      );
-
-    if (missingAddressKeys.length === 0) {
-      return;
-    }
-
-    let isMounted = true;
-
-    // Mark all keys as in-flight before starting concurrent processing
-    for (const key of missingAddressKeys) {
-      shortlistDetailsInFlightRef.current.add(key);
-    }
-
-    // PERF: Update state incrementally as each promise resolves with controlled
-    // concurrency to avoid overwhelming the browser with too many simultaneous requests
-    void processWithConcurrency(missingAddressKeys, 5, async (addressKey) => {
-      try {
-        const nextDetail = await fetchAddressDetail(addressKey);
-        if (isMounted) {
-          setShortlistDetails((current) => ({ ...current, [addressKey]: nextDetail }));
-        }
-      } catch {
-        if (isMounted) {
-          setShortlistDetails((current) => ({ ...current, [addressKey]: null }));
-        }
-      } finally {
-        shortlistDetailsInFlightRef.current.delete(addressKey);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [isShortlistOpen, savedVisible, shortlist.items]);
-
-  useEffect(() => {
-    if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
-      return;
-    }
-
-    const missingComparisonKeys = shortlist.items
-      .map((item) => item.addressKey)
-      .filter(
-        (addressKey) =>
-          !(addressKey in shortlistComparisonsRef.current) &&
-          !shortlistComparisonsInFlightRef.current.has(addressKey),
-      );
-
-    if (missingComparisonKeys.length === 0) {
-      return;
-    }
-
-    let isMounted = true;
-
-    // Mark all keys as in-flight before starting concurrent processing
-    for (const key of missingComparisonKeys) {
-      shortlistComparisonsInFlightRef.current.add(key);
-    }
-
-    // PERF: Update state incrementally as each promise resolves with controlled
-    // concurrency to avoid overwhelming the browser with too many simultaneous requests
-    void processWithConcurrency(missingComparisonKeys, 5, async (addressKey) => {
-      try {
-        const nextComparison = await fetchComparisonArtifact(addressKey);
-        if (isMounted) {
-          setShortlistComparisons((current) => ({ ...current, [addressKey]: nextComparison }));
-        }
-      } catch {
-        if (isMounted) {
-          setShortlistComparisons((current) => ({ ...current, [addressKey]: null }));
-        }
-      } finally {
-        shortlistComparisonsInFlightRef.current.delete(addressKey);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [isShortlistOpen, savedVisible, shortlist.items]);
+  const { shortlistRows } = useShortlistArtifacts({
+    blocks,
+    items: shortlist.items,
+    savedVisible,
+    selectedDetail,
+    selectedComparison,
+    isShortlistOpen,
+  });
 
 
   const activeFilterChips = useMemo<FilterChip[]>(
@@ -566,14 +306,14 @@ function App() {
     setMobileTab(null);
   }
 
-  if (error) {
+  if (error || loadError) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
         <Card className="w-full bg-background">
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
-              {t("app.missingData")} · {error}
+              {t("app.missingData")} · {error ?? loadError}
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-2 text-sm text-muted-foreground">
