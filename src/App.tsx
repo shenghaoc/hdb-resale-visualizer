@@ -704,7 +704,7 @@ function App() {
   if (error) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
-        <Card className="w-full panel-glass">
+        <Card className="w-full bg-background">
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
@@ -722,7 +722,7 @@ function App() {
   if (!manifest) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
-        <Card className="w-full panel-glass">
+        <Card className="w-full bg-background">
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
