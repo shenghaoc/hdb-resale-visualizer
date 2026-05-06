@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
   Languages,
@@ -9,7 +9,6 @@ import {
   X,
 } from "lucide-react";
 import {
-  DEFAULT_FILTERS,
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
@@ -28,14 +27,14 @@ import {
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { parseFilters, serializeFilters } from "@/lib/queryState";
 import { useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/types";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useUrlFilters } from "@/hooks/useUrlFilters";
+import { usePanelState } from "@/hooks/usePanelState";
 import { useTheme } from "@/hooks/useTheme";
 import { safeStorage } from "@/lib/storage";
 import { formatDateTime, formatMonth } from "@/lib/format";
@@ -44,7 +43,6 @@ import type {
   BlockSummary,
   ComparisonArtifact,
   Coordinates,
-  FilterState,
 } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
@@ -109,18 +107,8 @@ function App() {
   const error = manifestError ?? loadError;
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
-  const [filters, setFilters] = useState<FilterState>(() => {
-    if (typeof window === "undefined") {
-      return DEFAULT_FILTERS;
-    }
-
-    return {
-      ...DEFAULT_FILTERS,
-      ...parseFilters(window.location.search),
-    };
-  });
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
-  const [isShortlistOpen, setIsShortlistOpen] = useState(true);
+
   const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
     {},
   );
@@ -132,25 +120,14 @@ function App() {
   const shortlistDetailsInFlightRef = useRef<Set<string>>(new Set());
   const shortlistComparisonsInFlightRef = useRef<Set<string>>(new Set());
   const shortlist = useShortlist();
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
-
-  type DesktopTab = "filters" | "results" | "saved";
-  type MobileTab = "filters" | "results" | "saved";
-  const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
-  const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
-  const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
+  const { isDesktop, desktopTab, mobileTab, isDesktopPanelOpen, isShortlistOpen, resultsVisible, savedVisible, setDesktopTab, setMobileTab, setIsDesktopPanelOpen, setIsShortlistOpen } = usePanelState();
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
-  const { detail, comparison, isDetailLoading, isComparisonLoading, setDetail, setComparison, setIsDetailLoading, setIsComparisonLoading } = useSelectedBlockArtifacts(selectedAddressKey);
-  const resultsVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "results"
-    : mobileTab === "results";
-  const savedVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "saved"
-    : mobileTab === "saved";
+  const { detail, comparison, isDetailLoading, isComparisonLoading, beginSelectionLoad, clearSelectedArtifacts } = useSelectedBlockArtifacts(selectedAddressKey);
+  const { filters, patchFilters, resetFilters } = useUrlFilters({ clearSelectedArtifacts });
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
@@ -254,10 +231,6 @@ function App() {
     shortlist.items.length,
   ]);
 
-  useEffect(() => {
-    const nextSearch = serializeFilters(filters);
-    window.history.replaceState({}, "", `${window.location.pathname}${nextSearch}`);
-  }, [filters]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -270,7 +243,7 @@ function App() {
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [setComparison, setDetail, setIsComparisonLoading, setIsDetailLoading]);
+  }, []);
 
   useEffect(() => {
     if (!hasLoadedHeaderPreference) {
@@ -536,20 +509,6 @@ function App() {
     };
   }, [isShortlistOpen, savedVisible, shortlist.items]);
 
-  const patchFilters = useCallback((patch: Partial<FilterState>) => {
-    if ("selectedAddressKey" in patch) {
-      setIsDetailLoading(Boolean(patch.selectedAddressKey));
-      setIsComparisonLoading(Boolean(patch.selectedAddressKey));
-      if (!patch.selectedAddressKey) {
-        setDetail(null);
-        setComparison(null);
-      }
-    }
-
-    startTransition(() => {
-      setFilters((current) => ({ ...current, ...patch }));
-    });
-  }, [setComparison, setDetail, setIsComparisonLoading, setIsDetailLoading]);
 
   const activeFilterChips = useMemo<FilterChip[]>(
     () =>
@@ -570,9 +529,10 @@ function App() {
         setMobileTab("results");
       }
 
+      beginSelectionLoad(addressKey);
       patchFilters({ selectedAddressKey: addressKey });
     },
-    [isDesktop, patchFilters],
+    [beginSelectionLoad, isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
   );
 
   const handleToggleShortlist = useCallback(
@@ -647,11 +607,7 @@ function App() {
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
       onReset={() => {
-        setDetail(null);
-        setComparison(null);
-        setIsDetailLoading(false);
-        setIsComparisonLoading(false);
-        setFilters(DEFAULT_FILTERS);
+        resetFilters();
       }}
       options={manifest.filterOptions}
     />
