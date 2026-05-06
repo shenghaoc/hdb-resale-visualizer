@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@fontsource/noto-sans/latin-400.css";
-import "@fontsource/noto-sans/latin-500.css";
-import "@fontsource/noto-sans/latin-700.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/700.css";
 import "@fontsource/playfair-display/latin-500.css";
 import "@fontsource/playfair-display/latin-600.css";
 import "@fontsource/playfair-display/latin-700.css";

@@ -59,13 +59,13 @@
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
   
   /* Avenue Logic Design System - Precision Navigator */
-  --background: #f7faf9;
-  --foreground: #171c1f;
+  --background: #f8fafc;
+  --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #171c1f;
   --popover: #ffffff;
   --popover-foreground: #171c1f;
-  --primary: #2563eb;
+  --primary: #4f46e5;
   --primary-foreground: #ffffff;
   --secondary: #e3ebe8;
   --secondary-foreground: #171c1f;
@@ -77,7 +77,7 @@
   --destructive-foreground: #ffffff;
   --success: #3a8a6f;
   --success-foreground: #ffffff;
-  --border: rgba(23, 28, 31, 0.09);
+  --border: rgba(15, 23, 42, 0.08);
   --input: #dbe4e1;
   --ring: #2563eb;
   --chart-1: #2563eb;
@@ -85,6 +85,10 @@
   --chart-3: #b4c5ff;
   --chart-4: #acbfff;
   --chart-5: #dbe1ff;
+  --panel: oklch(1 0 0 / 0.92);
+  --panel-border: oklch(0.88 0.008 245 / 0.6);
+  --panel: oklch(0.17 0.016 254 / 0.88);
+  --panel-border: oklch(0.30 0.025 254 / 0.5);
   --radius: 0.5rem;
   --sidebar: #f7faf9;
   --sidebar-foreground: var(--foreground);
@@ -587,4 +591,13 @@ input[data-no-spinner="true"]::-webkit-outer-spin-button,
 input[data-no-spinner="true"]::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
+}
+
+@layer utilities {
+  .panel-glass {
+    background-color: var(--panel);
+    border: 1px solid var(--panel-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
