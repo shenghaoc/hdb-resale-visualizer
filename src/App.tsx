@@ -19,7 +19,6 @@ import {
   fetchBlockSummaries,
   fetchBlocksByTown,
   fetchComparisonArtifact,
-  fetchManifest,
   townToFilename,
 } from "@/lib/data";
 import {
@@ -34,6 +33,8 @@ import { useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/types";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
+import { useManifestData } from "@/hooks/useManifestData";
+import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useTheme } from "@/hooks/useTheme";
 import { safeStorage } from "@/lib/storage";
@@ -44,7 +45,6 @@ import type {
   ComparisonArtifact,
   Coordinates,
   FilterState,
-  Manifest,
 } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
@@ -95,16 +95,6 @@ const ResultsPane = lazy(() =>
   import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),
 );
 
-type LoadedDetail = {
-  addressKey: string;
-  data: AddressDetail | null;
-};
-
-type LoadedComparison = {
-  addressKey: string;
-  data: ComparisonArtifact | null;
-};
-
 type FilterChip = {
   key: string;
   label: string;
@@ -114,7 +104,9 @@ type FilterChip = {
 function App() {
   const { locale, setLocale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const [manifest, setManifest] = useState<Manifest | null>(null);
+  const { manifest, error: manifestError } = useManifestData();
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const error = manifestError ?? loadError;
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -127,12 +119,6 @@ function App() {
       ...parseFilters(window.location.search),
     };
   });
-  const [detail, setDetail] = useState<LoadedDetail | null>(null);
-  const [comparison, setComparison] = useState<LoadedComparison | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(filters.selectedAddressKey));
-  const [isComparisonLoading, setIsComparisonLoading] = useState(() =>
-    Boolean(filters.selectedAddressKey),
-  );
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
   const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
@@ -145,7 +131,6 @@ function App() {
   const shortlistComparisonsRef = useRef<Record<string, ComparisonArtifact | null>>({});
   const shortlistDetailsInFlightRef = useRef<Set<string>>(new Set());
   const shortlistComparisonsInFlightRef = useRef<Set<string>>(new Set());
-  const [error, setError] = useState<string | null>(null);
   const shortlist = useShortlist();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
@@ -159,6 +144,7 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const selectedAddressKey = filters.selectedAddressKey;
+  const { detail, comparison, isDetailLoading, isComparisonLoading, setDetail, setComparison, setIsDetailLoading, setIsComparisonLoading } = useSelectedBlockArtifacts(selectedAddressKey);
   const resultsVisible = isDesktop
     ? isDesktopPanelOpen && desktopTab === "results"
     : mobileTab === "results";
@@ -189,33 +175,7 @@ function App() {
     shortlistComparisonsRef.current = shortlistComparisons;
   }, [shortlistComparisons]);
 
-  useEffect(() => {
-    let isMounted = true;
 
-    async function load() {
-      try {
-        const nextManifest = await fetchManifest();
-
-        if (!isMounted) {
-          return;
-        }
-
-        setManifest(nextManifest);
-      } catch (loadError) {
-        if (!isMounted) {
-          return;
-        }
-
-        setError(loadError instanceof Error ? loadError.message : "Failed to load static data");
-      }
-    }
-
-    void load();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!manifest) {
@@ -274,7 +234,7 @@ function App() {
           return;
         }
 
-        setError(loadError instanceof Error ? loadError.message : "Failed to load blocks data");
+        setLoadError(loadError instanceof Error ? loadError.message : "Failed to load blocks data");
       }
     }
 
@@ -310,7 +270,7 @@ function App() {
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [setComparison, setDetail, setIsComparisonLoading, setIsDetailLoading]);
 
   useEffect(() => {
     if (!hasLoadedHeaderPreference) {
@@ -320,71 +280,9 @@ function App() {
     safeStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
-  useEffect(() => {
-    if (!selectedAddressKey) {
-      return;
-    }
 
-    let isMounted = true;
 
-    void fetchAddressDetail(selectedAddressKey)
-      .then((nextDetail) => {
-        if (!isMounted) {
-          return;
-        }
 
-        setDetail({ addressKey: selectedAddressKey, data: nextDetail });
-      })
-      .catch(() => {
-        if (!isMounted) {
-          return;
-        }
-
-        setDetail({ addressKey: selectedAddressKey, data: null });
-      })
-      .finally(() => {
-        if (isMounted) {
-          setIsDetailLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedAddressKey]);
-
-  useEffect(() => {
-    if (!selectedAddressKey) {
-      return;
-    }
-
-    let isMounted = true;
-
-    void fetchComparisonArtifact(selectedAddressKey)
-      .then((nextComparison) => {
-        if (!isMounted) {
-          return;
-        }
-
-        setComparison({ addressKey: selectedAddressKey, data: nextComparison });
-      })
-      .catch(() => {
-        if (!isMounted) {
-          return;
-        }
-
-        setComparison({ addressKey: selectedAddressKey, data: null });
-      })
-      .finally(() => {
-        if (isMounted) {
-          setIsComparisonLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [selectedAddressKey]);
 
   const stableFilters = useMemo(
     () => ({ ...filters, selectedAddressKey: null }),
@@ -651,7 +549,7 @@ function App() {
     startTransition(() => {
       setFilters((current) => ({ ...current, ...patch }));
     });
-  }, []);
+  }, [setComparison, setDetail, setIsComparisonLoading, setIsDetailLoading]);
 
   const activeFilterChips = useMemo<FilterChip[]>(
     () =>
