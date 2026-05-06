@@ -460,7 +460,10 @@ export function ShortlistDrawer({
       // If a cell begins with a formula prefix (=, +, -, @, \t, \r, |), we prefix it with a single quote
       // to ensure it is treated as literal text by spreadsheet software (Excel, Sheets, etc.).
       // This protects against malicious notes that could execute arbitrary commands or leak data.
-      const safeNotes = (row.item.notes || "").replace(/^[=+\-@\t\r|]/, "'$&");
+      // Match only at the start of the cell (spreadsheet apps evaluate formulas based on the first
+      // character of the cell, not per line) while accounting for leading whitespace, which Excel
+      // and Google Sheets typically trim before formula evaluation.
+      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
