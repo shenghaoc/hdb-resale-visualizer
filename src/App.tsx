@@ -704,7 +704,7 @@ function App() {
   if (error) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
-        <Card className="w-full bg-background">
+        <Card className="w-full panel-glass">
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
@@ -722,7 +722,7 @@ function App() {
   if (!manifest) {
     return (
       <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center p-4 sm:p-6 lg:p-8">
-        <Card className="w-full bg-background">
+        <Card className="w-full panel-glass">
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
@@ -832,6 +832,7 @@ function App() {
     <>
       <main
         className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
           "fixed inset-0 w-full overflow-hidden",
           isSavedDashboardOpen && "saved-dashboard-open",
         )}
@@ -851,6 +852,7 @@ function App() {
           <header
             data-testid={isDesktop ? "global-header" : undefined}
             className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
               "pointer-events-none absolute z-30 flex items-start gap-2",
               isDesktop ? "left-6 top-6 max-w-[min(42rem,calc(100vw-12rem))]" : "left-3 top-3 max-w-[70vw]",
             )}
@@ -860,6 +862,7 @@ function App() {
               aria-expanded={isMobileHeaderOpen}
               onClick={() => setIsMobileHeaderOpen((o) => !o)}
               className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                 "pointer-events-auto flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all",
                 isMobileHeaderOpen && "items-start",
               )}
@@ -973,6 +976,7 @@ function App() {
             role="toolbar"
             aria-label={t("filters.title")}
             className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
               "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
               isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(min(44rem,48vw)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
             )}
@@ -1029,6 +1033,7 @@ function App() {
                 data-open={isDesktopPanelOpen ? "true" : "false"}
                 data-mode={desktopTab}
                 className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                   "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
                   desktopTab === "saved"
                     ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
@@ -1044,6 +1049,7 @@ function App() {
                     id="desktop-filters-content"
                     aria-hidden={desktopTab !== "filters"}
                     className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                       "h-full overflow-y-auto p-3 pb-8",
                       desktopTab === "filters" ? "block" : "hidden",
                     )}
@@ -1054,12 +1060,14 @@ function App() {
                     id="desktop-results-content"
                     aria-hidden={desktopTab !== "results"}
                     className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                       "h-full min-h-0 flex-col gap-3 overflow-hidden p-3 pb-8",
                       desktopTab === "results" ? "flex" : "hidden",
                     )}
                   >
                     <div
                       className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                         "min-h-0 flex-1 flex-col",
                         detailVisible || detailLoading ? "hidden" : "flex",
                       )}
@@ -1069,6 +1077,7 @@ function App() {
                     {/* Render detail inline so it replaces results when active */}
                     <div
                       className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                         "min-h-0 flex-1 flex-col",
                         detailVisible || detailLoading ? "flex" : "hidden",
                       )}
@@ -1080,6 +1089,7 @@ function App() {
                     id="desktop-saved-content"
                     aria-hidden={desktopTab !== "saved"}
                     className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                       "h-full min-h-0 flex-col overflow-hidden p-3 pb-8",
                       desktopTab === "saved" ? "flex" : "hidden",
                     )}
@@ -1095,22 +1105,26 @@ function App() {
                 <div
                   id="mobile-panel"
                   className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                     "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all dark:bg-card",
                     activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0"
                   )}
                 >
                   <div
                     id="mobile-filters-content"
-                    className={cn("h-full overflow-y-auto p-3 pb-12", mobileTab === "filters" ? "block" : "hidden")}
+                    className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10","h-full overflow-y-auto p-3 pb-12", mobileTab === "filters" ? "block" : "hidden")}
                   >
                     {filterContent}
                   </div>
                   <div
                     id="mobile-results-content"
-                    className={cn("h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12", mobileTab === "results" ? "flex" : "hidden")}
+                    className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10","h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12", mobileTab === "results" ? "flex" : "hidden")}
                   >
                     <div
                       className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                         "min-h-0 flex-1 flex-col",
                         detailVisible || detailLoading ? "hidden" : "flex",
                       )}
@@ -1120,6 +1134,7 @@ function App() {
                     {/* Render detail inline so it replaces results when active */}
                     <div
                       className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10",
                         "min-h-0 flex-1 flex-col",
                         detailVisible || detailLoading ? "flex" : "hidden",
                       )}
@@ -1129,7 +1144,8 @@ function App() {
                   </div>
                   <div
                     id="mobile-saved-content"
-                    className={cn("h-full min-h-0 flex-col overflow-hidden p-3 pb-12", mobileTab === "saved" ? "flex" : "hidden")}
+                    className={cn(
+              "panel-glass rounded-xl overflow-hidden shadow-xl shadow-black/10","h-full min-h-0 flex-col overflow-hidden p-3 pb-12", mobileTab === "saved" ? "flex" : "hidden")}
                   >
                     {savedContent}
                   </div>
