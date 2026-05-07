@@ -19,9 +19,9 @@ export default tseslint.config(
     ],
   },
 
-  // Fast syntax-only rules for all TS/TSX files
+  // Syntax-only rules for all lintable files (JS configs + all TS/TSX)
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     languageOptions: {
       globals: {
@@ -29,6 +29,11 @@ export default tseslint.config(
         ...globals.node,
       },
     },
+  },
+
+  // React plugins for TSX/TS only
+  {
+    files: ["**/*.{ts,tsx}"],
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
@@ -39,7 +44,7 @@ export default tseslint.config(
     },
   },
 
-  // Type-checked rules only for app source and build scripts
+  // Type-checked rules layered on top for app source and build scripts
   {
     files: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
     extends: [...tseslint.configs.recommendedTypeChecked],
