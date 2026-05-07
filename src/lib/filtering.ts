@@ -197,6 +197,11 @@ let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
 
+// Cache canonical flat type values per filter string to avoid re-running
+// `canonicalFlatType` (which performs `.trim().toUpperCase()`) on every block
+// in the 10,000+ iteration `matchesFilter` loop.
+const filterFlatTypeCache = new Map<string, string>();
+
 function getCanonicalFlatTypes(block: BlockSummary): string[] {
   let canonical = blockCanonicalFlatTypesCache.get(block);
   if (!canonical) {
@@ -399,8 +404,6 @@ function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
   return earthRadiusMeters * c;
 }
 
-// Removed module-level CURRENT_YEAR; use getCurrentYear() per operation.
-
 export function resolveGeographicSearchIntent(
   query: string,
   blocks: BlockSummary[],
@@ -483,7 +486,6 @@ export function resetFilteringCachesForTests(): void {
 
 // Cache the current year to avoid expensive Date instantiations in the filtering loop
 const CURRENT_YEAR = new Date().getFullYear();
-const filterFlatTypeCache = new Map<string, string>();
 
 export function matchesFilter(
   block: BlockSummary,
@@ -547,7 +549,7 @@ export function matchesFilter(
     // ⚡ Bolt: Use a cached value for the filter's canonical flat type instead of re-evaluating
     // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
     let canonicalSelectedFlatType = filterFlatTypeCache.get(filters.flatType);
-    if (!canonicalSelectedFlatType) {
+    if (canonicalSelectedFlatType === undefined) {
       canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
       filterFlatTypeCache.set(filters.flatType, canonicalSelectedFlatType);
     }
