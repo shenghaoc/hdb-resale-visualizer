@@ -46,7 +46,17 @@ jobs:
           restore-keys: |
             ${{ steps.pipeline-cache.outputs.prefix }}-
 
+      - name: Check if pipeline cache was restored
+        id: cache-presence
+        run: |
+          if [ -f public/data/manifest.json ]; then
+            echo "restored=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "restored=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Verify cached data artifacts
+        if: steps.cache-presence.outputs.restored == 'true'
         id: data-check
         continue-on-error: true
         run: bun run check:data
@@ -58,14 +68,14 @@ jobs:
           echo "upstream_at=$prev" >> "$GITHUB_OUTPUT"
 
       - name: Sync official datasets (force)
-        if: steps.data-check.outcome != 'success'
+        if: steps.cache-presence.outputs.restored != 'true' || steps.data-check.outcome != 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data --force
 
       - name: Sync official datasets
-        if: steps.data-check.outcome == 'success'
+        if: steps.cache-presence.outputs.restored == 'true' && steps.data-check.outcome == 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
