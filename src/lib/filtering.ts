@@ -197,6 +197,11 @@ let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
 
+// Cache canonical flat type values per filter string to avoid re-running
+// `canonicalFlatType` (which performs `.trim().toUpperCase()`) on every block
+// in the 10,000+ iteration `matchesFilter` loop.
+const filterFlatTypeCache = new Map<string, string>();
+
 function getCanonicalFlatTypes(block: BlockSummary): string[] {
   let canonical = blockCanonicalFlatTypesCache.get(block);
   if (!canonical) {
@@ -399,8 +404,6 @@ function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
   return earthRadiusMeters * c;
 }
 
-// Removed module-level CURRENT_YEAR; use getCurrentYear() per operation.
-
 export function resolveGeographicSearchIntent(
   query: string,
   blocks: BlockSummary[],
@@ -475,6 +478,7 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
+  filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
@@ -542,7 +546,13 @@ export function matchesFilter(
   }
 
   if (filters.flatType) {
-    const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
+    // ⚡ Bolt: Use a cached value for the filter's canonical flat type instead of re-evaluating
+    // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
+    let canonicalSelectedFlatType = filterFlatTypeCache.get(filters.flatType);
+    if (canonicalSelectedFlatType === undefined) {
+      canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
+      filterFlatTypeCache.set(filters.flatType, canonicalSelectedFlatType);
+    }
     if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
       return false;
     }
@@ -550,7 +560,7 @@ export function matchesFilter(
 
   // ⚡ Bolt: Move expensive regex/tokenization text search check to the very end
   // This reduces expensive computations by >50% since most blocks are filtered out by simpler bounds first
-  if (!geographicIntent && !searchMatchesBlock(block, filters.search)) {
+  if (!geographicIntent && filters.search && !searchMatchesBlock(block, filters.search)) {
     return false;
   }
 
