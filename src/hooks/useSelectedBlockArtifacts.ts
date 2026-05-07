@@ -19,22 +19,20 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(selectedAddressKey));
   const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(selectedAddressKey));
 
-  /* eslint-disable react-hooks/set-state-in-effect -- Synchronous resets are intentional: clearing stale artifacts before async fetches prevents stale UI during selection changes. */
-  useEffect(() => {
-    if (!selectedAddressKey) {
-      setDetail(null);
-      setComparison(null);
-      setIsDetailLoading(false);
-      setIsComparisonLoading(false);
-      return;
-    }
-
-    let isMounted = true;
+  const [prevKey, setPrevKey] = useState(selectedAddressKey);
+  if (selectedAddressKey !== prevKey) {
+    setPrevKey(selectedAddressKey);
+    const isNowSelected = Boolean(selectedAddressKey);
+    setIsDetailLoading(isNowSelected);
+    setIsComparisonLoading(isNowSelected);
     setDetail(null);
     setComparison(null);
-    setIsDetailLoading(true);
-    setIsComparisonLoading(true);
-    /* eslint-enable react-hooks/set-state-in-effect */
+  }
+
+  useEffect(() => {
+    if (!selectedAddressKey) return;
+
+    let isMounted = true;
 
     void fetchAddressDetail(selectedAddressKey)
       .then((nextDetail) => {
