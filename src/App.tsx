@@ -289,7 +289,6 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks.length,
     sortedTowns,
     savedVisible,
     shortlist.items.length,
