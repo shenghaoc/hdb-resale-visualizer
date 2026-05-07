@@ -168,6 +168,13 @@ function App() {
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
   const debouncedSearch = useDebouncedValue(filters.search, 200);
+  // Keep effect-local loaders on the latest caches without re-running them for
+  // every incremental state write.
+  const blocksRef = useRef(blocks);
+
+  useEffect(() => {
+    blocksRef.current = blocks;
+  }, [blocks]);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
@@ -233,7 +240,8 @@ function App() {
 
     async function loadBlocks() {
       try {
-        const hasAllBlocks = blocks.length >= totalBlocks;
+        const currentBlocks = blocksRef.current;
+        const hasAllBlocks = currentBlocks.length >= totalBlocks;
 
         if (needsAllBlocks) {
           if (hasAllBlocks) {
@@ -247,7 +255,7 @@ function App() {
           if (hasAllBlocks) {
             return;
           }
-          const alreadyHasTown = blocks.some((b) => b.town === effectiveTown);
+          const alreadyHasTown = currentBlocks.some((b) => b.town === effectiveTown);
           if (alreadyHasTown) {
             return;
           }
@@ -281,7 +289,7 @@ function App() {
     debouncedSearch,
     userLocation,
     selectedAddressKey,
-    blocks,
+    blocks.length,
     sortedTowns,
     savedVisible,
     shortlist.items.length,
@@ -583,7 +591,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistDetails]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   useEffect(() => {
     if (!savedVisible || !isShortlistOpen || shortlist.items.length === 0) {
@@ -629,7 +637,7 @@ function App() {
     return () => {
       isMounted = false;
     };
-  }, [isShortlistOpen, savedVisible, shortlist.items, shortlistComparisons]);
+  }, [isShortlistOpen, savedVisible, shortlist.items]);
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     if ("selectedAddressKey" in patch) {
