@@ -53,7 +53,7 @@ export default tseslint.config(
   ...(typedLintEnabled
     ? [
         {
-          files: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+          files: ["src/**/*.{ts,tsx}", "shared/**/*.{ts,tsx}", "scripts/**/*.ts"],
           extends: [...tseslint.configs.recommendedTypeChecked],
           languageOptions: {
             parserOptions: {
