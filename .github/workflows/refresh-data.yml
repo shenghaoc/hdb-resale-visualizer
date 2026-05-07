@@ -45,6 +45,7 @@ jobs:
           key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
           restore-keys: |
             ${{ steps.pipeline-cache.outputs.prefix }}-
+            pipeline-cache-v2-${{ runner.os }}-
 
       - name: Check if pipeline cache was restored
         id: cache-presence
