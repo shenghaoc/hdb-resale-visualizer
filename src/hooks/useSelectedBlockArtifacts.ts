@@ -14,8 +14,10 @@ type LoadedComparison = { addressKey: string; data: ComparisonArtifact | null };
 export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
   const [detail, setDetail] = useState<LoadedDetail | null>(null);
   const [comparison, setComparison] = useState<LoadedComparison | null>(null);
-  const [isDetailLoading, setIsDetailLoading] = useState(false);
-  const [isComparisonLoading, setIsComparisonLoading] = useState(false);
+  // Initialize loading flags based on whether a selection exists on mount (deep link scenario).
+  // This prevents a brief flash of non-loading state before the useEffect runs.
+  const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(selectedAddressKey));
+  const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(selectedAddressKey));
 
   /* eslint-disable react-hooks/set-state-in-effect -- Selection changes must clear stale artifacts before rendering settled detail UI. */
   useEffect(() => {
