@@ -50,7 +50,7 @@ function DrawerContent({ className, hideHandle = false, children, ...props }: Dr
       role="dialog"
       aria-modal="false"
       className={cn(
-        "flex min-h-0 flex-col overflow-hidden border border-border panel-glass shadow-lg outline-none",
+        "flex min-h-0 flex-col overflow-hidden panel-glass shadow-lg outline-none",
         "rounded-lg",
         className,
       )}
