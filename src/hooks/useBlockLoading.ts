@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { fetchBlockSummaries, fetchBlocksByTown, townToFilename } from "@/lib/data";
 import type { BlockSummary, Manifest } from "@/types/data";
 
@@ -25,6 +25,7 @@ export function useBlockLoading({
 }: UseBlockLoadingArgs) {
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const blocksRef = useRef<BlockSummary[]>([]);
 
   const hasGeographic = useMemo(
     () => Boolean(debouncedSearch.trim() || userLocationPresent),
@@ -45,17 +46,21 @@ export function useBlockLoading({
 
     async function loadBlocks() {
       try {
-        const hasAllBlocks = blocks.length >= totalBlocks;
+        const currentBlocks = blocksRef.current;
+        const hasAllBlocks = currentBlocks.length >= totalBlocks;
 
         if (needsAllBlocks) {
           if (hasAllBlocks) return;
           const nextBlocks = await fetchBlockSummaries();
-          if (isMounted) setBlocks(nextBlocks);
+          if (isMounted) {
+            blocksRef.current = nextBlocks;
+            setBlocks(nextBlocks);
+          }
           return;
         }
 
         if (!effectiveTown || hasAllBlocks) return;
-        if (blocks.some((block) => block.town === effectiveTown)) return;
+        if (currentBlocks.some((block) => block.town === effectiveTown)) return;
 
         const nextBlocks = await fetchBlocksByTown(effectiveTown);
         if (!isMounted || !Array.isArray(nextBlocks)) return;
@@ -64,7 +69,9 @@ export function useBlockLoading({
           if (current.length >= totalBlocks || current.some((block) => block.town === effectiveTown)) {
             return current;
           }
-          return [...current, ...nextBlocks];
+          const updated = [...current, ...nextBlocks];
+          blocksRef.current = updated;
+          return updated;
         });
       } catch (error) {
         if (!isMounted) return;
@@ -86,7 +93,6 @@ export function useBlockLoading({
     savedVisible,
     shortlistCount,
     hasGeographic,
-    blocks,
   ]);
 
   return { blocks, loadError };
