@@ -13,7 +13,6 @@ import {
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
 } from "@/lib/constants";
-
 import {
   getSelectionByAddressKey,
   matchesFilter,
@@ -131,10 +130,6 @@ function App() {
 
     safeStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
-
-
-
-
 
   const stableFilters = useMemo(
     () => ({ ...filters, selectedAddressKey: null }),
