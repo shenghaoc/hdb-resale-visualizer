@@ -12,7 +12,7 @@ Before executing any directive, agents MUST read the authoritative steering file
 
 ## 🛡️ Workspace MCP Config
 Workspace MCP configuration lives in [`.kiro/settings/mcp.json`](.kiro/settings/mcp.json).
-Use it for repo-relevant tool integrations such as shadcn MCP, but keep generic external tooling and personal machine setup out of committed Kiro powers.
+Use it for repo-relevant tool integrations such as shadcn MCP, but keep generic external tooling and personal machine setup out of the committed repository configuration.
 
 ## 📈 Active Work (Specs)
 Current initiatives follow the **Kiro Tech-Design-First** workflow. Specs are located in `.kiro/specs/` and follow a strict **Design → Requirements → Tasks** hierarchy.

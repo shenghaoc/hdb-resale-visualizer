@@ -6,7 +6,6 @@
   - **`specs/`**: Active or retained feature and bugfix specifications.
   - **`settings/mcp.json`**: Workspace MCP configuration for repo-relevant tool integrations.
 - **`.agents/`**: Local agent tooling only. Keep it untracked and out of repository history.
-- **Generic external tooling**: Do not vendor generic shadcn or design-system agent bundles into this repo. Use workspace MCP config or external installs instead.
 - **`src/`**: React application source code.
   - **`components/`**: UI components.
   - **`components/ui/`**: Base Shadcn components.
@@ -25,3 +24,7 @@
 - **Hooks**: `useCamelCase.ts`.
 - **Lib/Utils**: `camelCase.ts`.
 - **Data Artifacts**: `kebab-case.json`.
+
+## Tooling Policy
+- Do not vendor generic shadcn or design-system agent bundles into this repo.
+- Use workspace MCP config or external installs for generic external tooling.
