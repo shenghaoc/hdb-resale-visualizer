@@ -475,6 +475,7 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
+  filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
