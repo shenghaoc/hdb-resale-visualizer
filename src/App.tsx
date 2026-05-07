@@ -27,7 +27,7 @@ import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState, type DesktopTab } from "@/hooks/usePanelState";
+import { usePanelState, type PanelTab } from "@/hooks/usePanelState";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
@@ -408,7 +408,7 @@ function App() {
     </Suspense>
   ) : null;
 
-  const desktopPanelWidths: Record<DesktopTab, string> = {
+  const desktopPanelWidths: Record<PanelTab, string> = {
     filters: "w-[min(30rem,34vw)]",
     results: "w-[min(34rem,38vw)]",
     saved: "w-[min(44rem,48vw)]",

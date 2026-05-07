@@ -19,7 +19,6 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
   const [isDetailLoading, setIsDetailLoading] = useState(() => Boolean(selectedAddressKey));
   const [isComparisonLoading, setIsComparisonLoading] = useState(() => Boolean(selectedAddressKey));
 
-  /* eslint-disable react-hooks/set-state-in-effect -- Selection changes must clear stale artifacts before rendering settled detail UI. */
   useEffect(() => {
     if (!selectedAddressKey) {
       setDetail(null);
@@ -63,7 +62,6 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
       isMounted = false;
     };
   }, [selectedAddressKey]);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   const selectedDetail =
     selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;

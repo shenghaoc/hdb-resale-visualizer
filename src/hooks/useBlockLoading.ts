@@ -86,8 +86,6 @@ export function useBlockLoading({
   }, [
     manifest,
     townFilter,
-    debouncedSearch,
-    userLocationPresent,
     selectedAddressKey,
     sortedTowns,
     savedVisible,

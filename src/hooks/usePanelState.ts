@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-export type DesktopTab = "filters" | "results" | "saved";
-export type MobileTab = "filters" | "results" | "saved";
+export type PanelTab = "filters" | "results" | "saved";
 
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
-  const [desktopTab, setDesktopTab] = useState<DesktopTab>("filters");
-  const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
+  const [desktopTab, setDesktopTab] = useState<PanelTab>("filters");
+  const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
   const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
 
