@@ -66,9 +66,9 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
   /* eslint-enable react-hooks/set-state-in-effect */
 
   const selectedDetail =
-    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail : null;
+    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
   const selectedComparison =
-    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison : null;
+    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
 
   return {
     detail: selectedDetail,

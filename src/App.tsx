@@ -227,16 +227,12 @@ function App() {
   const detailVisible = Boolean(selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
   const comparisonLoading = detailVisible && isComparisonLoading;
-  const selectedDetail =
-    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
-  const selectedComparison =
-    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
   const { shortlistRows } = useShortlistArtifacts({
     blocks,
     items: shortlist.items,
     savedVisible,
-    selectedDetail,
-    selectedComparison,
+    selectedDetail: detail,
+    selectedComparison: comparison,
     isShortlistOpen,
   });
 
@@ -370,8 +366,8 @@ function App() {
     detailVisible || detailLoading ? (
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
         <DetailDrawer
-          detail={selectedDetail}
-          comparison={selectedComparison}
+          detail={detail}
+          comparison={comparison}
           selectedBlock={selectedBlock}
           isLoading={detailLoading}
           isComparisonLoading={comparisonLoading}
