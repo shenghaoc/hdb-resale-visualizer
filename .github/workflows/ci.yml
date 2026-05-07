@@ -161,6 +161,7 @@ jobs:
           key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
           restore-keys: |
             ${{ steps.pipeline-cache.outputs.prefix }}-
+            pipeline-cache-v2-${{ runner.os }}-
 
       - name: Check if pipeline cache was restored
         if: steps.deploy-target.outputs.should_deploy == 'true'
@@ -197,7 +198,7 @@ jobs:
         run: bun run build:deploy
 
       - name: Compute pipeline cache save key
-        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success' && github.event_name != 'pull_request'
+        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success'
         id: pipeline-cache-save-key
         run: |
           upstream_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
@@ -214,7 +215,7 @@ jobs:
           echo "generated_key=$generated_key" >> "$GITHUB_OUTPUT"
 
       - name: Save pipeline cache
-        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success' && github.event_name != 'pull_request'
+        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success'
         uses: actions/cache/save@v5
         with:
           path: |
