@@ -40,7 +40,7 @@ function useMissingArtifactLoader<T>(
   items: ShortlistItem[],
   artifactsRef: MutableRefObject<Record<string, T | null>>,
   inFlightRef: MutableRefObject<Set<string>>,
-  fetchArtifact: (key: string) => Promise<T>,
+  fetchArtifact: (key: string) => Promise<T | null>,
   setArtifacts: Dispatch<SetStateAction<Record<string, T | null>>>,
 ) {
   useEffect(() => {
