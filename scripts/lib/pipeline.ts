@@ -6,8 +6,8 @@ import type {
   ComparisonArtifact,
   Manifest,
   TownFlatTypeTrendPoint,
-} from "@/types/data";
-import { buildFilterOptions } from "../../src/lib/filterOptions";
+} from "../../shared/data-types";
+import { buildFilterOptions } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
 
 export type ResaleTransaction = {
@@ -136,7 +136,7 @@ export function normalizeText(value: string): string {
   return value.trim().replace(/\s+/g, " ").toUpperCase();
 }
 
-export { townToFilename } from "../../src/lib/utils";
+export { townToFilename } from "../../shared/geo";
 
 export function makeAddressKey(town: string, block: string, streetName: string): string {
   const source = `${normalizeText(town)}-${normalizeText(block)}-${normalizeText(streetName)}`;

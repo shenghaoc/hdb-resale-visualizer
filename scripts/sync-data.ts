@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import Papa from "papaparse";
 import { makeSupermarketCacheKey } from "./lib/amenity";
+import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
 import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
@@ -47,41 +47,6 @@ type CollectionMetadata = {
   lastUpdatedAt: string;
 };
 
-function getHeaders() {
-  const apiKey = process.env.DATA_GOV_API_KEY;
-
-  return apiKey ? { "x-api-key": apiKey } : {};
-}
-
-async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
-  let lastError: Error | null = null;
-
-  for (let attempt = 0; attempt < 6; attempt += 1) {
-    const response = await fetch(url, {
-      ...init,
-      headers: {
-        "content-type": "application/json",
-        ...getHeaders(),
-        ...(init?.headers ?? {}),
-      },
-    });
-
-    if (response.ok) {
-      return (await response.json()) as T;
-    }
-
-    if (response.status === 429 || response.status >= 500) {
-      lastError = new Error(`Request failed for ${url}: ${response.status}`);
-      await sleep(2200 * (attempt + 1));
-      continue;
-    }
-
-    throw new Error(`Request failed for ${url}: ${response.status}`);
-  }
-
-  throw lastError ?? new Error(`Request failed for ${url}`);
-}
-
 async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
   const payload = await fetchJson<unknown>(
     `https://api-production.data.gov.sg/v2/public/api/collections/${RESALE_COLLECTION_ID}/metadata`,
@@ -92,69 +57,6 @@ async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
     childDatasets: parsed.data.collectionMetadata.childDatasets,
     lastUpdatedAt: parsed.data.collectionMetadata.lastUpdatedAt,
   };
-}
-
-async function sleep(milliseconds: number) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, milliseconds);
-  });
-}
-
-async function getDatasetDownloadUrl(datasetId: string) {
-  const base = `https://api-open.data.gov.sg/v1/public/api/datasets/${datasetId}`;
-
-  try {
-    await fetchJson(`${base}/initiate-download`, {
-      method: "POST",
-      body: JSON.stringify({}),
-    });
-  } catch {
-    // Some datasets expose the file directly through poll-download without initiation.
-  }
-
-  for (let attempt = 0; attempt < 8; attempt += 1) {
-    const payload = await fetchJson<{ code: number; data?: { url?: string } }>(
-      `${base}/poll-download`,
-    );
-    const url = payload.data?.url;
-    if (url) {
-      return url;
-    }
-
-    await sleep(1500);
-  }
-
-  throw new Error(`Timed out waiting for dataset download URL: ${datasetId}`);
-}
-
-async function fetchCsvRows(datasetId: string) {
-  const downloadUrl = await getDatasetDownloadUrl(datasetId);
-  const response = await fetch(downloadUrl);
-  if (!response.ok) {
-    throw new Error(`Failed to download CSV for ${datasetId}: ${response.status}`);
-  }
-
-  const csv = await response.text();
-  const parsed = Papa.parse<Record<string, string>>(csv, {
-    header: true,
-    skipEmptyLines: true,
-  });
-
-  if (parsed.errors.length > 0) {
-    throw new Error(`CSV parse error for ${datasetId}: ${parsed.errors[0]?.message ?? "unknown"}`);
-  }
-
-  return parsed.data;
-}
-
-async function fetchGeoJson(datasetId: string): Promise<RawGeoJson> {
-  const downloadUrl = await getDatasetDownloadUrl(datasetId);
-  const response = await fetch(downloadUrl);
-  if (!response.ok) {
-    throw new Error(`Failed to download GEOJSON for ${datasetId}: ${response.status}`);
-  }
-
-  return (await response.json()) as RawGeoJson;
 }
 
 async function loadGeocodeCache(): Promise<GeocodeCacheFile> {
@@ -182,11 +84,7 @@ async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
   url.searchParams.set("getAddrDetails", "Y");
   url.searchParams.set("pageNum", "1");
 
-  const payload = await fetchJson<unknown>(url.toString(), {
-    headers: {
-      ...getHeaders(),
-    },
-  });
+  const payload = await fetchJson<unknown>(url.toString());
 
   const parsed = oneMapResponseSchema.parse(payload);
   const match = parsed.results[0];
