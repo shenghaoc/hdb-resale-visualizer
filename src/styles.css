@@ -62,13 +62,13 @@
   --background: #f8fafc;
   --foreground: #0f172a;
   --card: #ffffff;
-  --card-foreground: #171c1f;
+  --card-foreground: #0f172a;
   --popover: #ffffff;
-  --popover-foreground: #171c1f;
+  --popover-foreground: #0f172a;
   --primary: #4f46e5;
   --primary-foreground: #ffffff;
-  --secondary: #e3ebe8;
-  --secondary-foreground: #171c1f;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
   --muted: #eef4f2;
   --muted-foreground: #6b7572;
   --accent: #dcece8;
@@ -79,7 +79,7 @@
   --success-foreground: #ffffff;
   --border: rgba(15, 23, 42, 0.08);
   --input: #dbe4e1;
-  --ring: #4f46e5;
+  --ring: var(--primary);
   --chart-1: var(--primary);
   --chart-2: #495c95;
   --chart-3: #b4c5ff;
@@ -105,8 +105,8 @@
   --card-foreground: #e4e7e4;
   --popover: #202724;
   --popover-foreground: #e4e7e4;
-  --primary: #79a6ff; /* Desaturated + Brightened blue */
-  --primary-foreground: #081224;
+  --primary: #818cf8; /* Indigo 400 */
+  --primary-foreground: #1e1b4b;
   --secondary: #24302c;
   --secondary-foreground: #dce9e4;
   --muted: #202724;
@@ -119,7 +119,7 @@
   --success-foreground: #102412;
   --border: rgba(222, 232, 225, 0.11);
   --input: #2b3934;
-  --ring: #79a6ff;
+  --ring: var(--primary);
   --chart-1: var(--primary);
   --chart-2: #9bb7ff;
   --chart-3: #4f6d9f;
@@ -597,7 +597,7 @@ input[data-no-spinner="true"]::-webkit-inner-spin-button {
   .panel-glass {
     background-color: var(--panel);
     border: 1px solid var(--panel-border);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 }
