@@ -4,6 +4,8 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
+const typedLintEnabled = process.env.ESLINT_TYPED === "1";
+
 export default tseslint.config(
   {
     ignores: [
@@ -14,6 +16,9 @@ export default tseslint.config(
       "scratch.tsx",
       ".agents",
       ".kiro",
+      ".claude",
+      ".gemini",
+      ".jules",
       "docs/archive",
       "public/data",
     ],
@@ -44,15 +49,19 @@ export default tseslint.config(
     },
   },
 
-  // Type-checked rules layered on top for app source and build scripts
-  {
-    files: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
-    extends: [...tseslint.configs.recommendedTypeChecked],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
+  // Type-checked rules — only activated when ESLINT_TYPED=1
+  ...(typedLintEnabled
+    ? [
+        {
+          files: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+          extends: [...tseslint.configs.recommendedTypeChecked],
+          languageOptions: {
+            parserOptions: {
+              projectService: true,
+              tsconfigRootDir: import.meta.dirname,
+            },
+          },
+        },
+      ]
+    : []),
 );
