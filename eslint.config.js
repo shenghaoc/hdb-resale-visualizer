@@ -6,26 +6,34 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["dist", "coverage", "playwright-report", "test-results", "scratch.tsx"],
+    ignores: [
+      "dist",
+      "coverage",
+      "playwright-report",
+      "test-results",
+      "scratch.tsx",
+      ".agents",
+      ".kiro",
+      "docs/archive",
+      "public/data",
+    ],
   },
+
+  // Syntax-only rules for all lintable files (JS configs + all TS/TSX)
   {
-    files: ["**/*.{ts,tsx}"],
-    extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
+    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     languageOptions: {
-      parserOptions: {
-        project: [
-          "./tsconfig.app.json",
-          "./tsconfig.node.json",
-          "./tsconfig.test.json",
-          "./tsconfig.e2e.json",
-        ],
-        tsconfigRootDir: import.meta.dirname,
-      },
       globals: {
         ...globals.browser,
         ...globals.node,
       },
     },
+  },
+
+  // React plugins for TSX/TS only
+  {
+    files: ["**/*.{ts,tsx}"],
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
@@ -33,6 +41,18 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    },
+  },
+
+  // Type-checked rules layered on top for app source and build scripts
+  {
+    files: ["src/**/*.{ts,tsx}", "scripts/**/*.ts"],
+    extends: [...tseslint.configs.recommendedTypeChecked],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
 );
