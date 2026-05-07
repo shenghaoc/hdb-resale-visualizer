@@ -46,16 +46,20 @@ jobs:
           restore-keys: |
             ${{ steps.pipeline-cache.outputs.prefix }}-
 
+      - name: Check if pipeline cache was restored
+        id: cache-presence
+        run: |
+          if [ -f public/data/manifest.json ]; then
+            echo "restored=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "restored=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Verify cached data artifacts
-        if: steps.pipeline-cache-restore.outputs.cache-hit == 'true'
+        if: steps.cache-presence.outputs.restored == 'true'
         id: data-check
         continue-on-error: true
         run: bun run check:data
-
-      - name: Mark data check as skipped when cache is cold
-        if: steps.pipeline-cache-restore.outputs.cache-hit != 'true'
-        id: data-check-skipped
-        run: echo "No pipeline cache hit; skipping cached artifact verification."
 
       - name: Record upstream timestamp before sync
         id: pre-sync
@@ -64,14 +68,14 @@ jobs:
           echo "upstream_at=$prev" >> "$GITHUB_OUTPUT"
 
       - name: Sync official datasets (force)
-        if: steps.pipeline-cache-restore.outputs.cache-hit != 'true' || steps.data-check.outcome != 'success'
+        if: steps.cache-presence.outputs.restored != 'true' || steps.data-check.outcome != 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
         run: bun run sync-data --force
 
       - name: Sync official datasets
-        if: steps.pipeline-cache-restore.outputs.cache-hit == 'true' && steps.data-check.outcome == 'success'
+        if: steps.cache-presence.outputs.restored == 'true' && steps.data-check.outcome == 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
