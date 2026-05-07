@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
@@ -22,6 +22,7 @@ type MapViewProps = {
   townFilter?: string | null;
   autoFitKey?: string | null;
   showBlockMarkers?: boolean;
+  isDarkMode: boolean;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
   onGeolocate?: (coords: Coordinates) => void;
@@ -54,10 +55,6 @@ type GeoJsonDataSourceLike = {
 type RasterSourceLike = {
   setTiles(tiles: string[]): void;
 };
-
-function getIsDarkFromDocument(): boolean {
-  return typeof document !== "undefined" && document.documentElement.classList.contains("dark");
-}
 
 function createCircleGeoJson(
   center: Coordinates,
@@ -120,6 +117,7 @@ export function MapView({
   townFilter,
   autoFitKey,
   showBlockMarkers = false,
+  isDarkMode,
   onSelect,
   onMapInteract,
   onGeolocate,
@@ -135,12 +133,12 @@ export function MapView({
   const localeRef = useRef(locale);
   const popupRef = useRef<Popup | null>(null);
   const prefersReducedMotionRef = useRef(false);
+  const initialIsDarkModeRef = useRef(isDarkMode);
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
-  const lastAppliedThemeRef = useRef<boolean>(getIsDarkFromDocument());
+  const lastAppliedThemeRef = useRef<boolean>(isDarkMode);
   const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(getIsDarkFromDocument);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -169,24 +167,6 @@ export function MapView({
     localeRef.current = locale;
   }, [locale]);
 
-  useEffect(() => {
-    if (typeof document === "undefined") {
-      return;
-    }
-
-    const root = document.documentElement;
-    const updateTheme = () => setIsDarkMode(getIsDarkFromDocument());
-    updateTheme();
-
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   // Create the map ONCE on mount
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -194,7 +174,7 @@ export function MapView({
     }
 
     prefersReducedMotionRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const initialIsDark = getIsDarkFromDocument();
+    const initialIsDark = initialIsDarkModeRef.current;
     const map = new maplibregl.Map({
       container: containerRef.current,
       attributionControl: false,
@@ -726,6 +706,7 @@ export function MapView({
     <div
       className="map-view bg-background transition-colors duration-300"
       data-testid="map-view"
+      data-theme={isDarkMode ? "dark" : "light"}
       ref={containerRef}
       role="application"
       aria-label={t("map.ariaLabel")}

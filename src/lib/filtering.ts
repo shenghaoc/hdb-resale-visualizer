@@ -214,7 +214,7 @@ function getCanonicalFlatTypes(block: BlockSummary): string[] {
 function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   const searchTokens = tokenizeSearchText(query);
   if (searchTokens.length === 0) {
-    return true;
+    return query.trim().length === 0;
   }
 
   let blockTokens = blockTokensCache.get(block);

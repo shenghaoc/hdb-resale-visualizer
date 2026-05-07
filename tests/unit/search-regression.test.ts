@@ -107,6 +107,16 @@ describe("Search Matching Regression", () => {
     });
   });
 
+  describe("Unsupported multilingual terms", () => {
+    it("does not treat an unrecognized Chinese query as an empty match-all search", () => {
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "中山" })).toBe(false);
+    });
+
+    it("still matches configured Chinese town aliases", () => {
+      expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "宏茂桥" })).toBe(true);
+    });
+  });
+
   describe("Postal code search", () => {
     it("matches exact 6-digit postal code", () => {
       expect(matchesFilter(block, { ...EMPTY_FILTERS, search: "560101" })).toBe(true);

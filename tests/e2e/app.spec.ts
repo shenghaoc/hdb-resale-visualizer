@@ -126,6 +126,46 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await expect(page.getByTestId("shortlist-drawer")).toContainText(rowAddress ?? "");
 });
 
+test("mobile saved tab preserves autodetected dark theme and exposes display controls", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: (query: string) => ({
+        matches: query.includes("prefers-color-scheme: dark"),
+        media: query,
+        onchange: null,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+        addListener: () => undefined,
+        removeListener: () => undefined,
+        dispatchEvent: () => false,
+      }),
+    });
+  });
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const mapView = page.getByTestId("map-view");
+  await expect(mapView).toBeVisible({ timeout: 20_000 });
+  await expect(mapView).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator("html")).toHaveClass(/dark/);
+
+  const mobileNav = page.locator(".mobile-tab-bar");
+  await expect(mobileNav.getByRole("button", { name: /toggle theme/i })).toBeVisible();
+  const languageSelect = mobileNav.getByRole("combobox", { name: /language/i });
+  await expect(languageSelect).toBeVisible();
+
+  await languageSelect.click();
+  await expect(page.getByRole("option")).toHaveCount(2);
+  await page.keyboard.press("Escape");
+
+  await mobileNav.getByRole("button", { name: /saved/i }).click();
+  await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
+  await expect(mapView).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator("html")).toHaveClass(/dark/);
+});
+
 test("comparison data binds into detail and shortlist views", async ({ page }) => {
   await mockComparisonArtifacts(page);
   await page.goto("/");
@@ -218,4 +258,3 @@ test("shortlist items from prior sessions are visible without adding a new one",
   });
   await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
 });
-

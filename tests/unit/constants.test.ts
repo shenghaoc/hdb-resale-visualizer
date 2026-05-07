@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getCurrentYear } from "../../src/lib/constants";
+import { getCurrentYear, getDefaultTransactionStartMonth } from "../../src/lib/constants";
 
 describe("constants", () => {
   describe("getCurrentYear", () => {
@@ -21,6 +21,16 @@ describe("constants", () => {
       vi.setSystemTime(new Date(2020, 0, 1));
 
       expect(getCurrentYear()).toBe(2020);
+    });
+  });
+
+  describe("getDefaultTransactionStartMonth", () => {
+    it("uses the same month three years before the latest data month", () => {
+      expect(getDefaultTransactionStartMonth("2017-01", "2026-04")).toBe("2023-04");
+    });
+
+    it("clamps to the earliest available data month", () => {
+      expect(getDefaultTransactionStartMonth("2025-01", "2026-04")).toBe("2025-01");
     });
   });
 });

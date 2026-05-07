@@ -3,6 +3,7 @@ import {
   Bookmark,
   Languages,
   List,
+  LocateFixed,
   Moon,
   SlidersHorizontal,
   Sun,
@@ -10,6 +11,7 @@ import {
 } from "lucide-react";
 import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+  getDefaultTransactionStartMonth,
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
 } from "@/lib/constants";
@@ -84,6 +86,20 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const { filters, patchFilters, resetFilters } = useUrlFilters();
+  const defaultStartMonth = useMemo(
+    () =>
+      manifest
+        ? getDefaultTransactionStartMonth(manifest.dataWindow.minMonth, manifest.dataWindow.maxMonth)
+        : null,
+    [manifest],
+  );
+  const effectiveFilters = useMemo(
+    () =>
+      defaultStartMonth && filters.startMonth === null
+        ? { ...filters, startMonth: defaultStartMonth }
+        : filters,
+    [defaultStartMonth, filters],
+  );
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(selectedAddressKey);
@@ -98,7 +114,7 @@ function App() {
 
   const { blocks, loadError } = useBlockLoading({
     manifest,
-    townFilter: filters.town,
+    townFilter: effectiveFilters.town,
     debouncedSearch,
     userLocationPresent: Boolean(userLocation),
     selectedAddressKey,
@@ -131,21 +147,21 @@ function App() {
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
   const stableFilters = useMemo(
-    () => ({ ...filters, selectedAddressKey: null }),
+    () => ({ ...effectiveFilters, selectedAddressKey: null }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      filters.search,
-      filters.town,
-      filters.flatType,
-      filters.flatModel,
-      filters.budgetMin,
-      filters.budgetMax,
-      filters.areaMin,
-      filters.areaMax,
-      filters.remainingLeaseMin,
-      filters.startMonth,
-      filters.endMonth,
-      filters.mrtMax,
+      effectiveFilters.search,
+      effectiveFilters.town,
+      effectiveFilters.flatType,
+      effectiveFilters.flatModel,
+      effectiveFilters.budgetMin,
+      effectiveFilters.budgetMax,
+      effectiveFilters.areaMin,
+      effectiveFilters.areaMax,
+      effectiveFilters.remainingLeaseMin,
+      effectiveFilters.startMonth,
+      effectiveFilters.endMonth,
+      effectiveFilters.mrtMax,
     ],
   );
   const mapFilters = useMemo(
@@ -157,11 +173,11 @@ function App() {
       resolveGeographicSearchIntent(
         filters.search,
         blocks,
-        filters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+        effectiveFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
         userLocation,
         t("filters.nearMe"),
       ),
-    [blocks, filters.mrtMax, filters.search, userLocation, t],
+    [blocks, effectiveFilters.mrtMax, filters.search, userLocation, t],
   );
   const mapGeographicIntent = useMemo(
     () =>
@@ -175,7 +191,7 @@ function App() {
     [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
   const hasResultScope = Boolean(
-    filters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
+    effectiveFilters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
   );
   const hasMapMarkerScope = Boolean(
     mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
@@ -268,10 +284,50 @@ function App() {
   const handleGeolocate = useCallback(
     (coords: Coordinates) => {
       setUserLocation(coords);
-      patchFilters({ search: t("filters.nearMe") });
+      patchFilters({ search: t("filters.nearMe"), town: "", selectedAddressKey: null });
+
+      if (isDesktop) {
+        setDesktopTab("results");
+        setIsDesktopPanelOpen(true);
+        return;
+      }
+
+      setMobileTab(null);
     },
-    [patchFilters, t],
+    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab, t],
   );
+
+  const handleChooseTown = useCallback(() => {
+    if (isDesktop) {
+      setDesktopTab("filters");
+      setIsDesktopPanelOpen(true);
+      return;
+    }
+
+    setMobileTab("filters");
+  }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab]);
+
+  const handleUseCurrentLocation = useCallback(() => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      handleChooseTown();
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        handleGeolocate({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => handleChooseTown(),
+      {
+        enableHighAccuracy: true,
+        maximumAge: 60_000,
+        timeout: 10_000,
+      },
+    );
+  }, [handleChooseTown, handleGeolocate]);
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
@@ -327,7 +383,7 @@ function App() {
   // Shared content blocks (rendered in both mobile tabs and desktop grid)
   const filterContent = (
     <FilterPanel
-      filters={filters}
+      filters={effectiveFilters}
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchFilters}
@@ -353,6 +409,7 @@ function App() {
               : null
         }
         showBlockMarkers={hasMapMarkerScope}
+        isDarkMode={theme === "dark"}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
         locale={locale}
@@ -413,6 +470,7 @@ function App() {
     saved: "w-[min(44rem,48vw)]",
   };
   const isSavedDashboardOpen = isDesktop && isDesktopPanelOpen && desktopTab === "saved";
+  const showFloatingHeader = isDesktop ? isHeaderVisible : isHeaderVisible && mobileTab === null;
 
   return (
     <>
@@ -433,7 +491,7 @@ function App() {
           © OneMap contributors
         </a>
 
-        {(!isDesktop || isHeaderVisible) && manifest ? (
+        {showFloatingHeader && manifest ? (
           <header
             data-testid={isDesktop ? "global-header" : undefined}
             className={cn(
@@ -591,6 +649,43 @@ function App() {
             </button>
           </div>
         )}
+
+        {!hasResultScope && (isDesktop || mobileTab === null) ? (
+          <div
+            className={cn(
+              "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border border-border/20 bg-background/92 p-3 text-sm shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:border-primary/10 dark:bg-card/92 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_16px_48px_rgba(4,12,24,0.82)]",
+              isDesktop
+                ? "bottom-[5.75rem] left-6"
+                : "bottom-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+2.9rem)] left-3 right-3",
+            )}
+          >
+            <p className="v2-section-title">{t("app.scopePromptTitle")}</p>
+            <p className="mt-1 text-xs leading-snug text-muted-foreground">
+              {t("app.scopePromptDescription")}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                type="button"
+                size="xs"
+                className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+                onClick={handleUseCurrentLocation}
+              >
+                <LocateFixed data-icon className="size-3.5" aria-hidden="true" />
+                {t("app.useCurrentLocation")}
+              </Button>
+              <Button
+                type="button"
+                size="xs"
+                variant="outline"
+                className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+                onClick={handleChooseTown}
+              >
+                <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
+                {t("app.chooseTown")}
+              </Button>
+            </div>
+          </div>
+        ) : null}
 
         <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
           {isDesktop && !isHeaderVisible ? (
@@ -788,6 +883,7 @@ function App() {
             type="button"
             variant={mobileTab === "filters" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "filters"}
             aria-expanded={mobileTab === "filters"}
             aria-controls={mobileTab === "filters" ? "mobile-filters-content" : undefined}
@@ -800,6 +896,7 @@ function App() {
             type="button"
             variant={mobileTab === "results" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "results"}
             aria-expanded={mobileTab === "results"}
             aria-controls={mobileTab === "results" ? "mobile-results-content" : undefined}
@@ -812,6 +909,7 @@ function App() {
             type="button"
             variant={mobileTab === "saved" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "saved"}
             aria-expanded={mobileTab === "saved"}
             aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
@@ -825,6 +923,39 @@ function App() {
               </Badge>
             ) : null}
           </Button>
+          <Button
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="mobile-mode-button"
+            onClick={toggleTheme}
+            aria-label={t("app.toggleTheme")}
+            title={t("app.toggleTheme")}
+          >
+            {theme === "light" ? (
+              <Moon data-icon className="size-4" aria-hidden="true" />
+            ) : (
+              <Sun data-icon className="size-4" aria-hidden="true" />
+            )}
+          </Button>
+          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
+            <SelectTrigger
+              aria-label={t("language.label")}
+              title={t("language.label")}
+              className="mobile-language-trigger"
+            >
+              <Languages data-icon className="size-4" aria-hidden="true" />
+              <span>{locale === "zh-SG" ? "中" : "EN"}</span>
+            </SelectTrigger>
+            <SelectContent align="end">
+              <SelectItem value="en-SG" className="text-xs">
+                {t("language.en")}
+              </SelectItem>
+              <SelectItem value="zh-SG" className="text-xs">
+                {t("language.zh")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </nav>
       )}
     </>

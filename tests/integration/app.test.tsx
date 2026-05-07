@@ -62,18 +62,33 @@ vi.mock("@/hooks/useShortlist", () => ({
 }));
 
 vi.mock("@/components/FilterPanel", () => ({
-  FilterPanel: () => <div data-testid="filter-panel" />,
+  FilterPanel: ({ filters }: { filters: { startMonth: string | null } }) => (
+    <div data-testid="filter-panel" data-start-month={filters.startMonth ?? ""} />
+  ),
 }));
 
 vi.mock("@/components/MapView", () => ({
   MapView: ({
+    blocks,
+    isDarkMode,
+    showBlockMarkers,
     onMapInteract,
     onSelect,
+    onGeolocate,
   }: {
+    blocks: BlockSummary[];
+    isDarkMode: boolean;
+    showBlockMarkers?: boolean;
     onMapInteract?: (interactionType?: "background" | "feature") => void;
     onSelect: (addressKey: string) => void;
+    onGeolocate?: (coords: { lat: number; lng: number }) => void;
   }) => (
-    <div data-testid="map-view">
+    <div
+      data-testid="map-view"
+      data-block-count={blocks.length}
+      data-show-block-markers={String(Boolean(showBlockMarkers))}
+      data-theme={isDarkMode ? "dark" : "light"}
+    >
       <button type="button" onClick={() => onMapInteract?.("background")}>
         Background map interaction
       </button>
@@ -85,6 +100,9 @@ vi.mock("@/components/MapView", () => ({
         }}
       >
         Feature map click
+      </button>
+      <button type="button" onClick={() => onGeolocate?.({ lat: 1.3339, lng: 103.9372 })}>
+        Mock geolocate
       </button>
     </div>
   ),
@@ -256,6 +274,44 @@ describe("App detail loading", () => {
 
     await screen.findByTestId("detail-drawer");
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
+  });
+
+  it("defaults the transaction window to three years before the latest data month", async () => {
+    dataMocks.fetchManifest.mockResolvedValue({
+      ...manifest,
+      dataWindow: {
+        minMonth: "2020-01",
+        maxMonth: "2026-04",
+      },
+    });
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "2023-04");
+    });
+  });
+
+  it("loads nearby map markers after geolocation", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    await user.click(screen.getByRole("button", { name: "Mock geolocate" }));
+
+    await waitFor(() => {
+      expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
+      expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
+    });
   });
 
   it("closes the results panel for background map exploration", async () => {
