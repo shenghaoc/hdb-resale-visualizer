@@ -63,14 +63,9 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
     };
   }, [selectedAddressKey]);
 
-  const selectedDetail =
-    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
-  const selectedComparison =
-    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
-
   return {
-    detail: selectedDetail,
-    comparison: selectedComparison,
+    detail: detail?.data ?? null,
+    comparison: comparison?.data ?? null,
     isDetailLoading,
     isComparisonLoading,
   };

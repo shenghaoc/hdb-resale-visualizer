@@ -77,4 +77,31 @@ describe("useSelectedBlockArtifacts", () => {
     expect(dataMocks.fetchAddressDetail).toHaveBeenCalledTimes(2);
     expect(dataMocks.fetchComparisonArtifact).toHaveBeenCalledTimes(2);
   });
+
+  it("clears loading and returns null artifacts when fetches fail", async () => {
+    dataMocks.fetchAddressDetail.mockRejectedValueOnce(new Error("detail failed"));
+    dataMocks.fetchComparisonArtifact.mockRejectedValueOnce(new Error("comparison failed"));
+
+    const { result } = renderHook(
+      ({ selectedAddressKey }: HookProps) => useSelectedBlockArtifacts(selectedAddressKey),
+      {
+        initialProps: { selectedAddressKey: "bedok-101-bedok-nth-ave-4" },
+      },
+    );
+
+    expect(result.current.detail).toBeNull();
+    expect(result.current.comparison).toBeNull();
+    expect(result.current.isDetailLoading).toBe(true);
+    expect(result.current.isComparisonLoading).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.isDetailLoading).toBe(false);
+      expect(result.current.isComparisonLoading).toBe(false);
+    });
+
+    expect(result.current.detail).toBeNull();
+    expect(result.current.comparison).toBeNull();
+    expect(dataMocks.fetchAddressDetail).toHaveBeenCalledTimes(1);
+    expect(dataMocks.fetchComparisonArtifact).toHaveBeenCalledTimes(1);
+  });
 });

@@ -73,8 +73,7 @@ type FilterChip = {
 function App() {
   const { locale, setLocale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { manifest, error: manifestError } = useManifestData();
-  const error = manifestError;
+  const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 

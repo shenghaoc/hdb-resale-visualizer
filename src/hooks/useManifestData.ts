@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchManifest } from "@/lib/data";
 import type { Manifest } from "@/types/data";
 
@@ -21,5 +21,5 @@ export function useManifestData() {
     };
   }, []);
 
-  return useMemo(() => ({ manifest, error }), [manifest, error]);
+  return { manifest, error };
 }
