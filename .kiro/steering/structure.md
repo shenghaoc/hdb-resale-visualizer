@@ -5,6 +5,7 @@
   - **`steering/`**: Persistent domain knowledge and rules.
   - **`specs/`**: Transient feature/bugfix specifications.
   - **`powers/`**: Dynamic MCP tool and steering bundles.
+- **`.agents/`**: Local agent tooling only. Do not commit repo-scoped skills here; any team-shared agent guidance must live under `.kiro/`.
 - **`src/`**: React application source code.
   - **`components/`**: UI components.
   - **`components/ui/`**: Base Shadcn components.
