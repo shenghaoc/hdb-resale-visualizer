@@ -867,7 +867,7 @@ function App() {
               aria-expanded={isMobileHeaderOpen}
               onClick={() => setIsMobileHeaderOpen((o) => !o)}
               className={cn(
-                "pointer-events-auto flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all",
+                "pointer-events-auto flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left backdrop-blur-[20px] transition-all shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]",
                 isMobileHeaderOpen && "items-start",
               )}
             >
@@ -904,7 +904,7 @@ function App() {
             </button>
 
             {isDesktop ? (
-              <div className="pointer-events-auto flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px]">
+              <div className="pointer-events-auto flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]">
                 <Button
                   type="button"
                   size="icon"
@@ -960,7 +960,7 @@ function App() {
           <div
             role="img"
             aria-label="Map legend: median price colour ramp from S$400K (low) to S$1.3M+ (high)"
-            className="pointer-events-none absolute z-25 rounded-lg border border-border/20 bg-background/90 p-2 shadow-[0_4px_16px_rgba(23,28,31,0.06)] backdrop-blur-[20px]"
+            className="pointer-events-none absolute z-25 rounded-lg border border-border/20 bg-background/90 p-2 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]"
             style={{ bottom: isDesktop ? "4rem" : "8rem", right: isDesktop ? "4.5rem" : "0.75rem" }}
           >
             <p className="mb-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">Median S$</p>
@@ -1019,7 +1019,7 @@ function App() {
               <Button
                 variant="outline"
                 size="xs"
-                className="h-8 rounded-xl border-border/20 bg-background/90 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground shadow-[0_4px_16px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-colors hover:text-foreground"
+                className="h-8 rounded-xl border-border/20 bg-background/90 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground backdrop-blur-[20px] transition-colors hover:text-foreground shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:text-primary/60 dark:hover:text-primary dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]"
                 onClick={() => setIsHeaderVisible(true)}
               >
                 {t("app.showHeader")}
@@ -1036,7 +1036,7 @@ function App() {
                 data-open={isDesktopPanelOpen ? "true" : "false"}
                 data-mode={desktopTab}
                 className={cn(
-                  "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out dark:bg-card",
+                  "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
                   desktopTab === "saved"
                     ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
                     : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] rounded-2xl",
@@ -1102,7 +1102,7 @@ function App() {
                 <div
                   id="mobile-panel"
                   className={cn(
-                    "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 shadow-[0_-8px_32px_rgba(23,28,31,0.08)] backdrop-blur-[20px] transition-all dark:bg-card",
+                    "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-all shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),inset_0_1px_0_rgba(34,211,238,0.05),0_-16px_48px_rgba(4,12,24,0.92)]",
                     activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0"
                   )}
                 >

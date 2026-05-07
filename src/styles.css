@@ -239,7 +239,7 @@
 }
 
 .dark .map-view {
-  background: #0c1414;
+  background: #040d18;
 }
 
 .dark .map-view .maplibregl-marker,
@@ -333,7 +333,7 @@
 
 .mobile-tab-bar [data-slot="button"][data-active="true"] {
   color: var(--primary);
-  background: rgba(37, 99, 235, 0.08);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 .mobile-tab-bar [data-slot="button"] > span {
@@ -376,7 +376,7 @@
 
 .desktop-tab-bar [data-slot="button"][data-active="true"] {
   color: var(--primary);
-  background: rgba(37, 99, 235, 0.08);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 @media (min-width: 1024px) {
@@ -592,6 +592,81 @@ input[data-no-spinner="true"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
+/* ─── Dark-mode system overrides ──────────────────────────── */
+
+.dark .v2-panel {
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.07),
+              0 12px 48px rgba(4, 12, 24, 0.8);
+}
+
+.dark .v2-card {
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.06),
+              0 2px 16px rgba(4, 12, 24, 0.55);
+}
+
+.dark .mobile-tab-bar {
+  border-top-color: rgba(34, 211, 238, 0.10);
+  box-shadow: 0 -1px 0 rgba(34, 211, 238, 0.06), 0 -8px 32px rgba(4, 12, 24, 0.65);
+}
+
+.dark .desktop-tab-bar {
+  border-color: rgba(34, 211, 238, 0.10);
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.06), 0 8px 32px rgba(4, 12, 24, 0.65);
+}
+
+.dark .map-attribution-link {
+  border-color: rgba(34, 211, 238, 0.10);
+  background: color-mix(in oklab, #080e1a 90%, transparent);
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.dark .map-popup .maplibregl-popup-content {
+  border-color: rgba(34, 211, 238, 0.15);
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08), 0 16px 40px rgba(4, 12, 24, 0.85);
+}
+
+.dark .maplibregl-ctrl-group {
+  border-color: rgba(34, 211, 238, 0.10) !important;
+}
+
+.dark .maplibregl-ctrl-group button {
+  background: #0d1628 !important;
+  color: #94a3b8;
+}
+
+.dark .maplibregl-ctrl button .maplibregl-ctrl-icon {
+  filter: invert(1) brightness(0.7);
+}
+
+/* Themed scrollbars in dark mode */
+.dark {
+  scrollbar-color: rgba(34, 211, 238, 0.14) transparent;
+  scrollbar-width: thin;
+}
+
+.dark ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(34, 211, 238, 0.14);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.30);
+}
+
+.dark ::selection {
+  background: rgba(34, 211, 238, 0.22);
+  color: #e2e8f0;
+}
+
 @layer utilities {
   .panel-glass {
     background-color: var(--panel);
@@ -599,4 +674,10 @@ input[data-no-spinner="true"]::-webkit-inner-spin-button {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
+}
+
+.dark .panel-glass {
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08),
+              inset 0 1px 0 rgba(34, 211, 238, 0.05),
+              0 8px 40px rgba(4, 12, 24, 0.75);
 }
