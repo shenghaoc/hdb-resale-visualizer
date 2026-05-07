@@ -54,7 +54,7 @@ export default tseslint.config(
     ? [
         {
           files: ["src/**/*.{ts,tsx}", "shared/**/*.{ts,tsx}", "scripts/**/*.ts"],
-          extends: [...tseslint.configs.recommendedTypeChecked],
+          extends: [...tseslint.configs.recommendedTypeCheckedOnly],
           languageOptions: {
             parserOptions: {
               projectService: true,
