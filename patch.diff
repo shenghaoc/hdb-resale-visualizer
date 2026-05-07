@@ -1,0 +1,33 @@
+--- src/lib/filtering.ts
++++ src/lib/filtering.ts
+@@ -482,6 +482,7 @@
+
+ // Cache the current year to avoid expensive Date instantiations in the filtering loop
+ const CURRENT_YEAR = new Date().getFullYear();
++const filterFlatTypeCache = new Map<string, string>();
+
+ export function matchesFilter(
+   block: BlockSummary,
+@@ -541,14 +542,20 @@
+   }
+
+   if (filters.flatType) {
+-    const canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
++    // ⚡ Bolt: Use a cached value for the filter's canonical flat type instead of re-evaluating
++    // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
++    let canonicalSelectedFlatType = filterFlatTypeCache.get(filters.flatType);
++    if (!canonicalSelectedFlatType) {
++      canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
++      filterFlatTypeCache.set(filters.flatType, canonicalSelectedFlatType);
++    }
+     if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
+       return false;
+     }
+   }
+
+   // ⚡ Bolt: Move expensive regex/tokenization text search check to the very end
+   // This reduces expensive computations by >50% since most blocks are filtered out by simpler bounds first
+-  if (!geographicIntent && !searchMatchesBlock(block, filters.search)) {
++  if (!geographicIntent && filters.search && !searchMatchesBlock(block, filters.search)) {
+     return false;
+   }
