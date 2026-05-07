@@ -1,4 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+} from "react";
 import { fetchAddressDetail, fetchComparisonArtifact } from "@/lib/data";
 import type {
   AddressDetail,
@@ -27,6 +35,40 @@ async function processWithConcurrency<T>(items: T[], concurrency: number, fn: (i
   await Promise.all(Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, worker));
 }
 
+function useMissingArtifactLoader<T>(
+  enabled: boolean,
+  items: ShortlistItem[],
+  artifactsRef: MutableRefObject<Record<string, T | null>>,
+  inFlightRef: MutableRefObject<Set<string>>,
+  fetchArtifact: (key: string) => Promise<T>,
+  setArtifacts: Dispatch<SetStateAction<Record<string, T | null>>>,
+) {
+  useEffect(() => {
+    if (!enabled || items.length === 0) return;
+    const missing = items
+      .map((item) => item.addressKey)
+      .filter((key) => !(key in artifactsRef.current) && !inFlightRef.current.has(key));
+    if (missing.length === 0) return;
+
+    let mounted = true;
+    for (const key of missing) inFlightRef.current.add(key);
+    void processWithConcurrency(missing, 5, async (addressKey) => {
+      try {
+        const artifact = await fetchArtifact(addressKey);
+        if (mounted) setArtifacts((cur) => ({ ...cur, [addressKey]: artifact }));
+      } catch {
+        if (mounted) setArtifacts((cur) => ({ ...cur, [addressKey]: null }));
+      } finally {
+        inFlightRef.current.delete(addressKey);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [enabled, items, artifactsRef, inFlightRef, fetchArtifact, setArtifacts]);
+}
+
 export function useShortlistArtifacts({
   blocks,
   items,
@@ -50,61 +92,39 @@ export function useShortlistArtifacts({
     comparisonsRef.current = shortlistComparisons;
   }, [shortlistComparisons]);
 
-  useEffect(() => {
-    if (!savedVisible || !isShortlistOpen || items.length === 0) return;
-    const missing = items
-      .map((item) => item.addressKey)
-      .filter((key) => !(key in detailsRef.current) && !detailsInFlightRef.current.has(key));
-    if (missing.length === 0) return;
+  const enabled = savedVisible && isShortlistOpen;
 
-    let mounted = true;
-    for (const key of missing) detailsInFlightRef.current.add(key);
-    void processWithConcurrency(missing, 5, async (addressKey) => {
-      try {
-        const detail = await fetchAddressDetail(addressKey);
-        if (mounted) setShortlistDetails((cur) => ({ ...cur, [addressKey]: detail }));
-      } catch {
-        if (mounted) setShortlistDetails((cur) => ({ ...cur, [addressKey]: null }));
-      } finally {
-        detailsInFlightRef.current.delete(addressKey);
-      }
-    });
+  useMissingArtifactLoader(
+    enabled,
+    items,
+    detailsRef,
+    detailsInFlightRef,
+    fetchAddressDetail,
+    setShortlistDetails,
+  );
 
-    return () => {
-      mounted = false;
-    };
-  }, [savedVisible, isShortlistOpen, items]);
+  useMissingArtifactLoader(
+    enabled,
+    items,
+    comparisonsRef,
+    comparisonsInFlightRef,
+    fetchComparisonArtifact,
+    setShortlistComparisons,
+  );
 
-  useEffect(() => {
-    if (!savedVisible || !isShortlistOpen || items.length === 0) return;
-    const missing = items
-      .map((item) => item.addressKey)
-      .filter((key) => !(key in comparisonsRef.current) && !comparisonsInFlightRef.current.has(key));
-    if (missing.length === 0) return;
-
-    let mounted = true;
-    for (const key of missing) comparisonsInFlightRef.current.add(key);
-    void processWithConcurrency(missing, 5, async (addressKey) => {
-      try {
-        const comparison = await fetchComparisonArtifact(addressKey);
-        if (mounted) setShortlistComparisons((cur) => ({ ...cur, [addressKey]: comparison }));
-      } catch {
-        if (mounted) setShortlistComparisons((cur) => ({ ...cur, [addressKey]: null }));
-      } finally {
-        comparisonsInFlightRef.current.delete(addressKey);
-      }
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, [savedVisible, isShortlistOpen, items]);
+  const blocksByKey = useMemo(() => {
+    const map = new Map<string, BlockSummary>();
+    for (const block of blocks) {
+      map.set(block.addressKey, block);
+    }
+    return map;
+  }, [blocks]);
 
   const shortlistRows = useMemo(() => {
     if (!savedVisible) return [];
     return items
       .map((item) => {
-        const block = blocks.find((candidate) => candidate.addressKey === item.addressKey);
+        const block = blocksByKey.get(item.addressKey);
         if (!block) return null;
         return {
           item,
@@ -127,7 +147,7 @@ export function useShortlistArtifacts({
         if (leftGap !== rightGap) return leftGap - rightGap;
         return left.item.addedAt.localeCompare(right.item.addedAt);
       });
-  }, [savedVisible, items, blocks, shortlistDetails, shortlistComparisons, selectedDetail, selectedComparison]);
+  }, [savedVisible, items, blocksByKey, shortlistDetails, shortlistComparisons, selectedDetail, selectedComparison]);
 
   return { shortlistRows };
 }
