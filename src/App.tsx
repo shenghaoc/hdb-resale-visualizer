@@ -3,6 +3,7 @@ import {
   Bookmark,
   Languages,
   List,
+  Loader2,
   LocateFixed,
   Moon,
   SlidersHorizontal,
@@ -77,6 +78,7 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [isLocating, setIsLocating] = useState(false);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
@@ -171,13 +173,13 @@ function App() {
   const geographicIntent = useMemo(
     () =>
       resolveGeographicSearchIntent(
-        filters.search,
+        effectiveFilters.search,
         blocks,
         effectiveFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
         userLocation,
         t("filters.nearMe"),
       ),
-    [blocks, effectiveFilters.mrtMax, filters.search, userLocation, t],
+    [blocks, effectiveFilters.mrtMax, effectiveFilters.search, userLocation, t],
   );
   const mapGeographicIntent = useMemo(
     () =>
@@ -191,7 +193,7 @@ function App() {
     [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
   const hasResultScope = Boolean(
-    effectiveFilters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
+    effectiveFilters.town || effectiveFilters.search.trim() || geographicIntent || selectedAddressKey,
   );
   const hasMapMarkerScope = Boolean(
     mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
@@ -313,14 +315,19 @@ function App() {
       return;
     }
 
+    setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        setIsLocating(false);
         handleGeolocate({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
       },
-      () => handleChooseTown(),
+      () => {
+        setIsLocating(false);
+        handleChooseTown();
+      },
       {
         enableHighAccuracy: true,
         maximumAge: 60_000,
@@ -650,7 +657,7 @@ function App() {
           </div>
         )}
 
-        {!hasResultScope && (isDesktop || mobileTab === null) ? (
+        {!hasResultScope && (isDesktop ? !isDesktopPanelOpen : mobileTab === null) ? (
           <div
             className={cn(
               "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border border-border/20 bg-background/92 p-3 text-sm shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:border-primary/10 dark:bg-card/92 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_16px_48px_rgba(4,12,24,0.82)]",
@@ -669,8 +676,13 @@ function App() {
                 size="xs"
                 className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
                 onClick={handleUseCurrentLocation}
+                disabled={isLocating}
               >
-                <LocateFixed data-icon className="size-3.5" aria-hidden="true" />
+                {isLocating ? (
+                  <Loader2 data-icon className="size-3.5 animate-spin" aria-hidden="true" />
+                ) : (
+                  <LocateFixed data-icon className="size-3.5" aria-hidden="true" />
+                )}
                 {t("app.useCurrentLocation")}
               </Button>
               <Button
