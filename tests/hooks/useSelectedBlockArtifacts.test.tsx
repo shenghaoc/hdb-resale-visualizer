@@ -104,4 +104,58 @@ describe("useSelectedBlockArtifacts", () => {
     expect(dataMocks.fetchAddressDetail).toHaveBeenCalledTimes(1);
     expect(dataMocks.fetchComparisonArtifact).toHaveBeenCalledTimes(1);
   });
+
+  it("does not expose stale data when selection changes rapidly", async () => {
+    const detailA = {
+      summary: { addressKey: "addr-a" },
+      recentTransactions: [],
+      monthlyTrend: [],
+    } as unknown as AddressDetail;
+    const detailB = {
+      summary: { addressKey: "addr-b" },
+      recentTransactions: [],
+      monthlyTrend: [],
+    } as unknown as AddressDetail;
+
+    // Simulate a slow fetch for A and a fast fetch for B
+    let resolveA: (value: AddressDetail) => void = () => {};
+    const promiseA = new Promise<AddressDetail>((resolve) => {
+      resolveA = resolve;
+    });
+    dataMocks.fetchAddressDetail.mockReturnValueOnce(promiseA);
+    dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
+
+    const { result, rerender } = renderHook(
+      ({ selectedAddressKey }: HookProps) => useSelectedBlockArtifacts(selectedAddressKey),
+      { initialProps: { selectedAddressKey: "addr-a" } },
+    );
+
+    expect(result.current.isDetailLoading).toBe(true);
+
+    // Switch to B before A resolves
+    dataMocks.fetchAddressDetail.mockResolvedValueOnce(detailB);
+    act(() => {
+      rerender({ selectedAddressKey: "addr-b" });
+    });
+
+    // B should be loading, detail should be null (cleared by prevKey pattern)
+    expect(result.current.detail).toBeNull();
+    expect(result.current.isDetailLoading).toBe(true);
+
+    // B resolves
+    await waitFor(() => {
+      expect(result.current.isDetailLoading).toBe(false);
+    });
+    expect(result.current.detail).toBe(detailB);
+
+    // Now A resolves late — it should NOT overwrite B's data because
+    // the effect for A was cleaned up (isMounted = false)
+    act(() => {
+      resolveA(detailA);
+    });
+    // Flush microtasks
+    await waitFor(() => {
+      expect(result.current.detail).toBe(detailB);
+    });
+  });
 });

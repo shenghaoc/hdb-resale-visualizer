@@ -63,9 +63,16 @@ export function useSelectedBlockArtifacts(selectedAddressKey: string | null) {
     };
   }, [selectedAddressKey]);
 
+  // Guard: only surface artifacts that match the current selection to prevent
+  // stale data from a previous fetch leaking through during rapid selection changes.
+  const matchedDetail =
+    selectedAddressKey && detail?.addressKey === selectedAddressKey ? detail.data : null;
+  const matchedComparison =
+    selectedAddressKey && comparison?.addressKey === selectedAddressKey ? comparison.data : null;
+
   return {
-    detail: detail?.data ?? null,
-    comparison: comparison?.data ?? null,
+    detail: matchedDetail,
+    comparison: matchedComparison,
     isDetailLoading,
     isComparisonLoading,
   };
