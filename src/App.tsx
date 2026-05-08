@@ -968,6 +968,39 @@ function App() {
         <nav className="mobile-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
+            size="icon"
+            variant="ghost"
+            className="mobile-mode-button"
+            onClick={toggleTheme}
+            aria-label={t("app.toggleTheme")}
+            title={t("app.toggleTheme")}
+          >
+            {theme === "light" ? (
+              <Moon data-icon className="size-4" aria-hidden="true" />
+            ) : (
+              <Sun data-icon className="size-4" aria-hidden="true" />
+            )}
+          </Button>
+          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
+            <SelectTrigger
+              aria-label={t("language.label")}
+              title={t("language.label")}
+              className="mobile-language-trigger"
+            >
+              <Languages data-icon className="size-4" aria-hidden="true" />
+              <span>{t("language.short_name")}</span>
+            </SelectTrigger>
+            <SelectContent position="popper" side="top" align="start" sideOffset={4}>
+              <SelectItem value="en-SG" className="text-xs">
+                {t("language.en")}
+              </SelectItem>
+              <SelectItem value="zh-SG" className="text-xs">
+                {t("language.zh")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            type="button"
             variant={mobileTab === "filters" ? "secondary" : "ghost"}
             size="sm"
             className="mobile-tab-button"
@@ -1010,39 +1043,6 @@ function App() {
               </Badge>
             ) : null}
           </Button>
-          <Button
-            type="button"
-            size="icon"
-            variant="ghost"
-            className="mobile-mode-button"
-            onClick={toggleTheme}
-            aria-label={t("app.toggleTheme")}
-            title={t("app.toggleTheme")}
-          >
-            {theme === "light" ? (
-              <Moon data-icon className="size-4" aria-hidden="true" />
-            ) : (
-              <Sun data-icon className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-            <SelectTrigger
-              aria-label={t("language.label")}
-              title={t("language.label")}
-              className="mobile-language-trigger"
-            >
-              <Languages data-icon className="size-4" aria-hidden="true" />
-              <span>{t("language.short_name")}</span>
-            </SelectTrigger>
-            <SelectContent position="popper" side="top" align="end" sideOffset={4}>
-              <SelectItem value="en-SG" className="text-xs">
-                {t("language.en")}
-              </SelectItem>
-              <SelectItem value="zh-SG" className="text-xs">
-                {t("language.zh")}
-              </SelectItem>
-            </SelectContent>
-          </Select>
         </nav>
       )}
     </>
