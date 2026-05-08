@@ -73,6 +73,9 @@ vi.mock("@/components/FilterPanel", () => ({
       <button type="button" onClick={() => onChange({ startMonth: null })}>
         Clear start month
       </button>
+      <button type="button" onClick={() => onChange({ town: "BEDOK" })}>
+        Choose Bedok
+      </button>
     </div>
   ),
 }));
@@ -330,9 +333,10 @@ describe("App detail loading", () => {
       expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
       expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
     });
+    expect(new URLSearchParams(window.location.search).get("search")).toBe("near me");
   });
 
-  it("shows feedback when browser geolocation fails", async () => {
+  it("shows feedback when browser geolocation fails and clears it after manual scope selection", async () => {
     Object.defineProperty(navigator, "geolocation", {
       value: {
         getCurrentPosition: vi.fn(
@@ -354,6 +358,12 @@ describe("App detail loading", () => {
     await user.click(await screen.findByRole("button", { name: "Use location" }));
 
     expect(await screen.findByText("Location failed. Choose a town instead.")).toBeInTheDocument();
+
+    await user.click(await screen.findByRole("button", { name: "Choose Bedok" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Location failed. Choose a town instead.")).not.toBeInTheDocument();
+    });
   });
 
   it("closes the results panel for background map exploration", async () => {

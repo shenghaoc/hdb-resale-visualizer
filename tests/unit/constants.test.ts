@@ -36,5 +36,9 @@ describe("constants", () => {
     it("does not return a malformed minimum month", () => {
       expect(getDefaultTransactionStartMonth("invalid", "2026-04")).toBe("2026-04");
     });
+
+    it("falls back to the minimum month when the latest data month is malformed", () => {
+      expect(getDefaultTransactionStartMonth("2025-01", "invalid")).toBe("2025-01");
+    });
   });
 });

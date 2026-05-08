@@ -5,6 +5,7 @@ import type { FilterState } from "@/types/data";
  */
 export const MAX_LEASE_DURATION = 99;
 export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
+export const NEAR_ME_SEARCH_QUERY = "near me";
 
 /**
  * Returns the current Gregorian year. Using a function ensures the value is fresh for each
@@ -19,13 +20,13 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
     return maxMonth;
   }
 
+  if (!YEAR_MONTH_PATTERN.test(maxMonth)) {
+    return minMonth;
+  }
+
   const [maxYearRaw, maxMonthRaw] = maxMonth.split("-");
   const maxYear = Number(maxYearRaw);
   const month = Number(maxMonthRaw);
-
-  if (!YEAR_MONTH_PATTERN.test(maxMonth) || !Number.isInteger(maxYear) || !Number.isInteger(month)) {
-    return minMonth;
-  }
 
   const defaultStart = `${maxYear - DEFAULT_TRANSACTION_WINDOW_YEARS}-${String(month).padStart(2, "0")}`;
   return defaultStart < minMonth ? minMonth : defaultStart;

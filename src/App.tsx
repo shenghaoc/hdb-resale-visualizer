@@ -15,6 +15,7 @@ import {
   getDefaultTransactionStartMonth,
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
+  NEAR_ME_SEARCH_QUERY,
 } from "@/lib/constants";
 import {
   getSelectionByAddressKey,
@@ -299,6 +300,10 @@ function App() {
         setUseDefaultStartMonth(false);
       }
 
+      if ("search" in patch || "town" in patch || "selectedAddressKey" in patch) {
+        setGeolocationError(null);
+      }
+
       patchFilters(patch);
     },
     [patchFilters],
@@ -314,7 +319,7 @@ function App() {
     (coords: Coordinates) => {
       setUserLocation(coords);
       setGeolocationError(null);
-      patchFilters({ search: t("filters.nearMe"), town: "", selectedAddressKey: null });
+      patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
 
       if (isDesktop) {
         setDesktopTab("results");
@@ -324,10 +329,14 @@ function App() {
 
       setMobileTab("results");
     },
-    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab, t],
+    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
   );
 
-  const handleChooseTown = useCallback(() => {
+  const handleChooseTown = useCallback((options?: { clearGeolocationError?: boolean }) => {
+    if (options?.clearGeolocationError !== false) {
+      setGeolocationError(null);
+    }
+
     if (isDesktop) {
       setDesktopTab("filters");
       setIsDesktopPanelOpen(true);
@@ -340,7 +349,7 @@ function App() {
   const handleUseCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setGeolocationError(t("app.locationUnavailable"));
-      handleChooseTown();
+      handleChooseTown({ clearGeolocationError: false });
       return;
     }
 
@@ -357,7 +366,7 @@ function App() {
       () => {
         setIsLocating(false);
         setGeolocationError(t("app.locationFailed"));
-        handleChooseTown();
+        handleChooseTown({ clearGeolocationError: false });
       },
       {
         enableHighAccuracy: true,
@@ -727,7 +736,7 @@ function App() {
                 size="xs"
                 variant="outline"
                 className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
-                onClick={handleChooseTown}
+                onClick={() => handleChooseTown()}
               >
                 <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
                 {t("app.chooseTown")}
@@ -1006,7 +1015,7 @@ function App() {
               className="mobile-language-trigger"
             >
               <Languages data-icon className="size-4" aria-hidden="true" />
-              <span>{locale === "zh-SG" ? t("language.zh_short") : t("language.en_short")}</span>
+              <span>{t("language.short_name")}</span>
             </SelectTrigger>
             <SelectContent align="end">
               <SelectItem value="en-SG" className="text-xs">
