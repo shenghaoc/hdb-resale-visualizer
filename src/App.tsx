@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
   Languages,
@@ -81,6 +81,7 @@ function App() {
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
+  const geolocationRequestRef = useRef(0);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
@@ -296,7 +297,7 @@ function App() {
 
   const patchUserFilters = useCallback(
     (patch: Partial<typeof filters>) => {
-      if (patch.startMonth === null || typeof patch.startMonth === "string") {
+      if ("startMonth" in patch) {
         setUseDefaultStartMonth(false);
       }
 
@@ -337,6 +338,11 @@ function App() {
       setGeolocationError(null);
     }
 
+    // Invalidate any pending geolocation request so a late response
+    // does not overwrite the user's manual town selection.
+    geolocationRequestRef.current += 1;
+    setIsLocating(false);
+
     if (isDesktop) {
       setDesktopTab("filters");
       setIsDesktopPanelOpen(true);
@@ -359,8 +365,12 @@ function App() {
 
     setGeolocationError(null);
     setIsLocating(true);
+    const requestId = ++geolocationRequestRef.current;
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        if (geolocationRequestRef.current !== requestId) {
+          return;
+        }
         setIsLocating(false);
         handleGeolocate({
           lat: position.coords.latitude,
@@ -368,6 +378,9 @@ function App() {
         });
       },
       () => {
+        if (geolocationRequestRef.current !== requestId) {
+          return;
+        }
         setIsLocating(false);
         setGeolocationError(t("app.locationFailed"));
         handleChooseTown({ clearGeolocationError: false });
