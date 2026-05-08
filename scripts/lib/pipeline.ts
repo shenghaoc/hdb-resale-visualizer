@@ -9,7 +9,7 @@ import type {
 } from "../../shared/data-types";
 import { buildFilterOptions } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
-import { currentIsoYear, monthDistance, nowIsoString } from "./time";
+
 
 export type ResaleTransaction = {
   id: string;
@@ -202,7 +202,7 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    return currentIsoYear();
+    return Temporal.Now.plainDateISO().year;
   }
 
   const counts = new Map<number, number>();
@@ -319,7 +319,7 @@ function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | 
     typeof yearCompleted === "number" &&
     Number.isFinite(yearCompleted) &&
     yearCompleted >= 1900 &&
-    yearCompleted <= currentIsoYear()
+    yearCompleted <= Temporal.Now.plainDateISO().year
   ) {
     return yearCompleted;
   }
@@ -332,7 +332,7 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
     return value.trim();
   }
 
-  const currentYear = currentIsoYear();
+  const currentYear = Temporal.Now.plainDateISO().year;
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
 }
@@ -651,7 +651,13 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: monthDistance(maxMonth, cohort.month),
+        monthsSinceLatestTransaction: Math.max(
+          0,
+          Temporal.PlainYearMonth.from(cohort.month).until(
+            Temporal.PlainYearMonth.from(maxMonth),
+            { largestUnit: "months" },
+          ).months,
+        ),
       });
     }
 
@@ -721,14 +727,14 @@ export function buildArtifacts({
         flatType: metric.flatType,
         amenities,
         percentileRanks,
-        generatedAt: nowIsoString(),
+        generatedAt: Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
       };
     }
   }
 
   const manifest: Manifest = {
     schemaVersion: "2.0.0",
-    generatedAt: nowIsoString(),
+    generatedAt: Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
     dataWindow: {
       minMonth: sortedMonths[0],
       maxMonth,

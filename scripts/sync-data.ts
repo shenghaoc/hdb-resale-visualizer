@@ -3,7 +3,7 @@ import path from "node:path";
 import { makeSupermarketCacheKey } from "./lib/amenity";
 import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
-import { epochIsoString, nowIsoString } from "./lib/time";
+
 import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
 import { collectionMetadataSchema, mrtFeatureSchema, oneMapResponseSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema, geoJsonFeatureSchema } from "./lib/schemas";
 import {
@@ -67,7 +67,7 @@ async function loadGeocodeCache(): Promise<GeocodeCacheFile> {
   } catch {
     return {
       version: 1,
-      updatedAt: epochIsoString(),
+      updatedAt: Temporal.Instant.fromEpochMilliseconds(0).toString({ fractionalSecondDigits: 3 }),
       entries: {},
     };
   }
@@ -456,7 +456,7 @@ async function main() {
 
       // Flush geocode cache only if new school geocodes were added
       if (schoolResult.geocodedCount > 0) {
-        geocodeCache.updatedAt = nowIsoString();
+        geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
         await saveGeocodeCache(geocodeCache);
       }
 
@@ -473,7 +473,7 @@ async function main() {
       supermarkets = supermarketResult.supermarkets;
 
       if (supermarketResult.geocodedCount > 0) {
-        geocodeCache.updatedAt = nowIsoString();
+        geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
         await saveGeocodeCache(geocodeCache);
       }
 
@@ -544,7 +544,7 @@ async function main() {
         }
 
         if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
-          geocodeCache.updatedAt = nowIsoString();
+          geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
           await saveGeocodeCache(geocodeCache);
           flushedAt = completed;
         }
@@ -564,7 +564,7 @@ async function main() {
     console.warn(`Geocoding failed for ${geocodeFailureCount} addresses.${sampleSuffix}`);
   }
 
-  geocodeCache.updatedAt = nowIsoString();
+  geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
   await saveGeocodeCache(geocodeCache);
 
   const artifacts = buildArtifacts({
