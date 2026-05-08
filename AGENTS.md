@@ -47,7 +47,7 @@ When reviewing pull requests, check for:
 - Code quality, maintainability, and unnecessary complexity
 - React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
 - Data pipeline contract violations (ensure `scripts/lib/schemas.ts` and `src/types/data.ts` are synchronized)
-- Package manager drift (Node 26 + npm-only — no npm/yarn/pnpm lockfiles)
+- Package manager drift (Node 26 + npm-only — no bun/yarn/pnpm lockfiles)
 - Runtime geocoding violations (all coordinates must be precomputed in `scripts/`)
 - Runtime fetching from external APIs (all data must be loaded from precomputed `public/data/` artifacts)
 - Missing tests for non-trivial logic changes
@@ -58,4 +58,4 @@ Do not approve PRs that:
 - Fetch data from external APIs at runtime
 - Break existing deployment assumptions or map attribution requirements
 - Manually edit generated files under `public/data/` (these are owned by `scripts/sync-data.ts`)
-- Include `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
+- Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
