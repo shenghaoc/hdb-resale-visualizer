@@ -83,4 +83,4 @@ Data portability should extend beyond files:
 4. Search-scoped map results fit to the matching blocks, not the full island.
 5. Placeholder detail cards for unavailable EIP, orientation, schools, and amenities are removed until real artifacts exist.
 6. Selecting a block triggers visual 1km/2km radius circles on the map.
-7. Type checking, linting, unit tests, e2e tests, and production build pass with Bun.
+7. Type checking, linting, unit tests, e2e tests, and production build pass with Node.js 26 + npm.

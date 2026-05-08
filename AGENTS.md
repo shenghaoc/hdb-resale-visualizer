@@ -5,7 +5,7 @@ This repository follows the **Kiro** spec-driven development workflow. All agent
 ## 🚀 Core Mandate: Read Steering First
 Before executing any directive, agents MUST read the authoritative steering files to maintain the project's strict architectural boundaries:
 - [**Product Vision**](.kiro/steering/product.md) — Map-first, deterministic facts only.
-- [**Technical Constraints**](.kiro/steering/tech.md) — 100% static, Bun-only, no runtime geocoding.
+- [**Technical Constraints**](.kiro/steering/tech.md) — 100% static, Node 26 + npm-only, no runtime geocoding.
 - [**Data Pipeline**](.kiro/steering/pipeline.md) — Strict separation between `scripts/` (build) and `src/` (runtime).
 - [**Repository Structure**](.kiro/steering/structure.md) — Naming conventions and project layout.
 - [**UI/UX Standards**](.kiro/steering/ui-standards.md) — Shadcn composition and high-density standards.
@@ -26,14 +26,14 @@ Project-level automation triggers are defined in `.kiro/hooks/`. These hooks exe
 
 ## 🛠️ Local Commands
 ```bash
-bun install           # Install dependencies
-bun run dev           # Start development server (localhost:5173)
-bun run sync-data     # Refresh precomputed artifacts (public/data/)
-bun run typecheck     # Strict TypeScript verification
-bun run lint          # ESLint check
-bun run test          # Run Vitest unit/integration tests
-bun run test:e2e      # Run Playwright end-to-end tests
-bun run build         # Production build
+npm install           # Install dependencies
+npm run dev           # Start development server (localhost:5173)
+npm run sync-data     # Refresh precomputed artifacts (public/data/)
+npm run typecheck     # Strict TypeScript verification
+npm run lint          # ESLint check
+npm run test          # Run Vitest unit/integration tests
+npm run test:e2e      # Run Playwright end-to-end tests
+npm run build         # Production build
 ```
 
 ## 🏗️ Architectural Boundary
@@ -47,7 +47,7 @@ When reviewing pull requests, check for:
 - Code quality, maintainability, and unnecessary complexity
 - React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
 - Data pipeline contract violations (ensure `scripts/lib/schemas.ts` and `src/types/data.ts` are synchronized)
-- Package manager drift (Bun-only — no npm/yarn/pnpm lockfiles)
+- Package manager drift (Node 26 + npm-only — no npm/yarn/pnpm lockfiles)
 - Runtime geocoding violations (all coordinates must be precomputed in `scripts/`)
 - Runtime fetching from external APIs (all data must be loaded from precomputed `public/data/` artifacts)
 - Missing tests for non-trivial logic changes
@@ -58,4 +58,4 @@ Do not approve PRs that:
 - Fetch data from external APIs at runtime
 - Break existing deployment assumptions or map attribution requirements
 - Manually edit generated files under `public/data/` (these are owned by `scripts/sync-data.ts`)
-- Include `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml` (Bun-only project)
+- Include `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)

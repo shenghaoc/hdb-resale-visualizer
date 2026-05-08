@@ -4,7 +4,7 @@ Use `AGENTS.md` as the authoritative policy for this repository.
 
 ## Implementation rules
 
-- Use Bun only (`bun install`, `bun run ...`).
+- Use Node.js 26 + npm only (`npm install`, `npm run ...`).
 - Do not add backend mutation routes or server-side write paths.
 - Keep core domain processing in `scripts/sync-data.ts`.
 - Frontend core data must come from precomputed artifacts in `public/data/`.
@@ -16,9 +16,9 @@ Use `AGENTS.md` as the authoritative policy for this repository.
 
 Run before submitting changes:
 
-- `bun run typecheck`
-- `bun run lint`
-- `bun run test`
-- `bun run test:e2e` for UI-impacting changes.
+- `npm run typecheck`
+- `npm run lint`
+- `npm run test`
+- `npm run test:e2e` for UI-impacting changes.
 
 If this file conflicts with `AGENTS.md`, follow `AGENTS.md`.

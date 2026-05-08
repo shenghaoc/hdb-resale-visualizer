@@ -1,7 +1,7 @@
 # Technology Stack & Constraints
 
 ## Core Stack
-- **Runtime**: Bun (Strictly use `bun` for installs and scripts).
+- **Runtime**: Node.js 26 (Strictly use `npm` for installs and scripts).
 - **Frontend**: React 19 (Strictly client-only/static).
 - **Language**: TypeScript (Strictly enforced type-checking).
 - **Bundler**: Vite.
