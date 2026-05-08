@@ -347,6 +347,10 @@ function App() {
   }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab]);
 
   const handleUseCurrentLocation = useCallback(() => {
+    if (isLocating) {
+      return;
+    }
+
     if (!navigator.geolocation) {
       setGeolocationError(t("app.locationUnavailable"));
       handleChooseTown({ clearGeolocationError: false });
@@ -374,7 +378,7 @@ function App() {
         timeout: 10_000,
       },
     );
-  }, [handleChooseTown, handleGeolocate, t]);
+  }, [handleChooseTown, handleGeolocate, isLocating, t]);
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
