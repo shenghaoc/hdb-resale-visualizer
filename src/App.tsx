@@ -115,9 +115,15 @@ function App() {
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(selectedAddressKey);
+  // "near me" is a sentinel that requires userLocation to resolve. Without a
+  // location it must not run as a literal text search against blocks.
+  const resolvedSearch = useMemo(
+    () => (filters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : filters.search),
+    [filters.search, userLocation],
+  );
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
-  const debouncedSearch = useDebouncedValue(filters.search, 200);
+  const debouncedSearch = useDebouncedValue(resolvedSearch, 200);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
@@ -159,12 +165,12 @@ function App() {
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
   const stableFilters = useMemo(
-    () => ({ ...effectiveFilters, selectedAddressKey: null }),
+    () => ({ ...effectiveFilters, search: resolvedSearch, selectedAddressKey: null }),
     // Intentional: list filter fields explicitly to avoid reference churn when
     // effectiveFilters is recreated without a meaningful filter value change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      effectiveFilters.search,
+      resolvedSearch,
       effectiveFilters.town,
       effectiveFilters.flatType,
       effectiveFilters.flatModel,
@@ -205,7 +211,7 @@ function App() {
     [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
   const hasResultScope = Boolean(
-    effectiveFilters.town || effectiveFilters.search.trim() || geographicIntent || selectedAddressKey,
+    effectiveFilters.town || resolvedSearch.trim() || geographicIntent || selectedAddressKey,
   );
   const hasMapMarkerScope = Boolean(
     mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
@@ -305,9 +311,16 @@ function App() {
         setGeolocationError(null);
       }
 
-      patchFilters(patch);
+      // Selecting a town while "near me" is the active search would apply both
+      // a geographic radius and a town boundary simultaneously. Clear the sentinel
+      // so town selection shows all blocks in that town without a radius constraint.
+      const resolved =
+        "town" in patch && filters.search === NEAR_ME_SEARCH_QUERY
+          ? { ...patch, search: "" }
+          : patch;
+      patchFilters(resolved);
     },
-    [patchFilters],
+    [patchFilters, filters.search],
   );
 
   const handleResetFilters = useCallback(() => {
