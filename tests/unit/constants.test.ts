@@ -32,5 +32,9 @@ describe("constants", () => {
     it("clamps to the earliest available data month", () => {
       expect(getDefaultTransactionStartMonth("2025-01", "2026-04")).toBe("2025-01");
     });
+
+    it("does not return a malformed minimum month", () => {
+      expect(getDefaultTransactionStartMonth("invalid", "2026-04")).toBe("2026-04");
+    });
   });
 });

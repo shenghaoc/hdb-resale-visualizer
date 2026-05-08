@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
-import type { BlockSummary, Manifest, ShortlistItem } from "@/types/data";
+import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -62,8 +62,18 @@ vi.mock("@/hooks/useShortlist", () => ({
 }));
 
 vi.mock("@/components/FilterPanel", () => ({
-  FilterPanel: ({ filters }: { filters: { startMonth: string | null } }) => (
-    <div data-testid="filter-panel" data-start-month={filters.startMonth ?? ""} />
+  FilterPanel: ({
+    filters,
+    onChange,
+  }: {
+    filters: FilterState;
+    onChange: (patch: Partial<FilterState>) => void;
+  }) => (
+    <div data-testid="filter-panel" data-start-month={filters.startMonth ?? ""}>
+      <button type="button" onClick={() => onChange({ startMonth: null })}>
+        Clear start month
+      </button>
+    </div>
   ),
 }));
 
@@ -276,7 +286,7 @@ describe("App detail loading", () => {
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
   });
 
-  it("defaults the transaction window to three years before the latest data month", async () => {
+  it("defaults the transaction window and lets users clear it to view all history", async () => {
     dataMocks.fetchManifest.mockResolvedValue({
       ...manifest,
       dataWindow: {
@@ -284,6 +294,8 @@ describe("App detail loading", () => {
         maxMonth: "2026-04",
       },
     });
+
+    const user = userEvent.setup();
 
     render(
       <I18nProvider>
@@ -293,6 +305,12 @@ describe("App detail loading", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "2023-04");
+    });
+
+    await user.click(screen.getByRole("button", { name: "Clear start month" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "");
     });
   });
 
@@ -312,6 +330,30 @@ describe("App detail loading", () => {
       expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
       expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
     });
+  });
+
+  it("shows feedback when browser geolocation fails", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: vi.fn(
+          (_success: PositionCallback, error: PositionErrorCallback) => error({} as GeolocationPositionError),
+        ),
+      },
+      configurable: true,
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: "Background map interaction" }));
+    await user.click(await screen.findByRole("button", { name: "Use location" }));
+
+    expect(await screen.findByText("Location failed. Choose a town instead.")).toBeInTheDocument();
   });
 
   it("closes the results panel for background map exploration", async () => {

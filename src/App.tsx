@@ -79,6 +79,7 @@ function App() {
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
   const [isLocating, setIsLocating] = useState(false);
+  const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
@@ -88,6 +89,13 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const { filters, patchFilters, resetFilters } = useUrlFilters();
+  const [useDefaultStartMonth, setUseDefaultStartMonth] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    return !new URLSearchParams(window.location.search).has("startMonth");
+  });
   const defaultStartMonth = useMemo(
     () =>
       manifest
@@ -95,15 +103,12 @@ function App() {
         : null,
     [manifest],
   );
-  // Intentional: when startMonth is null (unset by user), we apply the default
-  // transaction window so results are always scoped to recent data. The UI uses
-  // the "Clear selection" action to reset to null which then re-applies this default.
   const effectiveFilters = useMemo(
     () =>
-      defaultStartMonth && filters.startMonth === null
+      useDefaultStartMonth && defaultStartMonth && filters.startMonth === null
         ? { ...filters, startMonth: defaultStartMonth }
         : filters,
-    [defaultStartMonth, filters],
+    [defaultStartMonth, filters, useDefaultStartMonth],
   );
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
@@ -153,6 +158,8 @@ function App() {
 
   const stableFilters = useMemo(
     () => ({ ...effectiveFilters, selectedAddressKey: null }),
+    // Intentional: list filter fields explicitly to avoid reference churn when
+    // effectiveFilters is recreated without a meaningful filter value change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       effectiveFilters.search,
@@ -286,9 +293,27 @@ function App() {
     [toggleShortlist],
   );
 
+  const patchUserFilters = useCallback(
+    (patch: Partial<typeof filters>) => {
+      if (patch.startMonth === null || typeof patch.startMonth === "string") {
+        setUseDefaultStartMonth(false);
+      }
+
+      patchFilters(patch);
+    },
+    [patchFilters],
+  );
+
+  const handleResetFilters = useCallback(() => {
+    setUseDefaultStartMonth(true);
+    setGeolocationError(null);
+    resetFilters();
+  }, [resetFilters]);
+
   const handleGeolocate = useCallback(
     (coords: Coordinates) => {
       setUserLocation(coords);
+      setGeolocationError(null);
       patchFilters({ search: t("filters.nearMe"), town: "", selectedAddressKey: null });
 
       if (isDesktop) {
@@ -313,11 +338,13 @@ function App() {
   }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab]);
 
   const handleUseCurrentLocation = useCallback(() => {
-    if (typeof navigator === "undefined" || !navigator.geolocation) {
+    if (!navigator.geolocation) {
+      setGeolocationError(t("app.locationUnavailable"));
       handleChooseTown();
       return;
     }
 
+    setGeolocationError(null);
     setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -329,6 +356,7 @@ function App() {
       },
       () => {
         setIsLocating(false);
+        setGeolocationError(t("app.locationFailed"));
         handleChooseTown();
       },
       {
@@ -337,7 +365,7 @@ function App() {
         timeout: 10_000,
       },
     );
-  }, [handleChooseTown, handleGeolocate]);
+  }, [handleChooseTown, handleGeolocate, t]);
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
@@ -396,10 +424,8 @@ function App() {
       filters={effectiveFilters}
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
-      onChange={patchFilters}
-      onReset={() => {
-        resetFilters();
-      }}
+      onChange={patchUserFilters}
+      onReset={handleResetFilters}
       options={manifest.filterOptions}
     />
   );
@@ -480,7 +506,10 @@ function App() {
     saved: "w-[min(44rem,48vw)]",
   };
   const isSavedDashboardOpen = isDesktop && isDesktopPanelOpen && desktopTab === "saved";
-  const showFloatingHeader = isDesktop ? isHeaderVisible : isHeaderVisible && mobileTab === null;
+  const showFloatingHeader = isDesktop ? isHeaderVisible : mobileTab === null;
+  const showScopePrompt = Boolean(
+    manifest && !hasResultScope && (isDesktop ? !isDesktopPanelOpen : mobileTab === null),
+  );
 
   return (
     <>
@@ -660,7 +689,7 @@ function App() {
           </div>
         )}
 
-        {manifest && !hasResultScope && (isDesktop ? !isDesktopPanelOpen : mobileTab === null) ? (
+        {showScopePrompt ? (
           <div
             className={cn(
               "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border border-border/20 bg-background/92 p-3 text-sm shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:border-primary/10 dark:bg-card/92 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_16px_48px_rgba(4,12,24,0.82)]",
@@ -673,6 +702,11 @@ function App() {
             <p className="mt-1 text-xs leading-snug text-muted-foreground">
               {t("app.scopePromptDescription")}
             </p>
+            {geolocationError ? (
+              <p className="mt-2 text-xs font-medium leading-snug text-destructive">
+                {geolocationError}
+              </p>
+            ) : null}
             <div className="mt-3 flex flex-wrap gap-2">
               <Button
                 type="button"
@@ -699,6 +733,18 @@ function App() {
                 {t("app.chooseTown")}
               </Button>
             </div>
+          </div>
+        ) : null}
+
+        {geolocationError && !showScopePrompt ? (
+          <div
+            role="status"
+            className={cn(
+              "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-background/95 px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:bg-card/95",
+              isDesktop ? "bottom-[5.75rem] left-6 max-w-[22rem]" : "left-3 right-3 top-[3.6rem]",
+            )}
+          >
+            {geolocationError}
           </div>
         ) : null}
 

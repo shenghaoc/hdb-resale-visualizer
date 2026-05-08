@@ -12,12 +12,18 @@ export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
  */
 export const getCurrentYear = (): number => new Date().getFullYear();
 
+const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
+
 export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: string): string {
+  if (!YEAR_MONTH_PATTERN.test(minMonth)) {
+    return maxMonth;
+  }
+
   const [maxYearRaw, maxMonthRaw] = maxMonth.split("-");
   const maxYear = Number(maxYearRaw);
   const month = Number(maxMonthRaw);
 
-  if (!Number.isInteger(maxYear) || !Number.isInteger(month) || month < 1 || month > 12) {
+  if (!YEAR_MONTH_PATTERN.test(maxMonth) || !Number.isInteger(maxYear) || !Number.isInteger(month)) {
     return minMonth;
   }
 
