@@ -69,7 +69,7 @@ jobs:
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           GEOCODE_CONCURRENCY: "10"
-        run: npm run sync-data --force
+        run: npm run sync-data -- --force
 
       - name: Sync official datasets
         if: steps.cache-presence.outputs.restored == 'true' && steps.data-check.outcome == 'success'
