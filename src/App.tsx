@@ -967,7 +967,7 @@ function App() {
       )}
 
       {isDesktop && (
-        <nav className="desktop-tab-bar desktop-tab-bar--right" aria-label={t("tab.saved")}>
+        <nav className={cn("desktop-tab-bar desktop-tab-bar--right", isSavedDashboardOpen && "desktop-tab-bar--shifted")} aria-label={t("tab.saved")}>
           <Button
             type="button"
             variant={isRightPanelOpen ? "secondary" : "ghost"}

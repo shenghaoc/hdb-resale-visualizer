@@ -397,6 +397,7 @@
 .desktop-tab-bar--right {
   left: auto;
   right: 1.5rem;
+  transition: right 200ms ease-out;
 }
 
 .desktop-tab-bar [data-slot="button"] {
@@ -553,7 +554,7 @@
   right: calc(min(44rem, 48vw) + 0.75rem);
 }
 
-.saved-dashboard-open .desktop-tab-bar--right {
+.desktop-tab-bar--right.desktop-tab-bar--shifted {
   right: calc(min(44rem, 48vw) + 1.5rem);
 }
 
