@@ -15,6 +15,7 @@ export default defineConfig({
     globals: true,
     setupFiles: "./tests/setup.ts",
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    execArgv: ["--harmony-temporal"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],

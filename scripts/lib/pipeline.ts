@@ -10,7 +10,6 @@ import type {
 import { buildFilterOptions } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
 
-
 export type ResaleTransaction = {
   id: string;
   month: string;
@@ -423,6 +422,7 @@ export function buildArtifacts({
   parks,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
+  const runTimestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
@@ -436,6 +436,7 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1];
+  const maxMonthYM = Temporal.PlainYearMonth.from(maxMonth);
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -654,7 +655,7 @@ export function buildArtifacts({
         monthsSinceLatestTransaction: Math.max(
           0,
           Temporal.PlainYearMonth.from(cohort.month).until(
-            Temporal.PlainYearMonth.from(maxMonth),
+            maxMonthYM,
             { largestUnit: "months" },
           ).months,
         ),
@@ -727,14 +728,14 @@ export function buildArtifacts({
         flatType: metric.flatType,
         amenities,
         percentileRanks,
-        generatedAt: Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
+        generatedAt: runTimestamp,
       };
     }
   }
 
   const manifest: Manifest = {
     schemaVersion: "2.0.0",
-    generatedAt: Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
+    generatedAt: runTimestamp,
     dataWindow: {
       minMonth: sortedMonths[0],
       maxMonth,

@@ -26,6 +26,8 @@ describe("safeStorage", () => {
     vi.restoreAllMocks();
     if (originalLocalStorage) {
       Object.defineProperty(window, "localStorage", originalLocalStorage);
+    } else {
+      delete (window as any).localStorage;
     }
   });
 
