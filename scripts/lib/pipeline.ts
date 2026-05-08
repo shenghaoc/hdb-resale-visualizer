@@ -9,6 +9,7 @@ import type {
 } from "../../shared/data-types";
 import { buildFilterOptions } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
+import { currentIsoYear, monthDistance, nowIsoString } from "./time";
 
 export type ResaleTransaction = {
   id: string;
@@ -201,7 +202,7 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    return new Date().getFullYear();
+    return currentIsoYear();
   }
 
   const counts = new Map<number, number>();
@@ -294,14 +295,7 @@ function sortTransactionsByLatest(transactions: ResaleTransaction[]) {
 }
 
 function calculateMonthDistance(laterMonth: string, earlierMonth: string) {
-  const laterMonthDate = new Date(`${laterMonth}-01`);
-  const earlierMonthDate = new Date(`${earlierMonth}-01`);
-
-  return Math.max(
-    0,
-    (laterMonthDate.getFullYear() - earlierMonthDate.getFullYear()) * 12 +
-      (laterMonthDate.getMonth() - earlierMonthDate.getMonth()),
-  );
+  return monthDistance(laterMonth, earlierMonth);
 }
 
 function findNearestMrtDistanceMeters(
@@ -329,7 +323,7 @@ function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | 
     typeof yearCompleted === "number" &&
     Number.isFinite(yearCompleted) &&
     yearCompleted >= 1900 &&
-    yearCompleted <= new Date().getFullYear()
+    yearCompleted <= currentIsoYear()
   ) {
     return yearCompleted;
   }
@@ -342,7 +336,7 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
     return value.trim();
   }
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = currentIsoYear();
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
 }
@@ -731,14 +725,14 @@ export function buildArtifacts({
         flatType: metric.flatType,
         amenities,
         percentileRanks,
-        generatedAt: new Date().toISOString(),
+        generatedAt: nowIsoString(),
       };
     }
   }
 
   const manifest: Manifest = {
     schemaVersion: "2.0.0",
-    generatedAt: new Date().toISOString(),
+    generatedAt: nowIsoString(),
     dataWindow: {
       minMonth: sortedMonths[0],
       maxMonth,
