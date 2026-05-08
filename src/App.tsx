@@ -31,7 +31,7 @@ import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState, type PanelTab } from "@/hooks/usePanelState";
+import { usePanelState } from "@/hooks/usePanelState";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
@@ -85,7 +85,7 @@ function App() {
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
-  const { isDesktop, desktopTab, mobileTab, isDesktopPanelOpen, isShortlistOpen, resultsVisible, savedVisible, setDesktopTab, setMobileTab, setIsDesktopPanelOpen, setIsShortlistOpen } = usePanelState();
+  const { isDesktop, leftTab, isLeftPanelOpen, isRightPanelOpen, setLeftTab, setIsLeftPanelOpen, setIsRightPanelOpen, mobileTab, setMobileTab, isShortlistOpen, resultsVisible, savedVisible, setIsShortlistOpen } = usePanelState();
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
@@ -285,15 +285,15 @@ function App() {
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
       if (isDesktop) {
-        setIsDesktopPanelOpen(true);
-        setDesktopTab("results");
+        setIsLeftPanelOpen(true);
+        setLeftTab("results");
       } else {
         setMobileTab("results");
       }
 
       patchFilters({ selectedAddressKey: addressKey });
     },
-    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
+    [isDesktop, patchFilters, setLeftTab, setIsLeftPanelOpen, setMobileTab],
   );
 
   const handleToggleShortlist = useCallback(
@@ -336,12 +336,12 @@ function App() {
       patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
 
       if (isDesktop) {
-        setDesktopTab("results");
-        setIsDesktopPanelOpen(true);
+        setLeftTab("results");
+        setIsLeftPanelOpen(true);
       }
       // Mobile: stay on the map so nearby markers are visible once scope resolves.
     },
-    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen],
+    [isDesktop, patchFilters, setLeftTab, setIsLeftPanelOpen],
   );
 
   const handleChooseTown = useCallback((options?: { clearGeolocationError?: boolean }) => {
@@ -355,13 +355,13 @@ function App() {
     setIsLocating(false);
 
     if (isDesktop) {
-      setDesktopTab("filters");
-      setIsDesktopPanelOpen(true);
+      setLeftTab("filters");
+      setIsLeftPanelOpen(true);
       return;
     }
 
     setMobileTab("filters");
-  }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab, setGeolocationError, setIsLocating]);
+  }, [isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab, setGeolocationError, setIsLocating]);
 
   const handleUseCurrentLocation = useCallback(() => {
     if (isLocating) {
@@ -415,7 +415,8 @@ function App() {
     }
 
     if (isDesktop) {
-      setIsDesktopPanelOpen(false);
+      setIsLeftPanelOpen(false);
+      setIsRightPanelOpen(false);
       return;
     }
 
@@ -537,15 +538,10 @@ function App() {
     </Suspense>
   ) : null;
 
-  const desktopPanelWidths: Record<PanelTab, string> = {
-    filters: "w-[min(30rem,34vw)]",
-    results: "w-[min(34rem,38vw)]",
-    saved: "w-[min(44rem,48vw)]",
-  };
-  const isSavedDashboardOpen = isDesktop && isDesktopPanelOpen && desktopTab === "saved";
+  const isSavedDashboardOpen = isDesktop && isRightPanelOpen;
   const showFloatingHeader = isDesktop ? isHeaderVisible : mobileTab === null;
   const showScopePrompt = Boolean(
-    manifest && !hasResultScope && (isDesktop ? !isDesktopPanelOpen : mobileTab === null),
+    manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen : mobileTab === null),
   );
 
   return (
@@ -713,8 +709,8 @@ function App() {
               type="button"
               onClick={() => {
                 if (isDesktop) {
-                  setDesktopTab("filters");
-                  setIsDesktopPanelOpen(true);
+                  setLeftTab("filters");
+                  setIsLeftPanelOpen(true);
                   return;
                 }
                 setMobileTab("filters");
@@ -803,40 +799,39 @@ function App() {
 
           {isDesktop ? (
             <section className="pointer-events-none relative min-h-0 flex-1">
+              {/* Left panel: Filters / Results */}
               <aside
-                id="desktop-panel"
-                aria-hidden={!isDesktopPanelOpen}
-                {...(!isDesktopPanelOpen && { inert: true })}
-                data-open={isDesktopPanelOpen ? "true" : "false"}
-                data-mode={desktopTab}
+                id="desktop-left-panel"
+                aria-hidden={!isLeftPanelOpen}
+                {...(!isLeftPanelOpen && { inert: true })}
+                data-open={isLeftPanelOpen ? "true" : "false"}
+                data-mode={leftTab}
                 className={cn(
-                  "pointer-events-auto absolute flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-                  desktopTab === "saved"
-                    ? "bottom-0 right-0 top-0 max-h-none min-h-full rounded-none border-y-0 border-r-0 shadow-[-8px_0_32px_rgba(23,28,31,0.08)]"
-                    : "bottom-20 left-6 max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] rounded-2xl",
-                  isDesktopPanelOpen
+                  "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
+                  "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem]",
+                  isLeftPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
-                  desktopPanelWidths[desktopTab],
+                  leftTab === "filters" ? "w-[min(30rem,34vw)]" : "w-[min(34rem,38vw)]",
                 )}
               >
                 <div className="flex h-full min-h-0 flex-col">
                   <div
                     id="desktop-filters-content"
-                    aria-hidden={desktopTab !== "filters"}
+                    aria-hidden={leftTab !== "filters"}
                     className={cn(
                       "h-full overflow-y-auto p-3 pb-8",
-                      desktopTab === "filters" ? "block" : "hidden",
+                      leftTab === "filters" ? "block" : "hidden",
                     )}
                   >
                     {filterContent}
                   </div>
                   <div
                     id="desktop-results-content"
-                    aria-hidden={desktopTab !== "results"}
+                    aria-hidden={leftTab !== "results"}
                     className={cn(
                       "h-full min-h-0 flex-col gap-3 overflow-hidden p-3 pb-8",
-                      desktopTab === "results" ? "flex" : "hidden",
+                      leftTab === "results" ? "flex" : "hidden",
                     )}
                   >
                     <div
@@ -857,13 +852,28 @@ function App() {
                       {selectedDetailContent}
                     </div>
                   </div>
+                </div>
+              </aside>
+
+              {/* Right panel: Saved */}
+              <aside
+                id="desktop-right-panel"
+                aria-hidden={!isRightPanelOpen}
+                {...(!isRightPanelOpen && { inert: true })}
+                data-open={isRightPanelOpen ? "true" : "false"}
+                data-mode="saved"
+                className={cn(
+                  "pointer-events-auto absolute bottom-0 right-0 top-0 flex min-h-full max-w-[calc(100vw-3rem)] flex-col overflow-hidden border-l border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[-8px_0_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
+                  "w-[min(44rem,48vw)]",
+                  isRightPanelOpen
+                    ? "translate-x-0 opacity-100"
+                    : "pointer-events-none translate-x-6 opacity-0",
+                )}
+              >
+                <div className="flex h-full min-h-0 flex-col">
                   <div
                     id="desktop-saved-content"
-                    aria-hidden={desktopTab !== "saved"}
-                    className={cn(
-                      "h-full min-h-0 flex-col overflow-hidden p-3 pb-8",
-                      desktopTab === "saved" ? "flex" : "hidden",
-                    )}
+                    className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
                   >
                     {savedContent}
                   </div>
@@ -925,14 +935,14 @@ function App() {
         <nav className="desktop-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
-            variant={desktopTab === "filters" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            variant={leftTab === "filters" && isLeftPanelOpen ? "secondary" : "ghost"}
             size="sm"
-            data-active={desktopTab === "filters" && isDesktopPanelOpen}
-            aria-expanded={desktopTab === "filters" && isDesktopPanelOpen}
-            aria-controls={desktopTab === "filters" && isDesktopPanelOpen ? "desktop-filters-content" : undefined}
+            data-active={leftTab === "filters" && isLeftPanelOpen}
+            aria-expanded={leftTab === "filters" && isLeftPanelOpen}
+            aria-controls={leftTab === "filters" && isLeftPanelOpen ? "desktop-filters-content" : undefined}
             onClick={() => {
-              setDesktopTab("filters");
-              setIsDesktopPanelOpen((current) => (desktopTab === "filters" ? !current : true));
+              setLeftTab("filters");
+              setIsLeftPanelOpen((current) => (leftTab === "filters" ? !current : true));
             }}
           >
             <SlidersHorizontal data-icon />
@@ -940,14 +950,14 @@ function App() {
           </Button>
           <Button
             type="button"
-            variant={desktopTab === "results" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            variant={leftTab === "results" && isLeftPanelOpen ? "secondary" : "ghost"}
             size="sm"
-            data-active={desktopTab === "results" && isDesktopPanelOpen}
-            aria-expanded={desktopTab === "results" && isDesktopPanelOpen}
-            aria-controls={desktopTab === "results" && isDesktopPanelOpen ? "desktop-results-content" : undefined}
+            data-active={leftTab === "results" && isLeftPanelOpen}
+            aria-expanded={leftTab === "results" && isLeftPanelOpen}
+            aria-controls={leftTab === "results" && isLeftPanelOpen ? "desktop-results-content" : undefined}
             onClick={() => {
-              setDesktopTab("results");
-              setIsDesktopPanelOpen((current) => (desktopTab === "results" ? !current : true));
+              setLeftTab("results");
+              setIsLeftPanelOpen((current) => (leftTab === "results" ? !current : true));
             }}
           >
             <List data-icon />
@@ -960,17 +970,14 @@ function App() {
         <nav className="desktop-tab-bar desktop-tab-bar--right" aria-label={t("tab.saved")}>
           <Button
             type="button"
-            variant={desktopTab === "saved" && isDesktopPanelOpen ? "secondary" : "ghost"}
+            variant={isRightPanelOpen ? "secondary" : "ghost"}
             size="sm"
-            data-active={desktopTab === "saved" && isDesktopPanelOpen}
-            aria-expanded={desktopTab === "saved" && isDesktopPanelOpen}
-            aria-controls={desktopTab === "saved" && isDesktopPanelOpen ? "desktop-saved-content" : undefined}
-            onClick={() => {
-              setDesktopTab("saved");
-              setIsDesktopPanelOpen((current) => (desktopTab === "saved" ? !current : true));
-            }}
+            data-active={isRightPanelOpen}
+            aria-expanded={isRightPanelOpen}
+            aria-controls={isRightPanelOpen ? "desktop-saved-content" : undefined}
+            onClick={() => setIsRightPanelOpen((current) => !current)}
           >
-            <Bookmark data-icon className={desktopTab === "saved" && isDesktopPanelOpen ? "fill-current" : ""} />
+            <Bookmark data-icon className={isRightPanelOpen ? "fill-current" : ""} />
             <span>{t("tab.saved")}</span>
             {shortlist.items.length > 0 ? (
               <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
