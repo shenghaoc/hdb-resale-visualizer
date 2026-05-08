@@ -395,7 +395,7 @@ function App() {
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
-      setIsHeaderVisible(false);
+      if (isDesktop) setIsHeaderVisible(false);
       setHasInteractedWithMap(true);
     }
 
