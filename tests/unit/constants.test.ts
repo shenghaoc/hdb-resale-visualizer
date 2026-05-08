@@ -40,5 +40,9 @@ describe("constants", () => {
     it("falls back to the minimum month when the latest data month is malformed", () => {
       expect(getDefaultTransactionStartMonth("2025-01", "invalid")).toBe("2025-01");
     });
+
+    it("returns null when both data window months are malformed", () => {
+      expect(getDefaultTransactionStartMonth("invalid-min", "invalid-max")).toBeNull();
+    });
   });
 });

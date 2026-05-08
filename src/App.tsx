@@ -750,7 +750,9 @@ function App() {
             role="status"
             className={cn(
               "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-background/95 px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:bg-card/95",
-              isDesktop ? "bottom-[5.75rem] left-6 max-w-[22rem]" : "left-3 right-3 top-[3.6rem]",
+              isDesktop
+                ? "bottom-[5.75rem] left-6 max-w-[22rem]"
+                : "bottom-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.75rem)] left-3 right-3",
             )}
           >
             {geolocationError}

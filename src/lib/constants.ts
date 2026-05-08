@@ -15,12 +15,19 @@ export const getCurrentYear = (): number => new Date().getFullYear();
 
 const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
-export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: string): string {
-  if (!YEAR_MONTH_PATTERN.test(minMonth)) {
+export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: string): string | null {
+  const hasValidMinMonth = YEAR_MONTH_PATTERN.test(minMonth);
+  const hasValidMaxMonth = YEAR_MONTH_PATTERN.test(maxMonth);
+
+  if (!hasValidMinMonth && !hasValidMaxMonth) {
+    return null;
+  }
+
+  if (!hasValidMinMonth) {
     return maxMonth;
   }
 
-  if (!YEAR_MONTH_PATTERN.test(maxMonth)) {
+  if (!hasValidMaxMonth) {
     return minMonth;
   }
 
