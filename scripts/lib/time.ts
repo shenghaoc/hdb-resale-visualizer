@@ -2,7 +2,7 @@ const temporal = globalThis.Temporal;
 
 export function nowIsoString(): string {
   if (temporal) {
-    return temporal.Now.instant().toString();
+    return temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
   }
 
   return new Date().toISOString();
@@ -10,7 +10,7 @@ export function nowIsoString(): string {
 
 export function epochIsoString(): string {
   if (temporal) {
-    return temporal.Instant.fromEpochMilliseconds(0).toString();
+    return temporal.Instant.fromEpochMilliseconds(0).toString({ fractionalSecondDigits: 3 });
   }
 
   return new Date(0).toISOString();
@@ -28,17 +28,11 @@ export function monthDistance(laterMonth: string, earlierMonth: string): number 
   if (temporal) {
     const later = temporal.PlainYearMonth.from(laterMonth);
     const earlier = temporal.PlainYearMonth.from(earlierMonth);
-    const deltaYears = later.year - earlier.year;
-    const deltaMonths = later.month - earlier.month;
-    return Math.max(0, deltaYears * 12 + deltaMonths);
+    return Math.max(0, earlier.until(later, { largestUnit: "months" }).months);
   }
 
-  const laterMonthDate = new Date(`${laterMonth}-01`);
-  const earlierMonthDate = new Date(`${earlierMonth}-01`);
+  const [laterYear, laterMonthNum] = laterMonth.split("-").map(Number);
+  const [earlierYear, earlierMonthNum] = earlierMonth.split("-").map(Number);
 
-  return Math.max(
-    0,
-    (laterMonthDate.getFullYear() - earlierMonthDate.getFullYear()) * 12 +
-      (laterMonthDate.getMonth() - earlierMonthDate.getMonth()),
-  );
+  return Math.max(0, (laterYear - earlierYear) * 12 + (laterMonthNum - earlierMonthNum));
 }
