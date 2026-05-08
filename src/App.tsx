@@ -95,6 +95,9 @@ function App() {
         : null,
     [manifest],
   );
+  // Intentional: when startMonth is null (unset by user), we apply the default
+  // transaction window so results are always scoped to recent data. The UI uses
+  // the "Clear selection" action to reset to null which then re-applies this default.
   const effectiveFilters = useMemo(
     () =>
       defaultStartMonth && filters.startMonth === null
@@ -957,7 +960,7 @@ function App() {
               className="mobile-language-trigger"
             >
               <Languages data-icon className="size-4" aria-hidden="true" />
-              <span>{locale === "zh-SG" ? "中" : "EN"}</span>
+              <span>{locale === "zh-SG" ? t("language.zh_short") : t("language.en_short")}</span>
             </SelectTrigger>
             <SelectContent align="end">
               <SelectItem value="en-SG" className="text-xs">
