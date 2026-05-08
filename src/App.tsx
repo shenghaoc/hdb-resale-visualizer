@@ -541,7 +541,7 @@ function App() {
   const isSavedDashboardOpen = isDesktop && isRightPanelOpen;
   const showFloatingHeader = isDesktop ? isHeaderVisible : mobileTab === null;
   const showScopePrompt = Boolean(
-    manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen : mobileTab === null),
+    manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen && !isRightPanelOpen : mobileTab === null),
   );
 
   return (
