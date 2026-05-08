@@ -294,10 +294,6 @@ function sortTransactionsByLatest(transactions: ResaleTransaction[]) {
   );
 }
 
-function calculateMonthDistance(laterMonth: string, earlierMonth: string) {
-  return monthDistance(laterMonth, earlierMonth);
-}
-
 function findNearestMrtDistanceMeters(
   mrtExits: MrtExit[],
   geocode: GeocodeEntry | null | undefined,
@@ -655,7 +651,7 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: calculateMonthDistance(maxMonth, cohort.month),
+        monthsSinceLatestTransaction: monthDistance(maxMonth, cohort.month),
       });
     }
 
