@@ -953,6 +953,11 @@ function App() {
             <List data-icon />
             <span>{t("tab.results")}</span>
           </Button>
+        </nav>
+      )}
+
+      {isDesktop && (
+        <nav className="desktop-tab-bar desktop-tab-bar--right" aria-label={t("tab.saved")}>
           <Button
             type="button"
             variant={desktopTab === "saved" && isDesktopPanelOpen ? "secondary" : "ghost"}

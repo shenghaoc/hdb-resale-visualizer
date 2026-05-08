@@ -394,6 +394,11 @@
   box-shadow: 0 8px 24px rgba(23, 28, 31, 0.08);
 }
 
+.desktop-tab-bar--right {
+  left: auto;
+  right: 1.5rem;
+}
+
 .desktop-tab-bar [data-slot="button"] {
   min-width: 6.75rem;
   height: 2.625rem;
@@ -546,6 +551,10 @@
 
 .saved-dashboard-open .map-attribution-link {
   right: calc(min(44rem, 48vw) + 0.75rem);
+}
+
+.saved-dashboard-open .desktop-tab-bar--right {
+  right: calc(min(44rem, 48vw) + 1.5rem);
 }
 
 .maplibregl-ctrl-group button {
