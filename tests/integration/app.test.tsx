@@ -525,4 +525,44 @@ describe("App detail loading", () => {
       expect(resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
     });
   });
+
+  it("shows scope prompt when URL has near-me sentinel but no user location", async () => {
+    window.history.replaceState({}, "", "/?search=near+me");
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    await user.click(screen.getByRole("button", { name: "Background map interaction" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Start with location")).toBeInTheDocument();
+    });
+    expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "false");
+  });
+
+  it("clears near-me sentinel when user selects a town", async () => {
+    window.history.replaceState({}, "", "/?search=near+me");
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("filter-panel");
+    await user.click(screen.getByRole("button", { name: "Choose Bedok" }));
+
+    await waitFor(() => {
+      const params = new URLSearchParams(window.location.search);
+      expect(params.get("search")).not.toBe("near me");
+    });
+  });
 });

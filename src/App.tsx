@@ -361,7 +361,7 @@ function App() {
     }
 
     setMobileTab("filters");
-  }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab]);
+  }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab, setGeolocationError, setIsLocating]);
 
   const handleUseCurrentLocation = useCallback(() => {
     if (isLocating) {
