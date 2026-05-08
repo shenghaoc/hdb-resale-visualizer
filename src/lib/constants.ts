@@ -4,12 +4,40 @@ import type { FilterState } from "@/types/data";
  * Shared numeric constants used across the codebase.
  */
 export const MAX_LEASE_DURATION = 99;
+export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
+export const NEAR_ME_SEARCH_QUERY = "near me";
 
 /**
  * Returns the current Gregorian year. Using a function ensures the value is fresh for each
  * operation (e.g., a filter pass) while avoiding repeated `new Date()` allocations inside hot loops.
  */
 export const getCurrentYear = (): number => new Date().getFullYear();
+
+const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: string): string | null {
+  const hasValidMinMonth = YEAR_MONTH_PATTERN.test(minMonth);
+  const hasValidMaxMonth = YEAR_MONTH_PATTERN.test(maxMonth);
+
+  if (!hasValidMinMonth && !hasValidMaxMonth) {
+    return null;
+  }
+
+  if (!hasValidMinMonth) {
+    return maxMonth;
+  }
+
+  if (!hasValidMaxMonth) {
+    return minMonth;
+  }
+
+  const [maxYearRaw, maxMonthRaw] = maxMonth.split("-");
+  const maxYear = Number(maxYearRaw);
+  const month = Number(maxMonthRaw);
+
+  const defaultStart = `${maxYear - DEFAULT_TRANSACTION_WINDOW_YEARS}-${String(month).padStart(2, "0")}`;
+  return defaultStart < minMonth ? minMonth : defaultStart;
+}
 
 /**
  * Storage keys for local persistence.

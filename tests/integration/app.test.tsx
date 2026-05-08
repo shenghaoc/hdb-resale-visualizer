@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { I18nProvider } from "@/lib/i18n";
-import type { BlockSummary, Manifest, ShortlistItem } from "@/types/data";
+import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -62,18 +62,46 @@ vi.mock("@/hooks/useShortlist", () => ({
 }));
 
 vi.mock("@/components/FilterPanel", () => ({
-  FilterPanel: () => <div data-testid="filter-panel" />,
+  FilterPanel: ({
+    filters,
+    onChange,
+  }: {
+    filters: FilterState;
+    onChange: (patch: Partial<FilterState>) => void;
+  }) => (
+    <div data-testid="filter-panel" data-start-month={filters.startMonth ?? ""}>
+      <button type="button" onClick={() => onChange({ startMonth: null })}>
+        Clear start month
+      </button>
+      <button type="button" onClick={() => onChange({ town: "BEDOK" })}>
+        Choose Bedok
+      </button>
+    </div>
+  ),
 }));
 
 vi.mock("@/components/MapView", () => ({
   MapView: ({
+    blocks,
+    isDarkMode,
+    showBlockMarkers,
     onMapInteract,
     onSelect,
+    onGeolocate,
   }: {
+    blocks: BlockSummary[];
+    isDarkMode: boolean;
+    showBlockMarkers?: boolean;
     onMapInteract?: (interactionType?: "background" | "feature") => void;
     onSelect: (addressKey: string) => void;
+    onGeolocate?: (coords: { lat: number; lng: number }) => void;
   }) => (
-    <div data-testid="map-view">
+    <div
+      data-testid="map-view"
+      data-block-count={blocks.length}
+      data-show-block-markers={String(Boolean(showBlockMarkers))}
+      data-theme={isDarkMode ? "dark" : "light"}
+    >
       <button type="button" onClick={() => onMapInteract?.("background")}>
         Background map interaction
       </button>
@@ -85,6 +113,9 @@ vi.mock("@/components/MapView", () => ({
         }}
       >
         Feature map click
+      </button>
+      <button type="button" onClick={() => onGeolocate?.({ lat: 1.3339, lng: 103.9372 })}>
+        Mock geolocate
       </button>
     </div>
   ),
@@ -258,6 +289,107 @@ describe("App detail loading", () => {
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
   });
 
+  it("defaults the transaction window and lets users clear it to view all history", async () => {
+    dataMocks.fetchManifest.mockResolvedValue({
+      ...manifest,
+      dataWindow: {
+        minMonth: "2020-01",
+        maxMonth: "2026-04",
+      },
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "2023-04");
+    });
+
+    await user.click(screen.getByRole("button", { name: "Clear start month" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "");
+    });
+  });
+
+  it("loads nearby map markers after geolocation", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    await user.click(screen.getByRole("button", { name: "Mock geolocate" }));
+
+    await waitFor(() => {
+      expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
+      expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
+    });
+    expect(new URLSearchParams(window.location.search).get("search")).toBe("near me");
+  });
+
+  it("shows feedback when browser geolocation fails and clears it after manual scope selection", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: vi.fn(
+          (_success: PositionCallback, error: PositionErrorCallback) => error({} as GeolocationPositionError),
+        ),
+      },
+      configurable: true,
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: "Background map interaction" }));
+    await user.click(await screen.findByRole("button", { name: "Use location" }));
+
+    expect(await screen.findByText("Location failed. Choose a town instead.")).toBeInTheDocument();
+
+    await user.click(await screen.findByRole("button", { name: "Choose Bedok" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Location failed. Choose a town instead.")).not.toBeInTheDocument();
+    });
+  });
+
+  it("shows an in-progress state while browser geolocation is pending", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: vi.fn(),
+      },
+      configurable: true,
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: "Background map interaction" }));
+
+    const button = await screen.findByRole("button", { name: "Use location" });
+    await user.click(button);
+
+    expect(await screen.findByRole("button", { name: "Locating" })).toBeDisabled();
+  });
+
   it("closes the results panel for background map exploration", async () => {
     const user = userEvent.setup();
 
@@ -391,6 +523,46 @@ describe("App detail loading", () => {
       );
       expect(resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
       expect(resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+    });
+  });
+
+  it("shows scope prompt when URL has near-me sentinel but no user location", async () => {
+    window.history.replaceState({}, "", "/?search=near+me");
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    await user.click(screen.getByRole("button", { name: "Background map interaction" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Start with location")).toBeInTheDocument();
+    });
+    expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "false");
+  });
+
+  it("clears near-me sentinel when user selects a town", async () => {
+    window.history.replaceState({}, "", "/?search=near+me");
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("filter-panel");
+    await user.click(screen.getByRole("button", { name: "Choose Bedok" }));
+
+    await waitFor(() => {
+      const params = new URLSearchParams(window.location.search);
+      expect(params.get("search")).not.toBe("near me");
     });
   });
 });

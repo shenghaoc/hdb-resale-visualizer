@@ -3,6 +3,14 @@ import { safeStorage } from "@/lib/storage";
 
 const THEME_STORAGE_KEY = "hdb-resale-theme";
 
+function getSystemTheme(): "light" | "dark" {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return "light";
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export function useTheme() {
   // userTheme is null if the user hasn't explicitly set a preference
   const [userTheme, setUserTheme] = useState<"light" | "dark" | null>(() => {
@@ -10,7 +18,7 @@ export function useTheme() {
     return stored === "dark" || stored === "light" ? stored : null;
   });
 
-  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
+  const [systemTheme, setSystemTheme] = useState<"light" | "dark">(getSystemTheme);
 
   // Sync system theme and listen for changes
   useEffect(() => {

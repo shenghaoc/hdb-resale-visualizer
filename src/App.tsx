@@ -1,8 +1,10 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
   Languages,
   List,
+  Loader2,
+  LocateFixed,
   Moon,
   SlidersHorizontal,
   Sun,
@@ -10,8 +12,10 @@ import {
 } from "lucide-react";
 import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+  getDefaultTransactionStartMonth,
   HEADER_DISMISSED_STORAGE_KEY,
   MEDIAN_PRICE_LEGEND_GRADIENT,
+  NEAR_ME_SEARCH_QUERY,
 } from "@/lib/constants";
 import {
   getSelectionByAddressKey,
@@ -75,6 +79,9 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [geolocationError, setGeolocationError] = useState<string | null>(null);
+  const geolocationRequestRef = useRef(0);
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
@@ -84,12 +91,39 @@ function App() {
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
   const { toggle: toggleShortlist } = shortlist;
   const { filters, patchFilters, resetFilters } = useUrlFilters();
+  const [useDefaultStartMonth, setUseDefaultStartMonth] = useState(() => {
+    if (typeof window === "undefined") {
+      return true;
+    }
+
+    return !new URLSearchParams(window.location.search).has("startMonth");
+  });
+  const defaultStartMonth = useMemo(
+    () =>
+      manifest
+        ? getDefaultTransactionStartMonth(manifest.dataWindow.minMonth, manifest.dataWindow.maxMonth)
+        : null,
+    [manifest],
+  );
+  const effectiveFilters = useMemo(
+    () =>
+      useDefaultStartMonth && defaultStartMonth && filters.startMonth === null
+        ? { ...filters, startMonth: defaultStartMonth }
+        : filters,
+    [defaultStartMonth, filters, useDefaultStartMonth],
+  );
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(selectedAddressKey);
+  // "near me" is a sentinel that requires userLocation to resolve. Without a
+  // location it must not run as a literal text search against blocks.
+  const resolvedSearch = useMemo(
+    () => (filters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : filters.search),
+    [filters.search, userLocation],
+  );
   // Debounce search for the map only so list interactions stay in sync with
   // the visible result rows while the heavier map updates trail slightly.
-  const debouncedSearch = useDebouncedValue(filters.search, 200);
+  const debouncedSearch = useDebouncedValue(resolvedSearch, 200);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
@@ -98,7 +132,7 @@ function App() {
 
   const { blocks, loadError } = useBlockLoading({
     manifest,
-    townFilter: filters.town,
+    townFilter: effectiveFilters.town,
     debouncedSearch,
     userLocationPresent: Boolean(userLocation),
     selectedAddressKey,
@@ -131,21 +165,23 @@ function App() {
   }, [hasLoadedHeaderPreference, isHeaderVisible]);
 
   const stableFilters = useMemo(
-    () => ({ ...filters, selectedAddressKey: null }),
+    () => ({ ...effectiveFilters, search: resolvedSearch, selectedAddressKey: null }),
+    // Intentional: list filter fields explicitly to avoid reference churn when
+    // effectiveFilters is recreated without a meaningful filter value change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      filters.search,
-      filters.town,
-      filters.flatType,
-      filters.flatModel,
-      filters.budgetMin,
-      filters.budgetMax,
-      filters.areaMin,
-      filters.areaMax,
-      filters.remainingLeaseMin,
-      filters.startMonth,
-      filters.endMonth,
-      filters.mrtMax,
+      resolvedSearch,
+      effectiveFilters.town,
+      effectiveFilters.flatType,
+      effectiveFilters.flatModel,
+      effectiveFilters.budgetMin,
+      effectiveFilters.budgetMax,
+      effectiveFilters.areaMin,
+      effectiveFilters.areaMax,
+      effectiveFilters.remainingLeaseMin,
+      effectiveFilters.startMonth,
+      effectiveFilters.endMonth,
+      effectiveFilters.mrtMax,
     ],
   );
   const mapFilters = useMemo(
@@ -155,13 +191,13 @@ function App() {
   const geographicIntent = useMemo(
     () =>
       resolveGeographicSearchIntent(
-        filters.search,
+        effectiveFilters.search,
         blocks,
-        filters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+        effectiveFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
         userLocation,
         t("filters.nearMe"),
       ),
-    [blocks, filters.mrtMax, filters.search, userLocation, t],
+    [blocks, effectiveFilters.mrtMax, effectiveFilters.search, userLocation, t],
   );
   const mapGeographicIntent = useMemo(
     () =>
@@ -175,7 +211,7 @@ function App() {
     [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
   const hasResultScope = Boolean(
-    filters.town || filters.search.trim() || geographicIntent || selectedAddressKey,
+    effectiveFilters.town || resolvedSearch.trim() || geographicIntent || selectedAddressKey,
   );
   const hasMapMarkerScope = Boolean(
     mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
@@ -265,17 +301,112 @@ function App() {
     [toggleShortlist],
   );
 
+  const patchUserFilters = useCallback(
+    (patch: Partial<typeof filters>) => {
+      if ("startMonth" in patch) {
+        setUseDefaultStartMonth(false);
+      }
+
+      if ("search" in patch || "town" in patch || "selectedAddressKey" in patch) {
+        setGeolocationError(null);
+      }
+
+      // Selecting a town while "near me" is the active search would apply both
+      // a geographic radius and a town boundary simultaneously. Clear the sentinel
+      // so town selection shows all blocks in that town without a radius constraint.
+      const resolved =
+        "town" in patch && filters.search === NEAR_ME_SEARCH_QUERY
+          ? { ...patch, search: "" }
+          : patch;
+      patchFilters(resolved);
+    },
+    [patchFilters, filters.search],
+  );
+
+  const handleResetFilters = useCallback(() => {
+    setUseDefaultStartMonth(true);
+    setGeolocationError(null);
+    resetFilters();
+  }, [resetFilters]);
+
   const handleGeolocate = useCallback(
     (coords: Coordinates) => {
       setUserLocation(coords);
-      patchFilters({ search: t("filters.nearMe") });
+      setGeolocationError(null);
+      patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
+
+      if (isDesktop) {
+        setDesktopTab("results");
+        setIsDesktopPanelOpen(true);
+      }
+      // Mobile: stay on the map so nearby markers are visible once scope resolves.
     },
-    [patchFilters, t],
+    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen],
   );
+
+  const handleChooseTown = useCallback((options?: { clearGeolocationError?: boolean }) => {
+    if (options?.clearGeolocationError !== false) {
+      setGeolocationError(null);
+    }
+
+    // Invalidate any pending geolocation request so a late response
+    // does not overwrite the user's manual town selection.
+    geolocationRequestRef.current += 1;
+    setIsLocating(false);
+
+    if (isDesktop) {
+      setDesktopTab("filters");
+      setIsDesktopPanelOpen(true);
+      return;
+    }
+
+    setMobileTab("filters");
+  }, [isDesktop, setDesktopTab, setIsDesktopPanelOpen, setMobileTab, setGeolocationError, setIsLocating]);
+
+  const handleUseCurrentLocation = useCallback(() => {
+    if (isLocating) {
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      setGeolocationError(t("app.locationUnavailable"));
+      handleChooseTown({ clearGeolocationError: false });
+      return;
+    }
+
+    setGeolocationError(null);
+    setIsLocating(true);
+    const requestId = ++geolocationRequestRef.current;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        if (geolocationRequestRef.current !== requestId) {
+          return;
+        }
+        setIsLocating(false);
+        handleGeolocate({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => {
+        if (geolocationRequestRef.current !== requestId) {
+          return;
+        }
+        setIsLocating(false);
+        setGeolocationError(t("app.locationFailed"));
+        handleChooseTown({ clearGeolocationError: false });
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 60_000,
+        timeout: 10_000,
+      },
+    );
+  }, [handleChooseTown, handleGeolocate, isLocating, t]);
 
   function handleMapInteract(interactionType: "background" | "feature" = "background") {
     if (!hasInteractedWithMap) {
-      setIsHeaderVisible(false);
+      if (isDesktop) setIsHeaderVisible(false);
       setHasInteractedWithMap(true);
     }
 
@@ -327,13 +458,11 @@ function App() {
   // Shared content blocks (rendered in both mobile tabs and desktop grid)
   const filterContent = (
     <FilterPanel
-      filters={filters}
+      filters={effectiveFilters}
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
-      onChange={patchFilters}
-      onReset={() => {
-        resetFilters();
-      }}
+      onChange={patchUserFilters}
+      onReset={handleResetFilters}
       options={manifest.filterOptions}
     />
   );
@@ -353,6 +482,7 @@ function App() {
               : null
         }
         showBlockMarkers={hasMapMarkerScope}
+        isDarkMode={theme === "dark"}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
         locale={locale}
@@ -413,6 +543,10 @@ function App() {
     saved: "w-[min(44rem,48vw)]",
   };
   const isSavedDashboardOpen = isDesktop && isDesktopPanelOpen && desktopTab === "saved";
+  const showFloatingHeader = isDesktop ? isHeaderVisible : mobileTab === null;
+  const showScopePrompt = Boolean(
+    manifest && !hasResultScope && (isDesktop ? !isDesktopPanelOpen : mobileTab === null),
+  );
 
   return (
     <>
@@ -433,7 +567,7 @@ function App() {
           © OneMap contributors
         </a>
 
-        {(!isDesktop || isHeaderVisible) && manifest ? (
+        {showFloatingHeader && manifest ? (
           <header
             data-testid={isDesktop ? "global-header" : undefined}
             className={cn(
@@ -591,6 +725,67 @@ function App() {
             </button>
           </div>
         )}
+
+        {showScopePrompt ? (
+          <div
+            className={cn(
+              "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border border-border/20 bg-background/92 p-3 text-sm shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:border-primary/10 dark:bg-card/92 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_16px_48px_rgba(4,12,24,0.82)]",
+              isDesktop
+                ? "bottom-[5.75rem] left-6"
+                : "bottom-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+2.9rem)] left-3 right-3",
+            )}
+          >
+            <p className="v2-section-title">{t("app.scopePromptTitle")}</p>
+            <p className="mt-1 text-xs leading-snug text-muted-foreground">
+              {t("app.scopePromptDescription")}
+            </p>
+            {geolocationError ? (
+              <p className="mt-2 text-xs font-medium leading-snug text-destructive">
+                {geolocationError}
+              </p>
+            ) : null}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                type="button"
+                size="xs"
+                className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+                onClick={handleUseCurrentLocation}
+                disabled={isLocating}
+              >
+                {isLocating ? (
+                  <Loader2 data-icon className="size-3.5 animate-spin" aria-hidden="true" />
+                ) : (
+                  <LocateFixed data-icon className="size-3.5" aria-hidden="true" />
+                )}
+                {isLocating ? t("app.locating") : t("app.useCurrentLocation")}
+              </Button>
+              <Button
+                type="button"
+                size="xs"
+                variant="outline"
+                className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+                onClick={() => handleChooseTown()}
+              >
+                <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
+                {t("app.chooseTown")}
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        {geolocationError && !showScopePrompt ? (
+          <div
+            role="status"
+            className={cn(
+              "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-background/95 px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:bg-card/95",
+              isDesktop
+                ? "bottom-[5.75rem] left-6 max-w-[22rem]"
+                : "bottom-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.75rem)] left-3 right-3",
+            )}
+          >
+            {geolocationError}
+          </div>
+        ) : null}
 
         <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
           {isDesktop && !isHeaderVisible ? (
@@ -786,8 +981,42 @@ function App() {
         <nav className="mobile-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
+            size="icon"
+            variant="ghost"
+            className="mobile-mode-button"
+            onClick={toggleTheme}
+            aria-label={t("app.toggleTheme")}
+            title={t("app.toggleTheme")}
+          >
+            {theme === "light" ? (
+              <Moon data-icon className="size-4" aria-hidden="true" />
+            ) : (
+              <Sun data-icon className="size-4" aria-hidden="true" />
+            )}
+          </Button>
+          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
+            <SelectTrigger
+              aria-label={t("language.label")}
+              title={t("language.label")}
+              className="mobile-language-trigger"
+            >
+              <Languages data-icon className="size-4" aria-hidden="true" />
+              <span>{t("language.short_name")}</span>
+            </SelectTrigger>
+            <SelectContent position="popper" side="top" align="start" sideOffset={4}>
+              <SelectItem value="en-SG" className="text-xs">
+                {t("language.en")}
+              </SelectItem>
+              <SelectItem value="zh-SG" className="text-xs">
+                {t("language.zh")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            type="button"
             variant={mobileTab === "filters" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "filters"}
             aria-expanded={mobileTab === "filters"}
             aria-controls={mobileTab === "filters" ? "mobile-filters-content" : undefined}
@@ -800,6 +1029,7 @@ function App() {
             type="button"
             variant={mobileTab === "results" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "results"}
             aria-expanded={mobileTab === "results"}
             aria-controls={mobileTab === "results" ? "mobile-results-content" : undefined}
@@ -812,6 +1042,7 @@ function App() {
             type="button"
             variant={mobileTab === "saved" ? "secondary" : "ghost"}
             size="sm"
+            className="mobile-tab-button"
             data-active={mobileTab === "saved"}
             aria-expanded={mobileTab === "saved"}
             aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
