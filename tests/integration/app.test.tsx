@@ -366,6 +366,30 @@ describe("App detail loading", () => {
     });
   });
 
+  it("shows an in-progress state while browser geolocation is pending", async () => {
+    Object.defineProperty(navigator, "geolocation", {
+      value: {
+        getCurrentPosition: vi.fn(),
+      },
+      configurable: true,
+    });
+
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <App />
+      </I18nProvider>,
+    );
+
+    await user.click(await screen.findByRole("button", { name: "Background map interaction" }));
+
+    const button = await screen.findByRole("button", { name: "Use location" });
+    await user.click(button);
+
+    expect(await screen.findByRole("button", { name: "Locating" })).toBeDisabled();
+  });
+
   it("closes the results panel for background map exploration", async () => {
     const user = userEvent.setup();
 

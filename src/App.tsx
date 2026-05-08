@@ -729,7 +729,7 @@ function App() {
                 ) : (
                   <LocateFixed data-icon className="size-3.5" aria-hidden="true" />
                 )}
-                {t("app.useCurrentLocation")}
+                {isLocating ? t("app.locating") : t("app.useCurrentLocation")}
               </Button>
               <Button
                 type="button"
