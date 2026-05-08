@@ -10,7 +10,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 - MapLibre GL JS with OneMap GreyLite tiles
 - TanStack Table for results and shortlist comparison
 - ECharts for block-level trend charts
-- Bun for package management, scripts, and CI
+- Node.js 26 + npm for package management, scripts, and CI
 
 ## Kiro workflow and repository docs
 
@@ -45,19 +45,19 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 Install dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 Generate or refresh the static data artifacts:
 
 ```bash
-bun run sync-data
+npm run sync-data
 ```
 
 Start the app:
 
 ```bash
-bun run dev
+npm run dev
 ```
 
 Open `http://localhost:5173`.
@@ -65,14 +65,14 @@ Open `http://localhost:5173`.
 ## Scripts
 
 ```bash
-bun run dev
-bun run build
-bun run preview
-bun run typecheck
-bun run lint
-bun run test
-bun run test:e2e
-bun run sync-data
+npm run dev
+npm run build
+npm run preview
+npm run typecheck
+npm run lint
+npm run test
+npm run test:e2e
+npm run sync-data
 ```
 
 ## Data pipeline

@@ -39,7 +39,7 @@ async function main() {
 
   if (errors.length > 0) {
     throw new Error(
-      `Data artifact check failed in public/data/:\n${errors.join("\n")}\nRun "bun run sync-data" to generate them.`,
+      `Data artifact check failed in public/data/:\n${errors.join("\n")}\nRun "npm run sync-data" to generate them.`,
     );
   }
 

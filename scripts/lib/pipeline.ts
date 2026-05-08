@@ -201,7 +201,7 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    return new Date().getFullYear();
+    return Temporal.Now.plainDateISO().year;
   }
 
   const counts = new Map<number, number>();
@@ -293,17 +293,6 @@ function sortTransactionsByLatest(transactions: ResaleTransaction[]) {
   );
 }
 
-function calculateMonthDistance(laterMonth: string, earlierMonth: string) {
-  const laterMonthDate = new Date(`${laterMonth}-01`);
-  const earlierMonthDate = new Date(`${earlierMonth}-01`);
-
-  return Math.max(
-    0,
-    (laterMonthDate.getFullYear() - earlierMonthDate.getFullYear()) * 12 +
-      (laterMonthDate.getMonth() - earlierMonthDate.getMonth()),
-  );
-}
-
 function findNearestMrtDistanceMeters(
   mrtExits: MrtExit[],
   geocode: GeocodeEntry | null | undefined,
@@ -329,7 +318,7 @@ function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | 
     typeof yearCompleted === "number" &&
     Number.isFinite(yearCompleted) &&
     yearCompleted >= 1900 &&
-    yearCompleted <= new Date().getFullYear()
+    yearCompleted <= Temporal.Now.plainDateISO().year
   ) {
     return yearCompleted;
   }
@@ -342,7 +331,7 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
     return value.trim();
   }
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = Temporal.Now.plainDateISO().year;
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
 }
@@ -433,6 +422,7 @@ export function buildArtifacts({
   parks,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
+  const runTimestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
@@ -446,6 +436,7 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1];
+  const maxMonthYM = Temporal.PlainYearMonth.from(maxMonth);
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -661,7 +652,13 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: calculateMonthDistance(maxMonth, cohort.month),
+        monthsSinceLatestTransaction: Math.max(
+          0,
+          Temporal.PlainYearMonth.from(cohort.month).until(
+            maxMonthYM,
+            { largestUnit: "months" },
+          ).months,
+        ),
       });
     }
 
@@ -731,14 +728,14 @@ export function buildArtifacts({
         flatType: metric.flatType,
         amenities,
         percentileRanks,
-        generatedAt: new Date().toISOString(),
+        generatedAt: runTimestamp,
       };
     }
   }
 
   const manifest: Manifest = {
     schemaVersion: "2.0.0",
-    generatedAt: new Date().toISOString(),
+    generatedAt: runTimestamp,
     dataWindow: {
       minMonth: sortedMonths[0],
       maxMonth,

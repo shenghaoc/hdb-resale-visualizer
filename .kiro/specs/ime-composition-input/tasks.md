@@ -85,14 +85,14 @@
     - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
     - The test from task 1 encodes the expected behavior (callback not invoked during composition, invoked once on compositionend)
     - When this test passes, it confirms the expected behavior is satisfied
-    - Run: `bun run test tests/hooks/useIMEComposition.exploration.test.ts`
+    - Run: `npm run test tests/hooks/useIMEComposition.exploration.test.ts`
     - **EXPECTED OUTCOME**: Test PASSES (confirms bug is fixed)
     - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
   - [x] 3.5 Verify preservation tests still pass
     - **Property 2: Preservation** - Non-IME Input Passes Through Unchanged
     - **IMPORTANT**: Re-run the SAME tests from task 2 - do NOT write new tests
-    - Run: `bun run test tests/hooks/useIMEComposition.preservation.test.ts`
+    - Run: `npm run test tests/hooks/useIMEComposition.preservation.test.ts`
     - **EXPECTED OUTCOME**: Tests PASS (confirms no regressions for non-IME input)
     - Confirm all property-based tests still pass after fix (no regressions)
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
@@ -109,11 +109,11 @@
   - Integration test file: `tests/components/ShortlistDrawer.ime.test.tsx`
     - Render ShortlistDrawer row editor, simulate IME composition on notes textarea, verify `onUpdate` not called during composition
     - Render ShortlistDrawer row editor, simulate IME composition on target price input, verify `onUpdate` not called during composition
-  - Run all tests: `bun run test`
+  - Run all tests: `npm run test`
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3_
 
 - [x] 5. Checkpoint - Ensure all tests pass
-  - Run full test suite: `bun run test`
-  - Run typecheck: `bun run typecheck`
-  - Run lint: `bun run lint`
+  - Run full test suite: `npm run test`
+  - Run typecheck: `npm run typecheck`
+  - Run lint: `npm run lint`
   - Ensure all tests pass, ask the user if questions arise.

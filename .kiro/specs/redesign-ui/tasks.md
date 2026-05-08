@@ -25,9 +25,9 @@
 - [x] **Task 12: Shortlist Comparison Update**: Bind the comparison data to the Shortlist view for side-by-side amenity analysis.
 
 ## Phase 5: Validation & Final Polish
-- [x] Run `bun run typecheck`.
-- [x] Run `bun run lint`.
-- [x] Run `bun run test`.
+- [x] Run `npm run typecheck`.
+- [x] Run `npm run lint`.
+- [x] Run `npm run test`.
 - [x] Final e2e smoke test for the new data bindings.
 
 ## Phase 6: Visual Context & Advanced Sharing
