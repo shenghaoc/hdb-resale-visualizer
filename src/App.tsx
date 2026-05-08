@@ -325,12 +325,10 @@ function App() {
       if (isDesktop) {
         setDesktopTab("results");
         setIsDesktopPanelOpen(true);
-        return;
       }
-
-      setMobileTab("results");
+      // Mobile: stay on the map so nearby markers are visible once scope resolves.
     },
-    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen, setMobileTab],
+    [isDesktop, patchFilters, setDesktopTab, setIsDesktopPanelOpen],
   );
 
   const handleChooseTown = useCallback((options?: { clearGeolocationError?: boolean }) => {
@@ -1036,7 +1034,7 @@ function App() {
               <Languages data-icon className="size-4" aria-hidden="true" />
               <span>{t("language.short_name")}</span>
             </SelectTrigger>
-            <SelectContent align="end">
+            <SelectContent position="popper" side="top" align="end" sideOffset={4}>
               <SelectItem value="en-SG" className="text-xs">
                 {t("language.en")}
               </SelectItem>

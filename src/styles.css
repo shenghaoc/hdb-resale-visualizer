@@ -373,7 +373,7 @@
   background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
-.mobile-language-trigger svg:not([data-icon]) {
+.mobile-language-trigger > svg:last-of-type {
   display: none;
 }
 
