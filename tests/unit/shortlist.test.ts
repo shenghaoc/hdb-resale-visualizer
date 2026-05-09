@@ -46,4 +46,16 @@ describe("shortlist storage", () => {
     const oversizedPayload = "a".repeat(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH + 1);
     expect(decodeShortlistFromUrl(oversizedPayload)).toEqual([]);
   });
+
+  it("returns empty string when encoding oversized shortlist", () => {
+    const items = [
+      {
+        addressKey: "a",
+        notes: "a".repeat(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH),
+        targetPrice: 0,
+        addedAt: "",
+      },
+    ];
+    expect(encodeShortlistForUrl(items)).toBe("");
+  });
 });
