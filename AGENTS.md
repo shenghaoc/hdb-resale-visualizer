@@ -42,8 +42,20 @@ npm run build         # Production build
 3. **Persistence**: All user state is strictly browser-local (`localStorage`).
 
 ## 🔍 Code Review Policy
-When reviewing pull requests, check for:
+
+### Review Process
+Follow these steps in order before posting any feedback:
+
+1. **Read ALL changed files** — never comment on a diff excerpt in isolation.
+2. **Cross-reference existing automated reviews** — check what Gemini, Codex, or other bots flagged, then confirm whether those issues are already resolved in a later commit. Acknowledge the outcome explicitly.
+3. **Trace semantic dependencies** — when a refactor splits or merges state, identify every consumer of the old shape and verify each one is correctly updated. Look for conditions that previously checked one thing but now should check two (or vice-versa).
+4. **Inspect CSS against real DOM structure** — verify that selectors (descendant, sibling, compound) match the actual rendered element hierarchy, not just the intended one.
+5. **Scan for dead code** — identify computed values, compat shims, or returned properties that no consumer destructures or reads.
+6. **Audit edge cases, not just the happy path** — consider independent-state combinations (e.g. both panels open), keyboard interactions, and mobile vs desktop branches.
+
+### What to Check
 - Functional correctness and logical bugs
+- Semantic bugs in derived/composed state (e.g. a condition that was `!panelOpen` and should now be `!leftOpen && !rightOpen`)
 - Code quality, maintainability, and unnecessary complexity
 - React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
 - Data pipeline contract violations (ensure `scripts/lib/schemas.ts` and `src/types/data.ts` are synchronized)
@@ -52,8 +64,28 @@ When reviewing pull requests, check for:
 - Runtime fetching from external APIs (all data must be loaded from precomputed `public/data/` artifacts)
 - Missing tests for non-trivial logic changes
 - Weak TypeScript types and type safety issues
+- CSS selector validity against the actual DOM hierarchy (descendant vs sibling vs compound selectors)
+- Dead or misleading backwards-compat code that no consumer uses
 
-Do not approve PRs that:
+### Review Output Format
+Structure every review comment as follows:
+
+**Overview** — one short paragraph describing the architectural approach and whether it is sound.
+
+**Good news on automated reviews** — explicitly state which bot-flagged issues are already fixed in the latest commit and which (if any) are still open.
+
+**Issues Found** — for each issue:
+- Label severity: **High** / **Medium** / **Low**
+- Include the exact `file:line` reference
+- Show a before/after code snippet
+- Explain the impact concisely
+- Provide a concrete suggested fix
+
+**Positives** — bullet-list what the PR does well (architecture decisions, cleaner patterns, correct aria usage, etc.). Always include this section.
+
+**Summary** — two to three sentences: what real bugs were found, what is already correct, and the overall quality assessment.
+
+### Do Not Approve PRs That
 - Introduce backend routes or runtime server-side logic
 - Fetch data from external APIs at runtime
 - Break existing deployment assumptions or map attribution requirements
