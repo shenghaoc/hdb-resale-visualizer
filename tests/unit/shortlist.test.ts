@@ -48,14 +48,17 @@ describe("shortlist storage", () => {
   });
 
   it("returns empty string when encoding oversized shortlist", () => {
-    const items = [
+    const createItems = (notesLen: number) => [
       {
         addressKey: "a",
-        notes: "a".repeat(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH),
+        notes: "a".repeat(notesLen),
         targetPrice: 0,
         addedAt: "",
       },
     ];
-    expect(encodeShortlistForUrl(items)).toBe("");
+    // Case 1: JSON length exceeds limit
+    expect(encodeShortlistForUrl(createItems(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH))).toBe("");
+    // Case 2: Encoded length exceeds limit (but JSON length is under)
+    expect(encodeShortlistForUrl(createItems(Math.floor(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH * 0.8)))).toBe("");
   });
 });
