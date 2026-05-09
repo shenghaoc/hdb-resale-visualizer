@@ -4,7 +4,7 @@
   # Prevent clickjacking by blocking cross-origin framing
   X-Frame-Options: SAMEORIGIN
   # Modern clickjacking protection and automatic HTTPS upgrades
-  Content-Security-Policy: default-src 'self'; frame-ancestors 'self'; upgrade-insecure-requests; object-src 'none'; base-uri 'self';
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://*.onemap.gov.sg https://demotiles.maplibre.org; img-src 'self' data:; worker-src blob:; frame-ancestors 'self'; upgrade-insecure-requests; object-src 'none'; base-uri 'self';
   # Force HTTPS for a year, including subdomains
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload;
   # Prevent filter state / coordinates in URL params from leaking to external origins (OneMap, Google Maps)
