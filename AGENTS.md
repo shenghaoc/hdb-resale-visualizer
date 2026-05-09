@@ -87,9 +87,10 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
 
 ### Output Format
+The following structured format applies to the overall PR review summary comment, not individual inline line-level comments:
 - **Overview** — one paragraph on the approach and whether it is sound.
 - **Automated Review Status** — which bot-flagged issues are resolved vs. still open.
-- **Issues Found** — severity (**Critical/High/Medium/Low**), `file:line`, before/after snippet, impact, concrete fix.
+- **Issues Found** — severity (**Critical/High/Medium/Low**), `file:line`, before/after snippet (where applicable), impact, concrete fix.
 - **Positives** — what the PR does well.
 - **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
 
