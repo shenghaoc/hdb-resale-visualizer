@@ -521,6 +521,7 @@ export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
   stationTokenCache.clear();
+  stationTokensAndNormalizedCache.clear();
   filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
