@@ -88,8 +88,8 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 
 ### Output Format
 - **Overview** — one paragraph on the approach and whether it is sound.
-- **Good news on automated reviews** — which bot-flagged issues are resolved vs. still open.
-- **Issues Found** — severity (**High/Medium/Low**), `file:line`, before/after snippet, impact, concrete fix.
+- **Automated Review Status** — which bot-flagged issues are resolved vs. still open.
+- **Issues Found** — severity (**Critical/High/Medium/Low**), `file:line`, before/after snippet, impact, concrete fix.
 - **Positives** — what the PR does well.
 - **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
 
@@ -101,6 +101,6 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
 
 ### Platform-Specific Review Tooling
-- **Claude**: `/review-pr` slash command (`.claude/commands/review-pr.md`) runs the full checklist above as a single agent. Specialist agents in `.claude/agents/` are available for targeted deep-dives.
+- **Claude**: triggered via `@claude review` PR comment.
 - **Kiro**: review hooks configured in `.kiro/`.
 - **Gemini / Codex**: triggered via PR comments (`/gemini review`, `@codex review`).
