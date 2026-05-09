@@ -259,7 +259,6 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
 // Memoize station name normalization since it's called repeatedly for every block's
 // MRT stations during array filtering passes.
 const normalizedStationNameCache = new Map<string, string>();
-const stationTokenCache = new Map<string, string[]>();
 
 function normalizeStationName(stationName: string): string {
   const cached = normalizedStationNameCache.get(stationName);
@@ -276,23 +275,6 @@ function normalizeStationName(stationName: string): string {
   return normalized;
 }
 
-function getStationTokens(stationName: string): string[] {
-  const cached = stationTokenCache.get(stationName);
-  if (cached !== undefined) {
-    return cached;
-  }
-
-  // ⚡ Bolt: Reuse tokenized station names during query matching.
-  // `matchStationName` runs this per station per search, so caching avoids repeated
-  // split/filter allocations and reduces hot-path work for MRT intent parsing.
-  const tokens = tokenizeSearchText(stationName)
-    .map((t) => t.value)
-    .filter((v) => !STATION_NAME_STOP_WORDS.has(v));
-  evictCacheIfNeeded(stationTokenCache, TOKENIZATION_CACHE_LIMIT);
-  stationTokenCache.set(stationName, tokens);
-  return tokens;
-}
-
 const stationTokensAndNormalizedCache = new Map<
   string,
   { tokens: string[]; normalized: string }
@@ -307,9 +289,15 @@ function getStationTokensAndNormalized(stationName: string): {
     return cached;
   }
 
-  const tokens = getStationTokens(stationName);
+  // ⚡ Bolt: Reuse tokenized station names during query matching.
+  // `matchStationName` runs this per station per search, so caching avoids repeated
+  // split/filter allocations and reduces hot-path work for MRT intent parsing.
+  const tokens = tokenizeSearchText(stationName)
+    .map((t) => t.value)
+    .filter((v) => !STATION_NAME_STOP_WORDS.has(v));
   const normalized = tokens.join(" ");
   const result = { tokens, normalized };
+
   evictCacheIfNeeded(stationTokensAndNormalizedCache, TOKENIZATION_CACHE_LIMIT);
   stationTokensAndNormalizedCache.set(stationName, result);
   return result;
@@ -520,7 +508,6 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
-  stationTokenCache.clear();
   stationTokensAndNormalizedCache.clear();
   filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
