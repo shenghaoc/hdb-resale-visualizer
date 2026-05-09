@@ -256,23 +256,36 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   });
 }
 
-// Memoize station name normalization since it's called repeatedly for every block's
-// MRT stations during array filtering passes.
-const normalizedStationNameCache = new Map<string, string>();
+const stationTokensAndNormalizedCache = new Map<
+  string,
+  { tokens: string[]; normalized: string }
+>();
 
-function normalizeStationName(stationName: string): string {
-  const cached = normalizedStationNameCache.get(stationName);
+function getStationTokensAndNormalized(stationName: string): {
+  tokens: string[];
+  normalized: string;
+} {
+  const cached = stationTokensAndNormalizedCache.get(stationName);
   if (cached !== undefined) {
     return cached;
   }
 
-  const tokens = tokenizeSearchText(stationName).map((token) => token.value);
-  const normalized = tokens.filter((token) => !STATION_NAME_STOP_WORDS.has(token)).join(" ");
+  // ⚡ Bolt: Reuse tokenized station names during query matching.
+  // `matchStationName` runs this per station per search, so caching avoids repeated
+  // split/filter allocations and reduces hot-path work for MRT intent parsing.
+  const tokens = tokenizeSearchText(stationName)
+    .map((t) => t.value)
+    .filter((v) => !STATION_NAME_STOP_WORDS.has(v));
+  const normalized = tokens.join(" ");
+  const result = { tokens, normalized };
 
-  evictCacheIfNeeded(normalizedStationNameCache, TOKENIZATION_CACHE_LIMIT);
-  normalizedStationNameCache.set(stationName, normalized);
+  evictCacheIfNeeded(stationTokensAndNormalizedCache, TOKENIZATION_CACHE_LIMIT);
+  stationTokensAndNormalizedCache.set(stationName, result);
+  return result;
+}
 
-  return normalized;
+function normalizeStationName(stationName: string): string {
+  return getStationTokensAndNormalized(stationName).normalized;
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
@@ -320,8 +333,8 @@ function matchStationName(query: string, stationNames: string[]): string | null 
   let bestMatch: { stationName: string; score: number } | null = null;
 
   for (const stationName of stationNames) {
-    const normalizedStation = normalizeStationName(stationName);
-    const stationTokens = normalizedStation.split(" ").filter(Boolean);
+    const { tokens: stationTokens, normalized: normalizedStation } =
+      getStationTokensAndNormalized(stationName);
     if (stationTokens.length === 0) {
       continue;
     }
@@ -479,7 +492,7 @@ export function matchesGeographicSearchIntent(
 
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
-  normalizedStationNameCache.clear();
+  stationTokensAndNormalizedCache.clear();
   filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
