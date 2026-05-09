@@ -130,6 +130,10 @@ export function formatSqm(value: number, t: Translator, locale?: Locale): string
 }
 
 export function formatMonth(month: string, locale?: Locale): string {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
+    return month;
+  }
+
   const resolvedLocale = resolveLocale(locale);
   const cacheKey = `${month}-${resolvedLocale}`;
   let cached = formattedMonthCache.get(cacheKey);
