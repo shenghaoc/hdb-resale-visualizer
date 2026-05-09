@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import {
   decodeShortlistFromUrl,
   encodeShortlistForUrl,
@@ -43,7 +43,7 @@ describe("shortlist storage", () => {
   });
 
   it("rejects oversized shortlist share payloads", () => {
-    const oversizedPayload = "a".repeat(10_001);
+    const oversizedPayload = "a".repeat(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH + 1);
     expect(decodeShortlistFromUrl(oversizedPayload)).toEqual([]);
   });
 });
