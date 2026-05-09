@@ -259,6 +259,7 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
 // Memoize station name normalization since it's called repeatedly for every block's
 // MRT stations during array filtering passes.
 const normalizedStationNameCache = new Map<string, string>();
+const stationTokenCache = new Map<string, string[]>();
 
 function normalizeStationName(stationName: string): string {
   const cached = normalizedStationNameCache.get(stationName);
@@ -273,6 +274,21 @@ function normalizeStationName(stationName: string): string {
   normalizedStationNameCache.set(stationName, normalized);
 
   return normalized;
+}
+
+function getStationTokens(stationName: string): string[] {
+  const cached = stationTokenCache.get(stationName);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  // ⚡ Bolt: Reuse tokenized station names during query matching.
+  // `matchStationName` runs this per station per search, so caching avoids repeated
+  // split/filter allocations and reduces hot-path work for MRT intent parsing.
+  const tokens = normalizeStationName(stationName).split(" ").filter(Boolean);
+  evictCacheIfNeeded(stationTokenCache, TOKENIZATION_CACHE_LIMIT);
+  stationTokenCache.set(stationName, tokens);
+  return tokens;
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
@@ -321,7 +337,7 @@ function matchStationName(query: string, stationNames: string[]): string | null 
 
   for (const stationName of stationNames) {
     const normalizedStation = normalizeStationName(stationName);
-    const stationTokens = normalizedStation.split(" ").filter(Boolean);
+    const stationTokens = getStationTokens(stationName);
     if (stationTokens.length === 0) {
       continue;
     }
@@ -480,6 +496,7 @@ export function matchesGeographicSearchIntent(
 export function resetFilteringCachesForTests(): void {
   tokenizationCache.clear();
   normalizedStationNameCache.clear();
+  stationTokenCache.clear();
   filterFlatTypeCache.clear();
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
