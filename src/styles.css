@@ -88,6 +88,7 @@
   --panel-border: oklch(0.65 0.09 210 / 0.5);
   --radius: 0.5rem;
   --sidebar: #f1f5f9;
+  --saved-panel-width: min(44rem, 48vw);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
@@ -394,6 +395,12 @@
   box-shadow: 0 8px 24px rgba(23, 28, 31, 0.08);
 }
 
+.desktop-tab-bar--right {
+  left: auto;
+  right: 1.5rem;
+  transition: right 200ms ease-out;
+}
+
 .desktop-tab-bar [data-slot="button"] {
   min-width: 6.75rem;
   height: 2.625rem;
@@ -541,11 +548,15 @@
 }
 
 .saved-dashboard-open .map-view .maplibregl-ctrl-top-right {
-  right: calc(min(44rem, 48vw) + 1.5rem);
+  right: calc(var(--saved-panel-width) + 1.5rem);
 }
 
 .saved-dashboard-open .map-attribution-link {
-  right: calc(min(44rem, 48vw) + 0.75rem);
+  right: calc(var(--saved-panel-width) + 0.75rem);
+}
+
+.desktop-tab-bar--right.desktop-tab-bar--shifted {
+  right: calc(var(--saved-panel-width) + 1.5rem);
 }
 
 .maplibregl-ctrl-group button {

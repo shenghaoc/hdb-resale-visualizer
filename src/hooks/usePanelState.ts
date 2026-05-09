@@ -1,33 +1,40 @@
 import { useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
+export type LeftTab = "filters" | "results";
 export type PanelTab = "filters" | "results" | "saved";
 
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
-  const [desktopTab, setDesktopTab] = useState<PanelTab>("filters");
+
+  // Desktop: independent left panel (filters/results) and right panel (saved)
+  const [leftTab, setLeftTab] = useState<LeftTab>("filters");
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
+  const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
+
+  // Mobile: single tab at a time (unchanged)
   const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
-  const [isDesktopPanelOpen, setIsDesktopPanelOpen] = useState(true);
+
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
 
   const resultsVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "results"
+    ? isLeftPanelOpen && leftTab === "results"
     : mobileTab === "results";
-  const savedVisible = isDesktop
-    ? isDesktopPanelOpen && desktopTab === "saved"
-    : mobileTab === "saved";
+  const savedVisible = isDesktop ? isRightPanelOpen : mobileTab === "saved";
 
   return {
     isDesktop,
-    desktopTab,
+    leftTab,
+    isLeftPanelOpen,
+    isRightPanelOpen,
+    setLeftTab,
+    setIsLeftPanelOpen,
+    setIsRightPanelOpen,
     mobileTab,
-    isDesktopPanelOpen,
+    setMobileTab,
     isShortlistOpen,
     resultsVisible,
     savedVisible,
-    setDesktopTab,
-    setMobileTab,
-    setIsDesktopPanelOpen,
     setIsShortlistOpen,
   };
 }

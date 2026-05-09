@@ -404,7 +404,7 @@ describe("App detail loading", () => {
 
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
     await waitFor(() => {
-      expect(document.getElementById("desktop-panel")).toHaveAttribute("aria-hidden", "true");
+      expect(document.getElementById("desktop-left-panel")).toHaveAttribute("aria-hidden", "true");
     });
   });
 
