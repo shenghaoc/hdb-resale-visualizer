@@ -18,7 +18,6 @@ import {
   NEAR_ME_SEARCH_QUERY,
 } from "@/lib/constants";
 import {
-  getSelectionByAddressKey,
   matchesFilter,
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
@@ -141,7 +140,31 @@ function App() {
     shortlistCount: shortlist.items.length,
   });
 
+  // O(1) address key lookup — replaces linear blocks.find() calls throughout the component.
+  const blocksByKey = useMemo(() => {
+    const map = new Map<string, (typeof blocks)[number]>();
+    for (const block of blocks) {
+      map.set(block.addressKey, block);
+    }
+    return map;
+  }, [blocks]);
 
+  // Shared single-pass filter function used by both the results pane and map pane.
+  // Centralises filter logic so future changes only need to be made in one place.
+  const filterScopedBlocks = useCallback(
+    (
+      scopeBlocks: typeof blocks,
+      scopeFilters: typeof stableFilters,
+      scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
+    ) =>
+      scopeBlocks.filter((block) => {
+        if (!matchesFilter(block, scopeFilters, scopeIntent)) {
+          return false;
+        }
+        return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
+      }),
+    [],
+  );
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -219,25 +242,13 @@ function App() {
   const filteredBlocks = useMemo(
     () =>
       resultsVisible && hasResultScope
-        ? blocks.filter((block) => {
-            if (!matchesFilter(block, stableFilters, geographicIntent)) {
-              return false;
-            }
-            return geographicIntent ? matchesGeographicSearchIntent(block, geographicIntent) : true;
-          })
+        ? filterScopedBlocks(blocks, stableFilters, geographicIntent)
         : [],
-    [blocks, geographicIntent, hasResultScope, resultsVisible, stableFilters],
+    [blocks, filterScopedBlocks, geographicIntent, hasResultScope, resultsVisible, stableFilters],
   );
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
-      ? blocks.filter((block) => {
-          if (!matchesFilter(block, mapFilters, mapGeographicIntent)) {
-            return false;
-          }
-          return mapGeographicIntent
-            ? matchesGeographicSearchIntent(block, mapGeographicIntent)
-            : true;
-        })
+      ? filterScopedBlocks(blocks, mapFilters, mapGeographicIntent)
       : [];
 
     if (!selectedAddressKey) {
@@ -248,16 +259,16 @@ function App() {
       return scopedBlocks;
     }
 
-    const selected = getSelectionByAddressKey(blocks, selectedAddressKey);
+    const selected = blocksByKey.get(selectedAddressKey) ?? null;
     return selected ? [...scopedBlocks, selected] : scopedBlocks;
-  }, [blocks, hasMapMarkerScope, mapFilters, mapGeographicIntent, selectedAddressKey]);
+  }, [blocksByKey, blocks, filterScopedBlocks, hasMapMarkerScope, mapFilters, mapGeographicIntent, selectedAddressKey]);
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
     [shortlist.items],
   );
   const selectedBlock = useMemo(
-    () => getSelectionByAddressKey(blocks, selectedAddressKey),
-    [blocks, selectedAddressKey],
+    () => (selectedAddressKey ? (blocksByKey.get(selectedAddressKey) ?? null) : null),
+    [blocksByKey, selectedAddressKey],
   );
   const detailVisible = Boolean(selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
