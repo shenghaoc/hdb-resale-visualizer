@@ -104,6 +104,7 @@ describe("format functions", () => {
     });
 
     it("returns input unchanged for invalid month strings", () => {
+      expect(formatMonth("2024-00")).toBe("2024-00");
       expect(formatMonth("2024-13")).toBe("2024-13");
       expect(formatMonth("not-a-month")).toBe("not-a-month");
     });
