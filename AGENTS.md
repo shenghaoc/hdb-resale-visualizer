@@ -41,53 +41,20 @@ npm run build         # Production build
 2. **Build-Time Data**: All geocoding and MRT distance calculations happen in `scripts/`.
 3. **Persistence**: All user state is strictly browser-local (`localStorage`).
 
-## 🔍 Code Review Policy
+## 🔍 Code Review
 
-### Review Process
-Follow these steps in order before posting any feedback:
+Use the `/review-pr` slash command to trigger a full review. It spawns five specialist subagents in parallel and posts a structured top-level comment plus inline annotations.
 
-1. **Read ALL changed files** — never comment on a diff excerpt in isolation.
-2. **Cross-reference existing automated reviews** — check what Gemini, Codex, or other bots flagged, then confirm whether those issues are already resolved in a later commit. Acknowledge the outcome explicitly.
-3. **Trace semantic dependencies** — when a refactor splits or merges state, identify every consumer of the old shape and verify each one is correctly updated. Look for conditions that previously checked one thing but now should check two (or vice-versa).
-4. **Inspect CSS against real DOM structure** — verify that selectors (descendant, sibling, compound) match the actual rendered element hierarchy, not just the intended one.
-5. **Scan for dead code** — identify computed values, compat shims, or returned properties that no consumer destructures or reads.
-6. **Audit edge cases, not just the happy path** — consider independent-state combinations (e.g. both panels open), keyboard interactions, and mobile vs desktop branches.
-
-### What to Check
-- Functional correctness and logical bugs
-- Semantic bugs in derived/composed state (e.g. a condition that was `!panelOpen` and should now be `!leftOpen && !rightOpen`)
-- Code quality, maintainability, and unnecessary complexity
-- React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
-- Data pipeline contract violations (ensure `scripts/lib/schemas.ts` and `src/types/data.ts` are synchronized)
-- Package manager drift (Node 26 + npm-only — no bun/yarn/pnpm lockfiles)
-- Runtime geocoding violations (all coordinates must be precomputed in `scripts/`)
-- Runtime fetching from external APIs (all data must be loaded from precomputed `public/data/` artifacts)
-- Missing tests for non-trivial logic changes
-- Weak TypeScript types and type safety issues
-- CSS selector validity against the actual DOM hierarchy (descendant vs sibling vs compound selectors)
-- Dead or misleading backwards-compat code that no consumer uses
-
-### Review Output Format
-Structure every review comment as follows:
-
-**Overview** — one short paragraph describing the architectural approach and whether it is sound.
-
-**Good news on automated reviews** — explicitly state which bot-flagged issues are already fixed in the latest commit and which (if any) are still open.
-
-**Issues Found** — for each issue:
-- Label severity: **High** / **Medium** / **Low**
-- Include the exact `file:line` reference
-- Show a before/after code snippet
-- Explain the impact concisely
-- Provide a concrete suggested fix
-
-**Positives** — bullet-list what the PR does well (architecture decisions, cleaner patterns, correct aria usage, etc.). Always include this section.
-
-**Summary** — two to three sentences: what real bugs were found, what is already correct, and the overall quality assessment.
+Specialist agents live in [`.claude/agents/`](.claude/agents/):
+- [`code-quality-reviewer`](.claude/agents/code-quality-reviewer.md) — React/TS correctness, semantic state bugs, dead code, CSS selector validity
+- [`performance-reviewer`](.claude/agents/performance-reviewer.md) — hot-path allocations, MapLibre re-renders, memoisation gaps
+- [`security-code-reviewer`](.claude/agents/security-code-reviewer.md) — URL payload abuse, CSV injection, XSS, data leakage
+- [`test-coverage-reviewer`](.claude/agents/test-coverage-reviewer.md) — Vitest + Playwright gaps, edge cases, cache reset hygiene
+- [`architecture-reviewer`](.claude/agents/architecture-reviewer.md) — pipeline/runtime boundary, artifact contract sync, package manager compliance
 
 ### Do Not Approve PRs That
 - Introduce backend routes or runtime server-side logic
-- Fetch data from external APIs at runtime
+- Fetch data from external APIs at runtime (`src/` must only read `public/data/`)
 - Break existing deployment assumptions or map attribution requirements
-- Manually edit generated files under `public/data/` (these are owned by `scripts/sync-data.ts`)
+- Manually edit generated files under `public/data/` (owned by `scripts/sync-data.ts`)
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
