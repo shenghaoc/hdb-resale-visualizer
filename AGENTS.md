@@ -43,9 +43,9 @@ npm run build         # Production build
 
 ## 🔍 Code Review
 
-Use the `/review-pr` slash command to trigger a full review. It spawns five specialist subagents in parallel and posts a structured top-level comment plus inline annotations.
+Use the `/review-pr` slash command (`.claude/commands/review-pr.md`) to trigger a full review. It runs as a **single agent** — no subagents — covering code quality, performance, security, test coverage, and architectural boundaries in one pass.
 
-Specialist agents live in [`.claude/agents/`](.claude/agents/):
+Specialist agents in [`.claude/agents/`](.claude/agents/) are available for targeted deep-dives on a specific dimension:
 - [`code-quality-reviewer`](.claude/agents/code-quality-reviewer.md) — React/TS correctness, semantic state bugs, dead code, CSS selector validity
 - [`performance-reviewer`](.claude/agents/performance-reviewer.md) — hot-path allocations, MapLibre re-renders, memoisation gaps
 - [`security-code-reviewer`](.claude/agents/security-code-reviewer.md) — URL payload abuse, CSV injection, XSS, data leakage
