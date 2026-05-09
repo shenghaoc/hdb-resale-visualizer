@@ -544,6 +544,12 @@ function App() {
     manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen && !isRightPanelOpen : mobileTab === null),
   );
 
+  // Width classes for the left (Filters/Results) panel per tab
+  const leftPanelWidths: Record<string, string> = {
+    filters: "w-[min(30rem,34vw)]",
+    results: "w-[min(34rem,38vw)]",
+  };
+
   return (
     <>
       <main
@@ -690,7 +696,7 @@ function App() {
             aria-label={t("filters.title")}
             className={cn(
               "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
-              isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(min(44rem,48vw)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
+              isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(var(--saved-panel-width)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
             )}
             style={{ scrollbarWidth: "none" }}
           >
@@ -812,7 +818,7 @@ function App() {
                   isLeftPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
-                  leftTab === "filters" ? "w-[min(30rem,34vw)]" : "w-[min(34rem,38vw)]",
+                  leftPanelWidths[leftTab],
                 )}
               >
                 <div className="flex h-full min-h-0 flex-col">
@@ -864,7 +870,7 @@ function App() {
                 data-mode="saved"
                 className={cn(
                   "pointer-events-auto absolute bottom-0 right-0 top-0 flex min-h-full max-w-[calc(100vw-3rem)] flex-col overflow-hidden border-l border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[-8px_0_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-                  "w-[min(44rem,48vw)]",
+                  "w-[var(--saved-panel-width)]",
                   isRightPanelOpen
                     ? "translate-x-0 opacity-100"
                     : "pointer-events-none translate-x-6 opacity-0",
