@@ -41,6 +41,9 @@ function base64ToBytes(value: string) {
 
 export function encodeShortlistForUrl(items: ShortlistItem[]) {
   const json = JSON.stringify(items);
+  if (json.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
+    return "";
+  }
   const encoded = bytesToBase64(new TextEncoder().encode(json));
   if (encoded.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
     return "";
