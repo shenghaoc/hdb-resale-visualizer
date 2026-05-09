@@ -27,7 +27,12 @@ export function parseShortlist(raw: unknown): ShortlistItem[] {
 }
 
 function bytesToBase64(bytes: Uint8Array) {
-  return btoa(String.fromCharCode(...bytes));
+  const CHUNK_SIZE = 0x8000;
+  const parts: string[] = [];
+  for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
+    parts.push(String.fromCharCode(...bytes.subarray(i, i + CHUNK_SIZE)));
+  }
+  return btoa(parts.join(""));
 }
 
 function base64ToBytes(value: string) {
@@ -36,9 +41,6 @@ function base64ToBytes(value: string) {
 
 export function encodeShortlistForUrl(items: ShortlistItem[]) {
   const json = JSON.stringify(items);
-  if (json.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
-    return "";
-  }
   const encoded = bytesToBase64(new TextEncoder().encode(json));
   if (encoded.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
     return "";
