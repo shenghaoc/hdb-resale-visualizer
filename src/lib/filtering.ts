@@ -4,9 +4,14 @@ import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
-const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [
-  ["amk", "ang mo kio"],
-  ["yew tee", "choa chu kang"],
+// ⚡ Bolt: Pre-compile alias regex patterns once at module load.
+// resolveSearchAliases is called for every unique block address string during
+// the initial search pass (10,000+ blocks), creating 2 new RegExp objects per
+// call. Pre-compiling as literals eliminates ~20,000 short-lived allocations
+// and reduces GC pressure on first search.
+const SEARCH_ALIAS_REPLACEMENTS: Array<[RegExp, string]> = [
+  [/\bamk\b/g, "ang mo kio"],
+  [/\byew tee\b/g, "choa chu kang"],
 ];
 const TOKEN_NORMALIZATIONS = new Map<string, string>([
   ["ave", "avenue"],
@@ -58,8 +63,7 @@ function normalizeSearchText(value: string): string {
 
 function resolveSearchAliases(value: string): string {
   let resolved = value;
-  for (const [alias, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
-    const aliasRegex = new RegExp(`\\b${alias}\\b`, "g");
+  for (const [aliasRegex, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
     resolved = resolved.replace(aliasRegex, canonical);
   }
   return resolved;
