@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
 const shortlistItemSchema = z.object({
@@ -27,7 +27,12 @@ export function parseShortlist(raw: unknown): ShortlistItem[] {
 }
 
 function bytesToBase64(bytes: Uint8Array) {
-  return btoa(String.fromCharCode(...bytes));
+  const CHUNK_SIZE = 0x8000;
+  const parts: string[] = [];
+  for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
+    parts.push(String.fromCharCode(...bytes.subarray(i, i + CHUNK_SIZE)));
+  }
+  return btoa(parts.join(""));
 }
 
 function base64ToBytes(value: string) {
@@ -36,10 +41,21 @@ function base64ToBytes(value: string) {
 
 export function encodeShortlistForUrl(items: ShortlistItem[]) {
   const json = JSON.stringify(items);
-  return bytesToBase64(new TextEncoder().encode(json));
+  if (json.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
+    return "";
+  }
+  const encoded = bytesToBase64(new TextEncoder().encode(json));
+  if (encoded.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
+    return "";
+  }
+  return encoded;
 }
 
 export function decodeShortlistFromUrl(value: string) {
+  if (value.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
+    return [];
+  }
+
   try {
     const decoded = new TextDecoder().decode(base64ToBytes(value));
     const parsed: unknown = JSON.parse(decoded);

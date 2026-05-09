@@ -43,6 +43,12 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
  * Storage keys for local persistence.
  */
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
+
+/**
+ * Security guardrail: reject oversized share payloads early to avoid expensive
+ * base64 decoding/JSON parsing from attacker-crafted URLs.
+ */
+export const MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH = 10_000;
 export const HEADER_DISMISSED_STORAGE_KEY = "hdb_resale_header_dismissed_v1";
 
 /**
