@@ -2,6 +2,10 @@ import { z } from "zod";
 import { SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
+// Security guardrail: reject oversized share payloads early to avoid expensive
+// base64 decoding/JSON parsing from attacker-crafted URLs.
+const MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH = 10_000;
+
 const shortlistItemSchema = z.object({
   addressKey: z.string(),
   notes: z.string().catch(""),
@@ -40,6 +44,10 @@ export function encodeShortlistForUrl(items: ShortlistItem[]) {
 }
 
 export function decodeShortlistFromUrl(value: string) {
+  if (value.length > MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH) {
+    return [];
+  }
+
   try {
     const decoded = new TextDecoder().decode(base64ToBytes(value));
     const parsed: unknown = JSON.parse(decoded);

@@ -41,4 +41,9 @@ describe("shortlist storage", () => {
     const encoded = encodeShortlistForUrl(items);
     expect(decodeShortlistFromUrl(encoded)).toEqual(items);
   });
+
+  it("rejects oversized shortlist share payloads", () => {
+    const oversizedPayload = "a".repeat(10_001);
+    expect(decodeShortlistFromUrl(oversizedPayload)).toEqual([]);
+  });
 });
