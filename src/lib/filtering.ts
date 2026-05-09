@@ -198,6 +198,10 @@ function isNearMatch(left: string, right: string): boolean {
 let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
+// Track the blocks reference that produced stationNamesCache so we can
+// invalidate it when the data source changes (e.g. after a hot reload or
+// data refresh), preventing stale station lists from being reused.
+let stationNamesSourceRef: BlockSummary[] | null = null;
 
 // Cache canonical flat type values per filter string to avoid re-running
 // `canonicalFlatType` (which performs `.trim().toUpperCase()`) on every block
@@ -256,28 +260,29 @@ function searchMatchesBlock(block: BlockSummary, query: string): boolean {
   });
 }
 
-const stationTokensAndNormalizedCache = new Map<
-  string,
-  { tokens: string[]; normalized: string }
->();
-
-function getStationTokensAndNormalized(stationName: string): {
-  tokens: string[];
+type NormalizedStationTokens = {
   normalized: string;
-} {
+  tokens: string[];
+  tokenSet: Set<string>;
+};
+
+const stationTokensAndNormalizedCache = new Map<string, NormalizedStationTokens>();
+
+function getStationTokensAndNormalized(stationName: string): NormalizedStationTokens {
   const cached = stationTokensAndNormalizedCache.get(stationName);
   if (cached !== undefined) {
     return cached;
   }
 
-  // ⚡ Bolt: Reuse tokenized station names during query matching.
+  // Reuse tokenized station names during query matching.
   // `matchStationName` runs this per station per search, so caching avoids repeated
   // split/filter allocations and reduces hot-path work for MRT intent parsing.
+  // The tokenSet avoids repeated .includes() scans in the scoring inner loop.
   const tokens = tokenizeSearchText(stationName)
     .map((t) => t.value)
     .filter((v) => !STATION_NAME_STOP_WORDS.has(v));
   const normalized = tokens.join(" ");
-  const result = { tokens, normalized };
+  const result: NormalizedStationTokens = { tokens, normalized, tokenSet: new Set(tokens) };
 
   evictCacheIfNeeded(stationTokensAndNormalizedCache, TOKENIZATION_CACHE_LIMIT);
   stationTokensAndNormalizedCache.set(stationName, result);
@@ -289,7 +294,7 @@ function normalizeStationName(stationName: string): string {
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
-  if (stationNamesCache) {
+  if (stationNamesCache && stationNamesSourceRef === blocks) {
     return stationNamesCache;
   }
 
@@ -310,6 +315,7 @@ function collectStationNames(blocks: BlockSummary[]): string[] {
   }
 
   stationNamesCache = Array.from(stationNames);
+  stationNamesSourceRef = blocks;
   return stationNamesCache;
 }
 
@@ -333,7 +339,7 @@ function matchStationName(query: string, stationNames: string[]): string | null 
   let bestMatch: { stationName: string; score: number } | null = null;
 
   for (const stationName of stationNames) {
-    const { tokens: stationTokens, normalized: normalizedStation } =
+    const { tokens: stationTokens, normalized: normalizedStation, tokenSet: stationTokenSet } =
       getStationTokensAndNormalized(stationName);
     if (stationTokens.length === 0) {
       continue;
@@ -358,7 +364,7 @@ function matchStationName(query: string, stationNames: string[]): string | null 
     }
 
     const score = queryTokens.reduce((total, queryToken) => {
-      if (stationTokens.includes(queryToken)) {
+      if (stationTokenSet.has(queryToken)) {
         return total + 4;
       }
       if (stationTokens.some((stationToken) => stationToken.startsWith(queryToken))) {
@@ -497,6 +503,7 @@ export function resetFilteringCachesForTests(): void {
   blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
+  stationNamesSourceRef = null;
 }
 
 // Cache the current year to avoid expensive Date instantiations in the filtering loop
@@ -574,7 +581,7 @@ export function matchesFilter(
   }
 
   // Move expensive regex/tokenization text search check to the very end
-  // This reduces expensive computations by >50% since most blocks are filtered out by simpler bounds first
+  // so cheaper bounds checks can short-circuit first.
   if (!geographicIntent && filters.search && !searchMatchesBlock(block, filters.search)) {
     return false;
   }
