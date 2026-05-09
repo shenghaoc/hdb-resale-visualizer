@@ -4,9 +4,12 @@ import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
-const SEARCH_ALIAS_REPLACEMENTS: Array<[string, string]> = [
-  ["amk", "ang mo kio"],
-  ["yew tee", "choa chu kang"],
+// Pre-compile alias regex patterns at module level to avoid repeated RegExp
+// allocations. This is especially important for the initial search pass
+// where many unique block addresses are processed.
+const SEARCH_ALIAS_REPLACEMENTS: readonly (readonly [RegExp, string])[] = [
+  [/\bamk\b/g, "ang mo kio"],
+  [/\byew tee\b/g, "choa chu kang"],
 ];
 const TOKEN_NORMALIZATIONS = new Map<string, string>([
   ["ave", "avenue"],
@@ -58,8 +61,7 @@ function normalizeSearchText(value: string): string {
 
 function resolveSearchAliases(value: string): string {
   let resolved = value;
-  for (const [alias, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
-    const aliasRegex = new RegExp(`\\b${alias}\\b`, "g");
+  for (const [aliasRegex, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
     resolved = resolved.replace(aliasRegex, canonical);
   }
   return resolved;
@@ -453,8 +455,8 @@ export function matchesGeographicSearchIntent(
 
   let normalizedIntentName: string | undefined;
 
-  // ⚡ Bolt: Avoid intermediate array allocations and spreads in the hot filter loop.
-  // ⚡ Bolt: Check cheap numeric distance bounds before evaluating expensive station name normalization.
+  // Avoid intermediate array allocations and spreads in the hot filter loop.
+  // Check cheap numeric distance bounds before evaluating expensive station name normalization.
   if (block.nearestMrt !== null && block.nearestMrt.distanceMeters <= intent.radiusMeters) {
     normalizedIntentName = normalizeStationName(intent.stationName);
     if (normalizeStationName(block.nearestMrt.stationName) === normalizedIntentName) {
@@ -492,7 +494,7 @@ export function matchesFilter(
   filters: FilterState,
   geographicIntent?: GeographicSearchIntent | null,
 ): boolean {
-  // ⚡ Bolt: Execute cheaper comparisons first to short-circuit early and avoid expensive checks
+  // Execute cheaper comparisons first to short-circuit early and avoid expensive checks
   if (filters.town && block.town !== filters.town) {
     return false;
   }
@@ -514,7 +516,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    // ⚡ Bolt: Using cached year instead of calling new Date().getFullYear() every iteration
+    // Using cached year instead of calling new Date().getFullYear() every iteration
     const maxRemainingLease = MAX_LEASE_DURATION - (CURRENT_YEAR - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
@@ -546,7 +548,7 @@ export function matchesFilter(
   }
 
   if (filters.flatType) {
-    // ⚡ Bolt: Use a cached value for the filter's canonical flat type instead of re-evaluating
+    // Use a cached value for the filter's canonical flat type instead of re-evaluating
     // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
     let canonicalSelectedFlatType = filterFlatTypeCache.get(filters.flatType);
     if (canonicalSelectedFlatType === undefined) {
@@ -558,7 +560,7 @@ export function matchesFilter(
     }
   }
 
-  // ⚡ Bolt: Move expensive regex/tokenization text search check to the very end
+  // Move expensive regex/tokenization text search check to the very end
   // This reduces expensive computations by >50% since most blocks are filtered out by simpler bounds first
   if (!geographicIntent && filters.search && !searchMatchesBlock(block, filters.search)) {
     return false;
