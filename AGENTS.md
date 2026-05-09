@@ -42,20 +42,66 @@ npm run build         # Production build
 3. **Persistence**: All user state is strictly browser-local (`localStorage`).
 
 ## 🔍 Code Review Policy
-When reviewing pull requests, check for:
-- Functional correctness and logical bugs
-- Code quality, maintainability, and unnecessary complexity
-- React performance (state/effect/lifecycle mistakes, unnecessary rerenders)
-- Data pipeline contract violations (ensure `scripts/lib/schemas.ts` and `src/types/data.ts` are synchronized)
-- Package manager drift (Node 26 + npm-only — no bun/yarn/pnpm lockfiles)
-- Runtime geocoding violations (all coordinates must be precomputed in `scripts/`)
-- Runtime fetching from external APIs (all data must be loaded from precomputed `public/data/` artifacts)
-- Missing tests for non-trivial logic changes
-- Weak TypeScript types and type safety issues
 
-Do not approve PRs that:
+This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Platform-specific tooling is configured separately per agent (see below).
+
+### Review Process
+1. **Read ALL changed files** in full — never comment on a diff excerpt in isolation.
+2. **Cross-reference existing automated reviews** — confirm which flagged issues are already fixed in the latest commit and which remain open. Acknowledge both explicitly.
+3. **Trace semantic dependencies** — when a refactor splits or merges state, find every consumer of the old shape and verify each condition is correctly updated.
+4. **Inspect CSS against the real DOM hierarchy** — descendant selectors require the target to be *inside* the ancestor in JSX; a conditionally applied class needs a compound selector (`.a.b`), not a descendant one.
+5. **Scan for dead code** — computed values, compat shims, or returned properties that no consumer uses.
+6. **Audit edge cases** — independent-state combinations, keyboard interactions, mobile vs desktop branches, empty inputs, boundary values.
+
+### What to Check
+
+**Code quality & React correctness**
+- Semantic bugs in derived/composed state (e.g. `!panelOpen` that should now be `!leftOpen && !rightOpen`)
+- Missing or incorrect `useEffect` dependency arrays; unnecessary re-renders from unstable references
+- `type` over `interface`; no `any`; named constants instead of magic values
+- Dead backwards-compat code with no remaining consumers
+
+**Performance** (hot paths run against 10 000+ block records)
+- Per-iteration allocations: `new RegExp(...)`, `.trim().toUpperCase()`, inline object literals inside filter/search loops
+- Short-circuit opportunities on empty query or empty filter set
+- Memoisation gaps; unbounded caches without eviction
+- MapLibre: source mutations that force full re-renders instead of `setFilter`/`setPaintProperty`
+
+**Security**
+- URL parameter payloads parsed without a size guard (client-side DoS)
+- CSV export formula injection — sanitisation must target the start of the field; avoid the `m` flag to prevent over-sanitising multi-line cell values
+- `dangerouslySetInnerHTML` or dynamic `href`/`src` from user input
+- `localStorage` reads without Zod validation
+
+**Test coverage**
+- Non-trivial new logic without a Vitest unit test
+- Missing edge-case tests: empty input, oversized payload, invalid data
+- Module-level cache mutations without `resetFilteringCachesForTests()` in teardown
+- Brittle E2E assertions on computed CSS values — prefer visible text, aria roles, `data-testid`
+
+**Architecture** (hard constraints — any violation blocks merge)
+- `fetch()` in `src/` targeting external domains (OneMap, data.gov.sg) — critical
+- Geocoding or MRT distance calculations in `src/` — critical
+- `public/data/` files manually edited — owned by `scripts/sync-data.ts`
+- `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
+- `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
+
+### Output Format
+The following structured format applies to the overall PR review summary comment, not individual inline line-level comments:
+- **Overview** — one paragraph on the approach and whether it is sound.
+- **Automated Review Status** — which bot-flagged issues are resolved vs. still open.
+- **Issues Found** — severity (**Critical/High/Medium/Low**), `file:line`, before/after snippet (where applicable), impact, concrete fix.
+- **Positives** — what the PR does well.
+- **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
+
+### Do Not Approve PRs That
 - Introduce backend routes or runtime server-side logic
-- Fetch data from external APIs at runtime
+- Fetch data from external APIs at runtime (`src/` must only read `public/data/`)
 - Break existing deployment assumptions or map attribution requirements
-- Manually edit generated files under `public/data/` (these are owned by `scripts/sync-data.ts`)
+- Manually edit generated files under `public/data/` (owned by `scripts/sync-data.ts`)
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
+
+### Platform-Specific Review Tooling
+- **Claude**: triggered via `@claude review` PR comment.
+- **Kiro**: review hooks configured in `.kiro/`.
+- **Gemini / Codex**: triggered via PR comments (`/gemini review`, `@codex review`).
