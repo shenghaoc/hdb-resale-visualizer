@@ -130,7 +130,7 @@ export function formatSqm(value: number, t: Translator, locale?: Locale): string
 }
 
 export function formatMonth(month: string, locale?: Locale): string {
-  if (!/^\d{4}-\d{2}$/.test(month)) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
     return month;
   }
 
@@ -140,11 +140,6 @@ export function formatMonth(month: string, locale?: Locale): string {
   if (cached !== undefined) return cached;
 
   const [year, monthPart] = month.split("-");
-  const monthNumber = Number(monthPart);
-  if (!Number.isInteger(monthNumber) || monthNumber < 1 || monthNumber > 12) {
-    return month;
-  }
-
   const date = new Date(Number(year), Number(monthPart) - 1, 1);
 
   cached = getDateTimeFormat(resolvedLocale, {
