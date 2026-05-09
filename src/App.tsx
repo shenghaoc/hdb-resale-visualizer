@@ -141,10 +141,13 @@ function App() {
   });
 
   // O(1) address key lookup — replaces linear blocks.find() calls throughout the component.
-  const blocksByKey = useMemo(
-    () => new Map(blocks.map((block) => [block.addressKey, block])),
-    [blocks],
-  );
+  const blocksByKey = useMemo(() => {
+    const map = new Map<string, (typeof blocks)[number]>();
+    for (const block of blocks) {
+      map.set(block.addressKey, block);
+    }
+    return map;
+  }, [blocks]);
 
   // Shared single-pass filter function used by both the results pane and map pane.
   // Centralises filter logic so future changes only need to be made in one place.
@@ -162,8 +165,6 @@ function App() {
       }),
     [],
   );
-
-
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {

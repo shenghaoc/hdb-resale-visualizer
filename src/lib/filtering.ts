@@ -592,14 +592,3 @@ export function matchesFilter(
 export function getFilterOptions(blocks: BlockSummary[]) {
   return buildFilterOptions(blocks);
 }
-
-export function getSelectionByAddressKey(
-  blocks: BlockSummary[],
-  addressKey: string | null,
-): BlockSummary | null {
-  if (!addressKey) {
-    return null;
-  }
-
-  return blocks.find((block) => block.addressKey === addressKey) ?? null;
-}
