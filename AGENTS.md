@@ -41,16 +41,57 @@ npm run build         # Production build
 2. **Build-Time Data**: All geocoding and MRT distance calculations happen in `scripts/`.
 3. **Persistence**: All user state is strictly browser-local (`localStorage`).
 
-## 🔍 Code Review
+## 🔍 Code Review Policy
 
-Use the `/review-pr` slash command (`.claude/commands/review-pr.md`) to trigger a full review. It runs as a **single agent** — no subagents — covering code quality, performance, security, test coverage, and architectural boundaries in one pass.
+This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Platform-specific tooling is configured separately per agent (see below).
 
-Specialist agents in [`.claude/agents/`](.claude/agents/) are available for targeted deep-dives on a specific dimension:
-- [`code-quality-reviewer`](.claude/agents/code-quality-reviewer.md) — React/TS correctness, semantic state bugs, dead code, CSS selector validity
-- [`performance-reviewer`](.claude/agents/performance-reviewer.md) — hot-path allocations, MapLibre re-renders, memoisation gaps
-- [`security-code-reviewer`](.claude/agents/security-code-reviewer.md) — URL payload abuse, CSV injection, XSS, data leakage
-- [`test-coverage-reviewer`](.claude/agents/test-coverage-reviewer.md) — Vitest + Playwright gaps, edge cases, cache reset hygiene
-- [`architecture-reviewer`](.claude/agents/architecture-reviewer.md) — pipeline/runtime boundary, artifact contract sync, package manager compliance
+### Review Process
+1. **Read ALL changed files** in full — never comment on a diff excerpt in isolation.
+2. **Cross-reference existing automated reviews** — confirm which flagged issues are already fixed in the latest commit and which remain open. Acknowledge both explicitly.
+3. **Trace semantic dependencies** — when a refactor splits or merges state, find every consumer of the old shape and verify each condition is correctly updated.
+4. **Inspect CSS against the real DOM hierarchy** — descendant selectors require the target to be *inside* the ancestor in JSX; a conditionally applied class needs a compound selector (`.a.b`), not a descendant one.
+5. **Scan for dead code** — computed values, compat shims, or returned properties that no consumer uses.
+6. **Audit edge cases** — independent-state combinations, keyboard interactions, mobile vs desktop branches, empty inputs, boundary values.
+
+### What to Check
+
+**Code quality & React correctness**
+- Semantic bugs in derived/composed state (e.g. `!panelOpen` that should now be `!leftOpen && !rightOpen`)
+- Missing or incorrect `useEffect` dependency arrays; unnecessary re-renders from unstable references
+- `type` over `interface`; no `any`; named constants instead of magic values
+- Dead backwards-compat code with no remaining consumers
+
+**Performance** (hot paths run against 10 000+ block records)
+- Per-iteration allocations: `new RegExp(...)`, `.trim().toUpperCase()`, inline object literals inside filter/search loops
+- Short-circuit opportunities on empty query or empty filter set
+- Memoisation gaps; unbounded caches without eviction
+- MapLibre: source mutations that force full re-renders instead of `setFilter`/`setPaintProperty`
+
+**Security**
+- URL parameter payloads parsed without a size guard (client-side DoS)
+- CSV export formula injection — sanitisation regex must use both `g` and `m` flags to cover multi-line cell values
+- `dangerouslySetInnerHTML` or dynamic `href`/`src` from user input
+- `localStorage` reads without Zod validation
+
+**Test coverage**
+- Non-trivial new logic without a Vitest unit test
+- Missing edge-case tests: empty input, oversized payload, invalid data
+- Module-level cache mutations without `resetFilteringCachesForTests()` in teardown
+- Brittle E2E assertions on computed CSS values — prefer visible text, aria roles, `data-testid`
+
+**Architecture** (hard constraints — any violation blocks merge)
+- `fetch()` in `src/` targeting external domains (OneMap, data.gov.sg) — critical
+- Geocoding or MRT distance calculations in `src/` — critical
+- `public/data/` files manually edited — owned by `scripts/sync-data.ts`
+- `scripts/lib/schemas.ts` changed without matching update to `src/types/data.ts` (or vice-versa)
+- `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
+
+### Output Format
+- **Overview** — one paragraph on the approach and whether it is sound.
+- **Good news on automated reviews** — which bot-flagged issues are resolved vs. still open.
+- **Issues Found** — severity (**High/Medium/Low**), `file:line`, before/after snippet, impact, concrete fix.
+- **Positives** — what the PR does well.
+- **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
 
 ### Do Not Approve PRs That
 - Introduce backend routes or runtime server-side logic
@@ -58,3 +99,8 @@ Specialist agents in [`.claude/agents/`](.claude/agents/) are available for targ
 - Break existing deployment assumptions or map attribution requirements
 - Manually edit generated files under `public/data/` (owned by `scripts/sync-data.ts`)
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
+
+### Platform-Specific Review Tooling
+- **Claude**: `/review-pr` slash command (`.claude/commands/review-pr.md`) runs the full checklist above as a single agent. Specialist agents in `.claude/agents/` are available for targeted deep-dives.
+- **Kiro**: review hooks configured in `.kiro/`.
+- **Gemini / Codex**: triggered via PR comments (`/gemini review`, `@codex review`).
