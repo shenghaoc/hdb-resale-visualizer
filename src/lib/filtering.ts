@@ -285,10 +285,34 @@ function getStationTokens(stationName: string): string[] {
   // ⚡ Bolt: Reuse tokenized station names during query matching.
   // `matchStationName` runs this per station per search, so caching avoids repeated
   // split/filter allocations and reduces hot-path work for MRT intent parsing.
-  const tokens = normalizeStationName(stationName).split(" ").filter(Boolean);
+  const tokens = tokenizeSearchText(stationName)
+    .map((t) => t.value)
+    .filter((v) => !STATION_NAME_STOP_WORDS.has(v));
   evictCacheIfNeeded(stationTokenCache, TOKENIZATION_CACHE_LIMIT);
   stationTokenCache.set(stationName, tokens);
   return tokens;
+}
+
+const stationTokensAndNormalizedCache = new Map<
+  string,
+  { tokens: string[]; normalized: string }
+>();
+
+function getStationTokensAndNormalized(stationName: string): {
+  tokens: string[];
+  normalized: string;
+} {
+  const cached = stationTokensAndNormalizedCache.get(stationName);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const tokens = getStationTokens(stationName);
+  const normalized = tokens.join(" ");
+  const result = { tokens, normalized };
+  evictCacheIfNeeded(stationTokensAndNormalizedCache, TOKENIZATION_CACHE_LIMIT);
+  stationTokensAndNormalizedCache.set(stationName, result);
+  return result;
 }
 
 function collectStationNames(blocks: BlockSummary[]): string[] {
@@ -336,8 +360,8 @@ function matchStationName(query: string, stationNames: string[]): string | null 
   let bestMatch: { stationName: string; score: number } | null = null;
 
   for (const stationName of stationNames) {
-    const normalizedStation = normalizeStationName(stationName);
-    const stationTokens = getStationTokens(stationName);
+    const { tokens: stationTokens, normalized: normalizedStation } =
+      getStationTokensAndNormalized(stationName);
     if (stationTokens.length === 0) {
       continue;
     }
