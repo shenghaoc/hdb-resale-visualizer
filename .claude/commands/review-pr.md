@@ -54,12 +54,12 @@ Post a single top-level comment structured as:
 
 **Overview** — one paragraph on the architectural approach and whether it is sound.
 
-**Good news on automated reviews** — which bot-flagged issues are already resolved vs. still open.
+**Automated Review Status** — explicitly state which bot-flagged issues are already fixed in the latest commit and which (if any) are still open.
 
 **Issues Found** — for each issue:
-- Severity: **High** / **Medium** / **Low**
+- Severity: **Critical** / **High** / **Medium** / **Low**
 - Exact `file:line` reference
-- Before/after code snippet
+- Before/after code snippet where applicable
 - Concise impact explanation
 - Concrete suggested fix
 
