@@ -4,12 +4,11 @@ import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
-// ⚡ Bolt: Pre-compile alias regex patterns once at module load.
-// resolveSearchAliases is called for every unique block address string during
-// the initial search pass (10,000+ blocks), creating 2 new RegExp objects per
-// call. Pre-compiling as literals eliminates ~20,000 short-lived allocations
-// and reduces GC pressure on first search.
-const SEARCH_ALIAS_REPLACEMENTS: Array<[RegExp, string]> = [
+// ⚡ Bolt: Pre-compile alias regex patterns once at module load to avoid
+// repeated RegExp allocations in resolveSearchAliases, which is called for
+// every unique block address string during the initial search pass.
+// This significantly reduces GC pressure during the first search.
+const SEARCH_ALIAS_REPLACEMENTS: readonly (readonly [RegExp, string])[] = [
   [/\bamk\b/g, "ang mo kio"],
   [/\byew tee\b/g, "choa chu kang"],
 ];
