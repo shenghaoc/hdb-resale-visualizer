@@ -69,7 +69,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 
 **Security**
 - URL parameter payloads parsed without a size guard (client-side DoS)
-- CSV export formula injection — sanitisation regex must use both `g` and `m` flags to cover multi-line cell values
+- CSV export formula injection — sanitisation must target the start of the field; avoid the `m` flag to prevent over-sanitising multi-line cell values
 - `dangerouslySetInnerHTML` or dynamic `href`/`src` from user input
 - `localStorage` reads without Zod validation
 
@@ -83,7 +83,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - `fetch()` in `src/` targeting external domains (OneMap, data.gov.sg) — critical
 - Geocoding or MRT distance calculations in `src/` — critical
 - `public/data/` files manually edited — owned by `scripts/sync-data.ts`
-- `scripts/lib/schemas.ts` changed without matching update to `src/types/data.ts` (or vice-versa)
+- `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice-versa)
 - `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
 
 ### Output Format
