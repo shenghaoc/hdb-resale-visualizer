@@ -1,3 +1,4 @@
 export { I18nProvider } from "./provider";
 export { useI18n } from "./useI18n";
-export type { Locale, Translator } from "./types";
+export { LOCALE_OPTIONS, SUPPORTED_LOCALES } from "./types";
+export type { Locale, LocaleOption, Translator } from "./types";

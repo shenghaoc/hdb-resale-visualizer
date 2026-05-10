@@ -1,15 +1,15 @@
 import { expect, test, type Page, type ElementHandle } from "@playwright/test";
 
 /**
- * Preservation Property Tests for Header Controls
- * 
+ * Preservation Property Tests for Header & Tab-Bar Controls
+ *
  * **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5, 3.6**
- * 
- * These tests capture the baseline behavior of header controls on UNFIXED code.
- * They MUST PASS on unfixed code to establish the preservation requirements.
- * After the fix is implemented, these same tests must continue to pass,
- * ensuring no regressions in header functionality.
- * 
+ *
+ * These tests capture the baseline behavior of app controls across the floating
+ * header and the unified desktop tab bar. After the v3 layout refactor, theme
+ * toggle and language selector moved from the header toolbar into the bottom
+ * tab bar; the dismiss button remains in the header.
+ *
  * Following observation-first methodology: observe behavior patterns first,
  * then encode them as property-based tests for stronger guarantees.
  */
@@ -36,17 +36,20 @@ async function ensureHeaderVisible(page: Page) {
   await expect(header).toBeVisible();
 }
 
-async function getHeaderElements(page: Page) {
+async function getControlElements(page: Page) {
   const header = page.getByTestId("global-header");
+  const tabBar = page.getByTestId("desktop-tab-bar");
   await expect(header).toBeVisible();
-  
+  await expect(tabBar).toBeVisible();
+
   return {
     header,
-    themeToggle: header.getByRole("button", { name: /toggle theme/i }),
-    languageSelect: header.getByRole("combobox", { name: /language/i }),
+    tabBar,
+    // Theme toggle and language selector live in the unified bottom tab bar.
+    themeToggle: tabBar.getByRole("button", { name: /toggle theme/i }),
+    languageSelect: tabBar.getByRole("combobox", { name: /language/i }),
+    // Dismiss button remains in the header.
     dismissButton: header.getByRole("button", { name: /dismiss header/i }),
-    // Mobile info toggle might not always be visible, so we'll check conditionally
-    mobileInfoToggle: header.getByRole("button", { name: /toggle metadata/i })
   };
 }
 
@@ -83,16 +86,16 @@ async function getHeaderContent(page: Page) {
   };
 }
 
-test.describe("Preservation: Header Controls Continue to Function", () => {
+test.describe("Preservation: Header & Tab Bar Controls Continue to Function", () => {
   
   test("Property: Theme toggle switches between light and dark modes", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
-    
-    const elements = await getHeaderElements(page);
-    
+
+    const elements = await getControlElements(page);
+
     // Record initial theme
     const initialTheme = await getCurrentTheme(page);
     console.log("Initial theme:", initialTheme);
@@ -124,9 +127,9 @@ test.describe("Preservation: Header Controls Continue to Function", () => {
     await page.goto("/");
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
-    
-    const elements = await getHeaderElements(page);
-    
+
+    const elements = await getControlElements(page);
+
     // Test language selector functionality - just verify it opens and has options
     await expect(elements.languageSelect).toBeVisible();
     await elements.languageSelect.click();
@@ -155,9 +158,9 @@ test.describe("Preservation: Header Controls Continue to Function", () => {
     await page.goto("/");
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
-    
-    const elements = await getHeaderElements(page);
-    
+
+    const elements = await getControlElements(page);
+
     // Test dismiss button functionality
     await expect(elements.dismissButton).toBeVisible();
     await elements.dismissButton.click();
@@ -194,22 +197,41 @@ test.describe("Preservation: Header Controls Continue to Function", () => {
     const initialStyles = await getHeaderVisualStyles(page);
     console.log("Header visual styles:", initialStyles);
     
-    // PRESERVATION ASSERTIONS: Visual styles should be present
-    expect(initialStyles).toBeTruthy();
-    if (initialStyles) {
-      expect(initialStyles.backdropFilter).toBeTruthy(); // Should have backdrop blur
-      expect(initialStyles.backgroundColor).toBeTruthy(); // Should have background color
-      expect(initialStyles.boxShadow).toBeTruthy(); // Should have shadow
+    // PRESERVATION ASSERTIONS: Visual styles should be present on the floating header pill.
+    // The pill is a nested button element inside the header landmark, so probe the button.
+    const headerPill = page.getByTestId("global-header").locator("button").first();
+    const handle = await headerPill.elementHandle() as ElementHandle<HTMLElement>;
+    const pillStyles = await page.evaluate((el) => {
+      if (!el) return null;
+      const s = window.getComputedStyle(el);
+      return {
+        backdropFilter: s.backdropFilter,
+        backgroundColor: s.backgroundColor,
+        boxShadow: s.boxShadow,
+      };
+    }, handle);
+
+    expect(pillStyles).toBeTruthy();
+    if (pillStyles) {
+      expect(pillStyles.backdropFilter).toBeTruthy(); // Should have backdrop blur
+      expect(pillStyles.backgroundColor).toBeTruthy(); // Should have background color
+      expect(pillStyles.boxShadow).toBeTruthy(); // Should have shadow
     }
-    
+
     // Test that styles persist after theme toggle
-    const elements = await getHeaderElements(page);
+    const elements = await getControlElements(page);
     await elements.themeToggle.click();
     await page.waitForTimeout(200);
-    
-    const stylesAfterThemeToggle = await getHeaderVisualStyles(page);
-    console.log("Header visual styles after theme toggle:", stylesAfterThemeToggle);
-    
+
+    const stylesAfterThemeToggle = await page.evaluate((el) => {
+      if (!el) return null;
+      const s = window.getComputedStyle(el);
+      return {
+        backdropFilter: s.backdropFilter,
+        boxShadow: s.boxShadow,
+      };
+    }, handle);
+
     // Backdrop blur and shadows should still be present
     if (stylesAfterThemeToggle) {
       expect(stylesAfterThemeToggle.backdropFilter).toBeTruthy();
@@ -229,11 +251,11 @@ test.describe("Preservation: Header Controls Continue to Function", () => {
     // PRESERVATION ASSERTIONS: Content should be present
     expect(content.title).toBeTruthy(); // Should have a title
     expect(content.title).not.toBe(""); // Title should not be empty
-    
+
     // Test that content persists after language change
-    const elements = await getHeaderElements(page);
+    const elements = await getControlElements(page);
     await elements.languageSelect.click();
-    
+
     const options = page.getByRole("option");
     const optionCount = await options.count();
     
@@ -272,9 +294,9 @@ test.describe("Property-Based Preservation Tests", () => {
       await page.setViewportSize(viewport);
       await page.waitForTimeout(300); // Allow for responsive layout changes
       await ensureHeaderVisible(page);
-      
-      const elements = await getHeaderElements(page);
-      
+
+      const elements = await getControlElements(page);
+
       // PRESERVATION ASSERTION: Core controls should be visible and functional
       await expect(elements.themeToggle).toBeVisible();
       await expect(elements.languageSelect).toBeVisible();
@@ -327,8 +349,8 @@ test.describe("Property-Based Preservation Tests", () => {
       
       // Ensure header is visible
       await ensureHeaderVisible(page);
-      const elements = await getHeaderElements(page);
-      
+      const elements = await getControlElements(page);
+
       // Dismiss header
       await elements.dismissButton.click();
       await expect(elements.header).not.toBeVisible();
@@ -341,7 +363,7 @@ test.describe("Property-Based Preservation Tests", () => {
       
       // Verify controls still work after show/hide cycle
       const initialTheme = await getCurrentTheme(page);
-      const newElements = await getHeaderElements(page);
+      const newElements = await getControlElements(page);
       await newElements.themeToggle.click();
       await page.waitForTimeout(200);
       const themeAfterToggle = await getCurrentTheme(page);

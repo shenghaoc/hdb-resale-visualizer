@@ -1,7 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
-  Languages,
   List,
   Loader2,
   LocateFixed,
@@ -24,13 +23,12 @@ import {
 } from "@/lib/filtering";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { useI18n } from "@/lib/i18n";
-import type { Locale } from "@/lib/i18n/types";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState } from "@/hooks/usePanelState";
+import { usePanelState, LEFT_PANEL_WIDTHS, DESKTOP_PANEL_LAYOUT } from "@/hooks/usePanelState";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
@@ -41,18 +39,12 @@ import type {
 } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
+import { LocaleSelector } from "@/components/LocaleSelector";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
@@ -75,7 +67,7 @@ type FilterChip = {
 };
 
 function App() {
-  const { locale, setLocale, t } = useI18n();
+  const { locale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
@@ -85,7 +77,21 @@ function App() {
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
-  const { isDesktop, leftTab, isLeftPanelOpen, isRightPanelOpen, setLeftTab, setIsLeftPanelOpen, setIsRightPanelOpen, mobileTab, setMobileTab, isShortlistOpen, resultsVisible, savedVisible, setIsShortlistOpen } = usePanelState();
+  const {
+    isDesktop,
+    leftTab,
+    isLeftPanelOpen,
+    isSavedPanelOpen,
+    setLeftTab,
+    setIsLeftPanelOpen,
+    setIsSavedPanelOpen,
+    mobileTab,
+    setMobileTab,
+    isShortlistOpen,
+    resultsVisible,
+    savedVisible,
+    setIsShortlistOpen,
+  } = usePanelState();
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
@@ -429,7 +435,7 @@ function App() {
 
     if (isDesktop) {
       setIsLeftPanelOpen(false);
-      setIsRightPanelOpen(false);
+      setIsSavedPanelOpen(false);
       return;
     }
 
@@ -553,25 +559,15 @@ function App() {
     </Suspense>
   ) : null;
 
-  const isSavedDashboardOpen = isDesktop && isRightPanelOpen;
   const showFloatingHeader = isDesktop ? isHeaderVisible : mobileTab === null;
   const showScopePrompt = Boolean(
-    manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen && !isRightPanelOpen : mobileTab === null),
+    manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen && !isSavedPanelOpen : mobileTab === null),
   );
-
-  // Width classes for the left (Filters/Results) panel per tab
-  const leftPanelWidths: Record<string, string> = {
-    filters: "w-[min(30rem,34vw)]",
-    results: "w-[min(34rem,38vw)]",
-  };
 
   return (
     <>
       <main
-        className={cn(
-          "fixed inset-0 w-full overflow-hidden",
-          isSavedDashboardOpen && "saved-dashboard-open",
-        )}
+        className="fixed inset-0 w-full overflow-hidden"
       >
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
@@ -640,41 +636,6 @@ function App() {
                   size="icon"
                   variant="ghost"
                   className="size-8 p-0 text-muted-foreground hover:text-foreground"
-                  onClick={toggleTheme}
-                  aria-label={t("app.toggleTheme")}
-                >
-                  {theme === "light" ? (
-                    <Moon data-icon className="size-4" />
-                  ) : (
-                    <Sun data-icon className="size-4" />
-                  )}
-                </Button>
-
-                <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-                  <SelectTrigger
-                    aria-label={t("language.label")}
-                    className="h-8 min-w-20 border-border/30 bg-background/60 px-2 py-0 text-xs shadow-sm backdrop-blur-sm"
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <Languages data-icon className="size-3 opacity-60" />
-                      <SelectValue placeholder={t("language.label")} />
-                    </div>
-                  </SelectTrigger>
-                  <SelectContent align="end">
-                    <SelectItem value="en-SG" className="text-xs">
-                      {t("language.en")}
-                    </SelectItem>
-                    <SelectItem value="zh-SG" className="text-xs">
-                      {t("language.zh")}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button
-                  type="button"
-                  size="icon"
-                  variant="ghost"
-                  className="size-8 p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setIsHeaderVisible(false)}
                   aria-label={t("app.dismissHeader")}
                 >
@@ -729,7 +690,7 @@ function App() {
             aria-label={t("filters.title")}
             className={cn(
               "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
-              isDesktop ? cn("left-6 top-[5rem]", isSavedDashboardOpen ? "right-[calc(var(--saved-panel-width)+2rem)]" : "right-[8rem]") : "left-0 right-0 top-[3.6rem] px-3",
+              isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-0 top-[3.6rem] px-3",
             )}
             style={{ scrollbarWidth: "none" }}
           >
@@ -851,8 +812,8 @@ function App() {
                   isLeftPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
-                  leftPanelWidths[leftTab],
                 )}
+                style={{ width: LEFT_PANEL_WIDTHS[leftTab] }}
               >
                 <div className="flex h-full min-h-0 flex-col">
                   <div
@@ -894,20 +855,25 @@ function App() {
                 </div>
               </aside>
 
-              {/* Right panel: Saved */}
+              {/* Saved panel: tiles alongside left panel */}
               <aside
-                id="desktop-right-panel"
-                aria-hidden={!isRightPanelOpen}
-                {...(!isRightPanelOpen && { inert: true })}
-                data-open={isRightPanelOpen ? "true" : "false"}
+                id="desktop-saved-panel"
+                aria-hidden={!isSavedPanelOpen}
+                {...(!isSavedPanelOpen && { inert: true })}
+                data-open={isSavedPanelOpen ? "true" : "false"}
                 data-mode="saved"
                 className={cn(
-                  "pointer-events-auto absolute bottom-0 right-0 top-0 flex min-h-full max-w-[calc(100vw-3rem)] flex-col overflow-hidden border-l border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[-8px_0_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-                  "w-[var(--saved-panel-width)]",
-                  isRightPanelOpen
-                    ? "translate-x-0 opacity-100"
-                    : "pointer-events-none translate-x-6 opacity-0",
+                  "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity,left] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
+                  "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] w-[min(28rem,32vw)]",
+                  isSavedPanelOpen
+                    ? "translate-y-0 opacity-100"
+                    : "pointer-events-none translate-y-6 opacity-0",
                 )}
+                style={{
+                  left: isLeftPanelOpen
+                    ? `calc(${DESKTOP_PANEL_LAYOUT.edgeInset} + ${LEFT_PANEL_WIDTHS[leftTab]} + ${DESKTOP_PANEL_LAYOUT.panelGap})`
+                    : DESKTOP_PANEL_LAYOUT.edgeInset,
+                }}
               >
                 <div className="flex h-full min-h-0 flex-col">
                   <div
@@ -971,7 +937,7 @@ function App() {
       </main>
 
       {isDesktop && (
-        <nav className="desktop-tab-bar" aria-label={t("app.title")}>
+        <nav className="desktop-tab-bar" data-testid="desktop-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
             variant={leftTab === "filters" && isLeftPanelOpen ? "secondary" : "ghost"}
@@ -1002,21 +968,17 @@ function App() {
             <List data-icon />
             <span>{t("tab.results")}</span>
           </Button>
-        </nav>
-      )}
-
-      {isDesktop && (
-        <nav className={cn("desktop-tab-bar desktop-tab-bar--right", isSavedDashboardOpen && "desktop-tab-bar--shifted")} aria-label={t("tab.saved")}>
+          <span className="desktop-tab-bar-divider" aria-hidden="true" />
           <Button
             type="button"
-            variant={isRightPanelOpen ? "secondary" : "ghost"}
+            variant={isSavedPanelOpen ? "secondary" : "ghost"}
             size="sm"
-            data-active={isRightPanelOpen}
-            aria-expanded={isRightPanelOpen}
-            aria-controls={isRightPanelOpen ? "desktop-saved-content" : undefined}
-            onClick={() => setIsRightPanelOpen((current) => !current)}
+            data-active={isSavedPanelOpen}
+            aria-expanded={isSavedPanelOpen}
+            aria-controls={isSavedPanelOpen ? "desktop-saved-content" : undefined}
+            onClick={() => setIsSavedPanelOpen((current) => !current)}
           >
-            <Bookmark data-icon className={isRightPanelOpen ? "fill-current" : ""} />
+            <Bookmark data-icon className={isSavedPanelOpen ? "fill-current" : ""} />
             <span>{t("tab.saved")}</span>
             {shortlist.items.length > 0 ? (
               <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
@@ -1024,12 +986,28 @@ function App() {
               </Badge>
             ) : null}
           </Button>
+          <span className="desktop-tab-bar-divider" aria-hidden="true" />
+          <LocaleSelector variant="desktop" />
+          <Button
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="desktop-tab-bar-icon-btn"
+            onClick={toggleTheme}
+            aria-label={t("app.toggleTheme")}
+          >
+            {theme === "light" ? (
+              <Moon data-icon className="size-4" />
+            ) : (
+              <Sun data-icon className="size-4" />
+            )}
+          </Button>
         </nav>
       )}
 
       {/* Mobile bottom tab bar */}
       {!isDesktop && (
-        <nav className="mobile-tab-bar" aria-label={t("app.title")}>
+        <nav className="mobile-tab-bar" data-testid="mobile-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
             size="icon"
@@ -1045,24 +1023,7 @@ function App() {
               <Sun data-icon className="size-4" aria-hidden="true" />
             )}
           </Button>
-          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-            <SelectTrigger
-              aria-label={t("language.label")}
-              title={t("language.label")}
-              className="mobile-language-trigger"
-            >
-              <Languages data-icon className="size-4" aria-hidden="true" />
-              <span>{t("language.short_name")}</span>
-            </SelectTrigger>
-            <SelectContent position="popper" side="top" align="start" sideOffset={4}>
-              <SelectItem value="en-SG" className="text-xs">
-                {t("language.en")}
-              </SelectItem>
-              <SelectItem value="zh-SG" className="text-xs">
-                {t("language.zh")}
-              </SelectItem>
-            </SelectContent>
-          </Select>
+          <LocaleSelector variant="mobile" />
           <Button
             type="button"
             variant={mobileTab === "filters" ? "secondary" : "ghost"}
