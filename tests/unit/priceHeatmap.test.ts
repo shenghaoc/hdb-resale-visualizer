@@ -8,12 +8,13 @@ import {
   HEATMAP_SOURCE_ID,
 } from "../../src/lib/priceHeatmap";
 
-function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasClusters?: boolean } = {}) {
-  const { hasLayer = false, hasSource = false, hasClusters = true } = options;
+function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasClusters?: boolean; hasRadiusFill?: boolean } = {}) {
+  const { hasLayer = false, hasSource = false, hasClusters = true, hasRadiusFill = false } = options;
   return {
     getLayer: vi.fn((id: string) => {
       if (id === HEATMAP_LAYER_ID) return hasLayer ? {} : undefined;
       if (id === "clusters") return hasClusters ? {} : undefined;
+      if (id === "radius-fill") return hasRadiusFill ? {} : undefined;
       return undefined;
     }),
     getSource: vi.fn((id: string) => {
@@ -76,12 +77,21 @@ describe("priceHeatmap", () => {
     });
 
     it("handles missing clusters layer gracefully", () => {
-      const map = createMockMap({ hasClusters: false });
+      const map = createMockMap({ hasClusters: false, hasRadiusFill: false });
       addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
 
       expect(map.addLayer).toHaveBeenCalledTimes(1);
       const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];
       expect(addLayerCall[1]).toBeUndefined();
+    });
+
+    it("falls back to radius-fill when clusters layer is missing", () => {
+      const map = createMockMap({ hasClusters: false, hasRadiusFill: true });
+      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
+
+      expect(map.addLayer).toHaveBeenCalledTimes(1);
+      const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];
+      expect(addLayerCall[1]).toBe("radius-fill");
     });
   });
 

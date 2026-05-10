@@ -96,7 +96,7 @@ export function addPriceHeatmapLayer(
       },
     },
     // Insert **before** the block marker layers so markers stay on top.
-    map.getLayer("clusters") ? "clusters" : undefined,
+    map.getLayer("clusters") ? "clusters" : map.getLayer("radius-fill") ? "radius-fill" : undefined,
   );
 }
 

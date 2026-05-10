@@ -622,6 +622,9 @@ export function MapView({
     } else {
       void map.once("load", applyData);
     }
+    return () => {
+      map.off("load", applyData);
+    };
   }, [geoJson, priceHeatmapEnabled]);
 
 
@@ -709,6 +712,9 @@ export function MapView({
     } else {
       void map.once("load", apply);
     }
+    return () => {
+      map.off("load", apply);
+    };
   }, [priceHeatmapEnabled, geoJson]);
 
   // Update opacity on an already-visible heatmap layer without re-adding it
@@ -727,6 +733,9 @@ export function MapView({
     } else {
       void map.once("load", applyOpacity);
     }
+    return () => {
+      map.off("load", applyOpacity);
+    };
   }, [priceHeatmapOpacity]);
 
   // Update the radius circles when selection changes
