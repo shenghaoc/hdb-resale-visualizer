@@ -8,8 +8,9 @@ export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
 /**
- * Returns the current Gregorian year. Using a function ensures the value is fresh for each
- * operation (e.g., a filter pass) while avoiding repeated `new Date()` allocations inside hot loops.
+ * Returns the current Gregorian year. Callers in hot loops should cache the
+ * result (e.g., via a TTL wrapper) rather than calling this per iteration,
+ * since each invocation allocates a new Date object.
  */
 export const getCurrentYear = (): number => new Date().getFullYear();
 

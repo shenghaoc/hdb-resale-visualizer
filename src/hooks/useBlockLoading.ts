@@ -46,12 +46,12 @@ export function useBlockLoading({
 
     async function loadBlocks() {
       try {
-        setLoadError(null);
         const currentBlocks = blocksRef.current;
         const hasAllBlocks = currentBlocks.length >= totalBlocks;
 
         if (needsAllBlocks) {
           if (hasAllBlocks) return;
+          setLoadError(null);
           const nextBlocks = await fetchBlockSummaries();
           if (isMounted) {
             blocksRef.current = nextBlocks;
@@ -63,6 +63,7 @@ export function useBlockLoading({
         if (!effectiveTown || hasAllBlocks) return;
         if (currentBlocks.some((block) => block.town === effectiveTown)) return;
 
+        setLoadError(null);
         const nextBlocks = await fetchBlocksByTown(effectiveTown);
         if (!isMounted || !Array.isArray(nextBlocks)) return;
 
