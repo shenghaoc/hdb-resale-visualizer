@@ -139,8 +139,8 @@ function App() {
     () => (filters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : filters.search),
     [filters.search, userLocation],
   );
-  // Reduce debounce delay for better sync between map and list
-  // Keep some debouncing to avoid excessive map updates during typing
+  // 100ms debounce (reduced from 200ms) eliminates the stacked delay that caused
+  // the map and list to fall out of sync during geographic searches.
   const debouncedSearch = useDebouncedValue(resolvedSearch, 100);
 
   const sortedTowns = useMemo(

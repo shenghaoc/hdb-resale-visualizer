@@ -739,7 +739,8 @@ export function MapView({
   }, [priceHeatmapOpacity]);
 
   // Update radius circles: geographic search radius takes precedence over the
-  // selected-block 1km/2km rings so both effects share one source without fighting.
+  // selected-block 1km/2km rings to avoid visual clutter while coordinate search
+  // is active. Both share one source to prevent conflicting writes.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) {
