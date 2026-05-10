@@ -11,7 +11,6 @@ function resolveLocale(locale?: Locale) {
 // Reusing them reduces formatter time from ~3000ms to ~45ms per 50,000 calls.
 const FORMATTER_CACHE_LIMIT = 128;
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
-const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
 
 // ⚡ Bolt: Cache string outputs to avoid repetitive `.format()` calls and Temporal allocations.
 // For thousands of repeated values (e.g. months, rounded prices), this drops format time by >10x.
@@ -43,23 +42,8 @@ function getNumberFormat(locale: Locale, options: Intl.NumberFormatOptions): Int
   return formatter;
 }
 
-function getDateTimeFormat(
-  locale: Locale,
-  options: Intl.DateTimeFormatOptions
-): Intl.DateTimeFormat {
-  const key = `${locale}-${JSON.stringify(options)}`;
-  let formatter = dateTimeFormatCache.get(key);
-  if (!formatter) {
-    formatter = new Intl.DateTimeFormat(locale, options);
-    evictCacheIfNeeded(dateTimeFormatCache, FORMATTER_CACHE_LIMIT);
-    dateTimeFormatCache.set(key, formatter);
-  }
-  return formatter;
-}
-
 export function resetFormatCachesForTests(): void {
   numberFormatCache.clear();
-  dateTimeFormatCache.clear();
   formattedCurrencyCache.clear();
   formattedCompactCurrencyCache.clear();
   formattedNumberCache.clear();
@@ -141,7 +125,7 @@ export function formatMonth(month: string, locale?: Locale): string {
 
   const ym = Temporal.PlainYearMonth.from(month);
 
-  cached = ym.toLocaleString(resolvedLocale, {
+  cached = ym.toPlainDate({ day: 1 }).toLocaleString(resolvedLocale, {
     month: "short",
     year: "numeric"
   });
