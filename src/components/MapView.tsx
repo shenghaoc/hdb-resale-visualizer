@@ -588,8 +588,6 @@ export function MapView({
     }
   }, [geoJson]);
 
-
-
   // Fit bounds when townFilter changes
   useEffect(() => {
     const map = mapRef.current;

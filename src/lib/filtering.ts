@@ -1,6 +1,6 @@
 import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
 import { MAX_LEASE_DURATION } from '@/lib/constants';
-import { buildFilterOptions, canonicalFlatType } from "@/lib/filterOptions";
+import { buildFilterOptions, canonicalFlatType } from "@shared/filter-options";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
