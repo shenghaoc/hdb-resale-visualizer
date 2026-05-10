@@ -1,4 +1,3 @@
-import "@testing-library/jest-dom/vitest";
 import { Temporal } from "@js-temporal/polyfill";
 
 if (typeof (globalThis as any).Temporal === "undefined") {

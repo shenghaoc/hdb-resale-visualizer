@@ -1,3 +1,4 @@
+import "./lib/temporal-polyfill";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { makeSupermarketCacheKey } from "./lib/amenity";
