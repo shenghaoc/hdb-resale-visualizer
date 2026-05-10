@@ -17,34 +17,42 @@ export function isHeatmapLayerPresent(map: MapLibreMap): boolean {
 
 /**
  * Adds the price heatmap source + layer to the map **before** the blocks layer
- * so that block markers appear on top.  Safe to call multiple times – it is
+ * so that block markers appear on top.  Safe to call multiple times -- it is
  * a no-op when the layer already exists.
  *
  * The heatmap uses the same `median_price` property that already lives on
  * each block feature in the "blocks" GeoJSON source, so no extra data is
  * required at runtime.
+ *
+ * A dedicated non-clustered GeoJSON source (`HEATMAP_SOURCE_ID`) is created
+ * so that the heatmap renders from individual points rather than cluster
+ * aggregates.
  */
 export function addPriceHeatmapLayer(map: MapLibreMap, opacity: number): void {
   if (isHeatmapLayerPresent(map)) return;
 
-  // Re-use the existing "blocks" source so we don't duplicate data.
-  // We cannot set `cluster: true` on a source that also drives a heatmap
-  // because clusters collapse individual points.  However, since the heatmap
-  // layer only queries un-clustered features and MapLibre heatmap renders
-  // from raw source data (not cluster aggregates), this works fine as long
-  // as the source is already loaded.
+  // Create a dedicated non-clustered source for the heatmap using the same
+  // data as the "blocks" source.  Clustering collapses individual points
+  // which results in a sparse heatmap.
+  if (!map.getSource(HEATMAP_SOURCE_ID)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- accessing private MapLibre source data
+    const blocksSource = map.getSource("blocks") as any;
+    const data = blocksSource?._data ?? { type: "FeatureCollection", features: [] };
+    map.addSource(HEATMAP_SOURCE_ID, {
+      type: "geojson",
+      data,
+    });
+  }
 
-  // MapLibre's heatmap layer reads from a GeoJSON source directly.
-  // We reference the same "blocks" source already set up in MapView.
   map.addLayer(
     {
       id: HEATMAP_LAYER_ID,
       type: "heatmap",
-      source: "blocks",
+      source: HEATMAP_SOURCE_ID,
       maxzoom: 17,
       paint: {
-        // Weight each point by its median_price.  Normalise to 0–1 against
-        // the expected Singapore HDB price range (400 K – 1.5 M).
+        // Weight each point by its median_price.  Normalise to 0-1 against
+        // the expected Singapore HDB price range (400 K - 1.5 M).
         "heatmap-weight": [
           "interpolate",
           ["linear"],
@@ -60,7 +68,7 @@ export function addPriceHeatmapLayer(map: MapLibreMap, opacity: number): void {
           9, 0.6,
           15, 2,
         ],
-        // HSL color ramp: cool teal → amber → deep red (mirrors the existing
+        // HSL color ramp: cool teal to amber to deep red (mirrors the existing
         // MEDIAN_PRICE_COLOR_STOPS palette to stay visually coherent).
         "heatmap-color": [
           "interpolate",
@@ -88,17 +96,20 @@ export function addPriceHeatmapLayer(map: MapLibreMap, opacity: number): void {
       },
     },
     // Insert **before** the block marker layers so markers stay on top.
-    "clusters",
+    map.getLayer("clusters") ? "clusters" : undefined,
   );
 }
 
 /**
- * Removes the heatmap layer (and its source if necessary) from the map.
+ * Removes the heatmap layer (and its dedicated source) from the map.
  * Safe to call when the layer does not exist.
  */
 export function removePriceHeatmapLayer(map: MapLibreMap): void {
   if (map.getLayer(HEATMAP_LAYER_ID)) {
     map.removeLayer(HEATMAP_LAYER_ID);
+  }
+  if (map.getSource(HEATMAP_SOURCE_ID)) {
+    map.removeSource(HEATMAP_SOURCE_ID);
   }
 }
 

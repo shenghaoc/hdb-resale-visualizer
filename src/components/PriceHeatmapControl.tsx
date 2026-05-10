@@ -31,6 +31,7 @@ export function PriceHeatmapControl({
   style,
 }: PriceHeatmapControlProps) {
   const sliderId = useId();
+  const toggleId = useId();
 
   return (
     <div
@@ -59,7 +60,7 @@ export function PriceHeatmapControl({
           role="switch"
           aria-checked={isEnabled}
           aria-label={isEnabled ? t("heatmap.disable") : t("heatmap.enable")}
-          id="heatmap-toggle"
+          id={toggleId}
           onClick={onToggle}
           className={cn(
             "relative h-3.5 w-6 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",

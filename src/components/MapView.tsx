@@ -149,6 +149,7 @@ export function MapView({
   const previousAutoFitKeyRef = useRef<string | null>(null);
   const lastAppliedThemeRef = useRef<boolean>(isDarkMode);
   const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
+  const priceHeatmapOpacityRef = useRef(priceHeatmapOpacity);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -176,6 +177,9 @@ export function MapView({
   useEffect(() => {
     localeRef.current = locale;
   }, [locale]);
+  useEffect(() => {
+    priceHeatmapOpacityRef.current = priceHeatmapOpacity;
+  }, [priceHeatmapOpacity]);
 
   // Create the map ONCE on mount
   useEffect(() => {
@@ -672,7 +676,7 @@ export function MapView({
 
     const apply = () => {
       if (priceHeatmapEnabled) {
-        addPriceHeatmapLayer(map, priceHeatmapOpacity);
+        addPriceHeatmapLayer(map, priceHeatmapOpacityRef.current);
       } else {
         removePriceHeatmapLayer(map);
       }
@@ -683,7 +687,6 @@ export function MapView({
     } else {
       void map.once("load", apply);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceHeatmapEnabled]);
 
   // Update opacity on an already-visible heatmap layer without re-adding it
