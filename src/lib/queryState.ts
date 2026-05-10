@@ -32,7 +32,7 @@ export function parseFilters(search: string): FilterState {
 
 export function serializeFilters(filters: FilterState): string {
   const params = new URLSearchParams();
-  params.set("v", QUERY_VERSION);
+  let hasNonDefaultParams = false;
 
   for (const [key, value] of Object.entries(filters)) {
     if (value === null || value === "") {
@@ -40,6 +40,12 @@ export function serializeFilters(filters: FilterState): string {
     }
 
     params.set(key === "selectedAddressKey" ? "selected" : key, String(value));
+    hasNonDefaultParams = true;
+  }
+
+  // Only add version parameter if there are actual filter parameters
+  if (hasNonDefaultParams) {
+    params.set("v", QUERY_VERSION);
   }
 
   const search = params.toString();
