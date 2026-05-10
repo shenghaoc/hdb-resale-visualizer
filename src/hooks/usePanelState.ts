@@ -14,6 +14,19 @@ export const LEFT_PANEL_WIDTHS: Record<LeftTab, string> = {
   results: "min(34rem,38vw)",
 };
 
+/**
+ * Shared layout dimensions for the desktop panel system. Used for inline style
+ * calculations that cannot be expressed purely with Tailwind classes.
+ *
+ * - `edgeInset` mirrors the Tailwind `left-6` class used on the left panel's
+ *   resting position.
+ * - `panelGap` is the horizontal gap between tiling panels.
+ */
+export const DESKTOP_PANEL_LAYOUT = {
+  edgeInset: "1.5rem",
+  panelGap: "0.75rem",
+} as const;
+
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 

@@ -1,7 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Bookmark,
-  Languages,
   List,
   Loader2,
   LocateFixed,
@@ -23,14 +22,13 @@ import {
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { useI18n, LOCALE_OPTIONS } from "@/lib/i18n";
-import type { Locale } from "@/lib/i18n/types";
+import { useI18n } from "@/lib/i18n";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState, LEFT_PANEL_WIDTHS } from "@/hooks/usePanelState";
+import { usePanelState, LEFT_PANEL_WIDTHS, DESKTOP_PANEL_LAYOUT } from "@/hooks/usePanelState";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
@@ -41,17 +39,12 @@ import type {
 } from "@/types/data";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
+import { LocaleSelector } from "@/components/LocaleSelector";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
@@ -74,7 +67,7 @@ type FilterChip = {
 };
 
 function App() {
-  const { locale, setLocale, t } = useI18n();
+  const { locale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
@@ -864,8 +857,8 @@ function App() {
                 )}
                 style={{
                   left: isLeftPanelOpen
-                    ? `calc(1.5rem + ${LEFT_PANEL_WIDTHS[leftTab]} + 0.75rem)`
-                    : "1.5rem",
+                    ? `calc(${DESKTOP_PANEL_LAYOUT.edgeInset} + ${LEFT_PANEL_WIDTHS[leftTab]} + ${DESKTOP_PANEL_LAYOUT.panelGap})`
+                    : DESKTOP_PANEL_LAYOUT.edgeInset,
                 }}
               >
                 <div className="flex h-full min-h-0 flex-col">
@@ -980,22 +973,7 @@ function App() {
             ) : null}
           </Button>
           <span className="desktop-tab-bar-divider" aria-hidden="true" />
-          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-            <SelectTrigger
-              aria-label={t("language.label")}
-              className="desktop-tab-bar-lang-trigger"
-            >
-              <Languages data-icon className="size-3.5" aria-hidden="true" />
-              <span>{t("language.short_name")}</span>
-            </SelectTrigger>
-            <SelectContent position="popper" side="top" align="start" sideOffset={8}>
-              {LOCALE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-xs">
-                  {t(option.labelKey)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <LocaleSelector variant="desktop" />
           <Button
             type="button"
             size="icon"
@@ -1031,23 +1009,7 @@ function App() {
               <Sun data-icon className="size-4" aria-hidden="true" />
             )}
           </Button>
-          <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-            <SelectTrigger
-              aria-label={t("language.label")}
-              title={t("language.label")}
-              className="mobile-language-trigger"
-            >
-              <Languages data-icon className="size-4" aria-hidden="true" />
-              <span>{t("language.short_name")}</span>
-            </SelectTrigger>
-            <SelectContent position="popper" side="top" align="start" sideOffset={4}>
-              {LOCALE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-xs">
-                  {t(option.labelKey)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <LocaleSelector variant="mobile" />
           <Button
             type="button"
             variant={mobileTab === "filters" ? "secondary" : "ghost"}
