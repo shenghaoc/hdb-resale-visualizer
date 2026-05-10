@@ -13,18 +13,30 @@ function parseNumber(value: string | null): number | null {
 export function parseFilters(search: string): FilterState {
   const params = new URLSearchParams(search);
 
+  const budgetMin = parseNumber(params.get("budgetMin"));
+  const budgetMax = parseNumber(params.get("budgetMax"));
+  const areaMin = parseNumber(params.get("areaMin"));
+  const areaMax = parseNumber(params.get("areaMax"));
+  const startMonth = params.get("startMonth");
+  const endMonth = params.get("endMonth");
+
+  // Normalize inverted ranges so min <= max invariants always hold.
+  const budgetInverted = budgetMin !== null && budgetMax !== null && budgetMin > budgetMax;
+  const areaInverted = areaMin !== null && areaMax !== null && areaMin > areaMax;
+  const monthInverted = Boolean(startMonth && endMonth && startMonth > endMonth);
+
   return {
     search: params.get("search") ?? DEFAULT_FILTERS.search,
     town: params.get("town") ?? DEFAULT_FILTERS.town,
     flatType: params.get("flatType") ?? DEFAULT_FILTERS.flatType,
     flatModel: params.get("flatModel") ?? DEFAULT_FILTERS.flatModel,
-    budgetMin: parseNumber(params.get("budgetMin")),
-    budgetMax: parseNumber(params.get("budgetMax")),
-    areaMin: parseNumber(params.get("areaMin")),
-    areaMax: parseNumber(params.get("areaMax")),
+    budgetMin: budgetInverted ? budgetMax : budgetMin,
+    budgetMax: budgetInverted ? budgetMin : budgetMax,
+    areaMin: areaInverted ? areaMax : areaMin,
+    areaMax: areaInverted ? areaMin : areaMax,
     remainingLeaseMin: parseNumber(params.get("remainingLeaseMin")),
-    startMonth: params.get("startMonth"),
-    endMonth: params.get("endMonth"),
+    startMonth: monthInverted ? endMonth : startMonth,
+    endMonth: monthInverted ? startMonth : endMonth,
     mrtMax: parseNumber(params.get("mrtMax")),
     selectedAddressKey: params.get("selected"),
   };

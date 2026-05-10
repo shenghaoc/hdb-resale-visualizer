@@ -1,5 +1,5 @@
 import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
-import { MAX_LEASE_DURATION } from '@/lib/constants';
+import { getCurrentYear, MAX_LEASE_DURATION } from '@/lib/constants';
 import { buildFilterOptions, canonicalFlatType } from "@shared/filter-options";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
@@ -543,10 +543,24 @@ export function resetFilteringCachesForTests(): void {
   stationNamesSourceRef = null;
   townNamesCache = null;
   townNamesSourceRef = null;
+  _cachedYear = null;
+  _cachedYearTimestamp = 0;
 }
 
-// Cache the current year to avoid expensive Date instantiations in the filtering loop
-const CURRENT_YEAR = new Date().getFullYear();
+// Cache current year per filter pass to avoid repeated Temporal allocations inside
+// the hot loop while still refreshing across year boundaries for long-lived sessions.
+let _cachedYear: number | null = null;
+let _cachedYearTimestamp = 0;
+const YEAR_CACHE_TTL_MS = 60_000; // refresh every 60 seconds
+
+function getCachedCurrentYear(): number {
+  const now = Temporal.Now.instant().epochMilliseconds;
+  if (_cachedYear === null || now - _cachedYearTimestamp > YEAR_CACHE_TTL_MS) {
+    _cachedYear = getCurrentYear();
+    _cachedYearTimestamp = now;
+  }
+  return _cachedYear;
+}
 
 export function matchesFilter(
   block: BlockSummary,
@@ -575,8 +589,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    // Using cached year instead of calling new Date().getFullYear() every iteration
-    const maxRemainingLease = MAX_LEASE_DURATION - (CURRENT_YEAR - block.leaseCommenceRange[1]);
+    const maxRemainingLease = MAX_LEASE_DURATION - (getCachedCurrentYear() - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }

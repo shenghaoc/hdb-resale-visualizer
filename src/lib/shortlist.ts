@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
 const shortlistItemSchema = z.object({
   addressKey: z.string(),
   notes: z.string().catch(""),
   targetPrice: z.number().nullable().catch(null),
-  addedAt: z.string().min(1).catch(() => new Date(0).toISOString()),
+  addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
 });
 
 const shortlistSchema = z.array(z.unknown()).transform((arr) => {
@@ -94,13 +94,18 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
     return items.filter((item) => item.addressKey !== addressKey);
   }
 
+  // Refuse to add when at capacity instead of silently dropping the oldest item.
+  if (items.length >= MAX_SHORTLIST_ITEMS) {
+    return items;
+  }
+
   return [
     ...items,
     {
       addressKey,
       notes: "",
       targetPrice: null,
-      addedAt: new Date().toISOString(),
+      addedAt: Temporal.Now.instant().toString(),
     },
-  ].slice(-4);
+  ];
 }

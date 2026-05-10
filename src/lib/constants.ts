@@ -8,10 +8,9 @@ export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
 /**
- * Returns the current Gregorian year. Using a function ensures the value is fresh for each
- * operation (e.g., a filter pass) while avoiding repeated `new Date()` allocations inside hot loops.
+ * Returns the current Gregorian year using the Temporal API.
  */
-export const getCurrentYear = (): number => new Date().getFullYear();
+export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
 
 const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
@@ -43,6 +42,11 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
  * Storage keys for local persistence.
  */
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
+
+/**
+ * Maximum number of properties that can be saved to the shortlist.
+ */
+export const MAX_SHORTLIST_ITEMS = 20;
 
 /**
  * Security guardrail: reject oversized share payloads early to avoid expensive
