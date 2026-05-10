@@ -198,10 +198,9 @@ function isNearMatch(left: string, right: string): boolean {
 let blockTokensCache = new WeakMap<BlockSummary, BlockSearchTokens>();
 let blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
 let stationNamesCache: string[] | null = null;
-// Track the blocks reference that produced stationNamesCache so we can
-// invalidate it when the data source changes (e.g. after a hot reload or
-// data refresh), preventing stale station lists from being reused.
 let stationNamesSourceRef: BlockSummary[] | null = null;
+let townNamesCache: Set<string> | null = null;
+let townNamesSourceRef: BlockSummary[] | null = null;
 
 // Cache canonical flat type values per filter string to avoid re-running
 // `canonicalFlatType` (which performs `.trim().toUpperCase()`) on every block
@@ -319,15 +318,49 @@ function collectStationNames(blocks: BlockSummary[]): string[] {
   return stationNamesCache;
 }
 
-function matchStationName(query: string, stationNames: string[]): string | null {
-  const normalizedQuery = resolveSearchAliases(normalizeSearchText(query));
+function collectTownNames(blocks: BlockSummary[]): Set<string> {
+  if (townNamesCache && townNamesSourceRef === blocks) {
+    return townNamesCache;
+  }
+
+  const rawTowns = new Set<string>();
+  for (const block of blocks) {
+    rawTowns.add(block.town);
+  }
+
+  const townNames = new Set<string>();
+  for (const town of rawTowns) {
+    townNames.add(normalizeSearchText(town));
+  }
+
+  townNamesCache = townNames;
+  townNamesSourceRef = blocks;
+  return townNames;
+}
+
+function matchStationName(
+  query: string,
+  stationNames: string[],
+  townNames: Set<string>,
+): string | null {
+  const rawNormalizedQuery = normalizeSearchText(query);
+  const normalizedQuery = resolveSearchAliases(rawNormalizedQuery);
   if (!normalizedQuery) {
     return null;
   }
 
+  const isTownMatch = townNames.has(rawNormalizedQuery);
   const hasCueWords = normalizedQuery
     .split(" ")
     .some((token) => STATION_SEARCH_CUE_WORDS.has(token));
+
+  // If the query exactly matches a town name (e.g. "Bedok", "Ang Mo Kio") and has no cue
+  // words like "MRT" or "near", do not resolve it as a station intent. This prevents
+  // radius-based station filtering from incorrectly hiding town-wide results.
+  if (isTownMatch && !hasCueWords) {
+    return null;
+  }
+
   const queryTokens = tokenizeSearchText(normalizedQuery)
     .map((token) => token.value)
     .filter((token) => !STATION_SEARCH_CUE_WORDS.has(token));
@@ -452,7 +485,11 @@ export function resolveGeographicSearchIntent(
     };
   }
 
-  const stationName = matchStationName(query, collectStationNames(blocks));
+  const stationName = matchStationName(
+    query,
+    collectStationNames(blocks),
+    collectTownNames(blocks),
+  );
   if (!stationName) {
     return null;
   }
@@ -504,6 +541,8 @@ export function resetFilteringCachesForTests(): void {
   blockCanonicalFlatTypesCache = new WeakMap<BlockSummary, string[]>();
   stationNamesCache = null;
   stationNamesSourceRef = null;
+  townNamesCache = null;
+  townNamesSourceRef = null;
 }
 
 // Cache the current year to avoid expensive Date instantiations in the filtering loop
