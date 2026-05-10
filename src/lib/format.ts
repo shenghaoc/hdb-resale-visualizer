@@ -140,12 +140,11 @@ export function formatMonth(month: string, locale?: Locale): string {
   if (cached !== undefined) return cached;
 
   const ym = Temporal.PlainYearMonth.from(month);
-  const plainDate = ym.toPlainDate({ day: 1 });
 
-  cached = getDateTimeFormat(resolvedLocale, {
+  cached = ym.toLocaleString(resolvedLocale, {
     month: "short",
     year: "numeric"
-  }).format(plainDate);
+  });
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -164,8 +163,8 @@ export function formatRemainingLease(leaseCommenceRange: [number, number], t: Tr
 }
 
 export function formatDateTime(value: string, locale?: Locale): string {
-  return getDateTimeFormat(resolveLocale(locale), {
+  return Temporal.Instant.from(value).toLocaleString(resolveLocale(locale), {
     dateStyle: "medium",
     timeStyle: "short"
-  }).format(Temporal.Instant.from(value));
+  });
 }
