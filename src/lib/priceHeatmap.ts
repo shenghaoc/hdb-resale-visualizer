@@ -28,16 +28,16 @@ export function isHeatmapLayerPresent(map: MapLibreMap): boolean {
  * so that the heatmap renders from individual points rather than cluster
  * aggregates.
  */
-export function addPriceHeatmapLayer(map: MapLibreMap, opacity: number): void {
+export function addPriceHeatmapLayer(
+  map: MapLibreMap,
+  opacity: number,
+  data: GeoJSON.FeatureCollection,
+): void {
   if (isHeatmapLayerPresent(map)) return;
 
-  // Create a dedicated non-clustered source for the heatmap using the same
-  // data as the "blocks" source.  Clustering collapses individual points
-  // which results in a sparse heatmap.
+  // Create a dedicated non-clustered source for the heatmap.
+  // Clustering collapses individual points which results in a sparse heatmap.
   if (!map.getSource(HEATMAP_SOURCE_ID)) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- accessing private MapLibre source data
-    const blocksSource = map.getSource("blocks") as any;
-    const data = blocksSource?._data ?? { type: "FeatureCollection", features: [] };
     map.addSource(HEATMAP_SOURCE_ID, {
       type: "geojson",
       data,

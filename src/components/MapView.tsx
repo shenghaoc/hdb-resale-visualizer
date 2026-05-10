@@ -12,6 +12,7 @@ import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
 import {
   addPriceHeatmapLayer,
+  HEATMAP_SOURCE_ID,
   isHeatmapLayerPresent,
   removePriceHeatmapLayer,
   setHeatmapOpacity,
@@ -150,6 +151,7 @@ export function MapView({
   const lastAppliedThemeRef = useRef<boolean>(isDarkMode);
   const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
   const priceHeatmapOpacityRef = useRef(priceHeatmapOpacity);
+  const priceHeatmapEnabledRef = useRef(priceHeatmapEnabled);
 
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
@@ -180,6 +182,9 @@ export function MapView({
   useEffect(() => {
     priceHeatmapOpacityRef.current = priceHeatmapOpacity;
   }, [priceHeatmapOpacity]);
+  useEffect(() => {
+    priceHeatmapEnabledRef.current = priceHeatmapEnabled;
+  }, [priceHeatmapEnabled]);
 
   // Create the map ONCE on mount
   useEffect(() => {
@@ -602,6 +607,23 @@ export function MapView({
     }
   }, [geoJson]);
 
+  // Sync heatmap source data when geoJson changes while heatmap is active
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !priceHeatmapEnabled) return;
+    const applyData = () => {
+      const source = map.getSource(HEATMAP_SOURCE_ID);
+      if (isGeoJsonDataSourceLike(source)) {
+        source.setData(geoJson);
+      }
+    };
+    if (map.isStyleLoaded()) {
+      applyData();
+    } else {
+      void map.once("load", applyData);
+    }
+  }, [geoJson, priceHeatmapEnabled]);
+
 
 
   // Fit bounds when townFilter changes
@@ -676,7 +698,7 @@ export function MapView({
 
     const apply = () => {
       if (priceHeatmapEnabled) {
-        addPriceHeatmapLayer(map, priceHeatmapOpacityRef.current);
+        addPriceHeatmapLayer(map, priceHeatmapOpacityRef.current, geoJson);
       } else {
         removePriceHeatmapLayer(map);
       }
@@ -687,12 +709,12 @@ export function MapView({
     } else {
       void map.once("load", apply);
     }
-  }, [priceHeatmapEnabled]);
+  }, [priceHeatmapEnabled, geoJson]);
 
   // Update opacity on an already-visible heatmap layer without re-adding it
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !priceHeatmapEnabled) return;
+    if (!map || !priceHeatmapEnabledRef.current) return;
 
     const applyOpacity = () => {
       if (isHeatmapLayerPresent(map)) {
@@ -705,7 +727,6 @@ export function MapView({
     } else {
       void map.once("load", applyOpacity);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [priceHeatmapOpacity]);
 
   // Update the radius circles when selection changes
