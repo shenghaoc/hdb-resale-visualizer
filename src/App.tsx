@@ -77,7 +77,21 @@ function App() {
   const [isMobileHeaderOpen, setIsMobileHeaderOpen] = useState(false);
 
   const shortlist = useShortlist();
-  const { isDesktop, leftTab, isLeftPanelOpen, isSavedPanelOpen, setLeftTab, setIsLeftPanelOpen, setIsSavedPanelOpen, mobileTab, setMobileTab, isShortlistOpen, resultsVisible, savedVisible, setIsShortlistOpen } = usePanelState();
+  const {
+    isDesktop,
+    leftTab,
+    isLeftPanelOpen,
+    isSavedPanelOpen,
+    setLeftTab,
+    setIsLeftPanelOpen,
+    setIsSavedPanelOpen,
+    mobileTab,
+    setMobileTab,
+    isShortlistOpen,
+    resultsVisible,
+    savedVisible,
+    setIsShortlistOpen,
+  } = usePanelState();
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
