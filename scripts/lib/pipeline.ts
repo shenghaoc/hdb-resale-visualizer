@@ -201,7 +201,7 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    return Temporal.Now.plainDateISO().year;
+    throw new Error("getModeYear called with empty array — no transactions to derive lease year from");
   }
 
   const counts = new Map<number, number>();
@@ -313,16 +313,10 @@ function findNearestMrtDistanceMeters(
   return minMrtDistance;
 }
 
-function resolveLeaseCommenceYear(leaseYears: number[], yearCompleted: number | null | undefined) {
-  if (
-    typeof yearCompleted === "number" &&
-    Number.isFinite(yearCompleted) &&
-    yearCompleted >= 1900 &&
-    yearCompleted <= Temporal.Now.plainDateISO().year
-  ) {
-    return yearCompleted;
-  }
-
+function resolveLeaseCommenceYear(leaseYears: number[]) {
+  // For HDB, all units in a block share the same 99-year lease that starts
+  // when the land is acquired from the state — use the lease_commence_date
+  // from transaction records (the authoritative source), not yearCompleted.
   return getModeYear(leaseYears);
 }
 
@@ -487,7 +481,7 @@ export function buildArtifacts({
       .map(([stationName, distanceMeters]) => ({ stationName, distanceMeters: Math.round(distanceMeters) }));
     const nearestMrt: BlockSummary["nearestMrt"] = nearbyMrts[0] ?? null;
     const property = propertyByAddress.get(addressKey);
-    const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears, property?.yearCompleted);
+    const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears);
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
@@ -637,7 +631,6 @@ export function buildArtifacts({
       );
       const sourceWindow = summaryWindow.length > 0 ? summaryWindow : cohortTransactions;
       const geocode = geocodes[addressKey];
-      const property = propertyByAddress.get(addressKey);
 
       blockMetrics.push({
         addressKey,
@@ -647,8 +640,7 @@ export function buildArtifacts({
         medianPrice: median(sourceWindow.map((transaction) => transaction.resalePrice)),
         medianPricePerSqm: median(sourceWindow.map((transaction) => transaction.pricePerSqm)),
         leaseYear: resolveLeaseCommenceYear(
-          cohortTransactions.map((transaction) => transaction.leaseCommenceDate),
-          property?.yearCompleted,
+          cohortTransactions.map((transaction) => transaction.leaseCommenceDate)
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,

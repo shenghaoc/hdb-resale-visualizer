@@ -386,7 +386,7 @@ export function ShortlistDrawer({
 
     if (compareMode === "lease") {
       return t("shortlist.compare.metric.lease.value", {
-        value: row.block.leaseCommenceRange[1],
+        value: getLeaseYears(row),
       });
     }
 
@@ -502,7 +502,7 @@ export function ShortlistDrawer({
 
   const highlights = useMemo(() => {
     let bestValueRow: typeof rows[0] | null = null;
-    let newestLeaseRow: typeof rows[0] | null = null;
+    let longestLeaseRow: typeof rows[0] | null = null;
     let closestMrtRow: typeof rows[0] | null = null;
 
     let minPrice = Number.POSITIVE_INFINITY;
@@ -517,8 +517,8 @@ export function ShortlistDrawer({
       }
 
       const lease = row.block.leaseCommenceRange[1];
-      if (!newestLeaseRow || lease > maxLease) {
-        newestLeaseRow = row;
+      if (!longestLeaseRow || lease > maxLease) {
+        longestLeaseRow = row;
         maxLease = lease;
       }
 
@@ -536,9 +536,9 @@ export function ShortlistDrawer({
         sub: bestValueRow ? formatCompactCurrency(bestValueRow.block.medianPrice, locale) : t("shortlist.na"),
       },
       {
-        label: t("shortlist.newestLease"),
-        row: newestLeaseRow,
-        sub: newestLeaseRow ? t("unit.years", { value: getLeaseYears(newestLeaseRow) }) : t("shortlist.na"),
+        label: t("shortlist.highlights.longestLease"),
+        row: longestLeaseRow,
+        sub: longestLeaseRow ? t("unit.years", { value: getLeaseYears(longestLeaseRow) }) : t("shortlist.na"),
       },
       {
         label: t("shortlist.closestMrt"),
