@@ -511,8 +511,8 @@ function App() {
         autoFitKey={
           effectiveMapGeographicIntent?.type === "coordinates"
             ? `coordinates:${effectiveMapGeographicIntent.coordinates.lat},${effectiveMapGeographicIntent.coordinates.lng}`
-            : effectiveMapGeographicIntent
-              ? `${effectiveMapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
+            : effectiveMapGeographicIntent?.type === "station"
+              ? `station:${effectiveMapGeographicIntent.stationName.toLowerCase()}`
               : mapFilters.search.trim()
                 ? `search:${mapFilters.search.trim().toLowerCase()}`
                 : null
