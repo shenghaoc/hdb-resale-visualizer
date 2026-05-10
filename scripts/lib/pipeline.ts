@@ -631,7 +631,6 @@ export function buildArtifacts({
       );
       const sourceWindow = summaryWindow.length > 0 ? summaryWindow : cohortTransactions;
       const geocode = geocodes[addressKey];
-      const property = propertyByAddress.get(addressKey);
 
       blockMetrics.push({
         addressKey,
@@ -641,8 +640,7 @@ export function buildArtifacts({
         medianPrice: median(sourceWindow.map((transaction) => transaction.resalePrice)),
         medianPricePerSqm: median(sourceWindow.map((transaction) => transaction.pricePerSqm)),
         leaseYear: resolveLeaseCommenceYear(
-          cohortTransactions.map((transaction) => transaction.leaseCommenceDate),
-          property?.yearCompleted,
+          cohortTransactions.map((transaction) => transaction.leaseCommenceDate)
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
