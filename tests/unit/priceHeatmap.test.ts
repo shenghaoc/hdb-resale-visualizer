@@ -25,7 +25,7 @@ function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasCl
     removeLayer: vi.fn(),
     removeSource: vi.fn(),
     setPaintProperty: vi.fn(),
-  } as unknown as ReturnType<typeof createMockMap>;
+  };
 }
 
 type MockMap = ReturnType<typeof createMockMap>;
