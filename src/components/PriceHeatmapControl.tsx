@@ -63,16 +63,16 @@ export function PriceHeatmapControl({
           id={toggleId}
           onClick={onToggle}
           className={cn(
-            "relative h-3.5 w-6 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+            "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
             isEnabled
-              ? "bg-orange-500 dark:bg-orange-400"
+              ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)] dark:bg-orange-400 dark:shadow-[0_0_12px_rgba(251,146,60,0.2)]"
               : "bg-muted-foreground/30",
           )}
         >
           <span
             className={cn(
-              "absolute top-[1px] size-2.5 rounded-full bg-white shadow-sm transition-transform duration-200",
-              isEnabled ? "translate-x-[calc(100%-1px)]" : "translate-x-[1px]",
+              "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
+              isEnabled ? "translate-x-3" : "translate-x-0",
             )}
             aria-hidden="true"
           />
