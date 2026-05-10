@@ -264,6 +264,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.rank.recency": "Recency Rank",
     "detail.noComparisonData": "Amenity comparison data not available yet.",
     "detail.noPercentileData": "Market percentile data not available yet.",
+    "heatmap.label": "Price Heat",
+    "heatmap.enable": "Enable price heatmap",
+    "heatmap.disable": "Disable price heatmap",
+    "heatmap.opacity": "Opacity",
+    "heatmap.opacityLabel": "Heatmap opacity",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -524,5 +529,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.rank.recency": "活跃度排名",
     "detail.noComparisonData": "暂无设施数据",
     "detail.noPercentileData": "暂无排名数据",
+    "heatmap.label": "价格热力图",
+    "heatmap.enable": "开启价格热力图",
+    "heatmap.disable": "关闭价格热力图",
+    "heatmap.opacity": "透明度",
+    "heatmap.opacityLabel": "热力图透明度",
   },
 };

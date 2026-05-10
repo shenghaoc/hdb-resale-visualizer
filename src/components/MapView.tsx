@@ -10,6 +10,12 @@ import {
 } from "@/lib/constants";
 import { formatCompactCurrency } from "@/lib/format";
 import { toGeoJson } from "@/lib/map";
+import {
+  addPriceHeatmapLayer,
+  isHeatmapLayerPresent,
+  removePriceHeatmapLayer,
+  setHeatmapOpacity,
+} from "@/lib/priceHeatmap";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
@@ -23,6 +29,8 @@ type MapViewProps = {
   autoFitKey?: string | null;
   showBlockMarkers?: boolean;
   isDarkMode: boolean;
+  priceHeatmapEnabled?: boolean;
+  priceHeatmapOpacity?: number;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
   onGeolocate?: (coords: Coordinates) => void;
@@ -118,6 +126,8 @@ export function MapView({
   autoFitKey,
   showBlockMarkers = false,
   isDarkMode,
+  priceHeatmapEnabled = false,
+  priceHeatmapOpacity = 0.7,
   onSelect,
   onMapInteract,
   onGeolocate,
@@ -654,6 +664,46 @@ export function MapView({
     map.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
     map.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
   }, [selectedAddressKey]);
+
+  // Manage the price heatmap layer: add/remove/update opacity
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const apply = () => {
+      if (priceHeatmapEnabled) {
+        addPriceHeatmapLayer(map, priceHeatmapOpacity);
+      } else {
+        removePriceHeatmapLayer(map);
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      apply();
+    } else {
+      void map.once("load", apply);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [priceHeatmapEnabled]);
+
+  // Update opacity on an already-visible heatmap layer without re-adding it
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !priceHeatmapEnabled) return;
+
+    const applyOpacity = () => {
+      if (isHeatmapLayerPresent(map)) {
+        setHeatmapOpacity(map, priceHeatmapOpacity);
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      applyOpacity();
+    } else {
+      void map.once("load", applyOpacity);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [priceHeatmapOpacity]);
 
   // Update the radius circles when selection changes
   useEffect(() => {
