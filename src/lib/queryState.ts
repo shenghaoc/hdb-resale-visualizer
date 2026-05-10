@@ -36,13 +36,12 @@ export function serializeFilters(filters: FilterState): string {
 
   for (const [key, value] of Object.entries(filters)) {
     const defaultValue = DEFAULT_FILTERS[key as keyof FilterState];
-    // Treat null and "" as equivalent "empty" values
-    const isEmpty = (v: unknown) => v === null || v === "";
-    if (value === defaultValue || (isEmpty(value) && isEmpty(defaultValue))) {
+    const normalizedValue = value ?? "";
+    if (normalizedValue === (defaultValue ?? "")) {
       continue;
     }
 
-    params.set(key === "selectedAddressKey" ? "selected" : key, String(value));
+    params.set(key === "selectedAddressKey" ? "selected" : key, String(normalizedValue));
     hasNonDefaultParams = true;
   }
 
