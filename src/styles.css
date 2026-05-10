@@ -88,7 +88,6 @@
   --panel-border: oklch(0.65 0.09 210 / 0.5);
   --radius: 0.5rem;
   --sidebar: #f1f5f9;
-  --saved-panel-width: min(44rem, 48vw);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
   --sidebar-primary-foreground: var(--primary-foreground);
@@ -395,10 +394,52 @@
   box-shadow: 0 8px 24px rgba(23, 28, 31, 0.08);
 }
 
-.desktop-tab-bar--right {
-  left: auto;
-  right: 1.5rem;
-  transition: right 200ms ease-out;
+.desktop-tab-bar-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 0.25rem 0.125rem;
+  background: var(--border);
+}
+
+.desktop-tab-bar-lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2.625rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--background) 60%, transparent);
+  padding: 0.5rem 0.625rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.desktop-tab-bar-lang-trigger:hover,
+.desktop-tab-bar-lang-trigger[aria-expanded="true"] {
+  color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.desktop-tab-bar-lang-trigger > svg:last-of-type {
+  display: none;
+}
+
+.desktop-tab-bar-icon-btn {
+  width: 2.625rem;
+  height: 2.625rem;
+  border-radius: 0.5rem;
+  padding: 0;
+  color: var(--muted-foreground);
+  transition: all 150ms ease;
+}
+
+.desktop-tab-bar-icon-btn:hover {
+  color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 .desktop-tab-bar [data-slot="button"] {
@@ -545,18 +586,6 @@
   right: 1.5rem;
   top: 1.5rem;
   z-index: 30;
-}
-
-.saved-dashboard-open .map-view .maplibregl-ctrl-top-right {
-  right: calc(var(--saved-panel-width) + 1.5rem);
-}
-
-.saved-dashboard-open .map-attribution-link {
-  right: calc(var(--saved-panel-width) + 0.75rem);
-}
-
-.desktop-tab-bar--right.desktop-tab-bar--shifted {
-  right: calc(var(--saved-panel-width) + 1.5rem);
 }
 
 .maplibregl-ctrl-group button {

@@ -7,10 +7,11 @@ export type PanelTab = "filters" | "results" | "saved";
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // Desktop: independent left panel (filters/results) and right panel (saved)
+  // Desktop: left panel (filters/results) is mutually exclusive;
+  // saved panel is independent and tiles alongside the left panel.
   const [leftTab, setLeftTab] = useState<LeftTab>("filters");
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
-  const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
+  const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
 
   // Mobile: single tab at a time (unchanged)
   const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
@@ -20,16 +21,16 @@ export function usePanelState() {
   const resultsVisible = isDesktop
     ? isLeftPanelOpen && leftTab === "results"
     : mobileTab === "results";
-  const savedVisible = isDesktop ? isRightPanelOpen : mobileTab === "saved";
+  const savedVisible = isDesktop ? isSavedPanelOpen : mobileTab === "saved";
 
   return {
     isDesktop,
     leftTab,
     isLeftPanelOpen,
-    isRightPanelOpen,
+    isSavedPanelOpen,
     setLeftTab,
     setIsLeftPanelOpen,
-    setIsRightPanelOpen,
+    setIsSavedPanelOpen,
     mobileTab,
     setMobileTab,
     isShortlistOpen,
