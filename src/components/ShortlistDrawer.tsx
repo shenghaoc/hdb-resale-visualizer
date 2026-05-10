@@ -505,17 +505,27 @@ export function ShortlistDrawer({
     let newestLeaseRow: typeof rows[0] | null = null;
     let closestMrtRow: typeof rows[0] | null = null;
 
+    let minPrice = Number.POSITIVE_INFINITY;
+    let maxLease = Number.NEGATIVE_INFINITY;
+    let minMrtDistance = Number.POSITIVE_INFINITY;
+
     for (const row of rows) {
-      if (!bestValueRow || row.block.medianPrice < bestValueRow.block.medianPrice) {
+      const price = row.block.medianPrice;
+      if (!bestValueRow || price < minPrice) {
         bestValueRow = row;
+        minPrice = price;
       }
-      if (!newestLeaseRow || row.block.leaseCommenceRange[1] > newestLeaseRow.block.leaseCommenceRange[1]) {
+
+      const lease = row.block.leaseCommenceRange[1];
+      if (!newestLeaseRow || lease > maxLease) {
         newestLeaseRow = row;
+        maxLease = lease;
       }
-      const rowDistance = row.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const closestDistance = closestMrtRow?.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      if (!closestMrtRow || rowDistance < closestDistance) {
+
+      const distance = row.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      if (!closestMrtRow || distance < minMrtDistance) {
         closestMrtRow = row;
+        minMrtDistance = distance;
       }
     }
 
