@@ -35,7 +35,7 @@ export function serializeFilters(filters: FilterState): string {
   let hasNonDefaultParams = false;
 
   for (const [key, value] of Object.entries(filters)) {
-    if (value === null || value === "") {
+    if (value === DEFAULT_FILTERS[key as keyof FilterState]) {
       continue;
     }
 
