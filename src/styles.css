@@ -54,7 +54,7 @@
 :root {
   --mobile-tab-bar-height: 4rem;
   --mobile-map-attrib-height: 1.75rem;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
   --font-heading: var(--font-sans);
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
   
@@ -185,7 +185,7 @@
 
 .v2-kicker {
   font-size: 0.5rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.16em;
   line-height: 1;
   text-transform: uppercase;
@@ -194,7 +194,7 @@
 
 .v2-section-title {
   font-size: 0.62rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.14em;
   line-height: 1;
   text-transform: uppercase;
@@ -358,7 +358,7 @@
   background: transparent;
   color: var(--muted-foreground);
   font-size: 0.625rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1;
   padding: 0.45rem 0.25rem;
