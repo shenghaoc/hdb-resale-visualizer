@@ -71,12 +71,6 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
-  
-  // Clear any potentially cached location on app start to prevent test data leakage
-  useEffect(() => {
-    // Reset user location to ensure fresh geolocation on each session
-    setUserLocation(null);
-  }, []);
   const [isLocating, setIsLocating] = useState(false);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const geolocationRequestRef = useRef(0);
@@ -248,11 +242,15 @@ function App() {
       ),
     [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
   );
+  // Use non-debounced geographicIntent as fallback so the map responds immediately
+  // to geolocate (mapGeographicIntent lags by the debouncedSearch delay).
+  const effectiveMapGeographicIntent = mapGeographicIntent ?? geographicIntent;
+
   const hasResultScope = Boolean(
     effectiveFilters.town || resolvedSearch.trim() || geographicIntent || selectedAddressKey,
   );
   const hasMapMarkerScope = Boolean(
-    mapFilters.town || mapFilters.search.trim() || mapGeographicIntent,
+    mapFilters.town || mapFilters.search.trim() || effectiveMapGeographicIntent,
   );
   const filteredBlocks = useMemo(
     () =>
@@ -263,7 +261,7 @@ function App() {
   );
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
-      ? filterScopedBlocks(blocks, mapFilters, mapGeographicIntent)
+      ? filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent)
       : [];
 
     if (!selectedAddressKey) {
@@ -276,7 +274,7 @@ function App() {
 
     const selected = blocksByKey.get(selectedAddressKey) ?? null;
     return selected ? [...scopedBlocks, selected] : scopedBlocks;
-  }, [blocksByKey, blocks, filterScopedBlocks, hasMapMarkerScope, mapFilters, mapGeographicIntent, selectedAddressKey]);
+  }, [blocksByKey, blocks, effectiveMapGeographicIntent, filterScopedBlocks, hasMapMarkerScope, mapFilters, selectedAddressKey]);
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((item) => item.addressKey)),
     [shortlist.items],
@@ -413,7 +411,7 @@ function App() {
           lng: position.coords.longitude,
         });
       },
-      (error) => {
+      () => {
         if (geolocationRequestRef.current !== requestId) {
           return;
         }
@@ -481,10 +479,20 @@ function App() {
     );
   }
 
+  // Hide the "near me" sentinel from the search input — show the field as empty
+  // while geolocation is active so it doesn't look like a text filter.
+  const filterPanelFilters = useMemo(
+    () =>
+      effectiveFilters.search === NEAR_ME_SEARCH_QUERY
+        ? { ...effectiveFilters, search: "" }
+        : effectiveFilters,
+    [effectiveFilters],
+  );
+
   // Shared content blocks (rendered in both mobile tabs and desktop grid)
   const filterContent = (
     <FilterPanel
-      filters={effectiveFilters}
+      filters={filterPanelFilters}
       maxMonth={manifest.dataWindow.maxMonth}
       minMonth={manifest.dataWindow.minMonth}
       onChange={patchUserFilters}
@@ -501,17 +509,19 @@ function App() {
         selectedAddressKey={selectedAddressKey}
         townFilter={mapFilters.town}
         autoFitKey={
-          mapGeographicIntent
-            ? `${mapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
-            : mapFilters.search.trim()
-              ? `search:${mapFilters.search.trim().toLowerCase()}`
-              : null
+          effectiveMapGeographicIntent?.type === "coordinates"
+            ? `coordinates:${effectiveMapGeographicIntent.coordinates.lat},${effectiveMapGeographicIntent.coordinates.lng}`
+            : effectiveMapGeographicIntent
+              ? `${effectiveMapGeographicIntent.type}:${mapFilters.search.trim().toLowerCase()}`
+              : mapFilters.search.trim()
+                ? `search:${mapFilters.search.trim().toLowerCase()}`
+                : null
         }
         showBlockMarkers={hasMapMarkerScope}
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={priceHeatmapEnabled}
         priceHeatmapOpacity={priceHeatmapOpacity}
-        geographicIntent={mapGeographicIntent}
+        geographicIntent={effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
         locale={locale}

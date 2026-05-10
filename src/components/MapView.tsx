@@ -161,8 +161,7 @@ export function MapView({
 
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
-  const debouncedShowBlockMarkers = useDebouncedValue(showBlockMarkers, 200);
-  const shouldShowBlockMarkers = Boolean(debouncedShowBlockMarkers);
+  const shouldShowBlockMarkers = Boolean(showBlockMarkers);
 
   // Keep callbacks and t refs fresh without triggering map recreation
   useEffect(() => {
@@ -684,36 +683,6 @@ export function MapView({
     );
   }, [autoFitKey, blocks, debouncedTownFilter]);
 
-  // Update radius circles when geographic intent changes
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) return;
-
-    const source = map.getSource("radius");
-    if (!source) return;
-
-    // Only show radius circles for coordinate-based searches (like "near me")
-    if (geographicIntent?.type === "coordinates") {
-      const radiusKm = geographicIntent.radiusMeters / 1000;
-      const circle = createCircleGeoJson(geographicIntent.coordinates, radiusKm);
-      
-      if (isGeoJsonDataSourceLike(source)) {
-        source.setData({
-          type: "FeatureCollection",
-          features: [circle],
-        });
-      }
-    } else {
-      // Clear radius circles for station searches or no geographic intent
-      if (isGeoJsonDataSourceLike(source)) {
-        source.setData({
-          type: "FeatureCollection",
-          features: [],
-        });
-      }
-    }
-  }, [geographicIntent]);
-
   // Update the selected-point filters when selection changes
   useEffect(() => {
     const map = mapRef.current;
@@ -769,7 +738,8 @@ export function MapView({
     };
   }, [priceHeatmapOpacity]);
 
-  // Update the radius circles when selection changes
+  // Update radius circles: geographic search radius takes precedence over the
+  // selected-block 1km/2km rings so both effects share one source without fighting.
   useEffect(() => {
     const map = mapRef.current;
     if (!map) {
@@ -787,6 +757,15 @@ export function MapView({
         return;
       }
 
+      if (geographicIntent?.type === "coordinates") {
+        const radiusKm = geographicIntent.radiusMeters / 1000;
+        source.setData({
+          type: "FeatureCollection",
+          features: [createCircleGeoJson(geographicIntent.coordinates, radiusKm)],
+        });
+        return;
+      }
+
       if (!selectedAddressKey) {
         source.setData({ type: "FeatureCollection", features: [] });
         return;
@@ -798,14 +777,12 @@ export function MapView({
         return;
       }
 
-      const features: GeoJSON.Feature[] = [
-        createCircleGeoJson(selectedBlock.coordinates, 1),
-        createCircleGeoJson(selectedBlock.coordinates, 2),
-      ];
-
       source.setData({
         type: "FeatureCollection",
-        features,
+        features: [
+          createCircleGeoJson(selectedBlock.coordinates, 1),
+          createCircleGeoJson(selectedBlock.coordinates, 2),
+        ],
       });
     }
 
@@ -814,7 +791,7 @@ export function MapView({
     } else {
       void map.once("load", updateRadius);
     }
-  }, [selectedAddressKey, blocks]);
+  }, [geographicIntent, selectedAddressKey, blocks]);
 
   return (
     <div
