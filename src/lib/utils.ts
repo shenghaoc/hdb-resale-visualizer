@@ -5,4 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export { townToFilename } from "../../shared/geo";
+export { townToFilename } from "@shared/geo";

@@ -4,7 +4,7 @@ import {
   normalizeFlatModel,
   sortFlatTypes,
   buildFilterOptions,
-} from "../../shared/filter-options";
+} from "@shared/filter-options";
 
 describe("canonicalFlatType", () => {
   it("trims and uppercases normal strings", () => {

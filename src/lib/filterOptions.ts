@@ -1,4 +1,4 @@
 export {
   buildFilterOptions,
   canonicalFlatType,
-} from "../../shared/filter-options";
+} from "@shared/filter-options";
