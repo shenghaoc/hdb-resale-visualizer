@@ -159,6 +159,15 @@ export function MapView({
   // Memoize GeoJSON to avoid rebuilding the object on every render
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
 
+  // O(1) address key lookup for radius circle updates
+  const blocksByKey = useMemo(() => {
+    const map = new Map<string, BlockSummary>();
+    for (const b of blocks) {
+      map.set(b.addressKey, b);
+    }
+    return map;
+  }, [blocks]);
+
   // Debounce fitting bounds to avoid jumping when search tokens are typed rapidly
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
   const shouldShowBlockMarkers = Boolean(showBlockMarkers);
@@ -753,9 +762,6 @@ export function MapView({
       return;
     }
 
-    // Build O(1) lookup instead of O(n) blocks.find() on every selection change
-    const blocksByKey = new Map(blocks.map((b) => [b.addressKey, b]));
-
     function updateRadius() {
       const mapInstance = mapRef.current;
       if (!mapInstance) {
@@ -804,7 +810,7 @@ export function MapView({
     return () => {
       map.off("load", updateRadius);
     };
-  }, [geographicIntent, selectedAddressKey, blocks]);
+  }, [geographicIntent, selectedAddressKey, blocksByKey]);
 
   return (
     <div

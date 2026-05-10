@@ -543,6 +543,23 @@ export function resetFilteringCachesForTests(): void {
   stationNamesSourceRef = null;
   townNamesCache = null;
   townNamesSourceRef = null;
+  _cachedYear = null;
+  _cachedYearTimestamp = 0;
+}
+
+// Cache current year per filter pass to avoid repeated Date allocations inside
+// the hot loop while still refreshing across year boundaries for long-lived sessions.
+let _cachedYear: number | null = null;
+let _cachedYearTimestamp = 0;
+const YEAR_CACHE_TTL_MS = 60_000; // refresh every 60 seconds
+
+function getCachedCurrentYear(): number {
+  const now = Date.now();
+  if (_cachedYear === null || now - _cachedYearTimestamp > YEAR_CACHE_TTL_MS) {
+    _cachedYear = getCurrentYear();
+    _cachedYearTimestamp = now;
+  }
+  return _cachedYear;
 }
 
 export function matchesFilter(
@@ -572,7 +589,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const maxRemainingLease = MAX_LEASE_DURATION - (getCurrentYear() - block.leaseCommenceRange[1]);
+    const maxRemainingLease = MAX_LEASE_DURATION - (getCachedCurrentYear() - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }
