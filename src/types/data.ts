@@ -1,1 +1,1 @@
-export * from "../../shared/data-types";
+export * from "@shared/data-types";
