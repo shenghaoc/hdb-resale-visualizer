@@ -42,6 +42,7 @@ import type {
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
+import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -88,6 +89,8 @@ function App() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [hasInteractedWithMap, setHasInteractedWithMap] = useState(false);
   const [hasLoadedHeaderPreference, setHasLoadedHeaderPreference] = useState(false);
+  const [priceHeatmapEnabled, setPriceHeatmapEnabled] = useState(false);
+  const [priceHeatmapOpacity, setPriceHeatmapOpacity] = useState(0.7);
   const { toggle: toggleShortlist } = shortlist;
   const { filters, patchFilters, resetFilters } = useUrlFilters();
   const [useDefaultStartMonth, setUseDefaultStartMonth] = useState(() => {
@@ -494,6 +497,8 @@ function App() {
         }
         showBlockMarkers={hasMapMarkerScope}
         isDarkMode={theme === "dark"}
+        priceHeatmapEnabled={priceHeatmapEnabled}
+        priceHeatmapOpacity={priceHeatmapOpacity}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
         locale={locale}
@@ -698,6 +703,24 @@ function App() {
               <span>400K</span><span>1.3M</span>
             </div>
           </div>
+        )}
+
+        {/* Price heatmap toggle control */}
+        {(isDesktop || mobileTab === null) && (
+          <PriceHeatmapControl
+            isEnabled={priceHeatmapEnabled}
+            opacity={priceHeatmapOpacity}
+            onToggle={() => setPriceHeatmapEnabled((v) => !v)}
+            onOpacityChange={setPriceHeatmapOpacity}
+            t={t}
+            className="absolute z-25"
+            style={{
+              bottom: isDesktop
+                ? hasMapMarkerScope ? "7.5rem" : "4rem"
+                : hasMapMarkerScope ? "11.5rem" : "8rem",
+              right: isDesktop ? "4.5rem" : "0.75rem",
+            }}
+          />
         )}
 
         {activeFilterChips.length > 0 && (
