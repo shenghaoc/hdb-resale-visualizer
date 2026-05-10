@@ -103,6 +103,7 @@ function AmenityCard({
   count2km,
   nearestDistance,
   nearestName,
+  nearbyItems,
   t,
   locale,
 }: {
@@ -112,6 +113,7 @@ function AmenityCard({
   count2km?: number;
   nearestDistance?: number | null;
   nearestName?: string | null;
+  nearbyItems?: { name: string; distanceMeters: number }[];
   t: Translator;
   locale: Locale;
 }) {
@@ -131,7 +133,18 @@ function AmenityCard({
               {t("detail.within2km", { count: count2km })}
             </div>
           )}
-          {nearestName ? (
+          {nearbyItems && nearbyItems.length > 0 ? (
+            <div className="mt-1 flex flex-col gap-0.5">
+              {nearbyItems.map((item) => (
+                <div key={item.name} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
+                  <span className="truncate min-w-0">{item.name}</span>
+                  <span className="shrink-0 font-mono text-[0.65rem] tabular-nums">
+                    {formatMeters(item.distanceMeters, t, locale)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : nearestName ? (
             <div className="line-clamp-1 text-xs text-muted-foreground">
               {t("detail.nearestNamed", {
                 name: nearestName,
@@ -326,49 +339,46 @@ export function DetailDrawer({
                   </Card>
                 </div>
 
-                {/* MRT Connectivity */}
+                {/* MRT Connectivity — compact inline list */}
                 <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                  <h3 className="v2-section-title mb-2 flex items-center gap-2">
                     <TrainFront data-icon className="size-4" aria-hidden="true" />
                     {t("detail.connectivity")}
                   </h3>
-                  <div className="flex flex-col gap-3">
-                    {nearbyStations.length > 0 ? (
-                      nearbyStations.map((mrt, idx) => (
-                        <div
-                          key={mrt.stationName}
-                          className={cn(
-                            "flex items-center justify-between rounded-lg border border-border/40 p-3 shadow-sm",
-                            idx === 0 ? "bg-primary/[0.03] ring-1 ring-primary/10" : "bg-card",
-                          )}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className={cn(
-                              "size-2 rounded-full ring-2 ring-offset-2",
-                              idx === 0 
-                                ? "bg-primary ring-primary/20" 
-                                : "bg-muted-foreground/40 ring-muted-foreground/10"
-                            )} />
-                            <div className="flex flex-col">
-                              <span className="text-sm font-bold leading-none">
+                  {nearbyStations.length > 0 ? (
+                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                      <CardContent className="divide-y divide-border/40 p-0">
+                        {nearbyStations.map((mrt, idx) => (
+                          <div
+                            key={mrt.stationName}
+                            className="flex items-center justify-between px-3 py-2"
+                          >
+                            <div className="flex items-center gap-2">
+                              <div className={cn(
+                                "size-1.5 rounded-full",
+                                idx === 0
+                                  ? "bg-primary"
+                                  : "bg-muted-foreground/40"
+                              )} />
+                              <span className={cn(
+                                "text-sm leading-none",
+                                idx === 0 ? "font-bold" : "font-medium text-muted-foreground"
+                              )}>
                                 {mrt.stationName}
                               </span>
                             </div>
+                            <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                              {formatMeters(mrt.distanceMeters, t, locale)}
+                            </span>
                           </div>
-                          <Badge
-                            variant={idx === 0 ? "default" : "secondary"}
-                            className="h-6 font-mono text-[0.7rem] tabular-nums"
-                          >
-                            {formatMeters(mrt.distanceMeters, t, locale)}
-                          </Badge>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="py-2 text-sm text-muted-foreground italic">
-                        {t("detail.noMrtData")}
-                      </p>
-                    )}
-                  </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <p className="py-2 text-sm text-muted-foreground italic">
+                      {t("detail.noMrtData")}
+                    </p>
+                  )}
                 </section>
 
                 {/* Flat Types & Attributes */}
@@ -447,7 +457,7 @@ export function DetailDrawer({
                         count1km={comparison.amenities.primarySchoolsWithin1km}
                         count2km={comparison.amenities.primarySchoolsWithin2km}
                         nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
-                        nearestName={comparison.amenities.nearestPrimarySchools?.[0]?.name}
+                        nearbyItems={comparison.amenities.nearestPrimarySchools}
                         t={t}
                         locale={locale}
                       />
