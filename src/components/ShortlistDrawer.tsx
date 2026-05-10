@@ -501,32 +501,45 @@ export function ShortlistDrawer({
   }
 
   const highlights = useMemo(() => {
-    const byMedian = [...rows].sort((left, right) => left.block.medianPrice - right.block.medianPrice);
-    const byLease = [...rows].sort(
-      (left, right) => right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1],
-    );
-    const byMrt = [...rows].sort((left, right) => {
-      const leftDistance = left.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      const rightDistance = right.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      return leftDistance - rightDistance;
-    });
+    let bestMedianRow: ShortlistRow | null = null;
+    let bestLeaseRow: ShortlistRow | null = null;
+    let bestMrtRow: ShortlistRow | null = null;
+    let lowestMedian = Number.POSITIVE_INFINITY;
+    let newestLease = -1;
+    let closestMrt = Number.POSITIVE_INFINITY;
+
+    for (const row of rows) {
+      if (row.block.medianPrice < lowestMedian) {
+        lowestMedian = row.block.medianPrice;
+        bestMedianRow = row;
+      }
+      if (row.block.leaseCommenceRange[1] > newestLease) {
+        newestLease = row.block.leaseCommenceRange[1];
+        bestLeaseRow = row;
+      }
+      const mrtDist = row.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
+      if (mrtDist < closestMrt) {
+        closestMrt = mrtDist;
+        bestMrtRow = row;
+      }
+    }
 
     return [
       {
         label: t("shortlist.bestValue"),
-        row: byMedian[0] ?? null,
-        sub: byMedian[0] ? formatCompactCurrency(byMedian[0].block.medianPrice, locale) : t("shortlist.na"),
+        row: bestMedianRow,
+        sub: bestMedianRow ? formatCompactCurrency(bestMedianRow.block.medianPrice, locale) : t("shortlist.na"),
       },
       {
         label: t("shortlist.newestLease"),
-        row: byLease[0] ?? null,
-        sub: byLease[0] ? t("unit.years", { value: getLeaseYears(byLease[0]) }) : t("shortlist.na"),
+        row: bestLeaseRow,
+        sub: bestLeaseRow ? t("unit.years", { value: getLeaseYears(bestLeaseRow) }) : t("shortlist.na"),
       },
       {
         label: t("shortlist.closestMrt"),
-        row: byMrt[0] ?? null,
-        sub: byMrt[0]?.block.nearestMrt
-          ? formatMeters(byMrt[0].block.nearestMrt.distanceMeters, t, locale)
+        row: bestMrtRow,
+        sub: bestMrtRow?.block.nearestMrt
+          ? formatMeters(bestMrtRow.block.nearestMrt.distanceMeters, t, locale)
           : t("shortlist.na"),
       },
     ];

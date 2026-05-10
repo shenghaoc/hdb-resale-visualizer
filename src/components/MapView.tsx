@@ -627,8 +627,6 @@ export function MapView({
     };
   }, [geoJson, priceHeatmapEnabled]);
 
-
-
   // Fit bounds when townFilter changes
   useEffect(() => {
     const map = mapRef.current;
