@@ -120,6 +120,16 @@ function App() {
         : filters,
     [defaultStartMonth, filters, useDefaultStartMonth],
   );
+
+  // Hide the "near me" sentinel from the search input — show the field as empty
+  // while geolocation is active so it doesn't look like a text filter.
+  const filterPanelFilters = useMemo(
+    () =>
+      effectiveFilters.search === NEAR_ME_SEARCH_QUERY
+        ? { ...effectiveFilters, search: "" }
+        : effectiveFilters,
+    [effectiveFilters],
+  );
   const selectedAddressKey = filters.selectedAddressKey;
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(selectedAddressKey);
@@ -478,16 +488,6 @@ function App() {
       </main>
     );
   }
-
-  // Hide the "near me" sentinel from the search input — show the field as empty
-  // while geolocation is active so it doesn't look like a text filter.
-  const filterPanelFilters = useMemo(
-    () =>
-      effectiveFilters.search === NEAR_ME_SEARCH_QUERY
-        ? { ...effectiveFilters, search: "" }
-        : effectiveFilters,
-    [effectiveFilters],
-  );
 
   // Shared content blocks (rendered in both mobile tabs and desktop grid)
   const filterContent = (
