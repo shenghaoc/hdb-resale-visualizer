@@ -13,7 +13,7 @@ const FORMATTER_CACHE_LIMIT = 128;
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
 const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
 
-// ⚡ Bolt: Cache string outputs to avoid repetitive `.format()` calls and Date instantiations.
+// ⚡ Bolt: Cache string outputs to avoid repetitive `.format()` calls and Temporal allocations.
 // For thousands of repeated values (e.g. months, rounded prices), this drops format time by >10x.
 const FORMATTED_STRING_CACHE_LIMIT = 1000;
 const formattedCurrencyCache = new Map<string, string>();
@@ -139,13 +139,13 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const [year, monthPart] = month.split("-");
-  const date = new Date(Number(year), Number(monthPart) - 1, 1);
+  const ym = Temporal.PlainYearMonth.from(month);
+  const plainDate = ym.toPlainDate({ day: 1 });
 
   cached = getDateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric"
-  }).format(date);
+  }).format(plainDate);
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -167,5 +167,5 @@ export function formatDateTime(value: string, locale?: Locale): string {
   return getDateTimeFormat(resolveLocale(locale), {
     dateStyle: "medium",
     timeStyle: "short"
-  }).format(new Date(value));
+  }).format(Temporal.Instant.from(value));
 }

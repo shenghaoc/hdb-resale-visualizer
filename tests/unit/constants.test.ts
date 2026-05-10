@@ -8,19 +8,21 @@ describe("constants", () => {
     });
 
     it("should return the current year", () => {
-      // Mock the system time to a specific date
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-05-02T12:00:00Z"));
+      const spy = vi.spyOn(Temporal.Now, "plainDateISO").mockReturnValue(
+        Temporal.PlainDate.from("2025-05-02")
+      );
 
       expect(getCurrentYear()).toBe(2025);
+      spy.mockRestore();
     });
 
     it("should return another year when time changes", () => {
-      vi.useFakeTimers();
-      // Use local date constructor to avoid timezone issues at year boundaries
-      vi.setSystemTime(new Date(2020, 0, 1));
+      const spy = vi.spyOn(Temporal.Now, "plainDateISO").mockReturnValue(
+        Temporal.PlainDate.from("2020-01-01")
+      );
 
       expect(getCurrentYear()).toBe(2020);
+      spy.mockRestore();
     });
   });
 

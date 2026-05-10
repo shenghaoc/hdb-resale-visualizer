@@ -8,11 +8,9 @@ export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
 /**
- * Returns the current Gregorian year. Callers in hot loops should cache the
- * result (e.g., via a TTL wrapper) rather than calling this per iteration,
- * since each invocation allocates a new Date object.
+ * Returns the current Gregorian year using the Temporal API.
  */
-export const getCurrentYear = (): number => new Date().getFullYear();
+export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
 
 const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 

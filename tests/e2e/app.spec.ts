@@ -230,7 +230,7 @@ test("shortlist items from prior sessions are visible without adding a new one",
       addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
       notes: "Prior session note",
       targetPrice: 500000,
-      addedAt: new Date().toISOString(),
+      addedAt: Temporal.Now.instant().toString(),
     },
   ];
 

@@ -547,14 +547,14 @@ export function resetFilteringCachesForTests(): void {
   _cachedYearTimestamp = 0;
 }
 
-// Cache current year per filter pass to avoid repeated Date allocations inside
+// Cache current year per filter pass to avoid repeated Temporal allocations inside
 // the hot loop while still refreshing across year boundaries for long-lived sessions.
 let _cachedYear: number | null = null;
 let _cachedYearTimestamp = 0;
 const YEAR_CACHE_TTL_MS = 60_000; // refresh every 60 seconds
 
 function getCachedCurrentYear(): number {
-  const now = Date.now();
+  const now = Temporal.Now.instant().epochMilliseconds;
   if (_cachedYear === null || now - _cachedYearTimestamp > YEAR_CACHE_TTL_MS) {
     _cachedYear = getCurrentYear();
     _cachedYearTimestamp = now;

@@ -6,7 +6,7 @@ const shortlistItemSchema = z.object({
   addressKey: z.string(),
   notes: z.string().catch(""),
   targetPrice: z.number().nullable().catch(null),
-  addedAt: z.string().min(1).catch(() => new Date(0).toISOString()),
+  addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
 });
 
 const shortlistSchema = z.array(z.unknown()).transform((arr) => {
@@ -105,7 +105,7 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
       addressKey,
       notes: "",
       targetPrice: null,
-      addedAt: new Date().toISOString(),
+      addedAt: Temporal.Now.instant().toString(),
     },
   ];
 }
