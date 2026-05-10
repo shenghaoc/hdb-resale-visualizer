@@ -253,7 +253,35 @@ describe("matchesFilter", () => {
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(false);
   });
 
-  it("suppresses station intent when query exactly matches a town name without cue words", () => {
+  it("suppresses station intent for exact town matches without cue words", () => {
+    expect(alpha).toBeTruthy();
+    // "Ang Mo Kio" is both a town and a station
+    const intent = resolveGeographicSearchIntent("Ang Mo Kio", artifact.blockSummaries, 800);
+    expect(intent).toBeNull();
+  });
+
+  it("still resolves station intent for town matches when cue words are present", () => {
+    expect(alpha).toBeTruthy();
+    const intent = resolveGeographicSearchIntent("near Ang Mo Kio", artifact.blockSummaries, 800);
+    expect(intent).toEqual({
+      type: "station",
+      stationName: "ANG MO KIO MRT STATION",
+      radiusMeters: 800,
+    });
+  });
+
+  it("does NOT suppress station intent for alias-mapped queries like 'yew tee' (regression fix)", () => {
+    // Regression: "yew tee" expands to "choa chu kang" (a town).
+    // It should STILL resolve to Yew Tee MRT if it's not an exact town match *before* alias expansion.
+    const intent = resolveGeographicSearchIntent("yew tee", artifact.blockSummaries, 800);
+    expect(intent).toEqual({
+      type: "station",
+      stationName: "CHOA CHU KANG MRT STATION",
+      radiusMeters: 800,
+    });
+  });
+
+  it("still resolves station names when blocks load after an initial empty-array call", () => {
     const intent = resolveGeographicSearchIntent("ang mo kio", artifact.blockSummaries, 800);
     expect(intent).toBeNull();
   });

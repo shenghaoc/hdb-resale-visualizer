@@ -353,16 +353,19 @@ function matchStationName(
   const hasCueWords = normalizedQuery
     .split(" ")
     .some((token) => STATION_SEARCH_CUE_WORDS.has(token));
+
+  // If the query exactly matches a town name (e.g. "Bedok", "Ang Mo Kio") and has no cue
+  // words like "MRT" or "near", do not resolve it as a station intent. This prevents
+  // radius-based station filtering from incorrectly hiding town-wide results.
+  if (isTownMatch && !hasCueWords) {
+    return null;
+  }
+
   const queryTokens = tokenizeSearchText(normalizedQuery)
     .map((token) => token.value)
     .filter((token) => !STATION_SEARCH_CUE_WORDS.has(token));
 
   if (queryTokens.length === 0) {
-    return null;
-  }
-
-  // If the query exactly matches a town name and has no cue words, skip station matching entirely.
-  if (isTownMatch && !hasCueWords) {
     return null;
   }
 
