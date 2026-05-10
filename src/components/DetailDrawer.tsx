@@ -109,7 +109,7 @@ function AmenityCard({
 }: {
   icon: React.ElementType;
   label: string;
-  count1km: number;
+  count1km?: number;
   count2km?: number;
   nearestDistance?: number | null;
   nearestName?: string | null;
@@ -127,7 +127,9 @@ function AmenityCard({
           </span>
         </div>
         <div className="flex flex-col gap-1">
-          <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
+          {count1km !== undefined && (
+            <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
+          )}
           {count2km !== undefined && (
             <div className="text-xs text-muted-foreground">
               {t("detail.within2km", { count: count2km })}
@@ -339,48 +341,6 @@ export function DetailDrawer({
                   </Card>
                 </div>
 
-                {/* MRT Connectivity — compact inline list */}
-                <section>
-                  <h3 className="v2-section-title mb-2 flex items-center gap-2">
-                    <TrainFront data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.connectivity")}
-                  </h3>
-                  {nearbyStations.length > 0 ? (
-                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
-                      <CardContent className="divide-y divide-border/40 p-0">
-                        {nearbyStations.map((mrt, idx) => (
-                          <div
-                            key={mrt.stationName}
-                            className="flex items-center justify-between px-3 py-2"
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className={cn(
-                                "size-1.5 rounded-full",
-                                idx === 0
-                                  ? "bg-primary"
-                                  : "bg-muted-foreground/40"
-                              )} />
-                              <span className={cn(
-                                "text-sm leading-none",
-                                idx === 0 ? "font-bold" : "font-medium text-muted-foreground"
-                              )}>
-                                {mrt.stationName}
-                              </span>
-                            </div>
-                            <span className="font-mono text-xs tabular-nums text-muted-foreground">
-                              {formatMeters(mrt.distanceMeters, t, locale)}
-                            </span>
-                          </div>
-                        ))}
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <p className="py-2 text-sm text-muted-foreground italic">
-                      {t("detail.noMrtData")}
-                    </p>
-                  )}
-                </section>
-
                 {/* Flat Types & Attributes */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
@@ -443,54 +403,67 @@ export function DetailDrawer({
                     <Trees data-icon className="size-4" aria-hidden="true" />
                     {t("detail.nearbyAmenities")}
                   </h3>
-                  {isComparisonLoading ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      {Array.from({ length: 4 }).map((_, i) => (
+                  <div className="grid grid-cols-2 gap-3">
+                    {nearbyStations.length > 0 && (
+                      <AmenityCard
+                        icon={TrainFront}
+                        label={t("detail.connectivity")}
+                        nearbyItems={nearbyStations.map((mrt) => ({
+                          name: mrt.stationName,
+                          distanceMeters: mrt.distanceMeters,
+                        }))}
+                        t={t}
+                        locale={locale}
+                      />
+                    )}
+                    {isComparisonLoading ? (
+                      Array.from({ length: 4 }).map((_, i) => (
                         <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))}
-                    </div>
-                  ) : comparison ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      <AmenityCard
-                        icon={GraduationCap}
-                        label={t("detail.amenity.schools")}
-                        count1km={comparison.amenities.primarySchoolsWithin1km}
-                        count2km={comparison.amenities.primarySchoolsWithin2km}
-                        nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
-                        nearbyItems={comparison.amenities.nearestPrimarySchools}
-                        t={t}
-                        locale={locale}
-                      />
+                      ))
+                    ) : comparison ? (
+                      <>
+                        <AmenityCard
+                          icon={GraduationCap}
+                          label={t("detail.amenity.schools")}
+                          count1km={comparison.amenities.primarySchoolsWithin1km}
+                          count2km={comparison.amenities.primarySchoolsWithin2km}
+                          nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
+                          nearbyItems={comparison.amenities.nearestPrimarySchools}
+                          t={t}
+                          locale={locale}
+                        />
 
-                      <AmenityCard
-                        icon={UtensilsCrossed}
-                        label={t("detail.amenity.hawkers")}
-                        count1km={comparison.amenities.hawkerCentresWithin1km}
-                        nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
-                        t={t}
-                        locale={locale}
-                      />
+                        <AmenityCard
+                          icon={UtensilsCrossed}
+                          label={t("detail.amenity.hawkers")}
+                          count1km={comparison.amenities.hawkerCentresWithin1km}
+                          nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
+                          t={t}
+                          locale={locale}
+                        />
 
-                      <AmenityCard
-                        icon={ShoppingCart}
-                        label={t("detail.amenity.supermarkets")}
-                        count1km={comparison.amenities.supermarketsWithin1km}
-                        nearestDistance={comparison.amenities.nearestSupermarketMeters}
-                        t={t}
-                        locale={locale}
-                      />
+                        <AmenityCard
+                          icon={ShoppingCart}
+                          label={t("detail.amenity.supermarkets")}
+                          count1km={comparison.amenities.supermarketsWithin1km}
+                          nearestDistance={comparison.amenities.nearestSupermarketMeters}
+                          t={t}
+                          locale={locale}
+                        />
 
-                      <AmenityCard
-                        icon={Trees}
-                        label={t("detail.amenity.parks")}
-                        count1km={comparison.amenities.parksWithin1km}
-                        nearestDistance={comparison.amenities.nearestParkMeters}
-                        t={t}
-                        locale={locale}
-                      />
-                    </div>
-                  ) : (
-                    <p className="py-4 text-sm text-muted-foreground italic">
+                        <AmenityCard
+                          icon={Trees}
+                          label={t("detail.amenity.parks")}
+                          count1km={comparison.amenities.parksWithin1km}
+                          nearestDistance={comparison.amenities.nearestParkMeters}
+                          t={t}
+                          locale={locale}
+                        />
+                      </>
+                    ) : null}
+                  </div>
+                  {!isComparisonLoading && !comparison && (
+                    <p className="mt-4 text-sm text-muted-foreground italic">
                       {t("detail.noComparisonData")}
                     </p>
                   )}
