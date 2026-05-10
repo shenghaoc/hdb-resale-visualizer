@@ -584,6 +584,9 @@ export function MapView({
     }
 
     void map.once("load", applyVisibility);
+    return () => {
+      map.off("load", applyVisibility);
+    };
   }, [shouldShowBlockMarkers]);
 
   // Update the GeoJSON source data when blocks change
@@ -607,6 +610,9 @@ export function MapView({
     } else {
       void mapInstance.once("load", updateData);
     }
+    return () => {
+      mapInstance.off("load", updateData);
+    };
   }, [geoJson]);
 
   // Sync heatmap source data when geoJson changes while heatmap is active
@@ -747,6 +753,9 @@ export function MapView({
       return;
     }
 
+    // Build O(1) lookup instead of O(n) blocks.find() on every selection change
+    const blocksByKey = new Map(blocks.map((b) => [b.addressKey, b]));
+
     function updateRadius() {
       const mapInstance = mapRef.current;
       if (!mapInstance) {
@@ -772,7 +781,7 @@ export function MapView({
         return;
       }
 
-      const selectedBlock = blocks.find((b) => b.addressKey === selectedAddressKey);
+      const selectedBlock = blocksByKey.get(selectedAddressKey);
       if (!selectedBlock) {
         source.setData({ type: "FeatureCollection", features: [] });
         return;
@@ -792,6 +801,9 @@ export function MapView({
     } else {
       void map.once("load", updateRadius);
     }
+    return () => {
+      map.off("load", updateRadius);
+    };
   }, [geographicIntent, selectedAddressKey, blocks]);
 
   return (

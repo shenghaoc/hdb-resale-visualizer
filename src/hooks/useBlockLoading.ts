@@ -46,6 +46,7 @@ export function useBlockLoading({
 
     async function loadBlocks() {
       try {
+        setLoadError(null);
         const currentBlocks = blocksRef.current;
         const hasAllBlocks = currentBlocks.length >= totalBlocks;
 

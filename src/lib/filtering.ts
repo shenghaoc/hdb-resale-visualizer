@@ -1,5 +1,5 @@
 import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
-import { MAX_LEASE_DURATION } from '@/lib/constants';
+import { getCurrentYear, MAX_LEASE_DURATION } from '@/lib/constants';
 import { buildFilterOptions, canonicalFlatType } from "@shared/filter-options";
 import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
 
@@ -545,9 +545,6 @@ export function resetFilteringCachesForTests(): void {
   townNamesSourceRef = null;
 }
 
-// Cache the current year to avoid expensive Date instantiations in the filtering loop
-const CURRENT_YEAR = new Date().getFullYear();
-
 export function matchesFilter(
   block: BlockSummary,
   filters: FilterState,
@@ -575,8 +572,7 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    // Using cached year instead of calling new Date().getFullYear() every iteration
-    const maxRemainingLease = MAX_LEASE_DURATION - (CURRENT_YEAR - block.leaseCommenceRange[1]);
+    const maxRemainingLease = MAX_LEASE_DURATION - (getCurrentYear() - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }

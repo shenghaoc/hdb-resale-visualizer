@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
@@ -86,6 +87,7 @@ export function useShortlist() {
   return useMemo(
     () => ({
       items,
+      isFull: items.length >= MAX_SHORTLIST_ITEMS,
       toggle,
       update,
       has,

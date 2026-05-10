@@ -1,4 +1,4 @@
-import { startTransition, useCallback, useEffect, useState } from "react";
+import { startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
 import type { FilterState } from "@/types/data";
@@ -15,7 +15,15 @@ export function useUrlFilters() {
     };
   });
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
+    // Skip the initial mount — the URL already reflects the current filters.
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
     const nextSearch = serializeFilters(filters);
     window.history.replaceState({}, "", `${window.location.pathname}${nextSearch}`);
   }, [filters]);

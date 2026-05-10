@@ -45,6 +45,11 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
 
 /**
+ * Maximum number of properties that can be saved to the shortlist.
+ */
+export const MAX_SHORTLIST_ITEMS = 20;
+
+/**
  * Security guardrail: reject oversized share payloads early to avoid expensive
  * base64 decoding/JSON parsing from attacker-crafted URLs.
  */
