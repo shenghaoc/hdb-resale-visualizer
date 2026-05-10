@@ -428,7 +428,7 @@
   display: none;
 }
 
-.desktop-tab-bar-icon-btn {
+.desktop-tab-bar .desktop-tab-bar-icon-btn {
   min-width: 2.625rem;
   width: 2.625rem;
   height: 2.625rem;
@@ -438,7 +438,7 @@
   transition: all 150ms ease;
 }
 
-.desktop-tab-bar-icon-btn:hover {
+.desktop-tab-bar .desktop-tab-bar-icon-btn:hover {
   color: var(--primary);
   background: color-mix(in oklab, var(--primary) 10%, transparent);
 }

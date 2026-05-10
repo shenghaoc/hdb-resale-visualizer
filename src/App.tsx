@@ -856,7 +856,7 @@ function App() {
                 data-open={isSavedPanelOpen ? "true" : "false"}
                 data-mode="saved"
                 className={cn(
-                  "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
+                  "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity,left] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
                   "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] w-[min(28rem,32vw)]",
                   isSavedPanelOpen
                     ? "translate-y-0 opacity-100"
