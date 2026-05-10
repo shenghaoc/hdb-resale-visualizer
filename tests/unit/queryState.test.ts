@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseFilters, serializeFilters } from "@/lib/queryState";
+import { DEFAULT_FILTERS } from "@/lib/constants";
 
 describe("queryState", () => {
   it("round-trips filters to a query string", () => {
@@ -34,5 +35,32 @@ describe("queryState", () => {
       mrtMax: 700,
       selectedAddressKey: "foo",
     });
+  });
+
+  it("serializes default filters to empty string", () => {
+    const search = serializeFilters(DEFAULT_FILTERS);
+    expect(search).toBe("");
+  });
+
+  it("includes version parameter only when there are non-default filters", () => {
+    const searchWithTown = serializeFilters({ ...DEFAULT_FILTERS, town: "TAMPINES" });
+    expect(searchWithTown).toContain("town=TAMPINES");
+    expect(searchWithTown).toContain("v=1");
+  });
+
+  it("parses URLs with version parameter", () => {
+    const filters = parseFilters("?v=1");
+    expect(filters).toEqual(DEFAULT_FILTERS);
+  });
+
+  it("parses URLs without version parameter", () => {
+    const filters = parseFilters("?town=TAMPINES");
+    expect(filters).toEqual({ ...DEFAULT_FILTERS, town: "TAMPINES" });
+  });
+
+  it("serializes selectedAddressKey as selected parameter", () => {
+    const search = serializeFilters({ ...DEFAULT_FILTERS, selectedAddressKey: "test-key" });
+    expect(search).toContain("selected=test-key");
+    expect(search).toContain("v=1");
   });
 });
