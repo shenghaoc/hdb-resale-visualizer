@@ -165,7 +165,7 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await expectControlReceivesPointer(controls.geolocate, "Mobile geolocate");
   });
   
-  test("Header controls should remain functional (preservation check)", async ({ page }) => {
+  test("Header & tab bar controls should remain functional (preservation check)", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     
@@ -173,19 +173,21 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await ensureHeaderVisible(page);
     
     const header = page.getByTestId("global-header");
-    
-    // Test theme toggle
-    const themeToggle = header.getByRole("button", { name: /toggle theme/i });
+    const tabBar = page.getByTestId("desktop-tab-bar");
+    await expect(tabBar).toBeVisible();
+
+    // Theme toggle lives in the unified bottom tab bar.
+    const themeToggle = tabBar.getByRole("button", { name: /toggle theme/i });
     await expect(themeToggle).toBeVisible();
     await themeToggle.click();
-    
-    // Verify theme changed (this should work even on unfixed code)
+
+    // Verify theme changed
     await page.waitForTimeout(200);
     const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark'));
     console.log("Theme is dark after toggle:", isDark);
-    
-    // Test language selector
-    const languageSelect = header.getByRole("combobox", { name: /language/i });
+
+    // Language selector also lives in the tab bar.
+    const languageSelect = tabBar.getByRole("combobox", { name: /language/i });
     await expect(languageSelect).toBeVisible();
     await languageSelect.click();
     
@@ -195,7 +197,7 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     // Close the select
     await page.keyboard.press("Escape");
     
-    // Test dismiss button
+    // Dismiss button remains in the header.
     const dismissButton = header.getByRole("button", { name: /dismiss header/i });
     await expect(dismissButton).toBeVisible();
     await dismissButton.click();

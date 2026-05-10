@@ -23,14 +23,14 @@ import {
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, LOCALE_OPTIONS } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n/types";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState } from "@/hooks/usePanelState";
+import { usePanelState, LEFT_PANEL_WIDTHS } from "@/hooks/usePanelState";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useTheme } from "@/hooks/useTheme";
@@ -557,12 +557,6 @@ function App() {
     manifest && !hasResultScope && (isDesktop ? !isLeftPanelOpen && !isSavedPanelOpen : mobileTab === null),
   );
 
-  // Width classes for the left (Filters/Results) panel per tab
-  const leftPanelWidths: Record<string, string> = {
-    filters: "w-[min(30rem,34vw)]",
-    results: "w-[min(34rem,38vw)]",
-  };
-
   return (
     <>
       <main
@@ -811,8 +805,8 @@ function App() {
                   isLeftPanelOpen
                     ? "translate-y-0 opacity-100"
                     : "pointer-events-none translate-y-6 opacity-0",
-                  leftPanelWidths[leftTab],
                 )}
+                style={{ width: LEFT_PANEL_WIDTHS[leftTab] }}
               >
                 <div className="flex h-full min-h-0 flex-col">
                   <div
@@ -870,7 +864,7 @@ function App() {
                 )}
                 style={{
                   left: isLeftPanelOpen
-                    ? `calc(1.5rem + ${leftTab === "filters" ? "min(30rem,34vw)" : "min(34rem,38vw)"} + 0.75rem)`
+                    ? `calc(1.5rem + ${LEFT_PANEL_WIDTHS[leftTab]} + 0.75rem)`
                     : "1.5rem",
                 }}
               >
@@ -936,7 +930,7 @@ function App() {
       </main>
 
       {isDesktop && (
-        <nav className="desktop-tab-bar" aria-label={t("app.title")}>
+        <nav className="desktop-tab-bar" data-testid="desktop-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
             variant={leftTab === "filters" && isLeftPanelOpen ? "secondary" : "ghost"}
@@ -995,12 +989,11 @@ function App() {
               <span>{t("language.short_name")}</span>
             </SelectTrigger>
             <SelectContent position="popper" side="top" align="start" sideOffset={8}>
-              <SelectItem value="en-SG" className="text-xs">
-                {t("language.en")}
-              </SelectItem>
-              <SelectItem value="zh-SG" className="text-xs">
-                {t("language.zh")}
-              </SelectItem>
+              {LOCALE_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value} className="text-xs">
+                  {t(option.labelKey)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <Button
@@ -1022,7 +1015,7 @@ function App() {
 
       {/* Mobile bottom tab bar */}
       {!isDesktop && (
-        <nav className="mobile-tab-bar" aria-label={t("app.title")}>
+        <nav className="mobile-tab-bar" data-testid="mobile-tab-bar" aria-label={t("app.title")}>
           <Button
             type="button"
             size="icon"
@@ -1048,12 +1041,11 @@ function App() {
               <span>{t("language.short_name")}</span>
             </SelectTrigger>
             <SelectContent position="popper" side="top" align="start" sideOffset={4}>
-              <SelectItem value="en-SG" className="text-xs">
-                {t("language.en")}
-              </SelectItem>
-              <SelectItem value="zh-SG" className="text-xs">
-                {t("language.zh")}
-              </SelectItem>
+              {LOCALE_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value} className="text-xs">
+                  {t(option.labelKey)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <Button

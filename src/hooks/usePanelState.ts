@@ -4,6 +4,16 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 export type LeftTab = "filters" | "results";
 export type PanelTab = "filters" | "results" | "saved";
 
+/**
+ * Width expressions for the desktop left panel, keyed by the active tab.
+ * Raw values (not Tailwind classes) so they can be consumed in both `className`
+ * arbitrary values and inline style calculations without duplication.
+ */
+export const LEFT_PANEL_WIDTHS: Record<LeftTab, string> = {
+  filters: "min(30rem,34vw)",
+  results: "min(34rem,38vw)",
+};
+
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
