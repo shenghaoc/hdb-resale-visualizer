@@ -71,6 +71,12 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  
+  // Clear any potentially cached location on app start to prevent test data leakage
+  useEffect(() => {
+    // Reset user location to ensure fresh geolocation on each session
+    setUserLocation(null);
+  }, []);
   const [isLocating, setIsLocating] = useState(false);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const geolocationRequestRef = useRef(0);
@@ -129,9 +135,9 @@ function App() {
     () => (filters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : filters.search),
     [filters.search, userLocation],
   );
-  // Debounce search for the map only so list interactions stay in sync with
-  // the visible result rows while the heavier map updates trail slightly.
-  const debouncedSearch = useDebouncedValue(resolvedSearch, 200);
+  // Reduce debounce delay for better sync between map and list
+  // Keep some debouncing to avoid excessive map updates during typing
+  const debouncedSearch = useDebouncedValue(resolvedSearch, 100);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
@@ -407,7 +413,7 @@ function App() {
           lng: position.coords.longitude,
         });
       },
-      () => {
+      (error) => {
         if (geolocationRequestRef.current !== requestId) {
           return;
         }
@@ -505,6 +511,7 @@ function App() {
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={priceHeatmapEnabled}
         priceHeatmapOpacity={priceHeatmapOpacity}
+        geographicIntent={mapGeographicIntent}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
         locale={locale}

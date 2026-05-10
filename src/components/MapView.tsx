@@ -22,6 +22,7 @@ import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import type { Locale } from "@/lib/i18n";
+import type { GeographicSearchIntent } from "@/lib/filtering";
 
 type MapViewProps = {
   blocks: BlockSummary[];
@@ -32,6 +33,7 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
+  geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
   onGeolocate?: (coords: Coordinates) => void;
@@ -129,6 +131,7 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
+  geographicIntent,
   onSelect,
   onMapInteract,
   onGeolocate,
@@ -680,6 +683,36 @@ export function MapView({
       },
     );
   }, [autoFitKey, blocks, debouncedTownFilter]);
+
+  // Update radius circles when geographic intent changes
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const source = map.getSource("radius");
+    if (!source) return;
+
+    // Only show radius circles for coordinate-based searches (like "near me")
+    if (geographicIntent?.type === "coordinates") {
+      const radiusKm = geographicIntent.radiusMeters / 1000;
+      const circle = createCircleGeoJson(geographicIntent.coordinates, radiusKm);
+      
+      if (isGeoJsonDataSourceLike(source)) {
+        source.setData({
+          type: "FeatureCollection",
+          features: [circle],
+        });
+      }
+    } else {
+      // Clear radius circles for station searches or no geographic intent
+      if (isGeoJsonDataSourceLike(source)) {
+        source.setData({
+          type: "FeatureCollection",
+          features: [],
+        });
+      }
+    }
+  }, [geographicIntent]);
 
   // Update the selected-point filters when selection changes
   useEffect(() => {
