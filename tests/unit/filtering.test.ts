@@ -253,6 +253,65 @@ describe("matchesFilter", () => {
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(false);
   });
 
+  it("suppresses station intent when query exactly matches a town name without cue words", () => {
+    const intent = resolveGeographicSearchIntent("ang mo kio", artifact.blockSummaries, 800);
+    expect(intent).toBeNull();
+  });
+
+  it("resolves alias-mapped station when raw query is not a town name", () => {
+    // "yew tee" is aliased to "choa chu kang" in search. Since "yew tee" is not a town name
+    // itself, the town guard should not suppress it. We need a block with the CCK station.
+    const cckBlock: BlockSummary = {
+      ...artifact.blockSummaries[0]!,
+      town: "CHOA CHU KANG",
+      block: "600A",
+      streetName: "CHOA CHU KANG STREET 62",
+      nearestMrt: {
+        stationName: "CHOA CHU KANG MRT STATION",
+        distanceMeters: 300,
+      },
+      nearbyMrts: [
+        {
+          stationName: "CHOA CHU KANG MRT STATION",
+          distanceMeters: 300,
+        },
+      ],
+    };
+    const blocks = [...artifact.blockSummaries, cckBlock];
+
+    resetFilteringCachesForTests();
+    const intent = resolveGeographicSearchIntent("yew tee", blocks, 800);
+    expect(intent).not.toBeNull();
+    expect(intent!.type).toBe("station");
+    expect((intent as { stationName: string }).stationName).toContain("CHOA CHU KANG");
+  });
+
+  it("resolves alias-mapped station when cue word is present", () => {
+    const cckBlock: BlockSummary = {
+      ...artifact.blockSummaries[0]!,
+      town: "CHOA CHU KANG",
+      block: "600A",
+      streetName: "CHOA CHU KANG STREET 62",
+      nearestMrt: {
+        stationName: "CHOA CHU KANG MRT STATION",
+        distanceMeters: 300,
+      },
+      nearbyMrts: [
+        {
+          stationName: "CHOA CHU KANG MRT STATION",
+          distanceMeters: 300,
+        },
+      ],
+    };
+    const blocks = [...artifact.blockSummaries, cckBlock];
+
+    resetFilteringCachesForTests();
+    const intent = resolveGeographicSearchIntent("yew tee mrt", blocks, 800);
+    expect(intent).not.toBeNull();
+    expect(intent!.type).toBe("station");
+    expect((intent as { stationName: string }).stationName).toContain("CHOA CHU KANG");
+  });
+
   it("still resolves station names when blocks load after an initial empty-array call", () => {
     // Regression: stationNamesCache was poisoned by the first call with empty blocks (initial
     // React state), causing geographic search to always return null even after blocks loaded.

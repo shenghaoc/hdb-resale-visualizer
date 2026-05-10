@@ -323,9 +323,14 @@ function collectTownNames(blocks: BlockSummary[]): Set<string> {
     return townNamesCache;
   }
 
-  const townNames = new Set<string>();
+  const rawTowns = new Set<string>();
   for (const block of blocks) {
-    townNames.add(normalizeSearchText(block.town));
+    rawTowns.add(block.town);
+  }
+
+  const townNames = new Set<string>();
+  for (const town of rawTowns) {
+    townNames.add(normalizeSearchText(town));
   }
 
   townNamesCache = townNames;
@@ -338,12 +343,13 @@ function matchStationName(
   stationNames: string[],
   townNames: Set<string>,
 ): string | null {
-  const normalizedQuery = resolveSearchAliases(normalizeSearchText(query));
+  const rawNormalizedQuery = normalizeSearchText(query);
+  const normalizedQuery = resolveSearchAliases(rawNormalizedQuery);
   if (!normalizedQuery) {
     return null;
   }
 
-  const isTownMatch = townNames.has(normalizedQuery);
+  const isTownMatch = townNames.has(rawNormalizedQuery);
   const hasCueWords = normalizedQuery
     .split(" ")
     .some((token) => STATION_SEARCH_CUE_WORDS.has(token));
@@ -352,6 +358,11 @@ function matchStationName(
     .filter((token) => !STATION_SEARCH_CUE_WORDS.has(token));
 
   if (queryTokens.length === 0) {
+    return null;
+  }
+
+  // If the query exactly matches a town name and has no cue words, skip station matching entirely.
+  if (isTownMatch && !hasCueWords) {
     return null;
   }
 
@@ -378,13 +389,9 @@ function matchStationName(
       continue;
     }
 
-    // If the query exactly matches a town name (e.g. "Bedok", "Ang Mo Kio"), do not resolve
-    // it as a station intent unless it also has explicit cue words like "MRT" or "near".
-    // This prevents radius-based station filtering from incorrectly hiding town-wide results.
-    if (!hasCueWords && (isTownMatch || !exactStationMatch)) {
+    if (!hasCueWords && !exactStationMatch) {
       continue;
     }
-
 
     const score = queryTokens.reduce((total, queryToken) => {
       if (stationTokenSet.has(queryToken)) {
