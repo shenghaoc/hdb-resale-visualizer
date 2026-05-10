@@ -282,7 +282,6 @@ function App() {
     isShortlistOpen,
   });
 
-
   const activeFilterChips = useMemo<FilterChip[]>(
     () =>
       getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({

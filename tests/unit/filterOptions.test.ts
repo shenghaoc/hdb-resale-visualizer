@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   canonicalFlatType,
-  normalizeFlatModel,
-  sortFlatTypes,
   buildFilterOptions,
 } from "@/lib/filterOptions";
+import {
+  normalizeFlatModel,
+  sortFlatTypes,
+} from "../../shared/filter-options";
 
 describe("canonicalFlatType", () => {
   it("trims and uppercases normal strings", () => {
