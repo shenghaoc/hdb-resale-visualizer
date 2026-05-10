@@ -35,7 +35,10 @@ export function serializeFilters(filters: FilterState): string {
   let hasNonDefaultParams = false;
 
   for (const [key, value] of Object.entries(filters)) {
-    if (value === DEFAULT_FILTERS[key as keyof FilterState]) {
+    const defaultValue = DEFAULT_FILTERS[key as keyof FilterState];
+    // Treat null and "" as equivalent "empty" values
+    const isEmpty = (v: unknown) => v === null || v === "";
+    if (value === defaultValue || (isEmpty(value) && isEmpty(defaultValue))) {
       continue;
     }
 
