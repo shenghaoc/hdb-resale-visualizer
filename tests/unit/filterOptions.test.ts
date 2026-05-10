@@ -1,11 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   canonicalFlatType,
-  buildFilterOptions,
-} from "@/lib/filterOptions";
-import {
   normalizeFlatModel,
   sortFlatTypes,
+  buildFilterOptions,
 } from "../../shared/filter-options";
 
 describe("canonicalFlatType", () => {
