@@ -201,7 +201,7 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    return Temporal.Now.plainDateISO().year;
+    throw new Error("getModeYear called with empty array — no transactions to derive lease year from");
   }
 
   const counts = new Map<number, number>();
