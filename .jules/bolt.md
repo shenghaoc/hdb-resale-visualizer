@@ -54,6 +54,6 @@
 ## 2026-05-07 - Hoisting operations and avoiding implicit true function calls in loops
 **Learning:** Even fast operations like `.trim().toUpperCase()` or empty-string function calls (`tokenizeSearchText("")`) become significant bottlenecks when buried inside a loop processing 10,000+ items (like our `matchesFilter`). The frontend filter loop executes continuously upon user interactions, causing GC spikes and frame drops from hidden object allocations and function call overheads.
 **Action:** Always identify variables that are constant throughout the loop (e.g. `filters.flatType`) and cache or evaluate them exactly once outside the loop boundaries. Additionally, guard expensive functions (like search tokenization matching) with short-circuit checks (`filters.search` falsiness) to avoid redundant evaluation logic on the common default state (empty input).
-## 2025-05-18 - Replacing Multiple Sorting with Single Pass
+## 2026-05-10 - Replacing Multiple Sorting with Single Pass
 **Learning:** Performing multiple sorting operations on arrays (`[...rows].sort()`) just to find the min or max element is extremely computationally expensive. This takes $O(N \log N)$ complexity and causes garbage collection overhead per evaluation. By combining min/max findings within a single $O(N)$ linear pass, performance can be heavily improved.
 **Action:** When finding extremes in a dataset, use a single `for` loop tracking the min/max values rather than completely sorting the array.
