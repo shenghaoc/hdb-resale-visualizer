@@ -360,9 +360,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.pricePerSqft": "每平方英尺",
     "shortlist.na": "无数据",
     "shortlist.highlights.lowestMedian": "价格最低",
-    "shortlist.highlights.newestLease": "地契最长",
+    "shortlist.highlights.longestLease": "地契最长",
     "shortlist.highlights.closestMrt": "地铁最近",
-    "shortlist.highlights.commenceYear": "{year} 年地契",
     "shortlist.pricePerSqm": "{value} / 平米",
     "shortlist.loadingMetrics": "加载指标中…",
     "shortlist.areaRange": "面积范围",
@@ -397,9 +396,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.compareTrendsHint": "对比候选组屋的每月转售中位价走势。",
     "shortlist.lowestMedian": "价格最低",
     "shortlist.bestValue": "价格最佳",
-    "shortlist.newestLease": "地契最长",
     "shortlist.closestMrt": "地铁最近",
-    "shortlist.commence": "{year} 年地契",
     "shortlist.sortBy": "排序",
     "shortlist.compare.targetFit": "价格匹配度",
     "shortlist.compare.targetFit.help": "按“组屋中位价与目标价差距”排序，越接近越靠前。",
@@ -536,3 +533,4 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "heatmap.opacityLabel": "热力图透明度",
   },
 };
+
