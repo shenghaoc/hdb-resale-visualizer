@@ -536,7 +536,7 @@ export function ShortlistDrawer({
         sub: bestValueRow ? formatCompactCurrency(bestValueRow.block.medianPrice, locale) : t("shortlist.na"),
       },
       {
-        label: t("shortlist.newestLease"),
+        label: t("shortlist.highlights.newestLease"),
         row: longestLeaseRow,
         sub: longestLeaseRow ? t("unit.years", { value: getLeaseYears(longestLeaseRow) }) : t("shortlist.na"),
       },
