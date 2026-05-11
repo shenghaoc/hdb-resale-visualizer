@@ -134,16 +134,19 @@ function AmenityCard({
             </div>
           )}
           {nearbyItems && nearbyItems.length > 0 ? (
-            <div className="mt-1 flex flex-col gap-0.5">
+            <ul className="mt-1 flex flex-col gap-0.5">
               {nearbyItems.map((item) => (
-                <div key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
-                  <span className="truncate min-w-0">{item.name}</span>
+                <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                    <span className="truncate">{item.name}</span>
+                  </div>
                   <span className="shrink-0 font-mono text-[0.65rem] tabular-nums">
                     {formatMeters(item.distanceMeters, t, locale)}
                   </span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           ) : nearestDistance ? (
             <div className="text-xs text-muted-foreground">
               {t("detail.nearest", {
@@ -424,7 +427,7 @@ export function DetailDrawer({
                         count1km={comparison.amenities.primarySchoolsWithin1km}
                         count2km={comparison.amenities.primarySchoolsWithin2km}
                         nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
-                        nearbyItems={comparison.amenities.nearestPrimarySchools}
+                        nearbyItems={comparison.amenities.nearestPrimarySchools?.slice(0, 3)}
                         t={t}
                         locale={locale}
                       />
