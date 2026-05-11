@@ -54,7 +54,8 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-12");
     expect(result.current.useDefaultStartMonth).toBe(true);
 
-    window.location = originalLocation;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.location = originalLocation as any;
   });
 
   it("should NOT inject default start month if already in URL", () => {
@@ -77,7 +78,8 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-01");
     expect(result.current.useDefaultStartMonth).toBe(false);
 
-    window.location = originalLocation;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.location = originalLocation as any;
   });
 
   it("should compute hasResultScope correctly", () => {
