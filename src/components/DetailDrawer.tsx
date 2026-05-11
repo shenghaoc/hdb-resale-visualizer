@@ -107,8 +107,8 @@ function AmenityCard({
   t,
   locale,
 }: {
-  icon: React.ElementType;
-  label: string;
+  icon?: React.ElementType;
+  label?: string;
   count1km?: number;
   count2km?: number;
   nearestDistance?: number | null;
@@ -120,7 +120,7 @@ function AmenityCard({
   return (
     <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
       <CardContent className="p-3">
-        {showLabel && (
+        {showLabel && Icon && label && (
           <div className="mb-2 flex items-center gap-2">
             <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
             <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
@@ -151,7 +151,7 @@ function AmenityCard({
                 </li>
               ))}
             </ul>
-          ) : nearestDistance ? (
+          ) : nearestDistance != null ? (
             <div className="text-xs text-muted-foreground">
               {t("detail.nearest", {
                 distance: formatMeters(nearestDistance, t, locale),
@@ -403,8 +403,6 @@ export function DetailDrawer({
                       {t("detail.connectivity")}
                     </h3>
                     <AmenityCard
-                      icon={TrainFront}
-                      label={t("detail.connectivity")}
                       nearbyItems={nearbyStations.map((mrt) => ({
                         name: mrt.stationName,
                         distanceMeters: mrt.distanceMeters,

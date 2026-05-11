@@ -107,7 +107,6 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist: (addressKey: string) => void;
 }) {
   const { locale, t } = useI18n();
-  const nearbyStations = (block.nearbyMrts ?? []).slice(0, 3);
 
   if (isCompact) {
     const currentYear = getCurrentYear();
@@ -183,6 +182,8 @@ const BlockCard = memo(function BlockCard({
       </Item>
     );
   }
+
+  const nearbyStations = (block.nearbyMrts ?? []).slice(0, 3);
 
   return (
     <Item

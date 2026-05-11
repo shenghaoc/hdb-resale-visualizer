@@ -43,6 +43,14 @@ const mockComparison: ComparisonArtifact = {
         name: "BEDOK PRIMARY SCHOOL",
         distanceMeters: 250,
       },
+      {
+        name: "BEDOK SECONDARY SCHOOL",
+        distanceMeters: 450,
+      },
+      {
+        name: "OPERA ESTATE PRIMARY SCHOOL",
+        distanceMeters: 600,
+      },
     ],
     hawkerCentresWithin1km: 2,
     nearestHawkerCentreMeters: 180,
@@ -138,6 +146,31 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("800 m")).toBeInTheDocument();
     expect(screen.getByText("BEDOK SOUTH MRT STATION")).toBeInTheDocument();
     expect(screen.getByText("1.2 km")).toBeInTheDocument();
+  });
+
+  it("renders all 3 nearby schools with names and distances", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    // Check that all 3 schools are displayed with their distances
+    expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("250 m")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK SECONDARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("450 m")).toBeInTheDocument();
+    expect(screen.getByText("OPERA ESTATE PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("600 m")).toBeInTheDocument();
   });
 
   it("renders percentile sections when comparison data is available", () => {
