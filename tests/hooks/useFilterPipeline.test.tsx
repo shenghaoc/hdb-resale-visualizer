@@ -17,9 +17,9 @@ describe("useFilterPipeline", () => {
   } as unknown as Manifest;
 
   const initialFilters: FilterState = {
-    town: null,
-    flatType: null,
-    flatModel: null,
+    town: "",
+    flatType: "",
+    flatModel: "",
     budgetMin: null,
     budgetMax: null,
     areaMin: null,
@@ -35,9 +35,10 @@ describe("useFilterPipeline", () => {
   it("should inject default start month if not in URL", () => {
     // Mock window.location.search to be empty
     const originalLocation = window.location;
-    // @ts-expect-error - mock location
-    delete window.location;
-    window.location = { ...originalLocation, search: "" };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (window as any).location;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.location = { ...originalLocation, search: "" } as any;
 
     const { result } = renderHook(() => useFilterPipeline({
       manifest,
@@ -58,9 +59,10 @@ describe("useFilterPipeline", () => {
 
   it("should NOT inject default start month if already in URL", () => {
     const originalLocation = window.location;
-    // @ts-expect-error - mock location
-    delete window.location;
-    window.location = { ...originalLocation, search: "?startMonth=2021-01" };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delete (window as any).location;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    window.location = { ...originalLocation, search: "?startMonth=2021-01" } as any;
 
     const { result } = renderHook(() => useFilterPipeline({
       manifest,
