@@ -9,17 +9,19 @@ export function useGeolocation({ t }: { t: Translator }) {
   const requestIdRef = useRef(0);
 
   const clearError = useCallback(() => setGeolocationError(null), []);
+  const isLocatingRef = useRef(false);
 
   // Invalidates any in-flight getCurrentPosition call so a stale response
   // cannot overwrite user state after they've navigated elsewhere.
   const cancelPendingRequest = useCallback(() => {
     requestIdRef.current += 1;
+    isLocatingRef.current = false;
     setIsLocating(false);
   }, []);
 
   const locate = useCallback(
     (onSuccess: (coords: Coordinates) => void, onCannotLocate?: () => void) => {
-      if (isLocating) return;
+      if (isLocatingRef.current) return;
 
       if (!navigator.geolocation) {
         setGeolocationError(t("app.locationUnavailable"));
@@ -28,6 +30,7 @@ export function useGeolocation({ t }: { t: Translator }) {
       }
 
       setGeolocationError(null);
+      isLocatingRef.current = true;
       setIsLocating(true);
       const requestId = ++requestIdRef.current;
 
@@ -38,6 +41,7 @@ export function useGeolocation({ t }: { t: Translator }) {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
+          isLocatingRef.current = false;
           setIsLocating(false);
           setUserLocation(coords);
           setGeolocationError(null);
@@ -45,6 +49,7 @@ export function useGeolocation({ t }: { t: Translator }) {
         },
         () => {
           if (requestIdRef.current !== requestId) return;
+          isLocatingRef.current = false;
           setIsLocating(false);
           setGeolocationError(t("app.locationFailed"));
           onCannotLocate?.();
@@ -52,7 +57,7 @@ export function useGeolocation({ t }: { t: Translator }) {
         { enableHighAccuracy: true, maximumAge: 60_000, timeout: 10_000 },
       );
     },
-    [isLocating, t],
+    [t],
   );
 
   return useMemo(() => ({

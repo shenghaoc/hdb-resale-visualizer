@@ -115,14 +115,16 @@ function App() {
           : patch;
       patchFilters(resolved);
     },
-    [patchFilters, pipeline, geo, filters.search],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [patchFilters, pipeline.setUseDefaultStartMonth, geo.clearError, filters.search],
   );
 
   const handleResetFilters = useCallback(() => {
     pipeline.setUseDefaultStartMonth(true);
     geo.clearError();
     resetFilters();
-  }, [pipeline, geo, resetFilters]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pipeline.setUseDefaultStartMonth, geo.clearError, resetFilters]);
 
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
@@ -139,7 +141,8 @@ function App() {
 
   const handleToggleShortlist = useCallback(
     (addressKey: string) => shortlist.toggle(addressKey),
-    [shortlist],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [shortlist.toggle],
   );
 
   const handleChooseTown = useCallback(
@@ -153,7 +156,8 @@ function App() {
       }
       panel.setMobileTab("filters");
     },
-    [geo, panel],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [geo.clearError, geo.cancelPendingRequest, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen, panel.setMobileTab],
   );
 
   const handleGeolocate = useCallback(
@@ -166,7 +170,8 @@ function App() {
         panel.setIsLeftPanelOpen(true);
       }
     },
-    [geo, patchFilters, panel],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [geo.setUserLocation, geo.clearError, patchFilters, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen],
   );
 
   const handleUseCurrentLocation = useCallback(() => {
@@ -183,21 +188,34 @@ function App() {
       },
       () => handleChooseTown({ clearGeolocationError: false }),
     );
-  }, [geo, patchFilters, panel, handleChooseTown]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geo.locate, patchFilters, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen, handleChooseTown]);
 
-  const handleMapInteract = useCallback((interactionType: "background" | "feature" = "background") => {
-    if (!header.hasInteractedWithMap) {
-      if (panel.isDesktop) header.setIsHeaderVisible(false);
-      header.setHasInteractedWithMap(true);
-    }
-    if (interactionType === "feature") return;
-    if (panel.isDesktop) {
-      panel.setIsLeftPanelOpen(false);
-      panel.setIsSavedPanelOpen(false);
-      return;
-    }
-    panel.setMobileTab(null);
-  }, [header.hasInteractedWithMap, panel.isDesktop, header.setIsHeaderVisible, header.setHasInteractedWithMap, panel.setIsLeftPanelOpen, panel.setIsSavedPanelOpen, panel.setMobileTab]);
+  const handleMapInteract = useCallback(
+    (interactionType: "background" | "feature" = "background") => {
+      if (!header.hasInteractedWithMap) {
+        if (panel.isDesktop) header.setIsHeaderVisible(false);
+        header.setHasInteractedWithMap(true);
+      }
+      if (interactionType === "feature") return;
+      if (panel.isDesktop) {
+        panel.setIsLeftPanelOpen(false);
+        panel.setIsSavedPanelOpen(false);
+        return;
+      }
+      panel.setMobileTab(null);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      header.hasInteractedWithMap,
+      panel.isDesktop,
+      header.setIsHeaderVisible,
+      header.setHasInteractedWithMap,
+      panel.setIsLeftPanelOpen,
+      panel.setIsSavedPanelOpen,
+      panel.setMobileTab,
+    ],
+  );
 
   // ── Error / loading states ───────────────────────────────────────────────
 
