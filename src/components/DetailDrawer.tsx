@@ -102,7 +102,6 @@ function AmenityCard({
   count1km,
   count2km,
   nearestDistance,
-  nearestName,
   nearbyItems,
   t,
   locale,
@@ -112,7 +111,6 @@ function AmenityCard({
   count1km?: number;
   count2km?: number;
   nearestDistance?: number | null;
-  nearestName?: string | null;
   nearbyItems?: { name: string; distanceMeters: number }[];
   t: Translator;
   locale: Locale;
@@ -137,21 +135,14 @@ function AmenityCard({
           )}
           {nearbyItems && nearbyItems.length > 0 ? (
             <div className="mt-1 flex flex-col gap-0.5">
-              {nearbyItems.map((item, idx) => (
-                <div key={`${item.name}-${idx}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
+              {nearbyItems.map((item) => (
+                <div key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
                   <span className="truncate min-w-0">{item.name}</span>
                   <span className="shrink-0 font-mono text-[0.65rem] tabular-nums">
                     {formatMeters(item.distanceMeters, t, locale)}
                   </span>
                 </div>
               ))}
-            </div>
-          ) : nearestName ? (
-            <div className="line-clamp-1 text-xs text-muted-foreground">
-              {t("detail.nearestNamed", {
-                name: nearestName,
-                distance: formatMeters(nearestDistance ?? 0, t, locale),
-              })}
             </div>
           ) : nearestDistance ? (
             <div className="text-xs text-muted-foreground">
@@ -400,10 +391,6 @@ export function DetailDrawer({
                 {/* MRT Connectivity */}
                 {nearbyStations.length > 0 && (
                   <section>
-                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                      <TrainFront data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.connectivity")}
-                    </h3>
                     <AmenityCard
                       icon={TrainFront}
                       label={t("detail.connectivity")}
@@ -471,7 +458,7 @@ export function DetailDrawer({
                     </div>
                   ) : null}
                   {!isComparisonLoading && !comparison && (
-                    <p className="text-sm text-muted-foreground italic">
+                    <p className="py-4 text-sm text-muted-foreground italic">
                       {t("detail.noComparisonData")}
                     </p>
                   )}
