@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import type { Coordinates } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
@@ -55,7 +55,7 @@ export function useGeolocation({ t }: { t: Translator }) {
     [isLocating, t],
   );
 
-  return {
+  return useMemo(() => ({
     userLocation,
     setUserLocation,
     isLocating,
@@ -63,5 +63,5 @@ export function useGeolocation({ t }: { t: Translator }) {
     clearError,
     cancelPendingRequest,
     locate,
-  };
+  }), [userLocation, isLocating, geolocationError, clearError, cancelPendingRequest, locate]);
 }

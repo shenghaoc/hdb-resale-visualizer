@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HEADER_DISMISSED_STORAGE_KEY } from "@/lib/constants";
 import { safeStorage } from "@/lib/storage";
 
@@ -25,12 +25,12 @@ export function useHeaderState() {
     safeStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
   }, [hasLoadedPreference, isHeaderVisible]);
 
-  return {
+  return useMemo(() => ({
     isHeaderVisible,
     setIsHeaderVisible,
     hasInteractedWithMap,
     setHasInteractedWithMap,
     isMobileHeaderOpen,
     setIsMobileHeaderOpen,
-  };
+  }), [isHeaderVisible, hasInteractedWithMap, isMobileHeaderOpen]);
 }

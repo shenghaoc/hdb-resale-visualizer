@@ -185,7 +185,7 @@ function App() {
     );
   }, [geo, patchFilters, panel, handleChooseTown]);
 
-  function handleMapInteract(interactionType: "background" | "feature" = "background") {
+  const handleMapInteract = useCallback((interactionType: "background" | "feature" = "background") => {
     if (!header.hasInteractedWithMap) {
       if (panel.isDesktop) header.setIsHeaderVisible(false);
       header.setHasInteractedWithMap(true);
@@ -197,7 +197,7 @@ function App() {
       return;
     }
     panel.setMobileTab(null);
-  }
+  }, [header.hasInteractedWithMap, panel.isDesktop, header.setIsHeaderVisible, header.setHasInteractedWithMap, panel.setIsLeftPanelOpen, panel.setIsSavedPanelOpen, panel.setMobileTab]);
 
   // ── Error / loading states ───────────────────────────────────────────────
 

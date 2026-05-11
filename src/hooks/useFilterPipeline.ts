@@ -218,7 +218,7 @@ export function useFilterPipeline({
     selectedAddressKey,
   ]);
 
-  return {
+  return useMemo(() => ({
     useDefaultStartMonth,
     setUseDefaultStartMonth,
     effectiveFilters,
@@ -237,5 +237,23 @@ export function useFilterPipeline({
     filteredBlocks,
     mapFilteredBlocks,
     blocksByKey,
-  };
+  }), [
+    useDefaultStartMonth,
+    effectiveFilters,
+    filterPanelFilters,
+    resolvedSearch,
+    debouncedSearch,
+    sortedTowns,
+    stableFilters,
+    mapFilters,
+    geographicIntent,
+    effectiveMapGeographicIntent,
+    hasResultScope,
+    hasMapMarkerScope,
+    blocks,
+    loadError,
+    filteredBlocks,
+    mapFilteredBlocks,
+    blocksByKey,
+  ]);
 }
