@@ -107,7 +107,7 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist: (addressKey: string) => void;
 }) {
   const { locale, t } = useI18n();
-  const nearbyStations = (block.nearbyMrts ?? []).slice(0, 2);
+  const nearbyStations = (block.nearbyMrts ?? []).slice(0, 3);
 
   if (isCompact) {
     const currentYear = getCurrentYear();
@@ -240,16 +240,25 @@ const BlockCard = memo(function BlockCard({
             <TrainFront data-icon className="size-3.5" aria-hidden="true" />
             {t("results.nearestMrt")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
-            {block.nearestMrt
-              ? `${block.nearestMrt.stationName} • ${formatMeters(block.nearestMrt.distanceMeters, t, locale)}`
-              : t("results.noMatch")}
-          </strong>
-          {nearbyStations.length > 1 ? (
-            <span className="text-xs text-muted-foreground">
-              {t("results.alsoNear", { stations: nearbyStations.slice(1).map((station) => station.stationName).join(", ") })}
-            </span>
-          ) : null}
+          {nearbyStations.length > 0 ? (
+            <ul className="flex flex-col gap-0.5">
+              {nearbyStations.map((station) => (
+                <li key={`${station.stationName}-${station.distanceMeters}`} className="flex items-center justify-between gap-2 text-sm">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                    <span className="truncate font-semibold uppercase tracking-[0.08em]">{station.stationName}</span>
+                  </div>
+                  <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                    {formatMeters(station.distanceMeters, t, locale)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+              {t("results.noMatch")}
+            </strong>
+          )}
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
