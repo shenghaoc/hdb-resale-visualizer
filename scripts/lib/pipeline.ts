@@ -688,17 +688,14 @@ export function buildArtifacts({
       townFlatTypeMetrics.set(key, population);
     }
 
-    // ⚡ Bolt: Pre-sort a copy of the population once to allow O(log N) percentile calculations
-    const sortedMetrics = new Map<string, ComparisonMetricPopulation>();
-    for (const [key, population] of townFlatTypeMetrics.entries()) {
-      sortedMetrics.set(key, {
-        prices: [...population.prices].sort((a, b) => a - b),
-        pricesPerSqm: [...population.pricesPerSqm].sort((a, b) => a - b),
-        leases: [...population.leases].sort((a, b) => a - b),
-        mrtDistances: [...population.mrtDistances].sort((a, b) => a - b),
-        transactionCounts: [...population.transactionCounts].sort((a, b) => a - b),
-        recencies: [...population.recencies].sort((a, b) => a - b),
-      });
+    // ⚡ Bolt: Pre-sort the population once to allow O(log N) percentile calculations
+    for (const population of townFlatTypeMetrics.values()) {
+      population.prices.sort((a, b) => a - b);
+      population.pricesPerSqm.sort((a, b) => a - b);
+      population.leases.sort((a, b) => a - b);
+      population.mrtDistances.sort((a, b) => a - b);
+      population.transactionCounts.sort((a, b) => a - b);
+      population.recencies.sort((a, b) => a - b);
     }
 
     for (const metric of blockMetrics) {
@@ -708,7 +705,7 @@ export function buildArtifacts({
       }
 
       const key = `${metric.town}__${metric.flatType}`;
-      const metrics = sortedMetrics.get(key);
+      const metrics = townFlatTypeMetrics.get(key);
       if (!metrics) {
         continue;
       }
