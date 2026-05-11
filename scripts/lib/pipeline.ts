@@ -274,14 +274,25 @@ function findNearestSchools(
     .slice(0, limit);
 }
 
-function calculatePercentile(value: number, values: number[]): number {
+// ⚡ Bolt: Calculate percentile using O(log N) binary search since population values are pre-sorted
+function calculatePercentileSorted(value: number, values: number[]): number {
   if (values.length === 0) {
     return 50;
   }
 
-  const sorted = [...values].sort((a, b) => a - b);
-  const count = sorted.filter((v) => v <= value).length;
-  return Math.round((count / sorted.length) * 100);
+  let left = 0;
+  let right = values.length;
+  while (left < right) {
+    const mid = (left + right) >>> 1;
+    if (values[mid] <= value) {
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
+  }
+
+  const count = left;
+  return Math.round((count / values.length) * 100);
 }
 
 function sortTransactionsByLatest(transactions: ResaleTransaction[]) {
@@ -677,6 +688,19 @@ export function buildArtifacts({
       townFlatTypeMetrics.set(key, population);
     }
 
+    // ⚡ Bolt: Pre-sort a copy of the population once to allow O(log N) percentile calculations
+    const sortedMetrics = new Map<string, ComparisonMetricPopulation>();
+    for (const [key, population] of townFlatTypeMetrics.entries()) {
+      sortedMetrics.set(key, {
+        prices: [...population.prices].sort((a, b) => a - b),
+        pricesPerSqm: [...population.pricesPerSqm].sort((a, b) => a - b),
+        leases: [...population.leases].sort((a, b) => a - b),
+        mrtDistances: [...population.mrtDistances].sort((a, b) => a - b),
+        transactionCounts: [...population.transactionCounts].sort((a, b) => a - b),
+        recencies: [...population.recencies].sort((a, b) => a - b),
+      });
+    }
+
     for (const metric of blockMetrics) {
       const geocode = metric.geocode;
       if (!geocode) {
@@ -684,7 +708,7 @@ export function buildArtifacts({
       }
 
       const key = `${metric.town}__${metric.flatType}`;
-      const metrics = townFlatTypeMetrics.get(key);
+      const metrics = sortedMetrics.get(key);
       if (!metrics) {
         continue;
       }
@@ -703,12 +727,12 @@ export function buildArtifacts({
       };
 
       const percentileRanks = {
-        pricePercentile: calculatePercentile(metric.medianPrice, metrics.prices),
-        pricePerSqmPercentile: calculatePercentile(metric.medianPricePerSqm, metrics.pricesPerSqm),
-        leasePercentile: calculatePercentile(metric.leaseYear, metrics.leases),
-        mrtDistancePercentile: 100 - calculatePercentile(metric.mrtDistanceMeters, metrics.mrtDistances),
-        transactionCountPercentile: calculatePercentile(metric.transactionCount, metrics.transactionCounts),
-        recencyPercentile: 100 - calculatePercentile(
+        pricePercentile: calculatePercentileSorted(metric.medianPrice, metrics.prices),
+        pricePerSqmPercentile: calculatePercentileSorted(metric.medianPricePerSqm, metrics.pricesPerSqm),
+        leasePercentile: calculatePercentileSorted(metric.leaseYear, metrics.leases),
+        mrtDistancePercentile: 100 - calculatePercentileSorted(metric.mrtDistanceMeters, metrics.mrtDistances),
+        transactionCountPercentile: calculatePercentileSorted(metric.transactionCount, metrics.transactionCounts),
+        recencyPercentile: 100 - calculatePercentileSorted(
           metric.monthsSinceLatestTransaction,
           metrics.recencies,
         ),

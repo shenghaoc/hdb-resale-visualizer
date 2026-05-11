@@ -57,3 +57,6 @@
 ## 2026-05-10 - Replacing Multiple Sorting with Single Pass
 **Learning:** Performing multiple sorting operations on arrays (`[...rows].sort()`) just to find the min or max element is extremely computationally expensive. This takes $O(N \log N)$ complexity and causes garbage collection overhead per evaluation. By combining min/max findings within a single $O(N)$ linear pass, performance can be heavily improved.
 **Action:** When finding extremes in a dataset, use a single `for` loop tracking the min/max values rather than completely sorting the array.
+## 2026-05-11 - Binary Search for Percentile Calculation
+**Learning:** Calculating percentiles inside a loop using `Array.prototype.sort()` creates an O(N log N) overhead per iteration. For populations that do not change during metric generation, this results in massive redundant computation. By pre-sorting the populations once and applying a binary search to find the rank, the per-item calculation drops to O(log N).
+**Action:** When calculating metrics against a static population inside a loop, pre-sort the population reference data outside the loop and use binary search instead of repeatedly sorting arrays inline.
