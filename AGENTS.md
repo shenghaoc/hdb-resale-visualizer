@@ -40,7 +40,7 @@ npm run build         # Production build
 1. **Zero Runtime APIs**: The frontend (`src/`) only loads from `public/data/`.
 2. **Build-Time Data**: All geocoding and MRT distance calculations happen in `scripts/`.
 3. **Persistence**: All user state is strictly browser-local (`localStorage`).
-4. **Agent Context**: Agents MUST exclude `public/data/` from their context (and generally respect `.gitignore`) to prevent token bloat. Use `tests/fixtures/public-data/` if data schema analysis is required.
+4. **Agent Context**: Agents MUST NOT read, glob, index, summarize, or load `public/data/` into context unless explicitly asked. Respect `.gitignore` by default. Use `tests/fixtures/public-data/` if data schema analysis is required.
 
 ## 🔍 Code Review Policy
 
