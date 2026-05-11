@@ -23,6 +23,11 @@ const mockBlock: BlockSummary = {
     stationName: "BEDOK NORTH MRT STATION",
     distanceMeters: 400,
   },
+  nearbyMrts: [
+    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400 },
+    { stationName: "BEDOK MRT STATION", distanceMeters: 800 },
+    { stationName: "BEDOK SOUTH MRT STATION", distanceMeters: 1200 },
+  ],
 };
 
 const mockComparison: ComparisonArtifact = {
@@ -37,6 +42,14 @@ const mockComparison: ComparisonArtifact = {
       {
         name: "BEDOK PRIMARY SCHOOL",
         distanceMeters: 250,
+      },
+      {
+        name: "BEDOK SECONDARY SCHOOL",
+        distanceMeters: 450,
+      },
+      {
+        name: "OPERA ESTATE PRIMARY SCHOOL",
+        distanceMeters: 600,
       },
     ],
     hawkerCentresWithin1km: 2,
@@ -96,9 +109,8 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("Schools")).toBeInTheDocument();
     expect(screen.getByText("3 within 1km")).toBeInTheDocument();
     expect(screen.getByText("8 within 2km")).toBeInTheDocument();
-    expect(screen.getByText((_, element) => {
-      return element?.textContent === "BEDOK PRIMARY SCHOOL: 250 m";
-    })).toBeInTheDocument();
+    expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("250 m")).toBeInTheDocument();
     
     expect(screen.getByText("Hawkers")).toBeInTheDocument();
     expect(screen.getByText("2 within 1km")).toBeInTheDocument();
@@ -108,6 +120,57 @@ describe("DetailDrawer", () => {
     
     expect(screen.getByText("Parks")).toBeInTheDocument();
     expect(screen.getByText("4 within 1km")).toBeInTheDocument();
+  });
+
+  it("renders MRT connectivity section with nearby stations", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    // Check that MRT connectivity card is rendered (label is inside the card)
+    expect(screen.getByText("Connectivity")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK NORTH MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText("400 m")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText("800 m")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK SOUTH MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText("1.2 km")).toBeInTheDocument();
+  });
+
+  it("renders all 3 nearby schools with names and distances", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    // Check that all 3 schools are displayed with their distances
+    expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("250 m")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK SECONDARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("450 m")).toBeInTheDocument();
+    expect(screen.getByText("OPERA ESTATE PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("600 m")).toBeInTheDocument();
   });
 
   it("renders percentile sections when comparison data is available", () => {

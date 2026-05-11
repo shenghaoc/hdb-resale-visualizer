@@ -31,6 +31,11 @@ const block: BlockSummary = {
     stationName: "BEDOK NORTH MRT STATION",
     distanceMeters: 400,
   },
+  nearbyMrts: [
+    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400 },
+    { stationName: "BEDOK MRT STATION", distanceMeters: 800 },
+    { stationName: "KAKI BUKIT MRT STATION", distanceMeters: 1200 },
+  ],
 };
 
 describe("ResultsPane", () => {
@@ -50,5 +55,26 @@ describe("ResultsPane", () => {
     );
 
     expect(screen.getByText("勿洛 · BEDOK · 四房式 · 4 ROOM")).toBeInTheDocument();
+  });
+
+  it("renders nearby MRT stations with distances in full mode", () => {
+    render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact={false}
+        />
+      </I18nProvider>,
+    );
+
+    // Check that all 3 nearby MRT stations are displayed
+    expect(screen.getByText("BEDOK NORTH MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText("KAKI BUKIT MRT STATION")).toBeInTheDocument();
   });
 });
