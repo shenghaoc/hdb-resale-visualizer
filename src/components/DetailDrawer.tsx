@@ -103,6 +103,7 @@ function AmenityCard({
   count2km,
   nearestDistance,
   nearbyItems,
+  showLabel = true,
   t,
   locale,
 }: {
@@ -112,18 +113,21 @@ function AmenityCard({
   count2km?: number;
   nearestDistance?: number | null;
   nearbyItems?: { name: string; distanceMeters: number }[];
+  showLabel?: boolean;
   t: Translator;
   locale: Locale;
 }) {
   return (
     <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
       <CardContent className="p-3">
-        <div className="mb-2 flex items-center gap-2">
-          <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
-          <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-            {label}
-          </span>
-        </div>
+        {showLabel && (
+          <div className="mb-2 flex items-center gap-2">
+            <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
+            <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+              {label}
+            </span>
+          </div>
+        )}
         <div className="flex flex-col gap-1">
           {count1km !== undefined && (
             <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
@@ -134,7 +138,7 @@ function AmenityCard({
             </div>
           )}
           {nearbyItems && nearbyItems.length > 0 ? (
-            <ul className="mt-1 flex flex-col gap-0.5">
+            <ul className={showLabel ? "mt-1 flex flex-col gap-0.5" : "flex flex-col gap-0.5"}>
               {nearbyItems.map((item) => (
                 <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1.5 min-w-0">
@@ -394,6 +398,10 @@ export function DetailDrawer({
                 {/* MRT Connectivity */}
                 {nearbyStations.length > 0 && (
                   <section>
+                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                      <TrainFront data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.connectivity")}
+                    </h3>
                     <AmenityCard
                       icon={TrainFront}
                       label={t("detail.connectivity")}
@@ -401,6 +409,7 @@ export function DetailDrawer({
                         name: mrt.stationName,
                         distanceMeters: mrt.distanceMeters,
                       }))}
+                      showLabel={false}
                       t={t}
                       locale={locale}
                     />
