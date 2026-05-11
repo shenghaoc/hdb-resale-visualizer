@@ -274,14 +274,28 @@ function findNearestSchools(
     .slice(0, limit);
 }
 
-function calculatePercentile(value: number, values: number[]): number {
+/**
+ * Calculates the percentile rank of a value within a pre-sorted population using binary search.
+ * The population array MUST be sorted in ascending order.
+ */
+export function calculatePercentileSorted(value: number, values: number[]): number {
   if (values.length === 0) {
     return 50;
   }
 
-  const sorted = [...values].sort((a, b) => a - b);
-  const count = sorted.filter((v) => v <= value).length;
-  return Math.round((count / sorted.length) * 100);
+  let left = 0;
+  let right = values.length;
+  while (left < right) {
+    const mid = (left + right) >>> 1;
+    if (values[mid] <= value) {
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
+  }
+
+  const count = left;
+  return Math.round((count / values.length) * 100);
 }
 
 function sortTransactionsByLatest(transactions: ResaleTransaction[]) {
@@ -677,6 +691,15 @@ export function buildArtifacts({
       townFlatTypeMetrics.set(key, population);
     }
 
+    for (const population of townFlatTypeMetrics.values()) {
+      population.prices.sort((a, b) => a - b);
+      population.pricesPerSqm.sort((a, b) => a - b);
+      population.leases.sort((a, b) => a - b);
+      population.mrtDistances.sort((a, b) => a - b);
+      population.transactionCounts.sort((a, b) => a - b);
+      population.recencies.sort((a, b) => a - b);
+    }
+
     for (const metric of blockMetrics) {
       const geocode = metric.geocode;
       if (!geocode) {
@@ -703,12 +726,12 @@ export function buildArtifacts({
       };
 
       const percentileRanks = {
-        pricePercentile: calculatePercentile(metric.medianPrice, metrics.prices),
-        pricePerSqmPercentile: calculatePercentile(metric.medianPricePerSqm, metrics.pricesPerSqm),
-        leasePercentile: calculatePercentile(metric.leaseYear, metrics.leases),
-        mrtDistancePercentile: 100 - calculatePercentile(metric.mrtDistanceMeters, metrics.mrtDistances),
-        transactionCountPercentile: calculatePercentile(metric.transactionCount, metrics.transactionCounts),
-        recencyPercentile: 100 - calculatePercentile(
+        pricePercentile: calculatePercentileSorted(metric.medianPrice, metrics.prices),
+        pricePerSqmPercentile: calculatePercentileSorted(metric.medianPricePerSqm, metrics.pricesPerSqm),
+        leasePercentile: calculatePercentileSorted(metric.leaseYear, metrics.leases),
+        mrtDistancePercentile: 100 - calculatePercentileSorted(metric.mrtDistanceMeters, metrics.mrtDistances),
+        transactionCountPercentile: calculatePercentileSorted(metric.transactionCount, metrics.transactionCounts),
+        recencyPercentile: 100 - calculatePercentileSorted(
           metric.monthsSinceLatestTransaction,
           metrics.recencies,
         ),
