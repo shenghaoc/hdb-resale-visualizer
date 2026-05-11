@@ -137,8 +137,8 @@ function AmenityCard({
           )}
           {nearbyItems && nearbyItems.length > 0 ? (
             <div className="mt-1 flex flex-col gap-0.5">
-              {nearbyItems.map((item) => (
-                <div key={item.name} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
+              {nearbyItems.map((item, idx) => (
+                <div key={`${item.name}-${idx}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
                   <span className="truncate min-w-0">{item.name}</span>
                   <span className="shrink-0 font-mono text-[0.65rem] tabular-nums">
                     {formatMeters(item.distanceMeters, t, locale)}
@@ -397,73 +397,81 @@ export function DetailDrawer({
                   </Card>
                 </section>
 
+                {/* MRT Connectivity */}
+                {nearbyStations.length > 0 && (
+                  <section>
+                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                      <TrainFront data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.connectivity")}
+                    </h3>
+                    <AmenityCard
+                      icon={TrainFront}
+                      label={t("detail.connectivity")}
+                      nearbyItems={nearbyStations.map((mrt) => ({
+                        name: mrt.stationName,
+                        distanceMeters: mrt.distanceMeters,
+                      }))}
+                      t={t}
+                      locale={locale}
+                    />
+                  </section>
+                )}
+
                 {/* Nearby Amenities */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <Trees data-icon className="size-4" aria-hidden="true" />
                     {t("detail.nearbyAmenities")}
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {nearbyStations.length > 0 && (
+                  {isComparisonLoading ? (
+                    <div className="grid grid-cols-2 gap-3">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                      ))}
+                    </div>
+                  ) : comparison ? (
+                    <div className="grid grid-cols-2 gap-3">
                       <AmenityCard
-                        icon={TrainFront}
-                        label={t("detail.connectivity")}
-                        nearbyItems={nearbyStations.map((mrt) => ({
-                          name: mrt.stationName,
-                          distanceMeters: mrt.distanceMeters,
-                        }))}
+                        icon={GraduationCap}
+                        label={t("detail.amenity.schools")}
+                        count1km={comparison.amenities.primarySchoolsWithin1km}
+                        count2km={comparison.amenities.primarySchoolsWithin2km}
+                        nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
+                        nearbyItems={comparison.amenities.nearestPrimarySchools}
                         t={t}
                         locale={locale}
                       />
-                    )}
-                    {isComparisonLoading ? (
-                      Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))
-                    ) : comparison ? (
-                      <>
-                        <AmenityCard
-                          icon={GraduationCap}
-                          label={t("detail.amenity.schools")}
-                          count1km={comparison.amenities.primarySchoolsWithin1km}
-                          count2km={comparison.amenities.primarySchoolsWithin2km}
-                          nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
-                          nearbyItems={comparison.amenities.nearestPrimarySchools}
-                          t={t}
-                          locale={locale}
-                        />
 
-                        <AmenityCard
-                          icon={UtensilsCrossed}
-                          label={t("detail.amenity.hawkers")}
-                          count1km={comparison.amenities.hawkerCentresWithin1km}
-                          nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
-                          t={t}
-                          locale={locale}
-                        />
+                      <AmenityCard
+                        icon={UtensilsCrossed}
+                        label={t("detail.amenity.hawkers")}
+                        count1km={comparison.amenities.hawkerCentresWithin1km}
+                        nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
+                        t={t}
+                        locale={locale}
+                      />
 
-                        <AmenityCard
-                          icon={ShoppingCart}
-                          label={t("detail.amenity.supermarkets")}
-                          count1km={comparison.amenities.supermarketsWithin1km}
-                          nearestDistance={comparison.amenities.nearestSupermarketMeters}
-                          t={t}
-                          locale={locale}
-                        />
+                      <AmenityCard
+                        icon={ShoppingCart}
+                        label={t("detail.amenity.supermarkets")}
+                        count1km={comparison.amenities.supermarketsWithin1km}
+                        nearestDistance={comparison.amenities.nearestSupermarketMeters}
+                        t={t}
+                        locale={locale}
+                      />
 
-                        <AmenityCard
-                          icon={Trees}
-                          label={t("detail.amenity.parks")}
-                          count1km={comparison.amenities.parksWithin1km}
-                          nearestDistance={comparison.amenities.nearestParkMeters}
-                          t={t}
-                          locale={locale}
-                        />
-                      </>
-                    ) : null}
-                  </div>
+                      <AmenityCard
+                        icon={Trees}
+                        label={t("detail.amenity.parks")}
+                        count1km={comparison.amenities.parksWithin1km}
+                        nearestDistance={comparison.amenities.nearestParkMeters}
+                        t={t}
+                        locale={locale}
+                      />
+                    </div>
+                  ) : null}
                   {!isComparisonLoading && !comparison && (
-                    <p className="mt-4 text-sm text-muted-foreground italic">
+                    <p className="text-sm text-muted-foreground italic">
                       {t("detail.noComparisonData")}
                     </p>
                   )}
