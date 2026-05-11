@@ -58,6 +58,12 @@ function App() {
     t,
   });
 
+  const { setUseDefaultStartMonth } = pipeline;
+  const { clearError, locate, cancelPendingRequest, setUserLocation } = geo;
+  const { isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab, setIsSavedPanelOpen } = panel;
+  const { toggle: toggleShortlist } = shortlist;
+  const { hasInteractedWithMap, setIsHeaderVisible, setHasInteractedWithMap } = header;
+
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(filters.selectedAddressKey);
 
@@ -102,10 +108,10 @@ function App() {
   const patchUserFilters = useCallback(
     (patch: Partial<typeof filters>) => {
       if ("startMonth" in patch) {
-        pipeline.setUseDefaultStartMonth(false);
+        setUseDefaultStartMonth(false);
       }
       if ("search" in patch || "town" in patch || "selectedAddressKey" in patch) {
-        geo.clearError();
+        clearError();
       }
       // Selecting a town while "near me" is active would apply both a radius and
       // a town boundary. Clear the sentinel so town selection is unambiguous.
@@ -115,72 +121,67 @@ function App() {
           : patch;
       patchFilters(resolved);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [patchFilters, pipeline.setUseDefaultStartMonth, geo.clearError, filters.search],
+    [patchFilters, setUseDefaultStartMonth, clearError, filters.search],
   );
 
   const handleResetFilters = useCallback(() => {
-    pipeline.setUseDefaultStartMonth(true);
-    geo.clearError();
+    setUseDefaultStartMonth(true);
+    clearError();
     resetFilters();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pipeline.setUseDefaultStartMonth, geo.clearError, resetFilters]);
+  }, [setUseDefaultStartMonth, clearError, resetFilters]);
 
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
-      if (panel.isDesktop) {
-        panel.setIsLeftPanelOpen(true);
-        panel.setLeftTab("results");
+      if (isDesktop) {
+        setIsLeftPanelOpen(true);
+        setLeftTab("results");
       } else {
-        panel.setMobileTab("results");
+        setMobileTab("results");
       }
       patchFilters({ selectedAddressKey: addressKey });
     },
-    [panel, patchFilters],
+    [isDesktop, setIsLeftPanelOpen, setLeftTab, setMobileTab, patchFilters],
   );
 
   const handleToggleShortlist = useCallback(
-    (addressKey: string) => shortlist.toggle(addressKey),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [shortlist.toggle],
+    (addressKey: string) => toggleShortlist(addressKey),
+    [toggleShortlist],
   );
 
   const handleChooseTown = useCallback(
     (options?: { clearGeolocationError?: boolean }) => {
-      if (options?.clearGeolocationError !== false) geo.clearError();
-      geo.cancelPendingRequest();
-      if (panel.isDesktop) {
-        panel.setLeftTab("filters");
-        panel.setIsLeftPanelOpen(true);
+      if (options?.clearGeolocationError !== false) clearError();
+      cancelPendingRequest();
+      if (isDesktop) {
+        setLeftTab("filters");
+        setIsLeftPanelOpen(true);
         return;
       }
-      panel.setMobileTab("filters");
+      setMobileTab("filters");
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [geo.clearError, geo.cancelPendingRequest, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen, panel.setMobileTab],
+    [clearError, cancelPendingRequest, isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab],
   );
 
   const handleGeolocate = useCallback(
-    (coords: Parameters<typeof geo.setUserLocation>[0]) => {
-      geo.setUserLocation(coords);
-      geo.clearError();
+    (coords: Parameters<typeof setUserLocation>[0]) => {
+      setUserLocation(coords);
+      clearError();
       patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-      if (panel.isDesktop) {
-        panel.setLeftTab("results");
-        panel.setIsLeftPanelOpen(true);
+      if (isDesktop) {
+        setLeftTab("results");
+        setIsLeftPanelOpen(true);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [geo.setUserLocation, geo.clearError, patchFilters, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen],
+    [setUserLocation, clearError, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen],
   );
 
   const handleUseCurrentLocation = useCallback(() => {
-    geo.locate(
+    locate(
       (coords) => {
         patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-        if (panel.isDesktop) {
-          panel.setLeftTab("results");
-          panel.setIsLeftPanelOpen(true);
+        if (isDesktop) {
+          setLeftTab("results");
+          setIsLeftPanelOpen(true);
         }
         // Mobile: stay on map so nearby markers are visible once scope resolves.
         // The geo hook already called setUserLocation before invoking this callback.
@@ -188,32 +189,30 @@ function App() {
       },
       () => handleChooseTown({ clearGeolocationError: false }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo.locate, patchFilters, panel.isDesktop, panel.setLeftTab, panel.setIsLeftPanelOpen, handleChooseTown]);
+  }, [locate, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen, handleChooseTown]);
 
   const handleMapInteract = useCallback(
     (interactionType: "background" | "feature" = "background") => {
-      if (!header.hasInteractedWithMap) {
-        if (panel.isDesktop) header.setIsHeaderVisible(false);
-        header.setHasInteractedWithMap(true);
+      if (!hasInteractedWithMap) {
+        if (isDesktop) setIsHeaderVisible(false);
+        setHasInteractedWithMap(true);
       }
       if (interactionType === "feature") return;
-      if (panel.isDesktop) {
-        panel.setIsLeftPanelOpen(false);
-        panel.setIsSavedPanelOpen(false);
+      if (isDesktop) {
+        setIsLeftPanelOpen(false);
+        setIsSavedPanelOpen(false);
         return;
       }
-      panel.setMobileTab(null);
+      setMobileTab(null);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      header.hasInteractedWithMap,
-      panel.isDesktop,
-      header.setIsHeaderVisible,
-      header.setHasInteractedWithMap,
-      panel.setIsLeftPanelOpen,
-      panel.setIsSavedPanelOpen,
-      panel.setMobileTab,
+      hasInteractedWithMap,
+      isDesktop,
+      setIsHeaderVisible,
+      setHasInteractedWithMap,
+      setIsLeftPanelOpen,
+      setIsSavedPanelOpen,
+      setMobileTab,
     ],
   );
 

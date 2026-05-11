@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   getDefaultTransactionStartMonth,
@@ -40,6 +40,15 @@ export function useFilterPipeline({
     if (typeof window === "undefined") return true;
     return !new URLSearchParams(window.location.search).has("startMonth");
   });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handlePopState = () => {
+      setUseDefaultStartMonth(!new URLSearchParams(window.location.search).has("startMonth"));
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const defaultStartMonth = useMemo(
     () =>
