@@ -274,8 +274,7 @@ function findNearestSchools(
     .slice(0, limit);
 }
 
-// ⚡ Bolt: Calculate percentile using O(log N) binary search since population values are pre-sorted
-function calculatePercentileSorted(value: number, values: number[]): number {
+export function calculatePercentileSorted(value: number, values: number[]): number {
   if (values.length === 0) {
     return 50;
   }
@@ -688,7 +687,6 @@ export function buildArtifacts({
       townFlatTypeMetrics.set(key, population);
     }
 
-    // ⚡ Bolt: Pre-sort the population once to allow O(log N) percentile calculations
     for (const population of townFlatTypeMetrics.values()) {
       population.prices.sort((a, b) => a - b);
       population.pricesPerSqm.sort((a, b) => a - b);
