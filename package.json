@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --cache-location node_modules/.cache/eslint --cache-strategy content",
     "lint:typed": "ESLINT_TYPED=1 eslint . --cache --cache-location node_modules/.cache/eslint-typed --cache-strategy content",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "NODE_OPTIONS=--no-experimental-webstorage vitest run",
+    "test:watch": "NODE_OPTIONS=--no-experimental-webstorage vitest",
     "test:e2e": "playwright test",
     "sync-data": "tsx scripts/sync-data.ts"
   },

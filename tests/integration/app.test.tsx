@@ -234,13 +234,15 @@ describe("App detail loading", () => {
     });
     dataMocks.fetchBlocksByTown.mockResolvedValue(blocks);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
-    Object.defineProperty(window, "localStorage", {
-      value: {
-        getItem: vi.fn(() => null),
-        setItem: vi.fn(),
-      },
-      configurable: true,
+    vi.stubGlobal("localStorage", {
+      getItem: vi.fn(() => null),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
     });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it("clears loading and shows results again when selection is removed mid-request", async () => {

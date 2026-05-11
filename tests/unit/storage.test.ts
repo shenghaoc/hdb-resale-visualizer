@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { safeStorage } from "../../src/lib/storage";
 
-const originalLocalStorage = Object.getOwnPropertyDescriptor(window, "localStorage");
-
 function installLocalStorageMock(
   overrides: Partial<Pick<Storage, "getItem" | "setItem" | "removeItem">> = {},
 ) {
@@ -13,10 +11,7 @@ function installLocalStorageMock(
     ...overrides,
   } as Pick<Storage, "getItem" | "setItem" | "removeItem">;
 
-  Object.defineProperty(window, "localStorage", {
-    configurable: true,
-    value: storage,
-  });
+  vi.stubGlobal("localStorage", storage);
 
   return storage;
 }
@@ -24,11 +19,7 @@ function installLocalStorageMock(
 describe("safeStorage", () => {
   afterEach(() => {
     vi.restoreAllMocks();
-    if (originalLocalStorage) {
-      Object.defineProperty(window, "localStorage", originalLocalStorage);
-    } else {
-      Reflect.deleteProperty(window, "localStorage");
-    }
+    vi.unstubAllGlobals();
   });
 
   describe("getItem", () => {
