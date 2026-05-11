@@ -274,6 +274,10 @@ function findNearestSchools(
     .slice(0, limit);
 }
 
+/**
+ * Calculates the percentile rank of a value within a pre-sorted population using binary search.
+ * The population array MUST be sorted in ascending order.
+ */
 export function calculatePercentileSorted(value: number, values: number[]): number {
   if (values.length === 0) {
     return 50;
