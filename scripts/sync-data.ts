@@ -7,11 +7,9 @@ import {
 } from "./lib/sync/writer";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
 import {
   buildArtifacts,
   buildMrtStationsGeoJson,
-  type SchoolLocation,
   type GeocodeCacheFile,
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
@@ -225,12 +223,8 @@ async function main() {
     geocodeFailureCount,
   });
 
-  await writeGeneratedArtifacts(artifacts, mrtGeoJson);
   const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
-  await fs.writeFile(
-    path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtStations),
-    JSON.stringify(stationsGeoJson, null, 2),
-  );
+  await writeGeneratedArtifacts(artifacts, mrtGeoJson, stationsGeoJson);
 
   await writeTownBlockFiles(artifacts.blocksByTown);
   await writeComparisonFiles(artifacts.comparisons);

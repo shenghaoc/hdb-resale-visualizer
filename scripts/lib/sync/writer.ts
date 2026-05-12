@@ -20,17 +20,18 @@ export async function ensureDataDirectories() {
   await fs.mkdir(TRENDS_DIR, { recursive: true });
 }
 
-export async function writeGeneratedArtifacts(artifacts: GeneratedArtifacts, mrtGeoJson: unknown) {
+export async function writeGeneratedArtifacts(
+  artifacts: GeneratedArtifacts,
+  mrtGeoJson: unknown,
+  mrtStationsGeoJson: unknown,
+) {
   console.log("Writing generated artifacts to public/data/...");
-  
+
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.manifest), artifacts.manifest);
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.blockSummaries), artifacts.blockSummaries);
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend), artifacts.townFlatTypeTrend);
   await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtExits), mrtGeoJson);
-  
-  // Station GeoJSON is built by sync-data or pipeline but we write it here
-  // Actually, artifacts.mrtStations is not in GeneratedArtifacts yet, let's check pipeline.ts
-  // pipeline.ts has buildMrtStationsGeoJson
+  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtStations), mrtStationsGeoJson);
 }
 
 export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>) {
