@@ -7,18 +7,53 @@ updates:
       day: "monday"
       time: "09:00"
       timezone: "Asia/Singapore"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 10
     labels:
       - "dependencies"
     commit-message:
       prefix: "deps"
     groups:
-      minor-and-patch:
+      react:
         patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+          - "react"
+          - "react-dom"
+          - "@types/react*"
+          - "@vitejs/plugin-react*"
+          - "eslint-plugin-react-*"
+          - "@radix-ui/*"
+          - "radix-ui"
+          - "lucide-react"
+          - "echarts-for-react"
+          - "shadcn"
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "@tailwindcss/vite"
+          - "tailwindcss"
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+          - "tsx"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "typescript-eslint"
+          - "@typescript-eslint/*"
+          - "globals"
+      maplibre:
+        patterns:
+          - "maplibre-gl"
+      testing:
+        patterns:
+          - "vitest"
+          - "@playwright/test"
+          - "@testing-library/*"
+          - "jsdom"
+          - "fast-check"
 
   - package-ecosystem: "github-actions"
     directory: "/"
