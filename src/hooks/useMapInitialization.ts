@@ -30,9 +30,7 @@ export function useMapInitialization({
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    const tileUrl = initialIsDarkModeRef.current
-      ? ONEMAP_NIGHT_TILE_URL
-      : ONEMAP_DEFAULT_TILE_URL;
+    const tileUrl = initialIsDarkModeRef.current ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL;
 
     const map = new maplibregl.Map({
       container: containerRef.current,
