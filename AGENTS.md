@@ -36,4 +36,4 @@ npm run build
 
 ## 5) Reference docs (review/process details)
 - Workspace MCP config: [`.kiro/settings/mcp.json`](.kiro/settings/mcp.json)
-- Review policy and platform trigger conventions live in `.kiro/` specs/steering; consult when performing formal PR review work.
+- Review policy and platform trigger conventions live in [`.kiro/steering/`](.kiro/steering/); consult when performing formal PR review work.
