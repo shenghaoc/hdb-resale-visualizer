@@ -16,6 +16,16 @@ import type {
 } from "@/types/data";
 import type { z } from "zod";
 
+class ArtifactFetchHttpError extends Error {
+  status: number;
+
+  constructor(path: string, status: number) {
+    super(`Failed to load ${path}: ${status}`);
+    this.name = "ArtifactFetchHttpError";
+    this.status = status;
+  }
+}
+
 function createArtifactContractError(path: string, reason: string) {
   return new Error(`Artifact contract violation for ${path}: ${reason}`);
 }
@@ -24,7 +34,7 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSc
   const response = await fetch(path);
 
   if (!response.ok) {
-    throw new Error(`Failed to load ${path}: ${response.status}`);
+    throw new ArtifactFetchHttpError(path, response.status);
   }
 
   const parsed = schema.safeParse(await response.json());
@@ -62,7 +72,7 @@ export async function fetchComparisonArtifact(addressKey: string): Promise<Compa
     return await fetchJson(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`, comparisonArtifactSchema);
   } catch (error) {
     // Return null if comparison data doesn't exist yet
-    if (error instanceof Error && error.message.includes('404')) {
+    if (error instanceof ArtifactFetchHttpError && error.status === 404) {
       return null;
     }
     // Re-throw other errors (network issues, etc.)
