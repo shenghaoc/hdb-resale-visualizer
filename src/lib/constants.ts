@@ -79,8 +79,8 @@ export const MEDIAN_PRICE_COLOR_EXPRESSION = [
   "interpolate",
   ["linear"],
   ["get", "median_price"],
-  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
-];
+  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color] as const),
+] as const;
 export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 /**
