@@ -85,4 +85,15 @@ describe('fetchComparisonArtifact', () => {
 
     await expect(fetchComparisonArtifact('test-address')).rejects.toThrow('Network error');
   });
+
+  it('should not treat schema violations as missing artifact when address key contains 404', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve({ addressKey: 'block-404' }),
+    });
+
+    await expect(fetchComparisonArtifact('block-404')).rejects.toThrow(
+      /Artifact contract violation/
+    );
+  });
 });
