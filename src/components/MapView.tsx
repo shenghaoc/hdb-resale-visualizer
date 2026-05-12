@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
@@ -101,6 +101,7 @@ export function MapView({
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
+  const [mapInstance, setMapInstance] = useState<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const onMapInteractRef = useRef(onMapInteract);
   const onGeolocateRef = useRef(onGeolocate);
@@ -297,7 +298,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as any,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
@@ -471,11 +472,13 @@ export function MapView({
     });
 
     mapRef.current = map;
+    setMapInstance(map);
 
     return () => {
       popup.remove();
       map.remove();
       mapRef.current = null;
+      setMapInstance(null);
       popupRef.current = null;
     };
   }, []);
@@ -662,8 +665,8 @@ export function MapView({
     };
   }, [priceHeatmapOpacity]);
 
-  useMapTheme(mapRef, isDarkMode);
-  useMapRadiusLayer(mapRef, geographicIntent, selectedAddressKey, blocksByKey);
+  useMapTheme(mapInstance, isDarkMode);
+  useMapRadiusLayer(mapInstance, geographicIntent, selectedAddressKey, blocksByKey);
 
   return (
     <div

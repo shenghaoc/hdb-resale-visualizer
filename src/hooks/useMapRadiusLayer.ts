@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import { isGeoJsonDataSourceLike } from "@/types/map";
@@ -21,13 +21,12 @@ function createCircleGeoJson(center: Coordinates, radiusKm: number): GeoJSON.Fea
 }
 
 export function useMapRadiusLayer(
-  mapRef: RefObject<MapLibreMap | null>,
+  map: MapLibreMap | null,
   geographicIntent: GeographicSearchIntent | null | undefined,
   selectedAddressKey: string | null,
   blocksByKey: Map<string, BlockSummary>,
 ) {
   useEffect(() => {
-    const map = mapRef.current;
     if (!map) return;
 
     const updateRadius = () => {
@@ -61,8 +60,5 @@ export function useMapRadiusLayer(
     return () => {
       map.off("load", updateRadius);
     };
-    // Note: `mapRef` is a RefObject whose `.current` mutations do not trigger
-    // re-renders. This effect relies on the parent component causing a
-    // re-render (e.g., via state updates) once the map instance is ready.
-  }, [blocksByKey, geographicIntent, mapRef, selectedAddressKey]);
+  }, [blocksByKey, geographicIntent, map, selectedAddressKey]);
 }

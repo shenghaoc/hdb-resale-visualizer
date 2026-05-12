@@ -1,15 +1,14 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/lib/constants";
 
 type RasterSourceLike = { setTiles(tiles: string[]): void };
 
-export function useMapTheme(mapRef: RefObject<MapLibreMap | null>, isDarkMode: boolean) {
+export function useMapTheme(map: MapLibreMap | null, isDarkMode: boolean) {
   const lastAppliedThemeRef = useRef<boolean>(isDarkMode);
   const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    const map = mapRef.current;
     if (!map || lastAppliedThemeRef.current === isDarkMode) return;
 
     const applyTiles = () => {
@@ -42,5 +41,5 @@ export function useMapTheme(mapRef: RefObject<MapLibreMap | null>, isDarkMode: b
         pendingThemeLoadListenerRef.current = null;
       }
     };
-  }, [isDarkMode, mapRef]);
+  }, [isDarkMode, map]);
 }
