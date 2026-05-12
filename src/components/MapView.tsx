@@ -21,6 +21,7 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useMapTheme } from "@/hooks/useMapTheme";
 import { useMapRadiusLayer } from "@/hooks/useMapRadiusLayer";
 import type { BlockSummary, Coordinates } from "@/types/data";
+import { isGeoJsonDataSourceLike } from "@/types/map";
 import type { Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import type { Locale } from "@/lib/i18n";
@@ -61,10 +62,6 @@ type GeoJsonSourceLike = {
   getClusterExpansionZoom(clusterId: number): Promise<number>;
 };
 
-type GeoJsonDataSourceLike = {
-  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
-};
-
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
   GeoJSON.Point,
   PopupProperties
@@ -84,10 +81,6 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
     "setData" in source &&
     "getClusterExpansionZoom" in source
   );
-}
-
-function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
-  return !!source && typeof source === "object" && "setData" in source;
 }
 
 export function MapView({
@@ -304,7 +297,8 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as never,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+          "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as any,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
@@ -486,7 +480,6 @@ export function MapView({
     };
   }, []);
 
-;
 
   useEffect(() => {
     const map = mapRef.current;
@@ -668,9 +661,6 @@ export function MapView({
       map.off("load", applyOpacity);
     };
   }, [priceHeatmapOpacity]);
-
-;
-
 
   useMapTheme(mapRef, isDarkMode);
   useMapRadiusLayer(mapRef, geographicIntent, selectedAddressKey, blocksByKey);

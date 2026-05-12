@@ -19,7 +19,10 @@ export function useMapTheme(mapRef: RefObject<MapLibreMap | null>, isDarkMode: b
       lastAppliedThemeRef.current = isDarkMode;
     };
 
-    if (map.isStyleLoaded()) return applyTiles();
+    if (map.isStyleLoaded()) {
+      applyTiles();
+      return;
+    }
 
     if (pendingThemeLoadListenerRef.current) {
       map.off("load", pendingThemeLoadListenerRef.current);

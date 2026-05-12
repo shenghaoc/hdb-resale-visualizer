@@ -1,15 +1,8 @@
 import { useEffect, type RefObject } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary, Coordinates } from "@/types/data";
+import { isGeoJsonDataSourceLike } from "@/types/map";
 import type { GeographicSearchIntent } from "@/lib/filtering";
-
-type GeoJsonDataSourceLike = {
-  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
-};
-
-function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
-  return !!source && typeof source === "object" && "setData" in source;
-}
 
 function createCircleGeoJson(center: Coordinates, radiusKm: number): GeoJSON.Feature<GeoJSON.Polygon> {
   const points = 64;
@@ -42,7 +35,11 @@ export function useMapRadiusLayer(
       if (!isGeoJsonDataSourceLike(source)) return;
 
       if (geographicIntent?.type === "coordinates") {
-        source.setData({ type: "FeatureCollection", features: [createCircleGeoJson(geographicIntent.coordinates, geographicIntent.radiusMeters / 1000)] });
+        const radiusKm = geographicIntent.radiusMeters / 1000;
+        source.setData({
+          type: "FeatureCollection",
+          features: [createCircleGeoJson(geographicIntent.coordinates, radiusKm)],
+        });
         return;
       }
 
@@ -61,6 +58,11 @@ export function useMapRadiusLayer(
     if (map.isStyleLoaded()) updateRadius();
     else void map.once("load", updateRadius);
 
-    return () => map.off("load", updateRadius);
+    return () => {
+      map.off("load", updateRadius);
+    };
+    // Note: `mapRef` is a RefObject whose `.current` mutations do not trigger
+    // re-renders. This effect relies on the parent component causing a
+    // re-render (e.g., via state updates) once the map instance is ready.
   }, [blocksByKey, geographicIntent, mapRef, selectedAddressKey]);
 }
