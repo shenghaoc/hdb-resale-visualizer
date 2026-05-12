@@ -76,7 +76,9 @@ async function main() {
   const resaleCsvRows: Record<string, string>[] = [];
   for (const datasetId of resaleCollection.childDatasets) {
     const datasetRows = await fetchCsvRows(datasetId);
-    resaleCsvRows.push(...datasetRows);
+    for (const row of datasetRows) {
+      resaleCsvRows.push(row);
+    }
     await sleep(2600);
   }
 
