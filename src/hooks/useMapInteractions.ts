@@ -157,6 +157,14 @@ export function useMapInteractions({
       popup?.remove();
     };
 
+    const handleMouseEnterClusters = () => {
+      map.getCanvas().style.cursor = "pointer";
+    };
+
+    const handleMouseLeaveClusters = () => {
+      map.getCanvas().style.cursor = "";
+    };
+
     const handleMapClick = (event: MapMouseEvent) => {
       const queryableLayers = SELECTABLE_LAYER_IDS.filter((layerId) => map.getLayer(layerId));
       if (queryableLayers.length === 0) {
@@ -192,8 +200,8 @@ export function useMapInteractions({
     map.on("click", "clusters", handleClickCluster);
     map.on("mouseenter", "unclustered-point", handleMouseEnterUnclustered);
     map.on("mouseleave", "unclustered-point", handleMouseLeaveUnclustered);
-    map.on("mouseenter", "clusters", () => (map.getCanvas().style.cursor = "pointer"));
-    map.on("mouseleave", "clusters", () => (map.getCanvas().style.cursor = ""));
+    map.on("mouseenter", "clusters", handleMouseEnterClusters);
+    map.on("mouseleave", "clusters", handleMouseLeaveClusters);
     map.on("click", handleMapClick);
     map.on("dblclick", handleDblClick);
     map.on("movestart", handleMoveStart);
@@ -203,6 +211,8 @@ export function useMapInteractions({
       map.off("click", "clusters", handleClickCluster);
       map.off("mouseenter", "unclustered-point", handleMouseEnterUnclustered);
       map.off("mouseleave", "unclustered-point", handleMouseLeaveUnclustered);
+      map.off("mouseenter", "clusters", handleMouseEnterClusters);
+      map.off("mouseleave", "clusters", handleMouseLeaveClusters);
       map.off("click", handleMapClick);
       map.off("dblclick", handleDblClick);
       map.off("movestart", handleMoveStart);

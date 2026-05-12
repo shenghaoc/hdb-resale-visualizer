@@ -26,6 +26,10 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     } else {
       void map.once("load", updateData);
     }
+
+    return () => {
+      map.off("load", updateData);
+    };
   }, [map, geoJson]);
 
   // Sync heatmap source if active
@@ -44,5 +48,9 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     } else {
       void map.once("load", applyData);
     }
+
+    return () => {
+      map.off("load", applyData);
+    };
   }, [map, geoJson, priceHeatmapEnabled]);
 }

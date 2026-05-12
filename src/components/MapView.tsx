@@ -17,8 +17,7 @@ import { useMapFitBounds } from "@/hooks/useMapFitBounds";
 import { useMapDataSync } from "@/hooks/useMapDataSync";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
 import type { BlockSummary, Coordinates } from "@/types/data";
-import type { Translator } from "@/lib/i18n";
-import type { Locale } from "@/lib/i18n";
+import type { Locale, Translator } from "@/lib/i18n";
 import type { GeographicSearchIntent } from "@/lib/filtering";
 
 type MapViewProps = {

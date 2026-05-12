@@ -21,6 +21,7 @@ export function useMapInitialization({
   const mapRef = useRef<MapLibreMap | null>(null);
   const [mapInstance, setMapInstance] = useState<MapLibreMap | null>(null);
   const onGeolocateRef = useRef(onGeolocate);
+  const initialIsDarkModeRef = useRef(isDarkMode);
 
   useEffect(() => {
     onGeolocateRef.current = onGeolocate;
@@ -28,6 +29,10 @@ export function useMapInitialization({
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
+
+    const tileUrl = initialIsDarkModeRef.current
+      ? ONEMAP_NIGHT_TILE_URL
+      : ONEMAP_DEFAULT_TILE_URL;
 
     const map = new maplibregl.Map({
       container: containerRef.current,
@@ -46,7 +51,7 @@ export function useMapInitialization({
         sources: {
           onemap: {
             type: "raster",
-            tiles: [isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL],
+            tiles: [tileUrl],
             tileSize: 256,
             maxzoom: 18,
             attribution: ONEMAP_ATTRIBUTION,
@@ -70,9 +75,11 @@ export function useMapInitialization({
       showUserLocation: true,
     });
 
-    geolocate.on("geolocate", (e: unknown) => {
-      const event = e as { coords: { latitude: number; longitude: number } };
-      onGeolocateRef.current?.({ lat: event.coords.latitude, lng: event.coords.longitude });
+    geolocate.on("geolocate", (position: GeolocationPosition) => {
+      onGeolocateRef.current?.({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
     });
 
     map.addControl(geolocate, "top-right");
@@ -86,7 +93,7 @@ export function useMapInitialization({
       mapRef.current = null;
       setMapInstance(null);
     };
-  }, [containerRef, isDarkMode]);
+  }, [containerRef]);
 
   return mapInstance;
 }
