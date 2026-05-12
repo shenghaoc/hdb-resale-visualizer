@@ -23,14 +23,15 @@ Current initiatives follow the **Kiro Tech-Design-First** workflow. Specs are lo
 
 ## 4) Useful local commands
 ```bash
-npm install
-npm run dev
-npm run sync-data
-npm run typecheck
-npm run lint
-npm run test
-npm run test:e2e
-npm run build
+npm install           # Install dependencies
+npm run dev           # Start development server (localhost:5173)
+npm run sync-data     # Refresh precomputed artifacts (public/data/)
+npm run typecheck     # Strict TypeScript verification
+npm run lint          # ESLint with type-aware rules (default)
+npm run lint:fast     # ESLint syntax-focused pass (faster local fallback)
+npm run test          # Run Vitest unit/integration tests
+npm run test:e2e      # Run Playwright end-to-end tests
+npm run build         # Production build
 ```
 
 ## 🏗️ Architectural Boundary

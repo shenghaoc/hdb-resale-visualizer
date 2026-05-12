@@ -70,6 +70,7 @@ npm run build
 npm run preview
 npm run typecheck
 npm run lint
+npm run lint:fast
 npm run test
 npm run test:e2e
 npm run sync-data
@@ -107,7 +108,8 @@ GEOCODE_CONCURRENCY=10
 ## Deployment
 
 - `wrangler.toml` is configured for Cloudflare Pages static output.
-- `.github/workflows/ci.yml` runs typecheck, lint, unit/integration tests, e2e smoke, and production build.
+- `.github/workflows/ci.yml` runs typecheck, typed lint, unit/integration tests, e2e smoke, and fixture-backed production build verification.
+- `.github/workflows/deploy-preview.yml` handles build, pipeline cache/data sync, and Cloudflare Pages preview/production deploy after CI passes.
 - `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, and deploys directly to Cloudflare Pages when the relevant secrets exist. Artifacts are never committed to git.
 
 ## Notes
