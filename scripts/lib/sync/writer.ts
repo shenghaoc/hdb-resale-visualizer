@@ -11,7 +11,7 @@ const TRENDS_DIR = path.join(PUBLIC_DATA_DIR, path.dirname(CRITICAL_DATA_ARTIFAC
 
 async function writeJson(filePath: string, value: unknown) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, JSON.stringify(value, null, 2));
+  await fs.writeFile(filePath, JSON.stringify(value));
 }
 
 export async function ensureDataDirectories() {
@@ -37,18 +37,22 @@ export async function writeGeneratedArtifacts(
 export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>) {
   await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
-  for (const [town, blocks] of Object.entries(blocksByTown)) {
-    await writeJson(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), blocks);
-  }
+  await Promise.all(
+    Object.entries(blocksByTown).map(([town, blocks]) =>
+      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), JSON.stringify(blocks)),
+    ),
+  );
   console.log(`Generated ${Object.keys(blocksByTown).length} town-indexed block files.`);
 }
 
 export async function writeDetailFiles(details: Record<string, unknown>) {
   await fs.rm(DETAILS_DIR, { recursive: true, force: true });
   await fs.mkdir(DETAILS_DIR, { recursive: true });
-  for (const [addressKey, detail] of Object.entries(details)) {
-    await writeJson(path.join(DETAILS_DIR, `${addressKey}.json`), detail);
-  }
+  await Promise.all(
+    Object.entries(details).map(([addressKey, detail]) =>
+      fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), JSON.stringify(detail)),
+    ),
+  );
   console.log(`Generated ${Object.keys(details).length} detail files.`);
 }
 
@@ -56,9 +60,11 @@ export async function writeComparisonFiles(comparisons?: Record<string, unknown>
   await fs.rm(COMPARISONS_DIR, { recursive: true, force: true });
   if (comparisons) {
     await fs.mkdir(COMPARISONS_DIR, { recursive: true });
-    for (const [addressKey, comparison] of Object.entries(comparisons)) {
-      await writeJson(path.join(COMPARISONS_DIR, `${addressKey}.json`), comparison);
-    }
+    await Promise.all(
+      Object.entries(comparisons).map(([addressKey, comparison]) =>
+        fs.writeFile(path.join(COMPARISONS_DIR, `${addressKey}.json`), JSON.stringify(comparison)),
+      ),
+    );
     console.log(`Generated ${Object.keys(comparisons).length} comparison artifacts.`);
   }
 }

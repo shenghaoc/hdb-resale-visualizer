@@ -7,6 +7,7 @@ export function useMapLayers(map: MapLibreMap | null) {
     if (!map) return;
 
     const addLayers = () => {
+      if (!map.isStyleLoaded()) return;
       if (map.getSource("blocks")) return;
 
       map.addSource("radius", {
@@ -127,10 +128,21 @@ export function useMapLayers(map: MapLibreMap | null) {
       });
     };
 
+    const handleStyleData = () => {
+      addLayers();
+    };
+
+    map.on("styledata", handleStyleData);
+
     if (map.isStyleLoaded()) {
       addLayers();
     } else {
       void map.once("load", addLayers);
     }
+
+    return () => {
+      map.off("styledata", handleStyleData);
+      map.off("load", addLayers);
+    };
   }, [map]);
 }

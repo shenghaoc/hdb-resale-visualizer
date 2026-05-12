@@ -126,11 +126,15 @@ async function main() {
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
   const geocodeCache = await loadGeocodeCache(GEOCODE_CACHE_PATH);
 
-  let amenities: Awaited<ReturnType<typeof fetchAmenityData>> | undefined;
+  let amenities: Omit<Awaited<ReturnType<typeof fetchAmenityData>>, "geocodedCount"> | undefined;
   if (!skipAmenities) {
     try {
-      amenities = await fetchAmenityData(geocodeCache, { skipGeocoding, geocodeEndpoint });
-      if (amenities.geocodedCount > 0) {
+      const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
+        skipGeocoding,
+        geocodeEndpoint,
+      });
+      amenities = amenityData;
+      if (geocodedCount > 0) {
         geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
         await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
       }

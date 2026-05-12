@@ -115,9 +115,25 @@ export function MapView({
 
   // Selected point filter sync
   useEffect(() => {
-    if (!mapInstance || !mapInstance.getLayer("selected-point")) return;
-    mapInstance.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
-    mapInstance.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
+    if (!mapInstance) return;
+
+    const applySelectionFilter = () => {
+      if (!mapInstance.getLayer("selected-point")) return;
+      mapInstance.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
+      mapInstance.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
+    };
+
+    if (mapInstance.isStyleLoaded()) {
+      applySelectionFilter();
+    } else {
+      void mapInstance.once("load", applySelectionFilter);
+    }
+    mapInstance.on("styledata", applySelectionFilter);
+
+    return () => {
+      mapInstance.off("load", applySelectionFilter);
+      mapInstance.off("styledata", applySelectionFilter);
+    };
   }, [mapInstance, selectedAddressKey]);
 
   // Marker visibility sync

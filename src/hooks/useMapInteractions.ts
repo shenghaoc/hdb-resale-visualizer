@@ -112,9 +112,17 @@ export function useMapInteractions({
         isClusterSourceLike(source)
       ) {
         void source.getClusterExpansionZoom(clusterId).then((zoom) => {
+          let container: HTMLElement;
+          try {
+            container = map.getContainer();
+          } catch {
+            return;
+          }
+          if (!container.isConnected) return;
           map.easeTo({
             center: pointGeometry.coordinates as [number, number],
             zoom,
+            duration: prefersReducedMotion ? 0 : 260,
           });
         });
       }
