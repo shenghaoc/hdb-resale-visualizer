@@ -1,5 +1,12 @@
 import { DATA_BASE_PATH } from "@/lib/constants";
 import { townToFilename } from "@/lib/utils";
+import {
+  addressDetailSchema,
+  blockSummarySchema,
+  comparisonArtifactSchema,
+  manifestSchema,
+  townFlatTypeTrendPointSchema,
+} from "@/lib/dataSchemas";
 import type {
   AddressDetail,
   BlockSummary,
@@ -7,42 +14,52 @@ import type {
   Manifest,
   TownFlatTypeTrendPoint,
 } from "@/types/data";
+import type { z } from "zod";
 
-async function fetchJson<T>(path: string): Promise<T> {
+function createArtifactContractError(path: string, reason: string) {
+  return new Error(`Artifact contract violation for ${path}: ${reason}`);
+}
+
+async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema): Promise<z.infer<TSchema>> {
   const response = await fetch(path);
 
   if (!response.ok) {
     throw new Error(`Failed to load ${path}: ${response.status}`);
   }
 
-  return (await response.json()) as T;
+  const parsed = schema.safeParse(await response.json());
+  if (!parsed.success) {
+    throw createArtifactContractError(path, parsed.error.issues[0]?.message ?? "invalid JSON shape");
+  }
+
+  return parsed.data;
 }
 
 export { townToFilename };
 
 export function fetchManifest() {
-  return fetchJson<Manifest>(`${DATA_BASE_PATH}/manifest.json`);
+  return fetchJson(`${DATA_BASE_PATH}/manifest.json`, manifestSchema) as Promise<Manifest>;
 }
 
 export function fetchBlockSummaries() {
-  return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/block-summaries.json`);
+  return fetchJson(`${DATA_BASE_PATH}/block-summaries.json`, blockSummarySchema.array()) as Promise<BlockSummary[]>;
 }
 
 export function fetchBlocksByTown(town: string) {
-  return fetchJson<BlockSummary[]>(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`);
+  return fetchJson(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`, blockSummarySchema.array()) as Promise<BlockSummary[]>;
 }
 
 export function fetchTownFlatTypeTrends() {
-  return fetchJson<TownFlatTypeTrendPoint[]>(`${DATA_BASE_PATH}/trends/town-flat-type.json`);
+  return fetchJson(`${DATA_BASE_PATH}/trends/town-flat-type.json`, townFlatTypeTrendPointSchema.array()) as Promise<TownFlatTypeTrendPoint[]>;
 }
 
 export function fetchAddressDetail(addressKey: string) {
-  return fetchJson<AddressDetail>(`${DATA_BASE_PATH}/details/${addressKey}.json`);
+  return fetchJson(`${DATA_BASE_PATH}/details/${addressKey}.json`, addressDetailSchema) as Promise<AddressDetail>;
 }
 
 export async function fetchComparisonArtifact(addressKey: string): Promise<ComparisonArtifact | null> {
   try {
-    return await fetchJson<ComparisonArtifact>(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`);
+    return await fetchJson(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`, comparisonArtifactSchema) as Promise<ComparisonArtifact>;
   } catch (error) {
     // Return null if comparison data doesn't exist yet
     if (error instanceof Error && error.message.includes('404')) {
