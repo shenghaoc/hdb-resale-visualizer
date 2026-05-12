@@ -17,7 +17,15 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.workflow_run.conclusion == 'success' &&
+        (
+          (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.head_repository.full_name == github.repository) ||
+          (github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main')
+        )
+      )
     runs-on: ubuntu-latest
 
     steps:
@@ -45,43 +53,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Resolve deploy target
-        id: deploy-target
+      - name: Resolve deploy branch
+        id: deploy-branch
         env:
           EVENT_NAME: ${{ github.event_name }}
-          WORKFLOW_EVENT: ${{ github.event.workflow_run.event }}
           WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
-          WORKFLOW_HEAD_REPO: ${{ github.event.workflow_run.head_repository.full_name }}
-          REPOSITORY: ${{ github.repository }}
           DISPATCH_REF: ${{ github.ref_name }}
         run: |
-          should_deploy=false
           target_branch=""
 
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-            should_deploy=true
             target_branch="$DISPATCH_REF"
-          elif [ "$WORKFLOW_EVENT" = "pull_request" ]; then
-            if [ "$WORKFLOW_HEAD_REPO" = "$REPOSITORY" ]; then
-              should_deploy=true
-              target_branch="$WORKFLOW_HEAD_BRANCH"
-            fi
-          elif [ "$WORKFLOW_EVENT" = "push" ] && [ "$WORKFLOW_HEAD_BRANCH" = "main" ]; then
-            should_deploy=true
+          else
             target_branch="main"
           fi
 
-          echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
       - name: Compute pipeline cache key prefix
-        if: steps.deploy-target.outputs.should_deploy == 'true'
         id: pipeline-cache
         run: |
           echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('package-lock.json', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts', 'src/lib/mrt-colors.ts') }}" >> "$GITHUB_OUTPUT"
 
       - name: Restore pipeline cache
-        if: steps.deploy-target.outputs.should_deploy == 'true'
         uses: actions/cache/restore@v5
         id: pipeline-cache-restore
         with:
@@ -94,7 +88,6 @@ jobs:
             pipeline-cache-v2-${{ runner.os }}-
 
       - name: Check if pipeline cache was restored
-        if: steps.deploy-target.outputs.should_deploy == 'true'
         id: cache-presence
         run: |
           if [ -f public/data/manifest.json ]; then
@@ -104,31 +97,24 @@ jobs:
           fi
 
       - name: Verify cached data artifacts
-        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.cache-presence.outputs.restored == 'true'
+        if: steps.cache-presence.outputs.restored == 'true'
         id: data-check
         continue-on-error: true
         run: npm run check:data
 
       - name: Sync official datasets
-        if: steps.deploy-target.outputs.should_deploy == 'true' && (steps.cache-presence.outputs.restored != 'true' || steps.data-check.outcome != 'success')
+        if: steps.cache-presence.outputs.restored != 'true' || steps.data-check.outcome != 'success'
         env:
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
           GEOCODE_CONCURRENCY: '10'
         run: npm run sync-data
 
-      - name: Seed fixture data for non-deploy build
-        if: steps.deploy-target.outputs.should_deploy != 'true'
-        run: |
-          rm -rf public/data
-          mkdir -p public/data
-          cp -R tests/fixtures/public-data/. public/data/
-
       - name: Build
         run: npm run build:deploy
 
       - name: Compute pipeline cache save key
-        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success'
+        if: steps.data-check.outcome != 'success'
         id: pipeline-cache-save-key
         run: |
           upstream_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
@@ -145,7 +131,7 @@ jobs:
           echo "generated_key=$generated_key" >> "$GITHUB_OUTPUT"
 
       - name: Save pipeline cache
-        if: steps.deploy-target.outputs.should_deploy == 'true' && steps.data-check.outcome != 'success'
+        if: steps.data-check.outcome != 'success'
         uses: actions/cache/save@v5
         with:
           path: |
@@ -154,8 +140,7 @@ jobs:
           key: ${{ steps.pipeline-cache.outputs.prefix }}-${{ steps.pipeline-cache-save-key.outputs.upstream_key }}-${{ steps.pipeline-cache-save-key.outputs.generated_key }}
 
       - name: Deploy to Cloudflare Pages
-        if: steps.deploy-target.outputs.should_deploy == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx --no-install wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch="${{ steps.deploy-target.outputs.branch }}"
+        run: npx --no-install wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch="${{ steps.deploy-branch.outputs.branch }}"
