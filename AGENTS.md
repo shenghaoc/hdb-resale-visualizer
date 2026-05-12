@@ -9,13 +9,14 @@ Before coding or reviewing, read:
 - [`.kiro/steering/pipeline.md`](.kiro/steering/pipeline.md)
 - [`.kiro/steering/structure.md`](.kiro/steering/structure.md)
 - [`.kiro/steering/ui-standards.md`](.kiro/steering/ui-standards.md)
+- [`.kiro/steering/review.md`](.kiro/steering/review.md)
 
 ## 2) Non-negotiable architecture guardrails
 - Frontend (`src/`) must only consume static artifacts from `public/data/`.
 - All geocoding + MRT proximity computation must stay in `scripts/` (build-time only).
 - Persistent user state must remain browser-local (`localStorage`).
 - Do **not** load or analyze `public/data/` unless explicitly requested; use `tests/fixtures/public-data/` for schema-oriented work.
-- Runtime/tooling baseline: **Node 26 + npm only** (no bun/yarn/pnpm lockfiles).
+- Project runtime/tooling baseline: **Node 26 + npm only** (no bun/yarn/pnpm lockfiles).
 
 ## 3) Active specs (open only if task-related)
 - [Header & Map Control Fixes](.kiro/specs/header-blocks-map-controls/tasks.md)
@@ -36,4 +37,4 @@ npm run build
 
 ## 5) Reference docs (review/process details)
 - Workspace MCP config: [`.kiro/settings/mcp.json`](.kiro/settings/mcp.json)
-- Review policy and platform trigger conventions live in [`.kiro/steering/`](.kiro/steering/); consult when performing formal PR review work.
+- Review policy and platform trigger conventions live in [`.kiro/steering/review.md`](.kiro/steering/review.md); consult when performing formal PR review work.
