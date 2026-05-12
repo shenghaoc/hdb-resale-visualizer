@@ -92,6 +92,15 @@ jobs:
       - name: End-to-end smoke
         run: npm run test:e2e
 
+      - name: Seed fixture data for build verification
+        run: |
+          rm -rf public/data
+          mkdir -p public/data
+          cp -R tests/fixtures/public-data/. public/data/
+
+      - name: Production build verification
+        run: npm run build:deploy
+
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v7
         if: always()
