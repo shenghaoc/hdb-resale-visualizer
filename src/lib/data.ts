@@ -29,7 +29,7 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSc
 
   const parsed = schema.safeParse(await response.json());
   if (!parsed.success) {
-    throw createArtifactContractError(path, parsed.error.issues[0]?.message ?? "invalid JSON shape");
+    throw createArtifactContractError(path, parsed.error.issues.map((i) => i.path.join(".") + ": " + i.message).join(", ") || "invalid JSON shape");
   }
 
   return parsed.data;
@@ -37,29 +37,29 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSc
 
 export { townToFilename };
 
-export function fetchManifest() {
-  return fetchJson(`${DATA_BASE_PATH}/manifest.json`, manifestSchema) as Promise<Manifest>;
+export function fetchManifest(): Promise<Manifest> {
+  return fetchJson(`${DATA_BASE_PATH}/manifest.json`, manifestSchema);
 }
 
-export function fetchBlockSummaries() {
-  return fetchJson(`${DATA_BASE_PATH}/block-summaries.json`, blockSummarySchema.array()) as Promise<BlockSummary[]>;
+export function fetchBlockSummaries(): Promise<BlockSummary[]> {
+  return fetchJson(`${DATA_BASE_PATH}/block-summaries.json`, blockSummarySchema.array());
 }
 
-export function fetchBlocksByTown(town: string) {
-  return fetchJson(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`, blockSummarySchema.array()) as Promise<BlockSummary[]>;
+export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
+  return fetchJson(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`, blockSummarySchema.array());
 }
 
-export function fetchTownFlatTypeTrends() {
-  return fetchJson(`${DATA_BASE_PATH}/trends/town-flat-type.json`, townFlatTypeTrendPointSchema.array()) as Promise<TownFlatTypeTrendPoint[]>;
+export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
+  return fetchJson(`${DATA_BASE_PATH}/trends/town-flat-type.json`, townFlatTypeTrendPointSchema.array());
 }
 
-export function fetchAddressDetail(addressKey: string) {
-  return fetchJson(`${DATA_BASE_PATH}/details/${addressKey}.json`, addressDetailSchema) as Promise<AddressDetail>;
+export function fetchAddressDetail(addressKey: string): Promise<AddressDetail> {
+  return fetchJson(`${DATA_BASE_PATH}/details/${addressKey}.json`, addressDetailSchema);
 }
 
 export async function fetchComparisonArtifact(addressKey: string): Promise<ComparisonArtifact | null> {
   try {
-    return await fetchJson(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`, comparisonArtifactSchema) as Promise<ComparisonArtifact>;
+    return await fetchJson(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`, comparisonArtifactSchema);
   } catch (error) {
     // Return null if comparison data doesn't exist yet
     if (error instanceof Error && error.message.includes('404')) {
