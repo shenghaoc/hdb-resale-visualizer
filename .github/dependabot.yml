@@ -13,19 +13,30 @@ updates:
     commit-message:
       prefix: "deps"
     groups:
-      react:
+      react-core:
         patterns:
           - "react"
           - "react-dom"
           - "@types/react*"
-          - "@vitejs/plugin-react*"
-          - "eslint-plugin-react-*"
+        update-types:
+          - "minor"
+          - "patch"
+      ui-components:
+        patterns:
           - "@radix-ui/*"
           - "radix-ui"
           - "lucide-react"
+          - "shadcn"
+          - "class-variance-authority"
+          - "clsx"
+          - "tailwind-merge"
+        update-types:
+          - "minor"
+          - "patch"
+      visualization:
+        patterns:
           - "echarts"
           - "echarts-for-react"
-          - "shadcn"
         update-types:
           - "minor"
           - "patch"
@@ -41,8 +52,14 @@ updates:
       typescript:
         patterns:
           - "typescript"
+          - "typescript-eslint"
+          - "@typescript-eslint/*"
+        update-types:
+          - "minor"
+          - "patch"
+      types:
+        patterns:
           - "@types/*"
-          - "tsx"
         update-types:
           - "minor"
           - "patch"
@@ -51,15 +68,7 @@ updates:
           - "eslint"
           - "eslint-*"
           - "@eslint/*"
-          - "typescript-eslint"
-          - "@typescript-eslint/*"
           - "globals"
-        update-types:
-          - "minor"
-          - "patch"
-      maplibre:
-        patterns:
-          - "maplibre-gl"
         update-types:
           - "minor"
           - "patch"
@@ -77,8 +86,8 @@ updates:
         patterns:
           - "zod"
           - "papaparse"
-          - "@types/papaparse"
           - "temporal-polyfill"
+          - "tsx"
         update-types:
           - "minor"
           - "patch"

@@ -1,7 +1,19 @@
+import {
+  ensureDataDirectories,
+  writeComparisonFiles,
+  writeDetailFiles,
+  writeGeneratedArtifacts,
+  writeTownBlockFiles,
+} from "./lib/sync/writer";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { CRITICAL_DATA_ARTIFACT_PATHS } from "./lib/artifactContract";
-import { buildArtifacts, buildMrtStationsGeoJson, type SchoolLocation, townToFilename } from "./lib/pipeline";
+import {
+  buildArtifacts,
+  buildMrtStationsGeoJson,
+  type SchoolLocation,
+  type GeocodeCacheFile,
+} from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
 import { geocodeAddress, loadGeocodeCache, saveGeocodeCache } from "./lib/sync/geocode";
@@ -27,15 +39,14 @@ import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/s
 
 const ROOT = process.cwd();
 const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
-const BLOCKS_DIR = path.join(PUBLIC_DATA_DIR, "blocks");
-const DETAILS_DIR = path.join(PUBLIC_DATA_DIR, "details");
-const TRENDS_DIR = path.join(PUBLIC_DATA_DIR, path.dirname(CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend));
 const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
 
 type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
 
 async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
-  const payload = await fetchJson<unknown>(`https://api-production.data.gov.sg/v2/public/api/collections/${RESALE_COLLECTION_ID}/metadata`);
+  const payload = await fetchJson<unknown>(
+    `https://api-production.data.gov.sg/v2/public/api/collections/${RESALE_COLLECTION_ID}/metadata`,
+  );
   const parsed = collectionMetadataSchema.parse(payload);
   return {
     childDatasets: parsed.data.collectionMetadata.childDatasets,
@@ -43,27 +54,55 @@ async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
   };
 }
 
-async function writeJson(filePath: string, value: unknown) {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, JSON.stringify(value, null, 2));
-}
+async function fetchAmenityData(
+  geocodeCache: GeocodeCacheFile,
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+) {
+  console.log("Fetching amenity data...");
+  const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
+  await sleep(2600);
+  const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, options);
 
-async function ensureDirectories() {
-  await fs.mkdir(PUBLIC_DATA_DIR, { recursive: true });
-  await fs.mkdir(DETAILS_DIR, { recursive: true });
-  await fs.mkdir(TRENDS_DIR, { recursive: true });
+  const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
+  await sleep(2600);
+  const hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
+
+  const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
+  await sleep(2600);
+  const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, options);
+
+  const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
+  await sleep(2600);
+  const parks = normalizeAmenityGeoJson(parksGeoJson);
+
+  console.log(
+    `Loaded ${schoolResult.schools.length} schools, ${hawkers.length} hawkers, ${supermarketResult.supermarkets.length} supermarkets, ${parks.length} parks.`,
+  );
+
+  return {
+    schools: schoolResult.schools,
+    hawkers,
+    supermarkets: supermarketResult.supermarkets,
+    parks,
+    geocodedCount: schoolResult.geocodedCount + supermarketResult.geocodedCount,
+  };
 }
 
 async function main() {
   const force = process.argv.includes("--force");
-  const skipGeocoding = process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
-  const skipAmenities = process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+  const skipGeocoding =
+    process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
+  const skipAmenities =
+    process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
-  await ensureDirectories();
+
+  await ensureDataDirectories();
 
   const resaleCollection = await fetchCollectionMetadata();
   try {
-    const previousManifest = JSON.parse(await fs.readFile(path.join(PUBLIC_DATA_DIR, "manifest.json"), "utf8")) as { sources?: { lastUpdatedAt?: string } };
+    const previousManifest = JSON.parse(
+      await fs.readFile(path.join(PUBLIC_DATA_DIR, "manifest.json"), "utf8"),
+    ) as { sources?: { lastUpdatedAt?: string } };
     if (!force && previousManifest.sources?.lastUpdatedAt === resaleCollection.lastUpdatedAt) {
       console.log(`No upstream resale collection change detected (${resaleCollection.lastUpdatedAt}).`);
       return;
@@ -76,9 +115,7 @@ async function main() {
   const resaleCsvRows: Record<string, string>[] = [];
   for (const datasetId of resaleCollection.childDatasets) {
     const datasetRows = await fetchCsvRows(datasetId);
-    for (const row of datasetRows) {
-      resaleCsvRows.push(row);
-    }
+    for (const row of datasetRows) resaleCsvRows.push(row);
     await sleep(2600);
   }
 
@@ -91,60 +128,39 @@ async function main() {
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
   const geocodeCache = await loadGeocodeCache(GEOCODE_CACHE_PATH);
 
-  let schools: SchoolLocation[] | undefined;
-  let hawkers: Array<{ name: string; lat: number; lng: number }> | undefined;
-  let supermarkets: Array<{ name: string; lat: number; lng: number }> | undefined;
-  let parks: Array<{ name: string; lat: number; lng: number }> | undefined;
-
+  let amenities: Awaited<ReturnType<typeof fetchAmenityData>> | undefined;
   if (!skipAmenities) {
     try {
-      console.log("Fetching amenity data...");
-      const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
-      await sleep(2600);
-      const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, { skipGeocoding, geocodeEndpoint });
-      schools = schoolResult.schools;
-      if (schoolResult.geocodedCount > 0) {
+      amenities = await fetchAmenityData(geocodeCache, { skipGeocoding, geocodeEndpoint });
+      if (amenities.geocodedCount > 0) {
         geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
         await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
       }
-
-      const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
-      await sleep(2600);
-      hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
-
-      const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
-      await sleep(2600);
-      const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, { skipGeocoding, geocodeEndpoint });
-      supermarkets = supermarketResult.supermarkets;
-      if (supermarketResult.geocodedCount > 0) {
-        geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
-        await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
-      }
-
-      const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
-      await sleep(2600);
-      parks = normalizeAmenityGeoJson(parksGeoJson);
-      console.log(`Loaded ${schools.length} schools, ${hawkers.length} hawkers, ${supermarkets.length} supermarkets, ${parks.length} parks.`);
     } catch (error) {
-      console.warn(`Failed to fetch amenity data: ${error instanceof Error ? error.message : "unknown error"}. Continuing without amenities.`);
+      console.warn(
+        `Failed to fetch amenity data: ${error instanceof Error ? error.message : "unknown error"}. Continuing without amenities.`,
+      );
     }
   }
 
-  const uniqueAddresses = new Map(transactions.map((t) => [t.addressKey, `${t.block} ${t.streetName} SINGAPORE`]));
-  const missingAddresses = [...uniqueAddresses.entries()].filter(([addressKey]) => geocodeCache.entries[addressKey] === undefined);
+  const uniqueAddresses = new Map(
+    transactions.map((t) => [t.addressKey, `${t.block} ${t.streetName} SINGAPORE`]),
+  );
+  const missingAddresses = [...uniqueAddresses.entries()].filter(
+    ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
+  );
   let geocodeFailureCount = 0;
   const geocodeFailureSamples: string[] = [];
 
   if (skipGeocoding) {
     console.log(`Skipping geocoding and using ${Object.keys(geocodeCache.entries).length} cached coordinates.`);
-  } else {
+  } else if (missingAddresses.length > 0) {
     const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
     let nextIndex = 0;
     let completed = 0;
     let flushedAt = 0;
     let flushInFlight: Promise<void> | null = null;
-    console.log(`Geocoding ${missingAddresses.length} uncached addresses with concurrency ${concurrency}...`);
-    console.log(`Using geocode endpoint: ${geocodeEndpoint.origin}${geocodeEndpoint.pathname}`);
+    console.log(`Geocoding ${missingAddresses.length} addresses with concurrency ${concurrency}...`);
 
     async function worker() {
       while (nextIndex < missingAddresses.length) {
@@ -155,10 +171,14 @@ async function main() {
           if (geocode) geocodeCache.entries[addressKey] = geocode;
         } catch (error) {
           geocodeFailureCount += 1;
-          if (geocodeFailureSamples.length < 5) geocodeFailureSamples.push(`${searchValue}: ${error instanceof Error ? error.message : "unknown error"}`);
+          if (geocodeFailureSamples.length < 5)
+            geocodeFailureSamples.push(
+              `${searchValue}: ${error instanceof Error ? error.message : "unknown error"}`,
+            );
         }
         completed += 1;
-        if (completed % 200 === 0 || completed === missingAddresses.length) console.log(`Geocoded ${completed}/${missingAddresses.length}`);
+        if (completed % 200 === 0 || completed === missingAddresses.length)
+          console.log(`Geocoded ${completed}/${missingAddresses.length}`);
         if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
           flushedAt = completed;
           geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
@@ -168,13 +188,13 @@ async function main() {
         }
       }
     }
-
-    await Promise.all(Array.from({ length: Math.min(concurrency, missingAddresses.length || 1) }, () => worker()));
+    await Promise.all(
+      Array.from({ length: Math.min(concurrency, missingAddresses.length) }, () => worker()),
+    );
   }
 
   if (geocodeFailureCount > 0) {
-    const sampleSuffix = geocodeFailureSamples.length > 0 ? ` Sample failures: ${geocodeFailureSamples.join(" | ")}` : "";
-    console.warn(`Geocoding failed for ${geocodeFailureCount} addresses.${sampleSuffix}`);
+    console.warn(`Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`);
   }
 
   geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
@@ -185,10 +205,7 @@ async function main() {
     propertyInfo,
     mrtExits,
     geocodes: geocodeCache.entries,
-    schools,
-    hawkers,
-    supermarkets,
-    parks,
+    ...amenities,
     metadata: {
       resaleCollectionId: RESALE_COLLECTION_ID,
       resaleDatasetIds: resaleCollection.childDatasets,
@@ -202,31 +219,22 @@ async function main() {
     },
   });
 
-  validateGeneratedArtifacts({ blockSummariesCount: artifacts.blockSummaries.length, detailCount: Object.keys(artifacts.details).length, geocodeFailureCount });
+  validateGeneratedArtifacts({
+    blockSummariesCount: artifacts.blockSummaries.length,
+    detailCount: Object.keys(artifacts.details).length,
+    geocodeFailureCount,
+  });
 
-  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.manifest), artifacts.manifest);
-  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.blockSummaries), artifacts.blockSummaries);
-  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend), artifacts.townFlatTypeTrend);
-  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtExits), mrtGeoJson);
-  await writeJson(path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtStations), buildMrtStationsGeoJson(mrtExits));
+  await writeGeneratedArtifacts(artifacts, mrtGeoJson);
+  const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
+  await fs.writeFile(
+    path.join(PUBLIC_DATA_DIR, CRITICAL_DATA_ARTIFACT_PATHS.mrtStations),
+    JSON.stringify(stationsGeoJson, null, 2),
+  );
 
-  await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
-  await fs.mkdir(BLOCKS_DIR, { recursive: true });
-  for (const [town, blocks] of Object.entries(artifacts.blocksByTown)) await writeJson(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), blocks);
-  console.log(`Generated ${Object.keys(artifacts.blocksByTown).length} town-indexed block files.`);
-
-  const comparisonsDir = path.join(PUBLIC_DATA_DIR, "comparisons");
-  await fs.rm(comparisonsDir, { recursive: true, force: true });
-  if (artifacts.comparisons) {
-    await fs.mkdir(comparisonsDir, { recursive: true });
-    for (const [addressKey, comparison] of Object.entries(artifacts.comparisons)) await writeJson(path.join(comparisonsDir, `${addressKey}.json`), comparison);
-    console.log(`Generated ${Object.keys(artifacts.comparisons).length} comparison artifacts.`);
-  }
-
-  await fs.rm(DETAILS_DIR, { recursive: true, force: true });
-  await fs.mkdir(DETAILS_DIR, { recursive: true });
-  for (const [addressKey, detail] of Object.entries(artifacts.details)) await writeJson(path.join(DETAILS_DIR, `${addressKey}.json`), detail);
-  console.log(`Generated ${artifacts.blockSummaries.length} block summaries and ${Object.keys(artifacts.details).length} detail files.`);
+  await writeTownBlockFiles(artifacts.blocksByTown);
+  await writeComparisonFiles(artifacts.comparisons);
+  await writeDetailFiles(artifacts.details);
 }
 
 void main().catch((error) => {

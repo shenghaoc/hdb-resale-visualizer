@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run sync-data && tsc -b && vite build && npm run check:bundle",
+    "build": "npm run check:data && tsc -b && vite build && npm run check:bundle",
+    "build:full": "npm run sync-data && tsc -b && vite build && npm run check:bundle",
     "build:deploy": "npm run check:data && tsc -b && vite build && npm run check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "check:data": "tsx scripts/check-data-artifacts.ts",

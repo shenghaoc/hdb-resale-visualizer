@@ -1,7 +1,13 @@
 import { z } from "zod";
 
-const coordinatesSchema = z.object({ lat: z.number(), lng: z.number() });
-const nearestMrtSchema = z.object({ stationName: z.string(), distanceMeters: z.number() });
+const coordinatesSchema = z.object({
+  lat: z.number().min(1.15).max(1.5),
+  lng: z.number().min(103.55).max(104.13),
+});
+
+const monthSchema = z.string().regex(/^\d{4}-\d{2}$/);
+
+const nearestMrtSchema = z.object({ stationName: z.string(), distanceMeters: z.number().nonnegative() });
 
 export const blockSummarySchema = z.object({
   addressKey: z.string(),
@@ -10,12 +16,12 @@ export const blockSummarySchema = z.object({
   streetName: z.string(),
   displayName: z.string().nullable().optional(),
   coordinates: coordinatesSchema,
-  medianPrice: z.number(),
-  transactionCount: z.number(),
-  floorAreaRange: z.tuple([z.number(), z.number()]),
-  leaseCommenceRange: z.tuple([z.number(), z.number()]),
-  latestMonth: z.string(),
-  availableDateRange: z.tuple([z.string(), z.string()]),
+  medianPrice: z.number().positive(),
+  transactionCount: z.number().nonnegative(),
+  floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
+  leaseCommenceRange: z.tuple([z.number().int().min(1960), z.number().int().max(2100)]),
+  latestMonth: monthSchema,
+  availableDateRange: z.tuple([monthSchema, monthSchema]),
   flatTypes: z.array(z.string()),
   flatModels: z.array(z.string()),
   nearestMrt: nearestMrtSchema.nullable(),
@@ -24,30 +30,30 @@ export const blockSummarySchema = z.object({
 });
 
 const addressDetailSummarySchema = blockSummarySchema.extend({
-  priceIqr: z.tuple([z.number(), z.number()]),
-  pricePerSqmMedian: z.number(),
-  pricePerSqftMedian: z.number().nullable(),
+  priceIqr: z.tuple([z.number().positive(), z.number().positive()]),
+  pricePerSqmMedian: z.number().positive(),
+  pricePerSqftMedian: z.number().positive().nullable(),
 });
 
 const addressDetailTransactionSchema = z.object({
   id: z.string(),
-  month: z.string(),
+  month: monthSchema,
   flatType: z.string(),
   storeyRange: z.string(),
-  floorAreaSqm: z.number(),
+  floorAreaSqm: z.number().positive(),
   flatModel: z.string(),
-  leaseCommenceDate: z.number(),
+  leaseCommenceDate: z.number().int(),
   remainingLease: z.string(),
-  resalePrice: z.number(),
-  pricePerSqm: z.number(),
-  pricePerSqft: z.number().nullable(),
+  resalePrice: z.number().positive(),
+  pricePerSqm: z.number().positive(),
+  pricePerSqft: z.number().positive().nullable(),
 });
 
 const addressTrendPointSchema = z.object({
-  month: z.string(),
-  medianPrice: z.number(),
-  transactionCount: z.number(),
-  medianPricePerSqm: z.number(),
+  month: monthSchema,
+  medianPrice: z.number().positive(),
+  transactionCount: z.number().nonnegative(),
+  medianPricePerSqm: z.number().positive(),
 });
 
 export const addressDetailSchema = z.object({
@@ -59,39 +65,43 @@ export const addressDetailSchema = z.object({
 export const townFlatTypeTrendPointSchema = z.object({
   town: z.string(),
   flatType: z.string(),
-  month: z.string(),
-  medianPrice: z.number(),
-  transactionCount: z.number(),
+  month: monthSchema,
+  medianPrice: z.number().positive(),
+  transactionCount: z.number().nonnegative(),
 });
 
-export const manifestSchema = z.object({
-  schemaVersion: z.string(),
-  generatedAt: z.string(),
-  dataWindow: z.object({ minMonth: z.string(), maxMonth: z.string() }),
-  sources: z.object({
-    resaleCollectionId: z.string(),
-    resaleDatasetIds: z.array(z.string()),
-    propertyDatasetId: z.string(),
-    mrtDatasetId: z.string(),
-    moeSchoolDatasetId: z.string().optional(),
-    neaHawkerDatasetId: z.string().optional(),
-    sfaSupermarketDatasetId: z.string().optional(),
-    nparksParksDatasetId: z.string().optional(),
-    lastUpdatedAt: z.string(),
-  }),
-  filterOptions: z.object({
-    towns: z.array(z.string()),
-    flatTypes: z.array(z.string()),
-    flatModels: z.array(z.string()),
-  }),
-  counts: z.object({
-    blocks: z.number(),
-    transactions: z.number(),
-    towns: z.number(),
-    mrtStations: z.number(),
-    comparisons: z.number().optional(),
-  }),
-});
+export const manifestSchema = z
+  .object({
+    schemaVersion: z.string(),
+    generatedAt: z.string(),
+    dataWindow: z.object({ minMonth: monthSchema, maxMonth: monthSchema }),
+    sources: z.object({
+      resaleCollectionId: z.string(),
+      resaleDatasetIds: z.array(z.string()),
+      propertyDatasetId: z.string(),
+      mrtDatasetId: z.string(),
+      moeSchoolDatasetId: z.string().optional(),
+      neaHawkerDatasetId: z.string().optional(),
+      sfaSupermarketDatasetId: z.string().optional(),
+      nparksParksDatasetId: z.string().optional(),
+      lastUpdatedAt: z.string(),
+    }),
+    filterOptions: z.object({
+      towns: z.array(z.string()),
+      flatTypes: z.array(z.string()),
+      flatModels: z.array(z.string()),
+    }),
+    counts: z.object({
+      blocks: z.number().nonnegative(),
+      transactions: z.number().nonnegative(),
+      towns: z.number().nonnegative(),
+      mrtStations: z.number().nonnegative(),
+      comparisons: z.number().nonnegative().optional(),
+    }),
+  })
+  .refine((m) => m.dataWindow.minMonth <= m.dataWindow.maxMonth, {
+    message: "minMonth must be less than or equal to maxMonth",
+  });
 
 export const comparisonArtifactSchema = z.object({
   addressKey: z.string(),
