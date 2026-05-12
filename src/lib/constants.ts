@@ -1,4 +1,5 @@
 import type { FilterState } from "@/types/data";
+import type { ColorSpecification, DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
 
 /**
  * Shared numeric constants used across the codebase.
@@ -75,12 +76,12 @@ export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 1000000, color: "#d97757" },
   { price: 1300000, color: "#a83232" },
 ] as const;
-export const MEDIAN_PRICE_COLOR_EXPRESSION = [
+export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification<ColorSpecification> = [
   "interpolate",
   ["linear"],
   ["get", "median_price"],
-  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color] as const),
-] as const;
+  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
+];
 export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 /**
