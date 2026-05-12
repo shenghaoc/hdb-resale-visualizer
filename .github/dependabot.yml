@@ -23,19 +23,29 @@ updates:
           - "@radix-ui/*"
           - "radix-ui"
           - "lucide-react"
+          - "echarts"
           - "echarts-for-react"
           - "shadcn"
+        update-types:
+          - "minor"
+          - "patch"
       vite:
         patterns:
           - "vite"
           - "@vitejs/*"
           - "@tailwindcss/vite"
           - "tailwindcss"
+        update-types:
+          - "minor"
+          - "patch"
       typescript:
         patterns:
           - "typescript"
           - "@types/*"
           - "tsx"
+        update-types:
+          - "minor"
+          - "patch"
       eslint:
         patterns:
           - "eslint"
@@ -44,9 +54,15 @@ updates:
           - "typescript-eslint"
           - "@typescript-eslint/*"
           - "globals"
+        update-types:
+          - "minor"
+          - "patch"
       maplibre:
         patterns:
           - "maplibre-gl"
+        update-types:
+          - "minor"
+          - "patch"
       testing:
         patterns:
           - "vitest"
@@ -54,6 +70,15 @@ updates:
           - "@testing-library/*"
           - "jsdom"
           - "fast-check"
+        update-types:
+          - "minor"
+          - "patch"
+      miscellaneous:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
