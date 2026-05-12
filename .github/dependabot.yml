@@ -73,6 +73,15 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      data-utils:
+        patterns:
+          - "zod"
+          - "papaparse"
+          - "@types/papaparse"
+          - "temporal-polyfill"
+        update-types:
+          - "minor"
+          - "patch"
       miscellaneous:
         patterns:
           - "*"
