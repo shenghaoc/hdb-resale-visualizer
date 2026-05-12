@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { toGeoJson } from "@/lib/map";
@@ -55,8 +55,23 @@ export function MapView({
   locale,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [popupInstance, setPopupInstance] = useState<Popup | null>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const prefersReducedMotion = useMemo(
+    () =>
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        : false,
+    [],
+  );
+  const popupInstance = useMemo(
+    () =>
+      new Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 12,
+        className: "map-popup",
+      }),
+    [],
+  );
 
   const mapInstance = useMapInitialization({
     containerRef,
@@ -64,19 +79,12 @@ export function MapView({
     onGeolocate,
   });
 
-  useEffect(() => {
-    setPrefersReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    const popup = new Popup({
-      closeButton: false,
-      closeOnClick: false,
-      offset: 12,
-      className: "map-popup",
-    });
-    setPopupInstance(popup);
-    return () => {
-      popup.remove();
-    };
-  }, []);
+  useEffect(
+    () => () => {
+      popupInstance.remove();
+    },
+    [popupInstance],
+  );
 
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
   const blocksByKey = useMemo(() => {
@@ -127,7 +135,7 @@ export function MapView({
     if (mapInstance.isStyleLoaded()) {
       applyVisibility();
     } else {
-      mapInstance.once("load", applyVisibility);
+      void mapInstance.once("load", applyVisibility);
     }
   }, [mapInstance, showBlockMarkers]);
 
@@ -144,7 +152,7 @@ export function MapView({
     if (mapInstance.isStyleLoaded()) {
       apply();
     } else {
-      mapInstance.once("load", apply);
+      void mapInstance.once("load", apply);
     }
   }, [mapInstance, priceHeatmapEnabled, geoJson, priceHeatmapOpacity]);
 
@@ -159,7 +167,7 @@ export function MapView({
     if (mapInstance.isStyleLoaded()) {
       applyOpacity();
     } else {
-      mapInstance.once("load", applyOpacity);
+      void mapInstance.once("load", applyOpacity);
     }
   }, [mapInstance, priceHeatmapOpacity, priceHeatmapEnabled]);
 

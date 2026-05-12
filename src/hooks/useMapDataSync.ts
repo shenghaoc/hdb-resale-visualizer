@@ -24,7 +24,7 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     if (map.isStyleLoaded()) {
       updateData();
     } else {
-      map.once("load", updateData);
+      void map.once("load", updateData);
     }
   }, [map, geoJson]);
 
@@ -42,7 +42,7 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     if (map.isStyleLoaded()) {
       applyData();
     } else {
-      map.once("load", applyData);
+      void map.once("load", applyData);
     }
   }, [map, geoJson, priceHeatmapEnabled]);
 }

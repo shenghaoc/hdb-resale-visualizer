@@ -130,7 +130,7 @@ export function useMapLayers(map: MapLibreMap | null) {
     if (map.isStyleLoaded()) {
       addLayers();
     } else {
-      map.once("load", addLayers);
+      void map.once("load", addLayers);
     }
   }, [map]);
 }

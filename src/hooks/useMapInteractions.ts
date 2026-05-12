@@ -23,6 +23,43 @@ type UseMapInteractionsProps = {
 
 const SELECTABLE_LAYER_IDS = ["unclustered-point", "clusters"] as const;
 
+function readProperty(properties: unknown, key: string): unknown {
+  if (!properties || typeof properties !== "object" || !(key in properties)) {
+    return undefined;
+  }
+  return (properties as Record<string, unknown>)[key];
+}
+
+function readStringProperty(properties: unknown, key: string): string | undefined {
+  const value = readProperty(properties, key);
+  return typeof value === "string" ? value : undefined;
+}
+
+function readNumberProperty(properties: unknown, key: string): number | undefined {
+  const value = readProperty(properties, key);
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }
+  return undefined;
+}
+
+type ClusterSourceLike = {
+  getClusterExpansionZoom(clusterId: number): Promise<number>;
+};
+
+function isClusterSourceLike(source: unknown): source is ClusterSourceLike {
+  return (
+    !!source &&
+    typeof source === "object" &&
+    "getClusterExpansionZoom" in source &&
+    typeof source.getClusterExpansionZoom === "function"
+  );
+}
+
 export function useMapInteractions({
   map,
   popup,
@@ -50,8 +87,10 @@ export function useMapInteractions({
     const handleClickUnclustered = (event: MapLayerMouseEvent) => {
       onMapInteractRef.current?.("feature");
       const feature = event.features?.[0];
-      if (feature?.properties?.address_key) {
-        onSelectRef.current(feature.properties.address_key);
+      if (!feature) return;
+      const addressKey = readStringProperty(feature.properties, "address_key");
+      if (addressKey) {
+        onSelectRef.current(addressKey);
       }
     };
 
@@ -60,10 +99,14 @@ export function useMapInteractions({
       const feature = event.features?.[0];
       if (!feature?.geometry || feature.geometry.type !== "Point") return;
 
-      const clusterId = feature.properties?.cluster_id;
+      const clusterId = readNumberProperty(feature.properties, "cluster_id");
       const source = map.getSource("blocks");
-      if (isGeoJsonDataSourceLike(source) && typeof clusterId === "number") {
-        source.getClusterExpansionZoom(clusterId).then((zoom) => {
+      if (
+        clusterId !== undefined &&
+        isGeoJsonDataSourceLike(source) &&
+        isClusterSourceLike(source)
+      ) {
+        void source.getClusterExpansionZoom(clusterId).then((zoom) => {
           map.easeTo({
             center: feature.geometry.coordinates as [number, number],
             zoom,
@@ -77,30 +120,27 @@ export function useMapInteractions({
       const feature = event.features?.[0];
       if (!feature?.geometry || feature.geometry.type !== "Point" || !popup) return;
 
-      const props = (feature.properties ?? {}) as Record<string, unknown>;
+      const props = feature.properties;
       const container = document.createElement("div");
 
       const addressEl = document.createElement("strong");
-      addressEl.textContent = String(props.address ?? "");
+      addressEl.textContent = readStringProperty(props, "address") ?? "";
       container.appendChild(addressEl);
 
-      if (props.display_name) {
+      const displayName = readStringProperty(props, "display_name");
+      if (displayName) {
         const nameEl = document.createElement("p");
-        nameEl.textContent = String(props.display_name);
+        nameEl.textContent = displayName;
         container.appendChild(nameEl);
       }
 
       const townEl = document.createElement("p");
-      townEl.textContent = localizeTownName(String(props.town ?? ""), localeRef.current);
+      townEl.textContent = localizeTownName(readStringProperty(props, "town") ?? "", localeRef.current);
       container.appendChild(townEl);
 
       const infoEl = document.createElement("p");
-      const medianPrice =
-        typeof props.median_price === "number" ? props.median_price : Number(props.median_price ?? 0);
-      const transactionCount =
-        typeof props.transaction_count === "number"
-          ? props.transaction_count
-          : Number(props.transaction_count ?? 0);
+      const medianPrice = readNumberProperty(props, "median_price") ?? 0;
+      const transactionCount = readNumberProperty(props, "transaction_count") ?? 0;
       infoEl.textContent = `${tRef.current("map.median", { value: formatCompactCurrency(medianPrice) })} · ${tRef.current("map.txns", { count: transactionCount })}`;
       container.appendChild(infoEl);
 

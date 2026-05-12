@@ -86,7 +86,7 @@ export function useMapInitialization({
       mapRef.current = null;
       setMapInstance(null);
     };
-  }, []);
+  }, [containerRef, isDarkMode]);
 
   return mapInstance;
 }
