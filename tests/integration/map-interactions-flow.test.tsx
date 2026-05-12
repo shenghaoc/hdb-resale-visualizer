@@ -44,7 +44,7 @@ function createComposableMapStub() {
       return mapStub;
     }),
     getLayer: vi.fn((layerId: string) => (existingLayers.has(layerId) ? { id: layerId } : undefined)),
-    queryRenderedFeatures: vi.fn(() => []),
+    queryRenderedFeatures: vi.fn<() => unknown[]>(() => []),
     getCanvas: vi.fn(() => ({ style: { cursor: "" } })),
     getSource: vi.fn(() => undefined),
     easeTo: vi.fn(),

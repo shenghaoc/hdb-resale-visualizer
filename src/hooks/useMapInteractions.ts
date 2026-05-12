@@ -23,6 +23,10 @@ type UseMapInteractionsProps = {
 
 const SELECTABLE_LAYER_IDS = ["unclustered-point", "clusters"] as const;
 
+function isPointGeometry(geometry: GeoJSON.Geometry): geometry is GeoJSON.Point {
+  return geometry.type === "Point";
+}
+
 function readProperty(properties: unknown, key: string): unknown {
   if (!properties || typeof properties !== "object" || !(key in properties)) {
     return undefined;
@@ -97,7 +101,8 @@ export function useMapInteractions({
     const handleClickCluster = (event: MapLayerMouseEvent) => {
       onMapInteractRef.current?.("feature");
       const feature = event.features?.[0];
-      if (!feature?.geometry || feature.geometry.type !== "Point") return;
+      if (!feature?.geometry || !isPointGeometry(feature.geometry)) return;
+      const pointGeometry = feature.geometry;
 
       const clusterId = readNumberProperty(feature.properties, "cluster_id");
       const source = map.getSource("blocks");
@@ -108,7 +113,7 @@ export function useMapInteractions({
       ) {
         void source.getClusterExpansionZoom(clusterId).then((zoom) => {
           map.easeTo({
-            center: feature.geometry.coordinates as [number, number],
+            center: pointGeometry.coordinates as [number, number],
             zoom,
           });
         });
