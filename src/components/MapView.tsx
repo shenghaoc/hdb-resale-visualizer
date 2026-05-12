@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl, { LngLatBoundsLike, Map as MapLibreMap, Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
@@ -18,7 +18,10 @@ import {
   setHeatmapOpacity,
 } from "@/lib/priceHeatmap";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { useMapTheme } from "@/hooks/useMapTheme";
+import { useMapRadiusLayer } from "@/hooks/useMapRadiusLayer";
 import type { BlockSummary, Coordinates } from "@/types/data";
+import { isGeoJsonDataSourceLike } from "@/types/map";
 import type { Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import type { Locale } from "@/lib/i18n";
@@ -59,44 +62,6 @@ type GeoJsonSourceLike = {
   getClusterExpansionZoom(clusterId: number): Promise<number>;
 };
 
-type GeoJsonDataSourceLike = {
-  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
-};
-
-type RasterSourceLike = {
-  setTiles(tiles: string[]): void;
-};
-
-function createCircleGeoJson(
-  center: Coordinates,
-  radiusKm: number,
-): GeoJSON.Feature<GeoJSON.Polygon> {
-  const points = 64;
-  const coords = [];
-  const kmPerDegreeLat = 111.32;
-  const kmPerDegreeLng = 111.32 * Math.cos((center.lat * Math.PI) / 180);
-
-  for (let i = 0; i <= points; i++) {
-    const angle = (i * 360) / points;
-    const rad = (angle * Math.PI) / 180;
-    const dx = radiusKm * Math.cos(rad);
-    const dy = radiusKm * Math.sin(rad);
-    coords.push([center.lng + dx / kmPerDegreeLng, center.lat + dy / kmPerDegreeLat]);
-  }
-
-  return {
-    type: "Feature",
-    geometry: {
-      type: "Polygon",
-      coordinates: [coords],
-    },
-    properties: {
-      radius: radiusKm,
-    },
-  };
-}
-
-
 function isPopupFeature(feature: unknown): feature is GeoJSON.Feature<
   GeoJSON.Point,
   PopupProperties
@@ -118,10 +83,6 @@ function isGeoJsonSourceLike(source: unknown): source is GeoJsonSourceLike {
   );
 }
 
-function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
-  return !!source && typeof source === "object" && "setData" in source;
-}
-
 export function MapView({
   blocks,
   selectedAddressKey,
@@ -140,6 +101,7 @@ export function MapView({
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
+  const [mapInstance, setMapInstance] = useState<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const onMapInteractRef = useRef(onMapInteract);
   const onGeolocateRef = useRef(onGeolocate);
@@ -151,8 +113,6 @@ export function MapView({
   const hasInitialFitRef = useRef(false);
   const previousTownFilterRef = useRef<string | null>(null);
   const previousAutoFitKeyRef = useRef<string | null>(null);
-  const lastAppliedThemeRef = useRef<boolean>(isDarkMode);
-  const pendingThemeLoadListenerRef = useRef<(() => void) | null>(null);
   const priceHeatmapOpacityRef = useRef(priceHeatmapOpacity);
   const priceHeatmapEnabledRef = useRef(priceHeatmapEnabled);
 
@@ -338,7 +298,7 @@ export function MapView({
         source: "blocks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION as any,
           "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
           "circle-stroke-width": 1.5,
@@ -512,65 +472,17 @@ export function MapView({
     });
 
     mapRef.current = map;
-    lastAppliedThemeRef.current = initialIsDark;
+    setMapInstance(map);
 
     return () => {
-      if (pendingThemeLoadListenerRef.current) {
-        map.off("load", pendingThemeLoadListenerRef.current);
-        pendingThemeLoadListenerRef.current = null;
-      }
       popup.remove();
       map.remove();
       mapRef.current = null;
+      setMapInstance(null);
       popupRef.current = null;
     };
   }, []);
 
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) {
-      return;
-    }
-
-    if (lastAppliedThemeRef.current === isDarkMode) {
-      return;
-    }
-
-    const applyTiles = () => {
-      const source = map.getSource("onemap") as RasterSourceLike | undefined;
-      if (!source || typeof source.setTiles !== "function") {
-        return;
-      }
-
-      source.setTiles([isDarkMode ? ONEMAP_NIGHT_TILE_URL : ONEMAP_DEFAULT_TILE_URL]);
-      lastAppliedThemeRef.current = isDarkMode;
-    };
-
-    if (map.isStyleLoaded()) {
-      applyTiles();
-      return;
-    }
-
-    if (pendingThemeLoadListenerRef.current) {
-      map.off("load", pendingThemeLoadListenerRef.current);
-      pendingThemeLoadListenerRef.current = null;
-    }
-
-    const onLoad = () => {
-      pendingThemeLoadListenerRef.current = null;
-      applyTiles();
-    };
-
-    pendingThemeLoadListenerRef.current = onLoad;
-    void map.once("load", onLoad);
-
-    return () => {
-      if (pendingThemeLoadListenerRef.current) {
-        map.off("load", pendingThemeLoadListenerRef.current);
-        pendingThemeLoadListenerRef.current = null;
-      }
-    };
-  }, [isDarkMode]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -753,64 +665,8 @@ export function MapView({
     };
   }, [priceHeatmapOpacity]);
 
-  // Update radius circles: geographic search radius takes precedence over the
-  // selected-block 1km/2km rings to avoid visual clutter while coordinate search
-  // is active. Both share one source to prevent conflicting writes.
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) {
-      return;
-    }
-
-    function updateRadius() {
-      const mapInstance = mapRef.current;
-      if (!mapInstance) {
-        return;
-      }
-
-      const source = mapInstance.getSource("radius");
-      if (!isGeoJsonDataSourceLike(source)) {
-        return;
-      }
-
-      if (geographicIntent?.type === "coordinates") {
-        const radiusKm = geographicIntent.radiusMeters / 1000;
-        source.setData({
-          type: "FeatureCollection",
-          features: [createCircleGeoJson(geographicIntent.coordinates, radiusKm)],
-        });
-        return;
-      }
-
-      if (!selectedAddressKey) {
-        source.setData({ type: "FeatureCollection", features: [] });
-        return;
-      }
-
-      const selectedBlock = blocksByKey.get(selectedAddressKey);
-      if (!selectedBlock) {
-        source.setData({ type: "FeatureCollection", features: [] });
-        return;
-      }
-
-      source.setData({
-        type: "FeatureCollection",
-        features: [
-          createCircleGeoJson(selectedBlock.coordinates, 1),
-          createCircleGeoJson(selectedBlock.coordinates, 2),
-        ],
-      });
-    }
-
-    if (map.isStyleLoaded()) {
-      updateRadius();
-    } else {
-      void map.once("load", updateRadius);
-    }
-    return () => {
-      map.off("load", updateRadius);
-    };
-  }, [geographicIntent, selectedAddressKey, blocksByKey]);
+  useMapTheme(mapInstance, isDarkMode);
+  useMapRadiusLayer(mapInstance, geographicIntent, selectedAddressKey, blocksByKey);
 
   return (
     <div
