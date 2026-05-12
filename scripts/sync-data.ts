@@ -140,6 +140,7 @@ async function main() {
     let nextIndex = 0;
     let completed = 0;
     let flushedAt = 0;
+    let flushInFlight: Promise<void> | null = null;
     console.log(`Geocoding ${missingAddresses.length} uncached addresses with concurrency ${concurrency}...`);
     console.log(`Using geocode endpoint: ${geocodeEndpoint.origin}${geocodeEndpoint.pathname}`);
 
@@ -159,7 +160,9 @@ async function main() {
         if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
           flushedAt = completed;
           geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
-          await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
+          const flush = flushInFlight ?? Promise.resolve();
+          flushInFlight = flush.then(() => saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache));
+          await flushInFlight;
         }
       }
     }
@@ -176,7 +179,14 @@ async function main() {
   await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
 
   const artifacts = buildArtifacts({
-    transactions, propertyInfo, mrtExits, geocodes: geocodeCache.entries, schools, hawkers, supermarkets, parks,
+    transactions,
+    propertyInfo,
+    mrtExits,
+    geocodes: geocodeCache.entries,
+    schools,
+    hawkers,
+    supermarkets,
+    parks,
     metadata: {
       resaleCollectionId: RESALE_COLLECTION_ID,
       resaleDatasetIds: resaleCollection.childDatasets,
