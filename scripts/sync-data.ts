@@ -157,9 +157,9 @@ async function main() {
         completed += 1;
         if (completed % 200 === 0 || completed === missingAddresses.length) console.log(`Geocoded ${completed}/${missingAddresses.length}`);
         if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
+          flushedAt = completed;
           geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
           await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
-          flushedAt = completed;
         }
       }
     }
