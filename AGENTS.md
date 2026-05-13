@@ -113,7 +113,10 @@ The following structured format applies to the overall PR review summary comment
 
 ### Data fixtures for local dev
 The app loads static JSON from `public/data/` at runtime. This directory is gitignored and empty by default.
-For local development and E2E tests, copy test fixtures: `mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/`.
+For local development and E2E tests, copy test fixtures:
+
+```bash
+mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
 Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and is **not** needed for development or testing.
 
 ### Running services
