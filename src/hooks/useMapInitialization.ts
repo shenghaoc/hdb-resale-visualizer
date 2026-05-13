@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map as MapLibreMap } from "maplibre-gl";
-import { ONEMAP_ATTRIBUTION, ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/lib/constants";
+import {
+  MAP_GLYPHS_URL,
+  ONEMAP_ATTRIBUTION,
+  ONEMAP_DEFAULT_TILE_URL,
+  ONEMAP_NIGHT_TILE_URL,
+} from "@/lib/constants";
 
 export const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
   [103.55, 1.15],
@@ -45,7 +50,7 @@ export function useMapInitialization({
       touchPitch: false,
       style: {
         version: 8,
-        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+        glyphs: MAP_GLYPHS_URL,
         sources: {
           onemap: {
             type: "raster",

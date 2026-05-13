@@ -15,6 +15,7 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     if (!map) return;
 
     const updateData = () => {
+      if (!map.isStyleLoaded()) return;
       const source = map.getSource("blocks");
       if (isGeoJsonDataSourceLike(source)) {
         source.setData(geoJson);
@@ -26,9 +27,11 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     } else {
       void map.once("load", updateData);
     }
+    map.on("styledata", updateData);
 
     return () => {
       map.off("load", updateData);
+      map.off("styledata", updateData);
     };
   }, [map, geoJson]);
 
@@ -37,6 +40,7 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     if (!map || !priceHeatmapEnabled) return;
 
     const applyData = () => {
+      if (!map.isStyleLoaded()) return;
       const source = map.getSource(HEATMAP_SOURCE_ID);
       if (isGeoJsonDataSourceLike(source)) {
         source.setData(geoJson);
@@ -48,9 +52,11 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
     } else {
       void map.once("load", applyData);
     }
+    map.on("styledata", applyData);
 
     return () => {
       map.off("load", applyData);
+      map.off("styledata", applyData);
     };
   }, [map, geoJson, priceHeatmapEnabled]);
 }

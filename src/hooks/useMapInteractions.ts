@@ -87,6 +87,7 @@ export function useMapInteractions({
 
   useEffect(() => {
     if (!map) return;
+    let isActive = true;
 
     const handleClickUnclustered = (event: MapLayerMouseEvent) => {
       onMapInteractRef.current?.("feature");
@@ -111,20 +112,23 @@ export function useMapInteractions({
         isGeoJsonDataSourceLike(source) &&
         isClusterSourceLike(source)
       ) {
-        void source.getClusterExpansionZoom(clusterId).then((zoom) => {
-          let container: HTMLElement;
-          try {
-            container = map.getContainer();
-          } catch {
-            return;
-          }
-          if (!container.isConnected) return;
-          map.easeTo({
-            center: pointGeometry.coordinates as [number, number],
-            zoom,
-            duration: prefersReducedMotion ? 0 : 260,
-          });
-        });
+        void source
+          .getClusterExpansionZoom(clusterId)
+          .then((zoom) => {
+            let container: HTMLElement;
+            try {
+              container = map.getContainer();
+            } catch {
+              return;
+            }
+            if (!isActive || !container.isConnected) return;
+            map.easeTo({
+              center: pointGeometry.coordinates as [number, number],
+              zoom,
+              duration: prefersReducedMotion ? 0 : 260,
+            });
+          })
+          .catch(() => undefined);
       }
     };
 
@@ -215,6 +219,7 @@ export function useMapInteractions({
     map.on("movestart", handleMoveStart);
 
     return () => {
+      isActive = false;
       map.off("click", "unclustered-point", handleClickUnclustered);
       map.off("click", "clusters", handleClickCluster);
       map.off("mouseenter", "unclustered-point", handleMouseEnterUnclustered);

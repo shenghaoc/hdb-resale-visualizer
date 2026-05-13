@@ -118,6 +118,7 @@ export function MapView({
     if (!mapInstance) return;
 
     const applySelectionFilter = () => {
+      if (!mapInstance.isStyleLoaded()) return;
       if (!mapInstance.getLayer("selected-point")) return;
       mapInstance.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
       mapInstance.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
@@ -140,6 +141,7 @@ export function MapView({
   useEffect(() => {
     if (!mapInstance) return;
     const applyVisibility = () => {
+      if (!mapInstance.isStyleLoaded()) return;
       const visibility = showBlockMarkers ? "visible" : "none";
       for (const layerId of ["clusters", "cluster-count", "unclustered-point"]) {
         if (mapInstance.getLayer(layerId)) {
@@ -152,12 +154,19 @@ export function MapView({
     } else {
       void mapInstance.once("load", applyVisibility);
     }
+    mapInstance.on("styledata", applyVisibility);
+
+    return () => {
+      mapInstance.off("load", applyVisibility);
+      mapInstance.off("styledata", applyVisibility);
+    };
   }, [mapInstance, showBlockMarkers]);
 
   // Heatmap layer management
   useEffect(() => {
     if (!mapInstance) return;
     const apply = () => {
+      if (!mapInstance.isStyleLoaded()) return;
       if (priceHeatmapEnabled) {
         addPriceHeatmapLayer(mapInstance, priceHeatmapOpacity, geoJson);
       } else {
@@ -169,12 +178,20 @@ export function MapView({
     } else {
       void mapInstance.once("load", apply);
     }
+
+    mapInstance.on("styledata", apply);
+
+    return () => {
+      mapInstance.off("load", apply);
+      mapInstance.off("styledata", apply);
+    };
   }, [mapInstance, priceHeatmapEnabled, geoJson, priceHeatmapOpacity]);
 
   // Heatmap opacity sync
   useEffect(() => {
     if (!mapInstance || !priceHeatmapEnabled) return;
     const applyOpacity = () => {
+      if (!mapInstance.isStyleLoaded()) return;
       if (isHeatmapLayerPresent(mapInstance)) {
         setHeatmapOpacity(mapInstance, priceHeatmapOpacity);
       }
@@ -184,6 +201,13 @@ export function MapView({
     } else {
       void mapInstance.once("load", applyOpacity);
     }
+
+    mapInstance.on("styledata", applyOpacity);
+
+    return () => {
+      mapInstance.off("load", applyOpacity);
+      mapInstance.off("styledata", applyOpacity);
+    };
   }, [mapInstance, priceHeatmapOpacity, priceHeatmapEnabled]);
 
   useMapTheme(mapInstance, isDarkMode);

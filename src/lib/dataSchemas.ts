@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+const MIN_LEASE_COMMENCE_YEAR = 1960;
+const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
+const MAX_LEASE_COMMENCE_YEAR =
+  new Date().getFullYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+
 const coordinatesSchema = z.object({
   lat: z.number().min(1.15).max(1.5),
   lng: z.number().min(103.55).max(104.13),
@@ -19,7 +24,10 @@ export const blockSummarySchema = z.object({
   medianPrice: z.number().positive(),
   transactionCount: z.number().nonnegative(),
   floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
-  leaseCommenceRange: z.tuple([z.number().int().min(1960), z.number().int().max(2100)]),
+  leaseCommenceRange: z.tuple([
+    z.number().int().min(MIN_LEASE_COMMENCE_YEAR),
+    z.number().int().max(MAX_LEASE_COMMENCE_YEAR),
+  ]),
   latestMonth: monthSchema,
   availableDateRange: z.tuple([monthSchema, monthSchema]),
   flatTypes: z.array(z.string()),

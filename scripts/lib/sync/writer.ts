@@ -8,10 +8,15 @@ const BLOCKS_DIR = path.join(PUBLIC_DATA_DIR, "blocks");
 const DETAILS_DIR = path.join(PUBLIC_DATA_DIR, "details");
 const COMPARISONS_DIR = path.join(PUBLIC_DATA_DIR, "comparisons");
 const TRENDS_DIR = path.join(PUBLIC_DATA_DIR, path.dirname(CRITICAL_DATA_ARTIFACT_PATHS.townFlatTypeTrend));
+const JSON_INDENT_SPACES = process.env.PRETTY_DATA_ARTIFACTS === "1" ? 2 : undefined;
+
+function stringifyJson(value: unknown) {
+  return JSON.stringify(value, null, JSON_INDENT_SPACES);
+}
 
 async function writeJson(filePath: string, value: unknown) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, JSON.stringify(value));
+  await fs.writeFile(filePath, stringifyJson(value));
 }
 
 export async function ensureDataDirectories() {
@@ -39,7 +44,7 @@ export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>)
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
   await Promise.all(
     Object.entries(blocksByTown).map(([town, blocks]) =>
-      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), JSON.stringify(blocks)),
+      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks)),
     ),
   );
   console.log(`Generated ${Object.keys(blocksByTown).length} town-indexed block files.`);
@@ -50,7 +55,7 @@ export async function writeDetailFiles(details: Record<string, unknown>) {
   await fs.mkdir(DETAILS_DIR, { recursive: true });
   await Promise.all(
     Object.entries(details).map(([addressKey, detail]) =>
-      fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), JSON.stringify(detail)),
+      fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), stringifyJson(detail)),
     ),
   );
   console.log(`Generated ${Object.keys(details).length} detail files.`);
@@ -62,7 +67,7 @@ export async function writeComparisonFiles(comparisons?: Record<string, unknown>
     await fs.mkdir(COMPARISONS_DIR, { recursive: true });
     await Promise.all(
       Object.entries(comparisons).map(([addressKey, comparison]) =>
-        fs.writeFile(path.join(COMPARISONS_DIR, `${addressKey}.json`), JSON.stringify(comparison)),
+        fs.writeFile(path.join(COMPARISONS_DIR, `${addressKey}.json`), stringifyJson(comparison)),
       ),
     );
     console.log(`Generated ${Object.keys(comparisons).length} comparison artifacts.`);

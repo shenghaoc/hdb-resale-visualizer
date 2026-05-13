@@ -30,6 +30,7 @@ export function useMapRadiusLayer(
     if (!map) return;
 
     const updateRadius = () => {
+      if (!map.isStyleLoaded()) return;
       const source = map.getSource("radius");
       if (!isGeoJsonDataSourceLike(source)) return;
 
@@ -56,9 +57,11 @@ export function useMapRadiusLayer(
 
     if (map.isStyleLoaded()) updateRadius();
     else void map.once("load", updateRadius);
+    map.on("styledata", updateRadius);
 
     return () => {
       map.off("load", updateRadius);
+      map.off("styledata", updateRadius);
     };
   }, [blocksByKey, geographicIntent, map, selectedAddressKey]);
 }

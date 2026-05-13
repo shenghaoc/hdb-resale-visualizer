@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Locale, Translator } from "@/lib/i18n";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
@@ -6,11 +6,26 @@ import type { Map as MapLibreMap, Popup } from "maplibre-gl";
 
 type RegisteredHandlers = {
   mapClick?: (event: { point: { x: number; y: number } }) => void;
+  clusterClick?: (event: {
+    features?: Array<{
+      geometry: GeoJSON.Point;
+      properties: { cluster_id: number };
+    }>;
+  }) => void;
 };
 
 function createMapStub() {
   const existingLayers = new Set<string>();
   const handlers: RegisteredHandlers = {};
+  const container = document.createElement("div");
+  document.body.appendChild(container);
+  let resolveClusterZoom: (zoom: number) => void = () => undefined;
+  const clusterZoomPromise = new Promise<number>((resolve) => {
+    resolveClusterZoom = resolve;
+  });
+  const clusterSource = {
+    getClusterExpansionZoom: vi.fn(() => clusterZoomPromise),
+  };
 
   const mapStub = {
     on: vi.fn(
@@ -22,6 +37,9 @@ function createMapStub() {
         if (eventName === "click" && typeof layerOrHandler !== "string") {
           handlers.mapClick = layerOrHandler as (event: { point: { x: number; y: number } }) => void;
         }
+        if (eventName === "click" && layerOrHandler === "clusters" && maybeHandler) {
+          handlers.clusterClick = maybeHandler as RegisteredHandlers["clusterClick"];
+        }
         if (eventName === "click" && typeof layerOrHandler === "string" && maybeHandler) {
           return mapStub;
         }
@@ -32,7 +50,8 @@ function createMapStub() {
     getLayer: vi.fn((layerId: string) => (existingLayers.has(layerId) ? { id: layerId } : undefined)),
     queryRenderedFeatures: vi.fn<() => unknown[]>(() => []),
     getCanvas: vi.fn(() => ({ style: { cursor: "" } })),
-    getSource: vi.fn(() => undefined),
+    getContainer: vi.fn(() => container),
+    getSource: vi.fn((sourceId: string) => (sourceId === "blocks" ? clusterSource : undefined)),
     easeTo: vi.fn(),
     getZoom: vi.fn(() => 11),
   };
@@ -47,7 +66,10 @@ function createMapStub() {
   return {
     map: mapStub as unknown as MapLibreMap,
     queryRenderedFeatures: mapStub.queryRenderedFeatures,
+    easeTo: mapStub.easeTo,
     mapClickHandler: () => handlers.mapClick,
+    clusterClickHandler: () => handlers.clusterClick,
+    resolveClusterZoom,
     setLayers,
   };
 }
@@ -73,6 +95,7 @@ describe("useMapInteractions map click guard", () => {
   const onMapInteract = vi.fn();
 
   beforeEach(() => {
+    document.body.replaceChildren();
     vi.clearAllMocks();
   });
 
@@ -152,5 +175,37 @@ describe("useMapInteractions map click guard", () => {
 
     expect(mapStub.queryRenderedFeatures).toHaveBeenCalledTimes(1);
     expect(onMapInteract).not.toHaveBeenCalledWith("background");
+  });
+
+  it("does not animate pending cluster expansion after cleanup", async () => {
+    const mapStub = createMapStub();
+    const { unmount } = renderHook(() =>
+      useMapInteractions({
+        map: mapStub.map,
+        popup: createPopupStub(),
+        onSelect,
+        onMapInteract,
+        t,
+        locale,
+        prefersReducedMotion: true,
+      }),
+    );
+
+    mapStub.clusterClickHandler()?.({
+      features: [
+        {
+          geometry: { type: "Point", coordinates: [103.8, 1.33] },
+          properties: { cluster_id: 42 },
+        },
+      ],
+    });
+    unmount();
+
+    await act(async () => {
+      mapStub.resolveClusterZoom(14);
+      await Promise.resolve();
+    });
+
+    expect(mapStub.easeTo).not.toHaveBeenCalled();
   });
 });
