@@ -1,31 +1,29 @@
-import { lazy, Suspense, useCallback, useMemo } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useShortlist } from "@/hooks/useShortlist";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
-import { usePanelState, LEFT_PANEL_WIDTHS, DESKTOP_PANEL_LAYOUT } from "@/hooks/usePanelState";
+import { usePanelState } from "@/hooks/usePanelState";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useHeaderState } from "@/hooks/useHeaderState";
 import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
+import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { NEAR_ME_SEARCH_QUERY } from "@/lib/constants";
 import { AppHeader } from "@/components/AppHeader";
+import { AppPanelShell } from "@/components/AppPanelShell";
+import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
 import { ScopePrompt } from "@/components/ScopePrompt";
-import { DesktopTabBar } from "@/components/DesktopTabBar";
-import { MobileTabBar } from "@/components/MobileTabBar";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -60,10 +58,6 @@ function App() {
   });
 
   const { setUseDefaultStartMonth } = pipeline;
-  const { clearError, locate, cancelPendingRequest, setUserLocation } = geo;
-  const { isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab, setIsSavedPanelOpen } = panel;
-  const { toggle: toggleShortlist } = shortlist;
-  const { hasInteractedWithMap, setIsHeaderVisible, setHasInteractedWithMap } = header;
 
   const { detail, comparison, isDetailLoading, isComparisonLoading } =
     useSelectedBlockArtifacts(filters.selectedAddressKey);
@@ -104,118 +98,42 @@ function App() {
     [filters, locale, patchFilters, t],
   );
 
-  // Cross-cutting filter handler: coordinates useDefaultStartMonth, geo error,
-  // and the near-me sentinel when a town is selected simultaneously.
-  const patchUserFilters = useCallback(
-    (patch: Partial<typeof filters>) => {
-      if ("startMonth" in patch) {
-        setUseDefaultStartMonth(false);
-      }
-      if ("search" in patch || "town" in patch || "selectedAddressKey" in patch) {
-        clearError();
-      }
-      // Selecting a town while "near me" is active would apply both a radius and
-      // a town boundary. Clear the sentinel so town selection is unambiguous.
-      const resolved =
-        "town" in patch && filters.search === NEAR_ME_SEARCH_QUERY
-          ? { ...patch, search: "" }
-          : patch;
-      patchFilters(resolved);
-    },
-    [patchFilters, setUseDefaultStartMonth, clearError, filters.search],
-  );
-
-  const handleResetFilters = useCallback(() => {
-    setUseDefaultStartMonth(true);
-    clearError();
-    resetFilters();
-  }, [setUseDefaultStartMonth, clearError, resetFilters]);
-
-  const handleSelectAddress = useCallback(
-    (addressKey: string) => {
-      if (isDesktop) {
-        setIsLeftPanelOpen(true);
-        setLeftTab("results");
-      } else {
-        setMobileTab("results");
-      }
-      patchFilters({ selectedAddressKey: addressKey });
-    },
-    [isDesktop, setIsLeftPanelOpen, setLeftTab, setMobileTab, patchFilters],
-  );
-
-  const handleToggleShortlist = useCallback(
-    (addressKey: string) => toggleShortlist(addressKey),
-    [toggleShortlist],
-  );
-
-  const handleChooseTown = useCallback(
-    (options?: { clearGeolocationError?: boolean }) => {
-      if (options?.clearGeolocationError !== false) clearError();
-      cancelPendingRequest();
-      if (isDesktop) {
-        setLeftTab("filters");
-        setIsLeftPanelOpen(true);
-        return;
-      }
-      setMobileTab("filters");
-    },
-    [clearError, cancelPendingRequest, isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab],
-  );
-
-  const handleGeolocate = useCallback(
-    (coords: Parameters<typeof setUserLocation>[0]) => {
-      setUserLocation(coords);
-      clearError();
-      patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-      if (isDesktop) {
-        setLeftTab("results");
-        setIsLeftPanelOpen(true);
-      }
-    },
-    [setUserLocation, clearError, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen],
-  );
-
-  const handleUseCurrentLocation = useCallback(() => {
-    locate(
-      (coords) => {
-        patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-        if (isDesktop) {
-          setLeftTab("results");
-          setIsLeftPanelOpen(true);
-        }
-        // Mobile: stay on map so nearby markers are visible once scope resolves.
-        // The geo hook already called setUserLocation before invoking this callback.
-        void coords;
-      },
-      () => handleChooseTown({ clearGeolocationError: false }),
-    );
-  }, [locate, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen, handleChooseTown]);
-
-  const handleMapInteract = useCallback(
-    (interactionType: "background" | "feature" = "background") => {
-      if (!hasInteractedWithMap) {
-        if (isDesktop) setIsHeaderVisible(false);
-        setHasInteractedWithMap(true);
-      }
-      if (interactionType === "feature") return;
-      if (isDesktop) {
-        setIsLeftPanelOpen(false);
-        setIsSavedPanelOpen(false);
-        return;
-      }
-      setMobileTab(null);
-    },
-    [
-      hasInteractedWithMap,
-      isDesktop,
-      setIsHeaderVisible,
-      setHasInteractedWithMap,
-      setIsLeftPanelOpen,
-      setIsSavedPanelOpen,
-      setMobileTab,
-    ],
-  );
+  const {
+    patchUserFilters,
+    handleResetFilters,
+    handleSelectAddress,
+    handleToggleShortlist,
+    handleChooseTown,
+    handleGeolocate,
+    handleUseCurrentLocation,
+    handleMapInteract,
+    handleOpenFilters,
+    handleDesktopFiltersClick,
+    handleDesktopResultsClick,
+    handleDesktopSavedClick,
+    handleMobileFiltersClick,
+    handleMobileResultsClick,
+    handleMobileSavedClick,
+  } = useAppShellController({
+    filters,
+    patchFilters,
+    resetFilters,
+    setUseDefaultStartMonth,
+    clearGeolocationError: geo.clearError,
+    cancelPendingGeolocationRequest: geo.cancelPendingRequest,
+    locate: geo.locate,
+    setUserLocation: geo.setUserLocation,
+    isDesktop: panel.isDesktop,
+    setLeftTab: panel.setLeftTab,
+    setIsLeftPanelOpen: panel.setIsLeftPanelOpen,
+    setMobileTab: panel.setMobileTab,
+    setIsSavedPanelOpen: panel.setIsSavedPanelOpen,
+    hasInteractedWithMap: header.hasInteractedWithMap,
+    setIsHeaderVisible: header.setIsHeaderVisible,
+    setHasInteractedWithMap: header.setHasInteractedWithMap,
+    toggleShortlist: shortlist.toggle,
+    leftTab: panel.leftTab,
+  });
 
   // ── Error / loading states ───────────────────────────────────────────────
 
@@ -410,14 +328,7 @@ function App() {
           chips={activeFilterChips}
           isDesktop={panel.isDesktop}
           t={t}
-          onOpenFilters={() => {
-            if (panel.isDesktop) {
-              panel.setLeftTab("filters");
-              panel.setIsLeftPanelOpen(true);
-              return;
-            }
-            panel.setMobileTab("filters");
-          }}
+          onOpenFilters={handleOpenFilters}
         />
 
         <ScopePrompt
@@ -430,203 +341,42 @@ function App() {
           onChooseTown={() => handleChooseTown()}
         />
 
-        <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
-          {panel.isDesktop && !header.isHeaderVisible ? (
-            <div className="pointer-events-auto absolute left-6 top-6 z-30">
-              <Button
-                variant="outline"
-                size="xs"
-                className="h-8 rounded-xl border-border/20 bg-background/90 px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground backdrop-blur-[20px] transition-colors hover:text-foreground shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:text-primary/60 dark:hover:text-primary dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]"
-                onClick={() => header.setIsHeaderVisible(true)}
-              >
-                {t("app.showHeader")}
-              </Button>
-            </div>
-          ) : null}
-
-          {panel.isDesktop ? (
-            <section className="pointer-events-none relative min-h-0 flex-1">
-              {/* Left panel: Filters / Results */}
-              <aside
-                id="desktop-left-panel"
-                aria-hidden={!panel.isLeftPanelOpen}
-                {...(!panel.isLeftPanelOpen && { inert: true })}
-                data-open={panel.isLeftPanelOpen ? "true" : "false"}
-                data-mode={panel.leftTab}
-                className={cn(
-                  "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-                  "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem]",
-                  panel.isLeftPanelOpen
-                    ? "translate-y-0 opacity-100"
-                    : "pointer-events-none translate-y-6 opacity-0",
-                )}
-                style={{ width: LEFT_PANEL_WIDTHS[panel.leftTab] }}
-              >
-                <div className="flex h-full min-h-0 flex-col">
-                  <div
-                    id="desktop-filters-content"
-                    aria-hidden={panel.leftTab !== "filters"}
-                    className={cn(
-                      "h-full overflow-y-auto p-3 pb-8",
-                      panel.leftTab === "filters" ? "block" : "hidden",
-                    )}
-                  >
-                    {filterContent}
-                  </div>
-                  <div
-                    id="desktop-results-content"
-                    aria-hidden={panel.leftTab !== "results"}
-                    className={cn(
-                      "h-full min-h-0 flex-col gap-3 overflow-hidden p-3 pb-8",
-                      panel.leftTab === "results" ? "flex" : "hidden",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "min-h-0 flex-1 flex-col",
-                        detailVisible || detailLoading ? "hidden" : "flex",
-                      )}
-                    >
-                      {resultsPaneContent}
-                    </div>
-                    <div
-                      className={cn(
-                        "min-h-0 flex-1 flex-col",
-                        detailVisible || detailLoading ? "flex" : "hidden",
-                      )}
-                    >
-                      {selectedDetailContent}
-                    </div>
-                  </div>
-                </div>
-              </aside>
-
-              {/* Saved panel */}
-              <aside
-                id="desktop-saved-panel"
-                aria-hidden={!panel.isSavedPanelOpen}
-                {...(!panel.isSavedPanelOpen && { inert: true })}
-                data-open={panel.isSavedPanelOpen ? "true" : "false"}
-                data-mode="saved"
-                className={cn(
-                  "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity,left] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-                  "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] w-[min(28rem,32vw)]",
-                  panel.isSavedPanelOpen
-                    ? "translate-y-0 opacity-100"
-                    : "pointer-events-none translate-y-6 opacity-0",
-                )}
-                style={{
-                  left: panel.isLeftPanelOpen
-                    ? `calc(${DESKTOP_PANEL_LAYOUT.edgeInset} + ${LEFT_PANEL_WIDTHS[panel.leftTab]} + ${DESKTOP_PANEL_LAYOUT.panelGap})`
-                    : DESKTOP_PANEL_LAYOUT.edgeInset,
-                }}
-              >
-                <div className="flex h-full min-h-0 flex-col">
-                  <div
-                    id="desktop-saved-content"
-                    className="flex h-full min-h-0 flex-col overflow-hidden p-3 pb-8"
-                  >
-                    {savedContent}
-                  </div>
-                </div>
-              </aside>
-            </section>
-          ) : (
-            <section className="pointer-events-none relative min-h-0 flex-1">
-              {panel.mobileTab && (
-                <div
-                  id="mobile-panel"
-                  className={cn(
-                    "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-all shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),inset_0_1px_0_rgba(34,211,238,0.05),0_-16px_48px_rgba(4,12,24,0.92)]",
-                    activeFilterChips.length > 0 ? "top-[4.5rem]" : "top-0",
-                  )}
-                >
-                  <div
-                    id="mobile-filters-content"
-                    className={cn(
-                      "h-full overflow-y-auto p-3 pb-12",
-                      panel.mobileTab === "filters" ? "block" : "hidden",
-                    )}
-                  >
-                    {filterContent}
-                  </div>
-                  <div
-                    id="mobile-results-content"
-                    className={cn(
-                      "h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12",
-                      panel.mobileTab === "results" ? "flex" : "hidden",
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "min-h-0 flex-1 flex-col",
-                        detailVisible || detailLoading ? "hidden" : "flex",
-                      )}
-                    >
-                      {resultsPaneContent}
-                    </div>
-                    <div
-                      className={cn(
-                        "min-h-0 flex-1 flex-col",
-                        detailVisible || detailLoading ? "flex" : "hidden",
-                      )}
-                    >
-                      {selectedDetailContent}
-                    </div>
-                  </div>
-                  <div
-                    id="mobile-saved-content"
-                    className={cn(
-                      "h-full min-h-0 flex-col overflow-hidden p-3 pb-12",
-                      panel.mobileTab === "saved" ? "flex" : "hidden",
-                    )}
-                  >
-                    {savedContent}
-                  </div>
-                </div>
-              )}
-            </section>
-          )}
-        </div>
-      </main>
-
-      {panel.isDesktop && (
-        <DesktopTabBar
+        <AppPanelShell
+          isDesktop={panel.isDesktop}
+          isHeaderVisible={header.isHeaderVisible}
           leftTab={panel.leftTab}
           isLeftPanelOpen={panel.isLeftPanelOpen}
           isSavedPanelOpen={panel.isSavedPanelOpen}
-          shortlistCount={shortlist.items.length}
-          theme={theme}
-          t={t}
-          onFiltersClick={() => {
-            panel.setLeftTab("filters");
-            panel.setIsLeftPanelOpen((c) => (panel.leftTab === "filters" ? !c : true));
-          }}
-          onResultsClick={() => {
-            panel.setLeftTab("results");
-            panel.setIsLeftPanelOpen((c) => (panel.leftTab === "results" ? !c : true));
-          }}
-          onSavedClick={() => panel.setIsSavedPanelOpen((c) => !c)}
-          onToggleTheme={toggleTheme}
-        />
-      )}
-
-      {!panel.isDesktop && (
-        <MobileTabBar
           mobileTab={panel.mobileTab}
-          shortlistCount={shortlist.items.length}
-          theme={theme}
-          t={t}
-          onFiltersClick={() =>
-            panel.setMobileTab((c) => (c === "filters" ? null : "filters"))
-          }
-          onResultsClick={() =>
-            panel.setMobileTab((c) => (c === "results" ? null : "results"))
-          }
-          onSavedClick={() => panel.setMobileTab((c) => (c === "saved" ? null : "saved"))}
-          onToggleTheme={toggleTheme}
+          activeFilterChipCount={activeFilterChips.length}
+          detailVisible={detailVisible}
+          detailLoading={detailLoading}
+          filterContent={filterContent}
+          resultsPaneContent={resultsPaneContent}
+          selectedDetailContent={selectedDetailContent}
+          savedContent={savedContent}
+          onShowHeader={() => header.setIsHeaderVisible(true)}
+          showHeaderLabel={t("app.showHeader")}
         />
-      )}
+      </main>
+
+      <AppTabBars
+        isDesktop={panel.isDesktop}
+        leftTab={panel.leftTab}
+        mobileTab={panel.mobileTab}
+        isLeftPanelOpen={panel.isLeftPanelOpen}
+        isSavedPanelOpen={panel.isSavedPanelOpen}
+        shortlistCount={shortlist.items.length}
+        theme={theme}
+        t={t}
+        onDesktopFiltersClick={handleDesktopFiltersClick}
+        onDesktopResultsClick={handleDesktopResultsClick}
+        onDesktopSavedClick={handleDesktopSavedClick}
+        onMobileFiltersClick={handleMobileFiltersClick}
+        onMobileResultsClick={handleMobileResultsClick}
+        onMobileSavedClick={handleMobileSavedClick}
+        onToggleTheme={toggleTheme}
+      />
     </>
   );
 }
