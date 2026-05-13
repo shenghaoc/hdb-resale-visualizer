@@ -5,12 +5,8 @@ import {
   ONEMAP_ATTRIBUTION,
   ONEMAP_DEFAULT_TILE_URL,
   ONEMAP_NIGHT_TILE_URL,
+  SINGAPORE_BOUNDS,
 } from "@/lib/constants";
-
-export const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
-  [103.55, 1.15],
-  [104.13, 1.5],
-];
 
 type UseMapInitializationProps = {
   containerRef: React.RefObject<HTMLDivElement | null>;

@@ -42,22 +42,18 @@ export async function writeGeneratedArtifacts(
 export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>) {
   await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
-  await Promise.all(
-    Object.entries(blocksByTown).map(([town, blocks]) =>
-      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks)),
-    ),
-  );
+  for (const [town, blocks] of Object.entries(blocksByTown)) {
+    await fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks));
+  }
   console.log(`Generated ${Object.keys(blocksByTown).length} town-indexed block files.`);
 }
 
 export async function writeDetailFiles(details: Record<string, unknown>) {
   await fs.rm(DETAILS_DIR, { recursive: true, force: true });
   await fs.mkdir(DETAILS_DIR, { recursive: true });
-  await Promise.all(
-    Object.entries(details).map(([addressKey, detail]) =>
-      fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), stringifyJson(detail)),
-    ),
-  );
+  for (const [addressKey, detail] of Object.entries(details)) {
+    await fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), stringifyJson(detail));
+  }
   console.log(`Generated ${Object.keys(details).length} detail files.`);
 }
 
@@ -65,11 +61,12 @@ export async function writeComparisonFiles(comparisons?: Record<string, unknown>
   await fs.rm(COMPARISONS_DIR, { recursive: true, force: true });
   if (comparisons) {
     await fs.mkdir(COMPARISONS_DIR, { recursive: true });
-    await Promise.all(
-      Object.entries(comparisons).map(([addressKey, comparison]) =>
-        fs.writeFile(path.join(COMPARISONS_DIR, `${addressKey}.json`), stringifyJson(comparison)),
-      ),
-    );
+    for (const [addressKey, comparison] of Object.entries(comparisons)) {
+      await fs.writeFile(
+        path.join(COMPARISONS_DIR, `${addressKey}.json`),
+        stringifyJson(comparison),
+      );
+    }
     console.log(`Generated ${Object.keys(comparisons).length} comparison artifacts.`);
   }
 }

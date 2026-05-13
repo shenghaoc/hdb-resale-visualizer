@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary } from "@/types/data";
-import { SINGAPORE_BOUNDS } from "./useMapInitialization";
+import { SINGAPORE_BOUNDS } from "@/lib/constants";
 
 type UseMapFitBoundsProps = {
   map: MapLibreMap | null;

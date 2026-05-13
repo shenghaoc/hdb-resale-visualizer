@@ -1,13 +1,16 @@
 import { z } from "zod";
-
-const MIN_LEASE_COMMENCE_YEAR = 1960;
-const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
-const MAX_LEASE_COMMENCE_YEAR =
-  new Date().getFullYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+import {
+  MAX_LEASE_COMMENCE_YEAR,
+  MIN_LEASE_COMMENCE_YEAR,
+  SG_LAT_MAX,
+  SG_LAT_MIN,
+  SG_LNG_MAX,
+  SG_LNG_MIN,
+} from "./constants";
 
 const coordinatesSchema = z.object({
-  lat: z.number().min(1.15).max(1.5),
-  lng: z.number().min(103.55).max(104.13),
+  lat: z.number().min(SG_LAT_MIN).max(SG_LAT_MAX),
+  lng: z.number().min(SG_LNG_MIN).max(SG_LNG_MAX),
 });
 
 const monthSchema = z.string().regex(/^\d{4}-\d{2}$/);
