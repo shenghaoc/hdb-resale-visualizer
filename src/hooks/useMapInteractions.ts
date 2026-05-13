@@ -184,7 +184,7 @@ export function useMapInteractions({
       }
 
       const clickedFeatures = map.queryRenderedFeatures(event.point, {
-        layers: [...queryableLayers],
+        layers: queryableLayers,
       });
       if (clickedFeatures.length === 0) {
         onMapInteractRef.current?.("background");
