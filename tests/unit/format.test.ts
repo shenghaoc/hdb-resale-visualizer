@@ -166,6 +166,7 @@ describe("format functions", () => {
       formatNumber(1, 0);
       formatNumber(1, 0);
       formatNumber(1, 0);
+      formatNumber(1, 0);
       expect(true).toBe(true);
     });
   });
