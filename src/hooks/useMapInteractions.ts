@@ -41,6 +41,9 @@ function readStringProperty(properties: unknown, key: string): string | undefine
 
 function readNumberProperty(properties: unknown, key: string): number | undefined {
   const value = readProperty(properties, key);
+  if (value === null || value === undefined) {
+    return undefined;
+  }
   if (typeof value === "number") {
     return value;
   }

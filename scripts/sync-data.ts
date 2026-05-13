@@ -10,7 +10,9 @@ import path from "node:path";
 import {
   buildArtifacts,
   buildMrtStationsGeoJson,
+  type AmenityLocation,
   type GeocodeCacheFile,
+  type SchoolLocation,
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
@@ -52,37 +54,69 @@ async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
   };
 }
 
+function warnAmenityStep(step: string, error: unknown) {
+  console.warn(
+    `Amenity step "${step}" failed: ${error instanceof Error ? error.message : "unknown error"}.`,
+  );
+}
+
 async function fetchAmenityData(
   geocodeCache: GeocodeCacheFile,
   options: { skipGeocoding: boolean; geocodeEndpoint: URL },
 ) {
   console.log("Fetching amenity data...");
-  const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
-  await sleep(2600);
-  const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, options);
+  let schools: SchoolLocation[] = [];
+  let hawkers: AmenityLocation[] = [];
+  let supermarkets: AmenityLocation[] = [];
+  let parks: AmenityLocation[] = [];
+  let geocodedCount = 0;
 
-  const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
-  await sleep(2600);
-  const hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
+  try {
+    const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
+    await sleep(2600);
+    const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, options);
+    schools = schoolResult.schools;
+    geocodedCount += schoolResult.geocodedCount;
+  } catch (error) {
+    warnAmenityStep("schools", error);
+  }
 
-  const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
-  await sleep(2600);
-  const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, options);
+  try {
+    const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
+    await sleep(2600);
+    hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
+  } catch (error) {
+    warnAmenityStep("hawkers", error);
+  }
 
-  const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
-  await sleep(2600);
-  const parks = normalizeAmenityGeoJson(parksGeoJson);
+  try {
+    const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
+    await sleep(2600);
+    const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, options);
+    supermarkets = supermarketResult.supermarkets;
+    geocodedCount += supermarketResult.geocodedCount;
+  } catch (error) {
+    warnAmenityStep("supermarkets", error);
+  }
+
+  try {
+    const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
+    await sleep(2600);
+    parks = normalizeAmenityGeoJson(parksGeoJson);
+  } catch (error) {
+    warnAmenityStep("parks", error);
+  }
 
   console.log(
-    `Loaded ${schoolResult.schools.length} schools, ${hawkers.length} hawkers, ${supermarketResult.supermarkets.length} supermarkets, ${parks.length} parks.`,
+    `Loaded ${schools.length} schools, ${hawkers.length} hawkers, ${supermarkets.length} supermarkets, ${parks.length} parks.`,
   );
 
   return {
-    schools: schoolResult.schools,
+    schools,
     hawkers,
-    supermarkets: supermarketResult.supermarkets,
+    supermarkets,
     parks,
-    geocodedCount: schoolResult.geocodedCount + supermarketResult.geocodedCount,
+    geocodedCount,
   };
 }
 
@@ -130,20 +164,14 @@ async function main() {
 
   let amenities: Omit<Awaited<ReturnType<typeof fetchAmenityData>>, "geocodedCount"> | undefined;
   if (!skipAmenities) {
-    try {
-      const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
-        skipGeocoding,
-        geocodeEndpoint,
-      });
-      amenities = amenityData;
-      if (geocodedCount > 0) {
-        geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
-        await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
-      }
-    } catch (error) {
-      console.warn(
-        `Failed to fetch amenity data: ${error instanceof Error ? error.message : "unknown error"}. Continuing without amenities.`,
-      );
+    const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
+      skipGeocoding,
+      geocodeEndpoint,
+    });
+    amenities = amenityData;
+    if (geocodedCount > 0) {
+      geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+      await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
     }
   }
 

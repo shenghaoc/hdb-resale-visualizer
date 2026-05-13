@@ -23,11 +23,11 @@ export function useMapInitialization({
   const [mapInstance, setMapInstance] = useState<MapLibreMap | null>(null);
   const onGeolocateRef = useRef(onGeolocate);
   const isDarkModeRef = useRef(isDarkMode);
-  isDarkModeRef.current = isDarkMode;
 
   useEffect(() => {
     onGeolocateRef.current = onGeolocate;
-  }, [onGeolocate]);
+    isDarkModeRef.current = isDarkMode;
+  }, [onGeolocate, isDarkMode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;

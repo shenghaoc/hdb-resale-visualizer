@@ -381,6 +381,7 @@ function App() {
         <PriceLegend
           isDesktop={panel.isDesktop}
           isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
+          t={t}
         />
 
         {/* Price heatmap toggle */}
