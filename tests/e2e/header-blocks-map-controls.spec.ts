@@ -63,29 +63,27 @@ async function expectControlReceivesPointer(
 ) {
   await expect(control).toBeVisible();
 
-  await expect(async () => {
-    const hitInfo = await control.evaluate((element) => {
-      const rect = element.getBoundingClientRect();
-      const point = {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      };
-      const hit = document.elementFromPoint(point.x, point.y);
+  const hitInfo = await control.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const point = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    };
+    const hit = document.elementFromPoint(point.x, point.y);
 
-      return {
-        point,
-        hitTag: hit?.tagName ?? null,
-        hitClass: hit instanceof HTMLElement ? hit.className : null,
-        hitLabel: hit instanceof HTMLElement ? hit.getAttribute("aria-label") : null,
-        receivesPointer: hit === element || element.contains(hit),
-      };
-    });
+    return {
+      point,
+      hitTag: hit?.tagName ?? null,
+      hitClass: hit instanceof HTMLElement ? hit.className : null,
+      hitLabel: hit instanceof HTMLElement ? hit.getAttribute("aria-label") : null,
+      receivesPointer: hit === element || element.contains(hit),
+    };
+  });
 
-    expect(
-      hitInfo.receivesPointer,
-      `${label} should be the top hit target at ${Math.round(hitInfo.point.x)},${Math.round(hitInfo.point.y)}; got ${hitInfo.hitTag} ${hitInfo.hitLabel ?? hitInfo.hitClass ?? ""}`,
-    ).toBe(true);
-  }).toPass({ timeout: 5_000 });
+  expect(
+    hitInfo.receivesPointer,
+    `${label} should be the top hit target at ${Math.round(hitInfo.point.x)},${Math.round(hitInfo.point.y)}; got ${hitInfo.hitTag} ${hitInfo.hitLabel ?? hitInfo.hitClass ?? ""}`,
+  ).toBe(true);
 }
 
 async function checkControlsOverlapWithHeader(page: Page) {
