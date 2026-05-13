@@ -53,7 +53,7 @@ const addressDetailTransactionSchema = z.object({
   storeyRange: z.string(),
   floorAreaSqm: z.number().positive(),
   flatModel: z.string(),
-  leaseCommenceDate: z.number().int(),
+  leaseCommenceDate: z.number().int().min(MIN_LEASE_COMMENCE_YEAR).max(MAX_LEASE_COMMENCE_YEAR),
   remainingLease: z.string(),
   resalePrice: z.number().positive(),
   pricePerSqm: z.number().positive(),
