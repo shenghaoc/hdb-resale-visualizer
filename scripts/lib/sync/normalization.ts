@@ -98,7 +98,7 @@ export function normalizeAmenityGeoJson(
     const coords = parsed.data.geometry.coordinates;
     const props = parsed.data.properties;
     const name = (props.NAME ?? props.name ?? "Unknown") as string;
-    return { name: String(name), lat: coords[1], lng: coords[0] };
+    return { name, lat: coords[1], lng: coords[0] };
   });
 }
 
