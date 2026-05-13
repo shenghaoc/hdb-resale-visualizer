@@ -42,18 +42,33 @@ export async function writeGeneratedArtifacts(
 export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>) {
   await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
-  for (const [town, blocks] of Object.entries(blocksByTown)) {
-    await fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks));
-  }
+  await Promise.all(
+    Object.entries(blocksByTown).map(([town, blocks]) =>
+      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks)),
+    ),
+  );
   console.log(`Generated ${Object.keys(blocksByTown).length} town-indexed block files.`);
+}
+
+async function writeFilesChunked(
+  dir: string,
+  entries: [string, unknown][],
+  chunkSize = 50,
+) {
+  for (let i = 0; i < entries.length; i += chunkSize) {
+    const chunk = entries.slice(i, i + chunkSize);
+    await Promise.all(
+      chunk.map(([key, value]) =>
+        fs.writeFile(path.join(dir, `${key}.json`), stringifyJson(value)),
+      ),
+    );
+  }
 }
 
 export async function writeDetailFiles(details: Record<string, unknown>) {
   await fs.rm(DETAILS_DIR, { recursive: true, force: true });
   await fs.mkdir(DETAILS_DIR, { recursive: true });
-  for (const [addressKey, detail] of Object.entries(details)) {
-    await fs.writeFile(path.join(DETAILS_DIR, `${addressKey}.json`), stringifyJson(detail));
-  }
+  await writeFilesChunked(DETAILS_DIR, Object.entries(details));
   console.log(`Generated ${Object.keys(details).length} detail files.`);
 }
 
@@ -61,12 +76,7 @@ export async function writeComparisonFiles(comparisons?: Record<string, unknown>
   await fs.rm(COMPARISONS_DIR, { recursive: true, force: true });
   if (comparisons) {
     await fs.mkdir(COMPARISONS_DIR, { recursive: true });
-    for (const [addressKey, comparison] of Object.entries(comparisons)) {
-      await fs.writeFile(
-        path.join(COMPARISONS_DIR, `${addressKey}.json`),
-        stringifyJson(comparison),
-      );
-    }
+    await writeFilesChunked(COMPARISONS_DIR, Object.entries(comparisons));
     console.log(`Generated ${Object.keys(comparisons).length} comparison artifacts.`);
   }
 }
