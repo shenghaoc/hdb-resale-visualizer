@@ -42,11 +42,10 @@ export async function writeGeneratedArtifacts(
 export async function writeTownBlockFiles(blocksByTown: Record<string, unknown>) {
   await fs.rm(BLOCKS_DIR, { recursive: true, force: true });
   await fs.mkdir(BLOCKS_DIR, { recursive: true });
-  await Promise.all(
-    Object.entries(blocksByTown).map(([town, blocks]) =>
-      fs.writeFile(path.join(BLOCKS_DIR, `${townToFilename(town)}.json`), stringifyJson(blocks)),
-    ),
+  const entries = Object.entries(blocksByTown).map(
+    ([town, blocks]) => [townToFilename(town), blocks] as [string, unknown]
   );
+  await writeFilesChunked(BLOCKS_DIR, entries);
   console.log(`Generated ${Object.keys(blocksByTown).length} town-indexed block files.`);
 }
 

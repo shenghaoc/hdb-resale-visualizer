@@ -47,6 +47,13 @@ export function normalizeResaleRows(rows: Record<string, string>[]) {
 
 export function normalizePropertyRows(rows: Record<string, string>[]) {
   const output: PropertyInfo[] = [];
+
+  const parseNumberOrNull = (val: string | undefined | null) => {
+    if (!val || val.trim() === "") return null;
+    const num = Number(val);
+    return Number.isFinite(num) ? num : null;
+  };
+
   for (const row of rows) {
     const parsed = propertyRowSchema.safeParse(row);
     if (!parsed.success) continue;
@@ -56,9 +63,9 @@ export function normalizePropertyRows(rows: Record<string, string>[]) {
       addressKey: makeAddressKey("UNKNOWN", block, streetName),
       block,
       streetName,
-      maxFloorLevel: Number(parsed.data.max_floor_lvl) || null,
-      yearCompleted: Number(parsed.data.year_completed) || null,
-      totalDwellingUnits: Number(parsed.data.total_dwelling_units) || null,
+      maxFloorLevel: parseNumberOrNull(parsed.data.max_floor_lvl),
+      yearCompleted: parseNumberOrNull(parsed.data.year_completed),
+      totalDwellingUnits: parseNumberOrNull(parsed.data.total_dwelling_units),
     });
   }
   return output;
