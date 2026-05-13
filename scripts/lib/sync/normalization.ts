@@ -47,6 +47,13 @@ export function normalizeResaleRows(rows: Record<string, string>[]) {
 
 export function normalizePropertyRows(rows: Record<string, string>[]) {
   const output: PropertyInfo[] = [];
+
+  const parseNumberOrNull = (val: string | undefined | null) => {
+    if (!val || val.trim() === "") return null;
+    const num = Number(val);
+    return Number.isFinite(num) ? num : null;
+  };
+
   for (const row of rows) {
     const parsed = propertyRowSchema.safeParse(row);
     if (!parsed.success) continue;
@@ -56,9 +63,9 @@ export function normalizePropertyRows(rows: Record<string, string>[]) {
       addressKey: makeAddressKey("UNKNOWN", block, streetName),
       block,
       streetName,
-      maxFloorLevel: Number(parsed.data.max_floor_lvl) || null,
-      yearCompleted: Number(parsed.data.year_completed) || null,
-      totalDwellingUnits: Number(parsed.data.total_dwelling_units) || null,
+      maxFloorLevel: parseNumberOrNull(parsed.data.max_floor_lvl),
+      yearCompleted: parseNumberOrNull(parsed.data.year_completed),
+      totalDwellingUnits: parseNumberOrNull(parsed.data.total_dwelling_units),
     });
   }
   return output;
@@ -71,21 +78,28 @@ export function rekeyPropertyInfo(propertyRows: PropertyInfo[], transactions: Re
 }
 
 export function normalizeMrtFeatures(geoJson: RawGeoJson): MrtExit[] {
-  return geoJson.features
-    .map((feature) => mrtFeatureSchema.safeParse(feature))
-    .filter((result): result is { success: true; data: ReturnType<typeof mrtFeatureSchema.parse> } => result.success)
-    .map((result) => ({ stationName: normalizeText(result.data.properties.STATION_NA), lng: result.data.geometry.coordinates[0], lat: result.data.geometry.coordinates[1] }));
+  return geoJson.features.flatMap((feature) => {
+    const result = mrtFeatureSchema.safeParse(feature);
+    if (!result.success) return [];
+    return {
+      stationName: normalizeText(result.data.properties.STATION_NA),
+      lng: result.data.geometry.coordinates[0],
+      lat: result.data.geometry.coordinates[1],
+    };
+  });
 }
 
-export function normalizeAmenityGeoJson(geoJson: RawGeoJson): Array<{ name: string; lat: number; lng: number }> {
-  return geoJson.features.map((feature) => {
+export function normalizeAmenityGeoJson(
+  geoJson: RawGeoJson,
+): Array<{ name: string; lat: number; lng: number }> {
+  return geoJson.features.flatMap((feature) => {
     const parsed = geoJsonFeatureSchema.safeParse(feature);
-    if (!parsed.success) return null;
+    if (!parsed.success) return [];
     const coords = parsed.data.geometry.coordinates;
     const props = parsed.data.properties;
     const name = (props.NAME ?? props.name ?? "Unknown") as string;
-    return { name: String(name), lat: coords[1], lng: coords[0] };
-  }).filter((item): item is { name: string; lat: number; lng: number } => item !== null);
+    return { name, lat: coords[1], lng: coords[0] };
+  });
 }
 
 export async function normalizeSchoolRows(rows: Record<string, string>[], geocodeCache: GeocodeCacheFile, options: { skipGeocoding: boolean; geocodeEndpoint: URL }) {

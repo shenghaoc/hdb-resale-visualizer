@@ -12,7 +12,7 @@ import { useHeaderState } from "@/hooks/useHeaderState";
 import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { NEAR_ME_SEARCH_QUERY, MEDIAN_PRICE_LEGEND_GRADIENT } from "@/lib/constants";
+import { NEAR_ME_SEARCH_QUERY } from "@/lib/constants";
 import { AppHeader } from "@/components/AppHeader";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
 import { ScopePrompt } from "@/components/ScopePrompt";
@@ -22,6 +22,7 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
+import { PriceLegend } from "@/components/PriceLegend";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -377,33 +378,11 @@ function App() {
         ) : null}
 
         {/* Price-colour legend — only when map is visible */}
-        {pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null) && (
-          <div
-            role="img"
-            aria-label="Map legend: median price colour ramp from S$400K (low) to S$1.3M+ (high)"
-            className="pointer-events-none absolute z-25 rounded-lg border border-border/20 bg-background/90 p-2 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]"
-            style={{
-              bottom: panel.isDesktop ? "4rem" : "8rem",
-              right: panel.isDesktop ? "4.5rem" : "0.75rem",
-            }}
-          >
-            <p className="mb-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
-              Median S$
-            </p>
-            <div
-              aria-hidden="true"
-              className="h-1.5 w-20 rounded-full"
-              style={{ background: MEDIAN_PRICE_LEGEND_GRADIENT }}
-            />
-            <div
-              aria-hidden="true"
-              className="mt-0.5 flex justify-between text-[0.55rem] font-medium text-muted-foreground"
-            >
-              <span>400K</span>
-              <span>1.3M</span>
-            </div>
-          </div>
-        )}
+        <PriceLegend
+          isDesktop={panel.isDesktop}
+          isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
+          t={t}
+        />
 
         {/* Price heatmap toggle */}
         {(panel.isDesktop || panel.mobileTab === null) && (

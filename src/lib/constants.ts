@@ -8,6 +8,11 @@ export const MAX_LEASE_DURATION = 99;
 export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
+export const MIN_LEASE_COMMENCE_YEAR = 1960;
+export const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
+export const MAX_LEASE_COMMENCE_YEAR =
+  Temporal.Now.plainDateISO().year + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+
 /**
  * Returns the current Gregorian year using the Temporal API.
  */
@@ -62,11 +67,25 @@ export const HEADER_DISMISSED_STORAGE_KEY = "hdb_resale_header_dismissed_v1";
 export const DATA_BASE_PATH = "/data";
 
 /**
+ * Geographic boundary constants for Singapore.
+ */
+export const SG_LAT_MIN = 1.15;
+export const SG_LAT_MAX = 1.5;
+export const SG_LNG_MIN = 103.55;
+export const SG_LNG_MAX = 104.13;
+
+export const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
+  [SG_LNG_MIN, SG_LAT_MIN],
+  [SG_LNG_MAX, SG_LAT_MAX],
+];
+
+/**
  * Map configuration.
  */
 export const PRIMARY_BLUE = "#2563eb";
 export const ONEMAP_DEFAULT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png";
 export const ONEMAP_NIGHT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Night/{z}/{x}/{y}.png";
+export const MAP_GLYPHS_URL = "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf";
 export const ONEMAP_ATTRIBUTION = '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
 export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1000;
 export const MEDIAN_PRICE_COLOR_STOPS = [
