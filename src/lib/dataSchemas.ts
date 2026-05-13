@@ -13,7 +13,7 @@ const coordinatesSchema = z.object({
   lng: z.number().min(SG_LNG_MIN).max(SG_LNG_MAX),
 });
 
-const monthSchema = z.string().regex(/^\d{4}-\d{2}$/);
+const monthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
 
 const nearestMrtSchema = z.object({ stationName: z.string(), distanceMeters: z.number().nonnegative() });
 

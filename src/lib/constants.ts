@@ -11,7 +11,7 @@ export const NEAR_ME_SEARCH_QUERY = "near me";
 export const MIN_LEASE_COMMENCE_YEAR = 1960;
 export const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
 export const MAX_LEASE_COMMENCE_YEAR =
-  new Date().getFullYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+  Temporal.Now.plainDateISO().year + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
 
 /**
  * Returns the current Gregorian year using the Temporal API.
