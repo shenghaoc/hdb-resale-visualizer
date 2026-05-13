@@ -509,11 +509,11 @@ export function matchesGeographicSearchIntent(
     // ⚡ Bolt: Fast-path bounding box check before expensive haversine math.
     // 1 degree latitude is ~111.3km. At equator, 1 degree longitude is also ~111.3km.
     // We use a conservative 110,000 meters per degree to ensure safety.
-    const safeDelta = intent.radiusMeters / 110000;
-    const latDiff = Math.abs(block.coordinates.lat - intent.coordinates.lat);
-    const lngDiff = Math.abs(block.coordinates.lng - intent.coordinates.lng);
-
-    if (latDiff > safeDelta || lngDiff > safeDelta) {
+    const safeDelta = intent.radiusMeters / 110_000;
+    if (Math.abs(block.coordinates.lat - intent.coordinates.lat) > safeDelta) {
+      return false;
+    }
+    if (Math.abs(block.coordinates.lng - intent.coordinates.lng) > safeDelta) {
       return false;
     }
 
