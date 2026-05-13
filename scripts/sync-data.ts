@@ -7,6 +7,7 @@ import {
 } from "./lib/sync/writer";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   buildArtifacts,
   buildMrtStationsGeoJson,
@@ -42,6 +43,31 @@ const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
 const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
 
 type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
+type TimestampFactory = () => string;
+type GeocodeDependencies = {
+  geocodeAddressFn?: typeof geocodeAddress;
+  saveGeocodeCacheFn?: typeof saveGeocodeCache;
+  now?: TimestampFactory;
+};
+type AmenityFetchDependencies = {
+  fetchCsvRowsFn?: typeof fetchCsvRows;
+  fetchGeoJsonFn?: typeof fetchGeoJson;
+  normalizeSchoolRowsFn?: typeof normalizeSchoolRows;
+  normalizeAmenityGeoJsonFn?: typeof normalizeAmenityGeoJson;
+  normalizeSupermarketRowsFn?: typeof normalizeSupermarketRows;
+  sleepFn?: typeof sleep;
+};
+type ArtifactWriteDependencies = {
+  validateGeneratedArtifactsFn?: typeof validateGeneratedArtifacts;
+  buildMrtStationsGeoJsonFn?: typeof buildMrtStationsGeoJson;
+  writeGeneratedArtifactsFn?: typeof writeGeneratedArtifacts;
+  writeTownBlockFilesFn?: typeof writeTownBlockFiles;
+  writeComparisonFilesFn?: typeof writeComparisonFiles;
+  writeDetailFilesFn?: typeof writeDetailFiles;
+};
+
+const nowTimestamp: TimestampFactory = () =>
+  Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
 
 async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
   const payload = await fetchJson<unknown>(
@@ -60,10 +86,18 @@ function warnAmenityStep(step: string, error: unknown) {
   );
 }
 
-async function fetchAmenityData(
+export async function fetchAmenityData(
   geocodeCache: GeocodeCacheFile,
   options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+  deps: AmenityFetchDependencies = {},
 ) {
+  const fetchCsvRowsFn = deps.fetchCsvRowsFn ?? fetchCsvRows;
+  const fetchGeoJsonFn = deps.fetchGeoJsonFn ?? fetchGeoJson;
+  const normalizeSchoolRowsFn = deps.normalizeSchoolRowsFn ?? normalizeSchoolRows;
+  const normalizeAmenityGeoJsonFn = deps.normalizeAmenityGeoJsonFn ?? normalizeAmenityGeoJson;
+  const normalizeSupermarketRowsFn = deps.normalizeSupermarketRowsFn ?? normalizeSupermarketRows;
+  const sleepFn = deps.sleepFn ?? sleep;
+
   console.log("Fetching amenity data...");
   let schools: SchoolLocation[] = [];
   let hawkers: AmenityLocation[] = [];
@@ -72,9 +106,9 @@ async function fetchAmenityData(
   let geocodedCount = 0;
 
   try {
-    const schoolRows = await fetchCsvRows(MOE_SCHOOL_DATASET_ID);
-    await sleep(2600);
-    const schoolResult = await normalizeSchoolRows(schoolRows, geocodeCache, options);
+    const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
+    await sleepFn(2600);
+    const schoolResult = await normalizeSchoolRowsFn(schoolRows, geocodeCache, options);
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
   } catch (error) {
@@ -82,17 +116,21 @@ async function fetchAmenityData(
   }
 
   try {
-    const hawkerGeoJson = await fetchGeoJson(NEA_HAWKER_DATASET_ID);
-    await sleep(2600);
-    hawkers = normalizeAmenityGeoJson(hawkerGeoJson);
+    const hawkerGeoJson = await fetchGeoJsonFn(NEA_HAWKER_DATASET_ID);
+    await sleepFn(2600);
+    hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
   } catch (error) {
     warnAmenityStep("hawkers", error);
   }
 
   try {
-    const supermarketRows = await fetchCsvRows(SFA_SUPERMARKET_DATASET_ID);
-    await sleep(2600);
-    const supermarketResult = await normalizeSupermarketRows(supermarketRows, geocodeCache, options);
+    const supermarketRows = await fetchCsvRowsFn(SFA_SUPERMARKET_DATASET_ID);
+    await sleepFn(2600);
+    const supermarketResult = await normalizeSupermarketRowsFn(
+      supermarketRows,
+      geocodeCache,
+      options,
+    );
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
   } catch (error) {
@@ -100,9 +138,9 @@ async function fetchAmenityData(
   }
 
   try {
-    const parksGeoJson = await fetchGeoJson(NPARKS_PARKS_DATASET_ID);
-    await sleep(2600);
-    parks = normalizeAmenityGeoJson(parksGeoJson);
+    const parksGeoJson = await fetchGeoJsonFn(NPARKS_PARKS_DATASET_ID);
+    await sleepFn(2600);
+    parks = normalizeAmenityGeoJsonFn(parksGeoJson);
   } catch (error) {
     warnAmenityStep("parks", error);
   }
@@ -120,12 +158,109 @@ async function fetchAmenityData(
   };
 }
 
-async function main() {
-  const force = process.argv.includes("--force");
-  const skipGeocoding =
-    process.argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
-  const skipAmenities =
-    process.argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+export async function geocodeMissingAddresses(
+  options: {
+    missingAddresses: [string, string][];
+    geocodeCache: GeocodeCacheFile;
+    geocodeEndpoint: URL;
+    skipGeocoding: boolean;
+    cachePath: string;
+    concurrency: number;
+  },
+  deps: GeocodeDependencies = {},
+) {
+  const geocodeAddressFn = deps.geocodeAddressFn ?? geocodeAddress;
+  const saveGeocodeCacheFn = deps.saveGeocodeCacheFn ?? saveGeocodeCache;
+  const now = deps.now ?? nowTimestamp;
+  const { missingAddresses, geocodeCache, geocodeEndpoint, skipGeocoding, cachePath, concurrency } =
+    options;
+  let geocodeFailureCount = 0;
+  const geocodeFailureSamples: string[] = [];
+
+  if (skipGeocoding) {
+    console.log(
+      `Skipping geocoding and using ${Object.keys(geocodeCache.entries).length} cached coordinates.`,
+    );
+    return { geocodeFailureCount, geocodeFailureSamples };
+  }
+
+  if (missingAddresses.length === 0) {
+    return { geocodeFailureCount, geocodeFailureSamples };
+  }
+
+  let nextIndex = 0;
+  let completed = 0;
+  let flushedAt = 0;
+  let flushInFlight: Promise<void> | null = null;
+  console.log(`Geocoding ${missingAddresses.length} addresses with concurrency ${concurrency}...`);
+
+  async function worker() {
+    while (nextIndex < missingAddresses.length) {
+      const currentIndex = nextIndex++;
+      const [addressKey, searchValue] = missingAddresses[currentIndex];
+      try {
+        const geocode = await geocodeAddressFn(searchValue, geocodeEndpoint);
+        if (geocode) geocodeCache.entries[addressKey] = geocode;
+      } catch (error) {
+        geocodeFailureCount += 1;
+        if (geocodeFailureSamples.length < 5)
+          geocodeFailureSamples.push(
+            `${searchValue}: ${error instanceof Error ? error.message : "unknown error"}`,
+          );
+      }
+      completed += 1;
+      if (completed % 200 === 0 || completed === missingAddresses.length)
+        console.log(`Geocoded ${completed}/${missingAddresses.length}`);
+      if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
+        flushedAt = completed;
+        geocodeCache.updatedAt = now();
+        const flush = flushInFlight ?? Promise.resolve();
+        flushInFlight = flush.then(() => saveGeocodeCacheFn(cachePath, geocodeCache));
+        await flushInFlight;
+      }
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, missingAddresses.length) }, () => worker()),
+  );
+
+  return { geocodeFailureCount, geocodeFailureSamples };
+}
+
+export async function validateAndWriteArtifacts(
+  options: {
+    artifacts: ReturnType<typeof buildArtifacts>;
+    mrtGeoJson: { type: "FeatureCollection"; features: unknown[] };
+    mrtExits: ReturnType<typeof normalizeMrtFeatures>;
+    geocodeFailureCount: number;
+  },
+  deps: ArtifactWriteDependencies = {},
+) {
+  const validateGeneratedArtifactsFn = deps.validateGeneratedArtifactsFn ?? validateGeneratedArtifacts;
+  const buildMrtStationsGeoJsonFn = deps.buildMrtStationsGeoJsonFn ?? buildMrtStationsGeoJson;
+  const writeGeneratedArtifactsFn = deps.writeGeneratedArtifactsFn ?? writeGeneratedArtifacts;
+  const writeTownBlockFilesFn = deps.writeTownBlockFilesFn ?? writeTownBlockFiles;
+  const writeComparisonFilesFn = deps.writeComparisonFilesFn ?? writeComparisonFiles;
+  const writeDetailFilesFn = deps.writeDetailFilesFn ?? writeDetailFiles;
+
+  validateGeneratedArtifactsFn({
+    blockSummariesCount: options.artifacts.blockSummaries.length,
+    detailCount: Object.keys(options.artifacts.details).length,
+    geocodeFailureCount: options.geocodeFailureCount,
+  });
+
+  const stationsGeoJson = buildMrtStationsGeoJsonFn(options.mrtExits);
+  await writeGeneratedArtifactsFn(options.artifacts, options.mrtGeoJson, stationsGeoJson);
+  await writeTownBlockFilesFn(options.artifacts.blocksByTown);
+  await writeComparisonFilesFn(options.artifacts.comparisons);
+  await writeDetailFilesFn(options.artifacts.details);
+}
+
+export async function runSyncData(argv = process.argv.slice(2)) {
+  const force = argv.includes("--force");
+  const skipGeocoding = argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
+  const skipAmenities = argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
 
   await ensureDataDirectories();
@@ -170,7 +305,7 @@ async function main() {
     });
     amenities = amenityData;
     if (geocodedCount > 0) {
-      geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+      geocodeCache.updatedAt = nowTimestamp();
       await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
     }
   }
@@ -181,55 +316,21 @@ async function main() {
   const missingAddresses = [...uniqueAddresses.entries()].filter(
     ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
   );
-  let geocodeFailureCount = 0;
-  const geocodeFailureSamples: string[] = [];
-
-  if (skipGeocoding) {
-    console.log(`Skipping geocoding and using ${Object.keys(geocodeCache.entries).length} cached coordinates.`);
-  } else if (missingAddresses.length > 0) {
-    const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
-    let nextIndex = 0;
-    let completed = 0;
-    let flushedAt = 0;
-    let flushInFlight: Promise<void> | null = null;
-    console.log(`Geocoding ${missingAddresses.length} addresses with concurrency ${concurrency}...`);
-
-    async function worker() {
-      while (nextIndex < missingAddresses.length) {
-        const currentIndex = nextIndex++;
-        const [addressKey, searchValue] = missingAddresses[currentIndex];
-        try {
-          const geocode = await geocodeAddress(searchValue, geocodeEndpoint);
-          if (geocode) geocodeCache.entries[addressKey] = geocode;
-        } catch (error) {
-          geocodeFailureCount += 1;
-          if (geocodeFailureSamples.length < 5)
-            geocodeFailureSamples.push(
-              `${searchValue}: ${error instanceof Error ? error.message : "unknown error"}`,
-            );
-        }
-        completed += 1;
-        if (completed % 200 === 0 || completed === missingAddresses.length)
-          console.log(`Geocoded ${completed}/${missingAddresses.length}`);
-        if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
-          flushedAt = completed;
-          geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
-          const flush = flushInFlight ?? Promise.resolve();
-          flushInFlight = flush.then(() => saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache));
-          await flushInFlight;
-        }
-      }
-    }
-    await Promise.all(
-      Array.from({ length: Math.min(concurrency, missingAddresses.length) }, () => worker()),
-    );
-  }
+  const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
+  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses({
+    missingAddresses,
+    geocodeCache,
+    geocodeEndpoint,
+    skipGeocoding,
+    cachePath: GEOCODE_CACHE_PATH,
+    concurrency,
+  });
 
   if (geocodeFailureCount > 0) {
     console.warn(`Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`);
   }
 
-  geocodeCache.updatedAt = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+  geocodeCache.updatedAt = nowTimestamp();
   await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
 
   const artifacts = buildArtifacts({
@@ -251,21 +352,26 @@ async function main() {
     },
   });
 
-  validateGeneratedArtifacts({
-    blockSummariesCount: artifacts.blockSummaries.length,
-    detailCount: Object.keys(artifacts.details).length,
+  await validateAndWriteArtifacts({
+    artifacts,
+    mrtGeoJson,
+    mrtExits,
     geocodeFailureCount,
   });
-
-  const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
-  await writeGeneratedArtifacts(artifacts, mrtGeoJson, stationsGeoJson);
-
-  await writeTownBlockFiles(artifacts.blocksByTown);
-  await writeComparisonFiles(artifacts.comparisons);
-  await writeDetailFiles(artifacts.details);
 }
 
-void main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+function isDirectExecution() {
+  const entryFile = process.argv[1];
+  if (!entryFile) {
+    return false;
+  }
+
+  return path.resolve(entryFile) === fileURLToPath(import.meta.url);
+}
+
+if (isDirectExecution()) {
+  void runSyncData().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
