@@ -104,3 +104,31 @@ The following structured format applies to the overall PR review summary comment
 - **Claude**: triggered via `@claude review` PR comment.
 - **Kiro**: review hooks configured in `.kiro/`.
 - **Gemini / Codex**: triggered via PR comments (`/gemini review`, `@codex review`).
+
+## Cursor Cloud specific instructions
+
+### Environment
+- **Node.js 26** is required (`engines.node >= 26.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
+- **npm** is the only package manager (no yarn/pnpm/bun). `package-lock.json` is the lockfile.
+
+### Data fixtures for local dev
+The app loads static JSON from `public/data/` at runtime. This directory is gitignored and empty by default.
+For local development and E2E tests, copy test fixtures:
+
+```bash
+mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
+```
+
+Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and is **not** needed for development or testing.
+
+### Running services
+- `npm run dev` starts Vite on `localhost:5173`. No backend or database is required.
+- Playwright E2E tests (`npm run test:e2e`) auto-start a dev server on port 4173; no manual server start needed.
+- Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `npm run test`).
+
+### Standard commands
+All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires Chromium, which can be installed with:
+
+```bash
+npx playwright install --with-deps chromium
+```
