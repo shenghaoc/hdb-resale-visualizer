@@ -108,7 +108,7 @@ The following structured format applies to the overall PR review summary comment
 ## Cursor Cloud specific instructions
 
 ### Environment
-- **Node.js 26** is required (`engines.node >= 26.0.0`). The update script installs it via nvm and sets it as default.
+- **Node.js 26** is required (`engines.node >= 26.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
 - **npm** is the only package manager (no yarn/pnpm/bun). `package-lock.json` is the lockfile.
 
 ### Data fixtures for local dev
@@ -117,6 +117,8 @@ For local development and E2E tests, copy test fixtures:
 
 ```bash
 mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
+```
+
 Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and is **not** needed for development or testing.
 
 ### Running services
@@ -129,3 +131,4 @@ All lint/test/build/typecheck commands are listed in the "Useful local commands"
 
 ```bash
 npx playwright install --with-deps chromium
+```
