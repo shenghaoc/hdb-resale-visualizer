@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import type { GeocodeCacheFile } from "../../scripts/lib/pipeline";
+import type { GeocodeCacheFile, MrtStationFeatureCollection } from "../../scripts/lib/pipeline";
 import { buildFixtureArtifacts, fixtureMrtExits } from "../fixtures/pipeline";
+
+const EMPTY_STATIONS: MrtStationFeatureCollection = {
+  type: "FeatureCollection",
+  features: [],
+};
 import {
   fetchAmenityData,
   geocodeMissingAddresses,
@@ -102,9 +107,9 @@ describe("sync-data coordinator helpers", () => {
         validateGeneratedArtifactsFn: vi.fn(() => {
           callOrder.push("validate");
         }),
-        buildMrtStationsGeoJsonFn: vi.fn(() => {
+        buildMrtStationsGeoJsonFn: vi.fn((): MrtStationFeatureCollection => {
           callOrder.push("build-stations");
-          return { type: "FeatureCollection", features: [] };
+          return EMPTY_STATIONS;
         }),
         writeGeneratedArtifactsFn: vi.fn(async () => {
           callOrder.push("write-generated");
@@ -143,7 +148,7 @@ describe("sync-data coordinator helpers", () => {
           geocodeFailureCount: 0,
         },
         {
-          buildMrtStationsGeoJsonFn: vi.fn(() => ({ type: "FeatureCollection", features: [] })),
+          buildMrtStationsGeoJsonFn: vi.fn((): MrtStationFeatureCollection => EMPTY_STATIONS),
           writeGeneratedArtifactsFn: vi.fn().mockResolvedValue(undefined),
           writeTownBlockFilesFn: vi.fn().mockResolvedValue(undefined),
           writeComparisonFilesFn: vi.fn().mockResolvedValue(undefined),
