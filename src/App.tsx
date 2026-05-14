@@ -51,6 +51,7 @@ function App() {
     manifest,
     rawFilters: filters,
     userLocation: geo.userLocation,
+    resultsVisible: panel.resultsVisible,
     savedVisible: panel.savedVisible,
     shortlistCount: shortlist.items.length,
     t,
@@ -245,20 +246,18 @@ function App() {
     </div>
   );
 
-  const savedContent = (
-    <div hidden={!panel.savedVisible}>
-      <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
-        <ShortlistDrawer
-          isOpen={panel.isShortlistOpen}
-          onSelectAddress={handleSelectAddress}
-          onRemove={(addressKey) => shortlist.toggle(addressKey)}
-          onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
-          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-          rows={shortlistRows}
-        />
-      </Suspense>
-    </div>
-  );
+  const savedContent = panel.savedVisible ? (
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
+      <ShortlistDrawer
+        isOpen={panel.isShortlistOpen}
+        onSelectAddress={handleSelectAddress}
+        onRemove={(addressKey) => shortlist.toggle(addressKey)}
+        onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
+        onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+        rows={shortlistRows}
+      />
+    </Suspense>
+  ) : null;
 
   // ── Derived layout flags ─────────────────────────────────────────────────
 
