@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "typecheck:libs": "tsc --noEmit -p tsconfig.lib-check.json",
+    "setup:fixtures": "node -e \"require('node:fs').cpSync('tests/fixtures/public-data', 'public/data', {recursive:true})\"",
     "lint": "ESLINT_TYPED=1 eslint . --cache --cache-location node_modules/.cache/eslint-typed --cache-strategy content",
     "lint:fast": "eslint . --cache --cache-location node_modules/.cache/eslint --cache-strategy content",
     "lint:typed": "npm run lint",

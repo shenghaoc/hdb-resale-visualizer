@@ -65,79 +65,26 @@ jobs:
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             target_branch="$DISPATCH_REF"
           else
-            target_branch="main"
+            # workflow_run: match the triggering CI run (PR head branch or main on push).
+            target_branch="$WORKFLOW_HEAD_BRANCH"
+            if [ -z "$target_branch" ]; then
+              echo "::error::workflow_run.head_branch was empty; cannot set Cloudflare Pages branch"
+              exit 1
+            fi
           fi
 
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
-      - name: Compute pipeline cache key prefix
-        id: pipeline-cache
-        run: |
-          echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('package-lock.json', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts', 'src/lib/mrt-colors.ts') }}" >> "$GITHUB_OUTPUT"
-
-      - name: Restore pipeline cache
-        uses: actions/cache/restore@v5
-        id: pipeline-cache-restore
+      - name: Restore or sync official datasets
+        id: sync
+        uses: ./.github/actions/restore-or-sync-data
         with:
-          path: |
-            data/cache
-            public/data
-          key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
-          restore-keys: |
-            ${{ steps.pipeline-cache.outputs.prefix }}-
-            pipeline-cache-v2-${{ runner.os }}-
-
-      - name: Check if pipeline cache was restored
-        id: cache-presence
-        run: |
-          if [ -f public/data/manifest.json ]; then
-            echo "restored=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "restored=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Verify cached data artifacts
-        if: steps.cache-presence.outputs.restored == 'true'
-        id: data-check
-        continue-on-error: true
-        run: npm run check:data
-
-      - name: Sync official datasets
-        if: steps.cache-presence.outputs.restored != 'true' || steps.data-check.outcome != 'success'
-        env:
-          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
-          ONEMAP_SEARCH_ENDPOINT: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
-          GEOCODE_CONCURRENCY: '10'
-        run: npm run sync-data
+          data-gov-api-key: ${{ secrets.DATA_GOV_API_KEY }}
+          onemap-search-endpoint: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
+          geocode-concurrency: "10"
 
       - name: Build
         run: npm run build:deploy
-
-      - name: Compute pipeline cache save key
-        if: steps.data-check.outcome != 'success'
-        id: pipeline-cache-save-key
-        run: |
-          upstream_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
-          upstream_key=$(echo "$upstream_at" | tr -cd '0-9')
-          if [ -z "$upstream_key" ]; then
-            upstream_key="unknown"
-          fi
-          generated_at=$(jq -r '.generatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
-          generated_key=$(echo "$generated_at" | tr -cd '0-9')
-          if [ -z "$generated_key" ]; then
-            generated_key="${{ github.run_id }}"
-          fi
-          echo "upstream_key=$upstream_key" >> "$GITHUB_OUTPUT"
-          echo "generated_key=$generated_key" >> "$GITHUB_OUTPUT"
-
-      - name: Save pipeline cache
-        if: steps.data-check.outcome != 'success'
-        uses: actions/cache/save@v5
-        with:
-          path: |
-            data/cache
-            public/data
-          key: ${{ steps.pipeline-cache.outputs.prefix }}-${{ steps.pipeline-cache-save-key.outputs.upstream_key }}-${{ steps.pipeline-cache-save-key.outputs.generated_key }}
 
       - name: Deploy to Cloudflare Pages
         env:

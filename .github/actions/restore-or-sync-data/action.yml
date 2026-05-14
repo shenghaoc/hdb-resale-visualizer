@@ -1,0 +1,139 @@
+name: Restore or Sync Data Pipeline
+description: Restore cached artifacts, validate them, run sync-data, and save updated cache when needed.
+
+inputs:
+  force-sync:
+    description: Force sync-data -- --force regardless of cache status.
+    required: false
+    default: "false"
+  geocode-concurrency:
+    description: GEOCODE_CONCURRENCY for sync-data.
+    required: false
+    default: "10"
+  data-gov-api-key:
+    description: DATA_GOV_API_KEY passed to sync-data.
+    required: false
+    default: ""
+  onemap-search-endpoint:
+    description: Optional ONEMAP_SEARCH_ENDPOINT override.
+    required: false
+    default: ""
+
+outputs:
+  changed:
+    description: Whether upstream data changed or cached data validation failed.
+    value: ${{ steps.diff.outputs.changed }}
+  restored:
+    description: Whether public/data/manifest.json existed after cache restore.
+    value: ${{ steps.cache-presence.outputs.restored }}
+  cache-valid:
+    description: Whether npm run check:data passed on restored cache.
+    value: ${{ steps.check-status.outputs.cache_valid }}
+
+runs:
+  using: composite
+  steps:
+    - name: Compute pipeline cache key prefix
+      id: pipeline-cache
+      shell: bash
+      run: |
+        echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('package-lock.json', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts', 'src/lib/mrt-colors.ts') }}" >> "$GITHUB_OUTPUT"
+
+    - name: Restore pipeline cache
+      uses: actions/cache/restore@v5
+      id: pipeline-cache-restore
+      with:
+        path: |
+          data/cache
+          public/data
+        # "-seed" never matches a saved key (saves use prefix-upstream_key-generated_key);
+        # restoration always falls through to the prefix fallback below.
+        key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
+        restore-keys: |
+          ${{ steps.pipeline-cache.outputs.prefix }}-
+          pipeline-cache-v2-${{ runner.os }}-
+
+    - name: Check if pipeline cache was restored
+      id: cache-presence
+      shell: bash
+      run: |
+        if [ -f public/data/manifest.json ]; then
+          echo "restored=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "restored=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Verify cached data artifacts
+      if: steps.cache-presence.outputs.restored == 'true'
+      id: data-check
+      continue-on-error: true
+      shell: bash
+      run: npm run check:data
+
+    - name: Capture cache validation status
+      id: check-status
+      shell: bash
+      run: |
+        if [ "${{ steps.cache-presence.outputs.restored }}" = "true" ] && [ "${{ steps.data-check.outcome }}" = "success" ]; then
+          echo "cache_valid=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "cache_valid=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Record upstream timestamp before sync
+      id: pre-sync
+      shell: bash
+      run: |
+        prev=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+        echo "upstream_at=$prev" >> "$GITHUB_OUTPUT"
+
+    - name: Sync official datasets
+      shell: bash
+      env:
+        DATA_GOV_API_KEY: ${{ inputs.data-gov-api-key }}
+        ONEMAP_SEARCH_ENDPOINT: ${{ inputs.onemap-search-endpoint }}
+        GEOCODE_CONCURRENCY: ${{ inputs.geocode-concurrency }}
+      run: |
+        if [ "${{ inputs.force-sync }}" = "true" ] || [ "${{ steps.check-status.outputs.cache_valid }}" != "true" ]; then
+          npm run sync-data -- --force
+        else
+          npm run sync-data
+        fi
+
+    - id: diff
+      name: Detect data changes
+      shell: bash
+      run: |
+        new_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+        if [ "$new_at" != "${{ steps.pre-sync.outputs.upstream_at }}" ] || [ "${{ steps.check-status.outputs.cache_valid }}" != "true" ]; then
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Compute pipeline cache save key
+      if: steps.diff.outputs.changed == 'true'
+      id: pipeline-cache-save-key
+      shell: bash
+      run: |
+        upstream_at=$(jq -r '.sources.lastUpdatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+        upstream_key=$(echo "$upstream_at" | tr -cd '0-9')
+        if [ -z "$upstream_key" ]; then
+          upstream_key="unknown"
+        fi
+        generated_at=$(jq -r '.generatedAt // ""' public/data/manifest.json 2>/dev/null || echo "")
+        generated_key=$(echo "$generated_at" | tr -cd '0-9')
+        if [ -z "$generated_key" ]; then
+          generated_key="${{ github.run_id }}"
+        fi
+        echo "upstream_key=$upstream_key" >> "$GITHUB_OUTPUT"
+        echo "generated_key=$generated_key" >> "$GITHUB_OUTPUT"
+
+    - name: Save pipeline cache
+      if: steps.diff.outputs.changed == 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: |
+          data/cache
+          public/data
+        key: ${{ steps.pipeline-cache.outputs.prefix }}-${{ steps.pipeline-cache-save-key.outputs.upstream_key }}-${{ steps.pipeline-cache-save-key.outputs.generated_key }}
