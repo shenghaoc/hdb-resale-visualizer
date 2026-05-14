@@ -70,6 +70,7 @@ type DetailDrawerProps = {
 };
 
 const RANGE_KEYS: TrendRangeKey[] = ["2y", "5y", "10y", "max"];
+const FROM_PEAK_DISPLAY_THRESHOLD_PCT = -3;
 
 function TrajectoryBadge({
   trajectory,
@@ -93,7 +94,7 @@ function TrajectoryBadge({
       badgeContent = (
         <>
           <ArrowUp data-icon className="size-2.5" aria-hidden="true" />
-          {abs}% YoY
+          {t("trajectory.up", { value: abs })}
         </>
       );
       className += " bg-success/15 text-success border-success/30 border";
@@ -101,7 +102,7 @@ function TrajectoryBadge({
       badgeContent = (
         <>
           <ArrowDown data-icon className="size-2.5" aria-hidden="true" />
-          {abs}% YoY
+          {t("trajectory.down", { value: abs })}
         </>
       );
       className += " bg-destructive/10 text-destructive border-destructive/25 border";
@@ -116,7 +117,7 @@ function TrajectoryBadge({
     }
   }
 
-  const isPastPeak = peakToCurrentPct < -3;
+  const isPastPeak = peakToCurrentPct < FROM_PEAK_DISPLAY_THRESHOLD_PCT;
   const peakLabel = isPastPeak
     ? t("trajectory.fromPeak", { value: peakToCurrentPct.toFixed(1) })
     : t("trajectory.peakLabel", { month: formatMonth(peakMonth, locale) });
@@ -690,20 +691,20 @@ export function DetailDrawer({
                         value={formatCurrency(trajectory.currentMedian, locale)}
                       />
                       <StatPill
-                        label="Peak"
+                        label={t("trend.peak")}
                         value={formatCurrency(trajectory.peakPrice, locale)}
                         sub={formatMonth(trajectory.peakMonth, locale)}
                       />
                       {trajectory.yoyDeltaPct != null && (
                         <StatPill
-                          label="YoY change"
+                          label={t("trend.yoyChange")}
                           value={`${trajectory.yoyDeltaPct >= 0 ? "+" : ""}${trajectory.yoyDeltaPct.toFixed(1)}%`}
                           tone={trajectory.yoyDeltaPct >= 0 ? "positive" : "negative"}
                         />
                       )}
-                      {trajectory.peakToCurrentPct < -0.5 && (
+                      {trajectory.peakToCurrentPct < FROM_PEAK_DISPLAY_THRESHOLD_PCT && (
                         <StatPill
-                          label="From peak"
+                          label={t("trend.fromPeak")}
                           value={`${trajectory.peakToCurrentPct.toFixed(1)}%`}
                           tone="negative"
                         />
@@ -816,7 +817,7 @@ export function DetailDrawer({
                       ))}
                     </div>
                   }>
-                    <AskingPriceCheck key={detail.summary.id} detail={detail} />
+                    <AskingPriceCheck detail={detail} />
                   </Suspense>
                 ) : (
                   <div className="flex flex-col gap-3 py-12">

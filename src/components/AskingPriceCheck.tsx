@@ -109,7 +109,8 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
   }, [askingPriceInput]);
 
   const floorAreaSqm = useMemo(() => {
-    const n = Number(floorAreaInput);
+    const cleaned = floorAreaInput.replace(/[^\d.]/g, "");
+    const n = Number(cleaned);
     return Number.isFinite(n) && n > 0 ? n : null;
   }, [floorAreaInput]);
 

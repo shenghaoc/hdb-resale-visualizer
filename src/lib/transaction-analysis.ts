@@ -186,6 +186,8 @@ export type BlockTrajectory = {
   direction: "up" | "down" | "flat";
 };
 
+export const YOY_STABILITY_THRESHOLD_PCT = 1.5;
+
 export function computeBlockTrajectory(
   monthlyTrend: ReadonlyArray<AddressTrendPoint>,
 ): BlockTrajectory | null {
@@ -236,8 +238,8 @@ export function computeBlockTrajectory(
 
   let direction: BlockTrajectory["direction"] = "flat";
   if (yoyDeltaPct != null) {
-    if (yoyDeltaPct >= 1.5) direction = "up";
-    else if (yoyDeltaPct <= -1.5) direction = "down";
+    if (yoyDeltaPct >= YOY_STABILITY_THRESHOLD_PCT) direction = "up";
+    else if (yoyDeltaPct <= -YOY_STABILITY_THRESHOLD_PCT) direction = "down";
   }
 
   return {

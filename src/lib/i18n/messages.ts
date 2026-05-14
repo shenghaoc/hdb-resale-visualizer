@@ -275,6 +275,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "trend.medianPrice": "Median price",
     "trend.transactions": "Transactions",
     "trend.peak": "Peak",
+    "trend.yoyChange": "YoY change",
+    "trend.fromPeak": "From peak",
     "trend.chartLabel": "Price trend chart",
     "trend.range.2y": "2Y",
     "trend.range.5y": "5Y",
@@ -588,6 +590,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "trend.medianPrice": "中位成交价",
     "trend.transactions": "成交数",
     "trend.peak": "峰值",
+    "trend.yoyChange": "年同比变化",
+    "trend.fromPeak": "较峰值",
     "trend.chartLabel": "价格走势图",
     "trend.range.2y": "2年",
     "trend.range.5y": "5年",
@@ -632,4 +636,3 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "askingCheck.comparablesTitle": "匹配的可比交易",
   },
 };
-
