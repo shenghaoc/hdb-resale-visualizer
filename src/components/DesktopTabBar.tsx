@@ -79,8 +79,8 @@ export function DesktopTabBar({
       className="desktop-tab-bar"
       data-testid="desktop-tab-bar"
       aria-label={t("app.primaryNav")}
-      role="toolbar"
     >
+      <div role="toolbar">
       <Button
         ref={(node) => {
           itemRefs.current[0] = node;
@@ -176,6 +176,7 @@ export function DesktopTabBar({
           <Sun data-icon className="size-4" />
         )}
       </Button>
+      </div>
     </nav>
   );
 }

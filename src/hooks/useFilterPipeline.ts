@@ -18,7 +18,6 @@ type UseFilterPipelineOptions = {
   manifest: Manifest | null;
   rawFilters: FilterState;
   userLocation: Coordinates | null;
-  resultsVisible?: boolean;
   savedVisible: boolean;
   shortlistCount: number;
   t: Translator;

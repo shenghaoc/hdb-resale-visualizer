@@ -51,7 +51,6 @@ function App() {
     manifest,
     rawFilters: filters,
     userLocation: geo.userLocation,
-    resultsVisible: panel.resultsVisible,
     savedVisible: panel.savedVisible,
     shortlistCount: shortlist.items.length,
     t,
@@ -230,32 +229,36 @@ function App() {
       </Suspense>
     ) : null;
 
-  const resultsPaneContent = panel.resultsVisible ? (
-    <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
-      <ResultsPane
-        blocks={pipeline.filteredBlocks}
-        hasResultScope={pipeline.hasResultScope}
-        onSelect={handleSelectAddress}
-        onToggleShortlist={handleToggleShortlist}
-        selectedAddressKey={filters.selectedAddressKey}
-        shortlistKeys={shortlistKeySet}
-        isCompact
-      />
-    </Suspense>
-  ) : null;
+  const resultsPaneContent = (
+    <div hidden={!panel.resultsVisible}>
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
+        <ResultsPane
+          blocks={pipeline.filteredBlocks}
+          hasResultScope={pipeline.hasResultScope}
+          onSelect={handleSelectAddress}
+          onToggleShortlist={handleToggleShortlist}
+          selectedAddressKey={filters.selectedAddressKey}
+          shortlistKeys={shortlistKeySet}
+          isCompact
+        />
+      </Suspense>
+    </div>
+  );
 
-  const savedContent = panel.savedVisible ? (
-    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
-      <ShortlistDrawer
-        isOpen={panel.isShortlistOpen}
-        onSelectAddress={handleSelectAddress}
-        onRemove={(addressKey) => shortlist.toggle(addressKey)}
-        onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
-        onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-        rows={shortlistRows}
-      />
-    </Suspense>
-  ) : null;
+  const savedContent = (
+    <div hidden={!panel.savedVisible}>
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
+        <ShortlistDrawer
+          isOpen={panel.isShortlistOpen}
+          onSelectAddress={handleSelectAddress}
+          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
+          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+          rows={shortlistRows}
+        />
+      </Suspense>
+    </div>
+  );
 
   // ── Derived layout flags ─────────────────────────────────────────────────
 
