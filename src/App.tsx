@@ -230,19 +230,21 @@ function App() {
       </Suspense>
     ) : null;
 
-  const resultsPaneContent = panel.resultsVisible ? (
-    <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
-      <ResultsPane
-        blocks={pipeline.filteredBlocks}
-        hasResultScope={pipeline.hasResultScope}
-        onSelect={handleSelectAddress}
-        onToggleShortlist={handleToggleShortlist}
-        selectedAddressKey={filters.selectedAddressKey}
-        shortlistKeys={shortlistKeySet}
-        isCompact
-      />
-    </Suspense>
-  ) : null;
+  const resultsPaneContent = (
+    <div hidden={!panel.resultsVisible}>
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
+        <ResultsPane
+          blocks={pipeline.filteredBlocks}
+          hasResultScope={pipeline.hasResultScope}
+          onSelect={handleSelectAddress}
+          onToggleShortlist={handleToggleShortlist}
+          selectedAddressKey={filters.selectedAddressKey}
+          shortlistKeys={shortlistKeySet}
+          isCompact
+        />
+      </Suspense>
+    </div>
+  );
 
   const savedContent = panel.savedVisible ? (
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>

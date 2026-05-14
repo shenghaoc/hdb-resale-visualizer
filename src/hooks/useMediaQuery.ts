@@ -12,29 +12,24 @@ export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState<boolean>(() => getMatches(query));
 
   useEffect(() => {
-    function handleChange() {
-      setMatches(getMatches(query));
-    }
-
     const matchMedia = window.matchMedia(query);
 
-    // Triggered at the first client-side load and if query changes
-    handleChange();
-
-    // Listen matchMedia
-    if (matchMedia.addListener) {
-      matchMedia.addListener(handleChange);
-    } else {
-      matchMedia.addEventListener("change", handleChange);
+    function handleChange() {
+      setMatches(matchMedia.matches);
     }
 
-    return () => {
-      if (matchMedia.removeListener) {
-        matchMedia.removeListener(handleChange);
-      } else {
-        matchMedia.removeEventListener("change", handleChange);
-      }
-    };
+    // Sync once in case the query changed.
+    handleChange();
+
+    // Prefer the standard EventTarget API; fall back to the deprecated
+    // addListener form only when addEventListener is not available
+    // (older Safari prior to 14).
+    if (typeof matchMedia.addEventListener === "function") {
+      matchMedia.addEventListener("change", handleChange);
+      return () => matchMedia.removeEventListener("change", handleChange);
+    }
+    matchMedia.addListener(handleChange);
+    return () => matchMedia.removeListener(handleChange);
   }, [query]);
 
   return matches;
