@@ -2,9 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 
-const MODULEPRELOAD_LINK_RE =
-  /<link\s+rel=["']modulepreload["'][^>]*\bhref=["']([^"']+)["'][^>]*>/gi;
-
 export type ModulePreloadEntry = {
   readonly href: string;
   readonly resolvedPath: string;
@@ -42,9 +39,10 @@ export function readBudgetLimits(): {
 }
 
 export function parseModulePreloadHrefs(html: string): string[] {
-  return [...html.matchAll(MODULEPRELOAD_LINK_RE)]
-    .map((m) => m[1])
-    .filter((href): href is string => typeof href === "string" && href.length > 0);
+  const matches = html.matchAll(/<link[^>]+rel=["']modulepreload["'][^>]*>/gi);
+  return [...matches]
+    .map((m) => m[0].match(/\shref=["']([^"']+)["']/i)?.[1])
+    .filter((href): href is string => !!href);
 }
 
 function hrefToDistPath(distDir: string, href: string): string {
@@ -75,7 +73,7 @@ export function assertModulePreloadBudget(
   limits: { gzipTotalMax: number; gzipSingleMax: number },
 ): void {
   const gzipTotal = entries.reduce((sum, e) => sum + e.gzipBytes, 0);
-  const gzipSingle = entries.length === 0 ? 0 : Math.max(...entries.map((e) => e.gzipBytes));
+  const gzipSingle = entries.reduce((max, e) => Math.max(max, e.gzipBytes), 0);
 
   if (gzipSingle > limits.gzipSingleMax) {
     const worst = entries.reduce((a, b) => (b.gzipBytes > a.gzipBytes ? b : a));

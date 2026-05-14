@@ -22,6 +22,16 @@ describe("parseModulePreloadHrefs", () => {
   it("returns empty when no modulepreload links", () => {
     expect(parseModulePreloadHrefs("<html></html>")).toEqual([]);
   });
+
+  it("does not capture data-href attributes", () => {
+    const html = `<link rel="modulepreload" data-href="/fake.js" href="/real.js">`;
+    expect(parseModulePreloadHrefs(html)).toEqual(["/real.js"]);
+  });
+
+  it("handles href before rel", () => {
+    const html = `<link href="/assets/c.js" rel="modulepreload">`;
+    expect(parseModulePreloadHrefs(html)).toEqual(["/assets/c.js"]);
+  });
 });
 
 describe("assertModulePreloadBudget", () => {
