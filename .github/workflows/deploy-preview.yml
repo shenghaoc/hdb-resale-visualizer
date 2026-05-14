@@ -65,7 +65,12 @@ jobs:
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             target_branch="$DISPATCH_REF"
           else
-            target_branch="main"
+            # workflow_run: match the triggering CI run (PR head branch or main on push).
+            target_branch="$WORKFLOW_HEAD_BRANCH"
+            if [ -z "$target_branch" ]; then
+              echo "::error::workflow_run.head_branch was empty; cannot set Cloudflare Pages branch"
+              exit 1
+            fi
           fi
 
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
