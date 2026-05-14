@@ -1,5 +1,7 @@
-import { startTransition, Suspense, useEffect, useRef, useState } from "react";
+import { startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
+  ArrowDown,
+  ArrowUp,
   Bookmark,
   Check,
   Clock3,
@@ -9,6 +11,8 @@ import {
   History,
   Info,
   MapPin,
+  Minus,
+  Scale,
   ShoppingCart,
   Table,
   TrainFront,
@@ -43,8 +47,16 @@ import {
 } from "@/components/ui/item";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { lazy } from "react";
+import {
+  computeBlockTrajectory,
+  sliceTrendByRange,
+  type TrendRangeKey,
+} from "@/lib/transaction-analysis";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
+const AskingPriceCheck = lazy(() =>
+  import("./AskingPriceCheck").then((m) => ({ default: m.AskingPriceCheck })),
+);
 
 type DetailDrawerProps = {
   selectedBlock: BlockSummary | null;
@@ -56,6 +68,72 @@ type DetailDrawerProps = {
   onClose: () => void;
   onToggleShortlist: () => void;
 };
+
+const RANGE_KEYS: TrendRangeKey[] = ["2y", "5y", "10y", "max"];
+
+function TrajectoryBadge({
+  trajectory,
+  t,
+  locale,
+}: {
+  trajectory: ReturnType<typeof computeBlockTrajectory>;
+  t: Translator;
+  locale: Locale;
+}) {
+  if (!trajectory) return null;
+
+  const { direction, yoyDeltaPct, peakMonth, peakToCurrentPct } = trajectory;
+
+  let badgeContent: React.ReactNode;
+  let className = "h-5 gap-1 text-[0.6rem] font-extrabold px-1.5";
+
+  if (yoyDeltaPct != null) {
+    const abs = Math.abs(yoyDeltaPct).toFixed(1);
+    if (direction === "up") {
+      badgeContent = (
+        <>
+          <ArrowUp data-icon className="size-2.5" aria-hidden="true" />
+          {abs}% YoY
+        </>
+      );
+      className += " bg-success/15 text-success border-success/30 border";
+    } else if (direction === "down") {
+      badgeContent = (
+        <>
+          <ArrowDown data-icon className="size-2.5" aria-hidden="true" />
+          {abs}% YoY
+        </>
+      );
+      className += " bg-destructive/10 text-destructive border-destructive/25 border";
+    } else {
+      badgeContent = (
+        <>
+          <Minus data-icon className="size-2.5" aria-hidden="true" />
+          {t("trajectory.flat")}
+        </>
+      );
+      className += " bg-muted/40 text-muted-foreground border-border/40 border";
+    }
+  }
+
+  const isPastPeak = peakToCurrentPct < -3;
+  const peakLabel = isPastPeak
+    ? t("trajectory.fromPeak", { value: peakToCurrentPct.toFixed(1) })
+    : t("trajectory.peakLabel", { month: formatMonth(peakMonth, locale) });
+
+  return (
+    <div className="flex items-center gap-1.5 flex-wrap">
+      {badgeContent && (
+        <Badge variant="outline" className={className}>
+          {badgeContent}
+        </Badge>
+      )}
+      <span className="text-[0.58rem] text-muted-foreground/70 font-medium">
+        {peakLabel}
+      </span>
+    </div>
+  );
+}
 
 function PercentileBadge({
   percentile,
@@ -177,10 +255,27 @@ export function DetailDrawer({
   const { locale, t } = useI18n();
   const [activeTab, setActiveTab] = useState("overview");
   const [isCopied, setIsCopied] = useState(false);
+  const [trendRange, setTrendRange] = useState<TrendRangeKey>("5y");
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
+
+  const trajectory = useMemo(
+    () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
+    [detail],
+  );
+
+  const trendPoints = useMemo(() => {
+    if (!detail) return [];
+    return sliceTrendByRange(detail.monthlyTrend, trendRange);
+  }, [detail, trendRange]);
+
+  const peakMonthInView = useMemo(() => {
+    if (!trajectory) return null;
+    const inView = trendPoints.some((p) => p.month === trajectory.peakMonth);
+    return inView ? trajectory.peakMonth : null;
+  }, [trajectory, trendPoints]);
 
   useEffect(() => {
     return () => {
@@ -251,6 +346,9 @@ export function DetailDrawer({
                   </Button>
                 )}
               </div>
+              {trajectory && (
+                <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />
+              )}
             </div>
             <Button
               variant="ghost"
@@ -270,35 +368,42 @@ export function DetailDrawer({
               onValueChange={(v) => startTransition(() => setActiveTab(v))}
               className="flex h-full flex-col"
             >
-              <TabsList className="mb-4 grid w-full grid-cols-3 rounded-xl bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full grid-cols-4 rounded-xl bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
-                  className="gap-2 text-xs font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
                 >
-                  <Info data-icon className="size-3.5" aria-hidden="true" />
+                  <Info data-icon className="size-3" aria-hidden="true" />
                   {t("detail.overview")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="trends"
-                  className="gap-2 text-xs font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
                 >
-                  <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
+                  <TrendingUp data-icon className="size-3" aria-hidden="true" />
                   {t("detail.trends")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="history"
-                  className="gap-2 text-xs font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
                 >
-                  <History data-icon className="size-3.5" aria-hidden="true" />
+                  <History data-icon className="size-3" aria-hidden="true" />
                   {t("detail.history")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="negotiate"
+                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
+                >
+                  <Scale data-icon className="size-3" aria-hidden="true" />
+                  {t("detail.negotiate")}
                 </TabsTrigger>
               </TabsList>
 
+              {/* ── OVERVIEW ── */}
               <TabsContent
                 value="overview"
                 className="mt-0 flex-1 flex flex-col gap-5 pb-8 focus-visible:outline-none"
               >
-                {/* Key Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
                   <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
                     <CardHeader className="p-3 pb-2">
@@ -339,7 +444,6 @@ export function DetailDrawer({
                   </Card>
                 </div>
 
-                {/* Flat Types & Attributes */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <Table data-icon className="size-4" aria-hidden="true" />
@@ -395,7 +499,6 @@ export function DetailDrawer({
                   </Card>
                 </section>
 
-                {/* MRT Connectivity */}
                 {nearbyStations.length > 0 && (
                   <section>
                     <h3 className="v2-section-title mb-3 flex items-center gap-2">
@@ -414,7 +517,6 @@ export function DetailDrawer({
                   </section>
                 )}
 
-                {/* Nearby Amenities */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <Trees data-icon className="size-4" aria-hidden="true" />
@@ -438,7 +540,6 @@ export function DetailDrawer({
                         t={t}
                         locale={locale}
                       />
-
                       <AmenityCard
                         icon={UtensilsCrossed}
                         label={t("detail.amenity.hawkers")}
@@ -447,7 +548,6 @@ export function DetailDrawer({
                         t={t}
                         locale={locale}
                       />
-
                       <AmenityCard
                         icon={ShoppingCart}
                         label={t("detail.amenity.supermarkets")}
@@ -456,7 +556,6 @@ export function DetailDrawer({
                         t={t}
                         locale={locale}
                       />
-
                       <AmenityCard
                         icon={Trees}
                         label={t("detail.amenity.parks")}
@@ -474,7 +573,6 @@ export function DetailDrawer({
                   )}
                 </section>
 
-                {/* Market Percentiles */}
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
                     <TrendingUp data-icon className="size-4" aria-hidden="true" />
@@ -483,10 +581,7 @@ export function DetailDrawer({
                   {isComparisonLoading ? (
                     <div className="grid grid-cols-2 gap-3">
                       {Array.from({ length: 6 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
-                        />
+                        <div key={i} className="h-16 w-full animate-pulse rounded-lg bg-muted/40" />
                       ))}
                     </div>
                   ) : comparison ? (
@@ -528,24 +623,35 @@ export function DetailDrawer({
                 </section>
               </TabsContent>
 
+              {/* ── TRENDS ── */}
               <TabsContent
                 value="trends"
-                className="mt-0 flex-1 flex flex-col gap-6 focus-visible:outline-none"
+                className="mt-0 flex-1 flex flex-col gap-6 pb-8 focus-visible:outline-none"
               >
                 <section>
-                  <h3 className="mb-4 flex items-center justify-between gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
-                    <span className="flex items-center gap-2">
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <h3 className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                       <TrendingUp data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.priceTrend", { count: 24 })}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className="shrink-0 whitespace-nowrap px-2 font-mono text-[0.7rem]"
-                    >
-                      {t("shortlist.currencyCode")}
-                      {t("unit.perMonth")}
-                    </Badge>
-                  </h3>
+                      {t("detail.priceTrendFull")}
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      {RANGE_KEYS.map((key) => (
+                        <button
+                          key={key}
+                          onClick={() => setTrendRange(key)}
+                          className={cn(
+                            "rounded px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider transition-colors",
+                            trendRange === key
+                              ? "bg-primary text-primary-foreground"
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                          )}
+                          aria-pressed={trendRange === key}
+                        >
+                          {t(`trend.range.${key}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
                     <CardContent className="p-0">
                       <div className="flex h-[280px] items-center justify-center pt-4">
@@ -558,7 +664,12 @@ export function DetailDrawer({
                               </p>
                             </div>
                           }>
-                            <TrendChart points={detail.monthlyTrend.slice(-24)} t={t} />
+                            <TrendChart
+                              points={trendPoints}
+                              t={t}
+                              peakMonth={peakMonthInView}
+                              height={260}
+                            />
                           </Suspense>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
@@ -571,6 +682,34 @@ export function DetailDrawer({
                       </div>
                     </CardContent>
                   </Card>
+
+                  {trajectory && (
+                    <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                      <StatPill
+                        label={t("results.medianResale")}
+                        value={formatCurrency(trajectory.currentMedian, locale)}
+                      />
+                      <StatPill
+                        label="Peak"
+                        value={formatCurrency(trajectory.peakPrice, locale)}
+                        sub={formatMonth(trajectory.peakMonth, locale)}
+                      />
+                      {trajectory.yoyDeltaPct != null && (
+                        <StatPill
+                          label="YoY change"
+                          value={`${trajectory.yoyDeltaPct >= 0 ? "+" : ""}${trajectory.yoyDeltaPct.toFixed(1)}%`}
+                          tone={trajectory.yoyDeltaPct >= 0 ? "positive" : "negative"}
+                        />
+                      )}
+                      {trajectory.peakToCurrentPct < -0.5 && (
+                        <StatPill
+                          label="From peak"
+                          value={`${trajectory.peakToCurrentPct.toFixed(1)}%`}
+                          tone="negative"
+                        />
+                      )}
+                    </div>
+                  )}
                 </section>
 
                 <div className="grid grid-cols-1 gap-4">
@@ -607,6 +746,7 @@ export function DetailDrawer({
                 </div>
               </TabsContent>
 
+              {/* ── HISTORY ── */}
               <TabsContent value="history" className="mt-0 flex-1 focus-visible:outline-none">
                 <section>
                   <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
@@ -665,6 +805,27 @@ export function DetailDrawer({
                   </ItemGroup>
                 </section>
               </TabsContent>
+
+              {/* ── NEGOTIATE ── */}
+              <TabsContent value="negotiate" className="mt-0 flex-1 pb-8 focus-visible:outline-none">
+                {detail ? (
+                  <Suspense fallback={
+                    <div className="flex flex-col gap-3 py-12">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                      ))}
+                    </div>
+                  }>
+                    <AskingPriceCheck detail={detail} />
+                  </Suspense>
+                ) : (
+                  <div className="flex flex-col gap-3 py-12">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
             </Tabs>
           </div>
 
@@ -709,5 +870,35 @@ export function DetailDrawer({
         </div>
       </DrawerContent>
     </Drawer>
+  );
+}
+
+function StatPill({
+  label,
+  value,
+  sub,
+  tone,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  tone?: "positive" | "negative";
+}) {
+  return (
+    <div className="rounded-md border border-border/40 bg-card/70 px-3 py-2">
+      <div className="text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+        {label}
+      </div>
+      <div
+        className={cn(
+          "mt-0.5 text-sm font-extrabold tabular-nums",
+          tone === "positive" && "text-success",
+          tone === "negative" && "text-destructive",
+        )}
+      >
+        {value}
+      </div>
+      {sub && <div className="text-[0.58rem] text-muted-foreground">{sub}</div>}
+    </div>
   );
 }
