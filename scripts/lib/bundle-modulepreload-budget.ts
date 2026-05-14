@@ -95,18 +95,18 @@ export function assertModulePreloadBudget(
   entries: readonly ModulePreloadEntry[],
   limits: { gzipTotalMax: number; gzipSingleMax: number },
 ): void {
-  const gzipTotal = entries.reduce((sum, e) => sum + e.gzipBytes, 0);
-  const gzipSingle = entries.reduce((max, e) => Math.max(max, e.gzipBytes), 0);
+  const sorted = [...entries].sort((a, b) => b.gzipBytes - a.gzipBytes);
+  const gzipTotal = sorted.reduce((sum, e) => sum + e.gzipBytes, 0);
+  const worst = sorted[0];
 
-  if (gzipSingle > limits.gzipSingleMax) {
-    const worst = entries.reduce((a, b) => (b.gzipBytes > a.gzipBytes ? b : a));
+  if (worst && worst.gzipBytes > limits.gzipSingleMax) {
     throw new Error(
       `Largest modulepreload exceeds gzip budget (${limits.gzipSingleMax} B): ${worst.href} → ${worst.gzipBytes} B gzip (${worst.rawBytes} B raw).`,
     );
   }
 
   if (gzipTotal > limits.gzipTotalMax) {
-    const lines = entries
+    const lines = sorted
       .map((e) => `  ${e.href}: ${e.gzipBytes} B gzip (${e.rawBytes} B raw)`)
       .join("\n");
     throw new Error(
