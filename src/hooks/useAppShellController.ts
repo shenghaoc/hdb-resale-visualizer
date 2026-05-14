@@ -128,6 +128,8 @@ export function useAppShellController({
           setLeftTab("results");
           setIsLeftPanelOpen(true);
         }
+        // Mobile: stay on map so nearby markers are visible once scope resolves.
+        // The geo hook already called setUserLocation before invoking this callback.
         void coords;
       },
       () => handleChooseTown({ clearGeolocationError: false }),

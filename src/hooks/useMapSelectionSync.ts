@@ -12,12 +12,11 @@ export function useMapSelectionSync({ map, selectedAddressKey }: UseMapSelection
 
     const applySelectionFilter = () => {
       if (!map.isStyleLoaded()) return;
-      const filter = ["==", ["get", "address_key"], selectedAddressKey ?? ""];
       if (map.getLayer("selected-point")) {
-        map.setFilter("selected-point", filter);
+        map.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
       }
       if (map.getLayer("selected-point-label")) {
-        map.setFilter("selected-point-label", filter);
+        map.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
       }
     };
 
