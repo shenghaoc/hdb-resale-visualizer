@@ -817,7 +817,7 @@ export function DetailDrawer({
                       ))}
                     </div>
                   }>
-                    <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.street}`} detail={detail} />
+                    <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
                   </Suspense>
                 ) : (
                   <div className="flex flex-col gap-3 py-12">
