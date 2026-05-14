@@ -18,7 +18,7 @@ type UseFilterPipelineOptions = {
   manifest: Manifest | null;
   rawFilters: FilterState;
   userLocation: Coordinates | null;
-  resultsVisible: boolean;
+  resultsVisible?: boolean;
   savedVisible: boolean;
   shortlistCount: number;
   t: Translator;
@@ -28,7 +28,6 @@ export function useFilterPipeline({
   manifest,
   rawFilters,
   userLocation,
-  resultsVisible,
   savedVisible,
   shortlistCount,
   t,
@@ -195,11 +194,8 @@ export function useFilterPipeline({
   );
 
   const filteredBlocks = useMemo(
-    () =>
-      resultsVisible && hasResultScope
-        ? filterScopedBlocks(blocks, stableFilters, geographicIntent)
-        : [],
-    [blocks, filterScopedBlocks, geographicIntent, hasResultScope, resultsVisible, stableFilters],
+    () => (hasResultScope ? filterScopedBlocks(blocks, stableFilters, geographicIntent) : []),
+    [blocks, filterScopedBlocks, geographicIntent, hasResultScope, stableFilters],
   );
 
   const selectedAddressKey = rawFilters.selectedAddressKey;

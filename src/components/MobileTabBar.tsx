@@ -66,6 +66,7 @@ export function MobileTabBar({
   const filtersLabel = t("tab.filters");
   const resultsLabel = t("tab.results");
   const savedLabel = t("tab.saved");
+  const hasMountedMobilePanel = mobileTab !== null;
 
   return (
     <nav
@@ -103,6 +104,7 @@ export function MobileTabBar({
         variant="mobile"
         tabIndex={focusedIndex === 1 ? 0 : -1}
         onKeyDown={(e) => handleKeyDown(e, 1)}
+        onFocus={() => setFocusedIndex(1)}
       />
       <Button
         ref={(node) => {
@@ -114,7 +116,7 @@ export function MobileTabBar({
         className="mobile-tab-button"
         data-active={mobileTab === "filters"}
         aria-pressed={mobileTab === "filters"}
-        aria-controls="mobile-filters-content"
+        aria-controls={hasMountedMobilePanel ? "mobile-filters-content" : undefined}
         title={filtersLabel}
         tabIndex={focusedIndex === 2 ? 0 : -1}
         onClick={onFiltersClick}
@@ -134,7 +136,7 @@ export function MobileTabBar({
         className="mobile-tab-button"
         data-active={mobileTab === "results"}
         aria-pressed={mobileTab === "results"}
-        aria-controls="mobile-results-content"
+        aria-controls={hasMountedMobilePanel ? "mobile-results-content" : undefined}
         title={resultsLabel}
         tabIndex={focusedIndex === 3 ? 0 : -1}
         onClick={onResultsClick}
@@ -154,7 +156,7 @@ export function MobileTabBar({
         className="mobile-tab-button"
         data-active={mobileTab === "saved"}
         aria-pressed={mobileTab === "saved"}
-        aria-controls="mobile-saved-content"
+        aria-controls={hasMountedMobilePanel ? "mobile-saved-content" : undefined}
         title={savedLabel}
         tabIndex={focusedIndex === 4 ? 0 : -1}
         onClick={onSavedClick}

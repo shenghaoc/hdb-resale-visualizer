@@ -14,6 +14,7 @@ export type LocaleSelectorVariant = "desktop" | "mobile";
 type LocaleSelectorProps = {
   variant: LocaleSelectorVariant;
   onKeyDown?: React.KeyboardEventHandler;
+  onFocus?: React.FocusEventHandler<HTMLButtonElement>;
   tabIndex?: number;
 };
 
@@ -22,7 +23,7 @@ type LocaleSelectorProps = {
  * bar. Keeps trigger styling, icon sizing, and the options list in one place.
  */
 export const LocaleSelector = forwardRef<HTMLButtonElement, LocaleSelectorProps>(
-  ({ variant, onKeyDown, tabIndex }, ref) => {
+  ({ variant, onKeyDown, onFocus, tabIndex }, ref) => {
     const { locale, setLocale, t } = useI18n();
     const label = t("language.label");
 
@@ -41,6 +42,7 @@ export const LocaleSelector = forwardRef<HTMLButtonElement, LocaleSelectorProps>
           title={isDesktop ? undefined : label}
           className={triggerClassName}
           onKeyDown={onKeyDown}
+          onFocus={onFocus}
           tabIndex={tabIndex}
         >
           <Languages data-icon className={iconClassName} aria-hidden="true" />

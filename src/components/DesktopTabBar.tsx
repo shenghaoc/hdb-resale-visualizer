@@ -152,6 +152,7 @@ export function DesktopTabBar({
         variant="desktop"
         tabIndex={focusedIndex === 3 ? 0 : -1}
         onKeyDown={(e) => handleKeyDown(e, 3)}
+        onFocus={() => setFocusedIndex(3)}
       />
       <Button
         ref={(node) => {
