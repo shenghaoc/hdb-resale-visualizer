@@ -125,7 +125,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       expect(result.current.hasResultScope).toBe(false);
     });
 
-    it("is true when only mrtMax is set (no town/search/selectedKey)", () => {
+    it("is false when only mrtMax is set (no town/search/selectedKey)", () => {
       // mrtMax alone does not constitute a result scope — geographic intent needs blocks
       // to match stations. With no blocks/search, hasResultScope should be false.
       const { result } = renderHook(() =>

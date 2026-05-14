@@ -252,7 +252,9 @@ describe("useShortlistArtifacts", () => {
       await Promise.resolve();
     });
 
-    // After unmount, state should not have been updated (no error thrown)
-    expect(result.current.shortlistRows).toHaveLength(1);
+    // After unmount, state should not have been updated.
+    // The detailSummary should still be null because the successful fetch
+    // should have been ignored.
+    expect(result.current.shortlistRows[0]?.detailSummary).toBeNull();
   });
 });

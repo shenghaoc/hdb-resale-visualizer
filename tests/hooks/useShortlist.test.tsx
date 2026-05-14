@@ -163,9 +163,7 @@ describe("useShortlist", () => {
     const items = [
       { addressKey: "addr-url", notes: "", targetPrice: null, addedAt: "2026-01-01T00:00:00Z" },
     ];
-    const encoded = btoa(
-      String.fromCharCode(...new TextEncoder().encode(JSON.stringify(items))),
-    );
+    const encoded = Buffer.from(JSON.stringify(items)).toString("base64");
 
     const replaceSpy = vi.fn();
     Object.defineProperty(window, "location", {

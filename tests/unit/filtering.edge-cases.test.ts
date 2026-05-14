@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import {
   matchesFilter,
@@ -101,34 +101,31 @@ describe("matchesFilter — area range boundary conditions", () => {
 });
 
 describe("matchesFilter — remainingLeaseMin", () => {
-  beforeEach(() => resetFilteringCachesForTests());
+  beforeEach(() => {
+    resetFilteringCachesForTests();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01"));
+    resetFilteringCachesForTests(); // reset again after time change just in case
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   it("includes block where max remaining lease meets or exceeds remainingLeaseMin", () => {
     // leaseCommenceRange[1] = 2000, current year mocked to 2026 → 99 - (2026 - 2000) = 73 years
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-01-01"));
-    resetFilteringCachesForTests();
-
     const block = makeBlock({ leaseCommenceRange: [1990, 2000] });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 73 })).toBe(true);
     expect(matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 74 })).toBe(false);
-
-    vi.useRealTimers();
   });
 
   it("excludes very old blocks with low remaining lease", () => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-01-01"));
-    resetFilteringCachesForTests();
-
     // leaseCommenceRange[1] = 1960 → 99 - (2026 - 1960) = 33 years
     const block = makeBlock({ leaseCommenceRange: [1960, 1960] });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 50 })).toBe(false);
     expect(matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 30 })).toBe(true);
-
-    vi.useRealTimers();
   });
 });
 
