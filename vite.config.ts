@@ -11,6 +11,7 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1500,
     modulePreload: {
+      // Keep heavy async chunks out of the entry preload graph; bundle check enforces gzip budgets on what remains.
       resolveDependencies: (_filename, deps) =>
         deps.filter((dep) => !/vendor-(?:maplibre|echarts)|(?:^|\/)(?:MapView|TrendChart)(?:-|\.)/.test(dep)),
     },

@@ -1,0 +1,30 @@
+name: Strict dependency typecheck
+
+# Runs TypeScript with skipLibCheck:false using a CommonJS module target so vendor
+# export= typings (e.g. echarts root) still parse; complements the faster default
+# `npm run typecheck` on every PR.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck-libs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Strict lib typecheck (skipLibCheck false)
+        run: npm run typecheck:libs
