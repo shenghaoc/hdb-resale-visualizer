@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -46,7 +46,7 @@ import {
   ItemHeader,
 } from "@/components/ui/item";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { lazy } from "react";
+
 import {
   computeBlockTrajectory,
   sliceTrendByRange,
@@ -817,7 +817,7 @@ export function DetailDrawer({
                       ))}
                     </div>
                   }>
-                    <AskingPriceCheck detail={detail} />
+                    <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.street}`} detail={detail} />
                   </Suspense>
                 ) : (
                   <div className="flex flex-col gap-3 py-12">
