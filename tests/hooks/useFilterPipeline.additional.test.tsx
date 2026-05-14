@@ -151,7 +151,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       expect(result.current.hasResultScope).toBe(false);
     });
 
-    it("is true when search has non-whitespace content", () => {
+    it("is false for whitespace-only and true for non-empty content", () => {
       const { result } = renderHook(() =>
         useFilterPipeline({
           manifest,

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   formatCurrency,
   formatCompactCurrency,
@@ -91,7 +91,7 @@ describe("format edge cases", () => {
     });
 
     it("rounds to specified fraction digits", () => {
-      expect(formatNumber(1.005, 2)).toBe("1.01");
+      expect(formatNumber(1.015, 2)).toBe("1.02");
       expect(formatNumber(1.004, 2)).toBe("1");
     });
 

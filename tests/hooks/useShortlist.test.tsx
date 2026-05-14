@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useShortlist } from "@/hooks/useShortlist";
 import { MAX_SHORTLIST_ITEMS, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
 
@@ -24,6 +24,10 @@ describe("useShortlist", () => {
     clearStorage();
     // Reset URL to plain pathname
     mockLocation("");
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it("initialises with an empty list when storage is empty", () => {
@@ -169,12 +173,8 @@ describe("useShortlist", () => {
     ];
     const encoded = Buffer.from(JSON.stringify(items)).toString("base64");
 
-    const replaceSpy = vi.fn();
     mockLocation(`?shortlist=${encoded}`);
-    Object.defineProperty(window, "history", {
-      value: { replaceState: replaceSpy },
-      writable: true,
-    });
+    const replaceSpy = vi.spyOn(window.history, "replaceState");
 
     const { result } = renderHook(() => useShortlist());
 
