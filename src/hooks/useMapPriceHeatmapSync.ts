@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import {
   addPriceHeatmapLayer,
+  HEATMAP_SOURCE_ID,
   isHeatmapLayerPresent,
   removePriceHeatmapLayer,
   setHeatmapOpacity,
@@ -27,6 +28,10 @@ export function useMapPriceHeatmapSync({
       if (!map.isStyleLoaded()) return;
       if (priceHeatmapEnabled) {
         addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson);
+        const source = map.getSource(HEATMAP_SOURCE_ID);
+        if (source && "setData" in source) {
+          (source as { setData: (data: GeoJSON.FeatureCollection) => void }).setData(geoJson);
+        }
       } else {
         removePriceHeatmapLayer(map);
       }
