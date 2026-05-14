@@ -167,7 +167,7 @@ describe("useMapFitBounds", () => {
     const { rerender } = renderHook(
       ({ townFilter }: { townFilter: string | null }) =>
         useMapFitBounds({ map, blocks, townFilter, autoFitKey: null, prefersReducedMotion: false }),
-      { initialProps: { townFilter: null } },
+      { initialProps: { townFilter: null as string | null } },
     );
 
     expect(map.fitBounds).toHaveBeenCalledTimes(1);
@@ -184,7 +184,7 @@ describe("useMapFitBounds", () => {
     const { rerender } = renderHook(
       ({ autoFitKey }: { autoFitKey: string | null }) =>
         useMapFitBounds({ map, blocks, townFilter: null, autoFitKey, prefersReducedMotion: false }),
-      { initialProps: { autoFitKey: null } },
+      { initialProps: { autoFitKey: null as string | null } },
     );
 
     expect(map.fitBounds).toHaveBeenCalledTimes(1);

@@ -12,14 +12,18 @@ function writeStorage(items: object[]) {
   window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(items));
 }
 
+function mockLocation(search = ""): void {
+  Object.defineProperty(window, "location", {
+    value: { href: `http://localhost/${search}`, pathname: "/", search },
+    writable: true,
+  });
+}
+
 describe("useShortlist", () => {
   beforeEach(() => {
     clearStorage();
     // Reset URL to plain pathname
-    Object.defineProperty(window, "location", {
-      value: { search: "", pathname: "/" },
-      writable: true,
-    });
+    mockLocation("");
   });
 
   it("initialises with an empty list when storage is empty", () => {
@@ -166,10 +170,7 @@ describe("useShortlist", () => {
     const encoded = Buffer.from(JSON.stringify(items)).toString("base64");
 
     const replaceSpy = vi.fn();
-    Object.defineProperty(window, "location", {
-      value: { search: `?shortlist=${encoded}`, pathname: "/" },
-      writable: true,
-    });
+    mockLocation(`?shortlist=${encoded}`);
     Object.defineProperty(window, "history", {
       value: { replaceState: replaceSpy },
       writable: true,

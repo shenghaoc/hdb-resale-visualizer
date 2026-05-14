@@ -33,6 +33,13 @@ const baseFilters: FilterState = {
   selectedAddressKey: null,
 };
 
+function mockLocation(search = ""): void {
+  Object.defineProperty(window, "location", {
+    value: { href: `http://localhost/${search}`, pathname: "/", search },
+    writable: true,
+  });
+}
+
 function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): BlockSummary {
   return {
     town: "BEDOK",
@@ -56,6 +63,7 @@ describe("useFilterPipeline — additional edge cases", () => {
   beforeEach(() => {
     vi.mocked(useBlockLoading).mockReturnValue({ blocks: [], loadError: null });
     vi.clearAllMocks();
+    mockLocation("");
   });
 
   describe("near-me sentinel handling", () => {
@@ -319,10 +327,7 @@ describe("useFilterPipeline — additional edge cases", () => {
     });
 
     it("keeps user-supplied startMonth even when useDefaultStartMonth would be set", () => {
-      Object.defineProperty(window, "location", {
-        value: { search: "" },
-        writable: true,
-      });
+      mockLocation("");
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -344,10 +349,7 @@ describe("useFilterPipeline — additional edge cases", () => {
 
   describe("popstate listener updates useDefaultStartMonth", () => {
     it("sets useDefaultStartMonth false when popstate fires with startMonth in URL", () => {
-      Object.defineProperty(window, "location", {
-        value: { search: "" },
-        writable: true,
-      });
+      mockLocation("");
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -364,10 +366,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       expect(result.current.useDefaultStartMonth).toBe(true);
 
       act(() => {
-        Object.defineProperty(window, "location", {
-          value: { search: "?startMonth=2021-01" },
-          writable: true,
-        });
+        mockLocation("?startMonth=2021-01");
         window.dispatchEvent(new PopStateEvent("popstate"));
       });
 
