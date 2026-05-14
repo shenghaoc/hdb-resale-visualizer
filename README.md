@@ -8,7 +8,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 
 - Vite + React 19 + TypeScript
 - MapLibre GL JS with OneMap GreyLite tiles
-- TanStack Table for results and shortlist comparison
+- Shadcn-style table primitives for block results and shortlist comparison
 - ECharts for block-level trend charts
 - Node.js 26 + npm for package management, scripts, and CI
 
@@ -48,11 +48,13 @@ Install dependencies:
 npm install
 ```
 
-Generate or refresh the static data artifacts:
+For normal local development and automated tests, copy the checked-in fixture snapshot into `public/data/` (this directory is gitignored and empty by default):
 
 ```bash
-npm run sync-data
+mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
 ```
+
+Run `npm run sync-data` only when you intentionally want to refresh artifacts from the live data.gov.sg and OneMap APIs (requires network access and optional API keys; see [Environment](#environment)).
 
 Start the app:
 
@@ -107,7 +109,7 @@ GEOCODE_CONCURRENCY=10
 
 ## Deployment
 
-- `wrangler.toml` is configured for Cloudflare Pages static output.
+- Cloudflare Pages publishes the static `dist/` output using the Wrangler CLI from GitHub Actions (`wrangler pages deploy dist --project-name=...`); there is no committed `wrangler.toml` in this repository.
 - `.github/workflows/ci.yml` runs typecheck, typed lint, unit/integration tests, e2e smoke, and fixture-backed production build verification.
 - `.github/workflows/deploy-preview.yml` handles build, pipeline cache/data sync, and Cloudflare Pages preview/production deploy after CI passes.
 - `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, and deploys directly to Cloudflare Pages when the relevant secrets exist. Artifacts are never committed to git.
