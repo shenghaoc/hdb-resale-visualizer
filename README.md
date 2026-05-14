@@ -8,7 +8,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 
 - Vite + React 19 + TypeScript
 - MapLibre GL JS with OneMap GreyLite tiles
-- Shadcn-style table primitives for block results and shortlist comparison
+- Shadcn-style card and list primitives for block results and shortlist comparison
 - ECharts for block-level trend charts
 - Node.js 26 + npm for package management, scripts, and CI
 
@@ -51,7 +51,7 @@ npm install
 For normal local development and automated tests, copy the checked-in fixture snapshot into `public/data/` (this directory is gitignored and empty by default):
 
 ```bash
-mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
+npm run setup:fixtures
 ```
 
 Run `npm run sync-data` only when you intentionally want to refresh artifacts from the live data.gov.sg and OneMap APIs (requires network access and optional API keys; see [Environment](#environment)).
