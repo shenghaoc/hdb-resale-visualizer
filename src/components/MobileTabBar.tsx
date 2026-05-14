@@ -71,9 +71,9 @@ export function MobileTabBar({
     <nav
       className="mobile-tab-bar"
       data-testid="mobile-tab-bar"
+      role="toolbar"
       aria-label={t("app.primaryNav")}
     >
-      <div role="toolbar">
       <Button
         ref={(node) => {
           itemRefs.current[0] = node;
@@ -170,7 +170,6 @@ export function MobileTabBar({
           </Badge>
         ) : null}
       </Button>
-      </div>
     </nav>
   );
 }
