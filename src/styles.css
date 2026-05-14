@@ -657,6 +657,14 @@
   animation: fade-in-up 0.3s ease-out forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 input[data-no-spinner="true"] {
   appearance: textfield;
 }
