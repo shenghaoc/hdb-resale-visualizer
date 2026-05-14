@@ -200,7 +200,13 @@ export async function geocodeMissingAddresses(
       const [addressKey, searchValue] = missingAddresses[currentIndex];
       try {
         const geocode = await geocodeAddressFn(searchValue, geocodeEndpoint);
-        if (geocode) geocodeCache.entries[addressKey] = geocode;
+        if (geocode) {
+          geocodeCache.entries[addressKey] = geocode;
+        } else {
+          geocodeFailureCount += 1;
+          if (geocodeFailureSamples.length < 5)
+            geocodeFailureSamples.push(`${searchValue}: no geocode result`);
+        }
       } catch (error) {
         geocodeFailureCount += 1;
         if (geocodeFailureSamples.length < 5)
@@ -214,7 +220,7 @@ export async function geocodeMissingAddresses(
       if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
         flushedAt = completed;
         geocodeCache.updatedAt = now();
-        const flush = flushInFlight ?? Promise.resolve();
+        const flush = flushInFlight ? flushInFlight.catch(() => {}) : Promise.resolve();
         flushInFlight = flush.then(() => saveGeocodeCacheFn(cachePath, geocodeCache));
         await flushInFlight;
       }
