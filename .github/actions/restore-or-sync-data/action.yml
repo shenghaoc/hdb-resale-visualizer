@@ -46,6 +46,8 @@ runs:
         path: |
           data/cache
           public/data
+        # "-seed" never matches a saved key (saves use prefix-upstream_key-generated_key);
+        # restoration always falls through to the prefix fallback below.
         key: ${{ steps.pipeline-cache.outputs.prefix }}-seed
         restore-keys: |
           ${{ steps.pipeline-cache.outputs.prefix }}-

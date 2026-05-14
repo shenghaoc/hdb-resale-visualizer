@@ -1,16 +1,16 @@
 import { describe, expect, it, vi } from "vitest";
 import type { GeocodeCacheFile, MrtStationFeatureCollection } from "../../scripts/lib/pipeline";
 import { buildFixtureArtifacts, fixtureMrtExits } from "../fixtures/pipeline";
-
-const EMPTY_STATIONS: MrtStationFeatureCollection = {
-  type: "FeatureCollection",
-  features: [],
-};
 import {
   fetchAmenityData,
   geocodeMissingAddresses,
   validateAndWriteArtifacts,
 } from "../../scripts/sync-data";
+
+const EMPTY_STATIONS: MrtStationFeatureCollection = {
+  type: "FeatureCollection",
+  features: [],
+};
 
 function makeGeocodeCache(): GeocodeCacheFile {
   return {
@@ -148,6 +148,7 @@ describe("sync-data coordinator helpers", () => {
           geocodeFailureCount: 0,
         },
         {
+          validateGeneratedArtifactsFn: vi.fn(),
           buildMrtStationsGeoJsonFn: vi.fn((): MrtStationFeatureCollection => EMPTY_STATIONS),
           writeGeneratedArtifactsFn: vi.fn().mockResolvedValue(undefined),
           writeTownBlockFilesFn: vi.fn().mockResolvedValue(undefined),
