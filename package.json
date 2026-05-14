@@ -13,7 +13,7 @@
     "check": "npm run typecheck && npm run lint && npm run test",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "setup:fixtures": "node -e \"const fs=require('fs'); fs.mkdirSync('public/data', {recursive:true}); fs.cpSync('tests/fixtures/public-data', 'public/data', {recursive:true});\"",
+    "setup:fixtures": "node -e \"require('node:fs').cpSync('tests/fixtures/public-data', 'public/data', {recursive:true})\"",
     "lint": "ESLINT_TYPED=1 eslint . --cache --cache-location node_modules/.cache/eslint-typed --cache-strategy content",
     "lint:fast": "eslint . --cache --cache-location node_modules/.cache/eslint --cache-strategy content",
     "lint:typed": "npm run lint",
