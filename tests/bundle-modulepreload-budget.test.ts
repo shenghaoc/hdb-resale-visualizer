@@ -23,14 +23,24 @@ describe("parseModulePreloadHrefs", () => {
     expect(parseModulePreloadHrefs("<html></html>")).toEqual([]);
   });
 
-  it("does not capture data-href attributes", () => {
+  it("does not treat data-href as the modulepreload href", () => {
     const html = `<link rel="modulepreload" data-href="/fake.js" href="/real.js">`;
     expect(parseModulePreloadHrefs(html)).toEqual(["/real.js"]);
   });
 
-  it("handles href before rel", () => {
+  it("finds href when it appears before rel", () => {
     const html = `<link href="/assets/c.js" rel="modulepreload">`;
     expect(parseModulePreloadHrefs(html)).toEqual(["/assets/c.js"]);
+  });
+
+  it("allows whitespace around href equals", () => {
+    const html = `<link rel="modulepreload" href = "/assets/spaced.js" >`;
+    expect(parseModulePreloadHrefs(html)).toEqual(["/assets/spaced.js"]);
+  });
+
+  it("allows whitespace around rel equals", () => {
+    const html = `<link rel = "modulepreload" href="/assets/r.js">`;
+    expect(parseModulePreloadHrefs(html)).toEqual(["/assets/r.js"]);
   });
 });
 
@@ -92,6 +102,17 @@ describe("measureModulePreloads", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "bundle-budget-"));
     try {
       expect(() => measureModulePreloads(dir, ["/../etc/passwd"])).toThrow(/suspicious modulepreload href/);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("wraps read errors with href context", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "bundle-budget-"));
+    try {
+      expect(() => measureModulePreloads(dir, ["/assets/missing.js"])).toThrow(
+        /Failed to read or gzip modulepreload \/assets\/missing\.js/,
+      );
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }

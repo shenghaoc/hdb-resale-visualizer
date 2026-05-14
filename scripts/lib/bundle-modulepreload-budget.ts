@@ -2,6 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 
+/** Match each `<link ...>` tag; preload detection is done per-tag so attribute order is flexible. */
+const LINK_TAG_RE = /<link\b[^>]*>/gi;
+
+/** `rel="modulepreload"` / `rel = 'modulepreload'`; `(?<![...])rel` avoids matching `data-rel`. */
+const REL_MODULEPRELOAD_RE = /(?<![a-zA-Z0-9_-])rel\s*=\s*["']modulepreload["']/i;
+
+/** `href="..."` with optional spaces around `=`; negative lookbehind avoids `data-href`. */
+const HREF_ATTR_RE = /(?<![a-zA-Z0-9_-])href\s*=\s*["']([^"']+)["']/i;
+
 export type ModulePreloadEntry = {
   readonly href: string;
   readonly resolvedPath: string;
@@ -39,10 +48,17 @@ export function readBudgetLimits(): {
 }
 
 export function parseModulePreloadHrefs(html: string): string[] {
-  const matches = html.matchAll(/<link[^>]+rel=["']modulepreload["'][^>]*>/gi);
-  return [...matches]
-    .map((m) => m[0].match(/\shref=["']([^"']+)["']/i)?.[1])
-    .filter((href): href is string => !!href);
+  const hrefs: string[] = [];
+  for (const match of html.matchAll(LINK_TAG_RE)) {
+    const tag = match[0];
+    if (!REL_MODULEPRELOAD_RE.test(tag)) continue;
+    const hrefMatch = tag.match(HREF_ATTR_RE);
+    const href = hrefMatch?.[1];
+    if (typeof href === "string" && href.length > 0) {
+      hrefs.push(href);
+    }
+  }
+  return hrefs;
 }
 
 function hrefToDistPath(distDir: string, href: string): string {
@@ -57,14 +73,21 @@ function hrefToDistPath(distDir: string, href: string): string {
 export function measureModulePreloads(distDir: string, hrefs: readonly string[]): ModulePreloadEntry[] {
   return hrefs.map((href) => {
     const resolvedPath = hrefToDistPath(distDir, href);
-    const buf = fs.readFileSync(resolvedPath);
-    const gzipBytes = zlib.gzipSync(buf).length;
-    return {
-      href,
-      resolvedPath,
-      rawBytes: buf.length,
-      gzipBytes,
-    };
+    try {
+      const buf = fs.readFileSync(resolvedPath);
+      const gzipBytes = zlib.gzipSync(buf).length;
+      return {
+        href,
+        resolvedPath,
+        rawBytes: buf.length,
+        gzipBytes,
+      };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to read or gzip modulepreload ${href} (${resolvedPath}): ${message}`, {
+        cause: err,
+      });
+    }
   });
 }
 
