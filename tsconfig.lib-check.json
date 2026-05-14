@@ -1,0 +1,14 @@
+{
+  // Stricter than day-to-day builds: skipLibCheck false surfaces vendor .d.ts issues.
+  // module CommonJS avoids echarts' export= root typing incompatibility with module ESNext.
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "CommonJS",
+    "moduleResolution": "Node10",
+    "verbatimModuleSyntax": false,
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src", "shared", "types/lib-check-ambient.d.ts"]
+}
