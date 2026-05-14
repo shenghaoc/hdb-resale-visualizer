@@ -2,12 +2,6 @@ import { useEffect, useMemo, useRef } from "react";
 import { Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { toGeoJson } from "@/lib/map";
-import {
-  addPriceHeatmapLayer,
-  removePriceHeatmapLayer,
-  setHeatmapOpacity,
-  isHeatmapLayerPresent,
-} from "@/lib/priceHeatmap";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useMapTheme } from "@/hooks/useMapTheme";
 import { useMapRadiusLayer } from "@/hooks/useMapRadiusLayer";
@@ -16,6 +10,9 @@ import { useMapLayers } from "@/hooks/useMapLayers";
 import { useMapFitBounds } from "@/hooks/useMapFitBounds";
 import { useMapDataSync } from "@/hooks/useMapDataSync";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
+import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
+import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
+import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { GeographicSearchIntent } from "@/lib/filtering";
@@ -113,102 +110,14 @@ export function MapView({
     prefersReducedMotion,
   });
 
-  // Selected point filter sync
-  useEffect(() => {
-    if (!mapInstance) return;
-
-    const applySelectionFilter = () => {
-      if (!mapInstance.isStyleLoaded()) return;
-      if (!mapInstance.getLayer("selected-point")) return;
-      mapInstance.setFilter("selected-point", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
-      mapInstance.setFilter("selected-point-label", ["==", ["get", "address_key"], selectedAddressKey ?? ""]);
-    };
-
-    if (mapInstance.isStyleLoaded()) {
-      applySelectionFilter();
-    } else {
-      void mapInstance.once("load", applySelectionFilter);
-    }
-    mapInstance.on("styledata", applySelectionFilter);
-
-    return () => {
-      mapInstance.off("load", applySelectionFilter);
-      mapInstance.off("styledata", applySelectionFilter);
-    };
-  }, [mapInstance, selectedAddressKey]);
-
-  // Marker visibility sync
-  useEffect(() => {
-    if (!mapInstance) return;
-    const applyVisibility = () => {
-      if (!mapInstance.isStyleLoaded()) return;
-      const visibility = showBlockMarkers ? "visible" : "none";
-      for (const layerId of ["clusters", "cluster-count", "unclustered-point"]) {
-        if (mapInstance.getLayer(layerId)) {
-          mapInstance.setLayoutProperty(layerId, "visibility", visibility);
-        }
-      }
-    };
-    if (mapInstance.isStyleLoaded()) {
-      applyVisibility();
-    } else {
-      void mapInstance.once("load", applyVisibility);
-    }
-    mapInstance.on("styledata", applyVisibility);
-
-    return () => {
-      mapInstance.off("load", applyVisibility);
-      mapInstance.off("styledata", applyVisibility);
-    };
-  }, [mapInstance, showBlockMarkers]);
-
-  // Heatmap layer management
-  useEffect(() => {
-    if (!mapInstance) return;
-    const apply = () => {
-      if (!mapInstance.isStyleLoaded()) return;
-      if (priceHeatmapEnabled) {
-        addPriceHeatmapLayer(mapInstance, priceHeatmapOpacity, geoJson);
-      } else {
-        removePriceHeatmapLayer(mapInstance);
-      }
-    };
-    if (mapInstance.isStyleLoaded()) {
-      apply();
-    } else {
-      void mapInstance.once("load", apply);
-    }
-
-    mapInstance.on("styledata", apply);
-
-    return () => {
-      mapInstance.off("load", apply);
-      mapInstance.off("styledata", apply);
-    };
-  }, [mapInstance, priceHeatmapEnabled, geoJson, priceHeatmapOpacity]);
-
-  // Heatmap opacity sync
-  useEffect(() => {
-    if (!mapInstance || !priceHeatmapEnabled) return;
-    const applyOpacity = () => {
-      if (!mapInstance.isStyleLoaded()) return;
-      if (isHeatmapLayerPresent(mapInstance)) {
-        setHeatmapOpacity(mapInstance, priceHeatmapOpacity);
-      }
-    };
-    if (mapInstance.isStyleLoaded()) {
-      applyOpacity();
-    } else {
-      void mapInstance.once("load", applyOpacity);
-    }
-
-    mapInstance.on("styledata", applyOpacity);
-
-    return () => {
-      mapInstance.off("load", applyOpacity);
-      mapInstance.off("styledata", applyOpacity);
-    };
-  }, [mapInstance, priceHeatmapOpacity, priceHeatmapEnabled]);
+  useMapSelectionSync({ map: mapInstance, selectedAddressKey });
+  useMapMarkerVisibility({ map: mapInstance, showBlockMarkers });
+  useMapPriceHeatmapSync({
+    map: mapInstance,
+    geoJson,
+    priceHeatmapEnabled,
+    priceHeatmapOpacity,
+  });
 
   useMapTheme(mapInstance, isDarkMode);
   useMapRadiusLayer(mapInstance, geographicIntent, selectedAddressKey, blocksByKey);
