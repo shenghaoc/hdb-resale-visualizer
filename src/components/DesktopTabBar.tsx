@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Bookmark, List, Moon, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,34 +34,37 @@ export function DesktopTabBar({
   const filtersActive = leftTab === "filters" && isLeftPanelOpen;
   const resultsActive = leftTab === "results" && isLeftPanelOpen;
 
-  // Roving arrow-key navigation across the three toggle buttons.
-  const toggleRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const handleToggleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
-      const buttons = toggleRefs.current.filter(
-        (b): b is HTMLButtonElement => b !== null,
-      );
-      if (buttons.length === 0) return;
+  // Roving arrow-key navigation across all toolbar elements.
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent, index: number) => {
+      const items = itemRefs.current.filter((b): b is HTMLButtonElement => b !== null);
+      if (items.length === 0) return;
+
       let nextIndex: number | null = null;
       switch (event.key) {
         case "ArrowRight":
         case "ArrowDown":
-          nextIndex = (index + 1) % buttons.length;
+          nextIndex = (index + 1) % items.length;
           break;
         case "ArrowLeft":
         case "ArrowUp":
-          nextIndex = (index - 1 + buttons.length) % buttons.length;
+          nextIndex = (index - 1 + items.length) % items.length;
           break;
         case "Home":
           nextIndex = 0;
           break;
         case "End":
-          nextIndex = buttons.length - 1;
+          nextIndex = items.length - 1;
           break;
       }
+
       if (nextIndex !== null) {
         event.preventDefault();
-        buttons[nextIndex]?.focus();
+        setFocusedIndex(nextIndex);
+        items[nextIndex]?.focus();
       }
     },
     [],
@@ -80,7 +83,7 @@ export function DesktopTabBar({
     >
       <Button
         ref={(node) => {
-          toggleRefs.current[0] = node;
+          itemRefs.current[0] = node;
         }}
         type="button"
         variant={filtersActive ? "secondary" : "ghost"}
@@ -89,15 +92,17 @@ export function DesktopTabBar({
         aria-pressed={filtersActive}
         aria-controls="desktop-filters-content"
         title={filtersLabel}
+        tabIndex={focusedIndex === 0 ? 0 : -1}
         onClick={onFiltersClick}
-        onKeyDown={(event) => handleToggleKeyDown(event, 0)}
+        onKeyDown={(e) => handleKeyDown(e, 0)}
+        onFocus={() => setFocusedIndex(0)}
       >
         <SlidersHorizontal data-icon />
         <span>{filtersLabel}</span>
       </Button>
       <Button
         ref={(node) => {
-          toggleRefs.current[1] = node;
+          itemRefs.current[1] = node;
         }}
         type="button"
         variant={resultsActive ? "secondary" : "ghost"}
@@ -106,8 +111,10 @@ export function DesktopTabBar({
         aria-pressed={resultsActive}
         aria-controls="desktop-results-content"
         title={resultsLabel}
+        tabIndex={focusedIndex === 1 ? 0 : -1}
         onClick={onResultsClick}
-        onKeyDown={(event) => handleToggleKeyDown(event, 1)}
+        onKeyDown={(e) => handleKeyDown(e, 1)}
+        onFocus={() => setFocusedIndex(1)}
       >
         <List data-icon />
         <span>{resultsLabel}</span>
@@ -115,7 +122,7 @@ export function DesktopTabBar({
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
       <Button
         ref={(node) => {
-          toggleRefs.current[2] = node;
+          itemRefs.current[2] = node;
         }}
         type="button"
         variant={isSavedPanelOpen ? "secondary" : "ghost"}
@@ -124,8 +131,10 @@ export function DesktopTabBar({
         aria-pressed={isSavedPanelOpen}
         aria-controls="desktop-saved-content"
         title={savedLabel}
+        tabIndex={focusedIndex === 2 ? 0 : -1}
         onClick={onSavedClick}
-        onKeyDown={(event) => handleToggleKeyDown(event, 2)}
+        onKeyDown={(e) => handleKeyDown(e, 2)}
+        onFocus={() => setFocusedIndex(2)}
       >
         <Bookmark data-icon className={isSavedPanelOpen ? "fill-current" : ""} />
         <span>{savedLabel}</span>
@@ -136,13 +145,26 @@ export function DesktopTabBar({
         ) : null}
       </Button>
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
-      <LocaleSelector variant="desktop" />
+      <LocaleSelector
+        ref={(node) => {
+          itemRefs.current[3] = node;
+        }}
+        variant="desktop"
+        tabIndex={focusedIndex === 3 ? 0 : -1}
+        onKeyDown={(e) => handleKeyDown(e, 3)}
+      />
       <Button
+        ref={(node) => {
+          itemRefs.current[4] = node;
+        }}
         type="button"
         size="icon"
         variant="ghost"
         className="desktop-tab-bar-icon-btn"
+        tabIndex={focusedIndex === 4 ? 0 : -1}
         onClick={onToggleTheme}
+        onKeyDown={(e) => handleKeyDown(e, 4)}
+        onFocus={() => setFocusedIndex(4)}
         aria-label={t("app.toggleTheme")}
         aria-pressed={theme === "dark"}
         title={t("app.toggleTheme")}
