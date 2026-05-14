@@ -217,6 +217,33 @@ describe("computeBlockTrajectory", () => {
     expect(result!.yoyDeltaPct).toBeNull();
     expect(result!.direction).toBe("flat");
   });
+
+  it("handles sparse data by skipping anchors that are too far from the 12-month target", () => {
+    const trend: AddressTrendPoint[] = [
+      { month: "2020-01", medianPrice: 400000, transactionCount: 1, medianPricePerSqm: 4000 },
+      { month: "2024-06", medianPrice: 800000, transactionCount: 1, medianPricePerSqm: 8000 },
+    ];
+    const result = computeBlockTrajectory(trend);
+    // 2020-01 is > 16 months before 2024-06. It should be skipped.
+    expect(result!.yoyDelta).toBeNull();
+  });
+
+  it("finds the closest anchor within the ±4 month window", () => {
+    const trend: AddressTrendPoint[] = [
+      { month: "2023-01", medianPrice: 500000, transactionCount: 1, medianPricePerSqm: 5000 }, // 17m ago (outside [8, 16])
+      { month: "2023-03", medianPrice: 600000, transactionCount: 1, medianPricePerSqm: 6000 }, // 15m ago (inside)
+      { month: "2023-09", medianPrice: 700000, transactionCount: 1, medianPricePerSqm: 7000 }, // 9m ago (inside, closer to 12)
+      { month: "2024-06", medianPrice: 800000, transactionCount: 1, medianPricePerSqm: 8000 },
+    ];
+    const result = computeBlockTrajectory(trend);
+    // 2023-09 is 9 months ago (off-target = 3)
+    // 2023-03 is 15 months ago (off-target = 3)
+    // Both are equally close to 12. The loop picks the first one it sees that matches (or last if >=).
+    // In my implementation: 2023-03 distanceInMonths=15, offTarget=3, minDistanceTo12=3, yoyAnchor=2023-03
+    // Then 2023-09 distanceInMonths=9, offTarget=3, not < minDistanceTo12.
+    // So it should pick 2023-03.
+    expect(result!.yoyDelta).toBe(800000 - 600000);
+  });
 });
 
 describe("sliceTrendByRange", () => {

@@ -200,17 +200,28 @@ export function computeBlockTrajectory(
     if (point.medianPrice > peak.medianPrice) peak = point;
   }
 
-  const targetYear = Number(latest.month.slice(0, 4)) - 1;
-  const targetMonth = `${targetYear.toString().padStart(4, "0")}-${latest.month.slice(5, 7)}`;
-
+  // Robust YoY: Find the point closest to exactly 12 months ago
+  // within a window of [8, 16] months ago.
   let yoyAnchor: AddressTrendPoint | null = null;
-  for (let i = sorted.length - 1; i >= 0; i -= 1) {
-    if (sorted[i].month <= targetMonth) {
-      yoyAnchor = sorted[i];
-      break;
+  let minDistanceTo12 = Infinity;
+
+  const latestY = Number(latest.month.slice(0, 4));
+  const latestM = Number(latest.month.slice(5, 7));
+
+  for (const point of sorted) {
+    if (point.month === latest.month) continue;
+    const y = Number(point.month.slice(0, 4));
+    const m = Number(point.month.slice(5, 7));
+    const distanceInMonths = (latestY - y) * 12 + (latestM - m);
+
+    if (distanceInMonths >= 8 && distanceInMonths <= 16) {
+      const offTarget = Math.abs(distanceInMonths - 12);
+      if (offTarget < minDistanceTo12) {
+        minDistanceTo12 = offTarget;
+        yoyAnchor = point;
+      }
     }
   }
-  if (yoyAnchor && yoyAnchor.month === latest.month) yoyAnchor = null;
 
   const yoyDelta = yoyAnchor ? latest.medianPrice - yoyAnchor.medianPrice : null;
   const yoyDeltaPct =
