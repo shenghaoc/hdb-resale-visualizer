@@ -20,7 +20,7 @@ const checklistStateSchema = z.record(
       CHECKLIST_ITEMS.includes(item as ChecklistItemId),
     );
   }),
-);
+).catch({});
 
 export type ChecklistState = Record<string, ChecklistItemId[]>;
 
