@@ -1,15 +1,13 @@
 import { type CSSProperties, useId } from "react";
-import { GraduationCap, TrainFront, MapPin } from "lucide-react";
+import { TrainFront, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
 
 type AmenityLayersControlProps = {
   mrtStationsEnabled: boolean;
   mrtExitsEnabled: boolean;
-  schoolsEnabled: boolean;
   onToggleMrtStations: () => void;
   onToggleMrtExits: () => void;
-  onToggleSchools: () => void;
   t: Translator;
   className?: string;
   style?: CSSProperties;
@@ -18,17 +16,14 @@ type AmenityLayersControlProps = {
 export function AmenityLayersControl({
   mrtStationsEnabled,
   mrtExitsEnabled,
-  schoolsEnabled,
   onToggleMrtStations,
   onToggleMrtExits,
-  onToggleSchools,
   t,
   className,
   style,
 }: AmenityLayersControlProps) {
   const mrtStationId = useId();
   const mrtExitId = useId();
-  const schoolId = useId();
 
   return (
     <div
@@ -66,19 +61,6 @@ export function AmenityLayersControl({
           onChange={onToggleMrtExits}
           className="accent-primary"
           aria-label={t("amenity.mrtExits")}
-        />
-      </label>
-
-      <label className="flex items-center gap-1.5" htmlFor={schoolId}>
-        <GraduationCap className="size-3 text-primary/70" aria-hidden />
-        <span className="flex-1">{t("amenity.schools")}</span>
-        <input
-          id={schoolId}
-          type="checkbox"
-          checked={schoolsEnabled}
-          onChange={onToggleSchools}
-          className="accent-primary"
-          aria-label={t("amenity.schools")}
         />
       </label>
     </div>

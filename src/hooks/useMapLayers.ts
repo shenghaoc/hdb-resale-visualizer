@@ -134,6 +134,60 @@ export function useMapLayers(map: MapLibreMap | null) {
         },
       });
 
+      map.addSource("mrt-stations", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addSource("mrt-exits", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addLayer({
+        id: "mrt-exits-points",
+        type: "circle",
+        source: "mrt-exits",
+        layout: { visibility: "none" },
+        paint: {
+          "circle-color": "#475569",
+          "circle-radius": 3,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-stations-points",
+        type: "circle",
+        source: "mrt-stations",
+        layout: { visibility: "none" },
+        paint: {
+          "circle-color": "#dc2626",
+          "circle-radius": 5,
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-stations-labels",
+        type: "symbol",
+        source: "mrt-stations",
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "name"],
+          "text-size": 11,
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": "#dc2626",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 1.5,
+        },
+      });
+
       map.addLayer({
         id: "selected-point",
         type: "circle",

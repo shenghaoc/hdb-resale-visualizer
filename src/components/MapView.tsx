@@ -13,6 +13,7 @@ import { useMapInteractions } from "@/hooks/useMapInteractions";
 import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
 import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
+import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
 import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "@/lib/school-proximity";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Locale, Translator } from "@/lib/i18n";
@@ -27,6 +28,8 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
+  mrtStationsEnabled?: boolean;
+  mrtExitsEnabled?: boolean;
   primarySchools?: PrimarySchoolWithBand[];
   geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;
@@ -45,6 +48,8 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
+  mrtStationsEnabled = false,
+  mrtExitsEnabled = false,
   primarySchools = [],
   geographicIntent,
   onSelect,
@@ -130,6 +135,12 @@ export function MapView({
     geoJson,
     priceHeatmapEnabled,
     priceHeatmapOpacity,
+  });
+
+  useAmenityGeoSync({
+    map: mapInstance,
+    mrtStationsEnabled,
+    mrtExitsEnabled,
   });
 
   useMapTheme(mapInstance, isDarkMode);
