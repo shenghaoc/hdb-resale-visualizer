@@ -2,12 +2,15 @@ import { type CSSProperties, useId } from "react";
 import { Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
+import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type PriceHeatmapControlProps = {
   isEnabled: boolean;
   opacity: number;
+  mode: HeatmapMode;
   onToggle: () => void;
   onOpacityChange: (value: number) => void;
+  onModeChange: (mode: HeatmapMode) => void;
   t: Translator;
   className?: string;
   style?: CSSProperties;
@@ -24,8 +27,10 @@ type PriceHeatmapControlProps = {
 export function PriceHeatmapControl({
   isEnabled,
   opacity,
+  mode,
   onToggle,
   onOpacityChange,
+  onModeChange,
   t,
   className,
   style,
@@ -79,26 +84,54 @@ export function PriceHeatmapControl({
         </button>
       </div>
 
-      {/* Opacity slider — only shown when heatmap is active */}
+      {/* Mode toggle and Opacity slider — only shown when heatmap is active */}
       {isEnabled && (
-        <div className="flex items-center gap-1.5">
-          <label
-            htmlFor={sliderId}
-            className="text-[0.5rem] font-medium uppercase tracking-[0.08em] text-muted-foreground leading-none whitespace-nowrap"
-          >
-            {t("heatmap.opacity")}
-          </label>
-          <input
-            id={sliderId}
-            type="range"
-            min={0.1}
-            max={1}
-            step={0.05}
-            value={opacity}
-            onChange={(e) => onOpacityChange(Number(e.target.value))}
-            aria-label={t("heatmap.opacityLabel")}
-            className="heatmap-opacity-slider h-1 w-16 cursor-pointer appearance-none rounded-full accent-orange-500 dark:accent-orange-400"
-          />
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => onModeChange("price")}
+              className={cn(
+                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
+                mode === "price"
+                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              Price
+            </button>
+            <button
+              type="button"
+              onClick={() => onModeChange("perSqm")}
+              className={cn(
+                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
+                mode === "perSqm"
+                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              )}
+            >
+              $/sqm
+            </button>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <label
+              htmlFor={sliderId}
+              className="text-[0.5rem] font-medium uppercase tracking-[0.08em] text-muted-foreground leading-none whitespace-nowrap"
+            >
+              {t("heatmap.opacity")}
+            </label>
+            <input
+              id={sliderId}
+              type="range"
+              min={0.1}
+              max={1}
+              step={0.05}
+              value={opacity}
+              onChange={(e) => onOpacityChange(Number(e.target.value))}
+              aria-label={t("heatmap.opacityLabel")}
+              className="heatmap-opacity-slider h-1 w-16 cursor-pointer appearance-none rounded-full accent-orange-500 dark:accent-orange-400"
+            />
+          </div>
         </div>
       )}
     </div>

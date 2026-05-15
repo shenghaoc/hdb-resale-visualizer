@@ -46,6 +46,7 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
+  heatmapMode = "price",
   primarySchools = [],
   geographicIntent,
   onSelect,
@@ -131,6 +132,7 @@ export function MapView({
     geoJson,
     priceHeatmapEnabled,
     priceHeatmapOpacity,
+    heatmapMode,
   });
 
   useMapTheme(mapInstance, isDarkMode);

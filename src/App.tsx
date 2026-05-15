@@ -318,6 +318,7 @@ function App() {
         <PriceLegend
           isDesktop={panel.isDesktop}
           isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
+          mode={heatmap.heatmapMode}
           t={t}
         />
 

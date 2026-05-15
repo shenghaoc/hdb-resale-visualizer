@@ -1,16 +1,18 @@
-import { MEDIAN_PRICE_LEGEND_GRADIENT } from "@/lib/constants";
+import { MEDIAN_PRICE_LEGEND_GRADIENT, PRICE_PER_SQM_LEGEND_GRADIENT } from "@/lib/constants";
 import type { Translator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type PriceLegendProps = {
   isDesktop: boolean;
   isVisible: boolean;
+  mode?: HeatmapMode;
   t: Translator;
   className?: string;
   style?: React.CSSProperties;
 };
 
-export function PriceLegend({ isDesktop, isVisible, t, className, style }: PriceLegendProps) {
+export function PriceLegend({ isDesktop, isVisible, mode = "price", t, className, style }: PriceLegendProps) {
   if (!isVisible) return null;
 
   return (
@@ -28,19 +30,19 @@ export function PriceLegend({ isDesktop, isVisible, t, className, style }: Price
       }}
     >
       <p className="mb-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
-        {t("map.legend.heading")}
+        {mode === "perSqm" ? t("heatmap.labelSqm") ?? "$/SQM HEATMAP" : t("map.legend.heading")}
       </p>
       <div
         aria-hidden="true"
         className="h-1.5 w-20 rounded-full"
-        style={{ background: MEDIAN_PRICE_LEGEND_GRADIENT }}
+        style={{ background: mode === "perSqm" ? PRICE_PER_SQM_LEGEND_GRADIENT : MEDIAN_PRICE_LEGEND_GRADIENT }}
       />
       <div
         aria-hidden="true"
         className="mt-0.5 flex justify-between text-[0.55rem] font-medium text-muted-foreground"
       >
-        <span>{t("map.legend.priceLow")}</span>
-        <span>{t("map.legend.priceHigh")}</span>
+        <span>{mode === "perSqm" ? "4k" : t("map.legend.priceLow")}</span>
+        <span>{mode === "perSqm" ? "13k" : t("map.legend.priceHigh")}</span>
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ describe("priceHeatmap", () => {
 
   describe("addPriceHeatmapLayer", () => {
     it("creates source and layer when not present", () => {
-      addPriceHeatmapLayer(mockMap as never, 0.7, EMPTY_FC);
+      addPriceHeatmapLayer(mockMap as never, 0.7, EMPTY_FC, "price");
 
       expect(mockMap.addSource).toHaveBeenCalledWith(HEATMAP_SOURCE_ID, {
         type: "geojson",
@@ -70,7 +70,7 @@ describe("priceHeatmap", () => {
 
     it("is a no-op when layer already exists", () => {
       const map = createMockMap({ hasLayer: true });
-      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC, "price");
 
       expect(map.addSource).not.toHaveBeenCalled();
       expect(map.addLayer).not.toHaveBeenCalled();
@@ -78,7 +78,7 @@ describe("priceHeatmap", () => {
 
     it("handles missing clusters layer gracefully", () => {
       const map = createMockMap({ hasClusters: false, hasRadiusFill: false });
-      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC, "price");
 
       expect(map.addLayer).toHaveBeenCalledTimes(1);
       const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];
@@ -87,7 +87,7 @@ describe("priceHeatmap", () => {
 
     it("falls back to radius-fill when clusters layer is missing", () => {
       const map = createMockMap({ hasClusters: false, hasRadiusFill: true });
-      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC, "price");
 
       expect(map.addLayer).toHaveBeenCalledTimes(1);
       const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];
