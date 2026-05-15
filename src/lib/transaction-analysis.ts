@@ -84,6 +84,67 @@ export type ComparableSummary = {
   latestMonth: string | null;
 };
 
+export const RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE = 6;
+export const RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER = 1.5;
+export const RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD = 20;
+
+export type RecentTransactionOutlierDirection = "high" | "low";
+
+export type RecentTransactionOutlier = {
+  id: string;
+  flatType: string;
+  direction: RecentTransactionOutlierDirection;
+  medianPrice: number;
+  percentFromMedian: number;
+};
+
+export function detectRecentTransactionOutliers(
+  transactions: ReadonlyArray<AddressDetailTransaction>,
+): Map<string, RecentTransactionOutlier> {
+  const byFlatType = new Map<string, AddressDetailTransaction[]>();
+  for (const tx of transactions) {
+    const bucket = byFlatType.get(tx.flatType) ?? [];
+    bucket.push(tx);
+    byFlatType.set(tx.flatType, bucket);
+  }
+
+  const outliers = new Map<string, RecentTransactionOutlier>();
+
+  for (const [flatType, group] of byFlatType) {
+    if (group.length < RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE) continue;
+    const prices = group.map((tx) => tx.resalePrice).sort((a, b) => a - b);
+    const medianPrice = percentile(prices, 0.5);
+    if (!Number.isFinite(medianPrice) || medianPrice <= 0) continue;
+
+    const q1 = percentile(prices, 0.25);
+    const q3 = percentile(prices, 0.75);
+    const iqr = q3 - q1;
+    const lowerFence = q1 - iqr * RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER;
+    const upperFence = q3 + iqr * RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER;
+
+    for (const tx of group) {
+      const percentFromMedian = ((tx.resalePrice - medianPrice) / medianPrice) * 100;
+      const isHigh =
+        tx.resalePrice > upperFence &&
+        percentFromMedian >= RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD;
+      const isLow =
+        tx.resalePrice < lowerFence &&
+        percentFromMedian <= -RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD;
+      if (!isHigh && !isLow) continue;
+
+      outliers.set(tx.id, {
+        id: tx.id,
+        flatType,
+        direction: isHigh ? "high" : "low",
+        medianPrice,
+        percentFromMedian,
+      });
+    }
+  }
+
+  return outliers;
+}
+
 export function summarizeComparables(
   comparables: ReadonlyArray<AddressDetailTransaction>,
 ): ComparableSummary | null {
