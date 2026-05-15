@@ -46,6 +46,18 @@ describe("detectRecentTransactionOutliers", () => {
     const outliers = detectRecentTransactionOutliers(transactions);
     expect(outliers.get("high")?.direction).toBe("high");
     expect(outliers.get("low")?.direction).toBe("low");
+    expect(outliers.get("high")).toMatchObject({
+      id: "high",
+      flatType: "4 ROOM",
+      medianPrice: 517_500,
+    });
+    expect(outliers.get("low")).toMatchObject({
+      id: "low",
+      flatType: "4 ROOM",
+      medianPrice: 517_500,
+    });
+    expect(outliers.get("high")?.percentFromMedian).toBeCloseTo(73.913, 3);
+    expect(outliers.get("low")?.percentFromMedian).toBeCloseTo(-42.029, 3);
   });
 
   it("does not flag when sample size for a flat type is too small", () => {
@@ -90,5 +102,19 @@ describe("detectRecentTransactionOutliers", () => {
     ];
     const outliers = detectRecentTransactionOutliers(transactions);
     expect(outliers.has("mild-high")).toBe(false);
+  });
+
+  it("does not flag values that exceed the median threshold but stay inside the IQR fence", () => {
+    const transactions = [
+      makeTransaction("a", "4 ROOM", 400_000),
+      makeTransaction("b", "4 ROOM", 450_000),
+      makeTransaction("c", "4 ROOM", 500_000),
+      makeTransaction("d", "4 ROOM", 500_000),
+      makeTransaction("wide-high", "4 ROOM", 630_000),
+      makeTransaction("e", "4 ROOM", 650_000),
+    ];
+
+    const outliers = detectRecentTransactionOutliers(transactions);
+    expect(outliers.has("wide-high")).toBe(false);
   });
 });
