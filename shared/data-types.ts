@@ -66,6 +66,7 @@ export type TownFlatTypeTrendPoint = {
   flatType: string;
   month: string;
   medianPrice: number;
+  medianPricePerSqm: number;
   transactionCount: number;
 };
 

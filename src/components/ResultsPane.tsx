@@ -12,7 +12,18 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
-import type { BlockSummary } from "@/types/data";
+import { fetchTownFlatTypeTrends } from "@/lib/data";
+import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import { TownProfileSection } from "@/components/TownProfileSection";
+import {
+  buildLeaseCommencementHistogram,
+  pickBlocksBelowTownMedian,
+  pickTopBlocksByTransactionCount,
+  resolveTrendMonthRange,
+  rollupTownFlatTypesInRange,
+  sumRollupVolume,
+  volumeWeightedMeanLatestMedianPricePerSqm,
+} from "@/lib/town-profile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -86,6 +97,12 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
   isCompact?: boolean;
+  /** When set together with scope, results show a factual town overview above the list. */
+  profileTown?: string | null;
+  profileTownBlocks?: BlockSummary[];
+  profileDataWindow?: { minMonth: string; maxMonth: string } | null;
+  profileStartMonth?: string | null;
+  profileEndMonth?: string | null;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -308,8 +325,13 @@ export function ResultsPane({
   onToggleShortlist,
   scrollParent,
   isCompact = false,
+  profileTown = null,
+  profileTownBlocks = [],
+  profileDataWindow = null,
+  profileStartMonth = null,
+  profileEndMonth = null,
 }: ResultsPaneProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const sortOptions: Array<{ value: SortMode; label: string }> = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
@@ -326,6 +348,76 @@ export function ResultsPane({
   const compactRowHeight = 110;
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
+
+  const showTownProfile = Boolean(hasResultScope && profileTown && profileDataWindow);
+  const trendsQueryKey = showTownProfile && profileTown ? profileTown : "";
+
+  const [trendSnap, setTrendSnap] = useState<{
+    key: string;
+    rows: TownFlatTypeTrendPoint[];
+    failed: boolean;
+  }>({ key: "", rows: [], failed: false });
+
+  useEffect(() => {
+    if (!trendsQueryKey) {
+      return;
+    }
+
+    let alive = true;
+    void fetchTownFlatTypeTrends()
+      .then((data) => {
+        if (!alive) {
+          return;
+        }
+        setTrendSnap({ key: trendsQueryKey, rows: data, failed: false });
+      })
+      .catch(() => {
+        if (!alive) {
+          return;
+        }
+        setTrendSnap({ key: trendsQueryKey, rows: [], failed: true });
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, [trendsQueryKey]);
+
+  const townTrendRows = useMemo(
+    () => (trendSnap.key === trendsQueryKey ? trendSnap.rows : []),
+    [trendSnap, trendsQueryKey],
+  );
+  const townTrendLoading = Boolean(trendsQueryKey) && trendSnap.key !== trendsQueryKey;
+  const townTrendFailed = Boolean(trendsQueryKey) && trendSnap.key === trendsQueryKey && trendSnap.failed;
+
+  const townTrendRange = useMemo(() => {
+    if (!profileDataWindow) {
+      return null;
+    }
+    return resolveTrendMonthRange(profileDataWindow, profileStartMonth ?? null, profileEndMonth ?? null);
+  }, [profileDataWindow, profileEndMonth, profileStartMonth]);
+
+  const townRollups = useMemo(() => {
+    if (!showTownProfile || !profileTown || !townTrendRange) {
+      return [];
+    }
+    return rollupTownFlatTypesInRange(townTrendRows, profileTown, townTrendRange);
+  }, [profileTown, showTownProfile, townTrendRange, townTrendRows]);
+
+  const townTotalVol = useMemo(() => sumRollupVolume(townRollups), [townRollups]);
+  const townWeightedSqm = useMemo(() => volumeWeightedMeanLatestMedianPricePerSqm(townRollups), [townRollups]);
+
+  const townLeaseBuckets = useMemo(
+    () => buildLeaseCommencementHistogram(profileTownBlocks ?? []),
+    [profileTownBlocks],
+  );
+
+  const busyTownBlocks = useMemo(
+    () => pickTopBlocksByTransactionCount(profileTownBlocks ?? [], 5),
+    [profileTownBlocks],
+  );
+
+  const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
 
   const sortedBlocks = useMemo(() => {
     const sorted = [...blocks];
@@ -536,42 +628,63 @@ export function ResultsPane({
               <p className="text-sm font-medium">{t("results.selectTown")}</p>
               <p className="text-xs">{t("results.useTownFilter")}</p>
             </div>
-          ) : blocks.length === 0 ? (
-            <div className="flex flex-1 items-start">
-              <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
-            </div>
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">
-              <div
-                ref={listContainerRef}
-                className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
-              >
-                <ItemGroup
-                  className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
-                  style={
-                    shouldVirtualize
-                      ? {
-                          paddingTop: virtualTopPadding,
-                          paddingBottom: virtualBottomPadding,
-                        }
-                      : undefined
-                  }
-                >
-                  {(shouldVirtualize ? virtualBlocks : currentBlocks).map((block, idx) => (
-                    <BlockCard
-                      key={block.addressKey}
-                      index={idx}
-                      block={block}
-                      isFeatured={block.addressKey === selectedAddressKey}
-                      isSaved={shortlistKeys.has(block.addressKey)}
-                      isCompact={isCompact}
-                      onSelect={onSelect}
-                      onToggleShortlist={onToggleShortlist}
-                    />
-                  ))}
-                </ItemGroup>
-                {!shouldVirtualize ? renderPagination() : null}
-              </div>
+              {showTownProfile && profileTown && townTrendRange ? (
+                <TownProfileSection
+                  locale={locale}
+                  t={t}
+                  townName={profileTown}
+                  monthRange={townTrendRange}
+                  rollups={townRollups}
+                  totalTrendVolume={townTotalVol}
+                  weightedLatestSqm={townWeightedSqm}
+                  leaseBuckets={townLeaseBuckets}
+                  busyBlocks={busyTownBlocks}
+                  belowMedian={{ townMedian: townBelowMedianPack.townMedian, blocks: townBelowMedianPack.picks }}
+                  trendsLoading={townTrendLoading}
+                  trendsFailed={townTrendFailed}
+                  onSelectBlock={onSelect}
+                />
+              ) : null}
+              {blocks.length === 0 ? (
+                <div className="flex flex-1 items-start pt-2">
+                  <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
+                </div>
+              ) : (
+                <div className={cn("flex min-h-0 flex-1 flex-col gap-4", showTownProfile && "min-h-[12rem]")}>
+                  <div
+                    ref={listContainerRef}
+                    className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
+                  >
+                    <ItemGroup
+                      className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
+                      style={
+                        shouldVirtualize
+                          ? {
+                              paddingTop: virtualTopPadding,
+                              paddingBottom: virtualBottomPadding,
+                            }
+                          : undefined
+                      }
+                    >
+                      {(shouldVirtualize ? virtualBlocks : currentBlocks).map((block, idx) => (
+                        <BlockCard
+                          key={block.addressKey}
+                          index={idx}
+                          block={block}
+                          isFeatured={block.addressKey === selectedAddressKey}
+                          isSaved={shortlistKeys.has(block.addressKey)}
+                          isCompact={isCompact}
+                          onSelect={onSelect}
+                          onToggleShortlist={onToggleShortlist}
+                        />
+                      ))}
+                    </ItemGroup>
+                    {!shouldVirtualize ? renderPagination() : null}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </CardContent>

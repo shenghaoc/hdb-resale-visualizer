@@ -78,6 +78,7 @@ export const townFlatTypeTrendPointSchema = z.object({
   flatType: z.string(),
   month: monthSchema,
   medianPrice: z.number().positive(),
+  medianPricePerSqm: z.number().positive(),
   transactionCount: z.number().nonnegative(),
 });
 

@@ -16,6 +16,8 @@ import type {
 } from "@/types/data";
 import type { z } from "zod";
 
+let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
+
 class ArtifactFetchHttpError extends Error {
   status: number;
 
@@ -59,8 +61,19 @@ export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
   return fetchJson(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`, blockSummarySchema.array());
 }
 
+export function resetTownFlatTypeTrendsCacheForTests(): void {
+  townFlatTrendsPromise = null;
+}
+
 export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
-  return fetchJson(`${DATA_BASE_PATH}/trends/town-flat-type.json`, townFlatTypeTrendPointSchema.array());
+  if (!townFlatTrendsPromise) {
+    townFlatTrendsPromise = fetchJson(
+      `${DATA_BASE_PATH}/trends/town-flat-type.json`,
+      townFlatTypeTrendPointSchema.array(),
+    );
+  }
+
+  return townFlatTrendsPromise;
 }
 
 export function fetchAddressDetail(addressKey: string): Promise<AddressDetail> {
