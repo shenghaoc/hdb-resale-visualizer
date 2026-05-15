@@ -129,6 +129,7 @@ export type ShortlistItem = {
 export type NearbySchool = {
   name: string;
   distanceMeters: number;
+  coordinates?: Coordinates;
 };
 
 export type AmenityComparison = {

@@ -37,6 +37,11 @@ export function useMapLayers(map: MapLibreMap | null) {
         },
       });
 
+      map.addSource("primary-schools", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
       map.addSource("blocks", {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },
@@ -82,6 +87,42 @@ export function useMapLayers(map: MapLibreMap | null) {
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
           "circle-opacity": 0.92,
+        },
+      });
+
+      map.addLayer({
+        id: "primary-school-markers",
+        type: "circle",
+        source: "primary-schools",
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-color": "#f59e0b",
+          "circle-radius": ["case", ["==", ["get", "distance_band"], "within1km"], 7, 6],
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "rgba(255,255,255,0.95)",
+          "circle-opacity": 0.95,
+        },
+      });
+
+      map.addLayer({
+        id: "primary-school-labels",
+        type: "symbol",
+        source: "primary-schools",
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "name"],
+          "text-size": 11,
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+          "text-max-width": 12,
+          "text-allow-overlap": false,
+        },
+        paint: {
+          "text-color": "#92400e",
+          "text-halo-color": "#fff7ed",
+          "text-halo-width": 1.5,
         },
       });
 

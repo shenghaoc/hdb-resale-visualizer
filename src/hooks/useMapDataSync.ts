@@ -7,9 +7,20 @@ type UseMapDataSyncProps = {
   map: MapLibreMap | null;
   geoJson: GeoJSON.FeatureCollection;
   priceHeatmapEnabled: boolean;
+  primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
+  showPrimarySchools?: boolean;
 };
 
-export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapDataSyncProps) {
+const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
+const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
+
+export function useMapDataSync({
+  map,
+  geoJson,
+  priceHeatmapEnabled,
+  primarySchoolsGeoJson,
+  showPrimarySchools = false,
+}: UseMapDataSyncProps) {
   // Sync main blocks source
   useEffect(() => {
     if (!map) return;
@@ -59,4 +70,38 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
       map.off("styledata", applyData);
     };
   }, [map, geoJson, priceHeatmapEnabled]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    const applyPrimarySchools = () => {
+      if (!map.isStyleLoaded()) return;
+      const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
+      if (primarySchoolsGeoJson && isGeoJsonDataSourceLike(source)) {
+        source.setData(primarySchoolsGeoJson);
+      }
+
+      for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
+        if (map.getLayer(layerId)) {
+          map.setLayoutProperty(
+            layerId,
+            "visibility",
+            showPrimarySchools ? "visible" : "none",
+          );
+        }
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      applyPrimarySchools();
+    } else {
+      void map.once("load", applyPrimarySchools);
+    }
+    map.on("styledata", applyPrimarySchools);
+
+    return () => {
+      map.off("load", applyPrimarySchools);
+      map.off("styledata", applyPrimarySchools);
+    };
+  }, [map, primarySchoolsGeoJson, showPrimarySchools]);
 }

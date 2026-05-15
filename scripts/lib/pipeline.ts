@@ -263,6 +263,7 @@ function findNearestSchools(
       distanceMeters: Math.round(
         haversineDistanceMeters(blockCoords, { lat: school.lat, lng: school.lng }),
       ),
+      coordinates: { lat: school.lat, lng: school.lng },
     }))
     .sort((left, right) => {
       if (left.distanceMeters !== right.distanceMeters) {

@@ -13,6 +13,7 @@ import { useMapInteractions } from "@/hooks/useMapInteractions";
 import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
 import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
+import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "@/lib/school-proximity";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { GeographicSearchIntent } from "@/lib/filtering";
@@ -26,6 +27,7 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
+  primarySchools?: PrimarySchoolWithBand[];
   geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
@@ -43,6 +45,7 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
+  primarySchools = [],
   geographicIntent,
   onSelect,
   onMapInteract,
@@ -83,6 +86,10 @@ export function MapView({
   );
 
   const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
+  const primarySchoolsGeoJson = useMemo(
+    () => primarySchoolsToGeoJson(primarySchools),
+    [primarySchools],
+  );
   const blocksByKey = useMemo(() => {
     const map = new Map<string, BlockSummary>();
     for (const b of blocks) map.set(b.addressKey, b);
@@ -92,7 +99,13 @@ export function MapView({
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
 
   useMapLayers(mapInstance);
-  useMapDataSync({ map: mapInstance, geoJson, priceHeatmapEnabled });
+  useMapDataSync({
+    map: mapInstance,
+    geoJson,
+    priceHeatmapEnabled,
+    primarySchoolsGeoJson,
+    showPrimarySchools: primarySchools.length > 0,
+  });
   useMapFitBounds({
     map: mapInstance,
     blocks,
