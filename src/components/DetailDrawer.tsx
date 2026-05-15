@@ -63,8 +63,8 @@ import {
 } from "@/lib/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
-import { getBudgetMatchSignal } from "@/lib/budget-signals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 import { buildBlockExplanation } from "@/lib/block-explanation";
 
@@ -490,26 +490,16 @@ export function DetailDrawer({
                           {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
                         </Badge>
                       ) : null}
-                      {currentSummary && filters?.budgetMin != null || filters?.budgetMax != null ? (() => {
-                        const signal = getBudgetMatchSignal(currentSummary?.medianPrice ?? 0, filters?.budgetMin ?? null, filters?.budgetMax ?? null);
-                        if (signal.status === "no-budget") return null;
-                        return (
-                          <div
-                            className={cn(
-                              "mt-2 inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[0.58rem] font-bold uppercase tracking-tight",
-                              signal.status === "within" && "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-                              (signal.status === "above-max" || signal.status === "below-min") && "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
-                              (signal.status === "near-above" || signal.status === "near-below") && "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-                            )}
-                          >
-                            {signal.status === "within" && t("budget.within")}
-                            {signal.status === "above-max" && t("budget.aboveMax")}
-                            {signal.status === "below-min" && t("budget.belowMin")}
-                            {signal.status === "near-above" && t("budget.nearAbove", { value: formatCurrency(signal.diffAmount ?? 0, locale) })}
-                            {signal.status === "near-below" && t("budget.nearBelow", { value: formatCurrency(signal.diffAmount ?? 0, locale) })}
-                          </div>
-                        );
-                      })() : null}
+                      {currentSummary && (filters?.budgetMin != null || filters?.budgetMax != null) ? (
+                        <BudgetMatchBadge
+                          medianPrice={currentSummary.medianPrice}
+                          budgetMin={filters.budgetMin}
+                          budgetMax={filters.budgetMax}
+                          t={t}
+                          locale={locale}
+                          className="mt-2"
+                        />
+                      ) : null}
                       {detail?.summary.pricePerSqftMedian ? (
                         <div className="mt-1 text-xs font-medium text-muted-foreground">
                           {t("unit.psf", {

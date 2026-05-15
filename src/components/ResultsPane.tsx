@@ -12,8 +12,9 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
-import { getBudgetMatchSignal, type BudgetMatchResult } from "@/lib/budget-signals";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import type { BlockSummary } from "@/types/data";
+import type { Locale, Translator } from "@/lib/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -101,7 +102,10 @@ const BlockCard = memo(function BlockCard({
   isCompact = false,
   onSelect,
   onToggleShortlist,
-  budgetSignal,
+  budgetMin,
+  budgetMax,
+  t,
+  locale,
 }: {
   block: BlockSummary;
   index: number;
@@ -110,10 +114,11 @@ const BlockCard = memo(function BlockCard({
   isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
-  budgetSignal?: BudgetMatchResult;
+  budgetMin: number | null;
+  budgetMax: number | null;
+  t: Translator;
+  locale: Locale;
 }) {
-  const { locale, t } = useI18n();
-
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
@@ -149,22 +154,14 @@ const BlockCard = memo(function BlockCard({
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
-                {budgetSignal && budgetSignal.status !== "no-budget" && (
-                  <span
-                    className={cn(
-                      "inline-block rounded px-1 py-0.5 text-[0.5rem] font-bold uppercase tracking-tight",
-                      budgetSignal.status === "within" && "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-                      (budgetSignal.status === "above-max" || budgetSignal.status === "below-min") && "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
-                      (budgetSignal.status === "near-above" || budgetSignal.status === "near-below") && "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-                    )}
-                  >
-                    {budgetSignal.status === "within" && t("budget.within")}
-                    {budgetSignal.status === "above-max" && t("budget.aboveMax")}
-                    {budgetSignal.status === "below-min" && t("budget.belowMin")}
-                    {budgetSignal.status === "near-above" && t("budget.nearAbove", { value: formatCompactCurrency(budgetSignal.diffAmount ?? 0, locale) })}
-                    {budgetSignal.status === "near-below" && t("budget.nearBelow", { value: formatCompactCurrency(budgetSignal.diffAmount ?? 0, locale) })}
-                  </span>
-                )}
+                <BudgetMatchBadge
+                  medianPrice={block.medianPrice}
+                  budgetMin={budgetMin}
+                  budgetMax={budgetMax}
+                  t={t}
+                  locale={locale}
+                  className="scale-90 origin-right"
+                />
                 <span className="text-[0.58rem] font-medium text-muted-foreground">
                   {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
                 </span>
@@ -334,7 +331,7 @@ export function ResultsPane({
   budgetMin = null,
   budgetMax = null,
 }: ResultsPaneProps) {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const sortOptions: Array<{ value: SortMode; label: string }> = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
@@ -592,7 +589,10 @@ export function ResultsPane({
                       isCompact={isCompact}
                       onSelect={onSelect}
                       onToggleShortlist={onToggleShortlist}
-                      budgetSignal={getBudgetMatchSignal(block.medianPrice, budgetMin, budgetMax)}
+                      budgetMin={budgetMin}
+                      budgetMax={budgetMax}
+                      t={t}
+                      locale={locale}
                     />
                   ))}
                 </ItemGroup>
