@@ -54,7 +54,7 @@ describe("priceHeatmap", () => {
 
   describe("addPriceHeatmapLayer", () => {
     it("creates source and layer when not present", () => {
-      addPriceHeatmapLayer(mockMap as never, 0.7, EMPTY_FC);
+      addPriceHeatmapLayer(mockMap as never, 0.7, EMPTY_FC, "price");
 
       expect(mockMap.addSource).toHaveBeenCalledWith(HEATMAP_SOURCE_ID, {
         type: "geojson",
@@ -68,17 +68,35 @@ describe("priceHeatmap", () => {
       expect(addLayerCall[1]).toBe("clusters");
     });
 
-    it("is a no-op when layer already exists", () => {
+    it("updates paint properties when the layer already exists", () => {
       const map = createMockMap({ hasLayer: true });
-      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC, "perSqm");
 
       expect(map.addSource).not.toHaveBeenCalled();
       expect(map.addLayer).not.toHaveBeenCalled();
+      expect(map.setPaintProperty).toHaveBeenNthCalledWith(
+        1,
+        HEATMAP_LAYER_ID,
+        "heatmap-weight",
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "price_per_sqm_median"],
+          4000, 0,
+          13000, 1,
+        ],
+      );
+      expect(map.setPaintProperty).toHaveBeenNthCalledWith(
+        2,
+        HEATMAP_LAYER_ID,
+        "heatmap-opacity",
+        0.7,
+      );
     });
 
     it("handles missing clusters layer gracefully", () => {
       const map = createMockMap({ hasClusters: false, hasRadiusFill: false });
-      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC, "price");
 
       expect(map.addLayer).toHaveBeenCalledTimes(1);
       const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];
@@ -87,7 +105,7 @@ describe("priceHeatmap", () => {
 
     it("falls back to radius-fill when clusters layer is missing", () => {
       const map = createMockMap({ hasClusters: false, hasRadiusFill: true });
-      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC);
+      addPriceHeatmapLayer(map as never, 0.5, EMPTY_FC, "price");
 
       expect(map.addLayer).toHaveBeenCalledTimes(1);
       const addLayerCall = (map.addLayer as ReturnType<typeof vi.fn>).mock.calls[0];

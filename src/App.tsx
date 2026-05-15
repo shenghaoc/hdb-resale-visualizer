@@ -218,6 +218,7 @@ function App() {
         priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
         mrtStationsEnabled={mrtStationsEnabled}
         mrtExitsEnabled={mrtExitsEnabled}
+        heatmapMode={heatmap.heatmapMode}
         primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
@@ -322,6 +323,7 @@ function App() {
         <PriceLegend
           isDesktop={panel.isDesktop}
           isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
+          mode={heatmap.heatmapMode}
           t={t}
         />
 
@@ -330,8 +332,10 @@ function App() {
           <PriceHeatmapControl
             isEnabled={heatmap.priceHeatmapEnabled}
             opacity={heatmap.priceHeatmapOpacity}
+            mode={heatmap.heatmapMode}
             onToggle={heatmap.togglePriceHeatmap}
             onOpacityChange={heatmap.setPriceHeatmapOpacity}
+            onModeChange={heatmap.setHeatmapMode}
             t={t}
             className="absolute z-25"
             style={{

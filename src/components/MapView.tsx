@@ -30,6 +30,7 @@ type MapViewProps = {
   priceHeatmapOpacity?: number;
   mrtStationsEnabled?: boolean;
   mrtExitsEnabled?: boolean;
+  heatmapMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;
@@ -50,6 +51,7 @@ export function MapView({
   priceHeatmapOpacity = 0.7,
   mrtStationsEnabled = false,
   mrtExitsEnabled = false,
+  heatmapMode = "price",
   primarySchools = [],
   geographicIntent,
   onSelect,
@@ -135,6 +137,7 @@ export function MapView({
     geoJson,
     priceHeatmapEnabled,
     priceHeatmapOpacity,
+    heatmapMode,
   });
 
   useAmenityGeoSync({

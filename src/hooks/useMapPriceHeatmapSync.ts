@@ -6,12 +6,14 @@ import {
   removePriceHeatmapLayer,
   setHeatmapOpacity,
 } from "@/lib/priceHeatmap";
+import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type UseMapPriceHeatmapSyncProps = {
   map: MapLibreMap | null;
   geoJson: GeoJSON.FeatureCollection;
   priceHeatmapEnabled: boolean;
   priceHeatmapOpacity: number;
+  heatmapMode: HeatmapMode;
 };
 
 export function useMapPriceHeatmapSync({
@@ -19,6 +21,7 @@ export function useMapPriceHeatmapSync({
   geoJson,
   priceHeatmapEnabled,
   priceHeatmapOpacity,
+  heatmapMode,
 }: UseMapPriceHeatmapSyncProps) {
   useEffect(() => {
     if (!map) return;
@@ -26,7 +29,7 @@ export function useMapPriceHeatmapSync({
     const apply = () => {
       if (!map.isStyleLoaded()) return;
       if (priceHeatmapEnabled) {
-        addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson);
+        addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson, heatmapMode);
       } else {
         removePriceHeatmapLayer(map);
       }
@@ -37,7 +40,6 @@ export function useMapPriceHeatmapSync({
     } else {
       void map.once("load", apply);
     }
-
     map.on("styledata", apply);
 
     return () => {
@@ -46,7 +48,7 @@ export function useMapPriceHeatmapSync({
     };
   // priceHeatmapOpacity is included here only for initial layer creation; ongoing opacity
   // updates are owned exclusively by the second effect via setHeatmapOpacity.
-  }, [map, priceHeatmapEnabled, geoJson, priceHeatmapOpacity]);
+  }, [map, priceHeatmapEnabled, geoJson, priceHeatmapOpacity, heatmapMode]);
 
   useEffect(() => {
     if (!map || !priceHeatmapEnabled) return;
