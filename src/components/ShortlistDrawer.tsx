@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
@@ -546,6 +546,14 @@ export function ShortlistDrawer({
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
   const sortLabelId = useId();
+
+  useEffect(() => {
+    if (!isOpen) setShareError(null);
+  }, [isOpen]);
+
+  useEffect(() => {
+    setShareError(null);
+  }, [rows]);
 
   const currentYear = getCurrentYear();
   const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
