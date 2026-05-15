@@ -1,6 +1,13 @@
 import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { MEDIAN_PRICE_COLOR_EXPRESSION, PRIMARY_BLUE } from "@/lib/constants";
+import {
+  MEDIAN_PRICE_COLOR_EXPRESSION,
+  PRIMARY_BLUE,
+  SCHOOL_LABEL_COLOR,
+  SCHOOL_LABEL_HALO_COLOR,
+  SCHOOL_MARKER_COLOR,
+} from "@/lib/constants";
+import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/hooks/useMapDataSync";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {
@@ -37,7 +44,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         },
       });
 
-      map.addSource("primary-schools", {
+      map.addSource(PRIMARY_SCHOOL_SOURCE_ID, {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },
       });
@@ -91,14 +98,14 @@ export function useMapLayers(map: MapLibreMap | null) {
       });
 
       map.addLayer({
-        id: "primary-school-markers",
+        id: PRIMARY_SCHOOL_LAYER_IDS[0],
         type: "circle",
-        source: "primary-schools",
+        source: PRIMARY_SCHOOL_SOURCE_ID,
         layout: {
           visibility: "none",
         },
         paint: {
-          "circle-color": "#f59e0b",
+          "circle-color": SCHOOL_MARKER_COLOR,
           "circle-radius": ["case", ["==", ["get", "distance_band"], "within1km"], 7, 6],
           "circle-stroke-width": 2,
           "circle-stroke-color": "rgba(255,255,255,0.95)",
@@ -107,9 +114,9 @@ export function useMapLayers(map: MapLibreMap | null) {
       });
 
       map.addLayer({
-        id: "primary-school-labels",
+        id: PRIMARY_SCHOOL_LAYER_IDS[1],
         type: "symbol",
-        source: "primary-schools",
+        source: PRIMARY_SCHOOL_SOURCE_ID,
         layout: {
           visibility: "none",
           "text-field": ["get", "name"],
@@ -120,8 +127,8 @@ export function useMapLayers(map: MapLibreMap | null) {
           "text-allow-overlap": false,
         },
         paint: {
-          "text-color": "#92400e",
-          "text-halo-color": "#fff7ed",
+          "text-color": SCHOOL_LABEL_COLOR,
+          "text-halo-color": SCHOOL_LABEL_HALO_COLOR,
           "text-halo-width": 1.5,
         },
       });

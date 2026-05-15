@@ -25,7 +25,9 @@ import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { SchoolOverlayControl } from "@/components/SchoolOverlayControl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
+import { getPrimarySchoolsForOverlay, type PrimarySchoolWithBand } from "@/lib/school-proximity";
+
+const EMPTY_SCHOOLS: PrimarySchoolWithBand[] = [];
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -211,7 +213,7 @@ function App() {
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
         priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
-        primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : []}
+        primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}

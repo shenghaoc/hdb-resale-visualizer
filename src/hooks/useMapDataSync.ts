@@ -11,8 +11,8 @@ type UseMapDataSyncProps = {
   showPrimarySchools?: boolean;
 };
 
-const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
-const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
+export const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
+export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
 
 export function useMapDataSync({
   map,
