@@ -203,6 +203,29 @@ describe("ShortlistDrawer", () => {
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
   });
 
+  it("uses the same exact target copy in the card view as the comparison table", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[
+            {
+              ...mockRow,
+              item: { ...mockRow.item, targetPrice: mockRow.block.medianPrice },
+            },
+          ]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getAllByText("On target").length).toBeGreaterThan(0);
+    expect(screen.queryByText("$0 below target")).not.toBeInTheDocument();
+  });
+
   it("toggles between list and compare views and renders saved blocks in a table", () => {
     const onSelectAddress = vi.fn();
 
@@ -242,7 +265,7 @@ describe("ShortlistDrawer", () => {
     expect(tableRows[0]).toHaveTextContent("Test notes");
     expect(tableRows[1]).toHaveTextContent("Test notes");
 
-    fireEvent.click(tableRows[0]!);
+    fireEvent.click(screen.getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" }));
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
 
     fireEvent.click(

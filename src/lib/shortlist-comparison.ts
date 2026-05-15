@@ -104,7 +104,7 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
       addressKey: item.addressKey,
       address: `${block.block} ${block.streetName}`.trim(),
       town: block.town,
-      flatTypeLabel: block.flatTypes[0] ?? null,
+      flatTypeLabel: block.flatTypes.length > 0 ? block.flatTypes.join(", ") : null,
       medianPrice: block.medianPrice,
       medianPricePerSqm: detailSummary?.pricePerSqmMedian ?? null,
       medianPricePerSqft: detailSummary?.pricePerSqftMedian ?? null,

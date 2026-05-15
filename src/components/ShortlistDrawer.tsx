@@ -100,9 +100,15 @@ type ShortlistDrawerProps = {
 
 type GapInfo = {
   amount: number;
-  labelKey: "shortlist.gap.belowTarget" | "shortlist.gap.aboveTarget";
-  compactLabelKey: "shortlist.gap.belowTargetCompact" | "shortlist.gap.aboveTargetCompact";
-  tone: "positive" | "negative";
+  labelKey:
+    | "shortlist.gap.belowTarget"
+    | "shortlist.gap.aboveTarget"
+    | "shortlist.compare.gapMatch";
+  compactLabelKey:
+    | "shortlist.gap.belowTargetCompact"
+    | "shortlist.gap.aboveTargetCompact"
+    | "shortlist.compare.gapMatch";
+  tone: "positive" | "negative" | "match";
 };
 
 const compareModeLabels: Record<CompareMode, string> = {
@@ -191,24 +197,20 @@ function ShortlistComparisonTable({
             return (
               <TableRow
                 key={row.addressKey}
-                className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-                onClick={() => onSelectAddress(row.addressKey)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onSelectAddress(row.addressKey);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={row.address}
                 data-testid="shortlist-comparison-row"
               >
                 <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
                   {index + 1}
                 </TableCell>
                 <TableCell className="px-2 py-2">
-                  <span className="block font-extrabold text-foreground">{row.address}</span>
+                  <button
+                    type="button"
+                    className="block rounded-sm text-left font-extrabold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    onClick={() => onSelectAddress(row.addressKey)}
+                    aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
+                  >
+                    {row.address}
+                  </button>
                   {row.flatTypeLabel ? (
                     <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                       {row.flatTypeLabel}
@@ -288,7 +290,16 @@ function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | 
 
   const amount = Math.abs(targetPrice - medianPrice);
 
-  if (targetPrice >= medianPrice) {
+  if (targetPrice === medianPrice) {
+    return {
+      amount,
+      labelKey: "shortlist.compare.gapMatch",
+      compactLabelKey: "shortlist.compare.gapMatch",
+      tone: "match",
+    };
+  }
+
+  if (targetPrice > medianPrice) {
     return {
       amount,
       labelKey: "shortlist.gap.belowTarget",
@@ -471,14 +482,20 @@ function ShortlistRowEditor({
               <strong
                 className={cn(
                   "text-sm font-extrabold tracking-tight",
-                  gapInfo.tone === "positive" ? "text-success" : "text-destructive",
+                  gapInfo.tone === "positive" && "text-success",
+                  gapInfo.tone === "negative" && "text-destructive",
+                  gapInfo.tone === "match" && "text-primary",
                 )}
               >
-                {formatCurrency(gapInfo.amount, locale)}
+                {gapInfo.tone === "match"
+                  ? t(gapInfo.labelKey)
+                  : formatCurrency(gapInfo.amount, locale)}
               </strong>
-              <span className="text-[0.65rem] font-medium text-muted-foreground">
-                {t(gapInfo.labelKey)}
-              </span>
+              {gapInfo.tone !== "match" ? (
+                <span className="text-[0.65rem] font-medium text-muted-foreground">
+                  {t(gapInfo.labelKey)}
+                </span>
+              ) : null}
             </>
           ) : (
             <span className="text-[0.65rem] font-medium text-muted-foreground">
@@ -752,16 +769,16 @@ export function ShortlistDrawer({
     ];
   }, [locale, rows, t]);
 
-  const comparisonRows = useMemo(() => rows.filter((row) => row.monthlyTrend.length > 0), [rows]);
+  const trendChartRows = useMemo(() => rows.filter((row) => row.monthlyTrend.length > 0), [rows]);
   const compareOption = useMemo(() => {
-    if (comparisonRows.length < 2) {
+    if (trendChartRows.length < 2) {
       return null;
     }
 
-    const months = [...new Set(comparisonRows.flatMap((row) => row.monthlyTrend.map((point) => point.month)))].sort(
+    const months = [...new Set(trendChartRows.flatMap((row) => row.monthlyTrend.map((point) => point.month)))].sort(
       (left, right) => left.localeCompare(right),
     );
-    const series = comparisonRows.map((row) => {
+    const series = trendChartRows.map((row) => {
       const monthToPrice = new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice]));
       return {
         name: `${row.block.block} ${row.block.streetName}`,
@@ -831,7 +848,7 @@ export function ShortlistDrawer({
       },
       series,
     };
-  }, [comparisonRows, isDark, t]);
+  }, [trendChartRows, isDark, t]);
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
@@ -1112,12 +1129,16 @@ export function ShortlistDrawer({
                                   <span
                                     className={cn(
                                       "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",
-                                      gapInfo?.tone === "positive" ? "text-success" : "text-destructive",
+                                      gapInfo?.tone === "positive" && "text-success",
+                                      gapInfo?.tone === "negative" && "text-destructive",
+                                      gapInfo?.tone === "match" && "text-primary",
                                       !gapInfo && "text-muted-foreground",
                                     )}
                                   >
                                     {gapInfo
-                                      ? `${formatCompactCurrency(gapInfo.amount, locale)} ${t(gapInfo.compactLabelKey)}`
+                                      ? gapInfo.tone === "match"
+                                        ? t(gapInfo.compactLabelKey)
+                                        : `${formatCompactCurrency(gapInfo.amount, locale)} ${t(gapInfo.compactLabelKey)}`
                                       : t("shortlist.noTargetSet")}
                                   </span>
                                 </div>

@@ -68,7 +68,7 @@ describe("buildShortlistComparisonRows", () => {
       addressKey: "test-block",
       address: "101 Ang Mo Kio Ave 3",
       town: "ANG MO KIO",
-      flatTypeLabel: "3 ROOM",
+      flatTypeLabel: "3 ROOM, 4 ROOM",
       medianPrice: 500_000,
       medianPricePerSqm: 6_250,
       medianPricePerSqft: 580,
@@ -174,12 +174,14 @@ describe("buildShortlistComparisonRows", () => {
     expect(withoutMrt.nearestMrt).toBeNull();
   });
 
-  it("uses the first flat type as the label and null when none are present", () => {
-    const [row] = buildShortlistComparisonRows([
+  it("joins all flat types as the label and uses null when none are present", () => {
+    const [withFlatTypes, withoutFlatTypes] = buildShortlistComparisonRows([
+      makeRow(),
       makeRow({ block: { flatTypes: [] } }),
     ]);
 
-    expect(row.flatTypeLabel).toBeNull();
+    expect(withFlatTypes.flatTypeLabel).toBe("3 ROOM, 4 ROOM");
+    expect(withoutFlatTypes.flatTypeLabel).toBeNull();
   });
 
   it("does not mutate the input rows", () => {
