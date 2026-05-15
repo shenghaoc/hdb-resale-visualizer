@@ -98,6 +98,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
           onToggleOpen={() => {}}
@@ -135,6 +136,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[rowWithoutComparison]}
           onToggleOpen={() => {}}
@@ -160,6 +162,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[]}
           onToggleOpen={() => {}}
@@ -180,6 +183,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
           onToggleOpen={() => {}}
@@ -203,6 +207,7 @@ describe("ShortlistDrawer", () => {
     const { rerender } = render(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[]}
           onToggleOpen={() => {}}
@@ -216,6 +221,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
           onToggleOpen={() => {}}
@@ -232,6 +238,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow, mockRowTwo]}
           onToggleOpen={() => {}}
@@ -247,6 +254,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
           onToggleOpen={() => {}}

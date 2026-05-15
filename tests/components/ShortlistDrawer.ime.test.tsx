@@ -81,7 +81,7 @@ function renderDrawer(onUpdate = vi.fn()) {
   const result = render(
     <I18nProvider>
       <ShortlistDrawer
-        isOpen={true}
+        isOpen={true} remainingLeaseMin={null}
         rows={[mockRow]}
         onToggleOpen={() => {}}
         onRemove={() => {}}
