@@ -92,6 +92,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.csvLabel": "Export as CSV",
     "shortlist.shareLinkLabel": "Copy share link",
     "shortlist.copySummaryLabel": "Copy Markdown summary",
+    "shortlist.shareErrorTooLarge": "Too many blocks or notes to share via URL. Try removing some notes or blocks.",
 
     "shortlist.emptyState": "Save up to four blocks to compare.",
     "shortlist.savedProperties": "Saved properties",
@@ -472,6 +473,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.csvLabel": "导出为 CSV",
     "shortlist.shareLinkLabel": "复制分享链接",
     "shortlist.copySummaryLabel": "复制 Markdown 摘要",
+    "shortlist.shareErrorTooLarge": "由于组屋数量或备注过多，无法生成分享链接。请尝试精简备注或减少组屋。",
     "shortlist.emptyState": "最多可选四个组屋进行比较。",
     "shortlist.savedProperties": "已保存组屋",
     "shortlist.remove": "移除",

@@ -542,9 +542,16 @@ export function ShortlistDrawer({
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
   const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [shareError, setShareError] = useState<string | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
+
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+    if (!isOpen && shareError !== null) setShareError(null);
+  }
 
   const currentYear = getCurrentYear();
   const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
@@ -573,6 +580,7 @@ export function ShortlistDrawer({
   // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
   if (rows.length !== prevRowsCount) {
     setPrevRowsCount(rows.length);
+    if (shareError !== null) setShareError(null);
     if (prevRowsCount === 0 && rows.length > 0 && expandedKey === null) {
       // If we just added the first item and nothing is expanded, expand it for the cockpit experience
       setExpandedKey(rows[0].item.addressKey);
@@ -619,8 +627,14 @@ export function ShortlistDrawer({
   }
 
   async function handleShare() {
+    setShareError(null);
+    const encoded = encodeShortlistForUrl(rows.map((row) => row.item));
+    if (!encoded) {
+      setShareError(t("shortlist.shareErrorTooLarge"));
+      return;
+    }
     const params = new URLSearchParams(window.location.search);
-    params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
+    params.set("shortlist", encoded);
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
     if (navigator.share) {
@@ -959,6 +973,12 @@ export function ShortlistDrawer({
                   )}
                 </Button>
               </div>
+
+              {shareError && (
+                <div role="alert" className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive">
+                  {shareError}
+                </div>
+              )}
 
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
                 <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80">

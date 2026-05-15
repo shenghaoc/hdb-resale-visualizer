@@ -61,4 +61,10 @@ describe("shortlist storage", () => {
     // Case 2: Encoded length exceeds limit (but JSON length is under)
     expect(encodeShortlistForUrl(createItems(Math.floor(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH * 0.8)))).toBe("");
   });
+
+  it("returns empty array for invalid payloads", () => {
+    expect(decodeShortlistFromUrl("not-base-64!")).toEqual([]);
+    expect(decodeShortlistFromUrl(btoa("not-json"))).toEqual([]);
+    expect(decodeShortlistFromUrl(btoa(JSON.stringify([{ invalid: "schema" }])))).toEqual([]);
+  });
 });
