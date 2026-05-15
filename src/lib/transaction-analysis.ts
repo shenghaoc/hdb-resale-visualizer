@@ -88,12 +88,22 @@ export function summarizeComparables(
   comparables: ReadonlyArray<AddressDetailTransaction>,
 ): ComparableSummary | null {
   if (comparables.length === 0) return null;
-  const prices = comparables.map((t) => t.resalePrice).sort((a, b) => a - b);
-  const psm = comparables.map((t) => t.pricePerSqm).sort((a, b) => a - b);
-  const latestMonth = comparables
-    .map((t) => t.month)
-    .sort()
-    .at(-1) ?? null;
+  const prices = new Array<number>(comparables.length);
+  const psm = new Array<number>(comparables.length);
+  let latestMonth: string | null = null;
+
+  for (let i = 0; i < comparables.length; i++) {
+    const t = comparables[i];
+    prices[i] = t.resalePrice;
+    psm[i] = t.pricePerSqm;
+    if (!latestMonth || t.month > latestMonth) {
+      latestMonth = t.month;
+    }
+  }
+
+  prices.sort((a, b) => a - b);
+  psm.sort((a, b) => a - b);
+
   return {
     count: comparables.length,
     medianPrice: percentile(prices, 0.5),
@@ -133,12 +143,13 @@ export function assessAskingPrice(params: {
   const deltaVsP75 = params.askingPrice - summary.p75Price;
   const deltaVsMax = params.askingPrice - summary.maxPrice;
 
-  const sortedPrices = params.comparables
-    .map((t) => t.resalePrice)
-    .sort((a, b) => a - b);
-  const belowCount = sortedPrices.filter((p) => p < params.askingPrice).length;
-  const percentileAmongComparables =
-    sortedPrices.length === 0 ? 0 : (belowCount / sortedPrices.length) * 100;
+  let belowCount = 0;
+  for (const t of params.comparables) {
+    if (t.resalePrice < params.askingPrice) {
+      belowCount++;
+    }
+  }
+  const percentileAmongComparables = (belowCount / params.comparables.length) * 100;
 
   const askingPricePerSqm =
     params.floorAreaSqm && params.floorAreaSqm > 0
