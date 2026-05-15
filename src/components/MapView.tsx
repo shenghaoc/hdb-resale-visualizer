@@ -27,6 +27,7 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
+  heatmapMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;

@@ -38,6 +38,9 @@ export function toGeoJson(blocks: BlockSummary[]) {
             town: block.town,
             address: `${block.block} ${block.streetName}`,
             median_price: block.medianPrice,
+            price_per_sqm_median: Number(
+              (block.medianPrice / ((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2)).toFixed(2),
+            ),
             transaction_count: block.transactionCount,
             latest_month: block.latestMonth,
             ...(block.displayName ? { display_name: block.displayName } : {}),
