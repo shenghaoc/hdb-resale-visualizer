@@ -63,7 +63,7 @@ runs:
         CURRENT_PREFIX: ${{ steps.pipeline-cache.outputs.prefix }}
         MATCHED_KEY: ${{ steps.pipeline-cache-restore.outputs.cache-matched-key }}
       run: |
-        if [ -n "$MATCHED_KEY" ] && [[ "$MATCHED_KEY" == "$CURRENT_PREFIX"-* ]]; then
+        if [[ "$MATCHED_KEY" == "$CURRENT_PREFIX"-* ]]; then
           echo "current=true" >> "$GITHUB_OUTPUT"
         else
           echo "current=false" >> "$GITHUB_OUTPUT"
