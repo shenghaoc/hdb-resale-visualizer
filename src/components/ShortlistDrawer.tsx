@@ -968,7 +968,7 @@ export function ShortlistDrawer({
               </div>
 
               {shareError && (
-                <div className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive">
+                <div role="alert" className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive">
                   {shareError}
                 </div>
               )}
