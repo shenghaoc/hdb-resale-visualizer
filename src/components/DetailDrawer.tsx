@@ -1,5 +1,6 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AlertTriangle,
   ArrowDown,
   ArrowUp,
   Bookmark,
@@ -49,6 +50,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
   computeBlockTrajectory,
+  detectRecentTransactionOutliers,
+  type RecentTransactionOutlier,
   sliceTrendByRange,
   type TrendRangeKey,
 } from "@/lib/transaction-analysis";
@@ -311,6 +314,13 @@ export function DetailDrawer({
     if (!detail) return [];
     return sliceTrendByRange(detail.monthlyTrend, trendRange);
   }, [detail, trendRange]);
+  const recentTransactionOutliers = useMemo(
+    () =>
+      detail
+        ? detectRecentTransactionOutliers(detail.recentTransactions)
+        : new Map<string, RecentTransactionOutlier>(),
+    [detail],
+  );
 
   const peakMonthInView = useMemo(() => {
     if (!trajectory) return null;
@@ -826,44 +836,77 @@ export function DetailDrawer({
                       <History data-icon className="size-4" aria-hidden="true" />
                       {t("detail.recentTransactions")}
                     </span>
-                    <Badge variant="outline" className="font-mono text-[0.65rem]">
-                      {t("detail.totalCount", { count: detail?.recentTransactions.length ?? 0 })}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      {recentTransactionOutliers.size > 0 && (
+                        <Badge
+                          variant="outline"
+                          className="h-5 gap-1 border-amber-500/40 bg-amber-500/10 text-[0.6rem] font-bold text-amber-700 dark:text-amber-300"
+                        >
+                          <AlertTriangle data-icon className="size-3" aria-hidden="true" />
+                          {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
+                        </Badge>
+                      )}
+                      <Badge variant="outline" className="font-mono text-[0.65rem]">
+                        {t("detail.totalCount", { count: detail?.recentTransactions.length ?? 0 })}
+                      </Badge>
+                    </div>
                   </h3>
+                  <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+                    {t("detail.outlierRule")}
+                  </p>
                   <ItemGroup className="flex flex-col gap-3 pb-8">
-                    {detail?.recentTransactions.map((tx) => (
-                      <Item
-                        key={tx.id}
-                        variant="outline"
-                        className="bg-card px-4 py-3 transition-colors hover:bg-muted/30"
-                      >
-                        <ItemHeader>
-                          <ItemContent>
-                            <div className="flex flex-col gap-0.5">
-                              <strong className="text-sm font-bold tracking-tight">
-                                {formatCurrency(tx.resalePrice, locale)}
-                              </strong>
-                              <ItemDescription className="text-[0.65rem] font-bold uppercase tracking-wider">
-                                {tx.flatType} • {tx.storeyRange}
-                              </ItemDescription>
-                            </div>
-                          </ItemContent>
-                          <ItemActions>
-                            <div className="flex flex-col items-end gap-1">
-                              <Badge
-                                variant="secondary"
-                                className="h-5 text-[0.6rem] font-mono tracking-tighter"
-                              >
-                                {formatMonth(tx.month, locale)}
-                              </Badge>
-                              <span className="text-[0.6rem] font-medium text-muted-foreground/60 tracking-tight">
-                                {t("unit.sqm", { value: tx.floorAreaSqm })}
-                              </span>
-                            </div>
-                          </ItemActions>
-                        </ItemHeader>
-                      </Item>
-                    ))}
+                    {detail?.recentTransactions.map((tx) => {
+                      const outlier = recentTransactionOutliers.get(tx.id);
+                      return (
+                        <Item
+                          key={tx.id}
+                          variant="outline"
+                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30"
+                        >
+                          <ItemHeader>
+                            <ItemContent>
+                              <div className="flex flex-col gap-0.5">
+                                <strong className="text-sm font-bold tracking-tight">
+                                  {formatCurrency(tx.resalePrice, locale)}
+                                </strong>
+                                <ItemDescription className="text-[0.65rem] font-bold uppercase tracking-wider">
+                                  {tx.flatType} • {tx.storeyRange}
+                                </ItemDescription>
+                                {outlier?.direction === "high" && (
+                                  <Badge
+                                    variant="outline"
+                                    className="mt-1 h-5 w-fit border-amber-500/40 bg-amber-500/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-amber-700 dark:text-amber-300"
+                                  >
+                                    {t("detail.outlier.high")}
+                                  </Badge>
+                                )}
+                                {outlier?.direction === "low" && (
+                                  <Badge
+                                    variant="outline"
+                                    className="mt-1 h-5 w-fit border-cyan-500/40 bg-cyan-500/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-cyan-700 dark:text-cyan-300"
+                                  >
+                                    {t("detail.outlier.low")}
+                                  </Badge>
+                                )}
+                              </div>
+                            </ItemContent>
+                            <ItemActions>
+                              <div className="flex flex-col items-end gap-1">
+                                <Badge
+                                  variant="secondary"
+                                  className="h-5 text-[0.6rem] font-mono tracking-tighter"
+                                >
+                                  {formatMonth(tx.month, locale)}
+                                </Badge>
+                                <span className="text-[0.6rem] font-medium text-muted-foreground/60 tracking-tight">
+                                  {t("unit.sqm", { value: tx.floorAreaSqm })}
+                                </span>
+                              </div>
+                            </ItemActions>
+                          </ItemHeader>
+                        </Item>
+                      );
+                    })}
                     {!detail && (
                       <div className="flex flex-col gap-3 py-12">
                         {Array.from({ length: 5 }).map((_, i) => (
