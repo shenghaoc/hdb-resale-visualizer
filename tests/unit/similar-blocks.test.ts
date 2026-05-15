@@ -90,6 +90,23 @@ describe("scoreSimilarity", () => {
     expect(score).toBeGreaterThan(0);
   });
 
+  it("uses neutral price-per-sqm score when floor-area data is missing", () => {
+    const sourceMissingArea = makeBlock({
+      addressKey: "sourceMissingArea",
+      floorAreaRange: [0, 0],
+    });
+    const candidate = makeBlock({
+      addressKey: "candidate",
+      flatTypes: ["4 ROOM"],
+      floorAreaRange: [90, 100],
+    });
+    const fullAreaScore = scoreSimilarity(SOURCE, candidate);
+    const missingAreaScore = scoreSimilarity(sourceMissingArea, candidate);
+
+    expect(missingAreaScore).toBeGreaterThan(0);
+    expect(missingAreaScore).toBeLessThan(fullAreaScore);
+  });
+
   it("gives partial flat-type score for partial overlap", () => {
     const fullOverlap = makeBlock({
       addressKey: "full",

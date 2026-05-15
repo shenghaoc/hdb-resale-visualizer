@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
@@ -310,13 +310,6 @@ export function DetailDrawer({
   const similarBlocks = useMemo(
     () => (selectedBlock ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6 }) : []),
     [selectedBlock, allBlocks],
-  );
-
-  const handleSelectSimilar = useCallback(
-    (addressKey: string) => {
-      onSelectBlock(addressKey);
-    },
-    [onSelectBlock],
   );
 
   const trajectory = useMemo(
@@ -732,17 +725,22 @@ export function DetailDrawer({
                 </section>
 
                 <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <LayoutGrid data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.similarBlocks")}
-                  </h3>
+                  <div className="mb-3">
+                    <h3 className="v2-section-title flex items-center gap-2">
+                      <LayoutGrid data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.similarBlocks")}
+                    </h3>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      {t("detail.similarBlocks.hint")}
+                    </p>
+                  </div>
                   {similarBlocks.length > 0 ? (
                     <div className="flex flex-col gap-2">
                       {similarBlocks.map((block) => (
                         <SimilarBlockCard
                           key={block.addressKey}
                           block={block}
-                          onSelect={handleSelectSimilar}
+                          onSelect={onSelectBlock}
                           t={t}
                           locale={locale}
                         />
