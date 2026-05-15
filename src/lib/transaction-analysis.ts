@@ -88,16 +88,21 @@ export function summarizeComparables(
   comparables: ReadonlyArray<AddressDetailTransaction>,
 ): ComparableSummary | null {
   if (comparables.length === 0) return null;
-  const prices = comparables.map((t) => t.resalePrice).sort((a, b) => a - b);
-  const psm = comparables.map((t) => t.pricePerSqm).sort((a, b) => a - b);
-
-  // ⚡ Bolt: Replace O(N log N) sort + array allocation with single O(N) pass to find max month
+  const prices = new Array<number>(comparables.length);
+  const psm = new Array<number>(comparables.length);
   let latestMonth: string | null = null;
-  for (const t of comparables) {
+  
+  for (let i = 0; i < comparables.length; i++) {
+    const t = comparables[i];
+    prices[i] = t.resalePrice;
+    psm[i] = t.pricePerSqm;
     if (!latestMonth || t.month > latestMonth) {
       latestMonth = t.month;
     }
   }
+  
+  prices.sort((a, b) => a - b);
+  psm.sort((a, b) => a - b);
 
   return {
     count: comparables.length,
@@ -145,8 +150,7 @@ export function assessAskingPrice(params: {
       belowCount++;
     }
   }
-  const percentileAmongComparables =
-    params.comparables.length === 0 ? 0 : (belowCount / params.comparables.length) * 100;
+  const percentileAmongComparables = (belowCount / params.comparables.length) * 100;
 
   const askingPricePerSqm =
     params.floorAreaSqm && params.floorAreaSqm > 0
