@@ -22,6 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   formatCurrency,
   formatMeters,
@@ -459,6 +460,11 @@ export function DetailDrawer({
                           ? formatCurrency(currentSummary.medianPrice, locale)
                           : "..."}
                       </div>
+                      {currentSummary ? (
+                        <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+                          {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
+                        </Badge>
+                      ) : null}
                       {detail?.summary.pricePerSqftMedian ? (
                         <div className="mt-1 text-xs font-medium text-muted-foreground">
                           {t("unit.psf", {

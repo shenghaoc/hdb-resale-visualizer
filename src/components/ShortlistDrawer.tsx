@@ -32,6 +32,7 @@ import {
   formatRemainingLease,
 } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
+import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
@@ -881,6 +882,9 @@ export function ShortlistDrawer({
                                     </span>
                                   ) : null}
                                   <span>{t("stats.txns", { count: row.block.transactionCount.toLocaleString(locale) })}</span>
+                                  <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+                                    {t(getDataConfidenceLabelKey(row.block.transactionCount))}
+                                  </Badge>
                                   <span
                                     className={cn(
                                       "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",
