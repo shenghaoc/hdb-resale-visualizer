@@ -122,7 +122,13 @@ export const comparisonArtifactSchema = z.object({
     primarySchoolsWithin1km: z.number(),
     primarySchoolsWithin2km: z.number(),
     nearestPrimarySchoolMeters: z.number().nullable(),
-    nearestPrimarySchools: z.array(z.object({ name: z.string(), distanceMeters: z.number() })),
+    nearestPrimarySchools: z.array(
+      z.object({
+        name: z.string(),
+        distanceMeters: z.number(),
+        coordinates: coordinatesSchema.optional(),
+      }),
+    ),
     hawkerCentresWithin1km: z.number(),
     nearestHawkerCentreMeters: z.number().nullable(),
     supermarketsWithin1km: z.number(),

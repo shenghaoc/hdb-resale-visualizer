@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -23,7 +23,11 @@ import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
+import { SchoolOverlayControl } from "@/components/SchoolOverlayControl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getPrimarySchoolsForOverlay, type PrimarySchoolWithBand } from "@/lib/school-proximity";
+
+const EMPTY_SCHOOLS: PrimarySchoolWithBand[] = [];
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -46,6 +50,7 @@ function App() {
   const geo = useGeolocation({ t });
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
+  const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
 
   const pipeline = useFilterPipeline({
     manifest,
@@ -87,6 +92,11 @@ function App() {
   const detailVisible = Boolean(filters.selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
   const comparisonLoading = detailVisible && isComparisonLoading;
+  const primarySchoolsForOverlay = useMemo(
+    () => getPrimarySchoolsForOverlay(comparison?.amenities.nearestPrimarySchools ?? []),
+    [comparison],
+  );
+  const showSchoolOverlay = schoolOverlayEnabled && primarySchoolsForOverlay.length > 0;
 
   const activeFilterChips = useMemo(
     () =>
@@ -203,6 +213,7 @@ function App() {
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
         priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
+        primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
@@ -323,6 +334,26 @@ function App() {
                 : pipeline.hasMapMarkerScope
                   ? "11.5rem"
                   : "8rem",
+              right: panel.isDesktop ? "4.5rem" : "0.75rem",
+            }}
+          />
+        )}
+
+        {(panel.isDesktop || panel.mobileTab === null) && (
+          <SchoolOverlayControl
+            isEnabled={schoolOverlayEnabled}
+            hasSchools={primarySchoolsForOverlay.length > 0}
+            onToggle={() => setSchoolOverlayEnabled((enabled) => !enabled)}
+            t={t}
+            className="absolute z-25 w-32"
+            style={{
+              bottom: panel.isDesktop
+                ? pipeline.hasMapMarkerScope
+                  ? "11rem"
+                  : "7.5rem"
+                : pipeline.hasMapMarkerScope
+                  ? "15rem"
+                  : "11.5rem",
               right: panel.isDesktop ? "4.5rem" : "0.75rem",
             }}
           />

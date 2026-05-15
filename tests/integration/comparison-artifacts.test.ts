@@ -244,6 +244,7 @@ describe("comparison artifacts", () => {
     expect(alphaComparison?.amenities.nearestPrimarySchoolMeters).toBeGreaterThanOrEqual(0);
     expect(alphaComparison?.amenities.nearestPrimarySchools[0]).toMatchObject({
       name: "ANDERSON PRIMARY SCHOOL",
+      coordinates: { lat: 1.3693, lng: 103.8493 },
     });
     expect(alphaComparison?.amenities.nearestHawkerCentreMeters).toBeGreaterThanOrEqual(0);
     expect(alphaComparison?.amenities.nearestSupermarketMeters).toBeGreaterThanOrEqual(0);

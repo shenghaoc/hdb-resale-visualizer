@@ -188,7 +188,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
 
   await expect(detailDrawer).toContainText(rowAddress ?? "");
   await expect(detailDrawer).toContainText("Nearby Amenities");
-  await expect(detailDrawer).toContainText("Schools");
+  await expect(detailDrawer).toContainText("Primary schools");
   await expect(detailDrawer).toContainText("3 within 1km");
   await expect(detailDrawer).toContainText("8 within 2km");
   await expect(detailDrawer).toContainText("Hawkers");

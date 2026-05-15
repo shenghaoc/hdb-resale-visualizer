@@ -55,6 +55,7 @@ import {
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { getCurrentYear } from "@/lib/constants";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -186,6 +187,7 @@ function AmenityCard({
   count2km,
   nearestDistance,
   nearbyItems,
+  showDistanceBands = false,
   showLabel = true,
   t,
   locale,
@@ -196,6 +198,7 @@ function AmenityCard({
   count2km?: number;
   nearestDistance?: number | null;
   nearbyItems?: { name: string; distanceMeters: number }[];
+  showDistanceBands?: boolean;
   showLabel?: boolean;
   t: Translator;
   locale: Locale;
@@ -222,17 +225,30 @@ function AmenityCard({
           )}
           {nearbyItems && nearbyItems.length > 0 ? (
             <ul className={showLabel ? "mt-1 flex flex-col gap-0.5" : "flex flex-col gap-0.5"}>
-              {nearbyItems.map((item) => (
-                <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1.5 min-w-0">
-                    <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
-                    <span className="truncate">{item.name}</span>
-                  </div>
-                  <span className="shrink-0 font-mono text-[0.65rem] tabular-nums">
-                    {formatMeters(item.distanceMeters, t, locale)}
-                  </span>
-                </li>
-              ))}
+              {nearbyItems.map((item) => {
+                const distanceBand = showDistanceBands
+                  ? classifyPrimarySchoolDistance(item.distanceMeters)
+                  : null;
+
+                return (
+                  <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
+                    <div className="flex min-w-0 items-center gap-1.5">
+                      <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                      <span className="truncate">{item.name}</span>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-1.5">
+                      {distanceBand ? (
+                        <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.08em] text-primary">
+                          {t(`detail.schoolBand.${distanceBand}`)}
+                        </span>
+                      ) : null}
+                      <span className="font-mono text-[0.65rem] tabular-nums">
+                        {formatMeters(item.distanceMeters, t, locale)}
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           ) : nearestDistance != null ? (
             <div className="text-xs text-muted-foreground">
@@ -554,6 +570,7 @@ export function DetailDrawer({
                         count2km={comparison.amenities.primarySchoolsWithin2km}
                         nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
                         nearbyItems={comparison.amenities.nearestPrimarySchools?.slice(0, 3)}
+                        showDistanceBands
                         t={t}
                         locale={locale}
                       />

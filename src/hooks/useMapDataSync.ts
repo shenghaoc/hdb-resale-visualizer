@@ -2,14 +2,23 @@ import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
+import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
 
 type UseMapDataSyncProps = {
   map: MapLibreMap | null;
   geoJson: GeoJSON.FeatureCollection;
   priceHeatmapEnabled: boolean;
+  primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
+  showPrimarySchools?: boolean;
 };
 
-export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapDataSyncProps) {
+export function useMapDataSync({
+  map,
+  geoJson,
+  priceHeatmapEnabled,
+  primarySchoolsGeoJson,
+  showPrimarySchools = false,
+}: UseMapDataSyncProps) {
   // Sync main blocks source
   useEffect(() => {
     if (!map) return;
@@ -59,4 +68,45 @@ export function useMapDataSync({ map, geoJson, priceHeatmapEnabled }: UseMapData
       map.off("styledata", applyData);
     };
   }, [map, geoJson, priceHeatmapEnabled]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    let isActive = true;
+
+    const applyPrimarySchools = () => {
+      if (!isActive || !map.isStyleLoaded()) return;
+      const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
+      if (primarySchoolsGeoJson && isGeoJsonDataSourceLike(source)) {
+        source.setData(primarySchoolsGeoJson);
+      }
+
+      for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
+        if (map.getLayer(layerId)) {
+          map.setLayoutProperty(
+            layerId,
+            "visibility",
+            showPrimarySchools ? "visible" : "none",
+          );
+        }
+      }
+    };
+    const applyPrimarySchoolsOnLoad = () => {
+      map.off("load", applyPrimarySchoolsOnLoad);
+      applyPrimarySchools();
+    };
+
+    if (map.isStyleLoaded()) {
+      applyPrimarySchools();
+    } else {
+      map.on("load", applyPrimarySchoolsOnLoad);
+    }
+    map.on("styledata", applyPrimarySchools);
+
+    return () => {
+      isActive = false;
+      map.off("load", applyPrimarySchoolsOnLoad);
+      map.off("styledata", applyPrimarySchools);
+    };
+  }, [map, primarySchoolsGeoJson, showPrimarySchools]);
 }

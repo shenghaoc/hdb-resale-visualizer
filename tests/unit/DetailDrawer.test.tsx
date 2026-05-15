@@ -44,7 +44,7 @@ const mockComparison: ComparisonArtifact = {
         distanceMeters: 250,
       },
       {
-        name: "BEDOK SECONDARY SCHOOL",
+        name: "BEDOK GREEN PRIMARY SCHOOL",
         distanceMeters: 450,
       },
       {
@@ -107,10 +107,11 @@ describe("DetailDrawer", () => {
 
     // Check that amenity sections are rendered
     expect(screen.getByText("Nearby Amenities")).toBeInTheDocument();
-    expect(screen.getByText("Schools")).toBeInTheDocument();
+    expect(screen.getByText("Primary schools")).toBeInTheDocument();
     expect(screen.getByText("3 within 1km")).toBeInTheDocument();
     expect(screen.getByText("8 within 2km")).toBeInTheDocument();
     expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getAllByText("Within 1km").length).toBeGreaterThan(0);
     expect(screen.getByText("250 m")).toBeInTheDocument();
     
     expect(screen.getByText("Hawkers")).toBeInTheDocument();
@@ -170,7 +171,7 @@ describe("DetailDrawer", () => {
     // Check that all 3 schools are displayed with their distances
     expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
     expect(screen.getByText("250 m")).toBeInTheDocument();
-    expect(screen.getByText("BEDOK SECONDARY SCHOOL")).toBeInTheDocument();
+    expect(screen.getByText("BEDOK GREEN PRIMARY SCHOOL")).toBeInTheDocument();
     expect(screen.getByText("450 m")).toBeInTheDocument();
     expect(screen.getByText("OPERA ESTATE PRIMARY SCHOOL")).toBeInTheDocument();
     expect(screen.getByText("600 m")).toBeInTheDocument();

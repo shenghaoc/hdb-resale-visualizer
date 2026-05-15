@@ -1,6 +1,14 @@
 import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { MEDIAN_PRICE_COLOR_EXPRESSION, PRIMARY_BLUE } from "@/lib/constants";
+import {
+  MEDIAN_PRICE_COLOR_EXPRESSION,
+  PRIMARY_BLUE,
+  SCHOOL_LABEL_COLOR,
+  SCHOOL_LABEL_HALO_COLOR,
+  SCHOOL_MARKER_COLOR,
+  PRIMARY_SCHOOL_LAYER_IDS,
+  PRIMARY_SCHOOL_SOURCE_ID,
+} from "@/lib/constants";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {
@@ -35,6 +43,11 @@ export function useMapLayers(map: MapLibreMap | null) {
           "line-dasharray": [3, 3],
           "line-opacity": 0.25,
         },
+      });
+
+      map.addSource(PRIMARY_SCHOOL_SOURCE_ID, {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
       });
 
       map.addSource("blocks", {
@@ -82,6 +95,42 @@ export function useMapLayers(map: MapLibreMap | null) {
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
           "circle-opacity": 0.92,
+        },
+      });
+
+      map.addLayer({
+        id: PRIMARY_SCHOOL_LAYER_IDS[0],
+        type: "circle",
+        source: PRIMARY_SCHOOL_SOURCE_ID,
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-color": SCHOOL_MARKER_COLOR,
+          "circle-radius": ["case", ["==", ["get", "distance_band"], "within1km"], 7, 6],
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "rgba(255,255,255,0.95)",
+          "circle-opacity": 0.95,
+        },
+      });
+
+      map.addLayer({
+        id: PRIMARY_SCHOOL_LAYER_IDS[1],
+        type: "symbol",
+        source: PRIMARY_SCHOOL_SOURCE_ID,
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "name"],
+          "text-size": 11,
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+          "text-max-width": 12,
+          "text-allow-overlap": false,
+        },
+        paint: {
+          "text-color": SCHOOL_LABEL_COLOR,
+          "text-halo-color": SCHOOL_LABEL_HALO_COLOR,
+          "text-halo-width": 1.5,
         },
       });
 
