@@ -882,7 +882,7 @@ export function ShortlistDrawer({
                                     </span>
                                   ) : null}
                                   <span>{t("stats.txns", { count: row.block.transactionCount.toLocaleString(locale) })}</span>
-                                  <Badge variant="outline" className="h-4 px-1.5 text-[0.52rem] font-bold uppercase tracking-[0.08em]">
+                                  <Badge variant="outline" className="h-4 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.08em]">
                                     {t(`confidence.${getDataConfidenceLevel(row.block.transactionCount)}.label`)}
                                   </Badge>
                                   <span
