@@ -264,6 +264,7 @@ export function DetailDrawer({
   const [trendRange, setTrendRange] = useState<TrendRangeKey>("5y");
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
@@ -275,9 +276,9 @@ export function DetailDrawer({
   const leaseSignals = useMemo(
     () =>
       currentSummary
-        ? buildLeaseSignals(currentSummary.leaseCommenceRange, getCurrentYear(), remainingLeaseMin)
+        ? buildLeaseSignals(currentSummary.leaseCommenceRange, currentYear, remainingLeaseMin)
         : [],
-    [currentSummary, remainingLeaseMin],
+    [currentSummary, currentYear, remainingLeaseMin],
   );
 
   const trendPoints = useMemo(() => {
@@ -458,9 +459,7 @@ export function DetailDrawer({
                   </Card>
                 </div>
 
-                {leaseSignals.length > 0 && (
-                  <LeaseWarningPanel signals={leaseSignals} t={t} />
-                )}
+                <LeaseWarningPanel signals={leaseSignals} t={t} />
 
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">

@@ -346,7 +346,18 @@ export function ShortlistDrawer({
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
   const sortLabelId = useId();
 
+  const currentYear = getCurrentYear();
   const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
+  const leaseSignalsByAddressKey = useMemo(
+    () =>
+      new Map(
+        rows.map((row) => [
+          row.item.addressKey,
+          buildLeaseSignals(row.block.leaseCommenceRange, currentYear, remainingLeaseMin),
+        ]),
+      ),
+    [currentYear, remainingLeaseMin, rows],
+  );
 
   const effectiveExpandedKey =
     expandedKey === null
@@ -1028,11 +1039,7 @@ export function ShortlistDrawer({
                               </div>
 
                               <LeaseWarningPanel
-                                signals={buildLeaseSignals(
-                                  row.block.leaseCommenceRange,
-                                  getCurrentYear(),
-                                  remainingLeaseMin,
-                                )}
+                                signals={leaseSignalsByAddressKey.get(row.item.addressKey) ?? []}
                                 t={t}
                               />
 

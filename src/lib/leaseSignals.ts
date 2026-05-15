@@ -1,9 +1,14 @@
 import { MAX_LEASE_DURATION } from "@/lib/constants";
 
 export type LeaseSignalSeverity = "warn" | "info";
+export type LeaseSignalKey =
+  | "lease.signal.veryShort"
+  | "lease.signal.short"
+  | "lease.signal.oldCommence"
+  | "lease.signal.belowFilter";
 
 export type LeaseSignal = {
-  key: string;
+  key: LeaseSignalKey;
   severity: LeaseSignalSeverity;
 };
 
