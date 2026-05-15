@@ -567,7 +567,13 @@ export function DetailDrawer({
                   </h3>
                   <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
                     <CardContent className="p-3">
-                      {explanationCodes.length > 0 ? (
+                      {isComparisonLoading ? (
+                        <div className="space-y-2">
+                          {Array.from({ length: 3 }).map((_, i) => (
+                            <div key={i} className="h-3 w-full animate-pulse rounded-full bg-muted/40" />
+                          ))}
+                        </div>
+                      ) : explanationCodes.length > 0 ? (
                         <ul className="space-y-1.5">
                           {explanationCodes.map((code) => (
                             <li key={code} className="text-xs text-muted-foreground leading-relaxed">

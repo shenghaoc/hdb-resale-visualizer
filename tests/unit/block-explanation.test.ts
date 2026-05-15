@@ -63,13 +63,12 @@ const comparison: ComparisonArtifact = {
 };
 
 describe("buildBlockExplanation", () => {
-  it("returns budget/lease/mrt and volume rules when thresholds are satisfied", () => {
+  it("returns budget/lease/mrt and volume rules when absolute SGD thresholds are satisfied", () => {
     const result = buildBlockExplanation({
       block: baseBlock,
       comparison,
       filters: {
         ...baseFilters,
-        // Budget filter values are in absolute SGD (not thousands/K)
         budgetMin: 500000,
         budgetMax: 530000,
         remainingLeaseMin: 60,
@@ -133,5 +132,55 @@ describe("buildBlockExplanation", () => {
     });
 
     expect(result).not.toContain("below-town-median-price");
+  });
+
+  it("does not emit within-budget when median price is outside absolute SGD budget filters", () => {
+    const belowMinimum = buildBlockExplanation({
+      block: baseBlock,
+      comparison,
+      filters: {
+        ...baseFilters,
+        budgetMin: 530001,
+      },
+    });
+
+    const aboveMaximum = buildBlockExplanation({
+      block: baseBlock,
+      comparison,
+      filters: {
+        ...baseFilters,
+        budgetMax: 519999,
+      },
+    });
+
+    expect(belowMinimum).not.toContain("within-budget");
+    expect(aboveMaximum).not.toContain("within-budget");
+  });
+
+  it("does not emit within-mrt-threshold when nearest MRT exceeds the selected maximum", () => {
+    const result = buildBlockExplanation({
+      block: baseBlock,
+      comparison,
+      filters: {
+        ...baseFilters,
+        mrtMax: 500,
+      },
+    });
+
+    expect(result).not.toContain("within-mrt-threshold");
+  });
+
+  it("does not emit above-lease-threshold when remaining lease is below the selected minimum", () => {
+    const result = buildBlockExplanation({
+      block: baseBlock,
+      comparison,
+      filters: {
+        ...baseFilters,
+        remainingLeaseMin: 80,
+      },
+      currentYear: 2025,
+    });
+
+    expect(result).not.toContain("above-lease-threshold");
   });
 });
