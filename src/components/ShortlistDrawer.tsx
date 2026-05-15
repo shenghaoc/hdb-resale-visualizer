@@ -11,9 +11,11 @@ import {
   Copy,
   Download,
   GraduationCap,
+  LayoutGrid,
   Link2,
   MapPin,
   ShoppingCart,
+  Table as TableIcon,
   Trees,
   UtensilsCrossed,
   X,
@@ -33,6 +35,10 @@ import {
 } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
+import {
+  buildShortlistComparisonRows,
+  type ShortlistComparisonRow,
+} from "@/lib/shortlist-comparison";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
@@ -62,6 +68,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 
 type ShortlistRow = {
@@ -71,6 +85,8 @@ type ShortlistRow = {
   monthlyTrend: AddressTrendPoint[];
   comparison: ComparisonArtifact | null;
 };
+
+type ShortlistViewMode = "list" | "compare";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -99,6 +115,162 @@ const compareModeLabels: Record<CompareMode, string> = {
 };
 
 echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
+
+function ShortlistComparisonTable({
+  comparisonRows,
+  onSelectAddress,
+}: {
+  comparisonRows: ShortlistComparisonRow[];
+  onSelectAddress: (addressKey: string) => void;
+}) {
+  const { locale, t } = useI18n();
+
+  const formatGap = (gap: ShortlistComparisonRow["targetGap"]) => {
+    if (gap === null) {
+      return null;
+    }
+
+    if (gap.tone === "match") {
+      return { text: t("shortlist.compare.gapMatch"), tone: "match" as const };
+    }
+
+    const value = formatCompactCurrency(gap.amount, locale);
+    const text =
+      gap.tone === "below"
+        ? t("shortlist.compare.gapBelow", { value })
+        : t("shortlist.compare.gapAbove", { value });
+    return { text, tone: gap.tone };
+  };
+
+  return (
+    <div
+      className="rounded-xl border border-border/40 bg-card/50"
+      data-testid="shortlist-comparison-table"
+    >
+      <Table
+        aria-label={t("shortlist.compare.tableLabel")}
+        className="text-xs"
+      >
+        <TableHeader>
+          <TableRow className="bg-muted/30 hover:bg-muted/30">
+            <TableHead className="h-9 w-8 px-2 text-right">
+              {t("shortlist.compare.col.rank")}
+            </TableHead>
+            <TableHead className="h-9 px-2">
+              {t("shortlist.compare.col.address")}
+            </TableHead>
+            <TableHead className="h-9 px-2">
+              {t("shortlist.compare.col.town")}
+            </TableHead>
+            <TableHead className="h-9 px-2 text-right">
+              {t("shortlist.compare.col.medianPrice")}
+            </TableHead>
+            <TableHead className="h-9 px-2 text-right">
+              {t("shortlist.compare.col.medianPerSqm")}
+            </TableHead>
+            <TableHead className="h-9 px-2 text-right">
+              {t("shortlist.compare.col.txns")}
+            </TableHead>
+            <TableHead className="h-9 px-2">
+              {t("shortlist.compare.col.lease")}
+            </TableHead>
+            <TableHead className="h-9 px-2">
+              {t("shortlist.compare.col.mrt")}
+            </TableHead>
+            <TableHead className="h-9 px-2 text-right">
+              {t("shortlist.compare.col.targetPrice")}
+            </TableHead>
+            <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
+              {t("shortlist.compare.col.notes")}
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {comparisonRows.map((row, index) => {
+            const gap = formatGap(row.targetGap);
+            return (
+              <TableRow
+                key={row.addressKey}
+                className="cursor-pointer"
+                onClick={() => onSelectAddress(row.addressKey)}
+                data-testid="shortlist-comparison-row"
+              >
+                <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
+                  {index + 1}
+                </TableCell>
+                <TableCell className="px-2 py-2">
+                  <span className="block font-extrabold text-foreground">{row.address}</span>
+                  {row.flatTypeLabel ? (
+                    <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                      {row.flatTypeLabel}
+                    </span>
+                  ) : null}
+                </TableCell>
+                <TableCell className="px-2 py-2 font-medium text-muted-foreground">
+                  {localizeTownName(row.town, locale)}
+                </TableCell>
+                <TableCell className="px-2 py-2 text-right">
+                  <span className="block font-extrabold tabular-nums text-foreground">
+                    {formatCompactCurrency(row.medianPrice, locale)}
+                  </span>
+                  {gap ? (
+                    <span
+                      className={cn(
+                        "block text-[0.6rem] font-bold tabular-nums",
+                        gap.tone === "below" && "text-success",
+                        gap.tone === "above" && "text-destructive",
+                        gap.tone === "match" && "text-primary",
+                      )}
+                    >
+                      {gap.text}
+                    </span>
+                  ) : null}
+                </TableCell>
+                <TableCell className="px-2 py-2 text-right tabular-nums">
+                  {row.medianPricePerSqm !== null
+                    ? formatCurrency(Math.round(row.medianPricePerSqm), locale)
+                    : t("shortlist.compare.cellEmpty")}
+                </TableCell>
+                <TableCell className="px-2 py-2 text-right tabular-nums">
+                  {formatNumber(row.recentTransactionCount, 0, locale)}
+                </TableCell>
+                <TableCell className="px-2 py-2 tabular-nums">
+                  {formatRemainingLease(row.leaseCommenceRange, t)}
+                </TableCell>
+                <TableCell className="px-2 py-2">
+                  {row.nearestMrt ? (
+                    <>
+                      <span className="block font-semibold text-foreground">
+                        {row.nearestMrt.stationName}
+                      </span>
+                      <span className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground">
+                        {formatMeters(row.nearestMrt.distanceMeters, t, locale)}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-muted-foreground">
+                      {t("shortlist.compare.cellEmpty")}
+                    </span>
+                  )}
+                </TableCell>
+                <TableCell className="px-2 py-2 text-right tabular-nums">
+                  {row.targetPrice !== null
+                    ? formatCompactCurrency(row.targetPrice, locale)
+                    : t("shortlist.compare.cellEmpty")}
+                </TableCell>
+                <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground">
+                  {row.notes.trim().length > 0
+                    ? row.notes
+                    : t("shortlist.compare.cellEmpty")}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
 
 function getGapInfo(targetPrice: number | null, medianPrice: number): GapInfo | null {
   if (targetPrice === null) {
@@ -342,6 +514,7 @@ export function ShortlistDrawer({
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+  const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
@@ -358,6 +531,10 @@ export function ShortlistDrawer({
         ]),
       ),
     [currentYear, remainingLeaseMin, rows],
+  );
+  const comparisonViewRows = useMemo(
+    () => buildShortlistComparisonRows(rankedRows),
+    [rankedRows],
   );
 
   const effectiveExpandedKey =
@@ -682,6 +859,36 @@ export function ShortlistDrawer({
 
           {rows.length > 0 ? (
             <div className="flex flex-col gap-2">
+              <ButtonGroup
+                aria-label={t("shortlist.view.label")}
+                className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                data-testid="shortlist-view-toggle"
+              >
+                <Button
+                  type="button"
+                  size="xs"
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  aria-pressed={viewMode === "list"}
+                  aria-label={t("shortlist.view.listAria")}
+                  onClick={() => setViewMode("list")}
+                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                >
+                  <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                  {t("shortlist.view.list")}
+                </Button>
+                <Button
+                  type="button"
+                  size="xs"
+                  variant={viewMode === "compare" ? "default" : "ghost"}
+                  aria-pressed={viewMode === "compare"}
+                  aria-label={t("shortlist.view.compareAria")}
+                  onClick={() => setViewMode("compare")}
+                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                >
+                  <TableIcon data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                  {t("shortlist.view.compare")}
+                </Button>
+              </ButtonGroup>
               <div className="flex min-w-0 items-center gap-2">
                 <Field className="min-w-0 flex-1 flex-row items-center gap-2 space-y-0">
                   <FieldLabel id={sortLabelId} className="sr-only">
@@ -785,7 +992,7 @@ export function ShortlistDrawer({
                     ))}
                   </div>
 
-                  {compareOption ? (
+                  {viewMode === "list" && compareOption ? (
                     <Card size="sm" className="v2-card gap-3 rounded-xl py-3 shadow-none">
                       <CardHeader className="px-3">
                         <CardTitle className="v2-section-title">
@@ -805,6 +1012,14 @@ export function ShortlistDrawer({
                     </Card>
                   ) : null}
 
+                  {viewMode === "compare" ? (
+                    <ShortlistComparisonTable
+                      comparisonRows={comparisonViewRows}
+                      onSelectAddress={onSelectAddress}
+                    />
+                  ) : null}
+
+                  {viewMode === "list" ? (
                   <div className="flex flex-col gap-3" role="list">
                     {rankedRows.map((row, index) => {
                       const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
@@ -1082,6 +1297,7 @@ export function ShortlistDrawer({
                       );
                     })}
                   </div>
+                  ) : null}
                 </div>
               </div>
             )}
