@@ -27,8 +27,11 @@ outputs:
     description: Whether public/data/manifest.json existed after cache restore.
     value: ${{ steps.cache-presence.outputs.restored }}
   cache-valid:
-    description: Whether npm run check:data passed on restored cache.
+    description: Whether restored artifacts passed validation and came from the current pipeline hash prefix.
     value: ${{ steps.check-status.outputs.cache_valid }}
+  cache-current:
+    description: Whether the restored cache key matches the current pipeline hash prefix.
+    value: ${{ steps.cache-scope.outputs.current }}
 
 runs:
   using: composite
@@ -53,6 +56,19 @@ runs:
           ${{ steps.pipeline-cache.outputs.prefix }}-
           pipeline-cache-v2-${{ runner.os }}-
 
+    - name: Classify restored pipeline cache
+      id: cache-scope
+      shell: bash
+      env:
+        CURRENT_PREFIX: ${{ steps.pipeline-cache.outputs.prefix }}
+        MATCHED_KEY: ${{ steps.pipeline-cache-restore.outputs.cache-matched-key }}
+      run: |
+        if [ -n "$MATCHED_KEY" ] && [[ "$MATCHED_KEY" == "$CURRENT_PREFIX"-* ]]; then
+          echo "current=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "current=false" >> "$GITHUB_OUTPUT"
+        fi
+
     - name: Check if pipeline cache was restored
       id: cache-presence
       shell: bash
@@ -74,7 +90,7 @@ runs:
       id: check-status
       shell: bash
       run: |
-        if [ "${{ steps.cache-presence.outputs.restored }}" = "true" ] && [ "${{ steps.data-check.outcome }}" = "success" ]; then
+        if [ "${{ steps.cache-presence.outputs.restored }}" = "true" ] && [ "${{ steps.data-check.outcome }}" = "success" ] && [ "${{ steps.cache-scope.outputs.current }}" = "true" ]; then
           echo "cache_valid=true" >> "$GITHUB_OUTPUT"
         else
           echo "cache_valid=false" >> "$GITHUB_OUTPUT"
