@@ -51,6 +51,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   computeBlockTrajectory,
   detectRecentTransactionOutliers,
+  RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER,
+  RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD,
+  RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
   type RecentTransactionOutlier,
   sliceTrendByRange,
   type TrendRangeKey,
@@ -851,9 +854,15 @@ export function DetailDrawer({
                       </Badge>
                     </div>
                   </h3>
-                  <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-                    {t("detail.outlierRule")}
-                  </p>
+                  {recentTransactionOutliers.size > 0 && (
+                    <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+                      {t("detail.outlierRule", {
+                        minCount: RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
+                        iqrMult: RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER,
+                        pctThreshold: RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD,
+                      })}
+                    </p>
+                  )}
                   <ItemGroup className="flex flex-col gap-3 pb-8">
                     {detail?.recentTransactions.map((tx) => {
                       const outlier = recentTransactionOutliers.get(tx.id);

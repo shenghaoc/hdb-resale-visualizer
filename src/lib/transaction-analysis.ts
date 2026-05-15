@@ -114,6 +114,8 @@ export function detectRecentTransactionOutliers(
     if (group.length < RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE) continue;
     const prices = group.map((tx) => tx.resalePrice).sort((a, b) => a - b);
     const medianPrice = percentile(prices, 0.5);
+    if (!Number.isFinite(medianPrice) || medianPrice <= 0) continue;
+
     const q1 = percentile(prices, 0.25);
     const q3 = percentile(prices, 0.75);
     const iqr = q3 - q1;
@@ -121,7 +123,6 @@ export function detectRecentTransactionOutliers(
     const upperFence = q3 + iqr * RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER;
 
     for (const tx of group) {
-      if (!Number.isFinite(medianPrice) || medianPrice <= 0) continue;
       const percentFromMedian = ((tx.resalePrice - medianPrice) / medianPrice) * 100;
       const isHigh =
         tx.resalePrice > upperFence &&
