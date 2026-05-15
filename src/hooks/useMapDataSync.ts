@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
+import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
 
 type UseMapDataSyncProps = {
   map: MapLibreMap | null;
@@ -10,9 +11,6 @@ type UseMapDataSyncProps = {
   primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
   showPrimarySchools?: boolean;
 };
-
-export const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
-export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
 
 export function useMapDataSync({
   map,
@@ -74,8 +72,10 @@ export function useMapDataSync({
   useEffect(() => {
     if (!map) return;
 
+    let isActive = true;
+
     const applyPrimarySchools = () => {
-      if (!map.isStyleLoaded()) return;
+      if (!isActive || !map.isStyleLoaded()) return;
       const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
       if (primarySchoolsGeoJson && isGeoJsonDataSourceLike(source)) {
         source.setData(primarySchoolsGeoJson);
@@ -91,16 +91,21 @@ export function useMapDataSync({
         }
       }
     };
+    const applyPrimarySchoolsOnLoad = () => {
+      map.off("load", applyPrimarySchoolsOnLoad);
+      applyPrimarySchools();
+    };
 
     if (map.isStyleLoaded()) {
       applyPrimarySchools();
     } else {
-      void map.once("load", applyPrimarySchools);
+      map.on("load", applyPrimarySchoolsOnLoad);
     }
     map.on("styledata", applyPrimarySchools);
 
     return () => {
-      map.off("load", applyPrimarySchools);
+      isActive = false;
+      map.off("load", applyPrimarySchoolsOnLoad);
       map.off("styledata", applyPrimarySchools);
     };
   }, [map, primarySchoolsGeoJson, showPrimarySchools]);

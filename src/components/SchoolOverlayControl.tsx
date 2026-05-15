@@ -1,4 +1,4 @@
-import { type CSSProperties, useId } from "react";
+import type { CSSProperties } from "react";
 import { GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
@@ -20,7 +20,6 @@ export function SchoolOverlayControl({
   className,
   style,
 }: SchoolOverlayControlProps) {
-  const toggleId = useId();
   const label = isEnabled ? t("schoolOverlay.disable") : t("schoolOverlay.enable");
 
   return (
@@ -49,7 +48,6 @@ export function SchoolOverlayControl({
           aria-checked={isEnabled && hasSchools}
           aria-label={hasSchools ? label : t("schoolOverlay.unavailable")}
           disabled={!hasSchools}
-          id={toggleId}
           onClick={onToggle}
           className={cn(
             "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",

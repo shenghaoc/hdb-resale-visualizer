@@ -88,6 +88,8 @@ export const ONEMAP_NIGHT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Night
 export const MAP_GLYPHS_URL = "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf";
 export const ONEMAP_ATTRIBUTION = '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
 export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1000;
+export const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
+export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
 export const SCHOOL_MARKER_COLOR = "#f59e0b";
 export const SCHOOL_LABEL_COLOR = "#92400e";
 export const SCHOOL_LABEL_HALO_COLOR = "#fff7ed";

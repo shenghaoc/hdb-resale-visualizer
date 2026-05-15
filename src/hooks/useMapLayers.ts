@@ -6,8 +6,9 @@ import {
   SCHOOL_LABEL_COLOR,
   SCHOOL_LABEL_HALO_COLOR,
   SCHOOL_MARKER_COLOR,
+  PRIMARY_SCHOOL_LAYER_IDS,
+  PRIMARY_SCHOOL_SOURCE_ID,
 } from "@/lib/constants";
-import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/hooks/useMapDataSync";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {
