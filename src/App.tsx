@@ -256,6 +256,8 @@ function App() {
           selectedAddressKey={filters.selectedAddressKey}
           shortlistKeys={shortlistKeySet}
           isCompact
+          budgetMin={filters.budgetMin}
+          budgetMax={filters.budgetMax}
         />
       </Suspense>
     </div>
@@ -271,6 +273,8 @@ function App() {
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
         rows={shortlistRows}
         remainingLeaseMin={filters.remainingLeaseMin}
+        budgetMin={filters.budgetMin}
+        budgetMax={filters.budgetMax}
       />
     </Suspense>
   ) : null;

@@ -12,6 +12,7 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
+import { getBudgetMatchSignal, type BudgetMatchResult } from "@/lib/budget-signals";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -86,6 +87,8 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
   isCompact?: boolean;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -98,6 +101,7 @@ const BlockCard = memo(function BlockCard({
   isCompact = false,
   onSelect,
   onToggleShortlist,
+  budgetSignal,
 }: {
   block: BlockSummary;
   index: number;
@@ -106,6 +110,7 @@ const BlockCard = memo(function BlockCard({
   isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
+  budgetSignal?: BudgetMatchResult;
 }) {
   const { locale, t } = useI18n();
 
@@ -143,9 +148,27 @@ const BlockCard = memo(function BlockCard({
               <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
-              <span className="text-[0.58rem] font-medium text-muted-foreground">
-                {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
-              </span>
+              <div className="flex items-center justify-end gap-1.5">
+                {budgetSignal && budgetSignal.status !== "no-budget" && (
+                  <span
+                    className={cn(
+                      "inline-block rounded px-1 py-0.5 text-[0.5rem] font-bold uppercase tracking-tight",
+                      budgetSignal.status === "within" && "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                      (budgetSignal.status === "above-max" || budgetSignal.status === "below-min") && "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
+                      (budgetSignal.status === "near-above" || budgetSignal.status === "near-below") && "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                    )}
+                  >
+                    {budgetSignal.status === "within" && t("budget.within")}
+                    {budgetSignal.status === "above-max" && t("budget.aboveMax")}
+                    {budgetSignal.status === "below-min" && t("budget.belowMin")}
+                    {budgetSignal.status === "near-above" && t("budget.nearAbove", { value: formatCompactCurrency(budgetSignal.diffAmount ?? 0, locale) })}
+                    {budgetSignal.status === "near-below" && t("budget.nearBelow", { value: formatCompactCurrency(budgetSignal.diffAmount ?? 0, locale) })}
+                  </span>
+                )}
+                <span className="text-[0.58rem] font-medium text-muted-foreground">
+                  {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                </span>
+              </div>
             </div>
             <Button
               size="xs"
@@ -308,6 +331,8 @@ export function ResultsPane({
   onToggleShortlist,
   scrollParent,
   isCompact = false,
+  budgetMin = null,
+  budgetMax = null,
 }: ResultsPaneProps) {
   const { t } = useI18n();
   const sortOptions: Array<{ value: SortMode; label: string }> = [
@@ -567,6 +592,7 @@ export function ResultsPane({
                       isCompact={isCompact}
                       onSelect={onSelect}
                       onToggleShortlist={onToggleShortlist}
+                      budgetSignal={getBudgetMatchSignal(block.medianPrice, budgetMin, budgetMax)}
                     />
                   ))}
                 </ItemGroup>

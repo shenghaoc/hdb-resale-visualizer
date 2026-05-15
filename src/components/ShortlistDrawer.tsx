@@ -41,6 +41,7 @@ import {
 } from "@/lib/shortlist-comparison";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
+import { getBudgetMatchSignal } from "@/lib/budget-signals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import type {
   AddressDetailSummary,
@@ -92,6 +93,8 @@ type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
   remainingLeaseMin: number | null;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
@@ -125,9 +128,13 @@ echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, Canvas
 function ShortlistComparisonTable({
   comparisonRows,
   onSelectAddress,
+  budgetMin,
+  budgetMax,
 }: {
   comparisonRows: ShortlistComparisonRow[];
   onSelectAddress: (addressKey: string) => void;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
 }) {
   const { locale, t } = useI18n();
 
@@ -224,6 +231,26 @@ function ShortlistComparisonTable({
                   <span className="block font-extrabold tabular-nums text-foreground">
                     {formatCompactCurrency(row.medianPrice, locale)}
                   </span>
+                  {(() => {
+                    const signal = getBudgetMatchSignal(row.medianPrice, budgetMin ?? null, budgetMax ?? null);
+                    if (signal.status === "no-budget") return null;
+                    return (
+                      <span
+                        className={cn(
+                          "block text-[0.6rem] font-bold tabular-nums",
+                          signal.status === "within" && "text-emerald-600 dark:text-emerald-400",
+                          (signal.status === "above-max" || signal.status === "below-min") && "text-rose-600 dark:text-rose-400",
+                          (signal.status === "near-above" || signal.status === "near-below") && "text-amber-600 dark:text-amber-400",
+                        )}
+                      >
+                        {signal.status === "within" && t("budget.within")}
+                        {signal.status === "above-max" && t("budget.aboveMax")}
+                        {signal.status === "below-min" && t("budget.belowMin")}
+                        {signal.status === "near-above" && t("budget.nearAbove", { value: formatCompactCurrency(signal.diffAmount ?? 0, locale) })}
+                        {signal.status === "near-below" && t("budget.nearBelow", { value: formatCompactCurrency(signal.diffAmount ?? 0, locale) })}
+                      </span>
+                    );
+                  })()}
                   {gap ? (
                     <span
                       className={cn(
@@ -532,6 +559,8 @@ export function ShortlistDrawer({
   isOpen,
   rows,
   remainingLeaseMin,
+  budgetMin = null,
+  budgetMax = null,
   onToggleOpen,
   onRemove,
   onUpdate,
@@ -1042,6 +1071,8 @@ export function ShortlistDrawer({
                     <ShortlistComparisonTable
                       comparisonRows={comparisonViewRows}
                       onSelectAddress={onSelectAddress}
+                      budgetMin={budgetMin}
+                      budgetMax={budgetMax}
                     />
                   ) : null}
 
@@ -1104,6 +1135,26 @@ export function ShortlistDrawer({
                                     <strong className="block text-base font-extrabold leading-tight tracking-tight v2-tabular">
                                       {formatCompactCurrency(row.block.medianPrice, locale)}
                                     </strong>
+                                    {(() => {
+                                      const signal = getBudgetMatchSignal(row.block.medianPrice, budgetMin, budgetMax);
+                                      if (signal.status === "no-budget") return null;
+                                      return (
+                                        <span
+                                          className={cn(
+                                            "block text-[0.58rem] font-bold",
+                                            signal.status === "within" && "text-emerald-600 dark:text-emerald-400",
+                                            (signal.status === "above-max" || signal.status === "below-min") && "text-rose-600 dark:text-rose-400",
+                                            (signal.status === "near-above" || signal.status === "near-below") && "text-amber-600 dark:text-amber-400",
+                                          )}
+                                        >
+                                          {signal.status === "within" && t("budget.within")}
+                                          {signal.status === "above-max" && t("budget.aboveMax")}
+                                          {signal.status === "below-min" && t("budget.belowMin")}
+                                          {signal.status === "near-above" && t("budget.nearAbove", { value: formatCompactCurrency(signal.diffAmount ?? 0, locale) })}
+                                          {signal.status === "near-below" && t("budget.nearBelow", { value: formatCompactCurrency(signal.diffAmount ?? 0, locale) })}
+                                        </span>
+                                      );
+                                    })()}
                                     <span className="block text-[0.6rem] font-semibold text-muted-foreground">
                                       {row.detailSummary?.pricePerSqftMedian
                                         ? t("unit.psf", {
