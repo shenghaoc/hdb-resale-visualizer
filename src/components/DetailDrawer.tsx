@@ -32,7 +32,7 @@ import {
 import { useI18n } from "@/lib/i18n";
 import type { Locale, Translator } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
-import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
+import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,9 +53,10 @@ import {
   type TrendRangeKey,
 } from "@/lib/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
-import { getCurrentYear } from "@/lib/constants";
+import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
+import { buildBlockExplanation } from "@/lib/block-explanation";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -70,6 +71,7 @@ type DetailDrawerProps = {
   isComparisonLoading: boolean;
   isSaved: boolean;
   remainingLeaseMin: number | null;
+  filters?: FilterState;
   onClose: () => void;
   onToggleShortlist: () => void;
 };
@@ -271,6 +273,7 @@ export function DetailDrawer({
   isComparisonLoading,
   isSaved,
   remainingLeaseMin,
+  filters = DEFAULT_FILTERS,
   onClose,
   onToggleShortlist,
 }: DetailDrawerProps) {
@@ -282,6 +285,13 @@ export function DetailDrawer({
 
   const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
+  const explanationCodes = useMemo(
+    () =>
+      currentSummary
+        ? buildBlockExplanation({ block: currentSummary, comparison, filters })
+        : [],
+    [comparison, currentSummary, filters],
+  );
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
   const trajectory = useMemo(
@@ -549,6 +559,34 @@ export function DetailDrawer({
                     />
                   </section>
                 )}
+
+                <section>
+                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                    <Info data-icon className="size-4" aria-hidden="true" />
+                    {t("detail.whyThisBlock")}
+                  </h3>
+                  <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                    <CardContent className="p-3">
+                      {isComparisonLoading ? (
+                        <div className="space-y-2">
+                          {Array.from({ length: 3 }).map((_, i) => (
+                            <div key={i} className="h-3 w-full animate-pulse rounded-full bg-muted/40" />
+                          ))}
+                        </div>
+                      ) : explanationCodes.length > 0 ? (
+                        <ul className="space-y-1.5">
+                          {explanationCodes.map((code) => (
+                            <li key={code} className="text-xs text-muted-foreground leading-relaxed">
+                              • {t(`detail.why.${code}`)}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-xs text-muted-foreground italic">{t("detail.why.none")}</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </section>
 
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">
