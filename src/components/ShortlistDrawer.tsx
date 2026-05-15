@@ -465,7 +465,7 @@ export function ShortlistDrawer({
       // and Google Sheets typically trim before formula evaluation.
       // Security: We apply the multi-line (m) and global (g) flags to ensure we mitigate against
       // injection on subsequent lines within a multi-line input cell as well.
-      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/gm, "'$&");
+      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
