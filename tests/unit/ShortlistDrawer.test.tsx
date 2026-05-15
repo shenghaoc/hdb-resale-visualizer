@@ -214,6 +214,7 @@ describe("ShortlistDrawer", () => {
               item: { ...mockRow.item, targetPrice: mockRow.block.medianPrice },
             },
           ]}
+          remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
           onUpdate={() => {}}
@@ -234,6 +235,7 @@ describe("ShortlistDrawer", () => {
         <ShortlistDrawer
           isOpen={true}
           rows={[mockRow, mockRowTwo]}
+          remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
           onUpdate={() => {}}
