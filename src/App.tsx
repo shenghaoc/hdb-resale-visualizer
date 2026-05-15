@@ -230,6 +230,7 @@ function App() {
           detail={detail}
           comparison={comparison}
           selectedBlock={selectedBlock}
+          filters={filters}
           isLoading={detailLoading}
           isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
