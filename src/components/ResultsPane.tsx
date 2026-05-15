@@ -154,14 +154,14 @@ const BlockCard = memo(function BlockCard({
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
-                <BudgetMatchBadge
-                  medianPrice={block.medianPrice}
-                  budgetMin={budgetMin}
-                  budgetMax={budgetMax}
-                  t={t}
-                  locale={locale}
-                  className="scale-90 origin-right"
-                />
+                  <BudgetMatchBadge
+                    medianPrice={block.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    className="scale-90 origin-right"
+                  />
                 <span className="text-[0.58rem] font-medium text-muted-foreground">
                   {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
                 </span>
@@ -589,8 +589,8 @@ export function ResultsPane({
                       isCompact={isCompact}
                       onSelect={onSelect}
                       onToggleShortlist={onToggleShortlist}
-                      budgetMin={budgetMin}
-                      budgetMax={budgetMax}
+                      budgetMin={budgetMin ?? null}
+                      budgetMax={budgetMax ?? null}
                       t={t}
                       locale={locale}
                     />

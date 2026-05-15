@@ -1125,8 +1125,8 @@ export function ShortlistDrawer({
                                     </strong>
                                     <BudgetMatchBadge
                                       medianPrice={row.block.medianPrice}
-                                      budgetMin={budgetMin}
-                                      budgetMax={budgetMax}
+                                      budgetMin={budgetMin ?? null}
+                                      budgetMax={budgetMax ?? null}
                                       t={t}
                                       locale={locale}
                                       className="block text-[0.58rem] font-bold bg-transparent p-0 text-inherit"
