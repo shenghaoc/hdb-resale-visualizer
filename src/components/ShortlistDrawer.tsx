@@ -144,7 +144,7 @@ function ShortlistComparisonTable({
 
   return (
     <div
-      className="rounded-xl border border-border/40 bg-card/50"
+      className="rounded-xl border border-border/40 bg-card/50 overflow-x-auto v2-scrollbar"
       data-testid="shortlist-comparison-table"
     >
       <Table
@@ -191,8 +191,17 @@ function ShortlistComparisonTable({
             return (
               <TableRow
                 key={row.addressKey}
-                className="cursor-pointer"
+                className="cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
                 onClick={() => onSelectAddress(row.addressKey)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelectAddress(row.addressKey);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={row.address}
                 data-testid="shortlist-comparison-row"
               >
                 <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
