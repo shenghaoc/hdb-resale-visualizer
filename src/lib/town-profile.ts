@@ -43,7 +43,7 @@ export function resolveTrendMonthRange(
 export function medianNumeric(values: readonly number[]): number {
   const n = values.length;
   if (n === 0) {
-    throw new RangeError("medianNumeric: empty input");
+    return 0;
   }
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(n / 2);

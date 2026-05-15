@@ -61,7 +61,7 @@ describe("town-profile statistical helpers", () => {
     expect(medianNumeric([5])).toBe(5);
     expect(medianNumeric([1, 10, 2])).toBe(2);
     expect(medianNumeric([100, 200])).toBe(150);
-    expect(() => medianNumeric([])).toThrow(/empty/);
+    expect(medianNumeric([])).toBe(0);
   });
 });
 

@@ -652,7 +652,7 @@ export function ResultsPane({
                   <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
                 </div>
               ) : (
-                <div className={cn("flex min-h-0 flex-1 flex-col gap-4", showTownProfile && "min-h-[12rem]")}>
+                <div className={cn("flex min-h-0 flex-1 flex-col gap-4", showTownProfile && "basis-[12rem] shrink-0")}>
                   <div
                     ref={listContainerRef}
                     className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
