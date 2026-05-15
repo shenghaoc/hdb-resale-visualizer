@@ -463,7 +463,9 @@ export function ShortlistDrawer({
       // Match only at the start of the cell (spreadsheet apps evaluate formulas based on the first
       // character of the cell, not per line) while accounting for leading whitespace, which Excel
       // and Google Sheets typically trim before formula evaluation.
-      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
+      // Security: We apply the multi-line (m) and global (g) flags to ensure we mitigate against
+      // injection on subsequent lines within a multi-line input cell as well.
+      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/gm, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
