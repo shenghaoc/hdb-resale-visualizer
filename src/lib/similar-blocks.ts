@@ -18,16 +18,20 @@ export type RankSimilarBlocksOptions = {
  * Lease commence     0.05  — exponential decay; 5-yr gap → ~0.37
  * MRT distance       0.05  — exponential decay; 300 m gap → ~0.37 (neutral 0.5 if data absent)
  */
-export function scoreSimilarity(source: BlockSummary, candidate: BlockSummary): number {
+export function scoreSimilarity(
+  source: BlockSummary,
+  candidate: BlockSummary,
+  sourceSet?: Set<string>,
+): number {
   // ── Same-town bonus ──────────────────────────────────────────────────────
   const townScore = source.town === candidate.town ? 0.3 : 0;
 
   // ── Flat-type overlap (Jaccard) ──────────────────────────────────────────
-  const sourceSet = new Set(source.flatTypes);
-  const intersection = candidate.flatTypes.filter((t) => sourceSet.has(t)).length;
+  const effectiveSourceSet = sourceSet ?? new Set(source.flatTypes);
+  const intersection = candidate.flatTypes.filter((t) => effectiveSourceSet.has(t)).length;
   if (intersection === 0) return 0; // No overlap at all — not similar
-  const unionSize = new Set([...source.flatTypes, ...candidate.flatTypes]).size;
-  const flatTypeScore = unionSize > 0 ? (intersection / unionSize) * 0.25 : 0;
+  const unionSize = source.flatTypes.length + candidate.flatTypes.length - intersection;
+  const flatTypeScore = (intersection / unionSize) * 0.25;
 
   // ── Price similarity ─────────────────────────────────────────────────────
   const priceDiffFraction =
@@ -76,15 +80,24 @@ export function rankSimilarBlocks(
 
   type Scored = { block: BlockSummary; score: number };
   const scored: Scored[] = [];
+  const sourceSet = new Set(source.flatTypes);
 
   for (const candidate of candidates) {
     if (candidate.addressKey === source.addressKey) continue;
-    const score = scoreSimilarity(source, candidate);
+    const score = scoreSimilarity(source, candidate, sourceSet);
     if (score > 0) {
       scored.push({ block: candidate, score });
     }
   }
 
-  scored.sort((a, b) => b.score - a.score || a.block.addressKey.localeCompare(b.block.addressKey));
+  scored.sort(
+    (a, b) =>
+      b.score - a.score ||
+      (a.block.addressKey < b.block.addressKey
+        ? -1
+        : a.block.addressKey > b.block.addressKey
+          ? 1
+          : 0),
+  );
   return scored.slice(0, limit).map((s) => s.block);
 }
