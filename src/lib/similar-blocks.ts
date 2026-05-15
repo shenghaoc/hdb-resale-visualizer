@@ -28,7 +28,12 @@ export function scoreSimilarity(
 
   // ── Flat-type overlap (Jaccard) ──────────────────────────────────────────
   const effectiveSourceSet = sourceSet ?? new Set(source.flatTypes);
-  const intersection = candidate.flatTypes.filter((t) => effectiveSourceSet.has(t)).length;
+  let intersection = 0;
+  for (const t of candidate.flatTypes) {
+    if (effectiveSourceSet.has(t)) {
+      intersection++;
+    }
+  }
   if (intersection === 0) return 0; // No overlap at all — not similar
   const unionSize = source.flatTypes.length + candidate.flatTypes.length - intersection;
   const flatTypeScore = (intersection / unionSize) * 0.25;

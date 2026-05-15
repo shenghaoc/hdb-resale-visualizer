@@ -4,7 +4,6 @@ import type { BlockSummary } from "@/types/data";
 
 function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): BlockSummary {
   return {
-    addressKey: overrides.addressKey,
     town: "BEDOK",
     block: "1",
     streetName: "TEST STREET",
