@@ -100,13 +100,13 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
           allBlocks={[]}
@@ -138,13 +138,13 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
           allBlocks={[]}
@@ -167,13 +167,13 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
           allBlocks={[]}
@@ -295,6 +295,7 @@ describe("DetailDrawer", () => {
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
           allBlocks={[]}
@@ -322,6 +323,7 @@ describe("DetailDrawer", () => {
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
           allBlocks={[mockBlock, similarBlock]}
