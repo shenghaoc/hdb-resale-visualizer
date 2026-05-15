@@ -91,7 +91,7 @@ export function summarizeComparables(
   const prices = new Array<number>(comparables.length);
   const psm = new Array<number>(comparables.length);
   let latestMonth: string | null = null;
-  
+
   for (let i = 0; i < comparables.length; i++) {
     const t = comparables[i];
     prices[i] = t.resalePrice;
@@ -100,7 +100,7 @@ export function summarizeComparables(
       latestMonth = t.month;
     }
   }
-  
+
   prices.sort((a, b) => a - b);
   psm.sort((a, b) => a - b);
 
@@ -143,7 +143,6 @@ export function assessAskingPrice(params: {
   const deltaVsP75 = params.askingPrice - summary.p75Price;
   const deltaVsMax = params.askingPrice - summary.maxPrice;
 
-  // ⚡ Bolt: Replace O(N log N) sort and map/filter array allocations with a single O(N) pass
   let belowCount = 0;
   for (const t of params.comparables) {
     if (t.resalePrice < params.askingPrice) {
