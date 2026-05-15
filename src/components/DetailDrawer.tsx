@@ -52,6 +52,9 @@ import {
   sliceTrendByRange,
   type TrendRangeKey,
 } from "@/lib/transaction-analysis";
+import { buildLeaseSignals } from "@/lib/leaseSignals";
+import { getCurrentYear } from "@/lib/constants";
+import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -65,6 +68,7 @@ type DetailDrawerProps = {
   isLoading: boolean;
   isComparisonLoading: boolean;
   isSaved: boolean;
+  remainingLeaseMin: number | null;
   onClose: () => void;
   onToggleShortlist: () => void;
 };
@@ -250,6 +254,7 @@ export function DetailDrawer({
   isLoading,
   isComparisonLoading,
   isSaved,
+  remainingLeaseMin,
   onClose,
   onToggleShortlist,
 }: DetailDrawerProps) {
@@ -259,12 +264,21 @@ export function DetailDrawer({
   const [trendRange, setTrendRange] = useState<TrendRangeKey>("5y");
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
   const trajectory = useMemo(
     () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
     [detail],
+  );
+
+  const leaseSignals = useMemo(
+    () =>
+      currentSummary
+        ? buildLeaseSignals(currentSummary.leaseCommenceRange, currentYear, remainingLeaseMin)
+        : [],
+    [currentSummary, currentYear, remainingLeaseMin],
   );
 
   const trendPoints = useMemo(() => {
@@ -444,6 +458,8 @@ export function DetailDrawer({
                     </CardContent>
                   </Card>
                 </div>
+
+                <LeaseWarningPanel signals={leaseSignals} t={t} />
 
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">

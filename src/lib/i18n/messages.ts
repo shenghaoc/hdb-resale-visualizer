@@ -323,6 +323,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "askingCheck.enterPriceHint": "Enter the seller's asking price above to see how it compares with recent actual transactions in this block.",
     "askingCheck.noComparables": "No comparable transactions found with these filters. Try relaxing the storey or flat type criteria.",
     "askingCheck.comparablesTitle": "Matched comparable transactions",
+    "lease.signals.title": "Lease Notes",
+    "lease.signal.veryShort": "Very short remaining lease — under 30 years.",
+    "lease.signal.short": "Short remaining lease — under 60 years.",
+    "lease.signal.oldCommence": "Lease commenced before 1975.",
+    "lease.signal.belowFilter": "Some units may have less remaining lease than your minimum lease filter.",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -642,5 +647,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "askingCheck.enterPriceHint": "输入卖家开价，与本组屋近期实际成交价进行对比。",
     "askingCheck.noComparables": "未找到符合条件的可比交易，请尝试放宽楼层或户型条件。",
     "askingCheck.comparablesTitle": "匹配的可比交易",
+    "lease.signals.title": "地契说明",
+    "lease.signal.veryShort": "剩余地契极短——不足30年。",
+    "lease.signal.short": "剩余地契较短——不足60年。",
+    "lease.signal.oldCommence": "地契于1975年前开始。",
+    "lease.signal.belowFilter": "部分单位剩余地契年限可能低于您设置的最低年限筛选条件。",
   },
 };

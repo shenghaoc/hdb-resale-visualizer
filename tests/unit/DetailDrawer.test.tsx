@@ -92,6 +92,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
@@ -126,6 +127,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
@@ -152,6 +154,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
@@ -177,6 +180,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
@@ -214,6 +218,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={null}
@@ -241,6 +246,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={null}
@@ -262,6 +268,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={null}
@@ -299,6 +306,7 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
+          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={null}
