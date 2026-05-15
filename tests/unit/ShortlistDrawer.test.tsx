@@ -203,6 +203,79 @@ describe("ShortlistDrawer", () => {
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
   });
 
+  it("uses the same exact target copy in the card view as the comparison table", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[
+            {
+              ...mockRow,
+              item: { ...mockRow.item, targetPrice: mockRow.block.medianPrice },
+            },
+          ]}
+          remainingLeaseMin={null}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getAllByText("On target").length).toBeGreaterThan(0);
+    expect(screen.queryByText("$0 below target")).not.toBeInTheDocument();
+  });
+
+  it("toggles between list and compare views and renders saved blocks in a table", () => {
+    const onSelectAddress = vi.fn();
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow, mockRowTwo]}
+          remainingLeaseMin={null}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={onSelectAddress}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.queryByTestId("shortlist-comparison-table")).not.toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show saved blocks as a comparison table" }),
+    );
+
+    const table = screen.getByTestId("shortlist-comparison-table");
+    expect(table).toBeInTheDocument();
+    expect(screen.getAllByTestId("shortlist-comparison-row")).toHaveLength(2);
+    expect(screen.getByRole("table", { name: "Saved blocks comparison" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Address" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Town" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "$/sqm" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Nearest MRT" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Notes" })).toBeInTheDocument();
+
+    const tableRows = screen.getAllByTestId("shortlist-comparison-row");
+    expect(tableRows[0]).toHaveTextContent("101 Ang Mo Kio Ave 3");
+    expect(tableRows[1]).toHaveTextContent("202 Bedok North St 1");
+    expect(tableRows[0]).toHaveTextContent("Ang Mo Kio");
+    expect(tableRows[0]).toHaveTextContent("Test notes");
+    expect(tableRows[1]).toHaveTextContent("Test notes");
+
+    fireEvent.click(screen.getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" }));
+    expect(onSelectAddress).toHaveBeenCalledWith("test-block");
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show saved blocks as cards" }),
+    );
+    expect(screen.queryByTestId("shortlist-comparison-table")).not.toBeInTheDocument();
+  });
+
   it("keeps a valid card expanded when shortlist rows change", () => {
     const { rerender } = render(
       <I18nProvider>
