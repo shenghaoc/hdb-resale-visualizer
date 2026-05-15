@@ -11,6 +11,7 @@ import {
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
+import { getDataConfidenceLevel } from "@/lib/confidence";
 import type { BlockSummary } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -235,6 +236,9 @@ const BlockCard = memo(function BlockCard({
           <strong className="font-heading text-2xl font-extrabold v2-tabular">
             {formatCompactCurrency(block.medianPrice, locale)}
           </strong>
+          <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+            {t(`confidence.${getDataConfidenceLevel(block.transactionCount)}.label`)}
+          </Badge>
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
