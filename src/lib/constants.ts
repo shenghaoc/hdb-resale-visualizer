@@ -109,6 +109,15 @@ export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification
 ];
 export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
+export const PRICE_PER_SQM_COLOR_STOPS = [
+  { price: 4000, color: "#3a8a6f" },
+  { price: 6000, color: "#9bb368" },
+  { price: 8000, color: "#d4a44e" },
+  { price: 10000, color: "#d97757" },
+  { price: 13000, color: "#a83232" },
+] as const;
+export const PRICE_PER_SQM_LEGEND_GRADIENT = `linear-gradient(90deg, ${PRICE_PER_SQM_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
+
 /**
  * Query state configuration.
  */
