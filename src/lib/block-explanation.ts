@@ -14,10 +14,12 @@ export function buildBlockExplanation({
   block,
   comparison,
   filters,
+  currentYear,
 }: {
   block: BlockSummary;
   comparison: ComparisonArtifact | null;
   filters: FilterState;
+  currentYear?: number;
 }): BlockExplanationCode[] {
   const explanations: BlockExplanationCode[] = [];
 
@@ -25,7 +27,7 @@ export function buildBlockExplanation({
     explanations.push("high-transaction-volume");
   }
 
-  if (comparison && comparison.percentileRanks.pricePercentile <= 50) {
+  if (comparison && comparison.percentileRanks.pricePercentile < 50) {
     explanations.push("below-town-median-price");
   }
 
@@ -35,8 +37,8 @@ export function buildBlockExplanation({
   }
 
   if (filters.remainingLeaseMin != null) {
-    const currentYear = getCurrentYear();
-    const maxRemainingLeaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
+    const resolvedYear = currentYear ?? getCurrentYear();
+    const maxRemainingLeaseYears = MAX_LEASE_DURATION - (resolvedYear - block.leaseCommenceRange[1]);
     if (maxRemainingLeaseYears >= filters.remainingLeaseMin) {
       explanations.push("above-lease-threshold");
     }

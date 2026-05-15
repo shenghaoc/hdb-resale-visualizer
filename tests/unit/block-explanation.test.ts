@@ -69,11 +69,13 @@ describe("buildBlockExplanation", () => {
       comparison,
       filters: {
         ...baseFilters,
+        // Budget filter values are in absolute SGD (not thousands/K)
         budgetMin: 500000,
         budgetMax: 530000,
         remainingLeaseMin: 60,
         mrtMax: 600,
       },
+      currentYear: 2025,
     });
 
     expect(result).toEqual([
@@ -113,5 +115,23 @@ describe("buildBlockExplanation", () => {
     });
 
     expect(result).toEqual(["high-transaction-volume", "below-town-median-price"]);
+  });
+
+  it("does not emit below-town-median-price when pricePercentile is exactly 50", () => {
+    const atMedianComparison: ComparisonArtifact = {
+      ...comparison,
+      percentileRanks: {
+        ...comparison.percentileRanks,
+        pricePercentile: 50,
+      },
+    };
+
+    const result = buildBlockExplanation({
+      block: baseBlock,
+      comparison: atMedianComparison,
+      filters: baseFilters,
+    });
+
+    expect(result).not.toContain("below-town-median-price");
   });
 });
