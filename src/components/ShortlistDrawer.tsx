@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import { useTheme } from "@/hooks/useTheme";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
@@ -412,68 +412,115 @@ function AmenityTile({
   );
 }
 
+function CurrencyEditor({
+  id,
+  label,
+  value,
+  placeholder,
+  onChange,
+  t,
+}: {
+  id: string;
+  label: string;
+  value: number | null;
+  placeholder: string;
+  onChange: (value: number | null) => void;
+  t: Translator;
+}) {
+  const handleChange = useCallback(
+    (val: string) => {
+      const parsed = val === "" ? null : Number(val);
+      onChange(Number.isFinite(parsed) ? parsed : null);
+    },
+    [onChange],
+  );
+  const ime = useIMEComposition(handleChange);
+
+  return (
+    <Field>
+      <FieldContent>
+        <FieldLabel htmlFor={id} className="v2-section-title">
+          {label}
+        </FieldLabel>
+        <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
+          <InputGroupAddon align="inline-start" className="px-2.5">
+            <InputGroupText className="text-[0.65rem] font-extrabold">
+              {t("shortlist.currencyCode")}
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput
+            id={id}
+            inputMode="numeric"
+            placeholder={placeholder}
+            type="number"
+            value={ime.localValue ?? (value ?? "")}
+            className="text-sm font-bold"
+            onCompositionStart={ime.onCompositionStart}
+            onCompositionEnd={ime.onCompositionEnd}
+            onChange={ime.onChange}
+          />
+        </InputGroup>
+      </FieldContent>
+    </Field>
+  );
+}
+
+function NotesEditor({
+  id,
+  label,
+  value,
+  placeholder,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+}) {
+  const ime = useIMEComposition(onChange);
+  return (
+    <Field>
+      <FieldContent>
+        <FieldLabel htmlFor={id} className="v2-section-title">
+          {label}
+        </FieldLabel>
+        <Textarea
+          id={id}
+          value={ime.localValue ?? value}
+          placeholder={placeholder}
+          className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
+          onCompositionStart={ime.onCompositionStart}
+          onCompositionEnd={ime.onCompositionEnd}
+          onChange={ime.onChange}
+        />
+      </FieldContent>
+    </Field>
+  );
+}
+
 function ShortlistRowEditor({
-  addressKey,
-  notes,
-  targetPrice,
+  item,
   gapInfo,
   onUpdate,
 }: {
-  addressKey: string;
-  notes: string;
-  targetPrice: number | null;
+  item: ShortlistItem;
   gapInfo: GapInfo | null;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
 }) {
   const { locale, t } = useI18n();
 
-  const handleNotesChange = useCallback(
-    (value: string) => onUpdate(addressKey, { notes: value }),
-    [addressKey, onUpdate],
-  );
-
-  const handleTargetPriceChange = useCallback(
-    (value: string) => {
-      const parsed = value === "" ? null : Number(value);
-      onUpdate(addressKey, { targetPrice: Number.isFinite(parsed) ? parsed : null });
-    },
-    [addressKey, onUpdate],
-  );
-
-  const notesIME = useIMEComposition(handleNotesChange);
-  const targetPriceIME = useIMEComposition(handleTargetPriceChange);
-
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field>
-          <FieldContent>
-            <FieldLabel
-              htmlFor={`target-${addressKey}`}
-              className="v2-section-title"
-            >
-              {t("shortlist.yourTargetPrice")}
-            </FieldLabel>
-            <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
-              <InputGroupAddon align="inline-start" className="px-2.5">
-                <InputGroupText className="text-[0.65rem] font-extrabold">
-                  {t("shortlist.currencyCode")}
-                </InputGroupText>
-              </InputGroupAddon>
-              <InputGroupInput
-                id={`target-${addressKey}`}
-                inputMode="numeric"
-                placeholder={t("shortlist.targetPricePlaceholder")}
-                type="number"
-                value={targetPriceIME.localValue ?? (targetPrice ?? "")}
-                className="text-sm font-bold"
-                onCompositionStart={targetPriceIME.onCompositionStart}
-                onCompositionEnd={targetPriceIME.onCompositionEnd}
-                onChange={targetPriceIME.onChange}
-              />
-            </InputGroup>
-          </FieldContent>
-        </Field>
+        <CurrencyEditor
+          id={`target-${item.addressKey}`}
+          label={t("shortlist.yourTargetPrice")}
+          value={item.targetPrice}
+          placeholder={t("shortlist.targetPricePlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { targetPrice: val })}
+          t={t}
+        />
 
         <div className="flex flex-col gap-1.5">
           <span className="v2-section-title">{t("shortlist.gapVsTarget")}</span>
@@ -505,25 +552,72 @@ function ShortlistRowEditor({
         </div>
       </div>
 
-      <Field>
-        <FieldContent>
-          <FieldLabel
-            htmlFor={`notes-${addressKey}`}
-            className="v2-section-title"
-          >
-            {t("shortlist.notes")}
-          </FieldLabel>
-          <Textarea
-            id={`notes-${addressKey}`}
-            value={notesIME.localValue ?? notes}
-            placeholder={t("shortlist.notesPlaceholder")}
-            className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
-            onCompositionStart={notesIME.onCompositionStart}
-            onCompositionEnd={notesIME.onCompositionEnd}
-            onChange={notesIME.onChange}
-          />
-        </FieldContent>
-      </Field>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <CurrencyEditor
+          id={`offer-${item.addressKey}`}
+          label={t("shortlist.offerCeiling")}
+          value={item.offerCeiling ?? null}
+          placeholder={t("shortlist.offerCeilingPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { offerCeiling: val })}
+          t={t}
+        />
+        <NotesEditor
+          id={`agent-${item.addressKey}`}
+          label={t("shortlist.agentRemarks")}
+          value={item.agentRemarks ?? ""}
+          placeholder={t("shortlist.agentRemarksPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { agentRemarks: val })}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <NotesEditor
+          id={`pros-${item.addressKey}`}
+          label={t("shortlist.pros")}
+          value={item.pros ?? ""}
+          placeholder={t("shortlist.prosPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { pros: val })}
+        />
+        <NotesEditor
+          id={`cons-${item.addressKey}`}
+          label={t("shortlist.cons")}
+          value={item.cons ?? ""}
+          placeholder={t("shortlist.consPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { cons: val })}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <NotesEditor
+          id={`reno-${item.addressKey}`}
+          label={t("shortlist.renovation")}
+          value={item.renovation ?? ""}
+          placeholder={t("shortlist.renovationPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { renovation: val })}
+        />
+        <NotesEditor
+          id={`noise-${item.addressKey}`}
+          label={t("shortlist.noise")}
+          value={item.noise ?? ""}
+          placeholder={t("shortlist.noisePlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { noise: val })}
+        />
+        <NotesEditor
+          id={`transport-${item.addressKey}`}
+          label={t("shortlist.transport")}
+          value={item.transport ?? ""}
+          placeholder={t("shortlist.transportPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { transport: val })}
+        />
+      </div>
+
+      <NotesEditor
+        id={`notes-${item.addressKey}`}
+        label={t("shortlist.notes")}
+        value={item.notes}
+        placeholder={t("shortlist.notesPlaceholder")}
+        onChange={(val) => onUpdate(item.addressKey, { notes: val })}
+      />
     </>
   );
 }
@@ -1293,9 +1387,7 @@ export function ShortlistDrawer({
                               />
 
                               <ShortlistRowEditor
-                                addressKey={row.item.addressKey}
-                                notes={row.item.notes}
-                                targetPrice={row.item.targetPrice}
+                                item={row.item}
                                 gapInfo={gapInfo}
                                 onUpdate={onUpdate}
                               />
