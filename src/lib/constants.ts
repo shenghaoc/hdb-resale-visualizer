@@ -48,6 +48,7 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
  * Storage keys for local persistence.
  */
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
+export const CHECKLIST_STORAGE_KEY = "hdb_resale_checklist_v1";
 
 /**
  * Maximum number of properties that can be saved to the shortlist.

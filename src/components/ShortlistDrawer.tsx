@@ -42,6 +42,9 @@ import {
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BuyerChecklist } from "@/components/BuyerChecklist";
+import { useChecklist } from "@/hooks/useChecklist";
+import type { ChecklistItemId } from "@/lib/checklist";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -418,12 +421,16 @@ function ShortlistRowEditor({
   targetPrice,
   gapInfo,
   onUpdate,
+  checkedItems,
+  onToggleChecklist,
 }: {
   addressKey: string;
   notes: string;
   targetPrice: number | null;
   gapInfo: GapInfo | null;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
+  checkedItems: ChecklistItemId[];
+  onToggleChecklist: (addressKey: string, itemId: ChecklistItemId) => void;
 }) {
   const { locale, t } = useI18n();
 
@@ -505,6 +512,13 @@ function ShortlistRowEditor({
         </div>
       </div>
 
+      <BuyerChecklist
+        addressKey={addressKey}
+        checkedItems={checkedItems}
+        onToggle={onToggleChecklist}
+        t={t}
+      />
+
       <Field>
         <FieldContent>
           <FieldLabel
@@ -539,6 +553,7 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
+  const { state: checklistState, toggle: toggleChecklist } = useChecklist();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
   const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -1298,6 +1313,8 @@ export function ShortlistDrawer({
                                 targetPrice={row.item.targetPrice}
                                 gapInfo={gapInfo}
                                 onUpdate={onUpdate}
+                                checkedItems={checklistState[row.item.addressKey] ?? []}
+                                onToggleChecklist={toggleChecklist}
                               />
 
                               <div className="grid grid-cols-2 gap-2">
