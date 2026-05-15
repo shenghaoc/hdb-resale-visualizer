@@ -33,6 +33,8 @@ import {
 } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
+import { buildLeaseSignals } from "@/lib/leaseSignals";
+import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -72,6 +74,7 @@ type ShortlistRow = {
 type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
+  remainingLeaseMin: number | null;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
@@ -329,6 +332,7 @@ function ShortlistRowEditor({
 export function ShortlistDrawer({
   isOpen,
   rows,
+  remainingLeaseMin,
   onToggleOpen,
   onRemove,
   onUpdate,
@@ -1022,6 +1026,15 @@ export function ShortlistDrawer({
                                     ))}
                                 </div>
                               </div>
+
+                              <LeaseWarningPanel
+                                signals={buildLeaseSignals(
+                                  row.block.leaseCommenceRange,
+                                  getCurrentYear(),
+                                  remainingLeaseMin,
+                                )}
+                                t={t}
+                              />
 
                               <ShortlistRowEditor
                                 addressKey={row.item.addressKey}

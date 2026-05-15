@@ -222,6 +222,7 @@ function App() {
           isLoading={detailLoading}
           isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+          remainingLeaseMin={filters.remainingLeaseMin}
           onClose={() => patchFilters({ selectedAddressKey: null })}
           onToggleShortlist={() => {
             if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
@@ -255,6 +256,7 @@ function App() {
         onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
         rows={shortlistRows}
+        remainingLeaseMin={filters.remainingLeaseMin}
       />
     </Suspense>
   ) : null;
