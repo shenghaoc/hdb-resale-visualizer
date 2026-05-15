@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
@@ -545,15 +545,13 @@ export function ShortlistDrawer({
   const [shareError, setShareError] = useState<string | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
 
-  useEffect(() => {
-    if (!isOpen) setShareError(null);
-  }, [isOpen]);
-
-  useEffect(() => {
-    setShareError(null);
-  }, [rows]);
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+    if (!isOpen && shareError !== null) setShareError(null);
+  }
 
   const currentYear = getCurrentYear();
   const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
@@ -582,6 +580,7 @@ export function ShortlistDrawer({
   // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
   if (rows.length !== prevRowsCount) {
     setPrevRowsCount(rows.length);
+    if (shareError !== null) setShareError(null);
     if (prevRowsCount === 0 && rows.length > 0 && expandedKey === null) {
       // If we just added the first item and nothing is expanded, expand it for the cockpit experience
       setExpandedKey(rows[0].item.addressKey);
