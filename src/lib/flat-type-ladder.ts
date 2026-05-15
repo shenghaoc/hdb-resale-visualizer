@@ -54,31 +54,17 @@ export function deriveFlatTypePriceLadder(
   transactions: readonly Pick<AddressDetailTransaction, "flatType" | "resalePrice">[],
 ): FlatTypeLadderEntry[] {
   const byType = groupByFlatType(transactions);
-  const entries: FlatTypeLadderEntry[] = [];
+  const relevant = Array.from(new Set(availableFlatTypes));
 
-  // Only consider flat types that are both available and have order priority
-  const relevant = new Set(availableFlatTypes);
-  const ordered = FLAT_TYPE_ORDER.filter((ft) => relevant.has(ft));
+  const ordered = FLAT_TYPE_ORDER.filter((ft) => relevant.includes(ft));
+  const extras = relevant.filter((ft) => !(FLAT_TYPE_ORDER as readonly string[]).includes(ft)).sort();
 
-  // Also include any extra available types not in standard order (future-proof)
-  const extras = availableFlatTypes.filter((ft) => !FLAT_TYPE_ORDER.includes(ft as (typeof FLAT_TYPE_ORDER)[number])).sort();
-
-  for (const flatType of [...ordered, ...extras]) {
+  return [...ordered, ...extras].map((flatType) => {
     const prices = byType.get(flatType) ?? [];
-    if (prices.length > 0) {
-      entries.push({
-        flatType,
-        medianPrice: Math.round(median(prices)),
-        transactionCount: prices.length,
-      });
-    } else {
-      entries.push({
-        flatType,
-        medianPrice: null,
-        transactionCount: 0,
-      });
-    }
-  }
-
-  return entries;
+    return {
+      flatType,
+      medianPrice: prices.length > 0 ? Math.round(median(prices)) : null,
+      transactionCount: prices.length,
+    };
+  });
 }
