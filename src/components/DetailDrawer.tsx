@@ -11,6 +11,7 @@ import {
   GraduationCap,
   History,
   Info,
+  LayoutGrid,
   MapPin,
   Minus,
   Scale,
@@ -35,6 +36,7 @@ import { useI18n } from "@/lib/i18n";
 import type { Locale, Translator } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
+import { rankSimilarBlocks } from "@/lib/similar-blocks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,6 +76,7 @@ type DetailDrawerProps = {
   selectedBlock: BlockSummary | null;
   detail: AddressDetail | null;
   comparison: ComparisonArtifact | null;
+  allBlocks: ReadonlyArray<BlockSummary>;
   isLoading: boolean;
   isComparisonLoading: boolean;
   isSaved: boolean;
@@ -81,6 +84,7 @@ type DetailDrawerProps = {
   filters?: FilterState;
   onClose: () => void;
   onToggleShortlist: () => void;
+  onSelectBlock: (addressKey: string) => void;
 };
 
 const RANGE_KEYS: TrendRangeKey[] = ["2y", "5y", "10y", "max"];
@@ -276,6 +280,7 @@ export function DetailDrawer({
   selectedBlock,
   detail,
   comparison,
+  allBlocks,
   isLoading,
   isComparisonLoading,
   isSaved,
@@ -283,6 +288,7 @@ export function DetailDrawer({
   filters = DEFAULT_FILTERS,
   onClose,
   onToggleShortlist,
+  onSelectBlock,
 }: DetailDrawerProps) {
   const { locale, t } = useI18n();
   const [activeTab, setActiveTab] = useState("overview");
@@ -300,6 +306,11 @@ export function DetailDrawer({
     [comparison, currentSummary, filters],
   );
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
+
+  const similarBlocks = useMemo(
+    () => (selectedBlock ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6 }) : []),
+    [selectedBlock, allBlocks],
+  );
 
   const trajectory = useMemo(
     () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
@@ -712,6 +723,35 @@ export function DetailDrawer({
                     </p>
                   )}
                 </section>
+
+                <section>
+                  <div className="mb-3">
+                    <h3 className="v2-section-title flex items-center gap-2">
+                      <LayoutGrid data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.similarBlocks")}
+                    </h3>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      {t("detail.similarBlocks.hint")}
+                    </p>
+                  </div>
+                  {similarBlocks.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {similarBlocks.map((block) => (
+                        <SimilarBlockCard
+                          key={block.addressKey}
+                          block={block}
+                          onSelect={onSelectBlock}
+                          t={t}
+                          locale={locale}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="py-4 text-sm text-muted-foreground italic">
+                      {t("detail.similarBlocks.empty")}
+                    </p>
+                  )}
+                </section>
               </TabsContent>
 
               {/* ── TRENDS ── */}
@@ -1000,6 +1040,60 @@ export function DetailDrawer({
         </div>
       </DrawerContent>
     </Drawer>
+  );
+}
+
+function SimilarBlockCard({
+  block,
+  onSelect,
+  t,
+  locale,
+}: {
+  block: BlockSummary;
+  onSelect: (addressKey: string) => void;
+  t: Translator;
+  locale: Locale;
+}) {
+  const address = `${block.block} ${block.streetName}`;
+  return (
+    <button
+      type="button"
+      className="w-full rounded-xl border border-border/40 bg-card/70 px-3 py-2.5 text-left transition-colors hover:border-primary/30 hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      onClick={() => onSelect(block.addressKey)}
+      aria-label={t("detail.similarBlocks.viewBlock", { address })}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-sm font-bold leading-tight">{address}</div>
+          <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+            <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
+              {localizeTownName(block.town, locale)}
+            </span>
+            {block.flatTypes.slice(0, 2).map((ft) => (
+              <Badge
+                key={ft}
+                variant="outline"
+                className="h-4 px-1 text-[0.55rem] font-bold uppercase"
+              >
+                {localizeFlatType(ft, locale)}
+              </Badge>
+            ))}
+          </div>
+        </div>
+        <div className="shrink-0 text-right">
+          <div className="font-heading text-sm font-extrabold tabular-nums">
+            {formatCurrency(block.medianPrice, locale)}
+          </div>
+          {block.nearestMrt && (
+            <div className="mt-0.5 text-[0.6rem] text-muted-foreground/70 tabular-nums">
+              {formatMeters(block.nearestMrt.distanceMeters, t, locale)}
+              {" · "}
+              <TrainFront data-icon className="inline size-2.5 align-baseline" aria-hidden="true" />
+            </div>
+          )}
+        </div>
+      </div>
+    </button>
   );
 }
 

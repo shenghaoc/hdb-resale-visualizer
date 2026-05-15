@@ -349,6 +349,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "lease.signal.short": "Short remaining lease — under 60 years.",
     "lease.signal.oldCommence": "Lease commenced before 1975.",
     "lease.signal.belowFilter": "Some units may have less remaining lease than your minimum lease filter.",
+    "detail.similarBlocks": "Similar Blocks",
+    "detail.similarBlocks.hint": "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
+    "detail.similarBlocks.empty": "No similar blocks found.",
+    "detail.similarBlocks.viewBlock": "View block {address}",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -694,5 +698,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "lease.signal.short": "剩余地契较短——不足60年。",
     "lease.signal.oldCommence": "地契于1975年前开始。",
     "lease.signal.belowFilter": "部分单位剩余地契年限可能低于您设置的最低年限筛选条件。",
+    "detail.similarBlocks": "相似组屋",
+    "detail.similarBlocks.hint": "根据户型、价格、租约及地铁距离筛选出的相近备选组屋。",
+    "detail.similarBlocks.empty": "未找到相似组屋。",
+    "detail.similarBlocks.viewBlock": "查看 {address}",
   },
 };

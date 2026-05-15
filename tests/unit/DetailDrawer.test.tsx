@@ -30,6 +30,14 @@ const mockBlock: BlockSummary = {
   ],
 };
 
+const similarBlock: BlockSummary = {
+  ...mockBlock,
+  addressKey: "similar-block",
+  block: "102",
+  medianPrice: 552000,
+  transactionCount: 6,
+};
+
 const mockComparison: ComparisonArtifact = {
   addressKey: "test-block",
   town: "BEDOK",
@@ -92,15 +100,17 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -128,15 +138,17 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -155,15 +167,17 @@ describe("DetailDrawer", () => {
     render(
       <I18nProvider>
         <DetailDrawer
-          remainingLeaseMin={null}
           selectedBlock={mockBlock}
           detail={null}
           comparison={mockComparison}
           isLoading={false}
           isComparisonLoading={false}
           isSaved={false}
+          remainingLeaseMin={null}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -190,6 +204,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -228,6 +244,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -256,6 +274,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -263,6 +283,57 @@ describe("DetailDrawer", () => {
     // Check that fallback messages are shown
     expect(screen.getByText("Amenity comparison data not available yet.")).toBeInTheDocument();
     expect(screen.getByText("Market percentile data not available yet.")).toBeInTheDocument();
+  });
+
+  it("renders similar blocks empty state when no candidates are available", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          remainingLeaseMin={null}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getByText("Similar Blocks")).toBeInTheDocument();
+    expect(
+      screen.getByText("Nearby or comparable alternatives based on flat type, price, lease, and MRT access."),
+    ).toBeInTheDocument();
+    expect(screen.getByText("No similar blocks found.")).toBeInTheDocument();
+  });
+
+  it("renders similar block cards and selects a block when clicked", () => {
+    const onSelectBlock = vi.fn();
+
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          remainingLeaseMin={null}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[mockBlock, similarBlock]}
+          onSelectBlock={onSelectBlock}
+        />
+      </I18nProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "View block 102 BEDOK NTH AVE 4" }));
+    expect(onSelectBlock).toHaveBeenCalledWith("similar-block");
   });
 
   it("shows copied feedback only after clipboard write succeeds", async () => {
@@ -278,6 +349,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -316,6 +389,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
