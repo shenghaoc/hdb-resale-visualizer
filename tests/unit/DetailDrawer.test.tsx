@@ -101,6 +101,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -137,6 +139,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -164,6 +168,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -190,6 +196,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -228,6 +236,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -256,6 +266,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -278,6 +290,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );
@@ -316,6 +330,8 @@ describe("DetailDrawer", () => {
           isSaved={false}
           onClose={() => {}}
           onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
         />
       </I18nProvider>
     );

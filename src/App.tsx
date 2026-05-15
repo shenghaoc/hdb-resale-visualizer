@@ -231,6 +231,7 @@ function App() {
           comparison={comparison}
           selectedBlock={selectedBlock}
           filters={filters}
+          allBlocks={pipeline.blocks}
           isLoading={detailLoading}
           isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
@@ -239,6 +240,7 @@ function App() {
           onToggleShortlist={() => {
             if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
           }}
+          onSelectBlock={handleSelectAddress}
         />
       </Suspense>
     ) : null;
