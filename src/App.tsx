@@ -14,6 +14,7 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { AppHeader } from "@/components/AppHeader";
+import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
@@ -51,6 +52,8 @@ function App() {
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
+  const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
+  const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
   const pipeline = useFilterPipeline({
     manifest,
@@ -213,6 +216,8 @@ function App() {
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
         priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
+        mrtStationsEnabled={mrtStationsEnabled}
+        mrtExitsEnabled={mrtExitsEnabled}
         heatmapMode={heatmap.heatmapMode}
         primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
@@ -361,6 +366,27 @@ function App() {
                 : pipeline.hasMapMarkerScope
                   ? "15rem"
                   : "11.5rem",
+              right: panel.isDesktop ? "4.5rem" : "0.75rem",
+            }}
+          />
+        )}
+
+        {(panel.isDesktop || panel.mobileTab === null) && (
+          <AmenityLayersControl
+            mrtStationsEnabled={mrtStationsEnabled}
+            mrtExitsEnabled={mrtExitsEnabled}
+            onToggleMrtStations={() => setMrtStationsEnabled((v) => !v)}
+            onToggleMrtExits={() => setMrtExitsEnabled((v) => !v)}
+            t={t}
+            className="absolute z-25 w-32"
+            style={{
+              bottom: panel.isDesktop
+                ? pipeline.hasMapMarkerScope
+                  ? "14.5rem"
+                  : "11rem"
+                : pipeline.hasMapMarkerScope
+                  ? "18.5rem"
+                  : "15rem",
               right: panel.isDesktop ? "4.5rem" : "0.75rem",
             }}
           />
