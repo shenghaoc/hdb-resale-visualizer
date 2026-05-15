@@ -9,6 +9,7 @@ import {
   PRIMARY_SCHOOL_LAYER_IDS,
   PRIMARY_SCHOOL_SOURCE_ID,
 } from "@/lib/constants";
+import { getAmenityMinZoom } from "@/lib/amenity-visibility";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {
@@ -148,6 +149,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-exits-points",
         type: "circle",
         source: "mrt-exits",
+        minzoom: getAmenityMinZoom('mrt-exit'),
         layout: { visibility: "none" },
         paint: {
           "circle-color": "#475569",
@@ -161,6 +163,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-stations-points",
         type: "circle",
         source: "mrt-stations",
+        minzoom: getAmenityMinZoom('mrt-station'),
         layout: { visibility: "none" },
         paint: {
           "circle-color": "#dc2626",
@@ -174,9 +177,10 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-stations-labels",
         type: "symbol",
         source: "mrt-stations",
+        minzoom: getAmenityMinZoom('mrt-station'),
         layout: {
           visibility: "none",
-          "text-field": ["get", "name"],
+          "text-field": ["get", "stationName"],
           "text-size": 11,
           "text-offset": [0, 1.2],
           "text-anchor": "top",

@@ -47,7 +47,6 @@ export function AmenityLayersControl({
           checked={mrtStationsEnabled}
           onChange={onToggleMrtStations}
           className="accent-primary"
-          aria-label={t("amenity.mrtStations")}
         />
       </label>
 
@@ -60,7 +59,6 @@ export function AmenityLayersControl({
           checked={mrtExitsEnabled}
           onChange={onToggleMrtExits}
           className="accent-primary"
-          aria-label={t("amenity.mrtExits")}
         />
       </label>
     </div>

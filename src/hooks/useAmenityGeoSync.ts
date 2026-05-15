@@ -18,7 +18,10 @@ export function useAmenityGeoSync({
   useEffect(() => {
     if (mrtStationsEnabled && !stationsGeoJson) {
       fetch(`${DATA_BASE_PATH}/mrt-stations.geojson`)
-        .then((r) => r.json())
+        .then((r) => {
+          if (!r.ok) throw new Error(`Failed to load stations: ${r.status}`);
+          return r.json();
+        })
         .then((data: GeoJSON.FeatureCollection) => setStationsGeoJson(data))
         .catch(console.error);
     }
@@ -27,7 +30,10 @@ export function useAmenityGeoSync({
   useEffect(() => {
     if (mrtExitsEnabled && !exitsGeoJson) {
       fetch(`${DATA_BASE_PATH}/mrt-exits.geojson`)
-        .then((r) => r.json())
+        .then((r) => {
+          if (!r.ok) throw new Error(`Failed to load exits: ${r.status}`);
+          return r.json();
+        })
         .then((data: GeoJSON.FeatureCollection) => setExitsGeoJson(data))
         .catch(console.error);
     }
