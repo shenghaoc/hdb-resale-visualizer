@@ -98,7 +98,7 @@ export function PriceHeatmapControl({
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
               )}
             >
-              Price
+              {t("heatmap.modePrice")}
             </button>
             <button
               type="button"
@@ -110,7 +110,7 @@ export function PriceHeatmapControl({
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
               )}
             >
-              $/sqm
+              {t("heatmap.modePerSqm")}
             </button>
           </div>
           <div className="flex items-center gap-1.5">

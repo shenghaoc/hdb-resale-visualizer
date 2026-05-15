@@ -68,12 +68,30 @@ describe("priceHeatmap", () => {
       expect(addLayerCall[1]).toBe("clusters");
     });
 
-    it("is a no-op when layer already exists", () => {
+    it("updates paint properties when the layer already exists", () => {
       const map = createMockMap({ hasLayer: true });
-      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC, "price");
+      addPriceHeatmapLayer(map as never, 0.7, EMPTY_FC, "perSqm");
 
       expect(map.addSource).not.toHaveBeenCalled();
       expect(map.addLayer).not.toHaveBeenCalled();
+      expect(map.setPaintProperty).toHaveBeenNthCalledWith(
+        1,
+        HEATMAP_LAYER_ID,
+        "heatmap-weight",
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "price_per_sqm_median"],
+          4000, 0,
+          13000, 1,
+        ],
+      );
+      expect(map.setPaintProperty).toHaveBeenNthCalledWith(
+        2,
+        HEATMAP_LAYER_ID,
+        "heatmap-opacity",
+        0.7,
+      );
     });
 
     it("handles missing clusters layer gracefully", () => {
