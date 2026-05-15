@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { DATA_BASE_PATH } from "@/lib/constants";
 import { isGeoJsonDataSourceLike } from "@/types/map";
+import { getAmenityMinZoom } from "@/lib/amenity-visibility";
 
 export function useAmenityGeoSync({
   map,
@@ -14,6 +15,7 @@ export function useAmenityGeoSync({
 }) {
   const [stationsGeoJson, setStationsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [exitsGeoJson, setExitsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (mrtStationsEnabled && !stationsGeoJson) {
@@ -23,7 +25,7 @@ export function useAmenityGeoSync({
           return r.json();
         })
         .then((data: GeoJSON.FeatureCollection) => setStationsGeoJson(data))
-        .catch(console.error);
+        .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT stations"));
     }
   }, [mrtStationsEnabled, stationsGeoJson]);
 
@@ -35,44 +37,92 @@ export function useAmenityGeoSync({
           return r.json();
         })
         .then((data: GeoJSON.FeatureCollection) => setExitsGeoJson(data))
-        .catch(console.error);
+        .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT exits"));
     }
   }, [mrtExitsEnabled, exitsGeoJson]);
 
+  // Sync station data to map source with deferred-apply
   useEffect(() => {
-    if (!map || !map.isStyleLoaded()) return;
+    if (!map || !stationsGeoJson) return;
 
-    if (stationsGeoJson) {
+    const apply = () => {
+      if (!map.isStyleLoaded()) return;
       const source = map.getSource("mrt-stations");
       if (isGeoJsonDataSourceLike(source)) {
         source.setData(stationsGeoJson);
       }
+    };
+
+    if (map.isStyleLoaded()) {
+      apply();
+    } else {
+      void map.once("load", apply);
     }
-  }, [map, stationsGeoJson, mrtStationsEnabled]);
+    map.on("styledata", apply);
 
+    return () => {
+      map.off("load", apply);
+      map.off("styledata", apply);
+    };
+  }, [map, stationsGeoJson]);
+
+  // Sync exit data to map source with deferred-apply
   useEffect(() => {
-    if (!map || !map.isStyleLoaded()) return;
+    if (!map || !exitsGeoJson) return;
 
-    if (exitsGeoJson) {
+    const apply = () => {
+      if (!map.isStyleLoaded()) return;
       const source = map.getSource("mrt-exits");
       if (isGeoJsonDataSourceLike(source)) {
         source.setData(exitsGeoJson);
       }
-    }
-  }, [map, exitsGeoJson, mrtExitsEnabled]);
+    };
 
+    if (map.isStyleLoaded()) {
+      apply();
+    } else {
+      void map.once("load", apply);
+    }
+    map.on("styledata", apply);
+
+    return () => {
+      map.off("load", apply);
+      map.off("styledata", apply);
+    };
+  }, [map, exitsGeoJson]);
+
+  // Sync visibility with deferred-apply and minzoom gating
   useEffect(() => {
-    if (!map || !map.isStyleLoaded()) return;
-    
-    // Check if layer exists before setting visibility to avoid errors if map style is reloading
-    if (map.getLayer("mrt-stations-points")) {
-      const visibility = mrtStationsEnabled ? "visible" : "none";
-      map.setLayoutProperty("mrt-stations-points", "visibility", visibility);
-      map.setLayoutProperty("mrt-stations-labels", "visibility", visibility);
-    }
+    if (!map) return;
 
-    if (map.getLayer("mrt-exits-points")) {
-      map.setLayoutProperty("mrt-exits-points", "visibility", mrtExitsEnabled ? "visible" : "none");
+    const apply = () => {
+      if (!map.isStyleLoaded()) return;
+      const zoom = map.getZoom();
+
+      if (map.getLayer("mrt-stations-points")) {
+        const visible = mrtStationsEnabled && zoom >= getAmenityMinZoom("mrt-station") ? "visible" : "none";
+        map.setLayoutProperty("mrt-stations-points", "visibility", visible);
+        map.setLayoutProperty("mrt-stations-labels", "visibility", visible);
+      }
+
+      if (map.getLayer("mrt-exits-points")) {
+        const visible = mrtExitsEnabled && zoom >= getAmenityMinZoom("mrt-exit") ? "visible" : "none";
+        map.setLayoutProperty("mrt-exits-points", "visibility", visible);
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      apply();
+    } else {
+      void map.once("load", apply);
     }
+    map.on("styledata", apply);
+
+    return () => {
+      map.off("load", apply);
+      map.off("styledata", apply);
+    };
   }, [map, mrtStationsEnabled, mrtExitsEnabled]);
+
+  return { error };
 }

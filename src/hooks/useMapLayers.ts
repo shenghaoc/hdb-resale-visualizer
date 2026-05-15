@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import {
   MEDIAN_PRICE_COLOR_EXPRESSION,
+  MRT_STATION_COLOR,
   PRIMARY_BLUE,
   SCHOOL_LABEL_COLOR,
   SCHOOL_LABEL_HALO_COLOR,
@@ -166,7 +167,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         minzoom: getAmenityMinZoom('mrt-station'),
         layout: { visibility: "none" },
         paint: {
-          "circle-color": "#dc2626",
+          "circle-color": MRT_STATION_COLOR,
           "circle-radius": 5,
           "circle-stroke-width": 2,
           "circle-stroke-color": "#ffffff",
@@ -186,7 +187,7 @@ export function useMapLayers(map: MapLibreMap | null) {
           "text-anchor": "top",
         },
         paint: {
-          "text-color": "#dc2626",
+          "text-color": MRT_STATION_COLOR,
           "text-halo-color": "#ffffff",
           "text-halo-width": 1.5,
         },
