@@ -200,7 +200,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
                           }
-                          aria-description="Enter the minimum budget in SGD"
+                          aria-description={t("filters.a11y.minBudget")}
                         />
                       </InputGroup>
                     </FieldContent>
@@ -225,7 +225,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
                           }
-                          aria-description="Enter the maximum budget in SGD"
+                          aria-description={t("filters.a11y.maxBudget")}
                         />
                       </InputGroup>
                     </FieldContent>
@@ -250,7 +250,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         onChange={(event) =>
                           onChange({ remainingLeaseMin: parseOptionalNumberValue(event.target.value) })
                         }
-                        aria-description="Minimum remaining lease in years"
+                        aria-description={t("filters.a11y.remainingLeaseMin")}
                       />
                       <InputGroupAddon align="inline-end">
                         <InputGroupText>{t("unit.years", { value: "" }).trim()}</InputGroupText>
@@ -316,7 +316,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
                           }
-                          aria-description="Enter the minimum floor area in square meters"
+                          aria-description={t("filters.a11y.minFloorArea")}
                         />
                       </InputGroup>
                     </FieldContent>
@@ -341,7 +341,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
                           }
-                          aria-description="Enter the maximum floor area in square meters"
+                          aria-description={t("filters.a11y.maxFloorArea")}
                         />
                       </InputGroup>
                     </FieldContent>
