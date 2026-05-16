@@ -4,6 +4,7 @@ import {
   decodeShortlistFromUrl,
   encodeShortlistForUrl,
   loadShortlist,
+  mergeImportedShortlistItems,
   saveShortlist,
   toggleShortlistItem,
 } from "@/lib/shortlist";
@@ -66,6 +67,27 @@ describe("shortlist storage", () => {
     expect(decodeShortlistFromUrl("not-base-64!")).toEqual([]);
     expect(decodeShortlistFromUrl(btoa("not-json"))).toEqual([]);
     expect(decodeShortlistFromUrl(btoa(JSON.stringify([{ invalid: "schema" }])))).toEqual([]);
+  });
+
+  it("caps imported shortlist entries without dropping existing saved entries", () => {
+    const existing = Array.from({ length: 19 }, (_, index) => ({
+      addressKey: `saved-${index}`,
+      notes: "",
+      targetPrice: null,
+      addedAt: "2026-01-01T00:00:00.000Z",
+    }));
+    const imported = [
+      { addressKey: "saved-0", notes: "duplicate", targetPrice: null, addedAt: "2026-01-02T00:00:00.000Z" },
+      { addressKey: "imported-1", notes: "", targetPrice: null, addedAt: "2026-01-03T00:00:00.000Z" },
+      { addressKey: "imported-2", notes: "", targetPrice: null, addedAt: "2026-01-04T00:00:00.000Z" },
+    ];
+
+    const merged = mergeImportedShortlistItems(existing, imported);
+
+    expect(merged).toHaveLength(20);
+    expect(merged.slice(0, 19)).toEqual(existing);
+    expect(merged[19]?.addressKey).toBe("imported-1");
+    expect(merged.some((item) => item.addressKey === "imported-2")).toBe(false);
   });
 
   it("loads both old and new shortlist note formats seamlessly", () => {

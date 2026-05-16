@@ -3,6 +3,7 @@ import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
+  mergeImportedShortlistItems,
   saveShortlist,
   toggleShortlistItem,
 } from "@/lib/shortlist";
@@ -22,6 +23,8 @@ function readInitialShortlist(): InitialShortlistState {
     };
   }
 
+  const savedItems = loadShortlist(safeStorage);
+
   try {
     const params = new URLSearchParams(window.location.search);
     const shortlistParam = params.get("shortlist");
@@ -29,7 +32,7 @@ function readInitialShortlist(): InitialShortlistState {
       const parsed = decodeShortlistFromUrl(shortlistParam);
       if (parsed.length > 0) {
         return {
-          items: parsed,
+          items: mergeImportedShortlistItems(savedItems, parsed),
           shouldClearUrlParam: true,
         };
       }
@@ -39,7 +42,7 @@ function readInitialShortlist(): InitialShortlistState {
   }
 
   return {
-    items: loadShortlist(safeStorage),
+    items: savedItems,
     shouldClearUrlParam: false,
   };
 }
