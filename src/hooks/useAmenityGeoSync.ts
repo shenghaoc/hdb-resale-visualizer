@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { DATA_BASE_PATH } from "@/lib/constants";
 import { isGeoJsonDataSourceLike } from "@/types/map";
-import { getAmenityMinZoom } from "@/lib/amenity-visibility";
 
 export function useAmenityGeoSync({
   map,
@@ -91,22 +90,21 @@ export function useAmenityGeoSync({
     };
   }, [map, exitsGeoJson]);
 
-  // Sync visibility with deferred-apply and minzoom gating
+  // Sync visibility with deferred-apply; layer minzoom owns zoom gating.
   useEffect(() => {
     if (!map) return;
 
     const apply = () => {
       if (!map.isStyleLoaded()) return;
-      const zoom = map.getZoom();
 
       if (map.getLayer("mrt-stations-points")) {
-        const visible = mrtStationsEnabled && zoom >= getAmenityMinZoom("mrt-station") ? "visible" : "none";
+        const visible = mrtStationsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-stations-points", "visibility", visible);
         map.setLayoutProperty("mrt-stations-labels", "visibility", visible);
       }
 
       if (map.getLayer("mrt-exits-points")) {
-        const visible = mrtExitsEnabled && zoom >= getAmenityMinZoom("mrt-exit") ? "visible" : "none";
+        const visible = mrtExitsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-exits-points", "visibility", visible);
       }
     };

@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DetailDrawer } from "@/components/DetailDrawer";
+import { DEFAULT_FILTERS } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n";
 import type { BlockSummary, ComparisonArtifact } from "@/types/data";
 
@@ -259,6 +260,30 @@ describe("DetailDrawer", () => {
       el.className.includes("animate-pulse")
     );
     expect(loadingSkeletons.length).toBeGreaterThan(0);
+  });
+
+  it("stays open for a selected address while the block summary is still loading", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={null}
+          detail={null}
+          comparison={null}
+          isLoading={true}
+          isComparisonLoading={true}
+          isSaved={false}
+          remainingLeaseMin={null}
+          filters={{ ...DEFAULT_FILTERS, selectedAddressKey: "test-block" }}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getByTestId("detail-drawer")).toBeInTheDocument();
+    expect(screen.getByText("Loading details")).toBeInTheDocument();
   });
 
   it("shows fallback message when comparison data is not available", () => {
