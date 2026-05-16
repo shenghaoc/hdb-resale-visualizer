@@ -1,34 +1,88 @@
-import { type CSSProperties, useId } from "react";
-import { TrainFront, MapPin } from "lucide-react";
+import type { CSSProperties } from "react";
+import { GraduationCap, MapPin, TrainFront } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
 
 type AmenityLayersControlProps = {
   mrtStationsEnabled: boolean;
   mrtExitsEnabled: boolean;
+  schoolOverlayEnabled: boolean;
+  schoolOverlayAvailable: boolean;
+  schoolOverlayLoading: boolean;
+  hasBlockSelection: boolean;
   onToggleMrtStations: () => void;
   onToggleMrtExits: () => void;
+  onToggleSchoolOverlay: () => void;
   t: Translator;
   className?: string;
   style?: CSSProperties;
 };
 
+function LayerSwitch({
+  enabled,
+  disabled,
+  ariaLabel,
+  onToggle,
+}: {
+  enabled: boolean;
+  disabled: boolean;
+  ariaLabel: string;
+  onToggle: () => void;
+}) {
+  const active = enabled && !disabled;
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={active}
+      aria-label={ariaLabel}
+      disabled={disabled}
+      onClick={onToggle}
+      className={cn(
+        "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
+        active ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
+      )}
+    >
+      <span
+        className={cn(
+          "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
+          active ? "translate-x-3" : "translate-x-0",
+        )}
+        aria-hidden="true"
+      />
+    </button>
+  );
+}
+
 export function AmenityLayersControl({
   mrtStationsEnabled,
   mrtExitsEnabled,
+  schoolOverlayEnabled,
+  schoolOverlayAvailable,
+  schoolOverlayLoading,
+  hasBlockSelection,
   onToggleMrtStations,
   onToggleMrtExits,
+  onToggleSchoolOverlay,
   t,
   className,
   style,
 }: AmenityLayersControlProps) {
-  const mrtStationId = useId();
-  const mrtExitId = useId();
+  const schoolCanToggle = schoolOverlayAvailable && !schoolOverlayLoading;
+  const schoolAriaLabel = schoolOverlayLoading
+    ? t("schoolOverlay.loading")
+    : schoolOverlayAvailable
+      ? schoolOverlayEnabled
+        ? t("schoolOverlay.disable")
+        : t("schoolOverlay.enable")
+      : hasBlockSelection
+        ? t("schoolOverlay.noSchoolsNearby")
+        : t("schoolOverlay.unavailable");
 
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-1.5 rounded-lg border border-border/20 bg-background/90 p-2 text-[0.55rem] backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]",
+        "pointer-events-auto flex flex-col gap-2 rounded-lg border border-border/20 bg-background/90 p-2 text-[0.55rem] backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]",
         className,
       )}
       style={style}
@@ -38,29 +92,68 @@ export function AmenityLayersControl({
         <span className="font-bold uppercase tracking-[0.1em]">{t("amenity.label")}</span>
       </div>
 
-      <label className="flex items-center gap-1.5" htmlFor={mrtStationId}>
-        <TrainFront className="size-3 text-primary/70" aria-hidden />
-        <span className="flex-1">{t("amenity.mrtStations")}</span>
-        <input
-          id={mrtStationId}
-          type="checkbox"
-          checked={mrtStationsEnabled}
-          onChange={onToggleMrtStations}
-          className="accent-primary"
-        />
-      </label>
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center gap-1.5">
+          <TrainFront
+            data-icon
+            aria-hidden="true"
+            className={cn(
+              "size-3 shrink-0 transition-colors duration-200",
+              mrtStationsEnabled ? "text-primary" : "text-muted-foreground",
+            )}
+          />
+          <span className="flex-1 text-muted-foreground">{t("amenity.mrtStations")}</span>
+          <LayerSwitch
+            enabled={mrtStationsEnabled}
+            disabled={false}
+            ariaLabel={t("amenity.mrtStations")}
+            onToggle={onToggleMrtStations}
+          />
+        </div>
 
-      <label className="flex items-center gap-1.5" htmlFor={mrtExitId}>
-        <TrainFront className="size-3 text-primary/70" aria-hidden />
-        <span className="flex-1">{t("amenity.mrtExits")}</span>
-        <input
-          id={mrtExitId}
-          type="checkbox"
-          checked={mrtExitsEnabled}
-          onChange={onToggleMrtExits}
-          className="accent-primary"
-        />
-      </label>
+        <div className="flex items-center gap-1.5">
+          <TrainFront
+            data-icon
+            aria-hidden="true"
+            className={cn(
+              "size-3 shrink-0 transition-colors duration-200",
+              mrtExitsEnabled ? "text-primary" : "text-muted-foreground",
+            )}
+          />
+          <span className="flex-1 text-muted-foreground">{t("amenity.mrtExits")}</span>
+          <LayerSwitch
+            enabled={mrtExitsEnabled}
+            disabled={false}
+            ariaLabel={t("amenity.mrtExits")}
+            onToggle={onToggleMrtExits}
+          />
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <GraduationCap
+            data-icon
+            aria-hidden="true"
+            className={cn(
+              "size-3 shrink-0 transition-colors duration-200",
+              schoolOverlayEnabled && schoolCanToggle ? "text-primary" : "text-muted-foreground",
+            )}
+          />
+          <span className={cn("flex-1", schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground/60")}>
+            {t("amenity.schools")}
+            {!hasBlockSelection && (
+              <span className="ml-1 text-[0.5rem] italic opacity-60">
+                ({t("amenity.schoolsHint")})
+              </span>
+            )}
+          </span>
+          <LayerSwitch
+            enabled={schoolOverlayEnabled}
+            disabled={!schoolCanToggle}
+            ariaLabel={schoolAriaLabel}
+            onToggle={onToggleSchoolOverlay}
+          />
+        </div>
+      </div>
     </div>
   );
 }

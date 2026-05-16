@@ -24,9 +24,8 @@ import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
-import { SchoolOverlayControl } from "@/components/SchoolOverlayControl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPrimarySchoolsForOverlay, type PrimarySchoolWithBand } from "@/lib/school-proximity";
+import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -373,14 +372,18 @@ function App() {
         )}
 
         {(panel.isDesktop || panel.mobileTab === null) && (
-          <SchoolOverlayControl
-            isEnabled={schoolOverlayEnabled}
-            hasSchools={canShowSchoolOverlay}
-            hasSelection={schoolOverlaySelectionActive}
-            isLoading={schoolOverlayLoading}
-            onToggle={() => setSchoolOverlayEnabled((enabled) => !enabled)}
+          <AmenityLayersControl
+            mrtStationsEnabled={mrtStationsEnabled}
+            mrtExitsEnabled={mrtExitsEnabled}
+            schoolOverlayEnabled={schoolOverlayEnabled}
+            schoolOverlayAvailable={canShowSchoolOverlay}
+            schoolOverlayLoading={schoolOverlayLoading}
+            hasBlockSelection={schoolOverlaySelectionActive}
+            onToggleMrtStations={() => setMrtStationsEnabled((v) => !v)}
+            onToggleMrtExits={() => setMrtExitsEnabled((v) => !v)}
+            onToggleSchoolOverlay={() => setSchoolOverlayEnabled((v) => !v)}
             t={t}
-            className="absolute z-25 w-32"
+            className="absolute z-25 w-36"
             style={{
               bottom: panel.isDesktop
                 ? pipeline.hasMapMarkerScope
@@ -389,27 +392,6 @@ function App() {
                 : pipeline.hasMapMarkerScope
                   ? "15rem"
                   : "11.5rem",
-              right: panel.isDesktop ? "4.5rem" : "0.75rem",
-            }}
-          />
-        )}
-
-        {(panel.isDesktop || panel.mobileTab === null) && (
-          <AmenityLayersControl
-            mrtStationsEnabled={mrtStationsEnabled}
-            mrtExitsEnabled={mrtExitsEnabled}
-            onToggleMrtStations={() => setMrtStationsEnabled((v) => !v)}
-            onToggleMrtExits={() => setMrtExitsEnabled((v) => !v)}
-            t={t}
-            className="absolute z-25 w-32"
-            style={{
-              bottom: panel.isDesktop
-                ? pipeline.hasMapMarkerScope
-                  ? "14.5rem"
-                  : "11rem"
-                : pipeline.hasMapMarkerScope
-                  ? "18.5rem"
-                  : "15rem",
               right: panel.isDesktop ? "4.5rem" : "0.75rem",
             }}
           />
