@@ -51,7 +51,7 @@ export function SchoolOverlayControl({
                 type="button"
                 role="switch"
                 aria-checked={isEnabled && hasSchools}
-                aria-label={hasSchools ? t("schoolOverlay.label") : unavailableHint}
+                aria-label={t("schoolOverlay.label")}
                 disabled={!hasSchools}
                 onClick={onToggle}
                 className={cn(

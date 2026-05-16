@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 
@@ -253,7 +254,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -279,7 +282,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -304,7 +309,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -324,7 +331,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -352,7 +361,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -380,7 +391,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -397,7 +410,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -444,7 +459,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -500,7 +517,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -535,7 +554,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
@@ -555,7 +576,9 @@ describe("App detail loading", () => {
 
     render(
       <I18nProvider>
-        <App />
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
       </I18nProvider>,
     );
 
