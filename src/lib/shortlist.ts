@@ -95,6 +95,28 @@ export function saveShortlist(storage: Pick<Storage, "setItem">, items: Shortlis
   storage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(items));
 }
 
+export function mergeImportedShortlistItems(
+  existingItems: ShortlistItem[],
+  importedItems: ShortlistItem[],
+): ShortlistItem[] {
+  const existingAddressKeys = new Set(existingItems.map((item) => item.addressKey));
+  const mergedItems = [...existingItems];
+
+  for (const item of importedItems) {
+    if (mergedItems.length >= MAX_SHORTLIST_ITEMS) {
+      break;
+    }
+    if (existingAddressKeys.has(item.addressKey)) {
+      continue;
+    }
+
+    mergedItems.push(item);
+    existingAddressKeys.add(item.addressKey);
+  }
+
+  return mergedItems;
+}
+
 export function toggleShortlistItem(items: ShortlistItem[], addressKey: string): ShortlistItem[] {
   const existing = items.find((item) => item.addressKey === addressKey);
   if (existing) {

@@ -183,6 +183,40 @@ describe("useShortlist", () => {
     expect(replaceSpy).toHaveBeenCalled();
   });
 
+  it("merges URL shortlist imports without overwriting saved local entries", () => {
+    writeStorage([
+      {
+        addressKey: "addr-local",
+        notes: "keep my notes",
+        targetPrice: 500000,
+        addedAt: "2026-01-01T00:00:00Z",
+      },
+    ]);
+    const imported = [
+      {
+        addressKey: "addr-local",
+        notes: "incoming notes",
+        targetPrice: 600000,
+        addedAt: "2026-02-01T00:00:00Z",
+      },
+      { addressKey: "addr-url", notes: "", targetPrice: null, addedAt: "2026-03-01T00:00:00Z" },
+    ];
+    const encoded = Buffer.from(JSON.stringify(imported)).toString("base64");
+    mockLocation(`?shortlist=${encoded}`);
+
+    const { result } = renderHook(() => useShortlist());
+
+    expect(result.current.items.map((item) => item.addressKey)).toEqual(["addr-local", "addr-url"]);
+    expect(result.current.items[0]?.notes).toBe("keep my notes");
+
+    const persisted = JSON.parse(window.localStorage.getItem(SHORTLIST_STORAGE_KEY) ?? "[]") as Array<{
+      addressKey: string;
+      notes: string;
+    }>;
+    expect(persisted.map((item) => item.addressKey)).toEqual(["addr-local", "addr-url"]);
+    expect(persisted[0]?.notes).toBe("keep my notes");
+  });
+
   it("new item has empty notes and null targetPrice by default", () => {
     const { result } = renderHook(() => useShortlist());
 
