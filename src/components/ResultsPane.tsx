@@ -114,11 +114,49 @@ type ResultsPaneProps = {
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
 type ResultsViewMode = "blocks" | "town";
+type SortOption = { value: SortMode; label: string };
 type TownTrendSnap = {
   status: "idle" | "loaded" | "failed";
   requestedTown: string;
   rows: TownFlatTypeTrendPoint[];
 };
+
+function SortSelect({
+  label,
+  options,
+  value,
+  onValueChange,
+  className,
+}: {
+  label: string;
+  options: SortOption[];
+  value: SortMode;
+  onValueChange: (value: SortMode) => void;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex min-w-0 items-center gap-2", className)}>
+      <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
+        <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
+        {label}
+      </span>
+      <Select onValueChange={(nextValue) => onValueChange(nextValue as SortMode)} value={value}>
+        <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
 
 const BlockCard = memo(function BlockCard({
   block,
@@ -366,7 +404,7 @@ export function ResultsPane({
   profileEndMonth = null,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
-  const sortOptions: Array<{ value: SortMode; label: string }> = [
+  const sortOptions: SortOption[] = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
     { value: "lease-desc", label: t("results.sort.longestLease") },
@@ -529,7 +567,9 @@ export function ResultsPane({
         );
         return;
       }
-      setScrollTop(Math.max(0, scroller.scrollTop - listEl.offsetTop));
+      const scrollerTop = scroller.getBoundingClientRect().top;
+      const listTop = listEl.getBoundingClientRect().top;
+      setScrollTop(Math.max(0, scrollerTop - listTop));
     };
 
     updateViewport();
@@ -699,32 +739,16 @@ export function ResultsPane({
                 </ButtonGroup>
               ) : null}
               {!townProfileAvailable || resultsView === "blocks" ? (
-                <div className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-1 basis-full sm:basis-auto sm:flex-none")}>
-                  <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
-                    <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
-                    {t("results.sort")}
-                  </span>
-                  <Select
-                    onValueChange={(value) => {
-                      setSortMode(value as SortMode);
-                      setCurrentPage(1);
-                    }}
-                    value={sortMode}
-                  >
-                    <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {sortOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <SortSelect
+                  label={t("results.sort")}
+                  options={sortOptions}
+                  value={sortMode}
+                  onValueChange={(value) => {
+                    setSortMode(value);
+                    setCurrentPage(1);
+                  }}
+                  className={townProfileAvailable ? "flex-1 basis-full sm:basis-auto sm:flex-none" : undefined}
+                />
               ) : null}
             </div>
           </div>

@@ -89,7 +89,7 @@ export function useMapDataSync({
         if (!map.getLayer(layerId)) continue;
         map.setLayoutProperty(layerId, "visibility", schoolVisibility);
         if (schoolVisibility === "visible") {
-          map.moveLayer(layerId);
+          map.moveLayer(layerId, map.getLayer("selected-point") ? "selected-point" : undefined);
         }
       }
     };

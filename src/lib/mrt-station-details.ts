@@ -111,17 +111,17 @@ export type StationDetails = {
   isInterchange: boolean;
 };
 
-export function getStationDetails(stationName: string): StationDetails {
+const stationDetailsCache = new Map<string, StationDetails>();
+
+function computeStationDetails(stationName: string): StationDetails {
   const normalizedName = stationName.toUpperCase();
   const stationBaseName = normalizeStationBaseName(stationName);
   const matchedLines: LineCode[] = [];
+  const isLrtStation = normalizedName.endsWith("LRT STATION");
 
   const lineCodes = Object.keys(LINE_METADATA) as LineCode[];
   for (const lineCode of lineCodes) {
     if (lineCode === "LRT") {
-      if (normalizedName.endsWith("LRT STATION")) {
-        matchedLines.push("LRT");
-      }
       continue;
     }
 
@@ -137,6 +137,10 @@ export function getStationDetails(stationName: string): StationDetails {
         matchedLines.push(lineCode);
       }
     }
+  }
+
+  if (isLrtStation && !matchedLines.includes("LRT")) {
+    matchedLines.push("LRT");
   }
 
   if (matchedLines.length === 0) {
@@ -155,4 +159,20 @@ export function getStationDetails(stationName: string): StationDetails {
     lines: matchedLines,
     isInterchange,
   };
+}
+
+export function getStationDetails(stationName: string): StationDetails {
+  const cacheKey = stationName.trim().toUpperCase();
+  const cachedDetails = stationDetailsCache.get(cacheKey);
+  if (cachedDetails) {
+    return cachedDetails;
+  }
+
+  const details = computeStationDetails(stationName);
+  stationDetailsCache.set(cacheKey, details);
+  return details;
+}
+
+export function clearStationDetailsCache() {
+  stationDetailsCache.clear();
 }

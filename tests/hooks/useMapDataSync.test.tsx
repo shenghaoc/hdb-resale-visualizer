@@ -38,7 +38,9 @@ function createMapStub({
       return undefined;
     }),
     getLayer: vi.fn((id: string) =>
-      ["primary-school-markers", "primary-school-labels"].includes(id) ? {} : undefined,
+      ["primary-school-markers", "primary-school-labels", "selected-point"].includes(id)
+        ? {}
+        : undefined,
     ),
     setLayoutProperty: vi.fn(),
     moveLayer: vi.fn(),
@@ -231,5 +233,7 @@ describe("useMapDataSync", () => {
       "visibility",
       "visible",
     );
+    expect(map.moveLayer).toHaveBeenCalledWith("primary-school-markers", "selected-point");
+    expect(map.moveLayer).toHaveBeenCalledWith("primary-school-labels", "selected-point");
   });
 });

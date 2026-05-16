@@ -18,6 +18,11 @@ function Drawer({
   ...props
 }: DrawerProps) {
   const rootRef = React.useRef<HTMLDivElement>(null)
+  const onCloseRef = React.useRef(onClose)
+
+  React.useLayoutEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
 
   React.useEffect(() => {
     if (!open || !dismissible) {
@@ -26,7 +31,7 @@ function Drawer({
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose?.()
+        onCloseRef.current?.()
       }
     }
 
@@ -36,7 +41,7 @@ function Drawer({
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [dismissible, onClose, open])
+  }, [dismissible, open])
 
   if (!open) {
     return null
