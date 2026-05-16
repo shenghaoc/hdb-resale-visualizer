@@ -583,6 +583,9 @@ export function buildArtifacts({
         flatType,
         month,
         medianPrice: Math.round(median(groupTransactions.map((transaction) => transaction.resalePrice))),
+        medianPricePerSqm: Number(
+          median(groupTransactions.map((transaction) => transaction.pricePerSqm)).toFixed(2),
+        ),
         transactionCount: groupTransactions.length,
       };
     })

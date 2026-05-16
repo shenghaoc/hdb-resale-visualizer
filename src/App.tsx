@@ -111,6 +111,14 @@ function App() {
     [filters, locale, patchFilters, t],
   );
 
+  const townProfileBlocks = useMemo(
+    () =>
+      pipeline.effectiveFilters.town
+        ? pipeline.blocks.filter((b) => b.town === pipeline.effectiveFilters.town)
+        : [],
+    [pipeline.blocks, pipeline.effectiveFilters.town],
+  );
+
   const {
     patchUserFilters,
     handleResetFilters,
@@ -262,6 +270,11 @@ function App() {
           selectedAddressKey={filters.selectedAddressKey}
           shortlistKeys={shortlistKeySet}
           isCompact
+          profileTown={pipeline.effectiveFilters.town || null}
+          profileTownBlocks={townProfileBlocks}
+          profileDataWindow={manifest.dataWindow}
+          profileStartMonth={pipeline.effectiveFilters.startMonth}
+          profileEndMonth={pipeline.effectiveFilters.endMonth}
         />
       </Suspense>
     </div>
