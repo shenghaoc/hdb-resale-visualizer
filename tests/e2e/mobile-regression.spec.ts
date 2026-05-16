@@ -66,13 +66,6 @@ function firstResultCard(page: Page) {
   return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
 }
 
-async function resultCardAddressText(card: ReturnType<Page["locator"]>) {
-  const desktopAddress = card.locator(".result-address strong");
-  if ((await desktopAddress.count()) > 0) {
-    return await desktopAddress.first().textContent();
-  }
-  return await card.locator("strong").first().textContent();
-}
 
 test.describe("Mobile Regression: Recent Features", () => {
   test("results toolbar: sort and view toggle accessible on mobile", async ({ page }) => {
