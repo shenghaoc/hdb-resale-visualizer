@@ -283,7 +283,7 @@ describe("DetailDrawer", () => {
     );
 
     expect(screen.getByTestId("detail-drawer")).toBeInTheDocument();
-    expect(screen.getByText("Loading details")).toBeInTheDocument();
+    expect(screen.getByText(/Loading block details/)).toBeInTheDocument();
   });
 
   it("shows fallback message when comparison data is not available", () => {
