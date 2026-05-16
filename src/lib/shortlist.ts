@@ -10,7 +10,7 @@ const shortlistItemSchema = z.object({
   renovation: z.string().optional().catch(undefined),
   noise: z.string().optional().catch(undefined),
   transport: z.string().optional().catch(undefined),
-  offerCeiling: z.number().nullable().optional().catch(undefined),
+  offerCeiling: z.number().optional().catch(undefined),
   agentRemarks: z.string().optional().catch(undefined),
   targetPrice: z.number().nullable().catch(null),
   addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),

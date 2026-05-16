@@ -127,7 +127,7 @@ export type ShortlistItem = {
   renovation?: string;
   noise?: string;
   transport?: string;
-  offerCeiling?: number | null;
+  offerCeiling?: number;
   agentRemarks?: string;
   targetPrice: number | null;
   addedAt: string;

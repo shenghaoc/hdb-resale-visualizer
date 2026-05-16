@@ -558,7 +558,7 @@ function ShortlistRowEditor({
           label={t("shortlist.offerCeiling")}
           value={item.offerCeiling ?? null}
           placeholder={t("shortlist.offerCeilingPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { offerCeiling: val })}
+          onChange={(val) => onUpdate(item.addressKey, { offerCeiling: val ?? undefined })}
           t={t}
         />
         <NotesEditor

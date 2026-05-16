@@ -81,7 +81,6 @@ export function useShortlist() {
         if (next.noise === "") next.noise = undefined;
         if (next.transport === "") next.transport = undefined;
         if (next.agentRemarks === "") next.agentRemarks = undefined;
-        if (next.offerCeiling === null) next.offerCeiling = undefined;
 
         return next;
       }),
