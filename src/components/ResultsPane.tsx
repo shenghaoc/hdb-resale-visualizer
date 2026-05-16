@@ -660,44 +660,46 @@ export function ResultsPane({
             ) : null}
           </div>
         </CardHeader>
-        {hasResultScope && townProfileAvailable ? (
+        {hasResultScope ? (
           <div
             className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"
             data-testid="results-view-toolbar"
           >
-            <div className="flex min-w-0 flex-wrap items-center gap-2">
-              <ButtonGroup
-                aria-label={t("results.view.label")}
-                className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
-                data-testid="results-view-toggle"
-              >
-                <Button
-                  type="button"
-                  size="xs"
-                  variant={resultsView === "blocks" ? "default" : "ghost"}
-                  aria-pressed={resultsView === "blocks"}
-                  aria-label={t("results.view.blocksAria")}
-                  onClick={() => setResultsView("blocks")}
-                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+            <div className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-wrap")}>
+              {townProfileAvailable ? (
+                <ButtonGroup
+                  aria-label={t("results.view.label")}
+                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                  data-testid="results-view-toggle"
                 >
-                  <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                  {t("results.view.blocks")}
-                </Button>
-                <Button
-                  type="button"
-                  size="xs"
-                  variant={resultsView === "town" ? "default" : "ghost"}
-                  aria-pressed={resultsView === "town"}
-                  aria-label={t("results.view.townAria")}
-                  onClick={() => setResultsView("town")}
-                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
-                >
-                  <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                  {t("results.view.town")}
-                </Button>
-              </ButtonGroup>
-              {resultsView === "blocks" ? (
-                <div className="flex min-w-0 flex-1 basis-full items-center gap-2 sm:basis-auto sm:flex-none">
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant={resultsView === "blocks" ? "default" : "ghost"}
+                    aria-pressed={resultsView === "blocks"}
+                    aria-label={t("results.view.blocksAria")}
+                    onClick={() => setResultsView("blocks")}
+                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  >
+                    <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                    {t("results.view.blocks")}
+                  </Button>
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant={resultsView === "town" ? "default" : "ghost"}
+                    aria-pressed={resultsView === "town"}
+                    aria-label={t("results.view.townAria")}
+                    onClick={() => setResultsView("town")}
+                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  >
+                    <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                    {t("results.view.town")}
+                  </Button>
+                </ButtonGroup>
+              ) : null}
+              {!townProfileAvailable || resultsView === "blocks" ? (
+                <div className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-1 basis-full sm:basis-auto sm:flex-none")}>
                   <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
                     <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
                     {t("results.sort")}
@@ -724,36 +726,6 @@ export function ResultsPane({
                   </Select>
                 </div>
               ) : null}
-            </div>
-          </div>
-        ) : null}
-        {hasResultScope && !townProfileAvailable ? (
-          <div className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4">
-            <div className="flex min-w-0 items-center gap-2">
-              <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
-                <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
-                {t("results.sort")}
-              </span>
-              <Select
-                onValueChange={(value) => {
-                  setSortMode(value as SortMode);
-                  setCurrentPage(1);
-                }}
-                value={sortMode}
-              >
-                <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {sortOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
             </div>
           </div>
         ) : null}

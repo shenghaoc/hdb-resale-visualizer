@@ -49,12 +49,7 @@ function Drawer({
       data-dismissible={dismissible}
       tabIndex={-1}
       className={cn("flex h-full min-h-0 flex-col outline-none", className)}
-      onKeyDown={(event) => {
-        onKeyDown?.(event)
-        if (dismissible && event.key === "Escape") {
-          onClose?.()
-        }
-      }}
+      onKeyDown={onKeyDown}
       {...props}
     >
       {children}
