@@ -9,7 +9,7 @@ type UseMapDataSyncProps = {
   geoJson: GeoJSON.FeatureCollection;
   priceHeatmapEnabled: boolean;
   primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
-  showPrimarySchools?: boolean;
+  schoolOverlayEnabled?: boolean;
 };
 
 export function useMapDataSync({
@@ -17,7 +17,7 @@ export function useMapDataSync({
   geoJson,
   priceHeatmapEnabled,
   primarySchoolsGeoJson,
-  showPrimarySchools = false,
+  schoolOverlayEnabled = false,
 }: UseMapDataSyncProps) {
   // Sync main blocks source
   useEffect(() => {
@@ -81,13 +81,15 @@ export function useMapDataSync({
         source.setData(primarySchoolsGeoJson);
       }
 
+      const hasSchoolFeatures = (primarySchoolsGeoJson?.features.length ?? 0) > 0;
+      const schoolVisibility =
+        schoolOverlayEnabled && hasSchoolFeatures ? "visible" : "none";
+
       for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
-        if (map.getLayer(layerId)) {
-          map.setLayoutProperty(
-            layerId,
-            "visibility",
-            showPrimarySchools ? "visible" : "none",
-          );
+        if (!map.getLayer(layerId)) continue;
+        map.setLayoutProperty(layerId, "visibility", schoolVisibility);
+        if (schoolVisibility === "visible") {
+          map.moveLayer(layerId, map.getLayer("selected-point") ? "selected-point" : undefined);
         }
       }
     };
@@ -108,5 +110,5 @@ export function useMapDataSync({
       map.off("load", applyPrimarySchoolsOnLoad);
       map.off("styledata", applyPrimarySchools);
     };
-  }, [map, primarySchoolsGeoJson, showPrimarySchools]);
+  }, [map, primarySchoolsGeoJson, schoolOverlayEnabled]);
 }

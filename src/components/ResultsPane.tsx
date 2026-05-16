@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpDown, Bookmark, Clock3, Coins, TrainFront, WalletCards } from "lucide-react";
+import { ArrowUpDown, Bookmark, Building2, Clock3, Coins, LayoutGrid, TrainFront, WalletCards } from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
 import {
   formatCompactCurrency,
@@ -12,6 +12,8 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
+import { getStationDetails } from "@/lib/mrt-station-details";
+import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { fetchTownFlatTypeTrends } from "@/lib/data";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
@@ -28,6 +30,7 @@ import {
 } from "@/lib/town-profile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Item,
@@ -110,11 +113,50 @@ type ResultsPaneProps = {
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
+type ResultsViewMode = "blocks" | "town";
+type SortOption = { value: SortMode; label: string };
 type TownTrendSnap = {
   status: "idle" | "loaded" | "failed";
   requestedTown: string;
   rows: TownFlatTypeTrendPoint[];
 };
+
+function SortSelect({
+  label,
+  options,
+  value,
+  onValueChange,
+  className,
+}: {
+  label: string;
+  options: SortOption[];
+  value: SortMode;
+  onValueChange: (value: SortMode) => void;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex min-w-0 items-center gap-2", className)}>
+      <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
+        <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
+        {label}
+      </span>
+      <Select onValueChange={(nextValue) => onValueChange(nextValue as SortMode)} value={value}>
+        <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
 
 const BlockCard = memo(function BlockCard({
   block,
@@ -146,6 +188,9 @@ const BlockCard = memo(function BlockCard({
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
     const sqm = Math.round((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2);
     const mrtDist = block.nearestMrt?.distanceMeters;
+    const nearestMrtColor = block.nearestMrt
+      ? getStationDetails(block.nearestMrt.stationName).color
+      : "var(--color-primary)";
     return (
       <Item
         data-state={isFeatured ? "selected" : "idle"}
@@ -210,7 +255,7 @@ const BlockCard = memo(function BlockCard({
           <span>{formatSqm(sqm, t, locale)}</span>
           {mrtDist !== undefined && mrtDist !== null && (
             <span className="flex items-center gap-1">
-              <WalkDots meters={mrtDist} color="var(--color-primary)" />
+              <WalkDots meters={mrtDist} color={nearestMrtColor} />
               <span>{formatMeters(mrtDist, t, locale)}</span>
             </span>
           )}
@@ -292,7 +337,7 @@ const BlockCard = memo(function BlockCard({
               {nearbyStations.map((station) => (
                 <li key={`${station.stationName}-${station.distanceMeters}`} className="flex items-center justify-between gap-2 text-sm">
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                    <MrtLineDots stationName={station.stationName} />
                     <span className="truncate font-semibold uppercase tracking-[0.08em]">{station.stationName}</span>
                   </div>
                   <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
@@ -359,7 +404,7 @@ export function ResultsPane({
   profileEndMonth = null,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
-  const sortOptions: Array<{ value: SortMode; label: string }> = [
+  const sortOptions: SortOption[] = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
     { value: "lease-desc", label: t("results.sort.longestLease") },
@@ -367,6 +412,8 @@ export function ResultsPane({
     { value: "latest-desc", label: t("results.sort.recentActivity") },
   ];
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
+  const [resultsView, setResultsView] = useState<ResultsViewMode>("blocks");
+  const contentScrollRef = useRef<HTMLDivElement | null>(null);
   const listContainerRef = useRef<HTMLDivElement | null>(null);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -376,7 +423,8 @@ export function ResultsPane({
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
 
-  const showTownProfile = Boolean(hasResultScope && profileTown && profileDataWindow);
+  const townProfileAvailable = Boolean(hasResultScope && profileTown && profileDataWindow);
+  const showTownProfile = townProfileAvailable && resultsView === "town";
   const townTrendMountedRef = useRef(true);
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
 
@@ -502,30 +550,47 @@ export function ResultsPane({
       return;
     }
 
-    const container = listContainerRef.current;
-    const scroller = scrollParent ?? container;
-    if (!container || !scroller) {
+    const listEl = listContainerRef.current;
+    const scroller = scrollParent ?? contentScrollRef.current;
+    if (!listEl || !scroller) {
       return;
     }
+
+    let scrollFrameId: number | null = null;
 
     const updateViewport = () => {
       setViewportHeight(scroller.clientHeight);
     };
 
+    const updateScrollTop = () => {
+      scrollFrameId = null;
+      if (scrollParent) {
+        setScrollTop(
+          Math.max(0, scroller.getBoundingClientRect().top - listEl.getBoundingClientRect().top),
+        );
+        return;
+      }
+      const scrollerTop = scroller.getBoundingClientRect().top;
+      const listTop = listEl.getBoundingClientRect().top;
+      setScrollTop(Math.max(0, scrollerTop - listTop));
+    };
+
     const handleScroll = () => {
-      const currentScrollTop =
-        scroller === container
-          ? container.scrollTop
-          : Math.max(0, scroller.getBoundingClientRect().top - container.getBoundingClientRect().top);
-      setScrollTop(currentScrollTop);
+      if (scrollFrameId !== null) {
+        return;
+      }
+      scrollFrameId = window.requestAnimationFrame(updateScrollTop);
     };
 
     updateViewport();
-    handleScroll();
+    updateScrollTop();
     scroller.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", updateViewport);
 
     return () => {
+      if (scrollFrameId !== null) {
+        window.cancelAnimationFrame(scrollFrameId);
+      }
       scroller.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateViewport);
     };
@@ -535,6 +600,12 @@ export function ResultsPane({
   if (blocks !== prevBlocks) {
     setPrevBlocks(blocks);
     setCurrentPage(1);
+  }
+
+  const [prevProfileTown, setPrevProfileTown] = useState(profileTown);
+  if (profileTown !== prevProfileTown) {
+    setPrevProfileTown(profileTown);
+    setResultsView("blocks");
   }
 
   const totalPages = Math.max(1, Math.ceil(sortedBlocks.length / itemsPerPage));
@@ -629,48 +700,76 @@ export function ResultsPane({
 
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
-      <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
+      <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden border-none bg-transparent py-0 shadow-none">
+        <CardHeader className="shrink-0 border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
             <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("results.filteredBlocks")}
             </CardTitle>
             {hasResultScope ? (
-              <>
-                <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
-                  {t("results.shown", { count: blocks.length })}
-                </Badge>
-                <div className="flex min-w-0 basis-full items-center gap-2 sm:flex-none">
-                  <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
-                    <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
-                    {t("results.sort")}
-                  </span>
-                  <Select
-                    onValueChange={(value) => {
-                      setSortMode(value as SortMode);
-                      setCurrentPage(1);
-                    }}
-                    value={sortMode}
-                  >
-                    <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {sortOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </>
+              <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
+                {t("results.shown", { count: blocks.length })}
+              </Badge>
             ) : null}
           </div>
         </CardHeader>
-        <CardContent className="flex min-h-0 flex-1 flex-col px-3 pt-3 sm:px-4">
+        {hasResultScope ? (
+          <div
+            className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"
+            data-testid="results-view-toolbar"
+          >
+            <div className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-wrap")}>
+              {townProfileAvailable ? (
+                <ButtonGroup
+                  aria-label={t("results.view.label")}
+                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                  data-testid="results-view-toggle"
+                >
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant={resultsView === "blocks" ? "default" : "ghost"}
+                    aria-pressed={resultsView === "blocks"}
+                    aria-label={t("results.view.blocksAria")}
+                    onClick={() => setResultsView("blocks")}
+                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  >
+                    <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                    {t("results.view.blocks")}
+                  </Button>
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant={resultsView === "town" ? "default" : "ghost"}
+                    aria-pressed={resultsView === "town"}
+                    aria-label={t("results.view.townAria")}
+                    onClick={() => setResultsView("town")}
+                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  >
+                    <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                    {t("results.view.town")}
+                  </Button>
+                </ButtonGroup>
+              ) : null}
+              {!townProfileAvailable || resultsView === "blocks" ? (
+                <SortSelect
+                  label={t("results.sort")}
+                  options={sortOptions}
+                  value={sortMode}
+                  onValueChange={(value) => {
+                    setSortMode(value);
+                    setCurrentPage(1);
+                  }}
+                  className={townProfileAvailable ? "flex-1 basis-full sm:basis-auto sm:flex-none" : undefined}
+                />
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+        <CardContent
+          ref={contentScrollRef}
+          className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pt-3 sm:px-4 v2-scrollbar"
+        >
           {!hasResultScope ? (
             <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
               <ArrowUpDown data-icon className="size-6 opacity-40" aria-hidden="true" />
@@ -696,15 +795,15 @@ export function ResultsPane({
                   onSelectBlock={onSelect}
                 />
               ) : null}
-              {blocks.length === 0 ? (
+              {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">
                   <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
                 </div>
-              ) : (
-                <div className={cn("flex min-h-[8rem] flex-1 flex-col gap-4", showTownProfile && "basis-[8rem]")}>
+              ) : resultsView === "blocks" ? (
+                <div className="flex min-h-[8rem] flex-1 flex-col gap-4">
                   <div
                     ref={listContainerRef}
-                    className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
+                    className="min-h-0 flex-1 pr-2"
                   >
                     <ItemGroup
                       className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
@@ -737,7 +836,7 @@ export function ResultsPane({
                     {!shouldVirtualize ? renderPagination() : null}
                   </div>
                 </div>
-              )}
+              ) : null}
             </div>
           )}
         </CardContent>

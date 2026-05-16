@@ -9,6 +9,7 @@ import {
   Coins,
   Copy,
   GraduationCap,
+  ChevronLeft,
   History,
   Info,
   LayoutGrid,
@@ -64,6 +65,7 @@ import {
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 import { buildBlockExplanation } from "@/lib/block-explanation";
@@ -171,8 +173,8 @@ function PercentileBadge({
   const rounded = Math.round(percentile);
 
   return (
-    <div className="rounded-lg border border-border/40 bg-muted/20 p-3">
-      <div className="mb-2 flex items-center justify-between gap-2">
+    <div className="flex flex-col gap-1.5 py-1">
+      <div className="flex items-center justify-between gap-2">
         <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
           {label}
         </span>
@@ -183,7 +185,7 @@ function PercentileBadge({
           {rounded}%
         </Badge>
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-muted">
+      <div className="h-1 overflow-hidden rounded-full bg-muted/50">
         <div
           className={cn(
             "h-full rounded-full",
@@ -204,6 +206,7 @@ function AmenityCard({
   nearestDistance,
   nearbyItems,
   showDistanceBands = false,
+  showMrtLineColors = false,
   showLabel = true,
   t,
   locale,
@@ -215,22 +218,22 @@ function AmenityCard({
   nearestDistance?: number | null;
   nearbyItems?: { name: string; distanceMeters: number }[];
   showDistanceBands?: boolean;
+  showMrtLineColors?: boolean;
   showLabel?: boolean;
   t: Translator;
   locale: Locale;
 }) {
   return (
-    <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
-      <CardContent className="p-3">
-        {showLabel && Icon && label && (
-          <div className="mb-2 flex items-center gap-2">
-            <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
-            <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-              {label}
-            </span>
-          </div>
-        )}
-        <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2 rounded-xl bg-muted/30 p-3">
+      {showLabel && Icon && label && (
+        <div className="mb-2 flex items-center gap-2">
+          <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
+          <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+            {label}
+          </span>
+        </div>
+      )}
+      <div className="flex flex-col gap-1">
           {count1km !== undefined && (
             <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
           )}
@@ -249,7 +252,11 @@ function AmenityCard({
                 return (
                   <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
                     <div className="flex min-w-0 items-center gap-1.5">
-                      <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                      {showMrtLineColors ? (
+                        <MrtLineDots stationName={item.name} />
+                      ) : (
+                        <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+                      )}
                       <span className="truncate">{item.name}</span>
                     </div>
                     <div className="flex shrink-0 items-center gap-1.5">
@@ -274,8 +281,7 @@ function AmenityCard({
             </div>
           ) : null}
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }
 
@@ -380,14 +386,24 @@ export function DetailDrawer({
   };
 
   return (
-    <Drawer open={isDrawerOpen} onClose={onClose} dismissible={false}>
+    <Drawer open={isDrawerOpen} onClose={onClose}>
       <DrawerContent
         data-testid="detail-drawer"
-        className="h-full max-h-full border-border/40 bg-card/95 backdrop-blur-xl sm:h-[92vh] lg:left-auto lg:right-4 lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-[32rem]"
+        className="h-full min-h-0 max-h-full w-full border-border/40 bg-card/95 backdrop-blur-xl"
         hideHandle={true}
       >
         <div className="flex h-full flex-col overflow-hidden">
-          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pr-12 backdrop-blur-xl">
+          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pl-12 pr-12 backdrop-blur-xl sm:pl-6">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-2 top-4 sm:hidden"
+              onClick={onClose}
+              aria-label={t("app.close")}
+              title={t("app.close")}
+            >
+              <ChevronLeft data-icon className="size-5" aria-hidden="true" />
+            </Button>
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="font-bold tracking-wider">
@@ -437,13 +453,13 @@ export function DetailDrawer({
             </Button>
           </DrawerHeader>
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4 sm:px-6 v2-scrollbar">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-4 sm:px-6">
             <Tabs
               value={activeTab}
               onValueChange={(v) => startTransition(() => setActiveTab(v))}
-              className="flex h-full flex-col"
+              className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
-              <TabsList className="mb-4 grid w-full grid-cols-4 rounded-xl bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-xl bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
                   className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
@@ -474,20 +490,19 @@ export function DetailDrawer({
                 </TabsTrigger>
               </TabsList>
 
+              <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar">
               {/* ── OVERVIEW ── */}
               <TabsContent
                 value="overview"
-                className="mt-0 flex-1 flex flex-col gap-5 pb-8 focus-visible:outline-none"
+                className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
               >
                 <div className="grid grid-cols-2 gap-3">
-                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
-                    <CardHeader className="p-3 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                        {t("results.medianResale")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-3 pt-0">
+                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("results.medianResale")}
+                    </div>
+                    <div className="flex flex-col">
                       <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
                         {currentSummary
                           ? formatCurrency(currentSummary.medianPrice, locale)
@@ -515,23 +530,19 @@ export function DetailDrawer({
                           })}
                         </div>
                       ) : null}
-                    </CardContent>
-                  </Card>
-                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
-                    <CardHeader className="p-3 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                        {t("results.remainingLease")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-3 pt-0">
-                      <div className="font-heading text-sm font-extrabold tracking-tight">
+                    </div>
+                  </div>
+                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                      <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("results.remainingLease")}
+                    </div>
+                    <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
                           : "..."}
-                      </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
 
                 <LeaseWarningPanel signals={leaseSignals} t={t} />
@@ -614,6 +625,7 @@ export function DetailDrawer({
                         distanceMeters: mrt.distanceMeters,
                       }))}
                       showLabel={false}
+                      showMrtLineColors
                       t={t}
                       locale={locale}
                     />
@@ -787,7 +799,7 @@ export function DetailDrawer({
               {/* ── TRENDS ── */}
               <TabsContent
                 value="trends"
-                className="mt-0 flex-1 flex flex-col gap-6 pb-8 focus-visible:outline-none"
+                className="mt-0 flex flex-col gap-6 pb-8 focus-visible:outline-none"
               >
                 <section>
                   <div className="mb-3 flex items-center justify-between gap-2">
@@ -908,7 +920,7 @@ export function DetailDrawer({
               </TabsContent>
 
               {/* ── HISTORY ── */}
-              <TabsContent value="history" className="mt-0 flex-1 focus-visible:outline-none">
+              <TabsContent value="history" className="mt-0 pb-8 focus-visible:outline-none">
                 <section>
                   <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                     <span className="flex items-center gap-2">
@@ -1007,7 +1019,7 @@ export function DetailDrawer({
               </TabsContent>
 
               {/* ── NEGOTIATE ── */}
-              <TabsContent value="negotiate" className="mt-0 flex-1 pb-8 focus-visible:outline-none">
+              <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
                 {detail ? (
                   <Suspense fallback={
                     <div className="flex flex-col gap-3 py-12">
@@ -1026,6 +1038,7 @@ export function DetailDrawer({
                   </div>
                 )}
               </TabsContent>
+              </div>
             </Tabs>
           </div>
 
@@ -1090,7 +1103,7 @@ function SimilarBlockCard({
   return (
     <button
       type="button"
-      className="w-full rounded-xl border border-border/40 bg-card/70 px-3 py-2.5 text-left transition-colors hover:border-primary/30 hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      className="w-full rounded-xl bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       onClick={() => onSelect(block.addressKey)}
       aria-label={t("detail.similarBlocks.viewBlock", { address })}
     >
@@ -1141,7 +1154,7 @@ function StatPill({
   tone?: "positive" | "negative";
 }) {
   return (
-    <div className="rounded-md border border-border/40 bg-card/70 px-3 py-2">
+    <div className="rounded-md bg-muted/30 px-3 py-2">
       <div className="text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>

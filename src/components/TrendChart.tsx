@@ -15,6 +15,7 @@ import type { AddressTrendPoint } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
 import { useTheme } from "@/hooks/useTheme";
 import { PRIMARY_BLUE } from "@/lib/constants";
+import { ECHARTS_GRID_CONTAIN_AXIS_LABELS } from "@/lib/echarts-grid";
 
 echarts.use([
   LineChart,
@@ -83,7 +84,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
         right: 12,
         top: 20,
         bottom: 36,
-        containLabel: true,
+        ...ECHARTS_GRID_CONTAIN_AXIS_LABELS,
       },
       tooltip: {
         trigger: "axis",

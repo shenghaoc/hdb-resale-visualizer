@@ -1,0 +1,43 @@
+{
+  "addressKey": "bedok-10d-bedok-sth-ave-2",
+  "town": "BEDOK",
+  "flatType": "EXECUTIVE",
+  "amenities": {
+    "primarySchoolsWithin1km": 2,
+    "primarySchoolsWithin2km": 5,
+    "nearestPrimarySchoolMeters": 420,
+    "nearestPrimarySchools": [
+      {
+        "name": "BEDOK GREEN PRIMARY SCHOOL",
+        "distanceMeters": 420,
+        "coordinates": {
+          "lat": 1.3254,
+          "lng": 103.9328
+        }
+      },
+      {
+        "name": "OPERA ESTATE PRIMARY SCHOOL",
+        "distanceMeters": 890,
+        "coordinates": {
+          "lat": 1.3189,
+          "lng": 103.9289
+        }
+      }
+    ],
+    "hawkerCentresWithin1km": 2,
+    "nearestHawkerCentreMeters": 180,
+    "supermarketsWithin1km": 1,
+    "nearestSupermarketMeters": 320,
+    "parksWithin1km": 4,
+    "nearestParkMeters": 150
+  },
+  "percentileRanks": {
+    "pricePercentile": 65,
+    "pricePerSqmPercentile": 70,
+    "leasePercentile": 45,
+    "mrtDistancePercentile": 80,
+    "transactionCountPercentile": 55,
+    "recencyPercentile": 90
+  },
+  "generatedAt": "2026-04-22T00:00:00.000Z"
+}

@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResultsPane } from "@/components/ResultsPane";
 import { I18nProvider } from "@/lib/i18n";
@@ -137,6 +138,8 @@ describe("ResultsPane", () => {
         />
       </I18nProvider>,
     );
+
+    await userEvent.click(screen.getByRole("button", { name: "显示镇区概览图表与亮点" }));
 
     await waitFor(() => {
       expect(screen.queryByText("正在载入镇区级趋势文件…")).not.toBeInTheDocument();

@@ -1,0 +1,43 @@
+{
+  "addressKey": "bedok-106-lengkong-tiga",
+  "town": "BEDOK",
+  "flatType": "EXECUTIVE",
+  "amenities": {
+    "primarySchoolsWithin1km": 2,
+    "primarySchoolsWithin2km": 5,
+    "nearestPrimarySchoolMeters": 380,
+    "nearestPrimarySchools": [
+      {
+        "name": "EUNOS PRIMARY SCHOOL",
+        "distanceMeters": 380,
+        "coordinates": {
+          "lat": 1.3278,
+          "lng": 103.9032
+        }
+      },
+      {
+        "name": "HAIG GIRLS' SCHOOL",
+        "distanceMeters": 1200,
+        "coordinates": {
+          "lat": 1.3185,
+          "lng": 103.9015
+        }
+      }
+    ],
+    "hawkerCentresWithin1km": 2,
+    "nearestHawkerCentreMeters": 180,
+    "supermarketsWithin1km": 1,
+    "nearestSupermarketMeters": 320,
+    "parksWithin1km": 4,
+    "nearestParkMeters": 150
+  },
+  "percentileRanks": {
+    "pricePercentile": 65,
+    "pricePerSqmPercentile": 70,
+    "leasePercentile": 45,
+    "mrtDistancePercentile": 80,
+    "transactionCountPercentile": 55,
+    "recencyPercentile": 90
+  },
+  "generatedAt": "2026-04-22T00:00:00.000Z"
+}

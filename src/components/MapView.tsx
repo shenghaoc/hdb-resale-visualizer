@@ -32,6 +32,7 @@ type MapViewProps = {
   mrtExitsEnabled?: boolean;
   heatmapMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
+  schoolOverlayEnabled?: boolean;
   geographicIntent?: GeographicSearchIntent | null;
   onSelect: (addressKey: string) => void;
   onMapInteract?: (interactionType?: "background" | "feature") => void;
@@ -53,6 +54,7 @@ export function MapView({
   mrtExitsEnabled = false,
   heatmapMode = "price",
   primarySchools = [],
+  schoolOverlayEnabled = false,
   geographicIntent,
   onSelect,
   onMapInteract,
@@ -111,7 +113,7 @@ export function MapView({
     geoJson,
     priceHeatmapEnabled,
     primarySchoolsGeoJson,
-    showPrimarySchools: primarySchools.length > 0,
+    schoolOverlayEnabled,
   });
   useMapFitBounds({
     map: mapInstance,
