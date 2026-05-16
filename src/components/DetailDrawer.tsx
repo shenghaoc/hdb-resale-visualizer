@@ -173,8 +173,8 @@ function PercentileBadge({
   const rounded = Math.round(percentile);
 
   return (
-    <div className="rounded-lg border border-border/40 bg-muted/20 p-3">
-      <div className="mb-2 flex items-center justify-between gap-2">
+    <div className="flex flex-col gap-1.5 py-1">
+      <div className="flex items-center justify-between gap-2">
         <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
           {label}
         </span>
@@ -185,7 +185,7 @@ function PercentileBadge({
           {rounded}%
         </Badge>
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-muted">
+      <div className="h-1 overflow-hidden rounded-full bg-muted/50">
         <div
           className={cn(
             "h-full rounded-full",
@@ -224,17 +224,16 @@ function AmenityCard({
   locale: Locale;
 }) {
   return (
-    <Card className="v2-card gap-0 rounded-xl border-border/40 bg-card/80 py-0 shadow-none">
-      <CardContent className="p-3">
-        {showLabel && Icon && label && (
-          <div className="mb-2 flex items-center gap-2">
-            <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
-            <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-              {label}
-            </span>
-          </div>
-        )}
-        <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2 rounded-xl bg-muted/30 p-3">
+      {showLabel && Icon && label && (
+        <div className="mb-2 flex items-center gap-2">
+          <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
+          <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+            {label}
+          </span>
+        </div>
+      )}
+      <div className="flex flex-col gap-1">
           {count1km !== undefined && (
             <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
           )}
@@ -282,8 +281,7 @@ function AmenityCard({
             </div>
           ) : null}
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }
 
@@ -498,14 +496,12 @@ export function DetailDrawer({
                 className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
               >
                 <div className="grid grid-cols-2 gap-3">
-                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
-                    <CardHeader className="p-3 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                        {t("results.medianResale")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-3 pt-0">
+                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("results.medianResale")}
+                    </div>
+                    <div className="flex flex-col">
                       <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
                         {currentSummary
                           ? formatCurrency(currentSummary.medianPrice, locale)
@@ -533,23 +529,19 @@ export function DetailDrawer({
                           })}
                         </div>
                       ) : null}
-                    </CardContent>
-                  </Card>
-                  <Card className="v2-card rounded-xl border-border/40 bg-muted/20 py-0 shadow-none">
-                    <CardHeader className="p-3 pb-2">
-                      <CardDescription className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em]">
-                        <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                        {t("results.remainingLease")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-3 pt-0">
-                      <div className="font-heading text-sm font-extrabold tracking-tight">
+                    </div>
+                  </div>
+                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                      <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("results.remainingLease")}
+                    </div>
+                    <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
                           : "..."}
-                      </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
 
                 <LeaseWarningPanel signals={leaseSignals} t={t} />
@@ -1108,7 +1100,7 @@ function SimilarBlockCard({
   return (
     <button
       type="button"
-      className="w-full rounded-xl border border-border/40 bg-card/70 px-3 py-2.5 text-left transition-colors hover:border-primary/30 hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      className="w-full rounded-xl bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       onClick={() => onSelect(block.addressKey)}
       aria-label={t("detail.similarBlocks.viewBlock", { address })}
     >
@@ -1159,7 +1151,7 @@ function StatPill({
   tone?: "positive" | "negative";
 }) {
   return (
-    <div className="rounded-md border border-border/40 bg-card/70 px-3 py-2">
+    <div className="rounded-md bg-muted/30 px-3 py-2">
       <div className="text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>

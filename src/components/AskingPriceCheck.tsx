@@ -144,7 +144,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
 
   return (
     <section className="flex flex-col gap-5">
-      <div className="rounded-lg border border-border/40 bg-muted/10 p-4">
+      <div className="rounded-lg bg-muted/10 p-4">
         <div className="mb-3 flex items-start gap-3">
           <div className="rounded-md bg-primary/10 p-2 text-primary">
             <Scale data-icon className="size-4" aria-hidden="true" />
@@ -365,7 +365,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {comparables.slice(0, 8).map((tx) => (
                 <li
                   key={tx.id}
-                  className="flex items-center justify-between gap-2 rounded-md border border-border/40 bg-card/70 px-3 py-2 text-xs"
+                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs"
                 >
                   <div className="flex min-w-0 flex-col gap-0.5">
                     <span className="font-bold tabular-nums">
@@ -411,7 +411,7 @@ function DeltaCell({
       ? "text-success"
       : "text-foreground";
   return (
-    <div className="rounded-md border border-border/40 bg-card/70 p-3">
+    <div className="rounded-md bg-muted/30 p-3">
       <div className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>
