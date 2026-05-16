@@ -42,7 +42,7 @@ function createMapStub({ styleLoaded = true, blocksSourceExists = false } = {}) 
   return stub as unknown as MapLibreMap & typeof stub;
 }
 
-const EXPECTED_SOURCES = ["radius", "primary-schools", "blocks"];
+const EXPECTED_SOURCES = ["radius", "primary-schools", "blocks", "mrt-stations", "mrt-exits"];
 const EXPECTED_LAYERS = [
   "radius-fill",
   "radius-outline",
@@ -51,6 +51,9 @@ const EXPECTED_LAYERS = [
   "unclustered-point",
   "primary-school-markers",
   "primary-school-labels",
+  "mrt-exits-points",
+  "mrt-stations-points",
+  "mrt-stations-labels",
   "selected-point",
   "selected-point-label",
 ];

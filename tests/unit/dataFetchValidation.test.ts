@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fetchBlockSummaries, fetchManifest } from "@/lib/data";
+import {
+  fetchBlockSummaries,
+  fetchManifest,
+  fetchTownFlatTypeTrends,
+  resetTownFlatTypeTrendsCacheForTests,
+} from "@/lib/data";
 
 function mockJsonResponse(payload: unknown, ok = true, status = 200): Response {
   return { ok, status, json: vi.fn().mockResolvedValue(payload) } as unknown as Response;
@@ -7,6 +12,7 @@ function mockJsonResponse(payload: unknown, ok = true, status = 200): Response {
 
 describe("artifact fetch validation", () => {
   afterEach(() => {
+    resetTownFlatTypeTrendsCacheForTests();
     vi.unstubAllGlobals();
   });
 
@@ -38,5 +44,27 @@ describe("artifact fetch validation", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockJsonResponse([{ addressKey: "only-one-field" }])));
 
     await expect(fetchBlockSummaries()).rejects.toThrow(/Artifact contract violation/);
+  });
+
+  it("retries town flat-type trends after a failed fetch", async () => {
+    const fetchMock = vi.fn()
+      .mockResolvedValueOnce(mockJsonResponse([], false, 503))
+      .mockResolvedValueOnce(
+        mockJsonResponse([
+          {
+            town: "BEDOK",
+            flatType: "4 ROOM",
+            month: "2024-01",
+            medianPrice: 580_000,
+            medianPricePerSqm: 6105.26,
+            transactionCount: 12,
+          },
+        ]),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(fetchTownFlatTypeTrends()).rejects.toThrow(/503/);
+    await expect(fetchTownFlatTypeTrends()).resolves.toHaveLength(1);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });

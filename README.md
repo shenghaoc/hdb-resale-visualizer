@@ -91,7 +91,7 @@ npm run sync-data
 7. Emits:
    - `public/data/manifest.json`
    - `public/data/block-summaries.json`
-   - `public/data/trends/town-flat-type.json`
+   - `public/data/trends/town-flat-type.json` (monthly medians, median $/sqm, and transaction counts by town × flat type)
    - `public/data/mrt-exits.geojson`
    - `public/data/details/`
 

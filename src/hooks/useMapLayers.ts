@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import {
   MEDIAN_PRICE_COLOR_EXPRESSION,
+  MRT_STATION_COLOR,
   PRIMARY_BLUE,
   SCHOOL_LABEL_COLOR,
   SCHOOL_LABEL_HALO_COLOR,
@@ -9,6 +10,7 @@ import {
   PRIMARY_SCHOOL_LAYER_IDS,
   PRIMARY_SCHOOL_SOURCE_ID,
 } from "@/lib/constants";
+import { getAmenityMinZoom } from "@/lib/amenity-visibility";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {
@@ -130,6 +132,63 @@ export function useMapLayers(map: MapLibreMap | null) {
         paint: {
           "text-color": SCHOOL_LABEL_COLOR,
           "text-halo-color": SCHOOL_LABEL_HALO_COLOR,
+          "text-halo-width": 1.5,
+        },
+      });
+
+      map.addSource("mrt-stations", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addSource("mrt-exits", {
+        type: "geojson",
+        data: { type: "FeatureCollection", features: [] },
+      });
+
+      map.addLayer({
+        id: "mrt-exits-points",
+        type: "circle",
+        source: "mrt-exits",
+        minzoom: getAmenityMinZoom('mrt-exit'),
+        layout: { visibility: "none" },
+        paint: {
+          "circle-color": "#475569",
+          "circle-radius": 3,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-stations-points",
+        type: "circle",
+        source: "mrt-stations",
+        minzoom: getAmenityMinZoom('mrt-station'),
+        layout: { visibility: "none" },
+        paint: {
+          "circle-color": MRT_STATION_COLOR,
+          "circle-radius": 5,
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "#ffffff",
+        },
+      });
+
+      map.addLayer({
+        id: "mrt-stations-labels",
+        type: "symbol",
+        source: "mrt-stations",
+        minzoom: getAmenityMinZoom('mrt-station'),
+        layout: {
+          visibility: "none",
+          "text-field": ["get", "stationName"],
+          "text-size": 11,
+          "text-offset": [0, 1.2],
+          "text-anchor": "top",
+        },
+        paint: {
+          "text-color": MRT_STATION_COLOR,
+          "text-halo-color": "#ffffff",
           "text-halo-width": 1.5,
         },
       });
