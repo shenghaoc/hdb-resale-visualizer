@@ -24,13 +24,31 @@ Historical working notes are kept in [`docs/archive/`](docs/archive/) (non-canon
 
 Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.md)) and optional model-specific entrypoints ([`CLAUDE.md`](CLAUDE.md), [`GEMINI.md`](GEMINI.md)) that redirect to the same Kiro guidance.
 
+## Screenshots
+
+| Overview | Filtered by town |
+|---|---|
+| ![Overview](docs/screenshots/01-overview.png) | ![Filter panel](docs/screenshots/02-filter-panel.png) |
+
+| Results list | Block detail |
+|---|---|
+| ![Results](docs/screenshots/04-results-pane.png) | ![Block detail](docs/screenshots/05-block-detail.png) |
+
+| Shortlist | Mobile |
+|---|---|
+| ![Shortlist](docs/screenshots/06-saved.png) | ![Mobile](docs/screenshots/03-mobile.png) |
+
 ## What it does
 
 - Visualizes resale blocks as address points on a Singapore map
 - Filters by town, flat type, flat model, budget, floor area, lease year, date window, and MRT distance
-- Shows block-level median pricing, recent transactions, and 12 to 24 month trends
-- Stores a local browser shortlist with notes and target prices
-- Keeps the frontend static by generating JSON artifacts ahead of time
+- Shows block-level median pricing, recent transactions, and 12–24 month price trends
+- Overlays MRT stations, MRT exits, schools, hawker centres, supermarkets, and parks as toggleable amenity layers
+- Price heatmap mode colors the map by median $/sqm for at-a-glance comparisons
+- Budget match badges highlight blocks within your target range
+- Block detail drawer shows lease remaining, floor area range, transaction history, and a trend chart
+- Stores a browser-local shortlist with per-block notes and target prices
+- Keeps the frontend 100% static by precomputing all JSON artifacts at build time
 
 ## Official data sources
 
