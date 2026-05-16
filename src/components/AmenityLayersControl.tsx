@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { GraduationCap, MapPin, TrainFront } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
 
@@ -22,15 +23,17 @@ function LayerSwitch({
   enabled,
   disabled,
   ariaLabel,
+  tooltip,
   onToggle,
 }: {
   enabled: boolean;
   disabled: boolean;
   ariaLabel: string;
+  tooltip?: string;
   onToggle: () => void;
 }) {
   const active = enabled && !disabled;
-  return (
+  const switchButton = (
     <button
       type="button"
       role="switch"
@@ -51,6 +54,19 @@ function LayerSwitch({
         aria-hidden="true"
       />
     </button>
+  );
+
+  if (!tooltip) {
+    return switchButton;
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="inline-flex shrink-0">{switchButton}</span>
+      </TooltipTrigger>
+      <TooltipContent>{tooltip}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -150,6 +166,7 @@ export function AmenityLayersControl({
             enabled={schoolOverlayEnabled}
             disabled={!schoolCanToggle}
             ariaLabel={schoolAriaLabel}
+            tooltip={schoolAriaLabel}
             onToggle={onToggleSchoolOverlay}
           />
         </div>

@@ -1,5 +1,6 @@
 import { type CSSProperties, useId } from "react";
 import { Flame } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
 import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
@@ -37,6 +38,7 @@ export function PriceHeatmapControl({
 }: PriceHeatmapControlProps) {
   const sliderId = useId();
   const toggleId = useId();
+  const toggleHint = isEnabled ? t("heatmap.disable") : t("heatmap.enable");
 
   return (
     <div
@@ -59,29 +61,33 @@ export function PriceHeatmapControl({
           {t("heatmap.label")}
         </p>
 
-        {/* Custom toggle switch */}
-        <button
-          type="button"
-          role="switch"
-          aria-checked={isEnabled}
-          aria-label={isEnabled ? t("heatmap.disable") : t("heatmap.enable")}
-          id={toggleId}
-          onClick={onToggle}
-          className={cn(
-            "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-            isEnabled
-              ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)] dark:bg-orange-400 dark:shadow-[0_0_12px_rgba(251,146,60,0.2)]"
-              : "bg-muted-foreground/30",
-          )}
-        >
-          <span
-            className={cn(
-              "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
-              isEnabled ? "translate-x-3" : "translate-x-0",
-            )}
-            aria-hidden="true"
-          />
-        </button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={isEnabled}
+              aria-label={t("heatmap.label")}
+              id={toggleId}
+              onClick={onToggle}
+              className={cn(
+                "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                isEnabled
+                  ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)] dark:bg-orange-400 dark:shadow-[0_0_12px_rgba(251,146,60,0.2)]"
+                  : "bg-muted-foreground/30",
+              )}
+            >
+              <span
+                className={cn(
+                  "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
+                  isEnabled ? "translate-x-3" : "translate-x-0",
+                )}
+                aria-hidden="true"
+              />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>{toggleHint}</TooltipContent>
+        </Tooltip>
       </div>
 
       {/* Mode toggle and Opacity slider — only shown when heatmap is active */}
