@@ -12,7 +12,20 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
-import type { BlockSummary } from "@/types/data";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
+import { fetchTownFlatTypeTrends } from "@/lib/data";
+import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { Locale, Translator } from "@/lib/i18n";
+import { TownProfileSection } from "@/components/TownProfileSection";
+import {
+  buildLeaseCommencementHistogram,
+  pickBlocksBelowTownMedian,
+  pickTopBlocksByTransactionCount,
+  resolveTrendMonthRange,
+  rollupTownFlatTypesInRange,
+  sumRollupVolume,
+  volumeWeightedMeanLatestMedianPricePerSqm,
+} from "@/lib/town-profile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -86,9 +99,22 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
   isCompact?: boolean;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
+  /** When set together with scope, results show a factual town overview above the list. */
+  profileTown?: string | null;
+  profileTownBlocks?: BlockSummary[];
+  profileDataWindow?: { minMonth: string; maxMonth: string } | null;
+  profileStartMonth?: string | null;
+  profileEndMonth?: string | null;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
+type TownTrendSnap = {
+  status: "idle" | "loaded" | "failed";
+  requestedTown: string;
+  rows: TownFlatTypeTrendPoint[];
+};
 
 const BlockCard = memo(function BlockCard({
   block,
@@ -98,6 +124,10 @@ const BlockCard = memo(function BlockCard({
   isCompact = false,
   onSelect,
   onToggleShortlist,
+  budgetMin,
+  budgetMax,
+  t,
+  locale,
 }: {
   block: BlockSummary;
   index: number;
@@ -106,9 +136,11 @@ const BlockCard = memo(function BlockCard({
   isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
+  budgetMin: number | null;
+  budgetMax: number | null;
+  t: Translator;
+  locale: Locale;
 }) {
-  const { locale, t } = useI18n();
-
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
@@ -143,9 +175,19 @@ const BlockCard = memo(function BlockCard({
               <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
-              <span className="text-[0.58rem] font-medium text-muted-foreground">
-                {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
-              </span>
+              <div className="flex items-center justify-end gap-1.5">
+                  <BudgetMatchBadge
+                    medianPrice={block.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    className="scale-90 origin-right"
+                  />
+                <span className="text-[0.58rem] font-medium text-muted-foreground">
+                  {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                </span>
+              </div>
             </div>
             <Button
               size="xs"
@@ -308,8 +350,15 @@ export function ResultsPane({
   onToggleShortlist,
   scrollParent,
   isCompact = false,
+  budgetMin = null,
+  budgetMax = null,
+  profileTown = null,
+  profileTownBlocks = [],
+  profileDataWindow = null,
+  profileStartMonth = null,
+  profileEndMonth = null,
 }: ResultsPaneProps) {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const sortOptions: Array<{ value: SortMode; label: string }> = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
@@ -326,6 +375,98 @@ export function ResultsPane({
   const compactRowHeight = 110;
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
+
+  const showTownProfile = Boolean(hasResultScope && profileTown && profileDataWindow);
+  const townTrendMountedRef = useRef(true);
+  const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
+
+  const [trendSnap, setTrendSnap] = useState<TownTrendSnap>({
+    status: "idle",
+    requestedTown: "",
+    rows: [],
+  });
+
+  useEffect(() => {
+    townTrendMountedRef.current = true;
+    return () => {
+      townTrendMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showTownProfile || !profileTown) {
+      return;
+    }
+
+    if (trendSnap.status === "loaded") {
+      return;
+    }
+
+    if (trendSnap.status === "failed" && trendSnap.requestedTown === profileTown) {
+      return;
+    }
+
+    const requestedTown = profileTown;
+    const request = townTrendRequestRef.current ?? fetchTownFlatTypeTrends();
+    townTrendRequestRef.current = request;
+    void request
+      .then((data) => {
+        if (townTrendRequestRef.current === request) {
+          townTrendRequestRef.current = null;
+        }
+        if (!townTrendMountedRef.current) {
+          return;
+        }
+        setTrendSnap({ status: "loaded", requestedTown, rows: data });
+      })
+      .catch(() => {
+        if (townTrendRequestRef.current === request) {
+          townTrendRequestRef.current = null;
+        }
+        if (!townTrendMountedRef.current) {
+          return;
+        }
+        setTrendSnap({ status: "failed", requestedTown, rows: [] });
+      });
+  }, [profileTown, showTownProfile, trendSnap.requestedTown, trendSnap.status]);
+
+  const townTrendRows = useMemo(
+    () => (trendSnap.status === "loaded" ? trendSnap.rows : []),
+    [trendSnap],
+  );
+  const townTrendLoading =
+    showTownProfile &&
+    (trendSnap.status === "idle" || (trendSnap.status === "failed" && trendSnap.requestedTown !== profileTown));
+  const townTrendFailed = showTownProfile && trendSnap.status === "failed" && trendSnap.requestedTown === profileTown;
+
+  const townTrendRange = useMemo(() => {
+    if (!profileDataWindow) {
+      return null;
+    }
+    return resolveTrendMonthRange(profileDataWindow, profileStartMonth ?? null, profileEndMonth ?? null);
+  }, [profileDataWindow, profileEndMonth, profileStartMonth]);
+
+  const townRollups = useMemo(() => {
+    if (!showTownProfile || !profileTown || !townTrendRange) {
+      return [];
+    }
+    return rollupTownFlatTypesInRange(townTrendRows, profileTown, townTrendRange);
+  }, [profileTown, showTownProfile, townTrendRange, townTrendRows]);
+
+  const townTotalVol = useMemo(() => sumRollupVolume(townRollups), [townRollups]);
+  const townWeightedSqm = useMemo(() => volumeWeightedMeanLatestMedianPricePerSqm(townRollups), [townRollups]);
+
+  const townLeaseBuckets = useMemo(
+    () => buildLeaseCommencementHistogram(profileTownBlocks ?? []),
+    [profileTownBlocks],
+  );
+
+  const busyTownBlocks = useMemo(
+    () => pickTopBlocksByTransactionCount(profileTownBlocks ?? [], 5),
+    [profileTownBlocks],
+  );
+
+  const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
 
   const sortedBlocks = useMemo(() => {
     const sorted = [...blocks];
@@ -536,42 +677,67 @@ export function ResultsPane({
               <p className="text-sm font-medium">{t("results.selectTown")}</p>
               <p className="text-xs">{t("results.useTownFilter")}</p>
             </div>
-          ) : blocks.length === 0 ? (
-            <div className="flex flex-1 items-start">
-              <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
-            </div>
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">
-              <div
-                ref={listContainerRef}
-                className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
-              >
-                <ItemGroup
-                  className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
-                  style={
-                    shouldVirtualize
-                      ? {
-                          paddingTop: virtualTopPadding,
-                          paddingBottom: virtualBottomPadding,
-                        }
-                      : undefined
-                  }
-                >
-                  {(shouldVirtualize ? virtualBlocks : currentBlocks).map((block, idx) => (
-                    <BlockCard
-                      key={block.addressKey}
-                      index={idx}
-                      block={block}
-                      isFeatured={block.addressKey === selectedAddressKey}
-                      isSaved={shortlistKeys.has(block.addressKey)}
-                      isCompact={isCompact}
-                      onSelect={onSelect}
-                      onToggleShortlist={onToggleShortlist}
-                    />
-                  ))}
-                </ItemGroup>
-                {!shouldVirtualize ? renderPagination() : null}
-              </div>
+              {showTownProfile && profileTown && townTrendRange ? (
+                <TownProfileSection
+                  locale={locale}
+                  t={t}
+                  townName={profileTown}
+                  monthRange={townTrendRange}
+                  rollups={townRollups}
+                  totalTrendVolume={townTotalVol}
+                  weightedLatestSqm={townWeightedSqm}
+                  leaseBuckets={townLeaseBuckets}
+                  busyBlocks={busyTownBlocks}
+                  belowMedian={townBelowMedianPack}
+                  trendsLoading={townTrendLoading}
+                  trendsFailed={townTrendFailed}
+                  onSelectBlock={onSelect}
+                />
+              ) : null}
+              {blocks.length === 0 ? (
+                <div className="flex flex-1 items-start pt-2">
+                  <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
+                </div>
+              ) : (
+                <div className={cn("flex min-h-[8rem] flex-1 flex-col gap-4", showTownProfile && "basis-[8rem]")}>
+                  <div
+                    ref={listContainerRef}
+                    className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}
+                  >
+                    <ItemGroup
+                      className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
+                      style={
+                        shouldVirtualize
+                          ? {
+                              paddingTop: virtualTopPadding,
+                              paddingBottom: virtualBottomPadding,
+                            }
+                          : undefined
+                      }
+                    >
+                      {(shouldVirtualize ? virtualBlocks : currentBlocks).map((block, idx) => (
+                        <BlockCard
+                          key={block.addressKey}
+                          index={idx}
+                          block={block}
+                          isFeatured={block.addressKey === selectedAddressKey}
+                          isSaved={shortlistKeys.has(block.addressKey)}
+                          isCompact={isCompact}
+                          onSelect={onSelect}
+                          onToggleShortlist={onToggleShortlist}
+                          budgetMin={budgetMin ?? null}
+                          budgetMax={budgetMax ?? null}
+                          t={t}
+                          locale={locale}
+                        />
+                      ))}
+                    </ItemGroup>
+                    {!shouldVirtualize ? renderPagination() : null}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </CardContent>

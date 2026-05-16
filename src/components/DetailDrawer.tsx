@@ -64,8 +64,11 @@ import {
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 import { buildBlockExplanation } from "@/lib/block-explanation";
+import { deriveFlatTypePriceLadder } from "@/lib/flat-type-ladder";
+import { FlatTypePriceLadder } from "@/components/FlatTypePriceLadder";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -325,6 +328,11 @@ export function DetailDrawer({
     [currentSummary, currentYear, remainingLeaseMin],
   );
 
+  const flatTypeLadder = useMemo(() => {
+    if (!currentSummary || !detail?.recentTransactions) return [];
+    return deriveFlatTypePriceLadder(currentSummary.flatTypes, detail.recentTransactions);
+  }, [currentSummary, detail]);
+
   const trendPoints = useMemo(() => {
     if (!detail) return [];
     return sliceTrendByRange(detail.monthlyTrend, trendRange);
@@ -489,6 +497,16 @@ export function DetailDrawer({
                           {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
                         </Badge>
                       ) : null}
+                      {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
+                        <BudgetMatchBadge
+                          medianPrice={currentSummary.medianPrice}
+                          budgetMin={filters.budgetMin}
+                          budgetMax={filters.budgetMax}
+                          t={t}
+                          locale={locale}
+                          className="mt-2"
+                        />
+                      ) : null}
                       {detail?.summary.pricePerSqftMedian ? (
                         <div className="mt-1 text-xs font-medium text-muted-foreground">
                           {t("unit.psf", {
@@ -516,6 +534,17 @@ export function DetailDrawer({
                 </div>
 
                 <LeaseWarningPanel signals={leaseSignals} t={t} />
+
+                {flatTypeLadder.length > 0 && (
+                  <section>
+                    <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.72rem]">
+                      <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
+                      {t("detail.priceLadder")}
+                    </h3>
+                    <FlatTypePriceLadder entries={flatTypeLadder} />
+                    <p className="mt-1 text-[0.58rem] text-muted-foreground">{t("detail.priceLadderHint")}</p>
+                  </section>
+                )}
 
                 <section>
                   <h3 className="v2-section-title mb-3 flex items-center gap-2">

@@ -99,10 +99,10 @@ describe("shortlist storage", () => {
     };
 
     storage.set(SHORTLIST_STORAGE_KEY, JSON.stringify([oldFormatItem, newFormatItem]));
-    
+
     const loaded = loadShortlist(shim);
     expect(loaded).toHaveLength(2);
-    
+
     // Old item should be normalized with undefined for new fields
     expect(loaded[0]).toEqual({
       ...oldFormatItem,

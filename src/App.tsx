@@ -14,6 +14,7 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { AppHeader } from "@/components/AppHeader";
+import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
@@ -51,6 +52,8 @@ function App() {
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
+  const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
+  const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
   const pipeline = useFilterPipeline({
     manifest,
@@ -106,6 +109,14 @@ function App() {
         onRemove: () => patchFilters(chip.clearPatch),
       })),
     [filters, locale, patchFilters, t],
+  );
+
+  const townProfileBlocks = useMemo(
+    () =>
+      pipeline.effectiveFilters.town
+        ? pipeline.blocks.filter((b) => b.town === pipeline.effectiveFilters.town)
+        : [],
+    [pipeline.blocks, pipeline.effectiveFilters.town],
   );
 
   const {
@@ -213,6 +224,9 @@ function App() {
         isDarkMode={theme === "dark"}
         priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
         priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
+        mrtStationsEnabled={mrtStationsEnabled}
+        mrtExitsEnabled={mrtExitsEnabled}
+        heatmapMode={heatmap.heatmapMode}
         primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
@@ -256,6 +270,13 @@ function App() {
           selectedAddressKey={filters.selectedAddressKey}
           shortlistKeys={shortlistKeySet}
           isCompact
+          budgetMin={filters.budgetMin}
+          budgetMax={filters.budgetMax}
+          profileTown={pipeline.effectiveFilters.town || null}
+          profileTownBlocks={townProfileBlocks}
+          profileDataWindow={manifest.dataWindow}
+          profileStartMonth={pipeline.effectiveFilters.startMonth}
+          profileEndMonth={pipeline.effectiveFilters.endMonth}
         />
       </Suspense>
     </div>
@@ -271,6 +292,8 @@ function App() {
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
         rows={shortlistRows}
         remainingLeaseMin={filters.remainingLeaseMin}
+        budgetMin={filters.budgetMin}
+        budgetMax={filters.budgetMax}
       />
     </Suspense>
   ) : null;
@@ -317,6 +340,7 @@ function App() {
         <PriceLegend
           isDesktop={panel.isDesktop}
           isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
+          mode={heatmap.heatmapMode}
           t={t}
         />
 
@@ -325,8 +349,10 @@ function App() {
           <PriceHeatmapControl
             isEnabled={heatmap.priceHeatmapEnabled}
             opacity={heatmap.priceHeatmapOpacity}
+            mode={heatmap.heatmapMode}
             onToggle={heatmap.togglePriceHeatmap}
             onOpacityChange={heatmap.setPriceHeatmapOpacity}
+            onModeChange={heatmap.setHeatmapMode}
             t={t}
             className="absolute z-25"
             style={{
@@ -357,6 +383,27 @@ function App() {
                 : pipeline.hasMapMarkerScope
                   ? "15rem"
                   : "11.5rem",
+              right: panel.isDesktop ? "4.5rem" : "0.75rem",
+            }}
+          />
+        )}
+
+        {(panel.isDesktop || panel.mobileTab === null) && (
+          <AmenityLayersControl
+            mrtStationsEnabled={mrtStationsEnabled}
+            mrtExitsEnabled={mrtExitsEnabled}
+            onToggleMrtStations={() => setMrtStationsEnabled((v) => !v)}
+            onToggleMrtExits={() => setMrtExitsEnabled((v) => !v)}
+            t={t}
+            className="absolute z-25 w-32"
+            style={{
+              bottom: panel.isDesktop
+                ? pipeline.hasMapMarkerScope
+                  ? "14.5rem"
+                  : "11rem"
+                : pipeline.hasMapMarkerScope
+                  ? "18.5rem"
+                  : "15rem",
               right: panel.isDesktop ? "4.5rem" : "0.75rem",
             }}
           />

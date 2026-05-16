@@ -48,6 +48,7 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
  * Storage keys for local persistence.
  */
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
+export const CHECKLIST_STORAGE_KEY = "hdb_resale_checklist_v1";
 
 /**
  * Maximum number of properties that can be saved to the shortlist.
@@ -93,6 +94,7 @@ export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-scho
 export const SCHOOL_MARKER_COLOR = "#f59e0b";
 export const SCHOOL_LABEL_COLOR = "#92400e";
 export const SCHOOL_LABEL_HALO_COLOR = "#fff7ed";
+export const MRT_STATION_COLOR = "#dc2626";
 
 export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 400000, color: "#3a8a6f" },
@@ -108,6 +110,15 @@ export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification
   ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
 ];
 export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
+
+export const PRICE_PER_SQM_COLOR_STOPS = [
+  { price: 4000, color: "#3a8a6f" },
+  { price: 6000, color: "#9bb368" },
+  { price: 8000, color: "#d4a44e" },
+  { price: 10000, color: "#d97757" },
+  { price: 13000, color: "#a83232" },
+] as const;
+export const PRICE_PER_SQM_LEGEND_GRADIENT = `linear-gradient(90deg, ${PRICE_PER_SQM_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 /**
  * Query state configuration.

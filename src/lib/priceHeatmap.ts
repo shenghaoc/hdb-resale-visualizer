@@ -1,3 +1,4 @@
+import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 /**
@@ -32,8 +33,33 @@ export function addPriceHeatmapLayer(
   map: MapLibreMap,
   opacity: number,
   data: GeoJSON.FeatureCollection,
+  mode: HeatmapMode,
 ): void {
-  if (isHeatmapLayerPresent(map)) return;
+  // If layer exists, check if mode changed by inspecting its properties
+  // MapLibre's setPaintProperty can update it dynamically if we just want to update mode without full removal
+  if (isHeatmapLayerPresent(map)) {
+    map.setPaintProperty(
+      HEATMAP_LAYER_ID,
+      "heatmap-weight",
+      mode === "perSqm"
+        ? [
+            "interpolate",
+            ["linear"],
+            ["get", "price_per_sqm_median"],
+            4000, 0,
+            13000, 1,
+          ]
+        : [
+            "interpolate",
+            ["linear"],
+            ["get", "median_price"],
+            400_000, 0,
+            1_500_000, 1,
+          ]
+    );
+    map.setPaintProperty(HEATMAP_LAYER_ID, "heatmap-opacity", opacity);
+    return;
+  }
 
   // Create a dedicated non-clustered source for the heatmap.
   // Clustering collapses individual points which results in a sparse heatmap.
@@ -51,15 +77,21 @@ export function addPriceHeatmapLayer(
       source: HEATMAP_SOURCE_ID,
       maxzoom: 17,
       paint: {
-        // Weight each point by its median_price.  Normalise to 0-1 against
-        // the expected Singapore HDB price range (400 K - 1.5 M).
-        "heatmap-weight": [
-          "interpolate",
-          ["linear"],
-          ["get", "median_price"],
-          400_000, 0,
-          1_500_000, 1,
-        ],
+        "heatmap-weight": mode === "perSqm"
+          ? [
+              "interpolate",
+              ["linear"],
+              ["get", "price_per_sqm_median"],
+              4000, 0,
+              13000, 1,
+            ]
+          : [
+              "interpolate",
+              ["linear"],
+              ["get", "median_price"],
+              400_000, 0,
+              1_500_000, 1,
+            ],
         // Intensity ramps up as you zoom in so the heat field stays legible.
         "heatmap-intensity": [
           "interpolate",
@@ -68,8 +100,6 @@ export function addPriceHeatmapLayer(
           9, 0.6,
           15, 2,
         ],
-        // HSL color ramp: cool teal to amber to deep red (mirrors the existing
-        // MEDIAN_PRICE_COLOR_STOPS palette to stay visually coherent).
         "heatmap-color": [
           "interpolate",
           ["linear"],

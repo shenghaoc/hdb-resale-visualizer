@@ -20,6 +20,10 @@ This project enforces a strict build-time/runtime contract.
 - `public/data/trends/town-flat-type.json`
 - `public/data/mrt-exits.geojson`
 
+### `public/data/trends/town-flat-type.json`
+
+JSON array of **town × flat type × month** resale summaries. Each row: `town`, `flatType`, `month` (`YYYY-MM`), `medianPrice`, `medianPricePerSqm` (median of resale `pricePerSqm` within that slice), and `transactionCount`. Used for the town overview and validated at runtime by `townFlatTypeTrendPointSchema` in `src/lib/dataSchemas.ts`.
+
 ## Rules
 1. Runtime must only load files from `public/data/`.
 2. Coordinates and proximity metrics must be precomputed in `scripts/`.

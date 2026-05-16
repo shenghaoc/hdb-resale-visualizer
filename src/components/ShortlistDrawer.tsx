@@ -42,6 +42,10 @@ import {
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
+import { BuyerChecklist } from "@/components/BuyerChecklist";
+import { useChecklist } from "@/hooks/useChecklist";
+import type { ChecklistItemId } from "@/lib/checklist";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -92,6 +96,8 @@ type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
   remainingLeaseMin: number | null;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
@@ -125,9 +131,13 @@ echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, Canvas
 function ShortlistComparisonTable({
   comparisonRows,
   onSelectAddress,
+  budgetMin,
+  budgetMax,
 }: {
   comparisonRows: ShortlistComparisonRow[];
   onSelectAddress: (addressKey: string) => void;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
 }) {
   const { locale, t } = useI18n();
 
@@ -224,6 +234,15 @@ function ShortlistComparisonTable({
                   <span className="block font-extrabold tabular-nums text-foreground">
                     {formatCompactCurrency(row.medianPrice, locale)}
                   </span>
+                  <BudgetMatchBadge
+                    medianPrice={row.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    variant="compact"
+                    className="block text-[0.6rem] font-bold tabular-nums"
+                  />
                   {gap ? (
                     <span
                       className={cn(
@@ -503,10 +522,14 @@ function ShortlistRowEditor({
   item,
   gapInfo,
   onUpdate,
+  checkedItems,
+  onToggleChecklist,
 }: {
   item: ShortlistItem;
   gapInfo: GapInfo | null;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
+  checkedItems: ChecklistItemId[];
+  onToggleChecklist: (addressKey: string, itemId: ChecklistItemId) => void;
 }) {
   const { locale, t } = useI18n();
 
@@ -611,6 +634,13 @@ function ShortlistRowEditor({
         />
       </div>
 
+      <BuyerChecklist
+        addressKey={item.addressKey}
+        checkedItems={checkedItems}
+        onToggle={onToggleChecklist}
+        t={t}
+      />
+
       <NotesEditor
         id={`notes-${item.addressKey}`}
         label={t("shortlist.notes")}
@@ -626,6 +656,8 @@ export function ShortlistDrawer({
   isOpen,
   rows,
   remainingLeaseMin,
+  budgetMin = null,
+  budgetMax = null,
   onToggleOpen,
   onRemove,
   onUpdate,
@@ -633,12 +665,20 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
+  const { state: checklistState, toggle: toggleChecklist } = useChecklist();
   const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
   const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [shareError, setShareError] = useState<string | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
+
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+    if (!isOpen && shareError !== null) setShareError(null);
+  }
 
   const currentYear = getCurrentYear();
   const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
@@ -667,6 +707,7 @@ export function ShortlistDrawer({
   // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
   if (rows.length !== prevRowsCount) {
     setPrevRowsCount(rows.length);
+    if (shareError !== null) setShareError(null);
     if (prevRowsCount === 0 && rows.length > 0 && expandedKey === null) {
       // If we just added the first item and nothing is expanded, expand it for the cockpit experience
       setExpandedKey(rows[0].item.addressKey);
@@ -713,8 +754,14 @@ export function ShortlistDrawer({
   }
 
   async function handleShare() {
+    setShareError(null);
+    const encoded = encodeShortlistForUrl(rows.map((row) => row.item));
+    if (!encoded) {
+      setShareError(t("shortlist.shareErrorTooLarge"));
+      return;
+    }
     const params = new URLSearchParams(window.location.search);
-    params.set("shortlist", encodeShortlistForUrl(rows.map((row) => row.item)));
+    params.set("shortlist", encoded);
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
     if (navigator.share) {
@@ -1054,6 +1101,12 @@ export function ShortlistDrawer({
                 </Button>
               </div>
 
+              {shareError && (
+                <div role="alert" className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive">
+                  {shareError}
+                </div>
+              )}
+
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
                 <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
@@ -1136,6 +1189,8 @@ export function ShortlistDrawer({
                     <ShortlistComparisonTable
                       comparisonRows={comparisonViewRows}
                       onSelectAddress={onSelectAddress}
+                      budgetMin={budgetMin}
+                      budgetMax={budgetMax}
                     />
                   ) : null}
 
@@ -1198,6 +1253,15 @@ export function ShortlistDrawer({
                                     <strong className="block text-base font-extrabold leading-tight tracking-tight v2-tabular">
                                       {formatCompactCurrency(row.block.medianPrice, locale)}
                                     </strong>
+                                    <BudgetMatchBadge
+                                      medianPrice={row.block.medianPrice}
+                                      budgetMin={budgetMin ?? null}
+                                      budgetMax={budgetMax ?? null}
+                                      t={t}
+                                      locale={locale}
+                                      variant="compact"
+                                      className="block text-[0.58rem] font-bold"
+                                    />
                                     <span className="block text-[0.6rem] font-semibold text-muted-foreground">
                                       {row.detailSummary?.pricePerSqftMedian
                                         ? t("unit.psf", {
@@ -1390,6 +1454,8 @@ export function ShortlistDrawer({
                                 item={row.item}
                                 gapInfo={gapInfo}
                                 onUpdate={onUpdate}
+                                checkedItems={checklistState[row.item.addressKey] ?? []}
+                                onToggleChecklist={toggleChecklist}
                               />
 
                               <div className="grid grid-cols-2 gap-2">
