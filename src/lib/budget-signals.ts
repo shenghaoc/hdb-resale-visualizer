@@ -18,6 +18,10 @@ export function getBudgetMatchSignal(
   budgetMin: number | null,
   budgetMax: number | null,
 ): BudgetMatchResult {
+  if (!Number.isFinite(medianPrice)) {
+    return { status: "no-budget", diffAmount: null };
+  }
+
   // No budget filters active
   if (budgetMin === null && budgetMax === null) {
     return { status: "no-budget", diffAmount: null };
@@ -43,15 +47,11 @@ export function getBudgetMatchSignal(
   }
 
   // Below min budget
-  if (medianPrice < effectiveMin) {
-    const diff = effectiveMin - medianPrice;
-    const nearThreshold = effectiveMin * NEAR_THRESHOLD_PERCENT;
+  const diff = effectiveMin - medianPrice;
+  const nearThreshold = effectiveMin * NEAR_THRESHOLD_PERCENT;
 
-    if (diff <= nearThreshold) {
-      return { status: "near-below", diffAmount: diff };
-    }
-    return { status: "below-min", diffAmount: diff };
+  if (diff <= nearThreshold) {
+    return { status: "near-below", diffAmount: diff };
   }
-
-  return { status: "no-budget", diffAmount: null };
+  return { status: "below-min", diffAmount: diff };
 }

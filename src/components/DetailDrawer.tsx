@@ -490,7 +490,7 @@ export function DetailDrawer({
                           {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
                         </Badge>
                       ) : null}
-                      {currentSummary && (filters?.budgetMin != null || filters?.budgetMax != null) ? (
+                      {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
                         <BudgetMatchBadge
                           medianPrice={currentSummary.medianPrice}
                           budgetMin={filters.budgetMin}

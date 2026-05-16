@@ -237,7 +237,8 @@ function ShortlistComparisonTable({
                     budgetMax={budgetMax ?? null}
                     t={t}
                     locale={locale}
-                    className="block text-[0.6rem] font-bold tabular-nums bg-transparent p-0 text-inherit"
+                    variant="compact"
+                    className="block text-[0.6rem] font-bold tabular-nums"
                   />
                   {gap ? (
                     <span
@@ -1129,7 +1130,8 @@ export function ShortlistDrawer({
                                       budgetMax={budgetMax ?? null}
                                       t={t}
                                       locale={locale}
-                                      className="block text-[0.58rem] font-bold bg-transparent p-0 text-inherit"
+                                      variant="compact"
+                                      className="block text-[0.58rem] font-bold"
                                     />
                                     <span className="block text-[0.6rem] font-semibold text-muted-foreground">
                                       {row.detailSummary?.pricePerSqftMedian

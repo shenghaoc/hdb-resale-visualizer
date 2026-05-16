@@ -54,6 +54,18 @@ describe("budget signals", () => {
     expect(result.diffAmount).toBe(30000);
   });
 
+  it("returns near-above when only max is set and price is slightly above", () => {
+    const result = getBudgetMatchSignal(650000, null, 600000);
+    expect(result.status).toBe("near-above");
+    expect(result.diffAmount).toBe(50000);
+  });
+
+  it("returns near-below when only min is set and price is slightly below", () => {
+    const result = getBudgetMatchSignal(370000, 400000, null);
+    expect(result.status).toBe("near-below");
+    expect(result.diffAmount).toBe(30000);
+  });
+
   it("returns above-max when price is significantly above max (over 10%)", () => {
     const maxBudget = 600000;
     const price = 700000; // 16.7% above max
