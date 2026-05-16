@@ -104,6 +104,7 @@ export function AppHeader({
             className="size-8 p-0 text-muted-foreground hover:text-foreground"
             onClick={onDismiss}
             aria-label={t("app.dismissHeader")}
+            title={t("app.dismissHeader")}
           >
             <X data-icon className="size-4" />
           </Button>

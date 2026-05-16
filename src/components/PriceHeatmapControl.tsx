@@ -65,6 +65,7 @@ export function PriceHeatmapControl({
           role="switch"
           aria-checked={isEnabled}
           aria-label={isEnabled ? t("heatmap.disable") : t("heatmap.enable")}
+          title={isEnabled ? t("heatmap.disable") : t("heatmap.enable")}
           id={toggleId}
           onClick={onToggle}
           className={cn(
