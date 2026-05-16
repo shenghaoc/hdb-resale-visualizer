@@ -1037,6 +1037,7 @@ export function DetailDrawer({
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
                 aria-label={isSaved ? t("detail.saved") : t("detail.save")}
+                disabled={!currentSummary}
               >
                 <Bookmark data-icon="inline-start" className={cn("size-4", isSaved && "fill-current")} aria-hidden="true" />
                 <span className="truncate">
@@ -1052,6 +1053,7 @@ export function DetailDrawer({
                 variant="outline"
                 className="min-w-0 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
+                disabled={!currentSummary}
                 onClick={() => {
                   const url = new URL("https://www.google.com/maps/search/");
                   url.searchParams.append("api", "1");

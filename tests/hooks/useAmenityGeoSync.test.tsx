@@ -56,4 +56,51 @@ describe("useAmenityGeoSync", () => {
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "visible");
     expect(map.getZoom).not.toHaveBeenCalled();
   });
+
+  it("sets visibility to none when layers are disabled", () => {
+    const map = createMapStub();
+
+    renderHook(() =>
+      useAmenityGeoSync({
+        map,
+        mrtStationsEnabled: false,
+        mrtExitsEnabled: false,
+      }),
+    );
+
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "none");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "none");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
+  });
+
+  it("handles partial state: stations enabled, exits disabled", () => {
+    const map = createMapStub();
+
+    renderHook(() =>
+      useAmenityGeoSync({
+        map,
+        mrtStationsEnabled: true,
+        mrtExitsEnabled: false,
+      }),
+    );
+
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "visible");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "visible");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
+  });
+
+  it("skips setLayoutProperty for layers not present in the map", () => {
+    const map = createMapStub();
+    map.getLayer = vi.fn(() => undefined);
+
+    renderHook(() =>
+      useAmenityGeoSync({
+        map,
+        mrtStationsEnabled: true,
+        mrtExitsEnabled: true,
+      }),
+    );
+
+    expect(map.setLayoutProperty).not.toHaveBeenCalled();
+  });
 });
