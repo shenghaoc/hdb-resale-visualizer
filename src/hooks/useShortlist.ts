@@ -69,14 +69,21 @@ export function useShortlist() {
 
   const update = useCallback((addressKey: string, patch: Partial<ShortlistItem>) => {
     setItems((current) =>
-      current.map((item) =>
-        item.addressKey === addressKey
-          ? {
-              ...item,
-              ...patch,
-            }
-          : item,
-      ),
+      current.map((item) => {
+        if (item.addressKey !== addressKey) return item;
+        const next = { ...item, ...patch };
+
+        // Normalize empty strings and nulls to undefined to omit them from JSON serialization,
+        // reducing the footprint in localStorage and shared URL payloads.
+        if (next.pros === "") next.pros = undefined;
+        if (next.cons === "") next.cons = undefined;
+        if (next.renovation === "") next.renovation = undefined;
+        if (next.noise === "") next.noise = undefined;
+        if (next.transport === "") next.transport = undefined;
+        if (next.agentRemarks === "") next.agentRemarks = undefined;
+
+        return next;
+      }),
     );
   }, []);
 

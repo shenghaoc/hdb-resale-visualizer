@@ -5,6 +5,13 @@ import type { ShortlistItem } from "@/types/data";
 const shortlistItemSchema = z.object({
   addressKey: z.string(),
   notes: z.string().catch(""),
+  pros: z.string().optional().catch(undefined),
+  cons: z.string().optional().catch(undefined),
+  renovation: z.string().optional().catch(undefined),
+  noise: z.string().optional().catch(undefined),
+  transport: z.string().optional().catch(undefined),
+  offerCeiling: z.number().optional().catch(undefined),
+  agentRemarks: z.string().optional().catch(undefined),
   targetPrice: z.number().nullable().catch(null),
   addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
 });

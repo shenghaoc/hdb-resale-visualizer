@@ -123,6 +123,13 @@ export type FilterState = {
 export type ShortlistItem = {
   addressKey: string;
   notes: string;
+  pros?: string;
+  cons?: string;
+  renovation?: string;
+  noise?: string;
+  transport?: string;
+  offerCeiling?: number;
+  agentRemarks?: string;
   targetPrice: number | null;
   addedAt: string;
 };
