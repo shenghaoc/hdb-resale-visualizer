@@ -301,7 +301,7 @@ export function DetailDrawer({
 
   const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
-  const isDrawerOpen = Boolean(currentSummary || filters?.selectedAddressKey || isLoading);
+  const isDrawerOpen = Boolean(currentSummary || filters?.selectedAddressKey);
   const explanationCodes = useMemo(
     () =>
       currentSummary
