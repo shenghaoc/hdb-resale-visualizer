@@ -556,11 +556,14 @@ export function ResultsPane({
       return;
     }
 
+    let scrollFrameId: number | null = null;
+
     const updateViewport = () => {
       setViewportHeight(scroller.clientHeight);
     };
 
-    const handleScroll = () => {
+    const updateScrollTop = () => {
+      scrollFrameId = null;
       if (scrollParent) {
         setScrollTop(
           Math.max(0, scroller.getBoundingClientRect().top - listEl.getBoundingClientRect().top),
@@ -572,12 +575,22 @@ export function ResultsPane({
       setScrollTop(Math.max(0, scrollerTop - listTop));
     };
 
+    const handleScroll = () => {
+      if (scrollFrameId !== null) {
+        return;
+      }
+      scrollFrameId = window.requestAnimationFrame(updateScrollTop);
+    };
+
     updateViewport();
-    handleScroll();
+    updateScrollTop();
     scroller.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", updateViewport);
 
     return () => {
+      if (scrollFrameId !== null) {
+        window.cancelAnimationFrame(scrollFrameId);
+      }
       scroller.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateViewport);
     };
