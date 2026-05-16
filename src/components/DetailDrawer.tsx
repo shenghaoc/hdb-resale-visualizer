@@ -64,6 +64,7 @@ import {
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 import { buildBlockExplanation } from "@/lib/block-explanation";
 import { deriveFlatTypePriceLadder } from "@/lib/flat-type-ladder";
@@ -495,6 +496,16 @@ export function DetailDrawer({
                         <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
                           {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
                         </Badge>
+                      ) : null}
+                      {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
+                        <BudgetMatchBadge
+                          medianPrice={currentSummary.medianPrice}
+                          budgetMin={filters.budgetMin}
+                          budgetMax={filters.budgetMax}
+                          t={t}
+                          locale={locale}
+                          className="mt-2"
+                        />
                       ) : null}
                       {detail?.summary.pricePerSqftMedian ? (
                         <div className="mt-1 text-xs font-medium text-muted-foreground">

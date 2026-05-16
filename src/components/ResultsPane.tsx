@@ -12,8 +12,10 @@ import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { fetchTownFlatTypeTrends } from "@/lib/data";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
 import {
   buildLeaseCommencementHistogram,
@@ -97,6 +99,8 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
   isCompact?: boolean;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
   /** When set together with scope, results show a factual town overview above the list. */
   profileTown?: string | null;
   profileTownBlocks?: BlockSummary[];
@@ -120,6 +124,10 @@ const BlockCard = memo(function BlockCard({
   isCompact = false,
   onSelect,
   onToggleShortlist,
+  budgetMin,
+  budgetMax,
+  t,
+  locale,
 }: {
   block: BlockSummary;
   index: number;
@@ -128,9 +136,11 @@ const BlockCard = memo(function BlockCard({
   isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
+  budgetMin: number | null;
+  budgetMax: number | null;
+  t: Translator;
+  locale: Locale;
 }) {
-  const { locale, t } = useI18n();
-
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
@@ -165,9 +175,19 @@ const BlockCard = memo(function BlockCard({
               <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
-              <span className="text-[0.58rem] font-medium text-muted-foreground">
-                {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
-              </span>
+              <div className="flex items-center justify-end gap-1.5">
+                  <BudgetMatchBadge
+                    medianPrice={block.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    className="scale-90 origin-right"
+                  />
+                <span className="text-[0.58rem] font-medium text-muted-foreground">
+                  {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                </span>
+              </div>
             </div>
             <Button
               size="xs"
@@ -330,13 +350,15 @@ export function ResultsPane({
   onToggleShortlist,
   scrollParent,
   isCompact = false,
+  budgetMin = null,
+  budgetMax = null,
   profileTown = null,
   profileTownBlocks = [],
   profileDataWindow = null,
   profileStartMonth = null,
   profileEndMonth = null,
 }: ResultsPaneProps) {
-  const { t, locale } = useI18n();
+  const { locale, t } = useI18n();
   const sortOptions: Array<{ value: SortMode; label: string }> = [
     { value: "median-asc", label: t("results.sort.lowestMedian") },
     { value: "median-desc", label: t("results.sort.highestMedian") },
@@ -705,6 +727,10 @@ export function ResultsPane({
                           isCompact={isCompact}
                           onSelect={onSelect}
                           onToggleShortlist={onToggleShortlist}
+                          budgetMin={budgetMin ?? null}
+                          budgetMax={budgetMax ?? null}
+                          t={t}
+                          locale={locale}
                         />
                       ))}
                     </ItemGroup>

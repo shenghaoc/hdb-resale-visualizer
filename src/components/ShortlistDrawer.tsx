@@ -42,6 +42,7 @@ import {
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
 import type { ChecklistItemId } from "@/lib/checklist";
@@ -95,6 +96,8 @@ type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
   remainingLeaseMin: number | null;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
@@ -128,9 +131,13 @@ echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, Canvas
 function ShortlistComparisonTable({
   comparisonRows,
   onSelectAddress,
+  budgetMin,
+  budgetMax,
 }: {
   comparisonRows: ShortlistComparisonRow[];
   onSelectAddress: (addressKey: string) => void;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
 }) {
   const { locale, t } = useI18n();
 
@@ -227,6 +234,15 @@ function ShortlistComparisonTable({
                   <span className="block font-extrabold tabular-nums text-foreground">
                     {formatCompactCurrency(row.medianPrice, locale)}
                   </span>
+                  <BudgetMatchBadge
+                    medianPrice={row.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    variant="compact"
+                    className="block text-[0.6rem] font-bold tabular-nums"
+                  />
                   {gap ? (
                     <span
                       className={cn(
@@ -546,6 +562,8 @@ export function ShortlistDrawer({
   isOpen,
   rows,
   remainingLeaseMin,
+  budgetMin = null,
+  budgetMax = null,
   onToggleOpen,
   onRemove,
   onUpdate,
@@ -1077,6 +1095,8 @@ export function ShortlistDrawer({
                     <ShortlistComparisonTable
                       comparisonRows={comparisonViewRows}
                       onSelectAddress={onSelectAddress}
+                      budgetMin={budgetMin}
+                      budgetMax={budgetMax}
                     />
                   ) : null}
 
@@ -1139,6 +1159,15 @@ export function ShortlistDrawer({
                                     <strong className="block text-base font-extrabold leading-tight tracking-tight v2-tabular">
                                       {formatCompactCurrency(row.block.medianPrice, locale)}
                                     </strong>
+                                    <BudgetMatchBadge
+                                      medianPrice={row.block.medianPrice}
+                                      budgetMin={budgetMin ?? null}
+                                      budgetMax={budgetMax ?? null}
+                                      t={t}
+                                      locale={locale}
+                                      variant="compact"
+                                      className="block text-[0.58rem] font-bold"
+                                    />
                                     <span className="block text-[0.6rem] font-semibold text-muted-foreground">
                                       {row.detailSummary?.pricePerSqftMedian
                                         ? t("unit.psf", {

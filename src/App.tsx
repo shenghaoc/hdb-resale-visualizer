@@ -270,6 +270,8 @@ function App() {
           selectedAddressKey={filters.selectedAddressKey}
           shortlistKeys={shortlistKeySet}
           isCompact
+          budgetMin={filters.budgetMin}
+          budgetMax={filters.budgetMax}
           profileTown={pipeline.effectiveFilters.town || null}
           profileTownBlocks={townProfileBlocks}
           profileDataWindow={manifest.dataWindow}
@@ -290,6 +292,8 @@ function App() {
         onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
         rows={shortlistRows}
         remainingLeaseMin={filters.remainingLeaseMin}
+        budgetMin={filters.budgetMin}
+        budgetMax={filters.budgetMax}
       />
     </Suspense>
   ) : null;
