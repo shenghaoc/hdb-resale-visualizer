@@ -1,8 +1,31 @@
 import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { DATA_BASE_PATH } from "@/lib/constants";
-import { isGeoJsonDataSourceLike } from "@/types/map";
 import { getAmenityMinZoom } from "@/lib/amenity-visibility";
+import { getStationDetails } from "@/lib/mrt-station-details";
+import { isGeoJsonDataSourceLike } from "@/types/map";
+
+function enrichMrtFeaturesWithLineColors(
+  collection: GeoJSON.FeatureCollection,
+  stationNameProperty: "stationName" | "STATION_NA",
+): GeoJSON.FeatureCollection {
+  return {
+    ...collection,
+    features: collection.features.map((feature) => {
+      const properties = feature.properties ?? {};
+      const stationName = String(properties[stationNameProperty] ?? "");
+      const { color } = getStationDetails(stationName);
+
+      return {
+        ...feature,
+        properties: {
+          ...properties,
+          color,
+        },
+      };
+    }),
+  };
+}
 
 export function useAmenityGeoSync({
   map,
@@ -24,7 +47,9 @@ export function useAmenityGeoSync({
           if (!r.ok) throw new Error(`Failed to load stations: ${r.status}`);
           return r.json();
         })
-        .then((data: GeoJSON.FeatureCollection) => setStationsGeoJson(data))
+        .then((data: GeoJSON.FeatureCollection) =>
+          setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName")),
+        )
         .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT stations"));
     }
   }, [mrtStationsEnabled, stationsGeoJson]);
@@ -36,7 +61,9 @@ export function useAmenityGeoSync({
           if (!r.ok) throw new Error(`Failed to load exits: ${r.status}`);
           return r.json();
         })
-        .then((data: GeoJSON.FeatureCollection) => setExitsGeoJson(data))
+        .then((data: GeoJSON.FeatureCollection) =>
+          setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA")),
+        )
         .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT exits"));
     }
   }, [mrtExitsEnabled, exitsGeoJson]);

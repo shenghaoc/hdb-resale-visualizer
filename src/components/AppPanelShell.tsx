@@ -63,7 +63,10 @@ export function AppPanelShell({
             data-mode={leftTab}
             className={cn(
               "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-border/20 bg-card/94 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-[0_-8px_32px_rgba(23,28,31,0.08)] dark:border-primary/10 dark:bg-card dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_-16px_64px_rgba(4,12,24,0.92)]",
-              "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem]",
+              detailVisible || detailLoading
+                ? "max-h-[min(calc(100vh-8rem),52rem)]"
+                : "max-h-[min(44rem,calc(100vh-12rem))]",
+              "min-h-[24rem]",
               isLeftPanelOpen
                 ? "translate-y-0 opacity-100"
                 : "pointer-events-none translate-y-6 opacity-0",
@@ -157,8 +160,9 @@ export function AppPanelShell({
               <div
                 id="mobile-results-content"
                 className={cn(
-                  "h-full min-h-0 flex-col gap-3 overflow-y-auto p-3 pb-12",
+                  "h-full min-h-0 flex-col gap-3 p-3 pb-12",
                   mobileTab === "results" ? "flex" : "hidden",
+                  detailVisible || detailLoading ? "overflow-hidden" : "overflow-y-auto",
                 )}
               >
                 <div

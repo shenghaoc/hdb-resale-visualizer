@@ -21,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+import { ECHARTS_GRID_CONTAIN_AXIS_LABELS } from "@/lib/echarts-grid";
 import { cn } from "@/lib/utils";
 import { useI18n, type Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
@@ -42,6 +43,7 @@ import {
 import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
@@ -949,7 +951,7 @@ export function ShortlistDrawer({
       animationDuration: 400,
       backgroundColor: "transparent",
       color: colors.palette,
-      grid: { left: 8, right: 12, top: 42, bottom: 24, containLabel: true },
+      grid: { left: 8, right: 12, top: 42, bottom: 24, ...ECHARTS_GRID_CONTAIN_AXIS_LABELS },
       tooltip: {
         trigger: "axis",
         backgroundColor: colors.popover,
@@ -1428,10 +1430,7 @@ export function ShortlistDrawer({
                                         )}
                                       >
                                         <span className="flex min-w-0 items-center gap-2">
-                                          <span
-                                            className="size-1.5 rounded-full bg-muted-foreground/40"
-                                            style={idx === 0 ? { backgroundColor: accentColor } : undefined}
-                                          />
+                                          <MrtLineDots stationName={mrt.stationName} />
                                           <span className="truncate text-xs font-bold">{mrt.stationName}</span>
                                         </span>
                                         <Badge

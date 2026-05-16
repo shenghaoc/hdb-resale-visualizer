@@ -6,6 +6,8 @@ import type { Translator } from "@/lib/i18n";
 type SchoolOverlayControlProps = {
   isEnabled: boolean;
   hasSchools: boolean;
+  hasSelection: boolean;
+  isLoading: boolean;
   onToggle: () => void;
   t: Translator;
   className?: string;
@@ -15,12 +17,22 @@ type SchoolOverlayControlProps = {
 export function SchoolOverlayControl({
   isEnabled,
   hasSchools,
+  hasSelection,
+  isLoading,
   onToggle,
   t,
   className,
   style,
 }: SchoolOverlayControlProps) {
+  const canToggle = hasSchools && !isLoading;
   const label = isEnabled ? t("schoolOverlay.disable") : t("schoolOverlay.enable");
+  const ariaLabel = isLoading
+    ? t("schoolOverlay.loading")
+    : hasSchools
+      ? label
+      : hasSelection
+        ? t("schoolOverlay.noSchoolsNearby")
+        : t("schoolOverlay.unavailable");
 
   return (
     <div
@@ -45,19 +57,20 @@ export function SchoolOverlayControl({
         <button
           type="button"
           role="switch"
-          aria-checked={isEnabled && hasSchools}
-          aria-label={hasSchools ? label : t("schoolOverlay.unavailable")}
-          disabled={!hasSchools}
+          aria-checked={isEnabled && canToggle}
+          aria-busy={isLoading}
+          aria-label={ariaLabel}
+          disabled={!canToggle}
           onClick={onToggle}
           className={cn(
             "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
-            isEnabled && hasSchools ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
+            isEnabled && canToggle ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
           )}
         >
           <span
             className={cn(
               "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
-              isEnabled && hasSchools ? "translate-x-3" : "translate-x-0",
+              isEnabled && canToggle ? "translate-x-3" : "translate-x-0",
             )}
             aria-hidden="true"
           />

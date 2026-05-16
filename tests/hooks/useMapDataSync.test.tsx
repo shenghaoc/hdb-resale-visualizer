@@ -41,6 +41,7 @@ function createMapStub({
       ["primary-school-markers", "primary-school-labels"].includes(id) ? {} : undefined,
     ),
     setLayoutProperty: vi.fn(),
+    moveLayer: vi.fn(),
     on: vi.fn((event: string, handler: EventHandler) => {
       if (!handlers.has(event)) handlers.set(event, []);
       handlers.get(event)!.push(handler);
@@ -215,7 +216,7 @@ describe("useMapDataSync", () => {
         geoJson: EMPTY_GEOJSON,
         priceHeatmapEnabled: false,
         primarySchoolsGeoJson: schoolsGeoJson,
-        showPrimarySchools: true,
+        schoolOverlayEnabled: true,
       }),
     );
 

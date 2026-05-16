@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getStationDetails } from "../../scripts/lib/mrt";
+import { getStationDetails } from "@/lib/mrt-station-details";
 
 describe("getStationDetails", () => {
   it("does not infer EWL for Bedok North", () => {

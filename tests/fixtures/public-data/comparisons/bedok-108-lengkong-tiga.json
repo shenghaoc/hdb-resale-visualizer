@@ -1,0 +1,43 @@
+{
+  "addressKey": "bedok-108-lengkong-tiga",
+  "town": "BEDOK",
+  "flatType": "EXECUTIVE",
+  "amenities": {
+    "primarySchoolsWithin1km": 2,
+    "primarySchoolsWithin2km": 5,
+    "nearestPrimarySchoolMeters": 350,
+    "nearestPrimarySchools": [
+      {
+        "name": "EUNOS PRIMARY SCHOOL",
+        "distanceMeters": 350,
+        "coordinates": {
+          "lat": 1.3278,
+          "lng": 103.9032
+        }
+      },
+      {
+        "name": "ST. STEPHEN'S SCHOOL",
+        "distanceMeters": 1100,
+        "coordinates": {
+          "lat": 1.3198,
+          "lng": 103.9062
+        }
+      }
+    ],
+    "hawkerCentresWithin1km": 2,
+    "nearestHawkerCentreMeters": 180,
+    "supermarketsWithin1km": 1,
+    "nearestSupermarketMeters": 320,
+    "parksWithin1km": 4,
+    "nearestParkMeters": 150
+  },
+  "percentileRanks": {
+    "pricePercentile": 65,
+    "pricePerSqmPercentile": 70,
+    "leasePercentile": 45,
+    "mrtDistancePercentile": 80,
+    "transactionCountPercentile": 55,
+    "recencyPercentile": 90
+  },
+  "generatedAt": "2026-04-22T00:00:00.000Z"
+}

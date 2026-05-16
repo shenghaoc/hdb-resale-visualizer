@@ -28,8 +28,6 @@ import { SchoolOverlayControl } from "@/components/SchoolOverlayControl";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay, type PrimarySchoolWithBand } from "@/lib/school-proximity";
 
-const EMPTY_SCHOOLS: PrimarySchoolWithBand[] = [];
-
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
@@ -99,7 +97,9 @@ function App() {
     () => getPrimarySchoolsForOverlay(comparison?.amenities.nearestPrimarySchools ?? []),
     [comparison],
   );
-  const showSchoolOverlay = schoolOverlayEnabled && primarySchoolsForOverlay.length > 0;
+  const canShowSchoolOverlay = primarySchoolsForOverlay.length > 0;
+  const schoolOverlaySelectionActive = Boolean(filters.selectedAddressKey);
+  const schoolOverlayLoading = schoolOverlaySelectionActive && isComparisonLoading;
 
   const activeFilterChips = useMemo(
     () =>
@@ -227,7 +227,8 @@ function App() {
         mrtStationsEnabled={mrtStationsEnabled}
         mrtExitsEnabled={mrtExitsEnabled}
         heatmapMode={heatmap.heatmapMode}
-        primarySchools={showSchoolOverlay ? primarySchoolsForOverlay : EMPTY_SCHOOLS}
+        primarySchools={primarySchoolsForOverlay}
+        schoolOverlayEnabled={schoolOverlayEnabled && canShowSchoolOverlay}
         geographicIntent={pipeline.effectiveMapGeographicIntent}
         onMapInteract={handleMapInteract}
         onGeolocate={handleGeolocate}
@@ -260,7 +261,10 @@ function App() {
     ) : null;
 
   const resultsPaneContent = (
-    <div hidden={!panel.resultsVisible}>
+    <div
+      hidden={!panel.resultsVisible}
+      className={panel.resultsVisible ? "flex min-h-0 flex-1 flex-col" : undefined}
+    >
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
         <ResultsPane
           blocks={pipeline.filteredBlocks}
@@ -371,7 +375,9 @@ function App() {
         {(panel.isDesktop || panel.mobileTab === null) && (
           <SchoolOverlayControl
             isEnabled={schoolOverlayEnabled}
-            hasSchools={primarySchoolsForOverlay.length > 0}
+            hasSchools={canShowSchoolOverlay}
+            hasSelection={schoolOverlaySelectionActive}
+            isLoading={schoolOverlayLoading}
             onToggle={() => setSchoolOverlayEnabled((enabled) => !enabled)}
             t={t}
             className="absolute z-25 w-32"

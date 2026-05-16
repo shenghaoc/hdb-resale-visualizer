@@ -1,0 +1,43 @@
+{
+  "addressKey": "ang-mo-kio-104a-ang-mo-kio-st-11",
+  "town": "ANG MO KIO",
+  "flatType": "EXECUTIVE",
+  "amenities": {
+    "primarySchoolsWithin1km": 2,
+    "primarySchoolsWithin2km": 5,
+    "nearestPrimarySchoolMeters": 650,
+    "nearestPrimarySchools": [
+      {
+        "name": "ANDERSON PRIMARY SCHOOL",
+        "distanceMeters": 650,
+        "coordinates": {
+          "lat": 1.3693,
+          "lng": 103.8493
+        }
+      },
+      {
+        "name": "ANG MO KIO PRIMARY SCHOOL",
+        "distanceMeters": 980,
+        "coordinates": {
+          "lat": 1.3695,
+          "lng": 103.8455
+        }
+      }
+    ],
+    "hawkerCentresWithin1km": 2,
+    "nearestHawkerCentreMeters": 180,
+    "supermarketsWithin1km": 1,
+    "nearestSupermarketMeters": 320,
+    "parksWithin1km": 4,
+    "nearestParkMeters": 150
+  },
+  "percentileRanks": {
+    "pricePercentile": 65,
+    "pricePerSqmPercentile": 70,
+    "leasePercentile": 45,
+    "mrtDistancePercentile": 80,
+    "transactionCountPercentile": 55,
+    "recencyPercentile": 90
+  },
+  "generatedAt": "2026-04-22T00:00:00.000Z"
+}

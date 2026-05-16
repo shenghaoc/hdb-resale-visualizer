@@ -4,6 +4,7 @@ import {
   ArrowDown,
   ArrowUp,
   CheckCircle2,
+  ChevronDown,
   Info,
   Scale,
   Sparkles,
@@ -101,6 +102,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
   const [storeyRange, setStoreyRange] = useState<string>(() => storeyOptions[0] ?? "");
   const [floorAreaInput, setFloorAreaInput] = useState<string>("");
   const [flatType, setFlatType] = useState<string>(() => flatTypeOptions[0] ?? "");
+  const [comparablesExpanded, setComparablesExpanded] = useState(false);
 
   const askingPrice = useMemo(() => {
     const cleaned = askingPriceInput.replace(/[^\d.]/g, "");
@@ -335,32 +337,52 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
 
       {comparables.length > 0 && (
         <section>
-          <h4 className="mb-2 flex items-center justify-between text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-            <span>{t("askingCheck.comparablesTitle")}</span>
-            <Badge variant="outline" className="font-mono text-[0.6rem]">
-              {comparables.length}
-            </Badge>
-          </h4>
-          <ul className="flex flex-col gap-1.5">
-            {comparables.slice(0, 8).map((tx) => (
-              <li
-                key={tx.id}
-                className="flex items-center justify-between gap-2 rounded-md border border-border/40 bg-card/70 px-3 py-2 text-xs"
-              >
-                <div className="flex flex-col gap-0.5 min-w-0">
-                  <span className="font-bold tabular-nums">
-                    {formatCurrency(tx.resalePrice, locale)}
-                  </span>
-                  <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                    {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}{t("unit.sqmShort")}
-                  </span>
-                </div>
-                <Badge variant="secondary" className="h-5 font-mono text-[0.6rem]">
-                  {formatMonth(tx.month, locale)}
-                </Badge>
-              </li>
-            ))}
-          </ul>
+          <button
+            type="button"
+            className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:bg-muted/40"
+            aria-expanded={comparablesExpanded}
+            onClick={() => setComparablesExpanded((expanded) => !expanded)}
+          >
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="truncate">{t("askingCheck.comparablesTitle")}</span>
+              <Badge variant="outline" className="h-5 shrink-0 font-mono text-[0.6rem]">
+                {comparables.length}
+              </Badge>
+            </span>
+            <ChevronDown
+              data-icon
+              className={cn("size-4 shrink-0 transition-transform", comparablesExpanded && "rotate-180")}
+              aria-hidden="true"
+            />
+            <span className="sr-only">
+              {comparablesExpanded
+                ? t("askingCheck.toggleComparablesHide")
+                : t("askingCheck.toggleComparablesShow")}
+            </span>
+          </button>
+          {comparablesExpanded ? (
+            <ul className="flex max-h-56 flex-col gap-1.5 overflow-y-auto pr-1 v2-scrollbar">
+              {comparables.slice(0, 8).map((tx) => (
+                <li
+                  key={tx.id}
+                  className="flex items-center justify-between gap-2 rounded-md border border-border/40 bg-card/70 px-3 py-2 text-xs"
+                >
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <span className="font-bold tabular-nums">
+                      {formatCurrency(tx.resalePrice, locale)}
+                    </span>
+                    <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                      {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
+                      {t("unit.sqmShort")}
+                    </span>
+                  </div>
+                  <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
+                    {formatMonth(tx.month, locale)}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </section>
       )}
     </section>

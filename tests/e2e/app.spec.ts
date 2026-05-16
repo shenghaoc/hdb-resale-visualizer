@@ -18,6 +18,7 @@ const comparisonFixture = {
       {
         name: "BEDOK PRIMARY SCHOOL",
         distanceMeters: 250,
+        coordinates: { lat: 1.324, lng: 103.933 },
       },
     ],
     hawkerCentresWithin1km: 2,

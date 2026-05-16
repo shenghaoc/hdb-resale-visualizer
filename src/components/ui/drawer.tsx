@@ -17,19 +17,42 @@ function Drawer({
   onKeyDown,
   ...props
 }: DrawerProps) {
+  const rootRef = React.useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    if (!open || !dismissible) {
+      return
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose?.()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    rootRef.current?.focus()
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [dismissible, onClose, open])
+
   if (!open) {
     return null
   }
 
   return (
     <div
+      ref={rootRef}
       data-slot="drawer"
       data-dismissible={dismissible}
-      className={cn("flex h-full min-h-0 flex-col", className)}
+      tabIndex={-1}
+      className={cn("flex h-full min-h-0 flex-col outline-none", className)}
       onKeyDown={(event) => {
-        onKeyDown?.(event);
+        onKeyDown?.(event)
         if (dismissible && event.key === "Escape") {
-          onClose?.();
+          onClose?.()
         }
       }}
       {...props}
