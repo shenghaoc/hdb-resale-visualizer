@@ -40,21 +40,19 @@ export function resolveTrendMonthRange(
   return { start: dataWindow.minMonth, end: dataWindow.maxMonth };
 }
 
-export function medianNumeric(values: readonly number[]): number {
+export function medianNumeric(values: readonly number[]): number | null {
   const n = values.length;
   if (n === 0) {
-    return 0;
+    return null;
   }
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(n / 2);
   if (n % 2 === 1) {
-    const sole = sorted.at(mid);
-    if (sole === undefined) throw new RangeError("medianNumeric: unreachable");
-    return sole;
+    return sorted.at(mid) ?? null;
   }
   const lower = sorted.at(mid - 1);
   const upper = sorted.at(mid);
-  if (lower === undefined || upper === undefined) throw new RangeError("medianNumeric: unreachable");
+  if (lower === undefined || upper === undefined) return null;
   return (lower + upper) / 2;
 }
 
@@ -164,20 +162,23 @@ export function pickTopBlocksByTransactionCount(blocks: readonly BlockSummary[],
     .slice(0, limit);
 }
 
-export function pickBlocksBelowTownMedian(blocks: readonly BlockSummary[], limit: number): { townMedian: number; picks: BlockSummary[] } {
+export function pickBlocksBelowTownMedian(blocks: readonly BlockSummary[], limit: number): { townMedian: number | null; blocks: BlockSummary[] } {
   if (blocks.length === 0) {
-    return { townMedian: 0, picks: [] };
+    return { townMedian: null, blocks: [] };
   }
   const townMedian = medianNumeric(blocks.map((b) => b.medianPrice));
-  if (limit <= 0) {
-    return { townMedian, picks: [] };
+  if (townMedian === null) {
+    return { townMedian, blocks: [] };
   }
-  const picks = [...blocks]
+  if (limit <= 0) {
+    return { townMedian, blocks: [] };
+  }
+  const belowMedianBlocks = [...blocks]
     .filter((b) => b.medianPrice < townMedian)
     .sort((a, b) => {
       if (a.medianPrice !== b.medianPrice) return a.medianPrice - b.medianPrice;
       return a.addressKey.localeCompare(b.addressKey);
     })
     .slice(0, limit);
-  return { townMedian, picks };
+  return { townMedian, blocks: belowMedianBlocks };
 }

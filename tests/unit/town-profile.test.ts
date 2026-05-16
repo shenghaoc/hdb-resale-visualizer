@@ -61,7 +61,7 @@ describe("town-profile statistical helpers", () => {
     expect(medianNumeric([5])).toBe(5);
     expect(medianNumeric([1, 10, 2])).toBe(2);
     expect(medianNumeric([100, 200])).toBe(150);
-    expect(medianNumeric([])).toBe(0);
+    expect(medianNumeric([])).toBeNull();
   });
 });
 
@@ -177,7 +177,11 @@ describe("town-profile block selections", () => {
     expect(median).toBe(460_000);
     const bundle = pickBlocksBelowTownMedian(blocks, 5);
     expect(bundle.townMedian).toBe(460_000);
-    expect(bundle.picks.map((r) => r.addressKey)).toEqual(["z-b"]);
+    expect(bundle.blocks.map((r) => r.addressKey)).toEqual(["z-b"]);
+  });
+
+  it("returns explicit null median when no block medians exist", () => {
+    expect(pickBlocksBelowTownMedian([], 5)).toEqual({ townMedian: null, blocks: [] });
   });
 });
 

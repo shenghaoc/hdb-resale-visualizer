@@ -106,6 +106,11 @@ type ResultsPaneProps = {
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
+type TownTrendSnap = {
+  status: "idle" | "loaded" | "failed";
+  requestedTown: string;
+  rows: TownFlatTypeTrendPoint[];
+};
 
 const BlockCard = memo(function BlockCard({
   block,
@@ -350,45 +355,67 @@ export function ResultsPane({
   const compactRowStride = compactRowHeight + compactRowGap;
 
   const showTownProfile = Boolean(hasResultScope && profileTown && profileDataWindow);
-  const trendsQueryKey = showTownProfile && profileTown ? profileTown : "";
+  const townTrendMountedRef = useRef(true);
+  const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
 
-  const [trendSnap, setTrendSnap] = useState<{
-    key: string;
-    rows: TownFlatTypeTrendPoint[];
-    failed: boolean;
-  }>({ key: "", rows: [], failed: false });
+  const [trendSnap, setTrendSnap] = useState<TownTrendSnap>({
+    status: "idle",
+    requestedTown: "",
+    rows: [],
+  });
 
   useEffect(() => {
-    if (!trendsQueryKey) {
+    townTrendMountedRef.current = true;
+    return () => {
+      townTrendMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showTownProfile || !profileTown) {
       return;
     }
 
-    let alive = true;
-    void fetchTownFlatTypeTrends()
+    if (trendSnap.status === "loaded") {
+      return;
+    }
+
+    if (trendSnap.status === "failed" && trendSnap.requestedTown === profileTown) {
+      return;
+    }
+
+    const requestedTown = profileTown;
+    const request = townTrendRequestRef.current ?? fetchTownFlatTypeTrends();
+    townTrendRequestRef.current = request;
+    void request
       .then((data) => {
-        if (!alive) {
+        if (townTrendRequestRef.current === request) {
+          townTrendRequestRef.current = null;
+        }
+        if (!townTrendMountedRef.current) {
           return;
         }
-        setTrendSnap({ key: trendsQueryKey, rows: data, failed: false });
+        setTrendSnap({ status: "loaded", requestedTown, rows: data });
       })
       .catch(() => {
-        if (!alive) {
+        if (townTrendRequestRef.current === request) {
+          townTrendRequestRef.current = null;
+        }
+        if (!townTrendMountedRef.current) {
           return;
         }
-        setTrendSnap({ key: trendsQueryKey, rows: [], failed: true });
+        setTrendSnap({ status: "failed", requestedTown, rows: [] });
       });
-
-    return () => {
-      alive = false;
-    };
-  }, [trendsQueryKey]);
+  }, [profileTown, showTownProfile, trendSnap.requestedTown, trendSnap.status]);
 
   const townTrendRows = useMemo(
-    () => (trendSnap.key === trendsQueryKey ? trendSnap.rows : []),
-    [trendSnap, trendsQueryKey],
+    () => (trendSnap.status === "loaded" ? trendSnap.rows : []),
+    [trendSnap],
   );
-  const townTrendLoading = Boolean(trendsQueryKey) && trendSnap.key !== trendsQueryKey;
-  const townTrendFailed = Boolean(trendsQueryKey) && trendSnap.key === trendsQueryKey && trendSnap.failed;
+  const townTrendLoading =
+    showTownProfile &&
+    (trendSnap.status === "idle" || (trendSnap.status === "failed" && trendSnap.requestedTown !== profileTown));
+  const townTrendFailed = showTownProfile && trendSnap.status === "failed" && trendSnap.requestedTown === profileTown;
 
   const townTrendRange = useMemo(() => {
     if (!profileDataWindow) {
@@ -641,7 +668,7 @@ export function ResultsPane({
                   weightedLatestSqm={townWeightedSqm}
                   leaseBuckets={townLeaseBuckets}
                   busyBlocks={busyTownBlocks}
-                  belowMedian={{ townMedian: townBelowMedianPack.townMedian, blocks: townBelowMedianPack.picks }}
+                  belowMedian={townBelowMedianPack}
                   trendsLoading={townTrendLoading}
                   trendsFailed={townTrendFailed}
                   onSelectBlock={onSelect}
@@ -652,7 +679,7 @@ export function ResultsPane({
                   <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
                 </div>
               ) : (
-                <div className={cn("flex min-h-0 flex-1 flex-col gap-4", showTownProfile && "basis-[12rem] shrink-0")}>
+                <div className={cn("flex min-h-[8rem] flex-1 flex-col gap-4", showTownProfile && "basis-[8rem]")}>
                   <div
                     ref={listContainerRef}
                     className={cn("min-h-0 flex-1 pr-2 v2-scrollbar", !scrollParent && "overflow-y-auto")}

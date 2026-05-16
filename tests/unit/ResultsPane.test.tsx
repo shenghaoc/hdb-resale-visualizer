@@ -1,8 +1,16 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResultsPane } from "@/components/ResultsPane";
 import { I18nProvider } from "@/lib/i18n";
-import type { BlockSummary } from "@/types/data";
+import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+
+const dataMocks = vi.hoisted(() => ({
+  fetchTownFlatTypeTrends: vi.fn<() => Promise<TownFlatTypeTrendPoint[]>>(),
+}));
+
+vi.mock("@/lib/data", () => ({
+  fetchTownFlatTypeTrends: dataMocks.fetchTownFlatTypeTrends,
+}));
 
 vi.mock("@/lib/storage", () => ({
   safeStorage: {
@@ -38,7 +46,41 @@ const block: BlockSummary = {
   ],
 };
 
+const amkBlock: BlockSummary = {
+  ...block,
+  addressKey: "ang-mo-kio-406-ang-mo-kio-ave-10",
+  town: "ANG MO KIO",
+  block: "406",
+  streetName: "ANG MO KIO AVE 10",
+  medianPrice: 610000,
+  transactionCount: 2,
+};
+
+const trendRows: TownFlatTypeTrendPoint[] = [
+  {
+    town: "BEDOK",
+    flatType: "4 ROOM",
+    month: "2024-01",
+    medianPrice: 580000,
+    medianPricePerSqm: 6105.26,
+    transactionCount: 12,
+  },
+  {
+    town: "ANG MO KIO",
+    flatType: "4 ROOM",
+    month: "2024-01",
+    medianPrice: 610000,
+    medianPricePerSqm: 6777.78,
+    transactionCount: 9,
+  },
+];
+
 describe("ResultsPane", () => {
+  beforeEach(() => {
+    dataMocks.fetchTownFlatTypeTrends.mockReset();
+    dataMocks.fetchTownFlatTypeTrends.mockResolvedValue(trendRows);
+  });
+
   it("localizes compact-card town and flat type labels", () => {
     render(
       <I18nProvider>
@@ -76,5 +118,49 @@ describe("ResultsPane", () => {
     expect(screen.getByText("BEDOK NORTH MRT STATION")).toBeInTheDocument();
     expect(screen.getByText("BEDOK MRT STATION")).toBeInTheDocument();
     expect(screen.getByText("KAKI BUKIT MRT STATION")).toBeInTheDocument();
+  });
+
+  it("keeps the shared town trend dataset loaded across town switches", async () => {
+    const { rerender } = render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact={true}
+          profileTown="BEDOK"
+          profileTownBlocks={[block]}
+          profileDataWindow={{ minMonth: "2024-01", maxMonth: "2024-01" }}
+        />
+      </I18nProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText("正在载入镇区级趋势文件…")).not.toBeInTheDocument();
+    });
+    expect(dataMocks.fetchTownFlatTypeTrends).toHaveBeenCalledTimes(1);
+
+    rerender(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[amkBlock]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact={true}
+          profileTown="ANG MO KIO"
+          profileTownBlocks={[amkBlock]}
+          profileDataWindow={{ minMonth: "2024-01", maxMonth: "2024-01" }}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.queryByText("正在载入镇区级趋势文件…")).not.toBeInTheDocument();
+    expect(dataMocks.fetchTownFlatTypeTrends).toHaveBeenCalledTimes(1);
   });
 });

@@ -70,7 +70,10 @@ export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
     townFlatTrendsPromise = fetchJson(
       `${DATA_BASE_PATH}/trends/town-flat-type.json`,
       townFlatTypeTrendPointSchema.array(),
-    );
+    ).catch((error) => {
+      townFlatTrendsPromise = null;
+      throw error;
+    });
   }
 
   return townFlatTrendsPromise;

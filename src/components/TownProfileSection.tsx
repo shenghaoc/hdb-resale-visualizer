@@ -18,7 +18,7 @@ type TownProfileSectionProps = {
   weightedLatestSqm: number | null;
   leaseBuckets: LeaseCommenceDecadeBucket[];
   busyBlocks: BlockSummary[];
-  belowMedian: { townMedian: number; blocks: BlockSummary[] };
+  belowMedian: { townMedian: number | null; blocks: BlockSummary[] };
   trendsLoading: boolean;
   trendsFailed: boolean;
   onSelectBlock: (addressKey: string) => void;
@@ -202,7 +202,7 @@ export function TownProfileSection({
               </p>
               <p className="mb-1.5 text-[0.61rem] leading-snug text-muted-foreground">
                 {t("townProfile.townMedianMeta", {
-                  median: formatCompactCurrency(belowMedian.townMedian, locale),
+                  median: belowMedian.townMedian === null ? "—" : formatCompactCurrency(belowMedian.townMedian, locale),
                 })}
               </p>
               <div className="flex flex-col gap-1.5">
