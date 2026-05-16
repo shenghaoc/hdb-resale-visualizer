@@ -12,17 +12,20 @@ export const CHECKLIST_ITEMS = [
 ] as const;
 
 export type ChecklistItemId = (typeof CHECKLIST_ITEMS)[number];
+export type ChecklistState = Record<string, ChecklistItemId[]>;
 
 const checklistStateSchema = z.record(
   z.string(),
-  z.array(z.string()).transform((arr) => {
+  z.array(z.string()).catch([]).transform((arr) => {
     return arr.filter((item): item is ChecklistItemId =>
       CHECKLIST_ITEMS.includes(item as ChecklistItemId),
     );
   }),
-).catch({});
-
-export type ChecklistState = Record<string, ChecklistItemId[]>;
+).transform((state): ChecklistState => {
+  return Object.fromEntries(
+    Object.entries(state).filter(([, items]) => items.length > 0),
+  );
+}).catch({});
 
 export function parseChecklistState(raw: unknown): ChecklistState {
   const parsed = checklistStateSchema.safeParse(raw);
@@ -49,9 +52,8 @@ export function saveChecklistState(
 ) {
   try {
     storage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {
+  } catch {
     // Ignore storage errors (e.g., quota exceeded)
-    console.error("Failed to save checklist state", e);
   }
 }
 

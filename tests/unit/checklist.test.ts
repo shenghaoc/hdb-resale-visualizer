@@ -57,6 +57,16 @@ describe("checklist storage", () => {
       "block-1": ["noise", "remainingLease"],
     });
 
+    // Malformed entries are dropped without wiping valid saved blocks
+    expect(
+      parseChecklistState({
+        "block-1": ["noise"],
+        "block-2": 42,
+      })
+    ).toEqual({
+      "block-1": ["noise"],
+    });
+
     // Invalid format returns empty object
     expect(parseChecklistState(null)).toEqual({});
     expect(parseChecklistState("not an object")).toEqual({});
