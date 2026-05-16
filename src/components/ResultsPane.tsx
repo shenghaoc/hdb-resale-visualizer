@@ -404,13 +404,16 @@ export function ResultsPane({
   profileEndMonth = null,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
-  const sortOptions: SortOption[] = [
-    { value: "median-asc", label: t("results.sort.lowestMedian") },
-    { value: "median-desc", label: t("results.sort.highestMedian") },
-    { value: "lease-desc", label: t("results.sort.longestLease") },
-    { value: "mrt-asc", label: t("results.sort.nearestMrt") },
-    { value: "latest-desc", label: t("results.sort.recentActivity") },
-  ];
+  const sortOptions: SortOption[] = useMemo(
+    () => [
+      { value: "median-asc", label: t("results.sort.lowestMedian") },
+      { value: "median-desc", label: t("results.sort.highestMedian") },
+      { value: "lease-desc", label: t("results.sort.longestLease") },
+      { value: "mrt-asc", label: t("results.sort.nearestMrt") },
+      { value: "latest-desc", label: t("results.sort.recentActivity") },
+    ],
+    [t],
+  );
   const [sortMode, setSortMode] = useState<SortMode>("median-asc");
   const [resultsView, setResultsView] = useState<ResultsViewMode>("blocks");
   const contentScrollRef = useRef<HTMLDivElement | null>(null);
@@ -517,6 +520,7 @@ export function ResultsPane({
   const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
 
   const sortedBlocks = useMemo(() => {
+    if (blocks.length === 0) return [];
     const sorted = [...blocks];
 
     // ⚡ Bolt: Inline sorting logic per mode instead of passing a switch statement inside the sort loop.
@@ -610,18 +614,26 @@ export function ResultsPane({
 
   const totalPages = Math.max(1, Math.ceil(sortedBlocks.length / itemsPerPage));
   const visiblePage = Math.min(currentPage, totalPages);
-  const currentBlocks = sortedBlocks.slice(
-    (visiblePage - 1) * itemsPerPage,
-    visiblePage * itemsPerPage,
+  const currentBlocks = useMemo(
+    () => sortedBlocks.slice((visiblePage - 1) * itemsPerPage, visiblePage * itemsPerPage),
+    [sortedBlocks, visiblePage, itemsPerPage],
   );
-  const overscan = 8;
-  const virtualStartIndex = Math.max(0, Math.floor(scrollTop / compactRowStride) - overscan);
-  const virtualVisibleRows =
-    Math.ceil((viewportHeight || compactRowStride * 8) / compactRowStride) + overscan * 2;
-  const virtualEndIndex = Math.min(sortedBlocks.length, virtualStartIndex + virtualVisibleRows);
-  const virtualBlocks = sortedBlocks.slice(virtualStartIndex, virtualEndIndex);
-  const virtualTopPadding = virtualStartIndex * compactRowStride;
-  const virtualBottomPadding = Math.max(0, (sortedBlocks.length - virtualEndIndex) * compactRowStride);
+  const {
+    virtualBlocks,
+    virtualTopPadding,
+    virtualBottomPadding,
+  } = useMemo(() => {
+    const overscan = 8;
+    const startIndex = Math.max(0, Math.floor(scrollTop / compactRowStride) - overscan);
+    const visibleRows =
+      Math.ceil((viewportHeight || compactRowStride * 8) / compactRowStride) + overscan * 2;
+    const endIndex = Math.min(sortedBlocks.length, startIndex + visibleRows);
+    return {
+      virtualBlocks: sortedBlocks.slice(startIndex, endIndex),
+      virtualTopPadding: startIndex * compactRowStride,
+      virtualBottomPadding: Math.max(0, (sortedBlocks.length - endIndex) * compactRowStride),
+    };
+  }, [scrollTop, viewportHeight, compactRowStride, sortedBlocks]);
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
