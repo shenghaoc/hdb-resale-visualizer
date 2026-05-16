@@ -1,7 +1,6 @@
 import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatDateTime, formatMonth } from "@/lib/format";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { Manifest } from "@/types/data";
@@ -98,21 +97,17 @@ export function AppHeader({
 
       {isDesktop ? (
         <div className="pointer-events-auto flex items-center gap-1 rounded-xl border border-border/20 bg-background/90 p-1 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                type="button"
-                size="icon"
-                variant="ghost"
-                className="size-8 p-0 text-muted-foreground hover:text-foreground"
-                onClick={onDismiss}
-                aria-label={t("app.dismissHeader")}
-              >
-                <X data-icon className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>{t("app.dismissHeader")}</TooltipContent>
-          </Tooltip>
+          <Button
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="size-8 p-0 text-muted-foreground hover:text-foreground"
+            onClick={onDismiss}
+            aria-label={t("app.dismissHeader")}
+            title={t("app.dismissHeader")}
+          >
+            <X data-icon className="size-4" />
+          </Button>
         </div>
       ) : null}
     </header>

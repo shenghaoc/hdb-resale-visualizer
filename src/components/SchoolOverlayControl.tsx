@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { GraduationCap } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Translator } from "@/lib/i18n";
 
@@ -21,8 +20,7 @@ export function SchoolOverlayControl({
   className,
   style,
 }: SchoolOverlayControlProps) {
-  const toggleHint = isEnabled ? t("schoolOverlay.disable") : t("schoolOverlay.enable");
-  const unavailableHint = t("schoolOverlay.unavailable");
+  const label = isEnabled ? t("schoolOverlay.disable") : t("schoolOverlay.enable");
 
   return (
     <div
@@ -44,33 +42,27 @@ export function SchoolOverlayControl({
         <p className="flex-1 text-[0.55rem] leading-none font-bold tracking-[0.1em] text-muted-foreground uppercase">
           {t("schoolOverlay.label")}
         </p>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-flex shrink-0">
-              <button
-                type="button"
-                role="switch"
-                aria-checked={isEnabled && hasSchools}
-                aria-label={hasSchools ? t("schoolOverlay.label") : unavailableHint}
-                disabled={!hasSchools}
-                onClick={onToggle}
-                className={cn(
-                  "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
-                  isEnabled && hasSchools ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
-                )}
-              >
-                <span
-                  className={cn(
-                    "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
-                    isEnabled && hasSchools ? "translate-x-3" : "translate-x-0",
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-            </span>
-          </TooltipTrigger>
-          <TooltipContent>{hasSchools ? toggleHint : unavailableHint}</TooltipContent>
-        </Tooltip>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={isEnabled && hasSchools}
+          aria-label={hasSchools ? label : t("schoolOverlay.unavailable")}
+          title={hasSchools ? label : t("schoolOverlay.unavailable")}
+          disabled={!hasSchools}
+          onClick={onToggle}
+          className={cn(
+            "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
+            isEnabled && hasSchools ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
+          )}
+        >
+          <span
+            className={cn(
+              "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
+              isEnabled && hasSchools ? "translate-x-3" : "translate-x-0",
+            )}
+            aria-hidden="true"
+          />
+        </button>
       </div>
     </div>
   );
