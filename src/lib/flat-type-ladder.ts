@@ -24,22 +24,16 @@ export function median(values: readonly number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
   if (sorted.length % 2 === 1) {
-    const v = sorted.at(mid);
-    if (v === undefined) throw new RangeError("median: unreachable");
-    return v;
+    return sorted[mid]!;
   }
-  const lower = sorted.at(mid - 1);
-  const upper = sorted.at(mid);
-  if (lower === undefined || upper === undefined) throw new RangeError("median: unreachable");
-  return (lower + upper) / 2;
+  return (sorted[mid - 1]! + sorted[mid]!) / 2;
 }
 
 function groupByFlatType(transactions: readonly Pick<AddressDetailTransaction, "flatType" | "resalePrice">[]) {
   const map = new Map<string, number[]>();
   for (const tx of transactions) {
-    const list = map.get(tx.flatType) ?? [];
-    list.push(tx.resalePrice);
-    map.set(tx.flatType, list);
+    if (!map.has(tx.flatType)) map.set(tx.flatType, []);
+    map.get(tx.flatType)!.push(tx.resalePrice);
   }
   return map;
 }

@@ -36,6 +36,14 @@ describe("deriveFlatTypePriceLadder", () => {
     expect(ladder.map((e) => e.flatType)).toEqual(["2 ROOM", "MODEL A"]);
   });
 
+  it("deduplicates repeated flat types in availableFlatTypes", () => {
+    const available = ["3 ROOM", "3 ROOM", "4 ROOM"];
+    const ladder = deriveFlatTypePriceLadder(available, [tx("3 ROOM", 400000)]);
+    expect(ladder).toHaveLength(2);
+    expect(ladder[0].flatType).toBe("3 ROOM");
+    expect(ladder[1].flatType).toBe("4 ROOM");
+  });
+
   it("rounds median price to nearest integer", () => {
     const available = ["3 ROOM"];
     const transactions = [tx("3 ROOM", 400001), tx("3 ROOM", 400002)];

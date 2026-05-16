@@ -527,7 +527,7 @@ export function DetailDrawer({
                 {flatTypeLadder.length > 0 && (
                   <section>
                     <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.72rem]">
-                      <Scale data-icon className="size-3.5" aria-hidden="true" />
+                      <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
                       {t("detail.priceLadder")}
                     </h3>
                     <FlatTypePriceLadder entries={flatTypeLadder} />

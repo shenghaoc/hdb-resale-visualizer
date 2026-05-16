@@ -18,9 +18,9 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
   }
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-2 text-[0.7rem]", className)} aria-label={t("detail.priceLadder")}>
+    <ul role="list" className={cn("flex flex-wrap items-center gap-2 text-[0.7rem]", className)} aria-label={t("detail.priceLadder")}>
       {entries.map((entry, idx) => (
-        <div key={entry.flatType} className="flex items-center gap-1.5">
+        <li key={entry.flatType} className="flex items-center gap-1.5">
           <div
             className={cn(
               "rounded-md border px-2 py-1 text-center",
@@ -44,8 +44,8 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
             )}
           </div>
           {idx < entries.length - 1 && <ArrowRight className="size-3 text-muted-foreground/60" aria-hidden />}
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
