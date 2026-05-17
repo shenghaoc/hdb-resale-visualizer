@@ -106,12 +106,12 @@ npm run sync-data
 
 ## Build and runtime guardrails
 
-To keep the static-data architecture enforceable as the codebase evolves, CI and local production builds run two mandatory checks before compiling:
+To keep the static-data architecture enforceable as the codebase evolves, production build commands run explicit pre-build guards:
 
 - `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
 - `npm run check:data` validates that required generated artifacts are present before static build output is produced.
 
-`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + compile + bundle budget check).
+`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + compile + bundle budget check). Ensure fixtures are present first with `npm run setup:fixtures` in a fresh clone.
 
 `npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + compile + bundle budget check).
 
@@ -160,9 +160,10 @@ GEOCODE_CONCURRENCY=10
 
 ## Troubleshooting
 
-### `npm run build` fails on boundary violations
+### `npm run build` fails on boundary or data checks
 
-`check:boundaries` fails when build-time modules import from `src/` (directly or transitively) or use Vite runtime aliases inside Node execution paths. Move shared logic to `shared/` and import from there in both runtime and script codepaths.
+- Boundary failures (`check:boundaries`): Node-executed modules in `scripts/` imported runtime code from `src/` (directly or transitively) or used Vite runtime aliases. Move cross-environment helpers into `shared/` and import from there.
+- Data failures (`check:data`): required files/directories are missing or empty under `public/data/`. In local dev, run `npm run setup:fixtures`; in refresh workflows, run `npm run sync-data`.
 
 ### Map fails to render in browser
 
