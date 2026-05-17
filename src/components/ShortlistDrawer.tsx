@@ -167,7 +167,7 @@ function ShortlistComparisonTable({
     >
       <Table
         aria-label={t("shortlist.compare.tableLabel")}
-        className="text-xs"
+        className="min-w-[48rem] text-xs"
       >
         <TableHeader>
           <TableRow className="bg-muted/30 hover:bg-muted/30">
