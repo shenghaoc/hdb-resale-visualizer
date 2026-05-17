@@ -90,7 +90,10 @@ Open `http://localhost:5173`.
 
 ```bash
 npm run dev
+npm run check:boundaries
+npm run check:data
 npm run build
+npm run build:full
 npm run preview
 npm run typecheck
 npm run lint
@@ -99,6 +102,18 @@ npm run test
 npm run test:e2e
 npm run sync-data
 ```
+
+
+## Build and runtime guardrails
+
+To keep the static-data architecture enforceable as the codebase evolves, production build commands run explicit pre-build guards:
+
+- `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
+- `npm run check:data` validates that required generated artifacts are present before static build output is produced.
+
+`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + typecheck + compile + bundle budget check). Ensure fixtures are present first with `npm run setup:fixtures` in a fresh clone.
+
+`npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
 
 ## Data pipeline
 
@@ -142,3 +157,13 @@ GEOCODE_CONCURRENCY=10
 - This is not a prediction product.
 - Coordinates are resolved during artifact generation, never in the browser.
 - OneMap attribution must remain visible when the map is rendered.
+
+## Troubleshooting
+
+### `npm run build` fails on boundary or data checks
+
+1. Run `npm run check:boundaries` to see script/runtime import violations.
+   - Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
+2. Run `npm run check:data` to verify required artifacts.
+   - Local development fix: `npm run setup:fixtures`
+   - Live data refresh fix: `npm run sync-data`
