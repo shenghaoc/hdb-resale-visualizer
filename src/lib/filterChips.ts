@@ -1,7 +1,7 @@
-import { formatNumber } from "@/lib/format";
-import { getBudgetDivisor, localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
-import type { Locale, Translator } from "@/lib/i18n/types";
-import type { FilterState } from "@/types/data";
+import { formatNumber } from "./format";
+import { getBudgetDivisor, localizeFlatType, localizeTownName } from "./i18n/domain";
+import type { Locale, Translator } from "./i18n/types";
+import type { FilterState } from "../types/data";
 
 export type ActiveFilterChipDescriptor = {
   key: "search" | "town" | "flatType" | "budget" | "remainingLeaseMin" | "mrtMax";

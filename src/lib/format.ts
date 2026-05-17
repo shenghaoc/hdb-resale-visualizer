@@ -1,5 +1,5 @@
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
-import type { Locale, Translator } from "@/lib/i18n/types";
+import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
+import type { Locale, Translator } from "./i18n/types";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 

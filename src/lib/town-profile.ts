@@ -1,4 +1,4 @@
-import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { BlockSummary, TownFlatTypeTrendPoint } from "../types/data";
 
 /** YYYY-MM month window (lexicographic order matches chronological order). */
 export type TrendMonthRange = { start: string; end: string };

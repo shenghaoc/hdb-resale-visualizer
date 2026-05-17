@@ -1,4 +1,4 @@
-import type { BlockSummary } from "@/types/data";
+import type { BlockSummary } from "../types/data";
 
 type GeoJsonFeature = {
   type: "Feature";

@@ -1,4 +1,4 @@
-import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
+import type { HeatmapMode } from "../hooks/usePriceHeatmap";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 /**

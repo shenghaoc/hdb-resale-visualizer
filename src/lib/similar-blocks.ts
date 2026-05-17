@@ -1,4 +1,4 @@
-import type { BlockSummary } from "@/types/data";
+import type { BlockSummary } from "../types/data";
 
 export type RankSimilarBlocksOptions = {
   /** Maximum number of results to return. Defaults to 6. */

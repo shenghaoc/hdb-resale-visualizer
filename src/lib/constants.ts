@@ -1,4 +1,4 @@
-import type { FilterState } from "@/types/data";
+import type { FilterState } from "../types/data";
 import type { ColorSpecification, DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
 
 /**

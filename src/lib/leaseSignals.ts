@@ -1,4 +1,4 @@
-import { MAX_LEASE_DURATION } from "@/lib/constants";
+import { MAX_LEASE_DURATION } from "./constants";
 
 export type LeaseSignalSeverity = "warn" | "info";
 export type LeaseSignalKey =

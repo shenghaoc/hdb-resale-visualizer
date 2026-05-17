@@ -1,4 +1,4 @@
-import type { Coordinates, NearbySchool } from "@/types/data";
+import type { Coordinates, NearbySchool } from "../types/data";
 
 export const PRIMARY_SCHOOL_1KM_METERS = 1_000;
 export const PRIMARY_SCHOOL_2KM_METERS = 2_000;
