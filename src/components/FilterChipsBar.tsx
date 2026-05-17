@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import type { Translator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -23,10 +23,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
   const itemCount = chips.length + 1;
   const [focusedIndex, setFocusedIndex] = useState(0);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
-  useEffect(() => {
-    setFocusedIndex((index) => (index >= itemCount ? itemCount - 1 : index));
-  }, [itemCount]);
+  const activeIndex = Math.min(focusedIndex, itemCount - 1);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent, index: number) => {
     const items = itemRefs.current.filter((button): button is HTMLButtonElement => button !== null);
@@ -79,7 +76,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
           }}
           type="button"
           aria-label={t("filters.removeChip", { label: chip.label })}
-          tabIndex={focusedIndex === index ? 0 : -1}
+          tabIndex={activeIndex === index ? 0 : -1}
           onClick={chip.onRemove}
           onKeyDown={(event) => handleKeyDown(event, index)}
           onFocus={() => setFocusedIndex(index)}
@@ -96,7 +93,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
           itemRefs.current[filtersButtonIndex] = node;
         }}
         type="button"
-        tabIndex={focusedIndex === filtersButtonIndex ? 0 : -1}
+        tabIndex={activeIndex === filtersButtonIndex ? 0 : -1}
         onClick={onOpenFilters}
         onKeyDown={(event) => handleKeyDown(event, filtersButtonIndex)}
         onFocus={() => setFocusedIndex(filtersButtonIndex)}
