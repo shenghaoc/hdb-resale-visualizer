@@ -127,6 +127,16 @@ function App() {
     [pipeline.blocks, pipeline.effectiveFilters.town],
   );
 
+  const visibleMapBlocks = useMemo(
+    () => applyProfileVisibility(pipeline.mapFilteredBlocks, searchProfile.profile),
+    [pipeline.mapFilteredBlocks, searchProfile.profile],
+  );
+
+  const visibleResultBlocks = useMemo(
+    () => applyProfileVisibility(pipeline.filteredBlocks, searchProfile.profile),
+    [pipeline.filteredBlocks, searchProfile.profile],
+  );
+
   const {
     patchUserFilters,
     handleResetFilters,
@@ -253,16 +263,6 @@ function App() {
         t={t}
       />
     </Suspense>
-  );
-
-  const visibleMapBlocks = useMemo(
-    () => applyProfileVisibility(pipeline.mapFilteredBlocks, searchProfile.profile),
-    [pipeline.mapFilteredBlocks, searchProfile.profile],
-  );
-
-  const visibleResultBlocks = useMemo(
-    () => applyProfileVisibility(pipeline.filteredBlocks, searchProfile.profile),
-    [pipeline.filteredBlocks, searchProfile.profile],
   );
 
   const selectedDetailContent =
