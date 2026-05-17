@@ -13,7 +13,9 @@ import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
+import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { AppHeader } from "@/components/AppHeader";
+import { SearchProfileWizard } from "@/components/SearchProfileWizard";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
@@ -26,6 +28,8 @@ import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
+import { useSearchProfile } from "@/hooks/useSearchProfile";
+import { applyProfileVisibility } from "@/lib/matchProfile";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -49,6 +53,7 @@ function App() {
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
+  const searchProfile = useSearchProfile();
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
   const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
@@ -100,15 +105,19 @@ function App() {
   const schoolOverlaySelectionActive = Boolean(filters.selectedAddressKey);
   const schoolOverlayLoading = schoolOverlaySelectionActive && isComparisonLoading;
 
-  const activeFilterChips = useMemo(
-    () =>
-      getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
-        key: chip.key,
-        label: chip.label,
-        onRemove: () => patchFilters(chip.clearPatch),
-      })),
-    [filters, locale, patchFilters, t],
-  );
+  const activeFilterChips = useMemo(() => {
+    const filterChips = getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
+      key: chip.key,
+      label: chip.label,
+      onRemove: () => patchFilters(chip.clearPatch),
+    }));
+    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile).map((chip) => ({
+      key: chip.key,
+      label: chip.label,
+      onRemove: () => searchProfile.patchProfile(chip.clearPatch),
+    }));
+    return [...profileChips, ...filterChips];
+  }, [filters, locale, patchFilters, searchProfile, t]);
 
   const townProfileBlocks = useMemo(
     () =>
@@ -190,6 +199,15 @@ function App() {
     );
   }
 
+  if (!searchProfile.completed) {
+    return (
+      <SearchProfileWizard
+        options={manifest.filterOptions}
+        onComplete={(profile) => searchProfile.replaceProfile(profile)}
+      />
+    );
+  }
+
   // ── Shared content blocks ────────────────────────────────────────────────
 
   const filterContent = (
@@ -206,7 +224,7 @@ function App() {
   const mapContent = (
     <Suspense fallback={<MapSkeleton />}>
       <MapView
-        blocks={pipeline.mapFilteredBlocks}
+        blocks={visibleMapBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={filters.selectedAddressKey}
         townFilter={pipeline.mapFilters.town}
@@ -235,6 +253,16 @@ function App() {
         t={t}
       />
     </Suspense>
+  );
+
+  const visibleMapBlocks = useMemo(
+    () => applyProfileVisibility(pipeline.mapFilteredBlocks, searchProfile.profile),
+    [pipeline.mapFilteredBlocks, searchProfile.profile],
+  );
+
+  const visibleResultBlocks = useMemo(
+    () => applyProfileVisibility(pipeline.filteredBlocks, searchProfile.profile),
+    [pipeline.filteredBlocks, searchProfile.profile],
   );
 
   const selectedDetailContent =
@@ -266,7 +294,8 @@ function App() {
     >
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
         <ResultsPane
-          blocks={pipeline.filteredBlocks}
+          blocks={visibleResultBlocks}
+          searchProfile={searchProfile.profile}
           hasResultScope={pipeline.hasResultScope}
           onSelect={handleSelectAddress}
           onToggleShortlist={handleToggleShortlist}

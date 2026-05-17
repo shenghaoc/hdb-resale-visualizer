@@ -17,6 +17,8 @@ import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { fetchTownFlatTypeTrends } from "@/lib/data";
+import { evaluateBlockForProfile } from "@/lib/matchProfile";
+import type { SearchProfile } from "@/types/searchProfile";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
@@ -30,6 +32,7 @@ import {
   volumeWeightedMeanLatestMedianPricePerSqm,
 } from "@/lib/town-profile";
 import { Badge } from "@/components/ui/badge";
+import { buildTownRecommendations } from "@/lib/town-recommendations";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -113,6 +116,7 @@ type ResultsPaneProps = {
   profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   profileStartMonth?: string | null;
   profileEndMonth?: string | null;
+  searchProfile?: SearchProfile | null;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -173,6 +177,7 @@ const BlockCard = memo(function BlockCard({
   budgetMax,
   t,
   locale,
+  searchProfile,
 }: {
   block: BlockSummary;
   index: number;
@@ -185,7 +190,10 @@ const BlockCard = memo(function BlockCard({
   budgetMax: number | null;
   t: Translator;
   locale: Locale;
+  searchProfile?: SearchProfile | null;
 }) {
+  const matchTier = searchProfile ? evaluateBlockForProfile(block, searchProfile).tier : null;
+
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
@@ -233,7 +241,7 @@ const BlockCard = memo(function BlockCard({
                     className="scale-90 origin-right"
                   />
                 <span className="text-[0.58rem] font-medium text-muted-foreground">
-                  {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
+                  {matchTier ? `${matchTier.toUpperCase()} · ` : ""}{t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
               </div>
             </div>
@@ -302,6 +310,7 @@ const BlockCard = memo(function BlockCard({
         </ItemContent>
         <ItemActions className="flex-wrap justify-end">
           {isFeatured ? <Badge>{t("results.selected")}</Badge> : null}
+          {matchTier ? <Badge variant="secondary">{`${matchTier.charAt(0).toUpperCase()}${matchTier.slice(1)} match`}</Badge> : null}
           <Button
             size="xs"
             variant={isSaved ? "secondary" : "ghost"}
@@ -405,6 +414,7 @@ export function ResultsPane({
   profileDataWindow = null,
   profileStartMonth = null,
   profileEndMonth = null,
+  searchProfile = null,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
   const sortOptions: SortOption[] = useMemo(
@@ -428,6 +438,11 @@ export function ResultsPane({
   const compactRowHeight = 110;
   const compactRowGap = 8;
   const compactRowStride = compactRowHeight + compactRowGap;
+
+  const townRecommendations = useMemo(() => {
+    if (!searchProfile) return [];
+    return buildTownRecommendations(blocks, searchProfile, 5);
+  }, [blocks, searchProfile]);
 
   const townProfileAvailable = Boolean(hasResultScope && profileTown && profileDataWindow);
   const showTownProfile = townProfileAvailable && resultsView === "town";
@@ -817,6 +832,30 @@ export function ResultsPane({
                   onSelectBlock={onSelect}
                 />
               ) : null}
+              {resultsView === "blocks" && townRecommendations.length > 0 ? (
+                <section className="mb-4 rounded-xl border border-border/35 bg-muted/35 p-3 sm:p-3.5" aria-label="Recommended towns">
+                  <h3 className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">Recommended towns</h3>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {townRecommendations.map((town) => (
+                      <button
+                        key={town.town}
+                        type="button"
+                        className="rounded-lg border border-border/40 bg-background/85 px-3 py-2 text-left hover:bg-background"
+                        onClick={() => onSelect(blocks.find((b) => b.town === town.town)?.addressKey ?? "")}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <strong className="text-xs font-extrabold">{localizeTownName(town.town, locale)}</strong>
+                          <Badge variant="secondary">{Math.round(town.score * 100)}%</Badge>
+                        </div>
+                        <div className="mt-1 text-[0.65rem] text-muted-foreground">
+                          {town.matchingBlocks} matching · lease {Math.round(town.leasePassRate * 100)}%
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
               {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">
                   <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
