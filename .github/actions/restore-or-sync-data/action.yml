@@ -40,7 +40,7 @@ runs:
       id: pipeline-cache
       shell: bash
       run: |
-        echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('package-lock.json', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts', 'src/lib/mrt-colors.ts') }}" >> "$GITHUB_OUTPUT"
+        echo "prefix=pipeline-cache-v2-${{ runner.os }}-${{ hashFiles('package-lock.json', 'scripts/sync-data.ts', 'scripts/lib/**/*.ts', 'shared/**/*.ts', 'src/types/data.ts', 'src/lib/filterOptions.ts', 'src/lib/utils.ts') }}" >> "$GITHUB_OUTPUT"
 
     - name: Restore pipeline cache
       uses: actions/cache/restore@v5

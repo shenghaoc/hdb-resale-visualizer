@@ -1,1 +1,1 @@
-export { getStationDetails, type StationDetails } from "../../src/lib/mrt-station-details";
+export { getStationDetails, type StationDetails } from "../../shared/mrt-station-details";
