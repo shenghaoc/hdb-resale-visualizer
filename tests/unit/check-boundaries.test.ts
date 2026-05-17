@@ -27,7 +27,7 @@ function runBoundaryCheck(workspace: string) {
   return spawnSync(TSX_BIN, [CHECK_BOUNDARIES_SCRIPT], {
     cwd: workspace,
     encoding: "utf8",
-    env: { ...process.env, FORCE_COLOR: "0" },
+    env: { ...process.env, FORCE_COLOR: "0", NODE_NO_WARNINGS: "1" },
   });
 }
 
