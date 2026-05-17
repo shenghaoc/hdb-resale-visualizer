@@ -111,9 +111,9 @@ To keep the static-data architecture enforceable as the codebase evolves, produc
 - `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
 - `npm run check:data` validates that required generated artifacts are present before static build output is produced.
 
-`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + compile + bundle budget check). Ensure fixtures are present first with `npm run setup:fixtures` in a fresh clone.
+`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + typecheck + compile + bundle budget check). Ensure fixtures are present first with `npm run setup:fixtures` in a fresh clone.
 
-`npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + compile + bundle budget check).
+`npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
 
 ## Data pipeline
 
