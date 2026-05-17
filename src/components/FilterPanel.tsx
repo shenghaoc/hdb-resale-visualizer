@@ -270,6 +270,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         placeholder={t("filters.optional")}
                         type="number"
                         value={filters.mrtMax ?? ""}
+                        aria-description={t("filters.a11y.maxMrtDistance")}
                         onChange={(event) =>
                           onChange({ mrtMax: parseOptionalNumberValue(event.target.value) })
                         }
