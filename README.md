@@ -115,7 +115,8 @@ npm run sync-data
    - `public/data/block-summaries.json`
    - `public/data/trends/town-flat-type.json` (monthly medians, median $/sqm, and transaction counts by town × flat type)
    - `public/data/mrt-stations.geojson` and `mrt-exits.geojson`
-   - `public/data/details/` (individual block transaction history and amenities)
+   - `public/data/details/` (individual block transaction history and trend data)
+   - `public/data/comparisons/` (amenity proximity counts and percentile ranks, when amenity data is available)
 
 ## Environment
 
