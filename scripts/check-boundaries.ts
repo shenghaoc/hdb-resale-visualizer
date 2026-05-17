@@ -81,6 +81,18 @@ function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
       }
     }
 
+    if (
+      ts.isCallExpression(node) &&
+      ts.isIdentifier(node.expression) &&
+      node.expression.text === "require" &&
+      node.arguments.length === 1
+    ) {
+      const [specifier] = node.arguments;
+      if (specifier && ts.isStringLiteralLike(specifier)) {
+        specifiers.push(specifier.text);
+      }
+    }
+
     ts.forEachChild(node, visit);
   };
 
@@ -117,7 +129,6 @@ function visitSourceFile(file: string): void {
     sourceText,
     ts.ScriptTarget.Latest,
     true,
-    ts.ScriptKind.TS,
   );
 
   for (const specifier of getModuleSpecifiers(sourceFile)) {

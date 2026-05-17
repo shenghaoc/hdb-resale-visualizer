@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import {
   MAP_GLYPHS_URL,
   ONEMAP_DEFAULT_TILE_URL,
@@ -55,8 +55,12 @@ function expectSourceListToAllowOrigin(sourceList: string[], origin: string): vo
 }
 
 describe("Content Security Policy", () => {
-  const headersFile = fs.readFileSync("public/_headers", "utf8");
-  const directives = parseContentSecurityPolicy(headersFile);
+  let directives: Map<string, string[]>;
+
+  beforeAll(() => {
+    const headersFile = fs.readFileSync("public/_headers", "utf8");
+    directives = parseContentSecurityPolicy(headersFile);
+  });
 
   it("allows configured MapLibre glyph endpoints through connect-src", () => {
     const connectSrc = directives.get("connect-src") ?? [];
