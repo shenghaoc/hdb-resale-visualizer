@@ -90,7 +90,10 @@ Open `http://localhost:5173`.
 
 ```bash
 npm run dev
+npm run check:boundaries
+npm run check:data
 npm run build
+npm run build:full
 npm run preview
 npm run typecheck
 npm run lint
@@ -99,6 +102,18 @@ npm run test
 npm run test:e2e
 npm run sync-data
 ```
+
+
+## Build and runtime guardrails
+
+To keep the static-data architecture enforceable as the codebase evolves, CI and local production builds run two mandatory checks before compiling:
+
+- `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
+- `npm run check:data` validates that required generated artifacts are present before static build output is produced.
+
+`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + compile + bundle budget check).
+
+`npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + compile + bundle budget check).
 
 ## Data pipeline
 
@@ -142,3 +157,13 @@ GEOCODE_CONCURRENCY=10
 - This is not a prediction product.
 - Coordinates are resolved during artifact generation, never in the browser.
 - OneMap attribution must remain visible when the map is rendered.
+
+## Troubleshooting
+
+### `npm run build` fails on boundary violations
+
+`check:boundaries` fails when build-time modules import from `src/` (directly or transitively) or use Vite runtime aliases inside Node execution paths. Move shared logic to `shared/` and import from there in both runtime and script codepaths.
+
+### Map fails to render in browser
+
+The map initialization hook treats WebGL/context/shader failures as fatal renderer errors and surfaces a user-facing `mapError` state instead of leaving a broken map instance mounted. Typical causes are unsupported browsers, blocked GPU acceleration, or unstable graphics drivers.
