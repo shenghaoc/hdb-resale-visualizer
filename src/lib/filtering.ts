@@ -51,6 +51,8 @@ export type GeographicSearchIntent =
 const STATION_SEARCH_CUE_WORDS = new Set(["near", "nearby", "around", "mrt", "station"]);
 const STATION_NAME_STOP_WORDS = new Set(["mrt", "station"]);
 
+// These global regexes are only used with String.prototype.replace().
+// Do not reuse them with test()/exec(), where lastIndex would be stateful.
 const RE_NON_ALPHANUMERIC = /[^a-z0-9+]+/g;
 const RE_WHITESPACE = /\s+/g;
 const RE_NUMERIC_PREFIX = /^(\d+)\+$/;
