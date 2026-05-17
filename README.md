@@ -162,9 +162,8 @@ GEOCODE_CONCURRENCY=10
 
 ### `npm run build` fails on boundary or data checks
 
-- Boundary failures (`check:boundaries`): Node-executed modules in `scripts/` imported runtime code from `src/` (directly or transitively) or used Vite runtime aliases. Move cross-environment helpers into `shared/` and import from there.
-- Data failures (`check:data`): required files/directories are missing or empty under `public/data/`. In local dev, run `npm run setup:fixtures`; in refresh workflows, run `npm run sync-data`.
-
-### Map fails to render in browser
-
-The map initialization hook treats WebGL/context/shader failures as fatal renderer errors and surfaces a user-facing `mapError` state instead of leaving a broken map instance mounted. Typical causes are unsupported browsers, blocked GPU acceleration, or unstable graphics drivers.
+1. Run `npm run check:boundaries` to see script/runtime import violations.
+   - Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
+2. Run `npm run check:data` to verify required artifacts.
+   - Local development fix: `npm run setup:fixtures`
+   - Live data refresh fix: `npm run sync-data`
