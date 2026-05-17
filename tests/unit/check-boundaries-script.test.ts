@@ -2,9 +2,12 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 
-const repoRoot = process.cwd();
+const currentFile = fileURLToPath(import.meta.url);
+const testsDir = path.dirname(currentFile);
+const repoRoot = path.resolve(testsDir, "../..");
 const tsxCli = path.join(repoRoot, "node_modules", "tsx", "dist", "cli.mjs");
 const boundaryScript = path.join(repoRoot, "scripts", "check-boundaries.ts");
 
@@ -65,15 +68,18 @@ describe("check-boundaries script", () => {
     expect(result.stderr).toContain("reaches src/");
   });
 
-  it("fails when script graph uses forbidden runtime aliases", () => {
-    const workspace = setupWorkspace({
-      "scripts/entry.ts": 'import value from "@/lib/value";\nexport default value;\n',
-    });
+  it.each(["@/lib/value", "@shared/value"])(
+    "fails when script graph uses forbidden runtime alias %s",
+    (aliasImport) => {
+      const workspace = setupWorkspace({
+        "scripts/entry.ts": `import value from \"${aliasImport}\";\nexport default value;\n`,
+      });
 
-    const result = runBoundaryCheck(workspace);
+      const result = runBoundaryCheck(workspace);
 
-    expect(result.status).toBe(1);
-    expect(result.stderr).toContain("cannot use Vite alias");
-    expect(result.stderr).toContain("@/");
-  });
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain("cannot use Vite alias");
+      expect(result.stderr).toContain(aliasImport.split("/")[0] + "/");
+    },
+  );
 });
