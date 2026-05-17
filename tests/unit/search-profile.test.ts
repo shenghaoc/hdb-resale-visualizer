@@ -10,7 +10,7 @@ describe("search profile", () => {
     const profile = {
       ...DEFAULT_SEARCH_PROFILE,
       mainFlatType: "4 ROOM",
-      maxBudget: 700000,
+      maxBudget: null,
       commuteAnchorLabel: "Raffles Place",
       maxComfortableCommuteMinutes: 30,
       minimumRemainingLeaseYears: 70,

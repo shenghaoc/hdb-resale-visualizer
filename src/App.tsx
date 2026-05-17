@@ -29,7 +29,6 @@ import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
-import { applyProfileVisibility } from "@/lib/matchProfile";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -111,7 +110,7 @@ function App() {
       label: chip.label,
       onRemove: () => patchFilters(chip.clearPatch),
     }));
-    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile).map((chip) => ({
+    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile, locale, t).map((chip) => ({
       key: chip.key,
       label: chip.label,
       onRemove: () => searchProfile.patchProfile(chip.clearPatch),
@@ -125,16 +124,6 @@ function App() {
         ? pipeline.blocks.filter((b) => b.town === pipeline.effectiveFilters.town)
         : [],
     [pipeline.blocks, pipeline.effectiveFilters.town],
-  );
-
-  const visibleMapBlocks = useMemo(
-    () => applyProfileVisibility(pipeline.mapFilteredBlocks, searchProfile.profile),
-    [pipeline.mapFilteredBlocks, searchProfile.profile],
-  );
-
-  const visibleResultBlocks = useMemo(
-    () => applyProfileVisibility(pipeline.filteredBlocks, searchProfile.profile),
-    [pipeline.filteredBlocks, searchProfile.profile],
   );
 
   const {
@@ -209,11 +198,12 @@ function App() {
     );
   }
 
-  if (!searchProfile.completed) {
+  if (searchProfile.shouldShowWizard) {
     return (
       <SearchProfileWizard
         options={manifest.filterOptions}
         onComplete={(profile) => searchProfile.replaceProfile(profile)}
+        onSkip={searchProfile.dismissWizard}
       />
     );
   }
@@ -234,7 +224,7 @@ function App() {
   const mapContent = (
     <Suspense fallback={<MapSkeleton />}>
       <MapView
-        blocks={visibleMapBlocks}
+        blocks={pipeline.mapFilteredBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={filters.selectedAddressKey}
         townFilter={pipeline.mapFilters.town}
@@ -294,8 +284,7 @@ function App() {
     >
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
         <ResultsPane
-          blocks={visibleResultBlocks}
-          searchProfile={searchProfile.profile}
+          blocks={pipeline.filteredBlocks}
           hasResultScope={pipeline.hasResultScope}
           onSelect={handleSelectAddress}
           onToggleShortlist={handleToggleShortlist}

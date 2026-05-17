@@ -60,7 +60,6 @@ import {
   RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
   type RecentTransactionOutlier,
   sliceTrendByRange,
-  summarizeComparables,
   type TrendRangeKey,
 } from "@/lib/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
@@ -341,11 +340,6 @@ export function DetailDrawer({
     return deriveFlatTypePriceLadder(currentSummary.flatTypes, detail.recentTransactions);
   }, [currentSummary, detail]);
 
-  const comparableSummary = useMemo(
-    () => (detail ? summarizeComparables(detail.recentTransactions) : null),
-    [detail],
-  );
-
   const trendPoints = useMemo(() => {
     if (!detail) return [];
     return sliceTrendByRange(detail.monthlyTrend, trendRange);
@@ -502,20 +496,6 @@ export function DetailDrawer({
                 value="overview"
                 className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
               >
-                {comparableSummary ? (
-                  <section className="rounded-xl border border-border/35 bg-muted/35 p-3">
-                    <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      Comparable range (middle 50%)
-                    </p>
-                    <p className="mt-1 font-heading text-lg font-extrabold tracking-tight v2-tabular">
-                      {formatCurrency(comparableSummary.p25Price, locale)} – {formatCurrency(comparableSummary.p75Price, locale)}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                      Based on {comparableSummary.count} comparable transactions
-                    </p>
-                  </section>
-                ) : null}
-
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col rounded-xl bg-muted/30 p-3">
                     <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
