@@ -50,6 +50,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const EMPTY_ARRAY: any[] = [];
+
 function LeaseBar({ years, color = "currentColor", height = 3 }: { years: number; color?: string; height?: number }) {
   const pct = Math.max(0, Math.min(1, years / MAX_LEASE_DURATION)) * 100;
   return (
@@ -482,7 +484,7 @@ export function ResultsPane({
   }, [profileTown, showTownProfile, trendSnap.requestedTown, trendSnap.status]);
 
   const townTrendRows = useMemo(
-    () => (trendSnap.status === "loaded" ? trendSnap.rows : []),
+    () => (trendSnap.status === "loaded" ? trendSnap.rows : EMPTY_ARRAY),
     [trendSnap],
   );
   const townTrendLoading =
@@ -499,7 +501,7 @@ export function ResultsPane({
 
   const townRollups = useMemo(() => {
     if (!showTownProfile || !profileTown || !townTrendRange) {
-      return [];
+      return EMPTY_ARRAY;
     }
     return rollupTownFlatTypesInRange(townTrendRows, profileTown, townTrendRange);
   }, [profileTown, showTownProfile, townTrendRange, townTrendRows]);
@@ -520,7 +522,7 @@ export function ResultsPane({
   const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
 
   const sortedBlocks = useMemo(() => {
-    if (blocks.length === 0) return [];
+    if (blocks.length === 0) return EMPTY_ARRAY;
     const sorted = [...blocks];
 
     // ⚡ Bolt: Inline sorting logic per mode instead of passing a switch statement inside the sort loop.
@@ -550,7 +552,7 @@ export function ResultsPane({
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
-    if (!isCompact || !hasResultScope) {
+    if (!isCompact || !hasResultScope || resultsView !== "blocks") {
       return;
     }
 
@@ -623,6 +625,13 @@ export function ResultsPane({
     virtualTopPadding,
     virtualBottomPadding,
   } = useMemo(() => {
+    if (!isCompact || resultsView !== "blocks") {
+      return {
+        virtualBlocks: EMPTY_ARRAY,
+        virtualTopPadding: 0,
+        virtualBottomPadding: 0,
+      };
+    }
     const overscan = 8;
     const startIndex = Math.max(0, Math.floor(scrollTop / compactRowStride) - overscan);
     const visibleRows =
@@ -633,7 +642,7 @@ export function ResultsPane({
       virtualTopPadding: startIndex * compactRowStride,
       virtualBottomPadding: Math.max(0, (sortedBlocks.length - endIndex) * compactRowStride),
     };
-  }, [scrollTop, viewportHeight, compactRowStride, sortedBlocks]);
+  }, [scrollTop, viewportHeight, compactRowStride, sortedBlocks, isCompact, resultsView]);
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
