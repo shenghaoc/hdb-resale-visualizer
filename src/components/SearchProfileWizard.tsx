@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useI18n } from "@/lib/i18n";
+import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
 import type { FilterOptions } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 
@@ -18,16 +19,19 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const [mainFlatType, setMainFlatType] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
   const [commuteAnchorLabel, setCommuteAnchorLabel] = useState("");
+  const [commuteAnchorMrt, setCommuteAnchorMrt] = useState("");
   const [maxCommute, setMaxCommute] = useState("");
   const [minLease, setMinLease] = useState("");
+  const mrtStations = useMemo(() => getKnownMrtStationNames(), []);
 
   const canSubmit = useMemo(
     () =>
       mainFlatType.length > 0 &&
       commuteAnchorLabel.trim().length > 0 &&
+      commuteAnchorMrt.length > 0 &&
       Number(maxCommute) > 0 &&
       Number(minLease) > 0,
-    [commuteAnchorLabel, mainFlatType, maxCommute, minLease],
+    [commuteAnchorLabel, commuteAnchorMrt, mainFlatType, maxCommute, minLease],
   );
 
   return (
@@ -53,8 +57,23 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <Input inputMode="numeric" type="number" value={maxBudget} onChange={(e) => setMaxBudget(e.target.value)} />
           </div>
           <div className="grid gap-2">
-            <label className="text-sm font-medium">{t("searchProfile.commuteAnchor")}</label>
+            <label className="text-sm font-medium">{t("searchProfile.commuteDestination")}</label>
             <Input value={commuteAnchorLabel} onChange={(e) => setCommuteAnchorLabel(e.target.value)} placeholder={t("searchProfile.commuteAnchorPlaceholder")} />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm font-medium">{t("searchProfile.commuteMrtStation")}</label>
+            <Select value={commuteAnchorMrt} onValueChange={setCommuteAnchorMrt}>
+              <SelectTrigger>
+                <SelectValue placeholder={t("searchProfile.selectMrtStation")} />
+              </SelectTrigger>
+              <SelectContent>
+                {mrtStations.map((stationName) => (
+                  <SelectItem key={stationName} value={stationName}>
+                    {stationName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid gap-2">
             <label className="text-sm font-medium">{t("searchProfile.maxCommute")}</label>
@@ -74,7 +93,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   alternativeFlatTypes: [],
                   maxBudget: maxBudget ? Number(maxBudget) : null,
                   commuteAnchorLabel: commuteAnchorLabel.trim(),
-                  commuteAnchorMrt: null,
+                  commuteAnchorMrt,
                   maxComfortableCommuteMinutes: Number(maxCommute),
                   commuteStretchMinutes: 10,
                   minimumRemainingLeaseYears: Number(minLease),

@@ -12,9 +12,21 @@ describe("search profile", () => {
       mainFlatType: "4 ROOM",
       maxBudget: null,
       commuteAnchorLabel: "Raffles Place",
+      commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
       maxComfortableCommuteMinutes: 30,
       minimumRemainingLeaseYears: 70,
     };
     expect(hasCompletedSearchProfile(profile)).toBe(true);
+  });
+
+  it("requires preferred MRT station for completion", () => {
+    const profile = {
+      ...DEFAULT_SEARCH_PROFILE,
+      mainFlatType: "4 ROOM",
+      commuteAnchorLabel: "Raffles Place",
+      maxComfortableCommuteMinutes: 30,
+      minimumRemainingLeaseYears: 70,
+    };
+    expect(hasCompletedSearchProfile(profile)).toBe(false);
   });
 });
