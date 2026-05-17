@@ -5,6 +5,7 @@ import {
   formatCompactCurrency,
   formatMeters,
   formatMonth,
+  formatNumber,
   formatRemainingLease,
   formatSqm,
 } from "@/lib/format";
@@ -232,7 +233,7 @@ const BlockCard = memo(function BlockCard({
                     className="scale-90 origin-right"
                   />
                 <span className="text-[0.58rem] font-medium text-muted-foreground">
-                  {t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                  {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
               </div>
             </div>
@@ -381,7 +382,7 @@ const BlockCard = memo(function BlockCard({
           </Badge>
         ))}
         <ItemDescription className="ml-auto text-right">
-          {t("results.transactions", { count: block.transactionCount.toLocaleString(locale) })}
+          {t("results.transactions", { count: formatNumber(block.transactionCount, 0, locale) })}
         </ItemDescription>
       </ItemFooter>
     </Item>

@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { formatDateTime, formatMonth } from "@/lib/format";
+import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { Manifest } from "@/types/data";
 import { cn } from "@/lib/utils";
@@ -63,7 +63,7 @@ export function AppHeader({
               })}
             </Badge>
             <span className="hidden text-[0.6rem] font-medium text-muted-foreground sm:inline">
-              · {manifest.counts.transactions.toLocaleString(locale)}
+              · {formatNumber(manifest.counts.transactions, 0, locale)}
             </span>
           </>
         ) : (
@@ -87,7 +87,7 @@ export function AppHeader({
             </Badge>
             <span className="text-[0.6rem] font-medium text-muted-foreground">
               {t("stats.txns", {
-                count: manifest.counts.transactions.toLocaleString(locale),
+                count: formatNumber(manifest.counts.transactions, 0, locale),
               })}{" "}
               · {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })} ·
               OneMap

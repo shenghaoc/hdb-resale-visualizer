@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
-import { formatCompactCurrency, formatMonth } from "@/lib/format";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type {
   LeaseCommenceDecadeBucket,
@@ -125,7 +125,7 @@ export function TownProfileSection({
                     <td className="bg-background/85 px-1 py-1 v2-tabular">
                       {row.latestMedianPricePerSqm === null ? "—" : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">{row.windowTransactionVolume.toLocaleString(locale)}</td>
+                    <td className="bg-background/85 px-1 py-1 v2-tabular">{formatNumber(row.windowTransactionVolume, 0, locale)}</td>
                     <td className="rounded-r-md bg-background/85 px-1 py-1 text-muted-foreground">
                       {row.latestMonth === null ? "—" : formatMonth(row.latestMonth, locale)}
                     </td>
@@ -138,7 +138,7 @@ export function TownProfileSection({
           <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background/60 px-2.5 py-2 text-[0.65rem]">
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
               <span className="font-semibold text-muted-foreground">{t("townProfile.totalTrendVolume")}</span>
-              <span className="v2-tabular font-extrabold">{totalTrendVolume.toLocaleString(locale)}</span>
+              <span className="v2-tabular font-extrabold">{formatNumber(totalTrendVolume, 0, locale)}</span>
             </div>
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
               <span className="font-semibold text-muted-foreground">{t("townProfile.typicalSqm")}</span>
@@ -192,7 +192,7 @@ export function TownProfileSection({
                     key={block.addressKey}
                     block={block}
                     locale={locale}
-                    subtitle={t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                    subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
                 ))}
@@ -215,7 +215,7 @@ export function TownProfileSection({
                     key={block.addressKey}
                     block={block}
                     locale={locale}
-                    subtitle={t("stats.txns", { count: block.transactionCount.toLocaleString(locale) })}
+                    subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
                 ))}
