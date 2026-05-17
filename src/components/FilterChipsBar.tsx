@@ -64,7 +64,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
       aria-label={t("filters.title")}
       className={cn(
         "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
-        isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-0 top-[3.6rem] px-3",
+        isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-[4.25rem] top-[3.6rem] px-3",
       )}
       style={{ scrollbarWidth: "none" }}
     >
@@ -93,6 +93,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
           itemRefs.current[filtersButtonIndex] = node;
         }}
         type="button"
+        aria-label={t("filters.openPanel")}
         tabIndex={activeIndex === filtersButtonIndex ? 0 : -1}
         onClick={onOpenFilters}
         onKeyDown={(event) => handleKeyDown(event, filtersButtonIndex)}

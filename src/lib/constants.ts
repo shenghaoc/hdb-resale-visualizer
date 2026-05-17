@@ -62,6 +62,8 @@ export const MAX_SHORTLIST_ITEMS = 20;
 export const MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH = 10_000;
 export const HEADER_DISMISSED_STORAGE_KEY = "hdb_resale_header_dismissed_v1";
 export const SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v1";
+export const SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY =
+  "hdb_resale_search_profile_wizard_dismissed_v1";
 
 /**
  * API and Data paths.

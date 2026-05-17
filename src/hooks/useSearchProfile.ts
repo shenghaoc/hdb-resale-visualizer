@@ -1,30 +1,64 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   DEFAULT_SEARCH_PROFILE,
   hasCompletedSearchProfile,
   loadSearchProfile,
+  loadSearchProfileWizardDismissed,
   patchSearchProfile,
   saveSearchProfile,
+  saveSearchProfileWizardDismissed,
 } from "@/lib/searchProfile";
 import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
 export function useSearchProfile() {
   const [profile, setProfile] = useState<SearchProfile>(() => loadSearchProfile());
+  const [wizardDismissed, setWizardDismissed] = useState(() =>
+    loadSearchProfileWizardDismissed(),
+  );
 
   const completed = useMemo(() => hasCompletedSearchProfile(profile), [profile]);
+  const shouldShowWizard = !completed && !wizardDismissed;
 
-  function patchProfile(patch: SearchProfilePatch) {
+  const patchProfile = useCallback((patch: SearchProfilePatch) => {
     setProfile((prev) => patchSearchProfile(prev, patch));
-  }
+  }, []);
 
-  function replaceProfile(next: SearchProfile) {
+  const replaceProfile = useCallback((next: SearchProfile) => {
     saveSearchProfile(next);
+    saveSearchProfileWizardDismissed(true);
     setProfile(next);
-  }
+    setWizardDismissed(true);
+  }, []);
 
-  function resetProfile() {
+  const dismissWizard = useCallback(() => {
+    saveSearchProfileWizardDismissed(true);
+    setWizardDismissed(true);
+  }, []);
+
+  const resetProfile = useCallback(() => {
     replaceProfile(DEFAULT_SEARCH_PROFILE);
-  }
+    saveSearchProfileWizardDismissed(false);
+    setWizardDismissed(false);
+  }, [replaceProfile]);
 
-  return { profile, completed, patchProfile, replaceProfile, resetProfile };
+  return useMemo(
+    () => ({
+      profile,
+      completed,
+      shouldShowWizard,
+      patchProfile,
+      replaceProfile,
+      resetProfile,
+      dismissWizard,
+    }),
+    [
+      profile,
+      completed,
+      shouldShowWizard,
+      patchProfile,
+      replaceProfile,
+      resetProfile,
+      dismissWizard,
+    ],
+  );
 }

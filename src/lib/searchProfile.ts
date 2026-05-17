@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { SEARCH_PROFILE_STORAGE_KEY } from "@/lib/constants";
+import {
+  SEARCH_PROFILE_STORAGE_KEY,
+  SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY,
+} from "@/lib/constants";
 import { safeStorage } from "@/lib/storage";
 import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
@@ -53,6 +56,14 @@ export function saveSearchProfile(profile: SearchProfile): void {
   safeStorage.setItem(SEARCH_PROFILE_STORAGE_KEY, JSON.stringify(profile));
 }
 
+export function loadSearchProfileWizardDismissed(): boolean {
+  return safeStorage.getItem(SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY) === "1";
+}
+
+export function saveSearchProfileWizardDismissed(isDismissed: boolean): void {
+  safeStorage.setItem(SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY, isDismissed ? "1" : "0");
+}
+
 export function patchSearchProfile(profile: SearchProfile, patch: SearchProfilePatch): SearchProfile {
   const next = { ...profile, ...patch };
   saveSearchProfile(next);
@@ -62,7 +73,6 @@ export function patchSearchProfile(profile: SearchProfile, patch: SearchProfileP
 export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
   return Boolean(
     profile.mainFlatType.trim() &&
-      profile.maxBudget !== null &&
       profile.commuteAnchorLabel.trim() &&
       profile.maxComfortableCommuteMinutes !== null &&
       profile.minimumRemainingLeaseYears !== null,
