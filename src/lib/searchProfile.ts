@@ -74,6 +74,7 @@ export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
   return Boolean(
     profile.mainFlatType.trim() &&
       profile.commuteAnchorLabel.trim() &&
+      profile.commuteAnchorMrt?.trim() &&
       profile.maxComfortableCommuteMinutes !== null &&
       profile.minimumRemainingLeaseYears !== null,
   );
