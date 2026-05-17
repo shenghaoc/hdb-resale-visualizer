@@ -1,5 +1,5 @@
 import "temporal-polyfill/global";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 test.describe.configure({
   timeout: 60_000,
@@ -61,6 +61,15 @@ function firstResultCard(page: Page) {
   return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
 }
 
+async function expectHorizontalOverflow(locator: Locator) {
+  await expect(locator).toBeVisible({ timeout: 10_000 });
+  await expect
+    .poll(async () => locator.evaluate((element) => element.scrollWidth > element.clientWidth))
+    .toBe(true);
+  await expect
+    .poll(async () => locator.evaluate((element) => getComputedStyle(element).overflowX))
+    .toMatch(/auto|scroll/);
+}
 
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
@@ -116,11 +125,11 @@ test.describe("Mobile Regression: Recent Features", () => {
 
     // Navigate to trends tab
     await detailDrawer.getByRole("tab", { name: /trends/i }).click();
-    await expect(detailDrawer.getByRole("tabpanel")).toBeVisible();
+    await expect(detailDrawer.getByText(/Price History/i)).toBeVisible();
 
     // Navigate to history tab
     await detailDrawer.getByRole("tab", { name: /history/i }).click();
-    await expect(detailDrawer.getByRole("tabpanel")).toBeVisible();
+    await expect(detailDrawer.getByText(/Recent Transactions/i)).toBeVisible();
 
     // Navigate to negotiate tab
     await detailDrawer.getByRole("tab", { name: /negotiate/i }).click();
@@ -141,9 +150,10 @@ test.describe("Mobile Regression: Recent Features", () => {
     await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
 
-    // Result cards should be visible with budget set
-    const resultsPane = page.getByTestId("results-pane");
-    await expect(resultsPane.locator("[data-slot='item']").first()).toBeVisible({ timeout: 10_000 });
+    // Result cards should render the budget-match badge with budget set
+    const resultCard = firstResultCard(page);
+    await expect(resultCard).toBeVisible({ timeout: 10_000 });
+    await expect(resultCard.getByText(/Within selected budget/i)).toBeVisible();
   });
 
   test("town profile overview visible in mobile results", async ({ page }) => {
@@ -232,6 +242,16 @@ test.describe("Mobile Regression: Recent Features", () => {
     await expect(
       page.getByTestId("shortlist-drawer").getByText(/BEDOK STH AVE 2/i).first(),
     ).toBeVisible({ timeout: 10_000 });
+
+    const viewToggle = page.getByTestId("shortlist-view-toggle");
+    await viewToggle.getByRole("button", { name: /comparison table/i }).click();
+
+    const comparisonTable = page.getByTestId("shortlist-comparison-table");
+    const comparisonScroller = comparisonTable.locator("[data-slot='table-container']");
+    await expect(comparisonTable).toBeVisible();
+    await expectHorizontalOverflow(comparisonScroller);
+    await expect(comparisonTable.getByRole("table", { name: /saved blocks comparison/i })).toBeVisible();
+    await expect(comparisonTable.getByTestId("shortlist-comparison-row")).toHaveCount(2);
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {
@@ -281,7 +301,7 @@ test.describe("Mobile Regression: Recent Features", () => {
     const langSelect = tabBar.getByRole("combobox", { name: /language/i });
     await expect(langSelect).toBeVisible();
     await langSelect.click();
-    await expect(page.getByRole("option")).toHaveCount(2);
+    await expect(page.getByRole("listbox").getByRole("option")).toHaveCount(2);
     await page.keyboard.press("Escape");
   });
 
@@ -293,8 +313,8 @@ test.describe("Mobile Regression: Recent Features", () => {
     await expect(page.getByTestId("filters-panel")).toBeVisible();
 
     // Budget inputs should be accessible
-    const budgetMin = page.locator("#budget-min");
-    const budgetMax = page.locator("#budget-max");
+    const budgetMin = page.getByRole("spinbutton", { name: /minimum budget/i });
+    const budgetMax = page.getByRole("spinbutton", { name: /maximum budget/i });
     await expect(budgetMin).toBeVisible();
     await expect(budgetMax).toBeVisible();
 
