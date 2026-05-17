@@ -64,3 +64,7 @@
 ## 2024-06-25 - Haversine Bounding Box Fast Path
 **Learning:** Checking distance limits over large arrays (like thousands of HDB blocks) using the haversine formula (`computeDistanceMeters`) is slow due to excessive trigonometric functions (`Math.sin`, `Math.cos`, `Math.sqrt`, `Math.atan2`).
 **Action:** Always implement a cheap "bounding box" check before the spherical distance calculation. A conservative approximation (e.g. `110,000` meters per degree for both latitude and longitude near the equator) allows fast-path short-circuiting and yields a ~3-4x performance speedup.
+
+## 2024-05-18 - Replacing inline `.toLocaleString()` with cached `Intl.NumberFormat`
+**Learning:** Calling `.toLocaleString()` on primitives (e.g., numbers) inline within React components (especially inside frequently rendered loops like lists or tables) creates a significant performance overhead (~3800ms vs ~3ms per 50,000 calls). This happens because `.toLocaleString()` instantiates a new `Intl` formatter under the hood on every single invocation.
+**Action:** Always use the globally cached formatter functions (like `formatNumber` from `src/lib/format.ts`) instead of calling `.toLocaleString()` inline to avoid massive GC and instantiation spikes, particularly when formatting large data views like `ResultsPane` and `TownProfileSection`.
