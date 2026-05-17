@@ -50,7 +50,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const EMPTY_ARRAY: any[] = [];
+const EMPTY_ARRAY: never[] = [];
 
 function LeaseBar({ years, color = "currentColor", height = 3 }: { years: number; color?: string; height?: number }) {
   const pct = Math.max(0, Math.min(1, years / MAX_LEASE_DURATION)) * 100;
@@ -600,7 +600,7 @@ export function ResultsPane({
       scroller.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateViewport);
     };
-  }, [hasResultScope, isCompact, scrollParent, sortedBlocks.length]);
+  }, [hasResultScope, isCompact, scrollParent, sortedBlocks.length, resultsView]);
 
   const [prevBlocks, setPrevBlocks] = useState(blocks);
   if (blocks !== prevBlocks) {
