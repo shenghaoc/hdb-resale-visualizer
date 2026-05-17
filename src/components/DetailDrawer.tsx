@@ -341,6 +341,11 @@ export function DetailDrawer({
     return deriveFlatTypePriceLadder(currentSummary.flatTypes, detail.recentTransactions);
   }, [currentSummary, detail]);
 
+  const comparableSummary = useMemo(
+    () => (detail ? summarizeComparables(detail.recentTransactions) : null),
+    [detail],
+  );
+
   const trendPoints = useMemo(() => {
     if (!detail) return [];
     return sliceTrendByRange(detail.monthlyTrend, trendRange);
@@ -681,41 +686,13 @@ export function DetailDrawer({
                     {t("detail.nearbyAmenities")}
                   </h3>
                   {isComparisonLoading ? (
-                    {comparableSummary ? (
-                  <section className="rounded-xl border border-border/35 bg-muted/35 p-3">
-                    <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      Comparable range (middle 50%)
-                    </p>
-                    <p className="mt-1 font-heading text-lg font-extrabold tracking-tight v2-tabular">
-                      {formatCurrency(comparableSummary.p25Price, locale)} – {formatCurrency(comparableSummary.p75Price, locale)}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                      Based on {comparableSummary.count} comparable transactions
-                    </p>
-                  </section>
-                ) : null}
-
-                <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       {Array.from({ length: 4 }).map((_, i) => (
                         <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
                       ))}
                     </div>
                   ) : comparison ? (
-                    {comparableSummary ? (
-                  <section className="rounded-xl border border-border/35 bg-muted/35 p-3">
-                    <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      Comparable range (middle 50%)
-                    </p>
-                    <p className="mt-1 font-heading text-lg font-extrabold tracking-tight v2-tabular">
-                      {formatCurrency(comparableSummary.p25Price, locale)} – {formatCurrency(comparableSummary.p75Price, locale)}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                      Based on {comparableSummary.count} comparable transactions
-                    </p>
-                  </section>
-                ) : null}
-
-                <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       <AmenityCard
                         icon={GraduationCap}
                         label={t("detail.amenity.schools")}
@@ -766,41 +743,13 @@ export function DetailDrawer({
                     {t("detail.marketPercentiles")}
                   </h3>
                   {isComparisonLoading ? (
-                    {comparableSummary ? (
-                  <section className="rounded-xl border border-border/35 bg-muted/35 p-3">
-                    <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      Comparable range (middle 50%)
-                    </p>
-                    <p className="mt-1 font-heading text-lg font-extrabold tracking-tight v2-tabular">
-                      {formatCurrency(comparableSummary.p25Price, locale)} – {formatCurrency(comparableSummary.p75Price, locale)}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                      Based on {comparableSummary.count} comparable transactions
-                    </p>
-                  </section>
-                ) : null}
-
-                <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       {Array.from({ length: 6 }).map((_, i) => (
                         <div key={i} className="h-16 w-full animate-pulse rounded-lg bg-muted/40" />
                       ))}
                     </div>
                   ) : comparison ? (
-                    {comparableSummary ? (
-                  <section className="rounded-xl border border-border/35 bg-muted/35 p-3">
-                    <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      Comparable range (middle 50%)
-                    </p>
-                    <p className="mt-1 font-heading text-lg font-extrabold tracking-tight v2-tabular">
-                      {formatCurrency(comparableSummary.p25Price, locale)} – {formatCurrency(comparableSummary.p75Price, locale)}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] text-muted-foreground">
-                      Based on {comparableSummary.count} comparable transactions
-                    </p>
-                  </section>
-                ) : null}
-
-                <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       <PercentileBadge
                         label={t("detail.rank.price")}
                         percentile={comparison.percentileRanks.pricePercentile}
