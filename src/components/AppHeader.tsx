@@ -63,7 +63,6 @@ export function AppHeader({
               })}
             </Badge>
             <span className="hidden text-[0.6rem] font-medium text-muted-foreground sm:inline">
-              {/* ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls) */}
               · {formatNumber(manifest.counts.transactions, 0, locale)}
             </span>
           </>
@@ -87,7 +86,6 @@ export function AppHeader({
               })}
             </Badge>
             <span className="text-[0.6rem] font-medium text-muted-foreground">
-              {/* ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls) */}
               {t("stats.txns", {
                 count: formatNumber(manifest.counts.transactions, 0, locale),
               })}{" "}

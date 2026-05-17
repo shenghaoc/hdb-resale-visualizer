@@ -125,7 +125,6 @@ export function TownProfileSection({
                     <td className="bg-background/85 px-1 py-1 v2-tabular">
                       {row.latestMedianPricePerSqm === null ? "—" : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
                     </td>
-                    {/* ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls) */}
                     <td className="bg-background/85 px-1 py-1 v2-tabular">{formatNumber(row.windowTransactionVolume, 0, locale)}</td>
                     <td className="rounded-r-md bg-background/85 px-1 py-1 text-muted-foreground">
                       {row.latestMonth === null ? "—" : formatMonth(row.latestMonth, locale)}
@@ -139,7 +138,6 @@ export function TownProfileSection({
           <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background/60 px-2.5 py-2 text-[0.65rem]">
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
               <span className="font-semibold text-muted-foreground">{t("townProfile.totalTrendVolume")}</span>
-              {/* ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls) */}
               <span className="v2-tabular font-extrabold">{formatNumber(totalTrendVolume, 0, locale)}</span>
             </div>
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
@@ -189,16 +187,15 @@ export function TownProfileSection({
                 {t("townProfile.busyBlocks")}
               </p>
               <div className="flex flex-col gap-1.5">
-                {busyBlocks.map((block) => {
-                  // ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls)
-                  return <BlockMicroRow
+                {busyBlocks.map((block) => (
+                  <BlockMicroRow
                     key={block.addressKey}
                     block={block}
                     locale={locale}
                     subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
-                })}
+                ))}
               </div>
             </div>
           ) : null}
@@ -213,16 +210,15 @@ export function TownProfileSection({
                 })}
               </p>
               <div className="flex flex-col gap-1.5">
-                {belowMedian.blocks.map((block) => {
-                  // ⚡ Bolt: Use cached formatNumber to avoid inline .toLocaleString() instantiation overhead (~3800ms -> ~3ms per 50k calls)
-                  return <BlockMicroRow
+                {belowMedian.blocks.map((block) => (
+                  <BlockMicroRow
                     key={block.addressKey}
                     block={block}
                     locale={locale}
                     subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
-                })}
+                ))}
               </div>
             </div>
           ) : null}
