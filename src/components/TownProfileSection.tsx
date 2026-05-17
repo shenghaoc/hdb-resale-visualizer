@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
 import { formatCompactCurrency, formatMonth } from "@/lib/format";
@@ -68,7 +69,10 @@ export function TownProfileSection({
   trendsFailed,
   onSelectBlock,
 }: TownProfileSectionProps) {
-  const totalLeaseBlocks = leaseBuckets.reduce((s, b) => s + b.blockCount, 0);
+  const totalLeaseBlocks = useMemo(
+    () => leaseBuckets.reduce((s, b) => s + b.blockCount, 0),
+    [leaseBuckets],
+  );
 
   return (
     <section

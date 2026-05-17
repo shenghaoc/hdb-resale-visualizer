@@ -51,11 +51,20 @@ export type GeographicSearchIntent =
 const STATION_SEARCH_CUE_WORDS = new Set(["near", "nearby", "around", "mrt", "station"]);
 const STATION_NAME_STOP_WORDS = new Set(["mrt", "station"]);
 
+// These global regexes are only used with String.prototype.replace().
+// Do not reuse them with test()/exec(), where lastIndex would be stateful.
+const RE_NON_ALPHANUMERIC = /[^a-z0-9+]+/g;
+const RE_WHITESPACE = /\s+/g;
+const RE_NUMERIC_PREFIX = /^(\d+)\+$/;
+const RE_POSTAL_CODE_CANDIDATE = /^\d{3,6}$/;
+const RE_NUMERIC_TOKEN = /^\d{3,}$/;
+const RE_COORDINATE = /(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/;
+
 function normalizeSearchText(value: string): string {
   return resolveMultilingualSearchAliases(value)
     .toLowerCase()
-    .replace(/[^a-z0-9+]+/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(RE_NON_ALPHANUMERIC, " ")
+    .replace(RE_WHITESPACE, " ")
     .trim();
 }
 
@@ -75,8 +84,8 @@ function createSearchToken(value: string, isNumericPrefix: boolean): SearchToken
   return {
     value,
     isNumericPrefix,
-    isPostalCodeCandidate: /^\d{3,6}$/.test(value),
-    allowReverseMatch: !/^\d{3,}$/.test(value),
+    isPostalCodeCandidate: RE_POSTAL_CODE_CANDIDATE.test(value),
+    allowReverseMatch: !RE_NUMERIC_TOKEN.test(value),
   };
 }
 
@@ -115,7 +124,7 @@ function tokenizeSearchText(value: string): SearchToken[] {
     .map((token) => token.trim())
     .filter((token) => token.length > 0 && !SEARCH_STOP_WORDS.has(token))
     .map((token) => {
-      const numericPrefixMatch = token.match(/^(\d+)\+$/);
+      const numericPrefixMatch = token.match(RE_NUMERIC_PREFIX);
       if (numericPrefixMatch) {
         return createSearchToken(numericPrefixMatch[1] ?? token, true);
       }
@@ -423,7 +432,7 @@ function matchStationName(
 }
 
 function parseCoordinateSearch(query: string): Coordinates | null {
-  const coordinateMatch = query.match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+  const coordinateMatch = query.match(RE_COORDINATE);
   if (!coordinateMatch) {
     return null;
   }
