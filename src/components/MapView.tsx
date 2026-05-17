@@ -81,7 +81,7 @@ export function MapView({
     [],
   );
 
-  const mapInstance = useMapInitialization({
+  const { mapInstance, mapError } = useMapInitialization({
     containerRef,
     isDarkMode,
     onGeolocate,
@@ -159,6 +159,20 @@ export function MapView({
       ref={containerRef}
       role="application"
       aria-label={t("map.ariaLabel")}
-    />
+    >
+      {mapError ? (
+        <div
+          className="flex h-full min-h-[280px] items-center justify-center px-6 text-center"
+          role="status"
+        >
+          <div className="max-w-sm space-y-2">
+            <p className="text-sm font-semibold text-foreground">{t("map.unavailableTitle")}</p>
+            <p className="text-xs leading-5 text-muted-foreground">
+              {t("map.unavailableDescription")}
+            </p>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 }
