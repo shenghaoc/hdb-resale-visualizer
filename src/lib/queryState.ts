@@ -1,5 +1,5 @@
-import { DEFAULT_FILTERS, QUERY_VERSION } from "@/lib/constants";
-import type { FilterState } from "@/types/data";
+import { DEFAULT_FILTERS, QUERY_VERSION } from "./constants";
+import type { FilterState } from "../types/data";
 
 function parseNumber(value: string | null): number | null {
   if (!value) {

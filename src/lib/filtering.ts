@@ -1,7 +1,7 @@
-import type { BlockSummary, Coordinates, FilterState } from "@/types/data";
-import { getCurrentYear, MAX_LEASE_DURATION } from '@/lib/constants';
-import { buildFilterOptions, canonicalFlatType } from "@shared/filter-options";
-import { resolveMultilingualSearchAliases } from "@/lib/i18n/domain";
+import type { BlockSummary, Coordinates, FilterState } from "../types/data";
+import { getCurrentYear, MAX_LEASE_DURATION } from './constants';
+import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
+import { resolveMultilingualSearchAliases } from "./i18n/domain";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
 // Pre-compile alias regex patterns at module level to avoid repeated RegExp

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
-import type { ShortlistItem } from "@/types/data";
+import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "./constants";
+import type { ShortlistItem } from "../types/data";
 
 const shortlistItemSchema = z.object({
   addressKey: z.string(),

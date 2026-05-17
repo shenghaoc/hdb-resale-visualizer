@@ -1,10 +1,10 @@
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
 import type {
   AddressDetailSummary,
   BlockSummary,
   NearestMrt,
   ShortlistItem,
-} from "@/types/data";
+} from "../types/data";
 
 /**
  * Minimal shape required to build a comparison row. Accepts a subset of the

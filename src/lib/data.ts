@@ -1,19 +1,19 @@
-import { DATA_BASE_PATH } from "@/lib/constants";
-import { townToFilename } from "@/lib/utils";
+import { DATA_BASE_PATH } from "./constants";
+import { townToFilename } from "./utils";
 import {
   addressDetailSchema,
   blockSummarySchema,
   comparisonArtifactSchema,
   manifestSchema,
   townFlatTypeTrendPointSchema,
-} from "@/lib/dataSchemas";
+} from "./dataSchemas";
 import type {
   AddressDetail,
   BlockSummary,
   ComparisonArtifact,
   Manifest,
   TownFlatTypeTrendPoint,
-} from "@/types/data";
+} from "../types/data";
 import type { z } from "zod";
 
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;

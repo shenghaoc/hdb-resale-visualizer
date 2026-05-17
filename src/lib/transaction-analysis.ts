@@ -1,7 +1,7 @@
 import type {
   AddressDetailTransaction,
   AddressTrendPoint,
-} from "@/types/data";
+} from "../types/data";
 
 export type TrendRangeKey = "2y" | "5y" | "10y" | "max";
 

@@ -1,4 +1,4 @@
-import type { AddressDetailTransaction } from "@/types/data";
+import type { AddressDetailTransaction } from "../types/data";
 
 const FLAT_TYPE_ORDER = [
   "1 ROOM",

@@ -3,7 +3,7 @@ import {
   LRT_LINE_COLOR,
   MRT_LINE_COLORS,
   type RailLineCode,
-} from "@/lib/mrt-colors";
+} from "./mrt-colors";
 
 type LineCode = RailLineCode;
 

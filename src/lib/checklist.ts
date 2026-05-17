@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CHECKLIST_STORAGE_KEY } from "@/lib/constants";
+import { CHECKLIST_STORAGE_KEY } from "./constants";
 
 export const CHECKLIST_ITEMS = [
   "ethnicQuota",

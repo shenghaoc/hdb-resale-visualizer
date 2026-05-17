@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { I18nContext } from "./context";
 import { dictionaries } from "./messages";
 import type { Locale } from "./types";
-import { safeStorage } from "@/lib/storage";
+import { safeStorage } from "../storage";
 
 const LOCALE_STORAGE_KEY = "hdb-resale-locale";
 

@@ -1,5 +1,5 @@
-import type { BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+import type { BlockSummary, ComparisonArtifact, FilterState } from "../types/data";
+import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
 
 const MEANINGFUL_VOLUME_MIN_TRANSACTIONS = 5;
 
