@@ -30,13 +30,13 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 |---|---|
 | ![Overview](docs/screenshots/01-overview.png) | ![Filter panel](docs/screenshots/02-filter-panel.png) |
 
-| Results list | Block detail |
+| Mobile view | Results list |
 |---|---|
-| ![Results](docs/screenshots/04-results-pane.png) | ![Block detail](docs/screenshots/05-block-detail.png) |
+| ![Mobile](docs/screenshots/03-mobile.png) | ![Results](docs/screenshots/04-results-pane.png) |
 
-| Shortlist | Mobile |
+| Block detail | Shortlist |
 |---|---|
-| ![Shortlist](docs/screenshots/06-saved.png) | ![Mobile](docs/screenshots/03-mobile.png) |
+| ![Block detail](docs/screenshots/05-block-detail.png) | ![Shortlist](docs/screenshots/06-saved.png) |
 
 ## What it does
 
@@ -55,6 +55,10 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 - [Resale Flat Prices collection 189](https://data.gov.sg/datasets?agencies=Housing+%26+Development+Board+(HDB)&resultId=189)
 - [HDB Property Information](https://data.gov.sg/datasets/d_17f5382f26140b1fdae0ba2ef6239d2f/view)
 - [LTA MRT Station Exit (GEOJSON)](https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view)
+- [MOE School Directory](https://data.gov.sg/datasets/d_688b934f82c1059ed0a6993d2a829089/view)
+- [NEA Hawker Centre Directory](https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view)
+- [SFA Licensed Supermarkets](https://data.gov.sg/datasets/d_11edd0117280c5776651d7891114c88c/view)
+- [NParks Parks and Nature Reserves](https://data.gov.sg/datasets/d_0542d48f0991541706b58059381a6eca/view)
 - [data.gov.sg API docs](https://guide.data.gov.sg/developer-guide/api-overview)
 - [OneMap basemap docs](https://www.onemap.gov.sg/docs/maps/greylite.html)
 
@@ -101,17 +105,17 @@ npm run sync-data
 `scripts/sync-data.ts` does the following:
 
 1. Reads the HDB resale collection metadata from data.gov.sg.
-2. Downloads the CSV and GEOJSON source files through the official dataset download API.
+2. Downloads CSV and GEOJSON source files for resale prices, properties, MRT stations, schools, hawker centres, supermarkets, and parks through the official dataset download API.
 3. Validates raw rows with `zod`.
 4. Normalizes addresses, prices, lease values, and monthly aggregates.
-5. Resolves block coordinates through OneMap and caches them in `data/cache/geocodes.json` (preserved across CI runs via GitHub Actions cache; not tracked by git).
+5. Resolves block and amenity coordinates through OneMap and caches them in `data/cache/geocodes.json` (preserved across CI runs via GitHub Actions cache; not tracked by git).
 6. Computes nearest MRT distance from LTA station exit points.
 7. Emits:
    - `public/data/manifest.json`
    - `public/data/block-summaries.json`
    - `public/data/trends/town-flat-type.json` (monthly medians, median $/sqm, and transaction counts by town × flat type)
-   - `public/data/mrt-exits.geojson`
-   - `public/data/details/`
+   - `public/data/mrt-stations.geojson` and `mrt-exits.geojson`
+   - `public/data/details/` (individual block transaction history and amenities)
 
 ## Environment
 
