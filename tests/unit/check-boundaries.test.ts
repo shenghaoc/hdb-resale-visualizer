@@ -107,13 +107,12 @@ describe("check-boundaries", () => {
     expect(result.stderr).toContain("src/runtime.ts");
   });
 
-  it("rejects Vite aliases in static, dynamic, and require imports", () => {
+  it("rejects Vite aliases in static and dynamic imports", () => {
     const workspace = makeWorkspace({
       "scripts/check.ts": `
         import "@/lib/data";
 
         void import("@shared/runtime");
-        require("@/legacy");
       `,
     });
 
@@ -121,6 +120,19 @@ describe("check-boundaries", () => {
 
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('Vite alias "@/"');
+    expect(result.stderr).toContain('Vite alias "@shared/"');
+  });
+
+  it("rejects Vite aliases in require() calls", () => {
+    const workspace = makeWorkspace({
+      "scripts/check.ts": `
+        require("@shared/legacy");
+      `,
+    });
+
+    const result = runBoundaryCheck(workspace);
+
+    expect(result.status).toBe(1);
     expect(result.stderr).toContain('Vite alias "@shared/"');
   });
 });
