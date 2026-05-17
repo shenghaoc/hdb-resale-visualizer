@@ -2,7 +2,6 @@ import "temporal-polyfill/global";
 import { expect, test, type Page } from "@playwright/test";
 
 test.describe.configure({
-  mode: "serial",
   timeout: 60_000,
 });
 
@@ -54,10 +53,6 @@ async function mockComparisonArtifacts(page: Page) {
   });
 }
 
-async function setupMobile(page: Page) {
-  await page.setViewportSize(MOBILE_VIEWPORT);
-}
-
 function mobileTabBar(page: Page) {
   return page.getByTestId("mobile-tab-bar");
 }
@@ -68,8 +63,9 @@ function firstResultCard(page: Page) {
 
 
 test.describe("Mobile Regression: Recent Features", () => {
+  test.use({ viewport: MOBILE_VIEWPORT });
+
   test("results toolbar: sort and view toggle accessible on mobile", async ({ page }) => {
-    await setupMobile(page);
     await page.goto("/");
 
     // Open filters, set town filter explicitly (required for view toggle)
@@ -96,7 +92,6 @@ test.describe("Mobile Regression: Recent Features", () => {
 
   test("detail drawer tabs scroll and navigate on mobile", async ({ page }) => {
     await mockComparisonArtifacts(page);
-    await setupMobile(page);
     await page.goto("/");
 
     // Set town filter and open results
@@ -133,7 +128,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("budget match indicator shows on mobile results", async ({ page }) => {
-    await setupMobile(page);
     await page.goto("/");
 
     // Open filters, set town and budget (fixture blocks are ~$1.2M)
@@ -153,7 +147,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("town profile overview visible in mobile results", async ({ page }) => {
-    await setupMobile(page);
     await page.goto("/");
 
     // Set town filter explicitly (required for town profile)
@@ -177,7 +170,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("buyer checklist accessible from mobile saved tab", async ({ page }) => {
-    await setupMobile(page);
 
     // Pre-seed a shortlist item
     const shortlistData = [
@@ -208,7 +200,6 @@ test.describe("Mobile Regression: Recent Features", () => {
 
   test("shortlist comparison table scrolls horizontally on mobile", async ({ page }) => {
     await mockComparisonArtifacts(page);
-    await setupMobile(page);
 
     // Pre-seed two shortlist items using real fixture address keys
     const shortlistData = [
@@ -222,7 +213,7 @@ test.describe("Mobile Regression: Recent Features", () => {
         addressKey: "bedok-106-lengkong-tiga",
         notes: "",
         targetPrice: null,
-        addedAt: new Date(Date.now() - 60_000).toISOString(),
+        addedAt: Temporal.Now.instant().subtract({ minutes: 1 }).toString(),
       },
     ];
 
@@ -244,7 +235,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {
-    await setupMobile(page);
 
     const shortlistData = [
       {
@@ -269,7 +259,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("mobile theme toggle and language selector remain functional", async ({ page }) => {
-    await setupMobile(page);
     await page.goto("/");
 
     const tabBar = mobileTabBar(page);
@@ -297,7 +286,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("mobile filter panel opens and budget inputs work", async ({ page }) => {
-    await setupMobile(page);
     await page.goto("/");
 
     // Open filters
