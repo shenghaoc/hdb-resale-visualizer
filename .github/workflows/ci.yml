@@ -156,7 +156,7 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
 
       - name: Install Playwright browser
-        run: npx playwright install --with-deps firefox
+        run: npx playwright install --with-deps webkit 
 
       - name: End-to-end smoke
         run: npm run test:e2e
