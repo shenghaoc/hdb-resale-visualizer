@@ -127,8 +127,8 @@ Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and i
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `npm run test`).
 
 ### Standard commands
-All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires Chromium, which can be installed with:
+All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires Firefox, which can be installed with:
 
 ```bash
-npx playwright install --with-deps chromium
+npx playwright install --with-deps firefox
 ```
