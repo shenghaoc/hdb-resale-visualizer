@@ -105,7 +105,7 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  await page.getByRole("button", { name: "Filters" }).click();
+  await page.getByTestId("mobile-tab-bar").getByRole("button", { name: "Filters" }).click();
   await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 

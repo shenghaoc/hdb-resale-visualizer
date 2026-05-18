@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SEARCH_PROFILE_STORAGE_KEY } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 
@@ -201,6 +202,21 @@ const blocks: BlockSummary[] = [
   },
 ];
 
+const completedSearchProfile = {
+  version: 1,
+  mainFlatType: "4 ROOM",
+  alternativeFlatTypes: [],
+  maxBudget: 700000,
+  commuteAnchorLabel: "Bedok MRT",
+  commuteAnchorMrt: "BEDOK MRT STATION",
+  maxComfortableCommuteMinutes: 30,
+  commuteStretchMinutes: 10,
+  minimumRemainingLeaseYears: 65,
+  budgetStretchPercent: 5,
+  showStretchOptions: true,
+  showAllBlocks: false,
+};
+
 function createDeferredPromise<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void;
   let reject!: (reason?: unknown) => void;
@@ -236,7 +252,9 @@ describe("App detail loading", () => {
     dataMocks.fetchBlocksByTown.mockResolvedValue(blocks);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
     vi.stubGlobal("localStorage", {
-      getItem: vi.fn(() => null),
+      getItem: vi.fn((key: string) =>
+        key === SEARCH_PROFILE_STORAGE_KEY ? JSON.stringify(completedSearchProfile) : null,
+      ),
       setItem: vi.fn(),
       removeItem: vi.fn(),
     });
