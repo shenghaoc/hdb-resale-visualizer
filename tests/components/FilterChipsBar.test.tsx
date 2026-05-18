@@ -56,35 +56,41 @@ describe("FilterChipsBar", () => {
     const flatTypeChip = screen.getByRole("button", { name: "Remove filter: 4 ROOM" });
     const filtersButton = screen.getByRole("button", { name: "Filters" });
 
-    expect(townChip).toHaveAttribute("tabindex", "0");
-    expect(flatTypeChip).toHaveAttribute("tabindex", "-1");
-    expect(filtersButton).toHaveAttribute("tabindex", "-1");
+    const assertTabIndices = (town: "0" | "-1", flatType: "0" | "-1", filters: "0" | "-1") => {
+      expect(townChip).toHaveAttribute("tabindex", town);
+      expect(flatTypeChip).toHaveAttribute("tabindex", flatType);
+      expect(filtersButton).toHaveAttribute("tabindex", filters);
+    };
+
+    assertTabIndices("0", "-1", "-1");
 
     townChip.focus();
     await user.keyboard("{ArrowRight}");
     expect(flatTypeChip).toHaveFocus();
-    expect(flatTypeChip).toHaveAttribute("tabindex", "0");
+    assertTabIndices("-1", "0", "-1");
 
     await user.keyboard("{End}");
     expect(filtersButton).toHaveFocus();
-    expect(filtersButton).toHaveAttribute("tabindex", "0");
+    assertTabIndices("-1", "-1", "0");
 
     await user.keyboard("{ArrowRight}");
     expect(townChip).toHaveFocus();
-    expect(townChip).toHaveAttribute("tabindex", "0");
+    assertTabIndices("0", "-1", "-1");
 
     await user.keyboard("{ArrowLeft}");
     expect(filtersButton).toHaveFocus();
+    assertTabIndices("-1", "-1", "0");
 
     await user.keyboard("{Home}");
     expect(townChip).toHaveFocus();
-    expect(townChip).toHaveAttribute("tabindex", "0");
+    assertTabIndices("0", "-1", "-1");
 
     await user.keyboard("{ArrowDown}");
     expect(flatTypeChip).toHaveFocus();
-    expect(flatTypeChip).toHaveAttribute("tabindex", "0");
+    assertTabIndices("-1", "0", "-1");
 
     await user.keyboard("{ArrowUp}");
     expect(townChip).toHaveFocus();
+    assertTabIndices("0", "-1", "-1");
   });
 });
