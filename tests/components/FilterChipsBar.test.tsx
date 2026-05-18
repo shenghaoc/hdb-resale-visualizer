@@ -1,0 +1,74 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { FilterChipsBar, type FilterChip } from "@/components/FilterChipsBar";
+import type { Translator } from "@/lib/i18n/types";
+
+const t: Translator = (key, vars) => {
+  if (key === "filters.title") return "Filters";
+  if (key === "filters.removeChip") return `Remove filter: ${vars?.label ?? ""}`;
+  if (key === "tab.filters") return "Filters";
+  return key;
+};
+
+function renderFilterChipsBar(chips: FilterChip[]) {
+  const onOpenFilters = vi.fn();
+  const result = render(
+    <FilterChipsBar chips={chips} isDesktop={false} t={t} onOpenFilters={onOpenFilters} />,
+  );
+
+  return { ...result, onOpenFilters };
+}
+
+describe("FilterChipsBar", () => {
+  it("exposes removable chips and the filters action as toolbar buttons", async () => {
+    const user = userEvent.setup();
+    const removeTown = vi.fn();
+    const removeFlatType = vi.fn();
+    const { onOpenFilters } = renderFilterChipsBar([
+      { key: "town", label: "Town · BEDOK", onRemove: removeTown },
+      { key: "flatType", label: "4 ROOM", onRemove: removeFlatType },
+    ]);
+
+    expect(screen.getByRole("toolbar", { name: "Filters" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Remove filter: Town · BEDOK" }));
+    expect(removeTown).toHaveBeenCalledTimes(1);
+    expect(removeFlatType).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole("button", { name: "Filters" }));
+    expect(onOpenFilters).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps keyboard focus in a wrapping roving tab order", async () => {
+    const user = userEvent.setup();
+    renderFilterChipsBar([
+      { key: "town", label: "Town · BEDOK", onRemove: vi.fn() },
+      { key: "flatType", label: "4 ROOM", onRemove: vi.fn() },
+    ]);
+
+    const townChip = screen.getByRole("button", { name: "Remove filter: Town · BEDOK" });
+    const flatTypeChip = screen.getByRole("button", { name: "Remove filter: 4 ROOM" });
+    const filtersButton = screen.getByRole("button", { name: "Filters" });
+
+    expect(townChip).toHaveAttribute("tabindex", "0");
+    expect(flatTypeChip).toHaveAttribute("tabindex", "-1");
+    expect(filtersButton).toHaveAttribute("tabindex", "-1");
+
+    townChip.focus();
+    await user.keyboard("{ArrowRight}");
+    expect(flatTypeChip).toHaveFocus();
+    expect(flatTypeChip).toHaveAttribute("tabindex", "0");
+
+    await user.keyboard("{End}");
+    expect(filtersButton).toHaveFocus();
+    expect(filtersButton).toHaveAttribute("tabindex", "0");
+
+    await user.keyboard("{ArrowRight}");
+    expect(townChip).toHaveFocus();
+    expect(townChip).toHaveAttribute("tabindex", "0");
+
+    await user.keyboard("{ArrowLeft}");
+    expect(filtersButton).toHaveFocus();
+  });
+});
