@@ -4,6 +4,44 @@ import { isGeoJsonDataSourceLike } from "@/types/map";
 import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
 import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
 
+function areLayersAlreadyBeforeTarget(
+  map: MapLibreMap,
+  layerIds: readonly string[],
+  beforeLayerId: string | undefined,
+): boolean {
+  const orderedLayerIds = map.getStyle().layers.map((layer) => layer.id);
+  const lastLayerId = layerIds[layerIds.length - 1];
+  if (!lastLayerId) return true;
+
+  const currentGroupOrder = orderedLayerIds.filter((id) => layerIds.includes(id));
+  if (
+    currentGroupOrder.length !== layerIds.length ||
+    currentGroupOrder.some((id, index) => id !== layerIds[index])
+  ) {
+    return false;
+  }
+
+  const lastLayerIndex = orderedLayerIds.indexOf(lastLayerId);
+  if (beforeLayerId === undefined) {
+    return lastLayerIndex === orderedLayerIds.length - 1;
+  }
+
+  const beforeLayerIndex = orderedLayerIds.indexOf(beforeLayerId);
+  return beforeLayerIndex !== -1 && lastLayerIndex === beforeLayerIndex - 1;
+}
+
+function moveLayersBeforeTargetIfNeeded(
+  map: MapLibreMap,
+  layerIds: readonly string[],
+  beforeLayerId: string | undefined,
+): void {
+  if (areLayersAlreadyBeforeTarget(map, layerIds, beforeLayerId)) return;
+
+  for (const layerId of layerIds) {
+    map.moveLayer(layerId, beforeLayerId);
+  }
+}
+
 type UseMapDataSyncProps = {
   map: MapLibreMap | null;
   geoJson: GeoJSON.FeatureCollection;
@@ -88,9 +126,14 @@ export function useMapDataSync({
       for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
         if (!map.getLayer(layerId)) continue;
         map.setLayoutProperty(layerId, "visibility", schoolVisibility);
-        if (schoolVisibility === "visible") {
-          map.moveLayer(layerId, map.getLayer("selected-point") ? "selected-point" : undefined);
-        }
+      }
+
+      if (schoolVisibility === "visible") {
+        moveLayersBeforeTargetIfNeeded(
+          map,
+          PRIMARY_SCHOOL_LAYER_IDS,
+          map.getLayer("selected-point") ? "selected-point" : undefined,
+        );
       }
     };
     const applyPrimarySchoolsOnLoad = () => {
