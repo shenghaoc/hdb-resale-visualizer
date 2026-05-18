@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
 import {
-  DEFAULT_SEARCH_PROFILE,
   hasCompletedSearchProfile,
   loadSearchProfile,
   loadSearchProfileWizardDismissed,
