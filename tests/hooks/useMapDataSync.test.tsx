@@ -21,9 +21,11 @@ const POPULATED_GEOJSON: GeoJSON.FeatureCollection = {
 function createMapStub({
   styleLoaded = true,
   hasBothSources = true,
-}: { styleLoaded?: boolean; hasBothSources?: boolean } = {}) {
+  layerOrder = ["primary-school-markers", "primary-school-labels", "selected-point"],
+}: { styleLoaded?: boolean; hasBothSources?: boolean; layerOrder?: string[] } = {}) {
   const handlers = new Map<string, EventHandler[]>();
   const onceHandlers = new Map<string, EventHandler[]>();
+  const currentLayerOrder = [...layerOrder];
 
   const blocksSource = { setData: vi.fn() };
   const heatmapSource = { setData: vi.fn() };
@@ -37,13 +39,21 @@ function createMapStub({
       if (id === "primary-schools" && hasBothSources) return schoolSource;
       return undefined;
     }),
-    getLayer: vi.fn((id: string) =>
-      ["primary-school-markers", "primary-school-labels", "selected-point"].includes(id)
-        ? {}
-        : undefined,
-    ),
+    getLayer: vi.fn((id: string) => (currentLayerOrder.includes(id) ? {} : undefined)),
+    getStyle: vi.fn(() => ({
+      version: 8,
+      sources: {},
+      layers: currentLayerOrder.map((id) => ({ id })),
+    })),
     setLayoutProperty: vi.fn(),
-    moveLayer: vi.fn(),
+    moveLayer: vi.fn((id: string, before?: string) => {
+      const currentIndex = currentLayerOrder.indexOf(id);
+      if (currentIndex === -1) return;
+      currentLayerOrder.splice(currentIndex, 1);
+
+      const nextIndex = before ? currentLayerOrder.indexOf(before) : -1;
+      currentLayerOrder.splice(nextIndex >= 0 ? nextIndex : currentLayerOrder.length, 0, id);
+    }),
     on: vi.fn((event: string, handler: EventHandler) => {
       if (!handlers.has(event)) handlers.set(event, []);
       handlers.get(event)!.push(handler);
@@ -68,6 +78,7 @@ function createMapStub({
     blocksSource,
     heatmapSource,
     schoolSource,
+    currentLayerOrder,
     _handlers: handlers,
   };
 
@@ -233,7 +244,46 @@ describe("useMapDataSync", () => {
       "visibility",
       "visible",
     );
+    expect(map.moveLayer).not.toHaveBeenCalled();
+  });
+
+  it("moves primary school layers only when they are out of order", () => {
+    const map = createMapStub({
+      styleLoaded: true,
+      layerOrder: ["selected-point", "primary-school-labels", "primary-school-markers"],
+    });
+    const schoolsGeoJson: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [103.8, 1.3] },
+          properties: { name: "TEST PRIMARY SCHOOL" },
+        },
+      ],
+    };
+
+    renderHook(() =>
+      useMapDataSync({
+        map,
+        geoJson: EMPTY_GEOJSON,
+        priceHeatmapEnabled: false,
+        primarySchoolsGeoJson: schoolsGeoJson,
+        schoolOverlayEnabled: true,
+      }),
+    );
+
     expect(map.moveLayer).toHaveBeenCalledWith("primary-school-markers", "selected-point");
     expect(map.moveLayer).toHaveBeenCalledWith("primary-school-labels", "selected-point");
+    expect(map.currentLayerOrder).toEqual([
+      "primary-school-markers",
+      "primary-school-labels",
+      "selected-point",
+    ]);
+
+    (map.moveLayer as ReturnType<typeof vi.fn>).mockClear();
+    map.emit("styledata");
+
+    expect(map.moveLayer).not.toHaveBeenCalled();
   });
 });
