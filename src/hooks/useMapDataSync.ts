@@ -9,19 +9,24 @@ function areLayersAlreadyBeforeTarget(
   layerIds: readonly string[],
   beforeLayerId: string | undefined,
 ): boolean {
-  const orderedLayerIds = map.getStyle().layers.map((layer) => layer.id);
-  const lastLayerId = layerIds[layerIds.length - 1];
-  if (!lastLayerId) return true;
+  if (layerIds.length === 0) return true;
 
-  const currentGroupOrder = orderedLayerIds.filter((id) => layerIds.includes(id));
-  if (
-    currentGroupOrder.length !== layerIds.length ||
-    currentGroupOrder.some((id, index) => id !== layerIds[index])
-  ) {
-    return false;
+  const style = map.getStyle();
+  if (!style || !style.layers) return false;
+
+  const orderedLayerIds = style.layers.map((layer) => layer.id);
+
+  const firstLayerIndex = orderedLayerIds.indexOf(layerIds[0]);
+  if (firstLayerIndex === -1) return false;
+
+  for (let i = 0; i < layerIds.length; i++) {
+    if (orderedLayerIds[firstLayerIndex + i] !== layerIds[i]) {
+      return false;
+    }
   }
 
-  const lastLayerIndex = orderedLayerIds.indexOf(lastLayerId);
+  const lastLayerIndex = firstLayerIndex + layerIds.length - 1;
+
   if (beforeLayerId === undefined) {
     return lastLayerIndex === orderedLayerIds.length - 1;
   }
@@ -113,7 +118,7 @@ export function useMapDataSync({
 
     let isActive = true;
 
-    const applyPrimarySchools = () => {
+    const applyPrimarySchools = (e?: { dataType?: string }) => {
       if (!isActive || !map.isStyleLoaded()) return;
       const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
       if (primarySchoolsGeoJson && isGeoJsonDataSourceLike(source)) {
@@ -130,11 +135,13 @@ export function useMapDataSync({
       }
 
       if (schoolVisibility === "visible") {
-        moveLayersBeforeTargetIfNeeded(
-          map,
-          PRIMARY_SCHOOL_LAYER_IDS,
-          map.getLayer("selected-point") ? "selected-point" : undefined,
-        );
+        if (!e || e.dataType !== "source") {
+          moveLayersBeforeTargetIfNeeded(
+            map,
+            PRIMARY_SCHOOL_LAYER_IDS,
+            map.getLayer("selected-point") ? "selected-point" : undefined,
+          );
+        }
       }
     };
     const applyPrimarySchoolsOnLoad = () => {
