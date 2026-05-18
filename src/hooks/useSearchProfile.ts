@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   hasCompletedSearchProfile,
   loadSearchProfile,
@@ -14,26 +14,40 @@ export function useSearchProfile() {
     loadSearchProfileWizardDismissed(),
   );
 
+  const isMountedProfile = useRef(false);
+  const isMountedDismissed = useRef(false);
+
+  // Synchronize profile changes to persistence store cleanly on update, skipping initial mount
+  useEffect(() => {
+    if (!isMountedProfile.current) {
+      isMountedProfile.current = true;
+      return;
+    }
+    saveSearchProfile(profile);
+  }, [profile]);
+
+  // Synchronize wizardDismissed state to persistence store cleanly on update, skipping initial mount
+  useEffect(() => {
+    if (!isMountedDismissed.current) {
+      isMountedDismissed.current = true;
+      return;
+    }
+    saveSearchProfileWizardDismissed(wizardDismissed);
+  }, [wizardDismissed]);
+
   const completed = useMemo(() => hasCompletedSearchProfile(profile), [profile]);
   const shouldShowWizard = !completed && !wizardDismissed;
 
   const patchProfile = useCallback((patch: SearchProfilePatch) => {
-    setProfile((prev) => {
-      const next = { ...prev, ...patch };
-      saveSearchProfile(next);
-      return next;
-    });
+    setProfile((prev) => ({ ...prev, ...patch }));
   }, []);
 
   const replaceProfile = useCallback((next: SearchProfile) => {
-    saveSearchProfile(next);
-    saveSearchProfileWizardDismissed(true);
     setProfile(next);
     setWizardDismissed(true);
   }, []);
 
   const dismissWizard = useCallback(() => {
-    saveSearchProfileWizardDismissed(true);
     setWizardDismissed(true);
   }, []);
 
