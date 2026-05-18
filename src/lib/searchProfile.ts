@@ -8,15 +8,15 @@ import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
 const searchProfileSchema = z.object({
   version: z.literal(1).catch(1),
-  mainFlatType: z.string().trim().min(1).catch(""),
+  mainFlatType: z.string().trim().catch(""),
   alternativeFlatTypes: z.array(z.string()).catch([]),
-  maxBudget: z.number().nullable().catch(null),
-  commuteAnchorLabel: z.string().catch(""),
+  maxBudget: z.number().int().positive().nullable().catch(null),
+  commuteAnchorLabel: z.string().trim().catch(""),
   commuteAnchorMrt: z.string().nullable().catch(null),
-  maxComfortableCommuteMinutes: z.number().nullable().catch(null),
+  maxComfortableCommuteMinutes: z.number().int().positive().nullable().catch(null),
   commuteStretchMinutes: z.number().int().min(0).max(60).catch(10),
-  minimumRemainingLeaseYears: z.number().nullable().catch(null),
-  budgetStretchPercent: z.number().min(0).max(30).catch(5),
+  minimumRemainingLeaseYears: z.number().int().min(0).max(99).nullable().catch(null),
+  budgetStretchPercent: z.number().int().min(0).max(30).catch(5),
   showStretchOptions: z.boolean().catch(true),
   showAllBlocks: z.boolean().catch(false),
 });
@@ -65,9 +65,7 @@ export function saveSearchProfileWizardDismissed(isDismissed: boolean): void {
 }
 
 export function patchSearchProfile(profile: SearchProfile, patch: SearchProfilePatch): SearchProfile {
-  const next = { ...profile, ...patch };
-  saveSearchProfile(next);
-  return next;
+  return { ...profile, ...patch };
 }
 
 export function hasCompletedSearchProfile(profile: SearchProfile): boolean {

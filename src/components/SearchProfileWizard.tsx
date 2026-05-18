@@ -22,53 +22,49 @@ function formatStationLabel(stationName: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function WizardIcon({
-  stepKey,
-}: {
-  stepKey: "welcome" | "flatType" | "budget" | "commute" | "lease";
-}) {
-  if (stepKey === "welcome") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="11" cy="11" r="7.5" />
-        <path d="M16.5 16.5 21 21" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  if (stepKey === "flatType") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M3 9.5 12 3l9 6.5V20A1.5 1.5 0 0 1 19.5 21.5h-15A1.5 1.5 0 0 1 3 20V9.5Z" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9 21.5V14h6v7.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  if (stepKey === "budget") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="12" r="9.5" />
-        <path d="M12 6.5v11M15 9.5c0-1.1-1.34-2-3-2s-3 .9-3 2 1.34 2 3 2 3 .9 3 2-1.34 2-3 2-3-.9-3-2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  if (stepKey === "commute") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="5" y="2.5" width="14" height="16" rx="3" />
-        <path d="M5 12.5h14M12 2.5v10" strokeLinecap="round" />
-        <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
-        <circle cx="15.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
-        <path d="M7 18.5l-2 3M17 18.5l2 3M9 21.5h6" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  return (
+const WIZARD_ICONS = {
+  welcome: (
+    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="11" cy="11" r="7.5" />
+      <path d="M16.5 16.5 21 21" strokeLinecap="round" />
+    </svg>
+  ),
+  flatType: (
+    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 9.5 12 3l9 6.5V20A1.5 1.5 0 0 1 19.5 21.5h-15A1.5 1.5 0 0 1 3 20V9.5Z" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 21.5V14h6v7.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  budget: (
+    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M12 6.5v11M15 9.5c0-1.1-1.34-2-3-2s-3 .9-3 2 1.34 2 3 2 3 .9 3 2-1.34 2-3 2-3-.9-3-2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  commute: (
+    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="5" y="2.5" width="14" height="16" rx="3" />
+      <path d="M5 12.5h14M12 2.5v10" strokeLinecap="round" />
+      <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
+      <path d="M7 18.5l-2 3M17 18.5l2 3M9 21.5h6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  lease: (
     <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3" y="4.5" width="18" height="17" rx="2" />
       <path d="M16 2.5v4M8 2.5v4M3 9.5h18" strokeLinecap="round" />
       <path d="M8 13.5h2v2H8z" fill="currentColor" stroke="none" />
     </svg>
-  );
+  ),
+} as const;
+
+function WizardIcon({
+  stepKey,
+}: {
+  stepKey: keyof typeof WIZARD_ICONS;
+}) {
+  return WIZARD_ICONS[stepKey] || WIZARD_ICONS.welcome;
 }
 
 export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
@@ -94,7 +90,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     return mrtStations.filter((station) => station.includes(query));
   }, [stationSearch, mrtStations]);
 
-  const canContinueStep = (() => {
+  const canContinueStep = useMemo(() => {
     if (step === 0) return true;
     if (step === 1) return mainFlatType.length > 0;
     if (step === 2) return maxBudget.trim().length === 0 || Number(maxBudget) > 0;
@@ -102,15 +98,18 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     if (step === 4) return Number(minLease) > 0;
     if (step === 5) return true;
     return false;
-  })();
+  }, [step, mainFlatType, maxBudget, commuteAnchorLabel, commuteAnchorMrt, maxCommute, minLease]);
 
-  const canSubmit =
-    mainFlatType.length > 0 &&
-    (maxBudget.trim().length === 0 || Number(maxBudget) > 0) &&
-    commuteAnchorLabel.trim().length > 0 &&
-    commuteAnchorMrt.length > 0 &&
-    Number(maxCommute) > 0 &&
-    Number(minLease) > 0;
+  const canSubmit = useMemo(() => {
+    return (
+      mainFlatType.length > 0 &&
+      (maxBudget.trim().length === 0 || Number(maxBudget) > 0) &&
+      commuteAnchorLabel.trim().length > 0 &&
+      commuteAnchorMrt.length > 0 &&
+      Number(maxCommute) > 0 &&
+      Number(minLease) > 0
+    );
+  }, [mainFlatType, maxBudget, commuteAnchorLabel, commuteAnchorMrt, maxCommute, minLease]);
 
   const nextLabel =
     step === 0
