@@ -44,7 +44,7 @@ export function getSearchProfileChipDescriptors(
             ? t("shortlist.na")
             : formatNumber(profile.maxComfortableCommuteMinutes, 0, locale),
       }),
-      clearPatch: { commuteAnchorLabel: "", maxComfortableCommuteMinutes: null },
+      clearPatch: { commuteAnchorLabel: "", commuteAnchorMrt: null, maxComfortableCommuteMinutes: null },
     });
   }
   if (profile.minimumRemainingLeaseYears !== null) {

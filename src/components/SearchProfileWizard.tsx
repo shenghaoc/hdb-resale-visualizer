@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -83,17 +83,16 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [stationSearch, setStationSearch] = useState("");
   const [stationPickerOpen, setStationPickerOpen] = useState(false);
-  const isDesktop = typeof window !== "undefined" ? window.innerWidth >= 1024 : true;
   const mrtStations = getKnownMrtStationNames();
   const budgetPresets = [500000, 700000, 900000, 1200000];
   const commutePresets = [20, 30, 40, 50];
   const leasePresets = [50, 60, 70, 80];
   const totalSteps = 6;
-  const filteredStations = (() => {
+  const filteredStations = useMemo(() => {
     const query = stationSearch.trim().toUpperCase();
     if (!query) return mrtStations;
     return mrtStations.filter((station) => station.includes(query));
-  })();
+  }, [stationSearch, mrtStations]);
 
   const canContinueStep = (() => {
     if (step === 0) return true;
@@ -132,7 +131,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
       version: 1,
       mainFlatType,
       alternativeFlatTypes: [],
-      maxBudget: maxBudget ? Number(maxBudget) : null,
+      maxBudget: maxBudget.trim() !== "" ? Number(maxBudget) : null,
       commuteAnchorLabel: commuteAnchorLabel.trim(),
       commuteAnchorMrt,
       maxComfortableCommuteMinutes: Number(maxCommute),
@@ -166,7 +165,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             ))}
           </div>
 
-          <div className={cn("min-h-[19rem]", isDesktop ? "lg:min-h-[17rem]" : "")}>
+          <div className="min-h-[19rem] lg:min-h-[17rem]">
             <div
               key={step}
               style={{
@@ -324,7 +323,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             <ChevronDown className="size-4 text-muted-foreground transition-transform data-[open=true]:rotate-180" data-open={stationPickerOpen} />
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border border-border/70 bg-popover/98 p-0 shadow-[0_12px_40px_rgba(23,28,31,0.12)] backdrop-blur-xl dark:border-primary/15 dark:bg-popover">
+                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border border-border/70 bg-popover/98 p-0 shadow-[0_12px_40px_rgba(23,28,31,0.12)] backdrop-blur-xl dark:border-primary/15 dark:bg-popover">
                           <div className="border-b border-border/60 p-2.5">
                             <div className="rounded-[0.6rem] bg-black/[0.03] px-3 dark:bg-white/[0.06]">
                               <div className="flex items-center gap-2">
