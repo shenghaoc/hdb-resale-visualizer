@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { FilterChipsBar, type FilterChip } from "@/components/FilterChipsBar";
-import type { Translator } from "@/lib/i18n/types";
+import type { Translator } from "@/lib/i18n";
 
 const t: Translator = (key, vars) => {
   if (key === "filters.title") return "Filters";
@@ -40,6 +40,11 @@ describe("FilterChipsBar", () => {
     expect(onOpenFilters).toHaveBeenCalledTimes(1);
   });
 
+  it("renders nothing when there are no chips", () => {
+    renderFilterChipsBar([]);
+    expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
+  });
+
   it("keeps keyboard focus in a wrapping roving tab order", async () => {
     const user = userEvent.setup();
     renderFilterChipsBar([
@@ -70,5 +75,16 @@ describe("FilterChipsBar", () => {
 
     await user.keyboard("{ArrowLeft}");
     expect(filtersButton).toHaveFocus();
+
+    await user.keyboard("{Home}");
+    expect(townChip).toHaveFocus();
+    expect(townChip).toHaveAttribute("tabindex", "0");
+
+    await user.keyboard("{ArrowDown}");
+    expect(flatTypeChip).toHaveFocus();
+    expect(flatTypeChip).toHaveAttribute("tabindex", "0");
+
+    await user.keyboard("{ArrowUp}");
+    expect(townChip).toHaveFocus();
   });
 });
