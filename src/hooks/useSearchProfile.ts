@@ -35,12 +35,6 @@ export function useSearchProfile() {
     setWizardDismissed(true);
   }, []);
 
-  const resetProfile = useCallback(() => {
-    replaceProfile(DEFAULT_SEARCH_PROFILE);
-    saveSearchProfileWizardDismissed(false);
-    setWizardDismissed(false);
-  }, [replaceProfile]);
-
   return useMemo(
     () => ({
       profile,
@@ -48,7 +42,6 @@ export function useSearchProfile() {
       shouldShowWizard,
       patchProfile,
       replaceProfile,
-      resetProfile,
       dismissWizard,
     }),
     [
@@ -57,7 +50,6 @@ export function useSearchProfile() {
       shouldShowWizard,
       patchProfile,
       replaceProfile,
-      resetProfile,
       dismissWizard,
     ],
   );

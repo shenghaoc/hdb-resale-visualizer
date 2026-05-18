@@ -337,7 +337,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               </div>
                             </div>
                           </div>
-                          <div className="max-h-56 overflow-y-auto py-1">
+                          <div className="max-h-56 overflow-y-auto py-1" role="listbox" aria-label="MRT stations">
                             {filteredStations.length === 0 ? (
                               <p className="px-4 py-4 text-center text-sm text-muted-foreground">
                                 {t("searchProfile.noMrtStationFound")}
@@ -347,6 +347,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                 <button
                                   key={station}
                                   type="button"
+                                  role="option"
+                                  aria-selected={commuteAnchorMrt === station}
                                   onClick={() => {
                                     setCommuteAnchorMrt(station);
                                     setStationPickerOpen(false);
