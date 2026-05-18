@@ -57,20 +57,5 @@ export function getSearchProfileChipDescriptors(
     });
   }
 
-  chips.push({
-    key: "profile-show-stretch",
-    label: t("searchProfile.chip.stretch", {
-      value: profile.showStretchOptions ? t("searchProfile.on") : t("searchProfile.off"),
-    }),
-    clearPatch: { showStretchOptions: !profile.showStretchOptions },
-  });
-  chips.push({
-    key: "profile-show-all",
-    label: t("searchProfile.chip.showAll", {
-      value: profile.showAllBlocks ? t("searchProfile.on") : t("searchProfile.off"),
-    }),
-    clearPatch: { showAllBlocks: !profile.showAllBlocks },
-  });
-
   return chips;
 }
