@@ -38,6 +38,7 @@ function moveLayersBeforeTargetIfNeeded(
   if (areLayersAlreadyBeforeTarget(map, layerIds, beforeLayerId)) return;
 
   for (const layerId of layerIds) {
+    if (!map.getLayer(layerId)) continue;
     map.moveLayer(layerId, beforeLayerId);
   }
 }
