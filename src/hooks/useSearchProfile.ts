@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   hasCompletedSearchProfile,
   loadSearchProfile,
   loadSearchProfileWizardDismissed,
-  patchSearchProfile,
   saveSearchProfile,
   saveSearchProfileWizardDismissed,
 } from "@/lib/searchProfile";
@@ -15,29 +14,26 @@ export function useSearchProfile() {
     loadSearchProfileWizardDismissed(),
   );
 
-  // Synchronize profile changes to persistence store outside the state updater
-  useEffect(() => {
-    saveSearchProfile(profile);
-  }, [profile]);
-
-  // Synchronize wizardDismissed state to persistence store outside the state updater
-  useEffect(() => {
-    saveSearchProfileWizardDismissed(wizardDismissed);
-  }, [wizardDismissed]);
-
   const completed = useMemo(() => hasCompletedSearchProfile(profile), [profile]);
   const shouldShowWizard = !completed && !wizardDismissed;
 
   const patchProfile = useCallback((patch: SearchProfilePatch) => {
-    setProfile((prev) => patchSearchProfile(prev, patch));
+    setProfile((prev) => {
+      const next = { ...prev, ...patch };
+      saveSearchProfile(next);
+      return next;
+    });
   }, []);
 
   const replaceProfile = useCallback((next: SearchProfile) => {
+    saveSearchProfile(next);
+    saveSearchProfileWizardDismissed(true);
     setProfile(next);
     setWizardDismissed(true);
   }, []);
 
   const dismissWizard = useCallback(() => {
+    saveSearchProfileWizardDismissed(true);
     setWizardDismissed(true);
   }, []);
 

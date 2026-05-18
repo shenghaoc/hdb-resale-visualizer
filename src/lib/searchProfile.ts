@@ -12,7 +12,7 @@ const searchProfileSchema = z.object({
   alternativeFlatTypes: z.array(z.string()).catch([]),
   maxBudget: z.number().int().positive().nullable().catch(null),
   commuteAnchorLabel: z.string().trim().catch(""),
-  commuteAnchorMrt: z.string().nullable().catch(null),
+  commuteAnchorMrt: z.string().trim().min(1).nullable().catch(null),
   maxComfortableCommuteMinutes: z.number().int().positive().nullable().catch(null),
   commuteStretchMinutes: z.number().int().min(0).max(60).catch(10),
   minimumRemainingLeaseYears: z.number().int().min(0).max(99).nullable().catch(null),
