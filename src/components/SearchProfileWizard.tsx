@@ -337,13 +337,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               </div>
                             </div>
                           </div>
-                          <div className="max-h-56 overflow-y-auto py-1" role="listbox" aria-label="MRT stations">
-                            {filteredStations.length === 0 ? (
-                              <p className="px-4 py-4 text-center text-sm text-muted-foreground">
-                                {t("searchProfile.noMrtStationFound")}
-                              </p>
-                            ) : (
-                              filteredStations.slice(0, 40).map((station) => (
+                          {filteredStations.length === 0 ? (
+                            <div className="max-h-56 overflow-y-auto py-4 text-center text-sm text-muted-foreground" role="status" aria-live="polite">
+                              {t("searchProfile.noMrtStationFound")}
+                            </div>
+                          ) : (
+                            <div className="max-h-56 overflow-y-auto py-1" role="listbox" aria-label="MRT stations">
+                              {filteredStations.slice(0, 40).map((station) => (
                                 <button
                                   key={station}
                                   type="button"
@@ -361,9 +361,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                   <span>{formatStationLabel(station)}</span>
                                   {commuteAnchorMrt === station ? <Check className="size-4" /> : null}
                                 </button>
-                              ))
-                            )}
-                          </div>
+                              ))}
+                            </div>
+                          )}
                         </PopoverContent>
                       </Popover>
                     </div>
