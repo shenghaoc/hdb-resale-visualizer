@@ -184,13 +184,15 @@ function collectSrcFiles(dir: string): string[] {
   return files.sort();
 }
 
-for (const file of collectSrcFiles(SRC_DIR)) {
-  const sourceText = fs.readFileSync(file, "utf8");
-  if (EAGER_TEMPORAL_EXPORT_RE.test(sourceText)) {
-    recordViolation(
-      file,
-      "Do not read Temporal at module load in src/. Use a lazy getter so Safari can load the HTML polyfill first.",
-    );
+if (fs.existsSync(SRC_DIR)) {
+  for (const file of collectSrcFiles(SRC_DIR)) {
+    const sourceText = fs.readFileSync(file, "utf8");
+    if (EAGER_TEMPORAL_EXPORT_RE.test(sourceText)) {
+      recordViolation(
+        file,
+        "Do not read Temporal at module load in src/. Use a lazy getter so Safari can load the HTML polyfill first.",
+      );
+    }
   }
 }
 
