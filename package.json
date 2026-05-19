@@ -7,7 +7,7 @@
     "prepare:temporal-polyfill": "node -e \"require('node:fs').copyFileSync('node_modules/temporal-polyfill/global.min.js','public/temporal-polyfill.js')\"",
     "dev": "npm run prepare:temporal-polyfill && vite",
     "build": "npm run prepare:temporal-polyfill && npm run check:boundaries && npm run check:data && tsc -b && vite build && npm run check:bundle",
-    "build:full": "npm run check:boundaries && npm run sync-data && tsc -b && vite build && npm run check:bundle",
+    "build:full": "npm run prepare:temporal-polyfill && npm run check:boundaries && npm run sync-data && tsc -b && vite build && npm run check:bundle",
     "build:deploy": "npm run prepare:temporal-polyfill && npm run check:boundaries && npm run check:data && tsc -b && vite build && npm run check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "check:boundaries": "tsx scripts/check-boundaries.ts",

@@ -162,7 +162,7 @@ for (const entryFile of collectScriptFiles(SCRIPTS_DIR)) {
   visitSourceFile(entryFile);
 }
 
-const EAGER_TEMPORAL_EXPORT_RE = /export\s+const\s+\w+\s*=\s*(?:\n\s*)?Temporal\./;
+const EAGER_TEMPORAL_EXPORT_RE = /export\s+const\s+\w+\s*=\s*Temporal\./;
 const MAIN_PATH = path.join(SRC_DIR, "main.tsx");
 
 function collectSrcFiles(dir: string): string[] {

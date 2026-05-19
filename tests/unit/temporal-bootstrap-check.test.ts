@@ -57,4 +57,15 @@ describe("assertTemporalBootstrap", () => {
       /classic \(non-module\) script tag/,
     );
   });
+
+  it("rejects a polyfill file that is too small", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dist-bootstrap-"));
+    tempDirs.push(dir);
+    fs.writeFileSync(path.join(dir, "index.html"), `<script src="/temporal-polyfill.js"></script>`, "utf8");
+    fs.writeFileSync(path.join(dir, "temporal-polyfill.js"), "x".repeat(100), "utf8");
+
+    expect(() => assertTemporalBootstrap(dir, fs.readFileSync(path.join(dir, "index.html"), "utf8"))).toThrow(
+      /too small/,
+    );
+  });
 });
