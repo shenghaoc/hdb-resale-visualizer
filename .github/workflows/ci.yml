@@ -74,9 +74,6 @@ jobs:
               - 'tests/e2e/**'
               - 'tests/fixtures/public-data/**'
               - 'shared/**'
-              - 'index.html'
-              - 'scripts/check-bundle.ts'
-              - 'scripts/lib/temporal-bootstrap-check.ts'
               - 'playwright.config.*'
               - '.github/workflows/ci.yml'
             build:
@@ -160,6 +157,9 @@ jobs:
 
       - name: Install Playwright browser
         run: npx playwright install --with-deps webkit 
+
+      - name: Seed fixture data for e2e
+        run: npm run setup:fixtures
 
       - name: End-to-end smoke
         run: npm run test:e2e

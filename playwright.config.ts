@@ -21,7 +21,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: `npm run prepare:temporal-polyfill && npm run build && npm run preview -- --host ${E2E_HOST} --port ${E2E_PORT}`,
+    command: `npm run setup:fixtures && npm run prepare:temporal-polyfill && npm run build && npm run preview -- --host ${E2E_HOST} --port ${E2E_PORT}`,
     url: E2E_BASE_URL,
     reuseExistingServer: process.env.E2E_REUSE_SERVER === "1",
     timeout: 180_000,
