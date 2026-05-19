@@ -47,7 +47,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
     // with .map().filter() and using the slow Math.min(...arr) spread operator.
     for (let i = 0; i < points.length; i++) {
       const price = points[i].medianPrice;
-      if (!Number.isNaN(price)) {
+      if (price != null && !Number.isNaN(price)) {
         hasValidPrice = true;
         if (price < minPrice) minPrice = price;
         if (price > maxPrice) maxPrice = price;

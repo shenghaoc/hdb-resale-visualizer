@@ -352,8 +352,11 @@ export function buildTrendEnvelope(
       let min = Infinity;
       let max = -Infinity;
       for (let i = 0; i < prices.length; i++) {
-        if (prices[i] < min) min = prices[i];
-        if (prices[i] > max) max = prices[i];
+        const p = prices[i];
+        if (p != null && !Number.isNaN(p)) {
+          if (p < min) min = p;
+          if (p > max) max = p;
+        }
       }
       envelope.set(point.month, { min, max });
     }
