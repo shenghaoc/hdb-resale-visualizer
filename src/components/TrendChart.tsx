@@ -43,8 +43,6 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
     let maxPrice = -Infinity;
     let hasValidPrice = false;
 
-    // ⚡ Bolt: Use a single pass to find min/max instead of allocating new arrays
-    // with .map().filter() and using the slow Math.min(...arr) spread operator.
     for (let i = 0; i < points.length; i++) {
       const price = points[i].medianPrice;
       if (price != null && !Number.isNaN(price)) {

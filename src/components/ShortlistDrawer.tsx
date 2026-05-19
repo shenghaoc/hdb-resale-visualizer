@@ -348,7 +348,6 @@ function MiniSpark({
   color: string;
   points: AddressTrendPoint[];
 }) {
-  // Extract up to 12 trailing values and find min/max in one pass
   const values: number[] = [];
   let min = Infinity;
   let max = -Infinity;

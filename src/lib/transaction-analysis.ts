@@ -358,7 +358,9 @@ export function buildTrendEnvelope(
           if (p > max) max = p;
         }
       }
-      envelope.set(point.month, { min, max });
+      if (min <= max) {
+        envelope.set(point.month, { min, max });
+      }
     }
   }
   return envelope;
