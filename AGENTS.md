@@ -123,7 +123,7 @@ Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and i
 
 ### Running services
 - `npm run dev` starts Vite on `localhost:5173`. No backend or database is required.
-- Playwright E2E tests (`npm run test:e2e`) auto-start a dev server on port 4173; no manual server start needed.
+- Playwright E2E tests (`npm run test:e2e`) build production assets, run `vite preview` on port 4173, and exercise WebKit against that bundle (not `npm run dev`). Set `E2E_REUSE_SERVER=1` only when intentionally reusing an already-running preview on that port.
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `npm run test`).
 
 ### Standard commands

@@ -158,6 +158,9 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps webkit 
 
+      - name: Seed fixture data for e2e
+        run: npm run setup:fixtures
+
       - name: End-to-end smoke
         run: npm run test:e2e
 

@@ -21,6 +21,7 @@ export default tseslint.config(
       ".jules",
       "docs/archive",
       "public/data",
+      "public/temporal-polyfill.js",
     ],
   },
 

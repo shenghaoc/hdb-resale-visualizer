@@ -1,3 +1,4 @@
+import "temporal-polyfill/global";
 import { cpSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 

@@ -1,4 +1,3 @@
-import "temporal-polyfill/global";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "@fontsource/ibm-plex-sans/400.css";

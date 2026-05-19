@@ -151,6 +151,7 @@ Thumbs.db
 # to Cloudflare Pages by CI. Never committed to git.
 # CI test fixtures live in tests/fixtures/public-data/ instead.
 public/data/
+public/temporal-polyfill.js
 
 # Geocode cache — preserved between CI runs via actions/cache, not git
 data/cache/

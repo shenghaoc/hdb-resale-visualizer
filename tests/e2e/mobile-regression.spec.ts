@@ -1,4 +1,3 @@
-import "temporal-polyfill/global";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 test.describe.configure({
