@@ -35,8 +35,7 @@ export default defineConfig({
     {
       name: "webkit-mobile",
       use: {
-        ...devices["Desktop WebKit"],
-        viewport: { width: 390, height: 844 },
+        ...devices["iPhone 14"],
       },
       testMatch: /production-bootstrap\.spec\.ts|mobile-regression\.spec\.ts/,
     },

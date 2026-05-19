@@ -175,6 +175,7 @@ function checkEagerTemporal(sourceFile: ts.SourceFile, file: string) {
       ts.isGetAccessor(node) ||
       ts.isSetAccessor(node) ||
       ts.isClassDeclaration(node) ||
+      ts.isClassExpression(node) ||
       ts.isTypeReferenceNode(node)
     ) {
       return;
