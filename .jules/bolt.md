@@ -68,3 +68,7 @@
 ## 2024-05-18 - Replacing inline `.toLocaleString()` with cached `Intl.NumberFormat`
 **Learning:** Calling `.toLocaleString()` on primitives (e.g., numbers) inline within React components (especially inside frequently rendered loops like lists or tables) creates a significant performance overhead (~3800ms vs ~3ms per 50,000 calls). This happens because `.toLocaleString()` instantiates a new `Intl` formatter under the hood on every single invocation.
 **Action:** Always use the globally cached formatter functions (like `formatNumber` from `src/lib/format.ts`) instead of calling `.toLocaleString()` inline to avoid massive GC and instantiation spikes, particularly when formatting large data views like `ResultsPane` and `TownProfileSection`.
+
+## 2026-05-19 - Replacing Multiple Array Traversals for Min/Max
+**Learning:** Chaining array operations like `.map().filter()` followed by spread operations like `Math.min(...array)` inside React components and loops is highly inefficient. It allocates new arrays at each step and risks exceeding the call stack limit for large data sets.
+**Action:** When finding extremes (min/max) or extracting specific points, use a single O(N) `for` loop to evaluate values simultaneously, avoiding intermediary arrays and spread operator limitations.

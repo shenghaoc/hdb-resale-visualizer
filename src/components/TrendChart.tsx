@@ -39,10 +39,25 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
   const { isDark } = useTheme();
 
   const option = useMemo(() => {
-    const prices = points.map((p) => p.medianPrice);
-    const filteredPrices = prices.filter((p) => !Number.isNaN(p));
-    const minPrice = filteredPrices.length > 0 ? Math.min(...filteredPrices) : 0;
-    const maxPrice = filteredPrices.length > 0 ? Math.max(...filteredPrices) : 0;
+    let minPrice = Infinity;
+    let maxPrice = -Infinity;
+    let hasValidPrice = false;
+
+    // ⚡ Bolt: Use a single pass to find min/max instead of allocating new arrays
+    // with .map().filter() and using the slow Math.min(...arr) spread operator.
+    for (let i = 0; i < points.length; i++) {
+      const price = points[i].medianPrice;
+      if (!Number.isNaN(price)) {
+        hasValidPrice = true;
+        if (price < minPrice) minPrice = price;
+        if (price > maxPrice) maxPrice = price;
+      }
+    }
+
+    if (!hasValidPrice) {
+      minPrice = 0;
+      maxPrice = 0;
+    }
     const range = maxPrice - minPrice;
 
     const yMin = Math.floor(Math.max(0, minPrice - range * 0.5) / 10000) * 10000;
