@@ -348,16 +348,24 @@ function MiniSpark({
   color: string;
   points: AddressTrendPoint[];
 }) {
-  const values = points
-    .slice(-12)
-    .map((point) => point.medianPrice)
-    .filter((v) => v != null && !Number.isNaN(v));
+  const values: number[] = [];
+  let min = Infinity;
+  let max = -Infinity;
+
+  const startIndex = Math.max(0, points.length - 12);
+  for (let i = startIndex; i < points.length; i++) {
+    const price = points[i].medianPrice;
+    if (price != null && !Number.isNaN(price)) {
+      values.push(price);
+      if (price < min) min = price;
+      if (price > max) max = price;
+    }
+  }
+
   if (values.length < 2) {
     return <span className="h-[18px] w-16 rounded-sm bg-muted/60" aria-hidden="true" />;
   }
 
-  const min = Math.min(...values);
-  const max = Math.max(...values);
   const range = max - min || 1;
   const path = values
     .map((value, index) => {

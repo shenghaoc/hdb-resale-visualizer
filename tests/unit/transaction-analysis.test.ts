@@ -288,4 +288,14 @@ describe("buildTrendEnvelope", () => {
     const envelope = buildTrendEnvelope(trend, []);
     expect(envelope.has("2020-01")).toBe(false);
   });
+
+  it("skips NaN prices when computing envelope", () => {
+    const trend = [{ month: "2024-06", medianPrice: 600000, transactionCount: 1, medianPricePerSqm: 6000 }];
+    const transactions = [
+      tx({ month: "2024-06", resalePrice: NaN }),
+      tx({ month: "2024-06", resalePrice: 700000 }),
+    ];
+    const envelope = buildTrendEnvelope(trend, transactions);
+    expect(envelope.get("2024-06")).toEqual({ min: 700000, max: 700000 });
+  });
 });
