@@ -1,25 +1,44 @@
 import { defineConfig, devices } from "@playwright/test";
 
+/**
+ * E2E runs against the production build (vite preview), not the dev server.
+ * Safari/WebKit bugs such as missing Temporal only appear after bundling when
+ * module evaluation order differs from Vite dev. Do not point these tests at
+ * `npm run dev` or reuse a dev server on this port.
+ */
+const E2E_HOST = "127.0.0.1";
+const E2E_PORT = 4173;
+const E2E_BASE_URL = `http://${E2E_HOST}:${E2E_PORT}`;
+
 export default defineConfig({
-  reporter: [['html', { open: 'never' }]],
+  reporter: [["html", { open: "never" }]],
   globalSetup: "./tests/e2e/global-setup.ts",
   testDir: "./tests/e2e",
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: E2E_BASE_URL,
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "npm run dev -- --host 127.0.0.1 --port 4173",
-    url: "http://127.0.0.1:4173",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    command: `npm run prepare:temporal-polyfill && npm run build && npm run preview -- --host ${E2E_HOST} --port ${E2E_PORT}`,
+    url: E2E_BASE_URL,
+    reuseExistingServer: process.env.E2E_REUSE_SERVER === "1",
+    timeout: 180_000,
   },
   projects: [
     {
       name: "webkit",
       use: { ...devices["Desktop WebKit"] },
+      testIgnore: /production-bootstrap\.spec\.ts/,
+    },
+    {
+      name: "webkit-mobile",
+      use: {
+        ...devices["Desktop WebKit"],
+        viewport: { width: 390, height: 844 },
+      },
+      testMatch: /production-bootstrap\.spec\.ts|mobile-regression\.spec\.ts/,
     },
   ],
 });

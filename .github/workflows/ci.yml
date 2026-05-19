@@ -74,6 +74,9 @@ jobs:
               - 'tests/e2e/**'
               - 'tests/fixtures/public-data/**'
               - 'shared/**'
+              - 'index.html'
+              - 'scripts/check-bundle.ts'
+              - 'scripts/lib/temporal-bootstrap-check.ts'
               - 'playwright.config.*'
               - '.github/workflows/ci.yml'
             build:

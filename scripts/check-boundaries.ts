@@ -162,6 +162,48 @@ for (const entryFile of collectScriptFiles(SCRIPTS_DIR)) {
   visitSourceFile(entryFile);
 }
 
+const EAGER_TEMPORAL_EXPORT_RE = /export\s+const\s+\w+\s*=\s*(?:\n\s*)?Temporal\./;
+const MAIN_PATH = path.join(SRC_DIR, "main.tsx");
+
+function collectSrcFiles(dir: string): string[] {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const files: string[] = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectSrcFiles(fullPath));
+      continue;
+    }
+
+    if (entry.isFile() && SOURCE_EXTENSIONS.some((extension) => entry.name.endsWith(extension))) {
+      files.push(fullPath);
+    }
+  }
+
+  return files.sort();
+}
+
+for (const file of collectSrcFiles(SRC_DIR)) {
+  const sourceText = fs.readFileSync(file, "utf8");
+  if (EAGER_TEMPORAL_EXPORT_RE.test(sourceText)) {
+    recordViolation(
+      file,
+      "Do not read Temporal at module load in src/. Use a lazy getter so Safari can load the HTML polyfill first.",
+    );
+  }
+}
+
+if (fs.existsSync(MAIN_PATH)) {
+  const mainSource = fs.readFileSync(MAIN_PATH, "utf8");
+  if (mainSource.includes("temporal-polyfill/global")) {
+    recordViolation(
+      MAIN_PATH,
+      "Do not import temporal-polyfill/global from main.tsx. Load public/temporal-polyfill.js from index.html instead.",
+    );
+  }
+}
+
 if (violations.length > 0) {
   console.error("Script boundary check failed:");
   for (const violation of violations) {
