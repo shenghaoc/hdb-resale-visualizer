@@ -1,6 +1,6 @@
 import { z } from "zod";
 import {
-  MAX_LEASE_COMMENCE_YEAR,
+  getMaxLeaseCommenceYear,
   MIN_LEASE_COMMENCE_YEAR,
   SG_LAT_MAX,
   SG_LAT_MIN,
@@ -29,7 +29,7 @@ export const blockSummarySchema = z.object({
   floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
   leaseCommenceRange: z.tuple([
     z.number().int().min(MIN_LEASE_COMMENCE_YEAR),
-    z.number().int().max(MAX_LEASE_COMMENCE_YEAR),
+    z.number().int().max(getMaxLeaseCommenceYear()),
   ]),
   latestMonth: monthSchema,
   availableDateRange: z.tuple([monthSchema, monthSchema]),
@@ -53,7 +53,7 @@ const addressDetailTransactionSchema = z.object({
   storeyRange: z.string(),
   floorAreaSqm: z.number().positive(),
   flatModel: z.string(),
-  leaseCommenceDate: z.number().int().min(MIN_LEASE_COMMENCE_YEAR).max(MAX_LEASE_COMMENCE_YEAR),
+  leaseCommenceDate: z.number().int().min(MIN_LEASE_COMMENCE_YEAR).max(getMaxLeaseCommenceYear()),
   remainingLease: z.string(),
   resalePrice: z.number().positive(),
   pricePerSqm: z.number().positive(),

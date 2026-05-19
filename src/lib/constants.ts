@@ -10,13 +10,19 @@ export const NEAR_ME_SEARCH_QUERY = "near me";
 
 export const MIN_LEASE_COMMENCE_YEAR = 1960;
 export const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
-export const MAX_LEASE_COMMENCE_YEAR =
-  Temporal.Now.plainDateISO().year + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+
+let maxLeaseCommenceYearCache: number | undefined;
 
 /**
  * Returns the current Gregorian year using the Temporal API.
  */
 export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
+
+/** Upper bound for lease-commence validation; computed lazily after the Temporal polyfill loads. */
+export function getMaxLeaseCommenceYear(): number {
+  maxLeaseCommenceYearCache ??= getCurrentYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+  return maxLeaseCommenceYearCache;
+}
 
 const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 

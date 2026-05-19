@@ -74,6 +74,17 @@ async function expectHorizontalOverflow(locator: Locator) {
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
 
+  test("homepage loads map and tab bar without runtime errors", async ({ page }) => {
+    const pageErrors: string[] = [];
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+
+    await page.goto("/");
+
+    await expect(mobileTabBar(page)).toBeVisible();
+    await expect(page.locator(".maplibregl-canvas")).toHaveCount(1);
+    expect(pageErrors).toEqual([]);
+  });
+
   test("results toolbar: sort and view toggle accessible on mobile", async ({ page }) => {
     await page.goto("/");
 
