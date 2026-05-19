@@ -162,37 +162,47 @@ for (const entryFile of collectScriptFiles(SCRIPTS_DIR)) {
   visitSourceFile(entryFile);
 }
 
-const EAGER_TEMPORAL_EXPORT_RE = /export\s+const\s+\w+\s*=\s*Temporal\./;
 const MAIN_PATH = path.join(SRC_DIR, "main.tsx");
 
-function collectSrcFiles(dir: string): string[] {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  const files: string[] = [];
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...collectSrcFiles(fullPath));
-      continue;
+function checkEagerTemporal(sourceFile: ts.SourceFile, file: string) {
+  let isEager = false;
+  const visit = (node: ts.Node) => {
+    if (
+      ts.isFunctionDeclaration(node) ||
+      ts.isArrowFunction(node) ||
+      ts.isFunctionExpression(node) ||
+      ts.isMethodDeclaration(node) ||
+      ts.isGetAccessor(node) ||
+      ts.isSetAccessor(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isTypeReferenceNode(node)
+    ) {
+      return;
     }
 
-    if (entry.isFile() && SOURCE_EXTENSIONS.some((extension) => entry.name.endsWith(extension))) {
-      files.push(fullPath);
+    if (ts.isIdentifier(node) && node.text === "Temporal") {
+      isEager = true;
+      return;
     }
+
+    ts.forEachChild(node, visit);
+  };
+
+  visit(sourceFile);
+
+  if (isEager) {
+    recordViolation(
+      file,
+      "Do not read Temporal at module load in src/. Use a lazy getter so Safari can load the HTML polyfill first.",
+    );
   }
-
-  return files.sort();
 }
 
 if (fs.existsSync(SRC_DIR)) {
-  for (const file of collectSrcFiles(SRC_DIR)) {
+  for (const file of collectScriptFiles(SRC_DIR)) {
     const sourceText = fs.readFileSync(file, "utf8");
-    if (EAGER_TEMPORAL_EXPORT_RE.test(sourceText)) {
-      recordViolation(
-        file,
-        "Do not read Temporal at module load in src/. Use a lazy getter so Safari can load the HTML polyfill first.",
-      );
-    }
+    const sourceFile = ts.createSourceFile(file, sourceText, ts.ScriptTarget.Latest, true);
+    checkEagerTemporal(sourceFile, file);
   }
 }
 
