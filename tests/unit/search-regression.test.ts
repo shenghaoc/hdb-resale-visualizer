@@ -18,6 +18,7 @@ const createAngMoKioBlock = (): BlockSummary => ({
   displayName: "BLK 101 ANG MO KIO AVE 3",
   coordinates: { lat: 1.3692, lng: 103.8492 },
   medianPrice: 450000,
+  pricePerSqmMedian: 5600,
   transactionCount: 15,
   floorAreaRange: [67, 92],
   leaseCommenceRange: [1979, 1985],
