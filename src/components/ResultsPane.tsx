@@ -208,6 +208,7 @@ const BlockCard = memo(function BlockCard({
         aria-selected={isFeatured}
         tabIndex={0}
         onKeyDown={(e) => {
+          if (e.currentTarget !== e.target) return;
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             onSelect(block.addressKey);
@@ -297,6 +298,7 @@ const BlockCard = memo(function BlockCard({
       aria-selected={isFeatured}
       tabIndex={0}
       onKeyDown={(e) => {
+        if (e.currentTarget !== e.target) return;
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           onSelect(block.addressKey);
