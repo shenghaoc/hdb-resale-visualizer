@@ -13,6 +13,7 @@
 //   npm run dev &
 //   OUT=/tmp/audit-screens node scripts/audit-screens.mjs
 //   VIEWPORT=mobile node scripts/audit-screens.mjs
+//   AUDIT_TOWN=BEDOK AUDIT_ADDRESS_KEY=bedok-10d-bedok-sth-ave-2 node scripts/audit-screens.mjs
 
 import { chromium } from "playwright";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
@@ -78,12 +79,19 @@ const page = await context.newPage();
 page.on("console", (m) => logs.console.push({ type: m.type(), text: m.text() }));
 page.on("pageerror", (e) => logs.errors.push(e.message));
 
-// 1. Cold load
+// Drive scope via URL params instead of brittle combobox clicks:
+// the language selector is the first `[role=combobox]` in tab order,
+// so `getByRole("combobox").first()` lands on it. URL state bypasses
+// the whole UI flake.
+const SCOPE_TOWN = process.env.AUDIT_TOWN ?? "BEDOK";
+const SCOPE_ADDRESS_KEY = process.env.AUDIT_ADDRESS_KEY ?? "bedok-10d-bedok-sth-ave-2";
+
+// 1. Cold load, no scope — wizard should appear here
 await page.goto(URL, { waitUntil: "domcontentloaded" });
 await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
 await shot(page, "cold-load");
 
-// 2. Search profile wizard appears on first visit — capture it, then skip
+// 2. Wizard screenshot
 await attempt("wizard visible", async () => {
   const wizard = page.locator('text=/Search Profile|search profile|Skip|onboarding/i').first();
   if (await wizard.isVisible({ timeout: 3000 }).catch(() => false)) {
@@ -91,7 +99,7 @@ await attempt("wizard visible", async () => {
   }
 });
 
-// 3. Dismiss wizard if present
+// 3. Dismiss wizard so subsequent runs in the same context don't re-show it.
 await attempt("dismiss wizard", async () => {
   const skipBtn = page.getByRole("button", { name: /skip|later|dismiss|continue without/i }).first();
   if (await skipBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
@@ -101,59 +109,17 @@ await attempt("dismiss wizard", async () => {
 });
 
 await shot(page, "after-dismiss");
-
-// 4. Empty-scope state — should show ScopePrompt
 await shot(page, "empty-scope");
 
-// 5. Open filter panel
-await attempt("open filters", async () => {
-  const filtersBtn = page.getByRole("button", { name: /filter/i }).first();
-  await filtersBtn.click({ timeout: 5000 });
-  await page.waitForTimeout(600);
-});
-await shot(page, "filters-open");
-
-// 6. Set a town filter
-await attempt("set town", async () => {
-  const townTrigger = page.getByRole("combobox").first();
-  if (await townTrigger.isVisible({ timeout: 2000 }).catch(() => false)) {
-    await townTrigger.click();
-    await page.waitForTimeout(300);
-    await shot(page, "town-dropdown");
-    const bedok = page.getByRole("option").filter({ hasText: /bedok/i }).first();
-    if (await bedok.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await bedok.click();
-    } else {
-      await page.keyboard.press("Escape");
-    }
-  }
-});
+// 4. Apply scope via URL — this is what the app would parse via queryState
+await page.goto(`${URL}?town=${encodeURIComponent(SCOPE_TOWN)}`, { waitUntil: "domcontentloaded" });
+await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
 await page.waitForTimeout(800);
-await shot(page, "after-town");
+await shot(page, "scoped-town");
 
-// 7. Set flat type 4 ROOM if combobox present
-await attempt("set flat type", async () => {
-  const combos = await page.getByRole("combobox").all();
-  for (const c of combos) {
-    const label = (await c.textContent())?.toLowerCase() ?? "";
-    if (label.includes("flat") || label.includes("room") || label.includes("type")) {
-      await c.click();
-      await page.waitForTimeout(300);
-      const opt = page.getByRole("option").filter({ hasText: /4 ROOM/i }).first();
-      if (await opt.isVisible({ timeout: 1500 }).catch(() => false)) {
-        await opt.click();
-        break;
-      }
-      await page.keyboard.press("Escape");
-    }
-  }
-});
-await page.waitForTimeout(600);
-await shot(page, "after-flat-type");
-
-// 8. Close filters / view results
-await attempt("close filters or open results", async () => {
-  const resultsBtn = page.getByRole("button", { name: /result/i }).first();
+// 5. Open results pane
+await attempt("open results", async () => {
+  const resultsBtn = page.getByRole("button", { name: /^results$/i }).first();
   if (await resultsBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
     await resultsBtn.click();
     await page.waitForTimeout(600);
@@ -161,31 +127,23 @@ await attempt("close filters or open results", async () => {
 });
 await shot(page, "results-pane");
 
-// 9. Search bar test — type a query
-await attempt("search bar typing", async () => {
-  const searchInput = page.locator('input[type="search"], input[placeholder*="search" i], input[placeholder*="address" i], input[placeholder*="station" i]').first();
-  if (await searchInput.isVisible({ timeout: 2000 }).catch(() => false)) {
-    await searchInput.fill("");
-    await searchInput.type("near bedok mrt", { delay: 30 });
-    await page.waitForTimeout(800);
-  }
-});
+// 6. Geographic search via URL — exercises the geographic-intent codepath
+await page.goto(`${URL}?search=${encodeURIComponent("near bedok mrt")}`, { waitUntil: "domcontentloaded" });
+await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+await page.waitForTimeout(800);
 await shot(page, "search-bedok-mrt");
 
-// 10. Try clicking a block on the map / first result
-await attempt("select first result", async () => {
-  const firstRow = page.locator('[role="button"], button, a, li').filter({ hasText: /\d+\s+\w+/ }).first();
-  if (await firstRow.isVisible({ timeout: 2000 }).catch(() => false)) {
-    await firstRow.click();
-    await page.waitForTimeout(1200);
-  }
-});
+// 7. Select a specific block via URL — drives detail drawer reliably
+await page.goto(
+  `${URL}?town=${encodeURIComponent(SCOPE_TOWN)}&selected=${encodeURIComponent(SCOPE_ADDRESS_KEY)}`,
+  { waitUntil: "domcontentloaded" },
+);
+await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
+await page.waitForTimeout(1200);
 await shot(page, "block-selected");
-
-// 11. Detail drawer if open
 await shot(page, "detail-drawer");
 
-// 12. Try the asking-price-check input
+// 8. Asking-price input — only meaningful with a block selected
 await attempt("asking price check", async () => {
   const askingInput = page.locator('input[type="number"], input[inputmode="numeric"]').last();
   if (await askingInput.isVisible({ timeout: 1500 }).catch(() => false)) {
@@ -195,17 +153,22 @@ await attempt("asking price check", async () => {
 });
 await shot(page, "asking-price");
 
-// 13. Toggle price heatmap if button visible
+// 9. Toggle price heatmap — now visible because we have a scoped block set
 await attempt("toggle heatmap", async () => {
-  const heatmapBtn = page.getByRole("button", { name: /heat/i }).first();
+  const heatmapBtn = page.getByRole("switch", { name: /heat/i }).first();
   if (await heatmapBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
     await heatmapBtn.click();
-    await page.waitForTimeout(800);
+  } else {
+    const fallback = page.getByRole("button", { name: /heat/i }).first();
+    if (await fallback.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await fallback.click();
+    }
   }
+  await page.waitForTimeout(900);
 });
 await shot(page, "heatmap-on");
 
-// 14. Theme toggle if present
+// 10. Toggle theme
 await attempt("toggle theme", async () => {
   const themeBtn = page.getByRole("button", { name: /theme|dark|light/i }).first();
   if (await themeBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
@@ -215,9 +178,9 @@ await attempt("toggle theme", async () => {
 });
 await shot(page, "after-theme");
 
-// 15. Open shortlist / saved tab if present
+// 11. Open shortlist / saved tab
 await attempt("open saved", async () => {
-  const savedBtn = page.getByRole("button", { name: /saved|shortlist/i }).first();
+  const savedBtn = page.getByRole("button", { name: /^saved$|shortlist/i }).first();
   if (await savedBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
     await savedBtn.click();
     await page.waitForTimeout(500);
@@ -225,7 +188,17 @@ await attempt("open saved", async () => {
 });
 await shot(page, "saved-tab");
 
-// 16. Final full-page tall screenshot
+// 12. Add the selected block to the shortlist — captures populated shortlist UI
+await attempt("toggle shortlist for selected block", async () => {
+  const saveBtn = page.getByRole("button", { name: /save to shortlist|add to shortlist|shortlist/i }).first();
+  if (await saveBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
+    await saveBtn.click();
+    await page.waitForTimeout(500);
+  }
+});
+await shot(page, "shortlist-populated");
+
+// 13. Final full-page tall screenshot
 await shot(page, "final-fullpage", { fullPage: true });
 
 // Dump role/structure of visible buttons to disk for analysis
