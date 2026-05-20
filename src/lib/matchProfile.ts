@@ -62,10 +62,11 @@ function evaluateBudget(block: BlockSummary, profile: SearchProfile): DimensionM
 function evaluateCommute(block: BlockSummary, profile: SearchProfile): DimensionMatch {
   if (profile.maxComfortableCommuteMinutes === null) return "skip";
   const distanceMeters = walkingDistanceToAnchor(block, profile);
-  // If the anchor MRT is not in the block's nearby list, we can't evaluate commute
-  if (distanceMeters === null) {
-    return profile.commuteAnchorMrt ? "skip" : "fail";
-  }
+  // No measurable walking distance to the anchor (or nearest MRT when no anchor
+  // is set): we can't verify the commute threshold from static data, so fail
+  // rather than skip — silently ignoring the user's commute constraint would
+  // let blocks far from the anchor be ranked as strong matches.
+  if (distanceMeters === null) return "fail";
   const proxyMinutes = distanceMeters / WALKING_METERS_PER_MINUTE;
   if (proxyMinutes <= profile.maxComfortableCommuteMinutes) return "pass";
   const stretchCeiling = profile.maxComfortableCommuteMinutes + profile.commuteStretchMinutes;

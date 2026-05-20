@@ -156,7 +156,7 @@ describe("evaluateBlockForProfile", () => {
     expect(evaluateBlockForProfile(block, profile).commute).toBe("pass");
   });
 
-  it("skips commute when anchor MRT is not in nearbyMrts", () => {
+  it("fails commute when anchor MRT is not in nearbyMrts", () => {
     const block = makeBlock({
       addressKey: "x",
       nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 400 },
@@ -166,7 +166,7 @@ describe("evaluateBlockForProfile", () => {
       maxComfortableCommuteMinutes: 30,
       commuteAnchorMrt: "FAR AWAY MRT STATION",
     });
-    expect(evaluateBlockForProfile(block, profile).commute).toBe("skip");
+    expect(evaluateBlockForProfile(block, profile).commute).toBe("fail");
   });
 
   it("falls back to nearestMrt distance when commuteAnchorMrt is null", () => {
