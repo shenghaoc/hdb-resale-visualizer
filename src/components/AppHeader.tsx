@@ -63,7 +63,10 @@ export function AppHeader({
               })}
             </Badge>
             <span className="hidden text-[0.6rem] font-medium text-muted-foreground sm:inline">
-              · {formatNumber(manifest.counts.transactions, 0, locale)}
+              ·{" "}
+              {t("stats.transactions", {
+                count: formatNumber(manifest.counts.transactions, 0, locale),
+              })}
             </span>
           </>
         ) : (
@@ -86,7 +89,7 @@ export function AppHeader({
               })}
             </Badge>
             <span className="text-[0.6rem] font-medium text-muted-foreground">
-              {t("stats.txns", {
+              {t("stats.transactions", {
                 count: formatNumber(manifest.counts.transactions, 0, locale),
               })}{" "}
               · {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })} ·

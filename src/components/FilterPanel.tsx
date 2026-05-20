@@ -1,9 +1,11 @@
 import { useCallback, useId } from "react";
+import { RefreshCw, Search } from "lucide-react";
 import { formatMonth } from "@/lib/format";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { FilterOptions, FilterState } from "@/types/data";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +20,7 @@ import {
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
@@ -41,6 +44,9 @@ type FilterPanelProps = {
 };
 
 const ALL_VALUE = "__all__";
+
+const FILTER_INLINE_ACTION_CLASS =
+  "gap-1 rounded-lg px-2 text-[0.65rem] font-extrabold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
 
 function parseOptionalNumberValue(value: string) {
   if (value === "") {
@@ -125,8 +131,9 @@ export function FilterPanel(props: FilterPanelProps) {
                 onClick={onReset}
                 size="xs"
                 variant="ghost"
-                className="h-7 rounded-lg px-2 text-[0.65rem] font-extrabold uppercase tracking-wider"
+                className={cn("h-7", FILTER_INLINE_ACTION_CLASS)}
               >
+                <RefreshCw data-icon className="size-3 shrink-0" aria-hidden="true" />
                 {t("filters.reset")}
               </Button>
             </CardAction>
@@ -149,10 +156,15 @@ export function FilterPanel(props: FilterPanelProps) {
                       onCompositionEnd={searchIME.onCompositionEnd}
                       onChange={searchIME.onChange}
                     />
-                    <InputGroupAddon align="inline-end">
-                      <InputGroupText className="text-[0.65rem] font-extrabold uppercase tracking-[0.1em]">
+                    <InputGroupAddon align="inline-end" className="pr-1">
+                      <InputGroupButton
+                        type="button"
+                        className={FILTER_INLINE_ACTION_CLASS}
+                        onClick={(e) => e.currentTarget.closest('[data-slot="input-group"]')?.querySelector("input")?.focus()}
+                      >
+                        <Search data-icon className="size-3 shrink-0" aria-hidden="true" />
                         {t("filters.search")}
-                      </InputGroupText>
+                      </InputGroupButton>
                     </InputGroupAddon>
                   </InputGroup>
                 </FieldContent>
