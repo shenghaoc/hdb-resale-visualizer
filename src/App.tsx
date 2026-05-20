@@ -12,6 +12,7 @@ import { useHeaderState } from "@/hooks/useHeaderState";
 import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
+import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { buildTownRecommendations } from "@/lib/town-recommendations";
@@ -89,6 +90,15 @@ function App() {
         : null,
     [pipeline.blocksByKey, filters.selectedAddressKey],
   );
+
+  useDeepLinkPanelInit({
+    selectedAddressKey: filters.selectedAddressKey,
+    selectedBlock,
+    isDesktop: panel.isDesktop,
+    setLeftTab: panel.setLeftTab,
+    setIsLeftPanelOpen: panel.setIsLeftPanelOpen,
+    setMobileTab: panel.setMobileTab,
+  });
 
   const shortlistKeySet = useMemo(
     () => new Set(shortlist.items.map((i) => i.addressKey)),
