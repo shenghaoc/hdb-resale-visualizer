@@ -11,13 +11,7 @@ function parseNumber(value: string | null): number | null {
 }
 
 function safeParam(value: string | null, defaultValue: string): string {
-  if (value === null) {
-    return defaultValue;
-  }
-  if (value.length > MAX_SEARCH_QUERY_LENGTH) {
-    return value.slice(0, MAX_SEARCH_QUERY_LENGTH);
-  }
-  return value;
+  return safeParamNullable(value) ?? defaultValue;
 }
 
 function safeParamNullable(value: string | null): string | null {
