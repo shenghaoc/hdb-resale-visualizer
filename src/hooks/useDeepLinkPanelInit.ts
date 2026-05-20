@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { parseFilters } from "@/lib/queryState";
 import type { BlockSummary } from "@/types/data";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
@@ -32,15 +32,15 @@ export function useDeepLinkPanelInit({
   setIsLeftPanelOpen,
   setMobileTab,
 }: UseDeepLinkPanelInitOptions) {
-  const initialUrlSelectedKey = useRef(readInitialUrlSelectedKey());
-  const hasAppliedDeepLinkPanel = useRef(false);
+  const [initialUrlSelectedKey] = useState(() => readInitialUrlSelectedKey());
+  const hasApplied = useRef(false);
 
   useEffect(() => {
-    if (hasAppliedDeepLinkPanel.current) {
+    if (hasApplied.current) {
       return;
     }
 
-    const deepLinkKey = initialUrlSelectedKey.current;
+    const deepLinkKey = initialUrlSelectedKey;
     if (!deepLinkKey) {
       return;
     }
@@ -49,7 +49,7 @@ export function useDeepLinkPanelInit({
       return;
     }
 
-    hasAppliedDeepLinkPanel.current = true;
+    hasApplied.current = true;
 
     if (isDesktop) {
       setLeftTab("results");
@@ -64,5 +64,6 @@ export function useDeepLinkPanelInit({
     setIsLeftPanelOpen,
     setLeftTab,
     setMobileTab,
+    initialUrlSelectedKey,
   ]);
 }

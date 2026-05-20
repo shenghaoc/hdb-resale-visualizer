@@ -114,8 +114,11 @@ describe("useDeepLinkPanelInit", () => {
     const setIsLeftPanelOpen = vi.fn();
     const setMobileTab = vi.fn();
 
-    const { rerender } = renderHook(
-      (props: { selectedAddressKey: string | null; selectedBlock: BlockSummary | null }) =>
+    const { rerender } = renderHook<
+      ReturnType<typeof useDeepLinkPanelInit>,
+      { selectedAddressKey: string | null; selectedBlock: BlockSummary | null }
+    >(
+      (props) =>
         useDeepLinkPanelInit({
           selectedAddressKey: props.selectedAddressKey,
           selectedBlock: props.selectedBlock,
