@@ -477,13 +477,13 @@ export function buildArtifacts({
       .map((transaction) => transaction.pricePerSqft)
       .filter((value): value is number => value !== null);
 
-    // ⚡ Bolt: Replace map() and Math.min/max spread with O(N) loop to avoid call stack limits and intermediate allocations.
+    // Math.min/Math.max spread can exhaust the call stack on large arrays; single-pass avoids the intermediate allocation too.
     let minFloorArea = Infinity;
     let maxFloorArea = -Infinity;
     for (const transaction of sortedTransactions) {
       const area = transaction.floorAreaSqm;
-      if (area < minFloorArea) minFloorArea = area;
-      if (area > maxFloorArea) maxFloorArea = area;
+      if (area < minFloorArea) { minFloorArea = area; }
+      if (area > maxFloorArea) { maxFloorArea = area; }
     }
 
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
