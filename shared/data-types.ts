@@ -31,7 +31,6 @@ export type BlockSummary = {
 
 export type AddressDetailSummary = BlockSummary & {
   priceIqr: [number, number];
-  pricePerSqmMedian: number;
   pricePerSqftMedian: number | null;
 };
 

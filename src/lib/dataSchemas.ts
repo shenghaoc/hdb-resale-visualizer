@@ -45,7 +45,6 @@ export const blockSummarySchema = z.object({
 
 const addressDetailSummarySchema = blockSummarySchema.extend({
   priceIqr: z.tuple([z.number().positive(), z.number().positive()]),
-  pricePerSqmMedian: z.number().positive(),
   pricePerSqftMedian: z.number().positive().nullable(),
 });
 
