@@ -397,6 +397,7 @@ function App() {
             onToggle={heatmap.togglePriceHeatmap}
             onOpacityChange={heatmap.setPriceHeatmapOpacity}
             onModeChange={heatmap.setHeatmapMode}
+            hasScope={pipeline.hasResultScope}
             t={t}
             className="absolute z-25"
             style={{
