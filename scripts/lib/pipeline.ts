@@ -476,7 +476,16 @@ export function buildArtifacts({
     const pricePerSqftValues = sourceWindow
       .map((transaction) => transaction.pricePerSqft)
       .filter((value): value is number => value !== null);
-    const floorAreas = sortedTransactions.map((transaction) => transaction.floorAreaSqm);
+
+    // Math.min/Math.max spread can exhaust the call stack on large arrays; single-pass avoids the intermediate allocation too.
+    let minFloorArea = Infinity;
+    let maxFloorArea = -Infinity;
+    for (const transaction of sortedTransactions) {
+      const area = transaction.floorAreaSqm;
+      if (area < minFloorArea) { minFloorArea = area; }
+      if (area > maxFloorArea) { maxFloorArea = area; }
+    }
+
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
 
     const nearestStations = new Map<string, number>();
@@ -506,7 +515,7 @@ export function buildArtifacts({
       coordinates: { lat: geocode.lat, lng: geocode.lng },
       medianPrice: Math.round(median(priceValues)),
       transactionCount: sourceWindow.length,
-      floorAreaRange: [Math.min(...floorAreas), Math.max(...floorAreas)],
+      floorAreaRange: [minFloorArea, maxFloorArea],
       leaseCommenceRange: [leaseCommenceYear, leaseCommenceYear],
       latestMonth: latest.month,
       availableDateRange: [

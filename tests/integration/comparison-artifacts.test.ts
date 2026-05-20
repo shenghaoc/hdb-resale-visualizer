@@ -180,6 +180,11 @@ describe("comparison artifacts", () => {
     expect(artifacts.comparisons).toBeDefined();
     expect(artifacts.comparisons).toHaveProperty(alphaKey);
     expect(artifacts.comparisons).toHaveProperty(betaKey);
+
+    const alphaSummary = artifacts.blockSummaries.find((b) => b.addressKey === alphaKey);
+    const betaSummary = artifacts.blockSummaries.find((b) => b.addressKey === betaKey);
+    expect(alphaSummary?.floorAreaRange).toEqual([67, 67]);
+    expect(betaSummary?.floorAreaRange).toEqual([92, 92]);
   });
 
   it("calculates amenity counts within distance thresholds", () => {
