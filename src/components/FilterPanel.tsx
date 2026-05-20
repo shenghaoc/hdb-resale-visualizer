@@ -159,7 +159,6 @@ export function FilterPanel(props: FilterPanelProps) {
                     <InputGroupAddon align="inline-end" className="pr-1">
                       <InputGroupButton
                         type="button"
-                        aria-label={t("filters.search")}
                         className={FILTER_INLINE_ACTION_CLASS}
                         onClick={(e) => e.currentTarget.closest('[data-slot="input-group"]')?.querySelector("input")?.focus()}
                       >
