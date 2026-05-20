@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
+import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
@@ -174,7 +175,7 @@ describe("ShortlistDrawer", () => {
       </I18nProvider>
     );
 
-    expect(screen.getByText("Save up to four blocks to compare.")).toBeInTheDocument();
+    expect(screen.getByText(`Save up to ${MAX_SHORTLIST_ITEMS} blocks to compare.`)).toBeInTheDocument();
   });
 
   it("edits target price and can select a saved block on the map", () => {

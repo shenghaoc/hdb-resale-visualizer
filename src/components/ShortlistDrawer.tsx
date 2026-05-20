@@ -20,7 +20,7 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, getCurrentYear } from "@/lib/constants";
 import { ECHARTS_GRID_CONTAIN_AXIS_LABELS } from "@/lib/echarts-grid";
 import { cn } from "@/lib/utils";
 import { useI18n, type Translator } from "@/lib/i18n";
@@ -1154,7 +1154,7 @@ export function ShortlistDrawer({
           >
             {rows.length === 0 ? (
               <div className="empty-state pt-12 text-center text-sm text-muted-foreground">
-                {t("shortlist.emptyState")}
+                {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
               </div>
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
