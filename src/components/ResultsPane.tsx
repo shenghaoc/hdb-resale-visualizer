@@ -206,6 +206,13 @@ const BlockCard = memo(function BlockCard({
         variant="outline"
         role="listitem"
         aria-selected={isFeatured}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect(block.addressKey);
+          }
+        }}
         className={cn(
           "v2-card animate-fade-in-up cursor-pointer rounded-xl border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
           isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
@@ -288,6 +295,13 @@ const BlockCard = memo(function BlockCard({
       variant="outline"
       role="listitem"
       aria-selected={isFeatured}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(block.addressKey);
+        }
+      }}
       className={cn(
         "v2-card animate-fade-in-up group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995]",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
