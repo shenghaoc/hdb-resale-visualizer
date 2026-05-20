@@ -7,6 +7,7 @@ import type { Translator } from "@/lib/i18n";
 const t: Translator = (key, vars) => {
   if (key === "filters.title") return "Filters";
   if (key === "filters.removeChip") return `Remove filter: ${vars?.label ?? ""}`;
+  if (key === "filters.openPanel") return "Open filters panel";
   if (key === "tab.filters") return "Filters";
   return key;
 };
@@ -36,7 +37,7 @@ describe("FilterChipsBar", () => {
     expect(removeTown).toHaveBeenCalledTimes(1);
     expect(removeFlatType).not.toHaveBeenCalled();
 
-    await user.click(screen.getByRole("button", { name: "Filters" }));
+    await user.click(screen.getByRole("button", { name: "Open filters panel" }));
     expect(onOpenFilters).toHaveBeenCalledTimes(1);
   });
 
@@ -54,7 +55,7 @@ describe("FilterChipsBar", () => {
 
     const townChip = screen.getByRole("button", { name: "Remove filter: Town · BEDOK" });
     const flatTypeChip = screen.getByRole("button", { name: "Remove filter: 4 ROOM" });
-    const filtersButton = screen.getByRole("button", { name: "Filters" });
+    const filtersButton = screen.getByRole("button", { name: "Open filters panel" });
 
     const assertTabIndices = (town: "0" | "-1", flatType: "0" | "-1", filters: "0" | "-1") => {
       expect(townChip).toHaveAttribute("tabindex", town);
