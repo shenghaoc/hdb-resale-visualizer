@@ -77,11 +77,11 @@ describe("useDeepLinkPanelInit", () => {
       }),
     );
 
-    await waitFor(() => {
-      expect(setLeftTab).not.toHaveBeenCalled();
-      expect(setIsLeftPanelOpen).not.toHaveBeenCalled();
-      expect(setMobileTab).not.toHaveBeenCalled();
-    });
+    // Flush effects, then assert callbacks were never invoked
+    await new Promise((r) => setTimeout(r, 0));
+    expect(setLeftTab).not.toHaveBeenCalled();
+    expect(setIsLeftPanelOpen).not.toHaveBeenCalled();
+    expect(setMobileTab).not.toHaveBeenCalled();
   });
 
   it("does not switch panels when the deep-link key never resolves to a block", async () => {
@@ -102,9 +102,9 @@ describe("useDeepLinkPanelInit", () => {
       }),
     );
 
-    await waitFor(() => {
-      expect(setLeftTab).not.toHaveBeenCalled();
-    });
+    // Flush effects, then assert callback was never invoked
+    await new Promise((r) => setTimeout(r, 0));
+    expect(setLeftTab).not.toHaveBeenCalled();
   });
 
   it("does not override panel choice after the user changes selection", async () => {

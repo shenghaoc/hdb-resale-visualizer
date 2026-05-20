@@ -102,6 +102,8 @@ export function useFilterPipeline({
 
   // Skip full-corpus load when a scope is already active (town/search/selectedAddress):
   // recommendations are only shown in the empty-scope state.
+  // NOTE: hasInitialScope is the pre-blocks analogue of hasResultScope — it omits
+  //       geographicIntent which depends on blocks loaded by useBlockLoading below.
   const hasInitialScope = Boolean(
     resultsVisible &&
       (effectiveFilters.town || resolvedSearch.trim() || rawFilters.selectedAddressKey),
