@@ -13,7 +13,9 @@ import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
+import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { AppHeader } from "@/components/AppHeader";
+import { SearchProfileWizard } from "@/components/SearchProfileWizard";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
@@ -26,6 +28,7 @@ import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
+import { useSearchProfile } from "@/hooks/useSearchProfile";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -49,6 +52,7 @@ function App() {
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
+  const searchProfile = useSearchProfile();
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
   const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
@@ -100,15 +104,19 @@ function App() {
   const schoolOverlaySelectionActive = Boolean(filters.selectedAddressKey);
   const schoolOverlayLoading = schoolOverlaySelectionActive && isComparisonLoading;
 
-  const activeFilterChips = useMemo(
-    () =>
-      getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
-        key: chip.key,
-        label: chip.label,
-        onRemove: () => patchFilters(chip.clearPatch),
-      })),
-    [filters, locale, patchFilters, t],
-  );
+  const activeFilterChips = useMemo(() => {
+    const filterChips = getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
+      key: chip.key,
+      label: chip.label,
+      onRemove: () => patchFilters(chip.clearPatch),
+    }));
+    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile, locale, t).map((chip) => ({
+      key: chip.key,
+      label: chip.label,
+      onRemove: () => searchProfile.patchProfile(chip.clearPatch),
+    }));
+    return [...profileChips, ...filterChips];
+  }, [filters, locale, patchFilters, searchProfile, t]);
 
   const townProfileBlocks = useMemo(
     () =>
@@ -187,6 +195,16 @@ function App() {
           </CardHeader>
         </Card>
       </main>
+    );
+  }
+
+  if (searchProfile.shouldShowWizard) {
+    return (
+      <SearchProfileWizard
+        options={manifest.filterOptions}
+        onComplete={(profile) => searchProfile.replaceProfile(profile)}
+        onSkip={searchProfile.dismissWizard}
+      />
     );
   }
 

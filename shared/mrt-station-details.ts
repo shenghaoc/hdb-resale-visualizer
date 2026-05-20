@@ -111,6 +111,18 @@ export type StationDetails = {
   isInterchange: boolean;
 };
 
+const KNOWN_MRT_STATION_NAMES = Array.from(
+  new Set(
+    (Object.keys(LINE_METADATA) as LineCode[])
+      .filter((lineCode) => lineCode !== "LRT")
+      .flatMap((lineCode) =>
+        Array.from(LINE_METADATA[lineCode].stations).map(
+          (stationBaseName) => `${stationBaseName} MRT STATION`,
+        ),
+      ),
+  ),
+).sort((a, b) => a.localeCompare(b));
+
 const stationDetailsCache = new Map<string, StationDetails>();
 
 function computeStationDetails(stationName: string): StationDetails {
@@ -175,4 +187,8 @@ export function getStationDetails(stationName: string): StationDetails {
 
 export function clearStationDetailsCache() {
   stationDetailsCache.clear();
+}
+
+export function getKnownMrtStationNames(): string[] {
+  return KNOWN_MRT_STATION_NAMES;
 }
