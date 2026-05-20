@@ -1,5 +1,6 @@
 import { getCurrentYear } from "@/lib/constants";
 import { evaluateBlockForProfile, type MatchTier } from "@/lib/matchProfile";
+import { median } from "@/lib/utils";
 import type { BlockSummary } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 
@@ -24,13 +25,6 @@ const TIER_WEIGHT: Record<MatchTier, number> = {
   stretch: 0.4,
   weak: 0,
 };
-
-function median(values: number[]): number {
-  if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
-}
 
 export function buildTownRecommendations(
   profile: SearchProfile,

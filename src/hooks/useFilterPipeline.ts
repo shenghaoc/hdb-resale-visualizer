@@ -100,8 +100,15 @@ export function useFilterPipeline({
     [manifest],
   );
 
+  // Skip full-corpus load when a scope is already active (town/search/selectedAddress):
+  // recommendations are only shown in the empty-scope state.
+  const hasInitialScope = Boolean(
+    resultsVisible &&
+      (effectiveFilters.town || resolvedSearch.trim() || rawFilters.selectedAddressKey),
+  );
+
   const profileReadyForRecommendations =
-    resultsVisible && hasCompletedSearchProfile(searchProfile);
+    resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
   const { blocks, loadError } = useBlockLoading({
     manifest,

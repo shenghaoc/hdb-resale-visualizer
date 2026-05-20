@@ -139,6 +139,48 @@ describe("evaluateBlockForProfile", () => {
     const profile = makeProfile({ maxComfortableCommuteMinutes: 30 });
     expect(evaluateBlockForProfile(block, profile).commute).toBe("fail");
   });
+
+  it("passes commute when the anchor MRT is in nearbyMrts and within the threshold", () => {
+    const block = makeBlock({
+      addressKey: "x",
+      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 5000 },
+      nearbyMrts: [
+        { stationName: "BEDOK MRT STATION", distanceMeters: 400 },
+        { stationName: "OTHER MRT STATION", distanceMeters: 5000 },
+      ],
+    });
+    const profile = makeProfile({
+      maxComfortableCommuteMinutes: 30,
+      commuteAnchorMrt: "BEDOK MRT STATION",
+    });
+    expect(evaluateBlockForProfile(block, profile).commute).toBe("pass");
+  });
+
+  it("skips commute when anchor MRT is not in nearbyMrts", () => {
+    const block = makeBlock({
+      addressKey: "x",
+      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 400 },
+      nearbyMrts: [{ stationName: "OTHER MRT STATION", distanceMeters: 400 }],
+    });
+    const profile = makeProfile({
+      maxComfortableCommuteMinutes: 30,
+      commuteAnchorMrt: "FAR AWAY MRT STATION",
+    });
+    expect(evaluateBlockForProfile(block, profile).commute).toBe("skip");
+  });
+
+  it("falls back to nearestMrt distance when commuteAnchorMrt is null", () => {
+    const block = makeBlock({
+      addressKey: "x",
+      nearestMrt: { stationName: "NEARBY MRT STATION", distanceMeters: 400 },
+      nearbyMrts: [{ stationName: "NEARBY MRT STATION", distanceMeters: 400 }],
+    });
+    const profile = makeProfile({
+      maxComfortableCommuteMinutes: 30,
+      commuteAnchorMrt: null,
+    });
+    expect(evaluateBlockForProfile(block, profile).commute).toBe("pass");
+  });
 });
 
 describe("isProfileVisibilityActive", () => {

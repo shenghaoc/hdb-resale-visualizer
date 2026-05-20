@@ -16,6 +16,16 @@ export type ProfileEvaluation = {
 
 const WALKING_METERS_PER_MINUTE = 80;
 
+function walkingDistanceToAnchor(block: BlockSummary, profile: SearchProfile): number | null {
+  if (profile.commuteAnchorMrt) {
+    const anchor =
+      block.nearbyMrts?.find((m) => m.stationName === profile.commuteAnchorMrt) ??
+      (block.nearestMrt?.stationName === profile.commuteAnchorMrt ? block.nearestMrt : null);
+    return anchor?.distanceMeters ?? null;
+  }
+  return block.nearestMrt?.distanceMeters ?? null;
+}
+
 function evaluateFlatType(block: BlockSummary, profile: SearchProfile): DimensionMatch {
   const main = profile.mainFlatType.trim();
   if (!main) return "skip";
@@ -47,16 +57,14 @@ function evaluateBudget(block: BlockSummary, profile: SearchProfile): DimensionM
   return "fail";
 }
 
-function commuteMinutesProxy(block: BlockSummary): number | null {
-  const distance = block.nearestMrt?.distanceMeters;
-  if (distance == null) return null;
-  return distance / WALKING_METERS_PER_MINUTE;
-}
-
 function evaluateCommute(block: BlockSummary, profile: SearchProfile): DimensionMatch {
   if (profile.maxComfortableCommuteMinutes === null) return "skip";
-  const proxyMinutes = commuteMinutesProxy(block);
-  if (proxyMinutes === null) return "fail";
+  const distanceMeters = walkingDistanceToAnchor(block, profile);
+  // If the anchor MRT is not in the block's nearby list, we can't evaluate commute
+  if (distanceMeters === null) {
+    return profile.commuteAnchorMrt ? "skip" : "fail";
+  }
+  const proxyMinutes = distanceMeters / WALKING_METERS_PER_MINUTE;
   if (proxyMinutes <= profile.maxComfortableCommuteMinutes) return "pass";
   const stretchCeiling = profile.maxComfortableCommuteMinutes + profile.commuteStretchMinutes;
   if (proxyMinutes <= stretchCeiling) return "stretch";
