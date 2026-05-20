@@ -480,8 +480,8 @@ export function buildArtifacts({
     // ⚡ Bolt: Replace map() and Math.min/max spread with O(N) loop to avoid call stack limits and intermediate allocations.
     let minFloorArea = Infinity;
     let maxFloorArea = -Infinity;
-    for (let i = 0; i < sortedTransactions.length; i++) {
-      const area = sortedTransactions[i].floorAreaSqm;
+    for (const transaction of sortedTransactions) {
+      const area = transaction.floorAreaSqm;
       if (area < minFloorArea) minFloorArea = area;
       if (area > maxFloorArea) maxFloorArea = area;
     }
