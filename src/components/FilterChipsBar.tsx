@@ -81,7 +81,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
           onKeyDown={(event) => handleKeyDown(event, index)}
           onFocus={() => setFocusedIndex(index)}
           className={cn(
-            "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px] transition-all",
+            "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px] transition-all min-h-11 sm:min-h-min",
             chipFocusClass,
           )}
         >
@@ -99,7 +99,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
         onKeyDown={(event) => handleKeyDown(event, filtersButtonIndex)}
         onFocus={() => setFocusedIndex(filtersButtonIndex)}
         className={cn(
-          "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px] transition-all",
+          "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px] transition-all min-h-11 sm:min-h-min",
           chipFocusClass,
         )}
       >
