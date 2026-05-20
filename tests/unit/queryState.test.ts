@@ -63,32 +63,4 @@ describe("queryState", () => {
     expect(search).toContain("selected=test-key");
     expect(search).toContain("v=1");
   });
-
-  it("truncates string filters that exceed MAX_SEARCH_QUERY_LENGTH", () => {
-    const longString = "a".repeat(300);
-    const parsed = parseFilters(
-      `?search=${longString}&town=${longString}&flatType=${longString}&flatModel=${longString}&selected=${longString}&startMonth=${longString}&endMonth=${longString}`
-    );
-
-    expect(parsed.search).toHaveLength(256);
-    expect(parsed.search).toBe("a".repeat(256));
-
-    expect(parsed.town).toHaveLength(256);
-    expect(parsed.town).toBe("a".repeat(256));
-
-    expect(parsed.flatType).toHaveLength(256);
-    expect(parsed.flatType).toBe("a".repeat(256));
-
-    expect(parsed.flatModel).toHaveLength(256);
-    expect(parsed.flatModel).toBe("a".repeat(256));
-
-    expect(parsed.selectedAddressKey).toHaveLength(256);
-    expect(parsed.selectedAddressKey).toBe("a".repeat(256));
-
-    expect(parsed.startMonth).toHaveLength(256);
-    expect(parsed.startMonth).toBe("a".repeat(256));
-
-    expect(parsed.endMonth).toHaveLength(256);
-    expect(parsed.endMonth).toBe("a".repeat(256));
-  });
 });

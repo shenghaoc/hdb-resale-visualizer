@@ -1,4 +1,4 @@
-import { DEFAULT_FILTERS, MAX_SEARCH_QUERY_LENGTH, QUERY_VERSION } from "./constants";
+import { DEFAULT_FILTERS, QUERY_VERSION } from "./constants";
 import type { FilterState } from "../types/data";
 
 function parseNumber(value: string | null): number | null {
@@ -10,26 +10,6 @@ function parseNumber(value: string | null): number | null {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function safeParam(value: string | null, defaultValue: string): string {
-  if (value === null) {
-    return defaultValue;
-  }
-  if (value.length > MAX_SEARCH_QUERY_LENGTH) {
-    return value.slice(0, MAX_SEARCH_QUERY_LENGTH);
-  }
-  return value;
-}
-
-function safeParamNullable(value: string | null): string | null {
-  if (value === null) {
-    return null;
-  }
-  if (value.length > MAX_SEARCH_QUERY_LENGTH) {
-    return value.slice(0, MAX_SEARCH_QUERY_LENGTH);
-  }
-  return value;
-}
-
 export function parseFilters(search: string): FilterState {
   const params = new URLSearchParams(search);
 
@@ -37,8 +17,8 @@ export function parseFilters(search: string): FilterState {
   const budgetMax = parseNumber(params.get("budgetMax"));
   const areaMin = parseNumber(params.get("areaMin"));
   const areaMax = parseNumber(params.get("areaMax"));
-  const startMonth = safeParamNullable(params.get("startMonth"));
-  const endMonth = safeParamNullable(params.get("endMonth"));
+  const startMonth = params.get("startMonth");
+  const endMonth = params.get("endMonth");
 
   // Normalize inverted ranges so min <= max invariants always hold.
   const budgetInverted = budgetMin !== null && budgetMax !== null && budgetMin > budgetMax;
@@ -46,10 +26,10 @@ export function parseFilters(search: string): FilterState {
   const monthInverted = Boolean(startMonth && endMonth && startMonth > endMonth);
 
   return {
-    search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
-    town: safeParam(params.get("town"), DEFAULT_FILTERS.town),
-    flatType: safeParam(params.get("flatType"), DEFAULT_FILTERS.flatType),
-    flatModel: safeParam(params.get("flatModel"), DEFAULT_FILTERS.flatModel),
+    search: params.get("search") ?? DEFAULT_FILTERS.search,
+    town: params.get("town") ?? DEFAULT_FILTERS.town,
+    flatType: params.get("flatType") ?? DEFAULT_FILTERS.flatType,
+    flatModel: params.get("flatModel") ?? DEFAULT_FILTERS.flatModel,
     budgetMin: budgetInverted ? budgetMax : budgetMin,
     budgetMax: budgetInverted ? budgetMin : budgetMax,
     areaMin: areaInverted ? areaMax : areaMin,
@@ -58,7 +38,7 @@ export function parseFilters(search: string): FilterState {
     startMonth: monthInverted ? endMonth : startMonth,
     endMonth: monthInverted ? startMonth : endMonth,
     mrtMax: parseNumber(params.get("mrtMax")),
-    selectedAddressKey: safeParamNullable(params.get("selected")),
+    selectedAddressKey: params.get("selected"),
   };
 }
 
