@@ -204,9 +204,9 @@ export function useFilterPipeline({
   // Determine if there is any active filter/search/selection state, independent of which panel is visible.
   const hasResultScope = Boolean(
     effectiveFilters.town ||
-    resolvedSearch.trim() ||
-    geographicIntent ||
-    rawFilters.selectedAddressKey,
+      resolvedSearch.trim() ||
+      geographicIntent ||
+      rawFilters.selectedAddressKey,
   );
 
   const hasMapMarkerScope = Boolean(
