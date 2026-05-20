@@ -9,6 +9,7 @@ const baseBlock: BlockSummary = {
   streetName: "ANG MO KIO AVE 3",
   coordinates: { lat: 1.3, lng: 103.8 },
   medianPrice: 520000,
+  pricePerSqmMedian: 5778,
   transactionCount: 8,
   floorAreaRange: [80, 100],
   leaseCommenceRange: [1998, 2000],

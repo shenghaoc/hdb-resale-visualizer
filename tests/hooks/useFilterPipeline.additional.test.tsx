@@ -48,6 +48,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     streetName: "BEDOK NTH AVE 1",
     coordinates: { lat: 1.33, lng: 103.92 },
     medianPrice: 500_000,
+    pricePerSqmMedian: 5556,
     transactionCount: 5,
     floorAreaRange: [80, 100],
     leaseCommenceRange: [1990, 1990],
