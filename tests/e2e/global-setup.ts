@@ -18,7 +18,7 @@ export default function globalSetup() {
     minimumRemainingLeaseYears: 65,
     budgetStretchPercent: 5,
     showStretchOptions: true,
-    showAllBlocks: false,
+    showAllBlocks: true,
   };
 
   mkdirSync(targetDir, { recursive: true });

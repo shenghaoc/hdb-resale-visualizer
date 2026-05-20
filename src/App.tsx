@@ -14,6 +14,7 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
+import { buildTownRecommendations } from "@/lib/town-recommendations";
 import { AppHeader } from "@/components/AppHeader";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
@@ -63,6 +64,7 @@ function App() {
     resultsVisible: panel.resultsVisible,
     savedVisible: panel.savedVisible,
     shortlistCount: shortlist.items.length,
+    searchProfile: searchProfile.profile,
     t,
   });
 
@@ -125,6 +127,24 @@ function App() {
         : [],
     [pipeline.blocks, pipeline.effectiveFilters.town],
   );
+
+  const totalBlocks = manifest?.counts.blocks ?? 0;
+  const hasAllBlocksLoaded = totalBlocks > 0 && pipeline.blocks.length >= totalBlocks;
+  const townRecommendations = useMemo(() => {
+    if (!searchProfile.completed) return [];
+    if (pipeline.hasResultScope) return [];
+    if (!hasAllBlocksLoaded) return [];
+    return buildTownRecommendations(searchProfile.profile, pipeline.blocks);
+  }, [
+    searchProfile.completed,
+    searchProfile.profile,
+    pipeline.blocks,
+    pipeline.hasResultScope,
+    hasAllBlocksLoaded,
+  ]);
+
+  const townRecommendationsLoading =
+    Boolean(manifest) && searchProfile.completed && !pipeline.hasResultScope && !hasAllBlocksLoaded;
 
   const {
     patchUserFilters,
@@ -298,6 +318,9 @@ function App() {
           profileDataWindow={manifest.dataWindow}
           profileStartMonth={pipeline.effectiveFilters.startMonth}
           profileEndMonth={pipeline.effectiveFilters.endMonth}
+          townRecommendations={townRecommendations}
+          townRecommendationsLoading={townRecommendationsLoading}
+          onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null })}
         />
       </Suspense>
     </div>
