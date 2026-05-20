@@ -161,7 +161,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         type="button"
                         aria-label={t("filters.search")}
                         className={FILTER_INLINE_ACTION_CLASS}
-                        onClick={() => document.getElementById("search")?.focus()}
+                        onClick={(e) => e.currentTarget.closest('[data-slot="input-group"]')?.querySelector("input")?.focus()}
                       >
                         <Search data-icon className="size-3 shrink-0" aria-hidden="true" />
                         {t("filters.search")}
