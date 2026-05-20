@@ -476,7 +476,16 @@ export function buildArtifacts({
     const pricePerSqftValues = sourceWindow
       .map((transaction) => transaction.pricePerSqft)
       .filter((value): value is number => value !== null);
-    const floorAreas = sortedTransactions.map((transaction) => transaction.floorAreaSqm);
+
+    // ⚡ Bolt: Replace map() and Math.min/max spread with O(N) loop to avoid call stack limits and intermediate allocations.
+    let minFloorArea = Infinity;
+    let maxFloorArea = -Infinity;
+    for (let i = 0; i < sortedTransactions.length; i++) {
+      const area = sortedTransactions[i].floorAreaSqm;
+      if (area < minFloorArea) minFloorArea = area;
+      if (area > maxFloorArea) maxFloorArea = area;
+    }
+
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
 
     const nearestStations = new Map<string, number>();
@@ -506,7 +515,7 @@ export function buildArtifacts({
       coordinates: { lat: geocode.lat, lng: geocode.lng },
       medianPrice: Math.round(median(priceValues)),
       transactionCount: sourceWindow.length,
-      floorAreaRange: [Math.min(...floorAreas), Math.max(...floorAreas)],
+      floorAreaRange: [minFloorArea, maxFloorArea],
       leaseCommenceRange: [leaseCommenceYear, leaseCommenceYear],
       latestMonth: latest.month,
       availableDateRange: [
