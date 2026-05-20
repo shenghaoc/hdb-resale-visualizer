@@ -173,7 +173,7 @@ describe("ShortlistDrawer", () => {
       </I18nProvider>
     );
 
-    expect(screen.getByText("Save up to four blocks to compare.")).toBeInTheDocument();
+    expect(screen.getByText("Save up to 20 blocks to compare.")).toBeInTheDocument();
   });
 
   it("edits target price and can select a saved block on the map", () => {
