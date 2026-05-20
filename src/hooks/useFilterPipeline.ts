@@ -199,12 +199,12 @@ export function useFilterPipeline({
   // immediately to geolocate (mapGeographicIntent lags by debouncedSearch delay).
   const effectiveMapGeographicIntent = mapGeographicIntent ?? geographicIntent;
 
+  // Determine if there is any active filter/search/selection state, independent of which panel is visible.
   const hasResultScope = Boolean(
-    resultsVisible &&
-      (effectiveFilters.town ||
-        resolvedSearch.trim() ||
-        geographicIntent ||
-        rawFilters.selectedAddressKey),
+    effectiveFilters.town ||
+    resolvedSearch.trim() ||
+    geographicIntent ||
+    rawFilters.selectedAddressKey,
   );
 
   const hasMapMarkerScope = Boolean(
@@ -212,10 +212,12 @@ export function useFilterPipeline({
   );
 
   const filteredBlocks = useMemo(() => {
+    // If the results panel is not visible, do not compute filtered blocks.
+    if (!resultsVisible) return [];
     if (!hasResultScope) return [];
     const scoped = filterScopedBlocks(blocks, stableFilters, geographicIntent);
     return applyProfileVisibility(scoped, searchProfile);
-  }, [blocks, filterScopedBlocks, geographicIntent, hasResultScope, searchProfile, stableFilters]);
+  }, [blocks, filterScopedBlocks, geographicIntent, hasResultScope, resultsVisible, searchProfile, stableFilters]);
 
   const selectedAddressKey = rawFilters.selectedAddressKey;
 
