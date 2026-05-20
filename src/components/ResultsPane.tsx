@@ -20,6 +20,8 @@ import { fetchTownFlatTypeTrends } from "@/lib/data";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
+import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
+import type { TownRecommendation } from "@/lib/town-recommendations";
 import {
   buildLeaseCommencementHistogram,
   pickBlocksBelowTownMedian,
@@ -113,6 +115,10 @@ type ResultsPaneProps = {
   profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   profileStartMonth?: string | null;
   profileEndMonth?: string | null;
+  /** Surfaced in the empty-scope state when a search profile is active. */
+  townRecommendations?: ReadonlyArray<TownRecommendation>;
+  townRecommendationsLoading?: boolean;
+  onSelectTown?: (town: string) => void;
 };
 
 type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
@@ -405,6 +411,9 @@ export function ResultsPane({
   profileDataWindow = null,
   profileStartMonth = null,
   profileEndMonth = null,
+  townRecommendations = EMPTY_ARRAY,
+  townRecommendationsLoading = false,
+  onSelectTown,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
   const sortOptions: SortOption[] = useMemo(
@@ -793,10 +802,21 @@ export function ResultsPane({
           className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pt-3 sm:px-4 v2-scrollbar"
         >
           {!hasResultScope ? (
-            <div className="flex min-h-[14rem] flex-1 flex-col items-center justify-center gap-2 py-8 text-center text-muted-foreground">
-              <ArrowUpDown data-icon className="size-6 opacity-40" aria-hidden="true" />
-              <p className="text-sm font-medium">{t("results.selectTown")}</p>
-              <p className="text-xs">{t("results.useTownFilter")}</p>
+            <div className="flex min-h-[14rem] flex-1 flex-col gap-4 py-4">
+              {(townRecommendations.length > 0 || townRecommendationsLoading) && onSelectTown ? (
+                <TownRecommendationsSection
+                  recommendations={townRecommendations}
+                  isLoading={townRecommendationsLoading}
+                  onSelectTown={onSelectTown}
+                  t={t}
+                  locale={locale}
+                />
+              ) : null}
+              <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center text-muted-foreground">
+                <ArrowUpDown data-icon className="size-6 opacity-40" aria-hidden="true" />
+                <p className="text-sm font-medium">{t("results.selectTown")}</p>
+                <p className="text-xs">{t("results.useTownFilter")}</p>
+              </div>
             </div>
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">

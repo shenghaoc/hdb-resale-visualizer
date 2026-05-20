@@ -3,6 +3,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import { NEAR_ME_SEARCH_QUERY } from "@/lib/constants";
+import { DEFAULT_SEARCH_PROFILE } from "@/lib/searchProfile";
 import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
@@ -76,6 +77,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -92,6 +94,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -108,6 +111,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -126,6 +130,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -144,6 +149,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -160,6 +166,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -173,6 +180,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -193,6 +201,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: false,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -212,6 +221,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -233,6 +243,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: false,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -255,6 +266,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -278,6 +290,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -300,6 +313,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -319,6 +333,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -337,6 +352,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -359,6 +375,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -384,6 +401,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );
@@ -403,6 +421,7 @@ describe("useFilterPipeline — additional edge cases", () => {
           resultsVisible: true,
           savedVisible: false,
           shortlistCount: 0,
+          searchProfile: DEFAULT_SEARCH_PROFILE,
           t,
         }),
       );

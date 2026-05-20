@@ -11,6 +11,7 @@ type UseBlockLoadingArgs = {
   sortedTowns: string[];
   savedVisible: boolean;
   shortlistCount: number;
+  needsAllBlocksForRecommendations?: boolean;
 };
 
 export function useBlockLoading({
@@ -22,6 +23,7 @@ export function useBlockLoading({
   sortedTowns,
   savedVisible,
   shortlistCount,
+  needsAllBlocksForRecommendations = false,
 }: UseBlockLoadingArgs) {
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -37,7 +39,10 @@ export function useBlockLoading({
 
     let isMounted = true;
     const totalBlocks = manifest.counts.blocks;
-    const needsAllBlocks = hasGeographic || (savedVisible && shortlistCount > 0);
+    const needsAllBlocks =
+      hasGeographic ||
+      (savedVisible && shortlistCount > 0) ||
+      needsAllBlocksForRecommendations;
     const detectedTownForDeepLink =
       !townFilter && !hasGeographic && selectedAddressKey
         ? sortedTowns.find((town) => selectedAddressKey.startsWith(`${townToFilename(town)}-`)) ?? null
@@ -93,6 +98,7 @@ export function useBlockLoading({
     savedVisible,
     shortlistCount,
     hasGeographic,
+    needsAllBlocksForRecommendations,
   ]);
 
   return { blocks, loadError };

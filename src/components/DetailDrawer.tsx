@@ -38,6 +38,7 @@ import type { Locale, Translator } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import { rankSimilarBlocks } from "@/lib/similar-blocks";
+import { computeComparableRange } from "@/lib/comparable-range";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -322,6 +323,11 @@ export function DetailDrawer({
     [selectedBlock, allBlocks],
   );
 
+  const comparableRange = useMemo(
+    () => (selectedBlock ? computeComparableRange(selectedBlock, similarBlocks) : null),
+    [selectedBlock, similarBlocks],
+  );
+
   const trajectory = useMemo(
     () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
     [detail],
@@ -544,6 +550,41 @@ export function DetailDrawer({
                     </div>
                   </div>
                 </div>
+
+                {comparableRange ? (
+                  <section
+                    aria-labelledby="comparable-range-title"
+                    data-testid="comparable-range-headline"
+                    className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                  >
+                    <div
+                      id="comparable-range-title"
+                      className="mb-1 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                    >
+                      <Scale data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("detail.comparableRange.title")}
+                    </div>
+                    <p className="font-heading text-sm font-extrabold tracking-tight v2-tabular">
+                      {t("detail.comparableRange.summary", {
+                        min: formatCurrency(comparableRange.minPrice, locale),
+                        max: formatCurrency(comparableRange.maxPrice, locale),
+                        median: formatCurrency(comparableRange.medianPrice, locale),
+                        count: formatNumber(comparableRange.sampleSize, 0, locale),
+                      })}
+                    </p>
+                    <p className="mt-1 text-[0.65rem] font-medium text-muted-foreground">
+                      {Math.abs(comparableRange.deltaFromMedianPct) < 0.5
+                        ? t("detail.comparableRange.inline")
+                        : comparableRange.deltaFromMedianPct >= 0
+                          ? t("detail.comparableRange.above", {
+                              value: formatNumber(comparableRange.deltaFromMedianPct, 1, locale),
+                            })
+                          : t("detail.comparableRange.below", {
+                              value: formatNumber(Math.abs(comparableRange.deltaFromMedianPct), 1, locale),
+                            })}
+                    </p>
+                  </section>
+                ) : null}
 
                 <LeaseWarningPanel signals={leaseSignals} t={t} />
 

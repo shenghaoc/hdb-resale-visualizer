@@ -2,6 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
+import { DEFAULT_SEARCH_PROFILE } from "@/lib/searchProfile";
 import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
@@ -46,6 +47,7 @@ describe("useFilterPipeline", () => {
       userLocation: null,
       savedVisible: false,
       shortlistCount: 0,
+      searchProfile: DEFAULT_SEARCH_PROFILE,
       t,
     }));
 
@@ -70,6 +72,7 @@ describe("useFilterPipeline", () => {
       userLocation: null,
       savedVisible: false,
       shortlistCount: 0,
+      searchProfile: DEFAULT_SEARCH_PROFILE,
       t,
     }));
 
@@ -88,6 +91,7 @@ describe("useFilterPipeline", () => {
         userLocation: null,
         savedVisible: false,
         shortlistCount: 0,
+        searchProfile: DEFAULT_SEARCH_PROFILE,
         t,
       }),
       { initialProps: { rawFilters: initialFilters } }
@@ -131,6 +135,7 @@ describe("useFilterPipeline", () => {
       userLocation: null,
       savedVisible: false,
       shortlistCount: 0,
+      searchProfile: DEFAULT_SEARCH_PROFILE,
       t,
     }));
 

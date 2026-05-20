@@ -9,9 +9,12 @@ import {
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
+import { applyProfileVisibility } from "@/lib/matchProfile";
+import { hasCompletedSearchProfile } from "@/lib/searchProfile";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import type { BlockSummary, Coordinates, FilterState, Manifest } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 import type { Translator } from "@/lib/i18n";
 
 type UseFilterPipelineOptions = {
@@ -21,6 +24,7 @@ type UseFilterPipelineOptions = {
   resultsVisible?: boolean;
   savedVisible: boolean;
   shortlistCount: number;
+  searchProfile: SearchProfile;
   t: Translator;
 };
 
@@ -31,6 +35,7 @@ export function useFilterPipeline({
   resultsVisible = true,
   savedVisible,
   shortlistCount,
+  searchProfile,
   t,
 }: UseFilterPipelineOptions) {
   // Tracks whether the start month is still at its default (not explicitly set
@@ -95,6 +100,9 @@ export function useFilterPipeline({
     [manifest],
   );
 
+  const profileReadyForRecommendations =
+    resultsVisible && hasCompletedSearchProfile(searchProfile);
+
   const { blocks, loadError } = useBlockLoading({
     manifest,
     townFilter: effectiveFilters.town,
@@ -104,6 +112,7 @@ export function useFilterPipeline({
     sortedTowns,
     savedVisible,
     shortlistCount,
+    needsAllBlocksForRecommendations: profileReadyForRecommendations,
   });
 
   // O(1) address key lookup.
@@ -195,16 +204,20 @@ export function useFilterPipeline({
     mapFilters.town || mapFilters.search.trim() || effectiveMapGeographicIntent,
   );
 
-  const filteredBlocks = useMemo(
-    () => (hasResultScope ? filterScopedBlocks(blocks, stableFilters, geographicIntent) : []),
-    [blocks, filterScopedBlocks, geographicIntent, hasResultScope, stableFilters],
-  );
+  const filteredBlocks = useMemo(() => {
+    if (!hasResultScope) return [];
+    const scoped = filterScopedBlocks(blocks, stableFilters, geographicIntent);
+    return applyProfileVisibility(scoped, searchProfile);
+  }, [blocks, filterScopedBlocks, geographicIntent, hasResultScope, searchProfile, stableFilters]);
 
   const selectedAddressKey = rawFilters.selectedAddressKey;
 
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
-      ? filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent)
+      ? applyProfileVisibility(
+          filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent),
+          searchProfile,
+        )
       : [];
 
     if (!selectedAddressKey) return scopedBlocks;
@@ -222,6 +235,7 @@ export function useFilterPipeline({
     filterScopedBlocks,
     hasMapMarkerScope,
     mapFilters,
+    searchProfile,
     selectedAddressKey,
   ]);
 
