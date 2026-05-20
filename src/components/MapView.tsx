@@ -23,6 +23,7 @@ type MapViewProps = {
   blocks: BlockSummary[];
   selectedAddressKey: string | null;
   townFilter?: string | null;
+  flatType?: string;
   autoFitKey?: string | null;
   showBlockMarkers?: boolean;
   isDarkMode: boolean;
@@ -45,6 +46,7 @@ export function MapView({
   blocks,
   selectedAddressKey,
   townFilter,
+  flatType = "",
   autoFitKey,
   showBlockMarkers = false,
   isDarkMode,
@@ -94,7 +96,7 @@ export function MapView({
     [popupInstance],
   );
 
-  const geoJson = useMemo(() => toGeoJson(blocks), [blocks]);
+  const geoJson = useMemo(() => toGeoJson(blocks, flatType), [blocks, flatType]);
   const primarySchoolsGeoJson = useMemo(
     () => primarySchoolsToGeoJson(primarySchools),
     [primarySchools],

@@ -7,7 +7,7 @@ import type {
   Manifest,
   TownFlatTypeTrendPoint,
 } from "../../shared/data-types";
-import { buildFilterOptions } from "../../shared/filter-options";
+import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
 
 export type ResaleTransaction = {
@@ -507,6 +507,18 @@ export function buildArtifacts({
     const property = propertyByAddress.get(addressKey);
     const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears);
     const pricePerSqmMedian = Number(median(pricePerSqmValues).toFixed(2));
+    // Compute per-flat-type median prices for accurate budget filtering
+    const medianPriceByFlatType: Record<string, number> = {};
+    const transactionsByFlatType = new Map<string, number[]>();
+    for (const transaction of sourceWindow) {
+      const ftPrices = transactionsByFlatType.get(transaction.flatType) ?? [];
+      ftPrices.push(transaction.resalePrice);
+      transactionsByFlatType.set(transaction.flatType, ftPrices);
+    }
+    for (const [flatType, ftPrices] of transactionsByFlatType.entries()) {
+      medianPriceByFlatType[canonicalFlatType(flatType)] = Math.round(median(ftPrices));
+    }
+
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
@@ -526,6 +538,7 @@ export function buildArtifacts({
       ],
       flatTypes: [...new Set(sortedTransactions.map((transaction) => transaction.flatType))].sort(),
       flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
+      medianPriceByFlatType,
       nearestMrt,
       nearbyMrts,
       postalCode: geocode.postalCode ?? null,
