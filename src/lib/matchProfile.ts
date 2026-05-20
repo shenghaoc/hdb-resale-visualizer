@@ -23,14 +23,16 @@ function walkingDistanceToAnchor(block: BlockSummary, profile: SearchProfile): n
       (block.nearestMrt?.stationName === profile.commuteAnchorMrt ? block.nearestMrt : null);
     return anchor?.distanceMeters ?? null;
   }
+  // Proximity-to-nearest-MRT proxy only, not a true commute-time measurement.
+  // Without a specific anchor MRT this dimension measures general MRT accessibility
+  // rather than commute viability.
   return block.nearestMrt?.distanceMeters ?? null;
 }
 
-function evaluateFlatType(block: BlockSummary, profile: SearchProfile): DimensionMatch {
-  const main = profile.mainFlatType.trim();
-  if (!main) return "skip";
-  if (block.flatTypes.includes(main)) return "pass";
-  for (const alt of profile.alternativeFlatTypes) {
+function evaluateFlatType(block: BlockSummary, mainFlatType: string, alternativeFlatTypes: readonly string[]): DimensionMatch {
+  if (!mainFlatType) return "skip";
+  if (block.flatTypes.includes(mainFlatType)) return "pass";
+  for (const alt of alternativeFlatTypes) {
     if (alt && block.flatTypes.includes(alt)) return "stretch";
   }
   return "fail";
@@ -102,7 +104,8 @@ export function evaluateBlockForProfile(
   profile: SearchProfile,
   currentYear: number = getCurrentYear(),
 ): ProfileEvaluation {
-  const flatType = evaluateFlatType(block, profile);
+  const mainFlatType = profile.mainFlatType.trim();
+  const flatType = evaluateFlatType(block, mainFlatType, profile.alternativeFlatTypes);
   const lease = evaluateLease(block, profile, currentYear);
   const budget = evaluateBudget(block, profile);
   const commute = evaluateCommute(block, profile);

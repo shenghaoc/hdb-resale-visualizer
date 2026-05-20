@@ -144,7 +144,7 @@ function App() {
   ]);
 
   const townRecommendationsLoading =
-    searchProfile.completed && !pipeline.hasResultScope && !hasAllBlocksLoaded;
+    Boolean(manifest) && searchProfile.completed && !pipeline.hasResultScope && !hasAllBlocksLoaded;
 
   const {
     patchUserFilters,
