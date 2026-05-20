@@ -20,6 +20,7 @@ const mockBlock: BlockSummary = {
   streetName: "Ang Mo Kio Ave 3",
   coordinates: { lat: 1.3521, lng: 103.8198 },
   medianPrice: 500000,
+  pricePerSqmMedian: 6250,
   transactionCount: 10,
   floorAreaRange: [70, 90],
   leaseCommenceRange: [1990, 2000],

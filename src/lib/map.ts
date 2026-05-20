@@ -28,7 +28,6 @@ export function toGeoJson(blocks: BlockSummary[]) {
     features: blocks.map<GeoJsonFeature>((block) => {
       let feature = geoJsonCache.get(block);
       if (!feature) {
-        const midArea = (block.floorAreaRange[0] + block.floorAreaRange[1]) / 2;
         feature = {
           type: "Feature",
           geometry: {
@@ -40,7 +39,7 @@ export function toGeoJson(blocks: BlockSummary[]) {
             town: block.town,
             address: `${block.block} ${block.streetName}`,
             median_price: block.medianPrice,
-            price_per_sqm_median: midArea > 0 ? Number((block.medianPrice / midArea).toFixed(2)) : 0,
+            price_per_sqm_median: block.pricePerSqmMedian,
             transaction_count: block.transactionCount,
             latest_month: block.latestMonth,
             ...(block.displayName ? { display_name: block.displayName } : {}),

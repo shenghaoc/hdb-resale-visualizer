@@ -10,6 +10,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     displayName: null,
     coordinates: { lat: 1.35, lng: 103.8 },
     medianPrice: 600_000,
+    pricePerSqmMedian: 6300,
     transactionCount: 10,
     floorAreaRange: [90, 100] as [number, number],
     leaseCommenceRange: [2000, 2000] as [number, number],
@@ -90,21 +91,18 @@ describe("scoreSimilarity", () => {
     expect(score).toBeGreaterThan(0);
   });
 
-  it("uses neutral price-per-sqm score when floor-area data is missing", () => {
-    const sourceMissingArea = makeBlock({
-      addressKey: "sourceMissingArea",
-      floorAreaRange: [0, 0],
-    });
-    const candidate = makeBlock({
-      addressKey: "candidate",
+  it("penalises price-per-sqm deviation — closer psm ranks higher", () => {
+    const nearPsm = makeBlock({
+      addressKey: "nearPsm",
       flatTypes: ["4 ROOM"],
-      floorAreaRange: [90, 100],
+      pricePerSqmMedian: 6400,
     });
-    const fullAreaScore = scoreSimilarity(SOURCE, candidate);
-    const missingAreaScore = scoreSimilarity(sourceMissingArea, candidate);
-
-    expect(missingAreaScore).toBeGreaterThan(0);
-    expect(missingAreaScore).toBeLessThan(fullAreaScore);
+    const farPsm = makeBlock({
+      addressKey: "farPsm",
+      flatTypes: ["4 ROOM"],
+      pricePerSqmMedian: 9000,
+    });
+    expect(scoreSimilarity(SOURCE, nearPsm)).toBeGreaterThan(scoreSimilarity(SOURCE, farPsm));
   });
 
   it("gives partial flat-type score for partial overlap", () => {

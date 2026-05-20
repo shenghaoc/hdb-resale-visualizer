@@ -73,11 +73,11 @@ describe("Data Artifact Schema Preservation", () => {
     expect(firstBlock.streetName).toBeDefined();
     expect(firstBlock.coordinates).toBeDefined();
     expect(firstBlock.medianPrice).toBeDefined();
+    expect(firstBlock.pricePerSqmMedian).toBeDefined();
     expect(firstBlock.transactionCount).toBeDefined();
     expect(firstBlock.flatTypes).toBeDefined();
     expect(firstBlock.nearestMrt).toBeDefined();
     expect("priceIqr" in firstBlock).toBe(false);
-    expect("pricePerSqmMedian" in firstBlock).toBe(false);
     expect("pricePerSqftMedian" in firstBlock).toBe(false);
   });
 

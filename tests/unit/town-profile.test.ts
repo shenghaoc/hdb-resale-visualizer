@@ -25,6 +25,7 @@ function blockStub(p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey" | 
     streetName: "ST",
     displayName: null,
     coordinates: { lat: 1.332, lng: 103.821 },
+    pricePerSqmMedian: 6000,
     floorAreaRange: [90, 92],
     leaseCommenceRange: [1988, 1988],
     latestMonth: "2024-06",

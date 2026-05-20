@@ -117,6 +117,7 @@ describe("useFilterPipeline", () => {
         availableDateRange: ["2020-01", "2024-12"],
         mrtDistances: {},
         metricPercentiles: {},
+        pricePerSqmMedian: 6000,
       },
       {
         addressKey: "block-2",
@@ -124,6 +125,7 @@ describe("useFilterPipeline", () => {
         availableDateRange: ["2020-01", "2024-12"],
         mrtDistances: {},
         metricPercentiles: {},
+        pricePerSqmMedian: 6000,
       },
     ] as unknown as BlockSummary[];
     

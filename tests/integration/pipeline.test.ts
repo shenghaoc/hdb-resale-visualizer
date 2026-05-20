@@ -18,6 +18,7 @@ describe("pipeline artifacts", () => {
     );
     expect(artifacts.blockSummaries[0]?.displayName).toBe("BEDOK NORTH GREEN");
     expect("priceIqr" in (artifacts.blockSummaries[0] ?? {})).toBe(false);
+    expect(artifacts.blockSummaries.find((block) => block.addressKey === makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10"))?.pricePerSqmMedian).toBeCloseTo(5611.94, 2);
     expect(
       artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.displayName,
     ).toBeNull();

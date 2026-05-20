@@ -19,6 +19,7 @@ function makeBlock(lat: number, lng: number): BlockSummary {
     streetName: "BEDOK NTH AVE 1",
     coordinates: { lat, lng },
     medianPrice: 500_000,
+    pricePerSqmMedian: 5556,
     transactionCount: 5,
     floorAreaRange: [80, 100],
     leaseCommenceRange: [1990, 1990],

@@ -14,7 +14,7 @@ export type RankSimilarBlocksOptions = {
  * Same town          0.30  — binary
  * Flat-type overlap  0.25  — Jaccard similarity of flat-type sets
  * Price              0.25  — exponential decay; 20% difference → ~0.37
- * Price/sqm (proxy)  0.10  — estimated from medianPrice / mid(floorAreaRange) (neutral 0.5 if area data absent)
+ * Price/sqm          0.10  — pricePerSqmMedian; exponential decay; 20% difference → ~0.37
  * Lease commence     0.05  — exponential decay; 5-yr gap → ~0.37
  * MRT distance       0.05  — exponential decay; 300 m gap → ~0.37 (neutral 0.5 if data absent)
  */
@@ -45,16 +45,10 @@ export function scoreSimilarity(
       : 0;
   const priceScore = Math.exp(-5 * priceDiffFraction) * 0.25;
 
-  // ── Price-per-sqm similarity (estimated) ─────────────────────────────────
-  const sourceMidArea = (source.floorAreaRange[0] + source.floorAreaRange[1]) / 2;
-  const candidateMidArea = (candidate.floorAreaRange[0] + candidate.floorAreaRange[1]) / 2;
-  const sourcePsm = sourceMidArea > 0 ? source.medianPrice / sourceMidArea : 0;
-  const candidatePsm = candidateMidArea > 0 ? candidate.medianPrice / candidateMidArea : 0;
-  let psmScore = 0.5 * 0.1;
-  if (sourcePsm > 0 && candidatePsm > 0) {
-    const psmDiffFraction = Math.abs(candidatePsm - sourcePsm) / sourcePsm;
-    psmScore = Math.exp(-5 * psmDiffFraction) * 0.1;
-  }
+  // ── Price-per-sqm similarity ──────────────────────────────────────────────
+  const psmDiffFraction =
+    Math.abs(candidate.pricePerSqmMedian - source.pricePerSqmMedian) / source.pricePerSqmMedian;
+  const psmScore = Math.exp(-5 * psmDiffFraction) * 0.1;
 
   // ── Lease-commence similarity ─────────────────────────────────────────────
   const sourceMidLease = (source.leaseCommenceRange[0] + source.leaseCommenceRange[1]) / 2;

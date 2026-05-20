@@ -18,6 +18,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     displayName: null,
     coordinates: { lat: 1.35, lng: 103.8 },
     medianPrice: 600_000,
+    pricePerSqmMedian: 6300,
     transactionCount: 10,
     floorAreaRange: [90, 100],
     leaseCommenceRange: [2000, 2000],

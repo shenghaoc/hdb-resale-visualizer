@@ -13,6 +13,7 @@ const mockBlock: BlockSummary = {
   displayName: "BEDOK NORTH GREEN",
   coordinates: { lat: 1.3339, lng: 103.9372 },
   medianPrice: 545000,
+  pricePerSqmMedian: 5924,
   transactionCount: 1,
   floorAreaRange: [92, 92],
   leaseCommenceRange: [1983, 1983],

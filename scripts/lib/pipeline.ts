@@ -506,6 +506,7 @@ export function buildArtifacts({
     const nearestMrt: BlockSummary["nearestMrt"] = nearbyMrts[0] ?? null;
     const property = propertyByAddress.get(addressKey);
     const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears);
+    const pricePerSqmMedian = Number(median(pricePerSqmValues).toFixed(2));
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
@@ -514,6 +515,7 @@ export function buildArtifacts({
       displayName: sanitizeDisplayName(geocode.displayName, latest.block, latest.streetName),
       coordinates: { lat: geocode.lat, lng: geocode.lng },
       medianPrice: Math.round(median(priceValues)),
+      pricePerSqmMedian,
       transactionCount: sourceWindow.length,
       floorAreaRange: [minFloorArea, maxFloorArea],
       leaseCommenceRange: [leaseCommenceYear, leaseCommenceYear],
@@ -531,7 +533,6 @@ export function buildArtifacts({
     const detailSummary: AddressDetailSummary = {
       ...summary,
       priceIqr: [Math.round(quantile(priceValues, 0.25)), Math.round(quantile(priceValues, 0.75))],
-      pricePerSqmMedian: Number(median(pricePerSqmValues).toFixed(2)),
       pricePerSqftMedian:
         pricePerSqftValues.length > 0 ? Number(median(pricePerSqftValues).toFixed(2)) : null,
     };

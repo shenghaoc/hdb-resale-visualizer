@@ -16,6 +16,7 @@ export type BlockSummary = {
   displayName?: string | null;
   coordinates: Coordinates;
   medianPrice: number;
+  pricePerSqmMedian: number;
   transactionCount: number;
   floorAreaRange: [number, number];
   leaseCommenceRange: [number, number];
@@ -30,7 +31,6 @@ export type BlockSummary = {
 
 export type AddressDetailSummary = BlockSummary & {
   priceIqr: [number, number];
-  pricePerSqmMedian: number;
   pricePerSqftMedian: number | null;
 };
 
