@@ -13,24 +13,28 @@ const FG = [0xff, 0xff, 0xff]; // white
 function inRoundedRect(x, y) {
   if (x < 0 || x >= W || y < 0 || y >= H) return false;
   const r = RADIUS;
+  const cxLeft = r - 1;
+  const cxRight = W - r;
+  const cyTop = r - 1;
+  const cyBottom = H - r;
   if (x < r && y < r) {
-    const dx = r - 1 - x;
-    const dy = r - 1 - y;
+    const dx = x - cxLeft;
+    const dy = y - cyTop;
     return dx * dx + dy * dy <= r * r;
   }
   if (x >= W - r && y < r) {
-    const dx = x - (W - r);
-    const dy = r - 1 - y;
+    const dx = x - cxRight;
+    const dy = y - cyTop;
     return dx * dx + dy * dy <= r * r;
   }
   if (x < r && y >= H - r) {
-    const dx = r - 1 - x;
-    const dy = y - (H - r);
+    const dx = x - cxLeft;
+    const dy = y - cyBottom;
     return dx * dx + dy * dy <= r * r;
   }
   if (x >= W - r && y >= H - r) {
-    const dx = x - (W - r);
-    const dy = y - (H - r);
+    const dx = x - cxRight;
+    const dy = y - cyBottom;
     return dx * dx + dy * dy <= r * r;
   }
   return true;
@@ -45,15 +49,16 @@ function isH(x, y) {
 }
 
 // BMP rows are bottom-up; pixels are BGRA per row.
-const pixelBytes = [];
+const pixelBuf = Buffer.alloc(W * H * 4);
 for (let y = H - 1; y >= 0; y--) {
   for (let x = 0; x < W; x++) {
+    const i = ((H - 1 - y) * W + x) * 4;
     if (!inRoundedRect(x, y)) {
-      pixelBytes.push(0, 0, 0, 0);
+      pixelBuf.writeUInt32LE(0, i);
     } else if (isH(x, y)) {
-      pixelBytes.push(FG[2], FG[1], FG[0], 0xff);
+      pixelBuf[i] = FG[2]; pixelBuf[i + 1] = FG[1]; pixelBuf[i + 2] = FG[0]; pixelBuf[i + 3] = 0xff;
     } else {
-      pixelBytes.push(BG[2], BG[1], BG[0], 0xff);
+      pixelBuf[i] = BG[2]; pixelBuf[i + 1] = BG[1]; pixelBuf[i + 2] = BG[0]; pixelBuf[i + 3] = 0xff;
     }
   }
 }
@@ -71,8 +76,6 @@ bmpHeader.writeInt32LE(0, 24);
 bmpHeader.writeInt32LE(0, 28);
 bmpHeader.writeUInt32LE(0, 32);
 bmpHeader.writeUInt32LE(0, 36);
-
-const pixelBuf = Buffer.from(pixelBytes);
 // AND mask: 32 rows of 32 bits = 4 bytes per row => 128 bytes, all zero (rely on alpha channel).
 const andMask = Buffer.alloc(128, 0);
 const bmpData = Buffer.concat([bmpHeader, pixelBuf, andMask]);
