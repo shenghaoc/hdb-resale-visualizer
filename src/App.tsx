@@ -248,6 +248,11 @@ function App() {
       onChange={patchUserFilters}
       onReset={handleResetFilters}
       options={manifest.filterOptions}
+      desktopToggle={
+        panel.isDesktop
+          ? { isOpen: panel.isLeftPanelOpen, onToggle: handleDesktopFiltersClick }
+          : undefined
+      }
     />
   );
 
