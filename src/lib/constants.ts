@@ -51,6 +51,22 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
 }
 
 /**
+ * HDB affordability and eligibility rules.
+ *
+ * These are policy thresholds that get tuned over time; centralise them here so
+ * affordability helpers and the search-profile wizard stay in sync.
+ */
+export const HDB_MAX_LTV_RATIO = 0.75;
+export const HDB_MAX_BUYER_AGE = 95;
+export const HDB_LOAN_TENURE_MONTHS = 25 * 12;
+export const HDB_CONCESSIONARY_ANNUAL_RATE = 0.026;
+export const HDB_MORTGAGE_SERVICING_RATIO = 0.3;
+
+export const SEARCH_PROFILE_MIN_APPLICANT_AGE = 21;
+export const SEARCH_PROFILE_MAX_APPLICANT_AGE = 80;
+export const SEARCH_PROFILE_MAX_MONETARY_VALUE = 10_000_000;
+
+/**
  * Storage keys for local persistence.
  */
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";

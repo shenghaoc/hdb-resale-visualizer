@@ -11,6 +11,10 @@ export type SearchProfile = {
   budgetStretchPercent: number;
   showStretchOptions: boolean;
   showAllBlocks: boolean;
+  age: number | null;
+  coApplicantAge: number | null;
+  cpfOABalance: number | null;
+  monthlyIncome: number | null;
 };
 
 export type SearchProfilePatch = Partial<SearchProfile>;
