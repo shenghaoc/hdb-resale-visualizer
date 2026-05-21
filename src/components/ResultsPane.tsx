@@ -204,7 +204,7 @@ const BlockCard = memo(function BlockCard({
       <Item
         data-state={isFeatured ? "selected" : "idle"}
         variant="outline"
-        role="listitem"
+        role="option"
         aria-selected={isFeatured}
         tabIndex={0}
         onKeyDown={(e) => {
@@ -294,7 +294,7 @@ const BlockCard = memo(function BlockCard({
     <Item
       data-state={isFeatured ? "selected" : "idle"}
       variant="outline"
-      role="listitem"
+      role="option"
       aria-selected={isFeatured}
       tabIndex={0}
       onKeyDown={(e) => {
@@ -864,6 +864,7 @@ export function ResultsPane({
                     className="min-h-0 flex-1 pr-2"
                   >
                     <ItemGroup
+                      role="listbox"
                       className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
                       style={
                         shouldVirtualize
