@@ -407,8 +407,7 @@
   white-space: nowrap;
 }
 
-.mobile-mode-button,
-.mobile-language-trigger {
+.mobile-mode-button {
   display: flex;
   height: 3rem;
   width: 2.65rem;
@@ -430,15 +429,9 @@
   transition: all 150ms ease;
 }
 
-.mobile-mode-button:hover,
-.mobile-language-trigger:hover,
-.mobile-language-trigger[aria-expanded="true"] {
+.mobile-mode-button:hover {
   color: var(--primary);
   background: color-mix(in oklab, var(--primary) 10%, transparent);
-}
-
-.mobile-language-trigger > svg:last-of-type {
-  display: none;
 }
 
 .desktop-tab-bar {
@@ -463,33 +456,6 @@
   align-self: stretch;
   margin: 0.25rem 0.125rem;
   background: var(--border);
-}
-
-.desktop-tab-bar-lang-trigger {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  height: 2.625rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--background) 60%, transparent);
-  padding: 0.5rem 0.625rem;
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--muted-foreground);
-  cursor: pointer;
-  transition: all 150ms ease;
-}
-
-.desktop-tab-bar-lang-trigger:hover,
-.desktop-tab-bar-lang-trigger[aria-expanded="true"] {
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
-}
-
-.desktop-tab-bar-lang-trigger > svg:last-of-type {
-  display: none;
 }
 
 .desktop-tab-bar .desktop-tab-bar-icon-btn {
@@ -647,9 +613,34 @@
   box-shadow: none !important;
 }
 
+.map-locale-trigger {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  padding: 0;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.map-locale-trigger:hover,
+.map-locale-trigger[aria-expanded="true"] {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.map-locale-trigger > svg:last-of-type {
+  display: none;
+}
+
 .map-view .maplibregl-ctrl-top-right {
   right: 1.5rem;
-  top: 1.5rem;
+  top: calc(1.5rem + 2.75rem);
   z-index: 30;
 }
 
@@ -688,7 +679,7 @@
 
   .map-view .maplibregl-ctrl-top-right {
     right: 0.5rem;
-    top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+    top: calc(env(safe-area-inset-top, 0px) + 0.75rem + 2.75rem);
     bottom: auto;
     z-index: 30;
   }

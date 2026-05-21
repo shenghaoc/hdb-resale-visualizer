@@ -186,8 +186,10 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark'));
     console.log("Theme is dark after toggle:", isDark);
 
-    // Language selector also lives in the tab bar.
-    const languageSelect = tabBar.getByRole("combobox", { name: /language/i });
+    // Language selector lives in the floating map locale control.
+    const languageSelect = page
+      .getByTestId("map-locale-control")
+      .getByRole("combobox", { name: /language/i });
     await expect(languageSelect).toBeVisible();
     await languageSelect.click();
     
@@ -204,6 +206,9 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     
     // Header should be hidden
     await expect(header).not.toBeVisible();
+
+    // Language selector remains available on the map.
+    await expect(languageSelect).toBeVisible();
     
     // Show header button should appear
     await expect(page.getByRole("button", { name: /show header/i })).toBeVisible();

@@ -1,12 +1,27 @@
 import { z } from "zod";
 import {
+  SEARCH_PROFILE_MAX_APPLICANT_AGE,
+  SEARCH_PROFILE_MAX_MONETARY_VALUE,
+  SEARCH_PROFILE_MIN_APPLICANT_AGE,
   SEARCH_PROFILE_STORAGE_KEY,
   SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY,
 } from "@/lib/constants";
 import { safeStorage } from "@/lib/storage";
 import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
-const searchProfileSchema = z.object({
+export const applicantAgeSchema = z
+  .number()
+  .int()
+  .min(SEARCH_PROFILE_MIN_APPLICANT_AGE)
+  .max(SEARCH_PROFILE_MAX_APPLICANT_AGE)
+  .nullable();
+export const monetarySchema = z
+  .number()
+  .min(0)
+  .max(SEARCH_PROFILE_MAX_MONETARY_VALUE)
+  .nullable();
+
+export const searchProfileSchema = z.object({
   version: z.literal(1).catch(1),
   mainFlatType: z.string().trim().catch(""),
   alternativeFlatTypes: z.array(z.string()).catch([]),
@@ -19,6 +34,10 @@ const searchProfileSchema = z.object({
   budgetStretchPercent: z.number().int().min(0).max(30).catch(5),
   showStretchOptions: z.boolean().catch(true),
   showAllBlocks: z.boolean().catch(false),
+  age: applicantAgeSchema.catch(null),
+  coApplicantAge: applicantAgeSchema.catch(null),
+  cpfOABalance: monetarySchema.catch(null),
+  monthlyIncome: monetarySchema.catch(null),
 });
 
 export const DEFAULT_SEARCH_PROFILE: SearchProfile = {
@@ -34,6 +53,10 @@ export const DEFAULT_SEARCH_PROFILE: SearchProfile = {
   budgetStretchPercent: 5,
   showStretchOptions: true,
   showAllBlocks: false,
+  age: null,
+  coApplicantAge: null,
+  cpfOABalance: null,
+  monthlyIncome: null,
 };
 
 export function parseSearchProfile(raw: unknown): SearchProfile {

@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { Languages } from "lucide-react";
 import {
   Select,
@@ -6,58 +5,35 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { LOCALE_OPTIONS, useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 
-export type LocaleSelectorVariant = "desktop" | "mobile";
-
-type LocaleSelectorProps = {
-  variant: LocaleSelectorVariant;
-  onKeyDown?: React.KeyboardEventHandler;
-  onFocus?: React.FocusEventHandler<HTMLButtonElement>;
-  tabIndex?: number;
-};
-
 /**
- * Shared language dropdown used in both the desktop tab bar and the mobile tab
- * bar. Keeps trigger styling, icon sizing, and the options list in one place.
+ * Language dropdown for the floating map locale control.
  */
-export const LocaleSelector = forwardRef<HTMLButtonElement, LocaleSelectorProps>(
-  ({ variant, onKeyDown, onFocus, tabIndex }, ref) => {
-    const { locale, setLocale, t } = useI18n();
-    const label = t("language.label");
+export function LocaleSelector() {
+  const { locale, setLocale, t } = useI18n();
+  const label = t("language.label");
 
-    const isDesktop = variant === "desktop";
-    const triggerClassName = isDesktop
-      ? "desktop-tab-bar-lang-trigger"
-      : "mobile-language-trigger";
-    const iconClassName = isDesktop ? "size-3.5" : "size-4";
-    const sideOffset = isDesktop ? 8 : 4;
-
-    return (
-      <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
-        <SelectTrigger
-          ref={ref}
-          aria-label={label}
-          title={isDesktop ? undefined : label}
-          className={triggerClassName}
-          onKeyDown={onKeyDown}
-          onFocus={onFocus}
-          tabIndex={tabIndex}
-        >
-          <Languages data-icon className={iconClassName} aria-hidden="true" />
-          <span>{t("language.short_name")}</span>
-        </SelectTrigger>
-        <SelectContent position="popper" side="top" align="start" sideOffset={sideOffset}>
-          {LOCALE_OPTIONS.map((option) => (
-            <SelectItem key={option.value} value={option.value} className="text-xs">
-              {t(option.labelKey)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    );
-  },
-);
-
-LocaleSelector.displayName = "LocaleSelector";
+  return (
+    <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <SelectTrigger aria-label={label} className="map-locale-trigger">
+            <Languages data-icon className="size-4" aria-hidden="true" />
+            <span className="sr-only">{t("language.short_name")}</span>
+          </SelectTrigger>
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
+      <SelectContent position="popper" side="bottom" align="end" sideOffset={8}>
+        {LOCALE_OPTIONS.map((option) => (
+          <SelectItem key={option.value} value={option.value} className="text-xs">
+            {t(option.labelKey)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
