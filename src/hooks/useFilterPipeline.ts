@@ -207,6 +207,8 @@ export function useFilterPipeline({
         rawFilters.selectedAddressKey),
   );
 
+  // selectedAddressKey is intentionally excluded: a single-block selection has
+  // too few data points to render a meaningful heatmap.
   const hasMapMarkerScope = Boolean(
     mapFilters.town || mapFilters.search.trim() || effectiveMapGeographicIntent,
   );

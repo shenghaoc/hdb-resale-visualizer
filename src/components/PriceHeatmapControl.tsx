@@ -76,7 +76,7 @@ export function PriceHeatmapControl({
               aria-label={t("heatmap.label")}
               id={toggleId}
               disabled={!hasScope}
-              onClick={hasScope ? onToggle : undefined}
+              onClick={onToggle}
               className={cn(
                 "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300",
                 !hasScope && "cursor-not-allowed opacity-50",
