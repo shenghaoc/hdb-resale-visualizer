@@ -1,10 +1,10 @@
-import { formatNumber } from "./format";
+import { formatMonth, formatNumber } from "./format";
 import { getBudgetDivisor, localizeFlatType, localizeTownName } from "./i18n/domain";
 import type { Locale, Translator } from "./i18n/types";
 import type { FilterState } from "../types/data";
 
 export type ActiveFilterChipDescriptor = {
-  key: "search" | "town" | "flatType" | "budget" | "remainingLeaseMin" | "mrtMax";
+  key: "search" | "town" | "flatType" | "flatModel" | "budget" | "area" | "remainingLeaseMin" | "transactionWindow" | "mrtMax";
   label: string;
   clearPatch: Partial<FilterState>;
 };
@@ -52,6 +52,14 @@ export function getActiveFilterChipDescriptors(
     });
   }
 
+  if (filters.flatModel) {
+    chips.push({
+      key: "flatModel",
+      label: filters.flatModel,
+      clearPatch: { flatModel: "" },
+    });
+  }
+
   if (filters.budgetMin !== null || filters.budgetMax !== null) {
     const lo = filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale, t) : "";
     const hi = filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale, t) : "";
@@ -59,6 +67,16 @@ export function getActiveFilterChipDescriptors(
       key: "budget",
       label: lo && hi ? `${lo}–${hi}` : lo || hi,
       clearPatch: { budgetMin: null, budgetMax: null },
+    });
+  }
+
+  if (filters.areaMin !== null || filters.areaMax !== null) {
+    const lo = filters.areaMin !== null ? t("unit.sqm", { value: formatNumber(filters.areaMin, 0, locale) }) : "";
+    const hi = filters.areaMax !== null ? t("unit.sqm", { value: formatNumber(filters.areaMax, 0, locale) }) : "";
+    chips.push({
+      key: "area",
+      label: lo && hi ? `${lo}–${hi}` : lo || hi,
+      clearPatch: { areaMin: null, areaMax: null },
     });
   }
 
@@ -79,6 +97,16 @@ export function getActiveFilterChipDescriptors(
         value: formatNumber(filters.mrtMax, 0, locale),
       }),
       clearPatch: { mrtMax: null },
+    });
+  }
+
+  if (filters.startMonth !== null || filters.endMonth !== null) {
+    const lo = filters.startMonth !== null ? formatMonth(filters.startMonth, locale) : "";
+    const hi = filters.endMonth !== null ? formatMonth(filters.endMonth, locale) : "";
+    chips.push({
+      key: "transactionWindow",
+      label: lo && hi ? `${lo}–${hi}` : lo || hi,
+      clearPatch: { startMonth: null, endMonth: null },
     });
   }
 
