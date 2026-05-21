@@ -210,6 +210,60 @@ describe("getActiveFilterChipDescriptors", () => {
     expect(chips[0].label).not.toContain("–");
   });
 
+  it("emits area chip with only areaMax set", () => {
+    const filters: FilterState = {
+      search: "",
+      town: "",
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: 110,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+      selectedAddressKey: null,
+    };
+
+    const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
+
+    expect(chips).toEqual([
+      {
+        key: "area",
+        label: "110 sqm",
+        clearPatch: { areaMin: null, areaMax: null },
+      },
+    ]);
+  });
+
+  it("emits transactionWindow chip with only endMonth set", () => {
+    const filters: FilterState = {
+      search: "",
+      town: "",
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: "2024-06",
+      mrtMax: null,
+      selectedAddressKey: null,
+    };
+
+    const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
+
+    expect(chips).toHaveLength(1);
+    expect(chips[0].key).toBe("transactionWindow");
+    expect(chips[0].clearPatch).toEqual({ startMonth: null, endMonth: null });
+    // Should show the formatted month without a range separator
+    expect(chips[0].label).not.toContain("–");
+  });
+
   it("clears flatModel via clearPatch", () => {
     const filters: FilterState = {
       search: "",
