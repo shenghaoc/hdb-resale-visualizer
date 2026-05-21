@@ -46,6 +46,33 @@ describe("FilterChipsBar", () => {
     expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
   });
 
+  it("renders nothing when hidden is true, even with chips present", () => {
+    render(
+      <FilterChipsBar
+        chips={[{ key: "town", label: "BEDOK", onRemove: vi.fn() }]}
+        isDesktop={true}
+        t={t}
+        onOpenFilters={vi.fn()}
+        hidden={true}
+      />,
+    );
+    expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
+  });
+
+  it("renders chips when hidden is false on desktop", () => {
+    render(
+      <FilterChipsBar
+        chips={[{ key: "town", label: "BEDOK", onRemove: vi.fn() }]}
+        isDesktop={true}
+        t={t}
+        onOpenFilters={vi.fn()}
+        hidden={false}
+      />,
+    );
+    expect(screen.getByRole("toolbar", { name: "Filters" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Remove filter: BEDOK" })).toBeInTheDocument();
+  });
+
   it("keeps keyboard focus in a wrapping roving tab order", async () => {
     const user = userEvent.setup();
     renderFilterChipsBar([
