@@ -25,17 +25,13 @@ export function maxLoanFor(monthlyIncome: number): number {
 }
 
 /**
- * Maximum tolerable "lease consumed" (years since lease commencement) such
- * that an applicant of the given age still has a flat covered to
- * HDB_MAX_BUYER_AGE (currently 95).
+ * Minimum remaining lease (in years) that an applicant of the given age needs
+ * for the flat to cover them to HDB_MAX_BUYER_AGE (currently 95).
  *
- * Formula per HDB rule, with MAX_LEASE_DURATION = 99: 99 - (95 - age).
- * Equivalent to `age + 4` once 99 - 95 is folded in. The result is the upper
- * bound on (currentYear − leaseCommenceYear); convert to a minimum remaining
- * lease by subtracting from MAX_LEASE_DURATION.
+ * HDB's "lease-to-95" rule: remaining lease >= 95 - age.
  */
-export function maxRemainingLeaseForAge(oldestAge: number): number {
-  return MAX_LEASE_DURATION - (HDB_MAX_BUYER_AGE - oldestAge);
+export function minRequiredRemainingLease(age: number): number {
+  return HDB_MAX_BUYER_AGE - age;
 }
 
 /**
@@ -45,7 +41,7 @@ export function maxRemainingLeaseForAge(oldestAge: number): number {
  * Uses leaseCommenceRange[1] (the newest commencement in the block) so the
  * check passes when *any* unit in the block satisfies the rule.
  */
-export function isBlockAgeEligible(block: BlockSummary, oldestAge: number): boolean {
-  const leaseConsumed = getCurrentYear() - block.leaseCommenceRange[1];
-  return leaseConsumed <= maxRemainingLeaseForAge(oldestAge);
+export function isBlockAgeEligible(block: BlockSummary, age: number): boolean {
+  const remainingLease = MAX_LEASE_DURATION - (getCurrentYear() - block.leaseCommenceRange[1]);
+  return remainingLease >= minRequiredRemainingLease(age);
 }

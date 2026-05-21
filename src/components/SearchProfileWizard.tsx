@@ -3,6 +3,11 @@ import { Check, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  SEARCH_PROFILE_MAX_APPLICANT_AGE,
+  SEARCH_PROFILE_MAX_MONETARY_VALUE,
+  SEARCH_PROFILE_MIN_APPLICANT_AGE,
+} from "@/lib/constants";
 import { useI18n } from "@/lib/i18n";
 import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
 import { cn } from "@/lib/utils";
@@ -101,21 +106,21 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     return mrtStations.filter((station) => station.includes(query));
   }, [stationSearch, mrtStations]);
 
-  const isOptionalPositive = (value: string) =>
-    value.trim().length === 0 || Number(value) > 0;
+  const isOptionalInRange = (value: string, min: number, max: number) =>
+    value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
 
   const canContinueStep = useMemo(() => {
     if (step === 0) return true;
     if (step === 1) return mainFlatType.length > 0;
-    if (step === 2) return isOptionalPositive(maxBudget);
+    if (step === 2) return isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE);
     if (step === 3) return commuteAnchorLabel.trim().length > 0 && commuteAnchorMrt.length > 0 && Number(maxCommute) > 0;
     if (step === 4) return Number(minLease) > 0;
     if (step === 5) {
       return (
-        isOptionalPositive(age) &&
-        isOptionalPositive(coApplicantAge) &&
-        isOptionalPositive(cpfOABalance) &&
-        isOptionalPositive(monthlyIncome)
+        isOptionalInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
+        isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
       );
     }
     if (step === 6) return true;
@@ -137,15 +142,15 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const canSubmit = useMemo(() => {
     return (
       mainFlatType.length > 0 &&
-      isOptionalPositive(maxBudget) &&
+      isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
       commuteAnchorLabel.trim().length > 0 &&
       commuteAnchorMrt.length > 0 &&
       Number(maxCommute) > 0 &&
       Number(minLease) > 0 &&
-      isOptionalPositive(age) &&
-      isOptionalPositive(coApplicantAge) &&
-      isOptionalPositive(cpfOABalance) &&
-      isOptionalPositive(monthlyIncome)
+      isOptionalInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
+      isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
     );
   }, [
     mainFlatType,

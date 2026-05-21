@@ -2,14 +2,13 @@ import { describe, expect, it } from "vitest";
 import {
   isBlockAgeEligible,
   maxLoanFor,
-  maxRemainingLeaseForAge,
+  minRequiredRemainingLease,
 } from "@/lib/affordability";
 import {
   HDB_CONCESSIONARY_ANNUAL_RATE,
   HDB_LOAN_TENURE_MONTHS,
   HDB_MAX_BUYER_AGE,
   HDB_MORTGAGE_SERVICING_RATIO,
-  MAX_LEASE_DURATION,
   getCurrentYear,
 } from "@/lib/constants";
 import type { BlockSummary } from "@/types/data";
@@ -67,22 +66,20 @@ describe("maxLoanFor", () => {
   });
 });
 
-describe("maxRemainingLeaseForAge", () => {
-  it("applies the 99 - (95 - age) formula", () => {
-    expect(maxRemainingLeaseForAge(40)).toBe(
-      MAX_LEASE_DURATION - (HDB_MAX_BUYER_AGE - 40),
-    );
-    expect(maxRemainingLeaseForAge(40)).toBe(44);
-    expect(maxRemainingLeaseForAge(65)).toBe(69);
-    expect(maxRemainingLeaseForAge(35)).toBe(39);
+describe("minRequiredRemainingLease", () => {
+  it("applies the 95 - age formula", () => {
+    expect(minRequiredRemainingLease(40)).toBe(HDB_MAX_BUYER_AGE - 40);
+    expect(minRequiredRemainingLease(40)).toBe(55);
+    expect(minRequiredRemainingLease(65)).toBe(30);
+    expect(minRequiredRemainingLease(35)).toBe(60);
   });
 
-  it("monotonically increases with age", () => {
-    const a = maxRemainingLeaseForAge(30);
-    const b = maxRemainingLeaseForAge(45);
-    const c = maxRemainingLeaseForAge(70);
-    expect(a).toBeLessThan(b);
-    expect(b).toBeLessThan(c);
+  it("monotonically decreases with age", () => {
+    const a = minRequiredRemainingLease(30);
+    const b = minRequiredRemainingLease(45);
+    const c = minRequiredRemainingLease(70);
+    expect(a).toBeGreaterThan(b);
+    expect(b).toBeGreaterThan(c);
   });
 });
 
