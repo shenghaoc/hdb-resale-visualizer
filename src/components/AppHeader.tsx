@@ -153,7 +153,7 @@ export function AppHeader({
           className={cn(
             "pointer-events-auto hidden min-w-0 flex-1 items-center sm:flex",
             HEADER_SURFACE_CLASS,
-            "px-2 py-1 focus-within:ring-2 focus-within:ring-ring",
+            "px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20",
           )}
         >
           <Search data-icon className="ml-1 size-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
@@ -175,7 +175,7 @@ export function AppHeader({
           data-testid="header-search-toggle"
           aria-label={t("header.openSearch")}
           aria-expanded={isMobileSearchOpen}
-          aria-controls={overlaySearchId}
+          aria-controls={isMobileSearchOpen ? overlaySearchId : undefined}
           onClick={openMobileSearch}
           className={cn(
             "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground sm:hidden",
@@ -224,7 +224,7 @@ export function AppHeader({
             onClick={closeMobileSearch}
           />
           <div className="absolute inset-x-3 top-3 flex items-center gap-2">
-            <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring", HEADER_SURFACE_CLASS)}>
+            <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20", HEADER_SURFACE_CLASS)}>
               <Search data-icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
               <LocationSearchInput
                 ref={overlayInputRef}

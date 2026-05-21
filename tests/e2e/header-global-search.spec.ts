@@ -26,7 +26,7 @@ test.describe("Global header location search", () => {
 
     await expect(headerSearch).toHaveValue("near bedok mrt");
 
-    const filtersSearch = page.getByTestId("filters-panel").locator("#search");
+    const filtersSearch = page.getByTestId("filters-panel").getByRole("textbox", { name: /location search/i });
     await expect(filtersSearch).toHaveValue("near bedok mrt");
 
     await desktopNavButton(page, "Filters").click();
@@ -64,7 +64,7 @@ test.describe("Global header location search", () => {
     await expect(overlay).toHaveCount(0);
 
     await page.getByTestId("mobile-tab-bar").getByRole("button", { name: "Filters" }).click();
-    await expect(page.getByTestId("filters-panel").locator("#search")).toHaveValue("BEDOK");
+    await expect(page.getByTestId("filters-panel").getByRole("textbox", { name: /location search/i })).toHaveValue("BEDOK");
   });
 
   test("desktop: tab order moves from title chip to header search", async ({ page }) => {
