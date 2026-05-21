@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from "react";
 import { Bookmark, List, Moon, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LocaleSelector } from "@/components/LocaleSelector";
 import type { LeftTab } from "@/hooks/usePanelState";
 import type { Translator } from "@/lib/i18n";
 
@@ -145,27 +144,18 @@ export function DesktopTabBar({
         ) : null}
       </Button>
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
-      <LocaleSelector
-        ref={(node) => {
-          itemRefs.current[3] = node;
-        }}
-        variant="desktop"
-        tabIndex={focusedIndex === 3 ? 0 : -1}
-        onKeyDown={(e) => handleKeyDown(e, 3)}
-        onFocus={() => setFocusedIndex(3)}
-      />
       <Button
         ref={(node) => {
-          itemRefs.current[4] = node;
+          itemRefs.current[3] = node;
         }}
         type="button"
         size="icon"
         variant="ghost"
         className="desktop-tab-bar-icon-btn"
-        tabIndex={focusedIndex === 4 ? 0 : -1}
+        tabIndex={focusedIndex === 3 ? 0 : -1}
         onClick={onToggleTheme}
-        onKeyDown={(e) => handleKeyDown(e, 4)}
-        onFocus={() => setFocusedIndex(4)}
+        onKeyDown={(e) => handleKeyDown(e, 3)}
+        onFocus={() => setFocusedIndex(3)}
         aria-label={t("app.toggleTheme")}
         aria-pressed={theme === "dark"}
         title={t("app.toggleTheme")}
