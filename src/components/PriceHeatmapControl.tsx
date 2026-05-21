@@ -12,6 +12,7 @@ type PriceHeatmapControlProps = {
   onToggle: () => void;
   onOpacityChange: (value: number) => void;
   onModeChange: (mode: HeatmapMode) => void;
+  hasScope: boolean;
   t: Translator;
   className?: string;
   style?: CSSProperties;
@@ -32,13 +33,18 @@ export function PriceHeatmapControl({
   onToggle,
   onOpacityChange,
   onModeChange,
+  hasScope,
   t,
   className,
   style,
 }: PriceHeatmapControlProps) {
   const sliderId = useId();
   const toggleId = useId();
-  const toggleHint = isEnabled ? t("heatmap.disable") : t("heatmap.enable");
+  const toggleHint = hasScope
+    ? isEnabled
+      ? t("heatmap.disable")
+      : t("heatmap.enable")
+    : t("heatmap.disabledHint");
 
   return (
     <div
@@ -66,13 +72,16 @@ export function PriceHeatmapControl({
             <button
               type="button"
               role="switch"
-              aria-checked={isEnabled}
+              aria-checked={isEnabled && hasScope}
               aria-label={t("heatmap.label")}
               id={toggleId}
+              disabled={!hasScope}
               onClick={onToggle}
               className={cn(
-                "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-                isEnabled
+                "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300",
+                !hasScope && "cursor-not-allowed opacity-50",
+                hasScope && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                isEnabled && hasScope
                   ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)] dark:bg-orange-400 dark:shadow-[0_0_12px_rgba(251,146,60,0.2)]"
                   : "bg-muted-foreground/30",
               )}
@@ -80,7 +89,7 @@ export function PriceHeatmapControl({
               <span
                 className={cn(
                   "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
-                  isEnabled ? "translate-x-3" : "translate-x-0",
+                  isEnabled && hasScope ? "translate-x-3" : "translate-x-0",
                 )}
                 aria-hidden="true"
               />
@@ -91,7 +100,7 @@ export function PriceHeatmapControl({
       </div>
 
       {/* Mode toggle and Opacity slider — only shown when heatmap is active */}
-      {isEnabled && (
+      {isEnabled && hasScope && (
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-1">
             <button
