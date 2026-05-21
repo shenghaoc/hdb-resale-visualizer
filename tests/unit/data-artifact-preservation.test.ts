@@ -103,6 +103,7 @@ describe("Data Artifact Schema Preservation", () => {
     expect(sampleBlock).toBeTruthy();
     expect(sampleBlock?.nearestMrt?.stationName).toBeTruthy();
     expect(typeof sampleBlock?.nearestMrt?.distanceMeters).toBe("number");
+    expect(typeof sampleBlock?.nearestMrt?.walkingTimeSeconds).toBe("number");
   });
 
   it("keeps detail summary metrics available outside the startup summary artifact", () => {

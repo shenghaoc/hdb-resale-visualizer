@@ -17,7 +17,7 @@ const baseBlock: BlockSummary = {
   availableDateRange: ["2024-01", "2025-12"],
   flatTypes: ["4 ROOM"],
   flatModels: ["Model A"],
-  nearestMrt: { stationName: "Yio Chu Kang", distanceMeters: 550 },
+  nearestMrt: { stationName: "Yio Chu Kang", distanceMeters: 550, walkingTimeSeconds: 440 },
 };
 
 const baseFilters: FilterState = {

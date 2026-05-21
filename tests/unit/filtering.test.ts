@@ -286,12 +286,12 @@ describe("matchesFilter", () => {
       streetName: "CHOA CHU KANG STREET 62",
       nearestMrt: {
         stationName: "CHOA CHU KANG MRT STATION",
-        distanceMeters: 300,
+        distanceMeters: 300, walkingTimeSeconds: 240
       },
       nearbyMrts: [
         {
           stationName: "CHOA CHU KANG MRT STATION",
-          distanceMeters: 300,
+          distanceMeters: 300, walkingTimeSeconds: 240
         },
       ],
     };
@@ -312,12 +312,12 @@ describe("matchesFilter", () => {
       streetName: "CHOA CHU KANG STREET 62",
       nearestMrt: {
         stationName: "CHOA CHU KANG MRT STATION",
-        distanceMeters: 300,
+        distanceMeters: 300, walkingTimeSeconds: 240
       },
       nearbyMrts: [
         {
           stationName: "CHOA CHU KANG MRT STATION",
-          distanceMeters: 300,
+          distanceMeters: 300, walkingTimeSeconds: 240
         },
       ],
     };
@@ -374,12 +374,12 @@ describe("matchesFilter", () => {
         ...alpha!,
         nearestMrt: {
           stationName: "JURONG EAST MRT STATION",
-          distanceMeters: 1000,
+          distanceMeters: 1000, walkingTimeSeconds: 800
         },
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 400,
+            distanceMeters: 400, walkingTimeSeconds: 320
           },
         ],
       };
@@ -401,7 +401,7 @@ describe("matchesFilter", () => {
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 400,
+            distanceMeters: 400, walkingTimeSeconds: 320
           },
         ],
       };
@@ -421,12 +421,12 @@ describe("matchesFilter", () => {
         ...alpha!,
         nearestMrt: {
           stationName: stationName,
-          distanceMeters: 600,
+          distanceMeters: 600, walkingTimeSeconds: 480
         },
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 450,
+            distanceMeters: 450, walkingTimeSeconds: 360
           },
         ],
       };
@@ -437,8 +437,8 @@ describe("matchesFilter", () => {
     it("fails if nearest is wrong and nearby is out of bounds", () => {
       const block: BlockSummary = {
         ...alpha!,
-        nearestMrt: { stationName: "JURONG EAST MRT STATION", distanceMeters: 100 },
-        nearbyMrts: [{ stationName: "LAKESIDE MRT STATION", distanceMeters: 800 }],
+        nearestMrt: { stationName: "JURONG EAST MRT STATION", distanceMeters: 100, walkingTimeSeconds: 80 },
+        nearbyMrts: [{ stationName: "LAKESIDE MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 }],
       };
       expect(
         matchesGeographicSearchIntent(block, {

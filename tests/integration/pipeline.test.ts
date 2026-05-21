@@ -53,9 +53,11 @@ describe("pipeline artifacts", () => {
       lines: ["NSL"],
       isInterchange: false,
     });
+    // 16 m fallback estimate: round(16 / 1.25) = 13 s.
     expect(nearestMrt).toEqual({
       stationName: "ANG MO KIO MRT STATION",
       distanceMeters: 16,
+      walkingTimeSeconds: 13,
     });
   });
 
@@ -71,6 +73,7 @@ describe("pipeline artifacts", () => {
     expect(angMoKioSummary?.nearbyMrts?.[0]).toEqual({
       stationName: "ANG MO KIO MRT STATION",
       distanceMeters: 16,
+      walkingTimeSeconds: 13,
     });
   });
 });

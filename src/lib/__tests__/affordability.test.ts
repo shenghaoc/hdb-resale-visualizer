@@ -29,8 +29,8 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     availableDateRange: ["2021-01", "2024-06"],
     flatTypes: ["3 ROOM"],
     flatModels: ["NEW GENERATION"],
-    nearestMrt: { stationName: "Bedok", distanceMeters: 500 },
-    nearbyMrts: [{ stationName: "Bedok", distanceMeters: 500 }],
+    nearestMrt: { stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 },
+    nearbyMrts: [{ stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 }],
     postalCode: "460100",
     ...overrides,
   };

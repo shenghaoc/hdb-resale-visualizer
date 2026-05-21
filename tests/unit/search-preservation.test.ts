@@ -28,7 +28,7 @@ const createAngMoKioBlock = (): BlockSummary => ({
   flatModels: ["IMPROVED", "MODEL A"],
   nearestMrt: {
     stationName: "ANG MO KIO MRT STATION",
-    distanceMeters: 500,
+    distanceMeters: 500, walkingTimeSeconds: 400
   },
 });
 
@@ -50,7 +50,7 @@ const createBedokBlock = (): BlockSummary => ({
   flatModels: ["MODEL A"],
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
-    distanceMeters: 650,
+    distanceMeters: 650, walkingTimeSeconds: 520
   },
 });
 
@@ -72,7 +72,7 @@ const createJurongBlock = (): BlockSummary => ({
   flatModels: ["IMPROVED", "MODEL A"],
   nearestMrt: {
     stationName: "JURONG EAST MRT STATION",
-    distanceMeters: 400,
+    distanceMeters: 400, walkingTimeSeconds: 320
   },
 });
 

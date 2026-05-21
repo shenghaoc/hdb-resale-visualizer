@@ -104,3 +104,32 @@ export const geoJsonCollectionSchema = z.object({
   type: z.literal("FeatureCollection"),
   features: z.array(geoJsonFeatureSchema),
 });
+
+// OneMap routing returns route_summary.total_time (seconds) when routeType is walk/drive/cycle.
+// Public transport returns an array of plan_label entries instead — not used here.
+export const oneMapRoutingResponseSchema = z.object({
+  status: z.union([z.string(), z.number()]).optional(),
+  status_message: z.string().optional(),
+  route_summary: z
+    .object({
+      total_time: z.number().nonnegative(),
+      total_distance: z.number().nonnegative().optional(),
+    })
+    .optional(),
+});
+
+export const oneMapTokenResponseSchema = z.object({
+  access_token: z.string(),
+  expiry_timestamp: z.union([z.string(), z.number()]).optional(),
+});
+
+export const routingCacheEntrySchema = z.object({
+  walkingTimeSeconds: z.number().nonnegative().int(),
+  walkingDistanceMeters: z.number().nonnegative().nullable(),
+});
+
+export const routingCacheFileSchema = z.object({
+  version: z.literal(1),
+  updatedAt: z.string(),
+  entries: z.record(z.string(), routingCacheEntrySchema),
+});

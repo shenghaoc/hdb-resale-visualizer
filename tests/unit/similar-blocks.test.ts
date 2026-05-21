@@ -18,7 +18,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2024-12"] as [string, string],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500 },
+    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 },
     nearbyMrts: [],
     postalCode: null,
     ...overrides,
@@ -32,7 +32,7 @@ const SOURCE = makeBlock({
   flatTypes: ["4 ROOM"],
   leaseCommenceRange: [2000, 2000],
   floorAreaRange: [90, 100],
-  nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500 },
+  nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 },
 });
 
 describe("scoreSimilarity", () => {
@@ -71,12 +71,12 @@ describe("scoreSimilarity", () => {
     const closeMrt = makeBlock({
       addressKey: "closeMrt",
       flatTypes: ["4 ROOM"],
-      nearestMrt: { stationName: "A", distanceMeters: 520 },
+      nearestMrt: { stationName: "A", distanceMeters: 520, walkingTimeSeconds: 416 },
     });
     const farMrt = makeBlock({
       addressKey: "farMrt",
       flatTypes: ["4 ROOM"],
-      nearestMrt: { stationName: "B", distanceMeters: 2000 },
+      nearestMrt: { stationName: "B", distanceMeters: 2000, walkingTimeSeconds: 1600 },
     });
     expect(scoreSimilarity(SOURCE, closeMrt)).toBeGreaterThan(scoreSimilarity(SOURCE, farMrt));
   });

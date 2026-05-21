@@ -369,6 +369,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "unit.km": "{value} km",
 
     "unit.m": "{value} m",
+    "unit.minutesWalk": "{value} min walk",
     "unit.years": "{value} yrs",
     "unit.yearsRange": "{min} - {max} yrs",
     "unit.leaseYears": "{value} yr lease",
@@ -890,6 +891,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "heatmap.ariaLabelSqm": "地图图例：每平方米中位价色带，由低（约每平方米4000新元）至高（约每平方米13000新元以上）",
     "unit.km": "{value} 公里",
     "unit.m": "{value} 米",
+    "unit.minutesWalk": "步行 {value} 分钟",
     "unit.years": "{value} 年",
     "unit.yearsRange": "{min} - {max} 年",
     "unit.leaseYears": "{value} 年地契",

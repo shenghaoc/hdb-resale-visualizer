@@ -56,7 +56,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2020-01", "2024-12"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400 },
+    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
     ...overrides,
   };
 }

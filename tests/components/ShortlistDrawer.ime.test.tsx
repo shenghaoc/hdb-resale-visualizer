@@ -30,7 +30,7 @@ const mockBlock: BlockSummary = {
   flatModels: ["Model A"],
   nearestMrt: {
     stationName: "Ang Mo Kio",
-    distanceMeters: 500,
+    distanceMeters: 500, walkingTimeSeconds: 400
   },
 };
 

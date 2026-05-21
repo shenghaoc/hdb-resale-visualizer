@@ -23,12 +23,12 @@ const mockBlock: BlockSummary = {
   flatModels: ["MODEL A"],
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
-    distanceMeters: 400,
+    distanceMeters: 400, walkingTimeSeconds: 320
   },
   nearbyMrts: [
-    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400 },
-    { stationName: "BEDOK MRT STATION", distanceMeters: 800 },
-    { stationName: "BEDOK SOUTH MRT STATION", distanceMeters: 1200 },
+    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+    { stationName: "BEDOK MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 },
+    { stationName: "BEDOK SOUTH MRT STATION", distanceMeters: 1200, walkingTimeSeconds: 960 },
   ],
 };
 
@@ -158,11 +158,13 @@ describe("DetailDrawer", () => {
     // Check that MRT connectivity card is rendered (label is inside the card)
     expect(screen.getByText("Connectivity")).toBeInTheDocument();
     expect(screen.getByText("BEDOK NORTH MRT STATION")).toBeInTheDocument();
-    expect(screen.getByText("400 m")).toBeInTheDocument();
+    // Walking time replaces distance in the visible cell; distance is preserved
+    // for screen readers via aria-label / title.
+    expect(screen.getByText("5 min walk")).toBeInTheDocument();
     expect(screen.getByText("BEDOK MRT STATION")).toBeInTheDocument();
-    expect(screen.getByText("800 m")).toBeInTheDocument();
+    expect(screen.getByText("11 min walk")).toBeInTheDocument();
     expect(screen.getByText("BEDOK SOUTH MRT STATION")).toBeInTheDocument();
-    expect(screen.getByText("1.2 km")).toBeInTheDocument();
+    expect(screen.getByText("16 min walk")).toBeInTheDocument();
   });
 
   it("renders all 3 nearby schools with names and distances", () => {

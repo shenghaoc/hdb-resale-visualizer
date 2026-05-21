@@ -29,6 +29,7 @@ import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   formatCurrency,
   formatMeters,
+  formatMinutesWalk,
   formatMonth,
   formatNumber,
   formatRemainingLease,
@@ -217,7 +218,7 @@ function AmenityCard({
   count1km?: number;
   count2km?: number;
   nearestDistance?: number | null;
-  nearbyItems?: { name: string; distanceMeters: number }[];
+  nearbyItems?: { name: string; distanceMeters: number; walkingTimeSeconds?: number }[];
   showDistanceBands?: boolean;
   showMrtLineColors?: boolean;
   showLabel?: boolean;
@@ -266,8 +267,18 @@ function AmenityCard({
                           {t(`detail.schoolBand.${distanceBand}`)}
                         </span>
                       ) : null}
-                      <span className="font-mono text-[0.65rem] tabular-nums">
-                        {formatMeters(item.distanceMeters, t, locale)}
+                      <span
+                        className="font-mono text-[0.65rem] tabular-nums"
+                        title={item.walkingTimeSeconds !== undefined ? formatMeters(item.distanceMeters, t, locale) : undefined}
+                        aria-label={
+                          item.walkingTimeSeconds !== undefined
+                            ? `${formatMinutesWalk(item.walkingTimeSeconds, t, locale)} (${formatMeters(item.distanceMeters, t, locale)})`
+                            : undefined
+                        }
+                      >
+                        {item.walkingTimeSeconds !== undefined
+                          ? formatMinutesWalk(item.walkingTimeSeconds, t, locale)
+                          : formatMeters(item.distanceMeters, t, locale)}
                       </span>
                     </div>
                   </li>
@@ -664,6 +675,7 @@ export function DetailDrawer({
                       nearbyItems={nearbyStations.map((mrt) => ({
                         name: mrt.stationName,
                         distanceMeters: mrt.distanceMeters,
+                        walkingTimeSeconds: mrt.walkingTimeSeconds,
                       }))}
                       showLabel={false}
                       showMrtLineColors
@@ -1171,8 +1183,12 @@ function SimilarBlockCard({
             {formatCurrency(block.medianPrice, locale)}
           </div>
           {block.nearestMrt && (
-            <div className="mt-0.5 text-[0.6rem] text-muted-foreground/70 tabular-nums">
-              {formatMeters(block.nearestMrt.distanceMeters, t, locale)}
+            <div
+              className="mt-0.5 text-[0.6rem] text-muted-foreground/70 tabular-nums"
+              title={formatMeters(block.nearestMrt.distanceMeters, t, locale)}
+              aria-label={`${formatMinutesWalk(block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(block.nearestMrt.distanceMeters, t, locale)})`}
+            >
+              {formatMinutesWalk(block.nearestMrt.walkingTimeSeconds, t, locale)}
               {" · "}
               <TrainFront data-icon className="inline size-2.5 align-baseline" aria-hidden="true" />
             </div>
