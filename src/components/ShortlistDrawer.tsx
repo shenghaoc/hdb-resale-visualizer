@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Copy,
   Download,
+  ExternalLink,
   GraduationCap,
   LayoutGrid,
   Link2,
@@ -35,6 +36,11 @@ import {
   formatRemainingLease,
 } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
+import {
+  ninetyNineCoUrl,
+  propertyGuruUrl,
+  srxUrl,
+} from "@/lib/listingPortalLinks";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   buildShortlistComparisonRows,
@@ -1464,6 +1470,75 @@ export function ShortlistDrawer({
                                 checkedItems={checklistState[row.item.addressKey] ?? []}
                                 onToggleChecklist={toggleChecklist}
                               />
+
+                              <ButtonGroup
+                                aria-label={t("shortlist.openInPortal.group")}
+                                className="w-full flex-wrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
+                              >
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                  className="flex-1"
+                                >
+                                  <a
+                                    href={propertyGuruUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInPropertyGuru")}
+                                    title={t("shortlist.openInPropertyGuru")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    PropertyGuru
+                                  </a>
+                                </Button>
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                  className="flex-1"
+                                >
+                                  <a
+                                    href={ninetyNineCoUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInNinetyNineCo")}
+                                    title={t("shortlist.openInNinetyNineCo")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    99.co
+                                  </a>
+                                </Button>
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                  className="flex-1"
+                                >
+                                  <a
+                                    href={srxUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInSrx")}
+                                    title={t("shortlist.openInSrx")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    SRX
+                                  </a>
+                                </Button>
+                              </ButtonGroup>
 
                               <div className="grid grid-cols-2 gap-2">
                                 <Button
