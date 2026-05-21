@@ -296,8 +296,10 @@ test.describe("Mobile Regression: Recent Features", () => {
     );
     expect(afterToggle).not.toBe(initialDark);
 
-    // Language selector
-    const langSelect = tabBar.getByRole("combobox", { name: /language/i });
+    // Language selector (top-right map control)
+    const langSelect = page
+      .getByTestId("map-locale-control")
+      .getByRole("combobox", { name: /language/i });
     await expect(langSelect).toBeVisible();
     await langSelect.click();
     await expect(page.getByRole("listbox").getByRole("option")).toHaveCount(2);

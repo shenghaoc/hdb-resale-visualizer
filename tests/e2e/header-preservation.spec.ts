@@ -6,9 +6,9 @@ import { expect, test, type Page, type ElementHandle } from "@playwright/test";
  * **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5, 3.6**
  *
  * These tests capture the baseline behavior of app controls across the floating
- * header and the unified desktop tab bar. After the v3 layout refactor, theme
- * toggle and language selector moved from the header toolbar into the bottom
- * tab bar; the dismiss button remains in the header.
+ * header, floating map locale control, and unified desktop tab bar. Theme toggle
+ * lives in the bottom tab bar; the language selector is top-right on the map;
+ * the dismiss button remains in the header.
  *
  * Following observation-first methodology: observe behavior patterns first,
  * then encode them as property-based tests for stronger guarantees.
@@ -39,16 +39,17 @@ async function ensureHeaderVisible(page: Page) {
 async function getControlElements(page: Page) {
   const header = page.getByTestId("global-header");
   const tabBar = page.getByTestId("desktop-tab-bar");
+  const mapLocale = page.getByTestId("map-locale-control");
   await expect(header).toBeVisible();
   await expect(tabBar).toBeVisible();
+  await expect(mapLocale).toBeVisible();
 
   return {
     header,
     tabBar,
-    // Theme toggle and language selector live in the unified bottom tab bar.
+    mapLocale,
     themeToggle: tabBar.getByRole("button", { name: /toggle theme/i }),
-    languageSelect: tabBar.getByRole("combobox", { name: /language/i }),
-    // Dismiss button remains in the header.
+    languageSelect: mapLocale.getByRole("combobox", { name: /language/i }),
     dismissButton: header.getByRole("button", { name: /dismiss header/i }),
   };
 }
@@ -167,6 +168,9 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     
     // PRESERVATION ASSERTION: Header should be hidden
     await expect(elements.header).not.toBeVisible();
+
+    // Language selector stays on the map after header dismissal.
+    await expect(elements.languageSelect).toBeVisible();
     
     // Show header button should appear
     const showHeaderButton = page.getByRole("button", { name: /show header/i });
@@ -185,6 +189,7 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
 
     await expect(page.getByTestId("global-header")).toHaveCount(0);
     await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
+    await expect(page.getByTestId("map-locale-control")).toBeVisible();
     await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
   });
   

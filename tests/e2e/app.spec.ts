@@ -154,7 +154,9 @@ test("mobile saved tab preserves autodetected dark theme and exposes display con
 
   const mobileNav = page.locator(".mobile-tab-bar");
   await expect(mobileNav.getByRole("button", { name: /toggle theme/i })).toBeVisible();
-  const languageSelect = mobileNav.getByRole("combobox", { name: /language/i });
+  const languageSelect = page
+    .getByTestId("map-locale-control")
+    .getByRole("combobox", { name: /language/i });
   await expect(languageSelect).toBeVisible();
 
   await languageSelect.click();
