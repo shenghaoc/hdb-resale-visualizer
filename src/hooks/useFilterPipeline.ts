@@ -214,7 +214,6 @@ export function useFilterPipeline({
   );
 
   const filteredBlocks = useMemo(() => {
-    // If the results panel is not visible, do not compute filtered blocks.
     if (!resultsVisible) return [];
     const scoped = filterScopedBlocks(blocks, stableFilters, geographicIntent);
     return applyProfileVisibility(scoped, searchProfile);

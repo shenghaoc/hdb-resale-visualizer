@@ -109,6 +109,24 @@ describe("useFilterPipeline", () => {
     expect(result.current.hasResultScope).toBe(true);
   });
 
+  it("hasResultScope is true when resultsVisible=false with a preselected town (deep-link regression)", () => {
+    const { result } = renderHook(() =>
+      useFilterPipeline({
+        manifest,
+        rawFilters: { ...initialFilters, town: "BEDOK" },
+        userLocation: null,
+        resultsVisible: false,
+        savedVisible: false,
+        shortlistCount: 0,
+        searchProfile: DEFAULT_SEARCH_PROFILE,
+        t,
+      }),
+    );
+
+    expect(result.current.hasResultScope).toBe(true);
+    expect(result.current.filteredBlocks).toEqual([]);
+  });
+
   it("should append selectedAddressKey block to mapFilteredBlocks even if not in scope", () => {
     const blocks = [
       {
