@@ -385,6 +385,8 @@ function App() {
             isDesktop={panel.isDesktop}
             locale={locale}
             t={t}
+            search={pipeline.filterPanelFilters.search}
+            onSearchChange={(search) => patchUserFilters({ search })}
             isMobileHeaderOpen={header.isMobileHeaderOpen}
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}

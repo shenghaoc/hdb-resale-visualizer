@@ -76,7 +76,7 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
     page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
   ).toBeVisible({ timeout: 20_000 });
 
-  await page.getByLabel("Location search").fill("BEDOK");
+  await page.getByTestId("header-search-input").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
   const resultsTab = desktopNavButton(page, "Results");
   const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
@@ -171,7 +171,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await mockComparisonArtifacts(page);
   await page.goto("/");
 
-  await page.getByLabel("Location search").fill("BEDOK");
+  await page.getByTestId("header-search-input").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
   const resultsTab = desktopNavButton(page, "Results");
