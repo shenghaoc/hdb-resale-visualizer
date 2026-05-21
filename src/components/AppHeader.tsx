@@ -39,16 +39,6 @@ export function AppHeader({
       <button
         type="button"
         aria-expanded={isMobileHeaderOpen}
-        aria-label={
-          isMobileHeaderOpen
-            ? t("app.collapseHeader", { defaultValue: "Collapse header details" })
-            : t("app.expandHeader", { defaultValue: "Expand header details" })
-        }
-        title={
-          isMobileHeaderOpen
-            ? t("app.collapseHeader", { defaultValue: "Collapse header details" })
-            : t("app.expandHeader", { defaultValue: "Expand header details" })
-        }
         onClick={onToggleMobileHeader}
         className={cn(
           "pointer-events-auto flex min-w-0 items-center gap-2 rounded-xl border border-border/20 bg-background/90 px-3 py-2 text-left backdrop-blur-[20px] transition-all shadow-[0_4px_16px_rgba(23,28,31,0.08)] dark:border-primary/15 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.08),0_4px_24px_rgba(4,12,24,0.7)]",
