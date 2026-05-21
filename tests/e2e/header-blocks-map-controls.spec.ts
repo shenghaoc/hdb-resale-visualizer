@@ -141,11 +141,11 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await page.goto("/");
     
     await waitForMapLoad(page);
-    await expect(page.getByTestId("global-header")).toHaveCount(0);
+    await expect(page.getByTestId("global-header")).toBeVisible();
     
     const controls = await getMapControlsInfo(page);
     
-    // On mobile, controls stay above the map with no header hit target competing for clicks.
+    // On mobile, map controls stay above the map; the compact header should not block them.
     const controlsZIndex = await page.evaluate(() => {
       const controlsElement = document.querySelector('.maplibregl-ctrl-top-right');
       return controlsElement ? window.getComputedStyle(controlsElement).zIndex : null;

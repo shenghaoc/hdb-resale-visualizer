@@ -21,7 +21,7 @@ const block: BlockSummary = {
   availableDateRange: ["2015-01", "2025-01"],
   flatTypes: ["4 ROOM"],
   flatModels: ["MODEL A"],
-  nearestMrt: { stationName: "Bedok", distanceMeters: 400 },
+  nearestMrt: { stationName: "Bedok", distanceMeters: 400, walkingTimeSeconds: 320 },
 };
 
 describe("listingPortalLinks", () => {

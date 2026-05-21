@@ -181,13 +181,14 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     await expect(elements.header).toBeVisible();
   });
   
-  test("Property: Mobile map view omits the header overlay", async ({ page }) => {
-    // Set mobile viewport
+  test("Property: Mobile map view shows compact header with search toggle", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
     await waitForAppLoad(page);
 
-    await expect(page.getByTestId("global-header")).toHaveCount(0);
+    await expect(page.getByTestId("global-header")).toBeVisible();
+    await expect(page.getByTestId("header-search-toggle")).toBeVisible();
+    await expect(page.getByTestId("header-search-input")).toBeHidden();
     await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
     await expect(page.getByTestId("map-locale-control")).toBeVisible();
     await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
@@ -321,14 +322,14 @@ test.describe("Property-Based Preservation Tests", () => {
     }
   });
 
-  test("Property: Header stays absent across mobile viewport sizes", async ({ page }) => {
+  test("Property: Compact header stays visible on map across mobile viewport sizes", async ({ page }) => {
     await page.goto("/");
     await waitForAppLoad(page);
 
     const viewportSizes = [
       { width: 768, height: 1024 }, // Tablet below desktop shell
       { width: 390, height: 844 },  // Mobile
-      { width: 320, height: 568 }   // Small mobile
+      { width: 320, height: 568 },  // Small mobile
     ];
 
     for (const viewport of viewportSizes) {
@@ -337,7 +338,12 @@ test.describe("Property-Based Preservation Tests", () => {
       await page.setViewportSize(viewport);
       await page.waitForTimeout(300);
 
-      await expect(page.getByTestId("global-header")).toHaveCount(0);
+      await expect(page.getByTestId("global-header")).toBeVisible();
+      if (viewport.width < 640) {
+        await expect(page.getByTestId("header-search-toggle")).toBeVisible();
+      } else {
+        await expect(page.getByTestId("header-search-input")).toBeVisible();
+      }
       await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
       await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
     }

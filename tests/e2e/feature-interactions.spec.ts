@@ -73,7 +73,7 @@ test("feature interaction: search -> detail -> layers -> negotiate -> escape -> 
   await page.goto("/");
 
   // 1. BEDOK search
-  await page.getByLabel("Location search").fill("BEDOK");
+  await page.getByTestId("header-search-input").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
   // 2. Results

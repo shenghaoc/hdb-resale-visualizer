@@ -1,7 +1,7 @@
 import { useCallback, useId } from "react";
 import { PanelLeftClose, RefreshCw, Search } from "lucide-react";
+import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { formatMonth } from "@/lib/format";
-import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { FilterOptions, FilterState } from "@/types/data";
@@ -121,8 +121,6 @@ export function FilterPanel(props: FilterPanelProps) {
     (value: string) => onChange({ search: value }),
     [onChange],
   );
-  
-  const searchIME = useIMEComposition(handleSearchChange);
 
   return (
     <aside data-testid="filters-panel">
@@ -168,13 +166,13 @@ export function FilterPanel(props: FilterPanelProps) {
                 <FieldContent>
                   <FieldLabel htmlFor="search">{t("filters.searchLabel")}</FieldLabel>
                   <InputGroup>
-                    <InputGroupInput
+                    <LocationSearchInput
                       id="search"
+                      data-testid="filters-search-input"
+                      inputGroupControl
                       placeholder={t("filters.searchPlaceholder")}
-                      value={searchIME.localValue ?? filters.search}
-                      onCompositionStart={searchIME.onCompositionStart}
-                      onCompositionEnd={searchIME.onCompositionEnd}
-                      onChange={searchIME.onChange}
+                      value={filters.search}
+                      onValueChange={handleSearchChange}
                     />
                     <InputGroupAddon align="inline-end" className="pr-1">
                       <InputGroupButton
