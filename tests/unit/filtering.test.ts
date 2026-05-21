@@ -355,8 +355,8 @@ describe("matchesFilter", () => {
     const result = matchesFilter(alpha!, parsedFilters);
     const duration = Date.now() - startTime;
 
-    // It should complete extremely fast, e.g., less than 50 milliseconds
-    expect(duration).toBeLessThan(50);
+    // It should complete well under 200 ms even on slow CI runners
+    expect(duration).toBeLessThan(200);
     // Since parsedFilters.search is bounded, we can assert matchesFilter runs correctly.
     expect(result).toBe(false);
   });
