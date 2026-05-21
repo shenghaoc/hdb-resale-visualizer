@@ -640,7 +640,7 @@
 
 .map-view .maplibregl-ctrl-top-right {
   right: 1.5rem;
-  top: calc(1.5rem + var(--map-locale-stack-offset, 2.75rem));
+  top: calc(1.5rem + 2.75rem);
   z-index: 30;
 }
 
@@ -679,7 +679,7 @@
 
   .map-view .maplibregl-ctrl-top-right {
     right: 0.5rem;
-    top: calc(env(safe-area-inset-top, 0px) + 0.75rem + var(--map-locale-stack-offset, 2.75rem));
+    top: calc(env(safe-area-inset-top, 0px) + 0.75rem + 2.75rem);
     bottom: auto;
     z-index: 30;
   }
