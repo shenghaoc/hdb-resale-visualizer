@@ -204,8 +204,16 @@ const BlockCard = memo(function BlockCard({
       <Item
         data-state={isFeatured ? "selected" : "idle"}
         variant="outline"
-        role="listitem"
+        role="option"
         aria-selected={isFeatured}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.currentTarget !== e.target) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect(block.addressKey);
+          }
+        }}
         className={cn(
           "v2-card animate-fade-in-up cursor-pointer rounded-xl border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
           isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
@@ -286,8 +294,16 @@ const BlockCard = memo(function BlockCard({
     <Item
       data-state={isFeatured ? "selected" : "idle"}
       variant="outline"
-      role="listitem"
+      role="option"
       aria-selected={isFeatured}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.currentTarget !== e.target) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(block.addressKey);
+        }
+      }}
       className={cn(
         "v2-card animate-fade-in-up group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995]",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
@@ -848,6 +864,7 @@ export function ResultsPane({
                     className="min-h-0 flex-1 pr-2"
                   >
                     <ItemGroup
+                      role="listbox"
                       className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}
                       style={
                         shouldVirtualize
