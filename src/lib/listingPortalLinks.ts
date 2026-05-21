@@ -30,9 +30,10 @@ export function ninetyNineCoUrl(block: BlockSummary): string {
   params.set("query_limit", "radius");
   params.set("radius_max", String(NINETYNINE_RADIUS_METERS));
   const qs = params.toString();
-  // URLSearchParams encodes commas as %2C, but some servers expect literal commas
+  // URLSearchParams encodes commas as %2C, but 99.co expects literal commas
   // in query_coords (e.g. "1.3217,103.9357" not "1.3217%2C103.9357").
-  return `${NINETYNINE_CO_BASE}?${qs.replace(/%2C/g, ",")}`;
+  // Only decode the query_coords value to avoid unintended side-effects.
+  return `${NINETYNINE_CO_BASE}?${qs.replace(/((?:^|&)query_coords=[^&]*)%2C/g, "$1,")}`;
 }
 
 export function srxUrl(block: BlockSummary): string {
