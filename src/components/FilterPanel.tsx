@@ -1,5 +1,5 @@
 import { useCallback, useId } from "react";
-import { PanelLeft, PanelLeftClose, RefreshCw, Search } from "lucide-react";
+import { PanelLeftClose, RefreshCw, Search } from "lucide-react";
 import { formatMonth } from "@/lib/format";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
@@ -116,8 +116,7 @@ function SelectField({
 export function FilterPanel(props: FilterPanelProps) {
   const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle } = props;
   const { locale, t } = useI18n();
-  const hidePanelLabel = desktopToggle?.isOpen ? t("filters.hidePanel") : t("filters.showPanel");
-  
+
   const handleSearchChange = useCallback(
     (value: string) => onChange({ search: value }),
     [onChange],
@@ -142,14 +141,9 @@ export function FilterPanel(props: FilterPanelProps) {
                 className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card/80 px-2.5 text-[0.65rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
-                aria-controls="desktop-filters-content"
               >
-                {desktopToggle.isOpen ? (
-                  <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
-                ) : (
-                  <PanelLeft data-icon className="size-3.5 shrink-0" aria-hidden="true" />
-                )}
-                {hidePanelLabel}
+                <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                {t("filters.hidePanel")}
               </Button>
             ) : null}
             <CardAction>
@@ -166,7 +160,7 @@ export function FilterPanel(props: FilterPanelProps) {
           </div>
         </CardHeader>
 
-        <CardContent id="desktop-filters-content" className="flex flex-col gap-5 px-3 pb-12 pt-3 sm:px-4">
+        <CardContent className="flex flex-col gap-5 px-3 pb-12 pt-3 sm:px-4">
           <FieldGroup className="gap-4">
             <FieldSet className="gap-4">
               <FieldLegend className="v2-section-title">{t("filters.coreCriteria")}</FieldLegend>

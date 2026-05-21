@@ -56,16 +56,7 @@ describe("FilterPanel desktop panel toggle", () => {
     const toggle = screen.getByRole("button", { name: "Hide filters" });
     expect(toggle).toBeInTheDocument();
     expect(toggle).toHaveAttribute("aria-expanded", "true");
-    expect(toggle).toHaveAttribute("aria-controls", "desktop-filters-content");
     expect(screen.getByTestId("filters-panel-toggle")).toHaveClass("sm:inline-flex");
-  });
-
-  it("shows Show filters when the panel is collapsed", () => {
-    renderFilterPanel({
-      desktopToggle: { isOpen: false, onToggle: vi.fn() },
-    });
-
-    expect(screen.getByRole("button", { name: "Show filters" })).toBeInTheDocument();
   });
 
   it("does not render the desktop toggle without desktopToggle", () => {
