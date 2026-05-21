@@ -9,22 +9,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { LOCALE_OPTIONS, useI18n } from "@/lib/i18n";
 import type { Locale } from "@/lib/i18n";
 
-export type LocaleSelectorVariant = "map";
-
-type LocaleSelectorProps = {
-  variant?: LocaleSelectorVariant;
-};
-
 /**
- * Shared language dropdown for the floating map locale control.
+ * Language dropdown for the floating map locale control.
  */
-export function LocaleSelector({ variant = "map" }: LocaleSelectorProps) {
+export function LocaleSelector() {
   const { locale, setLocale, t } = useI18n();
   const label = t("language.label");
-
-  if (variant !== "map") {
-    return null;
-  }
 
   return (
     <Select value={locale} onValueChange={(v) => setLocale(v as Locale)}>
