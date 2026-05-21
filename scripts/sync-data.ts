@@ -25,7 +25,6 @@ import {
   loadRoutingCache,
   resolveOneMapToken,
   routeMissingPairs,
-  saveRoutingCache,
   type RoutingCacheFile,
 } from "./lib/sync/routing";
 import {
@@ -265,13 +264,11 @@ export async function computeWalkingTimes(
   deps: {
     resolveOneMapTokenFn?: typeof resolveOneMapToken;
     routeMissingPairsFn?: typeof routeMissingPairs;
-    saveRoutingCacheFn?: typeof saveRoutingCache;
     now?: TimestampFactory;
   } = {},
 ): Promise<{ walkingTimes: Map<string, number>; fallbackCount: number; failureCount: number }> {
   const resolveOneMapTokenFn = deps.resolveOneMapTokenFn ?? resolveOneMapToken;
   const routeMissingPairsFn = deps.routeMissingPairsFn ?? routeMissingPairs;
-  const saveRoutingCacheFn = deps.saveRoutingCacheFn ?? saveRoutingCache;
   const now = deps.now ?? nowTimestamp;
 
   const pairs: Array<{
@@ -333,8 +330,6 @@ export async function computeWalkingTimes(
           `OneMap routing failed for ${result.failedCount} pairs. Sample: ${result.failureSamples.join(" | ")}`,
         );
       }
-      options.routingCache.updatedAt = now();
-      await saveRoutingCacheFn(options.cachePath, options.routingCache);
     }
   }
 

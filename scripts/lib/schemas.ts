@@ -122,3 +122,14 @@ export const oneMapTokenResponseSchema = z.object({
   access_token: z.string(),
   expiry_timestamp: z.union([z.string(), z.number()]).optional(),
 });
+
+export const routingCacheEntrySchema = z.object({
+  walkingTimeSeconds: z.number().nonnegative().int(),
+  walkingDistanceMeters: z.number().nonnegative().nullable(),
+});
+
+export const routingCacheFileSchema = z.object({
+  version: z.literal(1),
+  updatedAt: z.string(),
+  entries: z.record(z.string(), routingCacheEntrySchema),
+});

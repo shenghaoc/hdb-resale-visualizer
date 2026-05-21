@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fetchJson, fetchWithRetry } from "./fetchers";
-import { oneMapRoutingResponseSchema, oneMapTokenResponseSchema } from "../schemas";
+import { oneMapRoutingResponseSchema, oneMapTokenResponseSchema, routingCacheFileSchema } from "../schemas";
 
 export type RoutingCacheKey = string;
 
@@ -34,7 +34,10 @@ export function buildRoutingCacheKey(start: RoutingCoordinate, end: RoutingCoord
 export async function loadRoutingCache(cachePath: string): Promise<RoutingCacheFile> {
   try {
     const content = await fs.readFile(cachePath, "utf8");
-    return JSON.parse(content) as RoutingCacheFile;
+    const parsed = JSON.parse(content);
+    const validated = routingCacheFileSchema.parse(parsed);
+    // runtime type is literal `1` after parsing through Zod; cast to keep the branded type
+    return validated as RoutingCacheFile;
   } catch {
     return {
       version: 1,
