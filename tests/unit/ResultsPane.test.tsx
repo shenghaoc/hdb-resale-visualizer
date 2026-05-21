@@ -39,12 +39,12 @@ const block: BlockSummary = {
   flatModels: ["MODEL A"],
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
-    distanceMeters: 400,
+    distanceMeters: 400, walkingTimeSeconds: 320
   },
   nearbyMrts: [
-    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400 },
-    { stationName: "BEDOK MRT STATION", distanceMeters: 800 },
-    { stationName: "KAKI BUKIT MRT STATION", distanceMeters: 1200 },
+    { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+    { stationName: "BEDOK MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 },
+    { stationName: "KAKI BUKIT MRT STATION", distanceMeters: 1200, walkingTimeSeconds: 960 },
   ],
 };
 

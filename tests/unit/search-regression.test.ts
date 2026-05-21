@@ -28,7 +28,7 @@ const createAngMoKioBlock = (): BlockSummary => ({
   flatModels: ["IMPROVED", "MODEL A"],
   nearestMrt: {
     stationName: "ANG MO KIO MRT STATION",
-    distanceMeters: 500,
+    distanceMeters: 500, walkingTimeSeconds: 400
   },
   postalCode: "560101",
 });

@@ -4,6 +4,7 @@ import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
 import {
   formatCompactCurrency,
   formatMeters,
+  formatMinutesWalk,
   formatMonth,
   formatNumber,
   formatRemainingLease,
@@ -197,6 +198,7 @@ const BlockCard = memo(function BlockCard({
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
     const sqm = Math.round((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2);
     const mrtDist = block.nearestMrt?.distanceMeters;
+    const mrtWalkSeconds = block.nearestMrt?.walkingTimeSeconds;
     const nearestMrtColor = block.nearestMrt
       ? getStationDetails(block.nearestMrt.stationName).color
       : "var(--color-primary)";
@@ -270,10 +272,14 @@ const BlockCard = memo(function BlockCard({
 
         <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[0.6rem] font-medium text-muted-foreground">
           <span>{formatSqm(sqm, t, locale)}</span>
-          {mrtDist !== undefined && mrtDist !== null && (
-            <span className="flex items-center gap-1">
+          {mrtDist !== undefined && mrtDist !== null && mrtWalkSeconds !== undefined && (
+            <span
+              className="flex items-center gap-1"
+              title={formatMeters(mrtDist, t, locale)}
+              aria-label={`${formatMinutesWalk(mrtWalkSeconds, t, locale)} (${formatMeters(mrtDist, t, locale)})`}
+            >
               <WalkDots meters={mrtDist} color={nearestMrtColor} />
-              <span>{formatMeters(mrtDist, t, locale)}</span>
+              <span>{formatMinutesWalk(mrtWalkSeconds, t, locale)}</span>
             </span>
           )}
           <span className="ml-auto">
@@ -365,8 +371,12 @@ const BlockCard = memo(function BlockCard({
                     <MrtLineDots stationName={station.stationName} />
                     <span className="truncate font-semibold uppercase tracking-[0.08em]">{station.stationName}</span>
                   </div>
-                  <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
-                    {formatMeters(station.distanceMeters, t, locale)}
+                  <span
+                    className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground"
+                    title={formatMeters(station.distanceMeters, t, locale)}
+                    aria-label={`${formatMinutesWalk(station.walkingTimeSeconds, t, locale)} (${formatMeters(station.distanceMeters, t, locale)})`}
+                  >
+                    {formatMinutesWalk(station.walkingTimeSeconds, t, locale)}
                   </span>
                 </li>
               ))}

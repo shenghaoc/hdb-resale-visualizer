@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Copy,
   Download,
+  ExternalLink,
   GraduationCap,
   LayoutGrid,
   Link2,
@@ -31,10 +32,16 @@ import {
   formatCompactCurrency,
   formatCurrency,
   formatMeters,
+  formatMinutesWalk,
   formatNumber,
   formatRemainingLease,
 } from "@/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
+import {
+  ninetyNineCoUrl,
+  propertyGuruUrl,
+  srxUrl,
+} from "@/lib/listingPortalLinks";
 import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   buildShortlistComparisonRows,
@@ -275,8 +282,12 @@ function ShortlistComparisonTable({
                       <span className="block font-semibold text-foreground">
                         {row.nearestMrt.stationName}
                       </span>
-                      <span className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground">
-                        {formatMeters(row.nearestMrt.distanceMeters, t, locale)}
+                      <span
+                        className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground"
+                        title={formatMeters(row.nearestMrt.distanceMeters, t, locale)}
+                        aria-label={`${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`}
+                      >
+                        {formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)}
                       </span>
                     </>
                   ) : (
@@ -756,7 +767,7 @@ export function ShortlistDrawer({
 
     if (row.block.nearestMrt) {
       return t("shortlist.compare.metric.mrt.value", {
-        value: formatMeters(row.block.nearestMrt.distanceMeters, t, locale),
+        value: formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale),
       });
     }
 
@@ -800,7 +811,7 @@ export function ShortlistDrawer({
           row.item.targetPrice !== null ? formatCurrency(row.item.targetPrice, locale) : "-";
         const lease = formatRemainingLease(row.block.leaseCommenceRange, t);
         const mrt = row.block.nearestMrt
-          ? formatMeters(row.block.nearestMrt.distanceMeters, t, locale)
+          ? formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)
           : "-";
         const schools = row.comparison?.amenities.primarySchoolsWithin1km ?? "-";
         const hawkers = row.comparison?.amenities.hawkerCentresWithin1km ?? "-";
@@ -914,7 +925,7 @@ export function ShortlistDrawer({
         label: t("shortlist.closestMrt"),
         row: closestMrtRow,
         sub: closestMrtRow?.block.nearestMrt
-          ? formatMeters(closestMrtRow.block.nearestMrt.distanceMeters, t, locale)
+          ? formatMinutesWalk(closestMrtRow.block.nearestMrt.walkingTimeSeconds, t, locale)
           : t("shortlist.na"),
       },
     ];
@@ -1286,8 +1297,11 @@ export function ShortlistDrawer({
                                   <MiniSpark color={accentColor} points={row.monthlyTrend} />
                                   <span>{t("unit.years", { value: getLeaseYears(row) })}</span>
                                   {row.block.nearestMrt ? (
-                                    <span>
-                                      {formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}
+                                    <span
+                                      title={formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}
+                                      aria-label={`${formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)})`}
+                                    >
+                                      {formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)}
                                     </span>
                                   ) : null}
                                   <span>{t("stats.txns", { count: formatNumber(row.block.transactionCount, 0, locale) })}</span>
@@ -1444,8 +1458,10 @@ export function ShortlistDrawer({
                                         <Badge
                                           variant={idx === 0 ? "default" : "secondary"}
                                           className="h-5 shrink-0 text-[0.58rem] font-extrabold v2-tabular"
+                                          title={formatMeters(mrt.distanceMeters, t, locale)}
+                                          aria-label={`${formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)} (${formatMeters(mrt.distanceMeters, t, locale)})`}
                                         >
-                                          {formatMeters(mrt.distanceMeters, t, locale)}
+                                          {formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)}
                                         </Badge>
                                       </div>
                                     ))}
@@ -1464,6 +1480,72 @@ export function ShortlistDrawer({
                                 checkedItems={checklistState[row.item.addressKey] ?? []}
                                 onToggleChecklist={toggleChecklist}
                               />
+
+                              <ButtonGroup
+                                aria-label={t("shortlist.openInPortal.group")}
+                                className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
+                              >
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                >
+                                  <a
+                                    href={propertyGuruUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInPropertyGuru")}
+                                    title={t("shortlist.openInPropertyGuru")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    PropertyGuru
+                                  </a>
+                                </Button>
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                >
+                                  <a
+                                    href={ninetyNineCoUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInNinetyNineCo")}
+                                    title={t("shortlist.openInNinetyNineCo")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    99.co
+                                  </a>
+                                </Button>
+                                <Button
+                                  asChild
+                                  variant="outline"
+                                  size="xs"
+                                >
+                                  <a
+                                    href={srxUrl(row.block)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={t("shortlist.openInSrx")}
+                                    title={t("shortlist.openInSrx")}
+                                  >
+                                    <ExternalLink
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    SRX
+                                  </a>
+                                </Button>
+                              </ButtonGroup>
 
                               <div className="grid grid-cols-2 gap-2">
                                 <Button

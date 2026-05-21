@@ -6,6 +6,7 @@ export type Coordinates = {
 export type NearestMrt = {
   stationName: string;
   distanceMeters: number;
+  walkingTimeSeconds: number;
 };
 
 export type BlockSummary = {

@@ -4,6 +4,7 @@ import {
   formatCompactCurrency,
   formatNumber,
   formatMeters,
+  formatMinutesWalk,
   formatMonth,
   formatRemainingLease,
   resetFormatCachesForTests,
@@ -14,6 +15,7 @@ import type { Translator } from "@/lib/i18n/types";
 const t: Translator = (key, vars) => {
   if (key === "unit.km") return `${String(vars?.value)} km`;
   if (key === "unit.m") return `${String(vars?.value)} m`;
+  if (key === "unit.minutesWalk") return `${String(vars?.value)} min walk`;
   if (key === "unit.years") return `${String(vars?.value)} years`;
   if (key === "unit.yearsRange") return `${String(vars?.min)}-${String(vars?.max)} years`;
   return key;
@@ -118,6 +120,20 @@ describe("format edge cases", () => {
 
     it("handles zero meters", () => {
       expect(formatMeters(0, t)).toBe("0 m");
+    });
+  });
+
+  describe("formatMinutesWalk — rounding and minimum display", () => {
+    it("rounds seconds up to the nearest minute", () => {
+      expect(formatMinutesWalk(60, t)).toBe("1 min walk");
+      expect(formatMinutesWalk(89, t)).toBe("1 min walk");
+      expect(formatMinutesWalk(90, t)).toBe("2 min walk");
+      expect(formatMinutesWalk(500, t)).toBe("8 min walk");
+    });
+
+    it("clamps sub-30-second walks to 1 min walk so the cell is never blank", () => {
+      expect(formatMinutesWalk(0, t)).toBe("1 min walk");
+      expect(formatMinutesWalk(15, t)).toBe("1 min walk");
     });
   });
 

@@ -30,7 +30,7 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     availableDateRange: ["2020-01", "2024-12"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400 },
+    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
     ...overrides,
   };
 }
@@ -51,13 +51,13 @@ describe("matchesFilter — null/missing nearestMrt", () => {
   });
 
   it("includes block where nearestMrt distance is within mrtMax", () => {
-    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300 } });
+    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300, walkingTimeSeconds: 240 } });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, mrtMax: 400 })).toBe(true);
   });
 
   it("excludes block where nearestMrt distance exceeds mrtMax", () => {
-    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 800 } });
+    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 } });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, mrtMax: 500 })).toBe(false);
   });
@@ -244,7 +244,7 @@ describe("matchesFilter — combined filters short-circuit", () => {
       floorAreaRange: [85, 100],
       flatTypes: ["4 ROOM"],
       flatModels: ["MODEL A"],
-      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300 },
+      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300, walkingTimeSeconds: 240 },
     });
 
     expect(
@@ -278,7 +278,7 @@ describe("matchesGeographicSearchIntent — null nearestMrt on station intent", 
 
   it("returns false for station intent when block nearestMrt is too far", () => {
     const block = makeBlock({
-      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 1200 },
+      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 1200, walkingTimeSeconds: 960 },
     });
 
     expect(
@@ -293,7 +293,7 @@ describe("matchesGeographicSearchIntent — null nearestMrt on station intent", 
   it("returns true for station intent when nearbyMrts contains the target within radius", () => {
     const block = makeBlock({
       nearestMrt: null,
-      nearbyMrts: [{ stationName: "BEDOK MRT STATION", distanceMeters: 500 }],
+      nearbyMrts: [{ stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 }],
     });
 
     expect(
