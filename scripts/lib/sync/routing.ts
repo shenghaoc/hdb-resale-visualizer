@@ -34,10 +34,8 @@ export function buildRoutingCacheKey(start: RoutingCoordinate, end: RoutingCoord
 export async function loadRoutingCache(cachePath: string): Promise<RoutingCacheFile> {
   try {
     const content = await fs.readFile(cachePath, "utf8");
-    const parsed = JSON.parse(content);
-    const validated = routingCacheFileSchema.parse(parsed);
-    // runtime type is literal `1` after parsing through Zod; cast to keep the branded type
-    return validated as RoutingCacheFile;
+    const validated: RoutingCacheFile = routingCacheFileSchema.parse(JSON.parse(content));
+    return validated;
   } catch {
     return {
       version: 1,
