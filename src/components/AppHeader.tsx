@@ -37,6 +37,7 @@ export function AppHeader({
 }: AppHeaderProps) {
   const headerSearchId = useId();
   const overlaySearchId = useId();
+  const overlayContainerId = useId();
   const overlayInputRef = useRef<HTMLInputElement>(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const closeMobileSearch = useCallback(() => {
@@ -178,7 +179,7 @@ export function AppHeader({
           data-testid="header-search-toggle"
           aria-label={t("header.openSearch")}
           aria-expanded={isMobileSearchOpen}
-          aria-controls={isMobileSearchOpen ? overlaySearchId : undefined}
+          aria-controls={isMobileSearchOpen ? overlayContainerId : undefined}
           onClick={openMobileSearch}
           className={cn(
             "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground sm:hidden",
@@ -216,6 +217,7 @@ export function AppHeader({
 
       {isMobileSearchOpen ? (
         <div
+          id={overlayContainerId}
           className="pointer-events-auto fixed inset-0 z-40 sm:hidden"
           data-testid="header-search-overlay"
         >
