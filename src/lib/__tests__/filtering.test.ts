@@ -18,6 +18,7 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     streetName: "BEDOK NORTH AVE 4",
     coordinates: { lat: 1.33, lng: 103.93 },
     medianPrice: 600000,
+    pricePerSqmMedian: 9000,
     transactionCount: 10,
     floorAreaRange: [65, 120],
     leaseCommenceRange: [1990, 1990],
