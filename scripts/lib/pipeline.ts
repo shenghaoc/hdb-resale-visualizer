@@ -370,7 +370,9 @@ export function pickNearestStations(
   }
 
   return [...closestExitByStation.entries()]
-    .sort(([, left], [, right]) => left.distance - right.distance)
+    .sort(([nameL, left], [nameR, right]) =>
+      left.distance - right.distance || nameL.localeCompare(nameR),
+    )
     .slice(0, limit)
     .map(([stationName, info]) => ({
       stationName,
