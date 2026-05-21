@@ -1473,13 +1473,12 @@ export function ShortlistDrawer({
 
                               <ButtonGroup
                                 aria-label={t("shortlist.openInPortal.group")}
-                                className="w-full flex-wrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
+                                className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
                               >
                                 <Button
                                   asChild
                                   variant="outline"
                                   size="xs"
-                                  className="flex-1"
                                 >
                                   <a
                                     href={propertyGuruUrl(row.block)}
@@ -1500,7 +1499,6 @@ export function ShortlistDrawer({
                                   asChild
                                   variant="outline"
                                   size="xs"
-                                  className="flex-1"
                                 >
                                   <a
                                     href={ninetyNineCoUrl(row.block)}
@@ -1521,7 +1519,6 @@ export function ShortlistDrawer({
                                   asChild
                                   variant="outline"
                                   size="xs"
-                                  className="flex-1"
                                 >
                                   <a
                                     href={srxUrl(row.block)}

@@ -33,7 +33,7 @@ describe("listingPortalLinks", () => {
 
   it("builds a 99.co search URL with HDB filter and block coordinates", () => {
     expect(ninetyNineCoUrl(block)).toBe(
-      "https://www.99.co/singapore/sale?listing_type=sale&main_category=hdb&query_coords=1.3217%2C103.9357&query_limit=radius&radius_max=1000",
+      "https://www.99.co/singapore/sale?listing_type=sale&main_category=hdb&query_coords=1.3217,103.9357&query_limit=radius&radius_max=1000",
     );
   });
 
