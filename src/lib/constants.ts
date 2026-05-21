@@ -132,6 +132,7 @@ export const PRICE_PER_SQM_LEGEND_GRADIENT = `linear-gradient(90deg, ${PRICE_PER
 /**
  * Query state configuration.
  */
+export const MAX_SEARCH_QUERY_LENGTH = 256;
 export const QUERY_VERSION = "1";
 
 /**

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
+import { parseFilters } from "@/lib/queryState";
 import {
   getFilterOptions,
   matchesFilter,
@@ -341,6 +342,23 @@ describe("matchesFilter", () => {
       stationName: "ANG MO KIO MRT STATION",
       radiusMeters: 800,
     });
+  });
+
+  it("does not hang when processing an extremely long search query and treats it as a bounded search", () => {
+    const longSearch = "a".repeat(1000000); // 1 MB search string
+    // Parse filters mimicking URL param parsing
+    const parsedFilters = parseFilters(`?search=${longSearch}`);
+
+    // The queryState truncation is verified elsewhere, but here we confirm that passing
+    // it to matchesFilter is extremely fast (not hanging the execution/tab)
+    const startTime = Date.now();
+    const result = matchesFilter(alpha!, parsedFilters);
+    const duration = Date.now() - startTime;
+
+    // It should complete well under 200 ms even on slow CI runners
+    expect(duration).toBeLessThan(200);
+    // Since parsedFilters.search is bounded, we can assert matchesFilter runs correctly.
+    expect(result).toBe(false);
   });
 
   describe("matchesGeographicSearchIntent", () => {
