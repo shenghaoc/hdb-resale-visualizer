@@ -1,5 +1,5 @@
 import { useCallback, useId } from "react";
-import { RefreshCw, Search } from "lucide-react";
+import { PanelLeftClose, RefreshCw, Search } from "lucide-react";
 import { formatMonth } from "@/lib/format";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
@@ -34,6 +34,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+type FilterPanelDesktopToggle = {
+  isOpen: boolean;
+  onToggle: () => void;
+};
+
 type FilterPanelProps = {
   filters: FilterState;
   options: FilterOptions;
@@ -41,6 +46,7 @@ type FilterPanelProps = {
   maxMonth: string;
   onChange: (patch: Partial<FilterState>) => void;
   onReset: () => void;
+  desktopToggle?: FilterPanelDesktopToggle;
 };
 
 const ALL_VALUE = "__all__";
@@ -108,9 +114,9 @@ function SelectField({
 }
 
 export function FilterPanel(props: FilterPanelProps) {
-  const { filters, options, minMonth, maxMonth, onChange, onReset } = props;
+  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle } = props;
   const { locale, t } = useI18n();
-  
+
   const handleSearchChange = useCallback(
     (value: string) => onChange({ search: value }),
     [onChange],
@@ -126,6 +132,20 @@ export function FilterPanel(props: FilterPanelProps) {
             <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("filters.title")}
             </CardTitle>
+            {desktopToggle ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                data-testid="filters-panel-toggle"
+                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card/80 px-2.5 text-[0.65rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
+                onClick={desktopToggle.onToggle}
+                aria-expanded={desktopToggle.isOpen}
+              >
+                <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                {t("filters.hidePanel")}
+              </Button>
+            ) : null}
             <CardAction>
               <Button
                 onClick={onReset}
