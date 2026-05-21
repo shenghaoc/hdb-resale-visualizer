@@ -258,6 +258,7 @@ function App() {
         onSelect={handleSelectAddress}
         selectedAddressKey={filters.selectedAddressKey}
         townFilter={pipeline.mapFilters.town}
+        flatType={filters.flatType}
         autoFitKey={
           pipeline.effectiveMapGeographicIntent?.type === "coordinates"
             ? `coordinates:${pipeline.effectiveMapGeographicIntent.coordinates.lat},${pipeline.effectiveMapGeographicIntent.coordinates.lng}`

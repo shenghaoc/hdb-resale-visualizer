@@ -24,6 +24,8 @@ export type BlockSummary = {
   availableDateRange: [string, string];
   flatTypes: string[];
   flatModels: string[];
+  medianPriceByFlatType?: Record<string, number>;
+  medianPricePerSqmByFlatType?: Record<string, number>;
   nearestMrt: NearestMrt | null;
   nearbyMrts?: NearestMrt[];
   postalCode?: string | null;

@@ -582,6 +582,42 @@ function getCachedCurrentYear(): number {
   return _cachedYear;
 }
 
+/**
+ * Returns the effective median price for budget comparison.
+ * When a flatType filter is active and the block has a per-flat-type median
+ * for that type, use it instead of the overall block median — this prevents
+ * blocks with mixed flat types from being incorrectly excluded.
+ */
+export function getEffectiveMedianPrice(block: BlockSummary, flatType: string): number {
+  if (!flatType) {
+    return block.medianPrice;
+  }
+
+  let canonicalSelectedFlatType = filterFlatTypeCache.get(flatType);
+  if (canonicalSelectedFlatType === undefined) {
+    canonicalSelectedFlatType = canonicalFlatType(flatType);
+    filterFlatTypeCache.set(flatType, canonicalSelectedFlatType);
+  }
+
+  const ftMedian = block.medianPriceByFlatType?.[canonicalSelectedFlatType];
+  return ftMedian ?? block.medianPrice;
+}
+
+export function getEffectivePricePerSqmMedian(block: BlockSummary, flatType: string): number {
+  if (!flatType) {
+    return block.pricePerSqmMedian;
+  }
+
+  let canonicalSelectedFlatType = filterFlatTypeCache.get(flatType);
+  if (canonicalSelectedFlatType === undefined) {
+    canonicalSelectedFlatType = canonicalFlatType(flatType);
+    filterFlatTypeCache.set(flatType, canonicalSelectedFlatType);
+  }
+
+  const ftMedian = block.medianPricePerSqmByFlatType?.[canonicalSelectedFlatType];
+  return ftMedian ?? block.pricePerSqmMedian;
+}
+
 export function matchesFilter(
   block: BlockSummary,
   filters: FilterState,
@@ -592,11 +628,14 @@ export function matchesFilter(
     return false;
   }
 
-  if (filters.budgetMin !== null && block.medianPrice < filters.budgetMin) {
+  // Use flat-type-specific median when flatType filter is active
+  const effectivePrice = getEffectiveMedianPrice(block, filters.flatType);
+
+  if (filters.budgetMin !== null && effectivePrice < filters.budgetMin) {
     return false;
   }
 
-  if (filters.budgetMax !== null && block.medianPrice > filters.budgetMax) {
+  if (filters.budgetMax !== null && effectivePrice > filters.budgetMax) {
     return false;
   }
 

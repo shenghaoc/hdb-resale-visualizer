@@ -7,7 +7,7 @@ import type {
   Manifest,
   TownFlatTypeTrendPoint,
 } from "../../shared/data-types";
-import { buildFilterOptions } from "../../shared/filter-options";
+import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { getStationDetails } from "./mrt";
 
 export type ResaleTransaction = {
@@ -507,6 +507,22 @@ export function buildArtifacts({
     const property = propertyByAddress.get(addressKey);
     const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears);
     const pricePerSqmMedian = Number(median(pricePerSqmValues).toFixed(2));
+    // Compute per-flat-type median prices and PPSM for accurate budget filtering and heatmap
+    const medianPriceByFlatType: Record<string, number> = {};
+    const medianPricePerSqmByFlatType: Record<string, number> = {};
+    const transactionsByFlatType = new Map<string, { prices: number[]; ppsmValues: number[] }>();
+    for (const transaction of sourceWindow) {
+      const ft = transactionsByFlatType.get(transaction.flatType) ?? { prices: [], ppsmValues: [] };
+      ft.prices.push(transaction.resalePrice);
+      ft.ppsmValues.push(transaction.pricePerSqm);
+      transactionsByFlatType.set(transaction.flatType, ft);
+    }
+    for (const [flatType, { prices: ftPrices, ppsmValues: ftPpsm }] of transactionsByFlatType.entries()) {
+      const key = canonicalFlatType(flatType);
+      medianPriceByFlatType[key] = Math.round(median(ftPrices));
+      medianPricePerSqmByFlatType[key] = Number(median(ftPpsm).toFixed(2));
+    }
+
     const summary: BlockSummary = {
       addressKey,
       town: latest.town,
@@ -526,6 +542,8 @@ export function buildArtifacts({
       ],
       flatTypes: [...new Set(sortedTransactions.map((transaction) => transaction.flatType))].sort(),
       flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
+      medianPriceByFlatType,
+      medianPricePerSqmByFlatType,
       nearestMrt,
       nearbyMrts,
       postalCode: geocode.postalCode ?? null,
