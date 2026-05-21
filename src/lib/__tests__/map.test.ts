@@ -39,32 +39,51 @@ describe("toGeoJson", () => {
     const block = makeBlock({
       medianPrice: 600000,
       medianPriceByFlatType: { "3 ROOM": 480000, "5 ROOM": 720000 },
+      medianPricePerSqmByFlatType: { "3 ROOM": 6000, "5 ROOM": 5000 },
     });
     const result = toGeoJson([block], "3 ROOM");
     expect(result.features[0].properties.median_price).toBe(480000);
+    expect(result.features[0].properties.price_per_sqm_median).toBe(6000);
   });
 
-  it("falls back to block median when block has no medianPriceByFlatType", () => {
-    const block = makeBlock({ medianPrice: 600000, medianPriceByFlatType: undefined });
+  it("falls back to block median when block has no per-type data", () => {
+    const block = makeBlock({
+      medianPrice: 600000,
+      pricePerSqmMedian: 5000,
+      medianPriceByFlatType: undefined,
+      medianPricePerSqmByFlatType: undefined,
+    });
     const result = toGeoJson([block], "3 ROOM");
     expect(result.features[0].properties.median_price).toBe(600000);
+    expect(result.features[0].properties.price_per_sqm_median).toBe(5000);
   });
 
   it("falls back to block median when flatType is not in medianPriceByFlatType", () => {
     const block = makeBlock({
       medianPrice: 600000,
+      pricePerSqmMedian: 5000,
       medianPriceByFlatType: { "3 ROOM": 480000 },
+      medianPricePerSqmByFlatType: { "3 ROOM": 6000 },
     });
     const result = toGeoJson([block], "EXECUTIVE");
     expect(result.features[0].properties.median_price).toBe(600000);
+    expect(result.features[0].properties.price_per_sqm_median).toBe(5000);
   });
 
   it("uses canonical key for MULTI-GENERATION lookup", () => {
     const block = makeBlock({
       medianPrice: 900000,
       medianPriceByFlatType: { "MULTI-GENERATION": 850000 },
+      medianPricePerSqmByFlatType: { "MULTI-GENERATION": 7000 },
     });
     const result = toGeoJson([block], "MULTI-GENERATION");
     expect(result.features[0].properties.median_price).toBe(850000);
+    expect(result.features[0].properties.price_per_sqm_median).toBe(7000);
+  });
+
+  it("uses block pricePerSqmMedian when no flatType is provided", () => {
+    const block = makeBlock({ pricePerSqmMedian: 5000 });
+    const result = toGeoJson([block]);
+    expect(result.features[0].properties.price_per_sqm_median).toBe(5000);
   });
 });

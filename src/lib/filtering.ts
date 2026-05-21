@@ -603,6 +603,21 @@ export function getEffectiveMedianPrice(block: BlockSummary, flatType: string): 
   return ftMedian ?? block.medianPrice;
 }
 
+export function getEffectivePricePerSqmMedian(block: BlockSummary, flatType: string): number {
+  if (!flatType) {
+    return block.pricePerSqmMedian;
+  }
+
+  let canonicalSelectedFlatType = filterFlatTypeCache.get(flatType);
+  if (canonicalSelectedFlatType === undefined) {
+    canonicalSelectedFlatType = canonicalFlatType(flatType);
+    filterFlatTypeCache.set(flatType, canonicalSelectedFlatType);
+  }
+
+  const ftMedian = block.medianPricePerSqmByFlatType?.[canonicalSelectedFlatType];
+  return ftMedian ?? block.pricePerSqmMedian;
+}
+
 export function matchesFilter(
   block: BlockSummary,
   filters: FilterState,

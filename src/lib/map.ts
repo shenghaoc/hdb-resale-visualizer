@@ -1,5 +1,5 @@
 import type { BlockSummary } from "../types/data";
-import { getEffectiveMedianPrice } from "./filtering";
+import { getEffectiveMedianPrice, getEffectivePricePerSqmMedian } from "./filtering";
 
 type GeoJsonFeature = {
   type: "Feature";
@@ -29,7 +29,7 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
     type: "FeatureCollection" as const,
     features: blocks.map<GeoJsonFeature>((block) => {
       // When flatType is active and block has per-type data, bypass cache since median_price varies
-      if (!flatType || !block.medianPriceByFlatType) {
+      if (!flatType || (!block.medianPriceByFlatType && !block.medianPricePerSqmByFlatType)) {
         let feature = geoJsonCache.get(block);
         if (!feature) {
           feature = {
@@ -55,7 +55,7 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
       }
 
       const effectivePrice = getEffectiveMedianPrice(block, flatType);
-      const midArea = (block.floorAreaRange[0] + block.floorAreaRange[1]) / 2;
+      const effectivePpsm = getEffectivePricePerSqmMedian(block, flatType);
       return {
         type: "Feature",
         geometry: {
@@ -67,7 +67,7 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
           town: block.town,
           address: `${block.block} ${block.streetName}`,
           median_price: effectivePrice,
-          price_per_sqm_median: midArea > 0 ? Number((effectivePrice / midArea).toFixed(2)) : 0,
+          price_per_sqm_median: effectivePpsm,
           transaction_count: block.transactionCount,
           latest_month: block.latestMonth,
           ...(block.displayName ? { display_name: block.displayName } : {}),

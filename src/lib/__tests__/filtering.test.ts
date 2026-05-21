@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import {
   getEffectiveMedianPrice,
+  getEffectivePricePerSqmMedian,
   matchesFilter,
   resetFilteringCachesForTests,
 } from "@/lib/filtering";
@@ -171,5 +172,48 @@ describe("getEffectiveMedianPrice", () => {
     });
 
     expect(getEffectiveMedianPrice(block, "EXECUTIVE")).toBe(600000);
+  });
+});
+
+describe("getEffectivePricePerSqmMedian", () => {
+  beforeEach(() => {
+    resetFilteringCachesForTests();
+  });
+
+  it("returns flat-type-specific PPSM when flatType is provided and available", () => {
+    const block = makeBlock({
+      pricePerSqmMedian: 7000,
+      medianPricePerSqmByFlatType: { "3 ROOM": 8000, "5 ROOM": 6000 },
+    });
+
+    expect(getEffectivePricePerSqmMedian(block, "3 ROOM")).toBe(8000);
+    expect(getEffectivePricePerSqmMedian(block, "5 ROOM")).toBe(6000);
+  });
+
+  it("returns block pricePerSqmMedian when flatType is empty", () => {
+    const block = makeBlock({
+      pricePerSqmMedian: 7000,
+      medianPricePerSqmByFlatType: { "3 ROOM": 8000 },
+    });
+
+    expect(getEffectivePricePerSqmMedian(block, "")).toBe(7000);
+  });
+
+  it("falls back to block pricePerSqmMedian when flatType is not in map", () => {
+    const block = makeBlock({
+      pricePerSqmMedian: 7000,
+      medianPricePerSqmByFlatType: { "3 ROOM": 8000 },
+    });
+
+    expect(getEffectivePricePerSqmMedian(block, "EXECUTIVE")).toBe(7000);
+  });
+
+  it("falls back to block pricePerSqmMedian when medianPricePerSqmByFlatType is undefined", () => {
+    const block = makeBlock({
+      pricePerSqmMedian: 7000,
+      medianPricePerSqmByFlatType: undefined,
+    });
+
+    expect(getEffectivePricePerSqmMedian(block, "3 ROOM")).toBe(7000);
   });
 });
