@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,7 @@ export function AppHeader({
 }: AppHeaderProps) {
   const headerSearchId = useId();
   const overlaySearchId = useId();
+  const overlayInputRef = useRef<HTMLInputElement>(null);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const closeMobileSearch = useCallback(() => {
     setIsMobileSearchOpen(false);
@@ -68,10 +69,10 @@ export function AppHeader({
     }
 
     const frame = window.requestAnimationFrame(() => {
-      document.getElementById(overlaySearchId)?.focus();
+      overlayInputRef.current?.focus();
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [isMobileSearchOpen, overlaySearchId]);
+  }, [isMobileSearchOpen]);
 
   return (
     <>
@@ -152,7 +153,7 @@ export function AppHeader({
           className={cn(
             "pointer-events-auto hidden min-w-0 flex-1 items-center sm:flex",
             HEADER_SURFACE_CLASS,
-            "px-2 py-1",
+            "px-2 py-1 focus-within:ring-2 focus-within:ring-ring",
           )}
         >
           <Search data-icon className="ml-1 size-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
@@ -223,9 +224,10 @@ export function AppHeader({
             onClick={closeMobileSearch}
           />
           <div className="absolute inset-x-3 top-3 flex items-center gap-2">
-            <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1", HEADER_SURFACE_CLASS)}>
+            <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring", HEADER_SURFACE_CLASS)}>
               <Search data-icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
               <LocationSearchInput
+                ref={overlayInputRef}
                 id={overlaySearchId}
                 data-testid="header-search-overlay-input"
                 aria-label={t("filters.searchLabel")}

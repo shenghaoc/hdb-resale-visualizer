@@ -1,4 +1,4 @@
-import { forwardRef, useCallback } from "react";
+import { forwardRef } from "react";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { MAX_SEARCH_QUERY_LENGTH } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
@@ -25,11 +25,7 @@ export const LocationSearchInput = forwardRef<HTMLInputElement, LocationSearchIn
     },
     ref,
   ) {
-    const handleValueChange = useCallback(
-      (nextValue: string) => onValueChange(nextValue),
-      [onValueChange],
-    );
-    const ime = useIMEComposition(handleValueChange);
+    const ime = useIMEComposition(onValueChange);
 
     return (
       <Input
