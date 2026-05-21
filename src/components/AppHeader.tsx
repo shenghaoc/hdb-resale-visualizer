@@ -79,10 +79,11 @@ export function AppHeader({
       <header
         data-testid="global-header"
         className={cn(
-          "pointer-events-none absolute z-30 flex min-w-0 items-start gap-2",
+          "pointer-events-none absolute flex min-w-0 items-start gap-2",
+          isDesktop ? "z-30" : "z-40",
           isDesktop
             ? "left-6 top-6 max-w-[min(52rem,calc(100vw-12rem))]"
-            : "left-3 top-3 max-w-[calc(100vw-1.5rem)]",
+            : "left-3 top-3 max-w-[calc(100vw-4.75rem)]",
         )}
       >
         <button
@@ -90,7 +91,9 @@ export function AppHeader({
           aria-expanded={isMobileHeaderOpen}
           onClick={onToggleMobileHeader}
           className={cn(
-            "pointer-events-auto flex min-w-0 shrink-0 items-center gap-2 px-3 py-2 text-left transition-all",
+            "pointer-events-auto flex min-w-0 items-center gap-2 px-3 py-2 text-left transition-all",
+            !isDesktop && "min-w-0 flex-1 overflow-hidden",
+            isDesktop && "shrink-0",
             HEADER_SURFACE_CLASS,
             isMobileHeaderOpen && "items-start",
           )}

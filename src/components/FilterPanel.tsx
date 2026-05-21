@@ -148,6 +148,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   <InputGroup>
                     <LocationSearchInput
                       id="search"
+                      data-testid="filters-search-input"
                       inputGroupControl
                       placeholder={t("filters.searchPlaceholder")}
                       value={filters.search}
