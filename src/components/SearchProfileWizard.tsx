@@ -27,6 +27,13 @@ function formatStationLabel(stationName: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+const isOptionalInRange = (value: string, min: number, max: number) =>
+  value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
+
+const isOptionalIntegerInRange = (value: string, min: number, max: number) =>
+  value.trim().length === 0 ||
+  (Number.isInteger(Number(value)) && Number(value) >= min && Number(value) <= max);
+
 const WIZARD_ICONS = {
   welcome: (
     <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -106,9 +113,6 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     return mrtStations.filter((station) => station.includes(query));
   }, [stationSearch, mrtStations]);
 
-  const isOptionalInRange = (value: string, min: number, max: number) =>
-    value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
-
   const canContinueStep = useMemo(() => {
     if (step === 0) return true;
     if (step === 1) return mainFlatType.length > 0;
@@ -117,8 +121,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     if (step === 4) return Number(minLease) > 0;
     if (step === 5) {
       return (
-        isOptionalInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
-        isOptionalInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
         isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
         isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
       );
@@ -147,8 +151,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
       commuteAnchorMrt.length > 0 &&
       Number(maxCommute) > 0 &&
       Number(minLease) > 0 &&
-      isOptionalInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
-      isOptionalInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
       isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
       isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
     );
@@ -533,6 +537,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <Input
                             inputMode="numeric"
                             type="number"
+                            step="1"
+                            min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
+                            max={SEARCH_PROFILE_MAX_APPLICANT_AGE}
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
                             placeholder={t("searchProfile.agePlaceholder")}
@@ -549,6 +556,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <Input
                             inputMode="numeric"
                             type="number"
+                            step="1"
+                            min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
+                            max={SEARCH_PROFILE_MAX_APPLICANT_AGE}
                             value={coApplicantAge}
                             onChange={(e) => setCoApplicantAge(e.target.value)}
                             placeholder={t("searchProfile.coApplicantAgePlaceholder")}
@@ -629,6 +639,26 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
+                    {age ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.age", { age: Number(age) })}
+                      </div>
+                    ) : null}
+                    {coApplicantAge ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
+                      </div>
+                    ) : null}
+                    {cpfOABalance ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.cpfOABalance", { amount: Number(cpfOABalance).toLocaleString() })}
+                      </div>
+                    ) : null}
+                    {monthlyIncome ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.monthlyIncome", { amount: Number(monthlyIncome).toLocaleString() })}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ) : null}
