@@ -19,6 +19,9 @@ type FilterChipsBarProps = {
 const chipFocusClass =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 
+const chipLayoutClass =
+  "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-full px-3 py-1.5 text-[0.65rem] font-semibold leading-none shadow-sm backdrop-blur-[16px] transition-all min-h-11 min-w-11 sm:min-h-min sm:min-w-min";
+
 export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChipsBarProps) {
   const itemCount = chips.length + 1;
   const [focusedIndex, setFocusedIndex] = useState(0);
@@ -81,7 +84,8 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
           onKeyDown={(event) => handleKeyDown(event, index)}
           onFocus={() => setFocusedIndex(index)}
           className={cn(
-            "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-foreground/80 bg-foreground px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-background shadow-sm backdrop-blur-[16px] transition-all",
+            chipLayoutClass,
+            "border border-foreground/80 bg-foreground text-background",
             chipFocusClass,
           )}
         >
@@ -99,7 +103,8 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
         onKeyDown={(event) => handleKeyDown(event, filtersButtonIndex)}
         onFocus={() => setFocusedIndex(filtersButtonIndex)}
         className={cn(
-          "filter-chip flex shrink-0 items-center gap-1 rounded-full border border-border/30 bg-background/90 px-3 py-1.5 text-[0.65rem] font-semibold leading-none text-foreground shadow-sm backdrop-blur-[16px] transition-all",
+          chipLayoutClass,
+          "border border-border/30 bg-background/90 text-foreground",
           chipFocusClass,
         )}
       >
