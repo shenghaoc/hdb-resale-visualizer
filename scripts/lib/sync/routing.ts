@@ -64,12 +64,19 @@ export async function resolveOneMapToken(options: OneMapTokenOptions): Promise<s
     return null;
   }
 
-  const payload = await fetchJson<unknown>(options.tokenEndpoint.toString(), {
-    method: "POST",
-    body: JSON.stringify({ email: options.email, password: options.password }),
-  });
-  const parsed = oneMapTokenResponseSchema.parse(payload);
-  return parsed.access_token;
+  try {
+    const payload = await fetchJson<unknown>(options.tokenEndpoint.toString(), {
+      method: "POST",
+      body: JSON.stringify({ email: options.email, password: options.password }),
+    });
+    const parsed = oneMapTokenResponseSchema.parse(payload);
+    return parsed.access_token;
+  } catch (error) {
+    console.warn(
+      `Failed to resolve OneMap token: ${error instanceof Error ? error.message : "unknown error"}. Falling back to walking-time estimates.`,
+    );
+    return null;
+  }
 }
 
 export async function fetchWalkingRoute(
@@ -189,11 +196,3 @@ export async function routeMissingPairs(
   return { routedCount, failedCount, failureSamples };
 }
 
-// Conservative pedestrian pace: distance / 1.25 m/s ≈ 75 m/min. Slightly
-// slower than the 80 m/min proxy used elsewhere in the app to account for
-// crossings, stairs, and detours not visible in straight-line distance.
-const FALLBACK_PACE_METERS_PER_SECOND = 1.25;
-
-export function fallbackWalkingTimeSeconds(distanceMeters: number): number {
-  return Math.round(distanceMeters / FALLBACK_PACE_METERS_PER_SECOND);
-}
