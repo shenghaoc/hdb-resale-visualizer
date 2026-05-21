@@ -17,6 +17,7 @@ import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { buildTownRecommendations } from "@/lib/town-recommendations";
 import { AppHeader } from "@/components/AppHeader";
+import { MapLocaleControl } from "@/components/MapLocaleControl";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
@@ -390,6 +391,10 @@ function App() {
             onDismiss={() => header.setIsHeaderVisible(false)}
           />
         ) : null}
+
+        {(panel.isDesktop || panel.mobileTab === null) && (
+          <MapLocaleControl isDesktop={panel.isDesktop} />
+        )}
 
         {/* Price-colour legend — only when map is visible */}
         <PriceLegend
