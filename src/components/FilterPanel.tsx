@@ -1,5 +1,5 @@
 import { useCallback, useId } from "react";
-import { PanelLeftClose, RefreshCw, Search } from "lucide-react";
+import { PanelLeft, PanelLeftClose, RefreshCw, Search } from "lucide-react";
 import { formatMonth } from "@/lib/format";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { useI18n } from "@/lib/i18n";
@@ -144,7 +144,11 @@ export function FilterPanel(props: FilterPanelProps) {
                 aria-expanded={desktopToggle.isOpen}
                 aria-controls="desktop-filters-content"
               >
-                <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                {desktopToggle.isOpen ? (
+                  <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                ) : (
+                  <PanelLeft data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                )}
                 {hidePanelLabel}
               </Button>
             ) : null}
@@ -162,7 +166,7 @@ export function FilterPanel(props: FilterPanelProps) {
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-5 px-3 pb-12 pt-3 sm:px-4">
+        <CardContent id="desktop-filters-content" className="flex flex-col gap-5 px-3 pb-12 pt-3 sm:px-4">
           <FieldGroup className="gap-4">
             <FieldSet className="gap-4">
               <FieldLegend className="v2-section-title">{t("filters.coreCriteria")}</FieldLegend>

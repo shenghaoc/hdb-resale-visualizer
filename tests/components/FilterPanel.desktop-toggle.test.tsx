@@ -53,7 +53,10 @@ describe("FilterPanel desktop panel toggle", () => {
       desktopToggle: { isOpen: true, onToggle: vi.fn() },
     });
 
-    expect(screen.getByRole("button", { name: "Hide filters" })).toBeInTheDocument();
+    const toggle = screen.getByRole("button", { name: "Hide filters" });
+    expect(toggle).toBeInTheDocument();
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(toggle).toHaveAttribute("aria-controls", "desktop-filters-content");
     expect(screen.getByTestId("filters-panel-toggle")).toHaveClass("sm:inline-flex");
   });
 
