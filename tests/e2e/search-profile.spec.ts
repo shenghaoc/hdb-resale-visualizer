@@ -51,7 +51,15 @@ test.describe("Search Profile Wizard", () => {
     await page.getByRole("button", { name: "70 yr", exact: true }).click();
     await page.getByRole("button", { name: "Next" }).click();
 
-    // 6. Review Step
+    // 6. Affordability Step (CPF, age, income — all optional)
+    await expect(page.getByText("Age and affordability?")).toBeVisible();
+    await page.getByLabel("Your age").fill("38");
+    await page.getByLabel("Co-applicant age").fill("36");
+    await page.getByLabel("CPF OA balance (SGD)").fill("120000");
+    await page.getByLabel("Household monthly income (SGD)").fill("9500");
+    await page.getByRole("button", { name: "Next" }).click();
+
+    // 7. Review Step
     await expect(page.getByText("Profile ready")).toBeVisible();
     await expect(page.getByText("4 ROOM")).toBeVisible();
     await expect(page.getByText("S$700,000")).toBeVisible();
@@ -62,9 +70,9 @@ test.describe("Search Profile Wizard", () => {
     const continueBtn = page.getByRole("button", { name: "Continue to map" });
     await continueBtn.click();
 
-    // 7. Verify wizard is closed and main map prompt or content is visible
+    // 8. Verify wizard is closed and main map prompt or content is visible
     await expect(title).not.toBeVisible();
-    
+
     // Verify local storage was populated correctly
     const profileJson = await page.evaluate(() => localStorage.getItem("hdb_resale_search_profile_v1"));
     expect(profileJson).not.toBeNull();
@@ -75,6 +83,10 @@ test.describe("Search Profile Wizard", () => {
     expect(profile.commuteAnchorMrt).toBe("RAFFLES PLACE MRT STATION");
     expect(profile.maxComfortableCommuteMinutes).toBe(30);
     expect(profile.minimumRemainingLeaseYears).toBe(70);
+    expect(profile.age).toBe(38);
+    expect(profile.coApplicantAge).toBe(36);
+    expect(profile.cpfOABalance).toBe(120000);
+    expect(profile.monthlyIncome).toBe(9500);
 
     const dismissed = await page.evaluate(() => localStorage.getItem("hdb_resale_search_profile_wizard_dismissed_v1"));
     expect(dismissed).toBe("1");

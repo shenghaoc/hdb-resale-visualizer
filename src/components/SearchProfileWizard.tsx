@@ -3,6 +3,11 @@ import { Check, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  SEARCH_PROFILE_MAX_APPLICANT_AGE,
+  SEARCH_PROFILE_MAX_MONETARY_VALUE,
+  SEARCH_PROFILE_MIN_APPLICANT_AGE,
+} from "@/lib/constants";
 import { useI18n } from "@/lib/i18n";
 import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
 import { cn } from "@/lib/utils";
@@ -21,6 +26,13 @@ function formatStationLabel(stationName: string) {
     .toLowerCase()
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+const isOptionalInRange = (value: string, min: number, max: number) =>
+  value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
+
+const isOptionalIntegerInRange = (value: string, min: number, max: number) =>
+  value.trim().length === 0 ||
+  (Number.isInteger(Number(value)) && Number(value) >= min && Number(value) <= max);
 
 const WIZARD_ICONS = {
   welcome: (
@@ -57,6 +69,13 @@ const WIZARD_ICONS = {
       <path d="M8 13.5h2v2H8z" fill="currentColor" stroke="none" />
     </svg>
   ),
+  affordability: (
+    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M4 7h16v12.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V7Z" strokeLinejoin="round" />
+      <path d="M4 7V5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V7" strokeLinejoin="round" />
+      <path d="M9 13h6M9 16.5h4" strokeLinecap="round" />
+    </svg>
+  ),
 } as const;
 
 function WizardIcon({
@@ -75,6 +94,10 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const [commuteAnchorMrt, setCommuteAnchorMrt] = useState("");
   const [maxCommute, setMaxCommute] = useState("");
   const [minLease, setMinLease] = useState("");
+  const [age, setAge] = useState("");
+  const [coApplicantAge, setCoApplicantAge] = useState("");
+  const [cpfOABalance, setCpfOABalance] = useState("");
+  const [monthlyIncome, setMonthlyIncome] = useState("");
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [stationSearch, setStationSearch] = useState("");
@@ -83,7 +106,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const budgetPresets = [500000, 700000, 900000, 1200000];
   const commutePresets = [20, 30, 40, 50];
   const leasePresets = [50, 60, 70, 80];
-  const totalSteps = 6;
+  const totalSteps = 7;
   const filteredStations = useMemo(() => {
     const query = stationSearch.trim().toUpperCase();
     if (!query) return mrtStations;
@@ -93,23 +116,58 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const canContinueStep = useMemo(() => {
     if (step === 0) return true;
     if (step === 1) return mainFlatType.length > 0;
-    if (step === 2) return maxBudget.trim().length === 0 || Number(maxBudget) > 0;
+    if (step === 2) return isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE);
     if (step === 3) return commuteAnchorLabel.trim().length > 0 && commuteAnchorMrt.length > 0 && Number(maxCommute) > 0;
     if (step === 4) return Number(minLease) > 0;
-    if (step === 5) return true;
+    if (step === 5) {
+      return (
+        isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
+        isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
+      );
+    }
+    if (step === 6) return true;
     return false;
-  }, [step, mainFlatType, maxBudget, commuteAnchorLabel, commuteAnchorMrt, maxCommute, minLease]);
+  }, [
+    step,
+    mainFlatType,
+    maxBudget,
+    commuteAnchorLabel,
+    commuteAnchorMrt,
+    maxCommute,
+    minLease,
+    age,
+    coApplicantAge,
+    cpfOABalance,
+    monthlyIncome,
+  ]);
 
   const canSubmit = useMemo(() => {
     return (
       mainFlatType.length > 0 &&
-      (maxBudget.trim().length === 0 || Number(maxBudget) > 0) &&
+      isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
       commuteAnchorLabel.trim().length > 0 &&
       commuteAnchorMrt.length > 0 &&
       Number(maxCommute) > 0 &&
-      Number(minLease) > 0
+      Number(minLease) > 0 &&
+      isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
+      isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
     );
-  }, [mainFlatType, maxBudget, commuteAnchorLabel, commuteAnchorMrt, maxCommute, minLease]);
+  }, [
+    mainFlatType,
+    maxBudget,
+    commuteAnchorLabel,
+    commuteAnchorMrt,
+    maxCommute,
+    minLease,
+    age,
+    coApplicantAge,
+    cpfOABalance,
+    monthlyIncome,
+  ]);
 
   const nextLabel =
     step === 0
@@ -126,11 +184,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     }
 
     if (!canSubmit) return;
+    const parseOptionalNumber = (value: string): number | null =>
+      value.trim() !== "" ? Number(value) : null;
     onComplete({
       version: 1,
       mainFlatType,
       alternativeFlatTypes: [],
-      maxBudget: maxBudget.trim() !== "" ? Number(maxBudget) : null,
+      maxBudget: parseOptionalNumber(maxBudget),
       commuteAnchorLabel: commuteAnchorLabel.trim(),
       commuteAnchorMrt,
       maxComfortableCommuteMinutes: Number(maxCommute),
@@ -139,6 +199,10 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
       budgetStretchPercent: 5,
       showStretchOptions: true,
       showAllBlocks: false,
+      age: parseOptionalNumber(age),
+      coApplicantAge: parseOptionalNumber(coApplicantAge),
+      cpfOABalance: parseOptionalNumber(cpfOABalance),
+      monthlyIncome: parseOptionalNumber(monthlyIncome),
     });
   };
 
@@ -449,6 +513,104 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               ) : null}
 
               {step === 5 ? (
+                <div>
+                  <div className="mb-5 flex items-start gap-3">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
+                      <WizardIcon stepKey="affordability" />
+                    </div>
+                    <div>
+                      <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
+                        {t("searchProfile.wizard.question.affordability")}
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {t("searchProfile.wizard.hint.affordability")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                          {t("searchProfile.age")}
+                        </p>
+                        <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                          <Input
+                            inputMode="numeric"
+                            type="number"
+                            step="1"
+                            min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
+                            max={SEARCH_PROFILE_MAX_APPLICANT_AGE}
+                            value={age}
+                            onChange={(e) => setAge(e.target.value)}
+                            placeholder={t("searchProfile.agePlaceholder")}
+                            aria-label={t("searchProfile.age")}
+                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                          {t("searchProfile.coApplicantAge")}
+                        </p>
+                        <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                          <Input
+                            inputMode="numeric"
+                            type="number"
+                            step="1"
+                            min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
+                            max={SEARCH_PROFILE_MAX_APPLICANT_AGE}
+                            value={coApplicantAge}
+                            onChange={(e) => setCoApplicantAge(e.target.value)}
+                            placeholder={t("searchProfile.coApplicantAgePlaceholder")}
+                            aria-label={t("searchProfile.coApplicantAge")}
+                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        {t("searchProfile.cpfOABalance")}
+                      </p>
+                      <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                        <div className="flex items-center">
+                          <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
+                          <Input
+                            inputMode="numeric"
+                            type="number"
+                            value={cpfOABalance}
+                            onChange={(e) => setCpfOABalance(e.target.value)}
+                            placeholder={t("searchProfile.cpfOABalancePlaceholder")}
+                            aria-label={t("searchProfile.cpfOABalance")}
+                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        {t("searchProfile.monthlyIncome")}
+                      </p>
+                      <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                        <div className="flex items-center">
+                          <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
+                          <Input
+                            inputMode="numeric"
+                            type="number"
+                            value={monthlyIncome}
+                            onChange={(e) => setMonthlyIncome(e.target.value)}
+                            placeholder={t("searchProfile.monthlyIncomePlaceholder")}
+                            aria-label={t("searchProfile.monthlyIncome")}
+                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+
+              {step === 6 ? (
                 <div className="pt-2 text-center">
                   <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
                     <WizardIcon stepKey="welcome" />
@@ -477,6 +639,26 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
+                    {age ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.age", { age: Number(age) })}
+                      </div>
+                    ) : null}
+                    {coApplicantAge ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
+                      </div>
+                    ) : null}
+                    {cpfOABalance ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.cpfOABalance", { amount: Number(cpfOABalance).toLocaleString() })}
+                      </div>
+                    ) : null}
+                    {monthlyIncome ? (
+                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                        {t("searchProfile.chip.monthlyIncome", { amount: Number(monthlyIncome).toLocaleString() })}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ) : null}
