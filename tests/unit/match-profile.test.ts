@@ -26,7 +26,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2025-01"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400 },
+    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
     nearbyMrts: [],
     postalCode: null,
     ...overrides,
@@ -71,7 +71,7 @@ describe("evaluateBlockForProfile", () => {
     const block = makeBlock({
       addressKey: "x",
       medianPrice: 600_000,
-      nearestMrt: { stationName: "X", distanceMeters: 400 },
+      nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
     });
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
@@ -85,7 +85,7 @@ describe("evaluateBlockForProfile", () => {
     const block = makeBlock({
       addressKey: "x",
       medianPrice: 720_000,
-      nearestMrt: { stationName: "X", distanceMeters: 400 },
+      nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
     });
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
@@ -100,7 +100,7 @@ describe("evaluateBlockForProfile", () => {
     const block = makeBlock({
       addressKey: "x",
       medianPrice: 720_000,
-      nearestMrt: { stationName: "X", distanceMeters: 3000 },
+      nearestMrt: { stationName: "X", distanceMeters: 3000, walkingTimeSeconds: 2400 },
     });
     const profile = makeProfile({
       maxBudget: 700_000,
@@ -115,7 +115,7 @@ describe("evaluateBlockForProfile", () => {
     const block = makeBlock({
       addressKey: "x",
       medianPrice: 1_500_000,
-      nearestMrt: { stationName: "X", distanceMeters: 6000 },
+      nearestMrt: { stationName: "X", distanceMeters: 6000, walkingTimeSeconds: 4800 },
     });
     const profile = makeProfile({
       maxBudget: 700_000,
@@ -144,10 +144,10 @@ describe("evaluateBlockForProfile", () => {
   it("passes commute when the anchor MRT is in nearbyMrts and within the threshold", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 5000 },
+      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
       nearbyMrts: [
-        { stationName: "BEDOK MRT STATION", distanceMeters: 400 },
-        { stationName: "OTHER MRT STATION", distanceMeters: 5000 },
+        { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+        { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
       ],
     });
     const profile = makeProfile({
@@ -160,8 +160,8 @@ describe("evaluateBlockForProfile", () => {
   it("fails commute when anchor MRT is not in nearbyMrts", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 400 },
-      nearbyMrts: [{ stationName: "OTHER MRT STATION", distanceMeters: 400 }],
+      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+      nearbyMrts: [{ stationName: "OTHER MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 }],
     });
     const profile = makeProfile({
       maxComfortableCommuteMinutes: 30,
@@ -173,8 +173,8 @@ describe("evaluateBlockForProfile", () => {
   it("falls back to nearestMrt distance when commuteAnchorMrt is null", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "NEARBY MRT STATION", distanceMeters: 400 },
-      nearbyMrts: [{ stationName: "NEARBY MRT STATION", distanceMeters: 400 }],
+      nearestMrt: { stationName: "NEARBY MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+      nearbyMrts: [{ stationName: "NEARBY MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 }],
     });
     const profile = makeProfile({
       maxComfortableCommuteMinutes: 30,
@@ -204,13 +204,13 @@ describe("applyProfileVisibility", () => {
     addressKey: "pass",
     flatTypes: ["4 ROOM"],
     medianPrice: 600_000,
-    nearestMrt: { stationName: "X", distanceMeters: 400 },
+    nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
   });
   const stretching = makeBlock({
     addressKey: "stretch",
     flatTypes: ["4 ROOM"],
     medianPrice: 720_000,
-    nearestMrt: { stationName: "X", distanceMeters: 3000 },
+    nearestMrt: { stationName: "X", distanceMeters: 3000, walkingTimeSeconds: 2400 },
   });
   const weak = makeBlock({
     addressKey: "weak",

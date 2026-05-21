@@ -22,7 +22,7 @@ const baseBlock: BlockSummary = {
   availableDateRange: ["2023-01", "2024-01"],
   flatTypes: ["3 ROOM", "4 ROOM"],
   flatModels: ["Model A"],
-  nearestMrt: { stationName: "Ang Mo Kio", distanceMeters: 500 },
+  nearestMrt: { stationName: "Ang Mo Kio", distanceMeters: 500, walkingTimeSeconds: 400 },
 };
 
 const baseItem: ShortlistItem = {
@@ -75,7 +75,7 @@ describe("buildShortlistComparisonRows", () => {
       medianPricePerSqft: 580,
       recentTransactionCount: 12,
       leaseCommenceRange: [1990, 2000],
-      nearestMrt: { stationName: "Ang Mo Kio", distanceMeters: 500 },
+      nearestMrt: { stationName: "Ang Mo Kio", distanceMeters: 500, walkingTimeSeconds: 400 },
       targetPrice: 480_000,
       notes: "Quiet corner, north-facing.",
     });
@@ -170,7 +170,7 @@ describe("buildShortlistComparisonRows", () => {
 
     expect(withMrt.nearestMrt).toEqual({
       stationName: "Ang Mo Kio",
-      distanceMeters: 500,
+      distanceMeters: 500, walkingTimeSeconds: 400
     });
     expect(withoutMrt.nearestMrt).toBeNull();
   });

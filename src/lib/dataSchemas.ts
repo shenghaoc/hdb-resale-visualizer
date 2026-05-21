@@ -15,7 +15,11 @@ const coordinatesSchema = z.object({
 
 const monthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
 
-const nearestMrtSchema = z.object({ stationName: z.string(), distanceMeters: z.number().nonnegative() });
+const nearestMrtSchema = z.object({
+  stationName: z.string(),
+  distanceMeters: z.number().nonnegative(),
+  walkingTimeSeconds: z.number().nonnegative(),
+});
 
 export const blockSummarySchema = z.object({
   addressKey: z.string(),

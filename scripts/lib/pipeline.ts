@@ -85,6 +85,13 @@ export type BuildArtifactsInput = {
   hawkers?: AmenityLocation[];
   supermarkets?: AmenityLocation[];
   parks?: AmenityLocation[];
+  /**
+   * Map keyed by `${addressKey}|${stationName}` returning real walking time in
+   * seconds for that block → station pair. When a pair is missing (failed API
+   * call, no token configured, fixture data), the pipeline falls back to a
+   * straight-line estimate so the build never blocks on routing failures.
+   */
+  walkingTimes?: Map<string, number>;
   metadata: Manifest["sources"];
 };
 
@@ -328,6 +335,77 @@ function findNearestMrtDistanceMeters(
   return minMrtDistance;
 }
 
+export type NearestStationPick = {
+  stationName: string;
+  distanceMeters: number;
+  exitLat: number;
+  exitLng: number;
+};
+
+/**
+ * Returns the top-N nearest stations for a block, keyed by station name with the
+ * closest exit selected. Exposed so callers can pre-route walking times against
+ * the same pairs the artifact pipeline will materialise.
+ */
+export function pickNearestStations(
+  geocode: { lat: number; lng: number },
+  mrtExits: MrtExit[],
+  limit = 3,
+): NearestStationPick[] {
+  const closestExitByStation = new Map<
+    string,
+    { distance: number; exitLat: number; exitLng: number }
+  >();
+
+  for (const exit of mrtExits) {
+    const distance = haversineDistanceMeters(geocode, { lat: exit.lat, lng: exit.lng });
+    const current = closestExitByStation.get(exit.stationName);
+    if (current === undefined || distance < current.distance) {
+      closestExitByStation.set(exit.stationName, {
+        distance,
+        exitLat: exit.lat,
+        exitLng: exit.lng,
+      });
+    }
+  }
+
+  return [...closestExitByStation.entries()]
+    .sort(([, left], [, right]) => left.distance - right.distance)
+    .slice(0, limit)
+    .map(([stationName, info]) => ({
+      stationName,
+      distanceMeters: Math.round(info.distance),
+      exitLat: info.exitLat,
+      exitLng: info.exitLng,
+    }));
+}
+
+// Conservative pedestrian pace: distance / 1.25 m/s ≈ 75 m/min. Slightly slower
+// than the 80 m/min commute-proxy elsewhere in the codebase to account for
+// crossings, stairs, and detours that straight-line distance can't see.
+const FALLBACK_WALKING_PACE_M_PER_S = 1.25;
+
+export function estimateWalkingTimeSeconds(distanceMeters: number): number {
+  return Math.round(distanceMeters / FALLBACK_WALKING_PACE_M_PER_S);
+}
+
+export function walkingTimeLookupKey(addressKey: string, stationName: string): string {
+  return `${addressKey}|${stationName}`;
+}
+
+function resolveWalkingTimeSeconds(
+  addressKey: string,
+  stationName: string,
+  distanceMeters: number,
+  lookup: Map<string, number> | undefined,
+): number {
+  const cached = lookup?.get(walkingTimeLookupKey(addressKey, stationName));
+  if (cached !== undefined) {
+    return cached;
+  }
+  return estimateWalkingTimeSeconds(distanceMeters);
+}
+
 function resolveLeaseCommenceYear(leaseYears: number[]) {
   // For HDB, all units in a block share the same 99-year lease that starts
   // when the land is acquired from the state — use the lease_commence_date
@@ -429,6 +507,7 @@ export function buildArtifacts({
   hawkers,
   supermarkets,
   parks,
+  walkingTimes,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
   const runTimestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
@@ -488,21 +567,21 @@ export function buildArtifacts({
 
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
 
-    const nearestStations = new Map<string, number>();
-    for (const exit of mrtExits) {
-      const distance = haversineDistanceMeters(
-        { lat: geocode.lat, lng: geocode.lng },
-        { lat: exit.lat, lng: exit.lng },
-      );
-      const currentDistance = nearestStations.get(exit.stationName);
-      if (currentDistance === undefined || distance < currentDistance) {
-        nearestStations.set(exit.stationName, distance);
-      }
-    }
-    const nearbyMrts = [...nearestStations.entries()]
-      .sort((left, right) => left[1] - right[1])
-      .slice(0, 3)
-      .map(([stationName, distanceMeters]) => ({ stationName, distanceMeters: Math.round(distanceMeters) }));
+    const nearbyStationPicks = pickNearestStations(
+      { lat: geocode.lat, lng: geocode.lng },
+      mrtExits,
+      3,
+    );
+    const nearbyMrts = nearbyStationPicks.map((pick) => ({
+      stationName: pick.stationName,
+      distanceMeters: pick.distanceMeters,
+      walkingTimeSeconds: resolveWalkingTimeSeconds(
+        addressKey,
+        pick.stationName,
+        pick.distanceMeters,
+        walkingTimes,
+      ),
+    }));
     const nearestMrt: BlockSummary["nearestMrt"] = nearbyMrts[0] ?? null;
     const property = propertyByAddress.get(addressKey);
     const leaseCommenceYear = resolveLeaseCommenceYear(leaseYears);

@@ -20,7 +20,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2025-01"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "X", distanceMeters: 400 },
+    nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
     nearbyMrts: [],
     postalCode: null,
     ...overrides,

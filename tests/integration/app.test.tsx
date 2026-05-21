@@ -198,7 +198,7 @@ const blocks: BlockSummary[] = [
     flatModels: ["MODEL A"],
     nearestMrt: {
       stationName: "BEDOK NORTH MRT STATION",
-      distanceMeters: 400,
+      distanceMeters: 400, walkingTimeSeconds: 320
     },
   },
 ];

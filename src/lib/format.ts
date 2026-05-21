@@ -109,6 +109,12 @@ export function formatMeters(value: number, t: Translator, locale?: Locale): str
   return t("unit.m", { value: formatNumber(value, 0, locale) });
 }
 
+export function formatMinutesWalk(seconds: number, t: Translator, locale?: Locale): string {
+  // Round up so that sub-30-second jaunts read as "1 min walk" rather than "0".
+  const minutes = Math.max(1, Math.round(seconds / 60));
+  return t("unit.minutesWalk", { value: formatNumber(minutes, 0, locale) });
+}
+
 export function formatSqm(value: number, t: Translator, locale?: Locale): string {
   return t("unit.sqm", { value: formatNumber(value, 0, locale) });
 }

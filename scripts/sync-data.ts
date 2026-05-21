@@ -11,6 +11,8 @@ import { fileURLToPath } from "node:url";
 import {
   buildArtifacts,
   buildMrtStationsGeoJson,
+  pickNearestStations,
+  walkingTimeLookupKey,
   type AmenityLocation,
   type GeocodeCacheFile,
   type SchoolLocation,
@@ -18,6 +20,14 @@ import {
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
 import { geocodeAddress, loadGeocodeCache, saveGeocodeCache } from "./lib/sync/geocode";
+import {
+  buildRoutingCacheKey,
+  loadRoutingCache,
+  resolveOneMapToken,
+  routeMissingPairs,
+  saveRoutingCache,
+  type RoutingCacheFile,
+} from "./lib/sync/routing";
 import {
   normalizeAmenityGeoJson,
   normalizeMrtFeatures,
@@ -36,11 +46,17 @@ import {
   RESALE_COLLECTION_ID,
   SFA_SUPERMARKET_DATASET_ID,
 } from "./lib/sync/constants";
-import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "./lib/syncGuards";
+import {
+  resolveOneMapRoutingEndpoint,
+  resolveOneMapSearchEndpoint,
+  resolveOneMapTokenEndpoint,
+  validateGeneratedArtifacts,
+} from "./lib/syncGuards";
 
 const ROOT = process.cwd();
 const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
 const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
+const ROUTING_CACHE_PATH = path.join(ROOT, "data", "cache", "walking-times.json");
 
 type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
 type TimestampFactory = () => string;
@@ -234,6 +250,113 @@ export async function geocodeMissingAddresses(
   return { geocodeFailureCount, geocodeFailureSamples };
 }
 
+export async function computeWalkingTimes(
+  options: {
+    geocodes: Record<string, import("./lib/pipeline").GeocodeEntry>;
+    addressKeys: Iterable<string>;
+    mrtExits: import("./lib/pipeline").MrtExit[];
+    routingCache: RoutingCacheFile;
+    cachePath: string;
+    skipRouting: boolean;
+    routingEndpoint: URL;
+    tokenEndpoint: URL;
+    concurrency: number;
+  },
+  deps: {
+    resolveOneMapTokenFn?: typeof resolveOneMapToken;
+    routeMissingPairsFn?: typeof routeMissingPairs;
+    saveRoutingCacheFn?: typeof saveRoutingCache;
+    now?: TimestampFactory;
+  } = {},
+): Promise<{ walkingTimes: Map<string, number>; fallbackCount: number; failureCount: number }> {
+  const resolveOneMapTokenFn = deps.resolveOneMapTokenFn ?? resolveOneMapToken;
+  const routeMissingPairsFn = deps.routeMissingPairsFn ?? routeMissingPairs;
+  const saveRoutingCacheFn = deps.saveRoutingCacheFn ?? saveRoutingCache;
+  const now = deps.now ?? nowTimestamp;
+
+  const pairs: Array<{
+    key: string;
+    addressKey: string;
+    stationName: string;
+    start: { lat: number; lng: number };
+    end: { lat: number; lng: number };
+  }> = [];
+
+  for (const addressKey of options.addressKeys) {
+    const geocode = options.geocodes[addressKey];
+    if (!geocode) {
+      continue;
+    }
+    const start = { lat: geocode.lat, lng: geocode.lng };
+    const picks = pickNearestStations(start, options.mrtExits, 3);
+    for (const pick of picks) {
+      const end = { lat: pick.exitLat, lng: pick.exitLng };
+      pairs.push({
+        key: buildRoutingCacheKey(start, end),
+        addressKey,
+        stationName: pick.stationName,
+        start,
+        end,
+      });
+    }
+  }
+
+  if (options.skipRouting) {
+    console.log(
+      `Skipping OneMap routing; using ${Object.keys(options.routingCache.entries).length} cached pairs and falling back where missing.`,
+    );
+  } else {
+    const token = await resolveOneMapTokenFn({
+      email: process.env.ONEMAP_EMAIL,
+      password: process.env.ONEMAP_PASSWORD,
+      token: process.env.ONEMAP_TOKEN,
+      tokenEndpoint: options.tokenEndpoint,
+    });
+
+    if (!token) {
+      console.warn(
+        "No ONEMAP_TOKEN (or ONEMAP_EMAIL+ONEMAP_PASSWORD) configured; falling back to straight-line walking-time estimates for all pairs.",
+      );
+    } else {
+      const dedupedPairs = [...new Map(pairs.map((pair) => [pair.key, pair])).values()];
+      const result = await routeMissingPairsFn({
+        pairs: dedupedPairs,
+        cache: options.routingCache,
+        routingEndpoint: options.routingEndpoint,
+        token,
+        cachePath: options.cachePath,
+        concurrency: options.concurrency,
+        now,
+      });
+      if (result.failedCount > 0) {
+        console.warn(
+          `OneMap routing failed for ${result.failedCount} pairs. Sample: ${result.failureSamples.join(" | ")}`,
+        );
+      }
+      options.routingCache.updatedAt = now();
+      await saveRoutingCacheFn(options.cachePath, options.routingCache);
+    }
+  }
+
+  const walkingTimes = new Map<string, number>();
+  let fallbackCount = 0;
+  let failureCount = 0;
+  for (const pair of pairs) {
+    const cached = options.routingCache.entries[pair.key];
+    if (cached) {
+      walkingTimes.set(walkingTimeLookupKey(pair.addressKey, pair.stationName), cached.walkingTimeSeconds);
+    } else {
+      fallbackCount += 1;
+      if (!options.skipRouting) {
+        // skipRouting fallbacks are expected, not failures.
+        failureCount += 1;
+      }
+    }
+  }
+
+  return { walkingTimes, fallbackCount, failureCount };
+}
+
 export async function validateAndWriteArtifacts(
   options: {
     artifacts: ReturnType<typeof buildArtifacts>;
@@ -267,7 +390,10 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const force = argv.includes("--force");
   const skipGeocoding = argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
   const skipAmenities = argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+  const skipRouting = argv.includes("--skip-routing") || process.env.SKIP_ROUTING === "1";
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
+  const routingEndpoint = resolveOneMapRoutingEndpoint();
+  const tokenEndpoint = resolveOneMapTokenEndpoint();
 
   await ensureDataDirectories();
 
@@ -339,11 +465,34 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   geocodeCache.updatedAt = nowTimestamp();
   await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
 
+  const routingCache = await loadRoutingCache(ROUTING_CACHE_PATH);
+  const routingConcurrency = Math.max(
+    1,
+    Number(process.env.ROUTING_CONCURRENCY ?? "4"),
+  );
+  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes({
+    geocodes: geocodeCache.entries,
+    addressKeys: uniqueAddresses.keys(),
+    mrtExits,
+    routingCache,
+    cachePath: ROUTING_CACHE_PATH,
+    skipRouting,
+    routingEndpoint,
+    tokenEndpoint,
+    concurrency: routingConcurrency,
+  });
+  if (walkingFallbackCount > 0) {
+    console.log(
+      `Walking-time fallbacks used for ${walkingFallbackCount} block→station pairs (straight-line / 1.25 m/s).`,
+    );
+  }
+
   const artifacts = buildArtifacts({
     transactions,
     propertyInfo,
     mrtExits,
     geocodes: geocodeCache.entries,
+    walkingTimes,
     ...amenities,
     metadata: {
       resaleCollectionId: RESALE_COLLECTION_ID,
