@@ -204,9 +204,9 @@ export function useFilterPipeline({
   // Determine if there is any active filter/search/selection state, independent of which panel is visible.
   const hasResultScope = Boolean(
     effectiveFilters.town ||
-    resolvedSearch.trim() ||
-    geographicIntent ||
-    rawFilters.selectedAddressKey,
+      resolvedSearch.trim() ||
+      geographicIntent ||
+      rawFilters.selectedAddressKey,
   );
 
   const hasMapMarkerScope = Boolean(
@@ -214,12 +214,10 @@ export function useFilterPipeline({
   );
 
   const filteredBlocks = useMemo(() => {
-    // If the results panel is not visible, do not compute filtered blocks.
     if (!resultsVisible) return [];
-    if (!hasResultScope) return [];
     const scoped = filterScopedBlocks(blocks, stableFilters, geographicIntent);
     return applyProfileVisibility(scoped, searchProfile);
-  }, [blocks, filterScopedBlocks, geographicIntent, hasResultScope, resultsVisible, searchProfile, stableFilters]);
+  }, [blocks, filterScopedBlocks, geographicIntent, resultsVisible, searchProfile, stableFilters]);
 
   const selectedAddressKey = rawFilters.selectedAddressKey;
 

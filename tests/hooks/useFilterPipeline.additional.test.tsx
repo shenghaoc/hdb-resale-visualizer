@@ -210,25 +210,6 @@ describe("useFilterPipeline — additional edge cases", () => {
       expect(result.current.filteredBlocks).toHaveLength(0);
     });
 
-    it("returns empty array when hasResultScope is false", () => {
-      const blocks = [makeBlock({ addressKey: "addr-1" })];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
-
-      const { result } = renderHook(() =>
-        useFilterPipeline({
-          manifest,
-          rawFilters: baseFilters,
-          userLocation: null,
-          resultsVisible: true,
-          savedVisible: false,
-          shortlistCount: 0,
-          searchProfile: DEFAULT_SEARCH_PROFILE,
-          t,
-        }),
-      );
-
-      expect(result.current.filteredBlocks).toHaveLength(0);
-    });
   });
 
   describe("mapFilteredBlocks", () => {
