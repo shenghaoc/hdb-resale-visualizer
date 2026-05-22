@@ -700,7 +700,7 @@ export function DetailDrawer({
                       </span>
                     </div>
                   </section>
-                ) : searchProfile && !searchProfile.monthlyIncome ? (
+                ) : searchProfile && searchProfile.monthlyIncome === null ? (
                   <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
                     <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
                       <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />

@@ -275,6 +275,33 @@ describe("computeAffordabilityVerdict", () => {
     expect(verdict.loanAmount).toBe(0);
   });
 
+  it("zero-income buyer (e.g. retiree) still gets a verdict from CPF balance", () => {
+    // monthlyIncome 0 (explicitly set, not null) → no loan but CPF can cover price.
+    // ceiling = CPF = 200k, medianPrice 150k < 200k * 0.8 = 160k → comfortable.
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 0, cpfOABalance: 200000, age: 35 }),
+      150000,
+    );
+    expect(verdict.status).toBe("comfortable");
+    expect(verdict.loanAmount).toBe(0);
+    expect(verdict.monthlyRepayment).toBe(0);
+    expect(verdict.downPaymentFromCpf).toBe(150000);
+    expect(verdict.cashOutlay).toBe(0);
+    expect(verdict.maxAffordablePrice).toBe(200000);
+  });
+
+  it("zero-income buyer with insufficient CPF — status over", () => {
+    // monthlyIncome 0, CPF 100k, medianPrice 150k → ceiling = 100k, cashOutlay = 50k.
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 0, cpfOABalance: 100000, age: 35 }),
+      150000,
+    );
+    expect(verdict.status).toBe("over");
+    expect(verdict.loanAmount).toBe(0);
+    expect(verdict.downPaymentFromCpf).toBe(100000);
+    expect(verdict.cashOutlay).toBe(50000);
+  });
+
   it("cash outlay when CPF covers full 25% down-payment", () => {
     // Price = 500k, down payment = 125k (25%), CPF 200k covers full 125k, cash = 0
     const verdict = computeAffordabilityVerdict(

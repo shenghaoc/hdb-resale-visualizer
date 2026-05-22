@@ -103,9 +103,10 @@ export type AffordabilityVerdict = {
 /**
  * Compute an affordability verdict for a block given the user's profile.
  *
- * When monthly income is missing the verdict returns status "unknown" and
- * zeroed financial figures — callers should suppress the affordability
- * signal entirely in that case.
+ * When monthly income has not been provided (null) the verdict returns
+ * status "unknown" and zeroed financial figures — callers should suppress
+ * the affordability signal entirely in that case. A zero-income profile
+ * (e.g. retiree) still yields a verdict based on CPF OA balance alone.
  *
  * NOTE: coApplicantAge is collected in the wizard but not yet used here.
  * HDB caps loan tenure at 65 minus the older applicant's age, so a younger
@@ -119,14 +120,9 @@ export function computeAffordabilityVerdict(
   },
   medianPrice: number,
 ): AffordabilityVerdict {
-  const income = profile.monthlyIncome ?? 0;
-  const cpf = profile.cpfOABalance ?? 0;
-  const tenureYears = computeLoanTenureYears(profile.age);
-  const ceiling = maxAffordablePrice(profile);
-
-  if (income <= 0) {
+  if (profile.monthlyIncome === null) {
     return {
-      maxAffordablePrice: ceiling,
+      maxAffordablePrice: maxAffordablePrice(profile),
       monthlyRepayment: 0,
       cashOutlay: 0,
       downPaymentFromCpf: 0,
@@ -134,6 +130,11 @@ export function computeAffordabilityVerdict(
       status: "unknown",
     };
   }
+
+  const income = profile.monthlyIncome;
+  const cpf = profile.cpfOABalance ?? 0;
+  const tenureYears = computeLoanTenureYears(profile.age);
+  const ceiling = maxAffordablePrice(profile);
 
   let downPaymentFromCpf: number;
   let cashOutlay: number;
