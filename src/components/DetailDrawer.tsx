@@ -649,7 +649,7 @@ export function DetailDrawer({
                           {t("affordability.downPayment")}
                         </span>
                         <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(0.25 * (currentSummary?.medianPrice ?? 0), locale)}
+                          {formatCurrency(affordabilityVerdict.downPaymentFromCpf + affordabilityVerdict.cashOutlay, locale)}
                         </div>
                       </div>
                       <div>

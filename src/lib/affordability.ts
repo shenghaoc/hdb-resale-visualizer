@@ -44,7 +44,7 @@ export function maxLoanFor(monthlyIncome: number, tenureMonths?: number): number
  * Two constraints:
  *  1. Loan: 75% LTV × price must be serviceable at 30% MSR over the
  *     age-capped tenure.
- *  2. CPF down payment: CPF OA can cover at most 20% of price.
+ *  2. CPF down payment: CPF OA can cover at most 25% of price.
  *
  * Returns 0 when neither constraint is binding (no usable data), or when
  * the CPF down-payment constraint alone yields 0 (no CPF balance).
@@ -58,25 +58,20 @@ export function maxAffordablePrice(profile: {
   const income = profile.monthlyIncome ?? 0;
   const tenureYears = computeLoanTenureYears(profile.age);
 
-  // Loan constraint: max loan ÷ 0.75 gives the total price that loan can support.
-  // When tenure is 0 (age ≥ 65) no HDB loan is available — buyer must pay
-  // entirely from own funds.
   let loanConstraint = Number.POSITIVE_INFINITY;
-  if (income > 0 && tenureYears > 0) {
-    const maxLoan = maxLoanFor(income, tenureYears * 12);
+  const maxLoan = (income > 0 && tenureYears > 0) ? maxLoanFor(income, tenureYears * 12) : 0;
+
+  if (maxLoan > 0) {
     loanConstraint = maxLoan / HDB_MAX_LTV_RATIO;
-  } else if (tenureYears <= 0 && income > 0) {
-    // Age ≥ 65: no loan eligibility. Max price is CPF alone (all-cash scenario
-    // can't be assessed without cash data, so return CPF balance as ceiling).
+  } else {
+    // No loan eligibility: Max price is limited to CPF balance (assuming no cash data).
     return Math.floor(cpf);
   }
 
-  // CPF constraint: CPF OA can cover up to 20% of the purchase price.
-  const cpfConstraint = cpf > 0 ? cpf / 0.2 : 0;
+  // CPF constraint: CPF OA must cover the downpayment (1 - LTV).
+  const downpaymentRatio = 1 - HDB_MAX_LTV_RATIO;
+  const cpfConstraint = cpf > 0 ? cpf / downpaymentRatio : 0;
 
-  if (!Number.isFinite(loanConstraint)) {
-    return Math.floor(cpfConstraint);
-  }
   return Math.floor(Math.min(loanConstraint, cpfConstraint));
 }
 
@@ -97,7 +92,7 @@ export type AffordabilityVerdict = {
   monthlyRepayment: number;
   /** Cash outlay required for the down payment (after CPF OA contribution). */
   cashOutlay: number;
-  /** CPF OA amount applied toward the 20% down-payment portion. */
+  /** CPF OA amount applied toward the 25% down-payment portion. */
   downPaymentFromCpf: number;
   /** Loan amount (75% of the block's median price). */
   loanAmount: number;
@@ -148,10 +143,16 @@ export function computeAffordabilityVerdict(
     downPaymentFromCpf = Math.min(cpf, medianPrice);
     cashOutlay = Math.max(0, medianPrice - downPaymentFromCpf);
   } else {
-    downPayment = 0.25 * medianPrice;
-    downPaymentFromCpf = Math.min(cpf, 0.2 * medianPrice);
-    cashOutlay = Math.max(0, downPayment - downPaymentFromCpf);
-    loanAmount = 0.75 * medianPrice;
+    const maxLoan = maxLoanFor(income, tenureYears * 12);
+    const requiredLoan = HDB_MAX_LTV_RATIO * medianPrice;
+    loanAmount = Math.min(requiredLoan, maxLoan);
+
+    downPayment = (1 - HDB_MAX_LTV_RATIO) * medianPrice;
+    const loanShortfall = Math.max(0, requiredLoan - maxLoan);
+    
+    const totalRequiredFromOwnFunds = downPayment + loanShortfall;
+    downPaymentFromCpf = Math.min(cpf, totalRequiredFromOwnFunds);
+    cashOutlay = Math.max(0, totalRequiredFromOwnFunds - downPaymentFromCpf);
 
     const months = tenureYears * 12;
     const monthlyRate = HDB_CONCESSIONARY_ANNUAL_RATE / 12;

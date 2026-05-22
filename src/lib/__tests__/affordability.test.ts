@@ -122,20 +122,20 @@ describe("maxAffordablePrice", () => {
   it("combines loan and CPF constraints — typical young buyer", () => {
     // Income $8,000, CPF $100k, age 35 → max loan ≈ $513,082, tenure 25y
     // Loan-constrained price = maxLoan / 0.75 ≈ $684,109
-    // CPF-constrained price = 100k / 0.20 = $500,000
-    // CPF constraint is tighter → $500,000
+    // CPF-constrained price = 100k / 0.25 = $400,000
+    // CPF constraint is tighter → $400,000
     const price = maxAffordablePrice(makeProfile({
       monthlyIncome: 8000,
       cpfOABalance: 100000,
       age: 35,
     }));
-    expect(price).toBe(500000);
+    expect(price).toBe(400000);
   });
 
   it("loan constraint dominates when CPF is high", () => {
     // Income $6,000, CPF $500k, age 30
     // maxLoan ≈ $384,811, loan-constrained = $513,081
-    // CPF-constrained = 500k / 0.20 = $2,500,000
+    // CPF-constrained = 500k / 0.25 = $2,000,000
     // Loan constraint tighter
     const price = maxAffordablePrice(makeProfile({
       monthlyIncome: 6000,
@@ -164,14 +164,14 @@ describe("maxAffordablePrice", () => {
     expect(price).toBe(0);
   });
 
-  it("CPF-only constraint when income is missing", () => {
-    // No income → loan constraint is infinite, only CPF constraint applies
+  it("CPF-only when income is missing (no loan eligibility)", () => {
+    // No income → maxLoan is 0 → returns CPF balance directly
     const price = maxAffordablePrice(makeProfile({
       monthlyIncome: null,
       cpfOABalance: 100000,
       age: 35,
     }));
-    expect(price).toBe(500000);
+    expect(price).toBe(100000);
   });
 
   it("returns 0 when both income and CPF are missing", () => {
@@ -215,20 +215,20 @@ describe("computeAffordabilityVerdict", () => {
   it("comfortable when price is well below ceiling", () => {
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 35 }),
-      500000, // well below the ceiling of 1,000,000
+      500000, // well below the ceiling
     );
     expect(verdict.status).toBe("comfortable");
     expect(verdict.monthlyRepayment).toBeGreaterThan(0);
-    expect(verdict.cashOutlay).toBe(25000); // 25% of 500k = 125k, CPF covers 100k, cash 25k
+    expect(verdict.cashOutlay).toBe(0); // CPF (200k) covers full 25% down (125k)
     expect(verdict.loanAmount).toBe(375000); // 75% of 500k
   });
 
   it("stretch when price is near ceiling (< 100% but > 80%)", () => {
-    // CPF = 100k → ceiling = 500k
-    // 450k is 90% of ceiling → stretch
+    // CPF = 100k → ceiling = 400k (100k / 0.25)
+    // 360k is 90% of ceiling → stretch
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
-      450000,
+      360000,
     );
     expect(verdict.status).toBe("stretch");
   });
@@ -236,7 +236,7 @@ describe("computeAffordabilityVerdict", () => {
   it("over when price exceeds ceiling", () => {
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
-      600000, // above ceiling of 500k
+      600000, // above ceiling of 400k
     );
     expect(verdict.status).toBe("over");
   });
@@ -274,18 +274,18 @@ describe("computeAffordabilityVerdict", () => {
     expect(verdict.loanAmount).toBe(0);
   });
 
-  it("cash outlay when CPF covers full 20% down-payment portion", () => {
-    // Price = 500k, down payment = 125k, CPF covers 100k (20%), cash = 25k
+  it("cash outlay when CPF covers full 25% down-payment", () => {
+    // Price = 500k, down payment = 125k (25%), CPF 200k covers full 125k, cash = 0
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 35 }),
       500000,
     );
-    expect(verdict.downPaymentFromCpf).toBe(100000);
-    expect(verdict.cashOutlay).toBe(25000);
+    expect(verdict.downPaymentFromCpf).toBe(125000);
+    expect(verdict.cashOutlay).toBe(0);
   });
 
-  it("cash outlay when CPF is insufficient for full 20%", () => {
-    // Price = 500k, down payment = 125k, CPF only has 30k → CPF covers 30k, cash = 95k
+  it("cash outlay when CPF is insufficient for full 25%", () => {
+    // Price = 500k, down payment = 125k (25%), CPF only has 30k → CPF covers 30k, cash = 95k
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 8000, cpfOABalance: 30000, age: 35 }),
       500000,
