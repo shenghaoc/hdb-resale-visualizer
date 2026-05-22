@@ -165,7 +165,9 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {t("askingCheck.askingPrice")}
             </span>
             <Input
+              type="number"
               inputMode="numeric"
+              enterKeyHint="done"
               autoComplete="off"
               placeholder={t("askingCheck.askingPricePlaceholder")}
               value={askingPriceInput}
@@ -179,7 +181,9 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {t("askingCheck.floorArea")}
             </span>
             <Input
+              type="number"
               inputMode="numeric"
+              enterKeyHint="done"
               autoComplete="off"
               placeholder={t("askingCheck.floorAreaPlaceholder")}
               value={floorAreaInput}
@@ -365,7 +369,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {comparables.slice(0, 8).map((tx) => (
                 <li
                   key={tx.id}
-                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs"
+                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
                 >
                   <div className="flex min-w-0 flex-col gap-0.5">
                     <span className="font-bold tabular-nums">

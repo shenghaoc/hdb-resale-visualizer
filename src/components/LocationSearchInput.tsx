@@ -31,6 +31,9 @@ export const LocationSearchInput = forwardRef<HTMLInputElement, LocationSearchIn
       <Input
         ref={ref}
         data-slot={inputGroupControl ? "input-group-control" : "input"}
+        type="search"
+        inputMode="search"
+        enterKeyHint="search"
         maxLength={maxLength}
         value={ime.localValue ?? value}
         onCompositionStart={ime.onCompositionStart}

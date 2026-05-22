@@ -311,6 +311,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                       <Input
                         inputMode="numeric"
+                        enterKeyHint="done"
                         type="number"
                         value={maxBudget}
                         onChange={(e) => setMaxBudget(e.target.value)}
@@ -479,6 +480,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     <div className="flex items-center">
                       <Input
                         inputMode="numeric"
+                        enterKeyHint="done"
                         type="number"
                         value={minLease}
                         onChange={(e) => setMinLease(e.target.value)}
@@ -537,6 +539,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             step="1"
                             min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
@@ -556,6 +559,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             step="1"
                             min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
@@ -578,6 +582,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             value={cpfOABalance}
                             onChange={(e) => setCpfOABalance(e.target.value)}
@@ -597,6 +602,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             value={monthlyIncome}
                             onChange={(e) => setMonthlyIncome(e.target.value)}

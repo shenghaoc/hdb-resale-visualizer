@@ -223,6 +223,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           id="budget-min"
                           data-no-spinner="true"
                           inputMode="numeric"
+                          enterKeyHint="done"
                           min={0}
                           placeholder={t("filters.noMinimum")}
                           type="number"
@@ -248,6 +249,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           id="budget-max"
                           data-no-spinner="true"
                           inputMode="numeric"
+                          enterKeyHint="done"
                           min={0}
                           placeholder={t("filters.noMaximum")}
                           type="number"
@@ -272,6 +274,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         id="remaining-lease"
                         data-no-spinner="true"
                         inputMode="numeric"
+                        enterKeyHint="done"
                         max={99}
                         min={0}
                         placeholder={t("filters.optional")}
@@ -296,6 +299,7 @@ export function FilterPanel(props: FilterPanelProps) {
                         id="mrt-max"
                         data-no-spinner="true"
                         inputMode="numeric"
+                        enterKeyHint="done"
                         min={0}
                         placeholder={t("filters.optional")}
                         type="number"
@@ -340,6 +344,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           id="area-min"
                           data-no-spinner="true"
                           inputMode="decimal"
+                          enterKeyHint="done"
                           min={0}
                           placeholder={t("filters.minSqm")}
                           type="number"
@@ -365,6 +370,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           id="area-max"
                           data-no-spinner="true"
                           inputMode="decimal"
+                          enterKeyHint="done"
                           min={0}
                           placeholder={t("filters.maxSqm")}
                           type="number"

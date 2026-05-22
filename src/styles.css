@@ -3,6 +3,26 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Typed custom properties ────────────────────────────────────────────
+   @property registers CSS variables with a syntax, inheritance flag, and
+   initial value so the browser can interpolate them smoothly in animations
+   and compute derived units predictably in calc().                          */
+@property --wizard-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 20px;
+}
+@property --radius {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0.5rem;
+}
+@property --mobile-tab-bar-height {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 4rem;
+}
+
 @theme inline {
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
@@ -381,6 +401,8 @@
   font-weight: 700;
   text-transform: uppercase;
   transition: all 150ms ease;
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 }
 
 /* Shared cyan-tint state for hover/active across every primary control. */
@@ -844,4 +866,65 @@ html {
     -webkit-backdrop-filter: none;
     background: var(--background);
   }
+}
+
+/* ── prefers-contrast — respects OS-level contrast preferences ─────── */
+@media (prefers-contrast: more) {
+  :root {
+    --border: light-dark(rgba(15, 23, 42, 0.18), rgba(34, 211, 238, 0.22));
+  }
+  .v2-card,
+  .v2-panel {
+    border-width: 1.5px;
+  }
+  .filter-chip {
+    border: 1px solid var(--border);
+  }
+}
+
+@media (prefers-contrast: less) {
+  :root {
+    --muted-foreground: light-dark(#94a3b8, #64748b);
+  }
+  .v2-card,
+  .v2-panel {
+    border-color: transparent;
+  }
+}
+
+/* ── content-visibility — skips rendering of off-screen list items ────
+   Off-screen rows in long scrollable lists are not painted / laid out,
+   dramatically reducing scroll jank with 10k+ listings. The intrinsic
+   size hint prevents scrollbar-thrashing. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+}
+
+/* ── Starting-style — enables CSS-only entrance animations ────────────
+   When an element first appears (mount, display toggle, or class toggle
+   that puts it on screen), the browser transitions from the @starting-style
+   block to the computed style. Pair with an existing transition property. */
+@starting-style {
+  .ss-fade-in {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* ── Allow discrete property transitions (display, overlay, etc.) ─────
+   Enables CSS transitions on properties that normally snap (e.g. display).
+   Use selectively — this is an opt-in class for elements that toggle
+   display alongside opacity/transform. */
+.transition-display {
+  transition-behavior: allow-discrete;
+}
+
+/* ── text-box-trim utility for Tailwind ───────────────────────────────
+   Eliminates the asymmetric leading above/below text in fixed-height
+   containers (buttons, badges, tabs). Falls back to normal alignment
+   in browsers that don't support it. */
+.text-box-trim {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 }

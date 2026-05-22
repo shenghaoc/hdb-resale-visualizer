@@ -1025,7 +1025,7 @@ export function DetailDrawer({
                         <Item
                           key={tx.id}
                           variant="outline"
-                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30"
+                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30 cv-auto"
                         >
                           <ItemHeader>
                             <ItemContent>
