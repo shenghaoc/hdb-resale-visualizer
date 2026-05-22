@@ -80,6 +80,13 @@
   --success: light-dark(#059669, #34d399);
   --success-foreground: light-dark(#ffffff, #022c22);
   --border: light-dark(rgba(15, 23, 42, 0.08), rgba(34, 211, 238, 0.12));
+  /* Shared tokens derived from --primary — reused for hover/active tints and
+     glass hairlines so colour adjustments propagate from one source. */
+  --primary-soft-bg: color-mix(in oklab, var(--primary) 10%, transparent);
+  --glass-border: light-dark(
+    rgba(195, 198, 215, 0.3),
+    color-mix(in oklab, var(--primary) 10%, transparent)
+  );
   --input: light-dark(#e2e8f0, #111f35);
   --ring: var(--primary);
   --chart-1: var(--primary);
@@ -144,38 +151,58 @@
   overflow: hidden;
 }
 
+/* Multi-value shadows cannot live inside light-dark() (commas inside a
+   substituted var() collide with the function's argument separators), so we
+   drive them via a single custom property and override it in .dark. The cyan
+   tint is now derived from --primary instead of hardcoded rgba. */
 .v2-panel {
+  --shadow-panel: 0 12px 32px rgba(23, 28, 31, 0.08);
+
   border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
   background: color-mix(in oklab, var(--card) 94%, transparent);
-  box-shadow: 0 12px 32px rgba(23, 28, 31, 0.08);
+  box-shadow: var(--shadow-panel);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  contain: layout style;
+}
+
+.dark .v2-panel {
+  --shadow-panel:
+    0 0 0 1px color-mix(in oklab, var(--primary) 7%, transparent),
+    0 12px 48px rgba(4, 12, 24, 0.8);
 }
 
 .v2-card {
+  --shadow-card: 0 2px 8px rgba(23, 28, 31, 0.04);
+
   border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
   background: color-mix(in oklab, var(--card) 96%, transparent);
-  box-shadow: 0 2px 8px rgba(23, 28, 31, 0.04);
+  box-shadow: var(--shadow-card);
+}
+
+.dark .v2-card {
+  --shadow-card:
+    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent),
+    0 2px 16px rgba(4, 12, 24, 0.55);
+}
+
+.v2-kicker,
+.v2-section-title {
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--muted-foreground);
 }
 
 .v2-kicker {
   font-size: 0.5rem;
-  font-weight: 700;
   letter-spacing: 0.16em;
-  line-height: 1;
-  text-transform: uppercase;
-  text-wrap: balance;
-  color: var(--muted-foreground);
 }
 
 .v2-section-title {
   font-size: 0.62rem;
-  font-weight: 700;
   letter-spacing: 0.14em;
-  line-height: 1;
-  text-transform: uppercase;
-  text-wrap: balance;
-  color: var(--muted-foreground);
 }
 
 .v2-tabular {
@@ -208,56 +235,22 @@
   }
 }
 
-@keyframes wizard-step-enter-fwd {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes wizard-step-exit-fwd {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-}
-
-@keyframes wizard-step-enter-back {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes wizard-step-exit-back {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(20px);
-  }
+/* Wizard step transitions share a single keyframe; the consumer sets
+   --wizard-x to flip slide direction (+20px forward / -20px back). */
+@keyframes wizard-step-enter {
+  from { opacity: 0; transform: translateX(var(--wizard-x, 20px)); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .wizard-panel-in {
   animation: wizard-panel-in 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wizard-panel-in {
+    animation: none;
+  }
 }
 
 .v2-scrollbar::-webkit-scrollbar-thumb {
@@ -277,6 +270,8 @@
   width: 100%;
   overflow: hidden;
   background: light-dark(#edf0eb, #040d18);
+  /* MapLibre canvas is self-contained — restrict layout/paint propagation. */
+  contain: layout paint;
 }
 
 .dark .map-view .maplibregl-marker,
@@ -290,16 +285,16 @@
   bottom: 0.5rem;
   z-index: 5;
   max-width: min(72vw, 22rem);
-  border: 1px solid light-dark(rgba(195, 198, 215, 0.3), rgba(34, 211, 238, 0.10));
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  background: light-dark(
-    color-mix(in oklab, var(--background) 88%, transparent),
-    color-mix(in oklab, var(--background) 90%, transparent)
-  );
+  background: color-mix(in oklab, var(--background) 88%, transparent);
   padding: 0.25rem 0.5rem;
   font-size: 0.625rem;
   line-height: 1.2;
-  color: light-dark(#0f172a, rgba(226, 232, 240, 0.7));
+  color: light-dark(
+    var(--foreground),
+    color-mix(in oklab, var(--foreground) 70%, transparent)
+  );
   text-decoration: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -335,6 +330,8 @@
 
 /* Mobile tab bar */
 .mobile-tab-bar {
+  --shadow-mobile-tab: 0 -4px 16px rgba(23, 28, 31, 0.04);
+
   position: fixed;
   bottom: 0;
   left: 0;
@@ -342,38 +339,57 @@
   z-index: 50;
   display: flex;
   align-items: stretch;
-  border-top: 1px solid light-dark(rgba(195, 198, 215, 0.3), rgba(34, 211, 238, 0.10));
+  border-top: 1px solid var(--glass-border);
   gap: 0.25rem;
   background: color-mix(in oklab, var(--background) 92%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
-  box-shadow: 0 -4px 16px rgba(23, 28, 31, 0.04);
+  box-shadow: var(--shadow-mobile-tab);
+}
+
+.dark .mobile-tab-bar {
+  --shadow-mobile-tab:
+    0 -1px 0 color-mix(in oklab, var(--primary) 6%, transparent),
+    0 -8px 32px rgba(4, 12, 24, 0.65);
+}
+
+/* Shared base for every "tab-bar / mode" trigger button. Per-element rules
+   below only override layout sizing and per-context font/letter-spacing. */
+.mobile-tab-bar .mobile-tab-button,
+.mobile-mode-button,
+.desktop-tab-bar .desktop-tab-bar-icon-btn,
+.desktop-tab-bar [data-slot="button"] {
+  display: flex;
+  align-items: center;
+  border: none;
+  color: var(--muted-foreground);
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: all 150ms ease;
+}
+
+/* Shared cyan-tint state for hover/active across every primary control. */
+.mobile-tab-bar .mobile-tab-button[data-active="true"],
+.mobile-mode-button:hover,
+.desktop-tab-bar .desktop-tab-bar-icon-btn:hover,
+.desktop-tab-bar [data-slot="button"][data-active="true"] {
+  color: var(--primary);
+  background: var(--primary-soft-bg);
 }
 
 .mobile-tab-bar .mobile-tab-button {
   flex: 1;
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 0.25rem;
   height: 3rem;
   min-width: 0;
   border-radius: 0.375rem;
-  border: none;
   padding: 0.5rem 0.25rem;
   font-size: 0.625rem;
-  font-weight: 700;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
   white-space: normal;
-  transition: all 150ms ease;
-}
-
-.mobile-tab-bar .mobile-tab-button[data-active="true"] {
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 .mobile-tab-bar .mobile-tab-button > span {
@@ -384,33 +400,23 @@
 }
 
 .mobile-mode-button {
-  display: flex;
   height: 3rem;
   width: 2.65rem;
   min-width: 2.65rem;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  border: none;
   border-radius: 0.375rem;
   background: transparent;
-  color: var(--muted-foreground);
   font-size: 0.625rem;
-  font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1;
   padding: 0.45rem 0.25rem;
-  text-transform: uppercase;
-  transition: all 150ms ease;
-}
-
-.mobile-mode-button:hover {
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 .desktop-tab-bar {
+  --shadow-desktop-tab: 0 8px 24px rgba(23, 28, 31, 0.08);
+
   position: fixed;
   bottom: 1.5rem;
   left: 1.5rem;
@@ -418,13 +424,19 @@
   display: flex;
   align-items: stretch;
   gap: 0.25rem;
-  border: 1px solid light-dark(rgba(195, 198, 215, 0.3), rgba(34, 211, 238, 0.10));
+  border: 1px solid var(--glass-border);
   border-radius: 0.75rem;
   background: color-mix(in oklab, var(--background) 92%, transparent);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 0.25rem;
-  box-shadow: 0 8px 24px rgba(23, 28, 31, 0.08);
+  box-shadow: var(--shadow-desktop-tab);
+}
+
+.dark .desktop-tab-bar {
+  --shadow-desktop-tab:
+    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent),
+    0 8px 32px rgba(4, 12, 24, 0.65);
 }
 
 .desktop-tab-bar-divider {
@@ -435,37 +447,22 @@
 }
 
 .desktop-tab-bar .desktop-tab-bar-icon-btn {
+  justify-content: center;
   min-width: 2.625rem;
   width: 2.625rem;
   height: 2.625rem;
   border-radius: 0.5rem;
   padding: 0;
-  color: var(--muted-foreground);
-  transition: all 150ms ease;
-}
-
-.desktop-tab-bar .desktop-tab-bar-icon-btn:hover {
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 .desktop-tab-bar [data-slot="button"] {
+  justify-content: center;
   min-width: 6.75rem;
   height: 2.625rem;
   border-radius: 0.5rem;
-  border: none;
   padding: 0.5rem 0.75rem;
   font-size: 0.625rem;
-  font-weight: 700;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-  transition: all 150ms ease;
-}
-
-.desktop-tab-bar [data-slot="button"][data-active="true"] {
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 @media (min-width: 1024px) {
@@ -517,20 +514,28 @@
   }
 }
 
+/* Theme-aware shimmer — derives the wash from --foreground so it reads on
+   both light and dark surfaces without separate .dark overrides. */
 .skeleton-shimmer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(15, 23, 42, 0.04) 40%,
-    rgba(15, 23, 42, 0.08) 50%,
-    rgba(15, 23, 42, 0.04) 60%,
-    rgba(255, 255, 255, 0) 100%
+    transparent 0%,
+    color-mix(in oklab, var(--foreground) 4%, transparent) 40%,
+    color-mix(in oklab, var(--foreground) 8%, transparent) 50%,
+    color-mix(in oklab, var(--foreground) 4%, transparent) 60%,
+    transparent 100%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none;
+  }
 }
 
 .skeleton-label {
@@ -555,14 +560,25 @@
 }
 
 .map-popup .maplibregl-popup-content {
+  --shadow-popup: 0 12px 30px rgba(15, 23, 42, 0.08);
+
   background: var(--popover);
   color: var(--popover-foreground);
   border-radius: var(--radius-md);
-  border: 1px solid light-dark(var(--border), rgba(34, 211, 238, 0.15));
+  border: 1px solid light-dark(
+    var(--border),
+    color-mix(in oklab, var(--primary) 15%, transparent)
+  );
   padding: 0.85rem 1rem;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-popup);
   min-width: 14rem;
   line-height: 1.55;
+}
+
+.dark .map-popup .maplibregl-popup-content {
+  --shadow-popup:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
+    0 16px 40px rgba(4, 12, 24, 0.85);
 }
 
 .map-popup .maplibregl-popup-content strong {
@@ -586,8 +602,21 @@
 .maplibregl-ctrl-group {
   overflow: hidden;
   border-radius: 0 !important;
-  border: 1px solid var(--border);
+  border: 1px solid light-dark(
+    var(--border),
+    color-mix(in oklab, var(--primary) 10%, transparent)
+  ) !important;
   box-shadow: none !important;
+}
+
+.maplibregl-ctrl-group button {
+  background: var(--card) !important;
+  color: light-dark(currentColor, var(--secondary-foreground));
+}
+
+/* MapLibre control icons ship as light SVGs; invert + dim them in dark mode. */
+.dark .maplibregl-ctrl button .maplibregl-ctrl-icon {
+  filter: invert(1) brightness(0.7);
 }
 
 .map-locale-trigger {
@@ -608,7 +637,7 @@
 .map-locale-trigger:hover,
 .map-locale-trigger[aria-expanded="true"] {
   color: var(--foreground);
-  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  background: var(--primary-soft-bg);
 }
 
 .map-locale-trigger > svg:last-of-type {
@@ -619,10 +648,6 @@
   right: 1.5rem;
   top: calc(1.5rem + 2.75rem);
   z-index: 30;
-}
-
-.maplibregl-ctrl-group button {
-  background: var(--card) !important;
 }
 
 .maplibregl-ctrl button .maplibregl-ctrl-icon {
@@ -707,82 +732,92 @@ input[data-no-spinner="true"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* ─── Dark-mode system overrides ──────────────────────────── */
-
-.dark .v2-panel {
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.07),
-              0 12px 48px rgba(4, 12, 24, 0.8);
+/* View Transitions API — used for DetailDrawer tab swaps. A short cross-fade
+   is plenty; longer durations feel laggy. Disabled under reduced-motion. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 160ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.dark .v2-card {
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.06),
-              0 2px 16px rgba(4, 12, 24, 0.55);
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
-.dark .mobile-tab-bar {
-  box-shadow: 0 -1px 0 rgba(34, 211, 238, 0.06), 0 -8px 32px rgba(4, 12, 24, 0.65);
-}
-
-.dark .desktop-tab-bar {
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.06), 0 8px 32px rgba(4, 12, 24, 0.65);
-}
-
-.dark .map-popup .maplibregl-popup-content {
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08), 0 16px 40px rgba(4, 12, 24, 0.85);
-}
-
-.dark .maplibregl-ctrl-group {
-  border-color: rgba(34, 211, 238, 0.10) !important;
-}
-
-.dark .maplibregl-ctrl-group button {
-  color: #94a3b8;
-}
-
-.dark .maplibregl-ctrl button .maplibregl-ctrl-icon {
-  filter: invert(1) brightness(0.7);
-}
-
-/* Themed scrollbars in dark mode */
-.dark {
-  scrollbar-color: rgba(34, 211, 238, 0.14) transparent;
+/* Themed scrollbars — light mode uses subtle neutral, dark mode picks up the
+   primary (cyan) accent via color-mix. Single rule covers both schemes. */
+html {
+  scrollbar-color: light-dark(
+      color-mix(in oklab, var(--muted-foreground) 30%, transparent),
+      color-mix(in oklab, var(--primary) 14%, transparent)
+    )
+    transparent;
   scrollbar-width: thin;
 }
 
-.dark ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 
-.dark ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.dark ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background: rgba(34, 211, 238, 0.14);
+  background: light-dark(
+    color-mix(in oklab, var(--muted-foreground) 30%, transparent),
+    color-mix(in oklab, var(--primary) 14%, transparent)
+  );
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(34, 211, 238, 0.30);
+::-webkit-scrollbar-thumb:hover {
+  background: light-dark(
+    color-mix(in oklab, var(--muted-foreground) 50%, transparent),
+    color-mix(in oklab, var(--primary) 30%, transparent)
+  );
 }
 
-.dark ::selection {
-  background: rgba(34, 211, 238, 0.22);
-  color: #e2e8f0;
+::selection {
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--foreground);
 }
 
 @layer utilities {
   .panel-glass {
+    --shadow-glass: none;
+
     background-color: var(--panel);
     border: 1px solid var(--panel-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-glass);
   }
 }
 
 .dark .panel-glass {
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08),
-              inset 0 1px 0 rgba(34, 211, 238, 0.05),
-              0 8px 40px rgba(4, 12, 24, 0.75);
+  --shadow-glass:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--primary) 5%, transparent),
+    0 8px 40px rgba(4, 12, 24, 0.75);
+}
+
+/* Respect users who request reduced transparency — drop blurs and use the
+   solid surface colour beneath them. Covers every backdrop-filter site. */
+@media (prefers-reduced-transparency: reduce) {
+  .v2-panel,
+  .panel-glass,
+  .mobile-tab-bar,
+  .desktop-tab-bar,
+  .map-attribution-link,
+  .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--background);
+  }
 }
