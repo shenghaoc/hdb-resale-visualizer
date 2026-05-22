@@ -3,25 +3,183 @@ import {
   HDB_CONCESSIONARY_ANNUAL_RATE,
   HDB_LOAN_TENURE_MONTHS,
   HDB_MAX_BUYER_AGE,
+  HDB_MAX_LTV_RATIO,
   HDB_MORTGAGE_SERVICING_RATIO,
   MAX_LEASE_DURATION,
 } from "@/lib/constants";
 import type { BlockSummary } from "@/types/data";
 
 /**
+ * HDB concessionary loan tenure cap: min(25 years, 65 - age).
+ * If age is unknown or the cap computes negative, the floor is 0.
+ */
+export function computeLoanTenureYears(age: number | null): number {
+  if (age === null || age === undefined) return 25;
+  return Math.min(25, Math.max(0, 65 - age));
+}
+
+/**
  * Maximum HDB concessionary loan size implied by a household's gross monthly
  * income, capped by the HDB Mortgage Servicing Ratio (MSR) of 30%.
  *
- * Computes the standard PV-of-annuity over a 25-year tenure at the prevailing
- * 2.6% concessionary rate. Returns 0 for non-positive inputs so callers can
- * treat "no income provided" as "no loan headroom".
+ * Computes the standard PV-of-annuity over the given tenure (defaults to
+ * 25 years at the prevailing 2.6% concessionary rate). Returns 0 for
+ * non-positive inputs or zero tenure so callers can treat "no income
+ * provided" / "no loan eligibility" as "no loan headroom".
  */
-export function maxLoanFor(monthlyIncome: number): number {
+export function maxLoanFor(monthlyIncome: number, tenureMonths?: number): number {
   if (!Number.isFinite(monthlyIncome) || monthlyIncome <= 0) return 0;
+  const months = tenureMonths ?? HDB_LOAN_TENURE_MONTHS;
+  if (months <= 0) return 0;
   const maxMonthlyPayment = monthlyIncome * HDB_MORTGAGE_SERVICING_RATIO;
   const monthlyRate = HDB_CONCESSIONARY_ANNUAL_RATE / 12;
-  const discount = (1 - Math.pow(1 + monthlyRate, -HDB_LOAN_TENURE_MONTHS)) / monthlyRate;
+  const discount = (1 - Math.pow(1 + monthlyRate, -months)) / monthlyRate;
   return Math.floor(maxMonthlyPayment * discount);
+}
+
+/**
+ * Maximum affordable purchase price given CPF OA balance, monthly income, and
+ * age under HDB concessionary loan rules.
+ *
+ * Two constraints:
+ *  1. Loan: 75% LTV × price must be serviceable at 30% MSR over the
+ *     age-capped tenure.
+ *  2. CPF down payment: CPF OA can cover at most 20% of price.
+ *
+ * Returns 0 when neither constraint is binding (no usable data), or when
+ * the CPF down-payment constraint alone yields 0 (no CPF balance).
+ */
+export function maxAffordablePrice(profile: {
+  monthlyIncome: number | null;
+  cpfOABalance: number | null;
+  age: number | null;
+}): number {
+  const cpf = profile.cpfOABalance ?? 0;
+  const income = profile.monthlyIncome ?? 0;
+  const tenureYears = computeLoanTenureYears(profile.age);
+
+  // Loan constraint: max loan ÷ 0.75 gives the total price that loan can support.
+  // When tenure is 0 (age ≥ 65) no HDB loan is available — buyer must pay
+  // entirely from own funds.
+  let loanConstraint = Number.POSITIVE_INFINITY;
+  if (income > 0 && tenureYears > 0) {
+    const maxLoan = maxLoanFor(income, tenureYears * 12);
+    loanConstraint = maxLoan / HDB_MAX_LTV_RATIO;
+  } else if (tenureYears <= 0 && income > 0) {
+    // Age ≥ 65: no loan eligibility. Max price is CPF alone (all-cash scenario
+    // can't be assessed without cash data, so return CPF balance as ceiling).
+    return Math.floor(cpf);
+  }
+
+  // CPF constraint: CPF OA can cover up to 20% of the purchase price.
+  const cpfConstraint = cpf > 0 ? cpf / 0.2 : 0;
+
+  if (!Number.isFinite(loanConstraint)) {
+    return Math.floor(cpfConstraint);
+  }
+  return Math.floor(Math.min(loanConstraint, cpfConstraint));
+}
+
+// ── Affordability verdict ──────────────────────────────────────────────
+
+/**
+ * The fraction of max-affordable-price below which a block is considered
+ * comfortably affordable (as opposed to a stretch).
+ */
+export const COMFORTABLE_AFFORDABILITY_RATIO = 0.8;
+
+export type AffordabilityStatus = "comfortable" | "stretch" | "over" | "unknown";
+
+export type AffordabilityVerdict = {
+  /** Max affordable purchase price (the ceiling). */
+  maxAffordablePrice: number;
+  /** Estimated monthly repayment for the given block's median price. */
+  monthlyRepayment: number;
+  /** Cash outlay required for the down payment (after CPF OA contribution). */
+  cashOutlay: number;
+  /** CPF OA amount applied toward the 20% down-payment portion. */
+  downPaymentFromCpf: number;
+  /** Loan amount (75% of the block's median price). */
+  loanAmount: number;
+  /** Affordability classification. */
+  status: AffordabilityStatus;
+};
+
+/**
+ * Compute an affordability verdict for a block given the user's profile.
+ *
+ * When monthly income is missing the verdict returns status "unknown" and
+ * zeroed financial figures — callers should suppress the affordability
+ * signal entirely in that case.
+ */
+export function computeAffordabilityVerdict(
+  profile: {
+    monthlyIncome: number | null;
+    cpfOABalance: number | null;
+    age: number | null;
+  },
+  medianPrice: number,
+): AffordabilityVerdict {
+  const income = profile.monthlyIncome ?? 0;
+  const cpf = profile.cpfOABalance ?? 0;
+  const tenureYears = computeLoanTenureYears(profile.age);
+  const ceiling = maxAffordablePrice(profile);
+
+  if (income <= 0) {
+    return {
+      maxAffordablePrice: ceiling,
+      monthlyRepayment: 0,
+      cashOutlay: 0,
+      downPaymentFromCpf: 0,
+      loanAmount: 0,
+      status: "unknown",
+    };
+  }
+
+  let downPayment: number;
+  let downPaymentFromCpf: number;
+  let cashOutlay: number;
+  let loanAmount: number;
+  let monthlyRepayment = 0;
+
+  if (tenureYears <= 0) {
+    // No loan eligibility: buyer pays full price from own funds.
+    loanAmount = 0;
+    downPaymentFromCpf = Math.min(cpf, medianPrice);
+    cashOutlay = Math.max(0, medianPrice - downPaymentFromCpf);
+  } else {
+    downPayment = 0.25 * medianPrice;
+    downPaymentFromCpf = Math.min(cpf, 0.2 * medianPrice);
+    cashOutlay = Math.max(0, downPayment - downPaymentFromCpf);
+    loanAmount = 0.75 * medianPrice;
+
+    const months = tenureYears * 12;
+    const monthlyRate = HDB_CONCESSIONARY_ANNUAL_RATE / 12;
+    if (months > 0 && loanAmount > 0) {
+      const discount = (1 - Math.pow(1 + monthlyRate, -months)) / monthlyRate;
+      monthlyRepayment = Math.ceil(loanAmount / discount);
+    }
+  }
+
+  let status: AffordabilityStatus;
+  if (ceiling <= 0) {
+    status = "over";
+  } else if (medianPrice <= ceiling * COMFORTABLE_AFFORDABILITY_RATIO) {
+    status = "comfortable";
+  } else if (medianPrice <= ceiling) {
+    status = "stretch";
+  } else {
+    status = "over";
+  }
+
+  return {
+    maxAffordablePrice: ceiling,
+    monthlyRepayment,
+    cashOutlay,
+    downPaymentFromCpf,
+    loanAmount,
+    status,
+  };
 }
 
 /**

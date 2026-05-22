@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  computeAffordabilityVerdict,
+  computeLoanTenureYears,
   isBlockAgeEligible,
+  maxAffordablePrice,
   maxLoanFor,
   minRequiredRemainingLease,
+  COMFORTABLE_AFFORDABILITY_RATIO,
 } from "@/lib/affordability";
 import {
   HDB_CONCESSIONARY_ANNUAL_RATE,
@@ -36,6 +40,19 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
   };
 }
 
+function makeProfile(overrides: {
+  monthlyIncome?: number | null;
+  cpfOABalance?: number | null;
+  age?: number | null;
+} = {}) {
+  return {
+    monthlyIncome: null as number | null,
+    cpfOABalance: null as number | null,
+    age: null as number | null,
+    ...overrides,
+  };
+}
+
 describe("maxLoanFor", () => {
   it("returns 0 for non-positive or non-finite incomes", () => {
     expect(maxLoanFor(0)).toBe(0);
@@ -63,6 +80,232 @@ describe("maxLoanFor", () => {
 
   it("is deterministic for the same input", () => {
     expect(maxLoanFor(6500)).toBe(maxLoanFor(6500));
+  });
+
+  it("accepts custom tenure in months", () => {
+    const result25 = maxLoanFor(8000, 300);
+    const result15 = maxLoanFor(8000, 180);
+    expect(result15).toBeLessThan(result25);
+    expect(result15).toBeGreaterThan(0);
+  });
+
+  it("returns 0 for zero tenure", () => {
+    expect(maxLoanFor(8000, 0)).toBe(0);
+  });
+});
+
+describe("computeLoanTenureYears", () => {
+  it("caps at 25 years for younger applicants", () => {
+    expect(computeLoanTenureYears(30)).toBe(25);
+    expect(computeLoanTenureYears(35)).toBe(25);
+    expect(computeLoanTenureYears(40)).toBe(25);
+  });
+
+  it("reduces linearly for age 40+", () => {
+    expect(computeLoanTenureYears(45)).toBe(20);
+    expect(computeLoanTenureYears(55)).toBe(10);
+    expect(computeLoanTenureYears(60)).toBe(5);
+  });
+
+  it("floors at 0 for age >= 65", () => {
+    expect(computeLoanTenureYears(65)).toBe(0);
+    expect(computeLoanTenureYears(70)).toBe(0);
+    expect(computeLoanTenureYears(80)).toBe(0);
+  });
+
+  it("defaults to 25 when age is null", () => {
+    expect(computeLoanTenureYears(null)).toBe(25);
+  });
+});
+
+describe("maxAffordablePrice", () => {
+  it("combines loan and CPF constraints — typical young buyer", () => {
+    // Income $8,000, CPF $100k, age 35 → max loan ≈ $513,082, tenure 25y
+    // Loan-constrained price = maxLoan / 0.75 ≈ $684,109
+    // CPF-constrained price = 100k / 0.20 = $500,000
+    // CPF constraint is tighter → $500,000
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 100000,
+      age: 35,
+    }));
+    expect(price).toBe(500000);
+  });
+
+  it("loan constraint dominates when CPF is high", () => {
+    // Income $6,000, CPF $500k, age 30
+    // maxLoan ≈ $384,811, loan-constrained = $513,081
+    // CPF-constrained = 500k / 0.20 = $2,500,000
+    // Loan constraint tighter
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: 6000,
+      cpfOABalance: 500000,
+      age: 30,
+    }));
+    const expectedLoanConstraint = Math.floor(maxLoanFor(6000) / 0.75);
+    expect(price).toBe(expectedLoanConstraint);
+  });
+
+  it("returns 0 when CPF is 0", () => {
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 0,
+      age: 35,
+    }));
+    expect(price).toBe(0);
+  });
+
+  it("returns 0 when CPF is null (treated as 0)", () => {
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: null,
+      age: 35,
+    }));
+    expect(price).toBe(0);
+  });
+
+  it("CPF-only constraint when income is missing", () => {
+    // No income → loan constraint is infinite, only CPF constraint applies
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: null,
+      cpfOABalance: 100000,
+      age: 35,
+    }));
+    expect(price).toBe(500000);
+  });
+
+  it("returns 0 when both income and CPF are missing", () => {
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: null,
+      cpfOABalance: null,
+      age: 35,
+    }));
+    expect(price).toBe(0);
+  });
+
+  it("age > 65 results in zero loan → max price is CPF only", () => {
+    // Age 70, CPF 200k, income 8k — no HDB loan available.
+    // Max price is CPF balance since buyer must pay entirely from own funds.
+    const price = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 200000,
+      age: 70,
+    }));
+    expect(price).toBe(200000);
+  });
+
+  it("shorter tenure from older age reduces loan capacity", () => {
+    // Age 55 → tenure = 10 years → maxLoan smaller → lower price ceiling
+    const price55 = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 100000,
+      age: 55,
+    }));
+    const price35 = maxAffordablePrice(makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 100000,
+      age: 35,
+    }));
+    expect(price55).toBeLessThan(price35);
+    expect(price55).toBeGreaterThan(0);
+  });
+});
+
+describe("computeAffordabilityVerdict", () => {
+  it("comfortable when price is well below ceiling", () => {
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 35 }),
+      500000, // well below the ceiling of 1,000,000
+    );
+    expect(verdict.status).toBe("comfortable");
+    expect(verdict.monthlyRepayment).toBeGreaterThan(0);
+    expect(verdict.cashOutlay).toBe(25000); // 25% of 500k = 125k, CPF covers 100k, cash 25k
+    expect(verdict.loanAmount).toBe(375000); // 75% of 500k
+  });
+
+  it("stretch when price is near ceiling (< 100% but > 80%)", () => {
+    // CPF = 100k → ceiling = 500k
+    // 450k is 90% of ceiling → stretch
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+      450000,
+    );
+    expect(verdict.status).toBe("stretch");
+  });
+
+  it("over when price exceeds ceiling", () => {
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+      600000, // above ceiling of 500k
+    );
+    expect(verdict.status).toBe("over");
+  });
+
+  it("boundary: exactly at comfortable/stretch threshold", () => {
+    const profile = makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 });
+    const ceiling = maxAffordablePrice(profile);
+    const threshold = Math.floor(ceiling * COMFORTABLE_AFFORDABILITY_RATIO);
+
+    const comfortableVerdict = computeAffordabilityVerdict(profile, threshold);
+    expect(comfortableVerdict.status).toBe("comfortable");
+
+    const stretchVerdict = computeAffordabilityVerdict(profile, threshold + 1);
+    expect(stretchVerdict.status).toBe("stretch");
+  });
+
+  it("boundary: exactly at stretch/over threshold", () => {
+    const profile = makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 });
+    const ceiling = maxAffordablePrice(profile);
+
+    const stretchVerdict = computeAffordabilityVerdict(profile, ceiling);
+    expect(stretchVerdict.status).toBe("stretch");
+
+    const overVerdict = computeAffordabilityVerdict(profile, ceiling + 1);
+    expect(overVerdict.status).toBe("over");
+  });
+
+  it("returns unknown when income is missing", () => {
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: null, cpfOABalance: 100000, age: 35 }),
+      500000,
+    );
+    expect(verdict.status).toBe("unknown");
+    expect(verdict.monthlyRepayment).toBe(0);
+    expect(verdict.loanAmount).toBe(0);
+  });
+
+  it("cash outlay when CPF covers full 20% down-payment portion", () => {
+    // Price = 500k, down payment = 125k, CPF covers 100k (20%), cash = 25k
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 35 }),
+      500000,
+    );
+    expect(verdict.downPaymentFromCpf).toBe(100000);
+    expect(verdict.cashOutlay).toBe(25000);
+  });
+
+  it("cash outlay when CPF is insufficient for full 20%", () => {
+    // Price = 500k, down payment = 125k, CPF only has 30k → CPF covers 30k, cash = 95k
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 30000, age: 35 }),
+      500000,
+    );
+    expect(verdict.downPaymentFromCpf).toBe(30000);
+    expect(verdict.cashOutlay).toBe(95000);
+  });
+
+  it("monthly repayment for an older buyer (shorter tenure)", () => {
+    // Age 55 → 10-year tenure → higher monthly for same loan amount
+    const youngVerdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 35 }),
+      500000,
+    );
+    const oldVerdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 55 }),
+      500000,
+    );
+    // Same loan amount, but shorter tenure → higher monthly
+    expect(oldVerdict.monthlyRepayment).toBeGreaterThan(youngVerdict.monthlyRepayment);
   });
 });
 
