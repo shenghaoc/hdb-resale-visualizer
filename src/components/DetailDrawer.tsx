@@ -1,4 +1,4 @@
-import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import {
   AlertTriangle,
@@ -1018,7 +1018,10 @@ export function DetailDrawer({
                       })}
                     </p>
                   )}
-                  <ItemGroup className="flex flex-col gap-3 pb-8">
+                  <ItemGroup
+                    className="flex flex-col gap-3 pb-8"
+                    style={{ "--cv-intrinsic-height": "72px" } as CSSProperties}
+                  >
                     {detail?.recentTransactions.map((tx) => {
                       const outlier = recentTransactionOutliers.get(tx.id);
                       return (
