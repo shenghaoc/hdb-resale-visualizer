@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -243,9 +243,10 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
           <div className="min-h-[19rem] lg:min-h-[17rem]">
             <div
               key={step}
+              className="wizard-step-anim"
               style={{
-                animation: `${direction > 0 ? "wizard-step-enter-fwd" : "wizard-step-enter-back"} 280ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards`,
-              }}
+                "--wizard-x": direction > 0 ? "20px" : "-20px",
+              } as CSSProperties}
             >
               {step === 0 ? (
                 <div className="pt-2 text-center">
@@ -322,6 +323,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                       <Input
                         inputMode="numeric"
+                        enterKeyHint="done"
                         type="number"
                         value={maxBudget}
                         onChange={(e) => setMaxBudget(e.target.value)}
@@ -490,6 +492,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     <div className="flex items-center">
                       <Input
                         inputMode="numeric"
+                        enterKeyHint="done"
                         type="number"
                         value={minLease}
                         onChange={(e) => setMinLease(e.target.value)}
@@ -548,6 +551,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             step="1"
                             min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
@@ -567,6 +571,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             step="1"
                             min={SEARCH_PROFILE_MIN_APPLICANT_AGE}
@@ -589,6 +594,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             value={cpfOABalance}
                             onChange={(e) => setCpfOABalance(e.target.value)}
@@ -608,6 +614,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
                             inputMode="numeric"
+                            enterKeyHint="done"
                             type="number"
                             value={monthlyIncome}
                             onChange={(e) => setMonthlyIncome(e.target.value)}

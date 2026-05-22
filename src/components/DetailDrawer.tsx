@@ -1,4 +1,5 @@
-import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import {
   AlertTriangle,
   ArrowDown,
@@ -489,7 +490,20 @@ export function DetailDrawer({
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-4 sm:px-6">
             <Tabs
               value={activeTab}
-              onValueChange={(v) => startTransition(() => setActiveTab(v))}
+              onValueChange={(v) => {
+                // View Transitions API needs the DOM committed before its
+                // callback resolves so it can snapshot the "after" state.
+                // startTransition defers the commit, so we use flushSync here
+                // to force a synchronous render; fall back to startTransition
+                // when the API is unavailable.
+                if (typeof document !== "undefined" && document.startViewTransition) {
+                  document.startViewTransition(() => {
+                    flushSync(() => setActiveTab(v));
+                  });
+                } else {
+                  startTransition(() => setActiveTab(v));
+                }
+              }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
               <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-xl bg-muted/40 p-1">
@@ -523,7 +537,7 @@ export function DetailDrawer({
                 </TabsTrigger>
               </TabsList>
 
-              <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar">
+              <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar drawer-body-vt">
               {/* ── OVERVIEW ── */}
               <TabsContent
                 value="overview"
@@ -1119,14 +1133,17 @@ export function DetailDrawer({
                       })}
                     </p>
                   )}
-                  <ItemGroup className="flex flex-col gap-3 pb-8">
+                  <ItemGroup
+                    className="flex flex-col gap-3 pb-8"
+                    style={{ "--cv-intrinsic-height": "72px" } as CSSProperties}
+                  >
                     {detail?.recentTransactions.map((tx) => {
                       const outlier = recentTransactionOutliers.get(tx.id);
                       return (
                         <Item
                           key={tx.id}
                           variant="outline"
-                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30"
+                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30 cv-auto"
                         >
                           <ItemHeader>
                             <ItemContent>

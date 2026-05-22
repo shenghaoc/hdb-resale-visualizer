@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
@@ -165,7 +165,9 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {t("askingCheck.askingPrice")}
             </span>
             <Input
+              type="number"
               inputMode="numeric"
+              enterKeyHint="done"
               autoComplete="off"
               placeholder={t("askingCheck.askingPricePlaceholder")}
               value={askingPriceInput}
@@ -179,7 +181,9 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {t("askingCheck.floorArea")}
             </span>
             <Input
+              type="number"
               inputMode="numeric"
+              enterKeyHint="done"
               autoComplete="off"
               placeholder={t("askingCheck.floorAreaPlaceholder")}
               value={floorAreaInput}
@@ -361,11 +365,14 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
             </span>
           </button>
           {comparablesExpanded ? (
-            <ul className="flex max-h-56 flex-col gap-1.5 overflow-y-auto pr-1 v2-scrollbar">
+            <ul
+              className="flex max-h-56 flex-col gap-1.5 overflow-y-auto pr-1 v2-scrollbar"
+              style={{ "--cv-intrinsic-height": "56px" } as CSSProperties}
+            >
               {comparables.slice(0, 8).map((tx) => (
                 <li
                   key={tx.id}
-                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs"
+                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
                 >
                   <div className="flex min-w-0 flex-col gap-0.5">
                     <span className="font-bold tabular-nums">

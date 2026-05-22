@@ -63,7 +63,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "cn-tabs-trigger relative inline-flex flex-1 cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium text-foreground/60 transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "cn-tabs-trigger relative inline-flex flex-1 cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium text-foreground/60 transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-box-trim",
         "group-data-[variant=default]/tabs-list:hover:bg-background/60",
         "group-data-[variant=default]/tabs-list:hover:shadow-sm",
         "group-data-[variant=default]/tabs-list:data-[state=active]:bg-background group-data-[variant=default]/tabs-list:data-[state=active]:text-foreground group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=default]/tabs-list:rounded-sm",
