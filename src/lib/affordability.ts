@@ -53,20 +53,20 @@ export function maxAffordablePrice(profile: {
   monthlyIncome: number | null;
   cpfOABalance: number | null;
   age: number | null;
+  /** coApplicantAge is collected in the wizard but not yet used in affordability calculations. */
 }): number {
   const cpf = profile.cpfOABalance ?? 0;
   const income = profile.monthlyIncome ?? 0;
   const tenureYears = computeLoanTenureYears(profile.age);
 
-  let loanConstraint = Number.POSITIVE_INFINITY;
   const maxLoan = (income > 0 && tenureYears > 0) ? maxLoanFor(income, tenureYears * 12) : 0;
 
-  if (maxLoan > 0) {
-    loanConstraint = maxLoan / HDB_MAX_LTV_RATIO;
-  } else {
+  if (maxLoan <= 0) {
     // No loan eligibility: Max price is limited to CPF balance (assuming no cash data).
     return Math.floor(cpf);
   }
+
+  const loanConstraint = maxLoan / HDB_MAX_LTV_RATIO;
 
   // CPF constraint: CPF OA must cover the downpayment (1 - LTV).
   const downpaymentRatio = 1 - HDB_MAX_LTV_RATIO;
@@ -106,6 +106,10 @@ export type AffordabilityVerdict = {
  * When monthly income is missing the verdict returns status "unknown" and
  * zeroed financial figures — callers should suppress the affordability
  * signal entirely in that case.
+ *
+ * NOTE: coApplicantAge is collected in the wizard but not yet used here.
+ * HDB caps loan tenure at 65 minus the older applicant's age, so a younger
+ * co-applicant can extend the tenure. This will be addressed in a future phase.
  */
 export function computeAffordabilityVerdict(
   profile: {
@@ -190,7 +194,7 @@ export function computeAffordabilityVerdict(
  * HDB's "lease-to-95" rule: remaining lease >= 95 - age.
  */
 export function minRequiredRemainingLease(age: number): number {
-  return HDB_MAX_BUYER_AGE - age;
+  return Math.max(0, HDB_MAX_BUYER_AGE - age);
 }
 
 /**

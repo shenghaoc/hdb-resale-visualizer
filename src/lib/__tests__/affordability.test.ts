@@ -294,6 +294,48 @@ describe("computeAffordabilityVerdict", () => {
     expect(verdict.cashOutlay).toBe(95000);
   });
 
+  it("age >= 65 has zero loan tenure — CPF covers full price, comfortable", () => {
+    // Age 70, CPF 200k, median 150k → ceiling = CPF = 200k
+    // 150k < 200k * 0.8 = 160k → comfortable
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 70 }),
+      150000,
+    );
+    expect(verdict.status).toBe("comfortable");
+    expect(verdict.loanAmount).toBe(0);
+    expect(verdict.monthlyRepayment).toBe(0);
+    expect(verdict.downPaymentFromCpf).toBe(150000);
+    expect(verdict.cashOutlay).toBe(0);
+  });
+
+  it("age >= 65 — CPF falls short, status over", () => {
+    // Age 70, CPF 100k, median 150k → ceiling = 100k
+    // 150k > 100k → over
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 70 }),
+      150000,
+    );
+    expect(verdict.status).toBe("over");
+    expect(verdict.loanAmount).toBe(0);
+    expect(verdict.monthlyRepayment).toBe(0);
+    expect(verdict.downPaymentFromCpf).toBe(100000);
+    expect(verdict.cashOutlay).toBe(50000);
+  });
+
+  it("age >= 65 — CPF covers full price, stretch", () => {
+    // Age 70, CPF 200k, median 180k → ceiling = 200k
+    // 180k > 200k * 0.8 = 160k but <= 200k → stretch
+    const verdict = computeAffordabilityVerdict(
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 200000, age: 70 }),
+      180000,
+    );
+    expect(verdict.status).toBe("stretch");
+    expect(verdict.loanAmount).toBe(0);
+    expect(verdict.monthlyRepayment).toBe(0);
+    expect(verdict.downPaymentFromCpf).toBe(180000);
+    expect(verdict.cashOutlay).toBe(0);
+  });
+
   it("monthly repayment for an older buyer (shorter tenure)", () => {
     // Age 55 → 10-year tenure → higher monthly for same loan amount
     const youngVerdict = computeAffordabilityVerdict(
@@ -323,6 +365,11 @@ describe("minRequiredRemainingLease", () => {
     const c = minRequiredRemainingLease(70);
     expect(a).toBeGreaterThan(b);
     expect(b).toBeGreaterThan(c);
+  });
+
+  it("floors at 0 for age > 95", () => {
+    expect(minRequiredRemainingLease(96)).toBe(0);
+    expect(minRequiredRemainingLease(100)).toBe(0);
   });
 });
 
