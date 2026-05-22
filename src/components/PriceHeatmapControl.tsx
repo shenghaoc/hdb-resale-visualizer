@@ -105,6 +105,7 @@ export function PriceHeatmapControl({
           <div className="flex items-center gap-1">
             <button
               type="button"
+              aria-pressed={mode === "price"}
               onClick={() => onModeChange("price")}
               className={cn(
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
@@ -117,6 +118,7 @@ export function PriceHeatmapControl({
             </button>
             <button
               type="button"
+              aria-pressed={mode === "perSqm"}
               onClick={() => onModeChange("perSqm")}
               className={cn(
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
