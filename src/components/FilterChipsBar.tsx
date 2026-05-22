@@ -14,6 +14,7 @@ type FilterChipsBarProps = {
   isDesktop: boolean;
   t: Translator;
   onOpenFilters: () => void;
+  hidden?: boolean;
 };
 
 const chipFocusClass =
@@ -22,7 +23,7 @@ const chipFocusClass =
 const chipLayoutClass =
   "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-full px-3 py-1.5 text-[0.65rem] font-semibold leading-none shadow-sm backdrop-blur-[16px] transition-all min-h-11 min-w-11 sm:min-h-min sm:min-w-min";
 
-export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChipsBarProps) {
+export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: FilterChipsBarProps) {
   const itemCount = chips.length + 1;
   const [focusedIndex, setFocusedIndex] = useState(0);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -66,7 +67,8 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters }: FilterChi
       role="toolbar"
       aria-label={t("filters.title")}
       className={cn(
-        "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+        "absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+        hidden ? "invisible opacity-0 pointer-events-none" : "pointer-events-auto",
         isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-[4.25rem] top-[3.6rem] px-3",
       )}
       style={{ scrollbarWidth: "none" }}

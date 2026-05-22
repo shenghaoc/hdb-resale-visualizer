@@ -467,6 +467,7 @@ function App() {
           isDesktop={panel.isDesktop}
           t={t}
           onOpenFilters={handleOpenFilters}
+          hidden={detailVisible && panel.isDesktop}
         />
 
         <ScopePrompt
