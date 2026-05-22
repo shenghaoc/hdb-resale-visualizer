@@ -102,10 +102,16 @@ export function PriceHeatmapControl({
       {/* Mode toggle and Opacity slider — only shown when heatmap is active */}
       {isEnabled && hasScope && (
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-1">
+          <div role="radiogroup" aria-label={t("heatmap.modeLabel")} className="flex items-center gap-1">
             <button
               type="button"
+              role="radio"
+              aria-checked={mode === "price"}
+              tabIndex={mode === "price" ? 0 : -1}
               onClick={() => onModeChange("price")}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
+              }}
               className={cn(
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
                 mode === "price"
@@ -117,7 +123,13 @@ export function PriceHeatmapControl({
             </button>
             <button
               type="button"
+              role="radio"
+              aria-checked={mode === "perSqm"}
+              tabIndex={mode === "perSqm" ? 0 : -1}
               onClick={() => onModeChange("perSqm")}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
+              }}
               className={cn(
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
                 mode === "perSqm"
