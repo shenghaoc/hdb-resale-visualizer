@@ -305,6 +305,7 @@ function App() {
           isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
           remainingLeaseMin={filters.remainingLeaseMin}
+          searchProfile={searchProfile.profile}
           onClose={() => patchFilters({ selectedAddressKey: null })}
           onToggleShortlist={() => {
             if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
@@ -330,6 +331,7 @@ function App() {
           isCompact
           budgetMin={filters.budgetMin}
           budgetMax={filters.budgetMax}
+          searchProfile={searchProfile.profile}
           profileTown={pipeline.effectiveFilters.town || null}
           profileTownBlocks={townProfileBlocks}
           profileDataWindow={manifest.dataWindow}

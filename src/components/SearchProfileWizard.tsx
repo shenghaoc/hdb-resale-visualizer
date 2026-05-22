@@ -8,6 +8,8 @@ import {
   SEARCH_PROFILE_MAX_MONETARY_VALUE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
 } from "@/lib/constants";
+import { maxAffordablePrice } from "@/lib/affordability";
+import { formatCurrency } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
 import { cn } from "@/lib/utils";
@@ -87,7 +89,7 @@ function WizardIcon({
 }
 
 export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
   const [mainFlatType, setMainFlatType] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
   const [commuteAnchorLabel, setCommuteAnchorLabel] = useState("");
@@ -142,6 +144,16 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     cpfOABalance,
     monthlyIncome,
   ]);
+
+  const affordabilityCeiling = useMemo(
+    () =>
+      maxAffordablePrice({
+        monthlyIncome: monthlyIncome.trim() ? Number(monthlyIncome) : null,
+        cpfOABalance: cpfOABalance.trim() ? Number(cpfOABalance) : null,
+        age: age.trim() ? Number(age) : null,
+      }),
+    [monthlyIncome, cpfOABalance, age],
+  );
 
   const canSubmit = useMemo(() => {
     return (
@@ -660,6 +672,23 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </div>
                     ) : null}
                   </div>
+                  {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
+                    <div className="mt-5 rounded-[0.65rem] border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-3 text-left dark:border-emerald-400/25 dark:bg-emerald-400/[0.06]">
+                      <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
+                        {t("affordability.ceiling", { price: formatCurrency(affordabilityCeiling, locale) })}
+                      </p>
+                      {monthlyIncome.trim() ? (
+                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-slate-600 dark:text-slate-300">
+                          {t("affordability.summary", {
+                            cpf: formatCurrency(Number(cpfOABalance), locale),
+                            income: formatCurrency(Number(monthlyIncome), locale),
+                            age: Number(age),
+                            price: formatCurrency(affordabilityCeiling, locale),
+                          })}
+                        </p>
+                      ) : null}
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </div>

@@ -38,8 +38,10 @@ import { useI18n } from "@/lib/i18n";
 import type { Locale, Translator } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 import { rankSimilarBlocks } from "@/lib/similar-blocks";
 import { computeComparableRange } from "@/lib/comparable-range";
+import { computeAffordabilityVerdict } from "@/lib/affordability";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,6 +91,7 @@ type DetailDrawerProps = {
   isSaved: boolean;
   remainingLeaseMin: number | null;
   filters?: FilterState;
+  searchProfile?: SearchProfile | null;
   onClose: () => void;
   onToggleShortlist: () => void;
   onSelectBlock: (addressKey: string) => void;
@@ -307,6 +310,7 @@ export function DetailDrawer({
   isSaved,
   remainingLeaseMin,
   filters = DEFAULT_FILTERS,
+  searchProfile = null,
   onClose,
   onToggleShortlist,
   onSelectBlock,
@@ -338,6 +342,18 @@ export function DetailDrawer({
     () => (selectedBlock ? computeComparableRange(selectedBlock, similarBlocks) : null),
     [selectedBlock, similarBlocks],
   );
+
+  const affordabilityVerdict = useMemo(() => {
+    if (!searchProfile || !currentSummary) return null;
+    return computeAffordabilityVerdict(
+      {
+        monthlyIncome: searchProfile.monthlyIncome,
+        cpfOABalance: searchProfile.cpfOABalance,
+        age: searchProfile.age,
+      },
+      currentSummary.medianPrice,
+    );
+  }, [searchProfile, currentSummary]);
 
   const trajectory = useMemo(
     () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
@@ -593,6 +609,105 @@ export function DetailDrawer({
                           : t("detail.comparableRange.below", {
                               value: formatNumber(Math.abs(comparableRange.deltaFromMedianPct), 1, locale),
                             })}
+                    </p>
+                  </section>
+                ) : null}
+
+                {affordabilityVerdict && affordabilityVerdict.status !== "unknown" ? (
+                  <section
+                    aria-labelledby="affordability-title"
+                    data-testid="affordability-section"
+                    className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                  >
+                    <div
+                      id="affordability-title"
+                      className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                    >
+                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("affordability.breakdownTitle")}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          {t("affordability.loanAmount")}
+                        </span>
+                        <div className="font-heading text-sm font-extrabold tabular-nums">
+                          {formatCurrency(affordabilityVerdict.loanAmount, locale)}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          {t("affordability.monthlyRepayment")}
+                        </span>
+                        <div className="font-heading text-sm font-extrabold tabular-nums">
+                          {formatCurrency(affordabilityVerdict.monthlyRepayment, locale)}
+                          <span className="text-[0.58rem] font-normal text-muted-foreground">{t("unit.perMonth")}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          {t("affordability.downPayment")}
+                        </span>
+                        <div className="font-heading text-sm font-extrabold tabular-nums">
+                          {formatCurrency(affordabilityVerdict.downPaymentFromCpf + affordabilityVerdict.cashOutlay, locale)}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          {t("affordability.fromCpf")}
+                        </span>
+                        <div className="font-heading text-sm font-extrabold tabular-nums">
+                          {formatCurrency(affordabilityVerdict.downPaymentFromCpf, locale)}
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          {t("affordability.cashRequired")}
+                        </span>
+                        <div className="font-heading text-sm font-extrabold tabular-nums">
+                          {formatCurrency(affordabilityVerdict.cashOutlay, locale)}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-2 flex items-center gap-1.5 text-[0.6rem] font-bold">
+                      <span
+                        className={cn(
+                          "h-1.5 w-1.5 rounded-full",
+                          affordabilityVerdict.status === "comfortable" && "bg-emerald-500",
+                          affordabilityVerdict.status === "stretch" && "bg-amber-500",
+                          affordabilityVerdict.status === "over" && "bg-red-500",
+                        )}
+                      />
+                      <span className="uppercase tracking-[0.08em] text-muted-foreground">
+                        {t("affordability.ceiling", { price: formatCurrency(affordabilityVerdict.maxAffordablePrice, locale) })}
+                      </span>
+                      <span
+                        className={cn(
+                          "ml-auto rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                          affordabilityVerdict.status === "comfortable" &&
+                            "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                          affordabilityVerdict.status === "stretch" &&
+                            "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                          affordabilityVerdict.status === "over" &&
+                            "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+                        )}
+                      >
+                        {affordabilityVerdict.status === "comfortable"
+                          ? t("affordability.comfortable")
+                          : affordabilityVerdict.status === "stretch"
+                            ? t("affordability.stretch")
+                            : t("affordability.over")}
+                      </span>
+                    </div>
+                  </section>
+                ) : searchProfile && searchProfile.monthlyIncome === null ? (
+                  <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
+                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                      {t("affordability.title")}
+                    </div>
+                    <p className="text-xs text-muted-foreground italic">
+                      {t("affordability.setProfileHint")}
                     </p>
                   </section>
                 ) : null}
