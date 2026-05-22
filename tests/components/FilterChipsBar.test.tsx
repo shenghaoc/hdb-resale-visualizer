@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { FilterChipsBar, type FilterChip } from "@/components/FilterChipsBar";
@@ -46,7 +46,7 @@ describe("FilterChipsBar", () => {
     expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
   });
 
-  it("hides visually but stays in the DOM when hidden is true, preserving state", () => {
+  it("hides visually but stays in the DOM when hidden is true", () => {
     render(
       <FilterChipsBar
         chips={[{ key: "town", label: "BEDOK", onRemove: vi.fn() }]}
@@ -61,6 +61,29 @@ describe("FilterChipsBar", () => {
     expect(toolbar).toHaveClass("invisible", "opacity-0", "pointer-events-none");
   });
 
+  it("preserves focusedIndex across a hide/show cycle", async () => {
+    const chips = [
+      { key: "town", label: "Town · BEDOK", onRemove: vi.fn() },
+      { key: "flatType", label: "4 ROOM", onRemove: vi.fn() },
+    ];
+    const { rerender } = render(
+      <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={false} />,
+    );
+    const secondChip = screen.getByRole("button", { name: "Remove filter: 4 ROOM" });
+    secondChip.focus();
+    await waitFor(() => {
+      expect(secondChip).toHaveAttribute("tabindex", "0");
+    });
+
+    rerender(
+      <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={true} />,
+    );
+    rerender(
+      <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={false} />,
+    );
+    expect(secondChip).toHaveAttribute("tabindex", "0");
+  });
+
   it("renders chips when hidden is false on desktop", () => {
     render(
       <FilterChipsBar
@@ -71,7 +94,9 @@ describe("FilterChipsBar", () => {
         hidden={false}
       />,
     );
-    expect(screen.getByRole("toolbar", { name: "Filters" })).toBeInTheDocument();
+    const toolbar = screen.getByRole("toolbar", { name: "Filters" });
+    expect(toolbar).toBeInTheDocument();
+    expect(toolbar).not.toHaveClass("invisible");
     expect(screen.getByRole("button", { name: "Remove filter: BEDOK" })).toBeInTheDocument();
   });
 
