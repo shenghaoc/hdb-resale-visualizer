@@ -17,8 +17,10 @@ import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
+import { computeAffordabilityVerdict } from "@/lib/affordability";
 import { fetchTownFlatTypeTrends } from "@/lib/data";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
 import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
@@ -110,6 +112,7 @@ type ResultsPaneProps = {
   isCompact?: boolean;
   budgetMin?: number | null;
   budgetMax?: number | null;
+  searchProfile?: SearchProfile | null;
   /** When set together with scope, results show a factual town overview above the list. */
   profileTown?: string | null;
   profileTownBlocks?: BlockSummary[];
@@ -178,6 +181,7 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist,
   budgetMin,
   budgetMax,
+  searchProfile,
   t,
   locale,
 }: {
@@ -190,9 +194,22 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist: (addressKey: string) => void;
   budgetMin: number | null;
   budgetMax: number | null;
+  searchProfile?: SearchProfile | null;
   t: Translator;
   locale: Locale;
 }) {
+  const affordVerdict = useMemo(() => {
+    if (!searchProfile) return null;
+    return computeAffordabilityVerdict(
+      {
+        monthlyIncome: searchProfile.monthlyIncome,
+        cpfOABalance: searchProfile.cpfOABalance,
+        age: searchProfile.age,
+      },
+      block.medianPrice,
+    );
+  }, [searchProfile, block.medianPrice]);
+
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
@@ -248,6 +265,23 @@ const BlockCard = memo(function BlockCard({
                     locale={locale}
                     className="scale-90 origin-right"
                   />
+                {affordVerdict && affordVerdict.status !== "unknown" ? (
+                  <span
+                    className={cn(
+                      "h-2 w-2 shrink-0 rounded-full",
+                      affordVerdict.status === "comfortable" && "bg-emerald-500",
+                      affordVerdict.status === "stretch" && "bg-amber-500",
+                      affordVerdict.status === "over" && "bg-red-500",
+                    )}
+                    title={
+                      affordVerdict.status === "comfortable"
+                        ? t("affordability.comfortable")
+                        : affordVerdict.status === "stretch"
+                          ? t("affordability.stretch")
+                          : t("affordability.over")
+                    }
+                  />
+                ) : null}
                 <span className="text-[0.58rem] font-medium text-muted-foreground">
                   {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
@@ -311,10 +345,9 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card animate-fade-in-up group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995]",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
-      style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}
     >
       <ItemHeader>
@@ -357,6 +390,33 @@ const BlockCard = memo(function BlockCard({
           <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
             {t(getDataConfidenceLabelKey(block.transactionCount))}
           </Badge>
+          {affordVerdict && affordVerdict.status !== "unknown" ? (
+            <span
+              className={cn(
+                "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                affordVerdict.status === "comfortable" &&
+                  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                affordVerdict.status === "stretch" &&
+                  "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                affordVerdict.status === "over" &&
+                  "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+              )}
+            >
+              <span
+                className={cn(
+                  "h-1.5 w-1.5 rounded-full",
+                  affordVerdict.status === "comfortable" && "bg-emerald-500",
+                  affordVerdict.status === "stretch" && "bg-amber-500",
+                  affordVerdict.status === "over" && "bg-red-500",
+                )}
+              />
+              {affordVerdict.status === "comfortable"
+                ? t("affordability.comfortable")
+                : affordVerdict.status === "stretch"
+                  ? t("affordability.stretch")
+                  : t("affordability.over")}
+            </span>
+          ) : null}
         </div>
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -432,6 +492,7 @@ export function ResultsPane({
   isCompact = false,
   budgetMin = null,
   budgetMax = null,
+  searchProfile = null,
   profileTown = null,
   profileTownBlocks = [],
   profileDataWindow = null,
@@ -897,6 +958,7 @@ export function ResultsPane({
                           onToggleShortlist={onToggleShortlist}
                           budgetMin={budgetMin ?? null}
                           budgetMax={budgetMax ?? null}
+                          searchProfile={searchProfile ?? null}
                           t={t}
                           locale={locale}
                         />
