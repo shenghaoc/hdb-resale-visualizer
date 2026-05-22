@@ -516,7 +516,7 @@ export function DetailDrawer({
                 </TabsTrigger>
               </TabsList>
 
-              <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar">
+              <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar drawer-body-vt">
               {/* ── OVERVIEW ── */}
               <TabsContent
                 value="overview"

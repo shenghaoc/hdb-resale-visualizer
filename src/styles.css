@@ -53,6 +53,10 @@
 
 :root {
   color-scheme: light;
+  /* Opts every descendant into native height/width keyword interpolation —
+     `transition: height 200ms` now animates to/from `auto` without any
+     JS-measured pixel values. Global by design; remove if a child element
+     ever needs the old snap behaviour. */
   interpolate-size: allow-keywords;
 
   --mobile-tab-bar-height: 4rem;
@@ -81,7 +85,10 @@
   --success-foreground: light-dark(#ffffff, #022c22);
   --border: light-dark(rgba(15, 23, 42, 0.08), rgba(34, 211, 238, 0.12));
   /* Shared tokens derived from --primary — reused for hover/active tints and
-     glass hairlines so colour adjustments propagate from one source. */
+     glass hairlines so colour adjustments propagate from one source.
+     Note: --primary itself is light-dark(), so the nested var() inside the
+     light-dark() arms below resolves correctly per-element at computed-value
+     time — each consumer's own color-scheme picks the right --primary arm. */
   --primary-soft-bg: color-mix(in oklab, var(--primary) 10%, transparent);
   --glass-border: light-dark(
     rgba(195, 198, 215, 0.3),
@@ -732,17 +739,27 @@ input[data-no-spinner="true"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* View Transitions API — used for DetailDrawer tab swaps. A short cross-fade
-   is plenty; longer durations feel laggy. Disabled under reduced-motion. */
+/* View Transitions API — scoped to the DetailDrawer body so tab swaps only
+   cross-fade the drawer content, not the map / panels. The root snapshot is
+   suppressed; only the named element animates. */
+.drawer-body-vt {
+  view-transition-name: drawer-body;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(drawer-body),
+::view-transition-new(drawer-body) {
   animation-duration: 160ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-old(drawer-body),
+  ::view-transition-new(drawer-body) {
     animation: none;
   }
 }
