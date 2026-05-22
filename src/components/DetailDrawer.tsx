@@ -473,7 +473,16 @@ export function DetailDrawer({
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-4 sm:px-6">
             <Tabs
               value={activeTab}
-              onValueChange={(v) => startTransition(() => setActiveTab(v))}
+              onValueChange={(v) => {
+                // Cross-fade the drawer body via the View Transitions API when
+                // available; React's startTransition still defers the render.
+                const apply = () => startTransition(() => setActiveTab(v));
+                if (typeof document !== "undefined" && document.startViewTransition) {
+                  document.startViewTransition(apply);
+                } else {
+                  apply();
+                }
+              }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
               <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-xl bg-muted/40 p-1">

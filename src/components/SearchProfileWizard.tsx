@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -232,8 +232,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <div
               key={step}
               style={{
-                animation: `${direction > 0 ? "wizard-step-enter-fwd" : "wizard-step-enter-back"} 280ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards`,
-              }}
+                "--wizard-x": direction > 0 ? "20px" : "-20px",
+                animation: "wizard-step-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards",
+              } as CSSProperties}
             >
               {step === 0 ? (
                 <div className="pt-2 text-center">
