@@ -231,9 +231,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
           <div className="min-h-[19rem] lg:min-h-[17rem]">
             <div
               key={step}
+              className="wizard-step-anim"
               style={{
                 "--wizard-x": direction > 0 ? "20px" : "-20px",
-                animation: "wizard-step-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards",
               } as CSSProperties}
             >
               {step === 0 ? (

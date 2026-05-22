@@ -249,12 +249,19 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
+.wizard-step-anim {
+  animation: wizard-step-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
 .wizard-panel-in {
   animation: wizard-panel-in 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .wizard-step-anim {
+    animation: none;
+  }
   .wizard-panel-in {
     animation: none;
   }
