@@ -1236,10 +1236,9 @@ export function ShortlistDrawer({
                           role="listitem"
                           data-state={isExpanded ? "expanded" : "collapsed"}
                           className={cn(
-                            "v2-card animate-fade-in-up ss-fade-in gap-0 rounded-xl py-0 transition-all cv-auto",
+                            "v2-card ss-fade-in gap-0 rounded-xl py-0 transition-all cv-auto",
                             isExpanded && "shadow-[0_12px_32px_rgba(23,28,31,0.10)]",
                           )}
-                          style={{ animationDelay: `${index * 45}ms` }}
                         >
                           <CardHeader className="gap-0 px-0">
                             <div className="flex items-start gap-2 p-3">

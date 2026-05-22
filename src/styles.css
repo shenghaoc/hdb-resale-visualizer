@@ -756,6 +756,11 @@
     opacity: 1;
     transform: none;
   }
+  .ss-fade-in {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 input[data-no-spinner="true"] {
@@ -896,9 +901,13 @@ html {
    Off-screen rows in long scrollable lists are not painted / laid out,
    dramatically reducing scroll jank with 10k+ listings. The intrinsic
    size hint prevents scrollbar-thrashing. */
+/* --cv-intrinsic-height lets each consumer set an appropriate estimate for
+   its own row height so the scrollbar doesn't jump as items enter the
+   viewport (default 200px works for BlockCards; smaller rows like
+   AskingPriceCheck can override with a lower value). */
 .cv-auto {
   content-visibility: auto;
-  contain-intrinsic-size: auto 200px;
+  contain-intrinsic-size: auto var(--cv-intrinsic-height, 200px);
 }
 
 /* ── Starting-style — enables CSS-only entrance animations ────────────

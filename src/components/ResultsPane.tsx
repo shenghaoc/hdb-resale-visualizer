@@ -311,10 +311,9 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card animate-fade-in-up ss-fade-in group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
-      style={{ animationDelay: `${index * 50}ms` }}
       onClick={() => onSelect(block.addressKey)}
     >
       <ItemHeader>
