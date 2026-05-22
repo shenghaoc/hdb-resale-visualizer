@@ -121,9 +121,9 @@ describe("computeLoanTenureYears", () => {
 describe("maxAffordablePrice", () => {
   it("combines loan and CPF constraints — typical young buyer", () => {
     // Income $8,000, CPF $100k, age 35 → max loan ≈ $513,082, tenure 25y
-    // Loan-constrained price = maxLoan / 0.75 ≈ $684,109
-    // CPF-constrained price = 100k / 0.25 = $400,000
-    // CPF constraint is tighter → $400,000
+    // Total funds constraint = 513,082 + 100,000 = 613,082
+    // Downpayment constraint = 100k / 0.25 = $400,000
+    // Downpayment constraint is tighter → $400,000
     const price = maxAffordablePrice(makeProfile({
       monthlyIncome: 8000,
       cpfOABalance: 100000,
@@ -132,18 +132,19 @@ describe("maxAffordablePrice", () => {
     expect(price).toBe(400000);
   });
 
-  it("loan constraint dominates when CPF is high", () => {
+  it("total funds constraint dominates when CPF is high", () => {
     // Income $6,000, CPF $500k, age 30
-    // maxLoan ≈ $384,811, loan-constrained = $513,081
-    // CPF-constrained = 500k / 0.25 = $2,000,000
-    // Loan constraint tighter
+    // maxLoan ≈ $384,811
+    // totalFundsConstraint = 384,811 + 500,000 = 884,811
+    // downpaymentConstraint = 500k / 0.25 = 2,000,000
+    // Total funds constraint is tighter
     const price = maxAffordablePrice(makeProfile({
       monthlyIncome: 6000,
       cpfOABalance: 500000,
       age: 30,
     }));
-    const expectedLoanConstraint = Math.floor(maxLoanFor(6000) / 0.75);
-    expect(price).toBe(expectedLoanConstraint);
+    const expectedTotalFunds = Math.floor(maxLoanFor(6000) + 500000);
+    expect(price).toBe(expectedTotalFunds);
   });
 
   it("returns 0 when CPF is 0", () => {

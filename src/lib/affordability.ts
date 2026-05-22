@@ -42,9 +42,9 @@ export function maxLoanFor(monthlyIncome: number, tenureMonths?: number): number
  * age under HDB concessionary loan rules.
  *
  * Two constraints:
- *  1. Loan: 75% LTV × price must be serviceable at 30% MSR over the
- *     age-capped tenure.
- *  2. CPF down payment: CPF OA can cover at most 25% of price.
+ *  1. Total funds: purchase price cannot exceed maxLoan + CPF balance.
+ *  2. Minimum down-payment: CPF OA must cover at least 25% of purchase price
+ *     (i.e. price <= CPF / 0.25).
  *
  * Returns 0 when neither constraint is binding (no usable data), or when
  * the CPF down-payment constraint alone yields 0 (no CPF balance).
@@ -66,13 +66,13 @@ export function maxAffordablePrice(profile: {
     return Math.floor(cpf);
   }
 
-  const loanConstraint = maxLoan / HDB_MAX_LTV_RATIO;
+  // The maximum price is constrained by two factors:
+  // 1. Total funds available: Price <= maxLoan + CPF
+  // 2. Minimum downpayment: Price <= CPF / (1 - LTV)
+  const totalFundsConstraint = maxLoan + cpf;
+  const downpaymentConstraint = cpf > 0 ? cpf / (1 - HDB_MAX_LTV_RATIO) : 0;
 
-  // CPF constraint: CPF OA must cover the downpayment (1 - LTV).
-  const downpaymentRatio = 1 - HDB_MAX_LTV_RATIO;
-  const cpfConstraint = cpf > 0 ? cpf / downpaymentRatio : 0;
-
-  return Math.floor(Math.min(loanConstraint, cpfConstraint));
+  return Math.floor(Math.min(totalFundsConstraint, downpaymentConstraint));
 }
 
 // ── Affordability verdict ──────────────────────────────────────────────
@@ -135,7 +135,6 @@ export function computeAffordabilityVerdict(
     };
   }
 
-  let downPayment: number;
   let downPaymentFromCpf: number;
   let cashOutlay: number;
   let loanAmount: number;
@@ -149,12 +148,9 @@ export function computeAffordabilityVerdict(
   } else {
     const maxLoan = maxLoanFor(income, tenureYears * 12);
     const requiredLoan = HDB_MAX_LTV_RATIO * medianPrice;
-    loanAmount = Math.min(requiredLoan, maxLoan);
+    loanAmount = Math.floor(Math.min(requiredLoan, maxLoan));
 
-    downPayment = (1 - HDB_MAX_LTV_RATIO) * medianPrice;
-    const loanShortfall = Math.max(0, requiredLoan - maxLoan);
-    
-    const totalRequiredFromOwnFunds = downPayment + loanShortfall;
+    const totalRequiredFromOwnFunds = medianPrice - loanAmount;
     downPaymentFromCpf = Math.min(cpf, totalRequiredFromOwnFunds);
     cashOutlay = Math.max(0, totalRequiredFromOwnFunds - downPaymentFromCpf);
 
