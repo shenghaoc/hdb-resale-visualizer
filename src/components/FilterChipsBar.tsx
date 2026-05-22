@@ -58,7 +58,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: F
     }
   }, []);
 
-  if (hidden || chips.length === 0) return null;
+  if (chips.length === 0) return null;
 
   const filtersButtonIndex = chips.length;
 
@@ -67,7 +67,8 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: F
       role="toolbar"
       aria-label={t("filters.title")}
       className={cn(
-        "pointer-events-auto absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+        "absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+        hidden ? "invisible opacity-0 pointer-events-none" : "pointer-events-auto",
         isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-[4.25rem] top-[3.6rem] px-3",
       )}
       style={{ scrollbarWidth: "none" }}

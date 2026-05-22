@@ -46,7 +46,7 @@ describe("FilterChipsBar", () => {
     expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
   });
 
-  it("renders nothing when hidden is true, even with chips present", () => {
+  it("hides visually but stays in the DOM when hidden is true, preserving state", () => {
     render(
       <FilterChipsBar
         chips={[{ key: "town", label: "BEDOK", onRemove: vi.fn() }]}
@@ -56,7 +56,9 @@ describe("FilterChipsBar", () => {
         hidden={true}
       />,
     );
-    expect(screen.queryByRole("toolbar")).not.toBeInTheDocument();
+    const toolbar = screen.getByRole("toolbar", { name: "Filters" });
+    expect(toolbar).toBeInTheDocument();
+    expect(toolbar).toHaveClass("invisible", "opacity-0", "pointer-events-none");
   });
 
   it("renders chips when hidden is false on desktop", () => {
