@@ -9,7 +9,7 @@ import {
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
 } from "@/lib/constants";
 import { maxAffordablePrice } from "@/lib/affordability";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
 import { cn } from "@/lib/utils";
@@ -646,7 +646,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     </div>
                     {maxBudget ? (
                       <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
-                        {`S$${Number(maxBudget).toLocaleString()}`}
+                        {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
                       </div>
                     ) : null}
                     <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
@@ -670,12 +670,12 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     ) : null}
                     {cpfOABalance ? (
                       <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
-                        {t("searchProfile.chip.cpfOABalance", { amount: Number(cpfOABalance).toLocaleString() })}
+                        {t("searchProfile.chip.cpfOABalance", { amount: formatNumber(Number(cpfOABalance), 0, locale) })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
                       <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
-                        {t("searchProfile.chip.monthlyIncome", { amount: Number(monthlyIncome).toLocaleString() })}
+                        {t("searchProfile.chip.monthlyIncome", { amount: formatNumber(Number(monthlyIncome), 0, locale) })}
                       </div>
                     ) : null}
                   </div>
