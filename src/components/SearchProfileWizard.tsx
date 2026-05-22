@@ -672,19 +672,21 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </div>
                     ) : null}
                   </div>
-                  {age.trim() && monthlyIncome.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
+                  {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
                     <div className="mt-5 rounded-[0.65rem] border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-3 text-left dark:border-emerald-400/25 dark:bg-emerald-400/[0.06]">
                       <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
                         {t("affordability.ceiling", { price: formatCurrency(affordabilityCeiling, locale) })}
                       </p>
-                      <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-slate-600 dark:text-slate-300">
-                        {t("affordability.summary", {
-                          cpf: formatCurrency(Number(cpfOABalance), locale),
-                          income: formatCurrency(Number(monthlyIncome), locale),
-                          age: Number(age),
-                          price: formatCurrency(affordabilityCeiling, locale),
-                        })}
-                      </p>
+                      {monthlyIncome.trim() ? (
+                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-slate-600 dark:text-slate-300">
+                          {t("affordability.summary", {
+                            cpf: formatCurrency(Number(cpfOABalance), locale),
+                            income: formatCurrency(Number(monthlyIncome), locale),
+                            age: Number(age),
+                            price: formatCurrency(affordabilityCeiling, locale),
+                          })}
+                        </p>
+                      ) : null}
                     </div>
                   ) : null}
                 </div>

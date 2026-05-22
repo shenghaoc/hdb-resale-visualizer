@@ -14,7 +14,7 @@ import type { BlockSummary } from "@/types/data";
  * If age is unknown or the cap computes negative, the floor is 0.
  */
 export function computeLoanTenureYears(age: number | null): number {
-  if (age === null || age === undefined) return 25;
+  if (age === null) return 25;
   return Math.min(25, Math.max(0, 65 - age));
 }
 
