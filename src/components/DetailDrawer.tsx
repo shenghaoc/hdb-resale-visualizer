@@ -1,4 +1,5 @@
 import { lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import {
   AlertTriangle,
   ArrowDown,
@@ -474,13 +475,17 @@ export function DetailDrawer({
             <Tabs
               value={activeTab}
               onValueChange={(v) => {
-                // Cross-fade the drawer body via the View Transitions API when
-                // available; React's startTransition still defers the render.
-                const apply = () => startTransition(() => setActiveTab(v));
+                // View Transitions API needs the DOM committed before its
+                // callback resolves so it can snapshot the "after" state.
+                // startTransition defers the commit, so we use flushSync here
+                // to force a synchronous render; fall back to startTransition
+                // when the API is unavailable.
                 if (typeof document !== "undefined" && document.startViewTransition) {
-                  document.startViewTransition(apply);
+                  document.startViewTransition(() => {
+                    flushSync(() => setActiveTab(v));
+                  });
                 } else {
-                  apply();
+                  startTransition(() => setActiveTab(v));
                 }
               }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
