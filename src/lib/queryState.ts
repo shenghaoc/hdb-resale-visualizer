@@ -66,9 +66,16 @@ export function serializeFilters(filters: FilterState): string {
   const params = new URLSearchParams();
   let hasNonDefaultParams = false;
 
+  // Strip compareTown when it has no primary anchor or when it duplicates the primary town.
+  const effectiveCompareTown =
+    filters.town && filters.compareTown && filters.compareTown !== filters.town
+      ? filters.compareTown
+      : "";
+
   for (const [key, value] of Object.entries(filters)) {
     const defaultValue = DEFAULT_FILTERS[key as keyof FilterState];
-    const normalizedValue = value ?? "";
+    const normalizedValue =
+      key === "compareTown" ? effectiveCompareTown : (value ?? "");
     if (normalizedValue === (defaultValue ?? "")) {
       continue;
     }

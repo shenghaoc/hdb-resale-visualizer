@@ -17,6 +17,7 @@ import type {
 import type { z } from "zod";
 
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
+const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -58,11 +59,25 @@ export function fetchBlockSummaries(): Promise<BlockSummary[]> {
 }
 
 export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
-  return fetchJson(`${API_BASE_PATH}/blocks/${townToFilename(town)}`, blockSummarySchema.array());
+  const existing = blocksByTownPromises.get(town);
+  if (existing) return existing;
+  const request = fetchJson(
+    `${API_BASE_PATH}/blocks/${townToFilename(town)}`,
+    blockSummarySchema.array(),
+  ).catch((error) => {
+    blocksByTownPromises.delete(town);
+    throw error;
+  });
+  blocksByTownPromises.set(town, request);
+  return request;
 }
 
 export function resetTownFlatTypeTrendsCacheForTests(): void {
   townFlatTrendsPromise = null;
+}
+
+export function resetBlocksByTownCacheForTests(): void {
+  blocksByTownPromises.clear();
 }
 
 export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {

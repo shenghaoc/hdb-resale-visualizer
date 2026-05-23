@@ -337,9 +337,12 @@ function App() {
           profileDataWindow={manifest.dataWindow}
           profileStartMonth={pipeline.effectiveFilters.startMonth}
           profileEndMonth={pipeline.effectiveFilters.endMonth}
+          compareTown={filters.compareTown || null}
+          availableTowns={manifest.filterOptions.towns}
+          onChangeCompareTown={(compareTown) => patchFilters({ compareTown })}
           townRecommendations={townRecommendations}
           townRecommendationsLoading={townRecommendationsLoading}
-          onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null })}
+          onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
         />
       </Suspense>
     </div>
