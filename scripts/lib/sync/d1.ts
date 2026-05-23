@@ -1,0 +1,133 @@
+/**
+ * Cloudflare D1 HTTP client used by the sync-data pipeline.
+ *
+ * The sync runs in Node (GitHub Actions or developer machine) and writes
+ * directly to the same D1 database that Pages Functions read from at runtime.
+ *
+ * D1 REST API reference:
+ *   POST /accounts/{account_id}/d1/database/{database_id}/query
+ *   POST /accounts/{account_id}/d1/database/{database_id}/raw
+ *
+ * Both endpoints accept either a single `{sql, params}` object or an array of
+ * statements (batch). Each statement has a 100KB body cap, so we issue
+ * batched `INSERT ... VALUES (?,?),(?,?),...` multi-row inserts in chunks.
+ */
+import { fetchWithRetry } from "./fetchers";
+
+export type D1Config = {
+  accountId: string;
+  databaseId: string;
+  apiToken: string;
+  /** Override for tests/local emulators. */
+  endpoint?: string;
+};
+
+type D1Statement = { sql: string; params?: unknown[] };
+
+type D1QueryResult<TRow = Record<string, unknown>> = {
+  success: boolean;
+  errors: Array<{ message: string; code?: number }>;
+  result: Array<{
+    results?: TRow[];
+    success?: boolean;
+    meta?: { changes?: number; duration?: number; rows_read?: number; rows_written?: number };
+  }>;
+};
+
+export function resolveD1ConfigFromEnv(): D1Config | null {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const databaseId = process.env.CLOUDFLARE_D1_DATABASE_ID;
+  const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+  if (!accountId || !databaseId || !apiToken) {
+    return null;
+  }
+  return { accountId, databaseId, apiToken, endpoint: process.env.CLOUDFLARE_D1_ENDPOINT };
+}
+
+function buildQueryUrl(config: D1Config): string {
+  const base = config.endpoint ?? "https://api.cloudflare.com";
+  return `${base}/client/v4/accounts/${config.accountId}/d1/database/${config.databaseId}/query`;
+}
+
+export class D1Client {
+  constructor(private readonly config: D1Config) {}
+
+  /**
+   * Run one or more parametric statements. Returns the typed rows from the
+   * last statement's `results` array (mirroring `wrangler d1 execute`).
+   */
+  async query<TRow = Record<string, unknown>>(
+    statement: D1Statement | D1Statement[],
+  ): Promise<TRow[]> {
+    const body = Array.isArray(statement) ? statement : [statement];
+    const response = await fetchWithRetry(buildQueryUrl(this.config), {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${this.config.apiToken}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(body.length === 1 ? body[0] : body),
+    });
+    const payload = (await response.json()) as D1QueryResult<TRow>;
+    if (!payload.success) {
+      const message = payload.errors?.map((e) => e.message).join("; ") || "D1 query failed";
+      throw new Error(`D1: ${message}`);
+    }
+    const last = payload.result[payload.result.length - 1];
+    return last?.results ?? [];
+  }
+
+  async execute(sql: string, params: unknown[] = []): Promise<void> {
+    await this.query({ sql, params });
+  }
+
+  /**
+   * Batch-insert rows using multi-row `VALUES (...)` tuples. Each chunk is one
+   * HTTP request so callers can pick a chunk size that keeps the request body
+   * comfortably under D1's 100KB-per-statement limit (rows per chunk × bytes
+   * per row < 100_000). Default 100 rows fits the schemas in this repo.
+   */
+  async batchInsert<TRow>(options: {
+    table: string;
+    columns: string[];
+    rows: TRow[];
+    mapRow: (row: TRow) => unknown[];
+    chunkSize?: number;
+    /** When true, emit `INSERT OR REPLACE` instead of `INSERT`. */
+    upsert?: boolean;
+  }): Promise<void> {
+    const { table, columns, rows, mapRow } = options;
+    if (rows.length === 0) {
+      return;
+    }
+    const chunkSize = options.chunkSize ?? 100;
+    const placeholders = `(${columns.map(() => "?").join(",")})`;
+    const verb = options.upsert ? "INSERT OR REPLACE" : "INSERT";
+    const sqlPrefix = `${verb} INTO ${table} (${columns.join(",")}) VALUES `;
+
+    for (let i = 0; i < rows.length; i += chunkSize) {
+      const chunk = rows.slice(i, i + chunkSize);
+      const params: unknown[] = [];
+      for (const row of chunk) {
+        const values = mapRow(row);
+        if (values.length !== columns.length) {
+          throw new Error(
+            `batchInsert(${table}): row provided ${values.length} values for ${columns.length} columns`,
+          );
+        }
+        params.push(...values);
+      }
+      const sql = sqlPrefix + new Array(chunk.length).fill(placeholders).join(",");
+      await this.execute(sql, params);
+    }
+  }
+
+  /**
+   * Replace the entire contents of a table — used for artifacts that are
+   * rebuilt from scratch on every sync (blocks, trends, etc.). Persistent
+   * caches must NOT be cleared; they are upserted in place.
+   */
+  async truncate(table: string): Promise<void> {
+    await this.execute(`DELETE FROM ${table}`);
+  }
+}

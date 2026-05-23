@@ -2,11 +2,12 @@
 
 # HDB Resale Visualizer
 
-Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction. The app uses official public datasets, precomputes static artifacts, and serves a fast client-only UI on Cloudflare Pages.
+Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction. The app uses official public datasets, persists them in Cloudflare D1, and serves a fast React UI through Cloudflare Pages Functions.
 
 ## Stack
 
-- Vite + React 19 + TypeScript
+- Vite + React 19 + TypeScript (frontend)
+- Cloudflare Pages Functions (`functions/api/*`) backed by Cloudflare D1 (runtime API)
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - ECharts for block-level trend charts
@@ -48,7 +49,7 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 - Budget match badges highlight blocks within your target range
 - Block detail drawer shows lease remaining, floor area range, transaction history, and a trend chart
 - Stores a browser-local shortlist with per-block notes and target prices
-- Keeps the frontend 100% static by precomputing all JSON artifacts at build time
+- Reads all live data through Cloudflare Pages Functions over Cloudflare D1; the frontend never touches data.gov.sg or OneMap at runtime
 
 ## Official data sources
 
@@ -70,50 +71,50 @@ Install dependencies:
 npm install
 ```
 
-For normal local development and automated tests, copy the checked-in fixture snapshot into `public/data/` (this directory is gitignored and empty by default):
-
-```bash
-npm run setup:fixtures
-```
-
-Run `npm run sync-data` only when you intentionally want to refresh artifacts from the live data.gov.sg and OneMap APIs (requires network access and optional API keys; see [Environment](#environment)).
-
-Start the app:
+For pure UI iteration that does not require live data, start Vite:
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:5173`.
+This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 because no Pages Functions are running — wire mock data per spec or use the full local stack below.
+
+For a full local stack (UI + Pages Functions + local D1 emulator):
+
+```bash
+npm run db:migrate:local     # one-time: create the local D1 schema
+npm run dev:functions        # runs `wrangler pages dev` against the local D1
+```
+
+You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
+
+Run `npm run sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
 
 ## Scripts
 
 ```bash
-npm run dev
-npm run check:boundaries
-npm run check:data
-npm run build
-npm run build:full
-npm run preview
+npm run dev               # Vite dev server (UI-only)
+npm run dev:functions     # Wrangler Pages dev (UI + /api/* + local D1)
+npm run check:boundaries  # script/runtime import boundary check
+npm run build             # production build (no D1 dependency)
+npm run build:full        # build + remote D1 sync (maintainers only)
+npm run preview           # vite preview of the built bundle
 npm run typecheck
 npm run lint
 npm run lint:fast
 npm run test
 npm run test:e2e
-npm run sync-data
+npm run sync-data         # remote D1 sync (requires CF credentials)
+npm run db:migrate:local
+npm run db:migrate:remote
 ```
 
 
 ## Build and runtime guardrails
 
-To keep the static-data architecture enforceable as the codebase evolves, production build commands run explicit pre-build guards:
-
 - `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
-- `npm run check:data` validates that required generated artifacts are present before static build output is produced.
-
-`npm run build` is the default fixture-backed production build path (`check:boundaries` + `check:data` + typecheck + compile + bundle budget check). Ensure fixtures are present first with `npm run setup:fixtures` in a fresh clone.
-
-`npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
+- `npm run build` is the default production build (`check:boundaries` + typecheck + compile + bundle budget check). It has no dependency on D1 — the static UI bundle is rebuilt from source only.
+- `npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
 
 ## Data pipeline
 
@@ -123,47 +124,50 @@ To keep the static-data architecture enforceable as the codebase evolves, produc
 2. Downloads CSV and GEOJSON source files for resale prices, properties, MRT stations, schools, hawker centres, supermarkets, and parks through the official dataset download API.
 3. Validates raw rows with `zod`.
 4. Normalizes addresses, prices, lease values, and monthly aggregates.
-5. Resolves block and amenity coordinates through OneMap and caches them in `data/cache/geocodes.json` (preserved across CI runs via GitHub Actions cache; not tracked by git).
-6. Computes nearest MRT distance from LTA station exit points.
-7. Emits:
-   - `public/data/manifest.json`
-   - `public/data/block-summaries.json`
-   - `public/data/trends/town-flat-type.json` (monthly medians, median $/sqm, and transaction counts by town × flat type)
-   - `public/data/mrt-stations.geojson` and `mrt-exits.geojson`
-   - `public/data/details/` (individual block transaction history and trend data)
-   - `public/data/comparisons/` (amenity proximity counts and percentile ranks, when amenity data is available)
+5. Loads existing geocodes from the `geocode_cache` D1 table; only addresses missing a cached row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
+6. Same one-time pattern for OneMap walking-time routes via the `walking_time_cache` table.
+7. Computes block-level summaries, address details, comparisons, and town × flat-type trend aggregates.
+8. Writes generated artifacts back to D1 (`manifest`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`).
+
+Pages Functions under `functions/api/*` then serve those tables on every request. Schema for both halves lives in `migrations/0001_initial.sql`.
 
 ## Environment
 
-Optional environment variables:
-
 ```bash
+# Build-time / sync-data
 DATA_GOV_API_KEY=...
-ONEMAP_SEARCH_ENDPOINT=https://www.onemap.gov.sg/api/common/elastic/search
+ONEMAP_EMAIL=...
+ONEMAP_PASSWORD=...
+ONEMAP_TOKEN=...
 GEOCODE_CONCURRENCY=10
+
+# Cloudflare D1 (sync-data writes via the HTTP API)
+CLOUDFLARE_ACCOUNT_ID=...
+CLOUDFLARE_API_TOKEN=...
+CLOUDFLARE_D1_DATABASE_ID=...
 ```
 
 `DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
 
 ## Deployment
 
-- Cloudflare Pages publishes the static `dist/` output using the Wrangler CLI from GitHub Actions (`wrangler pages deploy dist --project-name=...`); there is no committed `wrangler.toml` in this repository.
-- `.github/workflows/ci.yml` runs typecheck, typed lint, unit/integration tests, e2e smoke, and fixture-backed production build verification.
-- `.github/workflows/deploy-preview.yml` handles build, pipeline cache/data sync, and Cloudflare Pages preview/production deploy after CI passes.
-- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time, refreshes datasets, and deploys directly to Cloudflare Pages when the relevant secrets exist. Artifacts are never committed to git.
+- Cloudflare Pages publishes the static `dist/` output **and** the Pages Functions in `functions/`. `wrangler.toml` declares the D1 binding `DB`.
+- `.github/workflows/ci.yml` runs typecheck, typed lint, unit/integration tests, e2e smoke, and a production build verification.
+- `.github/workflows/deploy-preview.yml` builds and deploys preview/production to Cloudflare Pages after CI passes. PR previews share the production D1 binding — there is no per-PR sync.
+- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time and updates D1 in place. Pages Functions pick up the new data on the next request — no rebuild needed.
 
 ## Notes
 
 - This is not a prediction product.
-- Coordinates are resolved during artifact generation, never in the browser.
+- Coordinates are resolved during the build-time sync and persisted in D1; the browser never geocodes.
 - OneMap attribution must remain visible when the map is rendered.
 
 ## Troubleshooting
 
-### `npm run build` fails on boundary or data checks
+### `npm run build` fails on the boundary check
 
-1. Run `npm run check:boundaries` to see script/runtime import violations.
-   - Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
-2. Run `npm run check:data` to verify required artifacts.
-   - Local development fix: `npm run setup:fixtures`
-   - Live data refresh fix: `npm run sync-data`
+Run `npm run check:boundaries` to see script/runtime import violations. Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
+
+### `/api/*` returns 404 locally
+
+You are running `npm run dev` (Vite only). Switch to `npm run dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.

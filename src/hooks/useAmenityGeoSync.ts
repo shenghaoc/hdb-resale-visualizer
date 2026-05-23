@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { DATA_BASE_PATH } from "@/lib/constants";
+import { API_BASE_PATH } from "@/lib/constants";
 import { getStationDetails } from "@/lib/mrt-station-details";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 
@@ -41,7 +41,7 @@ export function useAmenityGeoSync({
 
   useEffect(() => {
     if (mrtStationsEnabled && !stationsGeoJson) {
-      fetch(`${DATA_BASE_PATH}/mrt-stations.geojson`)
+      fetch(`${API_BASE_PATH}/mrt-stations`)
         .then((r) => {
           if (!r.ok) throw new Error(`Failed to load stations: ${r.status}`);
           return r.json();
@@ -55,7 +55,7 @@ export function useAmenityGeoSync({
 
   useEffect(() => {
     if (mrtExitsEnabled && !exitsGeoJson) {
-      fetch(`${DATA_BASE_PATH}/mrt-exits.geojson`)
+      fetch(`${API_BASE_PATH}/mrt-exits`)
         .then((r) => {
           if (!r.ok) throw new Error(`Failed to load exits: ${r.status}`);
           return r.json();

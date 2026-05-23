@@ -75,14 +75,9 @@ jobs:
 
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
-      - name: Restore or sync official datasets
-        id: sync
-        uses: ./.github/actions/restore-or-sync-data
-        with:
-          data-gov-api-key: ${{ secrets.DATA_GOV_API_KEY }}
-          onemap-search-endpoint: ${{ secrets.ONEMAP_SEARCH_ENDPOINT }}
-          geocode-concurrency: "10"
-
+      # Pages Functions read data live from the production D1 binding; PR
+      # previews must not run sync-data (that would mutate shared prod state).
+      # Only the static UI bundle + Pages Functions code are deployed here.
       - name: Build
         run: npm run build:deploy
 

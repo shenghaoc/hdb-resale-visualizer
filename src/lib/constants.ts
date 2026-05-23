@@ -88,9 +88,10 @@ export const SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY =
   "hdb_resale_search_profile_wizard_dismissed_v1";
 
 /**
- * API and Data paths.
+ * Base path for the runtime data API served by Cloudflare Pages Functions
+ * under `functions/api/*` and backed by D1.
  */
-export const DATA_BASE_PATH = "/data";
+export const API_BASE_PATH = "/api";
 
 /**
  * Geographic boundary constants for Singapore.

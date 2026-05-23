@@ -1,11 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   buildRoutingCacheKey,
-  loadRoutingCache,
   routeMissingPairs,
   type RoutingCacheEntry,
+  type RoutingCacheFile,
 } from "../../scripts/lib/sync/routing";
-import { routingCacheFileSchema } from "../../scripts/lib/schemas";
 
 describe("buildRoutingCacheKey", () => {
   it("produces stable keys quantised to 5 decimal places", () => {
@@ -22,38 +21,6 @@ describe("buildRoutingCacheKey", () => {
   });
 });
 
-describe("loadRoutingCache", () => {
-  it("returns empty cache when the file does not exist", async () => {
-    const cache = await loadRoutingCache("/nonexistent/path/cache.json");
-    expect(cache.version).toBe(1);
-    expect(cache.entries).toEqual({});
-  });
-
-  it("rejects cache files that fail schema validation", async () => {
-    // Check that the schema catches bad entries
-    const badFile = {
-      version: 1,
-      updatedAt: "2024-01-01T00:00:00Z",
-      entries: { "key1": { walkingTimeSeconds: -5, walkingDistanceMeters: 100 } },
-    };
-    expect(() => routingCacheFileSchema.parse(badFile)).toThrow();
-  });
-
-  it("accepts a well-formed cache file", () => {
-    const valid = {
-      version: 1 as const,
-      updatedAt: "2024-01-01T00:00:00Z",
-      entries: {
-        "key1": { walkingTimeSeconds: 300, walkingDistanceMeters: 250 },
-        "key2": { walkingTimeSeconds: 0, walkingDistanceMeters: null },
-      },
-    };
-    const parsed = routingCacheFileSchema.parse(valid);
-    expect(parsed.entries["key1"].walkingTimeSeconds).toBe(300);
-    expect(parsed.entries["key2"].walkingDistanceMeters).toBeNull();
-  });
-});
-
 describe("routeMissingPairs", () => {
   const seedEntry = (seconds: number): RoutingCacheEntry => ({
     walkingTimeSeconds: seconds,
@@ -65,55 +32,55 @@ describe("routeMissingPairs", () => {
   const baseOptions = {
     routingEndpoint: new URL("https://api.example.com/routing"),
     token: "test-token",
-    cachePath: "/test/cache.json",
     concurrency: 2,
     now,
   };
+
+  function makeCache(entries: Record<string, RoutingCacheEntry> = {}): RoutingCacheFile {
+    return { version: 1, updatedAt: now(), entries };
+  }
 
   it("returns zero counts when all pairs are already cached", async () => {
     const pairs = [
       { key: "k1", start: { lat: 1.3, lng: 103.8 }, end: { lat: 1.4, lng: 103.9 } },
     ];
-    const cache = {
-      version: 1 as const,
-      updatedAt: now(),
-      entries: { "k1": seedEntry(300) },
-    };
+    const cache = makeCache({ k1: seedEntry(300) });
+    const flushCacheFn = vi.fn().mockResolvedValue(undefined);
 
     const result = await routeMissingPairs(
-      { ...baseOptions, pairs, cache },
-      { fetchWalkingRouteFn: vi.fn(), saveRoutingCacheFn: vi.fn() },
+      { ...baseOptions, pairs, cache, flushCacheFn },
+      { fetchWalkingRouteFn: vi.fn() },
     );
 
     expect(result).toEqual({ routedCount: 0, failedCount: 0, failureSamples: [] });
+    expect(flushCacheFn).not.toHaveBeenCalled();
   });
 
-  it("routes missing pairs and returns counts", async () => {
+  it("routes missing pairs and flushes newly added keys", async () => {
     const pairs = [
       { key: "k1", start: { lat: 1.3, lng: 103.8 }, end: { lat: 1.4, lng: 103.9 } },
       { key: "k2", start: { lat: 1.5, lng: 103.6 }, end: { lat: 1.6, lng: 103.7 } },
     ];
-    const cache = {
-      version: 1 as const,
-      updatedAt: now(),
-      entries: {} as Record<string, RoutingCacheEntry>,
-    };
-
+    const cache = makeCache();
     const fetchFn = vi.fn()
       .mockResolvedValueOnce({ walkingTimeSeconds: 180, walkingDistanceMeters: 150 })
       .mockResolvedValueOnce({ walkingTimeSeconds: 240, walkingDistanceMeters: 200 });
-    const saveFn = vi.fn().mockResolvedValue(undefined);
+    const flushedKeys: string[] = [];
+    const flushCacheFn = vi.fn().mockImplementation(async (keys: string[]) => {
+      flushedKeys.push(...keys);
+    });
 
     const result = await routeMissingPairs(
-      { ...baseOptions, pairs, cache },
-      { fetchWalkingRouteFn: fetchFn, saveRoutingCacheFn: saveFn },
+      { ...baseOptions, pairs, cache, flushCacheFn },
+      { fetchWalkingRouteFn: fetchFn },
     );
 
     expect(result.routedCount).toBe(2);
     expect(result.failedCount).toBe(0);
     expect(cache.entries["k1"].walkingTimeSeconds).toBe(180);
     expect(cache.entries["k2"].walkingTimeSeconds).toBe(240);
-    expect(saveFn).toHaveBeenCalled();
+    expect(flushCacheFn).toHaveBeenCalled();
+    expect(flushedKeys.sort()).toEqual(["k1", "k2"]);
   });
 
   it("handles partial failures and collects failure samples", async () => {
@@ -122,20 +89,15 @@ describe("routeMissingPairs", () => {
       { key: "k2", start: { lat: 1.5, lng: 103.6 }, end: { lat: 1.6, lng: 103.7 } },
       { key: "k3", start: { lat: 1.7, lng: 103.8 }, end: { lat: 1.8, lng: 103.9 } },
     ];
-    const cache = {
-      version: 1 as const,
-      updatedAt: now(),
-      entries: {} as Record<string, RoutingCacheEntry>,
-    };
-
+    const cache = makeCache();
     const fetchFn = vi.fn()
       .mockResolvedValueOnce({ walkingTimeSeconds: 180, walkingDistanceMeters: 150 })
       .mockRejectedValueOnce(new Error("network error"))
       .mockRejectedValueOnce(new Error("timeout"));
 
     const result = await routeMissingPairs(
-      { ...baseOptions, pairs, cache },
-      { fetchWalkingRouteFn: fetchFn, saveRoutingCacheFn: vi.fn().mockResolvedValue(undefined) },
+      { ...baseOptions, pairs, cache, flushCacheFn: vi.fn().mockResolvedValue(undefined) },
+      { fetchWalkingRouteFn: fetchFn },
     );
 
     expect(result.routedCount).toBe(1);
@@ -152,12 +114,7 @@ describe("routeMissingPairs", () => {
       start: { lat: 1.3, lng: 103.8 + i * 0.001 },
       end: { lat: 1.4, lng: 103.9 + i * 0.001 },
     }));
-    const cache = {
-      version: 1 as const,
-      updatedAt: now(),
-      entries: {} as Record<string, RoutingCacheEntry>,
-    };
-
+    const cache = makeCache();
     let inFlight = 0;
     let maxInFlight = 0;
     const fetchFn = vi.fn().mockImplementation(async () => {
@@ -169,8 +126,8 @@ describe("routeMissingPairs", () => {
     });
 
     await routeMissingPairs(
-      { ...baseOptions, pairs, cache, concurrency: 3 },
-      { fetchWalkingRouteFn: fetchFn, saveRoutingCacheFn: vi.fn().mockResolvedValue(undefined) },
+      { ...baseOptions, pairs, cache, concurrency: 3, flushCacheFn: vi.fn().mockResolvedValue(undefined) },
+      { fetchWalkingRouteFn: fetchFn },
     );
 
     expect(maxInFlight).toBeLessThanOrEqual(3);
