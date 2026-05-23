@@ -121,6 +121,7 @@ export type FilterState = {
   endMonth: string | null;
   mrtMax: number | null;
   selectedAddressKey: string | null;
+  compareTown: string;
 };
 
 export type ShortlistItem = {

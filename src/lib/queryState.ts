@@ -39,9 +39,14 @@ export function parseFilters(search: string): FilterState {
   const areaInverted = areaMin !== null && areaMax !== null && areaMin > areaMax;
   const monthInverted = Boolean(startMonth && endMonth && startMonth > endMonth);
 
+  const town = safeParam(params.get("town"), DEFAULT_FILTERS.town);
+  const rawCompareTown = safeParam(params.get("compareTown"), DEFAULT_FILTERS.compareTown);
+  // Require a primary town anchor; ignore a compareTown that matches the primary.
+  const compareTown = town && rawCompareTown !== town ? rawCompareTown : DEFAULT_FILTERS.compareTown;
+
   return {
     search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
-    town: safeParam(params.get("town"), DEFAULT_FILTERS.town),
+    town,
     flatType: safeParam(params.get("flatType"), DEFAULT_FILTERS.flatType),
     flatModel: safeParam(params.get("flatModel"), DEFAULT_FILTERS.flatModel),
     budgetMin: budgetInverted ? budgetMax : budgetMin,
@@ -53,6 +58,7 @@ export function parseFilters(search: string): FilterState {
     endMonth: monthInverted ? startMonth : endMonth,
     mrtMax: parseNumber(params.get("mrtMax")),
     selectedAddressKey: safeParamNullable(params.get("selected")),
+    compareTown,
   };
 }
 

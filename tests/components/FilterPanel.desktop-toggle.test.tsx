@@ -19,6 +19,7 @@ const defaultFilters: FilterState = {
   startMonth: null,
   endMonth: null,
   selectedAddressKey: null,
+  compareTown: "",
 };
 
 const defaultOptions: FilterOptions = {
