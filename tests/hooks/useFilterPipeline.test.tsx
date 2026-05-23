@@ -32,6 +32,8 @@ describe("useFilterPipeline", () => {
     search: "",
     selectedAddressKey: null,
     compareTown: "",
+    affordable: "",
+    sort: "",
   };
 
   it("should inject default start month if not in URL", () => {

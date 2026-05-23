@@ -17,6 +17,10 @@ export default function globalSetup() {
     budgetStretchPercent: 5,
     showStretchOptions: true,
     showAllBlocks: true,
+    age: 35,
+    coApplicantAge: 33,
+    cpfOABalance: 120000,
+    monthlyIncome: 9000,
   };
 
   // Fixtures are staged into `public/api/` by `npm run setup:fixtures` (invoked

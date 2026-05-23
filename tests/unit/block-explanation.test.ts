@@ -35,6 +35,8 @@ const baseFilters: FilterState = {
   mrtMax: null,
   selectedAddressKey: null,
   compareTown: "",
+  affordable: "",
+  sort: "",
 };
 
 const comparison: ComparisonArtifact = {

@@ -20,6 +20,8 @@ const defaultFilters: FilterState = {
   endMonth: null,
   selectedAddressKey: null,
   compareTown: "",
+  affordable: "",
+  sort: "",
 };
 
 const defaultOptions: FilterOptions = {

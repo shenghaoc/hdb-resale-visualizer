@@ -19,6 +19,8 @@ describe("queryState", () => {
       mrtMax: 700,
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
+      affordable: "comfortable",
+      sort: "affordability",
     });
 
     expect(parseFilters(search)).toEqual({
@@ -36,6 +38,8 @@ describe("queryState", () => {
       mrtMax: 700,
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
+      affordable: "comfortable",
+      sort: "affordability",
     });
   });
 

@@ -33,6 +33,8 @@ const baseFilters: FilterState = {
   search: "",
   selectedAddressKey: null,
   compareTown: "",
+  affordable: "",
+  sort: "",
 };
 
 function mockLocation(search = ""): void {

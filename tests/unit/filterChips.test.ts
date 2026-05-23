@@ -35,6 +35,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -64,6 +66,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: 500,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "zh-SG", createTranslator("zh-SG"));
@@ -92,6 +96,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -121,6 +127,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -150,6 +158,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -179,6 +189,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -206,6 +218,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -233,6 +247,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -262,6 +278,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -289,6 +307,8 @@ describe("getActiveFilterChipDescriptors", () => {
       mrtMax: null,
       selectedAddressKey: null,
       compareTown: "",
+      affordable: "",
+      sort: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));

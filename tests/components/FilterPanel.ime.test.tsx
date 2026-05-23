@@ -28,6 +28,8 @@ const defaultFilters: FilterState = {
   mrtMax: null,
   selectedAddressKey: null,
   compareTown: "",
+  affordable: "",
+  sort: "",
 };
 
 const defaultOptions: FilterOptions = {

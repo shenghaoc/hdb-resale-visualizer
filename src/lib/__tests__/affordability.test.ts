@@ -1,11 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import {
+  affordabilityHeadroom,
+  affordabilityProfileFingerprint,
   computeAffordabilityVerdict,
   computeLoanTenureYears,
+  isAffordabilityProfileComplete,
   isBlockAgeEligible,
   maxAffordablePrice,
   maxLoanFor,
   minRequiredRemainingLease,
+  passesAffordabilityMode,
+  resetAffordabilityCacheForTests,
   COMFORTABLE_AFFORDABILITY_RATIO,
 } from "@/lib/affordability";
 import {
@@ -44,11 +49,13 @@ function makeProfile(overrides: {
   monthlyIncome?: number | null;
   cpfOABalance?: number | null;
   age?: number | null;
+  coApplicantAge?: number | null;
 } = {}) {
   return {
     monthlyIncome: null as number | null,
     cpfOABalance: null as number | null,
     age: null as number | null,
+    coApplicantAge: null as number | null,
     ...overrides,
   };
 }
@@ -431,5 +438,167 @@ describe("isBlockAgeEligible", () => {
   it("is deterministic given the same inputs", () => {
     const block = makeBlock({ leaseCommenceRange: [1995, 2000] });
     expect(isBlockAgeEligible(block, 40)).toBe(isBlockAgeEligible(block, 40));
+  });
+});
+
+describe("isAffordabilityProfileComplete", () => {
+  it("returns true when income, CPF and age are all set", () => {
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+      ),
+    ).toBe(true);
+  });
+
+  it("returns false when any of income, CPF or age is null", () => {
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: null, cpfOABalance: 100000, age: 35 }),
+      ),
+    ).toBe(false);
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: null, age: 35 }),
+      ),
+    ).toBe(false);
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: null }),
+      ),
+    ).toBe(false);
+  });
+
+  it("treats explicit zero values as set, not missing", () => {
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: 0, cpfOABalance: 0, age: 35 }),
+      ),
+    ).toBe(true);
+  });
+});
+
+describe("affordabilityProfileFingerprint", () => {
+  it("changes when any input field changes", () => {
+    const base = makeProfile({
+      monthlyIncome: 8000,
+      cpfOABalance: 100000,
+      age: 35,
+      coApplicantAge: 33,
+    });
+    const initial = affordabilityProfileFingerprint(base);
+    expect(affordabilityProfileFingerprint({ ...base, monthlyIncome: 9000 })).not.toBe(initial);
+    expect(affordabilityProfileFingerprint({ ...base, cpfOABalance: 50000 })).not.toBe(initial);
+    expect(affordabilityProfileFingerprint({ ...base, age: 40 })).not.toBe(initial);
+    expect(affordabilityProfileFingerprint({ ...base, coApplicantAge: 30 })).not.toBe(initial);
+  });
+
+  it("is stable when nothing changes", () => {
+    const profile = makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 });
+    expect(affordabilityProfileFingerprint(profile)).toBe(
+      affordabilityProfileFingerprint({ ...profile }),
+    );
+  });
+});
+
+describe("passesAffordabilityMode", () => {
+  const block = makeBlock({ medianPrice: 360000 }); // stretch vs the comfortable-profile below
+  const profile = makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 });
+  // ceiling = 400_000, comfortable threshold = 320_000.
+  // block at 360_000 → stretch.
+
+  afterEach(() => {
+    resetAffordabilityCacheForTests();
+  });
+
+  it("passes everything when mode is off, regardless of verdict", () => {
+    expect(passesAffordabilityMode(block, profile, "")).toBe(true);
+    const overBlock = makeBlock({ medianPrice: 800000 });
+    expect(passesAffordabilityMode(overBlock, profile, "")).toBe(true);
+  });
+
+  it("comfortable mode rejects stretch and over blocks", () => {
+    const comfortableBlock = makeBlock({ medianPrice: 200000 });
+    const overBlock = makeBlock({ medianPrice: 800000 });
+
+    expect(passesAffordabilityMode(comfortableBlock, profile, "comfortable")).toBe(true);
+    expect(passesAffordabilityMode(block, profile, "comfortable")).toBe(false);
+    expect(passesAffordabilityMode(overBlock, profile, "comfortable")).toBe(false);
+  });
+
+  it("stretch mode accepts comfortable AND stretch, rejects over", () => {
+    const comfortableBlock = makeBlock({ medianPrice: 200000 });
+    const overBlock = makeBlock({ medianPrice: 800000 });
+
+    expect(passesAffordabilityMode(comfortableBlock, profile, "stretch")).toBe(true);
+    expect(passesAffordabilityMode(block, profile, "stretch")).toBe(true);
+    expect(passesAffordabilityMode(overBlock, profile, "stretch")).toBe(false);
+  });
+
+  it("incomplete profile disables the filter (passes everything through)", () => {
+    const incompleteProfile = makeProfile({ monthlyIncome: 8000, cpfOABalance: null, age: 35 });
+    const overBlock = makeBlock({ medianPrice: 800000 });
+    expect(passesAffordabilityMode(overBlock, incompleteProfile, "comfortable")).toBe(true);
+    expect(passesAffordabilityMode(overBlock, incompleteProfile, "stretch")).toBe(true);
+  });
+
+  it("invalidates the cache when the profile fingerprint changes", () => {
+    // First call with a tight profile — block is over budget.
+    const tightProfile = makeProfile({ monthlyIncome: 3000, cpfOABalance: 50000, age: 35 });
+    const targetBlock = makeBlock({ medianPrice: 360000 });
+    expect(passesAffordabilityMode(targetBlock, tightProfile, "comfortable")).toBe(false);
+
+    // Same block, now with a much more generous profile — must not return the
+    // cached "over" verdict.
+    const looseProfile = makeProfile({ monthlyIncome: 10000, cpfOABalance: 200000, age: 30 });
+    expect(passesAffordabilityMode(targetBlock, looseProfile, "comfortable")).toBe(true);
+  });
+});
+
+describe("affordabilityHeadroom", () => {
+  afterEach(() => {
+    resetAffordabilityCacheForTests();
+  });
+
+  it("returns null when the profile is incomplete (not 0)", () => {
+    const block = makeBlock({ medianPrice: 400000 });
+    expect(
+      affordabilityHeadroom(block, makeProfile({ monthlyIncome: null, cpfOABalance: 100000, age: 35 })),
+    ).toBeNull();
+    expect(
+      affordabilityHeadroom(block, makeProfile({ monthlyIncome: 8000, cpfOABalance: null, age: 35 })),
+    ).toBeNull();
+    expect(
+      affordabilityHeadroom(block, makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: null })),
+    ).toBeNull();
+  });
+
+  it("is positive when the block sits under the ceiling", () => {
+    // Ceiling: 400_000, block: 300_000 → headroom = +100_000.
+    const block = makeBlock({ medianPrice: 300000 });
+    const headroom = affordabilityHeadroom(
+      block,
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+    );
+    expect(headroom).toBe(100000);
+  });
+
+  it("is negative when the block sits over the ceiling", () => {
+    // Ceiling: 400_000, block: 600_000 → headroom = -200_000.
+    const block = makeBlock({ medianPrice: 600000 });
+    const headroom = affordabilityHeadroom(
+      block,
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+    );
+    expect(headroom).toBe(-200000);
+  });
+
+  it("is zero when the block sits exactly at the ceiling", () => {
+    // Ceiling computed from CPF/0.25 = 400_000 exactly.
+    const block = makeBlock({ medianPrice: 400000 });
+    const headroom = affordabilityHeadroom(
+      block,
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: 35 }),
+    );
+    expect(headroom).toBe(0);
   });
 });
