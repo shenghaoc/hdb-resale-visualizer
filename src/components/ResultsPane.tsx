@@ -17,10 +17,15 @@ import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
-import { computeAffordabilityVerdict } from "@/lib/affordability";
+import {
+  affordabilityProfileFingerprint,
+  computeAffordabilityVerdict,
+  isAffordabilityProfileComplete,
+  maxAffordablePrice,
+} from "@/lib/affordability";
 import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/lib/data";
 import { isSameTown } from "@/lib/queryState";
-import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { AffordabilityMode, BlockSortMode, BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
@@ -115,6 +120,10 @@ type ResultsPaneProps = {
   budgetMin?: number | null;
   budgetMax?: number | null;
   searchProfile?: SearchProfile | null;
+  affordabilityMode?: AffordabilityMode;
+  onClearAffordabilityFilter?: () => void;
+  sortMode?: BlockSortMode;
+  onSortChange?: (mode: BlockSortMode) => void;
   /** When set together with scope, results show a factual town overview above the list. */
   profileTown?: string | null;
   profileTownBlocks?: BlockSummary[];
@@ -132,9 +141,11 @@ type ResultsPaneProps = {
   onSelectTown?: (town: string) => void;
 };
 
-type SortMode = "median-asc" | "median-desc" | "lease-desc" | "mrt-asc" | "latest-desc";
+type SortMode = Exclude<BlockSortMode, "">;
 type ResultsViewMode = "blocks" | "town";
-type SortOption = { value: SortMode; label: string };
+type SortOption = { value: SortMode; label: string; disabled?: boolean; tooltip?: string };
+
+const DEFAULT_SORT_MODE: SortMode = "median-asc";
 type TownTrendSnap = {
   status: "idle" | "loaded" | "failed";
   requestedTown: string;
@@ -154,26 +165,42 @@ function SortSelect({
   onValueChange: (value: SortMode) => void;
   className?: string;
 }) {
+  const disabledHint = options.find((option) => option.disabled && option.tooltip)?.tooltip;
+
   return (
-    <div className={cn("flex min-w-0 items-center gap-2", className)}>
-      <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
-        <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
-        {label}
-      </span>
-      <Select onValueChange={(nextValue) => onValueChange(nextValue as SortMode)} value={value}>
-        <SelectTrigger className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+    <div className={cn("flex min-w-0 flex-col gap-1", className)}>
+      <div className="flex min-w-0 items-center gap-2">
+        <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
+          <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
+          {label}
+        </span>
+        <Select onValueChange={(nextValue) => onValueChange(nextValue as SortMode)} value={value}>
+          <SelectTrigger
+            data-testid="results-sort-trigger"
+            aria-describedby={disabledHint ? "results-sort-disabled-hint" : undefined}
+            className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      {disabledHint ? (
+        <p
+          id="results-sort-disabled-hint"
+          className="text-[0.62rem] leading-snug text-muted-foreground"
+        >
+          {disabledHint}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -500,6 +527,10 @@ export function ResultsPane({
   budgetMin = null,
   budgetMax = null,
   searchProfile = null,
+  affordabilityMode = "",
+  onClearAffordabilityFilter,
+  sortMode: sortModeProp,
+  onSortChange,
   profileTown = null,
   profileTownBlocks = [],
   profileDataWindow = null,
@@ -513,6 +544,16 @@ export function ResultsPane({
   onSelectTown,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
+
+  const affordabilitySortReady = searchProfile
+    ? isAffordabilityProfileComplete({
+        monthlyIncome: searchProfile.monthlyIncome,
+        cpfOABalance: searchProfile.cpfOABalance,
+        age: searchProfile.age,
+        coApplicantAge: searchProfile.coApplicantAge,
+      })
+    : false;
+
   const sortOptions: SortOption[] = useMemo(
     () => [
       { value: "median-asc", label: t("results.sort.lowestMedian") },
@@ -520,10 +561,29 @@ export function ResultsPane({
       { value: "lease-desc", label: t("results.sort.longestLease") },
       { value: "mrt-asc", label: t("results.sort.nearestMrt") },
       { value: "latest-desc", label: t("results.sort.recentActivity") },
+      {
+        value: "affordability",
+        label: t("affordability.sort.bestFit"),
+        disabled: !affordabilitySortReady,
+        tooltip: affordabilitySortReady ? undefined : t("affordability.sort.disabledTooltip"),
+      },
     ],
-    [t],
+    [t, affordabilitySortReady],
   );
-  const [sortMode, setSortMode] = useState<SortMode>("median-asc");
+
+  // Controlled (URL) or uncontrolled (local state) sort. Tests omit the prop
+  // and rely on the internal default; App.tsx always passes it.
+  const [internalSortMode, setInternalSortMode] = useState<SortMode>(DEFAULT_SORT_MODE);
+  const incomingSort: SortMode | null = sortModeProp ? sortModeProp : null;
+  // If URL asks for affordability sort but the profile is incomplete, silently
+  // fall back so the list doesn't render with a nonsense ordering.
+  const effectiveExternalSort: SortMode | null =
+    incomingSort === "affordability" && !affordabilitySortReady ? DEFAULT_SORT_MODE : incomingSort;
+  const sortMode: SortMode = effectiveExternalSort ?? internalSortMode;
+  const setSortMode = (next: SortMode) => {
+    setInternalSortMode(next);
+    onSortChange?.(next === DEFAULT_SORT_MODE ? "" : next);
+  };
   const [resultsView, setResultsView] = useState<ResultsViewMode>("blocks");
   const contentScrollRef = useRef<HTMLDivElement | null>(null);
   const listContainerRef = useRef<HTMLDivElement | null>(null);
@@ -689,6 +749,38 @@ export function ResultsPane({
     compareBlocksSnap.status === "failed" &&
     compareBlocksSnap.requestedTown === activeCompareTown;
 
+  // Keyed on the fingerprint, not on the whole profile object, to avoid
+  // recomputing when unrelated profile fields change.
+  const affordabilityFingerprint = searchProfile
+    ? affordabilityProfileFingerprint({
+        monthlyIncome: searchProfile.monthlyIncome,
+        cpfOABalance: searchProfile.cpfOABalance,
+        age: searchProfile.age,
+        coApplicantAge: searchProfile.coApplicantAge,
+      })
+    : "";
+
+  // Precompute affordability headroom once per profile change. Re-running the
+  // verdict math inside .sort() would multiply CPF/loan calculations by O(N log N).
+  const affordabilityHeadroomByKey = useMemo(() => {
+    if (sortMode !== "affordability" || !searchProfile || !affordabilitySortReady) {
+      return null;
+    }
+    const profile = {
+      monthlyIncome: searchProfile.monthlyIncome,
+      cpfOABalance: searchProfile.cpfOABalance,
+      age: searchProfile.age,
+      coApplicantAge: searchProfile.coApplicantAge,
+    };
+    const ceiling = maxAffordablePrice(profile);
+    const map = new Map<string, number>();
+    for (const block of blocks) {
+      map.set(block.addressKey, ceiling - block.medianPrice);
+    }
+    return map;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint]);
+
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
     const sorted = [...blocks];
@@ -713,10 +805,16 @@ export function ResultsPane({
         const rightDist = right.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
         return leftDist - rightDist;
       });
+    } else if (sortMode === "affordability" && affordabilityHeadroomByKey) {
+      return sorted.sort((left, right) => {
+        const leftHeadroom = affordabilityHeadroomByKey.get(left.addressKey) ?? Number.NEGATIVE_INFINITY;
+        const rightHeadroom = affordabilityHeadroomByKey.get(right.addressKey) ?? Number.NEGATIVE_INFINITY;
+        return rightHeadroom - leftHeadroom;
+      });
     }
 
     return sorted.sort((left, right) => left.medianPrice - right.medianPrice);
-  }, [blocks, sortMode]);
+  }, [blocks, sortMode, affordabilityHeadroomByKey]);
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
@@ -1017,7 +1115,32 @@ export function ResultsPane({
               ) : null}
               {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">
-                  <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
+                  {affordabilityMode && onClearAffordabilityFilter ? (
+                    <Card
+                      data-testid="affordability-empty-card"
+                      className="w-full border-border/50 bg-card/95"
+                    >
+                      <CardHeader>
+                        <CardTitle>{t("affordability.filter.empty.title")}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex flex-col gap-3">
+                        <p className="text-sm text-muted-foreground">
+                          {t("affordability.filter.empty.hint")}
+                        </p>
+                        <Button
+                          type="button"
+                          variant="default"
+                          size="sm"
+                          className="w-fit"
+                          onClick={onClearAffordabilityFilter}
+                        >
+                          {t("affordability.filter.empty.clear")}
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
+                  )}
                 </div>
               ) : resultsView === "blocks" ? (
                 <div className="flex min-h-[8rem] flex-1 flex-col gap-4">

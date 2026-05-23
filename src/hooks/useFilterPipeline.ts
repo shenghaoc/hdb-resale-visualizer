@@ -133,6 +133,25 @@ export function useFilterPipeline({
     return map;
   }, [blocks]);
 
+  // The affordability profile slice is the only piece of the search profile
+  // that affects matchesFilter; memoise it so a stable identity feeds the
+  // module-level verdict cache and the filter pipeline doesn't re-render when
+  // unrelated profile fields change.
+  const affordabilityProfile = useMemo(
+    () => ({
+      monthlyIncome: searchProfile.monthlyIncome,
+      cpfOABalance: searchProfile.cpfOABalance,
+      age: searchProfile.age,
+      coApplicantAge: searchProfile.coApplicantAge,
+    }),
+    [
+      searchProfile.monthlyIncome,
+      searchProfile.cpfOABalance,
+      searchProfile.age,
+      searchProfile.coApplicantAge,
+    ],
+  );
+
   // Shared single-pass filter function for both the results pane and map pane.
   const filterScopedBlocks = useCallback(
     (
@@ -141,10 +160,10 @@ export function useFilterPipeline({
       scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
     ) =>
       scopeBlocks.filter((block) => {
-        if (!matchesFilter(block, scopeFilters, scopeIntent)) return false;
+        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile)) return false;
         return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
       }),
-    [],
+    [affordabilityProfile],
   );
 
   const stableFilters = useMemo(
@@ -165,6 +184,7 @@ export function useFilterPipeline({
       effectiveFilters.startMonth,
       effectiveFilters.endMonth,
       effectiveFilters.mrtMax,
+      effectiveFilters.affordable,
     ],
   );
 
