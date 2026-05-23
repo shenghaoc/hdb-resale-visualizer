@@ -170,4 +170,21 @@ export const DEFAULT_FILTERS: FilterState = {
   mrtMax: null,
   selectedAddressKey: null,
   compareTown: "",
+  affordable: "",
+  sort: "",
 };
+
+/** Allowlist for URL-validated affordability filter modes. */
+export const AFFORDABILITY_MODES = ["", "comfortable", "stretch"] as const;
+
+/** Allowlist for URL-validated block sort modes. The empty string means
+ * "use the default" (median-asc), which keeps clean URLs for the default. */
+export const BLOCK_SORT_MODES = [
+  "",
+  "median-asc",
+  "median-desc",
+  "lease-desc",
+  "mrt-asc",
+  "latest-desc",
+  "affordability",
+] as const;

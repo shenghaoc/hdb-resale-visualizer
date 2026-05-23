@@ -4,7 +4,17 @@ import type { Locale, Translator } from "./i18n/types";
 import type { FilterState } from "../types/data";
 
 export type ActiveFilterChipDescriptor = {
-  key: "search" | "town" | "flatType" | "flatModel" | "budget" | "area" | "remainingLeaseMin" | "transactionWindow" | "mrtMax";
+  key:
+    | "search"
+    | "town"
+    | "flatType"
+    | "flatModel"
+    | "budget"
+    | "area"
+    | "remainingLeaseMin"
+    | "transactionWindow"
+    | "mrtMax"
+    | "affordable";
   label: string;
   clearPatch: Partial<FilterState>;
 };
@@ -97,6 +107,20 @@ export function getActiveFilterChipDescriptors(
         value: formatNumber(filters.mrtMax, 0, locale),
       }),
       clearPatch: { mrtMax: null },
+    });
+  }
+
+  if (filters.affordable === "comfortable") {
+    chips.push({
+      key: "affordable",
+      label: t("affordability.filter.chip.comfortable"),
+      clearPatch: { affordable: "" },
+    });
+  } else if (filters.affordable === "stretch") {
+    chips.push({
+      key: "affordable",
+      label: t("affordability.filter.chip.stretch"),
+      clearPatch: { affordable: "" },
     });
   }
 

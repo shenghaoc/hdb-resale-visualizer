@@ -1,5 +1,11 @@
-import { DEFAULT_FILTERS, MAX_SEARCH_QUERY_LENGTH, QUERY_VERSION } from "./constants";
-import type { FilterState } from "../types/data";
+import {
+  AFFORDABILITY_MODES,
+  BLOCK_SORT_MODES,
+  DEFAULT_FILTERS,
+  MAX_SEARCH_QUERY_LENGTH,
+  QUERY_VERSION,
+} from "./constants";
+import type { AffordabilityMode, BlockSortMode, FilterState } from "../types/data";
 
 function parseNumber(value: string | null): number | null {
   if (!value) {
@@ -27,6 +33,15 @@ function safeParamNullable(value: string | null): string | null {
 /** Town names are canonical upper-case; compare case- and whitespace-insensitively. */
 export function isSameTown(a: string, b: string): boolean {
   return a.trim().toUpperCase() === b.trim().toUpperCase();
+}
+
+function parseEnum<Allowed extends string>(
+  value: string | null,
+  allowlist: readonly Allowed[],
+  defaultValue: Allowed,
+): Allowed {
+  if (value === null) return defaultValue;
+  return (allowlist as readonly string[]).includes(value) ? (value as Allowed) : defaultValue;
 }
 
 export function parseFilters(search: string): FilterState {
@@ -67,6 +82,12 @@ export function parseFilters(search: string): FilterState {
     mrtMax: parseNumber(params.get("mrtMax")),
     selectedAddressKey: safeParamNullable(params.get("selected")),
     compareTown,
+    affordable: parseEnum<AffordabilityMode>(
+      params.get("affordable"),
+      AFFORDABILITY_MODES,
+      DEFAULT_FILTERS.affordable,
+    ),
+    sort: parseEnum<BlockSortMode>(params.get("sort"), BLOCK_SORT_MODES, DEFAULT_FILTERS.sort),
   };
 }
 
