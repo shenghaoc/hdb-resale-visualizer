@@ -91,7 +91,6 @@ export async function writeArtifactsToD1(
     columns: BLOCK_COLUMNS,
     rows: artifacts.blockSummaries,
     mapRow: mapBlockRow,
-    chunkSize: 50,
     preDelete: true,
   });
 
@@ -104,7 +103,6 @@ export async function writeArtifactsToD1(
     table: "block_details",
     columns: ["address_key", "json"],
     rows: detailRows,
-    chunkSize: 25,
     mapRow: (row) => [row.key, row.json],
     preDelete: true,
   });
@@ -119,7 +117,6 @@ export async function writeArtifactsToD1(
       table: "comparisons",
       columns: ["address_key", "json"],
       rows: comparisonRows,
-      chunkSize: 100,
       mapRow: (row) => [row.key, row.json],
       preDelete: true,
     });
@@ -132,7 +129,6 @@ export async function writeArtifactsToD1(
     table: "town_flat_type_trends",
     columns: ["town", "flat_type", "month", "median_price", "median_price_per_sqm", "transaction_count"],
     rows: artifacts.townFlatTypeTrend,
-    chunkSize: 200,
     mapRow: (point) => [
       point.town,
       point.flatType,

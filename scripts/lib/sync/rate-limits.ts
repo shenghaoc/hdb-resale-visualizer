@@ -104,13 +104,17 @@ export async function sleep(milliseconds: number): Promise<void> {
 
 export async function waitForUpstreamSlot(service: UpstreamService): Promise<void> {
   const intervalMs = upstreamIntervalMs(service);
-  const last = lastRequestAt.get(service) ?? 0;
   const now = Date.now();
-  const waitMs = last + intervalMs - now;
+  const last = lastRequestAt.get(service) ?? 0;
+  // Reserve the next slot before sleeping so concurrent workers cannot all
+  // read the same `last` and burst past the documented rate limit.
+  const nextAllowed = Math.max(now, last + intervalMs);
+  lastRequestAt.set(service, nextAllowed);
+
+  const waitMs = nextAllowed - now;
   if (waitMs > 0) {
     await sleep(waitMs);
   }
-  lastRequestAt.set(service, Date.now());
 }
 
 export function resetUpstreamThrottleForTests(): void {
