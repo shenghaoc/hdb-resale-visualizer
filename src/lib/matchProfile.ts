@@ -89,14 +89,11 @@ function combineTier(
 
   if (softSignals.length === 0) return "strong";
 
-  // Optimization: Use a single O(N) loop to count signals simultaneously
-  // rather than multiple .filter().length calls to avoid intermediary array allocations.
   let failCount = 0;
   let stretchCount = 0;
   let passCount = 0;
 
-  for (let i = 0; i < softSignals.length; i++) {
-    const s = softSignals[i];
+  for (const s of softSignals) {
     if (s === "fail") failCount++;
     else if (s === "stretch") stretchCount++;
     else if (s === "pass") passCount++;
