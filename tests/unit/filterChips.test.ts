@@ -34,6 +34,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -62,6 +63,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: 500,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "zh-SG", createTranslator("zh-SG"));
@@ -89,6 +91,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -117,6 +120,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -145,6 +149,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -173,6 +178,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: "2024-06",
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -199,6 +205,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -225,6 +232,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -253,6 +261,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: "2024-06",
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));
@@ -279,6 +288,7 @@ describe("getActiveFilterChipDescriptors", () => {
       endMonth: null,
       mrtMax: null,
       selectedAddressKey: null,
+      compareTown: "",
     };
 
     const chips = getActiveFilterChipDescriptors(filters, "en-SG", createTranslator("en-SG"));

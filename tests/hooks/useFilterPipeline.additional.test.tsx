@@ -32,6 +32,7 @@ const baseFilters: FilterState = {
   mrtMax: null,
   search: "",
   selectedAddressKey: null,
+  compareTown: "",
 };
 
 function mockLocation(search = ""): void {

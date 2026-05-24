@@ -18,11 +18,13 @@ import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { computeAffordabilityVerdict } from "@/lib/affordability";
-import { fetchTownFlatTypeTrends } from "@/lib/data";
+import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/lib/data";
+import { isSameTown } from "@/lib/queryState";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
+import { TownCompareSection } from "@/components/TownCompareSection";
 import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
 import type { TownRecommendation } from "@/lib/town-recommendations";
 import {
@@ -119,6 +121,11 @@ type ResultsPaneProps = {
   profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   profileStartMonth?: string | null;
   profileEndMonth?: string | null;
+  /** Optional second town that, when set, replaces the single-town overview with a compare view. */
+  compareTown?: string | null;
+  /** Full list of selectable towns for the compare picker. */
+  availableTowns?: ReadonlyArray<string>;
+  onChangeCompareTown?: (town: string) => void;
   /** Surfaced in the empty-scope state when a search profile is active. */
   townRecommendations?: ReadonlyArray<TownRecommendation>;
   townRecommendationsLoading?: boolean;
@@ -498,6 +505,9 @@ export function ResultsPane({
   profileDataWindow = null,
   profileStartMonth = null,
   profileEndMonth = null,
+  compareTown = null,
+  availableTowns = EMPTY_ARRAY,
+  onChangeCompareTown,
   townRecommendations = EMPTY_ARRAY,
   townRecommendationsLoading = false,
   onSelectTown,
@@ -527,8 +537,24 @@ export function ResultsPane({
 
   const townProfileAvailable = Boolean(hasResultScope && profileTown && profileDataWindow);
   const showTownProfile = townProfileAvailable && resultsView === "town";
+  const activeCompareTown =
+    compareTown && profileTown && !isSameTown(compareTown, profileTown) ? compareTown : null;
+  const showTownCompare = showTownProfile && Boolean(activeCompareTown);
   const townTrendMountedRef = useRef(true);
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
+  const compareBlocksMountedRef = useRef(true);
+  const compareBlocksFetchedTownRef = useRef<string | null>(null);
+
+  type CompareBlocksSnap = {
+    status: "idle" | "loaded" | "failed";
+    requestedTown: string;
+    blocks: BlockSummary[];
+  };
+  const [compareBlocksSnap, setCompareBlocksSnap] = useState<CompareBlocksSnap>({
+    status: "idle",
+    requestedTown: "",
+    blocks: [],
+  });
 
   const [trendSnap, setTrendSnap] = useState<TownTrendSnap>({
     status: "idle",
@@ -538,10 +564,34 @@ export function ResultsPane({
 
   useEffect(() => {
     townTrendMountedRef.current = true;
+    compareBlocksMountedRef.current = true;
     return () => {
       townTrendMountedRef.current = false;
+      compareBlocksMountedRef.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!showTownCompare || !activeCompareTown) {
+      compareBlocksFetchedTownRef.current = null;
+      return;
+    }
+    if (compareBlocksFetchedTownRef.current === activeCompareTown) {
+      return;
+    }
+    const requestedTown = activeCompareTown;
+    void fetchBlocksByTown(requestedTown)
+      .then((blocks) => {
+        if (!compareBlocksMountedRef.current) return;
+        compareBlocksFetchedTownRef.current = requestedTown;
+        setCompareBlocksSnap({ status: "loaded", requestedTown, blocks });
+      })
+      .catch(() => {
+        if (!compareBlocksMountedRef.current) return;
+        compareBlocksFetchedTownRef.current = requestedTown;
+        setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
+      });
+  }, [activeCompareTown, showTownCompare]);
 
   useEffect(() => {
     if (!showTownProfile || !profileTown) {
@@ -617,6 +667,27 @@ export function ResultsPane({
   );
 
   const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
+
+  const compareTownBlocks = useMemo(() => {
+    if (
+      !activeCompareTown ||
+      compareBlocksSnap.status !== "loaded" ||
+      compareBlocksSnap.requestedTown !== activeCompareTown
+    ) {
+      return EMPTY_ARRAY;
+    }
+    return compareBlocksSnap.blocks;
+  }, [activeCompareTown, compareBlocksSnap]);
+
+  const compareBlocksLoading =
+    showTownCompare &&
+    Boolean(activeCompareTown) &&
+    (compareBlocksSnap.status === "idle" ||
+      compareBlocksSnap.requestedTown !== activeCompareTown);
+  const compareBlocksFailed =
+    showTownCompare &&
+    compareBlocksSnap.status === "failed" &&
+    compareBlocksSnap.requestedTown === activeCompareTown;
 
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
@@ -908,21 +979,41 @@ export function ResultsPane({
           ) : (
             <div className="flex min-h-0 flex-1 flex-col gap-4">
               {showTownProfile && profileTown && townTrendRange ? (
-                <TownProfileSection
-                  locale={locale}
-                  t={t}
-                  townName={profileTown}
-                  monthRange={townTrendRange}
-                  rollups={townRollups}
-                  totalTrendVolume={townTotalVol}
-                  weightedLatestSqm={townWeightedSqm}
-                  leaseBuckets={townLeaseBuckets}
-                  busyBlocks={busyTownBlocks}
-                  belowMedian={townBelowMedianPack}
-                  trendsLoading={townTrendLoading}
-                  trendsFailed={townTrendFailed}
-                  onSelectBlock={onSelect}
-                />
+                <>
+                  <TownCompareSection
+                    locale={locale}
+                    t={t}
+                    primaryTown={profileTown}
+                    compareTown={activeCompareTown ?? ""}
+                    monthRange={townTrendRange}
+                    primaryBlocks={profileTownBlocks ?? EMPTY_ARRAY}
+                    compareBlocks={compareTownBlocks}
+                    trends={townTrendRows}
+                    availableTowns={availableTowns}
+                    trendsLoading={townTrendLoading}
+                    trendsFailed={townTrendFailed}
+                    compareBlocksLoading={compareBlocksLoading}
+                    compareBlocksFailed={compareBlocksFailed}
+                    onChangeCompareTown={(next) => onChangeCompareTown?.(next)}
+                  />
+                  {!activeCompareTown ? (
+                    <TownProfileSection
+                      locale={locale}
+                      t={t}
+                      townName={profileTown}
+                      monthRange={townTrendRange}
+                      rollups={townRollups}
+                      totalTrendVolume={townTotalVol}
+                      weightedLatestSqm={townWeightedSqm}
+                      leaseBuckets={townLeaseBuckets}
+                      busyBlocks={busyTownBlocks}
+                      belowMedian={townBelowMedianPack}
+                      trendsLoading={townTrendLoading}
+                      trendsFailed={townTrendFailed}
+                      onSelectBlock={onSelect}
+                    />
+                  ) : null}
+                </>
               ) : null}
               {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">

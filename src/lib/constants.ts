@@ -169,4 +169,5 @@ export const DEFAULT_FILTERS: FilterState = {
   endMonth: null,
   mrtMax: null,
   selectedAddressKey: null,
+  compareTown: "",
 };
