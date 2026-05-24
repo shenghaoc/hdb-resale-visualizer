@@ -72,6 +72,9 @@ function parseJsonOr<T>(value: string | null, fallback: T): T {
   try {
     return JSON.parse(value) as T;
   } catch {
+    console.error(
+      `parseJsonOr: failed to parse JSON, using fallback — ${typeof value === "string" ? value.slice(0, 200) : typeof value}`,
+    );
     return fallback;
   }
 }

@@ -69,9 +69,20 @@ export class D1Client {
       body: JSON.stringify(body),
     });
     if (!response.ok && !response.headers.get("content-type")?.includes("application/json")) {
-      throw new Error(`D1: HTTP ${response.status} ${response.statusText}`);
+      // The response is not JSON — try to read the body as text for diagnostics.
+      let bodyText = "";
+      try { bodyText = await response.text(); } catch { /* ignore */ }
+      throw new Error(`D1: HTTP ${response.status} ${response.statusText}${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
     }
-    const payload = (await response.json()) as D1QueryResult<TRow>;
+    let payload: D1QueryResult<TRow>;
+    try {
+      payload = (await response.json()) as D1QueryResult<TRow>;
+    } catch {
+      // Response claimed JSON but parse failed — read raw text for diagnostics.
+      let bodyText = "";
+      try { bodyText = await response.clone().text(); } catch { /* ignore */ }
+      throw new Error(`D1: invalid JSON response${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
+    }
     if (!payload.success) {
       const message = payload.errors?.map((e) => e.message).join("; ") || "D1 query failed";
       throw new Error(`D1: ${message}`);
