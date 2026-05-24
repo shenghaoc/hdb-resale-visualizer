@@ -89,9 +89,15 @@ function combineTier(
 
   if (softSignals.length === 0) return "strong";
 
-  const failCount = softSignals.filter((s) => s === "fail").length;
-  const stretchCount = softSignals.filter((s) => s === "stretch").length;
-  const passCount = softSignals.filter((s) => s === "pass").length;
+  let failCount = 0;
+  let stretchCount = 0;
+  let passCount = 0;
+
+  for (const s of softSignals) {
+    if (s === "fail") failCount++;
+    else if (s === "stretch") stretchCount++;
+    else if (s === "pass") passCount++;
+  }
 
   if (failCount >= 2) return "weak";
   if (failCount === 1) return passCount >= 1 && stretchCount === 0 ? "stretch" : "weak";
