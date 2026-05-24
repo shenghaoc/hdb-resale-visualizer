@@ -7,7 +7,7 @@ import {
   SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY,
 } from "@/lib/constants";
 import { safeStorage } from "@/lib/storage";
-import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
+import type { SearchProfile } from "@/types/searchProfile";
 
 export const applicantAgeSchema = z
   .number()
@@ -85,10 +85,6 @@ export function loadSearchProfileWizardDismissed(): boolean {
 
 export function saveSearchProfileWizardDismissed(isDismissed: boolean): void {
   safeStorage.setItem(SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY, isDismissed ? "1" : "0");
-}
-
-export function patchSearchProfile(profile: SearchProfile, patch: SearchProfilePatch): SearchProfile {
-  return { ...profile, ...patch };
 }
 
 export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
