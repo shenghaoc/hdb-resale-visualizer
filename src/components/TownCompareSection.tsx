@@ -216,26 +216,8 @@ export function TownCompareSection({
 
   const compareShareUrl = useMemo(() => {
     if (!compareTown) return "";
-    const shareFilters: FilterState = {
-      search: "",
-      town: primaryTown,
-      flatType: "",
-      flatModel: "",
-      budgetMin: null,
-      budgetMax: null,
-      areaMin: null,
-      areaMax: null,
-      remainingLeaseMin: null,
-      startMonth: null,
-      endMonth: null,
-      mrtMax: null,
-      selectedAddressKey: null,
-      compareTown,
-      affordable: "",
-      sort: "",
-    };
     return buildCompareShareUrl(
-      shareFilters,
+      { town: primaryTown, compareTown } as FilterState,
       `${window.location.origin}${window.location.pathname}`,
     );
   }, [primaryTown, compareTown]);

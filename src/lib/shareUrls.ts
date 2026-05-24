@@ -73,3 +73,30 @@ export function buildShortlistShareUrl(
   params.set("shortlist", encodedShortlist);
   return `${origin}${pathname}?${params.toString()}`;
 }
+
+/**
+ * Shares a URL using the Web Share API (mobile) with clipboard fallback
+ * (desktop). AbortError (user cancelled) is silently swallowed. Returns
+ * `"shared"` on success, `"copied"` on clipboard fallback, and throws on
+ * real failure so the caller can show an error.
+ */
+export async function shareViaNavigator(
+  url: string,
+  title: string,
+  text?: string,
+): Promise<"shared" | "copied"> {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text, url });
+      return "shared";
+    } catch (err: unknown) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return "shared"; // User cancelled — treat as success.
+      }
+      // Fall through to clipboard on real failure.
+    }
+  }
+
+  await navigator.clipboard.writeText(url);
+  return "copied";
+}

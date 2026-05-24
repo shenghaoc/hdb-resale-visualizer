@@ -31,7 +31,7 @@ import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
-import { buildFilterShareUrl } from "@/lib/shareUrls";
+import { buildFilterShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
@@ -200,15 +200,9 @@ function App() {
       filters,
       `${window.location.origin}${window.location.pathname}`,
     );
-    if (navigator.share) {
-      void navigator.share({ title: t("app.title"), url }).catch(() => {
-        // Swallow AbortError and fallback failures silently.
-      });
-    } else {
-      void navigator.clipboard.writeText(url).catch(() => {
-        // Clipboard write failed silently.
-      });
-    }
+    void shareViaNavigator(url, t("app.title")).catch(() => {
+      // Silently ignore — FilterChipsBar has no error display for share failures.
+    });
   }, [filters, t]);
 
   // ── Error / loading states ───────────────────────────────────────────────

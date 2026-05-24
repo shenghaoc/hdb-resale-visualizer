@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { shareViaNavigator } from "@/lib/shareUrls";
 
 export type ShareButtonProps = {
   /** The full absolute URL to share. */
@@ -57,33 +58,20 @@ export function ShareButton({
   const handleShare = useCallback(async () => {
     setError(null);
 
-    // Web Share API (mobile).
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, text, url });
-        return;
-      } catch (err: unknown) {
-        if (err instanceof DOMException && err.name === "AbortError") {
-          // User cancelled — no feedback needed.
-          return;
-        }
-        // Real failure — fall through to clipboard.
-      }
-    }
-
-    // Clipboard fallback (desktop / unsupported).
     try {
-      await navigator.clipboard.writeText(url);
-      cleanup();
-      setCopied(true);
-      timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+      const result = await shareViaNavigator(url, title, text);
+      if (result === "copied") {
+        cleanup();
+        setCopied(true);
+        timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+      }
     } catch {
       setError(errorLabel);
     }
   }, [url, title, text, errorLabel, cleanup]);
 
   return (
-    <>
+    <span className="relative inline-flex">
       <Button
         onClick={() => void handleShare()}
         size={size}
@@ -102,11 +90,11 @@ export function ShareButton({
       {error && (
         <div
           role="alert"
-          className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive"
+          className="absolute left-0 top-full z-50 mt-1 whitespace-nowrap rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive"
         >
           {error}
         </div>
       )}
-    </>
+    </span>
   );
 }
