@@ -1,6 +1,5 @@
 import {
   type BlockRow,
-  type Env,
   jsonResponse,
   rowToBlockSummary,
   serverError,

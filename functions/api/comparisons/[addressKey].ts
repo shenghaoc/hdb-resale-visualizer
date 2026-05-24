@@ -1,4 +1,4 @@
-import { type Env, jsonResponse, notFound, serverError } from "../../_lib/d1";
+import { jsonResponse, notFound, serverError } from "../../_lib/d1";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
   const raw = params.addressKey;

@@ -1,4 +1,4 @@
-import { type Env, jsonResponse, serverError } from "../../_lib/d1";
+import { jsonResponse, serverError } from "../../_lib/d1";
 
 type TrendRow = {
   town: string;

@@ -5,10 +5,6 @@
  * dependency-free (no Node imports) so it runs in the Workers runtime.
  */
 
-export type Env = {
-  DB: D1Database;
-};
-
 type JsonValue = unknown;
 
 const CACHE_HEADERS = {

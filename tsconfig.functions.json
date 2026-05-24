@@ -8,7 +8,7 @@
     "strict": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["@cloudflare/workers-types/2023-07-01"]
+    "types": ["@cloudflare/workers-types"]
   },
-  "include": ["functions/**/*.ts"]
+  "include": ["functions/**/*.ts", "worker/**/*.ts", "cloudflare-env.d.ts"]
 }

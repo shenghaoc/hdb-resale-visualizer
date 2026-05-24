@@ -1,6 +1,19 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "hdb-resale-visualizer",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-04-19",
-  "pages_build_output_dir": "dist"
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hdb-resale",
+      "database_id": "df06858c-8fd3-4cf5-9080-dbd9a9f49250",
+      "migrations_dir": "migrations"
+    }
+  ]
 }
