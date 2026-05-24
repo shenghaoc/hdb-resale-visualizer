@@ -113,7 +113,9 @@ export class D1Client {
       }
       return;
     }
-    const chunkSize = options.chunkSize ?? Math.max(1, Math.floor(100 / columns.length));
+    // Cap at D1's 100-bound-param limit regardless of caller-provided or default value.
+    const maxByParams = Math.max(1, Math.floor(100 / columns.length));
+    const chunkSize = Math.min(options.chunkSize ?? maxByParams, maxByParams);
     const placeholders = `(${columns.map(() => "?").join(",")})`;
     const verb = options.upsert ? "INSERT OR REPLACE" : "INSERT";
     const sqlPrefix = `${verb} INTO ${table} (${columns.join(",")}) VALUES `;

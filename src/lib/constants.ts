@@ -88,8 +88,8 @@ export const SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY =
   "hdb_resale_search_profile_wizard_dismissed_v1";
 
 /**
- * Base path for the runtime data API served by Cloudflare Pages Functions
- * under `functions/api/*` and backed by D1.
+ * Base path for the runtime data API served by the Cloudflare Worker
+ * under `worker/index.ts` and backed by D1.
  */
 export const API_BASE_PATH = "/api";
 

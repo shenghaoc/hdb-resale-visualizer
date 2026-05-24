@@ -75,14 +75,15 @@ jobs:
 
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
-      # Pages Functions read data live from the production D1 binding; PR
-      # previews must not run sync-data (that would mutate shared prod state).
-      # Only the static UI bundle + Pages Functions code are deployed here.
+      # Workers + static assets — `wrangler deploy` bundles and uploads the
+      # Worker and static assets configured in wrangler.jsonc.
+      # PR previews must not run sync-data (that would mutate shared prod state).
+      # Only the static UI bundle + Worker code are deployed here.
       - name: Build
         run: npm run build:deploy
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: npx --no-install wrangler pages deploy dist --project-name=hdb-resale-visualizer --branch="${{ steps.deploy-branch.outputs.branch }}"
+        run: npx --no-install wrangler deploy
