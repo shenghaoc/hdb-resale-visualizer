@@ -8,9 +8,10 @@
  *   POST /accounts/{account_id}/d1/database/{database_id}/query
  *   POST /accounts/{account_id}/d1/database/{database_id}/raw
  *
- * Both endpoints accept either a single `{sql, params}` object or an array of
- * statements (batch). Each statement has a 100KB body cap, so we issue
- * batched `INSERT ... VALUES (?,?),(?,?),...` multi-row inserts in chunks.
+ * The `/query` endpoint accepts either a single `{ sql, params }` object or a
+ * batch wrapper `{ batch: [{ sql, params }, ...] }`. Each statement has a
+ * 100KB body cap, so we issue batched `INSERT ... VALUES (?,?),(?,?),...`
+ * multi-row inserts in chunks.
  */
 import { fetchWithRetry } from "./fetchers";
 
@@ -23,6 +24,12 @@ export type D1Config = {
 };
 
 type D1Statement = { sql: string; params?: unknown[] };
+
+type D1QueryBody = D1Statement | { batch: D1Statement[] };
+
+function buildQueryBody(statement: D1Statement | D1Statement[]): D1QueryBody {
+  return Array.isArray(statement) ? { batch: statement } : statement;
+}
 
 type D1QueryResult<TRow = Record<string, unknown>> = {
   success: boolean;
@@ -59,14 +66,13 @@ export class D1Client {
   async query<TRow = Record<string, unknown>>(
     statement: D1Statement | D1Statement[],
   ): Promise<TRow[]> {
-    const body = Array.isArray(statement) ? statement : [statement];
     const response = await fetchWithRetry(buildQueryUrl(this.config), {
       method: "POST",
       headers: {
         authorization: `Bearer ${this.config.apiToken}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(buildQueryBody(statement)),
     });
     if (!response.ok && !response.headers.get("content-type")?.includes("application/json")) {
       // The response is not JSON — try to read the body as text for diagnostics.
