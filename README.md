@@ -151,10 +151,9 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 ## Deployment
 
-- Cloudflare Pages publishes the static `dist/` output **and** the Pages Functions in `functions/`. `wrangler.toml` declares the D1 binding `DB`.
-- `.github/workflows/ci.yml` runs typecheck, typed lint, unit/integration tests, e2e smoke, and a production build verification.
-- `.github/workflows/deploy-preview.yml` builds and deploys preview/production to Cloudflare Pages after CI passes. PR previews share the production D1 binding — there is no per-PR sync.
-- `.github/workflows/refresh-data.yml` runs nightly in SGT-equivalent UTC time and updates D1 in place. Pages Functions pick up the new data on the next request — no rebuild needed.
+- **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` runs `npm run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`.
+- **CI** (`.github/workflows/ci.yml`): typecheck, typed lint, unit/integration tests, e2e smoke, and a production build verification only.
+- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `npm run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes
 

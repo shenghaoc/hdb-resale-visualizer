@@ -39,6 +39,6 @@ jobs:
           GEOCODE_CONCURRENCY: "10"
         run: npm run sync-data
 
-      # Pages Functions read live data from D1, so no rebuild is needed on
-      # data-only refreshes. The static UI bundle redeploys only when source
-      # code changes — handled by the CI / deploy-preview workflows.
+      # The Worker reads live data from D1, so no redeploy is needed on
+      # data-only refreshes. The UI bundle redeploys only when source code
+      # changes — handled by Cloudflare Workers Builds, not GitHub Actions.
