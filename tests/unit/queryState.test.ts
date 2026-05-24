@@ -57,6 +57,20 @@ describe("queryState", () => {
     expect(filters.compareTown).toBe("ANG MO KIO");
   });
 
+  it("ignores compareTown that differs only by case or whitespace", () => {
+    expect(parseFilters("?town=BEDOK&compareTown=bedok").compareTown).toBe("");
+    expect(parseFilters("?town=BEDOK&compareTown=+BEDOK+").compareTown).toBe("");
+  });
+
+  it("drops a case-variant compareTown from the serialized URL", () => {
+    const search = serializeFilters({
+      ...DEFAULT_FILTERS,
+      town: "BEDOK",
+      compareTown: "bedok",
+    });
+    expect(search).not.toContain("compareTown");
+  });
+
   it("truncates oversized compareTown payloads", () => {
     const longString = "a".repeat(300);
     const filters = parseFilters(`?town=BEDOK&compareTown=${longString}`);

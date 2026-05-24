@@ -54,6 +54,10 @@ type MetricRow = {
   formatDelta: (delta: MetricDelta) => string;
 };
 
+// Below this magnitude the YoY label rounds to "0.0%", so render a flat arrow
+// rather than implying a directional trend from sub-rounding noise.
+const YOY_FLAT_THRESHOLD_PCT = 0.05;
+
 const TONE_BADGE_CLASS: Record<DeltaTone, string> = {
   better:
     "rounded-full bg-emerald-100 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
@@ -125,6 +129,12 @@ function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
   ];
 }
 
+// Anchor links (href="#id") are unreliable inside the app's fixed layout and
+// nested scroll containers, so scroll the target element into view directly.
+function scrollToColumn(id: string): void {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function signedNumber(value: number, locale: Locale): string {
   const sign = value > 0 ? "+" : value < 0 ? "−" : "";
   return `${sign}${formatNumber(Math.abs(value), 0, locale)}`;
@@ -144,8 +154,8 @@ function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
       </span>
     );
   }
-  const isUp = pct > 0.5;
-  const isDown = pct < -0.5;
+  const isUp = pct >= YOY_FLAT_THRESHOLD_PCT;
+  const isDown = pct <= -YOY_FLAT_THRESHOLD_PCT;
   const Icon = isUp ? ArrowUpRight : isDown ? ArrowDownRight : ArrowRight;
   const color = isUp
     ? "text-red-600 dark:text-red-400"
@@ -278,18 +288,20 @@ export function TownCompareSection({
             aria-label={t("townCompare.sectionsNavLabel")}
             className="sticky top-0 z-10 mb-3 flex w-full gap-1 rounded-full border border-border/40 bg-background/95 p-1 backdrop-blur md:hidden"
           >
-            <a
-              href="#town-compare-primary"
+            <button
+              type="button"
+              onClick={() => scrollToColumn("town-compare-primary")}
               className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted"
             >
               {localizeTownName(primaryTown, locale)}
-            </a>
-            <a
-              href="#town-compare-secondary"
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToColumn("town-compare-secondary")}
               className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted"
             >
               {localizeTownName(compareTown, locale)}
-            </a>
+            </button>
           </nav>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">

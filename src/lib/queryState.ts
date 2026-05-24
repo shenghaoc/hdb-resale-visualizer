@@ -24,6 +24,11 @@ function safeParamNullable(value: string | null): string | null {
   return value;
 }
 
+/** Town names are canonical upper-case; compare case- and whitespace-insensitively. */
+function isSameTown(a: string, b: string): boolean {
+  return a.trim().toUpperCase() === b.trim().toUpperCase();
+}
+
 export function parseFilters(search: string): FilterState {
   const params = new URLSearchParams(search);
 
@@ -42,7 +47,10 @@ export function parseFilters(search: string): FilterState {
   const town = safeParam(params.get("town"), DEFAULT_FILTERS.town);
   const rawCompareTown = safeParam(params.get("compareTown"), DEFAULT_FILTERS.compareTown);
   // Require a primary town anchor; ignore a compareTown that matches the primary.
-  const compareTown = town && rawCompareTown !== town ? rawCompareTown : DEFAULT_FILTERS.compareTown;
+  // Case/whitespace-insensitive so deep links like ?town=BEDOK&compareTown=bedok
+  // don't bypass the same-town guard and trigger a redundant compare fetch.
+  const compareTown =
+    town && !isSameTown(rawCompareTown, town) ? rawCompareTown : DEFAULT_FILTERS.compareTown;
 
   return {
     search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
@@ -68,7 +76,7 @@ export function serializeFilters(filters: FilterState): string {
 
   // Strip compareTown when it has no primary anchor or when it duplicates the primary town.
   const effectiveCompareTown =
-    filters.town && filters.compareTown && filters.compareTown !== filters.town
+    filters.town && filters.compareTown && !isSameTown(filters.compareTown, filters.town)
       ? filters.compareTown
       : "";
 
