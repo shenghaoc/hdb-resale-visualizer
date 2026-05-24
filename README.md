@@ -152,7 +152,7 @@ CLOUDFLARE_D1_DATABASE_ID=...
 ## Deployment
 
 - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` runs `npm run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`.
-- **CI** (`.github/workflows/ci.yml`): typecheck, typed lint, unit/integration tests, e2e smoke, and a production build verification only.
+- **CI** (`.github/workflows/ci.yml`): typecheck, typed lint, unit/integration tests, e2e smoke (fixtures staged to `public/api/` for preview only), and production build verification. No data artifact caching — runtime reads from D1.
 - **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `npm run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes
