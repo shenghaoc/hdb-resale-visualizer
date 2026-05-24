@@ -61,7 +61,7 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await page.getByLabel("Location search").fill("BEDOK");
   await expect(page).toHaveURL(/search=BEDOK/);
 
-  const resultsButton = page.getByRole("button", { name: "Results" });
+  const resultsButton = page.getByTestId("mobile-tab-bar").getByRole("button", { name: "Results" });
   const savedButton = page.locator(".mobile-tab-bar button").filter({ hasText: /^Saved/ });
 
   await resultsButton.click();
