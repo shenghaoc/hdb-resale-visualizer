@@ -772,6 +772,8 @@ export function ResultsPane({
       age: searchProfile.age,
       coApplicantAge: searchProfile.coApplicantAge,
     };
+    // The profile is constant for this loop (the guard above ensures it is
+    // complete), so compute the price ceiling once instead of per block.
     const ceiling = maxAffordablePrice(profile);
     const map = new Map<string, number>();
     for (const block of blocks) {

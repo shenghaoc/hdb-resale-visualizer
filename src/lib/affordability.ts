@@ -237,6 +237,7 @@ export function affordabilityProfileFingerprint(profile: AffordabilityProfile): 
   return `${profile.cpfOABalance ?? ""}|${profile.monthlyIncome ?? ""}|${profile.age ?? ""}|${profile.coApplicantAge ?? ""}`;
 }
 
+let lastProfileRef: AffordabilityProfile | null = null;
 let verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
 let verdictCacheFingerprint = "";
 
@@ -244,10 +245,15 @@ function getAffordabilityStatusCached(
   block: BlockSummary,
   profile: AffordabilityProfile,
 ): AffordabilityStatus {
-  const fingerprint = affordabilityProfileFingerprint(profile);
-  if (fingerprint !== verdictCacheFingerprint) {
-    verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
-    verdictCacheFingerprint = fingerprint;
+  // The profile reference is stable across a filter pass, so skip the
+  // fingerprint string build unless the reference actually changes.
+  if (profile !== lastProfileRef) {
+    const fingerprint = affordabilityProfileFingerprint(profile);
+    if (fingerprint !== verdictCacheFingerprint) {
+      verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
+      verdictCacheFingerprint = fingerprint;
+    }
+    lastProfileRef = profile;
   }
   const cached = verdictCache.get(block);
   if (cached !== undefined) {
@@ -295,6 +301,7 @@ export function affordabilityHeadroom(
 
 /** Test-only: drop the affordability verdict cache. */
 export function resetAffordabilityCacheForTests(): void {
+  lastProfileRef = null;
   verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
   verdictCacheFingerprint = "";
 }
