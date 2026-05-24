@@ -186,7 +186,7 @@ test.describe("Mobile Regression: Recent Features", () => {
         addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
         notes: "Test note",
         targetPrice: 500000,
-        addedAt: Temporal.Now.instant().toString(),
+        addedAt: new Date().toISOString(),
       },
     ];
 
@@ -216,13 +216,13 @@ test.describe("Mobile Regression: Recent Features", () => {
         addressKey: "bedok-10d-bedok-sth-ave-2",
         notes: "",
         targetPrice: null,
-        addedAt: Temporal.Now.instant().toString(),
+        addedAt: new Date().toISOString(),
       },
       {
         addressKey: "bedok-106-lengkong-tiga",
         notes: "",
         targetPrice: null,
-        addedAt: Temporal.Now.instant().subtract({ minutes: 1 }).toString(),
+        addedAt: new Date(Date.now() - 60000).toISOString(),
       },
     ];
 
@@ -260,7 +260,7 @@ test.describe("Mobile Regression: Recent Features", () => {
         addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
         notes: "",
         targetPrice: null,
-        addedAt: Temporal.Now.instant().toString(),
+        addedAt: new Date().toISOString(),
       },
     ];
 

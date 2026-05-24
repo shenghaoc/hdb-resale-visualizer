@@ -348,7 +348,7 @@ describe("ShortlistDrawer", () => {
     const originalBlob = global.Blob;
     let exportedContent = "";
 
-    global.Blob = vi.fn().mockImplementation(function(content: unknown[], options?: BlobPropertyBag) {
+    global.Blob = vi.fn().mockImplementation(function(content: BlobPart[], options?: BlobPropertyBag) {
       exportedContent = content.join("");
       return new originalBlob(content, options);
     });
