@@ -1,4 +1,9 @@
 import Papa from "papaparse";
+import {
+  classifyUpstreamService,
+  sleep,
+  waitForUpstreamSlot,
+} from "./rate-limits";
 
 function getHeaders(): Record<string, string> {
   const apiKey = process.env.DATA_GOV_API_KEY;
@@ -22,9 +27,7 @@ type FetchRetryOptions = {
   retryDelayMs?: number;
 };
 
-export async function sleep(milliseconds: number) {
-  await new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
+export { sleep } from "./rate-limits";
 
 export async function fetchWithRetry(
   url: string,
@@ -62,6 +65,10 @@ export async function fetchWithRetry(
 }
 
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
+  const upstreamService = classifyUpstreamService(url);
+  if (upstreamService) {
+    await waitForUpstreamSlot(upstreamService);
+  }
   const response = await fetchWithRetry(url, {
     ...init,
     headers: getJsonHeaders(init?.headers),
@@ -95,7 +102,6 @@ export async function getDatasetDownloadUrl(datasetId: string) {
     );
     const url = payload.data?.url;
     if (url) return url;
-    await sleep(1500);
   }
   throw new Error(`Timed out waiting for dataset download URL: ${datasetId}`);
 }

@@ -1,4 +1,5 @@
 import { fetchJson, fetchWithRetry } from "./fetchers";
+import { waitForUpstreamSlot } from "./rate-limits";
 import { oneMapRoutingResponseSchema, oneMapTokenResponseSchema } from "../schemas";
 import type { D1Client } from "./d1";
 
@@ -126,6 +127,7 @@ export async function fetchWalkingRoute(
   url.searchParams.set("end", `${end.lat},${end.lng}`);
   url.searchParams.set("routeType", "walk");
 
+  await waitForUpstreamSlot("onemap-routing");
   const response = await fetchWithRetry(url.toString(), {
     headers: { authorization: `Bearer ${token}` },
   });

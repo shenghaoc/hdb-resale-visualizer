@@ -36,7 +36,6 @@ describe("sync-data coordinator helpers", () => {
           supermarkets: [{ name: "NTUC", lat: 1.2, lng: 103.9 }],
           geocodedCount: 2,
         }),
-        sleepFn: vi.fn(),
       },
     );
 

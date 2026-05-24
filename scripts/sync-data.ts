@@ -7,10 +7,11 @@ import {
   walkingTimeLookupKey,
   type AmenityLocation,
   type GeocodeCacheFile,
+  type ResaleTransaction,
   type SchoolLocation,
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
-import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
+import { fetchCsvRows, fetchGeoJson, fetchJson } from "./lib/sync/fetchers";
 import {
   geocodeAddress,
   loadGeocodeCache,
@@ -63,7 +64,6 @@ type AmenityFetchDependencies = {
   normalizeSchoolRowsFn?: typeof normalizeSchoolRows;
   normalizeAmenityGeoJsonFn?: typeof normalizeAmenityGeoJson;
   normalizeSupermarketRowsFn?: typeof normalizeSupermarketRows;
-  sleepFn?: typeof sleep;
 };
 
 const nowTimestamp: TimestampFactory = () =>
@@ -96,7 +96,6 @@ export async function fetchAmenityData(
   const normalizeSchoolRowsFn = deps.normalizeSchoolRowsFn ?? normalizeSchoolRows;
   const normalizeAmenityGeoJsonFn = deps.normalizeAmenityGeoJsonFn ?? normalizeAmenityGeoJson;
   const normalizeSupermarketRowsFn = deps.normalizeSupermarketRowsFn ?? normalizeSupermarketRows;
-  const sleepFn = deps.sleepFn ?? sleep;
 
   console.log("Fetching amenity data...");
   let schools: SchoolLocation[] = [];
@@ -107,25 +106,24 @@ export async function fetchAmenityData(
 
   try {
     const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
-    await sleepFn(2600);
     const schoolResult = await normalizeSchoolRowsFn(schoolRows, geocodeCache, options);
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
+    console.log(`Processed ${schools.length} primary schools.`);
   } catch (error) {
     warnAmenityStep("schools", error);
   }
 
   try {
     const hawkerGeoJson = await fetchGeoJsonFn(NEA_HAWKER_DATASET_ID);
-    await sleepFn(2600);
     hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
+    console.log(`Processed ${hawkers.length} hawker centres.`);
   } catch (error) {
     warnAmenityStep("hawkers", error);
   }
 
   try {
     const supermarketRows = await fetchCsvRowsFn(SFA_SUPERMARKET_DATASET_ID);
-    await sleepFn(2600);
     const supermarketResult = await normalizeSupermarketRowsFn(
       supermarketRows,
       geocodeCache,
@@ -133,14 +131,15 @@ export async function fetchAmenityData(
     );
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
+    console.log(`Processed ${supermarkets.length} supermarkets.`);
   } catch (error) {
     warnAmenityStep("supermarkets", error);
   }
 
   try {
     const parksGeoJson = await fetchGeoJsonFn(NPARKS_PARKS_DATASET_ID);
-    await sleepFn(2600);
     parks = normalizeAmenityGeoJsonFn(parksGeoJson);
+    console.log(`Processed ${parks.length} parks.`);
   } catch (error) {
     warnAmenityStep("parks", error);
   }
@@ -365,22 +364,25 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   }
 
   console.log(`Downloading ${resaleCollection.childDatasets.length} resale datasets...`);
-  const resaleCsvRows: Record<string, string>[] = [];
-  for (const datasetId of resaleCollection.childDatasets) {
+  const transactions: ResaleTransaction[] = [];
+  for (const [index, datasetId] of resaleCollection.childDatasets.entries()) {
     const datasetRows = await fetchCsvRows(datasetId);
-    for (const row of datasetRows) {
-      resaleCsvRows.push(row);
-    }
-    await sleep(2600);
+    const normalized = normalizeResaleRows(datasetRows);
+    transactions.push(...normalized);
+    console.log(
+      `Processed resale dataset ${index + 1}/${resaleCollection.childDatasets.length}: ${normalized.length} transactions (${transactions.length} total).`,
+    );
   }
 
   const propertyRows = await fetchCsvRows(PROPERTY_DATASET_ID);
-  await sleep(2600);
-  const mrtGeoJson = await fetchGeoJson(MRT_DATASET_ID);
+  const normalizedPropertyInfo = normalizePropertyRows(propertyRows);
+  console.log(`Processed ${normalizedPropertyInfo.length} property rows.`);
 
-  const transactions = normalizeResaleRows(resaleCsvRows);
-  const propertyInfo = rekeyPropertyInfo(normalizePropertyRows(propertyRows), transactions);
+  const mrtGeoJson = await fetchGeoJson(MRT_DATASET_ID);
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
+  console.log(`Processed ${mrtExits.length} MRT exits.`);
+
+  const propertyInfo = rekeyPropertyInfo(normalizedPropertyInfo, transactions);
   const geocodeCache = await loadGeocodeCache(db);
   console.log(`Loaded ${Object.keys(geocodeCache.entries).length} cached geocodes from D1.`);
 
