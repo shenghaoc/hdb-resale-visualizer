@@ -40,7 +40,7 @@ const comparisonFixture = {
 };
 
 async function mockComparisonArtifacts(page: Page) {
-  await page.route("**/data/comparisons/*.json", async (route) => {
+  await page.route("**/api/comparisons/*", async (route) => {
     const url = new URL(route.request().url());
     const fileName = url.pathname.split("/").pop() ?? "fixture-address.json";
     const addressKey = fileName.replace(/\.json$/, "");

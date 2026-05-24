@@ -1,10 +1,8 @@
 import "temporal-polyfill/global";
-import { cpSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 export default function globalSetup() {
-  const fixtureDir = join(process.cwd(), "tests/fixtures/public-data");
-  const targetDir = join(process.cwd(), "public/data");
   const storageStatePath = join(process.cwd(), "test-results/e2e-storage-state.json");
   const completedSearchProfile = {
     version: 1,
@@ -21,8 +19,8 @@ export default function globalSetup() {
     showAllBlocks: true,
   };
 
-  mkdirSync(targetDir, { recursive: true });
-  cpSync(fixtureDir, targetDir, { recursive: true });
+  // Fixtures are staged into `public/api/` by `npm run setup:fixtures` (invoked
+  // from the playwright webServer command), so no copying happens here.
 
   mkdirSync(join(process.cwd(), "test-results"), { recursive: true });
   writeFileSync(

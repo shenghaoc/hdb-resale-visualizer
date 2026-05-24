@@ -1,11 +1,3 @@
-import {
-  ensureDataDirectories,
-  writeComparisonFiles,
-  writeDetailFiles,
-  writeGeneratedArtifacts,
-  writeTownBlockFiles,
-} from "./lib/sync/writer";
-import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -15,16 +7,22 @@ import {
   walkingTimeLookupKey,
   type AmenityLocation,
   type GeocodeCacheFile,
+  type ResaleTransaction,
   type SchoolLocation,
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
-import { fetchCsvRows, fetchGeoJson, fetchJson, sleep } from "./lib/sync/fetchers";
-import { geocodeAddress, loadGeocodeCache, saveGeocodeCache } from "./lib/sync/geocode";
+import { fetchCsvRows, fetchGeoJson, fetchJson } from "./lib/sync/fetchers";
+import {
+  geocodeAddress,
+  loadGeocodeCache,
+  saveGeocodeCacheEntries,
+} from "./lib/sync/geocode";
 import {
   buildRoutingCacheKey,
   loadRoutingCache,
   resolveOneMapToken,
   routeMissingPairs,
+  saveRoutingCacheEntries,
   type RoutingCacheFile,
 } from "./lib/sync/routing";
 import {
@@ -51,17 +49,13 @@ import {
   resolveOneMapTokenEndpoint,
   validateGeneratedArtifacts,
 } from "./lib/syncGuards";
-
-const ROOT = process.cwd();
-const PUBLIC_DATA_DIR = path.join(ROOT, "public", "data");
-const GEOCODE_CACHE_PATH = path.join(ROOT, "data", "cache", "geocodes.json");
-const ROUTING_CACHE_PATH = path.join(ROOT, "data", "cache", "walking-times.json");
+import { D1Client, resolveD1ConfigFromEnv } from "./lib/sync/d1";
+import { readManifestUpdatedAt, writeArtifactsToD1 } from "./lib/sync/store";
 
 type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
 type TimestampFactory = () => string;
 type GeocodeDependencies = {
   geocodeAddressFn?: typeof geocodeAddress;
-  saveGeocodeCacheFn?: typeof saveGeocodeCache;
   now?: TimestampFactory;
 };
 type AmenityFetchDependencies = {
@@ -70,15 +64,6 @@ type AmenityFetchDependencies = {
   normalizeSchoolRowsFn?: typeof normalizeSchoolRows;
   normalizeAmenityGeoJsonFn?: typeof normalizeAmenityGeoJson;
   normalizeSupermarketRowsFn?: typeof normalizeSupermarketRows;
-  sleepFn?: typeof sleep;
-};
-type ArtifactWriteDependencies = {
-  validateGeneratedArtifactsFn?: typeof validateGeneratedArtifacts;
-  buildMrtStationsGeoJsonFn?: typeof buildMrtStationsGeoJson;
-  writeGeneratedArtifactsFn?: typeof writeGeneratedArtifacts;
-  writeTownBlockFilesFn?: typeof writeTownBlockFiles;
-  writeComparisonFilesFn?: typeof writeComparisonFiles;
-  writeDetailFilesFn?: typeof writeDetailFiles;
 };
 
 const nowTimestamp: TimestampFactory = () =>
@@ -111,7 +96,6 @@ export async function fetchAmenityData(
   const normalizeSchoolRowsFn = deps.normalizeSchoolRowsFn ?? normalizeSchoolRows;
   const normalizeAmenityGeoJsonFn = deps.normalizeAmenityGeoJsonFn ?? normalizeAmenityGeoJson;
   const normalizeSupermarketRowsFn = deps.normalizeSupermarketRowsFn ?? normalizeSupermarketRows;
-  const sleepFn = deps.sleepFn ?? sleep;
 
   console.log("Fetching amenity data...");
   let schools: SchoolLocation[] = [];
@@ -122,25 +106,24 @@ export async function fetchAmenityData(
 
   try {
     const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
-    await sleepFn(2600);
     const schoolResult = await normalizeSchoolRowsFn(schoolRows, geocodeCache, options);
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
+    console.log(`Processed ${schools.length} primary schools.`);
   } catch (error) {
     warnAmenityStep("schools", error);
   }
 
   try {
     const hawkerGeoJson = await fetchGeoJsonFn(NEA_HAWKER_DATASET_ID);
-    await sleepFn(2600);
     hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
+    console.log(`Processed ${hawkers.length} hawker centres.`);
   } catch (error) {
     warnAmenityStep("hawkers", error);
   }
 
   try {
     const supermarketRows = await fetchCsvRowsFn(SFA_SUPERMARKET_DATASET_ID);
-    await sleepFn(2600);
     const supermarketResult = await normalizeSupermarketRowsFn(
       supermarketRows,
       geocodeCache,
@@ -148,14 +131,15 @@ export async function fetchAmenityData(
     );
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
+    console.log(`Processed ${supermarkets.length} supermarkets.`);
   } catch (error) {
     warnAmenityStep("supermarkets", error);
   }
 
   try {
     const parksGeoJson = await fetchGeoJsonFn(NPARKS_PARKS_DATASET_ID);
-    await sleepFn(2600);
     parks = normalizeAmenityGeoJsonFn(parksGeoJson);
+    console.log(`Processed ${parks.length} parks.`);
   } catch (error) {
     warnAmenityStep("parks", error);
   }
@@ -179,16 +163,14 @@ export async function geocodeMissingAddresses(
     geocodeCache: GeocodeCacheFile;
     geocodeEndpoint: URL;
     skipGeocoding: boolean;
-    cachePath: string;
     concurrency: number;
+    flushCacheFn: (newKeys: string[]) => Promise<void>;
   },
   deps: GeocodeDependencies = {},
 ) {
   const geocodeAddressFn = deps.geocodeAddressFn ?? geocodeAddress;
-  const saveGeocodeCacheFn = deps.saveGeocodeCacheFn ?? saveGeocodeCache;
   const now = deps.now ?? nowTimestamp;
-  const { missingAddresses, geocodeCache, geocodeEndpoint, skipGeocoding, cachePath, concurrency } =
-    options;
+  const { missingAddresses, geocodeCache, geocodeEndpoint, skipGeocoding, concurrency } = options;
   let geocodeFailureCount = 0;
   const geocodeFailureSamples: string[] = [];
 
@@ -206,6 +188,7 @@ export async function geocodeMissingAddresses(
   let nextIndex = 0;
   let completed = 0;
   let flushedAt = 0;
+  let pendingFlushKeys: string[] = [];
   let flushInFlight: Promise<void> | null = null;
   console.log(`Geocoding ${missingAddresses.length} addresses with concurrency ${concurrency}...`);
 
@@ -217,6 +200,7 @@ export async function geocodeMissingAddresses(
         const geocode = await geocodeAddressFn(searchValue, geocodeEndpoint);
         if (geocode) {
           geocodeCache.entries[addressKey] = geocode;
+          pendingFlushKeys.push(addressKey);
         } else {
           geocodeFailureCount += 1;
           if (geocodeFailureSamples.length < 5)
@@ -235,8 +219,10 @@ export async function geocodeMissingAddresses(
       if (completed - flushedAt >= 250 || completed === missingAddresses.length) {
         flushedAt = completed;
         geocodeCache.updatedAt = now();
+        const keys = pendingFlushKeys;
+        pendingFlushKeys = [];
         const flush = flushInFlight ? flushInFlight.catch(() => {}) : Promise.resolve();
-        flushInFlight = flush.then(() => saveGeocodeCacheFn(cachePath, geocodeCache));
+        flushInFlight = flush.then(() => options.flushCacheFn(keys));
         await flushInFlight;
       }
     }
@@ -255,11 +241,11 @@ export async function computeWalkingTimes(
     addressKeys: Iterable<string>;
     mrtExits: import("./lib/pipeline").MrtExit[];
     routingCache: RoutingCacheFile;
-    cachePath: string;
     skipRouting: boolean;
     routingEndpoint: URL;
     tokenEndpoint: URL;
     concurrency: number;
+    flushCacheFn: (newKeys: string[]) => Promise<void>;
   },
   deps: {
     resolveOneMapTokenFn?: typeof resolveOneMapToken;
@@ -321,7 +307,7 @@ export async function computeWalkingTimes(
         cache: options.routingCache,
         routingEndpoint: options.routingEndpoint,
         token,
-        cachePath: options.cachePath,
+        flushCacheFn: options.flushCacheFn,
         concurrency: options.concurrency,
         now,
       });
@@ -343,42 +329,12 @@ export async function computeWalkingTimes(
     } else {
       fallbackCount += 1;
       if (!options.skipRouting) {
-        // skipRouting fallbacks are expected, not failures.
         failureCount += 1;
       }
     }
   }
 
   return { walkingTimes, fallbackCount, failureCount };
-}
-
-export async function validateAndWriteArtifacts(
-  options: {
-    artifacts: ReturnType<typeof buildArtifacts>;
-    mrtGeoJson: { type: "FeatureCollection"; features: unknown[] };
-    mrtExits: ReturnType<typeof normalizeMrtFeatures>;
-    geocodeFailureCount: number;
-  },
-  deps: ArtifactWriteDependencies = {},
-) {
-  const validateGeneratedArtifactsFn = deps.validateGeneratedArtifactsFn ?? validateGeneratedArtifacts;
-  const buildMrtStationsGeoJsonFn = deps.buildMrtStationsGeoJsonFn ?? buildMrtStationsGeoJson;
-  const writeGeneratedArtifactsFn = deps.writeGeneratedArtifactsFn ?? writeGeneratedArtifacts;
-  const writeTownBlockFilesFn = deps.writeTownBlockFilesFn ?? writeTownBlockFiles;
-  const writeComparisonFilesFn = deps.writeComparisonFilesFn ?? writeComparisonFiles;
-  const writeDetailFilesFn = deps.writeDetailFilesFn ?? writeDetailFiles;
-
-  validateGeneratedArtifactsFn({
-    blockSummariesCount: options.artifacts.blockSummaries.length,
-    detailCount: Object.keys(options.artifacts.details).length,
-    geocodeFailureCount: options.geocodeFailureCount,
-  });
-
-  const stationsGeoJson = buildMrtStationsGeoJsonFn(options.mrtExits);
-  await writeGeneratedArtifactsFn(options.artifacts, options.mrtGeoJson, stationsGeoJson);
-  await writeTownBlockFilesFn(options.artifacts.blocksByTown);
-  await writeComparisonFilesFn(options.artifacts.comparisons);
-  await writeDetailFilesFn(options.artifacts.details);
 }
 
 export async function runSyncData(argv = process.argv.slice(2)) {
@@ -390,50 +346,62 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const routingEndpoint = resolveOneMapRoutingEndpoint();
   const tokenEndpoint = resolveOneMapTokenEndpoint();
 
-  await ensureDataDirectories();
+  const d1Config = resolveD1ConfigFromEnv();
+  if (!d1Config) {
+    throw new Error(
+      "Missing D1 credentials. Set CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, and CLOUDFLARE_D1_DATABASE_ID before running sync-data.",
+    );
+  }
+  const db = new D1Client(d1Config);
 
   const resaleCollection = await fetchCollectionMetadata();
-  try {
-    const previousManifest = JSON.parse(
-      await fs.readFile(path.join(PUBLIC_DATA_DIR, "manifest.json"), "utf8"),
-    ) as { sources?: { lastUpdatedAt?: string } };
-    if (!force && previousManifest.sources?.lastUpdatedAt === resaleCollection.lastUpdatedAt) {
+  if (!force) {
+    const previousLastUpdatedAt = await readManifestUpdatedAt(db);
+    if (previousLastUpdatedAt && previousLastUpdatedAt === resaleCollection.lastUpdatedAt) {
       console.log(`No upstream resale collection change detected (${resaleCollection.lastUpdatedAt}).`);
       return;
     }
-  } catch {
-    // No manifest yet.
   }
 
   console.log(`Downloading ${resaleCollection.childDatasets.length} resale datasets...`);
-  const resaleCsvRows: Record<string, string>[] = [];
-  for (const datasetId of resaleCollection.childDatasets) {
+  const transactions: ResaleTransaction[] = [];
+  for (const [index, datasetId] of resaleCollection.childDatasets.entries()) {
     const datasetRows = await fetchCsvRows(datasetId);
-    for (const row of datasetRows) {
-      resaleCsvRows.push(row);
-    }
-    await sleep(2600);
+    const normalized = normalizeResaleRows(datasetRows);
+    transactions.push(...normalized);
+    console.log(
+      `Processed resale dataset ${index + 1}/${resaleCollection.childDatasets.length}: ${normalized.length} transactions (${transactions.length} total).`,
+    );
   }
 
   const propertyRows = await fetchCsvRows(PROPERTY_DATASET_ID);
-  await sleep(2600);
-  const mrtGeoJson = await fetchGeoJson(MRT_DATASET_ID);
+  const normalizedPropertyInfo = normalizePropertyRows(propertyRows);
+  console.log(`Processed ${normalizedPropertyInfo.length} property rows.`);
 
-  const transactions = normalizeResaleRows(resaleCsvRows);
-  const propertyInfo = rekeyPropertyInfo(normalizePropertyRows(propertyRows), transactions);
+  const mrtGeoJson = await fetchGeoJson(MRT_DATASET_ID);
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
-  const geocodeCache = await loadGeocodeCache(GEOCODE_CACHE_PATH);
+  console.log(`Processed ${mrtExits.length} MRT exits.`);
+
+  const propertyInfo = rekeyPropertyInfo(normalizedPropertyInfo, transactions);
+  const geocodeCache = await loadGeocodeCache(db);
+  console.log(`Loaded ${Object.keys(geocodeCache.entries).length} cached geocodes from D1.`);
 
   let amenities: Omit<Awaited<ReturnType<typeof fetchAmenityData>>, "geocodedCount"> | undefined;
+  const amenityGeocodeKeys: string[] = [];
   if (!skipAmenities) {
+    const beforeAmenityKeys = new Set(Object.keys(geocodeCache.entries));
     const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
       skipGeocoding,
       geocodeEndpoint,
     });
     amenities = amenityData;
     if (geocodedCount > 0) {
-      geocodeCache.updatedAt = nowTimestamp();
-      await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
+      for (const key of Object.keys(geocodeCache.entries)) {
+        if (!beforeAmenityKeys.has(key)) {
+          amenityGeocodeKeys.push(key);
+        }
+      }
+      await saveGeocodeCacheEntries(db, geocodeCache, amenityGeocodeKeys, nowTimestamp());
     }
   }
 
@@ -449,18 +417,18 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     geocodeCache,
     geocodeEndpoint,
     skipGeocoding,
-    cachePath: GEOCODE_CACHE_PATH,
     concurrency,
+    flushCacheFn: async (newKeys) => {
+      await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+    },
   });
 
   if (geocodeFailureCount > 0) {
     console.warn(`Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`);
   }
 
-  geocodeCache.updatedAt = nowTimestamp();
-  await saveGeocodeCache(GEOCODE_CACHE_PATH, geocodeCache);
-
-  const routingCache = await loadRoutingCache(ROUTING_CACHE_PATH);
+  const routingCache = await loadRoutingCache(db);
+  console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
   const routingConcurrency = Math.max(
     1,
     Number(process.env.ROUTING_CONCURRENCY ?? "4"),
@@ -470,11 +438,13 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     addressKeys: uniqueAddresses.keys(),
     mrtExits,
     routingCache,
-    cachePath: ROUTING_CACHE_PATH,
     skipRouting,
     routingEndpoint,
     tokenEndpoint,
     concurrency: routingConcurrency,
+    flushCacheFn: async (newKeys) => {
+      await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+    },
   });
   if (walkingFallbackCount > 0) {
     console.log(
@@ -502,12 +472,14 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     },
   });
 
-  await validateAndWriteArtifacts({
-    artifacts,
-    mrtGeoJson,
-    mrtExits,
+  validateGeneratedArtifacts({
+    blockSummariesCount: artifacts.blockSummaries.length,
+    detailCount: Object.keys(artifacts.details).length,
     geocodeFailureCount,
   });
+
+  const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
+  await writeArtifactsToD1(db, artifacts, mrtGeoJson, stationsGeoJson, nowTimestamp());
 }
 
 function isDirectExecution() {

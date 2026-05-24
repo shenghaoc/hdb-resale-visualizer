@@ -207,7 +207,7 @@ function App() {
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-2 text-sm text-muted-foreground">
-            {t("app.syncDataHint")}
+            {t("app.devFunctionsHint")}
           </CardContent>
         </Card>
       </main>

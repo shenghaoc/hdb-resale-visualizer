@@ -1,4 +1,4 @@
-import { DATA_BASE_PATH } from "./constants";
+import { API_BASE_PATH } from "./constants";
 import { townToFilename } from "./utils";
 import {
   addressDetailSchema,
@@ -50,15 +50,15 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSc
 export { townToFilename };
 
 export function fetchManifest(): Promise<Manifest> {
-  return fetchJson(`${DATA_BASE_PATH}/manifest.json`, manifestSchema);
+  return fetchJson(`${API_BASE_PATH}/manifest`, manifestSchema);
 }
 
 export function fetchBlockSummaries(): Promise<BlockSummary[]> {
-  return fetchJson(`${DATA_BASE_PATH}/block-summaries.json`, blockSummarySchema.array());
+  return fetchJson(`${API_BASE_PATH}/block-summaries`, blockSummarySchema.array());
 }
 
 export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
-  return fetchJson(`${DATA_BASE_PATH}/blocks/${townToFilename(town)}.json`, blockSummarySchema.array());
+  return fetchJson(`${API_BASE_PATH}/blocks/${townToFilename(town)}`, blockSummarySchema.array());
 }
 
 export function resetTownFlatTypeTrendsCacheForTests(): void {
@@ -68,7 +68,7 @@ export function resetTownFlatTypeTrendsCacheForTests(): void {
 export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
   if (!townFlatTrendsPromise) {
     townFlatTrendsPromise = fetchJson(
-      `${DATA_BASE_PATH}/trends/town-flat-type.json`,
+      `${API_BASE_PATH}/trends/town-flat-type`,
       townFlatTypeTrendPointSchema.array(),
     ).catch((error) => {
       townFlatTrendsPromise = null;
@@ -80,18 +80,16 @@ export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
 }
 
 export function fetchAddressDetail(addressKey: string): Promise<AddressDetail> {
-  return fetchJson(`${DATA_BASE_PATH}/details/${addressKey}.json`, addressDetailSchema);
+  return fetchJson(`${API_BASE_PATH}/details/${addressKey}`, addressDetailSchema);
 }
 
 export async function fetchComparisonArtifact(addressKey: string): Promise<ComparisonArtifact | null> {
   try {
-    return await fetchJson(`${DATA_BASE_PATH}/comparisons/${addressKey}.json`, comparisonArtifactSchema);
+    return await fetchJson(`${API_BASE_PATH}/comparisons/${addressKey}`, comparisonArtifactSchema);
   } catch (error) {
-    // Return null if comparison data doesn't exist yet
     if (error instanceof ArtifactFetchHttpError && error.status === 404) {
       return null;
     }
-    // Re-throw other errors (network issues, etc.)
     throw error;
   }
 }

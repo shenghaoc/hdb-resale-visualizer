@@ -54,7 +54,7 @@ describe('fetchComparisonArtifact', () => {
 
     const result = await fetchComparisonArtifact('test-address');
     
-    expect(mockFetch).toHaveBeenCalledWith('/data/comparisons/test-address.json');
+    expect(mockFetch).toHaveBeenCalledWith('/api/comparisons/test-address');
     expect(result).toEqual(mockArtifact);
   });
 
@@ -76,7 +76,7 @@ describe('fetchComparisonArtifact', () => {
     });
 
     await expect(fetchComparisonArtifact('test-address')).rejects.toThrow(
-      'Failed to load /data/comparisons/test-address.json: 500'
+      'Failed to load /api/comparisons/test-address: 500'
     );
   });
 

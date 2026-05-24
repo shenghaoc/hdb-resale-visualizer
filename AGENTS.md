@@ -5,8 +5,8 @@ Use this file as a **thin router**. Keep task execution focused; treat deeper pr
 ## 🚀 Core Mandate: Read Steering First
 Before executing any directive, agents MUST read the authoritative steering files to maintain the project's strict architectural boundaries:
 - [**Product Vision**](.kiro/steering/product.md) — Map-first, deterministic facts only.
-- [**Technical Constraints**](.kiro/steering/tech.md) — 100% static, Node 26 + npm-only, no runtime geocoding.
-- [**Data Pipeline**](.kiro/steering/pipeline.md) — Strict separation between `scripts/` (build) and `src/` (runtime).
+- [**Technical Constraints**](.kiro/steering/tech.md) — Cloudflare Pages + D1 backend, Node 26 + npm-only, no runtime geocoding.
+- [**Data Pipeline**](.kiro/steering/pipeline.md) — `scripts/sync-data.ts` writes D1; `functions/api/*` reads D1.
 - [**Repository Structure**](.kiro/steering/structure.md) — Naming conventions and project layout.
 - [**UI/UX Standards**](.kiro/steering/ui-standards.md) — Shadcn composition and high-density standards.
 - [**Review Policy**](.kiro/steering/review.md) — Formal PR review workflow and severity framework.
@@ -24,8 +24,11 @@ Current initiatives follow the **Kiro Tech-Design-First** workflow. Specs are lo
 ## 4) Useful local commands
 ```bash
 npm install           # Install dependencies
-npm run dev           # Start development server (localhost:5173)
-npm run sync-data     # Refresh precomputed artifacts (public/data/)
+npm run dev           # Start Vite dev server (localhost:5173)
+npm run dev:functions # Start Wrangler Pages dev with D1 binding (full /api/* stack)
+npm run sync-data     # Refresh upstream data into D1 (requires CF credentials)
+npm run db:migrate:local   # Apply D1 migrations to the local emulator
+npm run db:migrate:remote  # Apply D1 migrations to the production database
 npm run typecheck     # Strict TypeScript verification
 npm run lint          # ESLint with type-aware rules (default)
 npm run lint:fast     # ESLint syntax-focused pass (faster local fallback)
@@ -35,10 +38,11 @@ npm run build         # Production build
 ```
 
 ## 🏗️ Architectural Boundary
-1. **Zero Runtime APIs**: The frontend (`src/`) only loads from `public/data/`.
-2. **Build-Time Data**: All geocoding and MRT distance calculations happen in `scripts/`.
-3. **Persistence**: All user state is strictly browser-local (`localStorage`).
-4. **Agent Context**: Agents MUST NOT read, glob, index, summarize, or load `public/data/` into context unless explicitly asked. Respect `.gitignore` by default. Use `tests/fixtures/public-data/` if data schema analysis is required.
+1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
+2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
+3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `npm run db:migrate:remote` (prod) or `npm run db:migrate:local` (Wrangler emulator).
+4. **Persistence**: All user state is strictly browser-local (`localStorage`).
+5. **Agent Context**: Agents MUST NOT read, glob, index, summarize, or load `public/data/` into context unless explicitly asked. Respect `.gitignore` by default. Use `tests/fixtures/public-data/` if data schema analysis is required.
 
 ## 🔍 Code Review Policy
 
@@ -79,9 +83,9 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Brittle E2E assertions on computed CSS values — prefer visible text, aria roles, `data-testid`
 
 **Architecture** (hard constraints — any violation blocks merge)
-- `fetch()` in `src/` targeting external domains (OneMap, data.gov.sg) — critical
-- Geocoding or MRT distance calculations in `src/` — critical
-- `public/data/` files manually edited — owned by `scripts/sync-data.ts`
+- `fetch()` in `src/` or `functions/` targeting external domains (OneMap, data.gov.sg) — critical (those calls belong only in `scripts/sync-data.ts`)
+- Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
+- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts` and `functions/_lib/d1.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
 - `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
 
@@ -94,10 +98,10 @@ The following structured format applies to the overall PR review summary comment
 - **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
 
 ### Do Not Approve PRs That
-- Introduce backend routes or runtime server-side logic
-- Fetch data from external APIs at runtime (`src/` must only read `public/data/`)
+- Fetch data from external APIs (OneMap, data.gov.sg) at runtime — those calls belong in `scripts/sync-data.ts` only
+- Bypass D1 by hand-editing static data files or hosting JSON elsewhere
+- Modify `migrations/*.sql` files retroactively — add a new numbered migration instead
 - Break existing deployment assumptions or map attribution requirements
-- Manually edit generated files under `public/data/` (owned by `scripts/sync-data.ts`)
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
 
 ### Platform-Specific Review Tooling
@@ -111,19 +115,17 @@ The following structured format applies to the overall PR review summary comment
 - **Node.js 26** is required (`engines.node >= 26.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
 - **npm** is the only package manager (no yarn/pnpm/bun). `package-lock.json` is the lockfile.
 
-### Data fixtures for local dev
-The app loads static JSON from `public/data/` at runtime. This directory is gitignored and empty by default.
-For local development and E2E tests, copy test fixtures:
+### Local data dev
+The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. For local development:
 
-```bash
-mkdir -p public/data && cp -R tests/fixtures/public-data/. public/data/
-```
-
-Running `npm run sync-data` fetches live data from data.gov.sg/OneMap APIs and is **not** needed for development or testing.
+- **UI-only iteration**: `npm run dev` (Vite on `localhost:5173`) — useful for component work that doesn't exercise live data.
+- **Full stack with D1**: `npm run dev:functions` runs `wrangler pages dev` against the local D1 emulator. Seed it once with `npm run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
+- **Production sync**: `npm run sync-data` writes directly to remote D1; requires `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID` env vars. Run from CI normally, not from a local box.
 
 ### Running services
-- `npm run dev` starts Vite on `localhost:5173`. No backend or database is required.
-- Playwright E2E tests (`npm run test:e2e`) build production assets, run `vite preview` on port 4173, and exercise WebKit against that bundle (not `npm run dev`). Set `E2E_REUSE_SERVER=1` only when intentionally reusing an already-running preview on that port.
+- `npm run dev` starts Vite on `localhost:5173` for UI work.
+- `npm run dev:functions` starts Wrangler Pages dev with the D1 binding.
+- Playwright E2E tests are currently being migrated to mock `/api/*` Pages Functions — see the open task in `.kiro/specs/pipeline-d1-migration/`.
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `npm run test`).
 
 ### Standard commands

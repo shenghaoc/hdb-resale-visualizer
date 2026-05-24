@@ -2,7 +2,6 @@ import { makeSupermarketCacheKey } from "../amenity";
 import { geoJsonFeatureSchema, mrtFeatureSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema } from "../schemas";
 import { makeAddressKey, normalizeText, parseRemainingLease, type GeocodeCacheFile, type MrtExit, type PropertyInfo, type ResaleTransaction, type SchoolLocation } from "../pipeline";
 import { geocodeAddress } from "./geocode";
-import { sleep } from "./fetchers";
 
 /** Conversion factor from square meters to square feet. */
 const SQM_TO_SQFT = 10.7639;
@@ -144,7 +143,6 @@ export async function normalizeSchoolRows(rows: Record<string, string>[], geocod
       geocodeCache.entries[cacheKey] = geocode;
       geocodedCount += 1;
       schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng, mainLevelCode });
-      await sleep(300);
     } catch (error) {
       console.warn(`School geocode failed for ${schoolName}: ${error instanceof Error ? error.message : "unknown error"}`);
       skippedNoCoords += 1;
@@ -187,7 +185,6 @@ export async function normalizeSupermarketRows(rows: Record<string, string>[], g
       geocodeCache.entries[cacheKey] = geocode;
       geocodedCount += 1;
       supermarkets.push({ name, lat: geocode.lat, lng: geocode.lng });
-      await sleep(300);
     } catch {
       skippedNoCoords += 1;
     }

@@ -150,11 +150,15 @@ Thumbs.db
 # Local AI agent skills and repo-scoped agent metadata
 .agents/
 
-# Generated data artifacts — owned by scripts/sync-data.ts, deployed directly
-# to Cloudflare Pages by CI. Never committed to git.
-# CI test fixtures live in tests/fixtures/public-data/ instead.
+# Legacy generated artifacts directory — superseded by Cloudflare D1.
+# Kept ignored so old local clones don't accidentally commit stale outputs.
 public/data/
+
+# Locally-staged API fixtures (`npm run setup:fixtures`) for E2E preview.
+# Production Pages Functions take priority over any same-path static files.
+public/api/
+
 public/temporal-polyfill.js
 
-# Geocode cache — preserved between CI runs via actions/cache, not git
+# Legacy on-disk geocode/routing caches — replaced by D1 tables.
 data/cache/

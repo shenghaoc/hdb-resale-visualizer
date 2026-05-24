@@ -1,16 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import type { GeocodeCacheFile, MrtStationFeatureCollection } from "../../scripts/lib/pipeline";
-import { buildFixtureArtifacts, fixtureMrtExits } from "../fixtures/pipeline";
+import type { GeocodeCacheFile } from "../../scripts/lib/pipeline";
 import {
   fetchAmenityData,
   geocodeMissingAddresses,
-  validateAndWriteArtifacts,
 } from "../../scripts/sync-data";
-
-const EMPTY_STATIONS: MrtStationFeatureCollection = {
-  type: "FeatureCollection",
-  features: [],
-};
 
 function makeGeocodeCache(): GeocodeCacheFile {
   return {
@@ -43,7 +36,6 @@ describe("sync-data coordinator helpers", () => {
           supermarkets: [{ name: "NTUC", lat: 1.2, lng: 103.9 }],
           geocodedCount: 2,
         }),
-        sleepFn: vi.fn(),
       },
     );
 
@@ -56,13 +48,13 @@ describe("sync-data coordinator helpers", () => {
     warnSpy.mockRestore();
   });
 
-  it("flushes geocode cache in batches and on final completion", async () => {
+  it("flushes geocode cache to D1 in batches and on final completion", async () => {
     const geocodeCache = makeGeocodeCache();
     const missingAddresses = Array.from({ length: 251 }, (_, index) => [
       `address-${index}`,
       `${index} TEST STREET SINGAPORE`,
     ]) as [string, string][];
-    const saveGeocodeCacheFn = vi.fn().mockResolvedValue(undefined);
+    const flushCacheFn = vi.fn().mockResolvedValue(undefined);
 
     const result = await geocodeMissingAddresses(
       {
@@ -70,8 +62,8 @@ describe("sync-data coordinator helpers", () => {
         geocodeCache,
         geocodeEndpoint: new URL("https://example.test/geocode"),
         skipGeocoding: false,
-        cachePath: "/tmp/geocodes.json",
         concurrency: 4,
+        flushCacheFn,
       },
       {
         geocodeAddressFn: vi.fn(async (searchValue: string) => ({
@@ -81,81 +73,14 @@ describe("sync-data coordinator helpers", () => {
           displayName: searchValue,
           searchValue,
         })),
-        saveGeocodeCacheFn,
         now: () => "2026-05-14T01:00:00.000Z",
       },
     );
 
     expect(result.geocodeFailureCount).toBe(0);
     expect(Object.keys(geocodeCache.entries)).toHaveLength(251);
-    expect(saveGeocodeCacheFn).toHaveBeenCalledTimes(2);
+    // Two flushes: one at 250 completions, one on final completion at 251.
+    expect(flushCacheFn).toHaveBeenCalledTimes(2);
     expect(geocodeCache.updatedAt).toBe("2026-05-14T01:00:00.000Z");
-  });
-
-  it("validates and writes all artifact groups in sequence", async () => {
-    const artifacts = buildFixtureArtifacts();
-    const callOrder: string[] = [];
-
-    await validateAndWriteArtifacts(
-      {
-        artifacts,
-        mrtGeoJson: { type: "FeatureCollection", features: [] },
-        mrtExits: fixtureMrtExits,
-        geocodeFailureCount: 0,
-      },
-      {
-        validateGeneratedArtifactsFn: vi.fn(() => {
-          callOrder.push("validate");
-        }),
-        buildMrtStationsGeoJsonFn: vi.fn((): MrtStationFeatureCollection => {
-          callOrder.push("build-stations");
-          return EMPTY_STATIONS;
-        }),
-        writeGeneratedArtifactsFn: vi.fn(async () => {
-          callOrder.push("write-generated");
-        }),
-        writeTownBlockFilesFn: vi.fn(async () => {
-          callOrder.push("write-town");
-        }),
-        writeComparisonFilesFn: vi.fn(async () => {
-          callOrder.push("write-comparison");
-        }),
-        writeDetailFilesFn: vi.fn(async () => {
-          callOrder.push("write-detail");
-        }),
-      },
-    );
-
-    expect(callOrder).toEqual([
-      "validate",
-      "build-stations",
-      "write-generated",
-      "write-town",
-      "write-comparison",
-      "write-detail",
-    ]);
-  });
-
-  it("surfaces writer failures instead of swallowing them", async () => {
-    const artifacts = buildFixtureArtifacts();
-
-    await expect(
-      validateAndWriteArtifacts(
-        {
-          artifacts,
-          mrtGeoJson: { type: "FeatureCollection", features: [] },
-          mrtExits: fixtureMrtExits,
-          geocodeFailureCount: 0,
-        },
-        {
-          validateGeneratedArtifactsFn: vi.fn(),
-          buildMrtStationsGeoJsonFn: vi.fn((): MrtStationFeatureCollection => EMPTY_STATIONS),
-          writeGeneratedArtifactsFn: vi.fn().mockResolvedValue(undefined),
-          writeTownBlockFilesFn: vi.fn().mockResolvedValue(undefined),
-          writeComparisonFilesFn: vi.fn().mockResolvedValue(undefined),
-          writeDetailFilesFn: vi.fn().mockRejectedValue(new Error("disk full")),
-        },
-      ),
-    ).rejects.toThrow("disk full");
   });
 });

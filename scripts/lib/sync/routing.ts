@@ -1,7 +1,7 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import { fetchJson, fetchWithRetry } from "./fetchers";
-import { oneMapRoutingResponseSchema, oneMapTokenResponseSchema, routingCacheFileSchema } from "../schemas";
+import { waitForUpstreamSlot } from "./rate-limits";
+import { oneMapRoutingResponseSchema, oneMapTokenResponseSchema } from "../schemas";
+import type { D1Client } from "./d1";
 
 export type RoutingCacheKey = string;
 
@@ -18,10 +18,10 @@ export type RoutingCacheFile = {
 
 export type RoutingCoordinate = { lat: number; lng: number };
 
-// Cache keys are quantised to ~1 m precision so that microscopic float drift between
-// runs (e.g. recomputed geocodes) does not cause spurious cache misses, while
-// genuine MRT exit relocations or geocode corrections still recompute.
 const COORD_PRECISION = 5;
+const EPOCH_TIMESTAMP = Temporal.Instant.fromEpochMilliseconds(0).toString({
+  fractionalSecondDigits: 3,
+});
 
 function roundCoord(value: number): string {
   return value.toFixed(COORD_PRECISION);
@@ -31,23 +31,59 @@ export function buildRoutingCacheKey(start: RoutingCoordinate, end: RoutingCoord
   return `${roundCoord(start.lat)},${roundCoord(start.lng)}|${roundCoord(end.lat)},${roundCoord(end.lng)}`;
 }
 
-export async function loadRoutingCache(cachePath: string): Promise<RoutingCacheFile> {
-  try {
-    const content = await fs.readFile(cachePath, "utf8");
-    const validated: RoutingCacheFile = routingCacheFileSchema.parse(JSON.parse(content));
-    return validated;
-  } catch {
-    return {
-      version: 1,
-      updatedAt: Temporal.Instant.fromEpochMilliseconds(0).toString({ fractionalSecondDigits: 3 }),
-      entries: {},
+type RoutingCacheRow = {
+  cache_key: string;
+  walking_time_seconds: number;
+  walking_distance_meters: number | null;
+};
+
+export async function loadRoutingCache(db: D1Client): Promise<RoutingCacheFile> {
+  const rows = await db.query<RoutingCacheRow>({
+    sql: "SELECT cache_key, walking_time_seconds, walking_distance_meters FROM walking_time_cache",
+  });
+  const entries: RoutingCacheFile["entries"] = {};
+  for (const row of rows) {
+    entries[row.cache_key] = {
+      walkingTimeSeconds: row.walking_time_seconds,
+      walkingDistanceMeters: row.walking_distance_meters,
     };
   }
+  return { version: 1, updatedAt: EPOCH_TIMESTAMP, entries };
 }
 
-export async function saveRoutingCache(cachePath: string, cache: RoutingCacheFile) {
-  await fs.mkdir(path.dirname(cachePath), { recursive: true });
-  await fs.writeFile(cachePath, JSON.stringify(cache, null, 2));
+export async function saveRoutingCacheEntries(
+  db: D1Client,
+  cache: RoutingCacheFile,
+  keys: Iterable<string>,
+  updatedAt: string,
+): Promise<void> {
+  const rows: Array<{ key: string; entry: RoutingCacheEntry }> = [];
+  for (const key of keys) {
+    const entry = cache.entries[key];
+    if (entry) {
+      rows.push({ key, entry });
+    }
+  }
+  if (rows.length === 0) {
+    return;
+  }
+  await db.batchInsert({
+    table: "walking_time_cache",
+    columns: [
+      "cache_key",
+      "walking_time_seconds",
+      "walking_distance_meters",
+      "updated_at",
+    ],
+    rows,
+    upsert: true,
+    mapRow: ({ key, entry }) => [
+      key,
+      entry.walkingTimeSeconds,
+      entry.walkingDistanceMeters,
+      updatedAt,
+    ],
+  });
 }
 
 export type OneMapTokenOptions = {
@@ -91,6 +127,7 @@ export async function fetchWalkingRoute(
   url.searchParams.set("end", `${end.lat},${end.lng}`);
   url.searchParams.set("routeType", "walk");
 
+  await waitForUpstreamSlot("onemap-routing");
   const response = await fetchWithRetry(url.toString(), {
     headers: { authorization: `Bearer ${token}` },
   });
@@ -117,7 +154,8 @@ export type RoutePairsOptions = {
   cache: RoutingCacheFile;
   routingEndpoint: URL;
   token: string;
-  cachePath: string;
+  /** Called periodically with the keys newly added since the last flush. */
+  flushCacheFn: (newKeys: string[]) => Promise<void>;
   concurrency: number;
   now: () => string;
 };
@@ -132,11 +170,9 @@ export async function routeMissingPairs(
   options: RoutePairsOptions,
   deps: {
     fetchWalkingRouteFn?: typeof fetchWalkingRoute;
-    saveRoutingCacheFn?: typeof saveRoutingCache;
   } = {},
 ): Promise<RoutePairsResult> {
   const fetchWalkingRouteFn = deps.fetchWalkingRouteFn ?? fetchWalkingRoute;
-  const saveRoutingCacheFn = deps.saveRoutingCacheFn ?? saveRoutingCache;
 
   const missing = options.pairs.filter((pair) => options.cache.entries[pair.key] === undefined);
   if (missing.length === 0) {
@@ -153,6 +189,7 @@ export async function routeMissingPairs(
   let failedCount = 0;
   const failureSamples: string[] = [];
   let flushedAt = 0;
+  let pendingFlushKeys: string[] = [];
   let flushInFlight: Promise<void> | null = null;
 
   async function worker() {
@@ -167,6 +204,7 @@ export async function routeMissingPairs(
           options.token,
         );
         options.cache.entries[pair.key] = entry;
+        pendingFlushKeys.push(pair.key);
         routedCount += 1;
       } catch (error) {
         failedCount += 1;
@@ -183,8 +221,10 @@ export async function routeMissingPairs(
       if (completed - flushedAt >= 250 || completed === missing.length) {
         flushedAt = completed;
         options.cache.updatedAt = options.now();
+        const keys = pendingFlushKeys;
+        pendingFlushKeys = [];
         const flush = flushInFlight ? flushInFlight.catch(() => {}) : Promise.resolve();
-        flushInFlight = flush.then(() => saveRoutingCacheFn(options.cachePath, options.cache));
+        flushInFlight = flush.then(() => options.flushCacheFn(keys));
         await flushInFlight;
       }
     }
@@ -197,3 +237,4 @@ export async function routeMissingPairs(
   return { routedCount, failedCount, failureSamples };
 }
 
+export { EPOCH_TIMESTAMP as ROUTING_CACHE_EPOCH };
