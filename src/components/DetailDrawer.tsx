@@ -69,6 +69,7 @@ import {
 } from "@/lib/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
+import { buildBlockShareUrl } from "@/lib/shareUrls";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
@@ -76,6 +77,7 @@ import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
 import { buildBlockExplanation } from "@/lib/block-explanation";
 import { deriveFlatTypePriceLadder } from "@/lib/flat-type-ladder";
 import { FlatTypePriceLadder } from "@/components/FlatTypePriceLadder";
+import { ShareButton } from "@/components/ShareButton";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -324,6 +326,18 @@ export function DetailDrawer({
 
   const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
+
+  const blockShareUrl = useMemo(() => {
+    if (!currentSummary) return "";
+    const shareFilters: FilterState = {
+      ...filters,
+      selectedAddressKey: currentSummary.addressKey,
+    };
+    return buildBlockShareUrl(
+      shareFilters,
+      `${window.location.origin}${window.location.pathname}`,
+    );
+  }, [currentSummary, filters]);
   const isDrawerOpen = Boolean(currentSummary || filters?.selectedAddressKey);
   const explanationCodes = useMemo(
     () =>
@@ -1228,9 +1242,9 @@ export function DetailDrawer({
           </div>
 
           <div className="shrink-0 border-t border-border/40 bg-background/80 p-4 backdrop-blur-md sm:p-6">
-            <div className="mx-auto grid w-full grid-cols-2 gap-2.5 sm:gap-4">
+            <div className="mx-auto flex w-full items-center gap-2.5 sm:gap-4">
               <Button
-                className="min-w-0 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
@@ -1247,9 +1261,19 @@ export function DetailDrawer({
                   </span>
                 </span>
               </Button>
+              <ShareButton
+                url={blockShareUrl}
+                title={t("app.title")}
+                ariaLabel={t("share.blockLink")}
+                ariaLabelCopied={t("share.linkCopied")}
+                errorLabel={t("share.copyError")}
+                variant="outline"
+                size="icon-xs"
+                className="shrink-0 rounded-lg border-border/50 bg-card/80"
+              />
               <Button
                 variant="outline"
-                className="min-w-0 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 disabled={!currentSummary}
                 onClick={() => {

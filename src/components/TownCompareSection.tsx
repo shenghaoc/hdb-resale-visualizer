@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Minus } from "lucide-react";
+import { ShareButton } from "@/components/ShareButton";
+import { buildCompareShareUrl } from "@/lib/shareUrls";
 import {
   formatCompactCurrency,
   formatMinutesWalk,
@@ -10,6 +12,7 @@ import { localizeTownName } from "@/lib/i18n/domain";
 import { isSameTown } from "@/lib/queryState";
 import type { Locale, Translator } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
+import { DEFAULT_FILTERS } from "@/lib/constants";
 import {
   buildTownCompareSnapshot,
   computeMetricDelta,
@@ -212,6 +215,14 @@ export function TownCompareSection({
 
   const metrics = useMemo(() => buildMetricRows(t, locale), [t, locale]);
 
+  const compareShareUrl = useMemo(() => {
+    if (!compareTown) return "";
+    return buildCompareShareUrl(
+      { ...DEFAULT_FILTERS, town: primaryTown, compareTown },
+      `${window.location.origin}${window.location.pathname}`,
+    );
+  }, [primaryTown, compareTown]);
+
   const compareOptions = useMemo(
     () => availableTowns.filter((town) => !isSameTown(town, primaryTown)),
     [availableTowns, primaryTown],
@@ -265,6 +276,18 @@ export function TownCompareSection({
               </SelectGroup>
             </SelectContent>
           </Select>
+          {compareTown && (
+            <ShareButton
+              url={compareShareUrl}
+              title={t("app.title")}
+              ariaLabel={t("share.townCompare")}
+              ariaLabelCopied={t("share.linkCopied")}
+              errorLabel={t("share.copyError")}
+              variant="outline"
+              size="icon-xs"
+              className="shrink-0 rounded-lg border-border/50 bg-card/80"
+            />
+          )}
         </div>
       </header>
 

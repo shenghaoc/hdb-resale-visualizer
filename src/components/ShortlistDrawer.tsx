@@ -48,6 +48,7 @@ import {
   type ShortlistComparisonRow,
 } from "@/lib/shortlist-comparison";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
+import { buildShortlistShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
@@ -781,24 +782,21 @@ export function ShortlistDrawer({
       setShareError(t("shortlist.shareErrorTooLarge"));
       return;
     }
-    const params = new URLSearchParams(window.location.search);
-    params.set("shortlist", encoded);
-    const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    const url = buildShortlistShareUrl(
+      encoded,
+      window.location.search,
+      window.location.origin,
+      window.location.pathname,
+    );
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: t("app.title"),
-          url,
-        });
-        return;
-      } catch {
-        // Sharing can be cancelled by the user; fall back to copying below.
+    try {
+      const result = await shareViaNavigator(url, t("app.title"));
+      if (result === "copied") {
+        showCopied("share");
       }
+    } catch {
+      // Clipboard failure — silently ignored for shortlist share.
     }
-
-    void navigator.clipboard.writeText(url);
-    showCopied("share");
   }
 
   function handleCopySummary() {
