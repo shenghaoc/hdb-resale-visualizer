@@ -4,10 +4,13 @@ import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
-import type { FilterOptions, FilterState } from "@/types/data";
+import { isAffordabilityProfileComplete } from "@/lib/affordability";
+import type { AffordabilityMode, FilterOptions, FilterState } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Field,
@@ -33,6 +36,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type FilterPanelDesktopToggle = {
   isOpen: boolean;
@@ -47,6 +56,7 @@ type FilterPanelProps = {
   onChange: (patch: Partial<FilterState>) => void;
   onReset: () => void;
   desktopToggle?: FilterPanelDesktopToggle;
+  searchProfile?: SearchProfile | null;
 };
 
 const ALL_VALUE = "__all__";
@@ -113,14 +123,112 @@ function SelectField({
   );
 }
 
+type AffordabilityFilterFieldProps = {
+  value: AffordabilityMode;
+  onChange: (next: AffordabilityMode) => void;
+  disabled: boolean;
+  t: ReturnType<typeof useI18n>["t"];
+};
+
+function AffordabilityFilterField({
+  value,
+  onChange,
+  disabled,
+  t,
+}: AffordabilityFilterFieldProps) {
+  const legendId = useId();
+  const buttonClass =
+    "h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-50";
+
+  const options: ReadonlyArray<{ mode: AffordabilityMode; label: string; aria: string }> = [
+    {
+      mode: "",
+      label: t("affordability.filter.all"),
+      aria: t("affordability.filter.allAria"),
+    },
+    {
+      mode: "comfortable",
+      label: t("affordability.filter.comfortable"),
+      aria: t("affordability.filter.comfortableAria"),
+    },
+    {
+      mode: "stretch",
+      label: t("affordability.filter.stretch"),
+      aria: t("affordability.filter.stretchAria"),
+    },
+  ];
+
+  const control = (
+    <ButtonGroup
+      aria-labelledby={legendId}
+      data-testid="affordability-filter-toggle"
+      data-affordability-mode={value || "all"}
+      data-affordability-disabled={disabled ? "true" : "false"}
+      className="w-fit gap-0 rounded-lg border border-border/40 bg-card/80 p-0.5"
+    >
+      {options.map((option) => {
+        const isActive = (value || "") === option.mode;
+        return (
+          <Button
+            key={option.mode || "all"}
+            type="button"
+            size="xs"
+            variant={isActive ? "default" : "ghost"}
+            aria-pressed={isActive}
+            aria-label={option.aria}
+            disabled={disabled}
+            onClick={() => onChange(option.mode)}
+            className={buttonClass}
+          >
+            {option.label}
+          </Button>
+        );
+      })}
+    </ButtonGroup>
+  );
+
+  return (
+    <Field>
+      <FieldContent>
+        <FieldLabel id={legendId}>{t("affordability.filter.legend")}</FieldLabel>
+        {disabled ? (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span tabIndex={0} aria-describedby={`${legendId}-tooltip`}>
+                  {control}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent id={`${legendId}-tooltip`}>
+                {t("affordability.filter.disabledTooltip")}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ) : (
+          control
+        )}
+      </FieldContent>
+    </Field>
+  );
+}
+
 export function FilterPanel(props: FilterPanelProps) {
-  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle } = props;
+  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle, searchProfile } = props;
   const { locale, t } = useI18n();
 
   const handleSearchChange = useCallback(
     (value: string) => onChange({ search: value }),
     [onChange],
   );
+
+  const affordabilityEnabled = searchProfile
+    ? isAffordabilityProfileComplete({
+        monthlyIncome: searchProfile.monthlyIncome,
+        cpfOABalance: searchProfile.cpfOABalance,
+        age: searchProfile.age,
+        coApplicantAge: searchProfile.coApplicantAge,
+      })
+    : false;
 
   return (
     <aside data-testid="filters-panel">
@@ -206,6 +314,13 @@ export function FilterPanel(props: FilterPanelProps) {
                   onChange={(flatType) => onChange({ flatType })}
                 />
               </div>
+
+              <AffordabilityFilterField
+                value={filters.affordable}
+                onChange={(affordable) => onChange({ affordable })}
+                disabled={!affordabilityEnabled}
+                t={t}
+              />
 
               <FieldSet className="gap-3">
                 <FieldLegend className="v2-section-title">{t("filters.budgetRange")}</FieldLegend>

@@ -254,6 +254,7 @@ function App() {
           ? { isOpen: panel.isLeftPanelOpen, onToggle: handleDesktopFiltersClick }
           : undefined
       }
+      searchProfile={searchProfile.profile}
     />
   );
 
@@ -332,6 +333,10 @@ function App() {
           budgetMin={filters.budgetMin}
           budgetMax={filters.budgetMax}
           searchProfile={searchProfile.profile}
+          affordabilityMode={filters.affordable}
+          onClearAffordabilityFilter={() => patchUserFilters({ affordable: "" })}
+          sortMode={filters.sort}
+          onSortChange={(sort) => patchUserFilters({ sort })}
           profileTown={pipeline.effectiveFilters.town || null}
           profileTownBlocks={townProfileBlocks}
           profileDataWindow={manifest.dataWindow}

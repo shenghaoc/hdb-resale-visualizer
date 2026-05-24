@@ -2,6 +2,7 @@ import type { BlockSummary, Coordinates, FilterState } from "../types/data";
 import { getCurrentYear, MAX_LEASE_DURATION } from './constants';
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { resolveMultilingualSearchAliases } from "./i18n/domain";
+import { passesAffordabilityMode, type AffordabilityProfile } from "./affordability";
 
 const SEARCH_STOP_WORDS = new Set(["block", "blk", "plus"]);
 // Pre-compile alias regex patterns at module level to avoid repeated RegExp
@@ -622,6 +623,7 @@ export function matchesFilter(
   block: BlockSummary,
   filters: FilterState,
   geographicIntent?: GeographicSearchIntent | null,
+  affordabilityProfile?: AffordabilityProfile | null,
 ): boolean {
   // Execute cheaper comparisons first to short-circuit early and avoid expensive checks
   if (filters.town && block.town !== filters.town) {
@@ -687,6 +689,12 @@ export function matchesFilter(
       filterFlatTypeCache.set(filters.flatType, canonicalSelectedFlatType);
     }
     if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
+      return false;
+    }
+  }
+
+  if (filters.affordable && affordabilityProfile) {
+    if (!passesAffordabilityMode(block, affordabilityProfile, filters.affordable)) {
       return false;
     }
   }

@@ -107,6 +107,17 @@ export type Manifest = {
   };
 };
 
+export type AffordabilityMode = "" | "comfortable" | "stretch";
+
+export type BlockSortMode =
+  | ""
+  | "median-asc"
+  | "median-desc"
+  | "lease-desc"
+  | "mrt-asc"
+  | "latest-desc"
+  | "affordability";
+
 export type FilterState = {
   search: string;
   town: string;
@@ -122,6 +133,8 @@ export type FilterState = {
   mrtMax: number | null;
   selectedAddressKey: string | null;
   compareTown: string;
+  affordable: AffordabilityMode;
+  sort: BlockSortMode;
 };
 
 export type ShortlistItem = {

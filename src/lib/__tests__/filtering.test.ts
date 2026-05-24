@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import {
   getEffectiveMedianPrice,
@@ -6,6 +6,7 @@ import {
   matchesFilter,
   resetFilteringCachesForTests,
 } from "@/lib/filtering";
+import { resetAffordabilityCacheForTests } from "@/lib/affordability";
 import type { BlockSummary } from "@/types/data";
 
 /**
@@ -217,3 +218,76 @@ describe("getEffectivePricePerSqmMedian", () => {
     expect(getEffectivePricePerSqmMedian(block, "3 ROOM")).toBe(7000);
   });
 });
+
+describe("budget filter × affordability filter layering", () => {
+  // Profile: ceiling = 400_000, comfortable < 320_000, stretch < 400_000.
+  const profile = {
+    monthlyIncome: 8000,
+    cpfOABalance: 100000,
+    age: 35,
+    coApplicantAge: null,
+  };
+
+  beforeEach(() => {
+    resetFilteringCachesForTests();
+    resetAffordabilityCacheForTests();
+  });
+  afterEach(() => {
+    resetAffordabilityCacheForTests();
+  });
+
+  it("requires BOTH the typed budget AND affordability mode to pass", () => {
+    // A block at 350_000 is within a generous typed budget (≤500k) but is a
+    // "stretch" under the affordability profile (above the comfortable
+    // threshold of 320k). With affordable="comfortable" it must be rejected.
+    const block = makeBlock({ medianPrice: 350000 });
+    const result = matchesFilter(
+      block,
+      { ...DEFAULT_FILTERS, budgetMax: 500000, affordable: "comfortable" },
+      null,
+      profile,
+    );
+    expect(result).toBe(false);
+  });
+
+  it("accepts a block that clears both budget and affordability comfortably", () => {
+    const block = makeBlock({ medianPrice: 250000 });
+    const result = matchesFilter(
+      block,
+      { ...DEFAULT_FILTERS, budgetMax: 500000, affordable: "comfortable" },
+      null,
+      profile,
+    );
+    expect(result).toBe(true);
+  });
+
+  it("a typed budget higher than the affordability ceiling is intentional — affordability still filters", () => {
+    // User typed budget 800k but affordability ceiling is 400k. Block at 600k
+    // passes budget but is "over" affordability → fail both modes.
+    const block = makeBlock({ medianPrice: 600000 });
+    expect(
+      matchesFilter(
+        block,
+        { ...DEFAULT_FILTERS, budgetMax: 800000, affordable: "stretch" },
+        null,
+        profile,
+      ),
+    ).toBe(false);
+  });
+
+  it("when the affordability profile is incomplete, the affordability predicate is inert", () => {
+    // ceiling = 100k from CPF alone (no income). Block at 600k would be "over"
+    // — but a missing profile must disable the filter, not silently filter.
+    const block = makeBlock({ medianPrice: 600000 });
+    const incompleteProfile = { monthlyIncome: null, cpfOABalance: 100000, age: 35, coApplicantAge: null };
+    expect(
+      matchesFilter(
+        block,
+        { ...DEFAULT_FILTERS, affordable: "comfortable" },
+        null,
+        incompleteProfile,
+      ),
+    ).toBe(true);
+  });
+});
+
