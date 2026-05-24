@@ -543,6 +543,7 @@ export function ResultsPane({
   const townTrendMountedRef = useRef(true);
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
   const compareBlocksMountedRef = useRef(true);
+  const compareBlocksFetchedTownRef = useRef<string | null>(null);
 
   type CompareBlocksSnap = {
     status: "idle" | "loaded" | "failed";
@@ -554,8 +555,6 @@ export function ResultsPane({
     requestedTown: "",
     blocks: [],
   });
-  const compareBlocksSnapRef = useRef(compareBlocksSnap);
-  compareBlocksSnapRef.current = compareBlocksSnap;
 
   const [trendSnap, setTrendSnap] = useState<TownTrendSnap>({
     status: "idle",
@@ -574,23 +573,22 @@ export function ResultsPane({
 
   useEffect(() => {
     if (!showTownCompare || !activeCompareTown) {
+      compareBlocksFetchedTownRef.current = null;
       return;
     }
-    const snap = compareBlocksSnapRef.current;
-    if (
-      (snap.status === "loaded" || snap.status === "failed") &&
-      snap.requestedTown === activeCompareTown
-    ) {
+    if (compareBlocksFetchedTownRef.current === activeCompareTown) {
       return;
     }
     const requestedTown = activeCompareTown;
     void fetchBlocksByTown(requestedTown)
       .then((blocks) => {
         if (!compareBlocksMountedRef.current) return;
+        compareBlocksFetchedTownRef.current = requestedTown;
         setCompareBlocksSnap({ status: "loaded", requestedTown, blocks });
       })
       .catch(() => {
         if (!compareBlocksMountedRef.current) return;
+        compareBlocksFetchedTownRef.current = requestedTown;
         setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
       });
   }, [activeCompareTown, showTownCompare]);
