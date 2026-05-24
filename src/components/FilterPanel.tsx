@@ -196,7 +196,12 @@ function AffordabilityFilterField({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span tabIndex={0} className="block w-full" aria-describedby={`${legendId}-tooltip`}>
+                <span
+                  tabIndex={0}
+                  className="block w-full"
+                  aria-labelledby={legendId}
+                  aria-describedby={`${legendId}-tooltip`}
+                >
                   {control}
                 </span>
               </TooltipTrigger>
