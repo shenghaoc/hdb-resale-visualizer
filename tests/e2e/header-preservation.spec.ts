@@ -241,8 +241,11 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     const optionCount = await options.count();
     
     if (optionCount > 0) {
+      const { title: oldTitle } = await getHeaderContent(page);
       await options.first().click();
-      await expect(page.getByTestId("global-header")).toBeVisible();
+      if (oldTitle) {
+        await expect(page.getByTestId("global-header")).not.toContainText(oldTitle);
+      }
 
       const contentAfterLanguageChange = await getHeaderContent(page);
 

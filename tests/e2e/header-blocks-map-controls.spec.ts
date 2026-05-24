@@ -113,7 +113,8 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await ensureHeaderVisible(page);
     
     const controls = await getMapControlsInfo(page);
-    await checkControlsOverlapWithHeader(page);
+    const { overlaps } = await checkControlsOverlapWithHeader(page);
+    expect(overlaps, "Header should overlap with map controls").toBe(true);
 
     await expectControlReceivesPointer(controls.zoomIn, "Desktop zoom in");
     await controls.zoomIn.click({ force: false });
