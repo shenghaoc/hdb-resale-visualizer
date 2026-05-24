@@ -81,6 +81,16 @@ describe("FilterPanel affordability toggle", () => {
     expect(screen.getByTestId("affordability-filter-toggle")).toBeInTheDocument();
   });
 
+  // The three labels (longest: "Affordable: comfortable + stretch") overflow a
+  // horizontal segmented control and get clipped inside the filter panel, making
+  // two options render identically. The group must stack vertically so every
+  // option stays fully readable at any panel width.
+  it("stacks options vertically to avoid label clipping", () => {
+    renderPanel(baseFilters, completeProfile);
+    const toggle = screen.getByTestId("affordability-filter-toggle");
+    expect(toggle).toHaveAttribute("data-orientation", "vertical");
+  });
+
   it("all-blocks button is active by default (affordable = '')", () => {
     renderPanel(baseFilters, completeProfile);
     const allBtn = screen.getByRole("button", {
