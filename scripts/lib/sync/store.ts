@@ -83,24 +83,19 @@ export async function writeArtifactsToD1(
 ): Promise<void> {
   console.log("Writing artifacts to D1...");
 
-  // Manifest — single row.
-  await db.execute(
-    "INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)",
-    [JSON.stringify(artifacts.manifest), updatedAt],
-  );
-
   // Blocks — truncate and reinsert. ~10k rows.
-  await db.truncate("blocks");
+  // preDelete batches DELETE with the first INSERT chunk to avoid a window
+  // where the table is empty if the process is interrupted.
   await db.batchInsert<BlockSummary>({
     table: "blocks",
     columns: BLOCK_COLUMNS,
     rows: artifacts.blockSummaries,
     mapRow: mapBlockRow,
     chunkSize: 50,
+    preDelete: true,
   });
 
   // Block details — truncate and reinsert. JSON blob per address_key.
-  await db.truncate("block_details");
   const detailRows = Object.entries(artifacts.details).map(([key, detail]) => ({
     key,
     json: JSON.stringify(detail),
@@ -111,10 +106,10 @@ export async function writeArtifactsToD1(
     rows: detailRows,
     chunkSize: 25,
     mapRow: (row) => [row.key, row.json],
+    preDelete: true,
   });
 
   // Comparisons — optional, truncate and reinsert.
-  await db.truncate("comparisons");
   if (artifacts.comparisons) {
     const comparisonRows = Object.entries(artifacts.comparisons).map(([key, comparison]) => ({
       key,
@@ -126,11 +121,13 @@ export async function writeArtifactsToD1(
       rows: comparisonRows,
       chunkSize: 100,
       mapRow: (row) => [row.key, row.json],
+      preDelete: true,
     });
+  } else {
+    await db.truncate("comparisons");
   }
 
   // Town × flat-type trends — normalized rows.
-  await db.truncate("town_flat_type_trends");
   await db.batchInsert({
     table: "town_flat_type_trends",
     columns: ["town", "flat_type", "month", "median_price", "median_price_per_sqm", "transaction_count"],
@@ -144,6 +141,7 @@ export async function writeArtifactsToD1(
       point.medianPricePerSqm,
       point.transactionCount,
     ],
+    preDelete: true,
   });
 
   // MRT GeoJSON — two rows keyed by kind.
@@ -154,6 +152,12 @@ export async function writeArtifactsToD1(
   await db.execute(
     "INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)",
     ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
+  );
+
+  // Manifest — written last so a matching timestamp implies a successful sync.
+  await db.execute(
+    "INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)",
+    [JSON.stringify(artifacts.manifest), updatedAt],
   );
 
   console.log(

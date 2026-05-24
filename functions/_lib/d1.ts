@@ -68,8 +68,12 @@ type BlockRow = {
 };
 
 function parseJsonOr<T>(value: string | null, fallback: T): T {
-  if (value === null) return fallback;
-  return JSON.parse(value) as T;
+  if (value === null || value === "") return fallback;
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    return fallback;
+  }
 }
 
 export function rowToBlockSummary(row: BlockRow) {

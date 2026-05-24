@@ -66,8 +66,11 @@ export class D1Client {
         authorization: `Bearer ${this.config.apiToken}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify(body.length === 1 ? body[0] : body),
+      body: JSON.stringify(body),
     });
+    if (!response.ok && !response.headers.get("content-type")?.includes("application/json")) {
+      throw new Error(`D1: HTTP ${response.status} ${response.statusText}`);
+    }
     const payload = (await response.json()) as D1QueryResult<TRow>;
     if (!payload.success) {
       const message = payload.errors?.map((e) => e.message).join("; ") || "D1 query failed";
@@ -85,7 +88,12 @@ export class D1Client {
    * Batch-insert rows using multi-row `VALUES (...)` tuples. Each chunk is one
    * HTTP request so callers can pick a chunk size that keeps the request body
    * comfortably under D1's 100KB-per-statement limit (rows per chunk × bytes
-   * per row < 100_000). Default 100 rows fits the schemas in this repo.
+   * per row < 100_000). Each statement also has a 100-bound-param limit, so the
+   * default chunk size is computed from the column count when not specified.
+   *
+   * When `preDelete` is true the first request batches `DELETE FROM <table>`
+   * together with the first INSERT chunk to avoid a window where the table is
+   * empty if the process is interrupted.
    */
   async batchInsert<TRow>(options: {
     table: string;
@@ -95,12 +103,17 @@ export class D1Client {
     chunkSize?: number;
     /** When true, emit `INSERT OR REPLACE` instead of `INSERT`. */
     upsert?: boolean;
+    /** When true, batch `DELETE FROM <table>` with the first INSERT chunk. */
+    preDelete?: boolean;
   }): Promise<void> {
     const { table, columns, rows, mapRow } = options;
     if (rows.length === 0) {
+      if (options.preDelete) {
+        await this.execute(`DELETE FROM ${table}`);
+      }
       return;
     }
-    const chunkSize = options.chunkSize ?? 100;
+    const chunkSize = options.chunkSize ?? Math.max(1, Math.floor(100 / columns.length));
     const placeholders = `(${columns.map(() => "?").join(",")})`;
     const verb = options.upsert ? "INSERT OR REPLACE" : "INSERT";
     const sqlPrefix = `${verb} INTO ${table} (${columns.join(",")}) VALUES `;
@@ -118,7 +131,16 @@ export class D1Client {
         params.push(...values);
       }
       const sql = sqlPrefix + new Array(chunk.length).fill(placeholders).join(",");
-      await this.execute(sql, params);
+
+      // First chunk with preDelete: batch DELETE + INSERT into one request.
+      if (i === 0 && options.preDelete) {
+        await this.query([
+          { sql: `DELETE FROM ${table}` },
+          { sql, params },
+        ]);
+      } else {
+        await this.execute(sql, params);
+      }
     }
   }
 
