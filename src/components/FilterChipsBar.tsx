@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { SlidersHorizontal, X } from "lucide-react";
+import { Link2, SlidersHorizontal, X } from "lucide-react";
 import type { Translator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,7 @@ type FilterChipsBarProps = {
   isDesktop: boolean;
   t: Translator;
   onOpenFilters: () => void;
+  onShare?: () => void;
   hidden?: boolean;
 };
 
@@ -23,11 +24,13 @@ const chipFocusClass =
 const chipLayoutClass =
   "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-full px-3 py-1.5 text-[0.65rem] font-semibold leading-none shadow-sm backdrop-blur-[16px] transition-all min-h-11 min-w-11 sm:min-h-min sm:min-w-min text-box-trim";
 
-export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: FilterChipsBarProps) {
-  const itemCount = chips.length + 1;
+export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, onShare, hidden }: FilterChipsBarProps) {
+  const itemCount = chips.length + (onShare ? 2 : 1);
   const [focusedIndex, setFocusedIndex] = useState(0);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeIndex = Math.min(focusedIndex, itemCount - 1);
+  const [shareCopied, setShareCopied] = useState(false);
+  const shareTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent, index: number) => {
     const items = itemRefs.current.filter((button): button is HTMLButtonElement => button !== null);
@@ -60,7 +63,16 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: F
 
   if (chips.length === 0) return null;
 
-  const filtersButtonIndex = chips.length;
+  const handleShareClick = () => {
+    if (!onShare) return;
+    onShare();
+    if (shareTimeoutRef.current) clearTimeout(shareTimeoutRef.current);
+    setShareCopied(true);
+    shareTimeoutRef.current = setTimeout(() => setShareCopied(false), 2000);
+  };
+
+  const shareButtonIndex = chips.length;
+  const filtersButtonIndex = chips.length + (onShare ? 1 : 0);
 
   return (
     <div
@@ -94,6 +106,26 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, hidden }: F
           {chip.label} <X aria-hidden="true" className="size-3 opacity-70" />
         </button>
       ))}
+      {onShare && (
+        <button
+          ref={(node) => {
+            itemRefs.current[shareButtonIndex] = node;
+          }}
+          type="button"
+          aria-label={shareCopied ? t("share.linkCopied") : t("share.filterResults")}
+          tabIndex={activeIndex === shareButtonIndex ? 0 : -1}
+          onClick={handleShareClick}
+          onKeyDown={(event) => handleKeyDown(event, shareButtonIndex)}
+          onFocus={() => setFocusedIndex(shareButtonIndex)}
+          className={cn(
+            chipLayoutClass,
+            "border border-border/30 bg-background/90 text-foreground",
+            chipFocusClass,
+          )}
+        >
+          <Link2 data-icon className="size-3.5" aria-hidden="true" />
+        </button>
+      )}
       <button
         ref={(node) => {
           itemRefs.current[filtersButtonIndex] = node;

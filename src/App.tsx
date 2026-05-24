@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -31,6 +31,7 @@ import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
+import { buildFilterShareUrl } from "@/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
@@ -193,6 +194,22 @@ function App() {
     toggleShortlist: shortlist.toggle,
     leftTab: panel.leftTab,
   });
+
+  const handleShareFilters = useCallback(() => {
+    const url = buildFilterShareUrl(
+      filters,
+      `${window.location.origin}${window.location.pathname}`,
+    );
+    if (navigator.share) {
+      void navigator.share({ title: t("app.title"), url }).catch(() => {
+        // Swallow AbortError and fallback failures silently.
+      });
+    } else {
+      void navigator.clipboard.writeText(url).catch(() => {
+        // Clipboard write failed silently.
+      });
+    }
+  }, [filters, t]);
 
   // ── Error / loading states ───────────────────────────────────────────────
 
@@ -477,6 +494,7 @@ function App() {
           isDesktop={panel.isDesktop}
           t={t}
           onOpenFilters={handleOpenFilters}
+          onShare={handleShareFilters}
           hidden={detailVisible && panel.isDesktop}
         />
 

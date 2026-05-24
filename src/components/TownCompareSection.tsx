@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Minus } from "lucide-react";
+import { ShareButton } from "@/components/ShareButton";
+import { buildCompareShareUrl } from "@/lib/shareUrls";
 import {
   formatCompactCurrency,
   formatMinutesWalk,
@@ -19,7 +21,7 @@ import {
   type TownCompareSnapshot,
 } from "@/lib/town-compare";
 import type { TrendMonthRange } from "@/lib/town-profile";
-import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type { BlockSummary, FilterState, TownFlatTypeTrendPoint } from "@/types/data";
 import {
   Select,
   SelectContent,
@@ -212,6 +214,32 @@ export function TownCompareSection({
 
   const metrics = useMemo(() => buildMetricRows(t, locale), [t, locale]);
 
+  const compareShareUrl = useMemo(() => {
+    if (!compareTown) return "";
+    const shareFilters: FilterState = {
+      search: "",
+      town: primaryTown,
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+      selectedAddressKey: null,
+      compareTown,
+      affordable: "",
+      sort: "",
+    };
+    return buildCompareShareUrl(
+      shareFilters,
+      `${window.location.origin}${window.location.pathname}`,
+    );
+  }, [primaryTown, compareTown]);
+
   const compareOptions = useMemo(
     () => availableTowns.filter((town) => !isSameTown(town, primaryTown)),
     [availableTowns, primaryTown],
@@ -265,6 +293,18 @@ export function TownCompareSection({
               </SelectGroup>
             </SelectContent>
           </Select>
+          {compareTown && (
+            <ShareButton
+              url={compareShareUrl}
+              title={t("app.title")}
+              ariaLabel={t("share.townCompare")}
+              ariaLabelCopied={t("share.linkCopied")}
+              errorLabel={t("share.copyError")}
+              variant="outline"
+              size="icon-xs"
+              className="shrink-0 rounded-lg border-border/50 bg-card/80"
+            />
+          )}
         </div>
       </header>
 
