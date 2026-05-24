@@ -13,16 +13,10 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
  */
 
 async function waitForMapLoad(page: Page) {
-  // Wait for map shell and controls to be visible and loaded.
   await expect(
     page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
   ).toBeVisible({ timeout: 20_000 });
-  
-  // Wait for map controls to be rendered
-  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
-  
-  // Wait a bit more for map to fully initialize
-  await page.waitForTimeout(400);
+  await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible({ timeout: 20_000 });
 }
 
 async function ensureHeaderVisible(page: Page) {
@@ -119,10 +113,8 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await ensureHeaderVisible(page);
     
     const controls = await getMapControlsInfo(page);
-    const overlapInfo = await checkControlsOverlapWithHeader(page);
-    
-    console.log("Desktop overlap info:", overlapInfo);
-    
+    await checkControlsOverlapWithHeader(page);
+
     await expectControlReceivesPointer(controls.zoomIn, "Desktop zoom in");
     await controls.zoomIn.click({ force: false });
 
@@ -144,14 +136,6 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await expect(page.getByTestId("global-header")).toBeVisible();
     
     const controls = await getMapControlsInfo(page);
-    
-    // On mobile, map controls stay above the map; the compact header should not block them.
-    const controlsZIndex = await page.evaluate(() => {
-      const controlsElement = document.querySelector('.maplibregl-ctrl-top-right');
-      return controlsElement ? window.getComputedStyle(controlsElement).zIndex : null;
-    });
-    
-    console.log("Mobile controls z-index:", controlsZIndex);
     
     await expectControlReceivesPointer(controls.zoomIn, "Mobile zoom in");
     await controls.zoomIn.click({ force: false });
@@ -180,11 +164,6 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     const themeToggle = tabBar.getByRole("button", { name: /toggle theme/i });
     await expect(themeToggle).toBeVisible();
     await themeToggle.click();
-
-    // Verify theme changed
-    await page.waitForTimeout(200);
-    const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark'));
-    console.log("Theme is dark after toggle:", isDark);
 
     // Language selector lives in the floating map locale control.
     const languageSelect = page

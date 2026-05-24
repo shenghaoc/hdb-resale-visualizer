@@ -15,12 +15,10 @@ import { expect, test, type Page, type ElementHandle } from "@playwright/test";
  */
 
 async function waitForAppLoad(page: Page) {
-  // Wait for the map shell to mount and expose controls.
   await expect(
     page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
   ).toBeVisible({ timeout: 20_000 });
-  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
-  await page.waitForTimeout(400); // Allow controls/header wiring to settle
+  await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible({ timeout: 20_000 });
 }
 
 async function ensureHeaderVisible(page: Page) {
@@ -58,24 +56,6 @@ async function getCurrentTheme(page: Page): Promise<'light' | 'dark'> {
   return await page.evaluate(() => (document.documentElement.classList.contains('dark') ? 'dark' : 'light'));
 }
 
-async function getHeaderVisualStyles(page: Page) {
-  const header = page.getByTestId("global-header");
-  const handle = await header.elementHandle() as ElementHandle<HTMLElement>;
-  
-  return await page.evaluate((headerElement) => {
-    if (!headerElement) return null;
-    
-    const styles = window.getComputedStyle(headerElement);
-    return {
-      backdropFilter: styles.backdropFilter,
-      backgroundColor: styles.backgroundColor,
-      boxShadow: styles.boxShadow,
-      border: styles.border,
-      opacity: styles.opacity
-    };
-  }, handle);
-}
-
 async function getHeaderContent(page: Page) {
   const header = page.getByTestId("global-header");
   const titleLocator = header.locator("[data-testid='header-title'], [data-slot='card-title'], h1, h2, h3").first();
@@ -99,28 +79,25 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
 
     // Record initial theme
     const initialTheme = await getCurrentTheme(page);
-    console.log("Initial theme:", initialTheme);
-    
+
     // Test theme toggle functionality
     await expect(elements.themeToggle).toBeVisible();
     await elements.themeToggle.click();
-    await page.waitForTimeout(200); // Allow for theme transition
-    
-    const themeAfterToggle = await getCurrentTheme(page);
-    console.log("Theme after toggle:", themeAfterToggle);
-    
-    // PRESERVATION ASSERTION: Theme should have switched
-    expect(themeAfterToggle).not.toBe(initialTheme);
-    
+
+    if (initialTheme === "light") {
+      await expect(page.locator("html")).toHaveClass(/dark/);
+    } else {
+      await expect(page.locator("html")).not.toHaveClass(/dark/);
+    }
+
     // Toggle back to verify it works both ways
     await elements.themeToggle.click();
-    await page.waitForTimeout(200);
-    
-    const themeAfterSecondToggle = await getCurrentTheme(page);
-    console.log("Theme after second toggle:", themeAfterSecondToggle);
-    
-    // Should be back to initial theme
-    expect(themeAfterSecondToggle).toBe(initialTheme);
+
+    if (initialTheme === "light") {
+      await expect(page.locator("html")).not.toHaveClass(/dark/);
+    } else {
+      await expect(page.locator("html")).toHaveClass(/dark/);
+    }
   });
   
   test("Property: Language selector switches between available languages", async ({ page }) => {
@@ -141,8 +118,6 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     
     // Get all option texts
     const optionTexts = await options.allTextContents();
-    console.log("Available language options:", optionTexts);
-    
     // PRESERVATION ASSERTION: Should have both English and Chinese options
     expect(optionTexts).toContain("English");
     expect(optionTexts).toContain("中文");
@@ -200,9 +175,6 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
     
-    const initialStyles = await getHeaderVisualStyles(page);
-    console.log("Header visual styles:", initialStyles);
-    
     // PRESERVATION ASSERTIONS: Visual styles should be present on the floating header pill.
     // The pill is a nested button element inside the header landmark, so probe the button.
     const headerPill = page.getByTestId("global-header").locator("button").first();
@@ -226,8 +198,13 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
 
     // Test that styles persist after theme toggle
     const elements = await getControlElements(page);
+    const themeBeforeToggle = await getCurrentTheme(page);
     await elements.themeToggle.click();
-    await page.waitForTimeout(200);
+    if (themeBeforeToggle === "light") {
+      await expect(page.locator("html")).toHaveClass(/dark/);
+    } else {
+      await expect(page.locator("html")).not.toHaveClass(/dark/);
+    }
 
     const stylesAfterThemeToggle = await page.evaluate((el) => {
       if (!el) return null;
@@ -252,8 +229,6 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     await ensureHeaderVisible(page);
     
     const content = await getHeaderContent(page);
-    console.log("Header content:", content);
-    
     // PRESERVATION ASSERTIONS: Content should be present
     expect(content.title).toBeTruthy(); // Should have a title
     expect(content.title).not.toBe(""); // Title should not be empty
@@ -267,11 +242,10 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     
     if (optionCount > 0) {
       await options.first().click();
-      await page.waitForTimeout(200);
-      
+      await expect(page.getByTestId("global-header")).toBeVisible();
+
       const contentAfterLanguageChange = await getHeaderContent(page);
-      console.log("Header content after language change:", contentAfterLanguageChange);
-      
+
       // Title should still be present (may be translated)
       expect(contentAfterLanguageChange.title).toBeTruthy();
       expect(contentAfterLanguageChange.title).not.toBe("");
@@ -281,62 +255,56 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
   });
 });
 
+const desktopViewports = [
+  { width: 1920, height: 1080, label: "large desktop" },
+  { width: 1280, height: 720, label: "standard desktop" },
+  { width: 1024, height: 768, label: "minimum desktop" },
+] as const;
+
+const mobileViewports = [
+  { width: 768, height: 1024, label: "tablet" },
+  { width: 390, height: 844, label: "mobile" },
+  { width: 320, height: 568, label: "small mobile" },
+] as const;
+
 test.describe("Property-Based Preservation Tests", () => {
-  
-  test("Property: Header controls work across different viewport sizes", async ({ page }) => {
-    await page.goto("/");
-    await waitForAppLoad(page);
-    
-    // Property-based test: Generate desktop/tablet viewport sizes where the header is present
-    const viewportSizes = [
-      { width: 1920, height: 1080 }, // Large desktop
-      { width: 1280, height: 720 },  // Standard desktop
-      { width: 1024, height: 768 }   // Minimum desktop shell
-    ];
-    
-    for (const viewport of viewportSizes) {
-      console.log(`Testing viewport: ${viewport.width}x${viewport.height}`);
-      
-      await page.setViewportSize(viewport);
-      await page.waitForTimeout(300); // Allow for responsive layout changes
+
+  for (const viewport of desktopViewports) {
+    test(`Property: Header controls work at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto("/");
+      await waitForAppLoad(page);
       await ensureHeaderVisible(page);
 
       const elements = await getControlElements(page);
 
-      // PRESERVATION ASSERTION: Core controls should be visible and functional
       await expect(elements.themeToggle).toBeVisible();
       await expect(elements.languageSelect).toBeVisible();
       await expect(elements.dismissButton).toBeVisible();
-      
-      // Test theme toggle works at this viewport size
+
       const initialTheme = await getCurrentTheme(page);
       await elements.themeToggle.click();
-      await page.waitForTimeout(200);
-      const themeAfterToggle = await getCurrentTheme(page);
-      
-      expect(themeAfterToggle).not.toBe(initialTheme);
-      
-      // Reset theme for next iteration
+      if (initialTheme === "light") {
+        await expect(page.locator("html")).toHaveClass(/dark/);
+      } else {
+        await expect(page.locator("html")).not.toHaveClass(/dark/);
+      }
+
+      // Reset
       await elements.themeToggle.click();
-      await page.waitForTimeout(200);
-    }
-  });
+      if (initialTheme === "light") {
+        await expect(page.locator("html")).not.toHaveClass(/dark/);
+      } else {
+        await expect(page.locator("html")).toHaveClass(/dark/);
+      }
+    });
+  }
 
-  test("Property: Compact header stays visible on map across mobile viewport sizes", async ({ page }) => {
-    await page.goto("/");
-    await waitForAppLoad(page);
-
-    const viewportSizes = [
-      { width: 768, height: 1024 }, // Tablet below desktop shell
-      { width: 390, height: 844 },  // Mobile
-      { width: 320, height: 568 },  // Small mobile
-    ];
-
-    for (const viewport of viewportSizes) {
-      console.log(`Testing mobile viewport: ${viewport.width}x${viewport.height}`);
-
-      await page.setViewportSize(viewport);
-      await page.waitForTimeout(300);
+  for (const viewport of mobileViewports) {
+    test(`Property: Compact header visible at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto("/");
+      await waitForAppLoad(page);
 
       await expect(page.getByTestId("global-header")).toBeVisible();
       if (viewport.width < 640) {
@@ -346,45 +314,42 @@ test.describe("Property-Based Preservation Tests", () => {
       }
       await expect(page.getByRole("button", { name: /show header/i })).toHaveCount(0);
       await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
-    }
-  });
-  
+    });
+  }
+
   test("Property: Header state transitions work correctly", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);
-    
-    // Test the complete header visibility cycle multiple times
+
     for (let i = 0; i < 3; i++) {
-      console.log(`Testing header visibility cycle ${i + 1}`);
-      
-      // Ensure header is visible
       await ensureHeaderVisible(page);
       const elements = await getControlElements(page);
 
-      // Dismiss header
       await elements.dismissButton.click();
       await expect(elements.header).not.toBeVisible();
-      
-      // Show header again
+
       const showHeaderButton = page.getByRole("button", { name: /show header/i });
       await expect(showHeaderButton).toBeVisible();
       await showHeaderButton.click();
       await expect(elements.header).toBeVisible();
-      
-      // Verify controls still work after show/hide cycle
+
       const initialTheme = await getCurrentTheme(page);
       const newElements = await getControlElements(page);
       await newElements.themeToggle.click();
-      await page.waitForTimeout(200);
-      const themeAfterToggle = await getCurrentTheme(page);
-      
-      // PRESERVATION ASSERTION: Controls should work after visibility cycle
-      expect(themeAfterToggle).not.toBe(initialTheme);
-      
+      if (initialTheme === "light") {
+        await expect(page.locator("html")).toHaveClass(/dark/);
+      } else {
+        await expect(page.locator("html")).not.toHaveClass(/dark/);
+      }
+
       // Reset theme
       await newElements.themeToggle.click();
-      await page.waitForTimeout(200);
+      if (initialTheme === "light") {
+        await expect(page.locator("html")).not.toHaveClass(/dark/);
+      } else {
+        await expect(page.locator("html")).toHaveClass(/dark/);
+      }
     }
   });
 });
