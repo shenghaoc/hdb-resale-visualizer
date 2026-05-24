@@ -123,5 +123,8 @@ describe("queryState", () => {
     expect(parsed.startMonth).toBe("a".repeat(256));
 
     expect(parsed.endMonth).toBe("a".repeat(256));
+
+    // Both town and compareTown truncate to the same value → same-town guard clears compareTown.
+    expect(parsed.compareTown).toBe("");
   });
 });

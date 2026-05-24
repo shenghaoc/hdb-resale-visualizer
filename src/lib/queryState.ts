@@ -25,7 +25,7 @@ function safeParamNullable(value: string | null): string | null {
 }
 
 /** Town names are canonical upper-case; compare case- and whitespace-insensitively. */
-function isSameTown(a: string, b: string): boolean {
+export function isSameTown(a: string, b: string): boolean {
   return a.trim().toUpperCase() === b.trim().toUpperCase();
 }
 

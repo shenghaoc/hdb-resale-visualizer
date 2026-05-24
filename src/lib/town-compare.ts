@@ -190,13 +190,15 @@ export function computeMetricDelta(
 ): MetricDelta | null {
   if (primary === null || compare === null) return null;
   const delta = compare - primary;
-  const pct = primary === 0 ? null : (delta / primary) * 100;
+  const pct = primary === 0 ? (compare === 0 ? 0 : null) : (delta / primary) * 100;
   const threshold = SIGNIFICANT_THRESHOLDS[kind];
   const lowerIsBetter = LOWER_IS_BETTER[kind];
 
   let isSignificant: boolean;
   if (kind === "medianRemainingLeaseYears" || kind === "medianWalkSeconds") {
     isSignificant = Math.abs(delta) >= threshold;
+  } else if (primary === 0) {
+    isSignificant = compare !== 0;
   } else {
     isSignificant = pct !== null && Math.abs(pct) >= threshold * 100;
   }

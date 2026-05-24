@@ -150,11 +150,17 @@ describe("computeMetricDelta", () => {
     expect(computeMetricDelta("windowVolume", 200, 100)!.tone).toBe("worse");
   });
 
-  it("returns null pct when the primary is zero", () => {
+  it("classifies a rise from zero volume as better when compare is non-zero", () => {
     const result = computeMetricDelta("windowVolume", 0, 50);
     expect(result!.delta).toBe(50);
     expect(result!.pct).toBeNull();
-    // Without a pct, the threshold can't be evaluated → neutral.
+    expect(result!.tone).toBe("better");
+  });
+
+  it("stays neutral when both volume sides are zero", () => {
+    const result = computeMetricDelta("windowVolume", 0, 0);
+    expect(result!.delta).toBe(0);
+    expect(result!.pct).toBe(0);
     expect(result!.tone).toBe("neutral");
   });
 });

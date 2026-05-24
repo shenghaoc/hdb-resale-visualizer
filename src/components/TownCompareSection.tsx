@@ -7,6 +7,7 @@ import {
   formatNumber,
 } from "@/lib/format";
 import { localizeTownName } from "@/lib/i18n/domain";
+import { isSameTown } from "@/lib/queryState";
 import type { Locale, Translator } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
 import {
@@ -212,7 +213,7 @@ export function TownCompareSection({
   const metrics = useMemo(() => buildMetricRows(t, locale), [t, locale]);
 
   const compareOptions = useMemo(
-    () => availableTowns.filter((town) => town !== primaryTown),
+    () => availableTowns.filter((town) => !isSameTown(town, primaryTown)),
     [availableTowns, primaryTown],
   );
 

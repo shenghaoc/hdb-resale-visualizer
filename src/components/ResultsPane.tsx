@@ -19,6 +19,7 @@ import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { computeAffordabilityVerdict } from "@/lib/affordability";
 import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/lib/data";
+import { isSameTown } from "@/lib/queryState";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/lib/i18n";
@@ -537,7 +538,7 @@ export function ResultsPane({
   const townProfileAvailable = Boolean(hasResultScope && profileTown && profileDataWindow);
   const showTownProfile = townProfileAvailable && resultsView === "town";
   const activeCompareTown =
-    compareTown && profileTown && compareTown !== profileTown ? compareTown : null;
+    compareTown && profileTown && !isSameTown(compareTown, profileTown) ? compareTown : null;
   const showTownCompare = showTownProfile && Boolean(activeCompareTown);
   const townTrendMountedRef = useRef(true);
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
@@ -553,6 +554,8 @@ export function ResultsPane({
     requestedTown: "",
     blocks: [],
   });
+  const compareBlocksSnapRef = useRef(compareBlocksSnap);
+  compareBlocksSnapRef.current = compareBlocksSnap;
 
   const [trendSnap, setTrendSnap] = useState<TownTrendSnap>({
     status: "idle",
@@ -573,15 +576,10 @@ export function ResultsPane({
     if (!showTownCompare || !activeCompareTown) {
       return;
     }
+    const snap = compareBlocksSnapRef.current;
     if (
-      compareBlocksSnap.status === "loaded" &&
-      compareBlocksSnap.requestedTown === activeCompareTown
-    ) {
-      return;
-    }
-    if (
-      compareBlocksSnap.status === "failed" &&
-      compareBlocksSnap.requestedTown === activeCompareTown
+      (snap.status === "loaded" || snap.status === "failed") &&
+      snap.requestedTown === activeCompareTown
     ) {
       return;
     }
@@ -595,7 +593,7 @@ export function ResultsPane({
         if (!compareBlocksMountedRef.current) return;
         setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
       });
-  }, [activeCompareTown, compareBlocksSnap.requestedTown, compareBlocksSnap.status, showTownCompare]);
+  }, [activeCompareTown, showTownCompare]);
 
   useEffect(() => {
     if (!showTownProfile || !profileTown) {
