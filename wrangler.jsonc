@@ -8,6 +8,11 @@
     "directory": "dist",
     "not_found_handling": "single-page-application"
   },
+  // Workers Builds / `wrangler deploy` must produce `dist/` before uploading assets.
+  // Dashboard build_command can stay empty when deploy runs `npx wrangler deploy`.
+  "build": {
+    "command": "npm run build:deploy"
+  },
   "d1_databases": [
     {
       "binding": "DB",

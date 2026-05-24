@@ -75,13 +75,9 @@ jobs:
 
           echo "branch=$target_branch" >> "$GITHUB_OUTPUT"
 
-      # Workers + static assets — `wrangler deploy` bundles and uploads the
-      # Worker and static assets configured in wrangler.jsonc.
+      # Workers + static assets — `wrangler deploy` runs `build.command` from
+      # wrangler.jsonc, then uploads the Worker and `dist/` assets.
       # PR previews must not run sync-data (that would mutate shared prod state).
-      # Only the static UI bundle + Worker code are deployed here.
-      - name: Build
-        run: npm run build:deploy
-
       - name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
