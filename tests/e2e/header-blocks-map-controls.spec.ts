@@ -13,16 +13,10 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
  */
 
 async function waitForMapLoad(page: Page) {
-  // Wait for map shell and controls to be visible and loaded.
   await expect(
     page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
   ).toBeVisible({ timeout: 20_000 });
-  
-  // Wait for map controls to be rendered
-  await page.waitForSelector(".maplibregl-ctrl-top-right", { timeout: 20_000 });
-  
-  // Wait a bit more for map to fully initialize
-  await page.waitForTimeout(400);
+  await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible({ timeout: 20_000 });
 }
 
 async function ensureHeaderVisible(page: Page) {
@@ -97,10 +91,12 @@ async function checkControlsOverlapWithHeader(page: Page) {
     throw new Error("Could not get bounding boxes for header or controls");
   }
   
-  // Check if header overlaps with controls (header extends into controls area)
-  const overlaps = headerBox.x + headerBox.width > controlsBox.x && 
-                   headerBox.y < controlsBox.y + controlsBox.height &&
-                   headerBox.y + headerBox.height > controlsBox.y;
+  // Check if header overlaps with controls (2D axis-aligned bounding box)
+  const overlaps =
+    headerBox.x + headerBox.width > controlsBox.x &&
+    headerBox.x < controlsBox.x + controlsBox.width &&
+    headerBox.y < controlsBox.y + controlsBox.height &&
+    headerBox.y + headerBox.height > controlsBox.y;
   
   return {
     overlaps,
@@ -119,10 +115,9 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await ensureHeaderVisible(page);
     
     const controls = await getMapControlsInfo(page);
-    const overlapInfo = await checkControlsOverlapWithHeader(page);
-    
-    console.log("Desktop overlap info:", overlapInfo);
-    
+    // Overlap is informational only — the fixed layout may separate header and controls.
+    await checkControlsOverlapWithHeader(page);
+
     await expectControlReceivesPointer(controls.zoomIn, "Desktop zoom in");
     await controls.zoomIn.click({ force: false });
 
@@ -144,14 +139,6 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await expect(page.getByTestId("global-header")).toBeVisible();
     
     const controls = await getMapControlsInfo(page);
-    
-    // On mobile, map controls stay above the map; the compact header should not block them.
-    const controlsZIndex = await page.evaluate(() => {
-      const controlsElement = document.querySelector('.maplibregl-ctrl-top-right');
-      return controlsElement ? window.getComputedStyle(controlsElement).zIndex : null;
-    });
-    
-    console.log("Mobile controls z-index:", controlsZIndex);
     
     await expectControlReceivesPointer(controls.zoomIn, "Mobile zoom in");
     await controls.zoomIn.click({ force: false });
@@ -180,11 +167,6 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     const themeToggle = tabBar.getByRole("button", { name: /toggle theme/i });
     await expect(themeToggle).toBeVisible();
     await themeToggle.click();
-
-    // Verify theme changed
-    await page.waitForTimeout(200);
-    const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark'));
-    console.log("Theme is dark after toggle:", isDark);
 
     // Language selector lives in the floating map locale control.
     const languageSelect = page

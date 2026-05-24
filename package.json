@@ -27,6 +27,7 @@
     "test": "NODE_OPTIONS=--no-experimental-webstorage vitest run",
     "test:watch": "NODE_OPTIONS=--no-experimental-webstorage vitest",
     "test:e2e": "playwright test",
+    "test:e2e:reuse": "E2E_REUSE_SERVER=1 playwright test",
     "sync-data": "tsx scripts/sync-data.ts"
   },
   "dependencies": {
