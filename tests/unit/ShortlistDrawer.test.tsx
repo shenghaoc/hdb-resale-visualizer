@@ -342,4 +342,58 @@ describe("ShortlistDrawer", () => {
 
     expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute("aria-expanded", "true");
   });
+
+  it("sanitizes multi-line formula injections in CSV export", () => {
+    // Mock Blob and URL.createObjectURL to intercept the generated CSV content
+    const originalBlob = global.Blob;
+    let exportedContent = "";
+
+    global.Blob = vi.fn().mockImplementation(function(content: unknown[], options?: BlobPropertyBag) {
+      exportedContent = content.join("");
+      return new originalBlob(content, options);
+    });
+
+    global.URL.createObjectURL = vi.fn().mockReturnValue("mock-url");
+
+    // Create a row with a multiline note that has formula triggers at the beginning of each line
+    const maliciousRow = {
+      ...mockRow,
+      item: {
+        ...mockShortlistItem,
+        notes: "first line\n=second line\n\n+third line\n -fourth line\n@fifth line",
+      },
+    };
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[maliciousRow]}
+          remainingLeaseMin={null}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    // Switch to comparison table view to reveal export button
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show saved blocks as a comparison table" }),
+    );
+
+    // Find and click the export CSV button
+    const exportButton = screen.getByRole("button", { name: "CSV" });
+    fireEvent.click(exportButton);
+
+    // Verify the multiline content correctly prefixes trigger characters with a single quote
+    // Since quotes are escaped in CSV (to ""), the note will be exported wrapped in quotes,
+    // with any internal quotes doubled.
+    expect(exportedContent).toContain(`"first line\n'=second line\n\n'+third line\n' -fourth line\n'@fifth line"`);
+
+    // Restore mocks
+    global.Blob = originalBlob;
+    global.URL.createObjectURL = vi.fn();
+  });
 });

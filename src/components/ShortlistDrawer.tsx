@@ -844,7 +844,10 @@ export function ShortlistDrawer({
       // Match only at the start of the cell (spreadsheet apps evaluate formulas based on the first
       // character of the cell, not per line) while accounting for leading whitespace, which Excel
       // and Google Sheets typically trim before formula evaluation.
-      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
+      // Additionally, multiline inputs need to have all lines checked because a formula
+      // trigger character at the start of a new line can still be parsed maliciously.
+      // Use [ \t]* instead of \s* to avoid matching across newlines which would break the replacement.
+      const safeNotes = (row.item.notes || "").replace(/^[ \t]*[=+\-@\t\r|]/gm, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
