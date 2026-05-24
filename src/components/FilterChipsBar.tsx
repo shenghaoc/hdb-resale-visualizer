@@ -14,7 +14,7 @@ type FilterChipsBarProps = {
   isDesktop: boolean;
   t: Translator;
   onOpenFilters: () => void;
-  onShare?: () => void;
+  onShare?: () => Promise<"shared" | "copied" | null>;
   hidden?: boolean;
 };
 
@@ -71,9 +71,10 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, onShare, hi
 
   if (chips.length === 0) return null;
 
-  const handleShareClick = () => {
+  const handleShareClick = async () => {
     if (!onShare) return;
-    onShare();
+    const result = await onShare();
+    if (result !== "copied") return;
     if (shareTimeoutRef.current) clearTimeout(shareTimeoutRef.current);
     setShareCopied(true);
     shareTimeoutRef.current = setTimeout(() => setShareCopied(false), 2000);
@@ -122,7 +123,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, onShare, hi
           type="button"
           aria-label={shareCopied ? t("share.linkCopied") : t("share.filterResults")}
           tabIndex={activeIndex === shareButtonIndex ? 0 : -1}
-          onClick={handleShareClick}
+          onClick={() => void handleShareClick()}
           onKeyDown={(event) => handleKeyDown(event, shareButtonIndex)}
           onFocus={() => setFocusedIndex(shareButtonIndex)}
           className={cn(

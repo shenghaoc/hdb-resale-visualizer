@@ -12,6 +12,7 @@ import { localizeTownName } from "@/lib/i18n/domain";
 import { isSameTown } from "@/lib/queryState";
 import type { Locale, Translator } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
+import { DEFAULT_FILTERS } from "@/lib/constants";
 import {
   buildTownCompareSnapshot,
   computeMetricDelta,
@@ -21,7 +22,7 @@ import {
   type TownCompareSnapshot,
 } from "@/lib/town-compare";
 import type { TrendMonthRange } from "@/lib/town-profile";
-import type { BlockSummary, FilterState, TownFlatTypeTrendPoint } from "@/types/data";
+import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import {
   Select,
   SelectContent,
@@ -217,7 +218,7 @@ export function TownCompareSection({
   const compareShareUrl = useMemo(() => {
     if (!compareTown) return "";
     return buildCompareShareUrl(
-      { town: primaryTown, compareTown } as FilterState,
+      { ...DEFAULT_FILTERS, town: primaryTown, compareTown },
       `${window.location.origin}${window.location.pathname}`,
     );
   }, [primaryTown, compareTown]);

@@ -195,14 +195,16 @@ function App() {
     leftTab: panel.leftTab,
   });
 
-  const handleShareFilters = useCallback(() => {
+  const handleShareFilters = useCallback(async () => {
     const url = buildFilterShareUrl(
       filters,
       `${window.location.origin}${window.location.pathname}`,
     );
-    void shareViaNavigator(url, t("app.title")).catch(() => {
-      // Silently ignore — FilterChipsBar has no error display for share failures.
-    });
+    try {
+      return await shareViaNavigator(url, t("app.title"));
+    } catch {
+      return null;
+    }
   }, [filters, t]);
 
   // ── Error / loading states ───────────────────────────────────────────────
