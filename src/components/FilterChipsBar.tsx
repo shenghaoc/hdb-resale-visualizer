@@ -30,7 +30,7 @@ export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, onShare, hi
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeIndex = Math.min(focusedIndex, itemCount - 1);
   const [shareCopied, setShareCopied] = useState(false);
-  const shareTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const shareTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent, index: number) => {
     const items = itemRefs.current.filter((button): button is HTMLButtonElement => button !== null);
