@@ -91,10 +91,12 @@ async function checkControlsOverlapWithHeader(page: Page) {
     throw new Error("Could not get bounding boxes for header or controls");
   }
   
-  // Check if header overlaps with controls (header extends into controls area)
-  const overlaps = headerBox.x + headerBox.width > controlsBox.x && 
-                   headerBox.y < controlsBox.y + controlsBox.height &&
-                   headerBox.y + headerBox.height > controlsBox.y;
+  // Check if header overlaps with controls (2D axis-aligned bounding box)
+  const overlaps =
+    headerBox.x + headerBox.width > controlsBox.x &&
+    headerBox.x < controlsBox.x + controlsBox.width &&
+    headerBox.y < controlsBox.y + controlsBox.height &&
+    headerBox.y + headerBox.height > controlsBox.y;
   
   return {
     overlaps,
@@ -113,8 +115,8 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
     await ensureHeaderVisible(page);
     
     const controls = await getMapControlsInfo(page);
-    const { overlaps } = await checkControlsOverlapWithHeader(page);
-    expect(overlaps, "Header should overlap with map controls").toBe(true);
+    // Overlap is informational only — the fixed layout may separate header and controls.
+    await checkControlsOverlapWithHeader(page);
 
     await expectControlReceivesPointer(controls.zoomIn, "Desktop zoom in");
     await controls.zoomIn.click({ force: false });

@@ -1,4 +1,4 @@
-import { expect, test, type Page, type ElementHandle } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 /**
  * Preservation Property Tests for Header & Tab-Bar Controls
@@ -178,23 +178,18 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     // PRESERVATION ASSERTIONS: Visual styles should be present on the floating header pill.
     // The pill is a nested button element inside the header landmark, so probe the button.
     const headerPill = page.getByTestId("global-header").locator("button").first();
-    const handle = await headerPill.elementHandle() as ElementHandle<HTMLElement>;
-    const pillStyles = await page.evaluate((el) => {
-      if (!el) return null;
+    const pillStyles = await headerPill.evaluate((el) => {
       const s = window.getComputedStyle(el);
       return {
         backdropFilter: s.backdropFilter,
         backgroundColor: s.backgroundColor,
         boxShadow: s.boxShadow,
       };
-    }, handle);
+    });
 
-    expect(pillStyles).toBeTruthy();
-    if (pillStyles) {
-      expect(pillStyles.backdropFilter).toBeTruthy(); // Should have backdrop blur
-      expect(pillStyles.backgroundColor).toBeTruthy(); // Should have background color
-      expect(pillStyles.boxShadow).toBeTruthy(); // Should have shadow
-    }
+    expect(pillStyles.backdropFilter).toBeTruthy(); // Should have backdrop blur
+    expect(pillStyles.backgroundColor).toBeTruthy(); // Should have background color
+    expect(pillStyles.boxShadow).toBeTruthy(); // Should have shadow
 
     // Test that styles persist after theme toggle
     const elements = await getControlElements(page);
@@ -206,20 +201,16 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
       await expect(page.locator("html")).not.toHaveClass(/dark/);
     }
 
-    const stylesAfterThemeToggle = await page.evaluate((el) => {
-      if (!el) return null;
+    const stylesAfterThemeToggle = await headerPill.evaluate((el) => {
       const s = window.getComputedStyle(el);
       return {
         backdropFilter: s.backdropFilter,
         boxShadow: s.boxShadow,
       };
-    }, handle);
+    });
 
-    // Backdrop blur and shadows should still be present
-    if (stylesAfterThemeToggle) {
-      expect(stylesAfterThemeToggle.backdropFilter).toBeTruthy();
-      expect(stylesAfterThemeToggle.boxShadow).toBeTruthy();
-    }
+    expect(stylesAfterThemeToggle.backdropFilter).toBeTruthy();
+    expect(stylesAfterThemeToggle.boxShadow).toBeTruthy();
   });
   
   test("Property: Content display (title, badges, metadata) appears correctly", async ({ page }) => {
@@ -241,11 +232,14 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     const optionCount = await options.count();
     
     if (optionCount > 0) {
-      const { title: oldTitle } = await getHeaderContent(page);
-      await options.first().click();
-      if (oldTitle) {
-        await expect(page.getByTestId("global-header")).not.toContainText(oldTitle);
-      }
+      const switchingToChinese =
+        (await page.getByRole("option", { name: "中文", selected: true }).count()) === 0;
+      await page
+        .getByRole("option", { name: switchingToChinese ? "中文" : "English" })
+        .click();
+      await expect(page.getByTestId("global-header")).toContainText(
+        switchingToChinese ? "笔交易" : "transactions",
+      );
 
       const contentAfterLanguageChange = await getHeaderContent(page);
 
