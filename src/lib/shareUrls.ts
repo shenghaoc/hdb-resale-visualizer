@@ -1,5 +1,6 @@
 import type { FilterState } from "@/types/data";
 import { serializeFilters } from "./queryState";
+import { townToFilename } from "./utils";
 
 /**
  * Builds the full deep-link URL for sharing a specific block.
@@ -106,5 +107,5 @@ export function buildBlockOgImageUrl(addressKey: string, baseUrl: string): strin
 }
 
 export function buildCompareOgImageUrl(townA: string, townB: string, baseUrl: string): string {
-  return `${baseUrl.replace(/\/$/, '')}/og/compare/${encodeURIComponent(townA.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(townB.toLowerCase().replace(/\s+/g, '-'))}.png`;
+  return `${baseUrl.replace(/\/$/, '')}/og/compare/${encodeURIComponent(townToFilename(townA))}/${encodeURIComponent(townToFilename(townB))}.png`;
 }

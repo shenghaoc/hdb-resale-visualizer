@@ -12,8 +12,8 @@ describe('mapBlockToOgProps', () => {
     }, { minMonth: '2023-01', maxMonth: '2026-01' });
 
     expect(mapped.title).toContain('123 BEDOK NORTH');
-    expect(mapped.walk).toBe('8 min');
-    expect(mapped.psm).toContain('7,000');
+    expect(mapped.mrtWalk).toBe('8 min');
+    expect(mapped.pricePerSqm).toContain('7,000');
   });
 
   it('falls back gracefully when fields are missing', () => {
@@ -25,7 +25,7 @@ describe('mapBlockToOgProps', () => {
       nearestMrt: null, nearbyMrts: [], postalCode: null,
     }, { minMonth: '2023-01', maxMonth: '2026-01' });
 
-    expect(mapped.walk).toBe('N/A');
-    expect(mapped.psm).toBe('N/A');
+    expect(mapped.mrtWalk).toBe('N/A');
+    expect(mapped.pricePerSqm).toBe('N/A');
   });
 });
