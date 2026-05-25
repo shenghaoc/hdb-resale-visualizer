@@ -2,6 +2,8 @@ import { z } from "zod";
 import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "./constants";
 import type { ShortlistItem } from "../types/data";
 
+export { mergeShortlists } from "@shared/shortlist-merge";
+
 const shortlistItemSchema = z.object({
   addressKey: z.string(),
   notes: z.string().catch(""),
