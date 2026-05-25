@@ -6,6 +6,12 @@
  * It is generated here, returned to the client once, and stored client-side.
  * Server-side we persist only the SHA-256 hash of the code and look rows up by
  * that hash — the raw code is never written to D1 and never logged.
+ *
+ * Data retention: when a user calls `sync.disable()` the localStorage key is
+ * cleared but the D1 row is intentionally left in place — there is no DELETE
+ * endpoint because the identity model (anonymous bearer secret) has no way to
+ * authenticate a removal request. If TTL-based cleanup is added later, rows can
+ * be purged by `created_at` or `updated_at` age.
  */
 import { z } from "zod";
 import {
@@ -34,7 +40,7 @@ const shortlistItemSchema = z
     offerCeiling: z.number().finite().optional(),
     agentRemarks: note.optional(),
     targetPrice: z.number().finite().nullable(),
-    addedAt: z.string().min(1).max(MAX_ADDED_AT_LENGTH),
+    addedAt: z.string().datetime({ offset: true }).max(MAX_ADDED_AT_LENGTH).default(() => new Date().toISOString()),
   })
   .strip();
 
@@ -142,8 +148,8 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
       const codeHash = await hashSyncCode(syncCode);
       const merged = mergeShortlists(items, []);
       await db
-        .prepare("INSERT INTO shortlists (code_hash, items_json, updated_at) VALUES (?, ?, ?)")
-        .bind(codeHash, JSON.stringify(merged), now)
+        .prepare("INSERT INTO shortlists (code_hash, items_json, updated_at, created_at) VALUES (?, ?, ?, ?)")
+        .bind(codeHash, JSON.stringify(merged), now, now)
         .run();
       return { status: 200, body: { syncCode, items: merged } };
     }

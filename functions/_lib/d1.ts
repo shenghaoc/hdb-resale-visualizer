@@ -28,14 +28,14 @@ export function jsonResponse(body: JsonValue, init: ResponseInit = {}): Response
  * the payload is private to a single sync code.
  */
 export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): Response {
-  return new Response(JSON.stringify(body), {
-    ...init,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store",
-      ...(init.headers ?? {}),
-    },
-  });
+  const headers = new Headers(init.headers);
+  if (!headers.has("content-type")) {
+    headers.set("content-type", "application/json; charset=utf-8");
+  }
+  if (!headers.has("cache-control")) {
+    headers.set("cache-control", "no-store");
+  }
+  return new Response(JSON.stringify(body), { ...init, headers });
 }
 
 export function notFound(message = "Not Found"): Response {

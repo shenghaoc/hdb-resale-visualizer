@@ -13,6 +13,12 @@ import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
  *
  * Only the SHA-256 hash of the code is ever read or written; the raw code is
  * never persisted or logged. See functions/_lib/shortlist.ts for the logic.
+ *
+ * Rate limiting: this endpoint has no built-in rate limiting on sync code
+ * creation. A script issuing empty-payload POSTs in a tight loop could
+ * accumulate unbounded rows and exhaust D1 storage. The recommended mitigation
+ * is a Cloudflare WAF rate-limiting rule on POST /api/shortlist (zero code
+ * change). For expected traffic volume this risk is accepted as-is.
  */
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // Client-side/edge DoS guard: reject oversized bodies before reading them.

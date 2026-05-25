@@ -11,5 +11,6 @@
 CREATE TABLE IF NOT EXISTS shortlists (
   code_hash TEXT PRIMARY KEY,
   items_json TEXT NOT NULL,
-  updated_at TEXT NOT NULL
+  updated_at TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

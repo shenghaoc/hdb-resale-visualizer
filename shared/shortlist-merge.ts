@@ -22,12 +22,18 @@ export function mergeShortlists(a: ShortlistItem[], b: ShortlistItem[]): Shortli
 
   for (const item of b) {
     const existing = byKey.get(item.addressKey);
-    if (!existing || item.addedAt > existing.addedAt) {
+    if (!existing) {
+      byKey.set(item.addressKey, item);
+      continue;
+    }
+    const itemTime = item.addedAt || "";
+    const existingTime = existing.addedAt || "";
+    if (itemTime > existingTime || (!itemTime && !existingTime)) {
       byKey.set(item.addressKey, item);
     }
   }
 
   return Array.from(byKey.values())
-    .sort((left, right) => right.addedAt.localeCompare(left.addedAt))
+    .sort((left, right) => (right.addedAt || "").localeCompare(left.addedAt || ""))
     .slice(0, MAX_SHORTLIST_ITEMS);
 }
