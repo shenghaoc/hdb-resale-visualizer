@@ -126,8 +126,11 @@ export function useShortlist() {
         const result = await pushShortlist(syncCode, merged);
         if (cancelled) return;
         readyRef.current = true;
-        lastPushedRef.current = JSON.stringify(result.items);
-        setItems(result.items);
+        setItems((current) => {
+          const next = mergeShortlists(current, result.items);
+          lastPushedRef.current = JSON.stringify(next);
+          return next;
+        });
         setSyncStatus("synced");
       } catch (error) {
         if (cancelled) return;
@@ -159,9 +162,13 @@ export function useShortlist() {
     let cancelled = false;
     setSyncStatus("syncing");
     void pushShortlist(syncCode, debouncedItems)
-      .then(() => {
+      .then((result) => {
         if (cancelled) return;
-        lastPushedRef.current = snapshot;
+        setItems((current) => {
+          const next = mergeShortlists(current, result.items);
+          lastPushedRef.current = JSON.stringify(next);
+          return next;
+        });
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -211,8 +218,11 @@ export function useShortlist() {
     try {
       const result = await pushShortlist(null, itemsRef.current);
       readyRef.current = true;
-      lastPushedRef.current = JSON.stringify(result.items);
-      setItems(result.items);
+      setItems((current) => {
+        const next = mergeShortlists(current, result.items);
+        lastPushedRef.current = JSON.stringify(next);
+        return next;
+      });
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
       setSyncCode(result.syncCode);
       setSyncStatus("synced");
@@ -229,8 +239,11 @@ export function useShortlist() {
       const merged = mergeShortlists(itemsRef.current, cloud);
       const result = await pushShortlist(code, merged);
       readyRef.current = true;
-      lastPushedRef.current = JSON.stringify(result.items);
-      setItems(result.items);
+      setItems((current) => {
+        const next = mergeShortlists(current, result.items);
+        lastPushedRef.current = JSON.stringify(next);
+        return next;
+      });
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
       setSyncCode(code);
       setSyncStatus("synced");
