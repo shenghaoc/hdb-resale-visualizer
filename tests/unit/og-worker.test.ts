@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapBlockToOgProps, transactionWeightedMedian } from "../../worker/og";
+import { mapBlockToOgProps, transactionWeightedMedian } from "../../worker/og-utils";
 
 describe("mapBlockToOgProps", () => {
   it("maps core fields for card rendering", () => {
