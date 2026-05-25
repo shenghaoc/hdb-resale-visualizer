@@ -38,6 +38,7 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
     const shaped = rows.slice(0, SEARCH_RESULT_LIMIT).map(rowToBlockSummary);
     return jsonResponse({ blocks: shaped, truncated, limit: SEARCH_RESULT_LIMIT });
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "search failed");
+    console.error("Search API failed:", error);
+    return serverError("search failed");
   }
 };

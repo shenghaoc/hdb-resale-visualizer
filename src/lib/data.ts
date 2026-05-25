@@ -147,8 +147,10 @@ export function fetchBlocksBySearch(
     `${API_BASE_PATH}/search${query ? `?${query}` : ""}`,
     searchResponseSchema,
   ).catch((error) => {
-    blocksBySearchPromise = null;
-    blocksBySearchKey = "";
+    if (blocksBySearchKey === cacheKey) {
+      blocksBySearchPromise = null;
+      blocksBySearchKey = "";
+    }
     throw error;
   });
   return blocksBySearchPromise;

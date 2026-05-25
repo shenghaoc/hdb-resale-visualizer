@@ -135,7 +135,7 @@ export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
   if (request.flatType) {
     const canonical = canonicalFlatType(request.flatType);
     where.push(
-      "EXISTS (SELECT 1 FROM json_each(blocks.flat_types_json) WHERE UPPER(TRIM(json_each.value)) = ?)",
+      "EXISTS (SELECT 1 FROM json_each(blocks.flat_types_json) WHERE json_each.value = ? COLLATE NOCASE)",
     );
     bindings.push(canonical);
 
