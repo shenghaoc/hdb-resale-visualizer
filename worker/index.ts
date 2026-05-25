@@ -157,7 +157,6 @@ export default {
         if (!seo) return assetResponse;
         const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
 
-        let sawCanonical = false;
         const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
         return new HTMLRewriter()
           .on("title", { element(el) { el.setInnerContent(seo.title); } })
@@ -166,21 +165,14 @@ export default {
           .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
           .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
           .on('link[rel="canonical"]', {
-            element(el) {
-              sawCanonical = true;
-              el.setAttribute("href", canonicalUrl);
-            },
+            element(el) { el.setAttribute("href", canonicalUrl); },
           })
           .on("head", {
             element(el) {
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
-            },
-            end(el) {
-              if (!sawCanonical) {
-                el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll('"', "&quot;")}">`, {
-                  html: true,
-                });
-              }
+              el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll('"', "&quot;")}">`, {
+                html: true,
+              });
             },
           })
           .transform(assetResponse);
