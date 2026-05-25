@@ -41,6 +41,15 @@ describe("mergeShortlists", () => {
     expect(mergeShortlists(local, cloud)[0].notes).toBe("local");
   });
 
+  it("treats missing or invalid addedAt as oldest", () => {
+    const local = [item("a", "2026-04-20T00:00:00.000Z")];
+    const cloud = [{ addressKey: "b", notes: "", targetPrice: null } as ShortlistItem];
+
+    const merged = mergeShortlists(local, cloud);
+
+    expect(merged.map((i) => i.addressKey)).toEqual(["a", "b"]);
+  });
+
   it("caps at MAX_SHORTLIST_ITEMS, keeping the most recent", () => {
     const many = Array.from({ length: MAX_SHORTLIST_ITEMS + 5 }, (_, index) =>
       item(`k${index}`, `2026-04-${String(index + 1).padStart(2, "0")}T00:00:00.000Z`),

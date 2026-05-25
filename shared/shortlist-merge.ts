@@ -1,6 +1,12 @@
 import { MAX_SHORTLIST_ITEMS } from "./shortlist-limits";
 import type { ShortlistItem } from "./data-types";
 
+function addedAtMs(iso?: string): number {
+  if (!iso) return 0;
+  const parsed = Date.parse(iso);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 /**
  * Merge two shortlists into one, deduplicating by `addressKey`.
  *
@@ -27,17 +33,17 @@ export function mergeShortlists(a: ShortlistItem[], b: ShortlistItem[]): Shortli
       byKey.set(item.addressKey, item);
       continue;
     }
-    const itemTime = item.addedAt ? Date.parse(item.addedAt) : 0;
-    const existingTime = existing.addedAt ? Date.parse(existing.addedAt) : 0;
-    if (itemTime > existingTime || (!itemTime && !existingTime)) {
+    const itemTime = addedAtMs(item.addedAt);
+    const existingTime = addedAtMs(existing.addedAt);
+    if (itemTime > existingTime || (itemTime === 0 && existingTime === 0)) {
       byKey.set(item.addressKey, item);
     }
   }
 
   return Array.from(byKey.values())
     .sort((left, right) => {
-      const leftTime = left.addedAt ? Date.parse(left.addedAt) : 0;
-      const rightTime = right.addedAt ? Date.parse(right.addedAt) : 0;
+      const leftTime = addedAtMs(left.addedAt);
+      const rightTime = addedAtMs(right.addedAt);
       return rightTime - leftTime;
     })
     .slice(0, MAX_SHORTLIST_ITEMS);

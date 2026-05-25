@@ -15,6 +15,12 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 const SYNC_DEBOUNCE_MS = 1000;
 
+/** Merge cloud items into local state without redundant re-renders. */
+function mergeFromCloud(current: ShortlistItem[], cloud: ShortlistItem[]): ShortlistItem[] {
+  const next = mergeShortlists(current, cloud);
+  return JSON.stringify(current) === JSON.stringify(next) ? current : next;
+}
+
 export type SyncStatus = "local" | "syncing" | "synced" | "error";
 
 export type ShortlistSync = {
@@ -122,16 +128,21 @@ export function useShortlist() {
       try {
         const cloud = await pullShortlist(syncCode);
         if (cancelled) return;
-        const merged = mergeShortlists(itemsRef.current, cloud);
-        const result = await pushShortlist(syncCode, merged);
+        let pushPayload: ShortlistItem[] = [];
+        setItems((current) => {
+          pushPayload = mergeShortlists(current, cloud);
+          return mergeFromCloud(current, cloud);
+        });
+        const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled) return;
         readyRef.current = true;
-        const next = mergeShortlists(itemsRef.current, result.items);
-        const nextStr = JSON.stringify(next);
-        if (nextStr !== JSON.stringify(itemsRef.current)) {
-          lastPushedRef.current = nextStr;
-          setItems(next);
-        }
+        let syncedSnapshot = "";
+        setItems((current) => {
+          const next = mergeFromCloud(current, result.items);
+          syncedSnapshot = JSON.stringify(next);
+          return next;
+        });
+        lastPushedRef.current = syncedSnapshot;
         setSyncStatus("synced");
       } catch (error) {
         if (cancelled) return;
@@ -165,12 +176,13 @@ export function useShortlist() {
     void pushShortlist(syncCode, debouncedItems)
       .then((result) => {
         if (cancelled) return;
-        const next = mergeShortlists(itemsRef.current, result.items);
-        const nextStr = JSON.stringify(next);
-        if (nextStr !== JSON.stringify(itemsRef.current)) {
-          lastPushedRef.current = nextStr;
-          setItems(next);
-        }
+        let syncedSnapshot = snapshot;
+        setItems((current) => {
+          const next = mergeFromCloud(current, result.items);
+          syncedSnapshot = JSON.stringify(next);
+          return next;
+        });
+        lastPushedRef.current = syncedSnapshot;
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -220,10 +232,9 @@ export function useShortlist() {
     try {
       const result = await pushShortlist(null, itemsRef.current);
       readyRef.current = true;
-      const next = mergeShortlists(itemsRef.current, result.items);
-      const nextStr = JSON.stringify(next);
-      if (nextStr !== JSON.stringify(itemsRef.current)) {
-        lastPushedRef.current = nextStr;
+      const next = mergeFromCloud(itemsRef.current, result.items);
+      lastPushedRef.current = JSON.stringify(next);
+      if (next !== itemsRef.current) {
         setItems(next);
       }
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
@@ -239,15 +250,20 @@ export function useShortlist() {
     setSyncStatus("syncing");
     try {
       const cloud = await pullShortlist(code);
-      const merged = mergeShortlists(itemsRef.current, cloud);
-      const result = await pushShortlist(code, merged);
+      let pushPayload: ShortlistItem[] = [];
+      setItems((current) => {
+        pushPayload = mergeShortlists(current, cloud);
+        return mergeFromCloud(current, cloud);
+      });
+      const result = await pushShortlist(code, pushPayload);
       readyRef.current = true;
-      const next = mergeShortlists(itemsRef.current, result.items);
-      const nextStr = JSON.stringify(next);
-      if (nextStr !== JSON.stringify(itemsRef.current)) {
-        lastPushedRef.current = nextStr;
-        setItems(next);
-      }
+      let syncedSnapshot = "";
+      setItems((current) => {
+        const next = mergeFromCloud(current, result.items);
+        syncedSnapshot = JSON.stringify(next);
+        return next;
+      });
+      lastPushedRef.current = syncedSnapshot;
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
       setSyncCode(code);
       setSyncStatus("synced");
