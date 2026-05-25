@@ -27,6 +27,9 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 - `geocode_cache` — `(cache_key, lat, lng, postal_code, display_name, search_value)`.
 - `walking_time_cache` — `(cache_key, walking_time_seconds, walking_distance_meters)`.
 
+**Runtime user state (opt-in, written by the Worker — not the sync pipeline):**
+- `shortlists` — `(code_hash, items_json, updated_at)`. One row per anonymous sync code, holding an opt-in cloud backup of a user's shortlist. Written at runtime by `functions/api/shortlist/*` and never touched by `scripts/sync-data.ts`. Only the SHA-256 hash of the bearer sync code is stored; the raw code lives solely in the user's browser.
+
 ## Runtime Endpoints (`functions/api/*`)
 | Endpoint | Table | Notes |
 |---|---|---|
@@ -45,4 +48,4 @@ All endpoints return JSON shapes validated by the Zod schemas in `src/lib/dataSc
 - **Mapping**: Consumes `/api/block-summaries` and `/api/mrt-exits` via MapLibre GL JS.
 - **Charts**: Consumes `/api/trends/*` and `/api/details/*` via Apache ECharts.
 - **Filtering**: Performs client-side filtering and sorting on the preloaded blocks array.
-- **Persistence**: Shortlists and user notes are stored strictly in `localStorage`.
+- **Persistence**: Shortlists and user notes are stored in `localStorage` by default. Optionally, a user can enable cloud sync with an anonymous sync code; the shortlist is then mirrored to the `shortlists` D1 table through `functions/api/shortlist/*` (the only runtime D1 write path). `localStorage` remains the offline baseline on each device.
