@@ -173,10 +173,14 @@ export default {
           })
           .on("head", {
             element(el) {
-              if (!sawCanonical) {
-                el.append(`<link rel="canonical" href="${canonicalUrl}">`, { html: true });
-              }
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
+            },
+            end(el) {
+              if (!sawCanonical) {
+                el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll('"', "&quot;")}">`, {
+                  html: true,
+                });
+              }
             },
           })
           .transform(assetResponse);
