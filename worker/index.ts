@@ -149,7 +149,8 @@ export default {
       const compareTown = url.searchParams.get("compareTown");
       if (!town && !selected && !compareTown) return assetResponse;
 
-      const [manifest, block] = await Promise.all([getManifest(env), selected ? getBlock(env, selected) : Promise.resolve(null)]);
+      const block = selected ? await getBlock(env, selected) : null;
+      const manifest = block ? null : await getManifest(env);
       const seo = buildSeoMeta({ town, block, manifest });
       if (!seo) return assetResponse;
       const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
