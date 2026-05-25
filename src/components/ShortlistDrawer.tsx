@@ -821,8 +821,10 @@ export function ShortlistDrawer({
       })
       .join("\n");
 
-    void navigator.clipboard.writeText(`${header}\n${body}`);
-    showCopied("summary");
+    navigator.clipboard?.writeText(`${header}\n${body}`)?.then(
+      () => showCopied("summary"),
+      () => {},
+    );
   }
 
   function handleExportCsv() {

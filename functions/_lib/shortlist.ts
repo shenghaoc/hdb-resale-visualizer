@@ -23,7 +23,6 @@ import {
   SYNC_CODE_BYTES,
   SYNC_CODE_PATTERN,
 } from "../../shared/shortlist-limits";
-import { mergeShortlists } from "../../shared/shortlist-merge";
 import type { ShortlistItem } from "../../shared/data-types";
 
 const note = z.string().max(MAX_NOTE_LENGTH);
@@ -146,12 +145,11 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
     if (!providedCode) {
       const syncCode = generateSyncCode();
       const codeHash = await hashSyncCode(syncCode);
-      const merged = mergeShortlists(items, []);
       await db
         .prepare("INSERT INTO shortlists (code_hash, items_json, updated_at, created_at) VALUES (?, ?, ?, ?)")
-        .bind(codeHash, JSON.stringify(merged), now, now)
+        .bind(codeHash, JSON.stringify(items), now, now)
         .run();
-      return { status: 200, body: { syncCode, items: merged } };
+      return { status: 200, body: { syncCode, items } };
     }
 
     const codeHash = await hashSyncCode(providedCode);
@@ -164,13 +162,15 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
       return { status: 404, body: { error: "Unknown sync code" } };
     }
 
-    const merged = mergeShortlists(items, parseStoredItems(row.items_json));
+    // Store the client's items directly — no server-side merge. Merging on
+    // the server would resurrect items the client intentionally deleted. The
+    // client handles merging when pulling before pushing (hydration/link).
     await db
       .prepare("UPDATE shortlists SET items_json = ?, updated_at = ? WHERE code_hash = ?")
-      .bind(JSON.stringify(merged), now, codeHash)
+      .bind(JSON.stringify(items), now, codeHash)
       .run();
 
-    return { status: 200, body: { syncCode: providedCode, items: merged } };
+    return { status: 200, body: { syncCode: providedCode, items } };
   } catch {
     return { status: 500, body: { error: "Shortlist sync failed" } };
   }

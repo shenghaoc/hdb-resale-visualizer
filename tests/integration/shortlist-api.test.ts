@@ -59,7 +59,7 @@ describe("handleShortlistPush", () => {
     expect(rows.size).toBe(1);
   });
 
-  it("merges incoming items with the stored row on a known code", async () => {
+  it("stores the incoming items directly on a known code (no server-side merge)", async () => {
     const { db } = makeFakeDB();
     const minted = (await handleShortlistPush(db, JSON.stringify({ items: [item("a", "2026-04-20T00:00:00.000Z")] })))
       .body as { syncCode: string };
@@ -71,7 +71,10 @@ describe("handleShortlistPush", () => {
     const body = res.body as { items: { addressKey: string }[] };
 
     expect(res.status).toBe(200);
-    expect(body.items.map((i) => i.addressKey).sort()).toEqual(["a", "b"]);
+    // Server stores the client's items directly — no merge. The client is
+    // responsible for merging when pulling before pushing (hydration / link).
+    // This prevents deleted items from being resurrected by server-side merge.
+    expect(body.items.map((i) => i.addressKey).sort()).toEqual(["b"]);
   });
 
   it("rejects an unknown (well-formed) code with 404", async () => {
