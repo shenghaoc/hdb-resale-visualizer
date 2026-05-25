@@ -20,9 +20,6 @@ const IMAGE_HEADERS = {
   "cache-control": "public, max-age=31536000, immutable",
 };
 
-const SVG_FONT =
-  'font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"';
-
 const MAX_OG_ADDRESS_KEY_LENGTH = 128;
 const MAX_OG_TOWN_SLUG_LENGTH = 64;
 const MANIFEST_CACHE_TTL_MS = 5 * 60 * 1000;
@@ -61,13 +58,13 @@ function fallbackCard(request: Request): Response {
 }
 
 function blockCardSvg(props: ReturnType<typeof mapBlockToOgProps>): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
   <rect width="1200" height="630" fill="#0f172a"/>
-  <text x="48" y="80" fill="#94a3b8" font-size="30" ${SVG_FONT}>${escapeXml(props.eyebrow)}</text>
-  <text x="48" y="180" fill="#e2e8f0" font-size="64" ${SVG_FONT}>${escapeXml(props.title)}</text>
-  <text x="48" y="300" fill="#f8fafc" font-size="82" ${SVG_FONT}>${escapeXml(props.medianPrice)}</text>
-  <text x="48" y="380" fill="#94a3b8" font-size="28" ${SVG_FONT}>$/SQM: ${escapeXml(props.pricePerSqm)} · LEASE: ${escapeXml(props.leaseCommenceYear)} · MRT WALK: ${escapeXml(props.mrtWalk)}</text>
-  <text x="48" y="590" fill="#94a3b8" font-size="24" ${SVG_FONT}>HDB Resale Explorer · Data window ${escapeXml(props.dataWindow)}</text>
+  <text x="48" y="80" fill="#94a3b8" font-size="30">${escapeXml(props.eyebrow)}</text>
+  <text x="48" y="180" fill="#e2e8f0" font-size="64">${escapeXml(props.title)}</text>
+  <text x="48" y="300" fill="#f8fafc" font-size="82">${escapeXml(props.medianPrice)}</text>
+  <text x="48" y="380" fill="#94a3b8" font-size="28">$/SQM: ${escapeXml(props.pricePerSqm)} · LEASE: ${escapeXml(props.leaseCommenceYear)} · MRT WALK: ${escapeXml(props.mrtWalk)}</text>
+  <text x="48" y="590" fill="#94a3b8" font-size="24">HDB Resale Explorer · Data window ${escapeXml(props.dataWindow)}</text>
 </svg>`;
 }
 
@@ -80,16 +77,16 @@ function compareCardSvg(input: {
   bTransactions: number;
 }): string {
   const delta = input.aMedian - input.bMedian;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
   <rect width="1200" height="630" fill="#111827"/>
-  <text x="48" y="72" fill="#cbd5e1" font-size="32" ${SVG_FONT}>Town Comparison</text>
-  <text x="48" y="130" fill="white" font-size="40" ${SVG_FONT}>${escapeXml(input.canonicalA)}</text>
-  <text x="48" y="200" fill="white" font-size="56" ${SVG_FONT}>${escapeXml(formatCurrency(input.aMedian))}</text>
-  <text x="48" y="250" fill="#cbd5e1" font-size="30" ${SVG_FONT}>Transactions: ${formatCount(input.aTransactions)}</text>
-  <text x="648" y="130" fill="white" font-size="40" ${SVG_FONT}>${escapeXml(input.canonicalB)}</text>
-  <text x="648" y="200" fill="white" font-size="56" ${SVG_FONT}>${escapeXml(formatCurrency(input.bMedian))}</text>
-  <text x="648" y="250" fill="#cbd5e1" font-size="30" ${SVG_FONT}>Transactions: ${formatCount(input.bTransactions)}</text>
-  <text x="48" y="580" fill="#cbd5e1" font-size="36" ${SVG_FONT}>Delta: ${escapeXml(formatCurrency(delta))}</text>
+  <text x="48" y="72" fill="#cbd5e1" font-size="32">Town Comparison</text>
+  <text x="48" y="130" fill="white" font-size="40">${escapeXml(input.canonicalA)}</text>
+  <text x="48" y="200" fill="white" font-size="56">${escapeXml(formatCurrency(input.aMedian))}</text>
+  <text x="48" y="250" fill="#cbd5e1" font-size="30">Transactions: ${formatCount(input.aTransactions)}</text>
+  <text x="648" y="130" fill="white" font-size="40">${escapeXml(input.canonicalB)}</text>
+  <text x="648" y="200" fill="white" font-size="56">${escapeXml(formatCurrency(input.bMedian))}</text>
+  <text x="648" y="250" fill="#cbd5e1" font-size="30">Transactions: ${formatCount(input.bTransactions)}</text>
+  <text x="48" y="580" fill="#cbd5e1" font-size="36">Delta: ${escapeXml(formatCurrency(delta))}</text>
 </svg>`;
 }
 
