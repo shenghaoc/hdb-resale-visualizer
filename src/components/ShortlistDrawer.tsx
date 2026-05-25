@@ -842,7 +842,7 @@ export function ShortlistDrawer({
       // Match only at the start of the cell (spreadsheet apps evaluate formulas based on the first
       // character of the cell, not per line) while accounting for leading whitespace, which Excel
       // and Google Sheets typically trim before formula evaluation.
-      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
+      const safeNotes = (row.item.notes || "").replace(/^[ \t]*[=+\-@\t\r|]/gm, "'$&");
 
       return [
         `"${row.block.block} ${row.block.streetName}"`,
