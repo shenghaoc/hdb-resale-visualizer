@@ -160,7 +160,8 @@ export default {
         .on('meta[property="og:title"]', { element(el) { el.setAttribute("content", seo.title); } })
         .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
         .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
-        .on("head", { element(el) { el.append(`<link rel="canonical" href="${canonicalUrl}"><script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`, { html: true }); } })
+        .on('link[rel="canonical"]', { element(el) { el.setAttribute("href", canonicalUrl); } })
+        .on("head", { element(el) { el.append(`<script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`, { html: true }); } })
         .transform(assetResponse);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Worker error";
