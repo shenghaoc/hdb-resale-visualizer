@@ -15,7 +15,8 @@ import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-station
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
-import { handleBlockOg, handleCompareOg } from './og';
+import { handleBlockOg, handleCompareOg } from "./og";
+import { buildSeoMeta, canonicalUrlForRoute, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
 
 // ---- route patterns -------------------------------------------------------
 
@@ -74,7 +75,20 @@ function buildPagesContext(
   };
 }
 
-// ---- fetch handler --------------------------------------------------------
+async function getManifest(env: Env): Promise<ManifestLike | null> {
+  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{ json: string }>();
+  return row ? (JSON.parse(row.json) as ManifestLike) : null;
+}
+
+async function getBlock(env: Env, addressKey: string): Promise<BlockSummaryLike | null> {
+  const row = await env.DB.prepare("SELECT address_key,town,display_name,median_price,transaction_count,available_min_month,available_max_month,floor_area_min,floor_area_max FROM blocks WHERE address_key = ?1").bind(addressKey).first<{ address_key: string; town: string; display_name: string | null; median_price: number; transaction_count: number; available_min_month: string; available_max_month: string; floor_area_min: number; floor_area_max: number }>();
+  if (!row) return null;
+  return { addressKey: row.address_key, town: row.town, displayName: row.display_name, medianPrice: row.median_price, transactionCount: row.transaction_count, availableDateRange: [row.available_min_month, row.available_max_month], floorAreaRange: [row.floor_area_min, row.floor_area_max] };
+}
+
+function textResponse(body: string, contentType: string): Response {
+  return new Response(body, { headers: { "content-type": `${contentType}; charset=utf-8`, "cache-control": "public, max-age=300, s-maxage=3600" } });
+}
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -104,15 +118,53 @@ export default {
         }
       }
 
-      // Not an API route — serve from static assets with SPA fallback.
-      return env.ASSETS.fetch(request);
+      if (url.pathname === "/robots.txt") {
+        return textResponse(`User-agent: *\nAllow: /\nSitemap: ${url.origin}/sitemap.xml\n`, "text/plain");
+      }
+
+      if (url.pathname === "/sitemap.xml") {
+        const cacheKey = new Request(url.toString());
+        const cached = await caches.default.match(cacheKey);
+        if (cached) return cached;
+
+        const manifest = await getManifest(env);
+        const generatedAt = manifest?.generatedAt;
+        const towns = manifest?.filterOptions?.towns ?? [];
+        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks").all<{ address_key: string; town: string }>();
+        const urls = [
+          { loc: `${url.origin}/`, lastmod: generatedAt },
+          ...towns.map((town) => ({ loc: canonicalUrlForRoute(url.origin, town, null, null), lastmod: generatedAt })),
+          ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(url.origin, row.town, row.address_key, null), lastmod: generatedAt })),
+        ];
+        const response = textResponse(sitemapXml(urls), "application/xml");
+        await caches.default.put(cacheKey, response.clone());
+        return response;
+      }
+
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (!(assetResponse.headers.get("content-type") ?? "").includes("text/html")) return assetResponse;
+
+      const town = url.searchParams.get("town");
+      const selected = url.searchParams.get("selected");
+      const compareTown = url.searchParams.get("compareTown");
+      if (!town && !selected && !compareTown) return assetResponse;
+
+      const [manifest, block] = await Promise.all([getManifest(env), selected ? getBlock(env, selected) : Promise.resolve(null)]);
+      const seo = buildSeoMeta({ town, block, manifest });
+      if (!seo) return assetResponse;
+      const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
+
+      return new HTMLRewriter()
+        .on("title", { element(el) { el.setInnerContent(seo.title); } })
+        .on('meta[name="description"]', { element(el) { el.setAttribute("content", seo.description); } })
+        .on('meta[property="og:title"]', { element(el) { el.setAttribute("content", seo.title); } })
+        .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
+        .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
+        .on("head", { element(el) { el.append(`<link rel="canonical" href="${canonicalUrl}"><script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`, { html: true }); } })
+        .transform(assetResponse);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Worker error";
-      console.error("Worker fetch handler error:", message);
-      return new Response(JSON.stringify({ error: message }), {
-        status: 500,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return new Response(JSON.stringify({ error: message }), { status: 500, headers: { "content-type": "application/json; charset=utf-8" } });
     }
   },
 };
