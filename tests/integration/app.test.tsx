@@ -363,7 +363,7 @@ describe("App detail loading", () => {
     await user.click(screen.getByRole("button", { name: "Mock geolocate" }));
 
     await waitFor(() => {
-      expect(dataMocks.fetchBlocksBySearch).toHaveBeenCalled();
+      expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
       expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
     });
     expect(new URLSearchParams(window.location.search).get("search")).toBe("near me");

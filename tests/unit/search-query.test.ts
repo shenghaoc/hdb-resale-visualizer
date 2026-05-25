@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildSearchQuery, SEARCH_PREDICATE_OWNERSHIP, validateSearchRequest } from "../../functions/_lib/search";
+import {
+  buildSearchQuery,
+  parseSearchRequest,
+  SEARCH_PREDICATE_OWNERSHIP,
+  validateSearchRequest,
+} from "../../functions/_lib/search";
 
 describe("search query builder", () => {
   it("builds coarse WHERE and bindings", () => {
@@ -20,6 +25,15 @@ describe("search query builder", () => {
       mrtMax: null, remainingLeaseMin: null, startMonth: null, endMonth: null,
     });
     expect(err).toBe("invalid budgetMin");
+  });
+
+  it("rejects oversized query parameters with 400", () => {
+    const longTown = "a".repeat(300);
+    const parsed = parseSearchRequest(new URL(`http://localhost/api/search?town=${longTown}`));
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.error).toBe("query parameter too long");
+    }
   });
 
   it("keeps server/client predicate ownership disjoint", () => {

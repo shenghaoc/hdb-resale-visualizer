@@ -112,17 +112,8 @@ export function useFilterPipeline({
   const profileReadyForRecommendations =
     resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
-  const { blocks, loadError, searchTruncated } = useBlockLoading({
-    manifest,
-    townFilter: effectiveFilters.town,
-    debouncedSearch,
-    userLocationPresent: Boolean(userLocation),
-    selectedAddressKey: rawFilters.selectedAddressKey,
-    sortedTowns,
-    savedVisible,
-    shortlistCount,
-    needsAllBlocksForRecommendations: profileReadyForRecommendations,
-    coarseSearchParams: {
+  const coarseSearchParams = useMemo(
+    () => ({
       flatType: effectiveFilters.flatType,
       flatModel: effectiveFilters.flatModel,
       budgetMin: effectiveFilters.budgetMin,
@@ -133,7 +124,32 @@ export function useFilterPipeline({
       startMonth: effectiveFilters.startMonth,
       endMonth: effectiveFilters.endMonth,
       mrtMax: effectiveFilters.mrtMax,
-    },
+    }),
+    [
+      effectiveFilters.flatType,
+      effectiveFilters.flatModel,
+      effectiveFilters.budgetMin,
+      effectiveFilters.budgetMax,
+      effectiveFilters.areaMin,
+      effectiveFilters.areaMax,
+      effectiveFilters.remainingLeaseMin,
+      effectiveFilters.startMonth,
+      effectiveFilters.endMonth,
+      effectiveFilters.mrtMax,
+    ],
+  );
+
+  const { blocks, loadError, searchTruncated } = useBlockLoading({
+    manifest,
+    townFilter: effectiveFilters.town,
+    debouncedSearch,
+    userLocationPresent: Boolean(userLocation),
+    selectedAddressKey: rawFilters.selectedAddressKey,
+    sortedTowns,
+    savedVisible,
+    shortlistCount,
+    needsAllBlocksForRecommendations: profileReadyForRecommendations,
+    coarseSearchParams,
   });
 
   // O(1) address key lookup.

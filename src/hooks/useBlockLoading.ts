@@ -42,6 +42,8 @@ export function useBlockLoading({
   const [loadError, setLoadError] = useState<string | null>(null);
   const [searchTruncated, setSearchTruncated] = useState(false);
   const blocksRef = useRef<BlockSummary[]>([]);
+  const loadedTownsRef = useRef<Set<string>>(new Set());
+  const blocksSourceRef = useRef<"none" | "search" | "town-partial" | "full">("none");
 
   const hasGeographic = useMemo(
     () => Boolean(debouncedSearch.trim() || userLocationPresent),
@@ -83,20 +85,14 @@ export function useBlockLoading({
     async function loadBlocks() {
       try {
         const currentBlocks = blocksRef.current;
-        const hasAllBlocks = currentBlocks.length >= totalBlocks;
+        const hasFullCorpus =
+          blocksSourceRef.current === "full" && currentBlocks.length >= totalBlocks;
 
         if (needsAllBlocks) {
-          if (hasAllBlocks) return;
+          if (hasFullCorpus) return;
           setLoadError(null);
-          if (!townFilter && hasCoarseSearchFilters) {
-            const result = await fetchBlocksBySearch({ town: "", ...coarseSearchParams });
-            if (isMounted) {
-              blocksRef.current = result.blocks;
-              setBlocks(result.blocks);
-              setSearchTruncated(result.truncated);
-            }
-            return;
-          }
+          loadedTownsRef.current.clear();
+          blocksSourceRef.current = "full";
           const nextBlocks = await fetchBlockSummaries();
           if (isMounted) {
             blocksRef.current = nextBlocks;
@@ -106,18 +102,31 @@ export function useBlockLoading({
           return;
         }
 
-        if (!effectiveTown || hasAllBlocks) return;
-        if (currentBlocks.some((block) => block.town === effectiveTown)) return;
+        if (!effectiveTown && hasCoarseSearchFilters) {
+          setLoadError(null);
+          loadedTownsRef.current.clear();
+          blocksSourceRef.current = "search";
+          const result = await fetchBlocksBySearch({ town: "", ...coarseSearchParams });
+          if (isMounted) {
+            blocksRef.current = result.blocks;
+            setBlocks(result.blocks);
+            setSearchTruncated(result.truncated);
+          }
+          return;
+        }
+
+        if (!effectiveTown || hasFullCorpus) return;
+        if (loadedTownsRef.current.has(effectiveTown)) return;
 
         setLoadError(null);
         const nextBlocks = await fetchBlocksByTown(effectiveTown);
         if (!isMounted || !Array.isArray(nextBlocks)) return;
 
+        loadedTownsRef.current.add(effectiveTown);
+        blocksSourceRef.current = "town-partial";
         setBlocks((current) => {
-          if (current.length >= totalBlocks || current.some((block) => block.town === effectiveTown)) {
-            return current;
-          }
-          const updated = [...current, ...nextBlocks];
+          const withoutTown = current.filter((block) => block.town !== effectiveTown);
+          const updated = [...withoutTown, ...nextBlocks];
           blocksRef.current = updated;
           return updated;
         });
