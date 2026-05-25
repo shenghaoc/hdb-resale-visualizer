@@ -38,16 +38,6 @@ export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): R
   });
 }
 
-/**
- * Row shape of the `shortlists` table (migration 0003). Holds the opt-in cloud
- * backup of a user's shortlist, keyed by the SHA-256 hash of their sync code.
- */
-export type ShortlistRow = {
-  code_hash: string;
-  items_json: string;
-  updated_at: string;
-};
-
 export function notFound(message = "Not Found"): Response {
   return new Response(JSON.stringify({ error: message }), {
     status: 404,
