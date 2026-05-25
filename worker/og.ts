@@ -40,7 +40,8 @@ async function readManifestMetadata(env: Env): Promise<{ version: string; dataWi
     try {
       const data = JSON.parse(row.json);
       if (data && typeof data === "object" && !Array.isArray(data)) {
-        Object.assign(parsed, data);
+        parsed.generatedAt = (data as ManifestJson).generatedAt;
+        parsed.dataWindow = (data as ManifestJson).dataWindow;
       }
     } catch (err) {
       console.error("Failed to parse manifest JSON:", err);
@@ -58,9 +59,35 @@ export function resetOgManifestCacheForTests(): void {
   manifestCache = null;
 }
 
+function cacheOrigin(request: Request): string {
+  const url = new URL(request.url);
+  if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+    return url.origin;
+  }
+  return url.origin.replace(/^http:/, "https:");
+}
+
 function buildCacheKey(request: Request, key: string, version: string): Request {
-  const origin = new URL(request.url).origin;
-  return new Request(`${origin}/__og-cache/${key}?v=${encodeURIComponent(version)}`);
+  return new Request(`${cacheOrigin(request)}/__og-cache/${key}?v=${encodeURIComponent(version)}`);
+}
+
+async function readCache(cacheKey: Request): Promise<Response | undefined> {
+  if (typeof caches === "undefined") return undefined;
+  try {
+    return await caches.default.match(cacheKey);
+  } catch (err) {
+    console.warn("Cache match failed:", err);
+    return undefined;
+  }
+}
+
+function writeCache(ctx: ExecutionContext, cacheKey: Request, response: Response): void {
+  if (typeof caches === "undefined") return;
+  ctx.waitUntil(
+    caches.default.put(cacheKey, response.clone()).catch((err) => {
+      console.warn("Cache put failed:", err);
+    }),
+  );
 }
 
 function fallbackCard(request: Request): Response {
@@ -100,18 +127,18 @@ function compareCardSvg(input: {
 </svg>`;
 }
 
-export async function handleBlockOg(request: Request, env: Env, addressKey: string): Promise<Response> {
+export async function handleBlockOg(
+  request: Request,
+  env: Env,
+  addressKey: string,
+  ctx: ExecutionContext,
+): Promise<Response> {
   if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
 
   const { version, dataWindow } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version);
 
-  let cached: Response | undefined;
-  try {
-    cached = await caches.default.match(cacheKey);
-  } catch (err) {
-    console.warn("Cache match failed:", err);
-  }
+  const cached = await readCache(cacheKey);
   if (cached) return cached;
 
   const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?").bind(addressKey).first<BlockRow>();
@@ -119,15 +146,17 @@ export async function handleBlockOg(request: Request, env: Env, addressKey: stri
 
   const props = mapBlockToOgProps(rowToBlockSummary(row), dataWindow);
   const response = new Response(blockCardSvg(props), { headers: IMAGE_HEADERS });
-  try {
-    await caches.default.put(cacheKey, response.clone());
-  } catch (err) {
-    console.warn("Cache put failed:", err);
-  }
+  writeCache(ctx, cacheKey, response);
   return response;
 }
 
-export async function handleCompareOg(request: Request, env: Env, townA: string, townB: string): Promise<Response> {
+export async function handleCompareOg(
+  request: Request,
+  env: Env,
+  townA: string,
+  townB: string,
+  ctx: ExecutionContext,
+): Promise<Response> {
   if (townA.length > MAX_OG_TOWN_SLUG_LENGTH || townB.length > MAX_OG_TOWN_SLUG_LENGTH) {
     return fallbackCard(request);
   }
@@ -138,12 +167,7 @@ export async function handleCompareOg(request: Request, env: Env, townA: string,
   const { version } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(request, `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`, version);
 
-  let cached: Response | undefined;
-  try {
-    cached = await caches.default.match(cacheKey);
-  } catch (err) {
-    console.warn("Cache match failed:", err);
-  }
+  const cached = await readCache(cacheKey);
   if (cached) return cached;
 
   const rows = await env.DB.prepare("SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)")
@@ -179,10 +203,6 @@ export async function handleCompareOg(request: Request, env: Env, townA: string,
     }),
     { headers: IMAGE_HEADERS },
   );
-  try {
-    await caches.default.put(cacheKey, response.clone());
-  } catch (err) {
-    console.warn("Cache put failed:", err);
-  }
+  writeCache(ctx, cacheKey, response);
   return response;
 }
