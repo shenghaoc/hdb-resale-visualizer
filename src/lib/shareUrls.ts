@@ -100,3 +100,11 @@ export async function shareViaNavigator(
   await navigator.clipboard.writeText(url);
   return "copied";
 }
+
+export function buildBlockOgImageUrl(addressKey: string, baseUrl: string): string {
+  return `${baseUrl.replace(/\/$/, '')}/og/block/${encodeURIComponent(addressKey)}.png`;
+}
+
+export function buildCompareOgImageUrl(townA: string, townB: string, baseUrl: string): string {
+  return `${baseUrl.replace(/\/$/, '')}/og/compare/${encodeURIComponent(townA.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(townB.toLowerCase().replace(/\s+/g, '-'))}.png`;
+}

@@ -15,6 +15,7 @@ import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-station
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
+import { handleBlockOg, handleCompareOg } from './og';
 
 // ---- route patterns -------------------------------------------------------
 
@@ -73,6 +74,17 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     try {
       const url = new URL(request.url);
+
+      const blockOg = new URLPattern({ pathname: '/og/block/:addressKey.png' }).exec(url);
+      if (blockOg) {
+        const key = blockOg.pathname.groups.addressKey;
+        return key ? handleBlockOg(request, env, key) : Response.redirect(`${url.origin}/og-card.png`, 302);
+      }
+      const compareOg = new URLPattern({ pathname: '/og/compare/:townA/:townB.png' }).exec(url);
+      if (compareOg) {
+        const { townA, townB } = compareOg.pathname.groups;
+        return townA && townB ? handleCompareOg(request, env, townA, townB) : Response.redirect(`${url.origin}/og-card.png`, 302);
+      }
 
       // Try to match an API route.
       for (const { pattern, handler } of patterns) {
