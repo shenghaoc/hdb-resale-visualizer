@@ -30,12 +30,6 @@ function escapeXml(value: string): string {
     .replaceAll("'", "&apos;");
 }
 
-function canonicalSearch(params: Record<string, string>): string {
-  const search = new URLSearchParams(params);
-  search.set("v", QUERY_VERSION);
-  return `?${search.toString()}`;
-}
-
 export function canonicalUrlForRoute(
   origin: string,
   town?: string | null,
@@ -45,24 +39,25 @@ export function canonicalUrlForRoute(
   const cleanTown = sanitizeParam(town);
   const cleanSelected = sanitizeParam(selected);
   const cleanCompareTown = sanitizeParam(compareTown);
+  const url = new URL("/", origin);
 
   if (cleanTown && cleanSelected) {
-    return `${origin}/${canonicalSearch({ town: cleanTown, selected: cleanSelected })}`;
+    url.searchParams.set("town", cleanTown);
+    url.searchParams.set("selected", cleanSelected);
+  } else if (cleanTown && cleanCompareTown && cleanCompareTown.toUpperCase() !== cleanTown.toUpperCase()) {
+    url.searchParams.set("town", cleanTown);
+    url.searchParams.set("compareTown", cleanCompareTown);
+  } else if (cleanTown) {
+    url.searchParams.set("town", cleanTown);
+  } else if (cleanSelected) {
+    url.searchParams.set("selected", cleanSelected);
   }
 
-  if (cleanTown && cleanCompareTown && cleanCompareTown.toUpperCase() !== cleanTown.toUpperCase()) {
-    return `${origin}/${canonicalSearch({ town: cleanTown, compareTown: cleanCompareTown })}`;
+  if (url.searchParams.size > 0) {
+    url.searchParams.set("v", QUERY_VERSION);
   }
 
-  if (cleanTown) {
-    return `${origin}/${canonicalSearch({ town: cleanTown })}`;
-  }
-
-  if (cleanSelected) {
-    return `${origin}/${canonicalSearch({ selected: cleanSelected })}`;
-  }
-
-  return `${origin}/`;
+  return url.toString();
 }
 
 export function serializeJsonLdForScript(jsonLd: unknown): string {

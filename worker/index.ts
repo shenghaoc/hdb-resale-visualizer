@@ -90,6 +90,32 @@ function textResponse(body: string, contentType: string): Response {
   return new Response(body, { headers: { "content-type": `${contentType}; charset=utf-8`, "cache-control": "public, max-age=300, s-maxage=3600" } });
 }
 
+function publicOrigin(url: URL): string {
+  if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+    return url.origin;
+  }
+  return url.origin.replace(/^http:/, "https:");
+}
+
+/** Paginate past D1's 10k-row cap so the sitemap includes every block. */
+async function fetchAllBlockRows(env: Env): Promise<Array<{ address_key: string; town: string }>> {
+  const blockRows: Array<{ address_key: string; town: string }> = [];
+  const pageSize = 10_000;
+  let offset = 0;
+
+  while (true) {
+    const chunk = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT ?1 OFFSET ?2")
+      .bind(pageSize, offset)
+      .all<{ address_key: string; town: string }>();
+    const results = chunk.results ?? [];
+    blockRows.push(...results);
+    if (results.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  return blockRows;
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
@@ -131,13 +157,12 @@ export default {
         const manifest = await getManifest(env);
         const generatedAt = manifest?.generatedAt;
         const towns = manifest?.filterOptions?.towns ?? [];
-        // D1 caps results at 10k rows and 1MB response size; LIMIT is set to 10000 to avoid silent truncation.
-        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT 10000").all<{ address_key: string; town: string }>();
-        const origin = url.hostname === "localhost" ? url.origin : url.origin.replace(/^http:/, "https:");
+        const blockRows = await fetchAllBlockRows(env);
+        const origin = publicOrigin(url);
         const urls = [
           { loc: `${origin}/`, lastmod: generatedAt },
           ...towns.map((town) => ({ loc: canonicalUrlForRoute(origin, town, null, null), lastmod: generatedAt })),
-          ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(origin, row.town, row.address_key, null), lastmod: generatedAt })),
+          ...blockRows.map((row) => ({ loc: canonicalUrlForRoute(origin, row.town, row.address_key, null), lastmod: generatedAt })),
         ];
         const response = textResponse(sitemapXml(urls), "application/xml");
         // Sitemap changes infrequently; use longer cache lifetimes to reduce D1 reads.
@@ -154,6 +179,7 @@ export default {
 
       const assetResponse = await env.ASSETS.fetch(request);
       if ([204, 304].includes(assetResponse.status)) return assetResponse;
+      if (assetResponse.status >= 300 && assetResponse.status < 400) return assetResponse;
       if (!(assetResponse.headers.get("content-type") ?? "").includes("text/html")) return assetResponse;
 
       const town = url.searchParams.get("town");
@@ -175,10 +201,20 @@ export default {
         }
         const seo = buildSeoMeta({ town, block, manifest });
         if (!seo) return assetResponse;
-        // Use the canonical town from D1 when a block was resolved, so the
-        // canonical URL reflects the authoritative town name — prevents
-        // query-parameter injection from polluting SEO metadata.
-        const canonicalUrl = canonicalUrlForRoute(url.origin, block ? block.town : town, selected, compareTown);
+        const validTowns = manifest?.filterOptions?.towns ?? [];
+        const authoritativeTown =
+          block?.town ??
+          (town ? validTowns.find((entry) => entry.toUpperCase() === town.toUpperCase()) ?? town : null);
+        const authoritativeCompareTown =
+          compareTown
+            ? validTowns.find((entry) => entry.toUpperCase() === compareTown.toUpperCase()) ?? compareTown
+            : null;
+        const canonicalUrl = canonicalUrlForRoute(
+          publicOrigin(url),
+          authoritativeTown,
+          selected,
+          authoritativeCompareTown,
+        );
 
         const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
         return new HTMLRewriter()
