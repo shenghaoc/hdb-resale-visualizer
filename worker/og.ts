@@ -37,8 +37,8 @@ function formatCurrency(value: number | null | undefined): string {
 }
 
 function formatWalkMinutes(seconds: number | null): string {
-  if (seconds === null || seconds <= 0) return "N/A";
-  return `${Math.round(seconds / 60)} min`;
+  if (seconds === null) return "N/A";
+  return `${Math.max(0, Math.round(seconds / 60))} min`;
 }
 
 function median(values: number[]): number | null {
