@@ -15,7 +15,14 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
   try {
     const url = new URL(request.url);
     const parsed = parseSearchRequest(url);
-    const validationError = validateSearchRequest(parsed);
+    if (!parsed.ok) {
+      return new Response(JSON.stringify({ error: parsed.error }), {
+        status: 400,
+        headers: { "content-type": "application/json; charset=utf-8" },
+      });
+    }
+
+    const validationError = validateSearchRequest(parsed.request);
     if (validationError) {
       return new Response(JSON.stringify({ error: validationError }), {
         status: 400,
@@ -23,7 +30,7 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
       });
     }
 
-    const { whereSql, bindings } = buildSearchQuery(parsed);
+    const { whereSql, bindings } = buildSearchQuery(parsed.request);
     const sql = `SELECT * FROM blocks ${whereSql} ORDER BY median_price DESC, transaction_count DESC LIMIT ?`;
     const result = await env.DB.prepare(sql).bind(...bindings, SEARCH_RESULT_LIMIT + 1).all();
     const rows = (result.results ?? []) as Parameters<typeof rowToBlockSummary>[0][];
