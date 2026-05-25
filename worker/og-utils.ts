@@ -45,7 +45,7 @@ export function formatWalkMinutes(seconds: number | null): string {
 
 /** Volume-weighted median of block-level medians (weights = transaction_count). */
 export function transactionWeightedMedian(rows: TownAggregateRow[]): number | null {
-  const weighted = rows.filter((row) => row.transaction_count > 0);
+  const weighted = rows.filter((row) => typeof row.median_price === "number" && row.transaction_count > 0);
   if (weighted.length === 0) return null;
 
   const totalWeight = weighted.reduce((sum, row) => sum + row.transaction_count, 0);
@@ -63,8 +63,11 @@ export function transactionWeightedMedian(rows: TownAggregateRow[]): number | nu
 
 export function mapBlockToOgProps(block: ReturnType<typeof rowToBlockSummary>, dataWindow: DataWindow) {
   const walkingSeconds =
-    block.nearestMrt && typeof block.nearestMrt === "object" && "walkingTimeSeconds" in block.nearestMrt
-      ? ((block.nearestMrt as { walkingTimeSeconds?: number }).walkingTimeSeconds ?? null)
+    block.nearestMrt &&
+    typeof block.nearestMrt === "object" &&
+    "walkingTimeSeconds" in block.nearestMrt &&
+    typeof (block.nearestMrt as { walkingTimeSeconds?: unknown }).walkingTimeSeconds === "number"
+      ? ((block.nearestMrt as { walkingTimeSeconds: number }).walkingTimeSeconds)
       : null;
 
   return {

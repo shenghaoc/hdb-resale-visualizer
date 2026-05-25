@@ -17,7 +17,7 @@ type ManifestJson = {
 /** SVG responses; route suffix is `.svg` until PNG rendering is available. */
 const IMAGE_HEADERS = {
   "content-type": "image/svg+xml; charset=utf-8",
-  "cache-control": "public, max-age=31536000, immutable",
+  "cache-control": "public, max-age=86400",
 };
 
 const MAX_OG_ADDRESS_KEY_LENGTH = 128;
@@ -35,7 +35,14 @@ async function readManifestMetadata(env: Env): Promise<{ version: string; dataWi
   }
 
   const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{ json: string }>();
-  const parsed = row ? (JSON.parse(row.json) as ManifestJson) : {};
+  const parsed: ManifestJson = {};
+  if (row) {
+    try {
+      Object.assign(parsed, JSON.parse(row.json) as ManifestJson);
+    } catch (err) {
+      console.error("Failed to parse manifest JSON:", err);
+    }
+  }
   const value = {
     version: parsed.generatedAt ?? "unknown",
     dataWindow: parsed.dataWindow ?? { minMonth: "N/A", maxMonth: "N/A" },
@@ -94,9 +101,14 @@ export async function handleBlockOg(request: Request, env: Env, addressKey: stri
   if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
 
   const { version, dataWindow } = await readManifestMetadata(env);
-  const cacheKey = buildCacheKey(request, `block/${addressKey}`, version);
+  const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version);
 
-  const cached = await caches.default.match(cacheKey);
+  let cached: Response | undefined;
+  try {
+    cached = await caches.default.match(cacheKey);
+  } catch (err) {
+    console.warn("Cache match failed:", err);
+  }
   if (cached) return cached;
 
   const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?").bind(addressKey).first<BlockRow>();
@@ -104,7 +116,11 @@ export async function handleBlockOg(request: Request, env: Env, addressKey: stri
 
   const props = mapBlockToOgProps(rowToBlockSummary(row), dataWindow);
   const response = new Response(blockCardSvg(props), { headers: IMAGE_HEADERS });
-  await caches.default.put(cacheKey, response.clone());
+  try {
+    await caches.default.put(cacheKey, response.clone());
+  } catch (err) {
+    console.warn("Cache put failed:", err);
+  }
   return response;
 }
 
@@ -117,9 +133,14 @@ export async function handleCompareOg(request: Request, env: Env, townA: string,
   const canonicalB = townFilenameToCanonical(townB);
 
   const { version } = await readManifestMetadata(env);
-  const cacheKey = buildCacheKey(request, `compare/${townA}/${townB}`, version);
+  const cacheKey = buildCacheKey(request, `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`, version);
 
-  const cached = await caches.default.match(cacheKey);
+  let cached: Response | undefined;
+  try {
+    cached = await caches.default.match(cacheKey);
+  } catch (err) {
+    console.warn("Cache match failed:", err);
+  }
   if (cached) return cached;
 
   const rows = await env.DB.prepare("SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)")
@@ -155,6 +176,10 @@ export async function handleCompareOg(request: Request, env: Env, townA: string,
     }),
     { headers: IMAGE_HEADERS },
   );
-  await caches.default.put(cacheKey, response.clone());
+  try {
+    await caches.default.put(cacheKey, response.clone());
+  } catch (err) {
+    console.warn("Cache put failed:", err);
+  }
   return response;
 }
