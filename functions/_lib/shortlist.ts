@@ -13,9 +13,11 @@ import {
   MAX_ADDRESS_KEY_LENGTH,
   MAX_NOTE_LENGTH,
   MAX_SHORTLIST_ITEMS,
+  MAX_SYNC_BODY_BYTES,
   SYNC_CODE_BYTES,
   SYNC_CODE_PATTERN,
 } from "../../shared/shortlist-limits";
+import { mergeShortlists } from "../../shared/shortlist-merge";
 import type { ShortlistItem } from "../../shared/data-types";
 
 const note = z.string().max(MAX_NOTE_LENGTH);
@@ -97,4 +99,102 @@ export function parseStoredItems(itemsJson: string): ShortlistItem[] {
     }
   }
   return items.slice(0, MAX_SHORTLIST_ITEMS);
+}
+
+/**
+ * Minimal structural view of the D1 surface the handlers touch. Defined here
+ * (rather than depending on the ambient `D1Database`) so the request-free sync
+ * logic can be unit-tested with an in-memory fake.
+ */
+type SyncStatement = {
+  bind: (...args: unknown[]) => SyncStatement;
+  first: <T>() => Promise<T | null>;
+  run: () => Promise<unknown>;
+};
+export type SyncDB = { prepare: (sql: string) => SyncStatement };
+
+export type SyncResult = { status: number; body: Record<string, unknown> };
+
+/**
+ * Core logic for `POST /api/shortlist`, decoupled from the Worker request so it
+ * is directly testable. `bodyText` is the raw request body.
+ */
+export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise<SyncResult> {
+  if (bodyText.length > MAX_SYNC_BODY_BYTES) {
+    return { status: 413, body: { error: "Payload too large" } };
+  }
+
+  let raw: unknown;
+  try {
+    raw = JSON.parse(bodyText);
+  } catch {
+    return { status: 400, body: { error: "Invalid JSON" } };
+  }
+
+  const parsed = shortlistPushSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { status: 400, body: { error: "Invalid shortlist payload" } };
+  }
+
+  const { syncCode: providedCode, items } = parsed.data;
+  const now = new Date().toISOString();
+
+  try {
+    if (!providedCode) {
+      const syncCode = generateSyncCode();
+      const codeHash = await hashSyncCode(syncCode);
+      const merged = mergeShortlists(items, []);
+      await db
+        .prepare("INSERT INTO shortlists (code_hash, items_json, updated_at) VALUES (?, ?, ?)")
+        .bind(codeHash, JSON.stringify(merged), now)
+        .run();
+      return { status: 200, body: { syncCode, items: merged } };
+    }
+
+    const codeHash = await hashSyncCode(providedCode);
+    const row = await db
+      .prepare("SELECT items_json FROM shortlists WHERE code_hash = ?")
+      .bind(codeHash)
+      .first<{ items_json: string }>();
+
+    if (!row) {
+      return { status: 404, body: { error: "Unknown sync code" } };
+    }
+
+    const merged = mergeShortlists(items, parseStoredItems(row.items_json));
+    await db
+      .prepare("UPDATE shortlists SET items_json = ?, updated_at = ? WHERE code_hash = ?")
+      .bind(JSON.stringify(merged), now, codeHash)
+      .run();
+
+    return { status: 200, body: { syncCode: providedCode, items: merged } };
+  } catch {
+    return { status: 500, body: { error: "Shortlist sync failed" } };
+  }
+}
+
+/**
+ * Core logic for `GET /api/shortlist/:syncCode`. A malformed code and a
+ * valid-but-missing code both return 404 to avoid leaking which is which.
+ */
+export async function handleShortlistGet(db: SyncDB, code: string | undefined): Promise<SyncResult> {
+  if (!code || !isValidSyncCode(code)) {
+    return { status: 404, body: { error: "Unknown sync code" } };
+  }
+
+  try {
+    const codeHash = await hashSyncCode(code);
+    const row = await db
+      .prepare("SELECT items_json FROM shortlists WHERE code_hash = ?")
+      .bind(codeHash)
+      .first<{ items_json: string }>();
+
+    if (!row) {
+      return { status: 404, body: { error: "Unknown sync code" } };
+    }
+
+    return { status: 200, body: { items: parseStoredItems(row.items_json) } };
+  } catch {
+    return { status: 500, body: { error: "Shortlist lookup failed" } };
+  }
 }
