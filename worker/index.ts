@@ -124,25 +124,33 @@ export default {
 
       if (url.pathname === "/sitemap.xml") {
         const cacheKey = new Request(url.toString());
-        const cached = await caches.default.match(cacheKey);
+        const cache = typeof caches !== "undefined" ? caches.default : null;
+        const cached = cache ? await cache.match(cacheKey) : null;
         if (cached) return cached;
 
         const manifest = await getManifest(env);
         const generatedAt = manifest?.generatedAt;
         const towns = manifest?.filterOptions?.towns ?? [];
-        // D1 all() caps at ~49k rows / 1 MB; LIMIT documents intent until sub-sitemaps are needed.
-        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT 49000").all<{ address_key: string; town: string }>();
+        // D1 caps results at 10k rows and 1MB response size; LIMIT is set to 10000 to avoid silent truncation.
+        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT 10000").all<{ address_key: string; town: string }>();
         const urls = [
           { loc: `${url.origin}/`, lastmod: generatedAt },
           ...towns.map((town) => ({ loc: canonicalUrlForRoute(url.origin, town, null, null), lastmod: generatedAt })),
           ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(url.origin, row.town, row.address_key, null), lastmod: generatedAt })),
         ];
         const response = textResponse(sitemapXml(urls), "application/xml");
-        ctx.waitUntil(caches.default.put(cacheKey, response.clone()));
+        if (cache) {
+          ctx.waitUntil(
+            cache.put(cacheKey, response.clone()).catch((err) => {
+              console.error("Sitemap cache put failed:", err);
+            }),
+          );
+        }
         return response;
       }
 
       const assetResponse = await env.ASSETS.fetch(request);
+      if ([204, 304].includes(assetResponse.status)) return assetResponse;
       if (!(assetResponse.headers.get("content-type") ?? "").includes("text/html")) return assetResponse;
 
       const town = url.searchParams.get("town");
@@ -171,7 +179,7 @@ export default {
           .on("head", {
             element(el) {
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
-              el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll('"', "&quot;")}">`, {
+              el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}">`, {
                 html: true,
               });
             },

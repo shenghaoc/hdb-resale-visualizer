@@ -86,7 +86,7 @@ export function buildSeoMeta(input: {
   manifest?: ManifestLike | null;
 }) {
   const range = input.block?.availableDateRange ?? input.manifest?.availableDateRange;
-  const windowText = range ? `${range[0]} to ${range[1]}` : "latest available window";
+  const windowText = range && range[0] && range[1] ? `${range[0]} to ${range[1]}` : "latest available window";
 
   if (input.block) {
     const blockName = input.block.displayName ?? input.block.addressKey;
