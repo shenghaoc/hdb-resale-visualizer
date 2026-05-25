@@ -24,7 +24,9 @@ describe("seo worker helpers", () => {
   it("escapes closing script sequences in json-ld", () => {
     const serialized = serializeJsonLdForScript({ name: "</script><script>alert(1)" });
     expect(serialized).not.toContain("</script>");
-    expect(serialized).toContain("<\\/script>");
+    expect(serialized).not.toContain("<script>");
+    expect(serialized).toContain("\\u003c");
+    expect(serialized).toContain("\\u003e");
   });
 
   it("serializes sitemap with required loc entries", () => {

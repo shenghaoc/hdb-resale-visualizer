@@ -66,7 +66,7 @@ export function canonicalUrlForRoute(
 }
 
 export function serializeJsonLdForScript(jsonLd: unknown): string {
-  return JSON.stringify(jsonLd).replace(/<\//g, "<\\/");
+  return JSON.stringify(jsonLd).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
 }
 
 export function sitemapXml(urls: Array<{ loc: string; lastmod?: string }>): string {

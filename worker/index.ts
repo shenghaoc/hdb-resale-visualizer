@@ -133,12 +133,15 @@ export default {
         const towns = manifest?.filterOptions?.towns ?? [];
         // D1 caps results at 10k rows and 1MB response size; LIMIT is set to 10000 to avoid silent truncation.
         const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT 10000").all<{ address_key: string; town: string }>();
+        const origin = url.hostname === "localhost" ? url.origin : url.origin.replace(/^http:/, "https:");
         const urls = [
-          { loc: `${url.origin}/`, lastmod: generatedAt },
-          ...towns.map((town) => ({ loc: canonicalUrlForRoute(url.origin, town, null, null), lastmod: generatedAt })),
-          ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(url.origin, row.town, row.address_key, null), lastmod: generatedAt })),
+          { loc: `${origin}/`, lastmod: generatedAt },
+          ...towns.map((town) => ({ loc: canonicalUrlForRoute(origin, town, null, null), lastmod: generatedAt })),
+          ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(origin, row.town, row.address_key, null), lastmod: generatedAt })),
         ];
         const response = textResponse(sitemapXml(urls), "application/xml");
+        // Sitemap changes infrequently; use longer cache lifetimes to reduce D1 reads.
+        response.headers.set("cache-control", "public, max-age=86400, s-maxage=604800");
         if (cache) {
           ctx.waitUntil(
             cache.put(cacheKey, response.clone()).catch((err) => {
@@ -160,10 +163,22 @@ export default {
 
       try {
         const block = selected ? await getBlock(env, selected) : null;
-        const manifest = block ? null : await getManifest(env);
+        const manifest = await getManifest(env);
+        if (manifest) {
+          const validTowns = manifest.filterOptions?.towns ?? [];
+          if (town && !validTowns.some((t) => t.toUpperCase() === town.toUpperCase())) {
+            return assetResponse;
+          }
+          if (compareTown && !validTowns.some((t) => t.toUpperCase() === compareTown.toUpperCase())) {
+            return assetResponse;
+          }
+        }
         const seo = buildSeoMeta({ town, block, manifest });
         if (!seo) return assetResponse;
-        const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
+        // Use the canonical town from D1 when a block was resolved, so the
+        // canonical URL reflects the authoritative town name — prevents
+        // query-parameter injection from polluting SEO metadata.
+        const canonicalUrl = canonicalUrlForRoute(url.origin, block ? block.town : town, selected, compareTown);
 
         const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
         return new HTMLRewriter()
