@@ -134,7 +134,7 @@ export function fetchBlocksBySearch(
 ): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
   const search = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
-    if (v !== null && v !== "") search.set(k, String(v));
+    if (v !== null && v !== undefined && v !== "") search.set(k, String(v));
   }
   const query = search.toString();
   const cacheKey = query;

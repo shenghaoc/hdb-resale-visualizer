@@ -53,7 +53,7 @@ function parseBoundedParam(value: string | null): string | null {
 }
 
 function parseFiniteNumber(value: string | null): number | null {
-  if (!value) return null;
+  if (!value || value.trim() === "") return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
 }
@@ -164,7 +164,7 @@ export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
   }
 
   if (request.flatModel) {
-    where.push("EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ?)");
+    where.push("EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ? COLLATE NOCASE)");
     bindings.push(request.flatModel);
   }
   if (request.areaMin !== null) {
