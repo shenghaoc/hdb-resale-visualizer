@@ -48,6 +48,23 @@ export function useBlockLoading({
     [debouncedSearch, userLocationPresent],
   );
 
+  const hasCoarseSearchFilters = useMemo(
+    () =>
+      Boolean(
+        coarseSearchParams.flatType ||
+          coarseSearchParams.flatModel ||
+          coarseSearchParams.budgetMin !== null ||
+          coarseSearchParams.budgetMax !== null ||
+          coarseSearchParams.areaMin !== null ||
+          coarseSearchParams.areaMax !== null ||
+          coarseSearchParams.remainingLeaseMin !== null ||
+          coarseSearchParams.startMonth !== null ||
+          coarseSearchParams.endMonth !== null ||
+          coarseSearchParams.mrtMax !== null,
+      ),
+    [coarseSearchParams],
+  );
+
   useEffect(() => {
     if (!manifest) return;
 
@@ -71,7 +88,7 @@ export function useBlockLoading({
         if (needsAllBlocks) {
           if (hasAllBlocks) return;
           setLoadError(null);
-          if (!townFilter) {
+          if (!townFilter && hasCoarseSearchFilters) {
             const result = await fetchBlocksBySearch({ town: "", ...coarseSearchParams });
             if (isMounted) {
               blocksRef.current = result.blocks;
@@ -122,6 +139,7 @@ export function useBlockLoading({
     savedVisible,
     shortlistCount,
     hasGeographic,
+    hasCoarseSearchFilters,
     needsAllBlocksForRecommendations,
     coarseSearchParams,
   ]);

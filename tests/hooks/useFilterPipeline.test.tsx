@@ -7,7 +7,7 @@ import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
 vi.mock("@/hooks/useBlockLoading", () => ({
-  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null })),
+  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null, searchTruncated: false })),
 }));
 
 describe("useFilterPipeline", () => {
@@ -150,7 +150,7 @@ describe("useFilterPipeline", () => {
       },
     ] as unknown as BlockSummary[];
     
-    vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+    vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
     const { result } = renderHook(() => useFilterPipeline({
       manifest,

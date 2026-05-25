@@ -16,9 +16,9 @@ describe("/api/search handler", () => {
     const ctx = {
       request: new Request("http://localhost/api/search?town=BEDOK"),
       env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: rows }) }) }) } },
-    } as unknown as Record<string, unknown>;
+    } as unknown as Parameters<typeof onRequestGet>[0];
     const resp = await onRequestGet(ctx);
-    const body = await resp.json() as unknown as Record<string, unknown>;
+    const body = (await resp.json()) as { truncated: boolean; blocks: unknown[] };
     expect(body.truncated).toBe(true);
     expect(body.blocks).toHaveLength(2000);
   });

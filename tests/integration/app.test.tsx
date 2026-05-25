@@ -11,7 +11,7 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
-  fetchBlocksBySearch: vi.fn(),
+  fetchBlocksBySearch: vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
   townToFilename: (town: string) =>
@@ -253,6 +253,7 @@ describe("App detail loading", () => {
       transactions: [],
     });
     dataMocks.fetchBlocksByTown.mockResolvedValue(blocks);
+    dataMocks.fetchBlocksBySearch.mockResolvedValue({ blocks, truncated: false, limit: 2000 });
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
     vi.stubGlobal("localStorage", {
       getItem: vi.fn((key: string) =>
@@ -362,7 +363,7 @@ describe("App detail loading", () => {
     await user.click(screen.getByRole("button", { name: "Mock geolocate" }));
 
     await waitFor(() => {
-      expect(dataMocks.fetchBlockSummaries).toHaveBeenCalled();
+      expect(dataMocks.fetchBlocksBySearch).toHaveBeenCalled();
       expect(screen.getByTestId("map-view")).toHaveAttribute("data-show-block-markers", "true");
     });
     expect(new URLSearchParams(window.location.search).get("search")).toBe("near me");

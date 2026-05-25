@@ -8,7 +8,7 @@ import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/lib/i18n";
 
 vi.mock("@/hooks/useBlockLoading", () => ({
-  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null })),
+  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null, searchTruncated: false })),
 }));
 
 const t = vi.fn((key: string) => key) as unknown as Translator;
@@ -66,7 +66,7 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
 
 describe("useFilterPipeline — additional edge cases", () => {
   beforeEach(() => {
-    vi.mocked(useBlockLoading).mockReturnValue({ blocks: [], loadError: null });
+    vi.mocked(useBlockLoading).mockReturnValue({ blocks: [], loadError: null, searchTruncated: false });
     vi.clearAllMocks();
     mockLocation("");
   });
@@ -195,7 +195,7 @@ describe("useFilterPipeline — additional edge cases", () => {
   describe("filteredBlocks", () => {
     it("returns empty array when resultsVisible is false", () => {
       const blocks = [makeBlock({ addressKey: "addr-1", town: "BEDOK" })];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -218,7 +218,7 @@ describe("useFilterPipeline — additional edge cases", () => {
   describe("mapFilteredBlocks", () => {
     it("is empty when hasMapMarkerScope is false", () => {
       const blocks = [makeBlock({ addressKey: "addr-1" })];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -241,7 +241,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         makeBlock({ addressKey: "addr-1", town: "BEDOK" }),
         makeBlock({ addressKey: "addr-2", town: "BEDOK" }),
       ];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -265,7 +265,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         makeBlock({ addressKey: "addr-bedok", town: "BEDOK" }),
         makeBlock({ addressKey: "addr-tampines", town: "TAMPINES" }),
       ];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
       const { result } = renderHook(() =>
         useFilterPipeline({
@@ -288,7 +288,7 @@ describe("useFilterPipeline — additional edge cases", () => {
 
     it("does not append selectedAddressKey when it cannot be found in blocksByKey", () => {
       const blocks = [makeBlock({ addressKey: "addr-bedok", town: "BEDOK" })];
-      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null });
+      vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
 
       const { result } = renderHook(() =>
         useFilterPipeline({
