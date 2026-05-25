@@ -22,6 +22,32 @@ export function jsonResponse(body: JsonValue, init: ResponseInit = {}): Response
   });
 }
 
+/**
+ * JSON response for per-user runtime data (the opt-in shortlist sync).
+ * Unlike {@link jsonResponse}, this is never cached at the edge or shared —
+ * the payload is private to a single sync code.
+ */
+export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): Response {
+  return new Response(JSON.stringify(body), {
+    ...init,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      ...(init.headers ?? {}),
+    },
+  });
+}
+
+/**
+ * Row shape of the `shortlists` table (migration 0003). Holds the opt-in cloud
+ * backup of a user's shortlist, keyed by the SHA-256 hash of their sync code.
+ */
+export type ShortlistRow = {
+  code_hash: string;
+  items_json: string;
+  updated_at: string;
+};
+
 export function notFound(message = "Not Found"): Response {
   return new Response(JSON.stringify({ error: message }), {
     status: 404,
