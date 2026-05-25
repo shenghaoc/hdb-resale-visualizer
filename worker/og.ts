@@ -38,7 +38,10 @@ async function readManifestMetadata(env: Env): Promise<{ version: string; dataWi
   const parsed: ManifestJson = {};
   if (row) {
     try {
-      Object.assign(parsed, JSON.parse(row.json) as ManifestJson);
+      const data = JSON.parse(row.json);
+      if (data && typeof data === "object" && !Array.isArray(data)) {
+        Object.assign(parsed, data);
+      }
     } catch (err) {
       console.error("Failed to parse manifest JSON:", err);
     }
