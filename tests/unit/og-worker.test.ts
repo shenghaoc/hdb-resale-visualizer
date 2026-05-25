@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapBlockToOgProps } from "./og";
+import { mapBlockToOgProps, transactionWeightedMedian } from "../../worker/og";
 
 describe("mapBlockToOgProps", () => {
   it("maps core fields for card rendering", () => {
@@ -65,7 +65,7 @@ describe("mapBlockToOgProps", () => {
     expect(mapped.pricePerSqm).toBe("N/A");
   });
 
-  it("rounds very short walk times to 0 min instead of N/A", () => {
+  it("rounds very short walk times to under one minute instead of N/A", () => {
     const mapped = mapBlockToOgProps(
       {
         addressKey: "k",
@@ -93,5 +93,15 @@ describe("mapBlockToOgProps", () => {
     );
 
     expect(mapped.mrtWalk).toBe("< 1 min");
+  });
+});
+
+describe("transactionWeightedMedian", () => {
+  it("weights block medians by transaction volume", () => {
+    const median = transactionWeightedMedian([
+      { town: "A", median_price: 400_000, transaction_count: 1 },
+      { town: "A", median_price: 600_000, transaction_count: 9 },
+    ]);
+    expect(median).toBe(600_000);
   });
 });
