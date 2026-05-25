@@ -368,7 +368,7 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   for (const [index, datasetId] of resaleCollection.childDatasets.entries()) {
     const datasetRows = await fetchCsvRows(datasetId);
     const normalized = normalizeResaleRows(datasetRows);
-    for (let i = 0; i < normalized.length; i++) transactions.push(normalized[i]);
+    for (const transaction of normalized) transactions.push(transaction);
     console.log(
       `Processed resale dataset ${index + 1}/${resaleCollection.childDatasets.length}: ${normalized.length} transactions (${transactions.length} total).`,
     );
