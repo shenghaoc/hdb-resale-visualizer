@@ -76,10 +76,6 @@ export function resetTownFlatTypeTrendsCacheForTests(): void {
   townFlatTrendsPromise = null;
 }
 
-export function resetBlocksByTownCacheForTests(): void {
-  blocksByTownPromises.clear();
-}
-
 export function fetchTownFlatTypeTrends(): Promise<TownFlatTypeTrendPoint[]> {
   if (!townFlatTrendsPromise) {
     townFlatTrendsPromise = fetchJson(

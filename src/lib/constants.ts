@@ -120,7 +120,6 @@ export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-scho
 export const SCHOOL_MARKER_COLOR = "#f59e0b";
 export const SCHOOL_LABEL_COLOR = "#92400e";
 export const SCHOOL_LABEL_HALO_COLOR = "#fff7ed";
-export const MRT_STATION_COLOR = "#dc2626";
 
 export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 400000, color: "#3a8a6f" },

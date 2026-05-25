@@ -23,7 +23,7 @@ const buttonGroupVariants = cva(
 
 function ButtonGroup({
   className,
-  orientation,
+  orientation = "horizontal",
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
   return (

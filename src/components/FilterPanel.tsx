@@ -138,7 +138,7 @@ function AffordabilityFilterField({
 }: AffordabilityFilterFieldProps) {
   const legendId = useId();
   const buttonClass =
-    "h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-50";
+    "h-7 w-full justify-start rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-50";
 
   const options: ReadonlyArray<{ mode: AffordabilityMode; label: string; aria: string }> = [
     {
@@ -160,11 +160,12 @@ function AffordabilityFilterField({
 
   const control = (
     <ButtonGroup
+      orientation="vertical"
       aria-labelledby={legendId}
       data-testid="affordability-filter-toggle"
       data-affordability-mode={value || "all"}
       data-affordability-disabled={disabled ? "true" : "false"}
-      className="w-fit gap-0 rounded-lg border border-border/40 bg-card/80 p-0.5"
+      className="w-full gap-0 rounded-lg border border-border/40 bg-card/80 p-0.5"
     >
       {options.map((option) => {
         const isActive = (value || "") === option.mode;
@@ -195,7 +196,12 @@ function AffordabilityFilterField({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span tabIndex={0} aria-describedby={`${legendId}-tooltip`}>
+                <span
+                  tabIndex={0}
+                  className="block w-full"
+                  aria-labelledby={legendId}
+                  aria-describedby={`${legendId}-tooltip`}
+                >
                   {control}
                 </span>
               </TooltipTrigger>
