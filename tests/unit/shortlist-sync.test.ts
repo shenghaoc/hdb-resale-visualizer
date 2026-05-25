@@ -68,9 +68,13 @@ describe("shortlistPushSchema", () => {
     expect(shortlistPushSchema.safeParse({ items }).success).toBe(false);
   });
 
-  it("rejects an oversized note", () => {
+  it("catches an oversized note instead of rejecting the item", () => {
     const items = [{ ...validItem("a"), notes: "x".repeat(MAX_NOTE_LENGTH + 1) }];
-    expect(shortlistPushSchema.safeParse({ items }).success).toBe(false);
+    const parsed = shortlistPushSchema.safeParse({ items });
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.items[0].notes).toBe("");
+    }
   });
 
   it("rejects an empty addressKey and a malformed sync code", () => {

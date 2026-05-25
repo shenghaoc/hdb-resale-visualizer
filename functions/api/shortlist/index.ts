@@ -21,9 +21,13 @@ import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
  * change). For expected traffic volume this risk is accepted as-is.
  */
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  // Client-side/edge DoS guard: reject oversized bodies before reading them.
-  const declaredLength = Number(request.headers.get("content-length") ?? "0");
-  if (Number.isFinite(declaredLength) && declaredLength > MAX_SYNC_BODY_BYTES) {
+  // Require a valid Content-Length header to prevent unbounded body reads.
+  const contentLengthHeader = request.headers.get("content-length");
+  if (!contentLengthHeader) {
+    return privateJsonResponse({ error: "Length Required" }, { status: 411 });
+  }
+  const declaredLength = Number(contentLengthHeader);
+  if (!Number.isInteger(declaredLength) || declaredLength < 0 || declaredLength > MAX_SYNC_BODY_BYTES) {
     return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
   }
 

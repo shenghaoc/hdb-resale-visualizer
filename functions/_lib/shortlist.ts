@@ -30,7 +30,7 @@ const note = z.string().max(MAX_NOTE_LENGTH);
 const shortlistItemSchema = z
   .object({
     addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
-    notes: note,
+    notes: note.catch(""),
     pros: note.optional(),
     cons: note.optional(),
     renovation: note.optional(),
@@ -38,8 +38,12 @@ const shortlistItemSchema = z
     transport: note.optional(),
     offerCeiling: z.number().finite().optional(),
     agentRemarks: note.optional(),
-    targetPrice: z.number().finite().nullable(),
-    addedAt: z.string().datetime({ offset: true }).max(MAX_ADDED_AT_LENGTH).default(() => new Date().toISOString()),
+    targetPrice: z.number().finite().nullable().catch(null),
+    addedAt: z
+      .string()
+      .datetime({ offset: true })
+      .max(MAX_ADDED_AT_LENGTH)
+      .catch(() => new Date().toISOString()),
   })
   .strip();
 

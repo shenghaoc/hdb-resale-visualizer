@@ -126,15 +126,12 @@ export function useShortlist() {
         const result = await pushShortlist(syncCode, merged);
         if (cancelled) return;
         readyRef.current = true;
-        setItems((current) => {
-          const next = mergeShortlists(current, result.items);
-          const nextStr = JSON.stringify(next);
-          if (nextStr === JSON.stringify(current)) {
-            return current;
-          }
+        const next = mergeShortlists(itemsRef.current, result.items);
+        const nextStr = JSON.stringify(next);
+        if (nextStr !== JSON.stringify(itemsRef.current)) {
           lastPushedRef.current = nextStr;
-          return next;
-        });
+          setItems(next);
+        }
         setSyncStatus("synced");
       } catch (error) {
         if (cancelled) return;
@@ -168,16 +165,12 @@ export function useShortlist() {
     void pushShortlist(syncCode, debouncedItems)
       .then((result) => {
         if (cancelled) return;
-        setItems((current) => {
-          const next = mergeShortlists(current, result.items);
-          const nextStr = JSON.stringify(next);
-          if (nextStr === JSON.stringify(current)) {
-            lastPushedRef.current = nextStr;
-            return current;
-          }
+        const next = mergeShortlists(itemsRef.current, result.items);
+        const nextStr = JSON.stringify(next);
+        if (nextStr !== JSON.stringify(itemsRef.current)) {
           lastPushedRef.current = nextStr;
-          return next;
-        });
+          setItems(next);
+        }
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -227,16 +220,12 @@ export function useShortlist() {
     try {
       const result = await pushShortlist(null, itemsRef.current);
       readyRef.current = true;
-      setItems((current) => {
-        const next = mergeShortlists(current, result.items);
-        const nextStr = JSON.stringify(next);
-        if (nextStr === JSON.stringify(current)) {
-          lastPushedRef.current = nextStr;
-          return current;
-        }
+      const next = mergeShortlists(itemsRef.current, result.items);
+      const nextStr = JSON.stringify(next);
+      if (nextStr !== JSON.stringify(itemsRef.current)) {
         lastPushedRef.current = nextStr;
-        return next;
-      });
+        setItems(next);
+      }
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
       setSyncCode(result.syncCode);
       setSyncStatus("synced");
@@ -253,16 +242,12 @@ export function useShortlist() {
       const merged = mergeShortlists(itemsRef.current, cloud);
       const result = await pushShortlist(code, merged);
       readyRef.current = true;
-      setItems((current) => {
-        const next = mergeShortlists(current, result.items);
-        const nextStr = JSON.stringify(next);
-        if (nextStr === JSON.stringify(current)) {
-          lastPushedRef.current = nextStr;
-          return current;
-        }
+      const next = mergeShortlists(itemsRef.current, result.items);
+      const nextStr = JSON.stringify(next);
+      if (nextStr !== JSON.stringify(itemsRef.current)) {
         lastPushedRef.current = nextStr;
-        return next;
-      });
+        setItems(next);
+      }
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
       setSyncCode(code);
       setSyncStatus("synced");
