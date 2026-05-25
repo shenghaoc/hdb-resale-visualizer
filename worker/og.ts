@@ -13,10 +13,14 @@ type TownAggregateRow = {
   transaction_count: number;
 };
 
+/** SVG responses; route suffix is `.svg` until PNG rendering is available. */
 const IMAGE_HEADERS = {
   "content-type": "image/svg+xml; charset=utf-8",
   "cache-control": "public, max-age=31536000, immutable",
 };
+
+const MAX_OG_ADDRESS_KEY_LENGTH = 128;
+const MAX_OG_TOWN_SLUG_LENGTH = 64;
 
 function escapeXml(value: string): string {
   return value
@@ -37,14 +41,21 @@ function formatCurrency(value: number | null | undefined): string {
 }
 
 function formatWalkMinutes(seconds: number | null): string {
-  if (seconds === null) return "N/A";
-  return `${Math.max(0, Math.round(seconds / 60))} min`;
+  if (seconds === null || seconds < 0) return "N/A";
+  const minutes = Math.round(seconds / 60);
+  if (minutes <= 0) return "< 1 min";
+  return `${minutes} min`;
 }
 
 function median(values: number[]): number | null {
   if (values.length === 0) return null;
   const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.floor(sorted.length / 2)] ?? null;
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length % 2 === 1) return sorted[mid] ?? null;
+  const lower = sorted[mid - 1];
+  const upper = sorted[mid];
+  if (lower === undefined || upper === undefined) return null;
+  return (lower + upper) / 2;
 }
 
 export function mapBlockToOgProps(block: ReturnType<typeof rowToBlockSummary>, dataWindow: DataWindow) {
@@ -83,6 +94,9 @@ function fallbackCard(request: Request): Response {
 }
 
 export async function handleBlockOg(request: Request, env: Env, addressKey: string): Promise<Response> {
+  if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
+
+  // Manifest version keys the immutable cache; one D1 read per request even on cache hits.
   const { version, dataWindow } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(request, `block/${addressKey}`, version);
 
@@ -101,9 +115,14 @@ export async function handleBlockOg(request: Request, env: Env, addressKey: stri
 }
 
 export async function handleCompareOg(request: Request, env: Env, townA: string, townB: string): Promise<Response> {
+  if (townA.length > MAX_OG_TOWN_SLUG_LENGTH || townB.length > MAX_OG_TOWN_SLUG_LENGTH) {
+    return fallbackCard(request);
+  }
+
   const canonicalA = townFilenameToCanonical(townA);
   const canonicalB = townFilenameToCanonical(townB);
 
+  // Manifest version keys the immutable cache; one D1 read per request even on cache hits.
   const { version } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(request, `compare/${townA}/${townB}`, version);
 

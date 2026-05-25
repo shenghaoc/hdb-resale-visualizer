@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cn, townToFilename } from "../../src/lib/utils";
+import { cn, townFilenameToCanonical, townToFilename } from "../../src/lib/utils";
 
 describe("utils", () => {
   describe("cn", () => {
@@ -61,6 +61,11 @@ describe("utils", () => {
     it("collapses multiple consecutive non-alphanumeric characters into a single hyphen", () => {
       expect(townToFilename("CHOA   CHU  KANG")).toBe("choa-chu-kang");
       expect(townToFilename("JURONG---WEST")).toBe("jurong-west");
+    });
+
+    it("round-trips KALLANG/WHAMPOA slug to canonical town", () => {
+      expect(townToFilename("KALLANG/WHAMPOA")).toBe("kallang-whampoa");
+      expect(townFilenameToCanonical("kallang-whampoa")).toBe("KALLANG/WHAMPOA");
     });
   });
 });

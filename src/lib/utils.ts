@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export { townToFilename } from "../../shared/geo";
+export { townFilenameToCanonical, townToFilename } from "../../shared/geo";
 
 export function median(values: number[]): number {
   if (values.length === 0) return 0;

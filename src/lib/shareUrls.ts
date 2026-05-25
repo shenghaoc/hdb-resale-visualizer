@@ -103,9 +103,9 @@ export async function shareViaNavigator(
 }
 
 export function buildBlockOgImageUrl(addressKey: string, baseUrl: string): string {
-  return `${baseUrl.replace(/\/$/, '')}/og/block/${encodeURIComponent(addressKey)}.png`;
+  return `${baseUrl.replace(/\/$/, "")}/og/block/${encodeURIComponent(addressKey)}.svg`;
 }
 
 export function buildCompareOgImageUrl(townA: string, townB: string, baseUrl: string): string {
-  return `${baseUrl.replace(/\/$/, '')}/og/compare/${encodeURIComponent(townToFilename(townA))}/${encodeURIComponent(townToFilename(townB))}.png`;
+  return `${baseUrl.replace(/\/$/, "")}/og/compare/${encodeURIComponent(townToFilename(townA))}/${encodeURIComponent(townToFilename(townB))}.svg`;
 }

@@ -92,6 +92,6 @@ describe("mapBlockToOgProps", () => {
       { minMonth: "2023-01", maxMonth: "2026-01" },
     );
 
-    expect(mapped.mrtWalk).toBe("0 min");
+    expect(mapped.mrtWalk).toBe("< 1 min");
   });
 });

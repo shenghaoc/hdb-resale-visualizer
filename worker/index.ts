@@ -31,6 +31,9 @@ const patterns = [
   { pattern: new URLPattern({ pathname: "/api/search{/}?" }),               handler: searchHandler },
 ];
 
+const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.svg" });
+const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.svg" });
+
 // ---- context helper -------------------------------------------------------
 
 /**
@@ -75,12 +78,12 @@ export default {
     try {
       const url = new URL(request.url);
 
-      const blockOg = new URLPattern({ pathname: '/og/block/:addressKey.png' }).exec(url);
+      const blockOg = blockOgPattern.exec(url);
       if (blockOg) {
         const key = blockOg.pathname.groups.addressKey;
         return key ? handleBlockOg(request, env, key) : Response.redirect(`${url.origin}/og-card.png`, 302);
       }
-      const compareOg = new URLPattern({ pathname: '/og/compare/:townA/:townB.png' }).exec(url);
+      const compareOg = compareOgPattern.exec(url);
       if (compareOg) {
         const { townA, townB } = compareOg.pathname.groups;
         return townA && townB ? handleCompareOg(request, env, townA, townB) : Response.redirect(`${url.origin}/og-card.png`, 302);
