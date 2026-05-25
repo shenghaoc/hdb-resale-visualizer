@@ -22,6 +22,7 @@ const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
 let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> | null =
   null;
 let blocksBySearchKey = "";
+let blocksBySearchSequence = 0;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -127,6 +128,7 @@ export type CoarseSearchParams = {
 export function resetBlocksBySearchCacheForTests(): void {
   blocksBySearchPromise = null;
   blocksBySearchKey = "";
+  blocksBySearchSequence = 0;
 }
 
 export function fetchBlocksBySearch(
@@ -142,12 +144,13 @@ export function fetchBlocksBySearch(
     return blocksBySearchPromise;
   }
 
+  const sequence = ++blocksBySearchSequence;
   blocksBySearchKey = cacheKey;
   blocksBySearchPromise = fetchJson(
     `${API_BASE_PATH}/search${query ? `?${query}` : ""}`,
     searchResponseSchema,
   ).catch((error) => {
-    if (blocksBySearchKey === cacheKey) {
+    if (blocksBySearchSequence === sequence && blocksBySearchKey === cacheKey) {
       blocksBySearchPromise = null;
       blocksBySearchKey = "";
     }

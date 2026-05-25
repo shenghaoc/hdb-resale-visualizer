@@ -102,15 +102,27 @@ export function useBlockLoading({
           return;
         }
 
-        if (!effectiveTown && hasCoarseSearchFilters) {
+        if (hasCoarseSearchFilters) {
           setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "search";
-          const result = await fetchBlocksBySearch({ town: "", ...coarseSearchParams });
+          const result = await fetchBlocksBySearch({
+            town: effectiveTown ?? "",
+            ...coarseSearchParams,
+          });
           if (isMounted) {
-            blocksRef.current = result.blocks;
-            setBlocks(result.blocks);
             setSearchTruncated(result.truncated);
+            if (effectiveTown) {
+              setBlocks((current) => {
+                const withoutTown = current.filter((block) => block.town !== effectiveTown);
+                const updated = [...withoutTown, ...result.blocks];
+                blocksRef.current = updated;
+                return updated;
+              });
+            } else {
+              blocksRef.current = result.blocks;
+              setBlocks(result.blocks);
+            }
           }
           return;
         }
