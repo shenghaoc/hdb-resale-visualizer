@@ -128,7 +128,11 @@ export function useShortlist() {
         readyRef.current = true;
         setItems((current) => {
           const next = mergeShortlists(current, result.items);
-          lastPushedRef.current = JSON.stringify(next);
+          const nextStr = JSON.stringify(next);
+          if (nextStr === JSON.stringify(current)) {
+            return current;
+          }
+          lastPushedRef.current = nextStr;
           return next;
         });
         setSyncStatus("synced");
@@ -166,7 +170,12 @@ export function useShortlist() {
         if (cancelled) return;
         setItems((current) => {
           const next = mergeShortlists(current, result.items);
-          lastPushedRef.current = JSON.stringify(next);
+          const nextStr = JSON.stringify(next);
+          if (nextStr === JSON.stringify(current)) {
+            lastPushedRef.current = nextStr;
+            return current;
+          }
+          lastPushedRef.current = nextStr;
           return next;
         });
         setSyncStatus("synced");
@@ -220,7 +229,12 @@ export function useShortlist() {
       readyRef.current = true;
       setItems((current) => {
         const next = mergeShortlists(current, result.items);
-        lastPushedRef.current = JSON.stringify(next);
+        const nextStr = JSON.stringify(next);
+        if (nextStr === JSON.stringify(current)) {
+          lastPushedRef.current = nextStr;
+          return current;
+        }
+        lastPushedRef.current = nextStr;
         return next;
       });
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
@@ -241,7 +255,12 @@ export function useShortlist() {
       readyRef.current = true;
       setItems((current) => {
         const next = mergeShortlists(current, result.items);
-        lastPushedRef.current = JSON.stringify(next);
+        const nextStr = JSON.stringify(next);
+        if (nextStr === JSON.stringify(current)) {
+          lastPushedRef.current = nextStr;
+          return current;
+        }
+        lastPushedRef.current = nextStr;
         return next;
       });
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);

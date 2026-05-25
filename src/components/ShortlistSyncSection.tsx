@@ -37,7 +37,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
   }, [t]);
 
   const handleCopy = useCallback(() => {
-    if (!sync.code) return;
+    if (!sync.code || !navigator.clipboard) return;
     void navigator.clipboard
       .writeText(sync.code)
       .then(() => {
