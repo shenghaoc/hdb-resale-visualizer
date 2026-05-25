@@ -51,6 +51,7 @@ import { encodeShortlistForUrl } from "@/lib/shortlist";
 import { buildShortlistShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
@@ -63,6 +64,7 @@ import type {
   ComparisonArtifact,
   ShortlistItem,
 } from "@/types/data";
+import type { ShortlistSync } from "@/hooks/useShortlist";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -112,6 +114,7 @@ type ShortlistDrawerProps = {
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   onSelectAddress: (addressKey: string) => void;
+  sync?: ShortlistSync;
 };
 
 type GapInfo = {
@@ -684,6 +687,7 @@ export function ShortlistDrawer({
   onRemove,
   onUpdate,
   onSelectAddress,
+  sync,
 }: ShortlistDrawerProps) {
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
@@ -1161,6 +1165,11 @@ export function ShortlistDrawer({
             id="shortlist-content"
             className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 py-3 sm:px-4"
           >
+            {sync ? (
+              <div className="mb-3 shrink-0">
+                <ShortlistSyncSection sync={sync} />
+              </div>
+            ) : null}
             {rows.length === 0 ? (
               <div className="empty-state pt-12 text-center text-sm text-muted-foreground">
                 {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
