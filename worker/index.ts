@@ -16,7 +16,7 @@ import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { handleBlockOg, handleCompareOg } from "./og";
-import { buildSeoMeta, canonicalUrlForRoute, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
+import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
 
 // ---- route patterns -------------------------------------------------------
 
@@ -130,14 +130,15 @@ export default {
         const manifest = await getManifest(env);
         const generatedAt = manifest?.generatedAt;
         const towns = manifest?.filterOptions?.towns ?? [];
-        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks").all<{ address_key: string; town: string }>();
+        // D1 all() caps at ~49k rows / 1 MB; LIMIT documents intent until sub-sitemaps are needed.
+        const blockRows = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT 49000").all<{ address_key: string; town: string }>();
         const urls = [
           { loc: `${url.origin}/`, lastmod: generatedAt },
           ...towns.map((town) => ({ loc: canonicalUrlForRoute(url.origin, town, null, null), lastmod: generatedAt })),
           ...(blockRows.results ?? []).map((row) => ({ loc: canonicalUrlForRoute(url.origin, row.town, row.address_key, null), lastmod: generatedAt })),
         ];
         const response = textResponse(sitemapXml(urls), "application/xml");
-        await caches.default.put(cacheKey, response.clone());
+        ctx.waitUntil(caches.default.put(cacheKey, response.clone()));
         return response;
       }
 
@@ -149,34 +150,40 @@ export default {
       const compareTown = url.searchParams.get("compareTown");
       if (!town && !selected && !compareTown) return assetResponse;
 
-      const block = selected ? await getBlock(env, selected) : null;
-      const manifest = block ? null : await getManifest(env);
-      const seo = buildSeoMeta({ town, block, manifest });
-      if (!seo) return assetResponse;
-      const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
+      try {
+        const block = selected ? await getBlock(env, selected) : null;
+        const manifest = block ? null : await getManifest(env);
+        const seo = buildSeoMeta({ town, block, manifest });
+        if (!seo) return assetResponse;
+        const canonicalUrl = canonicalUrlForRoute(url.origin, town, selected, compareTown);
 
-      let sawCanonical = false;
-      return new HTMLRewriter()
-        .on("title", { element(el) { el.setInnerContent(seo.title); } })
-        .on('meta[name="description"]', { element(el) { el.setAttribute("content", seo.description); } })
-        .on('meta[property="og:title"]', { element(el) { el.setAttribute("content", seo.title); } })
-        .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
-        .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
-        .on('link[rel="canonical"]', {
-          element(el) {
-            sawCanonical = true;
-            el.setAttribute("href", canonicalUrl);
-          },
-        })
-        .on("head", {
-          element(el) {
-            if (!sawCanonical) {
-              el.append(`<link rel="canonical" href="${canonicalUrl}">`, { html: true });
-            }
-            el.append(`<script type="application/ld+json">${JSON.stringify(seo.jsonLd)}</script>`, { html: true });
-          },
-        })
-        .transform(assetResponse);
+        let sawCanonical = false;
+        const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
+        return new HTMLRewriter()
+          .on("title", { element(el) { el.setInnerContent(seo.title); } })
+          .on('meta[name="description"]', { element(el) { el.setAttribute("content", seo.description); } })
+          .on('meta[property="og:title"]', { element(el) { el.setAttribute("content", seo.title); } })
+          .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
+          .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
+          .on('link[rel="canonical"]', {
+            element(el) {
+              sawCanonical = true;
+              el.setAttribute("href", canonicalUrl);
+            },
+          })
+          .on("head", {
+            element(el) {
+              if (!sawCanonical) {
+                el.append(`<link rel="canonical" href="${canonicalUrl}">`, { html: true });
+              }
+              el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
+            },
+          })
+          .transform(assetResponse);
+      } catch (seoError) {
+        console.error("SEO rewrite failed:", seoError);
+        return assetResponse;
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : "Worker error";
       return new Response(JSON.stringify({ error: message }), { status: 500, headers: { "content-type": "application/json; charset=utf-8" } });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSeoMeta, canonicalUrlForRoute, sitemapXml } from "../../worker/seo";
+import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml } from "../../worker/seo";
 
 describe("seo worker helpers", () => {
   it("normalizes canonical route urls", () => {
@@ -15,6 +15,16 @@ describe("seo worker helpers", () => {
     expect(sameTownCompare).not.toContain("compareTown");
 
     expect(canonicalUrlForRoute("https://example.com", null, null, null)).toBe("https://example.com/");
+
+    const selectedOnly = canonicalUrlForRoute("https://example.com", null, "BK-1", null);
+    expect(selectedOnly).toContain("selected=BK-1");
+    expect(selectedOnly).toContain("v=2");
+  });
+
+  it("escapes closing script sequences in json-ld", () => {
+    const serialized = serializeJsonLdForScript({ name: "</script><script>alert(1)" });
+    expect(serialized).not.toContain("</script>");
+    expect(serialized).toContain("<\\/script>");
   });
 
   it("serializes sitemap with required loc entries", () => {

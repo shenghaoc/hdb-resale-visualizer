@@ -58,7 +58,15 @@ export function canonicalUrlForRoute(
     return `${origin}/${canonicalSearch({ town: cleanTown })}`;
   }
 
+  if (cleanSelected) {
+    return `${origin}/${canonicalSearch({ selected: cleanSelected })}`;
+  }
+
   return `${origin}/`;
+}
+
+export function serializeJsonLdForScript(jsonLd: unknown): string {
+  return JSON.stringify(jsonLd).replace(/<\//g, "<\\/");
 }
 
 export function sitemapXml(urls: Array<{ loc: string; lastmod?: string }>): string {
