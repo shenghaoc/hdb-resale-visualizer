@@ -165,7 +165,8 @@ export default {
           .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
           .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
           .on('link[rel="canonical"]', {
-            element(el) { el.setAttribute("href", canonicalUrl); },
+            // Remove any pre-existing canonical so the one appended in head is the only one.
+            element(el) { el.remove(); },
           })
           .on("head", {
             element(el) {
