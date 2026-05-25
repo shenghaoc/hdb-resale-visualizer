@@ -112,7 +112,7 @@ export function useFilterPipeline({
   const profileReadyForRecommendations =
     resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
-  const { blocks, loadError } = useBlockLoading({
+  const { blocks, loadError, searchTruncated } = useBlockLoading({
     manifest,
     townFilter: effectiveFilters.town,
     debouncedSearch,
@@ -122,6 +122,18 @@ export function useFilterPipeline({
     savedVisible,
     shortlistCount,
     needsAllBlocksForRecommendations: profileReadyForRecommendations,
+    coarseSearchParams: {
+      flatType: effectiveFilters.flatType,
+      flatModel: effectiveFilters.flatModel,
+      budgetMin: effectiveFilters.budgetMin,
+      budgetMax: effectiveFilters.budgetMax,
+      areaMin: effectiveFilters.areaMin,
+      areaMax: effectiveFilters.areaMax,
+      remainingLeaseMin: effectiveFilters.remainingLeaseMin,
+      startMonth: effectiveFilters.startMonth,
+      endMonth: effectiveFilters.endMonth,
+      mrtMax: effectiveFilters.mrtMax,
+    },
   });
 
   // O(1) address key lookup.
@@ -286,6 +298,7 @@ export function useFilterPipeline({
     hasMapMarkerScope,
     blocks,
     loadError,
+    searchTruncated,
     filteredBlocks,
     mapFilteredBlocks,
     blocksByKey,
@@ -304,6 +317,7 @@ export function useFilterPipeline({
     hasMapMarkerScope,
     blocks,
     loadError,
+    searchTruncated,
     filteredBlocks,
     mapFilteredBlocks,
     blocksByKey,

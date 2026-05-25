@@ -11,6 +11,7 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
+  fetchBlocksBySearch: vi.fn(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
   townToFilename: (town: string) =>
@@ -44,6 +45,7 @@ vi.mock("@/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
   fetchBlockSummaries: dataMocks.fetchBlockSummaries,
   fetchBlocksByTown: dataMocks.fetchBlocksByTown,
+  fetchBlocksBySearch: dataMocks.fetchBlocksBySearch,
   fetchAddressDetail: dataMocks.fetchAddressDetail,
   fetchComparisonArtifact: dataMocks.fetchComparisonArtifact,
   townToFilename: dataMocks.townToFilename,

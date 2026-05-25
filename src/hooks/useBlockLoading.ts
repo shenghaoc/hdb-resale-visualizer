@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchBlockSummaries, fetchBlocksByTown, townToFilename } from "@/lib/data";
+import { fetchBlockSummaries, fetchBlocksBySearch, fetchBlocksByTown, townToFilename } from "@/lib/data";
 import type { BlockSummary, Manifest } from "@/types/data";
 
 type UseBlockLoadingArgs = {
@@ -12,6 +12,18 @@ type UseBlockLoadingArgs = {
   savedVisible: boolean;
   shortlistCount: number;
   needsAllBlocksForRecommendations?: boolean;
+  coarseSearchParams: {
+    flatType: string;
+    flatModel: string;
+    budgetMin: number | null;
+    budgetMax: number | null;
+    areaMin: number | null;
+    areaMax: number | null;
+    remainingLeaseMin: number | null;
+    startMonth: string | null;
+    endMonth: string | null;
+    mrtMax: number | null;
+  };
 };
 
 export function useBlockLoading({
@@ -24,9 +36,11 @@ export function useBlockLoading({
   savedVisible,
   shortlistCount,
   needsAllBlocksForRecommendations = false,
+  coarseSearchParams,
 }: UseBlockLoadingArgs) {
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [searchTruncated, setSearchTruncated] = useState(false);
   const blocksRef = useRef<BlockSummary[]>([]);
 
   const hasGeographic = useMemo(
@@ -57,10 +71,20 @@ export function useBlockLoading({
         if (needsAllBlocks) {
           if (hasAllBlocks) return;
           setLoadError(null);
+          if (!townFilter) {
+            const result = await fetchBlocksBySearch({ town: "", ...coarseSearchParams });
+            if (isMounted) {
+              blocksRef.current = result.blocks;
+              setBlocks(result.blocks);
+              setSearchTruncated(result.truncated);
+            }
+            return;
+          }
           const nextBlocks = await fetchBlockSummaries();
           if (isMounted) {
             blocksRef.current = nextBlocks;
             setBlocks(nextBlocks);
+            setSearchTruncated(false);
           }
           return;
         }
@@ -99,7 +123,8 @@ export function useBlockLoading({
     shortlistCount,
     hasGeographic,
     needsAllBlocksForRecommendations,
+    coarseSearchParams,
   ]);
 
-  return { blocks, loadError };
+  return { blocks, loadError, searchTruncated };
 }

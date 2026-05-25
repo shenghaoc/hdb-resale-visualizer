@@ -14,6 +14,7 @@ import { onRequestGet as comparisonHandler } from "../functions/api/comparisons/
 import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
+import { onRequestGet as searchHandler } from "../functions/api/search";
 
 // ---- route patterns -------------------------------------------------------
 
@@ -26,6 +27,7 @@ const patterns = [
   { pattern: new URLPattern({ pathname: "/api/mrt-stations{/}?" }),          handler: mrtStationsHandler },
   { pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }),             handler: mrtExitsHandler },
   { pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }), handler: trendsHandler },
+  { pattern: new URLPattern({ pathname: "/api/search{/}?" }),               handler: searchHandler },
 ];
 
 // ---- context helper -------------------------------------------------------

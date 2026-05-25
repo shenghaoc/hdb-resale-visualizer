@@ -6,6 +6,7 @@ import {
   comparisonArtifactSchema,
   manifestSchema,
   townFlatTypeTrendPointSchema,
+  searchResponseSchema,
 } from "./dataSchemas";
 import type {
   AddressDetail,
@@ -103,4 +104,28 @@ export async function fetchComparisonArtifact(addressKey: string): Promise<Compa
     }
     throw error;
   }
+}
+
+
+export type CoarseSearchParams = {
+  town: string;
+  flatType: string;
+  flatModel: string;
+  budgetMin: number | null;
+  budgetMax: number | null;
+  areaMin: number | null;
+  areaMax: number | null;
+  remainingLeaseMin: number | null;
+  startMonth: string | null;
+  endMonth: string | null;
+  mrtMax: number | null;
+};
+
+export function fetchBlocksBySearch(params: CoarseSearchParams): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
+  const search = new URLSearchParams();
+  for (const [k,v] of Object.entries(params)) {
+    if (v !== null && v !== "") search.set(k, String(v));
+  }
+  const query = search.toString();
+  return fetchJson(`${API_BASE_PATH}/search${query ? `?${query}` : ""}`, searchResponseSchema);
 }
