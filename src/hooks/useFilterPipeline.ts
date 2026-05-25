@@ -112,6 +112,9 @@ export function useFilterPipeline({
   const profileReadyForRecommendations =
     resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
+  // Use rawFilters for startMonth/endMonth so the coarse-search trigger only
+  // fires on user-set values, not the injected defaultStartMonth. All other
+  // fields come from effectiveFilters (the two are identical for those fields).
   const coarseSearchParams = useMemo(
     () => ({
       flatType: effectiveFilters.flatType,
@@ -121,8 +124,8 @@ export function useFilterPipeline({
       areaMin: effectiveFilters.areaMin,
       areaMax: effectiveFilters.areaMax,
       remainingLeaseMin: effectiveFilters.remainingLeaseMin,
-      startMonth: effectiveFilters.startMonth,
-      endMonth: effectiveFilters.endMonth,
+      startMonth: rawFilters.startMonth,
+      endMonth: rawFilters.endMonth,
       mrtMax: effectiveFilters.mrtMax,
     }),
     [
@@ -133,8 +136,8 @@ export function useFilterPipeline({
       effectiveFilters.areaMin,
       effectiveFilters.areaMax,
       effectiveFilters.remainingLeaseMin,
-      effectiveFilters.startMonth,
-      effectiveFilters.endMonth,
+      rawFilters.startMonth,
+      rawFilters.endMonth,
       effectiveFilters.mrtMax,
     ],
   );
