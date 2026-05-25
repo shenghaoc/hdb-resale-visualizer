@@ -112,6 +112,10 @@ export function rowToBlockSummary(row: BlockRow) {
 
 export { type BlockRow };
 
+/** Columns required by `rowToBlockSummary` (excludes large per-flat-type JSON blobs). */
+export const BLOCK_SUMMARY_SELECT_SQL =
+  "address_key, town, block, street_name, display_name, lat, lng, median_price, price_per_sqm_median, transaction_count, floor_area_min, floor_area_max, lease_commence_year, latest_month, available_min_month, available_max_month, flat_types_json, flat_models_json, NULL AS median_price_by_flat_type_json, NULL AS median_price_per_sqm_by_flat_type_json, nearest_mrt_json, nearby_mrts_json, postal_code";
+
 /**
  * Inverse of `townToFilename` in `shared/geo.ts`. Town filenames are
  * lowercase with `-` separators; the canonical town stored in D1 is uppercase

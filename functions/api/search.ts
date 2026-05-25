@@ -1,4 +1,4 @@
-import { jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
+import { BLOCK_SUMMARY_SELECT_SQL, jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
 import {
   SEARCH_RESULT_LIMIT,
   buildSearchQuery,
@@ -31,7 +31,7 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
     }
 
     const { whereSql, bindings } = buildSearchQuery(parsed.request);
-    const sql = `SELECT * FROM blocks ${whereSql} ORDER BY median_price DESC, transaction_count DESC LIMIT ?`;
+    const sql = `SELECT ${BLOCK_SUMMARY_SELECT_SQL} FROM blocks ${whereSql} ORDER BY address_key LIMIT ?`;
     const result = await env.DB.prepare(sql).bind(...bindings, SEARCH_RESULT_LIMIT + 1).all();
     const rows = (result.results ?? []) as Parameters<typeof rowToBlockSummary>[0][];
     const truncated = rows.length > SEARCH_RESULT_LIMIT;

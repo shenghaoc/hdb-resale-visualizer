@@ -139,6 +139,7 @@ type ResultsPaneProps = {
   townRecommendations?: ReadonlyArray<TownRecommendation>;
   townRecommendationsLoading?: boolean;
   onSelectTown?: (town: string) => void;
+  searchTruncated?: boolean;
 };
 
 type SortMode = Exclude<BlockSortMode, "">;
@@ -542,6 +543,7 @@ export function ResultsPane({
   townRecommendations = EMPTY_ARRAY,
   townRecommendationsLoading = false,
   onSelectTown,
+  searchTruncated = false,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
 
@@ -1002,6 +1004,15 @@ export function ResultsPane({
             ) : null}
           </div>
         </CardHeader>
+        {searchTruncated ? (
+          <p
+            className="shrink-0 border-b border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-950 dark:text-amber-100 sm:px-4"
+            data-testid="search-truncated-notice"
+            role="status"
+          >
+            {t("results.searchTruncated")}
+          </p>
+        ) : null}
         {hasResultScope ? (
           <div
             className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"

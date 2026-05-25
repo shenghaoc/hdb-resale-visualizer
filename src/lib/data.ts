@@ -19,6 +19,9 @@ import type { z } from "zod";
 
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
 const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
+let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> | null =
+  null;
+let blocksBySearchKey = "";
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -121,11 +124,32 @@ export type CoarseSearchParams = {
   mrtMax: number | null;
 };
 
-export function fetchBlocksBySearch(params: CoarseSearchParams): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
+export function resetBlocksBySearchCacheForTests(): void {
+  blocksBySearchPromise = null;
+  blocksBySearchKey = "";
+}
+
+export function fetchBlocksBySearch(
+  params: CoarseSearchParams,
+): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
   const search = new URLSearchParams();
-  for (const [k,v] of Object.entries(params)) {
+  for (const [k, v] of Object.entries(params)) {
     if (v !== null && v !== "") search.set(k, String(v));
   }
   const query = search.toString();
-  return fetchJson(`${API_BASE_PATH}/search${query ? `?${query}` : ""}`, searchResponseSchema);
+  const cacheKey = query;
+  if (blocksBySearchPromise && blocksBySearchKey === cacheKey) {
+    return blocksBySearchPromise;
+  }
+
+  blocksBySearchKey = cacheKey;
+  blocksBySearchPromise = fetchJson(
+    `${API_BASE_PATH}/search${query ? `?${query}` : ""}`,
+    searchResponseSchema,
+  ).catch((error) => {
+    blocksBySearchPromise = null;
+    blocksBySearchKey = "";
+    throw error;
+  });
+  return blocksBySearchPromise;
 }
