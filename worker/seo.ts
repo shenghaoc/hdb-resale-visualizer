@@ -39,25 +39,26 @@ export function canonicalUrlForRoute(
   const cleanTown = sanitizeParam(town);
   const cleanSelected = sanitizeParam(selected);
   const cleanCompareTown = sanitizeParam(compareTown);
-  const url = new URL("/", origin);
+  const params = new URLSearchParams();
 
   if (cleanTown && cleanSelected) {
-    url.searchParams.set("town", cleanTown);
-    url.searchParams.set("selected", cleanSelected);
+    params.set("town", cleanTown);
+    params.set("selected", cleanSelected);
   } else if (cleanTown && cleanCompareTown && cleanCompareTown.toUpperCase() !== cleanTown.toUpperCase()) {
-    url.searchParams.set("town", cleanTown);
-    url.searchParams.set("compareTown", cleanCompareTown);
+    params.set("town", cleanTown);
+    params.set("compareTown", cleanCompareTown);
   } else if (cleanTown) {
-    url.searchParams.set("town", cleanTown);
+    params.set("town", cleanTown);
   } else if (cleanSelected) {
-    url.searchParams.set("selected", cleanSelected);
+    params.set("selected", cleanSelected);
   }
 
-  if (url.searchParams.size > 0) {
-    url.searchParams.set("v", QUERY_VERSION);
+  if (params.size > 0) {
+    params.set("v", QUERY_VERSION);
+    return `${origin}/?${params.toString()}`;
   }
 
-  return url.toString();
+  return `${origin}/`;
 }
 
 export function serializeJsonLdForScript(jsonLd: unknown): string {

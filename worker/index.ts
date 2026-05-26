@@ -154,10 +154,12 @@ export default {
         const cached = cache ? await cache.match(cacheKey) : null;
         if (cached) return cached;
 
-        const manifest = await getManifest(env);
+        const [manifest, blockRows] = await Promise.all([
+          getManifest(env),
+          fetchAllBlockRows(env),
+        ]);
         const generatedAt = manifest?.generatedAt;
         const towns = manifest?.filterOptions?.towns ?? [];
-        const blockRows = await fetchAllBlockRows(env);
         const origin = publicOrigin(url);
         const urls = [
           { loc: `${origin}/`, lastmod: generatedAt },
@@ -188,8 +190,10 @@ export default {
       if (!town && !selected && !compareTown) return assetResponse;
 
       try {
-        const block = selected ? await getBlock(env, selected) : null;
-        const manifest = await getManifest(env);
+        const [block, manifest] = await Promise.all([
+          selected ? getBlock(env, selected) : Promise.resolve(null),
+          getManifest(env),
+        ]);
         if (manifest) {
           const validTowns = manifest.filterOptions?.towns ?? [];
           if (town && !validTowns.some((t) => t.toUpperCase() === town.toUpperCase())) {
