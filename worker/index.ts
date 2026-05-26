@@ -155,7 +155,14 @@ export default {
         }
         const cacheKey = new Request(cacheUrl.toString());
         const cache = typeof caches !== "undefined" ? caches.default : null;
-        const cached = cache ? await cache.match(cacheKey) : null;
+        let cached: Response | null = null;
+        if (cache) {
+          try {
+            cached = await cache.match(cacheKey);
+          } catch (err) {
+            console.warn("Sitemap cache match failed:", err);
+          }
+        }
         if (cached) return cached;
 
         const [manifest, blockRows] = await Promise.all([
@@ -222,7 +229,7 @@ export default {
         const canonicalUrl = canonicalUrlForRoute(
           publicOrigin(url),
           authoritativeTown,
-          selected,
+          block ? selected : null,
           authoritativeCompareTown,
         );
 
@@ -230,15 +237,18 @@ export default {
         return new HTMLRewriter()
           .on("title", { element(el) { el.setInnerContent(seo.title); } })
           .on('meta[name="description"]', { element(el) { el.setAttribute("content", seo.description); } })
-          .on('meta[property="og:title"]', { element(el) { el.setAttribute("content", seo.title); } })
-          .on('meta[property="og:description"]', { element(el) { el.setAttribute("content", seo.description); } })
-          .on('meta[property="og:url"]', { element(el) { el.setAttribute("content", canonicalUrl); } })
+          .on('meta[property="og:title"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:description"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:url"]', { element(el) { el.remove(); } })
           .on('link[rel="canonical"]', {
             // Remove any pre-existing canonical so the one appended in head is the only one.
             element(el) { el.remove(); },
           })
           .on("head", {
             element(el) {
+              el.append(`<meta property="og:title" content="${seo.title.replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:description" content="${seo.description.replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:url" content="${canonicalUrl.replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
               el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}">`, {
                 html: true,

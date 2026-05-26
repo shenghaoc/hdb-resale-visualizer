@@ -22,6 +22,7 @@ function sanitizeParam(value: string | null | undefined): string | null {
 }
 
 function escapeXml(value: string): string {
+  if (!/[<>&'"]/.test(value)) return value;
   return value.replace(/[<>&'"]/g, (char) => {
     switch (char) {
       case "&":
