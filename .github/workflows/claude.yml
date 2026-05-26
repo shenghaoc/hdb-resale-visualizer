@@ -1,3 +1,8 @@
+# Interactive @claude (OWNER-only below). For pull-request review from comments,
+# prefer the action-bundled /review-pr command (subagents + gh), not the marketplace
+# code-review plugin — see:
+# https://github.com/anthropics/claude-code-action/blob/main/.claude/commands/review-pr.md
+
 name: Claude Code
 
 on:
@@ -48,8 +53,6 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           additional_permissions: |
             actions: read
-          plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
-          plugins: "code-review@claude-code-plugins"
           claude_args: '--max-turns 40'
           settings: |
             {

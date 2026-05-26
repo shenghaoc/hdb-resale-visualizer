@@ -1,3 +1,13 @@
+# Automated PR review via the Anthropic "code-review" marketplace plugin.
+#
+# Why code-review instead of pr-review-toolkit?
+# - code-review is built for GitHub PRs: skip drafts/duplicates, diff-focused agents,
+#   and explicit gh + inline-comment tooling (see plugin command).
+# - pr-review-toolkit is broader (six specialist agents) and better for interactive,
+#   repo-wide prompts; its bundled /pr-review-toolkit:review-pr flow is lighter on
+#   gh posting guarantees than /code-review:code-review --comment.
+# Cost control: only non-draft PRs you open on this repo (OWNER + same-repo guard).
+
 name: Claude Code Review
 
 on:
@@ -46,18 +56,16 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Run Claude PR review toolkit
+      - name: Run Claude code-review plugin
         id: claude-review
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           use_sticky_comment: "true"
           plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
-          plugins: "pr-review-toolkit@claude-code-plugins"
+          plugins: "code-review@claude-code-plugins"
           prompt: |
-            /pr-review-toolkit:review-pr all parallel
-
-            Context: pull request ${{ github.event.pull_request.number }} in ${{ github.repository }}.
-            When you finish, post one consolidated summary as a pull-request comment for human reviewers (include critical / important / suggestions and file:line references where applicable).
+            /code-review:code-review https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }} --comment
           claude_args: |
             --max-turns 40
+            --allowedTools "Skill,Bash(gh issue view:*),Bash(gh search:*),Bash(gh issue list:*),Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*),mcp__github_inline_comment__create_inline_comment"
