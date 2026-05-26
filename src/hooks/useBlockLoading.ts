@@ -103,6 +103,7 @@ export function useBlockLoading({
         }
 
         if (hasCoarseSearchFilters) {
+          if (hasFullCorpus) return;
           setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "search";
@@ -135,9 +136,11 @@ export function useBlockLoading({
         if (!isMounted || !Array.isArray(nextBlocks)) return;
 
         loadedTownsRef.current.add(effectiveTown);
+        const wasSearchSource = blocksSourceRef.current === "search";
         blocksSourceRef.current = "town-partial";
         setBlocks((current) => {
-          const withoutTown = current.filter((block) => block.town !== effectiveTown);
+          const baseBlocks = wasSearchSource ? [] : current;
+          const withoutTown = baseBlocks.filter((block) => block.town !== effectiveTown);
           const updated = [...withoutTown, ...nextBlocks];
           blocksRef.current = updated;
           return updated;
