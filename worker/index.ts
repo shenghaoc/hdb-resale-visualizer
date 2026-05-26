@@ -149,7 +149,11 @@ export default {
       }
 
       if (url.pathname === "/sitemap.xml") {
-        const cacheKey = new Request(url.toString());
+        const cacheUrl = new URL(url.toString());
+        if (cacheUrl.hostname !== "localhost" && cacheUrl.hostname !== "127.0.0.1") {
+          cacheUrl.protocol = "https:";
+        }
+        const cacheKey = new Request(cacheUrl.toString());
         const cache = typeof caches !== "undefined" ? caches.default : null;
         const cached = cache ? await cache.match(cacheKey) : null;
         if (cached) return cached;
@@ -182,7 +186,9 @@ export default {
       const assetResponse = await env.ASSETS.fetch(request);
       if ([204, 304].includes(assetResponse.status)) return assetResponse;
       if (assetResponse.status >= 300 && assetResponse.status < 400) return assetResponse;
-      if (!(assetResponse.headers.get("content-type") ?? "").includes("text/html")) return assetResponse;
+      if (!(assetResponse.headers.get("content-type") ?? "").toLowerCase().includes("text/html")) {
+        return assetResponse;
+      }
 
       const town = url.searchParams.get("town");
       const selected = url.searchParams.get("selected");

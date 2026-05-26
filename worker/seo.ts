@@ -22,12 +22,26 @@ function sanitizeParam(value: string | null | undefined): string | null {
 }
 
 function escapeXml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
+  return value.replace(/[<>&'"]/g, (char) => {
+    switch (char) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      case "'":
+        return "&apos;";
+      default:
+        return char;
+    }
+  });
+}
+
+function encodeParam(value: string): string {
+  return encodeURIComponent(value);
 }
 
 export function canonicalUrlForRoute(
@@ -39,23 +53,18 @@ export function canonicalUrlForRoute(
   const cleanTown = sanitizeParam(town);
   const cleanSelected = sanitizeParam(selected);
   const cleanCompareTown = sanitizeParam(compareTown);
-  const params = new URLSearchParams();
 
   if (cleanTown && cleanSelected) {
-    params.set("town", cleanTown);
-    params.set("selected", cleanSelected);
-  } else if (cleanTown && cleanCompareTown && cleanCompareTown.toUpperCase() !== cleanTown.toUpperCase()) {
-    params.set("town", cleanTown);
-    params.set("compareTown", cleanCompareTown);
-  } else if (cleanTown) {
-    params.set("town", cleanTown);
-  } else if (cleanSelected) {
-    params.set("selected", cleanSelected);
+    return `${origin}/?town=${encodeParam(cleanTown)}&selected=${encodeParam(cleanSelected)}&v=${QUERY_VERSION}`;
   }
-
-  if (params.size > 0) {
-    params.set("v", QUERY_VERSION);
-    return `${origin}/?${params.toString()}`;
+  if (cleanTown && cleanCompareTown && cleanCompareTown.toUpperCase() !== cleanTown.toUpperCase()) {
+    return `${origin}/?town=${encodeParam(cleanTown)}&compareTown=${encodeParam(cleanCompareTown)}&v=${QUERY_VERSION}`;
+  }
+  if (cleanTown) {
+    return `${origin}/?town=${encodeParam(cleanTown)}&v=${QUERY_VERSION}`;
+  }
+  if (cleanSelected) {
+    return `${origin}/?selected=${encodeParam(cleanSelected)}&v=${QUERY_VERSION}`;
   }
 
   return `${origin}/`;
@@ -68,7 +77,7 @@ export function serializeJsonLdForScript(jsonLd: unknown): string {
 export function sitemapXml(urls: Array<{ loc: string; lastmod?: string }>): string {
   const entries = urls
     .map((entry) => {
-      const lastmod = entry.lastmod ? `<lastmod>${escapeXml(entry.lastmod)}</lastmod>` : "";
+      const lastmod = entry.lastmod ? `<lastmod>${entry.lastmod}</lastmod>` : "";
       return `  <url><loc>${escapeXml(entry.loc)}</loc>${lastmod}</url>`;
     })
     .join("\n");

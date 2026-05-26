@@ -9,7 +9,7 @@ describe("seo worker helpers", () => {
     expect(blockUrl).not.toContain("compareTown");
 
     const compareUrl = canonicalUrlForRoute("https://example.com", "BEDOK", null, "ANG MO KIO");
-    expect(compareUrl).toContain("compareTown=ANG+MO+KIO");
+    expect(compareUrl).toContain("compareTown=ANG%20MO%20KIO");
 
     const sameTownCompare = canonicalUrlForRoute("https://example.com", "BEDOK", null, "bedok");
     expect(sameTownCompare).not.toContain("compareTown");
