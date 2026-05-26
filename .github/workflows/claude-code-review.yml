@@ -1,0 +1,63 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened]
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "tests/**"
+      - "public/**"
+      - "functions/**"
+      - "worker/**"
+      - "shared/**"
+      - "migrations/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "tsconfig*.json"
+      - "vite.config.*"
+      - "playwright.config.*"
+      - "eslint.config.*"
+      - "vitest.config.*"
+      - ".github/workflows/**"
+      - "wrangler.toml"
+      - "wrangler.jsonc"
+
+jobs:
+  claude-review:
+    if: |
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.author_association == 'OWNER'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: claude-review-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude PR review toolkit
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          use_sticky_comment: "true"
+          plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
+          plugins: "pr-review-toolkit@claude-code-plugins"
+          prompt: |
+            /pr-review-toolkit:review-pr all parallel
+
+            Context: pull request ${{ github.event.pull_request.number }} in ${{ github.repository }}.
+            When you finish, post one consolidated summary as a pull-request comment for human reviewers (include critical / important / suggestions and file:line references where applicable).
+          claude_args: |
+            --max-turns 40
