@@ -66,4 +66,9 @@ describe("seo worker helpers", () => {
 
     expect(buildSeoMeta({})).toBeNull();
   });
+
+  it("falls back to generic window text when no availableDateRange is present", () => {
+    const fallback = buildSeoMeta({ town: "TAMPINES" });
+    expect(fallback?.description).toContain("latest available window");
+  });
 });

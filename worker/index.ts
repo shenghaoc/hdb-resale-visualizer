@@ -145,7 +145,7 @@ export default {
       }
 
       if (url.pathname === "/robots.txt") {
-        return textResponse(`User-agent: *\nAllow: /\nSitemap: ${url.origin}/sitemap.xml\n`, "text/plain");
+        return textResponse(`User-agent: *\nAllow: /\nSitemap: ${publicOrigin(url)}/sitemap.xml\n`, "text/plain");
       }
 
       if (url.pathname === "/sitemap.xml") {
@@ -248,9 +248,9 @@ export default {
           })
           .on("head", {
             element(el) {
-              el.append(`<meta property="og:title" content="${seo.title.replaceAll('"', '&quot;')}">`, { html: true });
-              el.append(`<meta property="og:description" content="${seo.description.replaceAll('"', '&quot;')}">`, { html: true });
-              el.append(`<meta property="og:url" content="${canonicalUrl.replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:title" content="${seo.title.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:description" content="${seo.description.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:url" content="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
               el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}">`, {
                 html: true,
