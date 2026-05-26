@@ -20,8 +20,7 @@ import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
  * is a Cloudflare WAF rate-limiting rule on POST /api/shortlist (zero code
  * change). For expected traffic volume this risk is accepted as-is.
  */
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  // Require a valid Content-Length header to prevent unbounded body reads.
+async function readBodyWithLimit(request: Request): Promise<string | Response> {
   const contentLengthHeader = request.headers.get("content-length");
   if (!contentLengthHeader) {
     return privateJsonResponse({ error: "Length Required" }, { status: 411 });
@@ -31,7 +30,43 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
   }
 
-  const text = await request.text();
-  const result = await handleShortlistPush(env.DB, text);
+  const reader = request.body?.getReader();
+  if (!reader) {
+    return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
+  }
+
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      totalBytes += value.length;
+      if (totalBytes > MAX_SYNC_BODY_BYTES) {
+        await reader.cancel();
+        return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return privateJsonResponse({ error: "Failed to read request body" }, { status: 400 });
+  }
+
+  const bodyBuffer = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bodyBuffer.set(chunk, offset);
+    offset += chunk.length;
+  }
+  return new TextDecoder().decode(bodyBuffer);
+}
+
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const body = await readBodyWithLimit(request);
+  if (body instanceof Response) {
+    return body;
+  }
+
+  const result = await handleShortlistPush(env.DB, body);
   return privateJsonResponse(result.body, { status: result.status });
 };
