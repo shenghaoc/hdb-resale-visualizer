@@ -1,5 +1,6 @@
 import type { FilterState } from "@/types/data";
 import { serializeFilters } from "./queryState";
+import { townToFilename } from "./utils";
 
 /**
  * Builds the full deep-link URL for sharing a specific block.
@@ -99,4 +100,12 @@ export async function shareViaNavigator(
 
   await navigator.clipboard.writeText(url);
   return "copied";
+}
+
+export function buildBlockOgImageUrl(addressKey: string, baseUrl: string): string {
+  return `${baseUrl.replace(/\/$/, "")}/og/block/${encodeURIComponent(addressKey)}.svg`;
+}
+
+export function buildCompareOgImageUrl(townA: string, townB: string, baseUrl: string): string {
+  return `${baseUrl.replace(/\/$/, "")}/og/compare/${encodeURIComponent(townToFilename(townA))}/${encodeURIComponent(townToFilename(townB))}.svg`;
 }

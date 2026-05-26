@@ -4,6 +4,8 @@ import {
   buildCompareShareUrl,
   buildFilterShareUrl,
   buildShortlistShareUrl,
+  buildBlockOgImageUrl,
+  buildCompareOgImageUrl,
 } from "@/lib/shareUrls";
 import { DEFAULT_FILTERS } from "@/lib/constants";
 import type { FilterState } from "@/types/data";
@@ -124,5 +126,20 @@ describe("buildShortlistShareUrl", () => {
   it("preserves pathname in URL", () => {
     const url = buildShortlistShareUrl("abc123", "", "https://example.com", "/app/");
     expect(url).toBe("https://example.com/app/?shortlist=abc123");
+  });
+});
+
+describe('OG image URL builders', () => {
+  it("builds block OG route", () => {
+    expect(buildBlockOgImageUrl("bedok-123", BASE_URL)).toBe("https://example.com/og/block/bedok-123.svg");
+  });
+
+  it("builds compare OG route from canonical town names", () => {
+    expect(buildCompareOgImageUrl("ANG MO KIO", "BEDOK", BASE_URL)).toBe(
+      "https://example.com/og/compare/ang-mo-kio/bedok.svg",
+    );
+    expect(buildCompareOgImageUrl("KALLANG/WHAMPOA", "BEDOK", BASE_URL)).toBe(
+      "https://example.com/og/compare/kallang-whampoa/bedok.svg",
+    );
   });
 });

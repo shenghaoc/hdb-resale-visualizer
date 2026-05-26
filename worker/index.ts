@@ -15,6 +15,7 @@ import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-station
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
+import { handleBlockOg, handleCompareOg } from './og';
 
 // ---- route patterns -------------------------------------------------------
 
@@ -30,6 +31,9 @@ const patterns = [
   { pattern: new URLPattern({ pathname: "/api/search{/}?" }),               handler: searchHandler },
 ];
 
+const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.svg" });
+const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.svg" });
+
 // ---- context helper -------------------------------------------------------
 
 /**
@@ -43,6 +47,7 @@ function buildPagesContext(
   request: Request,
   env: Env,
   groups: Record<string, string | undefined>,
+  ctx: ExecutionContext,
 ): Record<string, unknown> {
   // URLPattern group values may be undefined for optional segments.
   // Filter them out so handlers only see defined params.
@@ -60,9 +65,11 @@ function buildPagesContext(
     next: () => Promise.resolve(new Response(null, { status: 500 })),
     passThroughOnException: () => {},
     waitUntil(promise: Promise<unknown>) {
-      void promise.catch((err: unknown) => {
-        console.warn("waitUntil promise rejected:", err);
-      });
+      ctx.waitUntil(
+        promise.catch((err: unknown) => {
+          console.warn("waitUntil promise rejected:", err);
+        }),
+      );
     },
   };
 }
@@ -70,15 +77,30 @@ function buildPagesContext(
 // ---- fetch handler --------------------------------------------------------
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
       const url = new URL(request.url);
+
+      const blockOg = blockOgPattern.exec(url);
+      if (blockOg) {
+        const key = blockOg.pathname.groups.addressKey;
+        return key ? handleBlockOg(request, env, key, ctx) : Response.redirect(`${url.origin}/og-card.png`, 302);
+      }
+      const compareOg = compareOgPattern.exec(url);
+      if (compareOg) {
+        const { townA, townB } = compareOg.pathname.groups;
+        return townA && townB
+          ? handleCompareOg(request, env, townA, townB, ctx)
+          : Response.redirect(`${url.origin}/og-card.png`, 302);
+      }
 
       // Try to match an API route.
       for (const { pattern, handler } of patterns) {
         const match = pattern.exec(url);
         if (match) {
-          return handler(buildPagesContext(request, env, match.pathname.groups) as Parameters<typeof handler>[0]);
+          return handler(
+            buildPagesContext(request, env, match.pathname.groups, ctx) as Parameters<typeof handler>[0],
+          );
         }
       }
 
