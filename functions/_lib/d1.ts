@@ -29,12 +29,8 @@ export function jsonResponse(body: JsonValue, init: ResponseInit = {}): Response
  */
 export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): Response {
   const headers = new Headers(init.headers);
-  if (!headers.has("content-type")) {
-    headers.set("content-type", "application/json; charset=utf-8");
-  }
-  if (!headers.has("cache-control")) {
-    headers.set("cache-control", "no-store");
-  }
+  headers.set("content-type", "application/json; charset=utf-8");
+  headers.set("cache-control", "no-store");
   return new Response(JSON.stringify(body), { ...init, headers });
 }
 

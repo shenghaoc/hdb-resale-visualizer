@@ -17,8 +17,9 @@ function addedAtMs(iso?: string): number {
  * {@link MAX_SHORTLIST_ITEMS}, keeping the most recently added items when over
  * the cap.
  *
- * Shared by the browser (local/cloud reconciliation) and the Worker
- * (server-side merge of an incoming push with the stored row).
+ * Shared by the browser for local/cloud reconciliation. The Worker push
+ * handler does a direct overwrite — server-side merging was removed to
+ * prevent deleted items from being resurrected.
  */
 export function mergeShortlists(a: ShortlistItem[], b: ShortlistItem[]): ShortlistItem[] {
   const byKey = new Map<string, ShortlistItem>();
