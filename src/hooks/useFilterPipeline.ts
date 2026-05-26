@@ -112,7 +112,37 @@ export function useFilterPipeline({
   const profileReadyForRecommendations =
     resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
-  const { blocks, loadError } = useBlockLoading({
+  // Use rawFilters for startMonth/endMonth so the coarse-search trigger only
+  // fires on user-set values, not the injected defaultStartMonth. All other
+  // fields come from effectiveFilters (the two are identical for those fields).
+  const coarseSearchParams = useMemo(
+    () => ({
+      flatType: effectiveFilters.flatType,
+      flatModel: effectiveFilters.flatModel,
+      budgetMin: effectiveFilters.budgetMin,
+      budgetMax: effectiveFilters.budgetMax,
+      areaMin: effectiveFilters.areaMin,
+      areaMax: effectiveFilters.areaMax,
+      remainingLeaseMin: effectiveFilters.remainingLeaseMin,
+      startMonth: rawFilters.startMonth,
+      endMonth: rawFilters.endMonth,
+      mrtMax: effectiveFilters.mrtMax,
+    }),
+    [
+      effectiveFilters.flatType,
+      effectiveFilters.flatModel,
+      effectiveFilters.budgetMin,
+      effectiveFilters.budgetMax,
+      effectiveFilters.areaMin,
+      effectiveFilters.areaMax,
+      effectiveFilters.remainingLeaseMin,
+      rawFilters.startMonth,
+      rawFilters.endMonth,
+      effectiveFilters.mrtMax,
+    ],
+  );
+
+  const { blocks, loadError, searchTruncated } = useBlockLoading({
     manifest,
     townFilter: effectiveFilters.town,
     debouncedSearch,
@@ -122,6 +152,7 @@ export function useFilterPipeline({
     savedVisible,
     shortlistCount,
     needsAllBlocksForRecommendations: profileReadyForRecommendations,
+    coarseSearchParams,
   });
 
   // O(1) address key lookup.
@@ -286,6 +317,7 @@ export function useFilterPipeline({
     hasMapMarkerScope,
     blocks,
     loadError,
+    searchTruncated,
     filteredBlocks,
     mapFilteredBlocks,
     blocksByKey,
@@ -304,6 +336,7 @@ export function useFilterPipeline({
     hasMapMarkerScope,
     blocks,
     loadError,
+    searchTruncated,
     filteredBlocks,
     mapFilteredBlocks,
     blocksByKey,

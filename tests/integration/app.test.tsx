@@ -11,6 +11,7 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
+  fetchBlocksBySearch: vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
   townToFilename: (town: string) =>
@@ -44,6 +45,7 @@ vi.mock("@/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
   fetchBlockSummaries: dataMocks.fetchBlockSummaries,
   fetchBlocksByTown: dataMocks.fetchBlocksByTown,
+  fetchBlocksBySearch: dataMocks.fetchBlocksBySearch,
   fetchAddressDetail: dataMocks.fetchAddressDetail,
   fetchComparisonArtifact: dataMocks.fetchComparisonArtifact,
   townToFilename: dataMocks.townToFilename,
@@ -251,6 +253,7 @@ describe("App detail loading", () => {
       transactions: [],
     });
     dataMocks.fetchBlocksByTown.mockResolvedValue(blocks);
+    dataMocks.fetchBlocksBySearch.mockResolvedValue({ blocks, truncated: false, limit: 2000 });
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
     vi.stubGlobal("localStorage", {
       getItem: vi.fn((key: string) =>

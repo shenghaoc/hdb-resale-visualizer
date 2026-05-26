@@ -159,3 +159,9 @@ export const comparisonArtifactSchema = z.object({
   }),
   generatedAt: z.string(),
 });
+
+export const searchResponseSchema = z.object({
+  blocks: z.array(blockSummarySchema),
+  truncated: z.boolean(),
+  limit: z.number().int().positive(),
+});

@@ -72,6 +72,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "results.currentPageN": "Current Page, Page {value}",
     "results.shortlistCandidates": "Current shortlist candidates",
     "results.filteredBlocks": "Filtered blocks",
+    "results.searchTruncated":
+      "Showing the first 2,000 matching blocks. Narrow filters or pick a town to see more.",
     "results.shown": "{count} shown",
     "results.sort": "Sort",
     "results.sort.lowestMedian": "Lowest median first",
@@ -650,6 +652,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "results.currentPageN": "当前页，第 {value} 页",
     "results.shortlistCandidates": "候选组屋",
     "results.filteredBlocks": "筛选结果",
+    "results.searchTruncated": "仅显示前 2,000 个匹配组屋。请缩小筛选范围或选择市镇以查看更多。",
     "results.shown": "共 {count} 个",
     "results.sort": "排序",
     "results.sort.lowestMedian": "价格由低到高",

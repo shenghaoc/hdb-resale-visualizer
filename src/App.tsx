@@ -361,6 +361,7 @@ function App() {
           townRecommendations={townRecommendations}
           townRecommendationsLoading={townRecommendationsLoading}
           onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
+          searchTruncated={pipeline.searchTruncated}
         />
       </Suspense>
     </div>

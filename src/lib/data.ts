@@ -6,6 +6,7 @@ import {
   comparisonArtifactSchema,
   manifestSchema,
   townFlatTypeTrendPointSchema,
+  searchResponseSchema,
 } from "./dataSchemas";
 import type {
   AddressDetail,
@@ -18,6 +19,10 @@ import type { z } from "zod";
 
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
 const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
+let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> | null =
+  null;
+let blocksBySearchKey = "";
+let blocksBySearchSequence = 0;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -103,4 +108,53 @@ export async function fetchComparisonArtifact(addressKey: string): Promise<Compa
     }
     throw error;
   }
+}
+
+
+export type CoarseSearchParams = {
+  town: string;
+  flatType: string;
+  flatModel: string;
+  budgetMin: number | null;
+  budgetMax: number | null;
+  areaMin: number | null;
+  areaMax: number | null;
+  remainingLeaseMin: number | null;
+  startMonth: string | null;
+  endMonth: string | null;
+  mrtMax: number | null;
+};
+
+export function resetBlocksBySearchCacheForTests(): void {
+  blocksBySearchPromise = null;
+  blocksBySearchKey = "";
+  blocksBySearchSequence = 0;
+}
+
+export function fetchBlocksBySearch(
+  params: CoarseSearchParams,
+): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
+  const search = new URLSearchParams();
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== null && v !== undefined && v !== "") search.set(k, String(v));
+  }
+  const query = search.toString();
+  const cacheKey = query;
+  if (blocksBySearchPromise && blocksBySearchKey === cacheKey) {
+    return blocksBySearchPromise;
+  }
+
+  const sequence = ++blocksBySearchSequence;
+  blocksBySearchKey = cacheKey;
+  blocksBySearchPromise = fetchJson(
+    `${API_BASE_PATH}/search${query ? `?${query}` : ""}`,
+    searchResponseSchema,
+  ).catch((error) => {
+    if (blocksBySearchSequence === sequence && blocksBySearchKey === cacheKey) {
+      blocksBySearchPromise = null;
+      blocksBySearchKey = "";
+    }
+    throw error;
+  });
+  return blocksBySearchPromise;
 }
