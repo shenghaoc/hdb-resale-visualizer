@@ -65,7 +65,11 @@ function buildPagesContext(
     next: () => Promise.resolve(new Response(null, { status: 500 })),
     passThroughOnException: () => {},
     waitUntil(promise: Promise<unknown>) {
-      ctx.waitUntil(promise);
+      ctx.waitUntil(
+        promise.catch((err: unknown) => {
+          console.warn("waitUntil promise rejected:", err);
+        }),
+      );
     },
   };
 }

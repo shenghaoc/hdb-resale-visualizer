@@ -72,7 +72,7 @@ function buildCacheKey(request: Request, key: string, version: string): Request 
 }
 
 async function readCache(cacheKey: Request): Promise<Response | undefined> {
-  if (typeof caches === "undefined") return undefined;
+  if (typeof caches === "undefined" || !caches.default) return undefined;
   try {
     return await caches.default.match(cacheKey);
   } catch (err) {
@@ -82,7 +82,7 @@ async function readCache(cacheKey: Request): Promise<Response | undefined> {
 }
 
 function writeCache(ctx: ExecutionContext, cacheKey: Request, response: Response): void {
-  if (typeof caches === "undefined") return;
+  if (typeof caches === "undefined" || !caches.default) return;
   ctx.waitUntil(
     caches.default.put(cacheKey, response.clone()).catch((err) => {
       console.warn("Cache put failed:", err);
