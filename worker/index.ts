@@ -158,7 +158,9 @@ export default {
         let cached: Response | null = null;
         if (cache) {
           try {
-            cached = await cache.match(cacheKey);
+            // Cloudflare's Cache.match can be typed as `Response | undefined`.
+            // Normalize to `Response | null` so downstream checks are consistent.
+            cached = (await cache.match(cacheKey)) ?? null;
           } catch (err) {
             console.warn("Sitemap cache match failed:", err);
           }
