@@ -35,7 +35,7 @@ export function mergeShortlists(a: ShortlistItem[], b: ShortlistItem[]): Shortli
     }
     const itemTime = addedAtMs(item.addedAt);
     const existingTime = addedAtMs(existing.addedAt);
-    if (itemTime > existingTime || (itemTime === 0 && existingTime === 0)) {
+    if (itemTime > existingTime) {
       byKey.set(item.addressKey, item);
     }
   }

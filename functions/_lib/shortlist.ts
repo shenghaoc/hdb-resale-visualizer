@@ -31,13 +31,13 @@ const shortlistItemSchema = z
   .object({
     addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
     notes: note.catch(""),
-    pros: note.optional(),
-    cons: note.optional(),
-    renovation: note.optional(),
-    noise: note.optional(),
-    transport: note.optional(),
-    offerCeiling: z.number().finite().optional(),
-    agentRemarks: note.optional(),
+    pros: note.optional().catch(undefined),
+    cons: note.optional().catch(undefined),
+    renovation: note.optional().catch(undefined),
+    noise: note.optional().catch(undefined),
+    transport: note.optional().catch(undefined),
+    offerCeiling: z.number().finite().optional().catch(undefined),
+    agentRemarks: note.optional().catch(undefined),
     targetPrice: z.number().finite().nullable().catch(null),
     addedAt: z
       .string()

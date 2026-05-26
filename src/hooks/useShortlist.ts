@@ -128,21 +128,18 @@ export function useShortlist() {
       try {
         const cloud = await pullShortlist(syncCode);
         if (cancelled) return;
-        let pushPayload: ShortlistItem[] = [];
-        setItems((current) => {
-          pushPayload = mergeShortlists(current, cloud);
-          return mergeFromCloud(current, cloud);
-        });
+        // Compute push payload synchronously from itemsRef (always up-to-date)
+        // rather than extracting from a state updater whose execution is deferred.
+        const pushPayload = mergeShortlists(itemsRef.current, cloud);
+        setItems(mergeFromCloud(itemsRef.current, cloud));
         const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled) return;
         readyRef.current = true;
-        let syncedSnapshot = "";
-        setItems((current) => {
-          const next = mergeFromCloud(current, result.items);
-          syncedSnapshot = JSON.stringify(next);
-          return next;
-        });
-        lastPushedRef.current = syncedSnapshot;
+        const nextItems = mergeFromCloud(itemsRef.current, result.items);
+        lastPushedRef.current = JSON.stringify(nextItems);
+        if (nextItems !== itemsRef.current) {
+          setItems(nextItems);
+        }
         setSyncStatus("synced");
       } catch (error) {
         if (cancelled) return;
@@ -176,13 +173,11 @@ export function useShortlist() {
     void pushShortlist(syncCode, debouncedItems)
       .then((result) => {
         if (cancelled) return;
-        let syncedSnapshot = snapshot;
-        setItems((current) => {
-          const next = mergeFromCloud(current, result.items);
-          syncedSnapshot = JSON.stringify(next);
-          return next;
-        });
-        lastPushedRef.current = syncedSnapshot;
+        const nextItems = mergeFromCloud(itemsRef.current, result.items);
+        lastPushedRef.current = JSON.stringify(nextItems);
+        if (nextItems !== itemsRef.current) {
+          setItems(nextItems);
+        }
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -250,20 +245,17 @@ export function useShortlist() {
     setSyncStatus("syncing");
     try {
       const cloud = await pullShortlist(code);
-      let pushPayload: ShortlistItem[] = [];
-      setItems((current) => {
-        pushPayload = mergeShortlists(current, cloud);
-        return mergeFromCloud(current, cloud);
-      });
+      // Compute push payload synchronously from itemsRef, not from a deferred
+      // state updater whose return value is not available synchronously.
+      const pushPayload = mergeShortlists(itemsRef.current, cloud);
+      setItems(mergeFromCloud(itemsRef.current, cloud));
       const result = await pushShortlist(code, pushPayload);
       readyRef.current = true;
-      let syncedSnapshot = "";
-      setItems((current) => {
-        const next = mergeFromCloud(current, result.items);
-        syncedSnapshot = JSON.stringify(next);
-        return next;
-      });
-      lastPushedRef.current = syncedSnapshot;
+      const nextItems = mergeFromCloud(itemsRef.current, result.items);
+      lastPushedRef.current = JSON.stringify(nextItems);
+      if (nextItems !== itemsRef.current) {
+        setItems(nextItems);
+      }
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
       setSyncCode(code);
       setSyncStatus("synced");
