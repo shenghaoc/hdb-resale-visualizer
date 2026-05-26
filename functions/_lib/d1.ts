@@ -22,6 +22,18 @@ export function jsonResponse(body: JsonValue, init: ResponseInit = {}): Response
   });
 }
 
+/**
+ * JSON response for per-user runtime data (the opt-in shortlist sync).
+ * Unlike {@link jsonResponse}, this is never cached at the edge or shared —
+ * the payload is private to a single sync code.
+ */
+export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): Response {
+  const headers = new Headers(init.headers);
+  headers.set("content-type", "application/json; charset=utf-8");
+  headers.set("cache-control", "no-store");
+  return new Response(JSON.stringify(body), { ...init, headers });
+}
+
 export function notFound(message = "Not Found"): Response {
   return new Response(JSON.stringify({ error: message }), {
     status: 404,

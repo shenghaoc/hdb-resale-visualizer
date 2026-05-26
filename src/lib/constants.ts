@@ -1,6 +1,9 @@
 import type { FilterState } from "../types/data";
 import type { ColorSpecification, DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
 
+// Single-sourced from shared/ so the browser and the Worker agree on the cap.
+export { MAX_SHORTLIST_ITEMS } from "@shared/shortlist-limits";
+
 /**
  * Shared numeric constants used across the codebase.
  */
@@ -72,10 +75,8 @@ export const SEARCH_PROFILE_MAX_MONETARY_VALUE = 10_000_000;
 export const SHORTLIST_STORAGE_KEY = "hdb_resale_shortlist_v1";
 export const CHECKLIST_STORAGE_KEY = "hdb_resale_checklist_v1";
 
-/**
- * Maximum number of properties that can be saved to the shortlist.
- */
-export const MAX_SHORTLIST_ITEMS = 20;
+/** localStorage key holding the anonymous cloud-sync code, when sync is enabled. */
+export const SYNC_CODE_STORAGE_KEY = "hdb_resale_sync_code_v1";
 
 /**
  * Security guardrail: reject oversized share payloads early to avoid expensive

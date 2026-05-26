@@ -17,9 +17,13 @@ import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { handleBlockOg, handleCompareOg } from "./og";
 import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
+import { onRequestPost as shortlistCreateHandler } from "../functions/api/shortlist/index";
+import { onRequestGet as shortlistGetHandler } from "../functions/api/shortlist/[syncCode]";
 
 // ---- route patterns -------------------------------------------------------
 
+// `method` defaults to GET. Read endpoints stay GET-only; the opt-in shortlist
+// sync adds the only runtime write (POST).
 const patterns = [
   { pattern: new URLPattern({ pathname: "/api/manifest{/}?" }),             handler: manifestHandler },
   { pattern: new URLPattern({ pathname: "/api/block-summaries{/}?" }),      handler: blockSummariesHandler },
@@ -30,6 +34,8 @@ const patterns = [
   { pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }),             handler: mrtExitsHandler },
   { pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }), handler: trendsHandler },
   { pattern: new URLPattern({ pathname: "/api/search{/}?" }),               handler: searchHandler },
+  { pattern: new URLPattern({ pathname: "/api/shortlist{/}?" }),             handler: shortlistCreateHandler, method: "POST" },
+  { pattern: new URLPattern({ pathname: "/api/shortlist/:syncCode{/}?" }),   handler: shortlistGetHandler },
 ];
 
 const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.svg" });
@@ -134,10 +140,10 @@ export default {
           : Response.redirect(`${url.origin}/og-card.png`, 302);
       }
 
-      // Try to match an API route.
-      for (const { pattern, handler } of patterns) {
+      // Try to match an API route (path + method).
+      for (const { pattern, handler, method } of patterns) {
         const match = pattern.exec(url);
-        if (match) {
+        if (match && (method ?? "GET") === request.method) {
           return handler(
             buildPagesContext(request, env, match.pathname.groups, ctx) as Parameters<typeof handler>[0],
           );

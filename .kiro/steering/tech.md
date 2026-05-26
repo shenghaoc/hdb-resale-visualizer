@@ -16,4 +16,4 @@
 2. **D1 is Source of Truth**: All blocks, transactions, trends, comparisons, and persistent geocode/walking-time caches live in D1. Pages Functions read from the `DB` binding; the sync pipeline writes via the D1 HTTP API.
 3. **Geocoding is One-Time**: Geocoded coordinates and OneMap walking times never change for an address/pair. They are upserted into `geocode_cache` and `walking_time_cache` tables and re-used across every sync run. Browsers never geocode.
 4. **Schema Migrations**: D1 schema lives in `migrations/*.sql` and is applied via `npm run db:migrate:remote` (prod) and `npm run db:migrate:local` (Wrangler local emulator).
-5. **Browser Storage**: Use `localStorage` exclusively for persistent user state.
+5. **Browser Storage**: `localStorage` is the default and offline baseline for persistent user state. The one exception is **opt-in** shortlist cloud sync: an anonymous sync code (no account, no PII) mirrors the shortlist to the `shortlists` D1 table via `functions/api/shortlist/*`. This is the sole runtime D1 write; all other writes remain build-time.

@@ -83,6 +83,11 @@ export async function writeArtifactsToD1(
 ): Promise<void> {
   console.log("Writing artifacts to D1...");
 
+  // NOTE: the `shortlists` table (migration 0003) is intentionally absent here.
+  // It holds opt-in, runtime user state written only by the Worker
+  // (functions/api/shortlist/*). The sync pipeline must never truncate or
+  // rewrite it, or it would wipe users' cloud-backed shortlists.
+
   // Blocks — truncate and reinsert. ~10k rows.
   // preDelete batches DELETE with the first INSERT chunk to avoid a window
   // where the table is empty if the process is interrupted.

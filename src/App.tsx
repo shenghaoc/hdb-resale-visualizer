@@ -379,6 +379,7 @@ function App() {
         remainingLeaseMin={filters.remainingLeaseMin}
         budgetMin={filters.budgetMin}
         budgetMax={filters.budgetMax}
+        sync={shortlist.sync}
       />
     </Suspense>
   ) : null;

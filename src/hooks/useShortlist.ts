@@ -1,14 +1,49 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MAX_SHORTLIST_ITEMS, SYNC_CODE_STORAGE_KEY } from "@/lib/constants";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
   mergeImportedShortlistItems,
+  mergeShortlists,
   saveShortlist,
   toggleShortlistItem,
 } from "@/lib/shortlist";
+import { SyncCodeNotFoundError, pullShortlist, pushShortlist } from "@/lib/cloudSync";
 import type { ShortlistItem } from "@/types/data";
 import { safeStorage } from "@/lib/storage";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+
+const SYNC_DEBOUNCE_MS = 1000;
+
+/** Merge cloud items into local state without redundant re-renders. */
+function mergeFromCloud(current: ShortlistItem[], cloud: ShortlistItem[]): ShortlistItem[] {
+  const next = mergeShortlists(current, cloud);
+  return JSON.stringify(current) === JSON.stringify(next) ? current : next;
+}
+
+/** Keep itemsRef in sync with React state for async sync callbacks. */
+function applyItems(
+  itemsRef: { current: ShortlistItem[] },
+  setItems: (value: ShortlistItem[]) => void,
+  next: ShortlistItem[],
+): void {
+  itemsRef.current = next;
+  setItems(next);
+}
+
+export type SyncStatus = "local" | "syncing" | "synced" | "error";
+
+export type ShortlistSync = {
+  /** Active sync code, or null when sync is off. */
+  code: string | null;
+  status: SyncStatus;
+  /** Turn on sync: mint a code and back up the current shortlist. */
+  enable: () => Promise<void>;
+  /** Link an existing code: pull, merge, then keep syncing. */
+  link: (code: string) => Promise<void>;
+  /** Turn off sync on this device (local data is untouched). */
+  disable: () => void;
+};
 
 type InitialShortlistState = {
   items: ShortlistItem[];
@@ -50,6 +85,22 @@ function readInitialShortlist(): InitialShortlistState {
 export function useShortlist() {
   const [initialState] = useState(readInitialShortlist);
   const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
+  // Mirrors `items` for use inside async sync callbacks/effects without making
+  // them depend on `items`. Updated in the persistence effect below.
+  const itemsRef = useRef(items);
+
+  const [syncCode, setSyncCode] = useState<string | null>(() =>
+    safeStorage.getItem(SYNC_CODE_STORAGE_KEY),
+  );
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>(() =>
+    safeStorage.getItem(SYNC_CODE_STORAGE_KEY) ? "syncing" : "local",
+  );
+  const debouncedItems = useDebouncedValue(items, SYNC_DEBOUNCE_MS);
+  // JSON of the last successfully pushed set — skips redundant pushes.
+  const lastPushedRef = useRef<string | null>(null);
+  // Gates the debounced push until the initial pull/merge has completed, so we
+  // never clobber cloud data with stale local state on sign-in/reload.
+  const readyRef = useRef(false);
 
   useEffect(() => {
     if (!initialState.shouldClearUrlParam) {
@@ -63,8 +114,99 @@ export function useShortlist() {
   }, [initialState.shouldClearUrlParam]);
 
   useEffect(() => {
+    itemsRef.current = items;
     saveShortlist(safeStorage, items);
   }, [items]);
+
+  const dropSyncCode = useCallback((status: SyncStatus) => {
+    safeStorage.removeItem(SYNC_CODE_STORAGE_KEY);
+    readyRef.current = false;
+    lastPushedRef.current = null;
+    setSyncCode(null);
+    setSyncStatus(status);
+  }, []);
+
+  // Initial hydration for a stored code: pull → merge → push merged, once.
+  useEffect(() => {
+    if (!syncCode || readyRef.current) {
+      return;
+    }
+
+    let cancelled = false;
+    setSyncStatus("syncing");
+    void (async () => {
+      try {
+        const cloud = await pullShortlist(syncCode);
+        if (cancelled) return;
+        const mergedItems = mergeFromCloud(itemsRef.current, cloud);
+        const mergedSnapshot = JSON.stringify(mergedItems);
+        const pushPayload = mergeShortlists(itemsRef.current, cloud);
+        applyItems(itemsRef, setItems, mergedItems);
+        const result = await pushShortlist(syncCode, pushPayload);
+        if (cancelled) return;
+        readyRef.current = true;
+        lastPushedRef.current = JSON.stringify(result.items);
+        if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
+          const nextItems = mergeFromCloud(itemsRef.current, result.items);
+          if (nextItems !== itemsRef.current) {
+            applyItems(itemsRef, setItems, nextItems);
+          }
+        }
+        setSyncStatus("synced");
+      } catch (error) {
+        if (cancelled) return;
+        if (error instanceof SyncCodeNotFoundError) {
+          dropSyncCode("local");
+        } else {
+          // Leave readyRef false so we don't push (and risk clobbering) until a
+          // future reload retries the pull. Local use is unaffected.
+          setSyncStatus("error");
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [syncCode, dropSyncCode]);
+
+  // Debounced push of subsequent local changes while a code is active.
+  useEffect(() => {
+    if (!syncCode || !readyRef.current) {
+      return;
+    }
+    const snapshot = JSON.stringify(debouncedItems);
+    if (snapshot === lastPushedRef.current) {
+      return;
+    }
+
+    let cancelled = false;
+    setSyncStatus("syncing");
+    void pushShortlist(syncCode, debouncedItems)
+      .then((result) => {
+        if (cancelled) return;
+        lastPushedRef.current = JSON.stringify(result.items);
+        if (JSON.stringify(itemsRef.current) === snapshot) {
+          const nextItems = mergeFromCloud(itemsRef.current, result.items);
+          if (nextItems !== itemsRef.current) {
+            applyItems(itemsRef, setItems, nextItems);
+          }
+        }
+        setSyncStatus("synced");
+      })
+      .catch((error: unknown) => {
+        if (cancelled) return;
+        if (error instanceof SyncCodeNotFoundError) {
+          dropSyncCode("local");
+        } else {
+          setSyncStatus("error");
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedItems, syncCode, dropSyncCode]);
 
   const toggle = useCallback((addressKey: string) => {
     setItems((current) => toggleShortlistItem(current, addressKey));
@@ -94,6 +236,63 @@ export function useShortlist() {
     return items.some((item) => item.addressKey === addressKey);
   }, [items]);
 
+  const enable = useCallback(async () => {
+    setSyncStatus("syncing");
+    const snapshot = JSON.stringify(itemsRef.current);
+    try {
+      const result = await pushShortlist(null, itemsRef.current);
+      readyRef.current = true;
+      lastPushedRef.current = JSON.stringify(result.items);
+      if (JSON.stringify(itemsRef.current) === snapshot) {
+        const next = mergeFromCloud(itemsRef.current, result.items);
+        if (next !== itemsRef.current) {
+          applyItems(itemsRef, setItems, next);
+        }
+      }
+      safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
+      setSyncCode(result.syncCode);
+      setSyncStatus("synced");
+    } catch (error) {
+      setSyncStatus("error");
+      throw error;
+    }
+  }, []);
+
+  const link = useCallback(async (code: string) => {
+    setSyncStatus("syncing");
+    try {
+      const cloud = await pullShortlist(code);
+      const mergedItems = mergeFromCloud(itemsRef.current, cloud);
+      const mergedSnapshot = JSON.stringify(mergedItems);
+      const pushPayload = mergeShortlists(itemsRef.current, cloud);
+      applyItems(itemsRef, setItems, mergedItems);
+      const result = await pushShortlist(code, pushPayload);
+      readyRef.current = true;
+      lastPushedRef.current = JSON.stringify(result.items);
+      if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
+        const nextItems = mergeFromCloud(itemsRef.current, result.items);
+        if (nextItems !== itemsRef.current) {
+          applyItems(itemsRef, setItems, nextItems);
+        }
+      }
+      safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+      setSyncCode(code);
+      setSyncStatus("synced");
+    } catch (error) {
+      setSyncStatus("error");
+      throw error;
+    }
+  }, []);
+
+  const disable = useCallback(() => {
+    dropSyncCode("local");
+  }, [dropSyncCode]);
+
+  const sync = useMemo<ShortlistSync>(
+    () => ({ code: syncCode, status: syncStatus, enable, link, disable }),
+    [syncCode, syncStatus, enable, link, disable],
+  );
+
   return useMemo(
     () => ({
       items,
@@ -101,7 +300,8 @@ export function useShortlist() {
       toggle,
       update,
       has,
+      sync,
     }),
-    [items, toggle, update, has],
+    [items, toggle, update, has, sync],
   );
 }
