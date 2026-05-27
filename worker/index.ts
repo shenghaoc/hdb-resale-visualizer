@@ -299,6 +299,10 @@ export default {
   },
 
   scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+    if (!env.DB) {
+      console.error("Shortlist TTL cleanup skipped: DB binding is missing");
+      return;
+    }
     ctx.waitUntil(
       purgeStaleShortlists(env.DB).catch((err: unknown) => {
         console.error("Shortlist TTL cleanup failed:", err);
