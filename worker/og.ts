@@ -147,11 +147,16 @@ function renderPng(svg: string): Uint8Array {
       sansSerifFamily: "Inter",
     },
   });
-  const image = resvg.render();
-  const png = image.asPng();
-  image.free();
-  resvg.free();
-  return png;
+  try {
+    const image = resvg.render();
+    try {
+      return image.asPng();
+    } finally {
+      image.free();
+    }
+  } finally {
+    resvg.free();
+  }
 }
 
 export async function handleBlockOg(

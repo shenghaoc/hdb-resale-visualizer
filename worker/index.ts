@@ -245,11 +245,14 @@ export default {
         const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
 
         // Build per-route og:image URL (absolute, required by scrapers).
-        let ogImageUrl: string | null = null;
+        // Falls back to the static /og-card.png for plain town routes.
+        let ogImageUrl: string;
         if (block && selected) {
           ogImageUrl = `${publicOrigin(url)}/og/block/${encodeURIComponent(selected)}.png`;
         } else if (authoritativeTown && authoritativeCompareTown) {
           ogImageUrl = `${publicOrigin(url)}/og/compare/${encodeURIComponent(townToFilename(authoritativeTown))}/${encodeURIComponent(townToFilename(authoritativeCompareTown))}.png`;
+        } else {
+          ogImageUrl = `${publicOrigin(url)}/og-card.png`;
         }
 
         return new HTMLRewriter()
@@ -270,13 +273,13 @@ export default {
               el.append(`<meta property="og:title" content="${seo.title.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<meta property="og:description" content="${seo.description.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<meta property="og:url" content="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
-              if (ogImageUrl) {
-                el.append(`<meta property="og:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
-                el.append(`<meta property="og:image:type" content="image/png">`, { html: true });
-                el.append(`<meta property="og:image:width" content="1200">`, { html: true });
-                el.append(`<meta property="og:image:height" content="630">`, { html: true });
-                el.append(`<meta name="twitter:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
-              }
+              // Always emit og:image — uses dynamic PNG for block/compare routes,
+              // falls back to the static /og-card.png for plain town routes.
+              el.append(`<meta property="og:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:image:type" content="image/png">`, { html: true });
+              el.append(`<meta property="og:image:width" content="1200">`, { html: true });
+              el.append(`<meta property="og:image:height" content="630">`, { html: true });
+              el.append(`<meta name="twitter:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
               el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}">`, {
                 html: true,
