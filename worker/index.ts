@@ -267,6 +267,8 @@ export default {
           })
           .on('meta[property="og:image"]', { element(el) { el.remove(); } })
           .on('meta[property="og:image:type"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:image:width"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:image:height"]', { element(el) { el.remove(); } })
           .on('meta[name="twitter:image"]', { element(el) { el.remove(); } })
           .on("head", {
             element(el) {
