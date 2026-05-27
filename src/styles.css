@@ -727,14 +727,6 @@
   }
 }
 
-[data-slot="scroll-area-scrollbar"][data-orientation="vertical"] {
-  width: 0.625rem;
-}
-
-[data-slot="scroll-area-scrollbar"][data-orientation="horizontal"] {
-  height: 0.625rem;
-}
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
