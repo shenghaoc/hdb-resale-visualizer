@@ -33,6 +33,19 @@ describe("matchApiRoute", () => {
       matchApiRoute(new URL("https://example.com/api/shortlist/abc123abc123abc1"), "GET").kind,
     ).toBe("handler");
   });
+
+  it("treats HEAD as GET per RFC 9110 §9.3.2", () => {
+    const match = matchApiRoute(new URL("https://example.com/api/manifest"), "HEAD");
+    expect(match.kind).toBe("handler");
+    if (match.kind === "handler") {
+      expect(match.routeId).toBe("manifest");
+    }
+  });
+
+  it("does not treat HEAD as POST", () => {
+    const match = matchApiRoute(new URL("https://example.com/api/shortlist"), "HEAD");
+    expect(match.kind).toBe("method_not_allowed");
+  });
 });
 
 describe("methodNotAllowedResponse", () => {

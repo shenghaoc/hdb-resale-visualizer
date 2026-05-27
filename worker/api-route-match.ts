@@ -56,7 +56,8 @@ export function matchApiRoute(url: URL, requestMethod: string): ApiRouteMatch {
 
     pathMatched = true;
     const expectedMethod = method ?? "GET";
-    if (expectedMethod === requestMethod) {
+    const effectiveMethod = requestMethod === "HEAD" ? "GET" : requestMethod;
+    if (expectedMethod === effectiveMethod) {
       return { kind: "handler", routeId: id, groups: match.pathname.groups };
     }
     allowedMethods.push(expectedMethod);
