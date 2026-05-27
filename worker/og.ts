@@ -134,6 +134,8 @@ function compareCardSvg(input: {
 </svg>`;
 }
 
+const interFontBuffer = new Uint8Array(interFont as ArrayBuffer);
+
 /**
  * Rasterize an SVG string to PNG bytes using resvg.
  * Must be called after `resvgReady` has resolved.
@@ -141,7 +143,7 @@ function compareCardSvg(input: {
 function renderPng(svg: string): Uint8Array {
   const resvg = new Resvg(svg, {
     font: {
-      fontBuffers: [new Uint8Array(interFont as ArrayBuffer)],
+      fontBuffers: [interFontBuffer],
       loadSystemFonts: false,
       defaultFontFamily: "Inter",
       sansSerifFamily: "Inter",
