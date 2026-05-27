@@ -10,8 +10,8 @@
  * Data retention: when a user calls `sync.disable()` the localStorage key is
  * cleared but the D1 row is intentionally left in place — there is no DELETE
  * endpoint because the identity model (anonymous bearer secret) has no way to
- * authenticate a removal request. If TTL-based cleanup is added later, rows can
- * be purged by `created_at` or `updated_at` age.
+ * authenticate a removal request. Abandoned rows are purged by the scheduled
+ * cleanup in worker/index.ts once `updated_at` exceeds SHORTLIST_RETENTION_DAYS.
  */
 import { z } from "zod";
 import {
@@ -20,6 +20,7 @@ import {
   MAX_NOTE_LENGTH,
   MAX_SHORTLIST_ITEMS,
   MAX_SYNC_BODY_BYTES,
+  SHORTLIST_RETENTION_MS,
   SYNC_CODE_BYTES,
   SYNC_CODE_PATTERN,
 } from "../../shared/shortlist-limits";
@@ -115,7 +116,7 @@ export function parseStoredItems(itemsJson: string): ShortlistItem[] {
 type SyncStatement = {
   bind: (...args: unknown[]) => SyncStatement;
   first: <T>() => Promise<T | null>;
-  run: () => Promise<unknown>;
+  run: () => Promise<{ meta?: { changes?: number } } | unknown>;
 };
 export type SyncDB = { prepare: (sql: string) => SyncStatement };
 
@@ -204,4 +205,29 @@ export async function handleShortlistGet(db: SyncDB, code: string | undefined): 
   } catch {
     return { status: 500, body: { error: "Shortlist lookup failed" } };
   }
+}
+
+/** ISO cutoff for rows eligible for TTL purge at `now`. */
+export function shortlistRetentionCutoff(now: Date = new Date()): string {
+  return new Date(now.getTime() - SHORTLIST_RETENTION_MS).toISOString();
+}
+
+/**
+ * Delete shortlist rows untouched since before the retention cutoff.
+ * Returns the number of rows removed (0 when none match).
+ */
+export async function purgeStaleShortlists(db: SyncDB, now: Date = new Date()): Promise<number> {
+  const cutoff = shortlistRetentionCutoff(now);
+  const pageSize = 1000;
+  let total = 0;
+  while (true) {
+    const result = await db
+      .prepare("DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)")
+      .bind(cutoff, pageSize)
+      .run();
+    const changes = (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes ?? 0;
+    total += changes;
+    if (changes < pageSize) break;
+  }
+  return total;
 }

@@ -15,29 +15,27 @@ import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-station
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
-import { handleBlockOg, handleCompareOg } from "./og";
-import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
 import { onRequestPost as shortlistCreateHandler } from "../functions/api/shortlist/index";
 import { onRequestGet as shortlistGetHandler } from "../functions/api/shortlist/[syncCode]";
+import { handleBlockOg, handleCompareOg } from "./og";
+import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
+import { matchApiRoute, methodNotAllowedResponse, type ApiRouteId } from "./api-route-match";
+import { purgeStaleShortlists } from "../functions/_lib/shortlist";
 import { townToFilename } from "../shared/geo";
 
-// ---- route patterns -------------------------------------------------------
-
-// `method` defaults to GET. Read endpoints stay GET-only; the opt-in shortlist
-// sync adds the only runtime write (POST).
-const patterns = [
-  { pattern: new URLPattern({ pathname: "/api/manifest{/}?" }),             handler: manifestHandler },
-  { pattern: new URLPattern({ pathname: "/api/block-summaries{/}?" }),      handler: blockSummariesHandler },
-  { pattern: new URLPattern({ pathname: "/api/blocks/:town{/}?" }),         handler: blocksByTownHandler },
-  { pattern: new URLPattern({ pathname: "/api/details/:addressKey{/}?" }),   handler: detailHandler },
-  { pattern: new URLPattern({ pathname: "/api/comparisons/:addressKey{/}?" }), handler: comparisonHandler },
-  { pattern: new URLPattern({ pathname: "/api/mrt-stations{/}?" }),          handler: mrtStationsHandler },
-  { pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }),             handler: mrtExitsHandler },
-  { pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }), handler: trendsHandler },
-  { pattern: new URLPattern({ pathname: "/api/search{/}?" }),               handler: searchHandler },
-  { pattern: new URLPattern({ pathname: "/api/shortlist{/}?" }),             handler: shortlistCreateHandler, method: "POST" },
-  { pattern: new URLPattern({ pathname: "/api/shortlist/:syncCode{/}?" }),   handler: shortlistGetHandler },
-];
+const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
+  manifest: manifestHandler,
+  "block-summaries": blockSummariesHandler,
+  "blocks-by-town": blocksByTownHandler,
+  details: detailHandler,
+  comparisons: comparisonHandler,
+  "mrt-stations": mrtStationsHandler,
+  "mrt-exits": mrtExitsHandler,
+  "trends-town-flat-type": trendsHandler,
+  search: searchHandler,
+  "shortlist-create": shortlistCreateHandler,
+  "shortlist-get": shortlistGetHandler,
+};
 
 const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.png" });
 const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.png" });
@@ -141,14 +139,15 @@ export default {
           : Response.redirect(`${url.origin}/og-card.png`, 302);
       }
 
-      // Try to match an API route (path + method).
-      for (const { pattern, handler, method } of patterns) {
-        const match = pattern.exec(url);
-        if (match && (method ?? "GET") === request.method) {
-          return handler(
-            buildPagesContext(request, env, match.pathname.groups, ctx) as Parameters<typeof handler>[0],
-          );
-        }
+      const apiMatch = matchApiRoute(url, request.method);
+      if (apiMatch.kind === "handler") {
+        const handler = apiHandlers[apiMatch.routeId];
+        return handler(
+          buildPagesContext(request, env, apiMatch.groups, ctx) as Parameters<typeof handler>[0],
+        );
+      }
+      if (apiMatch.kind === "method_not_allowed") {
+        return methodNotAllowedResponse(apiMatch.allow);
       }
 
       if (url.pathname === "/robots.txt") {
@@ -297,5 +296,17 @@ export default {
       const message = error instanceof Error ? error.message : "Worker error";
       return new Response(JSON.stringify({ error: message }), { status: 500, headers: { "content-type": "application/json; charset=utf-8" } });
     }
+  },
+
+  scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+    if (!env.DB) {
+      console.error("Shortlist TTL cleanup skipped: DB binding is missing");
+      return;
+    }
+    ctx.waitUntil(
+      purgeStaleShortlists(env.DB).catch((err: unknown) => {
+        console.error("Shortlist TTL cleanup failed:", err);
+      }),
+    );
   },
 };
