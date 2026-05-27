@@ -62,6 +62,12 @@ describe("checkShortlistWriteRateLimit", () => {
     const limiter = makeLimiter({ success: true });
     await expect(checkShortlistWriteRateLimit(request, limiter)).resolves.toBeNull();
   });
+
+  it("fails open (returns null) when the limiter throws", async () => {
+    const request = new Request("https://example.com/api/shortlist", { method: "POST" });
+    const limiter: ShortlistWriteRateLimiter = { limit: vi.fn().mockRejectedValue(new Error("UNKNOWN")) };
+    await expect(checkShortlistWriteRateLimit(request, limiter)).resolves.toBeNull();
+  });
 });
 
 describe("runShortlistWriteIfAllowed", () => {

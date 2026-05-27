@@ -25,8 +25,13 @@ export async function checkShortlistWriteRateLimit(
     return null;
   }
 
-  const { success } = await limiter.limit({ key: shortlistWriteRateLimitKey(request) });
-  if (success) {
+  try {
+    const { success } = await limiter.limit({ key: shortlistWriteRateLimitKey(request) });
+    if (success) {
+      return null;
+    }
+  } catch (error) {
+    console.error("Rate limiter failed, allowing request:", error);
     return null;
   }
 
