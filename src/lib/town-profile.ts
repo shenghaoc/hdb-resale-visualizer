@@ -70,7 +70,7 @@ export function filterTownFlatTrendsInRange(
   return rows;
 }
 
-export function groupTownFlatTrendsByFlatType(points: readonly TownFlatTypeTrendPoint[]): Map<string, TownFlatTypeTrendPoint[]> {
+function groupTownFlatTrendsByFlatType(points: readonly TownFlatTypeTrendPoint[]): Map<string, TownFlatTypeTrendPoint[]> {
   const byType = new Map<string, TownFlatTypeTrendPoint[]>();
   for (const row of points) {
     const list = byType.get(row.flatType) ?? [];
@@ -80,7 +80,7 @@ export function groupTownFlatTrendsByFlatType(points: readonly TownFlatTypeTrend
   return byType;
 }
 
-export function rollupTownFlatTypeGroup(points: TownFlatTypeTrendPoint[]): TownFlatTypeRollup {
+function rollupTownFlatTypeGroup(points: TownFlatTypeTrendPoint[]): TownFlatTypeRollup {
   const first = points[0];
   if (!first) {
     throw new RangeError("rollupTownFlatTypeGroup: empty group");

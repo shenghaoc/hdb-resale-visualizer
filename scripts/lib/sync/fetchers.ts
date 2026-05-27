@@ -27,8 +27,6 @@ type FetchRetryOptions = {
   retryDelayMs?: number;
 };
 
-export { sleep } from "./rate-limits";
-
 export async function fetchWithRetry(
   url: string,
   init?: RequestInit,
@@ -81,7 +79,7 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> 
   return (await response.json()) as T;
 }
 
-export async function getDatasetDownloadUrl(datasetId: string) {
+async function getDatasetDownloadUrl(datasetId: string) {
   const base = `https://api-open.data.gov.sg/v1/public/api/datasets/${datasetId}`;
   try {
     await fetchJson(`${base}/initiate-download`, {

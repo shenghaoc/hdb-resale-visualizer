@@ -125,7 +125,7 @@ The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. Fo
 ### Running services
 - `npm run dev` starts Vite on `localhost:5173` for UI work.
 - `npm run dev:functions` starts Wrangler Pages dev with the D1 binding.
-- Playwright E2E tests are currently being migrated to mock `/api/*` Pages Functions — see the open task in `.kiro/specs/pipeline-d1-migration/`.
+- Playwright E2E tests mock the `/api/*` Pages Functions (see `tests/e2e/fixtures.ts`); they do not require a live D1 binding.
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `npm run test`).
 
 ### Standard commands

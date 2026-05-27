@@ -7,7 +7,7 @@ Use `AGENTS.md` as the authoritative policy for this repository.
 - Use Node.js 26 + npm only (`npm install`, `npm run ...`).
 - Do not add backend mutation routes or server-side write paths.
 - Keep core domain processing in `scripts/sync-data.ts`.
-- Frontend core data must come from precomputed artifacts in `public/data/`.
+- Frontend core data must come from the `/api/*` Pages Functions backed by Cloudflare D1.
 - Do not add runtime core-domain fetching from data.gov.sg or OneMap.
 - Keep OneMap attribution visible whenever the map is rendered.
 - This is not a price prediction product; do not add forecasting features.

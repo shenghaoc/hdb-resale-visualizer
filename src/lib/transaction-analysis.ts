@@ -5,7 +5,7 @@ import type {
 
 export type TrendRangeKey = "2y" | "5y" | "10y" | "max";
 
-export const TREND_RANGE_MONTHS: Record<TrendRangeKey, number | null> = {
+const TREND_RANGE_MONTHS: Record<TrendRangeKey, number | null> = {
   "2y": 24,
   "5y": 60,
   "10y": 120,
@@ -30,7 +30,7 @@ export type ComparableTolerances = {
   sqm: number;
 };
 
-export const DEFAULT_TOLERANCES: ComparableTolerances = {
+const DEFAULT_TOLERANCES: ComparableTolerances = {
   storey: 3,
   sqm: 5,
 };
@@ -258,7 +258,7 @@ export type BlockTrajectory = {
   direction: "up" | "down" | "flat";
 };
 
-export const YOY_STABILITY_THRESHOLD_PCT = 1.5;
+const YOY_STABILITY_THRESHOLD_PCT = 1.5;
 
 export function computeBlockTrajectory(
   monthlyTrend: ReadonlyArray<AddressTrendPoint>,

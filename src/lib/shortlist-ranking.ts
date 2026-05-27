@@ -13,7 +13,7 @@ type SortableShortlistRow = {
   };
 };
 
-export function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareMode) {
+function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareMode) {
   if (compareMode === "median" || compareMode === "median-asc") {
     return row.block.medianPrice;
   }

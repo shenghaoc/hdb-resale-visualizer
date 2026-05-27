@@ -143,8 +143,6 @@ export function normalizeText(value: string): string {
   return value.trim().replace(/\s+/g, " ").toUpperCase();
 }
 
-export { townToFilename } from "../../shared/geo";
-
 export function makeAddressKey(town: string, block: string, streetName: string): string {
   const source = `${normalizeText(town)}-${normalizeText(block)}-${normalizeText(streetName)}`;
 
