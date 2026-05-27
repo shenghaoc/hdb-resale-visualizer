@@ -167,8 +167,18 @@ export function buildTownCompareSnapshot(args: BuildTownCompareSnapshotArgs): To
   const { town, blocks, trends, range, currentYear = getCurrentYear() } = args;
   const rollups = rollupTownFlatTypesInRange(trends, town, range);
   const windowVolume = sumRollupVolume(rollups);
-  const blockMedianPrices = blocks.map((b) => b.medianPrice).filter(Number.isFinite);
-  const blockMedianSqm = blocks.map((b) => b.pricePerSqmMedian).filter(Number.isFinite);
+
+  // Use a single loop to avoid multiple intermediate array allocations from .map().filter()
+  const blockMedianPrices: number[] = [];
+  const blockMedianSqm: number[] = [];
+  for (const b of blocks) {
+    if (Number.isFinite(b.medianPrice)) {
+      blockMedianPrices.push(b.medianPrice);
+    }
+    if (Number.isFinite(b.pricePerSqmMedian)) {
+      blockMedianSqm.push(b.pricePerSqmMedian);
+    }
+  }
 
   return {
     town,
