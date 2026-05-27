@@ -20,6 +20,7 @@ import { onRequestGet as shortlistGetHandler } from "../functions/api/shortlist/
 import { handleBlockOg, handleCompareOg } from "./og";
 import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
 import { matchApiRoute, methodNotAllowedResponse, type ApiRouteId } from "./api-route-match";
+import { purgeStaleShortlists } from "../functions/_lib/shortlist";
 import { townToFilename } from "../shared/geo";
 
 const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
@@ -295,5 +296,13 @@ export default {
       const message = error instanceof Error ? error.message : "Worker error";
       return new Response(JSON.stringify({ error: message }), { status: 500, headers: { "content-type": "application/json; charset=utf-8" } });
     }
+  },
+
+  scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+    ctx.waitUntil(
+      purgeStaleShortlists(env.DB).catch((err: unknown) => {
+        console.error("Shortlist TTL cleanup failed:", err);
+      }),
+    );
   },
 };
