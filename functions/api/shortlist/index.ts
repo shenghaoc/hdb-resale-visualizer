@@ -1,5 +1,5 @@
 import { privateJsonResponse } from "../../_lib/d1";
-import { handleShortlistPush } from "../../_lib/shortlist";
+import { runShortlistWriteIfAllowed, type ShortlistWriteRateLimiter } from "../../_lib/shortlist-rate-limit";
 import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
 
 /**
@@ -14,11 +14,15 @@ import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
  * Only the SHA-256 hash of the code is ever read or written; the raw code is
  * never persisted or logged. See functions/_lib/shortlist.ts for the logic.
  *
- * Rate limiting: this endpoint has no built-in rate limiting on sync code
- * creation. A script issuing empty-payload POSTs in a tight loop could
- * accumulate unbounded rows and exhaust D1 storage. The recommended mitigation
- * is a Cloudflare WAF rate-limiting rule on POST /api/shortlist (zero code
- * change). For expected traffic volume this risk is accepted as-is.
+ * Rate limiting (defense in depth):
+ * - (a) Workers binding `SHORTLIST_WRITE_LIMITER` — 10 POST writes / 60 s / IP
+ *     per colo, enforced in code before any D1 mutation.
+ * - (b) Cloudflare WAF custom rule (dashboard, not in-repo): expression
+ *       `(http.request.uri.path eq "/api/shortlist" and http.request.method eq "POST")`,
+ *       characteristic `ip.src`, rate 10 requests / 60 seconds, action Block
+ *       (429). Apply at the zone edge ahead of the Worker.
+ * - (c) Scheduled TTL purge of rows untouched for SHORTLIST_RETENTION_DAYS —
+ *     see worker/index.ts scheduled handler.
  */
 async function readBodyWithLimit(request: Request): Promise<string | Response> {
   const contentLengthHeader = request.headers.get("content-length");
@@ -67,6 +71,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return body;
   }
 
-  const result = await handleShortlistPush(env.DB, body);
+  const limiter: ShortlistWriteRateLimiter | undefined = env.SHORTLIST_WRITE_LIMITER;
+  const result = await runShortlistWriteIfAllowed(request, env.DB, body, limiter);
+  if (result instanceof Response) {
+    return result;
+  }
+
   return privateJsonResponse(result.body, { status: result.status });
 };

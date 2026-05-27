@@ -31,3 +31,21 @@ export const SYNC_CODE_BYTES = 16;
  * Checked before hashing/looking up so we never hash unbounded attacker input.
  */
 export const SYNC_CODE_PATTERN = /^[A-Za-z0-9_-]{16,64}$/;
+
+/**
+ * Max POST /api/shortlist writes per client IP per colo within
+ * {@link SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC}. Must stay in sync with the
+ * `ratelimits` binding in wrangler.jsonc.
+ */
+export const SHORTLIST_WRITE_RATE_LIMIT = 10;
+
+/** Rate-limit window for POST /api/shortlist (seconds). Wrangler only allows 10 or 60. */
+export const SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC = 60;
+
+/**
+ * Rows with `updated_at` older than this window are purged by the scheduled
+ * cleanup. Active sync refreshes `updated_at`, so only abandoned rows expire.
+ */
+export const SHORTLIST_RETENTION_DAYS = 180;
+
+export const SHORTLIST_RETENTION_MS = SHORTLIST_RETENTION_DAYS * 24 * 60 * 60 * 1000;

@@ -24,5 +24,15 @@
       "database_id": "df06858c-8fd3-4cf5-9080-dbd9a9f49250",
       "migrations_dir": "migrations"
     }
+  ],
+  "ratelimits": [
+    {
+      "name": "SHORTLIST_WRITE_LIMITER",
+      "namespace_id": "1002",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
   ]
 }
