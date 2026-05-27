@@ -236,5 +236,3 @@ export async function routeMissingPairs(
 
   return { routedCount, failedCount, failureSamples };
 }
-
-export { EPOCH_TIMESTAMP as ROUTING_CACHE_EPOCH };

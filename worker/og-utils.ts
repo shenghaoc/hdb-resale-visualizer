@@ -36,7 +36,7 @@ export function formatCount(value: number): string {
   return new Intl.NumberFormat("en-SG").format(value);
 }
 
-export function formatWalkMinutes(seconds: number | null): string {
+function formatWalkMinutes(seconds: number | null): string {
   if (seconds === null || seconds < 0 || !Number.isFinite(seconds)) return "N/A";
   const minutes = Math.round(seconds / 60);
   if (minutes <= 0) return "< 1 min";

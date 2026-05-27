@@ -39,7 +39,7 @@ const DATA_GOV_ANONYMOUS_DOWNLOADS_PER_MINUTE = 5;
 
 const lastRequestAt = new Map<UpstreamService, number>();
 
-export function resolveDataGovApiTier(): DataGovApiTier {
+function resolveDataGovApiTier(): DataGovApiTier {
   if (!process.env.DATA_GOV_API_KEY) {
     return "anonymous";
   }

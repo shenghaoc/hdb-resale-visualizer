@@ -1,7 +1,7 @@
 import type { Coordinates, NearbySchool } from "../types/data";
 
-export const PRIMARY_SCHOOL_1KM_METERS = 1_000;
-export const PRIMARY_SCHOOL_2KM_METERS = 2_000;
+const PRIMARY_SCHOOL_1KM_METERS = 1_000;
+const PRIMARY_SCHOOL_2KM_METERS = 2_000;
 
 export type SchoolDistanceBand = "within1km" | "within2km" | "beyond2km";
 

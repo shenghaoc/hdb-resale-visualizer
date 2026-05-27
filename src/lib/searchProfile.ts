@@ -21,7 +21,7 @@ export const monetarySchema = z
   .max(SEARCH_PROFILE_MAX_MONETARY_VALUE)
   .nullable();
 
-export const searchProfileSchema = z.object({
+const searchProfileSchema = z.object({
   version: z.literal(1).catch(1),
   mainFlatType: z.string().trim().catch(""),
   alternativeFlatTypes: z.array(z.string()).catch([]),
