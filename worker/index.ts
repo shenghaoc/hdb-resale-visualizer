@@ -19,6 +19,7 @@ import { handleBlockOg, handleCompareOg } from "./og";
 import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml, type BlockSummaryLike, type ManifestLike } from "./seo";
 import { onRequestPost as shortlistCreateHandler } from "../functions/api/shortlist/index";
 import { onRequestGet as shortlistGetHandler } from "../functions/api/shortlist/[syncCode]";
+import { townToFilename } from "../shared/geo";
 
 // ---- route patterns -------------------------------------------------------
 
@@ -38,8 +39,8 @@ const patterns = [
   { pattern: new URLPattern({ pathname: "/api/shortlist/:syncCode{/}?" }),   handler: shortlistGetHandler },
 ];
 
-const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.svg" });
-const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.svg" });
+const blockOgPattern = new URLPattern({ pathname: "/og/block/:addressKey.png" });
+const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.png" });
 
 // ---- context helper -------------------------------------------------------
 
@@ -242,6 +243,18 @@ export default {
         );
 
         const safeJsonLd = serializeJsonLdForScript(seo.jsonLd);
+
+        // Build per-route og:image URL (absolute, required by scrapers).
+        // Falls back to the static /og-card.png for plain town routes.
+        let ogImageUrl: string;
+        if (block && selected) {
+          ogImageUrl = `${publicOrigin(url)}/og/block/${encodeURIComponent(selected)}.png`;
+        } else if (authoritativeTown && authoritativeCompareTown) {
+          ogImageUrl = `${publicOrigin(url)}/og/compare/${encodeURIComponent(townToFilename(authoritativeTown))}/${encodeURIComponent(townToFilename(authoritativeCompareTown))}.png`;
+        } else {
+          ogImageUrl = `${publicOrigin(url)}/og-card.png`;
+        }
+
         return new HTMLRewriter()
           .on("title", { element(el) { el.setInnerContent(seo.title); } })
           .on('meta[name="description"]', { element(el) { el.setAttribute("content", seo.description); } })
@@ -252,11 +265,23 @@ export default {
             // Remove any pre-existing canonical so the one appended in head is the only one.
             element(el) { el.remove(); },
           })
+          .on('meta[property="og:image"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:image:type"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:image:width"]', { element(el) { el.remove(); } })
+          .on('meta[property="og:image:height"]', { element(el) { el.remove(); } })
+          .on('meta[name="twitter:image"]', { element(el) { el.remove(); } })
           .on("head", {
             element(el) {
               el.append(`<meta property="og:title" content="${seo.title.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<meta property="og:description" content="${seo.description.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<meta property="og:url" content="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
+              // Always emit og:image — uses dynamic PNG for block/compare routes,
+              // falls back to the static /og-card.png for plain town routes.
+              el.append(`<meta property="og:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
+              el.append(`<meta property="og:image:type" content="image/png">`, { html: true });
+              el.append(`<meta property="og:image:width" content="1200">`, { html: true });
+              el.append(`<meta property="og:image:height" content="630">`, { html: true });
+              el.append(`<meta name="twitter:image" content="${ogImageUrl.replaceAll("&", "&amp;").replaceAll('"', '&quot;')}">`, { html: true });
               el.append(`<script type="application/ld+json">${safeJsonLd}</script>`, { html: true });
               el.append(`<link rel="canonical" href="${canonicalUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}">`, {
                 html: true,

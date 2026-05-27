@@ -8,17 +8,24 @@ import {
   type DataWindow,
   type TownAggregateRow,
 } from "./og-utils";
+import { initWasm, Resvg } from "@resvg/resvg-wasm";
+import wasmModule from "@resvg/resvg-wasm/index_bg.wasm";
+import interFont from "./Inter-Regular.ttf";
 
 type ManifestJson = {
   generatedAt?: string;
   dataWindow?: DataWindow;
 };
 
-/** SVG responses; route suffix is `.svg` until PNG rendering is available. */
 const IMAGE_HEADERS = {
-  "content-type": "image/svg+xml; charset=utf-8",
-  "cache-control": "public, max-age=86400",
+  "content-type": "image/png",
+  "cache-control": "public, max-age=86400, immutable",
 };
+
+/** One-time WASM init per isolate — reused across all requests. */
+const resvgReady: Promise<void> = (async () => {
+  await initWasm(wasmModule as WebAssembly.Module);
+})();
 
 const MAX_OG_ADDRESS_KEY_LENGTH = 128;
 const MAX_OG_TOWN_SLUG_LENGTH = 64;
@@ -95,7 +102,7 @@ function fallbackCard(request: Request): Response {
 }
 
 function blockCardSvg(props: ReturnType<typeof mapBlockToOgProps>): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="Inter, sans-serif">
   <rect width="1200" height="630" fill="#0f172a"/>
   <text x="48" y="80" fill="#94a3b8" font-size="30">${escapeXml(props.eyebrow)}</text>
   <text x="48" y="180" fill="#e2e8f0" font-size="64">${escapeXml(props.title)}</text>
@@ -114,7 +121,7 @@ function compareCardSvg(input: {
   bTransactions: number;
 }): string {
   const delta = input.aMedian - input.bMedian;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" font-family="Inter, sans-serif">
   <rect width="1200" height="630" fill="#111827"/>
   <text x="48" y="72" fill="#cbd5e1" font-size="32">Town Comparison</text>
   <text x="48" y="130" fill="white" font-size="40">${escapeXml(input.canonicalA)}</text>
@@ -125,6 +132,33 @@ function compareCardSvg(input: {
   <text x="648" y="250" fill="#cbd5e1" font-size="30">Transactions: ${formatCount(input.bTransactions)}</text>
   <text x="48" y="580" fill="#cbd5e1" font-size="36">Delta: ${escapeXml(formatCurrency(delta))}</text>
 </svg>`;
+}
+
+const interFontBuffer = new Uint8Array(interFont as ArrayBuffer);
+
+/**
+ * Rasterize an SVG string to PNG bytes using resvg.
+ * Must be called after `resvgReady` has resolved.
+ */
+function renderPng(svg: string): Uint8Array {
+  const resvg = new Resvg(svg, {
+    font: {
+      fontBuffers: [interFontBuffer],
+      loadSystemFonts: false,
+      defaultFontFamily: "Inter",
+      sansSerifFamily: "Inter",
+    },
+  });
+  try {
+    const image = resvg.render();
+    try {
+      return image.asPng();
+    } finally {
+      image.free();
+    }
+  } finally {
+    resvg.free();
+  }
 }
 
 export async function handleBlockOg(
@@ -144,8 +178,10 @@ export async function handleBlockOg(
   const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?").bind(addressKey).first<BlockRow>();
   if (!row) return fallbackCard(request);
 
+  await resvgReady;
   const props = mapBlockToOgProps(rowToBlockSummary(row), dataWindow);
-  const response = new Response(blockCardSvg(props), { headers: IMAGE_HEADERS });
+  const png = renderPng(blockCardSvg(props));
+  const response = new Response(png, { headers: IMAGE_HEADERS });
   writeCache(ctx, cacheKey, response);
   return response;
 }
@@ -192,7 +228,8 @@ export async function handleCompareOg(
   const aTransactions = aRows.reduce((sum, row) => sum + row.transaction_count, 0);
   const bTransactions = bRows.reduce((sum, row) => sum + row.transaction_count, 0);
 
-  const response = new Response(
+  await resvgReady;
+  const png = renderPng(
     compareCardSvg({
       canonicalA,
       canonicalB,
@@ -201,8 +238,8 @@ export async function handleCompareOg(
       aTransactions,
       bTransactions,
     }),
-    { headers: IMAGE_HEADERS },
   );
+  const response = new Response(png, { headers: IMAGE_HEADERS });
   writeCache(ctx, cacheKey, response);
   return response;
 }

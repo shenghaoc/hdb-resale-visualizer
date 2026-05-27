@@ -13,6 +13,10 @@
   "build": {
     "command": "npm run build:deploy"
   },
+  "rules": [
+    { "type": "Data", "globs": ["**/*.ttf"] },
+    { "type": "CompiledWasm", "globs": ["**/*.wasm"] }
+  ],
   "d1_databases": [
     {
       "binding": "DB",

@@ -131,15 +131,15 @@ describe("buildShortlistShareUrl", () => {
 
 describe('OG image URL builders', () => {
   it("builds block OG route", () => {
-    expect(buildBlockOgImageUrl("bedok-123", BASE_URL)).toBe("https://example.com/og/block/bedok-123.svg");
+    expect(buildBlockOgImageUrl("bedok-123", BASE_URL)).toBe("https://example.com/og/block/bedok-123.png");
   });
 
   it("builds compare OG route from canonical town names", () => {
     expect(buildCompareOgImageUrl("ANG MO KIO", "BEDOK", BASE_URL)).toBe(
-      "https://example.com/og/compare/ang-mo-kio/bedok.svg",
+      "https://example.com/og/compare/ang-mo-kio/bedok.png",
     );
     expect(buildCompareOgImageUrl("KALLANG/WHAMPOA", "BEDOK", BASE_URL)).toBe(
-      "https://example.com/og/compare/kallang-whampoa/bedok.svg",
+      "https://example.com/og/compare/kallang-whampoa/bedok.png",
     );
   });
 });
