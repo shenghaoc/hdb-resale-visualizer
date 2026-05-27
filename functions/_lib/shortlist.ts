@@ -222,7 +222,7 @@ export async function purgeStaleShortlists(db: SyncDB, now: Date = new Date()): 
   let total = 0;
   while (true) {
     const result = await db
-      .prepare("DELETE FROM shortlists WHERE updated_at < ? LIMIT ?")
+      .prepare("DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)")
       .bind(cutoff, pageSize)
       .run();
     const changes = (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes ?? 0;
