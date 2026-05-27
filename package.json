@@ -52,9 +52,10 @@
     "temporal-polyfill": "^0.3.2"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@cloudflare/workers-types": "^4.20250101.0",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.60.0",
+    "@resvg/resvg-wasm": "^2.6.2",
     "@tailwindcss/vite": "^4.3.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
