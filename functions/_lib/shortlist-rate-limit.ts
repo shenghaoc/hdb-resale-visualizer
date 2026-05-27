@@ -1,5 +1,4 @@
 import { privateJsonResponse } from "./d1";
-import { handleShortlistPush, type SyncDB, type SyncResult } from "./shortlist";
 import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "../../shared/shortlist-limits";
 
 export type ShortlistWriteRateLimiter = {
@@ -46,19 +45,3 @@ export async function checkShortlistWriteRateLimit(
   );
 }
 
-/**
- * Rate-limit gate in front of {@link handleShortlistPush}. Extracted so the
- * write path can be unit-tested without importing the Pages handler module.
- */
-export async function runShortlistWriteIfAllowed(
-  request: Request,
-  db: SyncDB,
-  bodyText: string,
-  limiter: ShortlistWriteRateLimiter | undefined,
-): Promise<Response | SyncResult> {
-  const rateLimitResponse = await checkShortlistWriteRateLimit(request, limiter);
-  if (rateLimitResponse) {
-    return rateLimitResponse;
-  }
-  return handleShortlistPush(db, bodyText);
-}

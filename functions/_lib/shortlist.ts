@@ -218,7 +218,16 @@ export function shortlistRetentionCutoff(now: Date = new Date()): string {
  */
 export async function purgeStaleShortlists(db: SyncDB, now: Date = new Date()): Promise<number> {
   const cutoff = shortlistRetentionCutoff(now);
-  const result = await db.prepare("DELETE FROM shortlists WHERE updated_at < ?").bind(cutoff).run();
-  const changes = (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes;
-  return typeof changes === "number" ? changes : 0;
+  const pageSize = 1000;
+  let total = 0;
+  while (true) {
+    const result = await db
+      .prepare("DELETE FROM shortlists WHERE updated_at < ? LIMIT ?")
+      .bind(cutoff, pageSize)
+      .run();
+    const changes = (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes ?? 0;
+    total += changes;
+    if (changes < pageSize) break;
+  }
+  return total;
 }

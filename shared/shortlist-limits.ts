@@ -35,7 +35,9 @@ export const SYNC_CODE_PATTERN = /^[A-Za-z0-9_-]{16,64}$/;
 /**
  * Max POST /api/shortlist writes per client IP per colo within
  * {@link SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC}. Must stay in sync with the
- * `ratelimits` binding in wrangler.jsonc.
+ * `ratelimits` binding in wrangler.jsonc. Not referenced at runtime — the
+ * actual limit is enforced by the Cloudflare binding. This constant exists
+ * as documentation so the two values are co-located with the period.
  */
 export const SHORTLIST_WRITE_RATE_LIMIT = 10;
 

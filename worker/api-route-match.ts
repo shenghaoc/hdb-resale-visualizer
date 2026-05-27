@@ -5,6 +5,8 @@
  * PagesFunction types and can be unit-tested in isolation.
  */
 
+import { privateJsonResponse } from "../functions/_lib/d1";
+
 export type ApiRouteId =
   | "manifest"
   | "block-summaries"
@@ -54,23 +56,20 @@ export function matchApiRoute(url: URL, requestMethod: string): ApiRouteMatch {
 
     pathMatched = true;
     const expectedMethod = method ?? "GET";
-    allowedMethods.push(expectedMethod);
     if (expectedMethod === requestMethod) {
       return { kind: "handler", routeId: id, groups: match.pathname.groups };
     }
+    allowedMethods.push(expectedMethod);
   }
   if (pathMatched) {
-    return { kind: "method_not_allowed", allow: [...new Set(allowedMethods)] };
+    return { kind: "method_not_allowed", allow: allowedMethods };
   }
   return { kind: "no_match" };
 }
 
 export function methodNotAllowedResponse(allow: string[]): Response {
-  return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
-    status: 405,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      Allow: allow.join(", "),
-    },
-  });
+  return privateJsonResponse(
+    { error: "Method Not Allowed" },
+    { status: 405, headers: { Allow: allow.join(", ") } },
+  );
 }

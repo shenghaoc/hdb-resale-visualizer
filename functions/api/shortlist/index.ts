@@ -48,7 +48,7 @@ async function readBodyWithLimit(request: Request): Promise<string | Response> {
       if (done) break;
       totalBytes += value.length;
       if (totalBytes > MAX_SYNC_BODY_BYTES) {
-        await reader.cancel();
+        try { await reader.cancel(); } catch { /* stream already closed */ }
         return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
       }
       chunks.push(value);

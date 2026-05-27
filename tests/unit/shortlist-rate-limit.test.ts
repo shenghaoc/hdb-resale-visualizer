@@ -1,30 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   checkShortlistWriteRateLimit,
-  runShortlistWriteIfAllowed,
   shortlistWriteRateLimitKey,
   type ShortlistWriteRateLimiter,
 } from "../../functions/_lib/shortlist-rate-limit";
-import type { SyncDB } from "../../functions/_lib/shortlist";
 import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "../../shared/shortlist-limits";
 
 function makeLimiter(outcome: { success: boolean }): ShortlistWriteRateLimiter {
   return { limit: vi.fn().mockResolvedValue(outcome) };
-}
-
-function makeFakeDB(): { db: SyncDB; run: ReturnType<typeof vi.fn> } {
-  const run = vi.fn().mockResolvedValue({ success: true });
-  const db: SyncDB = {
-    prepare: () => {
-      const stmt = {
-        bind: () => stmt,
-        first: vi.fn().mockResolvedValue(null),
-        run,
-      };
-      return stmt;
-    },
-  };
-  return { db, run };
 }
 
 describe("shortlistWriteRateLimitKey", () => {
@@ -67,35 +50,5 @@ describe("checkShortlistWriteRateLimit", () => {
     const request = new Request("https://example.com/api/shortlist", { method: "POST" });
     const limiter: ShortlistWriteRateLimiter = { limit: vi.fn().mockRejectedValue(new Error("UNKNOWN")) };
     await expect(checkShortlistWriteRateLimit(request, limiter)).resolves.toBeNull();
-  });
-});
-
-describe("runShortlistWriteIfAllowed", () => {
-  it("returns 429 and performs no D1 write when the limiter rejects the key", async () => {
-    const { db, run } = makeFakeDB();
-    const response = await runShortlistWriteIfAllowed(
-      new Request("https://example.com/api/shortlist", { method: "POST" }),
-      db,
-      JSON.stringify({ items: [{ addressKey: "a", notes: "", targetPrice: null, addedAt: "2026-04-20T00:00:00.000Z" }] }),
-      makeLimiter({ success: false }),
-    );
-
-    expect(response).toBeInstanceOf(Response);
-    expect((response as Response).status).toBe(429);
-    expect(run).not.toHaveBeenCalled();
-  });
-
-  it("proceeds to handleShortlistPush when the limiter accepts the key", async () => {
-    const { db, run } = makeFakeDB();
-    const result = await runShortlistWriteIfAllowed(
-      new Request("https://example.com/api/shortlist", { method: "POST" }),
-      db,
-      JSON.stringify({ items: [{ addressKey: "a", notes: "", targetPrice: null, addedAt: "2026-04-20T00:00:00.000Z" }] }),
-      makeLimiter({ success: true }),
-    );
-
-    expect(result).not.toBeInstanceOf(Response);
-    expect((result as { status: number }).status).toBe(200);
-    expect(run).toHaveBeenCalled();
   });
 });
