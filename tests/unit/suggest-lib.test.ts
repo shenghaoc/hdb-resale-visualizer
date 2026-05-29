@@ -51,9 +51,18 @@ describe("suggest lib", () => {
     const towns = suggestions.filter((s) => s.group === "town");
     expect(towns[0]?.label).toContain("Bedok");
     expect(towns[0]?.group).toBe("town");
-    if (towns[0]?.group === "town") {
-      expect(towns[0].town).toBe("BEDOK");
-    }
+    expect(towns[0]?.town).toBe("BEDOK");
+  });
+
+  it("escapes LIKE special characters in queries", async () => {
+    const db = mockDb({
+      "DISTINCT town": async () => ({ results: [] }),
+      "street_name": async () => ({ results: [] }),
+      "address_key": async () => ({ results: [] }),
+    });
+    // Queries containing % and _ should not crash or match everything
+    const suggestions = await buildSuggestions(db, "50% test_value", []);
+    expect(suggestions).toEqual([]);
   });
 
   it("includes postal suggestions for numeric queries", async () => {

@@ -114,18 +114,17 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           return;
         }
         setSuggestions(next);
-        const isFocused = id
-          ? document.activeElement?.id === id
-          : document.activeElement?.getAttribute("role") === "combobox";
+        const isFocused = id != null && document.activeElement?.id === id;
         if (isFocused) {
           setOpen(next.length > 0);
         }
         setActiveIndex(-1);
       })
-      .catch(() => {
+      .catch((error) => {
         if (fetchSequenceRef.current !== sequence) {
           return;
         }
+        console.error("Suggest fetch failed:", error);
         setSuggestions([]);
         setOpen(false);
         setActiveIndex(-1);

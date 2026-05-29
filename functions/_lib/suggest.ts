@@ -311,27 +311,34 @@ type MrtStationGeoJson = {
   features?: { properties?: { stationName?: string } }[];
 };
 
-let cachedStationNames: string[] | null = null;
+let cachedStationNamesPromise: Promise<string[]> | null = null;
 
 async function loadStationNames(db: SuggestDb): Promise<string[]> {
-  if (cachedStationNames) {
-    return cachedStationNames;
+  if (cachedStationNamesPromise) {
+    return cachedStationNamesPromise;
   }
-  const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
-  const row = (result.results ?? [])[0] as { json?: string } | undefined;
-  if (!row?.json) {
-    return [];
-  }
-  const parsed = JSON.parse(row.json) as MrtStationGeoJson;
-  const names = new Set<string>();
-  for (const feature of parsed.features ?? []) {
-    const stationName = feature.properties?.stationName;
-    if (stationName) {
-      names.add(stationName);
+  cachedStationNamesPromise = (async () => {
+    const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
+    const row = (result.results ?? [])[0] as { json?: string } | undefined;
+    if (!row?.json) {
+      return [];
     }
-  }
-  cachedStationNames = Array.from(names);
-  return cachedStationNames;
+    try {
+      const parsed = JSON.parse(row.json) as MrtStationGeoJson;
+      const names = new Set<string>();
+      for (const feature of parsed.features ?? []) {
+        const stationName = feature.properties?.stationName;
+        if (stationName) {
+          names.add(stationName);
+        }
+      }
+      return Array.from(names);
+    } catch {
+      console.error("loadStationNames: failed to parse mrt_geojson JSON");
+      return [];
+    }
+  })();
+  return cachedStationNamesPromise;
 }
 
 export async function buildSuggestions(

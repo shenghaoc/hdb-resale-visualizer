@@ -25,4 +25,34 @@ describe("suggestActions", () => {
   it("formats station search from canonical station name", () => {
     expect(stationNameToNearMrtSearch("BISHAN MRT STATION")).toBe("near bishan mrt");
   });
+
+  it("maps block selection to selectedAddressKey", () => {
+    expect(
+      filterPatchForSuggestion({
+        group: "block",
+        label: "123 Ang Mo Kio Ave 4",
+        addressKey: "AMK_123",
+      }),
+    ).toEqual({ search: "", selectedAddressKey: "AMK_123" });
+  });
+
+  it("maps street selection to search text", () => {
+    expect(
+      filterPatchForSuggestion({
+        group: "street",
+        label: "Ang Mo Kio",
+        search: "ANG MO KIO",
+      }),
+    ).toEqual({ search: "ANG MO KIO", town: "", selectedAddressKey: null });
+  });
+
+  it("maps postal selection to search text", () => {
+    expect(
+      filterPatchForSuggestion({
+        group: "postal",
+        label: "460108",
+        search: "460108",
+      }),
+    ).toEqual({ search: "460108", town: "", selectedAddressKey: null });
+  });
 });

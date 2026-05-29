@@ -28,6 +28,7 @@ let blocksBySearchSequence = 0;
 
 const SUGGEST_CACHE_LIMIT = 32;
 const suggestCache = new Map<string, Promise<Suggestion[]>>();
+const SUGGEST_TIMEOUT_MS = 10_000;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -43,8 +44,8 @@ function createArtifactContractError(path: string, reason: string) {
   return new Error(`Artifact contract violation for ${path}: ${reason}`);
 }
 
-async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema): Promise<z.infer<TSchema>> {
-  const response = await fetch(path);
+async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema, signal?: AbortSignal): Promise<z.infer<TSchema>> {
+  const response = signal ? await fetch(path, { signal }) : await fetch(path);
 
   if (!response.ok) {
     throw new ArtifactFetchHttpError(path, response.status);
@@ -187,16 +188,26 @@ export function fetchSuggestions(query: string): Promise<Suggestion[]> {
 
   const cached = suggestCache.get(cacheKey);
   if (cached) {
+    // Re-insert to move to end for LRU order (Map preserves insertion sequence)
+    suggestCache.delete(cacheKey);
+    suggestCache.set(cacheKey, cached);
     return cached;
   }
 
   evictSuggestCacheIfNeeded();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
   const request = fetchJson(
     `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
     suggestResponseSchema,
+    controller.signal,
   )
-    .then((response) => response.suggestions)
+    .then((response) => {
+      clearTimeout(timeout);
+      return response.suggestions;
+    })
     .catch((error) => {
+      clearTimeout(timeout);
       suggestCache.delete(cacheKey);
       throw error;
     });
