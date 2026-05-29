@@ -79,8 +79,6 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   const fetchSequenceRef = useRef(0);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
 
-  const flatSuggestions = suggestions;
-
   useEffect(() => {
     if (!suggestActive) {
       setSuggestions([]);
@@ -137,7 +135,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!open || flatSuggestions.length === 0) {
+      if (!open || suggestions.length === 0) {
         if (event.key === "Escape") {
           setOpen(false);
         }
@@ -146,21 +144,21 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
 
       if (event.key === "ArrowDown") {
         event.preventDefault();
-        setActiveIndex((current) => (current + 1) % flatSuggestions.length);
+        setActiveIndex((current) => (current + 1) % suggestions.length);
         return;
       }
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
         setActiveIndex((current) =>
-          current <= 0 ? flatSuggestions.length - 1 : current - 1,
+          current <= 0 ? suggestions.length - 1 : current - 1,
         );
         return;
       }
 
       if (event.key === "Enter" && activeIndex >= 0) {
         event.preventDefault();
-        const selected = flatSuggestions[activeIndex];
+        const selected = suggestions[activeIndex];
         if (selected) {
           selectSuggestion(selected);
         }
@@ -173,12 +171,12 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
         setActiveIndex(-1);
       }
     },
-    [activeIndex, flatSuggestions, open, selectSuggestion],
+    [activeIndex, suggestions, open, selectSuggestion],
   );
 
   const grouped = SUGGEST_GROUPS.map((group) => ({
     group,
-    items: flatSuggestions.filter((item) => item.group === group),
+    items: suggestions.filter((item) => item.group === group),
   })).filter((section) => section.items.length > 0);
 
   let optionOffset = 0;
@@ -228,7 +226,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           className="max-h-64 overflow-y-auto py-1"
           data-testid="search-suggest-listbox"
         >
-          {loading && flatSuggestions.length === 0 ? (
+          {loading && suggestions.length === 0 ? (
             <p className="px-3 py-2 text-xs text-muted-foreground" role="status">
               {t("filters.suggestLoading")}
             </p>
