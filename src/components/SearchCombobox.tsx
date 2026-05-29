@@ -114,7 +114,12 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           return;
         }
         setSuggestions(next);
-        setOpen(next.length > 0);
+        const isFocused = id
+          ? document.activeElement?.id === id
+          : document.activeElement?.getAttribute("role") === "combobox";
+        if (isFocused) {
+          setOpen(next.length > 0);
+        }
         setActiveIndex(-1);
       })
       .catch(() => {
@@ -130,7 +135,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           setLoading(false);
         }
       });
-  }, [debouncedQuery, suggestActive]);
+  }, [debouncedQuery, suggestActive, id]);
 
   const selectSuggestion = useCallback(
     (suggestion: Suggestion) => {
@@ -268,6 +273,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
                     id={`${listboxId}-option-${index}`}
                     type="button"
                     role="option"
+                    tabIndex={-1}
                     aria-selected={active}
                     data-testid={`search-suggest-option-${suggestion.group}`}
                     className={cn(

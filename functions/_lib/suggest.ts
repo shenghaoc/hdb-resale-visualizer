@@ -296,7 +296,7 @@ async function queryPostalCodes(db: SuggestDb, prefixPattern: string) {
 }
 
 function escapeLikePattern(value: string): string {
-  return value.replace(/\\/g, "\\\\").replace(/%/g, "\\%").replace(/_/g, "\\_");
+  return value.replace(/\\/g, () => "\\\\").replace(/%/g, "\\%").replace(/_/g, "\\_");
 }
 
 function buildLikePatterns(normalizedQuery: string): { prefixPattern: string; containsPattern: string } {
