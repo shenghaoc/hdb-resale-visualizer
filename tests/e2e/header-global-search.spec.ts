@@ -11,7 +11,9 @@ function desktopNavButton(page: Page, label: string) {
 }
 
 test.describe("Global header location search", () => {
-  test("desktop: header search filters results and stays synced with filters panel", async ({ page }) => {
+  test("desktop: header search filters results; filter panel has no duplicate input", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);
@@ -23,20 +25,37 @@ test.describe("Global header location search", () => {
 
     await desktopNavButton(page, "Results").click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
-
     await expect(headerSearch).toHaveValue("near bedok mrt");
 
-    const filtersSearch = page.getByTestId("filters-search-input");
-    await expect(filtersSearch).toHaveValue("near bedok mrt");
-
     await desktopNavButton(page, "Filters").click();
-    await expect(filtersSearch).toBeVisible();
-    await filtersSearch.fill("BEDOK");
+    await expect(page.getByTestId("filters-panel")).toBeVisible();
+    await expect(page.getByTestId("filters-search-input")).toHaveCount(0);
+
+    await headerSearch.fill("BEDOK");
     await expect(page).toHaveURL(/search=BEDOK/);
-    await expect(headerSearch).toHaveValue("BEDOK");
   });
 
-  test("mobile: magnifier overlay opens, syncs, and dismisses on Escape and scrim", async ({ page }) => {
+  test("desktop: typeahead shows grouped suggestions and town select updates URL", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    await waitForAppLoad(page);
+
+    const headerSearch = page.getByTestId("header-search-input");
+    await headerSearch.fill("bed");
+    const listbox = page.getByTestId("search-suggest-listbox");
+    await expect(listbox).toBeVisible();
+    await expect(page.getByTestId("search-suggest-option-town").first()).toBeVisible();
+
+    await page.getByTestId("search-suggest-option-town").first().click();
+    await expect(page).toHaveURL(/town=BEDOK/i);
+    await expect(page).not.toHaveURL(/search=/);
+  });
+
+  test("mobile: magnifier overlay opens, syncs, and dismisses on Escape and scrim", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
     await waitForAppLoad(page);
@@ -64,7 +83,11 @@ test.describe("Global header location search", () => {
     await expect(overlay).toHaveCount(0);
 
     await page.getByTestId("mobile-tab-bar").getByRole("button", { name: "Filters" }).click();
-    await expect(page.getByTestId("filters-search-input")).toHaveValue("BEDOK");
+    await expect(page.getByTestId("filters-search-input")).toHaveCount(0);
+    await expect(page).toHaveURL(/search=BEDOK/);
+
+    await page.getByTestId("mobile-tab-bar").getByRole("button", { name: "Filters" }).click();
+    await expect(page.getByTestId("header-search-toggle")).toBeVisible();
   });
 
   test("desktop: tab order moves from title chip to header search", async ({ page }) => {

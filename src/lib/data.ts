@@ -7,12 +7,14 @@ import {
   manifestSchema,
   townFlatTypeTrendPointSchema,
   searchResponseSchema,
+  suggestResponseSchema,
 } from "./dataSchemas";
 import type {
   AddressDetail,
   BlockSummary,
   ComparisonArtifact,
   Manifest,
+  Suggestion,
   TownFlatTypeTrendPoint,
 } from "../types/data";
 import type { z } from "zod";
@@ -23,6 +25,10 @@ let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean;
   null;
 let blocksBySearchKey = "";
 let blocksBySearchSequence = 0;
+
+const SUGGEST_CACHE_LIMIT = 32;
+const suggestCache = new Map<string, Promise<Suggestion[]>>();
+let suggestSequence = 0;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -157,4 +163,49 @@ export function fetchBlocksBySearch(
     throw error;
   });
   return blocksBySearchPromise;
+}
+
+function evictSuggestCacheIfNeeded(): void {
+  if (suggestCache.size < SUGGEST_CACHE_LIMIT) {
+    return;
+  }
+  const oldestKey = suggestCache.keys().next().value;
+  if (oldestKey !== undefined) {
+    suggestCache.delete(oldestKey);
+  }
+}
+
+export function resetSuggestCacheForTests(): void {
+  suggestCache.clear();
+  suggestSequence = 0;
+}
+
+export function fetchSuggestions(query: string): Promise<Suggestion[]> {
+  const trimmed = query.trim();
+  const cacheKey = trimmed.toLowerCase();
+  if (!cacheKey || cacheKey.length < 2) {
+    return Promise.resolve([]);
+  }
+
+  const cached = suggestCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const sequence = ++suggestSequence;
+  evictSuggestCacheIfNeeded();
+  const request = fetchJson(
+    `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
+    suggestResponseSchema,
+  )
+    .then((response) => response.suggestions)
+    .catch((error) => {
+      if (suggestSequence === sequence) {
+        suggestCache.delete(cacheKey);
+      }
+      throw error;
+    });
+
+  suggestCache.set(cacheKey, request);
+  return request;
 }

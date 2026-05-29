@@ -41,8 +41,9 @@
   together (type ↔ Zod schema parity).
 
 ## R6 — Performance
-- **R6.1** Client fetches are debounced and use a latest-wins
-  cache/sequence-guard (mirroring `fetchBlocksBySearch`).
+- **R6.1** Client fetches are debounced and use a latest-wins sequence guard
+  plus a bounded Map cache of in-flight/completed promises keyed by normalised
+  query (not a single-entry cache), so backspacing reuses prior results.
 - **R6.2** Server queries are index-backed; prefix-anchored where an index
   applies.
 

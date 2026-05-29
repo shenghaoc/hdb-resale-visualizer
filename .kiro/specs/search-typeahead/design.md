@@ -84,9 +84,12 @@ length floor). Any schema/index change is mirrored in
 
 ### 3. Data client — `src/lib/data.ts`
 
-`fetchSuggestions(q)` using the same promise-cache + sequence-guard pattern as
-`fetchBlocksBySearch` (latest-wins, cache by normalised query). Debounced at the
-component layer.
+`fetchSuggestions(q)` with a **Map-based promise cache** keyed by normalised
+query (same eviction pattern as `tokenizationCache` in `filtering.ts`, cap
+~32 entries) plus a sequence guard so only the latest in-flight request
+updates UI state. This avoids redundant `/api/suggest` round-trips when users
+backspace while typing (e.g. `Ang` → `An` → `Ang`). Debounced at the component
+layer.
 
 ### 4. Component — `src/components/SearchCombobox.tsx` (new)
 

@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { NEAR_ME_SEARCH_QUERY } from "@/lib/constants";
-import type { FilterState } from "@/types/data";
+import { filterPatchForSuggestion } from "@/lib/suggestActions";
+import type { FilterState, Suggestion } from "@/types/data";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
 import type { Coordinates } from "@/types/data";
 
@@ -60,6 +61,13 @@ export function useAppShellController({
       patchFilters(resolved);
     },
     [patchFilters, setUseDefaultStartMonth, clearGeolocationError, filters.search],
+  );
+
+  const handleSelectSuggestion = useCallback(
+    (suggestion: Suggestion) => {
+      patchUserFilters(filterPatchForSuggestion(suggestion));
+    },
+    [patchUserFilters],
   );
 
   const handleResetFilters = useCallback(() => {
@@ -198,6 +206,7 @@ export function useAppShellController({
 
   return {
     patchUserFilters,
+    handleSelectSuggestion,
     handleResetFilters,
     handleSelectAddress,
     handleToggleShortlist,

@@ -187,3 +187,46 @@ export type ComparisonArtifact = {
   percentileRanks: PercentileRanks;
   generatedAt: string;
 };
+
+export type SuggestionGroup = "town" | "street" | "block" | "mrt" | "postal";
+
+export type TownSuggestion = {
+  group: "town";
+  label: string;
+  town: string;
+};
+
+export type StreetSuggestion = {
+  group: "street";
+  label: string;
+  search: string;
+};
+
+export type BlockSuggestion = {
+  group: "block";
+  label: string;
+  addressKey: string;
+};
+
+export type MrtSuggestion = {
+  group: "mrt";
+  label: string;
+  stationName: string;
+};
+
+export type PostalSuggestion = {
+  group: "postal";
+  label: string;
+  search: string;
+};
+
+export type Suggestion =
+  | TownSuggestion
+  | StreetSuggestion
+  | BlockSuggestion
+  | MrtSuggestion
+  | PostalSuggestion;
+
+export type SuggestResponse = {
+  suggestions: Suggestion[];
+};

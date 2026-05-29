@@ -165,3 +165,45 @@ export const searchResponseSchema = z.object({
   truncated: z.boolean(),
   limit: z.number().int().positive(),
 });
+
+const townSuggestionSchema = z.object({
+  group: z.literal("town"),
+  label: z.string(),
+  town: z.string(),
+});
+
+const streetSuggestionSchema = z.object({
+  group: z.literal("street"),
+  label: z.string(),
+  search: z.string(),
+});
+
+const blockSuggestionSchema = z.object({
+  group: z.literal("block"),
+  label: z.string(),
+  addressKey: z.string(),
+});
+
+const mrtSuggestionSchema = z.object({
+  group: z.literal("mrt"),
+  label: z.string(),
+  stationName: z.string(),
+});
+
+const postalSuggestionSchema = z.object({
+  group: z.literal("postal"),
+  label: z.string(),
+  search: z.string(),
+});
+
+export const suggestionSchema = z.discriminatedUnion("group", [
+  townSuggestionSchema,
+  streetSuggestionSchema,
+  blockSuggestionSchema,
+  mrtSuggestionSchema,
+  postalSuggestionSchema,
+]);
+
+export const suggestResponseSchema = z.object({
+  suggestions: z.array(suggestionSchema),
+});
