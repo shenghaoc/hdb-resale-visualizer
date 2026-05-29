@@ -28,7 +28,6 @@ let blocksBySearchSequence = 0;
 
 const SUGGEST_CACHE_LIMIT = 32;
 const suggestCache = new Map<string, Promise<Suggestion[]>>();
-let suggestSequence = 0;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -177,7 +176,6 @@ function evictSuggestCacheIfNeeded(): void {
 
 export function resetSuggestCacheForTests(): void {
   suggestCache.clear();
-  suggestSequence = 0;
 }
 
 export function fetchSuggestions(query: string): Promise<Suggestion[]> {
@@ -192,7 +190,6 @@ export function fetchSuggestions(query: string): Promise<Suggestion[]> {
     return cached;
   }
 
-  const sequence = ++suggestSequence;
   evictSuggestCacheIfNeeded();
   const request = fetchJson(
     `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
@@ -200,9 +197,7 @@ export function fetchSuggestions(query: string): Promise<Suggestion[]> {
   )
     .then((response) => response.suggestions)
     .catch((error) => {
-      if (suggestSequence === sequence) {
-        suggestCache.delete(cacheKey);
-      }
+      suggestCache.delete(cacheKey);
       throw error;
     });
 

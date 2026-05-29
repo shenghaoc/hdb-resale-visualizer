@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -77,7 +77,16 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   const [activeIndex, setActiveIndex] = useState(-1);
   const [loading, setLoading] = useState(false);
   const fetchSequenceRef = useRef(0);
+  const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
+
+  useEffect(() => {
+    return () => {
+      if (blurTimeoutRef.current !== null) {
+        window.clearTimeout(blurTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!suggestActive) {
@@ -133,9 +142,20 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
     [onSelectSuggestion],
   );
 
+  const grouped = useMemo(() => {
+    return SUGGEST_GROUPS.map((group) => ({
+      group,
+      items: suggestions.filter((item) => item.group === group),
+    })).filter((section) => section.items.length > 0);
+  }, [suggestions]);
+
+  const flatGroupedItems = useMemo(() => {
+    return grouped.flatMap((section) => section.items);
+  }, [grouped]);
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!open || suggestions.length === 0) {
+      if (!open || flatGroupedItems.length === 0) {
         if (event.key === "Escape") {
           setOpen(false);
         }
@@ -144,23 +164,27 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
 
       if (event.key === "ArrowDown") {
         event.preventDefault();
-        setActiveIndex((current) => (current + 1) % suggestions.length);
+        setActiveIndex((current) => (current + 1) % flatGroupedItems.length);
         return;
       }
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
         setActiveIndex((current) =>
-          current <= 0 ? suggestions.length - 1 : current - 1,
+          current <= 0 ? flatGroupedItems.length - 1 : current - 1,
         );
         return;
       }
 
-      if (event.key === "Enter" && activeIndex >= 0) {
-        event.preventDefault();
-        const selected = suggestions[activeIndex];
-        if (selected) {
-          selectSuggestion(selected);
+      if (event.key === "Enter") {
+        if (activeIndex >= 0) {
+          event.preventDefault();
+          const selected = flatGroupedItems[activeIndex];
+          if (selected) {
+            selectSuggestion(selected);
+          }
+        } else {
+          setOpen(false);
         }
         return;
       }
@@ -171,13 +195,8 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
         setActiveIndex(-1);
       }
     },
-    [activeIndex, suggestions, open, selectSuggestion],
+    [activeIndex, flatGroupedItems, open, selectSuggestion],
   );
-
-  const grouped = SUGGEST_GROUPS.map((group) => ({
-    group,
-    items: suggestions.filter((item) => item.group === group),
-  })).filter((section) => section.items.length > 0);
 
   let optionOffset = 0;
 
@@ -202,12 +221,15 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
             onValueChange={onValueChange}
             onKeyDown={handleKeyDown}
             onFocus={() => {
+              if (blurTimeoutRef.current !== null) {
+                window.clearTimeout(blurTimeoutRef.current);
+              }
               if (suggestions.length > 0) {
                 setOpen(true);
               }
             }}
             onBlur={() => {
-              window.setTimeout(() => setOpen(false), 120);
+              blurTimeoutRef.current = window.setTimeout(() => setOpen(false), 120);
             }}
             className={inputClassName}
           />

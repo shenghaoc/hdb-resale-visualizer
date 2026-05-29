@@ -311,7 +311,12 @@ type MrtStationGeoJson = {
   features?: { properties?: { stationName?: string } }[];
 };
 
+let cachedStationNames: string[] | null = null;
+
 async function loadStationNames(db: SuggestDb): Promise<string[]> {
+  if (cachedStationNames) {
+    return cachedStationNames;
+  }
   const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
   const row = (result.results ?? [])[0] as { json?: string } | undefined;
   if (!row?.json) {
@@ -325,7 +330,8 @@ async function loadStationNames(db: SuggestDb): Promise<string[]> {
       names.add(stationName);
     }
   }
-  return Array.from(names);
+  cachedStationNames = Array.from(names);
+  return cachedStationNames;
 }
 
 export async function buildSuggestions(
@@ -337,11 +343,11 @@ export async function buildSuggestions(
   const isNumeric = RE_NUMERIC_QUERY.test(normalizedQuery);
 
   const [townRows, streetRows, blockRows, postalRows, mrtNames] = await Promise.all([
-    queryDistinctTowns(db, prefixPattern, containsPattern),
-    queryDistinctStreets(db, prefixPattern, containsPattern),
+    isNumeric ? Promise.resolve([]) : queryDistinctTowns(db, prefixPattern, containsPattern),
+    isNumeric ? Promise.resolve([]) : queryDistinctStreets(db, prefixPattern, containsPattern),
     queryBlocks(db, prefixPattern, containsPattern),
     isNumeric ? queryPostalCodes(db, prefixPattern) : Promise.resolve([]),
-    stationNames ? Promise.resolve(stationNames) : loadStationNames(db),
+    isNumeric ? Promise.resolve([]) : (stationNames ? Promise.resolve(stationNames) : loadStationNames(db)),
   ]);
 
   const grouped: Suggestion[] = [
