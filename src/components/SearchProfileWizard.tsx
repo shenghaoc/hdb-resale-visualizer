@@ -730,7 +730,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             type="button"
             onClick={handleContinue}
             disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-            className="rounded-[0.65rem] bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-all hover:brightness-95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60"
+            className="rounded-[0.65rem] bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-all enabled:hover:brightness-95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60"
           >
             {nextLabel}
           </button>
