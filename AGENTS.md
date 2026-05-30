@@ -15,13 +15,26 @@ Before executing any directive, agents MUST read the authoritative steering file
 Workspace MCP configuration lives in [`.kiro/settings/mcp.json`](.kiro/settings/mcp.json).
 Use it for repo-relevant tool integrations such as shadcn MCP, but keep generic external tooling and personal machine setup out of the committed repository configuration.
 
-## 📈 Active Work (Specs)
-Current initiatives follow the **Kiro Tech-Design-First** workflow. Specs are located in `.kiro/specs/` and follow a strict **Design → Requirements → Tasks** hierarchy.
-- [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — PR#35 tracking.
-- [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Visual grounding and sharing.
-- [**IME Composition Input**](.kiro/specs/ime-composition-input/tasks.md) — Input-composition bugfix track.
+## 🧠 Skills
+Reusable agent skill packs live in [`.kiro/skills/`](.kiro/skills/). Each skill has a `SKILL.md` with YAML frontmatter (name, description, allowed-tools) and supporting rule/reference files.
+- **shadcn** — Component composition, styling, forms, and CLI workflow rules.
+- **composition-patterns** — React compound-component and state-lifting patterns.
+- **react-best-practices** — Performance, rendering, async, and caching rules.
+- **react-view-transitions** — View Transitions API patterns for React SPAs.
+- **web-design-guidelines** — Vercel Web Interface Guidelines compliance checker.
 
-## 4) Useful local commands
+## 📈 Specs
+Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirements → Tasks** workflow (feature specs) or **Bugfix → Design → Tasks** workflow (bugfix specs). Each spec directory contains a `design.md`, `requirements.md` (or `bugfix.md`), and `tasks.md`. Kiro-generated specs also include a `.config.kiro` metadata file.
+
+**Active:**
+- [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
+
+**Completed:**
+- [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — Pointer-events fix + UI polish.
+- [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Location scope, visual grounding, amenity data.
+- [**IME Composition Input**](.kiro/specs/ime-composition-input/tasks.md) — CJK input composition bugfix.
+
+## ⚙️ Useful local commands
 ```bash
 npm install           # Install dependencies
 npm run dev           # Start Vite dev server (localhost:5173)
