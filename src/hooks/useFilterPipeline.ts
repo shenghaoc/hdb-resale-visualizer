@@ -9,6 +9,7 @@ import {
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
 } from "@/lib/filtering";
+import { getFuseMatchedKeys } from "@/lib/searchFuse";
 import { applyProfileVisibility } from "@/lib/matchProfile";
 import { hasCompletedSearchProfile } from "@/lib/searchProfile";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -189,11 +190,15 @@ export function useFilterPipeline({
       scopeBlocks: BlockSummary[],
       scopeFilters: FilterState & { selectedAddressKey: null },
       scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
-    ) =>
-      scopeBlocks.filter((block) => {
-        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile)) return false;
+    ) => {
+      const fuseMatchedKeys = scopeFilters.search
+        ? getFuseMatchedKeys(scopeBlocks, scopeFilters.search)
+        : null;
+      return scopeBlocks.filter((block) => {
+        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile, fuseMatchedKeys)) return false;
         return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
-      }),
+      });
+    },
     [affordabilityProfile],
   );
 

@@ -624,6 +624,7 @@ export function matchesFilter(
   filters: FilterState,
   geographicIntent?: GeographicSearchIntent | null,
   affordabilityProfile?: AffordabilityProfile | null,
+  fuseMatchedKeys?: ReadonlySet<string> | null,
 ): boolean {
   // Execute cheaper comparisons first to short-circuit early and avoid expensive checks
   if (filters.town && block.town !== filters.town) {
@@ -699,10 +700,15 @@ export function matchesFilter(
     }
   }
 
-  // Move expensive regex/tokenization text search check to the very end
-  // so cheaper bounds checks can short-circuit first.
-  if (!geographicIntent && filters.search && !searchMatchesBlock(block, filters.search)) {
-    return false;
+  // Move text search check to the end so cheaper bounds checks short-circuit first.
+  // When fuseMatchedKeys is provided (pre-computed Fuse.js results), use O(1) set lookup
+  // instead of the per-block substring/Levenshtein hand-rolled search.
+  if (!geographicIntent && filters.search) {
+    if (fuseMatchedKeys) {
+      if (!fuseMatchedKeys.has(block.addressKey)) return false;
+    } else if (!searchMatchesBlock(block, filters.search)) {
+      return false;
+    }
   }
 
   return true;
