@@ -86,13 +86,15 @@ function rollupTownFlatTypeGroup(points: TownFlatTypeTrendPoint[]): TownFlatType
     throw new RangeError("rollupTownFlatTypeGroup: empty group");
   }
   let latestMonth: string | null = null;
+  let latest: TownFlatTypeTrendPoint | null = null;
+  let volume = 0;
   for (const p of points) {
+    volume += p.transactionCount;
     if (!latestMonth || p.month > latestMonth) {
       latestMonth = p.month;
+      latest = p;
     }
   }
-  const volume = points.reduce((sum, p) => sum + p.transactionCount, 0);
-  const latest = latestMonth ? points.find((p) => p.month === latestMonth) ?? null : null;
   return {
     flatType: first.flatType,
     windowTransactionVolume: volume,

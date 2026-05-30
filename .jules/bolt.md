@@ -76,3 +76,7 @@
 ## 2026-05-19 - Single-Pass Loop Over Array Mapping
 **Learning:** Extracting multiple properties into separate lists using chained `.map().filter()` calls (e.g. `const prices = items.map(i => i.price).filter(Number.isFinite); const sqm = items.map(i => i.sqm).filter(Number.isFinite)`) on large arrays iterates the dataset multiple times and heavily allocates intermediate arrays. A single pass `for` loop executing these concurrently provides a ~3-4x performance improvement while eliminating excess GC pressure.
 **Action:** Replace sequential `.map().filter()` extractions over the same dataset with a single O(N) `for` loop when aggregating statistics or mapping over large array inputs.
+
+## 2024-05-18 - Single-Pass Aggregation over Native Array Iterators
+**Learning:** Calling sequential array operations like `.reduce()` then `.find()` inside a data aggregation pipeline (such as inside `rollupTownFlatTypeGroup`) iterates the exact same array multiple times and induces function-call and loop overhead penalties.
+**Action:** Always consolidate multiple array traversals into a single `for` loop. When searching for the latest item and concurrently accumulating a sum over a group, perform the sum (`volume += p.transactionCount`) within the same loop that tests the condition (`p.month > latestMonth`).
