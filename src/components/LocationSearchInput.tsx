@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import { MAX_SEARCH_QUERY_LENGTH } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
@@ -13,41 +12,35 @@ type LocationSearchInputProps = Omit<
   inputGroupControl?: boolean;
 };
 
-export const LocationSearchInput = forwardRef<HTMLInputElement, LocationSearchInputProps>(
-  function LocationSearchInput(
-    {
-      value,
-      onValueChange,
-      className,
-      maxLength = MAX_SEARCH_QUERY_LENGTH,
-      inputGroupControl = false,
-      ...props
-    },
-    ref,
-  ) {
-    const ime = useIMEComposition(onValueChange);
+export function LocationSearchInput({
+  value,
+  onValueChange,
+  className,
+  maxLength = MAX_SEARCH_QUERY_LENGTH,
+  inputGroupControl = false,
+  ref,
+  ...props
+}: LocationSearchInputProps) {
+  const ime = useIMEComposition(onValueChange);
 
-    return (
-      <Input
-        ref={ref}
-        data-slot={inputGroupControl ? "input-group-control" : "input"}
-        type="search"
-        inputMode="search"
-        enterKeyHint="search"
-        maxLength={maxLength}
-        value={ime.localValue ?? value}
-        onCompositionStart={ime.onCompositionStart}
-        onCompositionEnd={ime.onCompositionEnd}
-        onChange={ime.onChange}
-        className={cn(
-          inputGroupControl &&
-            "flex-1 border-0 bg-transparent ring-0 group-has-[[data-align=inline-end]]/input-group:pr-2 group-has-[[data-align=inline-start]]/input-group:pl-2 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent",
-          className,
-        )}
-        {...props}
-      />
-    );
-  },
-);
-
-LocationSearchInput.displayName = "LocationSearchInput";
+  return (
+    <Input
+      ref={ref}
+      data-slot={inputGroupControl ? "input-group-control" : "input"}
+      type="search"
+      inputMode="search"
+      enterKeyHint="search"
+      maxLength={maxLength}
+      value={ime.localValue ?? value}
+      onCompositionStart={ime.onCompositionStart}
+      onCompositionEnd={ime.onCompositionEnd}
+      onChange={ime.onChange}
+      className={cn(
+        inputGroupControl &&
+          "flex-1 border-0 bg-transparent ring-0 group-has-[[data-align=inline-end]]/input-group:pr-2 group-has-[[data-align=inline-start]]/input-group:pl-2 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent",
+        className,
+      )}
+      {...props}
+    />
+  );
+}

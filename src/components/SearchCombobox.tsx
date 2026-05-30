@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -23,6 +23,7 @@ type SearchComboboxProps = {
   placeholder?: string;
   /** When false, skips suggest fetch (e.g. hidden duplicate header inputs on mobile). */
   suggestActive?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
 function groupLabel(t: Translator, group: SuggestionGroup): string {
@@ -55,22 +56,20 @@ function suggestionKey(suggestion: Suggestion): string {
   }
 }
 
-export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(function SearchCombobox(
-  {
-    value,
-    onValueChange,
-    onSelectSuggestion,
-    t,
-    className,
-    inputClassName,
-    id,
-    "data-testid": dataTestId,
-    "aria-label": ariaLabel,
-    placeholder,
-    suggestActive = true,
-  },
+export function SearchCombobox({
+  value,
+  onValueChange,
+  onSelectSuggestion,
+  t,
+  className,
+  inputClassName,
+  id,
+  "data-testid": dataTestId,
+  "aria-label": ariaLabel,
+  placeholder,
+  suggestActive = true,
   ref,
-) {
+}: SearchComboboxProps) {
   const listboxId = useId();
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -90,16 +89,13 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   }, []);
 
   useEffect(() => {
-    if (!suggestActive) {
-      setSuggestions([]);
-      setOpen(false);
-      setActiveIndex(-1);
-      setLoading(false);
-      return;
-    }
-
     const trimmed = debouncedQuery.trim();
-    if (trimmed.length < 2) {
+
+    // Don't fetch when suggest is disabled or the query is too short. Clear any
+    // stale async results synchronously so the listbox never shows outdated
+    // matches; this is the cancellation path of the fetch synchronization below.
+    if (!suggestActive || trimmed.length < 2) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale fetch results
       setSuggestions([]);
       setOpen(false);
       setActiveIndex(-1);
@@ -300,6 +296,4 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
       </PopoverContent>
     </Popover>
   );
-});
-
-SearchCombobox.displayName = "SearchCombobox";
+}
