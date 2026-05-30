@@ -179,7 +179,7 @@ export function resetSuggestCacheForTests(): void {
   suggestCache.clear();
 }
 
-export function fetchSuggestions(query: string): Promise<Suggestion[]> {
+export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<Suggestion[]> {
   const trimmed = query.trim();
   const cacheKey = trimmed.toLowerCase();
   if (!cacheKey || cacheKey.length < 2) {
@@ -196,6 +196,12 @@ export function fetchSuggestions(query: string): Promise<Suggestion[]> {
 
   evictSuggestCacheIfNeeded();
   const controller = new AbortController();
+  if (signal) {
+    if (signal.aborted) {
+      return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+    }
+    signal.addEventListener("abort", () => controller.abort(signal.reason));
+  }
   const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
   const request = fetchJson(
     `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,

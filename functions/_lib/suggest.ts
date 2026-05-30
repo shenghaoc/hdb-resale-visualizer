@@ -353,7 +353,7 @@ export async function buildSuggestions(
   const [townRows, streetRows, blockRows, postalRows, mrtNames] = await Promise.all([
     isNumeric ? Promise.resolve([]) : queryDistinctTowns(db, prefixPattern, containsPattern),
     isNumeric ? Promise.resolve([]) : queryDistinctStreets(db, prefixPattern, containsPattern),
-    queryBlocks(db, prefixPattern, containsPattern),
+    (isNumeric && normalizedQuery.length >= 5) ? Promise.resolve([]) : queryBlocks(db, prefixPattern, containsPattern),
     isNumeric ? queryPostalCodes(db, prefixPattern) : Promise.resolve([]),
     isNumeric ? Promise.resolve([]) : (stationNames ? Promise.resolve(stationNames) : loadStationNames(db)),
   ]);

@@ -41,7 +41,7 @@ export function getFuseMatchedKeys(
   }
 
   const index = ensureFuseIndex(blocks);
-  const results = index.search(query, { limit: Math.min(blocks.length, 500) });
+  const results = index.search(trimmed, { limit: Math.min(blocks.length, 500) });
 
   if (results.length === 0) {
     return new Set<string>();

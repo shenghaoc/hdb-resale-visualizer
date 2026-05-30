@@ -76,7 +76,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [loading, setLoading] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const isFocusedRef = useRef(false);
   const fetchSequenceRef = useRef(0);
   const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
@@ -108,20 +108,21 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
     }
 
     const sequence = ++fetchSequenceRef.current;
+    const controller = new AbortController();
     setLoading(true);
-    void fetchSuggestions(trimmed)
+    void fetchSuggestions(trimmed, controller.signal)
       .then((next) => {
         if (fetchSequenceRef.current !== sequence) {
           return;
         }
         setSuggestions(next);
-        if (isFocused) {
+        if (isFocusedRef.current) {
           setOpen(next.length > 0);
         }
         setActiveIndex(-1);
       })
-      .catch((error) => {
-        if (fetchSequenceRef.current !== sequence) {
+      .catch((error: unknown) => {
+        if ((error instanceof DOMException && error.name === "AbortError") || fetchSequenceRef.current !== sequence) {
           return;
         }
         console.error("Suggest fetch failed:", error);
@@ -134,7 +135,11 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           setLoading(false);
         }
       });
-  }, [debouncedQuery, suggestActive, isFocused]);
+
+    return () => {
+      controller.abort();
+    };
+  }, [debouncedQuery, suggestActive]);
 
   const selectSuggestion = useCallback(
     (suggestion: Suggestion) => {
@@ -223,7 +228,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
             onValueChange={onValueChange}
             onKeyDown={handleKeyDown}
             onFocus={() => {
-              setIsFocused(true);
+              isFocusedRef.current = true;
               if (blurTimeoutRef.current !== null) {
                 window.clearTimeout(blurTimeoutRef.current);
               }
@@ -232,7 +237,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
               }
             }}
             onBlur={() => {
-              setIsFocused(false);
+              isFocusedRef.current = false;
               blurTimeoutRef.current = window.setTimeout(() => setOpen(false), 120);
             }}
             className={inputClassName}
