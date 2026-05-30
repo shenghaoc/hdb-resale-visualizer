@@ -229,9 +229,15 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
       reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
     };
     signal.addEventListener("abort", onAbort);
-    shared!.then(
-      (res) => { signal.removeEventListener("abort", onAbort); resolve(res); },
-      (err) => { signal.removeEventListener("abort", onAbort); reject(err); },
+    shared.then(
+      (res) => {
+        signal.removeEventListener("abort", onAbort);
+        resolve(res);
+      },
+      (err: unknown) => {
+        signal.removeEventListener("abort", onAbort);
+        reject(err instanceof Error ? err : new Error(String(err)));
+      },
     );
   });
 }
