@@ -49,3 +49,5 @@ export const LocationSearchInput = forwardRef<HTMLInputElement, LocationSearchIn
     );
   },
 );
+
+LocationSearchInput.displayName = "LocationSearchInput";

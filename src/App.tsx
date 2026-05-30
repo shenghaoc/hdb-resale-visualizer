@@ -160,6 +160,7 @@ function App() {
 
   const {
     patchUserFilters,
+    handleSelectSuggestion,
     handleResetFilters,
     handleSelectAddress,
     handleToggleShortlist,
@@ -418,6 +419,7 @@ function App() {
             t={t}
             search={pipeline.filterPanelFilters.search}
             onSearchChange={(search) => patchUserFilters({ search })}
+            onSelectSuggestion={handleSelectSuggestion}
             isMobileHeaderOpen={header.isMobileHeaderOpen}
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}

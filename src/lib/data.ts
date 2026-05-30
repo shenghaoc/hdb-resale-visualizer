@@ -7,12 +7,14 @@ import {
   manifestSchema,
   townFlatTypeTrendPointSchema,
   searchResponseSchema,
+  suggestResponseSchema,
 } from "./dataSchemas";
 import type {
   AddressDetail,
   BlockSummary,
   ComparisonArtifact,
   Manifest,
+  Suggestion,
   TownFlatTypeTrendPoint,
 } from "../types/data";
 import type { z } from "zod";
@@ -23,6 +25,10 @@ let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean;
   null;
 let blocksBySearchKey = "";
 let blocksBySearchSequence = 0;
+
+const SUGGEST_CACHE_LIMIT = 32;
+const suggestCache = new Map<string, Promise<Suggestion[]>>();
+const SUGGEST_TIMEOUT_MS = 10_000;
 
 class ArtifactFetchHttpError extends Error {
   status: number;
@@ -38,8 +44,8 @@ function createArtifactContractError(path: string, reason: string) {
   return new Error(`Artifact contract violation for ${path}: ${reason}`);
 }
 
-async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema): Promise<z.infer<TSchema>> {
-  const response = await fetch(path);
+async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema, signal?: AbortSignal): Promise<z.infer<TSchema>> {
+  const response = signal ? await fetch(path, { signal }) : await fetch(path);
 
   if (!response.ok) {
     throw new ArtifactFetchHttpError(path, response.status);
@@ -157,4 +163,81 @@ export function fetchBlocksBySearch(
     throw error;
   });
   return blocksBySearchPromise;
+}
+
+function evictSuggestCacheIfNeeded(): void {
+  if (suggestCache.size < SUGGEST_CACHE_LIMIT) {
+    return;
+  }
+  const oldestKey = suggestCache.keys().next().value;
+  if (oldestKey !== undefined) {
+    suggestCache.delete(oldestKey);
+  }
+}
+
+export function resetSuggestCacheForTests(): void {
+  suggestCache.clear();
+}
+
+export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<Suggestion[]> {
+  const trimmed = query.trim();
+  const cacheKey = trimmed.toLowerCase();
+  if (!cacheKey || cacheKey.length < 2) {
+    return Promise.resolve([]);
+  }
+
+  let shared = suggestCache.get(cacheKey);
+  if (!shared) {
+    evictSuggestCacheIfNeeded();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
+    shared = fetchJson(
+      `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
+      suggestResponseSchema,
+      controller.signal,
+    )
+      .then((response) => {
+        clearTimeout(timeout);
+        return response.suggestions;
+      })
+      .catch((error) => {
+        clearTimeout(timeout);
+        if (suggestCache.get(cacheKey) === shared) {
+          suggestCache.delete(cacheKey);
+        }
+        throw error;
+      });
+    suggestCache.set(cacheKey, shared);
+  } else {
+    // Re-insert to move to end for LRU order (Map preserves insertion sequence)
+    suggestCache.delete(cacheKey);
+    suggestCache.set(cacheKey, shared);
+  }
+
+  if (!signal) {
+    return shared;
+  }
+
+  if (signal.aborted) {
+    return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+  }
+
+  // Wrap so that aborting this caller's signal doesn't cancel the shared fetch.
+  return new Promise((resolve, reject) => {
+    const onAbort = () => {
+      signal.removeEventListener("abort", onAbort);
+      reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+    };
+    signal.addEventListener("abort", onAbort);
+    shared.then(
+      (res) => {
+        signal.removeEventListener("abort", onAbort);
+        resolve(res);
+      },
+      (err: unknown) => {
+        signal.removeEventListener("abort", onAbort);
+        reject(err instanceof Error ? err : new Error(String(err)));
+      },
+    );
+  });
 }

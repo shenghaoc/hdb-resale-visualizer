@@ -1,6 +1,5 @@
-import { useCallback, useId } from "react";
-import { PanelLeftClose, RefreshCw, Search } from "lucide-react";
-import { LocationSearchInput } from "@/components/LocationSearchInput";
+import { useId } from "react";
+import { PanelLeftClose, RefreshCw } from "lucide-react";
 import { formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
@@ -23,7 +22,6 @@ import {
 import {
   InputGroup,
   InputGroupAddon,
-  InputGroupButton,
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
@@ -222,11 +220,6 @@ export function FilterPanel(props: FilterPanelProps) {
   const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle, searchProfile } = props;
   const { locale, t } = useI18n();
 
-  const handleSearchChange = useCallback(
-    (value: string) => onChange({ search: value }),
-    [onChange],
-  );
-
   const affordabilityEnabled = searchProfile
     ? isAffordabilityProfileComplete({
         monthlyIncome: searchProfile.monthlyIncome,
@@ -276,32 +269,6 @@ export function FilterPanel(props: FilterPanelProps) {
           <FieldGroup className="gap-4">
             <FieldSet className="gap-4">
               <FieldLegend className="v2-section-title">{t("filters.coreCriteria")}</FieldLegend>
-              <Field>
-                <FieldContent>
-                  <FieldLabel htmlFor="search">{t("filters.searchLabel")}</FieldLabel>
-                  <InputGroup>
-                    <LocationSearchInput
-                      id="search"
-                      data-testid="filters-search-input"
-                      inputGroupControl
-                      placeholder={t("filters.searchPlaceholder")}
-                      value={filters.search}
-                      onValueChange={handleSearchChange}
-                    />
-                    <InputGroupAddon align="inline-end" className="pr-1">
-                      <InputGroupButton
-                        type="button"
-                        className={FILTER_INLINE_ACTION_CLASS}
-                        onClick={(e) => e.currentTarget.closest('[data-slot="input-group"]')?.querySelector("input")?.focus()}
-                      >
-                        <Search data-icon className="size-3 shrink-0" aria-hidden="true" />
-                        {t("filters.search")}
-                      </InputGroupButton>
-                    </InputGroupAddon>
-                  </InputGroup>
-                </FieldContent>
-              </Field>
-
               <div className="grid gap-4 lg:grid-cols-2">
                 <SelectField
                   allLabel={t("filters.allTowns")}

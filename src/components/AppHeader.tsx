@@ -3,7 +3,8 @@ import { Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { LocationSearchInput } from "@/components/LocationSearchInput";
+import { SearchCombobox } from "@/components/SearchCombobox";
+import type { Suggestion } from "@/types/data";
 import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { Manifest } from "@/types/data";
@@ -16,6 +17,7 @@ type AppHeaderProps = {
   t: Translator;
   search: string;
   onSearchChange: (value: string) => void;
+  onSelectSuggestion: (suggestion: Suggestion) => void;
   isMobileHeaderOpen: boolean;
   onToggleMobileHeader: () => void;
   onDismiss: () => void;
@@ -31,6 +33,7 @@ export function AppHeader({
   t,
   search,
   onSearchChange,
+  onSelectSuggestion,
   isMobileHeaderOpen,
   onToggleMobileHeader,
   onDismiss,
@@ -161,14 +164,16 @@ export function AppHeader({
           )}
         >
           <Search data-icon className="ml-1 size-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
-          <LocationSearchInput
+          <SearchCombobox
             id={headerSearchId}
             data-testid="header-search-input"
             aria-label={t("filters.searchLabel")}
-            placeholder={t("filters.searchPlaceholder")}
             value={search}
             onValueChange={onSearchChange}
-            className="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.72rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
+            onSelectSuggestion={onSelectSuggestion}
+            suggestActive={isDesktop}
+            t={t}
+            inputClassName="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.72rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
           />
         </div>
 
@@ -231,15 +236,17 @@ export function AppHeader({
           <div className="absolute inset-x-3 top-3 flex items-center gap-2">
             <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20", HEADER_SURFACE_CLASS)}>
               <Search data-icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-              <LocationSearchInput
+              <SearchCombobox
                 ref={overlayInputRef}
                 id={overlaySearchId}
                 data-testid="header-search-overlay-input"
                 aria-label={t("filters.searchLabel")}
-                placeholder={t("filters.searchPlaceholder")}
                 value={search}
                 onValueChange={onSearchChange}
-                className="h-10 min-w-0 border-0 bg-transparent px-1 text-sm shadow-none focus-visible:border-0 focus-visible:ring-0"
+                onSelectSuggestion={onSelectSuggestion}
+                suggestActive={isMobileSearchOpen}
+                t={t}
+                inputClassName="h-10 min-w-0 border-0 bg-transparent px-1 text-sm shadow-none focus-visible:border-0 focus-visible:ring-0"
               />
             </div>
             <Button

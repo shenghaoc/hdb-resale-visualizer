@@ -84,6 +84,7 @@ export async function writeArtifactsToD1(
   console.log("Writing artifacts to D1...");
 
   // NOTE: the `shortlists` table (migration 0003) is intentionally absent here.
+  // Suggest prefix indexes (migration 0005) live on `blocks` and require no sync changes.
   // It holds opt-in, runtime user state written only by the Worker
   // (functions/api/shortlist/*). The sync pipeline must never truncate or
   // rewrite it, or it would wipe users' cloud-backed shortlists.
