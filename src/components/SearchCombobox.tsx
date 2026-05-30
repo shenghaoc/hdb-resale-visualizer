@@ -247,7 +247,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
       <PopoverContent
         align="start"
         side="bottom"
-        className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-0 rounded-[0.75rem] border border-border/70 bg-popover/98 p-0 shadow-[0_12px_40px_rgba(23,28,31,0.12)] backdrop-blur-xl dark:border-primary/15"
+        className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-0 rounded-[0.75rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl"
         onOpenAutoFocus={(event) => event.preventDefault()}
       >
         {loading && suggestions.length === 0 ? (

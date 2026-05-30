@@ -220,8 +220,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
 
   return (
     <div className="absolute inset-0 z-[100] flex items-end justify-center px-4 pb-20 pt-6 lg:items-center lg:px-0 lg:pb-0">
-      <div className="absolute inset-0 bg-slate-950/35 backdrop-blur-[2px] dark:bg-slate-950/55" />
-      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-[1.25rem] border border-border/70 bg-card/95 shadow-[0_24px_80px_rgba(23,28,31,0.15)] backdrop-blur-2xl dark:border-primary/15 dark:bg-card/95 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_24px_80px_rgba(4,12,24,0.9)] lg:w-[28.75rem] lg:max-w-[28.75rem]">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
+      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-[1.25rem] border bg-popover/95 shadow-xl backdrop-blur-2xl lg:w-[28.75rem] lg:max-w-[28.75rem]">
         <div className="h-[3px] w-full rounded-t-[1.25rem] bg-gradient-to-r from-primary to-transparent opacity-60" />
         <CardContent className="overflow-hidden px-5 py-6 lg:px-8 lg:py-7">
           <div className="mb-6 flex items-center justify-center gap-1.5">
@@ -234,7 +234,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     ? "w-6 bg-primary"
                     : index < step
                       ? "w-2 bg-primary/35"
-                      : "w-2 bg-black/8 dark:bg-white/10",
+                      : "w-2 bg-muted-foreground/30",
                 )}
               />
             ))}
@@ -293,7 +293,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
-                              : "bg-black/[0.04] text-slate-500 hover:bg-black/[0.06] dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/[0.09]",
+                              : "bg-muted/50 text-muted-foreground hover:bg-muted/70",
                           )}
                         >
                           {flatType}
@@ -319,7 +319,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                  <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                     <div className="flex items-center">
                       <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                       <Input
@@ -346,7 +346,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
-                              : "border-black/8 text-slate-500 hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05]",
+                              : "border-border text-muted-foreground hover:bg-muted/60",
                           )}
                         >
                           {preset >= 1000000 ? `S$${(preset / 1000000).toFixed(1)}M` : `S$${Math.round(preset / 1000)}K`}
@@ -372,12 +372,12 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="space-y-4">
+                  <div className="flex flex-col gap-4">
                     <div>
                       <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                         {t("searchProfile.commuteDestination")}
                       </p>
-                      <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                         <Input
                           value={commuteAnchorLabel}
                           onChange={(e) => setCommuteAnchorLabel(e.target.value)}
@@ -394,7 +394,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <PopoverTrigger asChild>
                           <button
                             type="button"
-                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 text-left text-[0.95rem] font-semibold dark:border-primary/20 dark:bg-white/[0.04]"
+                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold"
                           >
                             <span className={commuteAnchorMrt ? "text-foreground" : "text-muted-foreground"}>
                               {commuteAnchorMrt ? formatStationLabel(commuteAnchorMrt) : t("searchProfile.selectMrtStation")}
@@ -402,9 +402,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             <ChevronDown className="size-4 text-muted-foreground transition-transform data-[open=true]:rotate-180" data-open={stationPickerOpen} />
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border border-border/70 bg-popover/98 p-0 shadow-[0_12px_40px_rgba(23,28,31,0.12)] backdrop-blur-xl dark:border-primary/15 dark:bg-popover">
+                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl">
                           <div className="border-b border-border/60 p-2.5">
-                            <div className="rounded-[0.6rem] bg-black/[0.03] px-3 dark:bg-white/[0.06]">
+                            <div className="rounded-[0.6rem] bg-muted/40 px-3">
                               <div className="flex items-center gap-2">
                                 <Search className="size-4 text-muted-foreground" />
                                 <Input
@@ -433,8 +433,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                     setStationPickerOpen(false);
                                   }}
                                   className={cn(
-                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.05]",
-                                    commuteAnchorMrt === station && "bg-primary/8 text-primary dark:bg-primary/10",
+                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted/60",
+                                    commuteAnchorMrt === station && "bg-primary/10 text-primary",
                                   )}
                                 >
                                   <span>{formatStationLabel(station)}</span>
@@ -463,7 +463,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                 "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
                                 active
                                   ? "border-primary bg-primary text-primary-foreground"
-                                  : "border-black/8 text-slate-500 hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05]",
+                                  : "border-border text-muted-foreground hover:bg-muted/60",
                               )}
                             >
                               {t("searchProfile.minutesPreset", { value: preset })}
@@ -491,7 +491,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                  <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                     <div className="flex items-center">
                       <Input
                         inputMode="numeric"
@@ -520,7 +520,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
-                              : "border-black/8 text-slate-500 hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/[0.05]",
+                              : "border-border text-muted-foreground hover:bg-muted/60",
                           )}
                         >
                           {t("searchProfile.yearsPresetShort", { value: preset })}
@@ -546,13 +546,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="space-y-4">
+                  <div className="flex flex-col gap-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                           {t("searchProfile.age")}
                         </p>
-                        <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                        <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                           <Input
                             inputMode="numeric"
                             enterKeyHint="done"
@@ -572,7 +572,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                           {t("searchProfile.coApplicantAge")}
                         </p>
-                        <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                        <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                           <Input
                             inputMode="numeric"
                             enterKeyHint="done"
@@ -593,7 +593,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                         {t("searchProfile.cpfOABalance")}
                       </p>
-                      <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                         <div className="flex items-center">
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
@@ -613,7 +613,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
                         {t("searchProfile.monthlyIncome")}
                       </p>
-                      <div className="rounded-[0.65rem] border border-black/10 bg-black/[0.02] px-4 dark:border-primary/20 dark:bg-white/[0.04]">
+                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
                         <div className="flex items-center">
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
@@ -645,51 +645,51 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     {t("searchProfile.wizard.hint.review")}
                   </p>
                   <div className="mt-5 flex flex-wrap justify-center gap-2">
-                    <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                       {mainFlatType}
                     </div>
                     {maxBudget ? (
-                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                         {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
                       </div>
                     ) : null}
-                    <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                       {formatStationLabel(commuteAnchorMrt)}
                     </div>
-                    <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                       {t("searchProfile.minutesPreset", { value: Number(maxCommute) })}
                     </div>
-                    <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
                     {age ? (
-                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                         {t("searchProfile.chip.age", { age: Number(age) })}
                       </div>
                     ) : null}
                     {coApplicantAge ? (
-                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                         {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
                       </div>
                     ) : null}
                     {cpfOABalance ? (
-                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                         {t("searchProfile.chip.cpfOABalance", { amount: formatNumber(Number(cpfOABalance), 0, locale) })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
-                      <div className="rounded-full bg-black/[0.04] px-3 py-1.5 text-xs font-bold text-slate-600 dark:bg-white/[0.06] dark:text-slate-300">
+                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
                         {t("searchProfile.chip.monthlyIncome", { amount: formatNumber(Number(monthlyIncome), 0, locale) })}
                       </div>
                     ) : null}
                   </div>
                   {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
-                    <div className="mt-5 rounded-[0.65rem] border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-3 text-left dark:border-emerald-400/25 dark:bg-emerald-400/[0.06]">
-                      <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
+                    <div className="mt-5 rounded-[0.65rem] border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
+                      <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-success">
                         {t("affordability.ceiling", { price: formatCurrency(affordabilityCeiling, locale) })}
                       </p>
                       {monthlyIncome.trim() ? (
-                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-slate-600 dark:text-slate-300">
+                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-muted-foreground">
                           {t("affordability.summary", {
                             cpf: formatCurrency(Number(cpfOABalance), locale),
                             income: formatCurrency(Number(monthlyIncome), locale),
@@ -713,7 +713,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                 setDirection(-1);
                 setStep((prev) => Math.max(0, prev - 1));
               }}
-              className="rounded-[0.65rem] bg-black/[0.04] px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-slate-500 transition-colors hover:bg-black/[0.06] dark:bg-white/[0.06] dark:text-slate-300 dark:hover:bg-white/[0.09]"
+              className="rounded-[0.65rem] bg-muted/50 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground transition-colors hover:bg-muted/70"
             >
               {t("searchProfile.back")}
             </button>
@@ -721,7 +721,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <button
               type="button"
               onClick={onSkip}
-              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-slate-400 transition-colors hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground/70 transition-colors hover:text-foreground"
             >
               {t("searchProfile.skip")}
             </button>
@@ -733,7 +733,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             className={cn(
               "rounded-[0.65rem] px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] transition-all",
               !canContinueStep || (step === totalSteps - 1 && !canSubmit)
-                ? "cursor-default bg-black/[0.06] text-slate-400 dark:bg-white/[0.06] dark:text-slate-500"
+                ? "cursor-default bg-muted/70 text-muted-foreground/60"
                 : "bg-primary text-primary-foreground hover:brightness-95",
             )}
           >

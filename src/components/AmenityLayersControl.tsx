@@ -43,7 +43,7 @@ function LayerSwitch({
       onClick={onToggle}
       className={cn(
         "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
-        active ? "bg-primary shadow-[0_0_8px_rgba(8,145,178,0.3)]" : "bg-muted-foreground/30",
+        active ? "bg-primary" : "bg-muted-foreground/30",
       )}
     >
       <span
@@ -98,7 +98,7 @@ export function AmenityLayersControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border border-border/20 bg-background/90 p-2 text-[0.55rem] backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]",
+        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover/90 p-2 text-[0.55rem] backdrop-blur-[20px] shadow-lg",
         className,
       )}
       style={style}
