@@ -37,9 +37,9 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Brittle E2E assertions on computed CSS values — prefer visible text, aria roles, `data-testid`
 
 **Architecture** (hard constraints — any violation blocks merge)
-- `fetch()` in `src/` targeting external domains (OneMap, data.gov.sg) — critical
-- Geocoding or MRT distance calculations in `src/` — critical
-- `public/data/` files manually edited — owned by `scripts/sync-data.ts`
+- `fetch()` in `src/` or `functions/` targeting external domains (OneMap, data.gov.sg) — critical (those calls belong only in `scripts/sync-data.ts`)
+- Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
+- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
 - `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
 
@@ -52,10 +52,10 @@ The following structured format applies to the overall PR review summary comment
 - **Summary** — two to three sentences on real bugs found, correctness, and overall quality.
 
 ## Do Not Approve PRs That
-- Introduce backend routes or runtime server-side logic
-- Fetch data from external APIs at runtime (`src/` must only read `public/data/`)
+- Fetch data from external APIs (OneMap, data.gov.sg) at runtime — those calls belong in `scripts/sync-data.ts` only
+- Bypass D1 by hand-editing static data files or hosting JSON elsewhere
+- Modify `migrations/*.sql` files retroactively — add a new numbered migration instead
 - Break existing deployment assumptions or map attribution requirements
-- Manually edit generated files under `public/data/` (owned by `scripts/sync-data.ts`)
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
 
 ## Platform-Specific Review Tooling
