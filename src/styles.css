@@ -105,8 +105,9 @@
   --destructive-foreground: light-dark(#ffffff, #2a0c0c);
   --success: light-dark(#059669, #34d399);
   --success-foreground: light-dark(#ffffff, #022c22);
-  /* amber-600 / amber-400 — matches the raw status colors it replaces */
-  --warning: light-dark(#d97706, #fbbf24);
+  /* amber-700 (light) keeps `text-warning` on a `bg-warning/10` tint above
+     WCAG AA (~4.6:1); amber-400 (dark) reads bright on the dark surface. */
+  --warning: light-dark(#b45309, #fbbf24);
   --warning-foreground: light-dark(#451a03, #2a1a02);
   --border: light-dark(rgba(15, 23, 42, 0.08), rgba(34, 211, 238, 0.12));
   /* Shared tokens derived from --primary — reused for hover/active tints and
