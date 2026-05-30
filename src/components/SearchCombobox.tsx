@@ -80,6 +80,22 @@ export function SearchCombobox({
   const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
 
+  // When suggest is off or the query is too short there are no results to show.
+  // Clear any stale state during render (guarded so it only runs when something
+  // is actually set) instead of in an effect — React re-renders before paint,
+  // which avoids the extra commit/flicker a post-paint effect reset causes.
+  // See react.dev "You Might Not Need an Effect" → adjusting state on prop change.
+  const trimmedQuery = debouncedQuery.trim();
+  if (
+    (!suggestActive || trimmedQuery.length < 2) &&
+    (suggestions.length > 0 || open || activeIndex !== -1 || loading)
+  ) {
+    setSuggestions([]);
+    setOpen(false);
+    setActiveIndex(-1);
+    setLoading(false);
+  }
+
   useEffect(() => {
     return () => {
       if (blurTimeoutRef.current !== null) {
@@ -90,22 +106,14 @@ export function SearchCombobox({
 
   useEffect(() => {
     const trimmed = debouncedQuery.trim();
-
-    // Don't fetch when suggest is disabled or the query is too short. Clear any
-    // stale async results synchronously so the listbox never shows outdated
-    // matches; this is the cancellation path of the fetch synchronization below.
+    // Stale state is cleared during render above; here we only fetch.
     if (!suggestActive || trimmed.length < 2) {
-      /* eslint-disable react-hooks/set-state-in-effect -- clearing stale fetch results */
-      setSuggestions([]);
-      setOpen(false);
-      setActiveIndex(-1);
-      setLoading(false);
-      /* eslint-enable react-hooks/set-state-in-effect */
       return;
     }
 
     const sequence = ++fetchSequenceRef.current;
     const controller = new AbortController();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setLoading(true);
     void fetchSuggestions(trimmed, controller.signal)
       .then((next) => {
