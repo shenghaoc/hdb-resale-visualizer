@@ -10,7 +10,7 @@ export function filterPatchForSuggestion(suggestion: Suggestion): Partial<Filter
     case "town":
       return { town: suggestion.town, search: "", selectedAddressKey: null };
     case "block":
-      return { selectedAddressKey: suggestion.addressKey, search: "" };
+      return { selectedAddressKey: suggestion.addressKey, search: "", town: "" };
     case "street":
       return { search: suggestion.search, town: "", selectedAddressKey: null };
     case "mrt":

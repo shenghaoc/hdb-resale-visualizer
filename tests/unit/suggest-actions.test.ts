@@ -33,7 +33,7 @@ describe("suggestActions", () => {
         label: "123 Ang Mo Kio Ave 4",
         addressKey: "AMK_123",
       }),
-    ).toEqual({ search: "", selectedAddressKey: "AMK_123" });
+    ).toEqual({ search: "", town: "", selectedAddressKey: "AMK_123" });
   });
 
   it("maps street selection to search text", () => {

@@ -65,6 +65,16 @@ describe("suggest lib", () => {
     expect(suggestions).toEqual([]);
   });
 
+  it("escapes backslash in LIKE patterns", async () => {
+    const db = mockDb({
+      "DISTINCT town": async () => ({ results: [] }),
+      "street_name": async () => ({ results: [] }),
+      "address_key": async () => ({ results: [] }),
+    });
+    const suggestions = await buildSuggestions(db, "test\\path", []);
+    expect(suggestions).toEqual([]);
+  });
+
   it("includes postal suggestions for numeric queries", async () => {
     const db = mockDb({
       "postal_code": async () => ({

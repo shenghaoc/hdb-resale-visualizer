@@ -202,8 +202,6 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
     [activeIndex, flatGroupedItems, open, selectSuggestion],
   );
 
-  let optionOffset = 0;
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverAnchor asChild>
@@ -263,8 +261,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
                 {groupLabel(t, section.group)}
               </p>
               {section.items.map((suggestion) => {
-                const index = optionOffset;
-                optionOffset += 1;
+                const index = flatGroupedItems.indexOf(suggestion);
                 const active = index === activeIndex;
                 return (
                   <button

@@ -318,12 +318,12 @@ async function loadStationNames(db: SuggestDb): Promise<string[]> {
     return cachedStationNamesPromise;
   }
   cachedStationNamesPromise = (async () => {
-    const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
-    const row = (result.results ?? [])[0] as { json?: string } | undefined;
-    if (!row?.json) {
-      return [];
-    }
     try {
+      const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
+      const row = (result.results ?? [])[0] as { json?: string } | undefined;
+      if (!row?.json) {
+        return [];
+      }
       const parsed = JSON.parse(row.json) as MrtStationGeoJson;
       const names = new Set<string>();
       for (const feature of parsed.features ?? []) {
@@ -333,8 +333,9 @@ async function loadStationNames(db: SuggestDb): Promise<string[]> {
         }
       }
       return Array.from(names);
-    } catch {
-      console.error("loadStationNames: failed to parse mrt_geojson JSON");
+    } catch (error) {
+      console.error("loadStationNames: failed to load or parse mrt_geojson", error);
+      cachedStationNamesPromise = null;
       return [];
     }
   })();
