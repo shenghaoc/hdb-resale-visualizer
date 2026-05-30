@@ -231,7 +231,7 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
     signal.addEventListener("abort", onAbort);
     shared!.then(
       (res) => { signal.removeEventListener("abort", onAbort); resolve(res); },
-      (err) => { signal.removeEventListener("abort", onAbort); reject(err as Error); },
+      (err) => { signal.removeEventListener("abort", onAbort); reject(err); },
     );
   });
 }
