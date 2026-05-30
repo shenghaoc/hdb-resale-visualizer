@@ -107,7 +107,7 @@
   --success-foreground: light-dark(#ffffff, #022c22);
   /* amber-600 / amber-400 — matches the raw status colors it replaces */
   --warning: light-dark(#d97706, #fbbf24);
-  --warning-foreground: light-dark(#ffffff, #2a1a02);
+  --warning-foreground: light-dark(#451a03, #2a1a02);
   --border: light-dark(rgba(15, 23, 42, 0.08), rgba(34, 211, 238, 0.12));
   /* Shared tokens derived from --primary — reused for hover/active tints and
      glass hairlines so colour adjustments propagate from one source.

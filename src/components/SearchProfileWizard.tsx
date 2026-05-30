@@ -721,7 +721,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <button
               type="button"
               onClick={onSkip}
-              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground/70 transition-colors hover:text-foreground"
+              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground transition-colors hover:text-foreground"
             >
               {t("searchProfile.skip")}
             </button>
@@ -730,12 +730,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             type="button"
             onClick={handleContinue}
             disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-            className={cn(
-              "rounded-[0.65rem] px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] transition-all",
-              !canContinueStep || (step === totalSteps - 1 && !canSubmit)
-                ? "cursor-default bg-muted/70 text-muted-foreground/60"
-                : "bg-primary text-primary-foreground hover:brightness-95",
-            )}
+            className="rounded-[0.65rem] bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-all hover:brightness-95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60"
           >
             {nextLabel}
           </button>
