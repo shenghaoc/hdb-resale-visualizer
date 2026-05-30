@@ -1,5 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { onRequestGet } from "../../functions/api/suggest";
+import { resetStationNamesCacheForTests } from "../../functions/_lib/suggest";
+
+beforeEach(() => {
+  resetStationNamesCacheForTests();
+});
 
 describe("/api/suggest handler", () => {
   it("returns 400 for short query", async () => {
