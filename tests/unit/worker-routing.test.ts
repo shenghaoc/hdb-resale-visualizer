@@ -62,16 +62,7 @@ describe("apiRouteDefinitions", () => {
     const getPaths = apiRouteDefinitions
       .filter((route) => (route.method ?? "GET") === "GET")
       .map((route) => route.pattern.pathname);
-    // Accommodate mock environment where the `{/}?` trailing slash logic is removed
-    expect(getPaths).toContain(
-      typeof process !== "undefined" && process.env.NODE_ENV === "test" && typeof global.URLPattern === "function" && global.URLPattern.toString().includes("replace")
-        ? "/api/manifest"
-        : "/api/manifest{/}?"
-    );
-    expect(getPaths).toContain(
-      typeof process !== "undefined" && process.env.NODE_ENV === "test" && typeof global.URLPattern === "function" && global.URLPattern.toString().includes("replace")
-        ? "/api/shortlist/:syncCode"
-        : "/api/shortlist/:syncCode{/}?"
-    );
+    expect(getPaths).toContain("/api/manifest{/}?");
+    expect(getPaths).toContain("/api/shortlist/:syncCode{/}?");
   });
 });

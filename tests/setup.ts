@@ -15,10 +15,13 @@ if (typeof URLPattern === "undefined") {
   global.URLPattern = class URLPattern {
     pathname: string;
     constructor({ pathname }: { pathname: string }) {
-      this.pathname = pathname.replace("{/}?", "");
+      // Preserve the original pattern string so `.pathname` matches the real
+      // URLPattern contract; normalize the optional trailing slash on demand.
+      this.pathname = pathname;
     }
     test(input: { pathname: string }) {
-      return input.pathname === this.pathname || input.pathname + "/" === this.pathname || input.pathname === this.pathname + "/";
+      const normalized = this.pathname.replace("{/}?", "");
+      return input.pathname === normalized || input.pathname + "/" === normalized || input.pathname === normalized + "/";
     }
     exec(input: { pathname: string }) {
       const match = this._match(input.pathname);
@@ -29,7 +32,7 @@ if (typeof URLPattern === "undefined") {
     }
     _match(path: string) {
        const pathParts = path.split("/").filter(Boolean);
-       const patternParts = this.pathname.split("/").filter(Boolean);
+       const patternParts = this.pathname.replace("{/}?", "").split("/").filter(Boolean);
        if (pathParts.length !== patternParts.length) return null;
        const groups: Record<string, string> = {};
        for (let i = 0; i < patternParts.length; i++) {
