@@ -3,7 +3,7 @@
 ## Directory Layout
 - **`.kiro/`**: Centralized workspace steering and configuration.
   - **`steering/`**: Persistent repository rules, architecture, and UI standards. Loaded automatically by Kiro on every interaction.
-  - **`specs/`**: Active or retained feature and bugfix specifications (Design → Requirements → Tasks).
+  - **`specs/`**: Active or retained feature and bugfix specifications. Feature specs follow Design → Requirements → Tasks; bugfix specs follow Bugfix → Design → Tasks (using `bugfix.md` instead of `requirements.md`).
   - **`skills/`**: Reusable agent skill packs with `SKILL.md` frontmatter, rules, and references.
   - **`settings/mcp.json`**: Workspace MCP configuration for repo-relevant tool integrations.
 - **`src/`**: React application source code.
@@ -32,7 +32,7 @@
 - **Steering files**: `kebab-case.md`.
 - **Spec directories**: `kebab-case/` under `.kiro/specs/`.
 - **Skill directories**: `kebab-case/` under `.kiro/skills/`, each with a `SKILL.md`.
-- **Migrations**: `NNNN_description.sql` (monotonically increasing).
+- **Migrations**: `NNNN_snake_case_description.sql` (monotonically increasing, lowercase with underscores).
 
 ## Tooling Policy
 - Do not vendor generic shadcn or design-system agent bundles into this repo.
