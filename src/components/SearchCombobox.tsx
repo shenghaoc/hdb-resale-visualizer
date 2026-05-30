@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -23,6 +23,7 @@ type SearchComboboxProps = {
   placeholder?: string;
   /** When false, skips suggest fetch (e.g. hidden duplicate header inputs on mobile). */
   suggestActive?: boolean;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
 function groupLabel(t: Translator, group: SuggestionGroup): string {
@@ -55,22 +56,20 @@ function suggestionKey(suggestion: Suggestion): string {
   }
 }
 
-export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(function SearchCombobox(
-  {
-    value,
-    onValueChange,
-    onSelectSuggestion,
-    t,
-    className,
-    inputClassName,
-    id,
-    "data-testid": dataTestId,
-    "aria-label": ariaLabel,
-    placeholder,
-    suggestActive = true,
-  },
+export function SearchCombobox({
+  value,
+  onValueChange,
+  onSelectSuggestion,
+  t,
+  className,
+  inputClassName,
+  id,
+  "data-testid": dataTestId,
+  "aria-label": ariaLabel,
+  placeholder,
+  suggestActive = true,
   ref,
-) {
+}: SearchComboboxProps) {
   const listboxId = useId();
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -81,6 +80,22 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
 
+  // When suggest is off or the query is too short there are no results to show.
+  // Clear any stale state during render (guarded so it only runs when something
+  // is actually set) instead of in an effect — React re-renders before paint,
+  // which avoids the extra commit/flicker a post-paint effect reset causes.
+  // See react.dev "You Might Not Need an Effect" → adjusting state on prop change.
+  const trimmedQuery = debouncedQuery.trim();
+  if (
+    (!suggestActive || trimmedQuery.length < 2) &&
+    (suggestions.length > 0 || open || activeIndex !== -1 || loading)
+  ) {
+    setSuggestions([]);
+    setOpen(false);
+    setActiveIndex(-1);
+    setLoading(false);
+  }
+
   useEffect(() => {
     return () => {
       if (blurTimeoutRef.current !== null) {
@@ -90,25 +105,15 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
   }, []);
 
   useEffect(() => {
-    if (!suggestActive) {
-      setSuggestions([]);
-      setOpen(false);
-      setActiveIndex(-1);
-      setLoading(false);
-      return;
-    }
-
     const trimmed = debouncedQuery.trim();
-    if (trimmed.length < 2) {
-      setSuggestions([]);
-      setOpen(false);
-      setActiveIndex(-1);
-      setLoading(false);
+    // Stale state is cleared during render above; here we only fetch.
+    if (!suggestActive || trimmed.length < 2) {
       return;
     }
 
     const sequence = ++fetchSequenceRef.current;
     const controller = new AbortController();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setLoading(true);
     void fetchSuggestions(trimmed, controller.signal)
       .then((next) => {
@@ -300,6 +305,4 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
       </PopoverContent>
     </Popover>
   );
-});
-
-SearchCombobox.displayName = "SearchCombobox";
+}
