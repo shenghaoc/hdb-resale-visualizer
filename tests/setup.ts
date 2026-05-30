@@ -20,8 +20,9 @@ if (typeof URLPattern === "undefined") {
       this.pathname = pathname;
     }
     test(input: { pathname: string }) {
-      const normalized = this.pathname.replace("{/}?", "");
-      return input.pathname === normalized || input.pathname + "/" === normalized || input.pathname === normalized + "/";
+      // Delegate to _match so parameterized patterns (e.g. /api/towns/:town)
+      // and the optional trailing slash are handled consistently.
+      return this._match(input.pathname) !== null;
     }
     exec(input: { pathname: string }) {
       const match = this._match(input.pathname);

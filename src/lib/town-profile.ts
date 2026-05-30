@@ -85,12 +85,12 @@ function rollupTownFlatTypeGroup(points: TownFlatTypeTrendPoint[]): TownFlatType
   if (!first) {
     throw new RangeError("rollupTownFlatTypeGroup: empty group");
   }
-  let latestMonth: string | null = null;
-  let latest: TownFlatTypeTrendPoint | null = null;
+  let latestMonth = first.month;
+  let latest = first;
   let volume = 0;
   for (const p of points) {
     volume += p.transactionCount;
-    if (!latestMonth || p.month > latestMonth) {
+    if (p.month > latestMonth) {
       latestMonth = p.month;
       latest = p;
     }
@@ -99,8 +99,8 @@ function rollupTownFlatTypeGroup(points: TownFlatTypeTrendPoint[]): TownFlatType
     flatType: first.flatType,
     windowTransactionVolume: volume,
     latestMonth,
-    latestMedianPrice: latest?.medianPrice ?? null,
-    latestMedianPricePerSqm: latest?.medianPricePerSqm ?? null,
+    latestMedianPrice: latest.medianPrice ?? null,
+    latestMedianPricePerSqm: latest.medianPricePerSqm ?? null,
   };
 }
 
