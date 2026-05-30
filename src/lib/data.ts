@@ -196,11 +196,13 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
 
   evictSuggestCacheIfNeeded();
   const controller = new AbortController();
+  let onAbort: (() => void) | undefined;
   if (signal) {
     if (signal.aborted) {
       return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
     }
-    signal.addEventListener("abort", () => controller.abort(signal.reason));
+    onAbort = () => controller.abort(signal.reason);
+    signal.addEventListener("abort", onAbort);
   }
   const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
   const request = fetchJson(
@@ -210,11 +212,15 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
   )
     .then((response) => {
       clearTimeout(timeout);
+      if (onAbort) signal!.removeEventListener("abort", onAbort);
       return response.suggestions;
     })
     .catch((error) => {
       clearTimeout(timeout);
-      suggestCache.delete(cacheKey);
+      if (onAbort) signal!.removeEventListener("abort", onAbort);
+      if (suggestCache.get(cacheKey) === request) {
+        suggestCache.delete(cacheKey);
+      }
       throw error;
     });
 

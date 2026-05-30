@@ -192,14 +192,14 @@ export function useFilterPipeline({
       scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
     ) => {
       const fuseMatchedKeys = scopeFilters.search
-        ? getFuseMatchedKeys(scopeBlocks, scopeFilters.search)
+        ? getFuseMatchedKeys(blocks, scopeFilters.search)
         : null;
       return scopeBlocks.filter((block) => {
         if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile, fuseMatchedKeys)) return false;
         return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
       });
     },
-    [affordabilityProfile],
+    [affordabilityProfile, blocks],
   );
 
   const stableFilters = useMemo(

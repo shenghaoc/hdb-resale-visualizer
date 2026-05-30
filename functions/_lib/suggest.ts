@@ -313,6 +313,10 @@ type MrtStationGeoJson = {
 
 let cachedStationNamesPromise: Promise<string[]> | null = null;
 
+export function resetStationNamesCacheForTests(): void {
+  cachedStationNamesPromise = null;
+}
+
 async function loadStationNames(db: SuggestDb): Promise<string[]> {
   if (cachedStationNamesPromise) {
     return cachedStationNamesPromise;
