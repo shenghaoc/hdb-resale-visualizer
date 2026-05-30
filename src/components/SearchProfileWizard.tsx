@@ -293,7 +293,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
-                              : "bg-muted/50 text-muted-foreground hover:bg-muted/70",
+                              : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
                           )}
                         >
                           {flatType}
@@ -346,7 +346,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border text-muted-foreground hover:bg-muted/60",
+                              : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
                           )}
                         >
                           {preset >= 1000000 ? `S$${(preset / 1000000).toFixed(1)}M` : `S$${Math.round(preset / 1000)}K`}
@@ -463,7 +463,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                 "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
                                 active
                                   ? "border-primary bg-primary text-primary-foreground"
-                                  : "border-border text-muted-foreground hover:bg-muted/60",
+                                  : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
                               )}
                             >
                               {t("searchProfile.minutesPreset", { value: preset })}
@@ -520,7 +520,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border text-muted-foreground hover:bg-muted/60",
+                              : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
                           )}
                         >
                           {t("searchProfile.yearsPresetShort", { value: preset })}
@@ -645,40 +645,40 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     {t("searchProfile.wizard.hint.review")}
                   </p>
                   <div className="mt-5 flex flex-wrap justify-center gap-2">
-                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {mainFlatType}
                     </div>
                     {maxBudget ? (
-                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
                       </div>
                     ) : null}
-                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {formatStationLabel(commuteAnchorMrt)}
                     </div>
-                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.minutesPreset", { value: Number(maxCommute) })}
                     </div>
-                    <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
                     {age ? (
-                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.age", { age: Number(age) })}
                       </div>
                     ) : null}
                     {coApplicantAge ? (
-                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
                       </div>
                     ) : null}
                     {cpfOABalance ? (
-                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.cpfOABalance", { amount: formatNumber(Number(cpfOABalance), 0, locale) })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
-                      <div className="rounded-full bg-muted/50 px-3 py-1.5 text-xs font-bold text-muted-foreground">
+                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.monthlyIncome", { amount: formatNumber(Number(monthlyIncome), 0, locale) })}
                       </div>
                     ) : null}
@@ -713,7 +713,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                 setDirection(-1);
                 setStep((prev) => Math.max(0, prev - 1));
               }}
-              className="rounded-[0.65rem] bg-muted/50 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground transition-colors hover:bg-muted/70"
+              className="rounded-[0.65rem] bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80"
             >
               {t("searchProfile.back")}
             </button>
