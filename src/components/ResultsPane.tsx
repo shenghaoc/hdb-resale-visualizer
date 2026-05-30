@@ -69,7 +69,7 @@ function LeaseBar({ years, color = "currentColor", height = 3 }: { years: number
   const pct = Math.max(0, Math.min(1, years / MAX_LEASE_DURATION)) * 100;
   return (
     <div
-      className="bg-black/10 dark:bg-white/10"
+      className="bg-foreground/10"
       style={{ position: "relative", height, borderRadius: height }}
     >
       <div
@@ -304,9 +304,9 @@ const BlockCard = memo(function BlockCard({
                   <span
                     className={cn(
                       "h-2 w-2 shrink-0 rounded-full",
-                      affordVerdict.status === "comfortable" && "bg-emerald-500",
-                      affordVerdict.status === "stretch" && "bg-amber-500",
-                      affordVerdict.status === "over" && "bg-red-500",
+                      affordVerdict.status === "comfortable" && "bg-success",
+                      affordVerdict.status === "stretch" && "bg-warning",
+                      affordVerdict.status === "over" && "bg-destructive",
                     )}
                     title={
                       affordVerdict.status === "comfortable"
@@ -430,19 +430,19 @@ const BlockCard = memo(function BlockCard({
               className={cn(
                 "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
                 affordVerdict.status === "comfortable" &&
-                  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                  "bg-success/10 text-success",
                 affordVerdict.status === "stretch" &&
-                  "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                  "bg-warning/10 text-warning",
                 affordVerdict.status === "over" &&
-                  "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+                  "bg-destructive/10 text-destructive",
               )}
             >
               <span
                 className={cn(
                   "h-1.5 w-1.5 rounded-full",
-                  affordVerdict.status === "comfortable" && "bg-emerald-500",
-                  affordVerdict.status === "stretch" && "bg-amber-500",
-                  affordVerdict.status === "over" && "bg-red-500",
+                  affordVerdict.status === "comfortable" && "bg-success",
+                  affordVerdict.status === "stretch" && "bg-warning",
+                  affordVerdict.status === "over" && "bg-destructive",
                 )}
               />
               {affordVerdict.status === "comfortable"
@@ -1006,7 +1006,7 @@ export function ResultsPane({
         </CardHeader>
         {searchTruncated ? (
           <p
-            className="shrink-0 border-b border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs font-semibold text-amber-950 dark:text-amber-100 sm:px-4"
+            className="shrink-0 border-b border-warning/30 bg-warning/10 px-3 py-2 text-xs font-semibold text-foreground sm:px-4"
             data-testid="search-truncated-notice"
             role="status"
           >

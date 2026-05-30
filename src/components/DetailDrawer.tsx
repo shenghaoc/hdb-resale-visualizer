@@ -701,9 +701,9 @@ export function DetailDrawer({
                       <span
                         className={cn(
                           "h-1.5 w-1.5 rounded-full",
-                          affordabilityVerdict.status === "comfortable" && "bg-emerald-500",
-                          affordabilityVerdict.status === "stretch" && "bg-amber-500",
-                          affordabilityVerdict.status === "over" && "bg-red-500",
+                          affordabilityVerdict.status === "comfortable" && "bg-success",
+                          affordabilityVerdict.status === "stretch" && "bg-warning",
+                          affordabilityVerdict.status === "over" && "bg-destructive",
                         )}
                       />
                       <span className="uppercase tracking-[0.08em] text-muted-foreground">
@@ -713,11 +713,11 @@ export function DetailDrawer({
                         className={cn(
                           "ml-auto rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
                           affordabilityVerdict.status === "comfortable" &&
-                            "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                            "bg-success/10 text-success",
                           affordabilityVerdict.status === "stretch" &&
-                            "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                            "bg-warning/10 text-warning",
                           affordabilityVerdict.status === "over" &&
-                            "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+                            "bg-destructive/10 text-destructive",
                         )}
                       >
                         {affordabilityVerdict.status === "comfortable"
@@ -836,13 +836,13 @@ export function DetailDrawer({
                   <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
                     <CardContent className="p-3">
                       {isComparisonLoading ? (
-                        <div className="space-y-2">
+                        <div className="flex flex-col gap-2">
                           {Array.from({ length: 3 }).map((_, i) => (
                             <div key={i} className="h-3 w-full animate-pulse rounded-full bg-muted/40" />
                           ))}
                         </div>
                       ) : explanationCodes.length > 0 ? (
-                        <ul className="space-y-1.5">
+                        <ul className="flex flex-col gap-1.5">
                           {explanationCodes.map((code) => (
                             <li key={code} className="text-xs text-muted-foreground leading-relaxed">
                               • {t(`detail.why.${code}`)}
@@ -1127,7 +1127,7 @@ export function DetailDrawer({
                       {recentTransactionOutliers.size > 0 && (
                         <Badge
                           variant="outline"
-                          className="h-5 gap-1 border-amber-500/40 bg-amber-500/10 text-[0.6rem] font-bold text-amber-700 dark:text-amber-300"
+                          className="h-5 gap-1 border-warning/40 bg-warning/10 text-[0.6rem] font-bold text-warning"
                         >
                           <AlertTriangle data-icon className="size-3" aria-hidden="true" />
                           {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
@@ -1171,7 +1171,7 @@ export function DetailDrawer({
                                 {outlier?.direction === "high" && (
                                   <Badge
                                     variant="outline"
-                                    className="mt-1 h-5 w-fit border-amber-500/40 bg-amber-500/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-amber-700 dark:text-amber-300"
+                                    className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-warning"
                                   >
                                     {t("detail.outlier.high")}
                                   </Badge>
@@ -1179,7 +1179,7 @@ export function DetailDrawer({
                                 {outlier?.direction === "low" && (
                                   <Badge
                                     variant="outline"
-                                    className="mt-1 h-5 w-fit border-cyan-500/40 bg-cyan-500/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-cyan-700 dark:text-cyan-300"
+                                    className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-primary"
                                   >
                                     {t("detail.outlier.low")}
                                   </Badge>

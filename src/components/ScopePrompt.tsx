@@ -37,7 +37,7 @@ export function ScopePrompt({
     return (
       <div
         className={cn(
-          "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border border-border/20 bg-background/92 p-3 text-sm shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:border-primary/10 dark:bg-card/92 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_16px_48px_rgba(4,12,24,0.82)]",
+          "pointer-events-auto absolute z-25 max-w-[22rem] rounded-xl border bg-popover/95 p-3 text-sm shadow-lg backdrop-blur-[20px]",
           isDesktop ? DESKTOP_POSITION : MOBILE_PROMPT_POSITION,
         )}
       >
@@ -85,7 +85,7 @@ export function ScopePrompt({
       <div
         role="status"
         className={cn(
-          "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-background/95 px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-[0_8px_28px_rgba(23,28,31,0.10)] backdrop-blur-[20px] dark:bg-card/95",
+          "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-popover/95 px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-lg backdrop-blur-[20px]",
           isDesktop ? `${DESKTOP_POSITION} max-w-[22rem]` : MOBILE_ERROR_POSITION,
         )}
       >

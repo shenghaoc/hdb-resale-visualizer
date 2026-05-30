@@ -167,7 +167,7 @@ export function MapView({
           className="flex h-full min-h-[280px] items-center justify-center px-6 text-center"
           role="status"
         >
-          <div className="max-w-sm space-y-2">
+          <div className="flex max-w-sm flex-col gap-2">
             <p className="text-sm font-semibold text-foreground">{t("map.unavailableTitle")}</p>
             <p className="text-xs leading-5 text-muted-foreground">
               {t("map.unavailableDescription")}

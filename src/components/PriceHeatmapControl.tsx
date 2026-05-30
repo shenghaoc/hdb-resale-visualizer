@@ -49,7 +49,7 @@ export function PriceHeatmapControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border border-border/20 bg-background/90 p-2 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]",
+        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover/90 p-2 backdrop-blur-[20px] shadow-lg",
         className,
       )}
       style={style}
@@ -82,7 +82,7 @@ export function PriceHeatmapControl({
                 !hasScope && "cursor-not-allowed opacity-50",
                 hasScope && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 isEnabled && hasScope
-                  ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.3)] dark:bg-orange-400 dark:shadow-[0_0_12px_rgba(251,146,60,0.2)]"
+                  ? "bg-orange-500"
                   : "bg-muted-foreground/30",
               )}
             >

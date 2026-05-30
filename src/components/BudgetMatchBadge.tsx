@@ -33,17 +33,11 @@ export function BudgetMatchBadge({
         "inline-flex items-center gap-1 rounded text-[0.58rem] font-bold uppercase",
         isCompact ? "px-0 py-0" : "px-1.5 py-0.5",
         signal.status === "within" &&
-          (isCompact
-            ? "text-emerald-700 dark:text-emerald-400"
-            : "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"),
+          (isCompact ? "text-success" : "bg-success/10 text-success"),
         (signal.status === "above-max" || signal.status === "below-min") &&
-          (isCompact
-            ? "text-rose-700 dark:text-rose-400"
-            : "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400"),
+          (isCompact ? "text-destructive" : "bg-destructive/10 text-destructive"),
         (signal.status === "near-above" || signal.status === "near-below") &&
-          (isCompact
-            ? "text-amber-700 dark:text-amber-400"
-            : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"),
+          (isCompact ? "text-warning" : "bg-warning/10 text-warning"),
         className,
       )}
     >

@@ -27,7 +27,7 @@ export function PriceLegend({ isDesktop, isVisible, mode = "price", t, className
       role="img"
       aria-label={mode === "perSqm" ? t("heatmap.ariaLabelSqm") : t("map.legend.ariaLabel")}
       className={cn(
-        "pointer-events-none absolute z-25 rounded-lg border border-border/20 bg-background/90 p-2 backdrop-blur-[20px] shadow-[0_4px_16px_rgba(23,28,31,0.06)] dark:border-primary/10 dark:bg-card/90 dark:shadow-[0_0_0_1px_rgba(34,211,238,0.07),0_4px_20px_rgba(4,12,24,0.7)]",
+        "pointer-events-none absolute z-25 rounded-lg border bg-popover/90 p-2 backdrop-blur-[20px] shadow-lg",
         className
       )}
       style={{

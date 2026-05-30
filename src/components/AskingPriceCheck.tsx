@@ -58,9 +58,9 @@ function toneStyles(tone: VerdictTheme["tone"]) {
       };
     case "warning":
       return {
-        bg: "bg-amber-500/10",
-        border: "border-amber-500/30",
-        text: "text-amber-600 dark:text-amber-400",
+        bg: "bg-warning/10",
+        border: "border-warning/30",
+        text: "text-warning",
       };
     case "destructive":
       return {
@@ -334,7 +334,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
         </div>
       ) : (
         <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-          <AlertTriangle data-icon className="size-4 shrink-0 text-amber-500" aria-hidden="true" />
+          <AlertTriangle data-icon className="size-4 shrink-0 text-warning" aria-hidden="true" />
           <span>{t("askingCheck.noComparables")}</span>
         </div>
       )}

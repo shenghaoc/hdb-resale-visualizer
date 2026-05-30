@@ -64,11 +64,11 @@ const YOY_FLAT_THRESHOLD_PCT = 0.05;
 
 const TONE_BADGE_CLASS: Record<DeltaTone, string> = {
   better:
-    "rounded-full bg-emerald-100 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+    "rounded-full bg-success/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-success",
   worse:
-    "rounded-full bg-red-100 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-red-700 dark:bg-red-900/30 dark:text-red-400",
+    "rounded-full bg-destructive/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-destructive",
   neutral:
-    "rounded-full bg-amber-100 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+    "rounded-full bg-warning/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-warning",
 };
 
 function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
@@ -162,9 +162,9 @@ function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   const isDown = pct <= -YOY_FLAT_THRESHOLD_PCT;
   const Icon = isUp ? ArrowUpRight : isDown ? ArrowDownRight : ArrowRight;
   const color = isUp
-    ? "text-red-600 dark:text-red-400"
+    ? "text-destructive"
     : isDown
-      ? "text-emerald-600 dark:text-emerald-400"
+      ? "text-success"
       : "text-muted-foreground";
   const sign = pct > 0 ? "+" : pct < 0 ? "−" : "";
   return (
