@@ -221,7 +221,7 @@ function buildMrtSuggestions(stationNames: string[], normalizedQuery: string): S
 async function queryDistinctTowns(db: SuggestDb, prefixPattern: string, containsPattern: string) {
   const prefix = await db
     .prepare(
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(prefixPattern)
     .all();
@@ -231,7 +231,7 @@ async function queryDistinctTowns(db: SuggestDb, prefixPattern: string, contains
   }
   const substring = await db
     .prepare(
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' COLLATE NOCASE AND town NOT LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' AND town NOT LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(containsPattern, prefixPattern)
     .all();
@@ -241,7 +241,7 @@ async function queryDistinctTowns(db: SuggestDb, prefixPattern: string, contains
 async function queryDistinctStreets(db: SuggestDb, prefixPattern: string, containsPattern: string) {
   const prefix = await db
     .prepare(
-      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(prefixPattern)
     .all();
@@ -251,7 +251,7 @@ async function queryDistinctStreets(db: SuggestDb, prefixPattern: string, contai
   }
   const substring = await db
     .prepare(
-      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' COLLATE NOCASE AND street_name NOT LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' AND street_name NOT LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(containsPattern, prefixPattern)
     .all();
@@ -261,7 +261,7 @@ async function queryDistinctStreets(db: SuggestDb, prefixPattern: string, contai
 async function queryBlocks(db: SuggestDb, prefixPattern: string, containsPattern: string) {
   const prefix = await db
     .prepare(
-      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) COLLATE NOCASE LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(prefixPattern)
     .all();
@@ -275,7 +275,7 @@ async function queryBlocks(db: SuggestDb, prefixPattern: string, containsPattern
   }
   const substring = await db
     .prepare(
-      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) LIKE ? ESCAPE '\\' COLLATE NOCASE AND (block || ' ' || street_name) NOT LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) COLLATE NOCASE LIKE ? ESCAPE '\\' AND (block || ' ' || street_name) COLLATE NOCASE NOT LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(containsPattern, prefixPattern)
     .all();
@@ -288,7 +288,7 @@ async function queryBlocks(db: SuggestDb, prefixPattern: string, containsPattern
 async function queryPostalCodes(db: SuggestDb, prefixPattern: string) {
   const result = await db
     .prepare(
-      "SELECT DISTINCT postal_code FROM blocks WHERE postal_code IS NOT NULL AND postal_code LIKE ? ESCAPE '\\' COLLATE NOCASE LIMIT 20",
+      "SELECT DISTINCT postal_code FROM blocks WHERE postal_code IS NOT NULL AND postal_code LIKE ? ESCAPE '\\' LIMIT 20",
     )
     .bind(prefixPattern)
     .all();

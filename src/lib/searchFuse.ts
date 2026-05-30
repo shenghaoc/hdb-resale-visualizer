@@ -17,12 +17,12 @@ const FUSE_OPTIONS = {
 };
 
 let fuseIndex: Fuse<BlockSummary> | null = null;
-let fuseIndexBlockCount = -1;
+let lastBlocks: readonly BlockSummary[] | null = null;
 
 function ensureFuseIndex(blocks: readonly BlockSummary[]): Fuse<BlockSummary> {
-  if (!fuseIndex || fuseIndexBlockCount !== blocks.length) {
+  if (!fuseIndex || lastBlocks !== blocks) {
     fuseIndex = new Fuse(blocks, FUSE_OPTIONS);
-    fuseIndexBlockCount = blocks.length;
+    lastBlocks = blocks;
   }
   return fuseIndex;
 }
@@ -56,5 +56,5 @@ export function getFuseMatchedKeys(
 
 export function resetSearchFuseForTests(): void {
   fuseIndex = null;
-  fuseIndexBlockCount = -1;
+  lastBlocks = null;
 }
