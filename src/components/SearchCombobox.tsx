@@ -95,11 +95,12 @@ export function SearchCombobox({
     // stale async results synchronously so the listbox never shows outdated
     // matches; this is the cancellation path of the fetch synchronization below.
     if (!suggestActive || trimmed.length < 2) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale fetch results
+      /* eslint-disable react-hooks/set-state-in-effect -- clearing stale fetch results */
       setSuggestions([]);
       setOpen(false);
       setActiveIndex(-1);
       setLoading(false);
+      /* eslint-enable react-hooks/set-state-in-effect */
       return;
     }
 
