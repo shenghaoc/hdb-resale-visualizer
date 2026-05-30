@@ -13,7 +13,7 @@ const FUSE_OPTIONS = {
   ignoreLocation: true,
   findAllMatches: false,
   minMatchCharLength: 2,
-  shouldSort: false,
+  shouldSort: true,
 };
 
 let fuseIndex: Fuse<BlockSummary> | null = null;

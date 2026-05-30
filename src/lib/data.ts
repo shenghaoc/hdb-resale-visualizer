@@ -186,44 +186,52 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
     return Promise.resolve([]);
   }
 
-  const cached = suggestCache.get(cacheKey);
-  if (cached) {
+  let shared = suggestCache.get(cacheKey);
+  if (!shared) {
+    evictSuggestCacheIfNeeded();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
+    shared = fetchJson(
+      `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
+      suggestResponseSchema,
+      controller.signal,
+    )
+      .then((response) => {
+        clearTimeout(timeout);
+        return response.suggestions;
+      })
+      .catch((error) => {
+        clearTimeout(timeout);
+        if (suggestCache.get(cacheKey) === shared) {
+          suggestCache.delete(cacheKey);
+        }
+        throw error;
+      });
+    suggestCache.set(cacheKey, shared);
+  } else {
     // Re-insert to move to end for LRU order (Map preserves insertion sequence)
     suggestCache.delete(cacheKey);
-    suggestCache.set(cacheKey, cached);
-    return cached;
+    suggestCache.set(cacheKey, shared);
   }
 
-  evictSuggestCacheIfNeeded();
-  const controller = new AbortController();
-  let onAbort: (() => void) | undefined;
-  if (signal) {
-    if (signal.aborted) {
-      return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
-    }
-    onAbort = () => controller.abort(signal.reason);
+  if (!signal) {
+    return shared;
+  }
+
+  if (signal.aborted) {
+    return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+  }
+
+  // Wrap so that aborting this caller's signal doesn't cancel the shared fetch.
+  return new Promise((resolve, reject) => {
+    const onAbort = () => {
+      signal.removeEventListener("abort", onAbort);
+      reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+    };
     signal.addEventListener("abort", onAbort);
-  }
-  const timeout = setTimeout(() => controller.abort(), SUGGEST_TIMEOUT_MS);
-  const request = fetchJson(
-    `${API_BASE_PATH}/suggest?q=${encodeURIComponent(trimmed)}`,
-    suggestResponseSchema,
-    controller.signal,
-  )
-    .then((response) => {
-      clearTimeout(timeout);
-      if (onAbort) signal!.removeEventListener("abort", onAbort);
-      return response.suggestions;
-    })
-    .catch((error) => {
-      clearTimeout(timeout);
-      if (onAbort) signal!.removeEventListener("abort", onAbort);
-      if (suggestCache.get(cacheKey) === request) {
-        suggestCache.delete(cacheKey);
-      }
-      throw error;
-    });
-
-  suggestCache.set(cacheKey, request);
-  return request;
+    shared!.then(
+      (res) => { signal.removeEventListener("abort", onAbort); resolve(res); },
+      (err) => { signal.removeEventListener("abort", onAbort); reject(err as Error); },
+    );
+  });
 }

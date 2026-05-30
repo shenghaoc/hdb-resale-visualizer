@@ -250,6 +250,11 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
         className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-0 rounded-[0.75rem] border border-border/70 bg-popover/98 p-0 shadow-[0_12px_40px_rgba(23,28,31,0.12)] backdrop-blur-xl dark:border-primary/15"
         onOpenAutoFocus={(event) => event.preventDefault()}
       >
+        {loading && suggestions.length === 0 ? (
+          <p className="px-3 py-2 text-xs text-muted-foreground" role="status">
+            {t("filters.suggestLoading")}
+          </p>
+        ) : (
         <div
           id={listboxId}
           role="listbox"
@@ -257,11 +262,6 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
           className="max-h-64 overflow-y-auto py-1"
           data-testid="search-suggest-listbox"
         >
-          {loading && suggestions.length === 0 ? (
-            <p className="px-3 py-2 text-xs text-muted-foreground" role="status">
-              {t("filters.suggestLoading")}
-            </p>
-          ) : null}
           {grouped.map((section) => (
             <div key={section.group} role="presentation">
               <p className="px-3 pb-1 pt-2 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
@@ -296,6 +296,7 @@ export const SearchCombobox = forwardRef<HTMLInputElement, SearchComboboxProps>(
             </div>
           ))}
         </div>
+        )}
       </PopoverContent>
     </Popover>
   );
