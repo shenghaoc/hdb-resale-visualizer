@@ -31,18 +31,18 @@ if (typeof URLPattern === "undefined") {
       return null;
     }
     _match(path: string) {
-       const pathParts = path.split("/").filter(Boolean);
-       const patternParts = this.pathname.replace("{/}?", "").split("/").filter(Boolean);
-       if (pathParts.length !== patternParts.length) return null;
-       const groups: Record<string, string> = {};
-       for (let i = 0; i < patternParts.length; i++) {
-           if (patternParts[i].startsWith(":")) {
-               groups[patternParts[i].slice(1)] = pathParts[i];
-           } else if (patternParts[i] !== pathParts[i]) {
-               return null;
-           }
-       }
-       return groups;
+      const pathParts = path.split("/").filter(Boolean);
+      const patternParts = this.pathname.replace("{/}?", "").split("/").filter(Boolean);
+      if (pathParts.length !== patternParts.length) return null;
+      const groups: Record<string, string> = {};
+      for (let i = 0; i < patternParts.length; i++) {
+        if (patternParts[i].startsWith(":")) {
+          groups[patternParts[i].slice(1)] = pathParts[i];
+        } else if (patternParts[i] !== pathParts[i]) {
+          return null;
+        }
+      }
+      return groups;
     }
   };
 }
