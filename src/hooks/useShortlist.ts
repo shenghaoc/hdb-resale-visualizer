@@ -199,14 +199,17 @@ export function useShortlist() {
         const current = readPendingShortlistPush();
         if (!current || JSON.stringify(current.items) === flushedSnapshot) {
           clearPendingShortlistPush();
+        } else {
+          // Newer data was enqueued during the push — re-flush once .finally()
+          // resets flushInFlightRef (setTimeout defers to the next macrotask).
+          setTimeout(flushPendingPush, 0);
         }
         if (pending.syncCode === null) {
           safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
           setSyncCode(result.syncCode);
           readyRef.current = true;
         }
-        const snapshot = JSON.stringify(pending.items);
-        applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
+        applyPushResult(itemsRef, setItems, lastPushedRef, flushedSnapshot, result.items);
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
