@@ -16,6 +16,7 @@ import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { buildTownRecommendations } from "@/lib/town-recommendations";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { MapLocaleControl } from "@/components/MapLocaleControl";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
@@ -273,8 +274,15 @@ function App() {
   );
 
   const mapContent = (
-    <Suspense fallback={<MapSkeleton />}>
-      <MapView
+    <ErrorBoundary
+      fill
+      className="size-full"
+      reloadOnRecovery={false}
+      fallbackText={t("error.mapFallback")}
+      actionText={t("error.retry")}
+    >
+      <Suspense fallback={<MapSkeleton />}>
+        <MapView
         blocks={pipeline.mapFilteredBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={filters.selectedAddressKey}
@@ -303,14 +311,21 @@ function App() {
         onGeolocate={handleGeolocate}
         locale={locale}
         t={t}
-      />
-    </Suspense>
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 
   const selectedDetailContent =
     detailVisible || detailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
-        <DetailDrawer
+      <ErrorBoundary
+        className="min-h-0"
+        reloadOnRecovery={false}
+        fallbackText={t("error.detailFallback")}
+        actionText={t("error.retry")}
+      >
+        <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
+          <DetailDrawer
           detail={detail}
           comparison={comparison}
           selectedBlock={selectedBlock}
@@ -326,8 +341,9 @@ function App() {
             if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
           }}
           onSelectBlock={handleSelectAddress}
-        />
-      </Suspense>
+          />
+        </Suspense>
+      </ErrorBoundary>
     ) : null;
 
   const resultsPaneContent = (
@@ -335,8 +351,14 @@ function App() {
       hidden={!panel.resultsVisible}
       className={panel.resultsVisible ? "flex min-h-0 flex-1 flex-col" : undefined}
     >
-      <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
-        <ResultsPane
+      <ErrorBoundary
+        className="min-h-0 flex-1"
+        reloadOnRecovery={false}
+        fallbackText={t("error.resultsFallback")}
+        actionText={t("error.retry")}
+      >
+        <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
+          <ResultsPane
           blocks={pipeline.filteredBlocks}
           hasResultScope={pipeline.hasResultScope}
           onSelect={handleSelectAddress}
@@ -363,26 +385,34 @@ function App() {
           townRecommendationsLoading={townRecommendationsLoading}
           onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
           searchTruncated={pipeline.searchTruncated}
-        />
-      </Suspense>
+          />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 
   const savedContent = panel.savedVisible ? (
-    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
-      <ShortlistDrawer
-        isOpen={panel.isShortlistOpen}
-        onSelectAddress={handleSelectAddress}
-        onRemove={(addressKey) => shortlist.toggle(addressKey)}
-        onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
-        onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-        rows={shortlistRows}
-        remainingLeaseMin={filters.remainingLeaseMin}
-        budgetMin={filters.budgetMin}
-        budgetMax={filters.budgetMax}
-        sync={shortlist.sync}
-      />
-    </Suspense>
+    <ErrorBoundary
+      className="min-h-0 flex-1"
+      reloadOnRecovery={false}
+      fallbackText={t("error.shortlistFallback")}
+      actionText={t("error.retry")}
+    >
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
+        <ShortlistDrawer
+          isOpen={panel.isShortlistOpen}
+          onSelectAddress={handleSelectAddress}
+          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
+          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+          rows={shortlistRows}
+          remainingLeaseMin={filters.remainingLeaseMin}
+          budgetMin={filters.budgetMin}
+          budgetMax={filters.budgetMax}
+          sync={shortlist.sync}
+        />
+      </Suspense>
+    </ErrorBoundary>
   ) : null;
 
   // ── Derived layout flags ─────────────────────────────────────────────────
@@ -548,4 +578,16 @@ function App() {
   );
 }
 
-export default App;
+function AppWithErrorBoundary() {
+  // Root boundary: a crash here means the whole app (including the I18nProvider)
+  // is unusable, so recovery falls back to a full reload and the fallback uses
+  // the default English copy — translations aren't reachable once the provider
+  // tree has failed.
+  return (
+    <ErrorBoundary fill className="min-h-screen">
+      <App />
+    </ErrorBoundary>
+  );
+}
+
+export default AppWithErrorBoundary;

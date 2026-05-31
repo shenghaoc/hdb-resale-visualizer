@@ -1,4 +1,5 @@
 import { type CSSProperties, lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { flushSync } from "react-dom";
 import {
   AlertTriangle,
@@ -1025,21 +1026,29 @@ export function DetailDrawer({
                     <CardContent className="p-0">
                       <div className="flex h-[280px] items-center justify-center pt-4">
                         {detail ? (
-                          <Suspense fallback={
-                            <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                              <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
-                              <p className="text-xs font-medium tracking-widest uppercase">
-                                {t("detail.calculatingTrends")}
-                              </p>
-                            </div>
-                          }>
-                            <TrendChart
-                              points={trendPoints}
-                              t={t}
-                              peakMonth={peakMonthInView}
-                              height={260}
-                            />
-                          </Suspense>
+                          <ErrorBoundary
+                            fill
+                            className="h-full w-full"
+                            reloadOnRecovery={false}
+                            fallbackText={t("error.trendFallback")}
+                            actionText={t("error.retry")}
+                          >
+                            <Suspense fallback={
+                              <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
+                                <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
+                                <p className="text-xs font-medium tracking-widest uppercase">
+                                  {t("detail.calculatingTrends")}
+                                </p>
+                              </div>
+                            }>
+                              <TrendChart
+                                points={trendPoints}
+                                t={t}
+                                peakMonth={peakMonthInView}
+                                height={260}
+                              />
+                            </Suspense>
+                          </ErrorBoundary>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
                             <TrendingUp data-icon className="size-8 stroke-[1px]" aria-hidden="true" />
@@ -1220,15 +1229,21 @@ export function DetailDrawer({
               {/* ── NEGOTIATE ── */}
               <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
                 {detail ? (
-                  <Suspense fallback={
-                    <div className="flex flex-col gap-3 py-12">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))}
-                    </div>
-                  }>
-                    <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
-                  </Suspense>
+                  <ErrorBoundary
+                    reloadOnRecovery={false}
+                    fallbackText={t("error.askingPriceFallback")}
+                    actionText={t("error.retry")}
+                  >
+                    <Suspense fallback={
+                      <div className="flex flex-col gap-3 py-12">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                          <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                        ))}
+                      </div>
+                    }>
+                      <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
+                    </Suspense>
+                  </ErrorBoundary>
                 ) : (
                   <div className="flex flex-col gap-3 py-12">
                     {Array.from({ length: 3 }).map((_, i) => (
