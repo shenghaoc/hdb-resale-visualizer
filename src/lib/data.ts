@@ -67,9 +67,28 @@ function createArtifactContractError(path: string, reason: string) {
 
 let fetchRetryBaseDelayMs = DEFAULT_FETCH_RETRY_BASE_DELAY_MS;
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
+function abortReason(signal: AbortSignal): Error {
+  return signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError");
+}
+
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(abortReason(signal));
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+
+    function onAbort(): void {
+      clearTimeout(timer);
+      reject(abortReason(signal!));
+    }
+
+    signal?.addEventListener("abort", onAbort, { once: true });
   });
 }
 
@@ -138,7 +157,9 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(
       }
 
       if (attempt < MAX_FETCH_ATTEMPTS - 1) {
-        await sleep(fetchRetryBaseDelayMs * 2 ** attempt);
+        // Pass the signal so an abort during backoff rejects immediately
+        // instead of waiting out the full delay before the next attempt aborts.
+        await sleep(fetchRetryBaseDelayMs * 2 ** attempt, signal);
       }
     }
   }
