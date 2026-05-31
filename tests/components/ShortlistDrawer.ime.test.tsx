@@ -10,6 +10,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
+import { DEFAULT_FILTERS } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
@@ -82,7 +83,9 @@ function renderDrawer(onUpdate = vi.fn()) {
   const result = render(
     <I18nProvider>
       <ShortlistDrawer
-        isOpen={true} remainingLeaseMin={null}
+        isOpen={true}
+        filters={DEFAULT_FILTERS}
+        remainingLeaseMin={null}
         rows={[mockRow]}
         onToggleOpen={() => {}}
         onRemove={() => {}}

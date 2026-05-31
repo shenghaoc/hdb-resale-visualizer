@@ -61,18 +61,22 @@ export function buildFilterShareUrl(filters: FilterState, baseUrl: string): stri
 }
 
 /**
- * Builds a shortlist share URL by appending the encoded shortlist param
- * to the current URL, preserving any existing filter params.
+ * Builds a shortlist share URL with the encoded shortlist and the current
+ * filter/scope state so recipients restore the same town, search, and filters.
  */
 export function buildShortlistShareUrl(
   encodedShortlist: string,
-  currentSearch: string,
+  filters: FilterState,
   origin: string,
   pathname: string,
 ): string {
-  const params = new URLSearchParams(currentSearch);
+  const filterSearch = serializeFilters(filters);
+  const params = new URLSearchParams(
+    filterSearch.startsWith("?") ? filterSearch.slice(1) : filterSearch,
+  );
   params.set("shortlist", encodedShortlist);
-  return `${origin}${pathname}?${params.toString()}`;
+  const query = params.toString();
+  return query ? `${origin}${pathname}?${query}` : `${origin}${pathname}`;
 }
 
 /**

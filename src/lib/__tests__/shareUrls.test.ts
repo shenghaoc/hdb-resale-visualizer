@@ -113,19 +113,30 @@ describe("buildFilterShareUrl", () => {
 });
 
 describe("buildShortlistShareUrl", () => {
-  it("appends encoded shortlist to existing params", () => {
-    const url = buildShortlistShareUrl("abc123", "?town=BEDOK", "https://example.com", "/");
-    expect(url).toBe("https://example.com/?town=BEDOK&shortlist=abc123");
+  it("appends encoded shortlist with filter scope", () => {
+    const filters = makeFilters({ town: "BEDOK", budgetMin: 300000 });
+    const url = buildShortlistShareUrl("abc123", filters, "https://example.com", "/");
+    expect(url).toContain("town=BEDOK");
+    expect(url).toContain("budgetMin=300000");
+    expect(url).toContain("shortlist=abc123");
   });
 
-  it("works with empty existing search", () => {
-    const url = buildShortlistShareUrl("abc123", "", "https://example.com", "/");
+  it("works when only shortlist param is set", () => {
+    const url = buildShortlistShareUrl("abc123", makeFilters(), "https://example.com", "/");
     expect(url).toBe("https://example.com/?shortlist=abc123");
   });
 
   it("preserves pathname in URL", () => {
-    const url = buildShortlistShareUrl("abc123", "", "https://example.com", "/app/");
+    const url = buildShortlistShareUrl("abc123", makeFilters(), "https://example.com", "/app/");
     expect(url).toBe("https://example.com/app/?shortlist=abc123");
+  });
+
+  it("includes search scope for geographic filters", () => {
+    const filters = makeFilters({ search: "near MRT Bedok", town: "BEDOK" });
+    const url = buildShortlistShareUrl("abc123", filters, "https://example.com", "/");
+    expect(url).toContain("search=");
+    expect(url).toContain("town=BEDOK");
+    expect(url).toContain("shortlist=abc123");
   });
 });
 

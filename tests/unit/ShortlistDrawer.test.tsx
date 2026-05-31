@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
-import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
+import { DEFAULT_FILTERS, MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
@@ -100,6 +100,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
@@ -138,6 +139,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[rowWithoutComparison]}
@@ -164,6 +166,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[]}
@@ -185,6 +188,7 @@ describe("ShortlistDrawer", () => {
     render(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
@@ -216,6 +220,7 @@ describe("ShortlistDrawer", () => {
               item: { ...mockRow.item, targetPrice: mockRow.block.medianPrice },
             },
           ]}
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
@@ -237,6 +242,7 @@ describe("ShortlistDrawer", () => {
         <ShortlistDrawer
           isOpen={true}
           rows={[mockRow, mockRowTwo]}
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
@@ -282,6 +288,7 @@ describe("ShortlistDrawer", () => {
     const { rerender } = render(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[]}
@@ -296,6 +303,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}
@@ -313,6 +321,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow, mockRowTwo]}
@@ -329,6 +338,7 @@ describe("ShortlistDrawer", () => {
     rerender(
       <I18nProvider>
         <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
           remainingLeaseMin={null}
           isOpen={true}
           rows={[mockRow]}

@@ -148,6 +148,63 @@ describe("ShareButton", () => {
     });
   });
 
+  it("downloads CSV when export button is clicked", async () => {
+    const click = vi.fn();
+    const createObjectURL = vi.fn(() => "blob:test");
+    const revokeObjectURL = vi.fn();
+    vi.spyOn(URL, "createObjectURL").mockImplementation(createObjectURL);
+    vi.spyOn(URL, "revokeObjectURL").mockImplementation(revokeObjectURL);
+    vi.spyOn(document, "createElement").mockImplementation((tagName: string) => {
+      const element = document.createElementNS("http://www.w3.org/1999/xhtml", tagName);
+      if (tagName === "a") {
+        element.click = click;
+      }
+      return element as HTMLAnchorElement;
+    });
+
+    render(
+      <ShareButton
+        {...DEFAULT_PROPS}
+        csvExport={{
+          filename: "test.csv",
+          getContent: () => '"Notes"\n"\'=1+1"',
+        }}
+        exportAriaLabel="Export CSV"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Export CSV" }));
+
+    expect(click).toHaveBeenCalled();
+    expect(createObjectURL).toHaveBeenCalled();
+    expect(revokeObjectURL).toHaveBeenCalled();
+  });
+
+  it("invokes onShareBlocked instead of sharing when shareDisabled is true", async () => {
+    const mockShare = vi.fn().mockResolvedValue(undefined);
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "share", {
+      value: mockShare,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      writable: true,
+      configurable: true,
+    });
+    const onShareBlocked = vi.fn();
+
+    render(<ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} />);
+    fireEvent.click(screen.getByRole("button", { name: "Share this block" }));
+
+    await waitFor(() => {
+      expect(onShareBlocked).toHaveBeenCalledTimes(1);
+    });
+    expect(mockShare).not.toHaveBeenCalled();
+    expect(writeText).not.toHaveBeenCalled();
+  });
+
   it("accepts optional text prop for Web Share", async () => {
     const mockShare = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, "share", {
