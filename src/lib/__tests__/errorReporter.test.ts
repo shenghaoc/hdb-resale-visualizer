@@ -73,7 +73,7 @@ describe("errorReporter", () => {
     window.dispatchEvent(
       Object.assign(new Event("unhandledrejection"), {
         reason: new Error("Promise rejected"),
-      }) as PromiseRejectionEvent,
+      }),
     );
 
     expect(sink).toHaveBeenCalledTimes(2);
