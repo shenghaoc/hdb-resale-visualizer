@@ -87,6 +87,28 @@ describe("errorReporter", () => {
     });
   });
 
+  it("appends filename:lineno:colno when an error event has no error object", () => {
+    const sink = vi.fn<(report: ErrorReport) => void>();
+    setErrorSink(sink);
+    initErrorReporting();
+
+    // e.g. a failed third-party <script> load: filename present, error null.
+    window.dispatchEvent(
+      new ErrorEvent("error", {
+        message: "Script error",
+        filename: "https://cdn.example.com/widget.js",
+        lineno: 5,
+        colno: 9,
+      }),
+    );
+
+    expect(sink).toHaveBeenCalledTimes(1);
+    expect(sink.mock.calls[0][0]).toMatchObject({
+      kind: "uncaught",
+      message: "Script error (https://cdn.example.com/widget.js:5:9)",
+    });
+  });
+
   it("does not register duplicate listeners when init is called twice", () => {
     const sink = vi.fn<(report: ErrorReport) => void>();
     setErrorSink(sink);

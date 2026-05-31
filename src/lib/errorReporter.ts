@@ -49,7 +49,9 @@ function normalizeError(error: unknown): { message: string; stack?: string } {
     return { message: error };
   }
   try {
-    return { message: JSON.stringify(error) };
+    // Cap serialized unknown errors so a large thrown object (e.g. an API
+    // response) can't inflate the sink payload.
+    return { message: JSON.stringify(error).slice(0, 500) };
   } catch {
     return { message: "Unknown error" };
   }
@@ -104,6 +106,10 @@ export function initErrorReporting(): void {
 }
 
 export function resetErrorReportingForTests(): void {
+  if (typeof window !== "undefined") {
+    window.removeEventListener("error", handleErrorEvent);
+    window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+  }
   initialized = false;
   prodSink = null;
 }

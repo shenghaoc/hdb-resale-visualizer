@@ -30,9 +30,19 @@ function privacySafeRoute(): string {
   return window.location.pathname;
 }
 
+const WEB_VITAL_NAMES = new Set<WebVitalName>(["LCP", "INP", "CLS"]);
+
+function isWebVitalName(name: Metric["name"]): name is WebVitalName {
+  return WEB_VITAL_NAMES.has(name as WebVitalName);
+}
+
 function dispatchVital(metric: Metric): void {
+  // Only the three metrics registered below are forwarded; the runtime guard
+  // also narrows metric.name to WebVitalName, removing the need for a cast.
+  if (!isWebVitalName(metric.name)) return;
+
   const report: WebVitalReport = {
-    name: metric.name as WebVitalName,
+    name: metric.name,
     value: metric.value,
     rating: metric.rating,
     route: privacySafeRoute(),
