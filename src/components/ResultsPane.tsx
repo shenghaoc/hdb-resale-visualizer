@@ -1,6 +1,8 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpDown, Bookmark, Building2, Clock3, Coins, LayoutGrid, TrainFront, WalletCards } from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+import { buildResultsCsvContent } from "@/lib/export";
+import { ShareButton } from "@/components/ShareButton";
 import {
   formatCompactCurrency,
   formatMeters,
@@ -140,6 +142,8 @@ type ResultsPaneProps = {
   townRecommendationsLoading?: boolean;
   onSelectTown?: (town: string) => void;
   searchTruncated?: boolean;
+  /** Deep-link URL that restores the current filters and location scope. */
+  shareUrl?: string;
 };
 
 type SortMode = Exclude<BlockSortMode, "">;
@@ -544,8 +548,10 @@ export function ResultsPane({
   townRecommendationsLoading = false,
   onSelectTown,
   searchTruncated = false,
+  shareUrl,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
+  const currentYear = getCurrentYear();
 
   const affordabilitySortReady = searchProfile
     ? isAffordabilityProfileComplete({
@@ -555,6 +561,38 @@ export function ResultsPane({
         coApplicantAge: searchProfile.coApplicantAge,
       })
     : false;
+
+  const resultsCsvExport = useMemo(() => {
+    if (!hasResultScope || blocks.length === 0) {
+      return undefined;
+    }
+    return {
+      filename: "hdb-results.csv",
+      getContent: () =>
+        buildResultsCsvContent(
+          [
+            t("results.export.address"),
+            t("results.export.town"),
+            t("results.export.medianPrice"),
+            t("results.export.pricePerSqm"),
+            t("results.export.transactions"),
+            t("results.export.remainingLease"),
+            t("results.export.mrtDistance"),
+            t("results.export.flatTypes"),
+          ],
+          blocks.map((block) => ({
+            address: `${block.block} ${block.streetName}`,
+            town: block.town,
+            medianPrice: block.medianPrice,
+            pricePerSqm: block.pricePerSqmMedian,
+            transactionCount: block.transactionCount,
+            remainingLeaseYears: Math.max(0, block.leaseCommenceRange[1] - currentYear),
+            mrtDistanceMeters: block.nearestMrt?.distanceMeters ?? "",
+            flatTypes: block.flatTypes.join("; "),
+          })),
+        ),
+    };
+  }, [blocks, currentYear, hasResultScope, t]);
 
   const sortOptions: SortOption[] = useMemo(
     () => [
@@ -998,9 +1036,25 @@ export function ResultsPane({
               {t("results.filteredBlocks")}
             </CardTitle>
             {hasResultScope ? (
-              <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
-                {t("results.shown", { count: blocks.length })}
-              </Badge>
+              <>
+                <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
+                  {t("results.shown", { count: blocks.length })}
+                </Badge>
+                {shareUrl ? (
+                  <ShareButton
+                    url={shareUrl}
+                    title={t("app.title")}
+                    ariaLabel={t("share.filterResults")}
+                    ariaLabelCopied={t("share.linkCopied")}
+                    errorLabel={t("share.copyError")}
+                    csvExport={resultsCsvExport}
+                    exportAriaLabel={t("share.exportCsv")}
+                    exportAriaLabelDone={t("share.exportCsvDone")}
+                    size="icon-xs"
+                    variant="outline"
+                  />
+                ) : null}
+              </>
             ) : null}
           </div>
         </CardHeader>

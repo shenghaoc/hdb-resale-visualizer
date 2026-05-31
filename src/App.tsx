@@ -197,17 +197,18 @@ function App() {
     leftTab: panel.leftTab,
   });
 
+  const resultsShareUrl = useMemo(
+    () => buildFilterShareUrl(filters, `${window.location.origin}${window.location.pathname}`),
+    [filters],
+  );
+
   const handleShareFilters = useCallback(async () => {
-    const url = buildFilterShareUrl(
-      filters,
-      `${window.location.origin}${window.location.pathname}`,
-    );
     try {
-      return await shareViaNavigator(url, t("app.title"));
+      return await shareViaNavigator(resultsShareUrl, t("app.title"));
     } catch {
       return null;
     }
-  }, [filters, t]);
+  }, [resultsShareUrl, t]);
 
   // ── Error / loading states ───────────────────────────────────────────────
 
@@ -385,6 +386,7 @@ function App() {
           townRecommendationsLoading={townRecommendationsLoading}
           onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
           searchTruncated={pipeline.searchTruncated}
+          shareUrl={resultsShareUrl}
           />
         </Suspense>
       </ErrorBoundary>
@@ -401,6 +403,7 @@ function App() {
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
         <ShortlistDrawer
           isOpen={panel.isShortlistOpen}
+          filters={filters}
           onSelectAddress={handleSelectAddress}
           onRemove={(addressKey) => shortlist.toggle(addressKey)}
           onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}

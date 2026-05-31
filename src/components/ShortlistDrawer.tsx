@@ -13,7 +13,6 @@ import {
   ExternalLink,
   GraduationCap,
   LayoutGrid,
-  Link2,
   MapPin,
   ShoppingCart,
   Table as TableIcon,
@@ -48,7 +47,9 @@ import {
   type ShortlistComparisonRow,
 } from "@/lib/shortlist-comparison";
 import { encodeShortlistForUrl } from "@/lib/shortlist";
-import { buildShortlistShareUrl, shareViaNavigator } from "@/lib/shareUrls";
+import { buildShortlistShareUrl } from "@/lib/shareUrls";
+import { buildShortlistCsvContent } from "@/lib/export";
+import { ShareButton } from "@/components/ShareButton";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
@@ -62,6 +63,7 @@ import type {
   AddressTrendPoint,
   BlockSummary,
   ComparisonArtifact,
+  FilterState,
   ShortlistItem,
 } from "@/types/data";
 import type { ShortlistSync } from "@/hooks/useShortlist";
@@ -107,6 +109,7 @@ type ShortlistViewMode = "list" | "compare";
 type ShortlistDrawerProps = {
   isOpen: boolean;
   rows: ShortlistRow[];
+  filters: FilterState;
   remainingLeaseMin: number | null;
   budgetMin?: number | null;
   budgetMax?: number | null;
@@ -680,6 +683,7 @@ function ShortlistRowEditor({
 export function ShortlistDrawer({
   isOpen,
   rows,
+  filters,
   remainingLeaseMin,
   budgetMin = null,
   budgetMax = null,
@@ -779,29 +783,52 @@ export function ShortlistDrawer({
     return t("shortlist.compare.metric.mrt.missing");
   }
 
-  async function handleShare() {
-    setShareError(null);
+  const shortlistShareUrl = useMemo(() => {
     const encoded = encodeShortlistForUrl(rows.map((row) => row.item));
     if (!encoded) {
-      setShareError(t("shortlist.shareErrorTooLarge"));
-      return;
+      return "";
     }
-    const url = buildShortlistShareUrl(
+    return buildShortlistShareUrl(
       encoded,
-      window.location.search,
+      filters,
       window.location.origin,
       window.location.pathname,
     );
+  }, [filters, rows]);
 
-    try {
-      const result = await shareViaNavigator(url, t("app.title"));
-      if (result === "copied") {
-        showCopied("share");
-      }
-    } catch {
-      // Clipboard failure — silently ignored for shortlist share.
-    }
-  }
+  const shortlistShareBlocked = shortlistShareUrl === "";
+
+  const shortlistCsvExport = useMemo(
+    () => ({
+      filename: "hdb-shortlist.csv",
+      getContent: () =>
+        buildShortlistCsvContent(
+          [
+            t("shortlist.export.address"),
+            t("shortlist.export.medianPrice"),
+            t("shortlist.export.targetPrice"),
+            t("shortlist.export.schools1km"),
+            t("shortlist.export.hawkers1km"),
+            t("shortlist.export.supermarkets1km"),
+            t("shortlist.export.parks1km"),
+            t("shortlist.export.mrtDistance"),
+            t("shortlist.export.notes"),
+          ],
+          rankedRows.map((row) => ({
+            address: `${row.block.block} ${row.block.streetName}`,
+            medianPrice: row.block.medianPrice,
+            targetPrice: row.item.targetPrice,
+            schools1km: row.comparison?.amenities.primarySchoolsWithin1km ?? "",
+            hawkers1km: row.comparison?.amenities.hawkerCentresWithin1km ?? "",
+            supermarkets1km: row.comparison?.amenities.supermarketsWithin1km ?? "",
+            parks1km: row.comparison?.amenities.parksWithin1km ?? "",
+            mrtDistanceMeters: row.block.nearestMrt?.distanceMeters ?? "",
+            notes: row.item.notes || "",
+          })),
+        ),
+    }),
+    [rankedRows, t],
+  );
 
   function handleCopySummary() {
     const header = `| Address | Median Price | Target Price | Lease | MRT | Schools (1km) | Hawkers (1km) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`;
@@ -825,52 +852,6 @@ export function ShortlistDrawer({
       () => showCopied("summary"),
       () => {},
     );
-  }
-
-  function handleExportCsv() {
-    const headers = [
-      t("shortlist.export.address"),
-      t("shortlist.export.medianPrice"),
-      t("shortlist.export.targetPrice"),
-      t("shortlist.export.schools1km"),
-      t("shortlist.export.hawkers1km"),
-      t("shortlist.export.supermarkets1km"),
-      t("shortlist.export.parks1km"),
-      t("shortlist.export.mrtDistance"),
-      t("shortlist.export.notes"),
-    ];
-    const escapedHeaders = headers.map((header) => `"${header.replace(/"/g, '""')}"`);
-    const csvRows = rankedRows.map((row) => {
-      // Security: Guard against CSV formula injection (CSV Injection/Formula Injection).
-      // If a cell begins with a formula prefix (=, +, -, @, \t, \r, |), we prefix it with a single quote
-      // to ensure it is treated as literal text by spreadsheet software (Excel, Sheets, etc.).
-      // This protects against malicious notes that could execute arbitrary commands or leak data.
-      // Match only at the start of the cell (spreadsheet apps evaluate formulas based on the first
-      // character of the cell, not per line) while accounting for leading whitespace, which Excel
-      // and Google Sheets typically trim before formula evaluation.
-      const safeNotes = (row.item.notes || "").replace(/^\s*[=+\-@\t\r|]/, "'$&");
-
-      return [
-        `"${row.block.block} ${row.block.streetName}"`,
-        row.block.medianPrice,
-        row.item.targetPrice ?? "",
-        row.comparison?.amenities.primarySchoolsWithin1km ?? "",
-        row.comparison?.amenities.hawkerCentresWithin1km ?? "",
-        row.comparison?.amenities.supermarketsWithin1km ?? "",
-        row.comparison?.amenities.parksWithin1km ?? "",
-        row.block.nearestMrt?.distanceMeters ?? "",
-        `"${safeNotes.replace(/"/g, '""')}"`,
-      ].join(",");
-    });
-    const blob = new Blob([escapedHeaders.join(",") + "\n" + csvRows.join("\n")], {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "hdb-shortlist.csv";
-    link.click();
-    URL.revokeObjectURL(url);
   }
 
   function handleExportJson() {
@@ -1109,21 +1090,21 @@ export function ShortlistDrawer({
                   </Select>
                 </Field>
 
-                <Button
-                  onClick={() => void handleShare()}
+                <ShareButton
+                  url={shortlistShareUrl || window.location.href}
+                  title={t("app.title")}
+                  ariaLabel={t("shortlist.shareLinkLabel")}
+                  ariaLabelCopied={t("shortlist.shareCopied")}
+                  errorLabel={t("share.copyError")}
+                  shareDisabled={shortlistShareBlocked}
+                  onShareBlocked={() => setShareError(t("shortlist.shareErrorTooLarge"))}
+                  csvExport={shortlistCsvExport}
+                  exportAriaLabel={t("shortlist.export.csvLabel")}
+                  exportAriaLabelDone={t("shortlist.export.csvLabel")}
+                  className="rounded-lg border-border/50 bg-card/80"
                   size="icon-xs"
                   variant="outline"
-                  type="button"
-                  className={cn("rounded-lg border-border/50 bg-card/80", copiedKey === "share" && "text-primary")}
-                  aria-label={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
-                  title={copiedKey === "share" ? t("shortlist.shareCopied") : t("shortlist.shareLinkLabel")}
-                >
-                  {copiedKey === "share" ? (
-                    <Check data-icon className="size-4" aria-hidden="true" />
-                  ) : (
-                    <Link2 data-icon className="size-4" aria-hidden="true" />
-                  )}
-                </Button>
+                />
               </div>
 
               {shareError && (
@@ -1137,10 +1118,6 @@ export function ShortlistDrawer({
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
                     <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.json")}
-                  </Button>
-                  <Button variant="outline" size="xs" onClick={handleExportCsv} type="button">
-                    <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                    {t("shortlist.export.csv")}
                   </Button>
                   <Button
                     variant="outline"
