@@ -25,7 +25,9 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//, /^\/og\//],
         runtimeCaching: [
           {
-            urlPattern: /^\/api\//,
+            // Workbox RegExpRoute execs against url.href, so a `^/api/`-anchored
+            // pattern never matches `https://host/api/...`. Match on pathname.
+            urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
             handler: "NetworkFirst",
             method: "GET",
             options: {
