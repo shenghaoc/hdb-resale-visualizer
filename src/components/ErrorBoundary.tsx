@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { reportBoundaryError } from "@/lib/errorReporter";
 import { cn } from "@/lib/utils";
 
 export const ERROR_BOUNDARY_FALLBACK_TEXT = "Something went wrong";
@@ -47,7 +48,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
-    console.error("[ErrorBoundary]", error, info.componentStack);
+    reportBoundaryError(error, info);
     this.props.onError?.(error, info);
   }
 
