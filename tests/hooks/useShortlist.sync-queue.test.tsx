@@ -96,4 +96,48 @@ describe("useShortlist offline sync queue", () => {
     expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
     expect(vi.mocked(pushShortlist).mock.calls.length).toBeGreaterThanOrEqual(2);
   });
+
+  it("queues an offline enable() and mints a code on reconnect flush", async () => {
+    // enable() mints a brand-new code, so start with no stored code.
+    window.localStorage.removeItem(SYNC_CODE_STORAGE_KEY);
+
+    const NEW_CODE = "NEW123abc123ABCD";
+    // Default absorbs the reconcile push the debounced effect fires once the
+    // freshly minted code activates; the first two calls are scripted below.
+    vi.mocked(pushShortlist).mockResolvedValue({ syncCode: NEW_CODE, items: [validItem("local-1")] });
+    vi.mocked(pushShortlist)
+      .mockRejectedValueOnce(new TypeError("Failed to fetch"))
+      .mockResolvedValueOnce({ syncCode: NEW_CODE, items: [validItem("local-1")] });
+
+    const { result } = renderHook(() => useShortlist());
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    act(() => {
+      result.current.toggle("local-1");
+    });
+
+    // First push (enable) fails "offline" -> coalesced into the queue with a
+    // null sync code; no code minted yet.
+    await act(async () => {
+      await result.current.sync.enable();
+      await vi.runAllTimersAsync();
+    });
+
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).not.toBeNull();
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBeNull();
+    expect(result.current.sync.code).toBeNull();
+
+    // Reconnect: the flush mints the code, persists it, and clears the queue.
+    await act(async () => {
+      window.dispatchEvent(new Event("online"));
+      await vi.runAllTimersAsync();
+    });
+
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBe(NEW_CODE);
+    expect(result.current.sync.code).toBe(NEW_CODE);
+  });
 });

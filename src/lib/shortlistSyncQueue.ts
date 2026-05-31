@@ -50,6 +50,12 @@ export function clearPendingShortlistPush(): void {
   safeStorage.removeItem(SHORTLIST_SYNC_QUEUE_KEY);
 }
 
+/**
+ * Cheap presence check for the queue gate — avoids the JSON parse + Zod
+ * validation of {@link readPendingShortlistPush}. Callers that act on a hit
+ * (e.g. `flushPendingPush`) re-read and re-validate before using the payload,
+ * so a corrupt entry here only costs a no-op flush attempt.
+ */
 export function hasPendingShortlistPush(): boolean {
-  return readPendingShortlistPush() !== null;
+  return safeStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY) !== null;
 }

@@ -226,11 +226,19 @@ export function useShortlist() {
   useEffect(() => {
     const onOnline = () => {
       setHydrationKey((key) => key + 1);
-      flushPendingPush();
+      // When a stored code still hasn't completed its initial pull (syncCode set,
+      // readyRef false), the hydration effect re-runs on this reconnect and
+      // re-pushes the merged payload, clearing the queue itself. Flushing here as
+      // well would push to the same code concurrently, so only flush directly
+      // when hydration won't (no code yet — the enable() mint path — or already
+      // hydrated).
+      if (readyRef.current || !syncCode) {
+        flushPendingPush();
+      }
     };
     window.addEventListener("online", onOnline);
     return () => window.removeEventListener("online", onOnline);
-  }, [flushPendingPush]);
+  }, [flushPendingPush, syncCode]);
 
   useEffect(() => {
     if (!navigator.onLine || !hasPendingShortlistPush()) {
@@ -447,10 +455,12 @@ export function useShortlist() {
           setSyncStatus("synced");
           return;
         }
-      } else if (isRetriableSyncError(error)) {
-        setSyncStatus("synced");
-        return;
       }
+      // pushPayload === null means the pull failed before we could establish the
+      // link (e.g. offline). Unlike a push failure, there is nothing to queue —
+      // we never confirmed the code exists and have no merged payload — so
+      // surface the failure to the caller (ShortlistSyncSection shows an error)
+      // instead of resolving as if the link succeeded.
       setSyncStatus("error");
       throw error;
     }

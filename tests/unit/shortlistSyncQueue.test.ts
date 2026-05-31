@@ -36,4 +36,14 @@ describe("shortlistSyncQueue", () => {
     window.localStorage.setItem(SHORTLIST_SYNC_QUEUE_KEY, "{not valid");
     expect(readPendingShortlistPush()).toBeNull();
   });
+
+  it("returns null for valid JSON that fails the schema", () => {
+    // `items` must be an array — a type mismatch should be rejected by Zod,
+    // not surfaced as a malformed pending push.
+    window.localStorage.setItem(
+      SHORTLIST_SYNC_QUEUE_KEY,
+      JSON.stringify({ syncCode: "CODE123abc123ABC1", items: "not-an-array" }),
+    );
+    expect(readPendingShortlistPush()).toBeNull();
+  });
 });
