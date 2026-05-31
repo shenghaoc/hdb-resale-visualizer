@@ -53,6 +53,22 @@ test.describe("Global header location search", () => {
     await expect(page).not.toHaveURL(/search=/);
   });
 
+  test("desktop: typeahead keyboard navigation selects highlighted town", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    await waitForAppLoad(page);
+
+    const headerSearch = page.getByTestId("header-search-input");
+    await headerSearch.fill("bed");
+    await expect(page.getByTestId("search-suggest-listbox")).toBeVisible();
+    await headerSearch.press("ArrowDown");
+    await headerSearch.press("Enter");
+    await expect(page).toHaveURL(/town=BEDOK/i);
+    await expect(page).not.toHaveURL(/search=/);
+  });
+
   test("mobile: magnifier overlay opens, syncs, and dismisses on Escape and scrim", async ({
     page,
   }) => {
