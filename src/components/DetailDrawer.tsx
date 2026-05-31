@@ -1,4 +1,5 @@
 import { type CSSProperties, lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { flushSync } from "react-dom";
 import {
   AlertTriangle,
@@ -1025,21 +1026,23 @@ export function DetailDrawer({
                     <CardContent className="p-0">
                       <div className="flex h-[280px] items-center justify-center pt-4">
                         {detail ? (
-                          <Suspense fallback={
-                            <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                              <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
-                              <p className="text-xs font-medium tracking-widest uppercase">
-                                {t("detail.calculatingTrends")}
-                              </p>
-                            </div>
-                          }>
-                            <TrendChart
-                              points={trendPoints}
-                              t={t}
-                              peakMonth={peakMonthInView}
-                              height={260}
-                            />
-                          </Suspense>
+                          <ErrorBoundary fill className="h-full w-full">
+                            <Suspense fallback={
+                              <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
+                                <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
+                                <p className="text-xs font-medium tracking-widest uppercase">
+                                  {t("detail.calculatingTrends")}
+                                </p>
+                              </div>
+                            }>
+                              <TrendChart
+                                points={trendPoints}
+                                t={t}
+                                peakMonth={peakMonthInView}
+                                height={260}
+                              />
+                            </Suspense>
+                          </ErrorBoundary>
                         ) : (
                           <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
                             <TrendingUp data-icon className="size-8 stroke-[1px]" aria-hidden="true" />

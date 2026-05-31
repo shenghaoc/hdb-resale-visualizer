@@ -16,6 +16,7 @@ import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
 import { buildTownRecommendations } from "@/lib/town-recommendations";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { MapLocaleControl } from "@/components/MapLocaleControl";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
@@ -273,8 +274,9 @@ function App() {
   );
 
   const mapContent = (
-    <Suspense fallback={<MapSkeleton />}>
-      <MapView
+    <ErrorBoundary fill className="size-full">
+      <Suspense fallback={<MapSkeleton />}>
+        <MapView
         blocks={pipeline.mapFilteredBlocks}
         onSelect={handleSelectAddress}
         selectedAddressKey={filters.selectedAddressKey}
@@ -303,14 +305,16 @@ function App() {
         onGeolocate={handleGeolocate}
         locale={locale}
         t={t}
-      />
-    </Suspense>
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 
   const selectedDetailContent =
     detailVisible || detailLoading ? (
-      <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
-        <DetailDrawer
+      <ErrorBoundary className="min-h-0">
+        <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
+          <DetailDrawer
           detail={detail}
           comparison={comparison}
           selectedBlock={selectedBlock}
@@ -326,8 +330,9 @@ function App() {
             if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
           }}
           onSelectBlock={handleSelectAddress}
-        />
-      </Suspense>
+          />
+        </Suspense>
+      </ErrorBoundary>
     ) : null;
 
   const resultsPaneContent = (
@@ -335,8 +340,9 @@ function App() {
       hidden={!panel.resultsVisible}
       className={panel.resultsVisible ? "flex min-h-0 flex-1 flex-col" : undefined}
     >
-      <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
-        <ResultsPane
+      <ErrorBoundary className="min-h-0 flex-1">
+        <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
+          <ResultsPane
           blocks={pipeline.filteredBlocks}
           hasResultScope={pipeline.hasResultScope}
           onSelect={handleSelectAddress}
@@ -363,8 +369,9 @@ function App() {
           townRecommendationsLoading={townRecommendationsLoading}
           onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
           searchTruncated={pipeline.searchTruncated}
-        />
-      </Suspense>
+          />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 
@@ -548,4 +555,12 @@ function App() {
   );
 }
 
-export default App;
+function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary fill className="min-h-screen">
+      <App />
+    </ErrorBoundary>
+  );
+}
+
+export default AppWithErrorBoundary;
