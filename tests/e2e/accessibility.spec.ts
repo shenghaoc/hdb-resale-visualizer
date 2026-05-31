@@ -4,8 +4,13 @@ import { expect, test, type Page } from "@playwright/test";
 
 const BLOCKING_IMPACTS = new Set(["critical", "serious"]);
 
-/** MapLibre renders tiles on canvas; contrast rules do not apply to the basemap. */
-const MAP_EXCLUDES = [".maplibregl-map", ".maplibregl-canvas-container", ".maplibregl-canvas"];
+/**
+ * MapLibre renders tiles on canvas; contrast rules do not apply to the basemap.
+ * Exclude only the canvas and its wrapper — not the whole `.maplibregl-map` root —
+ * so axe still audits the zoom controls and attribution link in
+ * `.maplibregl-control-container`.
+ */
+const MAP_EXCLUDES = [".maplibregl-canvas-container", ".maplibregl-canvas"];
 
 async function expectNoSeriousOrCriticalViolations(page: Page) {
   const results = await new AxeBuilder({ page })
