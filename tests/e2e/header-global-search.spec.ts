@@ -63,8 +63,15 @@ test.describe("Global header location search", () => {
     const headerSearch = page.getByTestId("header-search-input");
     await headerSearch.fill("bed");
     await expect(page.getByTestId("search-suggest-listbox")).toBeVisible();
-    await expect(page.getByTestId("search-suggest-option-town").first()).toBeVisible();
+    const townOption = page.getByTestId("search-suggest-option-town").first();
+    await expect(townOption).toBeVisible();
+
+    // ArrowDown should land on the town option; assert that explicitly so the
+    // test fails clearly (rather than via the final URL) if suggestion ordering
+    // ever changes and a non-town item becomes the first highlighted entry.
     await headerSearch.press("ArrowDown");
+    await expect(townOption).toHaveAttribute("aria-selected", "true");
+
     await headerSearch.press("Enter");
     await expect(page).toHaveURL(/town=BEDOK/i);
     await expect(page).not.toHaveURL(/search=/);
