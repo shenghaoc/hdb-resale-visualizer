@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { fetchComparisonArtifact } from '@/lib/data';
+import {
+  DATA_FETCH_USER_ERROR_MESSAGE,
+  fetchComparisonArtifact,
+  resetFetchRetrySettingsForTests,
+  setFetchRetryDelayForTests,
+} from '@/lib/data';
 
 // Mock fetch globally
 const mockFetch = vi.fn();
@@ -11,6 +16,7 @@ describe('fetchComparisonArtifact', () => {
   });
 
   afterEach(() => {
+    resetFetchRetrySettingsForTests();
     vi.restoreAllMocks();
   });
 
@@ -69,21 +75,39 @@ describe('fetchComparisonArtifact', () => {
     expect(result).toBeNull();
   });
 
-  it('should throw error for other HTTP errors', async () => {
-    mockFetch.mockResolvedValueOnce({
+  it('retries transient HTTP errors then surfaces a user-visible error', async () => {
+    setFetchRetryDelayForTests(0);
+    mockFetch.mockResolvedValue({
       ok: false,
       status: 500,
     });
 
-    await expect(fetchComparisonArtifact('test-address')).rejects.toThrow(
-      'Failed to load /api/comparisons/test-address: 500'
-    );
+    await expect(fetchComparisonArtifact('test-address')).rejects.toMatchObject({
+      name: 'DataFetchError',
+      userMessage: DATA_FETCH_USER_ERROR_MESSAGE,
+    });
+    expect(mockFetch).toHaveBeenCalledTimes(3);
   });
 
-  it('should throw error for network failures', async () => {
+  it('does not retry unknown/unclassified errors', async () => {
+    // A plain Error (not a TypeError) is treated as non-transient.
     mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
     await expect(fetchComparisonArtifact('test-address')).rejects.toThrow('Network error');
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('retries TypeError network failures then surfaces a user-visible error', async () => {
+    // Browsers surface real network failures (DNS, connection refused) as
+    // `TypeError: Failed to fetch`, which the data layer treats as transient.
+    setFetchRetryDelayForTests(0);
+    mockFetch.mockRejectedValue(new TypeError('Failed to fetch'));
+
+    await expect(fetchComparisonArtifact('test-address')).rejects.toMatchObject({
+      name: 'DataFetchError',
+      userMessage: DATA_FETCH_USER_ERROR_MESSAGE,
+    });
+    expect(mockFetch).toHaveBeenCalledTimes(3);
   });
 
   it('should not treat schema violations as missing artifact when address key contains 404', async () => {

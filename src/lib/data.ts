@@ -30,6 +30,12 @@ const SUGGEST_CACHE_LIMIT = 32;
 const suggestCache = new Map<string, Promise<Suggestion[]>>();
 const SUGGEST_TIMEOUT_MS = 10_000;
 
+const MAX_FETCH_ATTEMPTS = 3;
+const DEFAULT_FETCH_RETRY_BASE_DELAY_MS = 400;
+
+export const DATA_FETCH_USER_ERROR_MESSAGE =
+  "Unable to load data after several attempts. Check your connection and refresh the page.";
+
 class ArtifactFetchHttpError extends Error {
   status: number;
 
@@ -40,11 +46,82 @@ class ArtifactFetchHttpError extends Error {
   }
 }
 
+export class DataFetchError extends Error {
+  readonly userMessage: string;
+  readonly path: string;
+
+  constructor(path: string, userMessage: string, cause?: unknown) {
+    super(userMessage);
+    this.name = "DataFetchError";
+    this.path = path;
+    this.userMessage = userMessage;
+    if (cause !== undefined) {
+      this.cause = cause;
+    }
+  }
+}
+
 function createArtifactContractError(path: string, reason: string) {
   return new Error(`Artifact contract violation for ${path}: ${reason}`);
 }
 
-async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSchema, signal?: AbortSignal): Promise<z.infer<TSchema>> {
+let fetchRetryBaseDelayMs = DEFAULT_FETCH_RETRY_BASE_DELAY_MS;
+
+function abortReason(signal: AbortSignal): Error {
+  return signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError");
+}
+
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(abortReason(signal));
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+
+    function onAbort(): void {
+      clearTimeout(timer);
+      reject(abortReason(signal!));
+    }
+
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
+function isTransientHttpStatus(status: number): boolean {
+  return status === 429 || status >= 500;
+}
+
+function isTransientFetchFailure(error: unknown): boolean {
+  if (error instanceof ArtifactFetchHttpError) {
+    return isTransientHttpStatus(error.status);
+  }
+  if ((error instanceof Error || error instanceof DOMException) && error.name === "AbortError") {
+    return false;
+  }
+  if (error instanceof TypeError) {
+    return true;
+  }
+  return false;
+}
+
+export function setFetchRetryDelayForTests(ms: number): void {
+  fetchRetryBaseDelayMs = ms;
+}
+
+export function resetFetchRetrySettingsForTests(): void {
+  fetchRetryBaseDelayMs = DEFAULT_FETCH_RETRY_BASE_DELAY_MS;
+}
+
+async function fetchJsonOnce<TSchema extends z.ZodTypeAny>(
+  path: string,
+  schema: TSchema,
+  signal?: AbortSignal,
+): Promise<z.infer<TSchema>> {
   const response = signal ? await fetch(path, { signal }) : await fetch(path);
 
   if (!response.ok) {
@@ -57,6 +134,37 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(path: string, schema: TSc
   }
 
   return parsed.data;
+}
+
+async function fetchJson<TSchema extends z.ZodTypeAny>(
+  path: string,
+  schema: TSchema,
+  signal?: AbortSignal,
+): Promise<z.infer<TSchema>> {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < MAX_FETCH_ATTEMPTS; attempt += 1) {
+    try {
+      return await fetchJsonOnce(path, schema, signal);
+    } catch (error) {
+      if (signal?.aborted) {
+        throw error;
+      }
+
+      lastError = error;
+      if (!isTransientFetchFailure(error)) {
+        throw error;
+      }
+
+      if (attempt < MAX_FETCH_ATTEMPTS - 1) {
+        // Pass the signal so an abort during backoff rejects immediately
+        // instead of waiting out the full delay before the next attempt aborts.
+        await sleep(fetchRetryBaseDelayMs * 2 ** attempt, signal);
+      }
+    }
+  }
+
+  throw new DataFetchError(path, DATA_FETCH_USER_ERROR_MESSAGE, lastError);
 }
 
 export { townToFilename };
