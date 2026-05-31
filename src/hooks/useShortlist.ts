@@ -183,11 +183,23 @@ export function useShortlist() {
       return;
     }
 
+    // When the queue targets an existing code but hydration hasn't finished yet,
+    // defer to the hydration effect which will pull, merge, and push the
+    // authoritative payload (clearing the queue itself on success).
+    if (pending.syncCode !== null && !readyRef.current) {
+      return;
+    }
+
     flushInFlightRef.current = true;
+    const flushedSnapshot = JSON.stringify(pending.items);
     setSyncStatus("syncing");
     void pushShortlist(pending.syncCode, pending.items)
       .then((result) => {
-        clearPendingShortlistPush();
+        // Only clear if the queue wasn't overwritten with newer data while in flight.
+        const current = readPendingShortlistPush();
+        if (!current || JSON.stringify(current.items) === flushedSnapshot) {
+          clearPendingShortlistPush();
+        }
         if (pending.syncCode === null) {
           safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
           setSyncCode(result.syncCode);
