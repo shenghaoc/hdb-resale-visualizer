@@ -11,7 +11,7 @@ describe("PWA manifest", () => {
       short_name?: string;
       start_url?: string;
       display?: string;
-      icons?: { src: string; sizes: string }[];
+      icons?: { src: string; sizes: string; purpose?: string }[];
     };
 
     expect(manifest.name).toBeTruthy();
@@ -20,5 +20,9 @@ describe("PWA manifest", () => {
     expect(manifest.display).toBe("standalone");
     expect(manifest.icons?.some((icon) => icon.sizes === "192x192")).toBe(true);
     expect(manifest.icons?.some((icon) => icon.sizes === "512x512")).toBe(true);
+    // Lighthouse's installability audit requires a maskable icon.
+    expect(
+      manifest.icons?.some((icon) => icon.purpose?.includes("maskable")),
+    ).toBe(true);
   });
 });

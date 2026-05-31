@@ -18,6 +18,7 @@ export default defineConfig({
         "manifest.webmanifest",
         "icons/pwa-192.svg",
         "icons/pwa-512.svg",
+        "icons/apple-touch-icon.png",
       ],
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest,woff,woff2}"],
@@ -38,7 +39,8 @@ export default defineConfig({
                 maxAgeSeconds: 60 * 60 * 24 * 30,
               },
               cacheableResponse: {
-                statuses: [0, 200],
+                // /api/* is same-origin, so opaque (0) responses never occur.
+                statuses: [200],
               },
             },
           },
