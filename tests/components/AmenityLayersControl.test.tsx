@@ -93,6 +93,30 @@ describe("AmenityLayersControl", () => {
     expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
   });
 
+  it("toggles MRT exits layer and reflects aria-checked state", async () => {
+    const user = userEvent.setup();
+    const { onToggleMrtExits } = renderControl({ mrtExitsEnabled: false });
+
+    const exitsSwitch = screen.getByRole("switch", { name: "MRT Exits" });
+    expect(exitsSwitch).toHaveAttribute("aria-checked", "false");
+
+    await user.click(exitsSwitch);
+    expect(onToggleMrtExits).toHaveBeenCalledTimes(1);
+  });
+
+  it("reports the school switch as unchecked while loading even when enabled", () => {
+    renderControl({ schoolOverlayEnabled: true, schoolOverlayLoading: true });
+
+    const schoolSwitch = screen.getByRole("switch", {
+      name: "Loading nearby schools for the selected block.",
+    });
+    expect(schoolSwitch).toBeDisabled();
+    // active = enabled && !disabled, so loading forces aria-checked "false"
+    // despite schoolOverlayEnabled=true — the component reports the opposite of
+    // its enabled state under load.
+    expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
+  });
+
   it("shows the unavailable school label when no block is selected", () => {
     renderControl({
       hasBlockSelection: false,

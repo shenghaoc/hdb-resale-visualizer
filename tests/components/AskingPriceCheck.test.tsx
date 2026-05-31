@@ -27,12 +27,19 @@ function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransact
   };
 }
 
+// pricePerSqm values equal Math.round(resalePrice / 93) so the fixture stays
+// consistent with its own resalePrice/floorAreaSqm — assessAskingPrice reads
+// pricePerSqm directly into the median computation.
 const comparableTransactions = [
-  tx({ id: "a", resalePrice: 550000, pricePerSqm: 5913 }),
+  tx({ id: "a", resalePrice: 550000, pricePerSqm: 5914 }),
   tx({ id: "b", resalePrice: 600000, pricePerSqm: 6452 }),
   tx({ id: "c", resalePrice: 650000, pricePerSqm: 6989 }),
   tx({ id: "d", resalePrice: 700000, pricePerSqm: 7527 }),
 ];
+
+// Matches the locale I18nProvider resolves to in jsdom, so formatNumber output
+// in assertions mirrors the component's formatNumber(value, 0, locale) calls.
+const LOCALE = "en-SG" as const;
 
 function makeDetail(transactions: AddressDetailTransaction[]): AddressDetail {
   return {
@@ -88,12 +95,12 @@ describe("AskingPriceCheck", () => {
     expect(screen.getByText(/in line with market/i)).toBeInTheDocument();
     expect(
       screen.getByText(
-        `$${formatNumber(expected!.askingPricePerSqm!, 0)}/sqm`,
+        `$${formatNumber(expected!.askingPricePerSqm!, 0, LOCALE)}/sqm`,
       ),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        `$${formatNumber(expected!.summary.medianPricePerSqm, 0)}/sqm`,
+        `$${formatNumber(expected!.summary.medianPricePerSqm, 0, LOCALE)}/sqm`,
       ),
     ).toBeInTheDocument();
     const deltaSign = expected!.pricePerSqmDeltaPct! > 0 ? "+" : expected!.pricePerSqmDeltaPct! < 0 ? "−" : "";

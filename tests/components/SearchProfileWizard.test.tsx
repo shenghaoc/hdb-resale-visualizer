@@ -138,7 +138,14 @@ describe("SearchProfileWizard", () => {
     await user.click(screen.getByRole("button", { name: /70 yr/i }));
     await clickPrimary(user, /next/i);
 
-    await user.type(screen.getByLabelText(/^your age$/i), "18");
+    const ageInput = screen.getByLabelText(/^your age$/i);
+    await user.type(ageInput, "18");
     expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
+
+    // Replacing the out-of-range age with a valid one must re-enable the step,
+    // proving the age bound — not some other empty field — gated the button.
+    await user.clear(ageInput);
+    await user.type(ageInput, "25");
+    expect(screen.getByRole("button", { name: /next/i })).toBeEnabled();
   });
 });
