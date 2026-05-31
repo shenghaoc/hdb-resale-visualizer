@@ -63,6 +63,7 @@ test.describe("Global header location search", () => {
     const headerSearch = page.getByTestId("header-search-input");
     await headerSearch.fill("bed");
     await expect(page.getByTestId("search-suggest-listbox")).toBeVisible();
+    await expect(page.getByTestId("search-suggest-option-town").first()).toBeVisible();
     await headerSearch.press("ArrowDown");
     await headerSearch.press("Enter");
     await expect(page).toHaveURL(/town=BEDOK/i);
