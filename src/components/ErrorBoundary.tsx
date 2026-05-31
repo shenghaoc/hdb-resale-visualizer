@@ -5,6 +5,14 @@ import { cn } from "@/lib/utils";
 export const ERROR_BOUNDARY_FALLBACK_TEXT = "Something went wrong";
 export const ERROR_BOUNDARY_ACTION_TEXT = "Reload";
 
+/**
+ * Number of in-place recovery attempts allowed before a boundary with
+ * `reloadOnRecovery={false}` gives up and falls back to a full page reload. This
+ * keeps the recovery button from becoming a silent no-op when a child throws on
+ * every render (a persistent, non-transient error).
+ */
+export const MAX_LOCAL_RECOVERY_ATTEMPTS = 3;
+
 type ErrorBoundaryProps = {
   children: ReactNode;
   /** Fill the parent box (map pane, chart card). */
@@ -28,12 +36,13 @@ type ErrorBoundaryProps = {
 
 type ErrorBoundaryState = {
   hasError: boolean;
+  recoveryAttempts: number;
 };
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false };
+  state: ErrorBoundaryState = { hasError: false, recoveryAttempts: 0 };
 
-  static getDerivedStateFromError(): ErrorBoundaryState {
+  static getDerivedStateFromError(): Partial<ErrorBoundaryState> {
     return { hasError: true };
   }
 
@@ -42,15 +51,26 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.props.onError?.(error, info);
   }
 
+  componentDidUpdate(_prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState): void {
+    // The subtree recovered (errored → rendered children without re-throwing):
+    // restore the full local-retry budget so a later, unrelated error isn't
+    // shortchanged by attempts spent on the previous one.
+    if (prevState.hasError && !this.state.hasError && this.state.recoveryAttempts > 0) {
+      this.setState({ recoveryAttempts: 0 });
+    }
+  }
+
   private handleRecovery = (): void => {
     this.props.onReset?.();
 
     const { reloadOnRecovery = true } = this.props;
-    if (reloadOnRecovery) {
+    const localRecoveryExhausted = this.state.recoveryAttempts >= MAX_LOCAL_RECOVERY_ATTEMPTS;
+    if (reloadOnRecovery || localRecoveryExhausted) {
       window.location.reload();
-    } else {
-      this.setState({ hasError: false });
+      return;
     }
+
+    this.setState((prev) => ({ hasError: false, recoveryAttempts: prev.recoveryAttempts + 1 }));
   };
 
   render(): ReactNode {

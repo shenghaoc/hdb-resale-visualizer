@@ -5,6 +5,7 @@ import {
   ERROR_BOUNDARY_ACTION_TEXT,
   ERROR_BOUNDARY_FALLBACK_TEXT,
   ErrorBoundary,
+  MAX_LOCAL_RECOVERY_ATTEMPTS,
 } from "@/components/ErrorBoundary";
 
 function ThrowingChild(): never {
@@ -95,6 +96,36 @@ describe("ErrorBoundary", () => {
     expect(screen.getByText("Recovered child")).toBeInTheDocument();
     expect(screen.queryByTestId("error-boundary-fallback")).not.toBeInTheDocument();
     expect(reload).not.toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
+  it("falls back to a full reload once local recovery is exhausted", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const reload = vi.fn();
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: { ...window.location, reload },
+    });
+
+    const user = userEvent.setup();
+    render(
+      <ErrorBoundary reloadOnRecovery={false} actionText="Retry">
+        <ThrowingChild />
+      </ErrorBoundary>,
+    );
+
+    // The child throws on every render, so each retry returns to the error state
+    // without reloading — up to MAX_LOCAL_RECOVERY_ATTEMPTS times.
+    for (let attempt = 0; attempt < MAX_LOCAL_RECOVERY_ATTEMPTS; attempt += 1) {
+      await user.click(screen.getByRole("button", { name: "Retry" }));
+      expect(reload).not.toHaveBeenCalled();
+      expect(screen.getByTestId("error-boundary-fallback")).toBeInTheDocument();
+    }
+
+    // Once exhausted, the button stops being a silent no-op and reloads the page.
+    await user.click(screen.getByRole("button", { name: "Retry" }));
+    expect(reload).toHaveBeenCalledTimes(1);
 
     consoleError.mockRestore();
   });

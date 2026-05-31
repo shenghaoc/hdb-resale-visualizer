@@ -1229,15 +1229,21 @@ export function DetailDrawer({
               {/* ── NEGOTIATE ── */}
               <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
                 {detail ? (
-                  <Suspense fallback={
-                    <div className="flex flex-col gap-3 py-12">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))}
-                    </div>
-                  }>
-                    <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
-                  </Suspense>
+                  <ErrorBoundary
+                    reloadOnRecovery={false}
+                    fallbackText={t("error.askingPriceFallback")}
+                    actionText={t("error.retry")}
+                  >
+                    <Suspense fallback={
+                      <div className="flex flex-col gap-3 py-12">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                          <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                        ))}
+                      </div>
+                    }>
+                      <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
+                    </Suspense>
+                  </ErrorBoundary>
                 ) : (
                   <div className="flex flex-col gap-3 py-12">
                     {Array.from({ length: 3 }).map((_, i) => (

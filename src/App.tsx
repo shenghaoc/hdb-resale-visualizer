@@ -392,20 +392,27 @@ function App() {
   );
 
   const savedContent = panel.savedVisible ? (
-    <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
-      <ShortlistDrawer
-        isOpen={panel.isShortlistOpen}
-        onSelectAddress={handleSelectAddress}
-        onRemove={(addressKey) => shortlist.toggle(addressKey)}
-        onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
-        onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
-        rows={shortlistRows}
-        remainingLeaseMin={filters.remainingLeaseMin}
-        budgetMin={filters.budgetMin}
-        budgetMax={filters.budgetMax}
-        sync={shortlist.sync}
-      />
-    </Suspense>
+    <ErrorBoundary
+      className="min-h-0 flex-1"
+      reloadOnRecovery={false}
+      fallbackText={t("error.shortlistFallback")}
+      actionText={t("error.retry")}
+    >
+      <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
+        <ShortlistDrawer
+          isOpen={panel.isShortlistOpen}
+          onSelectAddress={handleSelectAddress}
+          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
+          onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
+          rows={shortlistRows}
+          remainingLeaseMin={filters.remainingLeaseMin}
+          budgetMin={filters.budgetMin}
+          budgetMax={filters.budgetMax}
+          sync={shortlist.sync}
+        />
+      </Suspense>
+    </ErrorBoundary>
   ) : null;
 
   // ── Derived layout flags ─────────────────────────────────────────────────
@@ -572,6 +579,10 @@ function App() {
 }
 
 function AppWithErrorBoundary() {
+  // Root boundary: a crash here means the whole app (including the I18nProvider)
+  // is unusable, so recovery falls back to a full reload and the fallback uses
+  // the default English copy — translations aren't reachable once the provider
+  // tree has failed.
   return (
     <ErrorBoundary fill className="min-h-screen">
       <App />
