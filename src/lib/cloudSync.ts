@@ -1,5 +1,6 @@
 import { API_BASE_PATH } from "@/lib/constants";
 import { parseShortlist } from "@/lib/shortlist";
+import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "@shared/shortlist-limits";
 import type { ShortlistItem } from "@/types/data";
 
 /**
@@ -15,6 +16,31 @@ export class SyncCodeNotFoundError extends Error {
     super("Unknown sync code");
     this.name = "SyncCodeNotFoundError";
   }
+}
+
+/** Thrown on HTTP 429 so callers can back off per `Retry-After`. */
+export class SyncRateLimitedError extends Error {
+  readonly retryAfterSec: number;
+
+  constructor(retryAfterSec: number) {
+    super("Sync rate limited");
+    this.name = "SyncRateLimitedError";
+    this.retryAfterSec = retryAfterSec;
+  }
+}
+
+/** Whether a failed push/pull should be queued or retried later (not 404/4xx). */
+export function isRetriableSyncError(error: unknown): boolean {
+  if (error instanceof SyncCodeNotFoundError) {
+    return false;
+  }
+  if (error instanceof SyncRateLimitedError || error instanceof TypeError) {
+    return true;
+  }
+  if (error instanceof Error && /^Sync failed \((5\d{2}|408)\)/.test(error.message)) {
+    return true;
+  }
+  return false;
 }
 
 type PushResult = { syncCode: string; items: ShortlistItem[] };
@@ -35,6 +61,13 @@ export async function pushShortlist(
 
   if (response.status === 404) {
     throw new SyncCodeNotFoundError();
+  }
+  if (response.status === 429) {
+    const header = response.headers.get("Retry-After");
+    const parsed = header ? Number(header) : Number.NaN;
+    const retryAfterSec =
+      Number.isFinite(parsed) && parsed > 0 ? parsed : SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC;
+    throw new SyncRateLimitedError(retryAfterSec);
   }
   if (!response.ok) {
     throw new Error(`Sync failed (${response.status})`);
