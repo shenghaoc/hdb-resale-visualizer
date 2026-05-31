@@ -81,7 +81,7 @@ function isTransientFetchFailure(error: unknown): boolean {
   if (error instanceof ArtifactFetchHttpError) {
     return isTransientHttpStatus(error.status);
   }
-  if (error instanceof DOMException && error.name === "AbortError") {
+  if ((error instanceof Error || error instanceof DOMException) && error.name === "AbortError") {
     return false;
   }
   if (error instanceof TypeError) {
@@ -133,15 +133,13 @@ async function fetchJson<TSchema extends z.ZodTypeAny>(
       }
 
       lastError = error;
-      const canRetry = isTransientFetchFailure(error) && attempt < MAX_FETCH_ATTEMPTS - 1;
-      if (!canRetry) {
-        if (isTransientFetchFailure(error)) {
-          throw new DataFetchError(path, DATA_FETCH_USER_ERROR_MESSAGE, error);
-        }
+      if (!isTransientFetchFailure(error)) {
         throw error;
       }
 
-      await sleep(fetchRetryBaseDelayMs * 2 ** attempt);
+      if (attempt < MAX_FETCH_ATTEMPTS - 1) {
+        await sleep(fetchRetryBaseDelayMs * 2 ** attempt);
+      }
     }
   }
 
