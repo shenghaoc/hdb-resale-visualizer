@@ -140,7 +140,7 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps webkit
 
-      - name: End-to-end smoke
+      - name: End-to-end smoke (incl. axe WCAG gate)
         run: npm run test:e2e
 
       - name: Upload Playwright Report

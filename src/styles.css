@@ -93,12 +93,14 @@
   --card-foreground: light-dark(#0f172a, #e2e8f0);
   --popover: light-dark(#ffffff, #0d1628);
   --popover-foreground: light-dark(#0f172a, #e2e8f0);
-  --primary: light-dark(#0891b2, #22d3ee);
+  /* cyan-700 (light) keeps white label text on primary buttons above WCAG AA (~4.5:1). */
+  --primary: light-dark(#0e7490, #22d3ee);
   --primary-foreground: light-dark(#ffffff, #083344);
   --secondary: light-dark(#f1f5f9, #111f35);
   --secondary-foreground: light-dark(#0f172a, #94a3b8);
   --muted: light-dark(#f1f5f9, #0d1628);
-  --muted-foreground: #64748b;
+  /* slate-600 (light) clears AA on card/popover surfaces (~#f8fafc). */
+  --muted-foreground: light-dark(#5f6b7c, #94a3b8);
   --accent: light-dark(#ecfeff, #193353);
   --accent-foreground: light-dark(#155e75, #e2e8f0);
   /* Light arms use the -700 shade so `text-{success,destructive}` on a 10%
