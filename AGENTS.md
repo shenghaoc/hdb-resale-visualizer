@@ -26,10 +26,10 @@ Reusable agent skill packs live in [`.kiro/skills/`](.kiro/skills/). Each skill 
 ## 📈 Specs
 Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirements → Tasks** workflow (feature specs) or **Bugfix → Design → Tasks** workflow (bugfix specs). Each spec directory contains a `design.md`, `requirements.md` (or `bugfix.md`), and `tasks.md`. Kiro-generated specs also include a `.config.kiro` metadata file.
 
-**Active:**
-- [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
+**Active:** _(none)_
 
 **Completed:**
+- [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
 - [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — Pointer-events fix + UI polish.
 - [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Location scope, visual grounding, amenity data.
 - [**IME Composition Input**](.kiro/specs/ime-composition-input/tasks.md) — CJK input composition bugfix.
