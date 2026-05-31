@@ -8,7 +8,19 @@ import {
   saveShortlist,
   toggleShortlistItem,
 } from "@/lib/shortlist";
-import { SyncCodeNotFoundError, pullShortlist, pushShortlist } from "@/lib/cloudSync";
+import {
+  isRetriableSyncError,
+  SyncCodeNotFoundError,
+  SyncRateLimitedError,
+  pullShortlist,
+  pushShortlist,
+} from "@/lib/cloudSync";
+import {
+  clearPendingShortlistPush,
+  enqueuePendingShortlistPush,
+  hasPendingShortlistPush,
+  readPendingShortlistPush,
+} from "@/lib/shortlistSyncQueue";
 import type { ShortlistItem } from "@/types/data";
 import { safeStorage } from "@/lib/storage";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -29,6 +41,22 @@ function applyItems(
 ): void {
   itemsRef.current = next;
   setItems(next);
+}
+
+function applyPushResult(
+  itemsRef: { current: ShortlistItem[] },
+  setItems: (value: ShortlistItem[]) => void,
+  lastPushedRef: { current: string | null },
+  snapshot: string,
+  resultItems: ShortlistItem[],
+): void {
+  lastPushedRef.current = JSON.stringify(resultItems);
+  if (JSON.stringify(itemsRef.current) === snapshot) {
+    const nextItems = mergeFromCloud(itemsRef.current, resultItems);
+    if (nextItems !== itemsRef.current) {
+      applyItems(itemsRef, setItems, nextItems);
+    }
+  }
 }
 
 export type SyncStatus = "local" | "syncing" | "synced" | "error";
@@ -101,6 +129,20 @@ export function useShortlist() {
   // Gates the debounced push until the initial pull/merge has completed, so we
   // never clobber cloud data with stale local state on sign-in/reload.
   const readyRef = useRef(false);
+  const flushInFlightRef = useRef(false);
+  const rateLimitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flushPendingPushRef = useRef<() => void>(() => {});
+  const [hydrationKey, setHydrationKey] = useState(0);
+
+  const scheduleRateLimitRetry = useCallback((retryAfterSec: number) => {
+    if (rateLimitTimerRef.current) {
+      clearTimeout(rateLimitTimerRef.current);
+    }
+    rateLimitTimerRef.current = setTimeout(() => {
+      rateLimitTimerRef.current = null;
+      flushPendingPushRef.current();
+    }, retryAfterSec * 1000);
+  }, []);
 
   useEffect(() => {
     if (!initialState.shouldClearUrlParam) {
@@ -120,11 +162,92 @@ export function useShortlist() {
 
   const dropSyncCode = useCallback((status: SyncStatus) => {
     safeStorage.removeItem(SYNC_CODE_STORAGE_KEY);
+    clearPendingShortlistPush();
+    if (rateLimitTimerRef.current) {
+      clearTimeout(rateLimitTimerRef.current);
+      rateLimitTimerRef.current = null;
+    }
     readyRef.current = false;
     lastPushedRef.current = null;
     setSyncCode(null);
     setSyncStatus(status);
   }, []);
+
+  const flushPendingPush = useCallback(() => {
+    if (flushInFlightRef.current || !navigator.onLine) {
+      return;
+    }
+
+    const pending = readPendingShortlistPush();
+    if (!pending) {
+      return;
+    }
+
+    flushInFlightRef.current = true;
+    setSyncStatus("syncing");
+    void pushShortlist(pending.syncCode, pending.items)
+      .then((result) => {
+        clearPendingShortlistPush();
+        if (pending.syncCode === null) {
+          safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
+          setSyncCode(result.syncCode);
+          readyRef.current = true;
+        }
+        const snapshot = JSON.stringify(pending.items);
+        applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
+        setSyncStatus("synced");
+      })
+      .catch((error: unknown) => {
+        if (error instanceof SyncCodeNotFoundError) {
+          clearPendingShortlistPush();
+          dropSyncCode("local");
+          return;
+        }
+        if (error instanceof SyncRateLimitedError) {
+          scheduleRateLimitRetry(error.retryAfterSec);
+          setSyncStatus("synced");
+          return;
+        }
+        if (isRetriableSyncError(error)) {
+          setSyncStatus("synced");
+          return;
+        }
+        setSyncStatus("error");
+      })
+      .finally(() => {
+        flushInFlightRef.current = false;
+      });
+  }, [dropSyncCode, scheduleRateLimitRetry]);
+
+  useEffect(() => {
+    flushPendingPushRef.current = flushPendingPush;
+  }, [flushPendingPush]);
+
+  useEffect(() => {
+    const onOnline = () => {
+      setHydrationKey((key) => key + 1);
+      flushPendingPush();
+    };
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
+  }, [flushPendingPush]);
+
+  useEffect(() => {
+    if (!navigator.onLine || !hasPendingShortlistPush()) {
+      return;
+    }
+    const timer = setTimeout(() => flushPendingPush(), 0);
+    return () => clearTimeout(timer);
+  }, [flushPendingPush]);
+
+  useEffect(
+    () => () => {
+      if (rateLimitTimerRef.current) {
+        clearTimeout(rateLimitTimerRef.current);
+      }
+    },
+    [],
+  );
 
   // Initial hydration for a stored code: pull → merge → push merged, once.
   useEffect(() => {
@@ -135,16 +258,18 @@ export function useShortlist() {
     let cancelled = false;
     setSyncStatus("syncing");
     void (async () => {
+      let pushPayload: ShortlistItem[] | null = null;
       try {
         const cloud = await pullShortlist(syncCode);
         if (cancelled) return;
         const mergedItems = mergeFromCloud(itemsRef.current, cloud);
         const mergedSnapshot = JSON.stringify(mergedItems);
-        const pushPayload = mergeShortlists(itemsRef.current, cloud);
+        pushPayload = mergeShortlists(itemsRef.current, cloud);
         applyItems(itemsRef, setItems, mergedItems);
         const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled) return;
         readyRef.current = true;
+        clearPendingShortlistPush();
         lastPushedRef.current = JSON.stringify(result.items);
         if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
           const nextItems = mergeFromCloud(itemsRef.current, result.items);
@@ -157,6 +282,21 @@ export function useShortlist() {
         if (cancelled) return;
         if (error instanceof SyncCodeNotFoundError) {
           dropSyncCode("local");
+        } else if (pushPayload !== null) {
+          if (error instanceof SyncRateLimitedError) {
+            enqueuePendingShortlistPush(syncCode, pushPayload);
+            readyRef.current = true;
+            scheduleRateLimitRetry(error.retryAfterSec);
+            setSyncStatus("synced");
+          } else if (isRetriableSyncError(error)) {
+            enqueuePendingShortlistPush(syncCode, pushPayload);
+            readyRef.current = true;
+            setSyncStatus("synced");
+          } else {
+            setSyncStatus("error");
+          }
+        } else if (isRetriableSyncError(error)) {
+          setSyncStatus("synced");
         } else {
           // Leave readyRef false so we don't push (and risk clobbering) until a
           // future reload retries the pull. Local use is unaffected.
@@ -168,7 +308,7 @@ export function useShortlist() {
     return () => {
       cancelled = true;
     };
-  }, [syncCode, dropSyncCode]);
+  }, [syncCode, dropSyncCode, hydrationKey, scheduleRateLimitRetry]);
 
   // Debounced push of subsequent local changes while a code is active.
   useEffect(() => {
@@ -185,19 +325,21 @@ export function useShortlist() {
     void pushShortlist(syncCode, debouncedItems)
       .then((result) => {
         if (cancelled) return;
-        lastPushedRef.current = JSON.stringify(result.items);
-        if (JSON.stringify(itemsRef.current) === snapshot) {
-          const nextItems = mergeFromCloud(itemsRef.current, result.items);
-          if (nextItems !== itemsRef.current) {
-            applyItems(itemsRef, setItems, nextItems);
-          }
-        }
+        clearPendingShortlistPush();
+        applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
         if (cancelled) return;
         if (error instanceof SyncCodeNotFoundError) {
           dropSyncCode("local");
+        } else if (error instanceof SyncRateLimitedError) {
+          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          scheduleRateLimitRetry(error.retryAfterSec);
+          setSyncStatus("synced");
+        } else if (isRetriableSyncError(error)) {
+          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          setSyncStatus("synced");
         } else {
           setSyncStatus("error");
         }
@@ -206,7 +348,7 @@ export function useShortlist() {
     return () => {
       cancelled = true;
     };
-  }, [debouncedItems, syncCode, dropSyncCode]);
+  }, [debouncedItems, syncCode, dropSyncCode, scheduleRateLimitRetry]);
 
   const toggle = useCallback((addressKey: string) => {
     setItems((current) => toggleShortlistItem(current, addressKey));
@@ -242,32 +384,40 @@ export function useShortlist() {
     try {
       const result = await pushShortlist(null, itemsRef.current);
       readyRef.current = true;
-      lastPushedRef.current = JSON.stringify(result.items);
-      if (JSON.stringify(itemsRef.current) === snapshot) {
-        const next = mergeFromCloud(itemsRef.current, result.items);
-        if (next !== itemsRef.current) {
-          applyItems(itemsRef, setItems, next);
-        }
-      }
+      clearPendingShortlistPush();
+      applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
       setSyncCode(result.syncCode);
       setSyncStatus("synced");
     } catch (error) {
+      if (error instanceof SyncRateLimitedError) {
+        enqueuePendingShortlistPush(null, itemsRef.current);
+        scheduleRateLimitRetry(error.retryAfterSec);
+        setSyncStatus("synced");
+        return;
+      }
+      if (isRetriableSyncError(error)) {
+        enqueuePendingShortlistPush(null, itemsRef.current);
+        setSyncStatus("synced");
+        return;
+      }
       setSyncStatus("error");
       throw error;
     }
-  }, []);
+  }, [scheduleRateLimitRetry]);
 
   const link = useCallback(async (code: string) => {
     setSyncStatus("syncing");
+    let pushPayload: ShortlistItem[] | null = null;
     try {
       const cloud = await pullShortlist(code);
       const mergedItems = mergeFromCloud(itemsRef.current, cloud);
       const mergedSnapshot = JSON.stringify(mergedItems);
-      const pushPayload = mergeShortlists(itemsRef.current, cloud);
+      pushPayload = mergeShortlists(itemsRef.current, cloud);
       applyItems(itemsRef, setItems, mergedItems);
       const result = await pushShortlist(code, pushPayload);
       readyRef.current = true;
+      clearPendingShortlistPush();
       lastPushedRef.current = JSON.stringify(result.items);
       if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
         const nextItems = mergeFromCloud(itemsRef.current, result.items);
@@ -279,10 +429,32 @@ export function useShortlist() {
       setSyncCode(code);
       setSyncStatus("synced");
     } catch (error) {
+      if (pushPayload !== null) {
+        if (error instanceof SyncRateLimitedError) {
+          enqueuePendingShortlistPush(code, pushPayload);
+          readyRef.current = true;
+          safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+          setSyncCode(code);
+          scheduleRateLimitRetry(error.retryAfterSec);
+          setSyncStatus("synced");
+          return;
+        }
+        if (isRetriableSyncError(error)) {
+          enqueuePendingShortlistPush(code, pushPayload);
+          readyRef.current = true;
+          safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+          setSyncCode(code);
+          setSyncStatus("synced");
+          return;
+        }
+      } else if (isRetriableSyncError(error)) {
+        setSyncStatus("synced");
+        return;
+      }
       setSyncStatus("error");
       throw error;
     }
-  }, []);
+  }, [scheduleRateLimitRetry]);
 
   const disable = useCallback(() => {
     dropSyncCode("local");
