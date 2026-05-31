@@ -274,7 +274,13 @@ function App() {
   );
 
   const mapContent = (
-    <ErrorBoundary fill className="size-full">
+    <ErrorBoundary
+      fill
+      className="size-full"
+      reloadOnRecovery={false}
+      fallbackText={t("error.mapFallback")}
+      actionText={t("error.retry")}
+    >
       <Suspense fallback={<MapSkeleton />}>
         <MapView
         blocks={pipeline.mapFilteredBlocks}
@@ -312,7 +318,12 @@ function App() {
 
   const selectedDetailContent =
     detailVisible || detailLoading ? (
-      <ErrorBoundary className="min-h-0">
+      <ErrorBoundary
+        className="min-h-0"
+        reloadOnRecovery={false}
+        fallbackText={t("error.detailFallback")}
+        actionText={t("error.retry")}
+      >
         <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
           <DetailDrawer
           detail={detail}
@@ -340,7 +351,12 @@ function App() {
       hidden={!panel.resultsVisible}
       className={panel.resultsVisible ? "flex min-h-0 flex-1 flex-col" : undefined}
     >
-      <ErrorBoundary className="min-h-0 flex-1">
+      <ErrorBoundary
+        className="min-h-0 flex-1"
+        reloadOnRecovery={false}
+        fallbackText={t("error.resultsFallback")}
+        actionText={t("error.retry")}
+      >
         <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
           <ResultsPane
           blocks={pipeline.filteredBlocks}

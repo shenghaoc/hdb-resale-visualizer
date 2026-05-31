@@ -1026,7 +1026,13 @@ export function DetailDrawer({
                     <CardContent className="p-0">
                       <div className="flex h-[280px] items-center justify-center pt-4">
                         {detail ? (
-                          <ErrorBoundary fill className="h-full w-full">
+                          <ErrorBoundary
+                            fill
+                            className="h-full w-full"
+                            reloadOnRecovery={false}
+                            fallbackText={t("error.trendFallback")}
+                            actionText={t("error.retry")}
+                          >
                             <Suspense fallback={
                               <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
                                 <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
