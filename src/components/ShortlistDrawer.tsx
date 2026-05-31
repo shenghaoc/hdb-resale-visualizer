@@ -1100,7 +1100,7 @@ export function ShortlistDrawer({
                   onShareBlocked={() => setShareError(t("shortlist.shareErrorTooLarge"))}
                   csvExport={shortlistCsvExport}
                   exportAriaLabel={t("shortlist.export.csvLabel")}
-                  exportAriaLabelDone={t("shortlist.export.csvLabel")}
+                  exportAriaLabelDone={t("share.exportCsvDone")}
                   className="rounded-lg border-border/50 bg-card/80"
                   size="icon-xs"
                   variant="outline"

@@ -117,7 +117,6 @@ export function ShareButton({
       className={cn(className, copied && "text-primary")}
       aria-label={copied ? ariaLabelCopied : ariaLabel}
       title={copied ? ariaLabelCopied : ariaLabel}
-      disabled={shareDisabled}
     >
       {copied ? (
         <Check data-icon className="size-4" aria-hidden="true" />

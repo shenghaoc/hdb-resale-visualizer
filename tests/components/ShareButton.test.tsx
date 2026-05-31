@@ -180,6 +180,31 @@ describe("ShareButton", () => {
     expect(revokeObjectURL).toHaveBeenCalled();
   });
 
+  it("invokes onShareBlocked instead of sharing when shareDisabled is true", async () => {
+    const mockShare = vi.fn().mockResolvedValue(undefined);
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "share", {
+      value: mockShare,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      writable: true,
+      configurable: true,
+    });
+    const onShareBlocked = vi.fn();
+
+    render(<ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} />);
+    fireEvent.click(screen.getByRole("button", { name: "Share this block" }));
+
+    await waitFor(() => {
+      expect(onShareBlocked).toHaveBeenCalledTimes(1);
+    });
+    expect(mockShare).not.toHaveBeenCalled();
+    expect(writeText).not.toHaveBeenCalled();
+  });
+
   it("accepts optional text prop for Web Share", async () => {
     const mockShare = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, "share", {

@@ -586,7 +586,7 @@ export function ResultsPane({
             medianPrice: block.medianPrice,
             pricePerSqm: block.pricePerSqmMedian,
             transactionCount: block.transactionCount,
-            remainingLeaseYears: Math.max(0, block.leaseCommenceRange[1] - currentYear),
+            remainingLeaseYears: Math.max(0, MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1])),
             mrtDistanceMeters: block.nearestMrt?.distanceMeters ?? "",
             flatTypes: block.flatTypes.join("; "),
           })),

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildCsvContent,
+  buildResultsCsvContent,
   buildShortlistCsvContent,
   escapeCsvQuotedField,
   formatCsvCell,
@@ -87,5 +88,49 @@ describe("buildShortlistCsvContent", () => {
       ],
     );
     expect(csv).toContain('"\'@import"');
+  });
+});
+
+describe("buildResultsCsvContent", () => {
+  it("exports results rows with the remaining lease value preserved", () => {
+    const csv = buildResultsCsvContent(
+      ["Address", "Town", "Median", "PSM", "Txns", "Remaining Lease", "MRT", "Flat Types"],
+      [
+        {
+          address: "Blk 1",
+          town: "Bedok",
+          medianPrice: 500000,
+          pricePerSqm: 6000,
+          transactionCount: 12,
+          remainingLeaseYears: 73,
+          mrtDistanceMeters: 400,
+          flatTypes: "3 ROOM; 4 ROOM",
+        },
+      ],
+    );
+    expect(csv).toBe(
+      '"Address","Town","Median","PSM","Txns","Remaining Lease","MRT","Flat Types"\n' +
+        '"Blk 1","Bedok",500000,6000,12,73,400,"3 ROOM; 4 ROOM"',
+    );
+  });
+
+  it("sanitizes formula-like text fields", () => {
+    const csv = buildResultsCsvContent(
+      ["Address", "Flat Types"],
+      [
+        {
+          address: "=cmd",
+          town: "",
+          medianPrice: 0,
+          pricePerSqm: 0,
+          transactionCount: 0,
+          remainingLeaseYears: "",
+          mrtDistanceMeters: "",
+          flatTypes: "@evil",
+        },
+      ],
+    );
+    expect(csv).toContain('"\'=cmd"');
+    expect(csv).toContain('"\'@evil"');
   });
 });
