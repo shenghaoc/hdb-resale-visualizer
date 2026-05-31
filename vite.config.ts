@@ -1,9 +1,49 @@
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      registerType: "autoUpdate",
+      injectRegister: "script-defer",
+      manifest: false,
+      includeAssets: [
+        "favicon.ico",
+        "og-card.png",
+        "temporal-polyfill.js",
+        "manifest.webmanifest",
+        "icons/pwa-192.svg",
+        "icons/pwa-512.svg",
+      ],
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest,woff,woff2}"],
+        navigateFallback: "/index.html",
+        navigateFallbackDenylist: [/^\/api\//, /^\/og\//],
+        runtimeCaching: [
+          {
+            urlPattern: /^\/api\//,
+            handler: "NetworkFirst",
+            method: "GET",
+            options: {
+              cacheName: "hdb-api-get-v1",
+              networkTimeoutSeconds: 8,
+              expiration: {
+                maxEntries: 128,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   resolve: {
     // Vite 8: use tsconfig paths instead of manual alias duplication
     tsconfigPaths: true,
