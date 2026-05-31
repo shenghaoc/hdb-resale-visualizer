@@ -64,17 +64,21 @@ const t: Translator = (key) => {
 
 const sampleBlock: BlockSummary = {
   addressKey: "bedok-101-bedok-nth-ave-4",
-  blockNo: "101",
-  street: "BEDOK NTH AVE 4",
   town: "BEDOK",
-  postalCode: "460101",
+  block: "101",
+  streetName: "BEDOK NTH AVE 4",
   coordinates: { lat: 1.324, lng: 103.93 },
   medianPrice: 500000,
-  medianPricePerSqm: 5500,
+  pricePerSqmMedian: 5500,
   transactionCount: 3,
-  remainingLeaseYears: 70,
+  floorAreaRange: [60, 120],
+  leaseCommenceRange: [1990, 1990],
+  latestMonth: "2024-12",
+  availableDateRange: ["2020-01", "2024-12"],
+  flatTypes: ["4 ROOM"],
+  flatModels: ["MODEL A"],
   nearestMrt: null,
-  nearestMrtDistanceM: null,
+  postalCode: "460101",
 };
 
 const defaultProps = {
