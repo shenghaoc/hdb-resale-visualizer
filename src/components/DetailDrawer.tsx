@@ -388,18 +388,19 @@ export function DetailDrawer({
 
   const leaseFinancing = useMemo(() => {
     if (!currentSummary) return null;
+    // Guard against malformed data: a missing lease-commence year would
+    // propagate as NaN and render garbage rather than a useful verdict.
+    const leaseCommence = currentSummary.leaseCommenceRange?.[0];
+    if (leaseCommence == null) return null;
     // Use the block's oldest units (fewest remaining years) so the CPF/loan
     // fit and decay clock reflect the buyer-protective worst case.
-    const remainingLeaseYears = computeRemainingLeaseYears(
-      currentSummary.leaseCommenceRange[0],
-      currentYear,
-    );
+    const remainingLeaseYears = computeRemainingLeaseYears(leaseCommence, currentYear);
     return assessLeaseFinancing({
       remainingLeaseYears,
       applicantAge: searchProfile?.age ?? null,
       coApplicantAge: searchProfile?.coApplicantAge ?? null,
     });
-  }, [currentSummary, currentYear, searchProfile]);
+  }, [currentSummary, currentYear, searchProfile?.age, searchProfile?.coApplicantAge]);
 
   const flatTypeLadder = useMemo(() => {
     if (!currentSummary || !detail?.recentTransactions) return [];
