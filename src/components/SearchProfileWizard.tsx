@@ -290,7 +290,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={selected}
                           onClick={() => setMainFlatType(selected ? "" : flatType)}
                           className={cn(
-                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200",
+                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
                               : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -343,7 +343,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMaxBudget(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all",
+                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -394,7 +394,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         <PopoverTrigger asChild>
                           <button
                             type="button"
-                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold"
+                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                           >
                             <span className={commuteAnchorMrt ? "text-foreground" : "text-muted-foreground"}>
                               {commuteAnchorMrt ? formatStationLabel(commuteAnchorMrt) : t("searchProfile.selectMrtStation")}
@@ -433,7 +433,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                     setStationPickerOpen(false);
                                   }}
                                   className={cn(
-                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted/60",
+                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                                     commuteAnchorMrt === station && "bg-primary/10 text-primary",
                                   )}
                                 >
@@ -460,7 +460,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               aria-pressed={active}
                               onClick={() => setMaxCommute(active ? "" : String(preset))}
                               className={cn(
-                                "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
+                                "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                 active
                                   ? "border-primary bg-primary text-primary-foreground"
                                   : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -517,7 +517,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMinLease(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all",
+                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -713,7 +713,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                 setDirection(-1);
                 setStep((prev) => Math.max(0, prev - 1));
               }}
-              className="rounded-[0.65rem] bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80"
+              className="rounded-[0.65rem] bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {t("searchProfile.back")}
             </button>
@@ -721,7 +721,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <button
               type="button"
               onClick={onSkip}
-              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground transition-colors hover:text-foreground"
+              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-md"
             >
               {t("searchProfile.skip")}
             </button>
@@ -730,7 +730,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             type="button"
             onClick={handleContinue}
             disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-            className="rounded-[0.65rem] bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-all enabled:hover:brightness-95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60"
+            className="rounded-[0.65rem] bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-all enabled:hover:brightness-95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {nextLabel}
           </button>
