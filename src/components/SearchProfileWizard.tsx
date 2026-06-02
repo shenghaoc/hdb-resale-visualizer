@@ -290,7 +290,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={selected}
                           onClick={() => setMainFlatType(selected ? "" : flatType)}
                           className={cn(
-                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
                               : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -343,7 +343,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMaxBudget(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -433,7 +433,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                     setStationPickerOpen(false);
                                   }}
                                   className={cn(
-                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted/60",
+                                    "flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                                     commuteAnchorMrt === station && "bg-primary/10 text-primary",
                                   )}
                                 >
@@ -460,7 +460,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               aria-pressed={active}
                               onClick={() => setMaxCommute(active ? "" : String(preset))}
                               className={cn(
-                                "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                                "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                 active
                                   ? "border-primary bg-primary text-primary-foreground"
                                   : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -517,7 +517,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMinLease(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
