@@ -69,9 +69,11 @@ import {
   type TrendRangeKey,
 } from "@/lib/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
+import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/lib/lease-financing";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { buildBlockShareUrl } from "@/lib/shareUrls";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
+import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
@@ -383,6 +385,22 @@ export function DetailDrawer({
         : [],
     [currentSummary, currentYear, remainingLeaseMin],
   );
+
+  const leaseFinancing = useMemo(() => {
+    if (!currentSummary) return null;
+    // Guard against malformed data: a missing lease-commence year would
+    // propagate as NaN and render garbage rather than a useful verdict.
+    const leaseCommence = currentSummary.leaseCommenceRange?.[0];
+    if (leaseCommence == null) return null;
+    // Use the block's oldest units (fewest remaining years) so the CPF/loan
+    // fit and decay clock reflect the buyer-protective worst case.
+    const remainingLeaseYears = computeRemainingLeaseYears(leaseCommence, currentYear);
+    return assessLeaseFinancing({
+      remainingLeaseYears,
+      applicantAge: searchProfile?.age ?? null,
+      coApplicantAge: searchProfile?.coApplicantAge ?? null,
+    });
+  }, [currentSummary, currentYear, searchProfile?.age, searchProfile?.coApplicantAge]);
 
   const flatTypeLadder = useMemo(() => {
     if (!currentSummary || !detail?.recentTransactions) return [];
@@ -742,6 +760,10 @@ export function DetailDrawer({
                 ) : null}
 
                 <LeaseWarningPanel signals={leaseSignals} t={t} />
+
+                {leaseFinancing ? (
+                  <LeaseFinancingPanel assessment={leaseFinancing} t={t} />
+                ) : null}
 
                 {flatTypeLadder.length > 0 && (
                   <section>
