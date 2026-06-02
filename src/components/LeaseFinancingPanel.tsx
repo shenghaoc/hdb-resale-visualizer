@@ -124,7 +124,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
             </dd>
           </div>
         ) : null}
-        {assessment.loanTenureYears !== null ? (
+        {assessment.loanTenureYears !== null && assessment.loanTenureYears > 0 ? (
           <div className="col-span-2">
             <dt className="text-[0.58rem] font-medium text-muted-foreground">
               {t("leaseFinancing.loanTenure")}

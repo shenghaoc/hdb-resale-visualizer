@@ -73,6 +73,9 @@ describe("assessLeaseFinancing", () => {
     expect(result.proratedLtvRatio).toBe(0);
     // Age-derived facts are still reported so the buyer sees the full picture.
     expect(result.requiredLeaseYears).toBe(HDB_MAX_BUYER_AGE - 35);
+    // Tenure collapses to 0 (lease − 20 floors at 0) and the lease is the binder.
+    expect(result.loanTenureYears).toBe(0);
+    expect(result.tenureLimitedBy).toBe("lease");
   });
 
   it("still flags the CPF floor when the buyer's age is unknown", () => {
@@ -83,6 +86,15 @@ describe("assessLeaseFinancing", () => {
     expect(result.status).toBe("below-cpf-floor");
     expect(result.youngestApplicantAge).toBeNull();
     expect(result.requiredLeaseYears).toBeNull();
+    expect(result.loanTenureYears).toBeNull();
+    expect(result.tenureLimitedBy).toBeNull();
+  });
+
+  it("attributes an exact age/lease tie to the lease", () => {
+    // Age 50 → age cap min(25, 65 − 50) = 15; remaining 35 → lease cap 15.
+    const result = assessLeaseFinancing({ remainingLeaseYears: 35, applicantAge: 50 });
+    expect(result.loanTenureYears).toBe(15);
+    expect(result.tenureLimitedBy).toBe("lease");
   });
 
   it("returns unknown (but still computes decay) when age is missing", () => {

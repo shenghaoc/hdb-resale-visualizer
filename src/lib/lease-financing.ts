@@ -121,10 +121,12 @@ export function assessLeaseFinancing(params: {
   const ageCapYears = youngest !== null ? computeLoanTenureYears(youngest) : null;
   const leaseCapYears = Math.max(0, remaining - CPF_MIN_LEASE_YEARS);
   const loanTenureYears = ageCapYears !== null ? Math.min(ageCapYears, leaseCapYears) : null;
+  // On a tie, attribute it to the lease — that's the constraint the buyer can't
+  // change, so it's the more useful (and less self-blaming) thing to surface.
   const tenureLimitedBy: LeaseFinancingAssessment["tenureLimitedBy"] =
     ageCapYears === null || loanTenureYears === null || loanTenureYears >= 25
       ? null
-      : leaseCapYears < ageCapYears
+      : leaseCapYears <= ageCapYears
         ? "lease"
         : "age";
 
