@@ -33,7 +33,8 @@ describe("assessLeaseFinancing", () => {
     expect(result.shortfallYears).toBe(0);
     expect(result.prorationFactor).toBe(1);
     expect(result.proratedLtvRatio).toBe(HDB_MAX_LTV_RATIO);
-    expect(result.ageLimitsTenure).toBe(false);
+    expect(result.loanTenureYears).toBe(25); // min(25, 65 - 35, 80 - 20)
+    expect(result.tenureLimitedBy).toBeNull();
   });
 
   it("uses the youngest applicant for the lease-to-95 rule", () => {
@@ -99,8 +100,25 @@ describe("assessLeaseFinancing", () => {
   it("marks tenure as age-limited once the applicant is over 40", () => {
     const result = assessLeaseFinancing({ remainingLeaseYears: 90, applicantAge: 50 });
     expect(result.status).toBe("covers-to-95");
-    expect(result.loanTenureYears).toBe(15); // min(25, 65 - 50)
-    expect(result.ageLimitsTenure).toBe(true);
+    expect(result.loanTenureYears).toBe(15); // min(25, 65 - 50, 90 - 20)
+    expect(result.tenureLimitedBy).toBe("age");
+  });
+
+  it("caps loan tenure by the remaining lease minus 20 years", () => {
+    // Age cap is the full 25 (min(25, 65 - 30)); the lease cap (35 - 20 = 15)
+    // is the binding constraint, so the buyer is told it's the lease, not age.
+    const result = assessLeaseFinancing({ remainingLeaseYears: 35, applicantAge: 30 });
+    expect(result.loanTenureYears).toBe(15);
+    expect(result.tenureLimitedBy).toBe("lease");
+  });
+
+  it("reports the lease cap even in the prorated band", () => {
+    // Youngest 40 → needs 55 yrs; 44 yrs is prorated. Age cap min(25,25)=25,
+    // lease cap 44-20=24 → tenure 24, limited by lease.
+    const result = assessLeaseFinancing({ remainingLeaseYears: 44, applicantAge: 40 });
+    expect(result.status).toBe("prorated");
+    expect(result.loanTenureYears).toBe(24);
+    expect(result.tenureLimitedBy).toBe("lease");
   });
 
   it("computes the lease left after a typical hold, flooring at zero", () => {

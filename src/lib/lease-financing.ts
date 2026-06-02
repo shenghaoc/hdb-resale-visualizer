@@ -61,10 +61,18 @@ export type LeaseFinancingAssessment = {
   prorationFactor: number | null;
   /** Indicative max HDB loan-to-value after pro-ration, or null when unknown. */
   proratedLtvRatio: number | null;
-  /** HDB concessionary loan tenure cap (years) for the youngest applicant. */
+  /**
+   * HDB concessionary loan tenure cap (years): the lower of the age cap
+   * (min(25, 65 − age)) and the lease cap (remaining lease − 20, so at least
+   * 20 years remain at loan end). Null when the buyer's age is unknown.
+   */
   loanTenureYears: number | null;
-  /** True when age (not lease) caps the loan tenure below the 25-year maximum. */
-  ageLimitsTenure: boolean;
+  /**
+   * Which constraint pulls the tenure below the 25-year maximum — so the buyer
+   * sees the real reason rather than always being told it's their age. Null
+   * when the tenure is the full 25 years or the age is unknown.
+   */
+  tenureLimitedBy: "age" | "lease" | null;
   /** Remaining lease (years) left after a {@link TYPICAL_HOLD_YEARS} hold. */
   remainingLeaseAfterHold: number;
 };
@@ -106,8 +114,19 @@ export function assessLeaseFinancing(params: {
 
   const requiredLeaseYears =
     youngest !== null ? Math.max(0, HDB_MAX_BUYER_AGE - youngest) : null;
-  const loanTenureYears = youngest !== null ? computeLoanTenureYears(youngest) : null;
-  const ageLimitsTenure = loanTenureYears !== null && loanTenureYears < 25;
+
+  // Loan tenure is the lower of the age cap (min(25, 65 − age)) and the lease
+  // cap (remaining − 20, so ≥ 20 years of lease survive the loan). HDB applies
+  // both; using age alone overstates the tenure on older flats.
+  const ageCapYears = youngest !== null ? computeLoanTenureYears(youngest) : null;
+  const leaseCapYears = Math.max(0, remaining - CPF_MIN_LEASE_YEARS);
+  const loanTenureYears = ageCapYears !== null ? Math.min(ageCapYears, leaseCapYears) : null;
+  const tenureLimitedBy: LeaseFinancingAssessment["tenureLimitedBy"] =
+    ageCapYears === null || loanTenureYears === null || loanTenureYears >= 25
+      ? null
+      : leaseCapYears < ageCapYears
+        ? "lease"
+        : "age";
 
   // The 20-year floor is a hard fact independent of the buyer's age.
   if (remaining < CPF_MIN_LEASE_YEARS) {
@@ -121,7 +140,7 @@ export function assessLeaseFinancing(params: {
       prorationFactor: 0,
       proratedLtvRatio: 0,
       loanTenureYears,
-      ageLimitsTenure,
+      tenureLimitedBy,
       remainingLeaseAfterHold,
     };
   }
@@ -136,7 +155,7 @@ export function assessLeaseFinancing(params: {
       prorationFactor: null,
       proratedLtvRatio: null,
       loanTenureYears: null,
-      ageLimitsTenure: false,
+      tenureLimitedBy: null,
       remainingLeaseAfterHold,
     };
   }
@@ -151,7 +170,7 @@ export function assessLeaseFinancing(params: {
       prorationFactor: 1,
       proratedLtvRatio: HDB_MAX_LTV_RATIO,
       loanTenureYears,
-      ageLimitsTenure,
+      tenureLimitedBy,
       remainingLeaseAfterHold,
     };
   }
@@ -168,7 +187,7 @@ export function assessLeaseFinancing(params: {
     prorationFactor,
     proratedLtvRatio: HDB_MAX_LTV_RATIO * prorationFactor,
     loanTenureYears,
-    ageLimitsTenure,
+    tenureLimitedBy,
     remainingLeaseAfterHold,
   };
 }

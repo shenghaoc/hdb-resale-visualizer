@@ -131,9 +131,11 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
             </dt>
             <dd className="font-heading text-sm font-extrabold tabular-nums">
               {t("unit.years", { value: assessment.loanTenureYears })}
-              {assessment.ageLimitsTenure ? (
+              {assessment.tenureLimitedBy !== null ? (
                 <span className="ml-1 text-[0.58rem] font-medium text-muted-foreground">
-                  {t("leaseFinancing.loanTenureAgeCapped")}
+                  {assessment.tenureLimitedBy === "lease"
+                    ? t("leaseFinancing.loanTenureLeaseCapped")
+                    : t("leaseFinancing.loanTenureAgeCapped")}
                 </span>
               ) : null}
             </dd>
