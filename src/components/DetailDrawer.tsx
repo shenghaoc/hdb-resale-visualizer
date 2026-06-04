@@ -469,7 +469,7 @@ export function DetailDrawer({
               aria-label={t("app.close")}
               title={t("app.close")}
             >
-              <ChevronLeft data-icon className="size-5" aria-hidden="true" />
+              <ChevronLeft data-icon="inline-start" className="size-5" aria-hidden="true" />
             </Button>
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
@@ -484,7 +484,7 @@ export function DetailDrawer({
               </div>
               <div className="flex w-full items-center justify-between gap-4">
                 <DrawerTitle className="min-w-0 truncate text-left font-heading text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
-                  {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "..."}
+                  {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "…"}
                 </DrawerTitle>
                 {currentSummary && (
                   <Button
@@ -500,7 +500,7 @@ export function DetailDrawer({
                     title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                     aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
-                    {isCopied ? <Check data-icon className="size-4" aria-hidden="true" /> : <Copy data-icon className="size-4" aria-hidden="true" />}
+                    {isCopied ? <Check data-icon="inline-start" className="size-4" aria-hidden="true" /> : <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />}
                   </Button>
                 )}
               </div>
@@ -516,7 +516,7 @@ export function DetailDrawer({
               aria-label={t("app.close")}
               title={t("app.close")}
             >
-              <X data-icon className="size-4" aria-hidden="true" />
+              <X data-icon="inline-start" className="size-4" aria-hidden="true" />
             </Button>
           </DrawerHeader>
 
@@ -586,7 +586,7 @@ export function DetailDrawer({
                       <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
                         {currentSummary
                           ? formatCurrency(currentSummary.medianPrice, locale)
-                          : "..."}
+                          : "…"}
                       </div>
                       {currentSummary ? (
                         <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
@@ -620,7 +620,7 @@ export function DetailDrawer({
                     <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
-                          : "..."}
+                          : "…"}
                     </div>
                   </div>
                 </div>
@@ -824,7 +824,7 @@ export function DetailDrawer({
                             ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
                                 currentSummary.floorAreaRange[1],
                               )} ${t("unit.sqm", { value: "" }).trim()}`
-                            : "..."}
+                            : "…"}
                         </span>
                       </div>
                     </CardContent>
@@ -1323,7 +1323,7 @@ export function DetailDrawer({
                   window.open(url.toString(), "_blank", "noopener,noreferrer");
                 }}
               >
-                <MapPin data-icon className="size-4" aria-hidden="true" />
+                <MapPin data-icon="inline-start" className="size-4" aria-hidden="true" />
                 <span className="truncate">{t("detail.directions")}</span>
               </Button>
             </div>

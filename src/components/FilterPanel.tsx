@@ -142,17 +142,17 @@ function AffordabilityFilterField({
     {
       mode: "",
       label: t("affordability.filter.all"),
-      aria: t("affordability.filter.allAria"),
+      aria: t("affordability.filter.all"),
     },
     {
       mode: "comfortable",
       label: t("affordability.filter.comfortable"),
-      aria: t("affordability.filter.comfortableAria"),
+      aria: t("affordability.filter.comfortable"),
     },
     {
       mode: "stretch",
       label: t("affordability.filter.stretch"),
-      aria: t("affordability.filter.stretchAria"),
+      aria: t("affordability.filter.stretch"),
     },
   ];
 
@@ -247,7 +247,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
               >
-                <PanelLeftClose data-icon className="size-3.5 shrink-0" aria-hidden="true" />
+                <PanelLeftClose data-icon="inline-start" className="size-3.5 shrink-0" aria-hidden="true" />
                 {t("filters.hidePanel")}
               </Button>
             ) : null}
@@ -258,7 +258,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 variant="ghost"
                 className={cn("h-7", FILTER_INLINE_ACTION_CLASS)}
               >
-                <RefreshCw data-icon className="size-3 shrink-0" aria-hidden="true" />
+                <RefreshCw data-icon="inline-start" className="size-3 shrink-0" aria-hidden="true" />
                 {t("filters.reset")}
               </Button>
             </CardAction>

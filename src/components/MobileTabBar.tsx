@@ -90,9 +90,9 @@ export function MobileTabBar({
         title={t("app.toggleTheme")}
       >
         {theme === "light" ? (
-          <Moon data-icon className="size-4" aria-hidden="true" />
+          <Moon data-icon="inline-start" className="size-4" aria-hidden="true" />
         ) : (
-          <Sun data-icon className="size-4" aria-hidden="true" />
+          <Sun data-icon="inline-start" className="size-4" aria-hidden="true" />
         )}
       </Button>
       <Button
@@ -112,7 +112,7 @@ export function MobileTabBar({
         onKeyDown={(e) => handleKeyDown(e, 1)}
         onFocus={() => setFocusedIndex(1)}
       >
-        <SlidersHorizontal data-icon />
+        <SlidersHorizontal data-icon="inline-start" />
         <span>{filtersLabel}</span>
       </Button>
       <Button
@@ -132,7 +132,7 @@ export function MobileTabBar({
         onKeyDown={(e) => handleKeyDown(e, 2)}
         onFocus={() => setFocusedIndex(2)}
       >
-        <List data-icon />
+        <List data-icon="inline-start" />
         <span>{resultsLabel}</span>
       </Button>
       <Button
@@ -152,7 +152,7 @@ export function MobileTabBar({
         onKeyDown={(e) => handleKeyDown(e, 3)}
         onFocus={() => setFocusedIndex(3)}
       >
-        <Bookmark data-icon className={mobileTab === "saved" ? "fill-current" : ""} />
+        <Bookmark data-icon="inline-start" className={mobileTab === "saved" ? "fill-current" : ""} />
         <span>{savedLabel}</span>
         {shortlistCount > 0 ? (
           <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">

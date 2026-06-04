@@ -96,7 +96,7 @@ export function DesktopTabBar({
         onKeyDown={(e) => handleKeyDown(e, 0)}
         onFocus={() => setFocusedIndex(0)}
       >
-        <SlidersHorizontal data-icon />
+        <SlidersHorizontal data-icon="inline-start" />
         <span>{filtersLabel}</span>
       </Button>
       <Button
@@ -115,7 +115,7 @@ export function DesktopTabBar({
         onKeyDown={(e) => handleKeyDown(e, 1)}
         onFocus={() => setFocusedIndex(1)}
       >
-        <List data-icon />
+        <List data-icon="inline-start" />
         <span>{resultsLabel}</span>
       </Button>
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
@@ -135,7 +135,7 @@ export function DesktopTabBar({
         onKeyDown={(e) => handleKeyDown(e, 2)}
         onFocus={() => setFocusedIndex(2)}
       >
-        <Bookmark data-icon className={isSavedPanelOpen ? "fill-current" : ""} />
+        <Bookmark data-icon="inline-start" className={isSavedPanelOpen ? "fill-current" : ""} />
         <span>{savedLabel}</span>
         {shortlistCount > 0 ? (
           <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
