@@ -1,9 +1,13 @@
 import { useCallback, useId, useMemo, useState } from "react";
-import * as echarts from "echarts/core";
-import { LineChart } from "echarts/charts";
-import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
-import { CanvasRenderer } from "echarts/renderers";
-import ReactEChartsCore from "echarts-for-react/esm/core";
+import {
+  LineChart as RechartsLineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import {
   ArrowUpDown,
   Check,
@@ -20,8 +24,7 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, getCurrentYear } from "@/lib/constants";
-import { ECHARTS_GRID_CONTAIN_AXIS_LABELS } from "@/lib/echarts-grid";
+import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, PRIMARY_BLUE, getCurrentYear } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useI18n, type Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
@@ -141,8 +144,6 @@ const compareModeLabels: Record<CompareMode, string> = {
   lease: "shortlist.compare.lease",
   mrt: "shortlist.compare.mrt",
 };
-
-echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
 
 function ShortlistComparisonTable({
   comparisonRows,
@@ -917,7 +918,7 @@ export function ShortlistDrawer({
   }, [locale, rows, t]);
 
   const trendChartRows = useMemo(() => rows.filter((row) => row.monthlyTrend.length > 0), [rows]);
-  const compareOption = useMemo(() => {
+  const compareChart = useMemo(() => {
     if (trendChartRows.length < 2) {
       return null;
     }
@@ -925,20 +926,31 @@ export function ShortlistDrawer({
     const months = [...new Set(trendChartRows.flatMap((row) => row.monthlyTrend.map((point) => point.month)))].sort(
       (left, right) => left.localeCompare(right),
     );
-    const series = trendChartRows.map((row) => {
-      const monthToPrice = new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice]));
-      return {
-        name: `${row.block.block} ${row.block.streetName}`,
-        type: "line",
-        smooth: true,
-        showSymbol: false,
-        lineStyle: { width: 2.25 },
-        data: months.map((month) => {
-          const price = monthToPrice.get(month);
-          return price != null && !Number.isNaN(price) ? price : null;
-        }),
-      };
+    const seriesKeys = trendChartRows.map((row) => `${row.block.block} ${row.block.streetName}`);
+    const priceMaps = trendChartRows.map((row) =>
+      new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice])),
+    );
+    let maxPrice = 0;
+    const data = months.map((month) => {
+      const row: Record<string, string | number | undefined> = { month };
+      for (let i = 0; i < seriesKeys.length; i++) {
+        const price = priceMaps[i].get(month);
+        if (price != null && !Number.isNaN(price)) {
+          row[seriesKeys[i]] = price;
+          if (price > maxPrice) maxPrice = price;
+        } else {
+          row[seriesKeys[i]] = undefined;
+        }
+      }
+      return row;
     });
+    const priceAxisWidth = maxPrice > 0
+      ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4)
+      : 48;
+
+    const palette = isDark
+      ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
+      : [PRIMARY_BLUE, "#3a8a6f", "#d97706", "#c026d3"];
 
     const colors = {
       popover: isDark ? "#191f1d" : "#ffffff",
@@ -946,56 +958,10 @@ export function ShortlistDrawer({
       border: isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)",
       splitLine: isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)",
       mutedForeground: isDark ? "#9baaa4" : "#6b7572",
-      palette: isDark
-        ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
-        : ["#2563eb", "#3a8a6f", "#d97706", "#c026d3"],
     };
 
-    return {
-      animationDuration: 400,
-      backgroundColor: "transparent",
-      color: colors.palette,
-      grid: { left: 8, right: 12, top: 42, bottom: 24, ...ECHARTS_GRID_CONTAIN_AXIS_LABELS },
-      tooltip: {
-        trigger: "axis",
-        backgroundColor: colors.popover,
-        borderColor: colors.border,
-        borderWidth: 1,
-        textStyle: { color: colors.popoverForeground },
-        valueFormatter: (value: number | null) =>
-          value === null || Number.isNaN(value) ? t("shortlist.na") : formatCompactCurrency(value),
-      },
-      legend: {
-        type: "scroll",
-        top: 0,
-        textStyle: {
-          color: colors.mutedForeground,
-          fontSize: 10,
-          fontWeight: 700,
-        },
-      },
-      xAxis: {
-        type: "category",
-        data: months,
-        axisLine: { lineStyle: { color: colors.border } },
-        axisLabel: {
-          color: colors.mutedForeground,
-          formatter: (value: string) => value.slice(2),
-          fontSize: 10,
-        },
-      },
-      yAxis: {
-        type: "value",
-        splitLine: { lineStyle: { color: colors.splitLine } },
-        axisLabel: {
-          color: colors.mutedForeground,
-          formatter: (value: number) => formatCompactCurrency(value),
-          fontSize: 10,
-        },
-      },
-      series,
-    };
-  }, [trendChartRows, isDark, t]);
+    return { data, seriesKeys, palette, colors, priceAxisWidth };
+  }, [trendChartRows, isDark]);
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
@@ -1172,7 +1138,7 @@ export function ShortlistDrawer({
                     ))}
                   </div>
 
-                  {viewMode === "list" && compareOption ? (
+                  {viewMode === "list" && compareChart ? (
                     <Card size="sm" className="v2-card gap-3 rounded-xl py-3 shadow-none">
                       <CardHeader className="px-3">
                         <CardTitle className="v2-section-title">
@@ -1180,14 +1146,64 @@ export function ShortlistDrawer({
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="px-3">
-                        <ReactEChartsCore
-                          echarts={echarts}
-                          notMerge
-                          option={compareOption}
+                        <div
                           style={{ height: 220, width: "100%" }}
                           aria-label={t("shortlist.compareTrendsTitle")}
                           role="img"
-                        />
+                        >
+                          <ResponsiveContainer width="100%" height="100%">
+                            <RechartsLineChart data={compareChart.data} margin={{ top: 8, right: 12, bottom: 0, left: 8 }}>
+                              <XAxis
+                                dataKey="month"
+                                tickFormatter={(v: string) => v.slice(2)}
+                                tick={{ fill: compareChart.colors.mutedForeground, fontSize: 10 }}
+                                axisLine={{ stroke: compareChart.colors.border }}
+                                tickLine={false}
+                              />
+                              <YAxis
+                                tickFormatter={(v: number) => formatCompactCurrency(v)}
+                                tick={{ fill: compareChart.colors.mutedForeground, fontSize: 10 }}
+                                axisLine={false}
+                                tickLine={false}
+                                width={compareChart.priceAxisWidth}
+                              />
+                              <Tooltip
+                                contentStyle={{
+                                  backgroundColor: compareChart.colors.popover,
+                                  border: `1px solid ${compareChart.colors.border}`,
+                                  color: compareChart.colors.popoverForeground,
+                                  borderRadius: 4,
+                                  fontSize: 11,
+                                }}
+                                labelFormatter={(label) => String(label)}
+                                formatter={(value) => {
+                                  if (value == null || typeof value !== "number" || Number.isNaN(value)) {
+                                    return t("shortlist.na");
+                                  }
+                                  return formatCompactCurrency(value);
+                                }}
+                              />
+                              <Legend
+                                verticalAlign="top"
+                                wrapperStyle={{ fontSize: 10, fontWeight: 700, color: compareChart.colors.mutedForeground }}
+                              />
+                              {compareChart.seriesKeys.map((key, i) => (
+                                <Line
+                                  key={key}
+                                  type="monotone"
+                                  dataKey={key}
+                                  stroke={compareChart.palette[i % compareChart.palette.length]}
+                                  strokeWidth={2.25}
+                                  dot={false}
+                                  activeDot={false}
+                                  connectNulls={false}
+                                  isAnimationActive={true}
+                                  animationDuration={400}
+                                />
+                              ))}
+                            </RechartsLineChart>
+                          </ResponsiveContainer>
+                        </div>
                       </CardContent>
                     </Card>
                   ) : null}
