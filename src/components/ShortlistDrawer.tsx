@@ -3,7 +3,7 @@ import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, LegendComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import ReactEChartsCore from "echarts-for-react/esm/core";
+import { EChart } from "@/components/EChart";
 import {
   ArrowUpDown,
   Check,
@@ -1180,9 +1180,8 @@ export function ShortlistDrawer({
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="px-3">
-                        <ReactEChartsCore
+                        <EChart
                           echarts={echarts}
-                          notMerge
                           option={compareOption}
                           style={{ height: 220, width: "100%" }}
                           aria-label={t("shortlist.compareTrendsTitle")}

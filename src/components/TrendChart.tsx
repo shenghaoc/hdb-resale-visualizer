@@ -9,7 +9,7 @@ import {
   MarkPointComponent,
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import ReactEChartsCore from "echarts-for-react/esm/core";
+import { EChart } from "@/components/EChart";
 import { formatCompactCurrency } from "@/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
 import type { Translator } from "@/lib/i18n/types";
@@ -168,9 +168,8 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
   }, [points, isDark, t, peakMonth]);
 
   return (
-    <ReactEChartsCore
+    <EChart
       echarts={echarts}
-      notMerge
       option={option}
       style={{ height, width: "100%" }}
       aria-label={t("trend.chartLabel")}
