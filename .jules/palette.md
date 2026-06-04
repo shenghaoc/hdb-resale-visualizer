@@ -9,3 +9,11 @@
 ## 2026-06-02 - Focus ring contrast on primary-filled chips
 **Learning:** Preset chips that use `bg-primary` when selected can hide a `ring-primary/50` focus ring because the ring shares the same hue as the background. Popover listbox options are easy to miss when adding focus styles to a wizard's main controls.
 **Action:** Add `focus-visible:ring-offset-2 focus-visible:ring-offset-background` to selectable chips that can render with a primary background. Apply the same base focus ring utilities to every keyboard-reachable button in nested pickers (e.g. MRT station listbox options), not just the trigger.
+
+## 2026-06-04 - Focus ring pattern for expandable rows
+**Learning:** The `CardHeader` component often contains custom clickable elements (like `div` or `button` wrappers for expandable rows) that use custom flexbox layouts. These elements might lack standard focus styling, which makes keyboard navigation difficult. Adding focus rings directly to these elements requires carefully maintaining their layout properties while adding the `focus-visible` utility classes.
+**Action:** When implementing expandable rows or custom clickable areas, always verify keyboard focus visibility. If it's a custom `button` or `div` acting as a trigger, ensure `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50` (and a `rounded` utility if needed to match the shape) is applied so screen reader and keyboard users can easily identify the active element.
+
+## 2026-06-04 - Jules memory folder must be `.jules` (lowercase)
+**Learning:** Jules sometimes writes learnings to `.Jules/` (capital J) instead of this repo’s canonical `.jules/` directory. On case-insensitive filesystems (macOS, Windows) both paths alias to the same folder and the mistake is easy to miss in review; on Linux CI they are separate directories and ESLint ignore rules only list `.jules`.
+**Action:** When reviewing Jules PRs, confirm palette/bolt/sentinel learnings land in `.jules/`, delete stray `.Jules/` files, and merge misplaced content into the lowercase file using real Markdown line breaks—not literal `\n` escape sequences in a single line.
