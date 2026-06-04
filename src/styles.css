@@ -416,7 +416,7 @@
   color: var(--muted-foreground);
   font-weight: 700;
   text-transform: uppercase;
-  transition: color 150ms ease, background 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
 }
@@ -683,7 +683,7 @@
   padding: 0;
   color: var(--muted-foreground);
   cursor: pointer;
-  transition: color 150ms ease, background 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
 }
 
 .map-locale-trigger:hover,

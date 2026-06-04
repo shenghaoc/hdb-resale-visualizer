@@ -436,9 +436,9 @@ function App() {
         href="#main-content"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-lg focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-bold focus-visible:text-primary-foreground focus-visible:shadow-lg"
       >
-        Skip to main content
+        {t("app.skipToContent")}
       </a>
-      <main id="main-content" className="fixed inset-0 w-full overflow-hidden">
+      <main id="main-content" tabIndex={-1} className="fixed inset-0 w-full overflow-hidden focus:outline-none">
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
         <a
