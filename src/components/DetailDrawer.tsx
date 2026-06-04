@@ -469,7 +469,7 @@ export function DetailDrawer({
               aria-label={t("app.close")}
               title={t("app.close")}
             >
-              <ChevronLeft data-icon className="size-5" aria-hidden="true" />
+              <ChevronLeft data-icon="inline-start" className="size-5" aria-hidden="true" />
             </Button>
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
@@ -500,7 +500,7 @@ export function DetailDrawer({
                     title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                     aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
-                    {isCopied ? <Check data-icon className="size-4" aria-hidden="true" /> : <Copy data-icon className="size-4" aria-hidden="true" />}
+                    {isCopied ? <Check data-icon="inline-start" className="size-4" aria-hidden="true" /> : <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />}
                   </Button>
                 )}
               </div>
@@ -516,7 +516,7 @@ export function DetailDrawer({
               aria-label={t("app.close")}
               title={t("app.close")}
             >
-              <X data-icon className="size-4" aria-hidden="true" />
+              <X data-icon="inline-start" className="size-4" aria-hidden="true" />
             </Button>
           </DrawerHeader>
 
@@ -1323,7 +1323,7 @@ export function DetailDrawer({
                   window.open(url.toString(), "_blank", "noopener,noreferrer");
                 }}
               >
-                <MapPin data-icon className="size-4" aria-hidden="true" />
+                <MapPin data-icon="inline-start" className="size-4" aria-hidden="true" />
                 <span className="truncate">{t("detail.directions")}</span>
               </Button>
             </div>

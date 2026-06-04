@@ -1029,7 +1029,7 @@ export function ShortlistDrawer({
                 </Button>
               </ButtonGroup>
               <div className="flex min-w-0 items-center gap-2">
-                <Field className="min-w-0 flex-1 flex-row items-center gap-2 space-y-0">
+                <Field className="min-w-0 flex-1 flex-row items-center gap-2">
                   <FieldLabel id={sortLabelId} className="sr-only">
                     {t("shortlist.sortBy")}
                   </FieldLabel>
@@ -1340,7 +1340,7 @@ export function ShortlistDrawer({
                                 aria-label={t("shortlist.remove")}
                                 title={t("shortlist.remove")}
                               >
-                                <X data-icon className="size-4" aria-hidden="true" />
+                                <X data-icon="inline-start" className="size-4" aria-hidden="true" />
                               </Button>
                             </div>
                           </CardHeader>
