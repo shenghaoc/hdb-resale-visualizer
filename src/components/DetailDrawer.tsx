@@ -484,7 +484,7 @@ export function DetailDrawer({
               </div>
               <div className="flex w-full items-center justify-between gap-4">
                 <DrawerTitle className="min-w-0 truncate text-left font-heading text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">
-                  {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "..."}
+                  {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "…"}
                 </DrawerTitle>
                 {currentSummary && (
                   <Button
@@ -586,7 +586,7 @@ export function DetailDrawer({
                       <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
                         {currentSummary
                           ? formatCurrency(currentSummary.medianPrice, locale)
-                          : "..."}
+                          : "…"}
                       </div>
                       {currentSummary ? (
                         <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
@@ -620,7 +620,7 @@ export function DetailDrawer({
                     <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
-                          : "..."}
+                          : "…"}
                     </div>
                   </div>
                 </div>
@@ -824,7 +824,7 @@ export function DetailDrawer({
                             ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
                                 currentSummary.floorAreaRange[1],
                               )} ${t("unit.sqm", { value: "" }).trim()}`
-                            : "..."}
+                            : "…"}
                         </span>
                       </div>
                     </CardContent>

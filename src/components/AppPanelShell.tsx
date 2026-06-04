@@ -62,7 +62,7 @@ export function AppPanelShell({
             data-open={isLeftPanelOpen ? "true" : "false"}
             data-mode={leftTab}
             className={cn(
-              "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border bg-popover/95 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-xl",
+              "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain rounded-2xl border bg-popover/95 backdrop-blur-[20px] transition-[transform,opacity] duration-200 ease-out shadow-xl",
               detailVisible || detailLoading
                 ? "max-h-[min(calc(100vh-8rem),52rem)]"
                 : "max-h-[min(44rem,calc(100vh-12rem))]",
@@ -116,7 +116,7 @@ export function AppPanelShell({
             data-open={isSavedPanelOpen ? "true" : "false"}
             data-mode="saved"
             className={cn(
-              "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border bg-popover/95 backdrop-blur-[20px] transition-[transform,opacity,left] duration-200 ease-out shadow-xl",
+              "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain rounded-2xl border bg-popover/95 backdrop-blur-[20px] transition-[transform,opacity,left] duration-200 ease-out shadow-xl",
               "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] w-[min(28rem,32vw)]",
               isSavedPanelOpen
                 ? "translate-y-0 opacity-100"
@@ -144,7 +144,7 @@ export function AppPanelShell({
             <div
               id="mobile-panel"
               className={cn(
-                "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden rounded-t-2xl border bg-popover/95 backdrop-blur-[20px] transition-all shadow-xl",
+                "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain rounded-t-2xl border bg-popover/95 backdrop-blur-[20px] transition-all shadow-xl",
                 activeFilterChipCount > 0 ? "top-[4.5rem]" : "top-0",
               )}
             >

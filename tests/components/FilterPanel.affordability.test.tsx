@@ -94,7 +94,7 @@ describe("FilterPanel affordability toggle", () => {
   it("all-blocks button is active by default (affordable = '')", () => {
     renderPanel(baseFilters, completeProfile);
     const allBtn = screen.getByRole("button", {
-      name: /show all blocks regardless of affordability/i,
+      name: /All blocks/i,
     });
     expect(allBtn).toHaveAttribute("aria-pressed", "true");
   });
@@ -102,7 +102,7 @@ describe("FilterPanel affordability toggle", () => {
   it("comfortable button is active when affordable = 'comfortable'", () => {
     renderPanel({ ...baseFilters, affordable: "comfortable" }, completeProfile);
     const comfortableBtn = screen.getByRole("button", {
-      name: /show only blocks comfortably/i,
+      name: /comfortable(?!\s*\+)/i,
     });
     expect(comfortableBtn).toHaveAttribute("aria-pressed", "true");
   });
@@ -110,7 +110,7 @@ describe("FilterPanel affordability toggle", () => {
   it("stretch button is active when affordable = 'stretch'", () => {
     renderPanel({ ...baseFilters, affordable: "stretch" }, completeProfile);
     const stretchBtn = screen.getByRole("button", {
-      name: /show comfortable and stretch/i,
+      name: /stretch/i,
     });
     expect(stretchBtn).toHaveAttribute("aria-pressed", "true");
   });
@@ -120,7 +120,7 @@ describe("FilterPanel affordability toggle", () => {
     renderPanel(baseFilters, completeProfile, onChange);
 
     const comfortableBtn = screen.getByRole("button", {
-      name: /show only blocks comfortably/i,
+      name: /comfortable(?!\s*\+)/i,
     });
     await userEvent.click(comfortableBtn);
 
@@ -132,7 +132,7 @@ describe("FilterPanel affordability toggle", () => {
     renderPanel(baseFilters, completeProfile, onChange);
 
     const stretchBtn = screen.getByRole("button", {
-      name: /show comfortable and stretch/i,
+      name: /stretch/i,
     });
     await userEvent.click(stretchBtn);
 
@@ -144,7 +144,7 @@ describe("FilterPanel affordability toggle", () => {
     renderPanel(baseFilters, completeProfile, onChange);
 
     const allBtn = screen.getByRole("button", {
-      name: /show all blocks regardless/i,
+      name: /All blocks/i,
     });
     await userEvent.click(allBtn);
 

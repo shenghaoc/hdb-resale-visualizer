@@ -982,7 +982,7 @@ export function ResultsPane({
             >
               1
             </Button>
-            {startPage > 2 && <span className="px-1 text-muted-foreground">...</span>}
+            {startPage > 2 && <span className="px-1 text-muted-foreground" aria-hidden="true">…</span>}
           </>
         )}
         {pages.map((p) => (
@@ -1003,7 +1003,7 @@ export function ResultsPane({
         ))}
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <span className="px-1 text-muted-foreground">...</span>}
+            {endPage < totalPages - 1 && <span className="px-1 text-muted-foreground" aria-hidden="true">…</span>}
             <Button
               variant="outline"
               size="sm"

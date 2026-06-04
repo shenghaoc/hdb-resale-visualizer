@@ -42,14 +42,14 @@ function LayerSwitch({
       disabled={disabled}
       onClick={onToggle}
       className={cn(
-        "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
+        "relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
         active ? "bg-primary" : "bg-muted-foreground/30",
       )}
     >
       <span
         className={cn(
-          "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
-          active ? "translate-x-3" : "translate-x-0",
+          "absolute top-[3px] left-[3px] size-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
+          active ? "translate-x-4" : "translate-x-0",
         )}
         aria-hidden="true"
       />

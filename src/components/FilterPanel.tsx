@@ -142,17 +142,17 @@ function AffordabilityFilterField({
     {
       mode: "",
       label: t("affordability.filter.all"),
-      aria: t("affordability.filter.allAria"),
+      aria: t("affordability.filter.all"),
     },
     {
       mode: "comfortable",
       label: t("affordability.filter.comfortable"),
-      aria: t("affordability.filter.comfortableAria"),
+      aria: t("affordability.filter.comfortable"),
     },
     {
       mode: "stretch",
       label: t("affordability.filter.stretch"),
-      aria: t("affordability.filter.stretchAria"),
+      aria: t("affordability.filter.stretch"),
     },
   ];
 
