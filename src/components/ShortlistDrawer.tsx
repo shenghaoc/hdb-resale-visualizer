@@ -1235,7 +1235,7 @@ export function ShortlistDrawer({
                                     current === row.item.addressKey ? null : row.item.addressKey,
                                   )
                                 }
-                                className="flex min-w-0 flex-1 flex-col text-left"
+                                className="flex min-w-0 flex-1 flex-col rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                                 aria-expanded={isExpanded}
                               >
                                 <div className="flex min-w-0 items-start gap-2">
