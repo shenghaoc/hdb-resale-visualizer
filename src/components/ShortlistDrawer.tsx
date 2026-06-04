@@ -1167,12 +1167,13 @@ export function ShortlistDrawer({
                                   borderRadius: 4,
                                   fontSize: 11,
                                 }}
-                                labelFormatter={(label: string) => label}
-                                formatter={(value: number | null) =>
-                                  value === null || Number.isNaN(value)
-                                    ? t("shortlist.na")
-                                    : formatCompactCurrency(value)
-                                }
+                                labelFormatter={(label) => String(label)}
+                                formatter={(value) => {
+                                  if (value == null || typeof value !== "number" || Number.isNaN(value)) {
+                                    return t("shortlist.na");
+                                  }
+                                  return formatCompactCurrency(value);
+                                }}
                               />
                               <Legend
                                 verticalAlign="top"

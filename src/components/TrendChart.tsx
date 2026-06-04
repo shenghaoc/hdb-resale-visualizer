@@ -105,12 +105,13 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
               borderRadius: 4,
               fontSize: 12,
             }}
-            labelFormatter={(label: string) => label}
-            formatter={(value: number, name: string) => {
+            labelFormatter={(label) => String(label)}
+            formatter={(value, name) => {
+              const numValue = typeof value === "number" ? value : NaN;
               if (name === priceLabel) {
-                return [isNaN(value) ? "–" : formatCompactCurrency(value), name];
+                return [isNaN(numValue) ? "–" : formatCompactCurrency(numValue), String(name)];
               }
-              return [isNaN(value) ? "–" : t("stats.txns", { count: value }), name];
+              return [isNaN(numValue) ? "–" : t("stats.txns", { count: numValue }), String(name)];
             }}
           />
           {peakMonth ? (
