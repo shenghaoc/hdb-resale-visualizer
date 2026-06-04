@@ -23,7 +23,6 @@ updates:
           - "patch"
       ui-components:
         patterns:
-          - "@radix-ui/*"
           - "radix-ui"
           - "lucide-react"
           - "shadcn"
@@ -35,8 +34,7 @@ updates:
           - "patch"
       visualization:
         patterns:
-          - "echarts"
-          - "echarts-for-react"
+          - "recharts"
         update-types:
           - "minor"
           - "patch"
