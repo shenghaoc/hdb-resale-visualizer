@@ -730,7 +730,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             type="button"
             onClick={handleContinue}
             disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-            className="rounded-[0.65rem] bg-secondary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-secondary-foreground transition-[color,background-color,box-shadow] enabled:hover:bg-secondary/80 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="rounded-[0.65rem] bg-[color-mix(in_oklab,var(--primary),#000_35%)] px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-white transition-[color,background-color,box-shadow] enabled:hover:bg-[color-mix(in_oklab,var(--primary),#000_50%)] disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {nextLabel}
           </button>
