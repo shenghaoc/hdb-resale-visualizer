@@ -109,9 +109,9 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
             formatter={(value, name) => {
               const numValue = typeof value === "number" ? value : NaN;
               if (name === priceLabel) {
-                return [isNaN(numValue) ? "–" : formatCompactCurrency(numValue), String(name)];
+                return [Number.isNaN(numValue) ? "–" : formatCompactCurrency(numValue), String(name)];
               }
-              return [isNaN(numValue) ? "–" : t("stats.txns", { count: numValue }), String(name)];
+              return [Number.isNaN(numValue) ? "–" : t("stats.txns", { count: numValue }), String(name)];
             }}
           />
           {peakMonth ? (
