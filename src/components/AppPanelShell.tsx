@@ -144,7 +144,7 @@ export function AppPanelShell({
             <div
               id="mobile-panel"
               className={cn(
-                "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain rounded-t-2xl border bg-popover/95 backdrop-blur-[20px] transition-all shadow-xl",
+                "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain rounded-t-2xl border bg-popover/95 backdrop-blur-[20px] transition-[transform,opacity] shadow-xl",
                 activeFilterChipCount > 0 ? "top-[4.5rem]" : "top-0",
               )}
             >
