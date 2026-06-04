@@ -930,14 +930,23 @@ export function ShortlistDrawer({
     const priceMaps = trendChartRows.map((row) =>
       new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice])),
     );
+    let maxPrice = 0;
     const data = months.map((month) => {
       const row: Record<string, string | number | undefined> = { month };
       for (let i = 0; i < seriesKeys.length; i++) {
         const price = priceMaps[i].get(month);
-        row[seriesKeys[i]] = price != null && !Number.isNaN(price) ? price : undefined;
+        if (price != null && !Number.isNaN(price)) {
+          row[seriesKeys[i]] = price;
+          if (price > maxPrice) maxPrice = price;
+        } else {
+          row[seriesKeys[i]] = undefined;
+        }
       }
       return row;
     });
+    const priceAxisWidth = maxPrice > 0
+      ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4)
+      : 48;
 
     const palette = isDark
       ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
@@ -951,7 +960,7 @@ export function ShortlistDrawer({
       mutedForeground: isDark ? "#9baaa4" : "#6b7572",
     };
 
-    return { data, seriesKeys, palette, colors };
+    return { data, seriesKeys, palette, colors, priceAxisWidth };
   }, [trendChartRows, isDark]);
 
   return (
@@ -1156,7 +1165,7 @@ export function ShortlistDrawer({
                                 tick={{ fill: compareChart.colors.mutedForeground, fontSize: 10 }}
                                 axisLine={false}
                                 tickLine={false}
-                                width={48}
+                                width={compareChart.priceAxisWidth}
                               />
                               <Tooltip
                                 contentStyle={{

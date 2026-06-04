@@ -25,10 +25,11 @@ type TrendChartProps = {
 export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartProps) {
   const { isDark } = useTheme();
 
-  const { data, yMin, colors } = useMemo(() => {
+  const { data, yMin, priceAxisWidth, countAxisWidth, colors } = useMemo(() => {
     let minPrice = Infinity;
     let maxPrice = -Infinity;
     let hasValidPrice = false;
+    let maxCount = 0;
 
     for (let i = 0; i < points.length; i++) {
       const price = points[i].medianPrice;
@@ -37,6 +38,8 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
         if (price < minPrice) minPrice = price;
         if (price > maxPrice) maxPrice = price;
       }
+      const count = points[i].transactionCount;
+      if (count != null && count > maxCount) maxCount = count;
     }
 
     if (!hasValidPrice) {
@@ -45,6 +48,10 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
     }
     const range = maxPrice - minPrice;
     const yMin = Math.floor(Math.max(0, minPrice - range * 0.5) / 10000) * 10000;
+    const priceAxisWidth = hasValidPrice
+      ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4)
+      : 48;
+    const countAxisWidth = Math.max(32, String(maxCount).length * 8 + 4);
 
     return {
       data: points.map((p) => ({
@@ -53,6 +60,8 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
         transactionCount: p.transactionCount,
       })),
       yMin,
+      priceAxisWidth,
+      countAxisWidth,
       colors: {
         primary: isDark ? "#79a6ff" : PRIMARY_BLUE,
         chart2: isDark ? "#9bb7ff" : "#495c95",
@@ -87,7 +96,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
             tick={{ fill: colors.mutedForeground, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
-            width={48}
+            width={priceAxisWidth}
           />
           <YAxis
             yAxisId="count"
@@ -95,7 +104,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
             tick={{ fill: colors.mutedForeground, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
-            width={32}
+            width={countAxisWidth}
           />
           <Tooltip
             contentStyle={{
