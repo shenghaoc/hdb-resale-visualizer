@@ -75,7 +75,7 @@ function createMapStub({
 const DEFAULT_PROPS = {
   priceHeatmapEnabled: true,
   priceHeatmapOpacity: 0.6,
-  heatmapMode: "absolute" as const,
+  heatmapMode: "price" as const,
 };
 
 describe("useMapPriceHeatmapSync — heatmap data sync", () => {
