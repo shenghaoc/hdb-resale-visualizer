@@ -196,4 +196,23 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
 
     expect(map.heatmapSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
+
+  it("routes opacity-only changes through setHeatmapOpacity, not layer recreation", async () => {
+    const { setHeatmapOpacity, isHeatmapLayerPresent } = await import("@/lib/priceHeatmap");
+    (isHeatmapLayerPresent as ReturnType<typeof vi.fn>).mockReturnValue(true);
+    const map = createMapStub({ styleLoaded: true });
+
+    const { rerender } = renderHook(
+      ({ opacity }: { opacity: number }) =>
+        useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS, priceHeatmapOpacity: opacity }),
+      { initialProps: { opacity: 0.6 } },
+    );
+
+    (setHeatmapOpacity as ReturnType<typeof vi.fn>).mockClear();
+
+    rerender({ opacity: 0.3 });
+
+    // Effect 3 (setHeatmapOpacity) must fire for the opacity change.
+    expect(setHeatmapOpacity).toHaveBeenCalledWith(map, 0.3);
+  });
 });
