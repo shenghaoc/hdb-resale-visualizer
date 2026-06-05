@@ -113,7 +113,6 @@ export function MapView({
   useMapDataSync({
     map: mapInstance,
     geoJson,
-    priceHeatmapEnabled,
     primarySchoolsGeoJson,
     schoolOverlayEnabled,
   });

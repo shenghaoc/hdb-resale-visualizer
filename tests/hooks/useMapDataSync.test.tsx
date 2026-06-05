@@ -2,7 +2,6 @@ import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useMapDataSync } from "@/hooks/useMapDataSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
 
 type EventHandler = (...args: unknown[]) => void;
 
@@ -28,14 +27,12 @@ function createMapStub({
   const currentLayerOrder = [...layerOrder];
 
   const blocksSource = { setData: vi.fn() };
-  const heatmapSource = { setData: vi.fn() };
   const schoolSource = { setData: vi.fn() };
 
   const stub = {
     isStyleLoaded: vi.fn(() => styleLoaded),
     getSource: vi.fn((id: string) => {
       if (id === "blocks" && hasBothSources) return blocksSource;
-      if (id === HEATMAP_SOURCE_ID && hasBothSources) return heatmapSource;
       if (id === "primary-schools" && hasBothSources) return schoolSource;
       return undefined;
     }),
@@ -76,7 +73,6 @@ function createMapStub({
       }
     },
     blocksSource,
-    heatmapSource,
     schoolSource,
     currentLayerOrder,
     _handlers: handlers,
@@ -93,7 +89,7 @@ describe("useMapDataSync", () => {
   it("does nothing when map is null", () => {
     // Should not throw
     renderHook(() =>
-      useMapDataSync({ map: null, geoJson: EMPTY_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map: null, geoJson: EMPTY_GEOJSON }),
     );
   });
 
@@ -101,7 +97,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: true });
 
     renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
     expect(map.blocksSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
@@ -111,7 +107,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: false });
 
     renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
     expect(map.blocksSource.setData).not.toHaveBeenCalled();
@@ -126,7 +122,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: true });
 
     renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
     map.emit("styledata");
@@ -140,7 +136,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: true, hasBothSources: false });
 
     renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
     expect(map.blocksSource.setData).not.toHaveBeenCalled();
@@ -150,7 +146,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: true });
 
     const { unmount } = renderHook(() =>
-      useMapDataSync({ map, geoJson: EMPTY_GEOJSON, priceHeatmapEnabled: false }),
+      useMapDataSync({ map, geoJson: EMPTY_GEOJSON }),
     );
 
     unmount();
@@ -159,32 +155,12 @@ describe("useMapDataSync", () => {
     expect(map.off).toHaveBeenCalledWith("styledata", expect.any(Function));
   });
 
-  it("syncs heatmap source when priceHeatmapEnabled is true", () => {
-    const map = createMapStub({ styleLoaded: true });
-
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: true }),
-    );
-
-    expect(map.heatmapSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
-  });
-
-  it("does not sync heatmap source when priceHeatmapEnabled is false", () => {
-    const map = createMapStub({ styleLoaded: true });
-
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON, priceHeatmapEnabled: false }),
-    );
-
-    expect(map.heatmapSource.setData).not.toHaveBeenCalled();
-  });
-
   it("updates blocks source when geoJson prop changes", () => {
     const map = createMapStub({ styleLoaded: true });
 
     const { rerender } = renderHook(
       ({ geoJson }: { geoJson: GeoJSON.FeatureCollection }) =>
-        useMapDataSync({ map, geoJson, priceHeatmapEnabled: false }),
+        useMapDataSync({ map, geoJson }),
       { initialProps: { geoJson: EMPTY_GEOJSON } },
     );
 
@@ -193,21 +169,6 @@ describe("useMapDataSync", () => {
     rerender({ geoJson: POPULATED_GEOJSON });
 
     expect(map.blocksSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
-  });
-
-  it("removes heatmap listeners when priceHeatmapEnabled switches to false", () => {
-    const map = createMapStub({ styleLoaded: true });
-
-    const { rerender } = renderHook(
-      ({ enabled }: { enabled: boolean }) =>
-        useMapDataSync({ map, geoJson: EMPTY_GEOJSON, priceHeatmapEnabled: enabled }),
-      { initialProps: { enabled: true } },
-    );
-
-    rerender({ enabled: false });
-
-    // off should have been called for the heatmap effect cleanup
-    expect(map.off).toHaveBeenCalled();
   });
 
   it("syncs primary school overlay data and visibility", () => {
@@ -227,7 +188,6 @@ describe("useMapDataSync", () => {
       useMapDataSync({
         map,
         geoJson: EMPTY_GEOJSON,
-        priceHeatmapEnabled: false,
         primarySchoolsGeoJson: schoolsGeoJson,
         schoolOverlayEnabled: true,
       }),
@@ -267,7 +227,6 @@ describe("useMapDataSync", () => {
       useMapDataSync({
         map,
         geoJson: EMPTY_GEOJSON,
-        priceHeatmapEnabled: false,
         primarySchoolsGeoJson: schoolsGeoJson,
         schoolOverlayEnabled: true,
       }),

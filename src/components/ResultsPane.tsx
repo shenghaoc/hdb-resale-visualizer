@@ -247,7 +247,8 @@ const BlockCard = memo(function BlockCard({
       },
       block.medianPrice,
     );
-  }, [searchProfile, block.medianPrice]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
+  }, [searchProfile?.monthlyIncome, searchProfile?.cpfOABalance, searchProfile?.age, block.medianPrice]);
 
   if (isCompact) {
     const currentYear = getCurrentYear();
