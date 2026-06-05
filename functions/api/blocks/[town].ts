@@ -1,4 +1,5 @@
 import {
+  BLOCK_SUMMARY_SELECT_SQL,
   type BlockRow,
   jsonResponse,
   rowToBlockSummary,
@@ -21,7 +22,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
 
   try {
     const result = await env.DB.prepare(
-      "SELECT * FROM blocks WHERE town = ? ORDER BY median_price DESC, transaction_count DESC",
+      `SELECT ${BLOCK_SUMMARY_SELECT_SQL} FROM blocks WHERE town = ? ORDER BY median_price DESC, transaction_count DESC`,
     )
       .bind(town)
       .all<BlockRow>();

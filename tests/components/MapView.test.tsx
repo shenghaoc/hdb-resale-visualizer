@@ -119,7 +119,6 @@ describe("MapView", () => {
     expect(mapHooks.useMapDataSync).toHaveBeenCalledWith(
       expect.objectContaining({
         geoJson: expectedGeoJson,
-        priceHeatmapEnabled: true,
       }),
     );
     expect(mapHooks.useMapPriceHeatmapSync).toHaveBeenCalledWith(

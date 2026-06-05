@@ -121,7 +121,7 @@ export function useShortlist() {
     safeStorage.getItem(SYNC_CODE_STORAGE_KEY),
   );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(() =>
-    safeStorage.getItem(SYNC_CODE_STORAGE_KEY) ? "syncing" : "local",
+    syncCode ? "syncing" : "local",
   );
   const debouncedItems = useDebouncedValue(items, SYNC_DEBOUNCE_MS);
   // JSON of the last successfully pushed set — skips redundant pushes.

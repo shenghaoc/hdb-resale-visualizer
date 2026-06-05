@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { isGeoJsonDataSourceLike } from "@/types/map";
-import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
 import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
 
 function areLayersAlreadyBeforeTarget(
@@ -51,7 +50,6 @@ function moveLayersBeforeTargetIfNeeded(
 type UseMapDataSyncProps = {
   map: MapLibreMap | null;
   geoJson: GeoJSON.FeatureCollection;
-  priceHeatmapEnabled: boolean;
   primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
   schoolOverlayEnabled?: boolean;
 };
@@ -59,7 +57,6 @@ type UseMapDataSyncProps = {
 export function useMapDataSync({
   map,
   geoJson,
-  priceHeatmapEnabled,
   primarySchoolsGeoJson,
   schoolOverlayEnabled = false,
 }: UseMapDataSyncProps) {
@@ -87,31 +84,6 @@ export function useMapDataSync({
       map.off("styledata", updateData);
     };
   }, [map, geoJson]);
-
-  // Sync heatmap source if active
-  useEffect(() => {
-    if (!map || !priceHeatmapEnabled) return;
-
-    const applyData = () => {
-      if (!map.isStyleLoaded()) return;
-      const source = map.getSource(HEATMAP_SOURCE_ID);
-      if (isGeoJsonDataSourceLike(source)) {
-        source.setData(geoJson);
-      }
-    };
-
-    if (map.isStyleLoaded()) {
-      applyData();
-    } else {
-      void map.once("load", applyData);
-    }
-    map.on("styledata", applyData);
-
-    return () => {
-      map.off("load", applyData);
-      map.off("styledata", applyData);
-    };
-  }, [map, geoJson, priceHeatmapEnabled]);
 
   useEffect(() => {
     if (!map) return;

@@ -1,5 +1,8 @@
 import type { BlockSummary, FilterOptions } from "./data-types";
 
+const RE_FLAT_MODEL_SKIP = /^(?:-|N\/A|NA|UNKNOWN|NONE|NULL)$/;
+const RE_MAX_FLOOR = /^MAX FLOOR \d+$/;
+
 export function canonicalFlatType(value: string): string {
   const normalized = value.trim().toUpperCase();
   if (normalized === "MULTI GENERATION") return "MULTI-GENERATION";
@@ -9,8 +12,8 @@ export function canonicalFlatType(value: string): string {
 export function normalizeFlatModel(value: string): string | null {
   const normalized = value.trim().replace(/\s+/g, " ").toUpperCase();
   if (!normalized) return null;
-  if (/^(?:-|N\/A|NA|UNKNOWN|NONE|NULL)$/.test(normalized)) return null;
-  if (/^MAX FLOOR \d+$/.test(normalized)) return null;
+  if (RE_FLAT_MODEL_SKIP.test(normalized)) return null;
+  if (RE_MAX_FLOOR.test(normalized)) return null;
   return normalized;
 }
 

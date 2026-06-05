@@ -19,6 +19,7 @@ import type {
 } from "../types/data";
 import type { z } from "zod";
 
+let blockSummariesPromise: Promise<BlockSummary[]> | null = null;
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
 const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
 let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> | null =
@@ -173,8 +174,21 @@ export function fetchManifest(): Promise<Manifest> {
   return fetchJson(`${API_BASE_PATH}/manifest`, manifestSchema);
 }
 
+export function resetBlockSummariesCacheForTests(): void {
+  blockSummariesPromise = null;
+}
+
 export function fetchBlockSummaries(): Promise<BlockSummary[]> {
-  return fetchJson(`${API_BASE_PATH}/block-summaries`, blockSummarySchema.array());
+  if (!blockSummariesPromise) {
+    blockSummariesPromise = fetchJson(
+      `${API_BASE_PATH}/block-summaries`,
+      blockSummarySchema.array(),
+    ).catch((error) => {
+      blockSummariesPromise = null;
+      throw error;
+    });
+  }
+  return blockSummariesPromise;
 }
 
 export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
