@@ -20,4 +20,4 @@
 
 ## 2026-06-06 - Missing focus ring on Block micro-row buttons
 **Learning:** In highly customized list elements, such as block list items disguised as flex-box containers inside the `TownProfileSection` component, standard Tailwind UI defaults leave interactive elements without visual focus states.
-**Action:** Verify explicit focus indicators for any new or existing custom interactive elements acting as `<button>` row items, especially when mapped inside a list or data view. Apply utilities like `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50` to resolve it.
+**Action:** Verify explicit focus indicators for any new or existing custom interactive elements acting as `<button>` row items, especially when mapped inside a list or data view. Apply utilities like `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background` to resolve it.
