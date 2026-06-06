@@ -40,7 +40,7 @@ function BlockMicroRow({
     <button
       type="button"
       onClick={onSelect}
-      className="flex w-full min-w-0 items-center gap-2 rounded-lg border border-border/35 bg-muted/40 px-2 py-1.5 text-left text-[0.7rem] transition-colors hover:bg-muted/70"
+      className="flex w-full min-w-0 items-center gap-2 rounded-lg border border-border/35 bg-muted/40 px-2 py-1.5 text-left text-[0.7rem] transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background"
     >
       <span className="min-w-0 flex-1 truncate font-semibold">
         {block.block} {block.streetName}
