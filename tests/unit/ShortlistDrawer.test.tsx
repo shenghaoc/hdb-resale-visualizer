@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { DEFAULT_FILTERS, MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import { I18nProvider } from "@/lib/i18n/provider";
@@ -275,7 +275,9 @@ describe("ShortlistDrawer", () => {
     expect(tableRows[0]).toHaveTextContent("Test notes");
     expect(tableRows[1]).toHaveTextContent("Test notes");
 
-    fireEvent.click(screen.getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" }));
+    const compareTable = within(table).getByRole("table", { name: "Saved blocks comparison" });
+    const compareButton = within(compareTable).getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" });
+    fireEvent.click(compareButton);
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
 
     fireEvent.click(

@@ -145,13 +145,13 @@ const compareModeLabels: Record<CompareMode, string> = {
   mrt: "shortlist.compare.mrt",
 };
 
-type DecisionStatusValue = "" | NonNullable<ShortlistItem["decisionStatus"]>;
+type DecisionStatusValue = "unknown" | NonNullable<ShortlistItem["decisionStatus"]>;
 
 const decisionStatusOptions: Array<{
   value: DecisionStatusValue;
   labelKey: string;
 }> = [
-  { value: "", labelKey: "shortlist.decisionStatus.unknown" },
+  { value: "unknown", labelKey: "shortlist.decisionStatus.unknown" },
   { value: "considering", labelKey: "shortlist.decisionStatus.considering" },
   { value: "viewing booked", labelKey: "shortlist.decisionStatus.viewingBooked" },
   { value: "offered", labelKey: "shortlist.decisionStatus.offered" },
@@ -242,7 +242,7 @@ function ShortlistComparisonTable({
       className="rounded-xl border border-border/40 bg-card/50 v2-scrollbar"
       data-testid="shortlist-comparison-table"
     >
-      <div className="overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto">
         <Table
           aria-label={t("shortlist.compare.tableLabel")}
           className="min-w-[60rem] text-xs"
@@ -808,10 +808,10 @@ function ShortlistRowEditor({
               {t("shortlist.decisionStatus.label")}
             </FieldLabel>
             <Select
-              value={item.decisionStatus ?? ""}
+              value={item.decisionStatus ?? "unknown"}
               onValueChange={(value) =>
                 onUpdate(item.addressKey, {
-                  decisionStatus: value === "" ? undefined : (value as ShortlistItem["decisionStatus"]),
+                  decisionStatus: value === "unknown" ? undefined : (value as ShortlistItem["decisionStatus"]),
                 })
               }
             >

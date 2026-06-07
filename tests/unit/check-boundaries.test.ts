@@ -6,7 +6,8 @@ import { afterEach, describe, expect, it } from "vitest";
 
 const ROOT_DIR = process.cwd();
 const CHECK_BOUNDARIES_SCRIPT = path.join(ROOT_DIR, "scripts/check-boundaries.ts");
-const TSX_BIN = path.join(ROOT_DIR, "node_modules/.bin/tsx");
+const TSX_IMPORT = path.join(ROOT_DIR, "node_modules/tsx/dist/esm/index.mjs");
+const NODE_BIN = process.execPath;
 
 const tempWorkspaces: string[] = [];
 
@@ -24,11 +25,15 @@ function makeWorkspace(files: Record<string, string>): string {
 }
 
 function runBoundaryCheck(workspace: string) {
-  return spawnSync(TSX_BIN, [CHECK_BOUNDARIES_SCRIPT], {
-    cwd: workspace,
-    encoding: "utf8",
-    env: { ...process.env, FORCE_COLOR: "0", NODE_NO_WARNINGS: "1" },
-  });
+  return spawnSync(
+    NODE_BIN,
+    ["--import", TSX_IMPORT, CHECK_BOUNDARIES_SCRIPT],
+    {
+      cwd: workspace,
+      encoding: "utf8",
+      env: { ...process.env, FORCE_COLOR: "0", NODE_NO_WARNINGS: "1" },
+    },
+  );
 }
 
 afterEach(() => {

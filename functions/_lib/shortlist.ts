@@ -37,8 +37,7 @@ const shortlistDecisionStatuses = [
   "dropped",
 ] as const;
 
-const shortlistItemSchema = z
-  .object({
+const shortlistItemSchema = z.object({
     addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
     notes: note.catch(""),
     pros: note.optional().catch(undefined),
@@ -70,21 +69,20 @@ const shortlistItemSchema = z
       .datetime({ offset: true })
       .max(MAX_ADDED_AT_LENGTH)
       .catch(() => new Date().toISOString()),
-  })
-  .passthrough();
+});
 
 function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
   if (Number.isFinite(value)) {
     return value;
   }
-  if (Number.isFinite(fallback as number)) {
-    return fallback as number;
+  if (typeof fallback === "number" && Number.isFinite(fallback)) {
+    return fallback;
   }
   return undefined;
 }
 
 function normalizeDecisionStatus(
-  value: (typeof shortlistDecisionStatuses)[number] | string | undefined,
+  value: string | undefined,
 ): (typeof shortlistDecisionStatuses)[number] | undefined {
   if (typeof value !== "string") {
     return undefined;

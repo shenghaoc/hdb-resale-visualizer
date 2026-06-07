@@ -14,12 +14,11 @@ const shortlistDecisionStatuses = [
   "dropped",
 ] as const;
 
-const note = z.string().max(MAX_NOTE_LENGTH).catch("");
+const note = z.string().max(MAX_NOTE_LENGTH);
 
-const shortlistItemSchema = z
-  .object({
+const shortlistItemSchema = z.object({
     addressKey: z.string().min(1),
-    notes: note,
+    notes: note.catch(""),
     pros: note.optional().catch(undefined),
     cons: note.optional().catch(undefined),
     renovation: note.optional().catch(undefined),
@@ -45,21 +44,20 @@ const shortlistItemSchema = z
     agentRemarks: note.optional().catch(undefined),
     targetPrice: z.number().finite().nullable().catch(null),
     addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
-  })
-  .passthrough();
+});
 
 function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
   if (Number.isFinite(value)) {
     return value;
   }
-  if (Number.isFinite(fallback as number)) {
-    return fallback as number;
+  if (typeof fallback === "number" && Number.isFinite(fallback)) {
+    return fallback;
   }
   return undefined;
 }
 
 function normalizeDecisionStatus(
-  value: (typeof shortlistDecisionStatuses)[number] | string | undefined,
+  value: string | undefined,
 ): (typeof shortlistDecisionStatuses)[number] | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -86,7 +84,7 @@ function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): Short
   const transportNotes = raw.transportNotes ?? raw.transport;
 
   return {
-    ...(raw as ShortlistItem),
+    ...raw,
     notes,
     askingPrice,
     suggestedOfferCeiling,

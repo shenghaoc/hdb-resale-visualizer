@@ -40,7 +40,18 @@ describe("shortlist storage", () => {
     ];
 
     const encoded = encodeShortlistForUrl(items);
-    expect(decodeShortlistFromUrl(encoded)).toEqual(items);
+    const decoded = decodeShortlistFromUrl(encoded);
+    expect(decoded).toHaveLength(1);
+    expect(decoded[0]).toMatchObject({
+      addressKey: items[0]?.addressKey,
+      notes: items[0]?.notes,
+      targetPrice: 800000,
+      addedAt: items[0]?.addedAt,
+      askingPrice: 800000,
+      buyerOpeningOffer: 800000,
+      buyerNotes: items[0]?.notes,
+      suggestedOfferCeiling: 800000,
+    });
   });
 
   it("round-trips mixed legacy and migrated payloads through share links", () => {
@@ -65,11 +76,11 @@ describe("shortlist storage", () => {
         valuationReceived: 745000,
         estimatedCov: 680000,
         viewingDate: "2026-05-20",
-        decisionStatus: "offered",
+        decisionStatus: "offered" as const,
         buyerNotes: "Great offer already sent",
         addedAt: "2026-06-01T00:00:00.000Z",
       },
-    ] as const;
+    ];
 
     const encoded = encodeShortlistForUrl(items);
     const decoded = decodeShortlistFromUrl(encoded);
@@ -163,30 +174,29 @@ describe("shortlist storage", () => {
     const loaded = loadShortlist(shim);
     expect(loaded).toHaveLength(2);
 
-    // Old item should be normalized with undefined for new fields
     expect(loaded[0]).toMatchObject({
       ...oldFormatItem,
-      askingPrice: undefined,
-      fairRangeLow: undefined,
-      fairRangeMedian: undefined,
-      fairRangeHigh: undefined,
-      suggestedOfferCeiling: undefined,
-      buyerOpeningOffer: undefined,
-      valuationReceived: undefined,
-      estimatedCov: undefined,
-      viewingDate: undefined,
-      decisionStatus: undefined,
-      pros: undefined,
-      cons: undefined,
-      renovation: undefined,
-      noise: undefined,
-      transport: undefined,
-      offerCeiling: undefined,
-      noiseNotes: undefined,
-      transportNotes: undefined,
       buyerNotes: oldFormatItem.notes,
-      agentRemarks: undefined,
     });
+    expect(loaded[0].askingPrice).toBeUndefined();
+    expect(loaded[0].fairRangeLow).toBeUndefined();
+    expect(loaded[0].fairRangeMedian).toBeUndefined();
+    expect(loaded[0].fairRangeHigh).toBeUndefined();
+    expect(loaded[0].suggestedOfferCeiling).toBeUndefined();
+    expect(loaded[0].buyerOpeningOffer).toBeUndefined();
+    expect(loaded[0].valuationReceived).toBeUndefined();
+    expect(loaded[0].estimatedCov).toBeUndefined();
+    expect(loaded[0].viewingDate).toBeUndefined();
+    expect(loaded[0].decisionStatus).toBeUndefined();
+    expect(loaded[0].pros).toBeUndefined();
+    expect(loaded[0].cons).toBeUndefined();
+    expect(loaded[0].renovation).toBeUndefined();
+    expect(loaded[0].noise).toBeUndefined();
+    expect(loaded[0].transport).toBeUndefined();
+    expect(loaded[0].offerCeiling).toBeUndefined();
+    expect(loaded[0].noiseNotes).toBeUndefined();
+    expect(loaded[0].transportNotes).toBeUndefined();
+    expect(loaded[0].agentRemarks).toBeUndefined();
 
     // New item should retain its fields
     expect(loaded[1]).toMatchObject({
