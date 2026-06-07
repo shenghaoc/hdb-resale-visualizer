@@ -308,8 +308,10 @@ export function ListingCheckPanel({
       !flatType ||
       !storeyRange
     ) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale comparable set when inputs become invalid
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale state when inputs become invalid
       setComparableSet(null);
+      setComparableSetLoading(false);
+      setComparableSetError(false);
       return;
     }
 
@@ -317,13 +319,22 @@ export function ListingCheckPanel({
     setComparableSetLoading(true);
     setComparableSetError(false);
 
+    // Use the block's median floor area as fallback (midpoint of recorded
+    // range) rather than the max, to avoid skewing comparables toward
+    // larger units when the user hasn't entered a specific value.
+    const fallbackFloorArea =
+      detail.summary.floorAreaRange[0] != null &&
+      detail.summary.floorAreaRange[1] != null
+        ? (detail.summary.floorAreaRange[0] + detail.summary.floorAreaRange[1]) / 2
+        : null;
+
     const body = JSON.stringify({
       town: detail.summary.town,
       block: detail.summary.block,
       streetName: detail.summary.streetName,
       flatType,
       storeyRange,
-      floorAreaSqm: resolvedFloorAreaSqm ?? detail.summary.floorAreaRange[1] ?? 0,
+      floorAreaSqm: resolvedFloorAreaSqm ?? fallbackFloorArea ?? 0,
       leaseCommenceYear: resolvedLeaseYear ?? null,
       referenceMonth: referenceMonth ?? detail.summary.latestMonth,
     });

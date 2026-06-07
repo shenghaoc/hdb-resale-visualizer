@@ -114,9 +114,9 @@ async function queryCount(
   sql: string,
   ...params: unknown[]
 ): Promise<number> {
-  const stmt = db.prepare(sql);
+  let stmt = db.prepare(sql);
   if (params.length > 0) {
-    stmt.bind(...params);
+    stmt = stmt.bind(...params);
   }
   const result = await stmt.first<{ cnt: number }>();
   return result?.cnt ?? 0;
@@ -127,9 +127,9 @@ async function queryRows(
   sql: string,
   ...params: unknown[]
 ): Promise<TransactionRow[]> {
-  const stmt = db.prepare(sql);
+  let stmt = db.prepare(sql);
   if (params.length > 0) {
-    stmt.bind(...params);
+    stmt = stmt.bind(...params);
   }
   const result = await stmt.all<Record<string, unknown>>();
   return (result.results ?? []).map(mapD1Row);
