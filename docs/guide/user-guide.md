@@ -131,7 +131,18 @@ The tool returns a **verdict** — whether the asking price is well below, aroun
 
 Each result shows a **confidence badge** (High / Medium / Low) indicating how reliable the assessment is. Confidence is based on four signals: sample size, data recency, geographic proximity, and match quality (flat type, floor area, storey).
 
+A **data quality badge** appears alongside the confidence badge to summarise the comparable set:
+
+| Badge | Meaning |
+|-------|---------|
+| **Strong data** | Recent block-level evidence with a good sample size |
+| **Weak data** | Low sample size or low confidence |
+| **Widened comparables** | Search was expanded beyond the block to the street or town |
+| **Stale data** | The most recent comparable is over 12 months old |
+
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
+
+The header bar shows the latest transaction month in the dataset and, when available, the sync timestamp and data source attribution.
 
 ### Comparable evidence table
 

@@ -1,6 +1,7 @@
 import { LOW_SAMPLE_THRESHOLD } from "../../shared/comparable-engine";
 import type { CaveatCode } from "../../shared/caveat-codes";
 import type { ConfidenceAssessment } from "../../shared/confidence-system";
+import { monthsBetween } from "@/lib/dataQuality";
 
 export type ComparableQualityTag = "strong" | "weak" | "widened" | "stale";
 
@@ -29,21 +30,16 @@ function hasLowSampleSignal(
   );
 }
 
-function monthsBetween(olderMonth: string, newerMonth: string): number {
-  const olderYear = Number(olderMonth.slice(0, 4));
-  const olderMon = Number(olderMonth.slice(5, 7));
-  const newerYear = Number(newerMonth.slice(0, 4));
-  const newerMon = Number(newerMonth.slice(5, 7));
-  return (newerYear - olderYear) * 12 + (newerMon - olderMon);
-}
-
 export function getComparableSetQualityTag({
   confidence,
   widenedSearch,
   newestComparableAgeMonths,
   caveatCodes = [],
 }: ComparableSetQualityInput): ComparableQualityTag {
-  if (newestComparableAgeMonths != null && newestComparableAgeMonths > 12) {
+  if (
+    (newestComparableAgeMonths != null && newestComparableAgeMonths > 12) ||
+    caveatCodes.includes("STALE_DATA")
+  ) {
     return "stale";
   }
   if (

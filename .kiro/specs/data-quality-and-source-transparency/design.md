@@ -1,150 +1,246 @@
 # Design: Data Quality and Source Transparency
 
-> Status: Draft. Make historical signal quality explicit and consistent across
-> listing check, block detail, shortlist, and comparison views without changing the
-> existing data pipeline semantics.
+> Status: Draft. Surface data freshness, source provenance, and comparable-set
+> trustworthiness across all user-facing views without changing the data pipeline
+> or comparable engine semantics.
 
 ## Problem
 
-Users rely on historical resale data, but the UI surfaces freshness and trust signals
-in disconnected places and with inconsistent wording. The app already has:
+Users rely on historical resale transactions to evaluate asking prices, but the
+app surfaces trust signals inconsistently:
 
-- manifest metadata in `manifest` (`generatedAt`, `dataWindow`, `sources`),
-- comparable-match metadata from the comparable engine (`widenedSearch`, age,
-  caveats),
-- caveat codes and confidence outputs in `shared/caveat-codes.ts`.
-
-What is missing is a coherent, user-facing trust layer that stays stable when metadata
-is stale, partially missing, or partially available.
+1. **Freshness is hidden.** The manifest carries `dataWindow.maxMonth`,
+   `generatedAt`, and `sources.lastUpdatedAt`, but no user-facing view shows
+   when the data was last synced or which transaction month is latest.
+2. **Source attribution is absent.** Dataset IDs flow through the pipeline
+   (`scripts/sync-data.ts` collects `resaleCollectionId`, `resaleDatasetIds`,
+   `propertyDatasetId`, etc.) but never reach the UI — users cannot verify
+   where numbers originate.
+3. **Comparable quality is implicit.** The confidence system
+   (`shared/confidence-system.ts`) scores evidence strength and
+   `shared/caveat-codes.ts` emits machine-readable codes (`LOW_SAMPLE`,
+   `WIDENED_TO_TOWN`, `STALE_DATA`, etc.), but no single label tells the user
+   whether their comparable set is strong, weak, widened, or stale.
+4. **Caveat language diverges.** `ListingCheckPanel`, `ComparableEvidenceTable`,
+   `DetailDrawer`, and `ShortlistDrawer` each compose caveat strings
+   independently, producing inconsistent phrasing for identical conditions.
+5. **Missing metadata is fragile.** Partial or null manifest fields can produce
+   blank UI slots or runtime errors instead of explicit fallback labels.
 
 ## Goals
 
-- Expose data freshness at the point of use (latest month and sync/build timestamp).
-- Surface source attribution where available (dataset IDs / upstream source provenance).
-- Make comparable quality explicit: strong / weak / widened / stale.
-- Provide consistent caveat language for all surfaces.
-- Keep the app safe when metadata is stale, missing, or partial.
+- Expose data freshness at point of use: latest transaction month and
+  sync/build timestamp.
+- Surface source attribution where appropriate (dataset provenance from
+  manifest).
+- Derive a canonical comparable-set quality tag (`strong | weak | widened |
+  stale`) from existing confidence and caveat data.
+- Unify caveat language across listing check, block detail, shortlist, and
+  comparison views through a shared message adapter.
+- Guarantee graceful rendering when metadata is stale, missing, or partial.
 
 ## Non-goals
 
-- Adding any runtime external data ingestion at app runtime.
-- Replacing the comparable selection engine.
-- Changing core pricing math.
+- Runtime external data ingestion (all fetches stay in `scripts/sync-data.ts`).
+- Replacing the comparable selection engine (`shared/comparable-engine.ts`).
+- Changing the confidence scoring formula (`shared/confidence-system.ts`).
+- Adding new D1 tables or migration files.
+- New API endpoints (reuse `/api/manifest` unless proven insufficient).
 
 ## Architecture
 
-### 1) Shared data-quality façade
+### 1. Existing metadata inventory
 
-Introduce a small, browser-safe layer used by UI components:
+The manifest (served by `GET /api/manifest`, schema in `shared/data-types.ts`)
+already carries:
 
-`src/lib/dataQuality.ts`
+```typescript
+type Manifest = {
+  schemaVersion: string;
+  generatedAt: string;                 // ISO timestamp of sync run
+  dataWindow: {
+    minMonth: string;                  // e.g. "2012-01"
+    maxMonth: string;                  // e.g. "2025-03"
+  };
+  sources: {
+    resaleCollectionId: string;
+    resaleDatasetIds: string[];
+    propertyDatasetId: string;
+    mrtDatasetId: string;
+    lastUpdatedAt: string;             // upstream collection timestamp
+    moeSchoolDatasetId?: string;
+    neaHawkerDatasetId?: string;
+    sfaSupermarketDatasetId?: string;
+    nparksParksDatasetId?: string;
+  };
+  counts: { blocks: number; transactions: number; towns: number; mrtStations: number; comparisons?: number };
+  filterOptions: FilterOptions;
+};
+```
 
-- `deriveDataQualityState(manifest: Partial<Manifest> | null)` returns a normalized object:
-  - `latestMonthUsed` (from `manifest.dataWindow.maxMonth` when available, else `null`)
-  - `generatedAt` (from `manifest.generatedAt` when parseable, else `null`)
-  - `sources` (best-effort object with optional source IDs)
-  - `syncState` (`fresh`, `stale`, `missing`, `partial`)
-  - `syncMessage` (single human-readable label)
-- `formatDataQualityState(...)` to avoid copy/paste message logic.
+The confidence system (`shared/confidence-system.ts`) produces:
 
-The layer must:
+```typescript
+type ConfidenceAssessment = {
+  level: "high" | "medium" | "low";
+  score: number;                       // 0–1 raw evidence score
+  signals: { sample: number; recency: number; scope: number; match: number };
+  summary: string;
+  input: ConfidenceInput;
+};
+```
 
-- Be defensive: partial or missing fields never throw; all outputs are nullable or
-  defaulted and always rendered gracefully.
-- Reuse existing manifest fields only; no new metadata fetch path is introduced unless
-  runtime needs exceed what `/api/manifest` already carries.
+Machine-readable caveats (`shared/caveat-codes.ts`) include: `LOW_SAMPLE`,
+`VERY_LOW_SAMPLE`, `NO_COMPARABLES`, `STALE_DATA`, `WIDENED_TO_STREET`,
+`WIDENED_TO_TOWN`, `TIME_ADJUSTMENT_APPLIED`, `SMALL_TREND_SAMPLE`,
+`FLAT_TYPE_MISMATCH`, `FLOOR_AREA_MISMATCH`, `STOREY_MISMATCH`,
+`LEASE_MISMATCH`, `NO_SAME_BLOCK`, `NO_SAME_STREET`, `EXTREME_OUTLIER_LOW`,
+`EXTREME_OUTLIER_HIGH`.
 
-### 2) Reuse metadata contract first
+The D1 `manifest` table (`migrations/0001_initial.sql`) stores a single JSON
+blob with an `updated_at` column tracking sync completion. The frontend fetches
+this via `src/hooks/useManifestData.ts`.
 
-Primary data source remains:
+No new data source is needed. The task is to normalize, derive, and display.
 
-- `GET /api/manifest` (existing runtime path).
+### 2. Data-quality facade — `src/lib/dataQuality.ts`
 
-No new endpoint is added initially.
+A small browser-safe layer consumed by all UI surfaces:
 
-Only if this endpoint lacks required user-facing fields in production runs, we add one
-of:
+```typescript
+type SyncState = "fresh" | "stale" | "missing" | "partial";
 
-- optional `/public/data/metadata.json` static file generated at sync time, or
-- minimal `/api/data-quality-metadata` endpoint returning the same schema.
+type DataQualityState = {
+  latestMonth: string | null;           // manifest.dataWindow.maxMonth
+  generatedAt: string | null;           // manifest.generatedAt (ISO)
+  lastUpdatedAt: string | null;         // manifest.sources.lastUpdatedAt (ISO)
+  syncState: SyncState;
+  syncMessage: string;                  // human-readable fallback label
+  sourceAttribution: {
+    resaleCollectionId: string | null;
+    datasetCount: number;
+  };
+};
 
-Selection is guided by current sync artifact behavior and will be decided in implementation.
+function deriveDataQualityState(
+  manifest: Partial<Manifest> | null
+): DataQualityState;
 
-### 3) Unified comparable quality status
+function formatRelativeTime(iso: string | null): string; // "3 days ago" | "unavailable"
+```
 
-Create a canonical helper:
+State derivation rules:
+- `missing` — manifest is `null` or empty object.
+- `partial` — `generatedAt` or `dataWindow` is absent but other fields exist.
+- `stale` — `maxMonth` is more than 3 months behind the current month.
+- `fresh` — none of the above.
 
-`src/lib/listing-quality.ts`
+Every field is nullable. Missing values produce fallback copy, never throw.
 
-- `deriveComparableSetQuality(set, reference)` returns:
-  - `qualityTag`: `strong | weak | widened | stale`
-  - `reasonCodes`: ordered `CaveatCode[]` values
-  - `latestComparableMonth`
+### 3. Comparable quality status — `src/lib/listing-quality.ts`
 
-Mapping:
+Derives a single trust label from existing confidence + caveat outputs:
 
-- `weak` when sample is low or reliability signals are weak.
-- `widened` when widened matching was required.
-- `stale` when `newestComparableAgeMonths > 12`.
-- `strong` when none of the above apply and confidence is high.
+```typescript
+type QualityTag = "strong" | "weak" | "widened" | "stale";
 
-Use existing `ConfidenceInput` + `Caveat` data as inputs where possible to avoid
-duplicate heuristics.
+type ComparableSetQuality = {
+  tag: QualityTag;
+  reasonCodes: CaveatCode[];
+  latestComparableMonth: string | null;
+};
 
-### 4) Shared caveat language + render surface
+function deriveComparableSetQuality(input: {
+  confidence: ConfidenceAssessment;
+  caveats: CaveatCode[];
+  newestComparableAgeMonths: number | null;
+}): ComparableSetQuality;
+```
 
-Add/use a shared translation-ready dictionary:
+Mapping priority (first match wins):
+1. **stale** — `newestComparableAgeMonths > 12` or `STALE_DATA` in caveats.
+2. **widened** — `WIDENED_TO_STREET` or `WIDENED_TO_TOWN` in caveats.
+3. **weak** — `LOW_SAMPLE` or `VERY_LOW_SAMPLE` in caveats, or
+   `confidence.level === "low"`.
+4. **strong** — none of the above and `confidence.level` is `"high"` or
+   `"medium"`.
 
-- Keep canonical language definitions in `shared/caveat-codes.ts` messages.
-- Add a single UI adapter to map `(code, severity)` to labels used in:
-  - `ListingCheckPanel`
-  - `ComparableEvidenceTable`
-  - `DetailDrawer`
-  - `ShortlistDrawer`
-  - `ResultsPane`
-  - comparison tiles and cards that show transaction confidence
+This consumes the same `ConfidenceInput` and `CaveatCode` data already produced
+by the confidence-and-caveats system — no duplicate heuristics.
 
-This removes divergent strings like "assessment is directional only", "few comparables",
-and equivalent meanings rendered as multiple phrasings.
+### 4. Shared caveat language adapter
 
-### 5) Surface-level behavior
+Canonical user-facing messages stay in `shared/caveat-codes.ts` (which already
+has `getCaveatMessage(code)` and severity mappings). A thin UI adapter maps
+`(code, severity)` to display props consumed by all surfaces:
 
-- `ListingCheckPanel`
-  - Display latest month used by the current check.
-  - Show quality badge (`strong`/`weak`/`widened`/`stale`) beside existing confidence.
-  - Show time-adjustment caveat when adjustment could not be applied.
-- `AppHeader` (or equivalent global info surface)
-  - Keep current `dataThrough` display but include source metadata and sync timestamp
-    with graceful fallback when unavailable.
-- `DetailDrawer`, `ShortlistDrawer`, `ResultsPane`
-  - Keep existing confidence badge labels but append/replace caveat summary text
-    from the same shared source.
-- `ComparableEvidenceTable`
-  - Keep existing reason table, but ensure widened/stale/low-sample messages use shared
-    caveat text/ordering where possible.
+```typescript
+function getCaveatDisplayProps(code: CaveatCode): {
+  label: string;              // e.g. "Low sample size"
+  severity: "info" | "warning" | "critical";
+  icon: string;               // Lucide icon name
+};
+```
 
-### 6) Graceful failure modes
+All surfaces import this adapter instead of composing inline strings. This
+eliminates divergent copy like "assessment is directional only" vs "few
+comparables" vs "limited comparable transactions" for the same condition.
 
-- If manifest fetch succeeds but metadata fields are missing:
-  - show `"Data source: unavailable"` or equivalent fallback, not a hard error.
-- If comparables are stale and low-quality:
-  - show explicit caveat tags and do not crash rendering.
-- If comparison set is empty:
-  - keep explicit "no comparable transactions" state and still show latest known
-    freshness source context where available.
+### 5. Surface-level integration
 
-## Testing Plan
+| Surface | What to show | Source |
+|---------|-------------|--------|
+| `ListingCheckPanel` | Latest month used, quality badge, time-adjustment caveat | `deriveComparableSetQuality` + manifest |
+| `ComparableEvidenceTable` | Widened/low-sample notes using shared language | caveat adapter |
+| `AppHeader` / global info | "Data through {month}", sync timestamp | `deriveDataQualityState` |
+| `DetailDrawer` | Compact quality tag + caveat summary | caveat adapter |
+| `ShortlistDrawer` | Per-row quality indicator | `deriveComparableSetQuality` |
+| `ResultsPane` | Confidence label + caveat micro-copy | caveat adapter |
 
-- Add unit tests for:
-  - stale (`maxMonth` beyond freshness window),
-  - missing metadata (null/malformed timestamp/source IDs),
-  - partial metadata (only core manifest fields present).
-- Add component tests covering list/check/overview surfaces using shared caveat labels.
-- Ensure existing confidence and caveat tests continue to pass and remain source-of-truth
-  oriented.
+### 6. Graceful failure modes
 
-## Open question
+| Scenario | Behavior |
+|----------|----------|
+| Manifest fetch fails | Show "Data freshness: unavailable"; all other features work |
+| `dataWindow.maxMonth` missing | Show "Latest month: unavailable"; listing check still runs |
+| `sources` object partial | Show "Source: unavailable"; no crash |
+| Empty comparable set | Show "No comparable transactions found"; no quality badge |
+| Stale + low quality | Show both caveat tags; highest severity wins for badge color |
+| Town/flat type has few transactions | Show `LOW_SAMPLE` caveat with town/flat-type context |
 
-- Do we use `manifest.sources.lastUpdatedAt` as the trust baseline for "latest sync"
-  globally, or is `manifest.generatedAt` preferred for "build timestamp" in all views?
-  Recommendation: show both when both exist.
+## Testing plan
+
+- **Unit tests** (`tests/unit/dataQuality.test.ts`):
+  - Stale state when `maxMonth` is >3 months old.
+  - Missing manifest (`null` input).
+  - Partial manifest (missing `generatedAt`, missing `sources`, missing
+    `dataWindow`).
+  - `formatRelativeTime` with valid ISO, invalid string, `null`.
+- **Unit tests** (`tests/unit/listing-quality.test.ts`):
+  - Each quality tag path (strong, weak, widened, stale).
+  - Priority ordering: stale overrides widened overrides weak.
+  - Edge cases: empty caveats + high confidence → strong; no comparables →
+    no badge.
+- **Component tests**:
+  - `ListingCheckPanel` renders latest month and quality badge.
+  - `ComparableEvidenceTable` uses shared caveat language (no inline strings).
+  - `DetailDrawer` / `ShortlistDrawer` show fallback on missing metadata.
+- **E2E** (existing Playwright mocks):
+  - Listing check flow with full metadata → quality badge visible.
+  - Partial metadata fixture → no render crash, fallback labels shown.
+
+## Risks and trade-offs
+
+- **Manifest-only freshness**: Sync timestamp reflects when the pipeline last
+  ran, not necessarily when upstream data changed. Mitigation: show both
+  `generatedAt` (our sync) and `lastUpdatedAt` (upstream) when both exist.
+- **3-month staleness threshold**: Somewhat arbitrary. May need tuning after
+  observing real data publication cadence. Mitigated by making the threshold a
+  named constant.
+- **No per-source staleness**: All data sources are treated as a single
+  freshness unit. If amenity data goes stale while resale transactions are
+  fresh, the UI will not distinguish. Acceptable for v1; per-source tracking
+  is a future enhancement.
+- **Quality tag is a simplification**: Collapsing multi-dimensional confidence
+  into a single `strong/weak/widened/stale` tag loses nuance. Mitigated by
+  also showing the individual caveat codes alongside the badge.

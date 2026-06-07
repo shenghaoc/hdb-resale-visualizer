@@ -27,7 +27,7 @@ function currentMonth(now: Date): string {
   return `${year}-${month}`;
 }
 
-function monthsBetween(olderMonth: string, newerMonth: string): number {
+export function monthsBetween(olderMonth: string, newerMonth: string): number {
   const olderYear = Number(olderMonth.slice(0, 4));
   const olderMon = Number(olderMonth.slice(5, 7));
   const newerYear = Number(newerMonth.slice(0, 4));
@@ -39,13 +39,12 @@ export function deriveDataQualityState(
   manifest: Partial<Manifest> | null,
   now: Date = new Date(),
 ): DataQualityState {
-  const latestMonthUsed = isMonth(manifest?.dataWindow?.maxMonth)
-    ? manifest.dataWindow.maxMonth
-    : null;
-  const generatedAt = isIsoDateTime(manifest?.generatedAt) ? manifest.generatedAt : null;
-  const lastSyncedAt = isIsoDateTime(manifest?.sources?.lastUpdatedAt)
-    ? manifest.sources.lastUpdatedAt
-    : null;
+  const rawMaxMonth = manifest?.dataWindow?.maxMonth;
+  const latestMonthUsed = isMonth(rawMaxMonth) ? rawMaxMonth : null;
+  const rawGeneratedAt = manifest?.generatedAt;
+  const generatedAt = isIsoDateTime(rawGeneratedAt) ? rawGeneratedAt : null;
+  const rawLastUpdatedAt = manifest?.sources?.lastUpdatedAt;
+  const lastSyncedAt = isIsoDateTime(rawLastUpdatedAt) ? rawLastUpdatedAt : null;
 
   const sourceLabels: string[] = [];
   if (
