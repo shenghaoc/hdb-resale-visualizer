@@ -359,45 +359,57 @@ export function buildComparableSet(
   const sameStreetCount = sameStreetRows.length;
   const sameTownCount = sameTownRows.length;
 
+  const hasBlockData = sameBlockRows.length > 0;
+  const hasStreetData = sameStreetRows.length > 0;
+  const hasTownData = sameTownRows.length > 0;
+
+  const anyPassReachesThreshold =
+    sameBlockRows.length >= MIN_COMPARABLES ||
+    sameStreetRows.length >= MIN_COMPARABLES ||
+    sameTownRows.length >= MIN_COMPARABLES;
+
   const caveats: string[] = [];
   let widenedSearch = false;
   let comparables: ComparableTransaction[] = [];
 
-  // Pass 1 — same block
-  if (sameBlockRows.length >= MIN_COMPARABLES) {
-    comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
-  } else if (sameBlockRows.length === 0 && sameStreetRows.length === 0 && sameTownRows.length === 0) {
-    // No data at all — return empty
+  if (!hasBlockData && !hasStreetData && !hasTownData) {
+    // No data at all
     caveats.push("No comparable transactions found for this listing.");
-  } else if (sameBlockRows.length > 0 && sameStreetRows.length < MIN_COMPARABLES && sameTownRows.length === 0) {
-    // All passes below threshold and no town data — use narrowest available
-    comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
-  } else {
-    // Pass 2 — same street
-    widenedSearch = true;
-    caveats.push(
-      "Few comparable transactions in the same block — search widened to the same street.",
-    );
-
-    if (sameStreetRows.length >= MIN_COMPARABLES) {
-      comparables = scoreAndRank(candidate, sameStreetRows, MAX_COMPARABLES);
-    } else if (sameStreetRows.length > 0 && sameTownRows.length === 0) {
-      // Street has data but below threshold, and no town fallback available
+  } else if (anyPassReachesThreshold) {
+    // Standard widening: use the narrowest pass that meets MIN_COMPARABLES
+    if (sameBlockRows.length >= MIN_COMPARABLES) {
+      comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
+    } else if (sameStreetRows.length >= MIN_COMPARABLES) {
+      widenedSearch = true;
+      caveats.push(
+        "Few comparable transactions in the same block — search widened to the same street.",
+      );
       comparables = scoreAndRank(candidate, sameStreetRows, MAX_COMPARABLES);
     } else {
-      // Pass 3 — same town
+      widenedSearch = true;
       caveats.push(
+        "Few comparable transactions in the same block — search widened to the same street.",
         "Few comparable transactions on the same street — search widened to the entire town.",
       );
-
-      if (sameTownRows.length > 0) {
-        comparables = scoreAndRank(candidate, sameTownRows, MAX_COMPARABLES);
-      } else {
-        caveats.length = 0;
-        caveats.push(
-          "No comparable transactions found for this listing.",
-        );
-      }
+      comparables = scoreAndRank(candidate, sameTownRows, MAX_COMPARABLES);
+    }
+  } else {
+    // No pass reaches threshold — use narrowest pass with any data
+    if (hasBlockData) {
+      comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
+    } else if (hasStreetData) {
+      widenedSearch = true;
+      caveats.push(
+        "Few comparable transactions in the same block — search widened to the same street.",
+      );
+      comparables = scoreAndRank(candidate, sameStreetRows, MAX_COMPARABLES);
+    } else {
+      widenedSearch = true;
+      caveats.push(
+        "Few comparable transactions in the same block — search widened to the same street.",
+        "Few comparable transactions on the same street — search widened to the entire town.",
+      );
+      comparables = scoreAndRank(candidate, sameTownRows, MAX_COMPARABLES);
     }
   }
 

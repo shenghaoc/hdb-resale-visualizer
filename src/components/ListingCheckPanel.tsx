@@ -308,6 +308,7 @@ export function ListingCheckPanel({
       !flatType ||
       !storeyRange
     ) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale comparable set when inputs become invalid
       setComparableSet(null);
       return;
     }
@@ -334,7 +335,8 @@ export function ListingCheckPanel({
     })
       .then(async (res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`);
-        const data: ListingComparableSet = await res.json();
+        const json: unknown = await res.json();
+        const data = json as ListingComparableSet;
         if (!cancelled) {
           setComparableSet(data);
           setComparableSetLoading(false);
@@ -363,8 +365,8 @@ export function ListingCheckPanel({
   ]);
 
   // ── Compute result from comparable set ────────────────────────────────────
-  // ComparableTransaction satisfies the runtime interface of AddressDetailTransaction
-  // for all fields read by assessAskingPrice, computeConfidence, and generateCaveats.
+  // ComparableTransaction is mapped to AddressDetailTransaction for compatibility
+  // with the existing assessAskingPrice, computeConfidence, and generateCaveats.
   type LocalResult = {
     assessment: AskingPriceAssessment;
     confidence: ConfidenceResult;
@@ -380,7 +382,19 @@ export function ListingCheckPanel({
       return null;
     }
 
-    const txs = comparableSet.comparables as unknown as AddressDetailTransaction[];
+    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => ({
+      id: tx.transactionId,
+      month: tx.month,
+      flatType: tx.flatType,
+      storeyRange: tx.storeyRange,
+      floorAreaSqm: tx.floorAreaSqm,
+      flatModel: "",
+      leaseCommenceDate: tx.leaseCommenceDate ?? 0,
+      remainingLease: "",
+      resalePrice: tx.resalePrice,
+      pricePerSqm: tx.pricePerSqm,
+      pricePerSqft: null,
+    }));
 
     const assessment = assessAskingPrice({
       askingPrice: resolvedAskingPrice,

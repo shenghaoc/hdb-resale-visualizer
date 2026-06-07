@@ -160,6 +160,8 @@ export async function writeArtifactsToD1(
   // Transactions — full normalized table for the comparable engine v2.
   if (artifacts.transactions && artifacts.transactions.length > 0) {
     await insertTransactions(db, artifacts.transactions);
+  } else {
+    await db.truncate("transactions");
   }
 
   // Manifest — written last so a matching timestamp implies a successful sync.

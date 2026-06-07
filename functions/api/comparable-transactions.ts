@@ -183,19 +183,19 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (sameBlockCount >= 8) {
     dataRows = await queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3",
+      "SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3 ORDER BY month DESC LIMIT 150",
       parsed.town, parsed.block, parsed.flatType,
     );
   } else if (sameStreetCount >= 8) {
     dataRows = await queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2",
+      "SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
       parsed.streetName, parsed.flatType,
     );
   } else if (sameTownCount > 0) {
     dataRows = await queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2",
+      "SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
       parsed.town, parsed.flatType,
     );
   }
