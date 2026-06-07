@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, PRIMARY_BLUE, getCurrentYear } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { useI18n, type Translator } from "@/lib/i18n";
+import { useI18n, type Locale, type Translator } from "@/lib/i18n";
 import { localizeTownName } from "@/lib/i18n/domain";
 import { useTheme } from "@/hooks/useTheme";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
@@ -309,7 +309,7 @@ function ShortlistComparisonTable({
 function formatComparisonGap(
   gap: ShortlistComparisonRow["targetGap"],
   t: Translator,
-  locale?: string,
+  locale?: Locale,
 ): { text: string; tone: "below" | "above" | "match" } | null {
   if (gap === null) {
     return null;

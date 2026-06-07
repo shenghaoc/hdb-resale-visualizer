@@ -275,7 +275,7 @@ describe("ShortlistDrawer", () => {
     expect(tableRows[0]).toHaveTextContent("Test notes");
     expect(tableRows[1]).toHaveTextContent("Test notes");
 
-    fireEvent.click(screen.getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "View 101 Ang Mo Kio Ave 3" })[0]);
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
 
     fireEvent.click(
