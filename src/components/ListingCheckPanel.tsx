@@ -323,6 +323,37 @@ export function ListingCheckPanel({
 
   const verdictRef = useRef<HTMLDivElement>(null);
 
+  // ── Render-phase prop → state sync ──────────────────────────────────────
+  const [prevAskingPrice, setPrevAskingPrice] = useState(askingPrice);
+  if (askingPrice !== prevAskingPrice) {
+    setPrevAskingPrice(askingPrice);
+    setAskingPriceInput(askingPrice != null ? String(askingPrice) : "");
+  }
+
+  const [prevFloorAreaSqm, setPrevFloorAreaSqm] = useState(floorAreaSqm);
+  if (floorAreaSqm !== prevFloorAreaSqm) {
+    setPrevFloorAreaSqm(floorAreaSqm);
+    setFloorAreaInput(floorAreaSqm != null ? String(floorAreaSqm) : "");
+  }
+
+  const [prevLeaseCommenceYear, setPrevLeaseCommenceYear] = useState(leaseCommenceYear);
+  if (leaseCommenceYear !== prevLeaseCommenceYear) {
+    setPrevLeaseCommenceYear(leaseCommenceYear);
+    setLeaseYearInput(leaseCommenceYear != null ? String(leaseCommenceYear) : "");
+  }
+
+  // ── Render-phase detail reset when address clears ─────────────────────────
+  const [prevSelectedAddressKey, setPrevSelectedAddressKey] = useState(selectedAddressKey);
+  if (selectedAddressKey !== prevSelectedAddressKey) {
+    setPrevSelectedAddressKey(selectedAddressKey);
+    if (!selectedAddressKey) {
+      setDetail(null);
+      setDetailError(false);
+      setDetailLoading(false);
+      setSearchValue("");
+    }
+  }
+
   const handleCheckClick = useCallback(() => {
     setTimeout(() => {
       verdictRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

@@ -52,7 +52,6 @@ export function useMapPriceHeatmapSync({
         !config ||
         config.enabled !== desiredConfig.enabled ||
         config.mode !== desiredConfig.mode ||
-        config.opacity !== desiredConfig.opacity ||
         !layerIsPresent;
 
       if (!configChanged && layerIsPresent && sourceIsHeatmapReady) {

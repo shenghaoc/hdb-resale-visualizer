@@ -1,92 +1,138 @@
 # Tasks: Analysis Performance and Lazy Loading
 
-## Phase 1 — Baseline capture and harness
+> Execution checklist. Ordered by impact and dependency. Each task names its
+> acceptance check. Tasks marked [x] are already addressed in the current
+> codebase.
 
-- [ ] **T1.1** Add a short performance capture note to repo docs or spec scratch notes with baseline outputs for:
-  - `npm run check:bundle`
-  - `npm run build`
-  - `npm run test`
-  - `npm run lint`
-  - Playwright smoke run for map/filter/listing check interactions.
-  - Acceptance: all baseline scripts run in current branch and outputs are recorded.
+## Phase 1 — Performance measurement harness
 
-- [ ] **T1.2** Add a dedicated Playwright script in `tests/e2e` for timing capture of:
-  - filter change to list update
-  - map interaction while filtering
-  - listing check request to evidence render
-  - Acceptance: script returns stable timing summary for repeated runs.
+- [x] **T1.1** Add a Playwright performance trace script in `tests/e2e/` that
+  captures timing for:
+  - filter typing → list update latency (measure time from keypress to DOM
+    change in ResultsPane)
+  - listing check: click "Check" → verdict card visible
+  - map pan/zoom FPS during active filtering
+  - Acceptance: script returns stable timing summary; can be run before/after
+    any performance PR.
+  - **Done:** `tests/e2e/performance-trace.spec.ts`
 
-## Phase 2 — Bundle and lazy-loading boundary work
+- [x] **T1.2** Add a `scripts/perf-baseline.sh` script that runs:
+  - `npm run build` (record time)
+  - `npm run check:bundle` (record preload sizes)
+  - `npm run test -- --run` (record duration)
+  - Outputs a JSON summary for diff comparison.
+  - Acceptance: script runs in CI and produces reproducible output.
+  - **Done:** `scripts/perf-baseline.sh`
 
-- [ ] **T2.1** Create a new lazy analysis entry module under `src/components/analysis/AnalysisPanel.tsx` (name placeholder) so heavy analysis-only UI and logic are not in the initial eager graph.
-- [ ] **T2.2** Refactor `App.tsx` to load analysis-heavy route/views via `React.lazy` and keep defaults on existing lightweight shells.
-  - Acceptance: `npm run check:bundle` remains within budgets.
+## Phase 2 — Filtering pipeline stabilization
 
-- [ ] **T2.3** Add conditional loading for analysis-only helpers (e.g., worker bootstrap, table virtualization, formatting utilities) inside the analysis chunk only.
-  - Acceptance: route-level split exists in import graph.
+- [x] **T2.1** Audit `src/hooks/useFilterPipeline.ts` for unstable
+  dependencies. Current state: `stableFilters` uses explicit dep list;
+  `filterScopedBlocks` uses minimal callback deps; tokenization and flat-type
+  caches are module-level.
 
-## Phase 3 — Filtering and rerender reductions
+- [x] **T2.2** Stabilize the `t` dependency for geographic intent computation.
+  Extract `t("filters.nearMe")` into a `useMemo` that depends only on the
+  translated string value, not the translator function reference. Pass the
+  resolved string to `resolveGeographicSearchIntent`.
+  - Acceptance: `geographicIntent` and `mapGeographicIntent` do not
+    recompute when `t` reference changes but string is identical. Add a test
+    that verifies memo stability.
+  - **Done:** `nearMeLabel` useMemo added in `src/hooks/useFilterPipeline.ts`
 
-- [x] **T3.1** Audit `src/hooks/useFilterPipeline.ts` for unstable dependencies and tighten memo inputs to avoid unnecessary pipeline resets.
-- [ ] **T3.2** Add memoized derived selectors for expensive inputs and caches for repeated filter requests in `src/lib/filtering.ts` where safe.
-- [ ] **T3.3** Add tests for filter result consistency when filter state is toggled rapidly.
-  - Acceptance: no result correctness regressions and fewer avoidable full recomputations in profiler-like runs.
+- [x] **T2.3** Add regression tests for filter consistency under rapid state
+  toggles. Test that toggling town/flatType/budget back and forth produces
+  identical filtered sets.
+  - Acceptance: new test file passes in `npm run test`.
+  - **Done:** "filter consistency under rapid state toggles" describe block
+    in `src/lib/__tests__/filtering.test.ts`
 
-## Phase 4 — Analysis worker and comparable post-processing
+## Phase 3 — Map sync hook optimization (if profiling warrants)
 
-- [ ] **T4.1** Add worker scaffolding under `src/workers/analysis/`:
-  - `analysis-worker.ts`
-  - `analysis-worker-contract.ts` (request/response types)
-  - bootstrapping entry from browser when check view enters
-  - Acceptance: worker only loads on analysis view activation.
+- [x] **T3.1** Audit map sync hooks for redundant setData calls. Current
+  state: `useMapDataSync` uses ref-based identity guards
+  (`geoJson !== blocksSourceRef.current`) to skip setData when reference is
+  unchanged. School sync uses similar pattern.
 
-- [ ] **T4.2** Move or mirror these compute-heavy tasks into worker path:
-  - comparable ranking and stable sort slices
-  - caveat/confidence derivation that is purely presentational
-  - aggregated summary stats used by listing check
-  - Acceptance: same outputs before and after for a fixed fixture payload.
+- [x] **T3.2** Add payload-change guards and minimal-change detection for
+  source/layer updates. Current state: all hooks use ref comparison before
+  calling setData/setLayoutProperty.
 
-- [ ] **T4.3** Ensure fallback to synchronous path when worker unavailable.
-  - Acceptance: no functional regressions on browsers without workers.
+- [x] **T3.3** Add a map interaction performance check in e2e/smoke that
+  verifies no visible stutter during repeated pan/zoom with active filters.
+  - Acceptance: trace shows >30fps during interaction; no frame drops >100ms.
+  - **Done:** "map remains interactive during filter operations" test in
+    `tests/e2e/performance-trace.spec.ts`
 
-## Phase 5 — Comparable and table rendering performance
+## Phase 4 — Render-path hygiene validation
 
-- [ ] **T5.1** In `src/components/ComparableEvidenceTable.tsx`, add threshold-based virtualized path using `@tanstack/react-virtual`.
-  - Keep direct render for small row counts.
-  - Acceptance: rows above threshold render smoothly in large local test sets.
+- [x] **T4.1** Refactor `ListingCheckPanel.tsx` to avoid expensive
+  transformations during render. Current state: all derivations
+  (`flatTypeOptions`, `storeyOptions`, `comparablePayload`, `result`) are
+  properly memoized with appropriate dependencies.
 
-- [ ] **T5.2** Move sort and transform helpers out of render into memoized functions/hooks.
-  - Acceptance: sorting does not run on unrelated state updates.
+- [x] **T4.2** Ensure `buildComparablePayload` uses single-pass O(N) loop
+  for counts. Current state: single `for` loop over comparables accumulates
+  all counts and maps transactions in one pass.
 
-- [ ] **T5.3** Add a focused benchmark fixture with row counts above and below threshold to verify virtualization switch behavior.
-  - Acceptance: both modes render and maintain expected sort behavior.
-
-## Phase 6 — Map update throttling and source sync pruning
-
-- [x] **T6.1** Audit `src/hooks/useMapDataSync.ts`, `src/hooks/useMapPriceHeatmapSync.ts`, `src/hooks/useMapRadiusLayer.ts` for repeated `styledata` updates.
-- [x] **T6.2** Add payload-change guards and minimal-change detection for `source.setData` and layer visibility updates.
-- [ ] **T6.3** Add a map interaction perf check in e2e/smoke to verify no visible stutter during repeated pan/zoom and filter toggles.
-  - Acceptance: improved smoothness; no visual regression in existing map interactions.
-
-## Phase 7 — Render-path safety and UI responsiveness
-
-- [x] **T7.1** Refactor `src/components/ListingCheckPanel.tsx` to avoid expensive transformations during render; keep compute in memoized selectors or worker results.
-- [x] **T7.2** Preserve `adjustmentMeta` and listing check contract while reducing intermediate object churn.
-- [ ] **T7.3** Add regression tests for:
+- [x] **T4.3** Add regression tests for:
   - no repeated comparable recompute on unchanged query
   - loading/error states remain responsive
-  - result stays interactive while user edits price/filters.
+  - result stays interactive while user edits price/filters
+  - Acceptance: new tests pass in `npm run test`.
+  - **Done:** `tests/unit/comparable-determinism.test.ts`
 
-## Phase 8 — Validation and trade-off closure
+## Phase 5 — Comparable table virtualization (conditional)
 
-- [ ] **T8.1** Re-run:
-  - `npm run test`
-  - `npm run lint`
-  - `npm run check:bundle`
-  - `npm run build`
-  - perf + e2e timing scripts
-- [ ] **T8.2** Compare before/after metrics and publish measured deltas in the spec log.
-- [ ] **T8.3** Document heavy library decisions:
-  - Why worker is justified
-  - Why virtualization is justified if enabled
-  - Why Comlink/DuckDB/Arquero are not used or deferred.
+- [ ] **T5.1** If comparable engine cap increases beyond 30 (tracked in
+  `shared/comparable-engine.ts`), add threshold-based virtualization to
+  `ComparableEvidenceTable.tsx` using `@tanstack/react-virtual`.
+  - Keep direct render for ≤50 rows (current behavior).
+  - Virtualize for >50 rows.
+  - Gate behind lazy import (not in initial bundle).
+  - Acceptance: both modes render correctly; sort behavior preserved.
+
+- [ ] **T5.2** Add a focused test fixture with row counts above and below
+  threshold to verify virtualization switch behavior.
+  - Acceptance: test verifies correct rendering at 30 rows (no
+    virtualization) and 60 rows (virtualized).
+
+## Phase 6 — Worker architecture (conditional)
+
+- [ ] **T6.1** If profiling shows a browser-side analysis task exceeds 50ms
+  on P95 hardware, add worker scaffolding under `src/workers/analysis/`:
+  - `analysis-worker.ts` — worker entry
+  - `analysis-worker-contract.ts` — typed request/response
+  - Bootstrap only on analysis view activation
+  - Acceptance: worker loads on demand; synchronous fallback works.
+
+- [ ] **T6.2** Move the identified blocking computation to worker. Maintain
+  identical outputs for a fixed fixture payload.
+  - Acceptance: before/after outputs match for test fixtures.
+
+## Phase 7 — Final validation and documentation
+
+- [ ] **T7.1** Re-run full validation suite:
+  - `npm run test` — all 1,205+ tests pass
+  - `npm run lint` — clean
+  - `npm run typecheck` — clean
+  - `npm run check:bundle` — within budget
+  - `npm run build` — succeeds
+  - Playwright performance trace — no regressions
+
+- [ ] **T7.2** Compare before/after metrics using the T1.2 baseline script.
+  Publish deltas in PR description.
+
+- [ ] **T7.3** Update `performance-audit.md` with final measured deltas and
+  any changes to heavy library decisions.
+
+## Task dependency summary
+
+```
+T1.1, T1.2 (measurement) → enables T7.1, T7.2 (validation)
+T2.2 (translator fix) → standalone, no deps
+T2.3, T4.3 (regression tests) → standalone
+T3.3 (map perf check) → depends on T1.1 script
+T5.1, T5.2 (virtualization) → conditional on engine cap change
+T6.1, T6.2 (worker) → conditional on profiling evidence
+```

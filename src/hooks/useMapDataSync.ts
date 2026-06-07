@@ -104,14 +104,13 @@ export function useMapDataSync({
       if (!isActive || !map.isStyleLoaded()) return;
       const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
       const shouldSetSchoolData =
-        primarySchoolsGeoJson != null &&
         isGeoJsonDataSourceLike(source) &&
         (source !== schoolsLayerSourceRef.current ||
           primarySchoolsGeoJson !== schoolsSourceRef.current);
       if (shouldSetSchoolData) {
-        source.setData(primarySchoolsGeoJson);
+        source.setData(primarySchoolsGeoJson ?? { type: "FeatureCollection", features: [] });
         schoolsLayerSourceRef.current = source;
-        schoolsSourceRef.current = primarySchoolsGeoJson;
+        schoolsSourceRef.current = primarySchoolsGeoJson ?? null;
       }
 
       const hasSchoolFeatures = (primarySchoolsGeoJson?.features.length ?? 0) > 0;

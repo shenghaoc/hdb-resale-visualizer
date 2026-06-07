@@ -3,80 +3,111 @@
 ## R1 — Baseline and measurement
 
 - **R1.1** Capture pre-change baseline values for:
-  - `npm run build`
-  - `npm run check:bundle`
-  - `npm run test`
-  - `npm run lint`
+  - `npm run build` timing and output sizes
+  - `npm run check:bundle` preload metrics
+  - `npm run test` pass count and duration
+  - `npm run lint` clean state
   - Playwright interaction timings for filter/search/map/check flows.
-- **R1.2** Record INP, LCP, and CLS using existing reporting pathway (`src/lib/performance.ts`) before and after changes.
-- **R1.3** Keep all baseline outputs under version control notes for later comparison in review comments.
+- **R1.2** Add a Playwright performance trace script that captures:
+  - filter typing latency (keypress → list update)
+  - listing check verdict latency (click → verdict visible)
+  - map pan/zoom frame stability during active filtering
+- **R1.3** Record before/after deltas in PR descriptions for any performance
+  change.
 
 ## R2 — Bundle-size safety
 
-- **R2.1** New dependencies required for analysis surfaces must not increase initial preload budgets beyond current checks without explicit justification.
-- **R2.2** Add/adjust lazy boundaries so heavy dependencies do not appear in initial modulepreload set by default.
-- **R2.3** `npm run check:bundle` must continue to pass after introducing lazy split points.
+- **R2.1** New dependencies must not increase initial preload budgets beyond
+  the current 225,280 B gzip total / 98,304 B gzip single limits.
+- **R2.2** Heavy dependencies must ship only in lazily-loaded chunks (not in
+  the modulepreload set).
+- **R2.3** `npm run check:bundle` must continue to pass after any dependency
+  addition.
+- **R2.4** The main index chunk (currently 195 KiB gzip) must not grow by
+  more than 10% without explicit justification.
 
-## R3 — Analysis performance and responsiveness
+## R3 — Filtering pipeline efficiency
 
-- **R3.1** Keep listing check interactions responsive while the comparable payload is loading or being processed.
-- **R3.2** Move non-API-required expensive post-processing (sorting/filtering/summaries) out of direct React render paths.
-- **R3.3** Preserve existing API behavior for comparable retrieval; API endpoint still remains authoritative.
-- **R3.4** Listing price check should remain usable while comparable data is large or when multiple quick edits occur.
+- **R3.1** Stabilize the `t` (translator) dependency in
+  `useFilterPipeline.ts` so that `geographicIntent` and
+  `mapGeographicIntent` memos do not recompute on translator reference
+  changes when the translated string is unchanged.
+- **R3.2** Maintain existing short-circuit ordering in `matchesFilter`:
+  cheap numeric comparisons first, expensive text search last.
+- **R3.3** Keep existing cache infrastructure (`tokenizationCache`,
+  `filterFlatTypeCache`, `getCanonicalFlatTypes` WeakMap) intact.
+- **R3.4** Filter-change-to-first-result latency must remain under 100ms
+  (P95) for 10,000+ block datasets.
+- **R3.5** No correctness regressions in filter results when filter state is
+  toggled rapidly.
 
-## R4 — Filtering pipeline efficiency
+## R4 — Comparable scoring and table performance
 
-- **R4.1** Reduce unnecessary recomputation in `useFilterPipeline.ts` and `matchesFilter` by improving memo boundaries and input identity control.
-- **R4.2** Ensure filtering work is amortized and cache-friendly under repeated typing and filter toggles.
-- **R4.3** Keep existing short-circuit semantics and result correctness in map and results panes.
+- **R4.1** Keep comparable computation on the API side (Workers). Do not move
+  scoring to the browser unless a concrete local-only use case arises.
+- **R4.2** Maintain the single-pass `buildComparablePayload` pattern for
+  computing counts and mapping transactions (currently O(30)).
+- **R4.3** All derived state (`comparablePayload`, `result`, confidence,
+  caveats) must remain memoized — never recompute on unrelated state updates.
+- **R4.4** ComparableEvidenceTable sort must not run on unrelated state updates
+  (currently memoized on `[comparables, sortKey, sortDirection]`).
+- **R4.5** Add virtualization to ComparableEvidenceTable only if row count
+  exceeds 50 (currently capped at 30 by engine).
 
-## R5 — Comparable scoring and table performance
+## R5 — Map rendering performance
 
-- **R5.1** For analysis views, use worker-backed or memoized compute path for heavy comparable transformations and stable ranking.
-- **R5.2** Add optional virtualization for comparable tables when row count exceeds threshold.
-- **R5.3** Keep small payloads on the fast direct render path.
-- **R5.4** Never recompute comparable display arrays in JSX render loops.
+- **R5.1** Maintain existing ref-based change guards in map sync hooks to
+  prevent redundant `setData` calls.
+- **R5.2** Map pan/zoom must not visibly stutter during active filtering
+  (>30fps target).
+- **R5.3** Do not replace or rewrite the existing MapLibre map stack.
+- **R5.4** Consider debouncing `styledata` handlers only if profiling shows
+  measurable frame drops during rapid interaction.
 
-## R6 — Map rendering performance
+## R6 — Mobile responsiveness
 
-- **R6.1** Reduce redundant map source/layer sync operations on frequent `styledata`/interaction cycles.
-- **R6.2** Preserve current map UX and layer ordering while reducing unnecessary updates.
-- **R6.3** Continue using existing map stack and avoid rewriting map primitives.
+- **R6.1** CSS-only responsive switching (`hidden sm:*` / `sm:hidden`) must
+  remain the pattern — no JS media query listeners.
+- **R6.2** ComparableEvidenceTable mobile card layout must remain functional.
+- **R6.3** Analysis-heavy surfaces must not block touch interactions on
+  mobile devices.
 
-## R7 — Mobile responsiveness
+## R7 — Rerender and render-path hygiene
 
-- **R7.1** Maintain a dedicated mobile rendering path for tables/cards with smaller DOM trees.
-- **R7.2** Ensure analysis-heavy surfaces do not block touch interactions due to oversized desktop-only rendering.
-- **R7.3** Preserve accessibility and readable layout at mobile widths.
+- **R7.1** No expensive derived computations inside render for listing check
+  or result views.
+- **R7.2** All pure transformation pipelines must use stable dependencies in
+  `useMemo` / `useCallback`.
+- **R7.3** `BlockCard` in ResultsPane must remain wrapped in `React.memo`.
+- **R7.4** Avoid creating new object/array references in dependency arrays
+  that would invalidate downstream memos.
 
-## R8 — Rerender and render-path hygiene
+## R8 — Worker architecture (deferred)
 
-- **R8.1** Avoid expensive derived computations inside render for both listing check and result views.
-- **R8.2** Memoize all pure transformation pipelines using stable dependencies.
-- **R8.3** Limit rerender propagation by passing memoized data/handlers to heavy child components.
+- **R8.1** Do not introduce a Web Worker boundary unless a specific analysis
+  task is measured as UI-blocking (>50ms on P95 hardware).
+- **R8.2** If a worker is added in future, it must be lazy-loaded and only
+  started when the analysis view activates.
+- **R8.3** Worker payloads must be typed (`Request`/`Result` contracts).
+- **R8.4** A synchronous fallback must exist for browsers without worker
+  support.
 
-## R9 — Optional worker architecture
+## R9 — Heavy dependency governance
 
-- **R9.1** Introduce worker boundary only when an analysis task can be clearly measured as UI-blocking.
-- **R9.2** Worker payloads must be typed and structured (`Request`/`Result` contracts).
-- **R9.3** Worker initialization must be lazy and only occur in analysis-heavy UI states.
+- **R9.1** `@tanstack/react-virtual`: add only for tables exceeding 50 rows,
+  and only in lazy analysis chunks.
+- **R9.2** Comlink: add only if worker message-passing complexity exceeds a
+  small helper-function boundary.
+- **R9.3** DuckDB-WASM / Arquero: do not add without a concrete in-browser
+  analysis-workbench user story approved in a separate spec.
 
-## R10 — Heavy dependency governance
+## R10 — Validation
 
-- **R10.1** Add `@tanstack/react-virtual` only for large row bodies and only in lazy analysis chunks.
-- **R10.2** Add Comlink only if function-call complexity or maintenance overhead makes raw message passing materially worse.
-- **R10.3** Do not add DuckDB-WASM or Arquero unless a concrete analysis-workbench use case is approved.
-
-## R11 — Validation
-
-- **R11.1** Keep all existing unit/e2e tests passing.
-- **R11.2** Add benchmark-style tests/scripts for before/after deltas where practical.
-- **R11.3** Add explicit assertions for thresholds and feature flags that gate lazy and virtualized paths.
-
-## R12 — Current baseline and dependency decisions
-
-- **R12.1** Baseline measurements for bundle + bundle budget, INP/LCP/CLS, and Playwright traces are required before and after performance work in Phase 8.
-- **R12.2** `@tanstack/react-virtual` is currently not added; add only if thresholded comparable-table row virtualization proves necessary after profiling.
-- **R12.3** Web Worker support is currently deferred to explicit profiling evidence of UI-blocking comparable transforms.
-- **R12.4** Do not add Comlink unless message-passing complexity exceeds a small helper-function boundary.
-- **R12.5** Do not add DuckDB-WASM or Arquero without a concrete in-browser analysis-workbench user story.
+- **R10.1** All existing unit tests (1,205) and e2e tests must continue to
+  pass.
+- **R10.2** Add a Playwright performance trace script for before/after
+  comparison (filter latency, check latency, map smoothness).
+- **R10.3** Add regression tests for filter result consistency under rapid
+  toggling.
+- **R10.4** Document heavy library decisions with measured justification in
+  the performance audit file.

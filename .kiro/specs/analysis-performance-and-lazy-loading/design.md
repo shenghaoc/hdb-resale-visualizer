@@ -6,215 +6,270 @@ In Progress.
 
 ## Goal
 
-Improve usability and performance in analysis-heavy flows without regressing load size or map responsiveness.
+Improve usability and performance in analysis-heavy flows without regressing
+load size or map responsiveness. Allow heavy libraries where they clearly
+improve the buyer workflow, but never in the initial bundle unless justified.
 
 Primary focus:
 
 - Keep listing price check responsive under realistic dataset sizes.
 - Keep map interactions smooth on desktop and mobile.
-- Reduce rerender and compute churn for filtering, comparable scoring, and result rendering.
-- Avoid adding heavy dependencies to the initial bundle unless justified by measurable gain.
+- Reduce rerender and compute churn for filtering, comparable scoring, and
+  result rendering.
+- Avoid adding heavy dependencies to the initial bundle unless justified by
+  measurable gain.
 
-## Short performance audit
+## Performance audit (concrete baseline)
 
-### 1) Current performance budget and baseline setup
+### Bundle state (measured 2025-06-08)
 
-- Module preload budgets are enforced by `scripts/check-bundle.ts`.
-  - Total gzip preload budget: `220 KiB`.
-  - Largest single preload budget: `96 KiB`.
-  - Enforcement path is `scripts/lib/bundle-modulepreload-budget.ts`.
-- There is an existing runtime performance reporting helper: `src/lib/performance.ts`.
-  - LCP, INP, CLS are observed in `src/lib/__tests__/performance.test.ts`.
-- Build pipeline already validates `npm run check:bundle` after Vite output.
+| Metric | Value |
+|--------|-------|
+| Modulepreload count | 5 |
+| Modulepreload gzip total | 15,346 B |
+| Budget: total gzip | 225,280 B (220 KiB) |
+| Budget: single gzip | 98,304 B (96 KiB) |
+| Largest chunk (vendor-maplibre) | 272.93 KiB gzip |
+| Main index chunk | 195.45 KiB gzip |
+| CartesianChart chunk | 97.31 KiB gzip |
+| GuideDialog chunk | 50.48 KiB gzip |
+| ShortlistDrawer chunk | 15.99 KiB gzip |
+| DetailDrawer chunk | 14.05 KiB gzip |
+| ResultsPane chunk | 11.71 KiB gzip |
 
-### 2) Existing optimization signals already present
+**Assessment:** Initial preloads are well within budget (15 KiB / 220 KiB).
+The heavy chunks (MapLibre 273 KiB, CartesianChart 97 KiB) are lazy-loaded.
+The main index chunk at 195 KiB is large but within the 220 KiB single-module
+limit since it is not a preloaded chunk.
 
-- App-level route-level lazy loading exists for heavy UI branches in `src/App.tsx`:
-  - `MapView`, `DetailDrawer`, `ResultsPane`, `ShortlistDrawer`, `GuideDialog` use `React.lazy`.
-- Map data rendering path already includes caches:
-  - `src/lib/map.ts` caches generated GeoJSON features for stable block objects.
-- Result list rendering already has compact-mode virtualization logic in `src/components/ResultsPane.tsx`.
-- Filtering pipeline already memoizes multiple stages and uses search indexes in:
-  - `src/hooks/useFilterPipeline.ts`, `src/lib/filtering.ts`, `src/lib/searchFuse.ts`.
+### Lazy loading boundaries (current)
 
-### 3) Identified bottlenecks and risk areas
+Already lazy via `React.lazy` in `src/App.tsx`:
+- `MapView` — map stack + hooks
+- `DetailDrawer` — transaction detail
+- `ResultsPane` — block cards + virtualized list
+- `ShortlistDrawer` — saved blocks
+- `GuideDialog` — onboarding dialog
+- `ListingCheckPanel` — price check + comparable table
 
-1. Filtering rerun frequency
-- `useFilterPipeline` performs repeated memoized derivations; however `filterScopedBlocks` depends on frequently changing filter state and `blocks`, and its callback may re-run broadly.
-- `matchesFilter` still contains multiple conditional checks and short-circuit paths that can be expensive for large `blocks` arrays.
+Eagerly loaded:
+- `AppHeader`, `FilterPanel`, `AppTabBars`, `AppPanelShell` — structural
+  shell, needed immediately
+- Map controls (`MapLocaleControl`, `AmenityLayersControl`,
+  `PriceHeatmapControl`) — small, needed when map loads
 
-2. Comparable computation path
-- Comparable generation logic runs at API boundary in `functions/api/comparable-transactions.ts` + `shared/comparable-engine.ts`.
-- Current path still performs full sort+rank per selected scope and then returns up to 30 comparables.
-- Listing check currently maps comparable payload in render-driven hooks and computes assessment/caveats in one memoized block in `src/components/ListingCheckPanel.tsx`.
-- For high-volume usage in future or expanded compare windows, this can still block the worker thread during parse/assessment passes.
+**Assessment:** Lazy boundaries are well-placed. No further route-level splits
+needed unless a new heavy analysis surface is added.
 
-3. Result and table rendering cost
-- `ComparableEvidenceTable.tsx` performs full-array sort and mapping on each supported interaction.
-- It currently renders full rows for desktop and mobile by mapping arrays.
-- The existing compact table workaround is in `ResultsPane`, but comparable table does not use `react-virtual`.
+### Filtering performance
 
-4. Map rendering update frequency
-- `MapView` uses multiple hooks that sync map sources and layers on `styledata` events:
-  - `src/hooks/useMapDataSync.ts`
-  - `src/hooks/useMapPriceHeatmapSync.ts`
-  - `src/hooks/useAmenityGeoSync.ts`, `useMapSelectionSync`, `useMapRadiusLayer`.
-- Some effects call `setData` / layer/visibility updates whenever style data changes, which can add avoidable work while pan/zoom interactions occur.
+**Hot path:** `matchesFilter` in `src/lib/filtering.ts:622-715` runs against
+10,000+ blocks per filter change.
 
-5. Mobile-specific pressure
-- Results and controls are responsive but still re-render with desktop-mode structures on small devices until breakpoints resolve.
-- Some controls and table structures can be kept in separate mobile-first paths to reduce render work and paint complexity.
+**What's already optimized:**
+- Short-circuit ordering: cheap numeric comparisons first (town, budget, area,
+  lease, date, MRT distance), expensive text search last.
+- `filterFlatTypeCache` (Map) avoids `.trim().toUpperCase()` per block.
+- `getCanonicalFlatTypes` uses WeakMap per-block cache.
+- `tokenizationCache` (Map, 10K limit) prevents repeated search tokenization.
+- `fuseMatchedKeys` (Set) provides O(1) lookup for text search when Fuse.js
+  pre-computed results are available — bypasses the hand-rolled
+  substring/Levenshtein entirely.
+- `geographicIntent` uses bounding-box pre-filter before haversine.
 
-6. Rerenders and render-path computation
-- `ListingCheckPanel.tsx` contains state-reset branches in render path for prop transitions.
-- Several inline maps/derivations are recalculated in hook bodies and are vulnerable to cascading renders from state updates.
-- Need clear guardrails for avoiding expensive recomputation of comparables and confidence artifacts inside render loops.
+**Remaining bottlenecks:**
+1. `resolveGeographicSearchIntent` depends on `t` (translator fn) which may
+   have unstable identity, causing `geographicIntent` and
+   `mapGeographicIntent` to recompute unnecessarily.
+2. Two parallel filter passes run (results + map) with overlapping work when
+   `debouncedSearch === stableFilters.search`.
+3. `getFuseMatchedKeys` scans all blocks even when search is empty (early
+   return exists but depends on Fuse index rebuild timing).
+
+### Comparable computation performance
+
+**API path:** `shared/comparable-engine.ts` runs in Workers (Cloudflare Pages
+Functions). The `scoreSimilarity` function is lightweight (8 numeric
+comparisons + weighting). `buildComparableSet` performs at most 3 widening
+passes (block → street → town) with sort of ≤30 items each.
+
+**Browser path:** `buildComparablePayload` in
+`src/components/ListingCheckPanel.tsx:155-215` runs a single O(N) pass over
+comparables (N≤30) to compute counts and map transactions. This is correctly
+memoized via `useMemo` keyed on `[comparableSet, detail]`.
+
+**Result computation:** The `result` useMemo block
+(`ListingCheckPanel.tsx:510-557`) calls `assessAskingPrice`,
+`computeConfidence`, and `generateCaveats` — all pure functions on small
+inputs (≤30 comparables). Correctly memoized.
+
+**No remaining hot-path issues** in comparable computation. The original
+concern about 4 redundant array filters has been resolved — counts are now
+accumulated in a single `for` loop in `buildComparablePayload`.
+
+### Map rendering performance
+
+**Pattern:** All map sync hooks (`useMapDataSync`, `useMapPriceHeatmapSync`,
+`useMapRadiusLayer`, `useAmenityGeoSync`) listen to the `styledata` event and
+call `setData` / `setLayoutProperty` when it fires.
+
+**Existing guards (already in place):**
+- `useMapDataSync` uses ref-based identity checks
+  (`geoJson !== blocksSourceRef.current`) to skip setData when the GeoJSON
+  reference hasn't changed.
+- Primary school sync uses similar ref-based guards for both data and
+  visibility.
+- `moveLayersBeforeTargetIfNeeded` checks current order before calling
+  `moveLayer`.
+
+**Remaining concern:** MapLibre fires `styledata` frequently during
+pan/zoom/interaction. Even with ref guards, the event handler itself runs and
+performs source lookups. This is low-cost per call but adds up under rapid
+interaction.
+
+### Table rendering performance
+
+**ComparableEvidenceTable** (`src/components/ComparableEvidenceTable.tsx`):
+- Sort is memoized via `useMemo` on `[comparables, sortKey, sortDirection]`.
+- Typical payload: 8–30 rows. No virtualization needed at this scale.
+- Desktop and mobile layouts render in parallel (`hidden sm:table` /
+  `sm:hidden`) — no JS media query overhead.
+
+**ResultsPane** (`src/components/ResultsPane.tsx`):
+- Implements custom virtualization for compact mode when
+  `sortedBlocks.length > 80` (overscan: 8 items).
+- `BlockCard` is wrapped in `React.memo`.
+- Sort helpers pre-compute affordability headroom in a memoized Map to avoid
+  O(N log N) CPF/loan calculations during sort.
+
+**Assessment:** Table rendering is already well-optimized. Virtualization for
+the comparable table would only help if row counts grow beyond 30 (currently
+capped by engine).
+
+### Mobile responsiveness
+
+- Responsive breakpoints use CSS-only switching (`hidden sm:*` / `sm:hidden`).
+- No JS resize observers or media query listeners.
+- `ComparableEvidenceTable` has dedicated mobile card layout.
+- `ResultsPane` has compact card mode for mobile.
+
+**No blocking issues** identified for mobile rendering performance.
+
+### Rerenders and render-path computation
+
+**Resolved issues:**
+- `ListingCheckPanel` correctly memoizes all derived state (`flatTypeOptions`,
+  `storeyOptions`, `resolvedAskingPrice`, `comparablePayload`, `result`).
+- `useFilterPipeline` uses explicit dependency lists in `stableFilters` to
+  prevent reference churn.
+- `filterScopedBlocks` uses `useCallback` with minimal dependencies.
+
+**Remaining concerns:**
+1. `geographicIntent` depends on `t` — if translator identity is unstable,
+   both intent memos recompute.
+2. `mapFilters` recreates on every `debouncedSearch` change — this is
+   intentional (100ms debounce) but means the map filter pass always runs
+   100ms behind results.
 
 ## Design approach
 
 ### A. Measurement-first baseline
 
-Before changes, collect baseline snapshots in one controlled run:
+Before further changes, collect baseline snapshots:
 
-- `npm run build` + `npm run check:bundle`
-- `npm run test`
-- `npm run lint`
-- Playwright trace run for
-  - map pan/zoom + filter interactions
-  - listing check flow
-  - large payload result rendering
+- `npm run build` + `npm run check:bundle` (captured above)
+- `npm run test` — 133 files, 1205 tests passing
+- `npm run typecheck` — clean
+- `npm run lint` — clean
 
-Then define delta targets in terms of:
+Define delta targets:
+- INP: maintain < 200ms for filter interactions
+- Filter-change-to-first-result: measure with Playwright tracing
+- Comparable request-to-verdict: measure with network + render timing
+- Map pan/zoom frame stability: no visible stutter during active filtering
 
-- INP
-- LCP
-- CLS
-- Filter-change to first painted result latency
-- Comparable request-to-verdict latency
-- Rows rendered per frame
-- JS thread long task ratio on interaction bursts
+### B. Deferred execution for analysis-heavy paths
 
-### B. Analysis-first lazy loading and deferred execution
+- Keep map stack (MapLibre) as-is — no replacement.
+- Keep heavy analysis code behind existing lazy boundaries.
+- Load analysis-specific modules only when needed (listing check expanded,
+  comparable table opened).
 
-- Keep map stack (`MapLibre`) as the source of map visuals; do not replace.
-- Keep heavy analysis code out of the default render path.
-- Load analysis-specific modules only when needed:
-  - listing check expanded flow
-  - comparable details table opened
-  - large result rendering paths
+### C. Web Worker for CPU-heavy analysis (deferred)
 
-### C. Web Worker for CPU-heavy analysis
+**Decision:** Not justified yet. Current comparable computation runs in
+Workers (API-side). Browser-side post-processing is O(30) — a single loop
+over ≤30 items. Worker thread overhead would exceed the computation saved.
 
-Allowed by current constraints: move heavy, repeated, synchronous computations into worker.
+**When to revisit:**
+- If comparable window expands to 100+ transactions.
+- If new local-only analysis features require repeated scoring.
 
-Candidate moves:
+### D. `@tanstack/react-virtual` (deferred)
 
-1. Comparable post-processing in browser
-- Deduplicate and rank final comparable candidates for display.
-- Compute table sort/paging slices for analysis view.
-- Compute aggregate trend/quality summaries for local views.
+**Decision:** Not justified yet. ComparableEvidenceTable handles ≤30 rows.
+ResultsPane already has custom virtualization for >80 blocks.
 
-2. Large filtering helper tasks (frontend-only mode)
-- Optional background scoring/index precompute for search + local affordance.
-- Keep API DB filtering as source of truth; worker is used only for UI shaping and local analytics.
-
-3. Communication
-- Use plain `postMessage` first.
-- Introduce `Comlink` only if multiple bidirectional method APIs become complex.
-
-### D. `@tanstack/react-virtual` where payload grows
-
-- Use for `ComparableEvidenceTable` and any tabular analysis surfaces once row count crosses threshold.
-- Do not import it into entry chunk; gate behind analysis lazy split.
-- Keep current threshold-based behavior:
-  - small sets render normally.
-  - large sets use virtualization.
-- Avoid adding if payload never crosses threshold.
+**When to revisit:**
+- If comparable table row cap increases beyond 50.
+- If a new analysis surface needs unbounded row rendering.
 
 ### E. Bundle size guardrails
 
 - Any new heavy package must ship only in dynamically loaded analysis bundles.
-- Keep initial preload budgets respected.
-- New deps are accepted only if:
-  - measurable pre/post gain is captured.
-  - dependency is not duplicated by existing stack behavior.
+- Keep initial preload budget under 220 KiB gzip (currently 15 KiB — massive
+  headroom).
+- New deps accepted only if measurable pre/post gain is captured.
 
-### F. Mobile responsiveness plan
+### F. No-compute-in-render rule
 
-- Ensure comparable view has dedicated mobile card/table split.
-- Use existing compact patterns for cards and action groups.
-- Defer expensive columns and controls until viewport width allows.
-
-### G. No-compute-in-render rule for analysis surfaces
-
-- Any derived comparable summary/caveat/sort list must be memoized or precomputed in effect/worker.
+- Any derived summary/caveat/sort must be memoized or precomputed.
 - Never derive large arrays directly in JSX render loops.
 - Ensure stable keys and stable handlers to reduce child rerenders.
 
-## Proposed architecture changes (target)
+## Architecture changes (target)
 
-1. `src/components/ListingCheckPanel.tsx`
-- Extract analysis derivations into `useListingAnalysisResult` style hook.
-- Move compare response post-processing and sort helpers to worker-backed adapter when available.
+1. **`src/hooks/useFilterPipeline.ts`**
+   - Stabilize `t` dependency for geographic intent computation.
+   - Add early-exit when search is empty to skip Fuse pass entirely.
+   - Consider deduplicating results/map filter passes when search values
+     converge.
 
-2. `src/components/ComparableEvidenceTable.tsx`
-- Add optional virtualization path using `@tanstack/react-virtual` above a size threshold.
-- Keep current default rendering for small sets.
+2. **`src/hooks/useMapDataSync.ts` and sibling hooks**
+   - Current ref-based guards are sufficient.
+   - Consider debouncing `styledata` handler if profiling shows it fires
+     excessively during rapid pan/zoom (only if measurable).
 
-3. `src/hooks/useFilterPipeline.ts` and `src/lib/filtering.ts`
-- Add stronger memo boundaries for heavy loops.
-- Reduce churn from unstable object dependencies.
-- Add cache keys and invalidation points for expensive derived indexes.
+3. **`src/components/ComparableEvidenceTable.tsx`**
+   - No changes needed at current scale (≤30 rows).
+   - Add optional virtualization path if row cap increases.
 
-4. `src/lib/map.ts` and map hooks
-- Keep existing cache model but add guarded source update checks.
-- Avoid repeated expensive layer updates in style loops when derived payload is unchanged.
-
-5. New analysis worker package
-- `src/workers/analysis/` with worker entry + typed message contracts.
-- Worker loads only on demand.
-
-6. Benchmark scaffolding
-- Add a small performance regression fixture to collect:
-  - scriptable timing metrics
-  - table render and map interaction traces
-  - bundle size diff for each PR scope
-
-## Before / after measurement plan
-
-### Before
-
-- LCP/INP/CLS from existing telemetry path and test harness.
-- Bundle budget from `npm run check:bundle`.
-- Filter operation time and render count for large filters from existing scenario tests.
-- Comparable flow timeline:
-  - user click -> API return -> table visible.
-
-### After
-
-- Same metrics with target windows, plus worker offload deltas and frame budget gains.
-- Compare:
-  - no-worker vs worker path toggled by feature flag.
-  - virtualized vs non-virtualized table path at row thresholds.
-- Hard acceptance:
-  - initial route budget remains under enforced preload caps.
-  - map/scroll interactions avoid visible stutter at normal mobile/desktop hardware.
-  - listing check result area remains responsive when comparables and profiles are large.
+4. **Performance regression fixture**
+   - Add Playwright performance trace script for:
+     - filter typing latency
+     - listing check request-to-verdict
+     - map interaction smoothness
+   - Run as part of CI or manually before/after performance PRs.
 
 ## Heavy library justification
 
-### Comlink
-- Not required initially.
-- Add only if worker API surface becomes multi-method and wrapper overhead justifies complexity reduction.
+### Web Workers
+- **Status:** Not justified for this phase.
+- **Reason:** All heavy computation (comparable scoring, filtering) either runs
+  server-side (Workers) or is already O(30) in the browser. Worker thread
+  overhead would exceed savings.
+- **Revisit when:** Comparable window grows >100 or new local-only analysis.
 
 ### @tanstack/react-virtual
-- Justified for large table bodies in analysis surfaces (comparable list + potential future transaction tables).
-- Not required for default small payloads.
+- **Status:** Not justified for this phase.
+- **Reason:** ComparableEvidenceTable ≤30 rows. ResultsPane already has custom
+  virtualization for >80 blocks.
+- **Revisit when:** Comparable table exceeds 50 rows or new unbounded list.
 
-### Web Workers
-- Justified and preferred for any repeated CPU-bound comparable or derived computations in analysis flows.
-- Must be lazy loaded and only started on analysis route/state.
+### Comlink
+- **Status:** Not justified.
+- **Reason:** No worker boundary exists to communicate across.
 
 ### DuckDB-WASM / Arquero
-- Not justified for this spec phase.
-- No clear need for ad-hoc SQL/columnar analysis workbench inside browser.
+- **Status:** Explicitly out of scope.
+- **Reason:** No ad-hoc SQL/columnar analysis workbench use case exists.

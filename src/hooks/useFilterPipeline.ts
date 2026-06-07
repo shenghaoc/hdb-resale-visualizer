@@ -228,14 +228,16 @@ export function useFilterPipeline({
   );
 
   const resultsFuseMatchedKeys = useMemo(
-    () => getFuseMatchedKeys(blocks, stableFilters.search),
+    () => stableFilters.search ? getFuseMatchedKeys(blocks, stableFilters.search) : null,
     [blocks, stableFilters.search],
   );
 
   const mapFuseMatchedKeys = useMemo(
-    () => getFuseMatchedKeys(blocks, mapFilters.search),
+    () => mapFilters.search ? getFuseMatchedKeys(blocks, mapFilters.search) : null,
     [blocks, mapFilters.search],
   );
+
+  const nearMeLabel = useMemo(() => t("filters.nearMe"), [t]);
 
   const geographicIntent = useMemo(
     () =>
@@ -244,9 +246,9 @@ export function useFilterPipeline({
         blocks,
         effectiveFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
         userLocation,
-        t("filters.nearMe"),
+        nearMeLabel,
       ),
-    [blocks, effectiveFilters.mrtMax, effectiveFilters.search, userLocation, t],
+    [blocks, effectiveFilters.mrtMax, effectiveFilters.search, userLocation, nearMeLabel],
   );
 
   const mapGeographicIntent = useMemo(
@@ -256,9 +258,9 @@ export function useFilterPipeline({
         blocks,
         mapFilters.mrtMax ?? DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
         userLocation,
-        t("filters.nearMe"),
+        nearMeLabel,
       ),
-    [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, t],
+    [blocks, mapFilters.mrtMax, mapFilters.search, userLocation, nearMeLabel],
   );
 
   // Use non-debounced geographicIntent as fallback so the map responds

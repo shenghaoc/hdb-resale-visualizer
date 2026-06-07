@@ -291,3 +291,65 @@ describe("budget filter × affordability filter layering", () => {
   });
 });
 
+describe("filter consistency under rapid state toggles", () => {
+  beforeEach(() => {
+    resetFilteringCachesForTests();
+  });
+
+  const blocks = [
+    makeBlock({ addressKey: "bedok-100", town: "BEDOK", medianPrice: 500000 }),
+    makeBlock({ addressKey: "tampines-200", town: "TAMPINES", block: "200", streetName: "TAMPINES ST 21", medianPrice: 700000, coordinates: { lat: 1.35, lng: 103.95 } }),
+    makeBlock({ addressKey: "bedok-101", town: "BEDOK", block: "101", medianPrice: 400000 }),
+  ];
+
+  it("toggling town filter back and forth produces identical results", () => {
+    const withTown = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, town: "BEDOK" }));
+    const withoutTown = blocks.filter((b) => matchesFilter(b, DEFAULT_FILTERS));
+    const withTownAgain = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, town: "BEDOK" }));
+
+    expect(withTown).toHaveLength(2);
+    expect(withoutTown).toHaveLength(3);
+    expect(withTownAgain).toEqual(withTown);
+  });
+
+  it("toggling flatType filter produces consistent results across iterations", () => {
+    const blocksWithTypes = [
+      makeBlock({ addressKey: "a", flatTypes: ["3 ROOM", "4 ROOM"] }),
+      makeBlock({ addressKey: "b", flatTypes: ["5 ROOM"] }),
+      makeBlock({ addressKey: "c", flatTypes: ["3 ROOM"] }),
+    ];
+
+    const pass1 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }));
+    const pass2 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "5 ROOM" }));
+    const pass3 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }));
+
+    expect(pass1).toHaveLength(2);
+    expect(pass2).toHaveLength(1);
+    expect(pass3).toEqual(pass1);
+  });
+
+  it("toggling budget range produces deterministic sets", () => {
+    const pass1 = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, budgetMax: 600000 }));
+    const pass2 = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, budgetMax: 800000 }));
+    const pass3 = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, budgetMax: 600000 }));
+
+    expect(pass1).toHaveLength(2);
+    expect(pass2).toHaveLength(3);
+    expect(pass3).toEqual(pass1);
+  });
+
+  it("combined filter toggles produce consistent results", () => {
+    const filters1 = { ...DEFAULT_FILTERS, town: "BEDOK", budgetMax: 450000 };
+    const filters2 = { ...DEFAULT_FILTERS, town: "BEDOK" };
+    const filters3 = { ...DEFAULT_FILTERS, town: "BEDOK", budgetMax: 450000 };
+
+    const pass1 = blocks.filter((b) => matchesFilter(b, filters1));
+    const pass2 = blocks.filter((b) => matchesFilter(b, filters2));
+    const pass3 = blocks.filter((b) => matchesFilter(b, filters3));
+
+    expect(pass1).toHaveLength(1);
+    expect(pass2).toHaveLength(2);
+    expect(pass3).toEqual(pass1);
+  });
+});
+
