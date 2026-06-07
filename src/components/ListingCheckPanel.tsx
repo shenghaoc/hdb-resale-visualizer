@@ -3,8 +3,11 @@ import {
   AlertTriangle,
   ArrowDown,
   ArrowUp,
+  Bookmark,
   CheckCircle2,
   Info,
+  List,
+  Search,
   Scale,
   Sparkles,
 } from "lucide-react";
@@ -65,6 +68,9 @@ type ListingCheckPanelProps = {
   onFlatTypeChange: (flatType: string | null) => void;
   onStoreyRangeChange: (storeyRange: string | null) => void;
   onLeaseYearChange: (year: number | null) => void;
+  onUseSampleCheck: () => void;
+  onOpenCandidates: () => void;
+  onOpenShortlist: () => void;
   onSaveToShortlist: () => void;
   onShare: () => void;
   savedToShortlist: boolean;
@@ -156,12 +162,18 @@ export function ListingCheckPanel({
   onFlatTypeChange,
   onStoreyRangeChange,
   onLeaseYearChange,
+  onUseSampleCheck,
+  onOpenCandidates,
+  onOpenShortlist,
   onSaveToShortlist,
   onShare,
   savedToShortlist,
   referenceMonth,
 }: ListingCheckPanelProps) {
   const { locale, t } = useI18n();
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const askingPriceInputRef = useRef<HTMLInputElement | null>(null);
 
   // ── Search combobox state ──────────────────────────────────────────────────
   const [searchValue, setSearchValue] = useState("");
@@ -581,6 +593,20 @@ export function ListingCheckPanel({
   // ── Check button enabled ──────────────────────────────────────────────────
   const canCheck = selectedAddressKey != null && resolvedAskingPrice != null;
 
+  const handlePrimaryAction = useCallback(() => {
+    if (!selectedAddressKey) {
+      searchInputRef.current?.focus();
+      return;
+    }
+
+    if (!comparableSetLoading && canCheck) {
+      handleCheckClick();
+      return;
+    }
+
+    askingPriceInputRef.current?.focus();
+  }, [canCheck, comparableSetLoading, selectedAddressKey, handleCheckClick]);
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <section className="flex flex-col gap-5">
@@ -591,12 +617,41 @@ export function ListingCheckPanel({
             <Scale data-icon className="size-4" aria-hidden="true" />
           </div>
           <div className="flex-1">
-            <h3 className="text-sm font-bold tracking-tight">
-              {t("check.title")}
-            </h3>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {t("check.description")}
-            </p>
+            <h3 className="text-sm font-bold tracking-tight">{t("check.primaryAction")}</h3>
+            <p className="mt-1 text-xs text-muted-foreground">{t("check.valueStatement")}</p>
+            <p className="mt-1 text-[0.62rem] font-medium text-success">{t("check.trustStatement")}</p>
+          </div>
+        </div>
+
+        <div className="grid gap-2">
+          <Button
+            type="button"
+            size="lg"
+            className="h-12 w-full justify-start"
+            onClick={handlePrimaryAction}
+          >
+            <Search data-icon className="size-4" aria-hidden="true" />
+            <span>{t("check.primaryAction")}</span>
+          </Button>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="h-10 w-full justify-start"
+              onClick={onOpenCandidates}
+            >
+              <List data-icon className="size-4" aria-hidden="true" />
+              <span>{t("check.findCandidates")}</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-10 w-full justify-start"
+              onClick={onOpenShortlist}
+            >
+              <Bookmark data-icon className="size-4" aria-hidden="true" />
+              <span>{t("check.compareShortlist")}</span>
+            </Button>
           </div>
         </div>
 
@@ -606,6 +661,7 @@ export function ListingCheckPanel({
             value={searchValue}
             onValueChange={setSearchValue}
             onSelectSuggestion={handleSelectSuggestion}
+            ref={searchInputRef}
             t={t}
             placeholder={t("check.blockPlaceholder")}
           />
@@ -650,6 +706,7 @@ export function ListingCheckPanel({
                 {t("askingCheck.askingPrice")}
               </span>
               <Input
+                ref={askingPriceInputRef}
                 type="number"
                 inputMode="numeric"
                 enterKeyHint="done"
@@ -776,9 +833,14 @@ export function ListingCheckPanel({
 
       {/* ── No block selected hint ─────────────────────────────────────── */}
       {!selectedAddressKey && (
-        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-          <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
-          <span>{t("check.selectBlockHint")}</span>
+        <div className="flex flex-col gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <div className="flex items-start gap-3">
+            <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
+            <span>{t("check.selectBlockHint")}</span>
+          </div>
+          <Button type="button" variant="outline" size="sm" className="w-full" onClick={onUseSampleCheck}>
+            {t("check.sampleListingCheck")}
+          </Button>
         </div>
       )}
 

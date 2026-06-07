@@ -21,6 +21,8 @@ type AppHeaderProps = {
   isMobileHeaderOpen: boolean;
   onToggleMobileHeader: () => void;
   onDismiss: () => void;
+  mobileTab: string | null;
+  onClearMobileTab?: () => void;
 };
 
 const HEADER_SURFACE_CLASS =
@@ -37,6 +39,8 @@ export function AppHeader({
   isMobileHeaderOpen,
   onToggleMobileHeader,
   onDismiss,
+  mobileTab,
+  onClearMobileTab,
 }: AppHeaderProps) {
   const headerSearchId = useId();
   const overlaySearchId = useId();
@@ -48,8 +52,11 @@ export function AppHeader({
   }, []);
 
   const openMobileSearch = useCallback(() => {
+    if (mobileTab != null) {
+      onClearMobileTab?.();
+    }
     setIsMobileSearchOpen(true);
-  }, []);
+  }, [mobileTab, onClearMobileTab]);
 
   useEffect(() => {
     if (!isMobileSearchOpen) {
@@ -220,7 +227,7 @@ export function AppHeader({
         ) : null}
       </header>
 
-      {isMobileSearchOpen ? (
+      {isMobileSearchOpen && mobileTab == null ? (
         <div
           id={overlayContainerId}
           className="pointer-events-auto fixed inset-0 z-40 sm:hidden"

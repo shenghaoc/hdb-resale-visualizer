@@ -34,7 +34,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
 import { buildFilterShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
-import { ListingCheckPanel } from "@/components/ListingCheckPanel";
 import {
   useListingCheckUrlState,
   buildCheckShareUrl,
@@ -52,6 +51,9 @@ const ShortlistDrawer = lazy(() =>
 );
 const ResultsPane = lazy(() =>
   import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),
+);
+const ListingCheckPanel = lazy(() =>
+  import("@/components/ListingCheckPanel").then((m) => ({ default: m.ListingCheckPanel })),
 );
 
 function App() {
@@ -201,10 +203,87 @@ function App() {
   if (checkStoreyRange !== prevCheckStoreyRange) setPrevCheckStoreyRange(checkStoreyRange);
   if (checkLeaseYear !== prevCheckLeaseYear) setPrevCheckLeaseYear(checkLeaseYear);
 
+  // Hardcoded sample for the "Try sample listing check" CTA at cold start.
+  // This address key must exist in the D1 dataset; if it's ever dropped during
+  // a data refresh, the detail fetch will gracefully return an error state.
+  const FALLBACK_SAMPLE = useMemo(() => ({
+    addressKey: "406-ANG MO KIO AVE 10",
+    medianPrice: 450000,
+    floorAreaRange: [68, 68] as [number, number],
+    leaseCommenceRange: [1980, 1980] as [number, number],
+    flatTypes: ["4 ROOM"],
+  }), []);
+
+  const sampleCheckBlock = useMemo(() => {
+    if (pipeline.blocks.length === 0) {
+      return FALLBACK_SAMPLE;
+    }
+    const candidates = pipeline.blocks.filter((block) => block.medianPrice > 0 && block.transactionCount > 0);
+    if (candidates.length === 0) return FALLBACK_SAMPLE;
+    return candidates
+      .slice()
+      .sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
+  }, [pipeline.blocks, FALLBACK_SAMPLE]);
+
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
     setCheckAddressKey(addressKey);
     setCheckSavedToShortlist(false);
   }, []);
+
+  const handleUseSampleCheck = useCallback(() => {
+    if (!sampleCheckBlock) return;
+    const [minArea, maxArea] = sampleCheckBlock.floorAreaRange ?? [];
+    const [minLease, maxLease] = sampleCheckBlock.leaseCommenceRange ?? [];
+    const fallbackFlatType = sampleCheckBlock.flatTypes?.length
+      ? [...sampleCheckBlock.flatTypes].sort((a, b) => a.localeCompare(b))[0]
+      : null;
+    const floorAreaSqm = minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
+    const leaseCommenceYear =
+      minLease != null && maxLease != null && minLease > 0 && maxLease > 0
+        ? Math.round((minLease + maxLease) / 2)
+        : null;
+
+    setCheckAddressKey(sampleCheckBlock.addressKey);
+    setCheckAskingPrice(Math.round(sampleCheckBlock.medianPrice));
+    setCheckFloorAreaSqm(floorAreaSqm);
+    setCheckFlatType(fallbackFlatType);
+    setCheckStoreyRange(null);
+    setCheckLeaseYear(leaseCommenceYear);
+    setCheckSavedToShortlist(false);
+    if (panel.isDesktop) {
+      panel.setLeftTab("check");
+      panel.setIsLeftPanelOpen(true);
+    } else {
+      panel.setMobileTab("check");
+    }
+  }, [
+    panel,
+    sampleCheckBlock,
+    setCheckAddressKey,
+    setCheckAskingPrice,
+    setCheckFloorAreaSqm,
+    setCheckFlatType,
+    setCheckStoreyRange,
+    setCheckLeaseYear,
+  ]);
+
+  const handleOpenCandidates = useCallback(() => {
+    const tab = pipeline.hasResultScope ? "results" : "filters";
+    if (panel.isDesktop) {
+      panel.setLeftTab(tab);
+      panel.setIsLeftPanelOpen(true);
+      return;
+    }
+    panel.setMobileTab(tab);
+  }, [panel, pipeline.hasResultScope]);
+
+  const handleOpenShortlist = useCallback(() => {
+    if (panel.isDesktop) {
+      panel.setIsSavedPanelOpen(true);
+      return;
+    }
+    panel.setMobileTab("saved");
+  }, [panel]);
 
   const handleCheckSaveToShortlist = useCallback(() => {
     if (!checkAddressKey || checkAskingPrice == null) return;
@@ -542,34 +621,39 @@ function App() {
   ) : null;
 
   const checkContent = (
-    <ListingCheckPanel
-      selectedAddressKey={checkAddressKey}
-      askingPrice={checkAskingPrice}
-      floorAreaSqm={checkFloorAreaSqm}
-      flatType={checkFlatType}
-      storeyRange={checkStoreyRange}
-      leaseCommenceYear={checkLeaseYear}
-      onAddressSelect={handleCheckAddressSelect}
-      onAskingPriceChange={setCheckAskingPrice}
-      onFloorAreaChange={setCheckFloorAreaSqm}
-      onFlatTypeChange={setCheckFlatType}
-      onStoreyRangeChange={setCheckStoreyRange}
-      onLeaseYearChange={setCheckLeaseYear}
-      onSaveToShortlist={handleCheckSaveToShortlist}
-      onShare={() => { void handleCheckShare(); }}
-      savedToShortlist={checkSavedToShortlist}
-      referenceMonth={manifest?.dataWindow.maxMonth}
-    />
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
+      <ListingCheckPanel
+        selectedAddressKey={checkAddressKey}
+        askingPrice={checkAskingPrice}
+        floorAreaSqm={checkFloorAreaSqm}
+        flatType={checkFlatType}
+        storeyRange={checkStoreyRange}
+        leaseCommenceYear={checkLeaseYear}
+        onAddressSelect={handleCheckAddressSelect}
+        onAskingPriceChange={setCheckAskingPrice}
+        onFloorAreaChange={setCheckFloorAreaSqm}
+        onFlatTypeChange={setCheckFlatType}
+        onStoreyRangeChange={setCheckStoreyRange}
+        onLeaseYearChange={setCheckLeaseYear}
+        onSaveToShortlist={handleCheckSaveToShortlist}
+        onShare={() => {
+          void handleCheckShare();
+        }}
+        onUseSampleCheck={handleUseSampleCheck}
+        onOpenCandidates={handleOpenCandidates}
+        onOpenShortlist={handleOpenShortlist}
+        savedToShortlist={checkSavedToShortlist}
+        referenceMonth={manifest?.dataWindow.maxMonth}
+      />
+    </Suspense>
   );
 
   // ── Derived layout flags ─────────────────────────────────────────────────
 
-  const showFloatingHeader = panel.isDesktop ? header.isHeaderVisible : panel.mobileTab === null;
+  const showFloatingHeader = header.isHeaderVisible;
   const showScopePrompt = Boolean(
     !pipeline.hasResultScope &&
-      (panel.isDesktop
-        ? !panel.isLeftPanelOpen && !panel.isSavedPanelOpen
-        : panel.mobileTab === null),
+      (panel.isDesktop || panel.mobileTab === null),
   );
 
   // ── Render ───────────────────────────────────────────────────────────────
@@ -606,6 +690,8 @@ function App() {
             isMobileHeaderOpen={header.isMobileHeaderOpen}
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}
+            mobileTab={panel.mobileTab}
+            onClearMobileTab={() => panel.setMobileTab(null)}
           />
         ) : null}
 
@@ -689,6 +775,14 @@ function App() {
           t={t}
           onUseCurrentLocation={handleUseCurrentLocation}
           onChooseTown={() => handleChooseTown()}
+          onCheckListing={() => {
+            if (panel.isDesktop) {
+              panel.setLeftTab("check");
+              panel.setIsLeftPanelOpen(true);
+            } else {
+              panel.setMobileTab("check");
+            }
+          }}
         />
 
         <AppPanelShell

@@ -1,4 +1,4 @@
-import { Loader2, LocateFixed, SlidersHorizontal } from "lucide-react";
+import { Loader2, LocateFixed, Scale, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Translator } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ type ScopePromptProps = {
   t: Translator;
   onUseCurrentLocation: () => void;
   onChooseTown: () => void;
+  onCheckListing?: () => void;
 };
 
 // Tailwind v4's scanner only picks up class names that appear as complete
@@ -32,6 +33,7 @@ export function ScopePrompt({
   t,
   onUseCurrentLocation,
   onChooseTown,
+  onCheckListing,
 }: ScopePromptProps) {
   if (showScopePrompt) {
     return (
@@ -75,6 +77,18 @@ export function ScopePrompt({
             <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
             {t("app.chooseTown")}
           </Button>
+          {onCheckListing ? (
+            <Button
+              type="button"
+              size="xs"
+              variant="outline"
+              className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+              onClick={onCheckListing}
+            >
+              <Scale data-icon className="size-3.5" aria-hidden="true" />
+              {t("check.primaryAction")}
+            </Button>
+          ) : null}
         </div>
       </div>
     );

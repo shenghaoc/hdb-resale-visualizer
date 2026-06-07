@@ -1,10 +1,18 @@
 # HDB Resale Explorer — User Guide
 
-HDB Resale Explorer is a free, map-based tool for browsing Singapore HDB resale transactions. It pulls official data from data.gov.sg and presents it on an interactive map so you can compare blocks, check asking prices, and shortlist properties — all without creating an account.
+HDB Resale Explorer is a free, buyer-first HDB due-diligence tool for Singapore resale transactions. It pulls official data from data.gov.sg and presents it on an interactive map so you can compare blocks, evaluate asking prices, and shortlist properties — all without creating an account.
 
 ## Getting started
 
-When you first open the app you will see a prompt asking you to **use your current location** or **choose a town**. Picking either one scopes the map to that area and loads the matching blocks.
+When you first open the app, the first screen is a quick buyer-entry flow so you can start value analysis immediately:
+
+1. **Check a listing price**
+2. **Find candidate blocks**
+3. **Compare my shortlist**
+
+Use **Check a listing price** first if you already have a specific unit in mind. Use location/town search only when you want to scan map-driven candidates first.
+
+The map remains available for map-first discovery, and you can still **use your current location** or **choose a town** to scope the map and filters.
 
 On **desktop** the interface has three zones:
 
@@ -98,11 +106,20 @@ You can **compare two towns** side-by-side by selecting a second town from the d
 
 ## Asking-price check
 
-The **Check** tab lets you evaluate a specific listing's asking price against real transaction data.
+The **Check** tab lets you evaluate a specific listing's asking price against historical resale transaction data.
+
+This is a **deterministic comparison**, not a black-box AI valuation.
+
+- **No AI valuation API** is used.
+- The app compares your input to actual recent transactions from the same area and similar units.
 
 1. **Search for the block** — type the address to select it
 2. **Enter the asking price** — the listed price from PropertyGuru, 99.co, etc.
 3. Optionally enter **floor area**, **flat type**, **storey range**, and **lease year** for a more precise comparison
+
+If you have no block selected, you can use the sample path:
+
+4. **Try sample listing check** — pre-fills a known public sample block so you can see the same comparison flow without manually entering everything first.
 
 The tool returns a **verdict** — whether the asking price is well below, around, or above the median for comparable recent transactions. You will see:
 
