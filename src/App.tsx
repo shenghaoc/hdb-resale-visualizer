@@ -681,6 +681,7 @@ function App() {
             isMobileHeaderOpen={header.isMobileHeaderOpen}
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}
+            mobileTab={panel.mobileTab}
           />
         ) : null}
 
