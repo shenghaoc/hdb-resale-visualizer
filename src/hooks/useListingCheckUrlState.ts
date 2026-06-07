@@ -136,10 +136,10 @@ export function useListingCheckUrlState() {
         existingParams.delete(key);
       }
 
-      // Build full search string
+      // Build full search string with proper separator
       const existingQS = existingParams.toString();
       const fullQS = existingQS
-        ? `${existingQS}&${nextSearch.slice(1)}`
+        ? `?${existingQS}${nextSearch ? `&${nextSearch.slice(1)}` : ""}`
         : nextSearch;
 
       window.history.replaceState({}, "", `${window.location.pathname}${fullQS}`);

@@ -205,6 +205,16 @@ export function ListingCheckPanel({
     setSearchValue("");
   }
 
+  // Clear stale detail when the selected address changes
+  const [prevSelectedAddressKey, setPrevSelectedAddressKey] = useState(selectedAddressKey);
+  if (selectedAddressKey !== prevSelectedAddressKey) {
+    setPrevSelectedAddressKey(selectedAddressKey);
+    if (selectedAddressKey) {
+      setDetail(null);
+      setDetailError(false);
+    }
+  }
+
   // ── Fetch address detail when selection changes ───────────────────────────
   useEffect(() => {
     if (!selectedAddressKey) {
@@ -292,11 +302,7 @@ export function ListingCheckPanel({
   );
 
   const result: ListingCheckResult | null = useMemo(() => {
-    if (
-      resolvedAskingPrice == null ||
-      !detail ||
-      resolvedFloorAreaSqm == null
-    ) {
+    if (resolvedAskingPrice == null || !detail) {
       return null;
     }
     return performListingCheck({

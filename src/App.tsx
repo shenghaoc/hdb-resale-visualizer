@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -186,6 +186,16 @@ function App() {
     () => initialCheckState.leaseCommenceYear,
   );
   const [checkSavedToShortlist, setCheckSavedToShortlist] = useState(false);
+  const [prevCheckAskingPrice, setPrevCheckAskingPrice] = useState(checkAskingPrice);
+  const [prevCheckFloorAreaSqm, setPrevCheckFloorAreaSqm] = useState(checkFloorAreaSqm);
+  const [prevCheckFlatType, setPrevCheckFlatType] = useState(checkFlatType);
+  const [prevCheckStoreyRange, setPrevCheckStoreyRange] = useState(checkStoreyRange);
+  const [prevCheckLeaseYear, setPrevCheckLeaseYear] = useState(checkLeaseYear);
+  if (checkAskingPrice !== prevCheckAskingPrice) setPrevCheckAskingPrice(checkAskingPrice);
+  if (checkFloorAreaSqm !== prevCheckFloorAreaSqm) setPrevCheckFloorAreaSqm(checkFloorAreaSqm);
+  if (checkFlatType !== prevCheckFlatType) setPrevCheckFlatType(checkFlatType);
+  if (checkStoreyRange !== prevCheckStoreyRange) setPrevCheckStoreyRange(checkStoreyRange);
+  if (checkLeaseYear !== prevCheckLeaseYear) setPrevCheckLeaseYear(checkLeaseYear);
 
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
     setCheckAddressKey(addressKey);
@@ -203,7 +213,11 @@ function App() {
       leaseCommenceYear: checkLeaseYear,
       timestamp: new Date().toISOString(),
     };
-    shortlist.toggle(checkAddressKey);
+    // Only toggle if not already in shortlist (toggle removes if present)
+    const alreadySaved = shortlist.items.some((i) => i.addressKey === checkAddressKey);
+    if (!alreadySaved) {
+      shortlist.toggle(checkAddressKey);
+    }
     shortlist.update(checkAddressKey, {
       notes: JSON.stringify(notesPayload),
       targetPrice: checkAskingPrice,
@@ -222,6 +236,29 @@ function App() {
     });
     void navigator.clipboard.writeText(url);
   }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear]);
+
+  // Reset saved-to-shortlist flag when form inputs change
+  if (checkAskingPrice !== prevCheckAskingPrice
+    || checkFloorAreaSqm !== prevCheckFloorAreaSqm
+    || checkFlatType !== prevCheckFlatType
+    || checkStoreyRange !== prevCheckStoreyRange
+    || checkLeaseYear !== prevCheckLeaseYear) {
+    setCheckSavedToShortlist(false);
+  }
+
+  // Auto-open Check tab when loading a shared check URL
+  const hasAppliedCheckDeepLink = useRef(false);
+  useEffect(() => {
+    if (hasAppliedCheckDeepLink.current) return;
+    if (!initialCheckState.selectedAddressKey) return;
+    hasAppliedCheckDeepLink.current = true;
+    if (panel.isDesktop) {
+      panel.setLeftTab("check");
+      panel.setIsLeftPanelOpen(true);
+    } else {
+      panel.setMobileTab("check");
+    }
+  }, [initialCheckState.selectedAddressKey, panel]);
 
   // Sync check state to URL
   useEffect(() => {
