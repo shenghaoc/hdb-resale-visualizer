@@ -11,6 +11,7 @@ export type GenerateCaveatsParams = {
   confidence: ConfidenceResult;
   leaseCommenceYear?: number;
   comparableLeaseYears: number[];
+  referenceMonth?: string;
 };
 
 /**
@@ -20,7 +21,7 @@ export type GenerateCaveatsParams = {
  * data limitations that might affect the verdict's reliability.
  */
 export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
-  const { assessment, confidence, leaseCommenceYear, comparableLeaseYears } = params;
+  const { assessment, confidence, leaseCommenceYear, comparableLeaseYears, referenceMonth } = params;
   const caveats: Caveat[] = [];
   const messagesSeen = new Set<string>();
 
@@ -45,15 +46,20 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
 
   // Stale data
   if (confidence.newestComparableMonth) {
-    // Already checked in confidence module, but double-check here for
-    // standalone use. We check if newestMonth looks old relative to
-    // the past 12 months.
     const newestYear = Number(confidence.newestComparableMonth.slice(0, 4));
     const newestMon = Number(confidence.newestComparableMonth.slice(5, 7));
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1;
-    const ageInMonths = (currentYear - newestYear) * 12 + (currentMonth - newestMon);
+
+    let ageInMonths: number;
+    if (referenceMonth) {
+      const refYear = Number(referenceMonth.slice(0, 4));
+      const refMon = Number(referenceMonth.slice(5, 7));
+      ageInMonths = (refYear - newestYear) * 12 + (refMon - newestMon);
+    } else {
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+      ageInMonths = (currentYear - newestYear) * 12 + (currentMonth - newestMon);
+    }
 
     if (ageInMonths > 12) {
       add(

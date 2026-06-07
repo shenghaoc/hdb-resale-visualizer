@@ -75,6 +75,7 @@ export function performListingCheck(
     confidence,
     leaseCommenceYear,
     comparableLeaseYears,
+    referenceMonth,
   });
 
   return { assessment, confidence, caveats };

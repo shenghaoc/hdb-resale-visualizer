@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
@@ -158,17 +158,51 @@ export function ListingCheckPanel({
   const [comparablesExpanded, setComparablesExpanded] = useState(false);
 
   // ── Local input state (numbers typed as strings) ───────────────────────────
-  const [askingPriceInput, setAskingPriceInput] = useState("");
-  const [floorAreaInput, setFloorAreaInput] = useState("");
-  const [leaseYearInput, setLeaseYearInput] = useState("");
+  const [askingPriceInput, setAskingPriceInput] = useState(() =>
+    askingPrice != null ? String(askingPrice) : "",
+  );
+  const [floorAreaInput, setFloorAreaInput] = useState(() =>
+    floorAreaSqm != null ? String(floorAreaSqm) : "",
+  );
+  const [leaseYearInput, setLeaseYearInput] = useState(() =>
+    leaseCommenceYear != null ? String(leaseCommenceYear) : "",
+  );
+
+  // Sync props to local input state when they change externally (e.g. deep linking / URL load)
+  const [prevAskingPrice, setPrevAskingPrice] = useState(askingPrice);
+  if (askingPrice !== prevAskingPrice) {
+    setPrevAskingPrice(askingPrice);
+    setAskingPriceInput(askingPrice != null ? String(askingPrice) : "");
+  }
+
+  const [prevFloorAreaSqm, setPrevFloorAreaSqm] = useState(floorAreaSqm);
+  if (floorAreaSqm !== prevFloorAreaSqm) {
+    setPrevFloorAreaSqm(floorAreaSqm);
+    setFloorAreaInput(floorAreaSqm != null ? String(floorAreaSqm) : "");
+  }
+
+  const [prevLeaseCommenceYear, setPrevLeaseCommenceYear] = useState(leaseCommenceYear);
+  if (leaseCommenceYear !== prevLeaseCommenceYear) {
+    setPrevLeaseCommenceYear(leaseCommenceYear);
+    setLeaseYearInput(leaseCommenceYear != null ? String(leaseCommenceYear) : "");
+  }
+
+  const verdictRef = useRef<HTMLDivElement>(null);
+
+  const handleCheckClick = useCallback(() => {
+    setTimeout(() => {
+      verdictRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }, []);
 
   // ── Reset detail state during render when addressKey clears ──────────────
   // Following React's "You Might Not Need an Effect" pattern: adjust state on
   // prop change during render rather than in a cascading effect.
-  if (!selectedAddressKey && (detail !== null || detailError || detailLoading)) {
+  if (!selectedAddressKey && (detail !== null || detailError || detailLoading || searchValue !== "")) {
     setDetail(null);
     setDetailError(false);
     setDetailLoading(false);
+    setSearchValue("");
   }
 
   // ── Fetch address detail when selection changes ───────────────────────────
@@ -186,6 +220,9 @@ export function ListingCheckPanel({
       .then((data) => {
         if (cancelled) return;
         setDetail(data);
+        if (data) {
+          setSearchValue(`${data.summary.block} ${data.summary.streetName}`);
+        }
         setDetailLoading(false);
       })
       .catch(() => {
@@ -512,9 +549,7 @@ export function ListingCheckPanel({
               type="button"
               className="w-full"
               disabled={!canCheck}
-              onClick={() => {
-                /* result is computed automatically via useMemo */
-              }}
+              onClick={handleCheckClick}
             >
               {t("check.checkButton")}
             </Button>
@@ -532,7 +567,7 @@ export function ListingCheckPanel({
 
       {/* ── Verdict card ───────────────────────────────────────────────── */}
       {result && theme && resolvedAskingPrice != null && (
-        <Card className={cn("border-2 shadow-none", styles.border, styles.bg)}>
+        <Card ref={verdictRef} className={cn("border-2 shadow-none", styles.border, styles.bg)}>
           <CardContent className="flex flex-col gap-4 p-4">
             {/* Verdict badge + confidence */}
             <div className="flex items-center gap-3">
