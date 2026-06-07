@@ -406,8 +406,8 @@ function ShortlistComparisonTable({
                       : t("shortlist.compare.cellEmpty")}
                   </TableCell>
                   <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground">
-                    {row.notes.trim().length > 0
-                      ? row.notes
+                    {row.buyerNotes.trim().length > 0
+                      ? row.buyerNotes
                       : t("shortlist.compare.cellEmpty")}
                   </TableCell>
                 </TableRow>

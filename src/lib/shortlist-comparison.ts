@@ -70,7 +70,6 @@ export type ShortlistComparisonRow = {
   deltaVsFairMedian: ShortlistComparisonGap | null;
   confidenceLevelLabel: DataConfidenceLabelKey;
   caveatKeys: ShortlistComparisonCaveatKey[];
-  monthlyPaymentEstimate: number | null;
 };
 
 export type BuildShortlistComparisonRowsOptions = {
@@ -196,7 +195,6 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
       deltaVsFairMedian: computeDeltaVsReference(isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null, block.medianPrice),
       confidenceLevelLabel: getDataConfidenceLabelKey(block.transactionCount),
       caveatKeys: buildCaveats(item, block.nearestMrt ?? null, block.transactionCount),
-      monthlyPaymentEstimate: null,
     };
   });
 }

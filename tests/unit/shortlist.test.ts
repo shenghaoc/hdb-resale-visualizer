@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import {
   decodeShortlistFromUrl,
   encodeShortlistForUrl,
@@ -255,5 +256,32 @@ describe("shortlist storage", () => {
     expect(loaded).toHaveLength(1);
     expect(loaded[0]?.addressKey).toBe("good-old");
     expect(loaded[0]?.buyerOpeningOffer).toBeUndefined();
+  });
+
+  it("truncates oversized notes instead of erasing them", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    const longNote = "x".repeat(MAX_NOTE_LENGTH + 500);
+    storage.set(
+      SHORTLIST_STORAGE_KEY,
+      JSON.stringify([
+        {
+          addressKey: "long-note",
+          notes: longNote,
+          buyerNotes: longNote,
+          targetPrice: null,
+          addedAt: "2026-06-01T00:00:00.000Z",
+        },
+      ]),
+    );
+
+    const loaded = loadShortlist(shim);
+    expect(loaded).toHaveLength(1);
+    expect(loaded[0]?.notes).toHaveLength(MAX_NOTE_LENGTH);
+    expect(loaded[0]?.buyerNotes).toHaveLength(MAX_NOTE_LENGTH);
   });
 });
