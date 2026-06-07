@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { mockComparisonArtifacts } from "./fixtures";
 
 test.describe.configure({
@@ -15,15 +15,6 @@ function firstResultCard(page: Page) {
   return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
 }
 
-async function expectHorizontalOverflow(locator: Locator) {
-  await expect(locator).toBeVisible({ timeout: 10_000 });
-  await expect
-    .poll(async () => locator.evaluate((element) => element.scrollWidth > element.clientWidth))
-    .toBe(true);
-  await expect
-    .poll(async () => locator.evaluate((element) => getComputedStyle(element).overflowX))
-    .toMatch(/auto|scroll/);
-}
 
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
@@ -162,7 +153,7 @@ test.describe("Mobile Regression: Recent Features", () => {
     });
   });
 
-  test("shortlist comparison table scrolls horizontally on mobile", async ({ page }) => {
+  test("shortlist comparison renders card layout on mobile", async ({ page }) => {
     await mockComparisonArtifacts(page);
 
     // Pre-seed two shortlist items using real fixture address keys
@@ -201,11 +192,9 @@ test.describe("Mobile Regression: Recent Features", () => {
     await viewToggle.getByRole("button", { name: /comparison table/i }).click();
 
     const comparisonTable = page.getByTestId("shortlist-comparison-table");
-    const comparisonScroller = comparisonTable.locator("[data-slot='table-container']");
     await expect(comparisonTable).toBeVisible();
-    await expectHorizontalOverflow(comparisonScroller);
-    await expect(comparisonTable.getByRole("table", { name: /saved blocks comparison/i })).toBeVisible();
-    await expect(comparisonTable.getByTestId("shortlist-comparison-row")).toHaveCount(2);
+    // Mobile renders card layout instead of a scrollable table
+    await expect(comparisonTable.getByTestId("shortlist-comparison-card")).toHaveCount(2);
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {

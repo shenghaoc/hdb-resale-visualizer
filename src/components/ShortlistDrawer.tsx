@@ -429,6 +429,7 @@ function ShortlistComparisonTable({
         {comparisonRows.map((row, index) => (
           <div
             key={`mobile-${row.addressKey}`}
+            data-testid="shortlist-comparison-card"
             className="rounded-lg border border-border/40 bg-card/70 p-2.5"
           >
             <div className="flex items-start gap-2">
