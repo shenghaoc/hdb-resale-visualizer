@@ -243,16 +243,39 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   if (applyAdjustment && result.comparables.length > 0) {
     try {
+      // Collect unique town × flat type pairs from the comparables so we
+      // only query the subset of trend data we actually need.
+      const uniquePairs = new Map<string, { town: string; flatType: string }>();
+      for (const c of result.comparables) {
+        const key = `${c.town}__${c.flatType}`;
+        if (!uniquePairs.has(key)) {
+          uniquePairs.set(key, { town: c.town, flatType: c.flatType });
+        }
+      }
+
+      // Build a parameterized IN clause: WHERE (town, flat_type) IN ((?1,?2), (?3,?4), ...)
+      const placeholders: string[] = [];
+      const params: string[] = [];
+      let idx = 0;
+      for (const pair of uniquePairs.values()) {
+        placeholders.push(`(?${idx + 1},?${idx + 2})`);
+        params.push(pair.town, pair.flatType);
+        idx += 2;
+      }
+
       const trendRows = await env.DB.prepare(
-        "SELECT town, flat_type, month, median_price_per_sqm, transaction_count " +
-          "FROM town_flat_type_trends",
-      ).all<{
-        town: string;
-        flat_type: string;
-        month: string;
-        median_price_per_sqm: number;
-        transaction_count: number;
-      }>();
+        `SELECT town, flat_type, month, median_price_per_sqm, transaction_count
+         FROM town_flat_type_trends
+         WHERE (town, flat_type) IN (${placeholders.join(", ")})`,
+      )
+        .bind(...params)
+        .all<{
+          town: string;
+          flat_type: string;
+          month: string;
+          median_price_per_sqm: number;
+          transaction_count: number;
+        }>();
       const trendLookup = buildTrendLookup(trendRows.results ?? []);
       const adjustmentResult = computeTimeAdjustments(
         result.comparables.map((c) => ({

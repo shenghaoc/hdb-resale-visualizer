@@ -331,6 +331,9 @@ export function ListingCheckPanel({
     let cancelled = false;
     setComparableSetLoading(true);
     setComparableSetError(false);
+    // Clear stale results while loading so UI doesn't show mismatched verdict.
+    setComparableSet(null);
+    setAdjustmentMeta(null);
 
     // Use the block's median floor area as fallback (midpoint of recorded
     // range) rather than the max, to avoid skewing comparables toward
