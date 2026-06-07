@@ -3,6 +3,7 @@ export type CompareMode = "median" | "median-asc" | "median-desc" | "lease" | "m
 type SortableShortlistRow = {
   item: {
     targetPrice: number | null;
+    decisionStatus?: "considering" | "viewing booked" | "offered" | "rejected" | "kiv" | "dropped";
   };
   block: {
     medianPrice: number;
@@ -35,6 +36,19 @@ function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareM
     : Math.abs(row.item.targetPrice - row.block.medianPrice);
 }
 
+const decisionStatusPriority: Record<string, number> = {
+  considering: 0,
+  "viewing booked": 1,
+  offered: 2,
+  kiv: 3,
+  rejected: 4,
+  dropped: 5,
+};
+
+function getDecisionStatusPriority(status?: SortableShortlistRow["item"]["decisionStatus"]) {
+  return status === undefined ? 9 : decisionStatusPriority[status];
+}
+
 function comparePrimaryValues(left: number, right: number) {
   const leftIsFinite = Number.isFinite(left);
   const rightIsFinite = Number.isFinite(right);
@@ -65,6 +79,11 @@ export function rankShortlistRows<T extends SortableShortlistRow>(
     );
     if (primary !== 0) {
       return primary;
+    }
+
+    const statusPriority = getDecisionStatusPriority(left.item.decisionStatus) - getDecisionStatusPriority(right.item.decisionStatus);
+    if (statusPriority !== 0) {
+      return statusPriority;
     }
 
     const byMedian = left.block.medianPrice - right.block.medianPrice;

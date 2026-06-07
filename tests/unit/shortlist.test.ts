@@ -43,6 +43,44 @@ describe("shortlist storage", () => {
     expect(decodeShortlistFromUrl(encoded)).toEqual(items);
   });
 
+  it("round-trips mixed legacy and migrated payloads through share links", () => {
+    const items = [
+      {
+        addressKey: "legacy-1",
+        notes: "Legacy format",
+        targetPrice: 800000,
+        addedAt: "2026-06-01T00:00:00.000Z",
+        offerCeiling: 820000,
+      },
+      {
+        addressKey: "new-2",
+        notes: "Modern format",
+        targetPrice: 760000,
+        askingPrice: 770000,
+        fairRangeLow: 700000,
+        fairRangeMedian: 740000,
+        fairRangeHigh: 780000,
+        suggestedOfferCeiling: 785000,
+        buyerOpeningOffer: 775000,
+        valuationReceived: 745000,
+        estimatedCov: 680000,
+        viewingDate: "2026-05-20",
+        decisionStatus: "offered",
+        buyerNotes: "Great offer already sent",
+        addedAt: "2026-06-01T00:00:00.000Z",
+      },
+    ] as const;
+
+    const encoded = encodeShortlistForUrl(items);
+    const decoded = decodeShortlistFromUrl(encoded);
+
+    expect(decoded).toHaveLength(2);
+    expect(decoded[0]?.askingPrice).toBe(800000);
+    expect(decoded[0]?.suggestedOfferCeiling).toBe(820000);
+    expect(decoded[1]?.buyerOpeningOffer).toBe(775000);
+    expect(decoded[1]?.fairRangeMedian).toBe(740000);
+  });
+
   it("rejects oversized shortlist share payloads", () => {
     const oversizedPayload = "a".repeat(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH + 1);
     expect(decodeShortlistFromUrl(oversizedPayload)).toEqual([]);
@@ -126,18 +164,86 @@ describe("shortlist storage", () => {
     expect(loaded).toHaveLength(2);
 
     // Old item should be normalized with undefined for new fields
-    expect(loaded[0]).toEqual({
+    expect(loaded[0]).toMatchObject({
       ...oldFormatItem,
+      askingPrice: undefined,
+      fairRangeLow: undefined,
+      fairRangeMedian: undefined,
+      fairRangeHigh: undefined,
+      suggestedOfferCeiling: undefined,
+      buyerOpeningOffer: undefined,
+      valuationReceived: undefined,
+      estimatedCov: undefined,
+      viewingDate: undefined,
+      decisionStatus: undefined,
       pros: undefined,
       cons: undefined,
       renovation: undefined,
       noise: undefined,
       transport: undefined,
       offerCeiling: undefined,
+      noiseNotes: undefined,
+      transportNotes: undefined,
+      buyerNotes: oldFormatItem.notes,
       agentRemarks: undefined,
     });
 
     // New item should retain its fields
-    expect(loaded[1]).toEqual(newFormatItem);
+    expect(loaded[1]).toMatchObject({
+      ...newFormatItem,
+      buyerNotes: newFormatItem.notes,
+      noiseNotes: newFormatItem.noise,
+      transportNotes: newFormatItem.transport,
+    });
+  });
+
+  it("migrates legacy offer fields into the offer-board model", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    const legacyItem = {
+      addressKey: "legacy-offer",
+      notes: "Legacy shortlist",
+      offerCeiling: 820000,
+      targetPrice: 800000,
+      addedAt: "2026-05-16T00:00:00.000Z",
+    };
+
+    storage.set(SHORTLIST_STORAGE_KEY, JSON.stringify([legacyItem]));
+    const [loaded] = loadShortlist(shim);
+
+    expect(loaded?.askingPrice).toBe(800000);
+    expect(loaded?.suggestedOfferCeiling).toBe(820000);
+    expect(loaded?.buyerOpeningOffer).toBe(800000);
+    expect(loaded?.buyerNotes).toBe("Legacy shortlist");
+  });
+
+  it("drops malformed shortlist entries but keeps valid legacy/new items", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    storage.set(
+      SHORTLIST_STORAGE_KEY,
+      JSON.stringify([
+        { addressKey: "", targetPrice: 800000, addedAt: "2026-05-16T00:00:00.000Z" },
+        {
+          addressKey: "good-old",
+          notes: "Good legacy",
+          targetPrice: 780000,
+          addedAt: "2026-05-16T00:00:00.000Z",
+        },
+      ]),
+    );
+
+    const loaded = loadShortlist(shim);
+    expect(loaded).toHaveLength(1);
+    expect(loaded[0]?.addressKey).toBe("good-old");
+    expect(loaded[0]?.buyerOpeningOffer).toBe(780000);
   });
 });

@@ -71,19 +71,40 @@ describe("buildCsvContent", () => {
 
 describe("buildShortlistCsvContent", () => {
   it("exports shortlist rows with sanitized notes", () => {
+    const baseRow = {
+      address: "Blk 1",
+      medianPrice: 500000,
+      askingPrice: null,
+      fairRangeLow: null,
+      fairRangeMedian: null,
+      fairRangeHigh: null,
+      suggestedOfferCeiling: null,
+      buyerOpeningOffer: null,
+      valuationReceived: null,
+      estimatedCov: null,
+      viewingDate: "",
+      decisionStatus: "",
+      buyerNotes: "",
+      pros: "",
+      cons: "",
+      renovation: "",
+      noiseNotes: "",
+      transportNotes: "",
+      agentRemarks: "",
+      targetPrice: null,
+      schools1km: 2,
+      hawkers1km: 1,
+      supermarkets1km: 0,
+      parks1km: 1,
+      mrtDistanceMeters: 400,
+      notes: "@import",
+    };
+
     const csv = buildShortlistCsvContent(
       ["Address", "Notes"],
       [
         {
-          address: "Blk 1",
-          medianPrice: 500000,
-          targetPrice: null,
-          schools1km: 2,
-          hawkers1km: 1,
-          supermarkets1km: 0,
-          parks1km: 1,
-          mrtDistanceMeters: 400,
-          notes: "@import",
+          ...baseRow,
         },
       ],
     );

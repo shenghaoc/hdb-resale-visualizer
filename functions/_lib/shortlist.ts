@@ -28,6 +28,15 @@ import type { ShortlistItem } from "../../shared/data-types";
 
 const note = z.string().max(MAX_NOTE_LENGTH);
 
+const shortlistDecisionStatuses = [
+  "considering",
+  "viewing booked",
+  "offered",
+  "rejected",
+  "kiv",
+  "dropped",
+] as const;
+
 const shortlistItemSchema = z
   .object({
     addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
@@ -38,6 +47,22 @@ const shortlistItemSchema = z
     noise: note.optional().catch(undefined),
     transport: note.optional().catch(undefined),
     offerCeiling: z.number().finite().optional().catch(undefined),
+    suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
+    askingPrice: z.number().finite().optional().catch(undefined),
+    fairRangeLow: z.number().finite().optional().catch(undefined),
+    fairRangeMedian: z.number().finite().optional().catch(undefined),
+    fairRangeHigh: z.number().finite().optional().catch(undefined),
+    buyerOpeningOffer: z.number().finite().optional().catch(undefined),
+    valuationReceived: z.number().finite().optional().catch(undefined),
+    estimatedCov: z.number().finite().optional().catch(undefined),
+    viewingDate: z.string().optional().catch(undefined),
+    decisionStatus: z
+      .enum(shortlistDecisionStatuses)
+      .optional()
+      .catch(undefined),
+    noiseNotes: note.optional().catch(undefined),
+    transportNotes: note.optional().catch(undefined),
+    buyerNotes: note.optional().catch(undefined),
     agentRemarks: note.optional().catch(undefined),
     targetPrice: z.number().finite().nullable().catch(null),
     addedAt: z
@@ -46,7 +71,51 @@ const shortlistItemSchema = z
       .max(MAX_ADDED_AT_LENGTH)
       .catch(() => new Date().toISOString()),
   })
-  .strip();
+  .passthrough();
+
+function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
+  if (Number.isFinite(value)) {
+    return value;
+  }
+  if (Number.isFinite(fallback as number)) {
+    return fallback as number;
+  }
+  return undefined;
+}
+
+function normalizeDecisionStatus(
+  value: (typeof shortlistDecisionStatuses)[number] | string | undefined,
+): (typeof shortlistDecisionStatuses)[number] | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+  const normalized = value.toLowerCase();
+  for (const status of shortlistDecisionStatuses) {
+    if (status === normalized) {
+      return status;
+    }
+  }
+  return undefined;
+}
+
+function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): ShortlistItem {
+  const notes = raw.notes ?? "";
+  const targetPrice = raw.targetPrice;
+  const fallbackOfferCeiling = normalizeNumber(raw.offerCeiling, targetPrice);
+  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, fallbackOfferCeiling);
+
+  return {
+    ...(raw as ShortlistItem),
+    notes,
+    suggestedOfferCeiling,
+    askingPrice: normalizeNumber(raw.askingPrice, targetPrice),
+    buyerOpeningOffer: normalizeNumber(raw.buyerOpeningOffer, targetPrice),
+    buyerNotes: raw.buyerNotes ?? notes,
+    noiseNotes: raw.noiseNotes ?? raw.noise,
+    transportNotes: raw.transportNotes ?? raw.transport,
+    decisionStatus: normalizeDecisionStatus(raw.decisionStatus),
+  };
+}
 
 const shortlistItemsSchema = z.array(shortlistItemSchema).max(MAX_SHORTLIST_ITEMS);
 
@@ -102,7 +171,7 @@ export function parseStoredItems(itemsJson: string): ShortlistItem[] {
   for (const entry of raw) {
     const parsed = shortlistItemSchema.safeParse(entry);
     if (parsed.success) {
-      items.push(parsed.data);
+      items.push(normalizeShortlistItem(parsed.data));
     }
   }
   return items.slice(0, MAX_SHORTLIST_ITEMS);

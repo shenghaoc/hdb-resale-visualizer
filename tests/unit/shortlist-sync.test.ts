@@ -102,4 +102,20 @@ describe("parseStoredItems", () => {
     );
     expect(parseStoredItems(json)).toHaveLength(MAX_SHORTLIST_ITEMS);
   });
+
+  it("migrates legacy offer-ceiling fields when parsing synced payloads", () => {
+    const payload = {
+      ...validItem("legacy-offer"),
+      offerCeiling: 840000,
+      targetPrice: 810000,
+      notes: "legacy note",
+    };
+
+    const parsed = parseStoredItems(JSON.stringify([payload]));
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0]?.askingPrice).toBe(810000);
+    expect(parsed[0]?.suggestedOfferCeiling).toBe(840000);
+    expect(parsed[0]?.buyerOpeningOffer).toBe(810000);
+    expect(parsed[0]?.buyerNotes).toBe("legacy note");
+  });
 });
