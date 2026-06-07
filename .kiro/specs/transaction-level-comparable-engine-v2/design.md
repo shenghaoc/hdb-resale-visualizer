@@ -86,15 +86,20 @@ CREATE INDEX IF NOT EXISTS idx_tx_town ON transactions(town);
 CREATE INDEX IF NOT EXISTS idx_tx_block ON transactions(town, block);
 CREATE INDEX IF NOT EXISTS idx_tx_street ON transactions(street_name);
 CREATE INDEX IF NOT EXISTS idx_tx_flat_type ON transactions(flat_type);
+CREATE INDEX IF NOT EXISTS idx_tx_town_flat_type ON transactions(town, flat_type);
 CREATE INDEX IF NOT EXISTS idx_tx_month ON transactions(month);
 CREATE INDEX IF NOT EXISTS idx_tx_lease ON transactions(lease_commence_year);
 CREATE INDEX IF NOT EXISTS idx_tx_floor_area ON transactions(floor_area_sqm);
 ```
 
-The sync pipeline extracts transactions from each `block_details` JSON row
-and inserts them into this table. The `storey_midpoint` is pre-computed
-during sync using the existing `parseStoreyMidpoint` logic (moved to
-`shared/` so it can be used at build time).
+The sync pipeline builds the `transactions` table from the **full** resale
+transaction dataset — not from the 20-row capped `recentTransactions` in
+`block_details`. During `buildArtifacts()`, after sorting all transactions
+for each block, the entire sorted array is written to the `transactions`
+table (the 20-row cap only applies to the `block_details` JSON payload).
+The `storey_midpoint` is pre-computed during sync using the existing
+`parseStoreyMidpoint` logic (moved to `shared/` so it can be used at build
+time).
 
 ### 2. Shared Similarity Engine: `shared/comparable-engine.ts`
 
@@ -102,7 +107,26 @@ Pure TypeScript module with no side effects. Runs in both the API handler
 (Cloudflare Workers) and in Vitest tests. Never imported by the browser
 directly (the browser calls the API endpoint instead).
 
+To enforce the price-free invariant at the type level, `scoreSimilarity`
+accepts a `ScoringInput` type that **excludes** `resalePrice` and
+`pricePerSqm`. The API handler maps `TransactionRow` → `ScoringInput` before
+scoring, then attaches prices to the returned `ComparableTransaction` from
+the original row. This makes it impossible for scoring code to accidentally
+read price fields — the TypeScript compiler rejects it.
+
 ```ts
+/** Price-free subset of TransactionRow used as scoring input. */
+export type ScoringInput = {
+  town: string;
+  block: string;
+  streetName: string;
+  flatType: string;
+  storeyMidpoint: number;
+  floorAreaSqm: number;
+  leaseCommenceDate: number | null;
+  month: string;
+};
+
 export type CandidateListing = {
   town: string;
   block: string;
@@ -111,6 +135,7 @@ export type CandidateListing = {
   storeyRange: string;        // e.g. '07 TO 09'
   floorAreaSqm: number;
   leaseCommenceYear: number | null;
+  referenceMonth: string;       // e.g. manifest.dataWindow.maxMonth — deterministic recency anchor
   // Optional MRT context if pre-computed data is available
   nearestMrtDistance?: number;  // meters, from walking_time_cache
 };
@@ -124,7 +149,7 @@ export type ComparableTransaction = {
   flatType: string;
   storeyRange: string;
   floorAreaSqm: number;
-  leaseCommenceYear: number | null;
+  leaseCommenceDate: number | null;
   resalePrice: number;
   pricePerSqm: number;
   similarity: number;         // 0–1, higher = more similar
@@ -168,7 +193,7 @@ similarity = w_block * blockMatch
 | `floorAreaSimilarity` | 0.15 | `1 - clamp(|diff| / max(candidate.sqm, 50), 0, 1)` — floor at 50 sqm so very small flats aren't penalised disproportionately |
 | `storeySimilarity` | 0.10 | `1 - clamp(|diff| / 25, 0, 1)` — 25 floors as max range |
 | `leaseSimilarity` | 0.10 | `1 - clamp(|diff| / 50, 0, 1)` — 50 years as max range. When either lease is null, the lease component is excluded and the remaining weights are dynamically re-scaled to sum to 1.0 (e.g. each weight divided by 0.90). |
-| `recencyScore` | 0.05 | `1 - clamp(ageInMonths / 60, 0, 1)` — decays linearly over 5 years |
+| `recencyScore` | 0.05 | `1 - clamp(ageInMonths / 60, 0, 1)` — decays linearly over 5 years. `ageInMonths` is computed against `candidate.referenceMonth` (not `Date.now()`), ensuring deterministic, reproducible scores. |
 
 Weights sum to 1.0. All components are [0, 1]. The final similarity is [0, 1].
 
@@ -203,9 +228,10 @@ similarity scoring but with a different candidate pool:
    Score and sort all results. Return top N regardless of count.
    Set `widenedSearch = true`, add caveat.
 
-If any pass returns 0 results, the engine returns an empty
-`ListingComparableSet` with `caveats: ["No comparable transactions found
-for this listing."]`.
+If pass 3 (same town + same flat type) still returns 0 results, the engine
+returns an empty `ListingComparableSet` with `caveats: ["No comparable
+transactions found for this listing."]`. An empty result from pass 1 or
+pass 2 does **not** short-circuit — it triggers widening to the next pass.
 
 **Caveats added during widening:**
 - Pass 2 triggered: `"Few comparable transactions in the same block — search
@@ -241,7 +267,8 @@ Content-Type: application/json
   "flatType": "4 ROOM",
   "storeyRange": "07 TO 09",
   "floorAreaSqm": 93,
-  "leaseCommenceYear": 2015
+  "leaseCommenceYear": 2015,
+  "referenceMonth": "2026-05"
 }
 
 → 200
@@ -263,8 +290,10 @@ It imports the similarity engine from `shared/comparable-engine.ts`.
 many fields. Encoding it as query params would be unwieldy and hit URL
 length limits. POST with a JSON body is cleaner.
 
-**Validation:** The handler validates the request body with a Zod schema
-before querying D1. Returns 400 on invalid input.
+**Validation:** The handler enforces a body size limit (e.g. 8 KB via
+`Content-Length` check) before calling `request.json()`, then validates the
+parsed body with a Zod schema (`CandidateListing`). Returns 400 on oversize
+or invalid input. This mirrors the existing shortlist POST body-size guard.
 
 **Performance:** The `transactions` table with indexes on `(town, block)`,
 `(street_name)`, `(town, flat_type)` keeps each pass to a single indexed
@@ -309,9 +338,10 @@ transactions, which the v2 engine now provides from the API.
 ### 5. Sync Pipeline Changes
 
 `scripts/sync-data.ts` (or a new module in `scripts/lib/sync/`):
-- After populating `block_details`, extract all transactions from each
-  block's JSON, compute `storey_midpoint`, and batch-insert into the
-  `transactions` table.
+- During `buildArtifacts()`, after sorting all transactions for each block,
+  write the **full** sorted array to the `transactions` table before
+  applying the 20-row cap for `block_details`. Compute `storey_midpoint`
+  for each row.
 - The `transactions` table is truncated and re-inserted on each sync run
   (same pattern as `blocks`, `block_details`, etc.).
 
@@ -339,7 +369,7 @@ export type TransactionRow = {
   storeyRange: string;
   storeyMidpoint: number;
   floorAreaSqm: number;
-  leaseCommenceYear: number | null;
+  leaseCommenceDate: number | null;
   resalePrice: number;
   pricePerSqm: number;
   flatModel: string;

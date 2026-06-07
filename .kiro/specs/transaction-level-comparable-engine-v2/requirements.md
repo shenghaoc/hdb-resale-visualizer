@@ -32,8 +32,10 @@
   similarity (0.15), storey similarity (0.10), lease similarity (0.10),
   recency (0.05). All weights are named constants.
 - **R3.3** Resale price and price per sqm are **never** read or used in any
-  similarity computation. This invariant is enforced by the function
-  signature (it does not accept price fields as input for scoring).
+  similarity computation. This invariant is enforced at the type level:
+  `scoreSimilarity` accepts a `ScoringInput` type that excludes `resalePrice`
+  and `pricePerSqm`. The TypeScript compiler rejects any attempt to read
+  price fields during scoring.
 - **R3.4** Match reasons are derived from individual component scores ≥ 0.9
   and returned as human-readable labels (e.g. "Same block", "Similar floor
   area (±3 sqm)").
@@ -65,8 +67,9 @@
 ## R5 — New API endpoint
 - **R5.1** `POST /api/comparable-transactions` accepts a JSON body matching
   the `CandidateListing` schema.
-- **R5.2** The handler validates the request body with Zod. Returns 400 with
-  error details on invalid input.
+- **R5.2** The handler enforces a body size limit (8 KB) before parsing JSON,
+  then validates the request body with Zod. Returns 400 with error details on
+  oversize or invalid input.
 - **R5.3** The handler queries the `transactions` D1 table with the widening
   passes, scores results using the shared engine, and returns a
   `ListingComparableSet` JSON response.

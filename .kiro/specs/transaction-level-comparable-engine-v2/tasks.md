@@ -11,10 +11,11 @@
   types. Define weight constants (`BLOCK_WEIGHT`, `STREET_WEIGHT`, etc.).
   → `npm run typecheck` passes. (R3.1, R3.2, R7.2)
 
-- [ ] **T1.2** Implement `scoreSimilarity(candidate, transaction)`:
+- [ ] **T1.2** Implement `scoreSimilarity(candidate: CandidateListing, tx: ScoringInput)`:
   computes weighted similarity score from block, street, town, flat type,
-  floor area, storey, lease, and recency components. Resale price is never
-  read. When either lease is null, the lease component is excluded and
+  floor area, storey, lease, and recency components. `ScoringInput` excludes
+  `resalePrice` and `pricePerSqm` — the type system enforces the price-free
+  invariant. When either lease is null, the lease component is excluded and
   remaining weights are re-scaled to sum to 1.0. Returns
   `{ similarity, matchReasons }`.
   → `npm run typecheck` passes. (R3.2, R3.3, R3.4, R3.6)
@@ -54,11 +55,12 @@
   → `npm run typecheck` passes.
 
 - [ ] **T3.2** In `scripts/sync-data.ts` (or a new
-  `scripts/lib/sync/extract-transactions.ts`), after `block_details` is
-  populated: iterate all `block_details` rows, parse the JSON, extract each
-  `recentTransaction`, compute `storeyMidpoint` via the shared
-  `parseStoreyMidpoint`, and collect into a `TransactionRow[]`. Handle
-  missing `leaseCommenceDate` and `floorAreaSqm` gracefully.
+  `scripts/lib/sync/extract-transactions.ts`), during `buildArtifacts()`:
+  after sorting all transactions for each block, write the **full** sorted
+  array (not the 20-row capped slice) to a `TransactionRow[]`. Compute
+  `storeyMidpoint` via the shared `parseStoreyMidpoint`. Handle missing
+  `leaseCommenceDate` and `floorAreaSqm` gracefully. The 20-row cap for
+  `block_details` JSON is applied separately.
   → `npm run typecheck` passes. (R2.1, R2.3)
 
 - [ ] **T3.3** Wire the extraction + insert into the main sync flow in
@@ -80,9 +82,11 @@
   (response shape). Used by both the API handler and tests.
   → `npm run typecheck` passes. (R5.2)
 
-- [ ] **T4.3** Wire the endpoint into the Worker router
-  (`worker/index.ts` or `functions/_lib/routing.ts`): POST
-  `/api/comparable-transactions` dispatches to the new handler.
+- [ ] **T4.3** Wire the endpoint into the Worker router:
+  add a new `ApiRouteId` entry and `URLPattern` definition in
+  `worker/api-route-match.ts` (method: `"POST"`, pathname:
+  `"/api/comparable-transactions"`), then register the handler import and
+  dispatch case in `worker/index.ts`.
   → `npm run typecheck` passes. (R5.4)
 
 ## Phase 5 — Frontend wiring
