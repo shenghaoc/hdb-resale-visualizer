@@ -68,12 +68,12 @@ describe("shortlistPushSchema", () => {
     expect(shortlistPushSchema.safeParse({ items }).success).toBe(false);
   });
 
-  it("catches an oversized note instead of rejecting the item", () => {
+  it("truncates an oversized note instead of rejecting the item", () => {
     const items = [{ ...validItem("a"), notes: "x".repeat(MAX_NOTE_LENGTH + 1) }];
     const parsed = shortlistPushSchema.safeParse({ items });
     expect(parsed.success).toBe(true);
     if (parsed.success) {
-      expect(parsed.data.items[0].notes).toBe("");
+      expect(parsed.data.items[0].notes).toHaveLength(MAX_NOTE_LENGTH);
     }
   });
 

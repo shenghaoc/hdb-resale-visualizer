@@ -26,7 +26,7 @@ import {
 } from "../../shared/shortlist-limits";
 import type { ShortlistItem } from "../../shared/data-types";
 
-const note = z.string().max(MAX_NOTE_LENGTH);
+const note = z.string().transform((s) => s.slice(0, MAX_NOTE_LENGTH));
 
 const shortlistDecisionStatuses = [
   "considering",

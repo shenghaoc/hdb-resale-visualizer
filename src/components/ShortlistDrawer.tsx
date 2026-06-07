@@ -948,9 +948,9 @@ function ShortlistRowEditor({
         <CurrencyEditor
           id={`offer-${item.addressKey}`}
           label={t("shortlist.offerCeiling")}
-          value={item.offerCeiling ?? null}
+          value={item.suggestedOfferCeiling ?? null}
           placeholder={t("shortlist.offerCeilingPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { offerCeiling: val ?? undefined })}
+          onChange={(val) => onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })}
           t={t}
         />
       </div>
