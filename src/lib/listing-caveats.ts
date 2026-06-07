@@ -37,7 +37,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
 
   let ageMonths: number | null = null;
   if (referenceMonth && confidence.newestComparableMonth) {
-    ageMonths = monthDiff(confidence.newestComparableMonth, referenceMonth);
+    ageMonths = Math.max(0, monthDiff(confidence.newestComparableMonth, referenceMonth));
   }
 
   const input: ConfidenceInput = {

@@ -46,7 +46,7 @@ export function computeConfidence(
 
   let ageMonths: number | null = null;
   if (referenceMonth && newestMonth) {
-    ageMonths = monthDiff(newestMonth, referenceMonth);
+    ageMonths = Math.max(0, monthDiff(newestMonth, referenceMonth));
   }
 
   const input: ConfidenceInput = {

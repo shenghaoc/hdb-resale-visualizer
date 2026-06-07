@@ -163,7 +163,9 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
 
   // --- Lease mismatch ---
   if (leaseCommenceYear != null && comparableLeaseYears.length > 0) {
-    const sorted = [...comparableLeaseYears].sort((a, b) => a - b);
+    const validLeaseYears = comparableLeaseYears.filter((y) => !Number.isNaN(y));
+    if (validLeaseYears.length === 0) return caveats;
+    const sorted = [...validLeaseYears].sort((a, b) => a - b);
     const medianLeaseYear = sorted[Math.floor(sorted.length / 2)];
     if (Math.abs(leaseCommenceYear - medianLeaseYear) > 10) {
       add(

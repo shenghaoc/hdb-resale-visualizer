@@ -491,11 +491,11 @@ export function ListingCheckPanel({
       sameTownCount: comparableSet.sameTownCount,
       newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
       flatTypeMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons.includes("Same flat type")).length,
+        .filter((c) => c.matchReasons?.includes("Same flat type")).length,
       floorAreaMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons.some((r) => r.startsWith("Similar floor area"))).length,
+        .filter((c) => c.matchReasons?.some((r) => r.startsWith("Similar floor area"))).length,
       storeyMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons.includes("Similar storey")).length,
+        .filter((c) => c.matchReasons?.includes("Similar storey")).length,
       widenedSearch: comparableSet.widenedSearch,
       timeAdjustmentApplied: adjustmentMeta?.adjustmentApplied ?? false,
       trendSampleSize: null,
