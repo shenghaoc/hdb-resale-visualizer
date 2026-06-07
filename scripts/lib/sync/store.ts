@@ -235,6 +235,11 @@ function mapTxRow(row: TransactionRow): unknown[] {
  * the 100-bound-param per-statement limit (14 columns → 7 rows per INSERT)
  * while minimising HTTP round-trips (up to 100 INSERTs per batch call → 700
  * rows per HTTP request).
+ *
+ * TODO: At production scale (~1M transactions), this still issues ~1.4k D1
+ * HTTP requests per sync (~20–30 min wall time). A future D1 bulk-import API
+ * or raw-SQL endpoint without param limits would reduce this to a single
+ * request. Tracked as follow-up — not blocking merge.
  */
 export async function insertTransactions(
   db: D1Client,

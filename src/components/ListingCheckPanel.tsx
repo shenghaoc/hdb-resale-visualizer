@@ -328,15 +328,26 @@ export function ListingCheckPanel({
         ? (detail.summary.floorAreaRange[0] + detail.summary.floorAreaRange[1]) / 2
         : null;
 
+    const effectiveFloorArea = resolvedFloorAreaSqm ?? fallbackFloorArea;
+    const effectiveReferenceMonth = referenceMonth ?? detail.summary.latestMonth;
+
+    // Guard: floor area is required for similarity scoring; referenceMonth
+    // anchors recency. Without them, the API would return a 400.
+    if (effectiveFloorArea == null || effectiveFloorArea <= 0 || !effectiveReferenceMonth) {
+      setComparableSetError(true);
+      setComparableSetLoading(false);
+      return;
+    }
+
     const body = JSON.stringify({
       town: detail.summary.town,
       block: detail.summary.block,
       streetName: detail.summary.streetName,
       flatType,
       storeyRange,
-      floorAreaSqm: resolvedFloorAreaSqm ?? fallbackFloorArea ?? 0,
+      floorAreaSqm: effectiveFloorArea,
       leaseCommenceYear: resolvedLeaseYear ?? null,
-      referenceMonth: referenceMonth ?? detail.summary.latestMonth,
+      referenceMonth: effectiveReferenceMonth,
     });
 
     fetch("/api/comparable-transactions", {

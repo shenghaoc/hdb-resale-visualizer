@@ -243,4 +243,33 @@ describe("buildComparableSet", () => {
     // Newest is 2026-03, reference is 2026-05 → 2 months old
     expect(result.newestComparableAgeMonths).toBe(2);
   });
+
+  it("all passes below MIN_COMPARABLES: uses narrowest pass with data (block)", () => {
+    const candidate = makeCandidate();
+    const sameBlock = makeRows(3, { block: "123A" });
+    const sameStreet = makeRows(5, {
+      block: "124B",
+      streetName: "ANG MO KIO AVE 1",
+    });
+    const sameTown = makeRows(6, {
+      block: "500C",
+      streetName: "ANG MO KIO AVE 5",
+      town: "ANG MO KIO",
+    });
+
+    const result = buildComparableSet({
+      candidate,
+      sameBlockRows: sameBlock,
+      sameStreetRows: sameStreet,
+      sameTownRows: sameTown,
+    });
+
+    // All passes below MIN_COMPARABLES (8), so narrowest pass (block)
+    // should be used without widening.
+    expect(result.comparables).toHaveLength(3);
+    expect(result.widenedSearch).toBe(false);
+    expect(result.sameBlockCount).toBe(3);
+    expect(result.sameStreetCount).toBe(5);
+    expect(result.sameTownCount).toBe(6);
+  });
 });
