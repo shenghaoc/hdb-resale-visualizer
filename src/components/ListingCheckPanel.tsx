@@ -935,12 +935,12 @@ export function ListingCheckPanel({
       )}
 
       {/* ── Evidence table ─────────────────────────────────────────────── */}
-      {result && comparables.length > 0 && (
+      {comparableSet && !comparableSetLoading && !comparableSetError && (
         <ComparableEvidenceTable
           comparables={comparables}
           referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
-          widenedSearch={comparableSet?.widenedSearch ?? false}
-          caveats={comparableSet?.caveats ?? []}
+          widenedSearch={comparableSet.widenedSearch}
+          caveats={comparableSet.caveats}
         />
       )}
     </section>

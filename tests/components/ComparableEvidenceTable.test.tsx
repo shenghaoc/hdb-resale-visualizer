@@ -49,16 +49,17 @@ describe("ComparableEvidenceTable", () => {
 
   it("renders all column headers", () => {
     renderTable();
-    expect(screen.getByText("Month")).toBeInTheDocument();
-    expect(screen.getByText("Block / Street")).toBeInTheDocument();
-    expect(screen.getByText("Flat Type")).toBeInTheDocument();
-    expect(screen.getByText("Storey")).toBeInTheDocument();
-    expect(screen.getByText("Area")).toBeInTheDocument();
-    expect(screen.getByText("Lease")).toBeInTheDocument();
-    expect(screen.getByText("Price")).toBeInTheDocument();
-    expect(screen.getByText("$/sqm")).toBeInTheDocument();
-    expect(screen.getByText("Similarity")).toBeInTheDocument();
-    expect(screen.getByText("Match Reasons")).toBeInTheDocument();
+    const table = screen.getByRole("table");
+    expect(within(table).getByText("Month")).toBeInTheDocument();
+    expect(within(table).getByText("Block / Street")).toBeInTheDocument();
+    expect(within(table).getByText("Flat Type")).toBeInTheDocument();
+    expect(within(table).getByText("Storey")).toBeInTheDocument();
+    expect(within(table).getByText("Area")).toBeInTheDocument();
+    expect(within(table).getByText("Lease")).toBeInTheDocument();
+    expect(within(table).getByText("Price")).toBeInTheDocument();
+    expect(within(table).getByText("$/sqm")).toBeInTheDocument();
+    expect(within(table).getByText("Similarity")).toBeInTheDocument();
+    expect(within(table).getByText("Match Reasons")).toBeInTheDocument();
   });
 
   // ── Row count ───────────────────────────────────────────────────────────
@@ -87,10 +88,10 @@ describe("ComparableEvidenceTable", () => {
     const user = userEvent.setup();
     renderTable();
 
-    const priceButton = screen.getByRole("button", { name: /price/i });
+    const table = screen.getByRole("table");
+    const priceButton = within(table).getByRole("button", { name: /price/i });
     await user.click(priceButton);
 
-    const table = screen.getByRole("table");
     const rows = within(table).getAllByRole("row");
     // tx-5 has highest price ($700K), should be first data row
     expect(rows[1]).toHaveTextContent("700");
@@ -100,11 +101,11 @@ describe("ComparableEvidenceTable", () => {
     const user = userEvent.setup();
     renderTable();
 
-    const priceButton = screen.getByRole("button", { name: /price/i });
+    const table = screen.getByRole("table");
+    const priceButton = within(table).getByRole("button", { name: /price/i });
     await user.click(priceButton);
     await user.click(priceButton);
 
-    const table = screen.getByRole("table");
     const rows = within(table).getAllByRole("row");
     // tx-4 has lowest price ($450K), should be first data row
     expect(rows[1]).toHaveTextContent("450");
@@ -116,10 +117,10 @@ describe("ComparableEvidenceTable", () => {
     const user = userEvent.setup();
     renderTable();
 
-    const monthButton = screen.getByRole("button", { name: /month/i });
+    const table = screen.getByRole("table");
+    const monthButton = within(table).getByRole("button", { name: /month/i });
     await user.click(monthButton);
 
-    const table = screen.getByRole("table");
     const rows = within(table).getAllByRole("row");
     // tx-5 has earliest month (2024-05), should be first
     expect(rows[1]).toHaveTextContent("May 2024");
@@ -180,7 +181,7 @@ describe("ComparableEvidenceTable", () => {
     const whyButton = screen.getByRole("button", { name: /why these comparables/i });
     await user.click(whyButton);
 
-    expect(screen.getByText(/search was widened/i)).toBeInTheDocument();
+    expect(screen.getByText(/widened to the same street or town/i)).toBeInTheDocument();
   });
 
   it("shows low-sample note when fewer than 5 comparables", async () => {
@@ -210,5 +211,38 @@ describe("ComparableEvidenceTable", () => {
     renderTable();
     const articles = screen.getAllByRole("article");
     expect(articles).toHaveLength(FIXTURES.length);
+  });
+
+  // ── Mobile sort controls ───────────────────────────────────────────────
+
+  it("renders mobile sort pill buttons for all sortable columns", () => {
+    renderTable();
+    const sortButtons = screen.getAllByRole("button", { pressed: false });
+    const activeButtons = screen.getAllByRole("button", { pressed: true });
+    // 5 sort keys total: 1 active (similarity) + 4 inactive
+    expect(activeButtons).toHaveLength(1);
+    expect(activeButtons[0]).toHaveTextContent(/similarity/i);
+    // Other sort pills exist (month, price, $/sqm, area)
+    const pillLabels = sortButtons.map((b) => b.textContent?.toLowerCase() ?? "");
+    expect(pillLabels.some((l) => l.includes("month"))).toBe(true);
+    expect(pillLabels.some((l) => l.includes("price"))).toBe(true);
+    expect(pillLabels.some((l) => l.includes("area"))).toBe(true);
+  });
+
+  it("mobile sort button changes sort order", async () => {
+    const user = userEvent.setup();
+    renderTable();
+
+    // Find the mobile Price sort button (aria-pressed)
+    const pricePills = screen.getAllByRole("button").filter(
+      (b) => b.textContent?.toLowerCase().includes("price") && b.getAttribute("aria-pressed") !== null,
+    );
+    expect(pricePills.length).toBeGreaterThanOrEqual(1);
+    await user.click(pricePills[0]);
+
+    // After clicking Price, the desktop table first row should have highest price
+    const table = screen.getByRole("table");
+    const rows = within(table).getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("700");
   });
 });

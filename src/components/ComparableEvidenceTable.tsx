@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, ChevronDown, ChevronUp, Info } from "lucide-react";
+import { AlertTriangle, ArrowUpDown, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
@@ -30,6 +30,16 @@ const DEFAULT_SORT_DIRECTIONS: Record<SortKey, SortDirection> = {
   pricePerSqm: "desc",
   similarity: "desc",
 };
+
+const SORT_KEY_I18N: Record<SortKey, string> = {
+  similarity: "evidence.col.similarity",
+  month: "evidence.col.month",
+  resalePrice: "evidence.col.price",
+  pricePerSqm: "evidence.col.priceSqm",
+  floorAreaSqm: "evidence.col.area",
+};
+
+const SORT_KEY_ORDER: SortKey[] = ["similarity", "month", "resalePrice", "pricePerSqm", "floorAreaSqm"];
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
@@ -275,6 +285,27 @@ export function ComparableEvidenceTable({
 
       {/* ── Mobile card layout ────────────────────────────────────────── */}
       <div className="flex flex-col gap-2 sm:hidden">
+        {/* Mobile sort controls */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <ArrowUpDown data-icon className="size-3 shrink-0 text-muted-foreground" aria-hidden="true" />
+          {SORT_KEY_ORDER.map((key) => (
+            <button
+              key={key}
+              type="button"
+              className={cn(
+                "shrink-0 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-wider transition-colors",
+                key === sortKey
+                  ? "bg-primary/15 text-primary"
+                  : "bg-muted/20 text-muted-foreground hover:bg-muted/40",
+              )}
+              onClick={() => handleSort(key)}
+              aria-pressed={key === sortKey}
+            >
+              {t(SORT_KEY_I18N[key])}
+              {key === sortKey && (sortDirection === "asc" ? " ↑" : " ↓")}
+            </button>
+          ))}
+        </div>
         {sorted.map((tx) => (
           <article
             key={tx.transactionId}
