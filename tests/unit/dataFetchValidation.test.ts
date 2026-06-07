@@ -44,6 +44,50 @@ describe("artifact fetch validation", () => {
     await expect(fetchManifest()).resolves.toMatchObject({ schemaVersion: "2.0.0" });
   });
 
+  it("parses manifest when optional metadata fields are missing", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        mockJsonResponse({
+          schemaVersion: "2.0.0",
+          dataWindow: { minMonth: "2020-01", maxMonth: "2026-01" },
+          filterOptions: { towns: ["A"], flatTypes: ["4 ROOM"], flatModels: ["Model A"] },
+          counts: { blocks: 1, transactions: 1, towns: 1, mrtStations: 1 },
+        }),
+      ),
+    );
+
+    await expect(fetchManifest()).resolves.toMatchObject({
+      schemaVersion: "2.0.0",
+      generatedAt: undefined,
+      sources: {},
+    });
+  });
+
+  it("parses manifest when source metadata is partial", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        mockJsonResponse({
+          schemaVersion: "2.0.0",
+          generatedAt: "2026-01-01T00:00:00Z",
+          dataWindow: { minMonth: "2020-01", maxMonth: "2026-01" },
+          sources: {
+            resaleCollectionId: "a",
+          },
+          filterOptions: { towns: ["A"], flatTypes: ["4 ROOM"], flatModels: ["Model A"] },
+          counts: { blocks: 1, transactions: 1, towns: 1, mrtStations: 1 },
+        }),
+      ),
+    );
+
+    await expect(fetchManifest()).resolves.toMatchObject({
+      sources: {
+        resaleCollectionId: "a",
+      },
+    });
+  });
+
   it("throws precise artifact-contract error for invalid block summaries", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockJsonResponse([{ addressKey: "only-one-field" }])));
 

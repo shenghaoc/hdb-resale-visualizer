@@ -27,7 +27,6 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   formatCurrency,
   formatMeters,
@@ -72,6 +71,7 @@ import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/lib/lease-financing";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { buildBlockShareUrl } from "@/lib/shareUrls";
+import { getBlockDataQualityTag } from "@/lib/listing-quality";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
@@ -96,6 +96,7 @@ type DetailDrawerProps = {
   isComparisonLoading: boolean;
   isSaved: boolean;
   remainingLeaseMin: number | null;
+  referenceMonth?: string;
   filters?: FilterState;
   searchProfile?: SearchProfile | null;
   onClose: () => void;
@@ -315,6 +316,7 @@ export function DetailDrawer({
   isComparisonLoading,
   isSaved,
   remainingLeaseMin,
+  referenceMonth,
   filters = DEFAULT_FILTERS,
   searchProfile = null,
   onClose,
@@ -590,8 +592,25 @@ export function DetailDrawer({
                       </div>
                       {currentSummary ? (
                         <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                          {t(getDataConfidenceLabelKey(currentSummary.transactionCount))}
+                          {t(
+                            `quality.${getBlockDataQualityTag({
+                              transactionCount: currentSummary.transactionCount,
+                              latestMonth: currentSummary.latestMonth,
+                              referenceMonth,
+                            })}`,
+                          )}
                         </Badge>
+                      ) : null}
+                      {currentSummary ? (
+                        <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
+                          {t(
+                            `quality.hint.${getBlockDataQualityTag({
+                              transactionCount: currentSummary.transactionCount,
+                              latestMonth: currentSummary.latestMonth,
+                              referenceMonth,
+                            })}`,
+                          )}
+                        </div>
                       ) : null}
                       {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
                         <BudgetMatchBadge

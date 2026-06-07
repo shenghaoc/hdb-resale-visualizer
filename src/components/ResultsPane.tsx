@@ -15,7 +15,6 @@ import {
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
-import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
@@ -43,6 +42,7 @@ import {
   sumRollupVolume,
   volumeWeightedMeanLatestMedianPricePerSqm,
 } from "@/lib/town-profile";
+import { getBlockDataQualityTag } from "@/lib/listing-quality";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -428,8 +428,23 @@ const BlockCard = memo(function BlockCard({
             {formatCompactCurrency(block.medianPrice, locale)}
           </strong>
           <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-            {t(getDataConfidenceLabelKey(block.transactionCount))}
+            {t(
+              `quality.${getBlockDataQualityTag({
+                transactionCount: block.transactionCount,
+                latestMonth: block.latestMonth,
+                referenceMonth: profileDataWindow?.maxMonth ?? null,
+              })}`,
+            )}
           </Badge>
+          <span className="text-[0.62rem] font-semibold text-muted-foreground">
+            {t(
+              `quality.hint.${getBlockDataQualityTag({
+                transactionCount: block.transactionCount,
+                latestMonth: block.latestMonth,
+                referenceMonth: profileDataWindow?.maxMonth ?? null,
+              })}`,
+            )}
+          </span>
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(

@@ -128,6 +128,8 @@ describe("ShortlistDrawer", () => {
     // Check that location percentiles are displayed
     expect(screen.getByText("Location ranks")).toBeInTheDocument();
     expect(screen.getByText("MRT: 60th • Lease: 76th")).toBeInTheDocument();
+    expect(screen.getByText("Strong data")).toBeInTheDocument();
+    expect(screen.getByText("Recent block-level evidence")).toBeInTheDocument();
   });
 
   it("gracefully handles missing comparison data", () => {

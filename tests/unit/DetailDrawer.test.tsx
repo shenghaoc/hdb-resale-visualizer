@@ -167,6 +167,29 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("16 min walk")).toBeInTheDocument();
   });
 
+  it("shows the shared weak-data label for low-sample blocks", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          remainingLeaseMin={null}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>
+    );
+
+    expect(screen.getByText("Weak data")).toBeInTheDocument();
+    expect(screen.getByText("Low sample size")).toBeInTheDocument();
+  });
+
   it("renders all 3 nearby schools with names and distances", () => {
     render(
       <I18nProvider>

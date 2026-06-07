@@ -16,6 +16,7 @@ export type CaveatCode =
   | "EXTREME_OUTLIER_LOW"
   | "EXTREME_OUTLIER_HIGH"
   | "TIME_ADJUSTMENT_APPLIED"
+  | "TIME_ADJUSTMENT_UNAVAILABLE"
   | "SMALL_TREND_SAMPLE";
 
 export type CaveatSeverity = "info" | "warning" | "critical";
@@ -36,10 +37,13 @@ export type GenerateCaveatsParams = {
 
 const WIDENED_STREET_PATTERN = /widened to the same street/i;
 const WIDENED_TOWN_PATTERN = /widened to the entire town/i;
+const ADJUSTMENT_UNAVAILABLE_PATTERN =
+  /time adjustment could not be applied|could not be time-adjusted|insufficient trend data/i;
 
 function mapApiCaveat(msg: string): CaveatCode | null {
   if (WIDENED_STREET_PATTERN.test(msg)) return "WIDENED_TO_STREET";
   if (WIDENED_TOWN_PATTERN.test(msg)) return "WIDENED_TO_TOWN";
+  if (ADJUSTMENT_UNAVAILABLE_PATTERN.test(msg)) return "TIME_ADJUSTMENT_UNAVAILABLE";
   return null;
 }
 
@@ -128,6 +132,12 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
           "warning",
           "Few comparable transactions on the same street — search widened to the entire town.",
         );
+      } else if (code === "TIME_ADJUSTMENT_UNAVAILABLE") {
+        add(
+          "TIME_ADJUSTMENT_UNAVAILABLE",
+          "warning",
+          "Time adjustment could not be fully applied — recent trend data was missing for part or all of this comparable set.",
+        );
       }
     }
   }
@@ -193,7 +203,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   }
 
   // --- Time adjustment ---
-  if (inp.timeAdjustmentApplied) {
+  if (inp.timeAdjustmentApplied && !seen.has("TIME_ADJUSTMENT_UNAVAILABLE")) {
     add(
       "TIME_ADJUSTMENT_APPLIED",
       "info",

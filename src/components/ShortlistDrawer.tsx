@@ -44,7 +44,6 @@ import {
   propertyGuruUrl,
   srxUrl,
 } from "@/lib/listingPortalLinks";
-import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import {
   buildShortlistComparisonRows,
   type ShortlistComparisonRow,
@@ -61,6 +60,7 @@ import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
 import type { ChecklistItemId } from "@/lib/checklist";
+import { getBlockDataQualityTag } from "@/lib/listing-quality";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -116,6 +116,7 @@ type ShortlistDrawerProps = {
   remainingLeaseMin: number | null;
   budgetMin?: number | null;
   budgetMax?: number | null;
+  referenceMonth?: string;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
@@ -1051,6 +1052,7 @@ export function ShortlistDrawer({
   remainingLeaseMin,
   budgetMin = null,
   budgetMax = null,
+  referenceMonth,
   onToggleOpen,
   onRemove,
   onUpdate,
@@ -1708,8 +1710,23 @@ export function ShortlistDrawer({
                                   ) : null}
                                   <span>{t("stats.txns", { count: formatNumber(row.block.transactionCount, 0, locale) })}</span>
                                   <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                                    {t(getDataConfidenceLabelKey(row.block.transactionCount))}
+                                    {t(
+                                      `quality.${getBlockDataQualityTag({
+                                        transactionCount: row.block.transactionCount,
+                                        latestMonth: row.block.latestMonth,
+                                        referenceMonth,
+                                      })}`,
+                                    )}
                                   </Badge>
+                                  <span className="text-[0.58rem] font-semibold uppercase tracking-[0.08em]">
+                                    {t(
+                                      `quality.hint.${getBlockDataQualityTag({
+                                        transactionCount: row.block.transactionCount,
+                                        latestMonth: row.block.latestMonth,
+                                        referenceMonth,
+                                      })}`,
+                                    )}
+                                  </span>
                                   <span
                                     className={cn(
                                       "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",

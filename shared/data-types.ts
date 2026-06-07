@@ -81,21 +81,21 @@ export type FilterOptions = {
 
 export type Manifest = {
   schemaVersion: string;
-  generatedAt: string;
+  generatedAt?: string;
   dataWindow: {
     minMonth: string;
     maxMonth: string;
   };
   sources: {
-    resaleCollectionId: string;
-    resaleDatasetIds: string[];
-    propertyDatasetId: string;
-    mrtDatasetId: string;
+    resaleCollectionId?: string;
+    resaleDatasetIds?: string[];
+    propertyDatasetId?: string;
+    mrtDatasetId?: string;
     moeSchoolDatasetId?: string;
     neaHawkerDatasetId?: string;
     sfaSupermarketDatasetId?: string;
     nparksParksDatasetId?: string;
-    lastUpdatedAt: string;
+    lastUpdatedAt?: string;
   };
   filterOptions: FilterOptions;
   counts: {

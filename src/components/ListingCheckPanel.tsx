@@ -52,6 +52,7 @@ import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
 import type { AdjustmentInfo } from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
+import { getComparableSetQualityTag } from "@/lib/listing-quality";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -183,8 +184,9 @@ export function ListingCheckPanel({
   const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
-  /** Whether time-adjusted prices are shown (toggle state). */
-  const [adjustmentEnabled] = useState(false);
+  // Always request time-adjustment metadata so the UI can surface when the
+  // adjustment succeeded, widened partially, or could not be applied.
+  const [adjustmentEnabled] = useState(true);
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
@@ -529,7 +531,10 @@ export function ListingCheckPanel({
       percentileAmongComparables: assessment.percentileAmongComparables,
       leaseCommenceYear: resolvedLeaseYear ?? undefined,
       comparableLeaseYears,
-      apiCaveats: comparableSet.caveats,
+      apiCaveats: [
+        ...comparableSet.caveats,
+        ...(adjustmentMeta?.adjustmentCaveats ?? []),
+      ],
     });
 
     return {
@@ -540,6 +545,28 @@ export function ListingCheckPanel({
   }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
 
   const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
+  const qualityTag = useMemo(() => {
+    if (!result || !comparableSet) {
+      return null;
+    }
+    return getComparableSetQualityTag({
+      confidence: result.confidence,
+      widenedSearch: comparableSet.widenedSearch,
+      newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
+      caveatCodes: result.caveats.map((c) => c.code),
+    });
+  }, [comparableSet, result]);
+  const evidenceCaveats = useMemo(() => {
+    if (result) {
+      return result.caveats.map((c) => c.message);
+    }
+    return Array.from(
+      new Set([
+        ...(comparableSet?.caveats ?? []),
+        ...(adjustmentMeta?.adjustmentCaveats ?? []),
+      ]),
+    );
+  }, [adjustmentMeta, comparableSet, result]);
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
   const theme = result ? VERDICT_THEMES[result.assessment.verdict] : null;
@@ -895,6 +922,18 @@ export function ListingCheckPanel({
                 >
                   {result.confidence.summary}
                 </p>
+                {qualityTag ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]">
+                        {t(`quality.${qualityTag}`)}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-60 text-xs">
+                      {t(`quality.hint.${qualityTag}`)}
+                    </TooltipContent>
+                  </Tooltip>
+                ) : null}
               </div>
             </div>
 
@@ -1018,7 +1057,7 @@ export function ListingCheckPanel({
             comparables={comparables}
             referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
             widenedSearch={comparableSet.widenedSearch}
-            caveats={comparableSet.caveats}
+            caveats={evidenceCaveats}
           />
         </div>
       )}
