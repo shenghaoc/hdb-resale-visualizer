@@ -639,7 +639,6 @@ function App() {
         onUseSampleCheck={handleUseSampleCheck}
         onOpenCandidates={handleOpenCandidates}
         onOpenShortlist={handleOpenShortlist}
-        hasSampleCheck={sampleCheckBlock != null}
         savedToShortlist={checkSavedToShortlist}
         referenceMonth={manifest?.dataWindow.maxMonth}
       />
@@ -651,9 +650,7 @@ function App() {
   const showFloatingHeader = header.isHeaderVisible;
   const showScopePrompt = Boolean(
     !pipeline.hasResultScope &&
-      (panel.isDesktop
-        ? !panel.isLeftPanelOpen && !panel.isSavedPanelOpen
-        : panel.mobileTab === null),
+      (panel.isDesktop || panel.mobileTab === null),
   );
 
   // ── Render ───────────────────────────────────────────────────────────────

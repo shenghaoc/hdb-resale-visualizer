@@ -75,7 +75,6 @@ type ListingCheckPanelProps = {
   onShare: () => void;
   savedToShortlist: boolean;
   referenceMonth?: string;
-  hasSampleCheck: boolean;
 };
 
 // ── Verdict themes ──────────────────────────────────────────────────────────
@@ -170,11 +169,11 @@ export function ListingCheckPanel({
   onShare,
   savedToShortlist,
   referenceMonth,
-  hasSampleCheck,
 }: ListingCheckPanelProps) {
   const { locale, t } = useI18n();
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const askingPriceInputRef = useRef<HTMLInputElement | null>(null);
 
   // ── Search combobox state ──────────────────────────────────────────────────
   const [searchValue, setSearchValue] = useState("");
@@ -595,17 +594,17 @@ export function ListingCheckPanel({
   const canCheck = selectedAddressKey != null && resolvedAskingPrice != null;
 
   const handlePrimaryAction = useCallback(() => {
-    if (!selectedAddressKey && searchInputRef.current) {
-      searchInputRef.current.focus();
+    if (!selectedAddressKey) {
+      searchInputRef.current?.focus();
       return;
     }
 
-    if (selectedAddressKey && !comparableSetLoading && canCheck) {
+    if (!comparableSetLoading && canCheck) {
       handleCheckClick();
       return;
     }
 
-    searchInputRef.current?.focus();
+    askingPriceInputRef.current?.focus();
   }, [canCheck, comparableSetLoading, selectedAddressKey, handleCheckClick]);
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -707,6 +706,7 @@ export function ListingCheckPanel({
                 {t("askingCheck.askingPrice")}
               </span>
               <Input
+                ref={askingPriceInputRef}
                 type="number"
                 inputMode="numeric"
                 enterKeyHint="done"
@@ -838,11 +838,9 @@ export function ListingCheckPanel({
             <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
             <span>{t("check.selectBlockHint")}</span>
           </div>
-          {hasSampleCheck ? (
-            <Button type="button" variant="outline" size="sm" className="w-full" onClick={onUseSampleCheck}>
-              {t("check.sampleListingCheck")}
-            </Button>
-          ) : null}
+          <Button type="button" variant="outline" size="sm" className="w-full" onClick={onUseSampleCheck}>
+            {t("check.sampleListingCheck")}
+          </Button>
         </div>
       )}
 
