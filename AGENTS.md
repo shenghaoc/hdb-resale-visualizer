@@ -31,6 +31,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 
 **Completed:**
+- [**Mobile Buyer Usability**](.kiro/specs/mobile-buyer-usability/tasks.md) — Phone-first buyer workflows: listing check, verdict, comparables, shortlist, compare.
 - [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
 - [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — Pointer-events fix + UI polish.
 - [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Location scope, visual grounding, amenity data.
