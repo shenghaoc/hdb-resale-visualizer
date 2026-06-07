@@ -33,12 +33,12 @@ export function usePanelState() {
 
   // Desktop: left panel (filters/results) is mutually exclusive;
   // saved panel is independent and tiles alongside the left panel.
-  const [leftTab, setLeftTab] = useState<LeftTab>("filters");
+  const [leftTab, setLeftTab] = useState<LeftTab>("check");
   const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
   const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
 
   // Mobile: single tab at a time (unchanged)
-  const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
+  const [mobileTab, setMobileTab] = useState<PanelTab | null>("check");
 
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
 

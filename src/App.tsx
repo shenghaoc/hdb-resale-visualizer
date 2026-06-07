@@ -34,7 +34,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
 import { buildFilterShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
-import { ListingCheckPanel } from "@/components/ListingCheckPanel";
 import {
   useListingCheckUrlState,
   buildCheckShareUrl,
@@ -52,6 +51,9 @@ const ShortlistDrawer = lazy(() =>
 );
 const ResultsPane = lazy(() =>
   import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),
+);
+const ListingCheckPanel = lazy(() =>
+  import("@/components/ListingCheckPanel").then((m) => ({ default: m.ListingCheckPanel })),
 );
 
 function App() {
@@ -201,10 +203,76 @@ function App() {
   if (checkStoreyRange !== prevCheckStoreyRange) setPrevCheckStoreyRange(checkStoreyRange);
   if (checkLeaseYear !== prevCheckLeaseYear) setPrevCheckLeaseYear(checkLeaseYear);
 
+  const sampleCheckBlock = useMemo(() => {
+    if (pipeline.blocks.length === 0) {
+      return null;
+    }
+    const candidates = pipeline.blocks.filter((block) => block.medianPrice > 0 && block.transactionCount > 0);
+    if (candidates.length === 0) return null;
+    return candidates
+      .slice()
+      .sort((a, b) => a.addressKey.localeCompare(b.addressKey))
+      .at(0);
+  }, [pipeline.blocks]);
+
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
     setCheckAddressKey(addressKey);
     setCheckSavedToShortlist(false);
   }, []);
+
+  const handleUseSampleCheck = useCallback(() => {
+    if (!sampleCheckBlock) return;
+    const [minArea, maxArea] = sampleCheckBlock.floorAreaRange;
+    const [minLease, maxLease] = sampleCheckBlock.leaseCommenceRange;
+    const fallbackFlatType = sampleCheckBlock.flatTypes.length
+      ? [...sampleCheckBlock.flatTypes].sort((a, b) => a.localeCompare(b))[0]
+      : null;
+    const floorAreaSqm = minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
+    const leaseCommenceYear =
+      minLease != null && maxLease != null && minLease > 0 && maxLease > 0
+        ? Math.round((minLease + maxLease) / 2)
+        : null;
+
+    setCheckAddressKey(sampleCheckBlock.addressKey);
+    setCheckAskingPrice(Math.round(sampleCheckBlock.medianPrice));
+    setCheckFloorAreaSqm(floorAreaSqm);
+    setCheckFlatType(fallbackFlatType);
+    setCheckStoreyRange(null);
+    setCheckLeaseYear(leaseCommenceYear);
+    setCheckSavedToShortlist(false);
+    if (panel.isDesktop) {
+      panel.setLeftTab("check");
+      panel.setIsLeftPanelOpen(true);
+    } else {
+      panel.setMobileTab("check");
+    }
+  }, [
+    panel,
+    sampleCheckBlock,
+    setCheckAddressKey,
+    setCheckAskingPrice,
+    setCheckFloorAreaSqm,
+    setCheckFlatType,
+    setCheckStoreyRange,
+    setCheckLeaseYear,
+  ]);
+
+  const handleOpenCandidates = useCallback(() => {
+    if (panel.isDesktop) {
+      panel.setLeftTab("results");
+      panel.setIsLeftPanelOpen(true);
+      return;
+    }
+    panel.setMobileTab("results");
+  }, [panel]);
+
+  const handleOpenShortlist = useCallback(() => {
+    if (panel.isDesktop) {
+      panel.setIsSavedPanelOpen(true);
+      return;
+    }
+    panel.setMobileTab("saved");
+  }, [panel]);
 
   const handleCheckSaveToShortlist = useCallback(() => {
     if (!checkAddressKey || checkAskingPrice == null) return;
@@ -542,24 +610,32 @@ function App() {
   ) : null;
 
   const checkContent = (
-    <ListingCheckPanel
-      selectedAddressKey={checkAddressKey}
-      askingPrice={checkAskingPrice}
-      floorAreaSqm={checkFloorAreaSqm}
-      flatType={checkFlatType}
-      storeyRange={checkStoreyRange}
-      leaseCommenceYear={checkLeaseYear}
-      onAddressSelect={handleCheckAddressSelect}
-      onAskingPriceChange={setCheckAskingPrice}
-      onFloorAreaChange={setCheckFloorAreaSqm}
-      onFlatTypeChange={setCheckFlatType}
-      onStoreyRangeChange={setCheckStoreyRange}
-      onLeaseYearChange={setCheckLeaseYear}
-      onSaveToShortlist={handleCheckSaveToShortlist}
-      onShare={() => { void handleCheckShare(); }}
-      savedToShortlist={checkSavedToShortlist}
-      referenceMonth={manifest?.dataWindow.maxMonth}
-    />
+    <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
+      <ListingCheckPanel
+        selectedAddressKey={checkAddressKey}
+        askingPrice={checkAskingPrice}
+        floorAreaSqm={checkFloorAreaSqm}
+        flatType={checkFlatType}
+        storeyRange={checkStoreyRange}
+        leaseCommenceYear={checkLeaseYear}
+        onAddressSelect={handleCheckAddressSelect}
+        onAskingPriceChange={setCheckAskingPrice}
+        onFloorAreaChange={setCheckFloorAreaSqm}
+        onFlatTypeChange={setCheckFlatType}
+        onStoreyRangeChange={setCheckStoreyRange}
+        onLeaseYearChange={setCheckLeaseYear}
+        onSaveToShortlist={handleCheckSaveToShortlist}
+        onShare={() => {
+          void handleCheckShare();
+        }}
+        onUseSampleCheck={handleUseSampleCheck}
+        onOpenCandidates={handleOpenCandidates}
+        onOpenShortlist={handleOpenShortlist}
+        hasSampleCheck={sampleCheckBlock != null}
+        savedToShortlist={checkSavedToShortlist}
+        referenceMonth={manifest?.dataWindow.maxMonth}
+      />
+    </Suspense>
   );
 
   // ── Derived layout flags ─────────────────────────────────────────────────
