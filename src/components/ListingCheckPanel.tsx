@@ -12,14 +12,14 @@ import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import {
-  parseStoreyMidpoint,
+  assessAskingPrice,
   type AskingPriceAssessment,
 } from "@/lib/transaction-analysis";
-import { performListingCheck, type ListingCheckResult } from "@/lib/listing-verdict";
-import type { ConfidenceResult } from "@/lib/listing-confidence";
-import type { Caveat } from "@/lib/listing-caveats";
+import { computeConfidence, type ConfidenceResult } from "@/lib/listing-confidence";
+import { generateCaveats, type Caveat } from "@/lib/listing-caveats";
 import { fetchAddressDetail } from "@/lib/data";
-import type { AddressDetail } from "@/types/data";
+import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
+import type { ListingComparableSet, ComparableTransaction } from "../../shared/comparable-engine";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -155,6 +155,9 @@ export function ListingCheckPanel({
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState(false);
   const [comparablesExpanded, setComparablesExpanded] = useState(false);
+  const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
+  const [comparableSetLoading, setComparableSetLoading] = useState(false);
+  const [comparableSetError, setComparableSetError] = useState(false);
 
   // ── Local input state (numbers typed as strings) ───────────────────────────
   const [askingPriceInput, setAskingPriceInput] = useState(() =>
@@ -294,40 +297,130 @@ export function ListingCheckPanel({
     return Number.isFinite(n) && n > 0 ? n : null;
   }, [leaseCommenceYear, leaseYearInput]);
 
-  // ── Perform listing check ─────────────────────────────────────────────────
-  const storeyMidpoint = useMemo(
-    () => (storeyRange ? parseStoreyMidpoint(storeyRange) : null),
-    [storeyRange],
-  );
-
-  const result: ListingCheckResult | null = useMemo(() => {
-    if (resolvedAskingPrice == null || !detail) {
-      return null;
+  // ── Perform listing check via v2 comparable engine API ────────────────────
+  // Replaces the v1 client-side findComparableTransactions with a cross-block
+  // transaction search backed by the new /api/comparable-transactions endpoint.
+  useEffect(() => {
+    if (
+      resolvedAskingPrice == null ||
+      !detail ||
+      !selectedAddressKey ||
+      !flatType ||
+      !storeyRange
+    ) {
+      setComparableSet(null);
+      return;
     }
-    return performListingCheck({
-      askingPrice: resolvedAskingPrice,
-      floorAreaSqm: resolvedFloorAreaSqm,
-      transactions: detail.recentTransactions,
-      comparableQuery: {
-        flatType: flatType || null,
-        storeyMidpoint,
-        floorAreaSqm: resolvedFloorAreaSqm,
-      },
-      leaseCommenceYear: resolvedLeaseYear ?? undefined,
-      referenceMonth,
+
+    let cancelled = false;
+    setComparableSetLoading(true);
+    setComparableSetError(false);
+
+    const body = JSON.stringify({
+      town: detail.summary.town,
+      block: detail.summary.block,
+      streetName: detail.summary.streetName,
+      flatType,
+      storeyRange,
+      floorAreaSqm: resolvedFloorAreaSqm ?? detail.summary.floorAreaRange[1] ?? 0,
+      leaseCommenceYear: resolvedLeaseYear ?? null,
+      referenceMonth: referenceMonth ?? detail.summary.latestMonth,
     });
+
+    fetch("/api/comparable-transactions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`API error: ${res.status}`);
+        const data: ListingComparableSet = await res.json();
+        if (!cancelled) {
+          setComparableSet(data);
+          setComparableSetLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setComparableSet(null);
+          setComparableSetError(true);
+          setComparableSetLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [
     resolvedAskingPrice,
     resolvedFloorAreaSqm,
-    detail,
-    flatType,
-    storeyMidpoint,
     resolvedLeaseYear,
+    selectedAddressKey,
+    flatType,
+    storeyRange,
+    detail,
     referenceMonth,
   ]);
 
-  // ── Compute comparables from result (avoids duplicate findComparableTransactions) ────
-  const comparables = result?.comparables ?? [];
+  // ── Compute result from comparable set ────────────────────────────────────
+  // ComparableTransaction satisfies the runtime interface of AddressDetailTransaction
+  // for all fields read by assessAskingPrice, computeConfidence, and generateCaveats.
+  type LocalResult = {
+    assessment: AskingPriceAssessment;
+    confidence: ConfidenceResult;
+    caveats: Caveat[];
+  };
+
+  const result: LocalResult | null = useMemo(() => {
+    if (
+      !comparableSet ||
+      comparableSet.comparables.length === 0 ||
+      resolvedAskingPrice == null
+    ) {
+      return null;
+    }
+
+    const txs = comparableSet.comparables as unknown as AddressDetailTransaction[];
+
+    const assessment = assessAskingPrice({
+      askingPrice: resolvedAskingPrice,
+      floorAreaSqm: resolvedFloorAreaSqm,
+      comparables: txs,
+    });
+
+    if (!assessment) return null;
+
+    const confidence = computeConfidence(txs, referenceMonth);
+
+    const comparableLeaseYears: number[] = [];
+    for (const tx of comparableSet.comparables) {
+      if (tx.leaseCommenceDate != null) {
+        comparableLeaseYears.push(tx.leaseCommenceDate);
+      }
+    }
+
+    const localCaveats = generateCaveats({
+      assessment,
+      confidence,
+      leaseCommenceYear: resolvedLeaseYear ?? undefined,
+      comparableLeaseYears,
+      referenceMonth,
+    });
+
+    // Merge API caveats (widening, low sample) with generated caveats
+    const mergedCaveats: Caveat[] = [
+      ...comparableSet.caveats.map((msg) => ({ severity: "warning" as const, message: msg })),
+      ...localCaveats,
+    ];
+
+    return {
+      assessment,
+      confidence,
+      caveats: mergedCaveats,
+    };
+  }, [comparableSet, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, referenceMonth]);
+
+  const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
   const theme = result ? VERDICT_THEMES[result.assessment.verdict] : null;
@@ -546,14 +639,33 @@ export function ListingCheckPanel({
             <Button
               type="button"
               className="w-full"
-              disabled={!canCheck}
+              disabled={!canCheck || comparableSetLoading}
               onClick={handleCheckClick}
             >
-              {t("check.checkButton")}
+              {comparableSetLoading ? t("check.loading") : t("check.checkButton")}
             </Button>
           </div>
         )}
       </div>
+
+      {/* ── API loading state ──────────────────────────────────────────── */}
+      {comparableSetLoading && (
+        <div className="flex items-center gap-2 rounded-md bg-muted/20 p-3 text-xs text-muted-foreground">
+          <div className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" />
+          <span>{t("check.analyzingComparables")}</span>
+        </div>
+      )}
+
+      {/* ── API error state ────────────────────────────────────────────── */}
+      {comparableSetError && !comparableSetLoading && (
+        <div className="flex items-start gap-3 rounded-md border border-destructive/30 bg-destructive/5 p-3 text-xs">
+          <AlertTriangle data-icon className="size-4 shrink-0 text-destructive" aria-hidden="true" />
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold text-destructive">{t("check.apiError")}</span>
+            <span className="text-muted-foreground">{t("check.apiErrorDetail")}</span>
+          </div>
+        </div>
+      )}
 
       {/* ── No block selected hint ─────────────────────────────────────── */}
       {!selectedAddressKey && (
@@ -683,7 +795,19 @@ export function ListingCheckPanel({
             {/* Comparable transactions list */}
             {comparables.length > 0 && (
               <ComparableTransactionsList
-                transactions={comparables}
+                transactions={comparables.map((tx) => ({
+                  id: tx.transactionId,
+                  month: tx.month,
+                  flatType: tx.flatType,
+                  storeyRange: tx.storeyRange,
+                  floorAreaSqm: tx.floorAreaSqm,
+                  flatModel: "",
+                  leaseCommenceDate: tx.leaseCommenceDate ?? 0,
+                  remainingLease: "",
+                  resalePrice: tx.resalePrice,
+                  pricePerSqm: tx.pricePerSqm,
+                  pricePerSqft: null,
+                }))}
                 expanded={comparablesExpanded}
                 onToggle={() => setComparablesExpanded((prev) => !prev)}
               />
