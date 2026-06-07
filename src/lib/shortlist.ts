@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "./constants";
 import type { ShortlistItem } from "../types/data";
-import { MAX_NOTE_LENGTH } from "../../shared/shortlist-limits";
 
 export { mergeShortlists } from "@shared/shortlist-merge";
 
@@ -14,7 +13,7 @@ const shortlistDecisionStatuses = [
   "dropped",
 ] as const;
 
-const note = z.string().max(MAX_NOTE_LENGTH);
+const note = z.string();
 
 const shortlistItemSchema = z.object({
     addressKey: z.string().min(1),
@@ -74,11 +73,7 @@ function normalizeDecisionStatus(
 
 function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): ShortlistItem {
   const notes = raw.notes ?? "";
-  const targetPrice = raw.targetPrice;
-  const fallbackOfferCeiling = normalizeNumber(raw.offerCeiling, targetPrice);
-  const askingPrice = normalizeNumber(raw.askingPrice, targetPrice);
-  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, fallbackOfferCeiling);
-  const buyerOpeningOffer = normalizeNumber(raw.buyerOpeningOffer, targetPrice);
+  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, raw.offerCeiling);
   const buyerNotes = raw.buyerNotes ?? notes;
   const noiseNotes = raw.noiseNotes ?? raw.noise;
   const transportNotes = raw.transportNotes ?? raw.transport;
@@ -86,9 +81,7 @@ function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): Short
   return {
     ...raw,
     notes,
-    askingPrice,
     suggestedOfferCeiling,
-    buyerOpeningOffer,
     buyerNotes,
     noiseNotes,
     transportNotes,

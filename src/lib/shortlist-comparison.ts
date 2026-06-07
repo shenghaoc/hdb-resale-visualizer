@@ -107,15 +107,6 @@ function isFiniteNumber(value: number | null | undefined): value is number {
   return Number.isFinite(value);
 }
 
-function getSelectedOfferPrice(item: ShortlistComparisonInputRow["item"]): number | null {
-  const candidate =
-    item.suggestedOfferCeiling ??
-    item.buyerOpeningOffer ??
-    item.askingPrice ??
-    item.targetPrice;
-  return isFiniteNumber(candidate) ? candidate : null;
-}
-
 function computeDeltaVsReference(
   reference: number | null,
   candidate: number | null,
@@ -202,7 +193,7 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
         ? item.suggestedOfferCeiling
         : null,
       decisionStatus: item.decisionStatus,
-      deltaVsFairMedian: computeDeltaVsReference(isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null, getSelectedOfferPrice(item)),
+      deltaVsFairMedian: computeDeltaVsReference(isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null, block.medianPrice),
       confidenceLevelLabel: getDataConfidenceLabelKey(block.transactionCount),
       caveatKeys: buildCaveats(item, block.nearestMrt ?? null, block.transactionCount),
       monthlyPaymentEstimate: null,

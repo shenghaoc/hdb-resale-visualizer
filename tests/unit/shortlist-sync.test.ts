@@ -113,9 +113,9 @@ describe("parseStoredItems", () => {
 
     const parsed = parseStoredItems(JSON.stringify([payload]));
     expect(parsed).toHaveLength(1);
-    expect(parsed[0]?.askingPrice).toBe(810000);
+    expect(parsed[0]?.askingPrice).toBeUndefined();
     expect(parsed[0]?.suggestedOfferCeiling).toBe(840000);
-    expect(parsed[0]?.buyerOpeningOffer).toBe(810000);
+    expect(parsed[0]?.buyerOpeningOffer).toBeUndefined();
     expect(parsed[0]?.buyerNotes).toBe("legacy note");
   });
 });

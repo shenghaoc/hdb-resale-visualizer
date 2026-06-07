@@ -98,16 +98,12 @@ function normalizeDecisionStatus(
 
 function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): ShortlistItem {
   const notes = raw.notes ?? "";
-  const targetPrice = raw.targetPrice;
-  const fallbackOfferCeiling = normalizeNumber(raw.offerCeiling, targetPrice);
-  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, fallbackOfferCeiling);
+  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, raw.offerCeiling);
 
   return {
     ...(raw as ShortlistItem),
     notes,
     suggestedOfferCeiling,
-    askingPrice: normalizeNumber(raw.askingPrice, targetPrice),
-    buyerOpeningOffer: normalizeNumber(raw.buyerOpeningOffer, targetPrice),
     buyerNotes: raw.buyerNotes ?? notes,
     noiseNotes: raw.noiseNotes ?? raw.noise,
     transportNotes: raw.transportNotes ?? raw.transport,

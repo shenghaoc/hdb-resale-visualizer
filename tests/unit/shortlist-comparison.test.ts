@@ -194,7 +194,7 @@ describe("buildShortlistComparisonRows", () => {
     expect(JSON.stringify(input)).toBe(snapshot);
   });
 
-  it("prefers suggested offer ceiling for fair-median delta by default", () => {
+  it("computes deltaVsFairMedian from fairRangeMedian vs block medianPrice", () => {
     const [row] = buildShortlistComparisonRows([
       makeRow({
         item: {
@@ -207,22 +207,23 @@ describe("buildShortlistComparisonRows", () => {
       }),
     ]);
 
-    expect(row.deltaVsFairMedian).toEqual({ amount: 20000, tone: "above" });
+    expect(row.deltaVsFairMedian).toEqual({ amount: 30000, tone: "below" });
     expect(row.askingPrice).toBe(500000);
     expect(row.suggestedOfferCeiling).toBe(520000);
   });
 
-  it("falls back to the target price when no suggested offer fields are set", () => {
+  it("computes deltaVsFairMedian from fairRangeMedian vs block medianPrice", () => {
     const [row] = buildShortlistComparisonRows([
       makeRow({
         item: {
           targetPrice: 460000,
-          fairRangeMedian: 500000,
+          fairRangeMedian: 480000,
         },
+        block: { medianPrice: 500000 },
       }),
     ]);
 
-    expect(row.deltaVsFairMedian).toEqual({ amount: 40000, tone: "below" });
+    expect(row.deltaVsFairMedian).toEqual({ amount: 20000, tone: "above" });
   });
 
   it("builds confidence and caveat metadata", () => {

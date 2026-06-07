@@ -47,11 +47,11 @@ describe("shortlist storage", () => {
       notes: items[0]?.notes,
       targetPrice: 800000,
       addedAt: items[0]?.addedAt,
-      askingPrice: 800000,
-      buyerOpeningOffer: 800000,
       buyerNotes: items[0]?.notes,
-      suggestedOfferCeiling: 800000,
     });
+    expect(decoded[0]?.askingPrice).toBeUndefined();
+    expect(decoded[0]?.buyerOpeningOffer).toBeUndefined();
+    expect(decoded[0]?.suggestedOfferCeiling).toBeUndefined();
   });
 
   it("round-trips mixed legacy and migrated payloads through share links", () => {
@@ -86,7 +86,7 @@ describe("shortlist storage", () => {
     const decoded = decodeShortlistFromUrl(encoded);
 
     expect(decoded).toHaveLength(2);
-    expect(decoded[0]?.askingPrice).toBe(800000);
+    expect(decoded[0]?.askingPrice).toBeUndefined();
     expect(decoded[0]?.suggestedOfferCeiling).toBe(820000);
     expect(decoded[1]?.buyerOpeningOffer).toBe(775000);
     expect(decoded[1]?.fairRangeMedian).toBe(740000);
@@ -225,9 +225,9 @@ describe("shortlist storage", () => {
     storage.set(SHORTLIST_STORAGE_KEY, JSON.stringify([legacyItem]));
     const [loaded] = loadShortlist(shim);
 
-    expect(loaded?.askingPrice).toBe(800000);
+    expect(loaded?.askingPrice).toBeUndefined();
     expect(loaded?.suggestedOfferCeiling).toBe(820000);
-    expect(loaded?.buyerOpeningOffer).toBe(800000);
+    expect(loaded?.buyerOpeningOffer).toBeUndefined();
     expect(loaded?.buyerNotes).toBe("Legacy shortlist");
   });
 
@@ -254,6 +254,6 @@ describe("shortlist storage", () => {
     const loaded = loadShortlist(shim);
     expect(loaded).toHaveLength(1);
     expect(loaded[0]?.addressKey).toBe("good-old");
-    expect(loaded[0]?.buyerOpeningOffer).toBe(780000);
+    expect(loaded[0]?.buyerOpeningOffer).toBeUndefined();
   });
 });
