@@ -38,6 +38,10 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 |---|---|
 | ![Block detail](docs/screenshots/05-block-detail.png) | ![Shortlist](docs/screenshots/06-saved.png) |
 
+## User guide
+
+A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-guide.md). The same content is rendered in-app via the help button (?) in the navigation bar.
+
 ## What it does
 
 - Visualizes resale blocks as address points on a Singapore map

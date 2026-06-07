@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Bookmark, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
+import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { PanelTab } from "@/hooks/usePanelState";
@@ -15,6 +15,7 @@ type MobileTabBarProps = {
   onCheckClick: () => void;
   onSavedClick: () => void;
   onToggleTheme: () => void;
+  onOpenGuide: () => void;
 };
 
 export function MobileTabBar({
@@ -27,9 +28,10 @@ export function MobileTabBar({
   onCheckClick,
   onSavedClick,
   onToggleTheme,
+  onOpenGuide,
 }: MobileTabBarProps) {
   // Roving arrow-key navigation across all toolbar elements.
-  const [focusedIndex, setFocusedIndex] = useState(1); // Default to Filters
+  const [focusedIndex, setFocusedIndex] = useState(2); // Default to Filters
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const handleKeyDown = useCallback(
@@ -103,6 +105,23 @@ export function MobileTabBar({
           itemRefs.current[1] = node;
         }}
         type="button"
+        size="icon"
+        variant="ghost"
+        className="mobile-mode-button"
+        tabIndex={focusedIndex === 1 ? 0 : -1}
+        onClick={onOpenGuide}
+        onKeyDown={(e) => handleKeyDown(e, 1)}
+        onFocus={() => setFocusedIndex(1)}
+        aria-label={t("app.openGuide")}
+        title={t("app.openGuide")}
+      >
+        <CircleHelp data-icon="inline-start" className="size-4" aria-hidden="true" />
+      </Button>
+      <Button
+        ref={(node) => {
+          itemRefs.current[2] = node;
+        }}
+        type="button"
         variant={mobileTab === "filters" ? "secondary" : "ghost"}
         size="sm"
         className="mobile-tab-button"
@@ -110,17 +129,17 @@ export function MobileTabBar({
         aria-pressed={mobileTab === "filters"}
         aria-controls={mobileTab === "filters" ? "mobile-filters-content" : undefined}
         title={filtersLabel}
-        tabIndex={focusedIndex === 1 ? 0 : -1}
+        tabIndex={focusedIndex === 2 ? 0 : -1}
         onClick={onFiltersClick}
-        onKeyDown={(e) => handleKeyDown(e, 1)}
-        onFocus={() => setFocusedIndex(1)}
+        onKeyDown={(e) => handleKeyDown(e, 2)}
+        onFocus={() => setFocusedIndex(2)}
       >
         <SlidersHorizontal data-icon="inline-start" />
         <span>{filtersLabel}</span>
       </Button>
       <Button
         ref={(node) => {
-          itemRefs.current[2] = node;
+          itemRefs.current[3] = node;
         }}
         type="button"
         variant={mobileTab === "results" ? "secondary" : "ghost"}
@@ -130,17 +149,17 @@ export function MobileTabBar({
         aria-pressed={mobileTab === "results"}
         aria-controls={mobileTab === "results" ? "mobile-results-content" : undefined}
         title={resultsLabel}
-        tabIndex={focusedIndex === 2 ? 0 : -1}
+        tabIndex={focusedIndex === 3 ? 0 : -1}
         onClick={onResultsClick}
-        onKeyDown={(e) => handleKeyDown(e, 2)}
-        onFocus={() => setFocusedIndex(2)}
+        onKeyDown={(e) => handleKeyDown(e, 3)}
+        onFocus={() => setFocusedIndex(3)}
       >
         <List data-icon="inline-start" />
         <span>{resultsLabel}</span>
       </Button>
       <Button
         ref={(node) => {
-          itemRefs.current[3] = node;
+          itemRefs.current[4] = node;
         }}
         type="button"
         variant={mobileTab === "check" ? "secondary" : "ghost"}
@@ -150,17 +169,17 @@ export function MobileTabBar({
         aria-pressed={mobileTab === "check"}
         aria-controls={mobileTab === "check" ? "mobile-check-content" : undefined}
         title={checkLabel}
-        tabIndex={focusedIndex === 3 ? 0 : -1}
+        tabIndex={focusedIndex === 4 ? 0 : -1}
         onClick={onCheckClick}
-        onKeyDown={(e) => handleKeyDown(e, 3)}
-        onFocus={() => setFocusedIndex(3)}
+        onKeyDown={(e) => handleKeyDown(e, 4)}
+        onFocus={() => setFocusedIndex(4)}
       >
         <Scale data-icon="inline-start" />
         <span>{checkLabel}</span>
       </Button>
       <Button
         ref={(node) => {
-          itemRefs.current[4] = node;
+          itemRefs.current[5] = node;
         }}
         type="button"
         variant={mobileTab === "saved" ? "secondary" : "ghost"}
@@ -170,10 +189,10 @@ export function MobileTabBar({
         aria-pressed={mobileTab === "saved"}
         aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
         title={savedLabel}
-        tabIndex={focusedIndex === 4 ? 0 : -1}
+        tabIndex={focusedIndex === 5 ? 0 : -1}
         onClick={onSavedClick}
-        onKeyDown={(e) => handleKeyDown(e, 4)}
-        onFocus={() => setFocusedIndex(4)}
+        onKeyDown={(e) => handleKeyDown(e, 5)}
+        onFocus={() => setFocusedIndex(5)}
       >
         <Bookmark data-icon="inline-start" className={mobileTab === "saved" ? "fill-current" : ""} />
         <span>{savedLabel}</span>

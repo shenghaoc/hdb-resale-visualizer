@@ -40,6 +40,9 @@ import {
   buildCheckShareUrl,
 } from "@/hooks/useListingCheckUrlState";
 
+const GuideDialog = lazy(() =>
+  import("@/components/GuideDialog").then((m) => ({ default: m.GuideDialog })),
+);
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
@@ -63,6 +66,7 @@ function App() {
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
   const searchProfile = useSearchProfile();
+  const [guideOpen, setGuideOpen] = useState(false);
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
   const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
@@ -725,7 +729,14 @@ function App() {
         onMobileCheckClick={handleMobileCheckClick}
         onMobileSavedClick={handleMobileSavedClick}
         onToggleTheme={toggleTheme}
+        onOpenGuide={() => setGuideOpen(true)}
       />
+
+      {guideOpen && (
+        <Suspense fallback={null}>
+          <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} t={t} />
+        </Suspense>
+      )}
     </>
   );
 }

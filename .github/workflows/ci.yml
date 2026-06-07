@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'src/**'
+      - 'functions/**'
       - 'scripts/**'
       - 'tests/**'
       - 'public/**'
@@ -169,3 +170,47 @@ jobs:
 
       - name: Production build verification
         run: npm run build:deploy
+
+  docs-check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for docs update
+        id: docs
+        run: |
+          BASE=${{ github.event.pull_request.base.sha }}
+          HEAD=${{ github.event.pull_request.head.sha }}
+          SRC_CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- 'src/' 'functions/' | wc -l | tr -d ' ')
+          DOCS_CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- 'docs/guide/' | wc -l | tr -d ' ')
+          echo "src_changed=$SRC_CHANGED" >> "$GITHUB_OUTPUT"
+          echo "docs_changed=$DOCS_CHANGED" >> "$GITHUB_OUTPUT"
+
+      - name: Post reminder comment
+        if: >-
+          steps.docs.outputs.src_changed != '0'
+          && steps.docs.outputs.docs_changed == '0'
+          && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const marker = '<!-- docs-freshness-check -->';
+            if (comments.some(c => c.body.includes(marker))) return;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `${marker}\n📝 **Docs reminder** — This PR changes \`src/\` or \`functions/\` but does not update \`docs/guide/\`. If the change affects user-facing behaviour, please update the [user guide](../blob/main/docs/guide/user-guide.md).`,
+            });
