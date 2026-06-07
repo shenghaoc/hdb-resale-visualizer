@@ -938,7 +938,7 @@ export function ListingCheckPanel({
       {result && comparables.length > 0 && (
         <ComparableEvidenceTable
           comparables={comparables}
-          referenceMonth={referenceMonth ?? ""}
+          referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
           widenedSearch={comparableSet?.widenedSearch ?? false}
           caveats={comparableSet?.caveats ?? []}
         />

@@ -3,7 +3,7 @@ import { AlertTriangle, ChevronDown, ChevronUp, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
-import type { ComparableTransaction } from "../../shared/comparable-engine";
+import { LOW_SAMPLE_THRESHOLD, type ComparableTransaction } from "../../shared/comparable-engine";
 import {
   Table,
   TableBody,
@@ -132,6 +132,7 @@ export function ComparableEvidenceTable({
           type="button"
           className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:bg-muted/20"
           aria-expanded={explainerOpen}
+          aria-controls="why-comparables-explainer"
           onClick={() => setExplainerOpen((o) => !o)}
         >
           <span>{t("evidence.whyTitle")}</span>
@@ -142,11 +143,11 @@ export function ComparableEvidenceTable({
           />
         </button>
         {explainerOpen && (
-          <div className="px-3 pb-3 text-xs leading-relaxed text-muted-foreground">
+          <div id="why-comparables-explainer" className="px-3 pb-3 text-xs leading-relaxed text-muted-foreground">
             {widenedSearch
               ? t("evidence.whyWidened")
               : t("evidence.whyNormal")}
-            {comparables.length < 5 && (
+            {comparables.length < LOW_SAMPLE_THRESHOLD && (
               <>
                 {" "}
                 {t("evidence.whyLowSample")}
