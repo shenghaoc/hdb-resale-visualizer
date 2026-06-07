@@ -197,6 +197,57 @@ test.describe("Mobile Regression: Recent Features", () => {
     await expect(comparisonTable.getByTestId("shortlist-comparison-card")).toHaveCount(2);
   });
 
+  test("shortlist offer board fields editable on mobile", async ({ page }) => {
+    const shortlistData = [
+      {
+        addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
+        notes: "",
+        targetPrice: null,
+        addedAt: new Date().toISOString(),
+      },
+    ];
+
+    await page.goto("/");
+    await page.evaluate(
+      ({ data }) => localStorage.setItem("hdb_resale_shortlist_v1", JSON.stringify(data)),
+      { data: shortlistData },
+    );
+    await page.reload();
+
+    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
+    const drawer = page.getByTestId("shortlist-drawer");
+    await expect(drawer).toBeVisible();
+
+    // Single item auto-expands; wait for the asking price field to be visible
+    const askingInput = page.getByRole("spinbutton", { name: /asking price/i });
+    await expect(askingInput).toBeVisible({ timeout: 10_000 });
+
+    // Fill asking price
+    await askingInput.fill("550000");
+    await expect(askingInput).toHaveValue("550000");
+
+    // Change decision status
+    const statusSelect = drawer.getByRole("combobox", { name: /decision status/i });
+    await statusSelect.scrollIntoViewIfNeeded();
+    await statusSelect.click();
+    await page.getByRole("option", { name: /considering/i }).click();
+    await expect(statusSelect).toContainText(/considering/i);
+
+    // Verify persistence after reload
+    await page.reload();
+    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
+    await expect(drawer).toBeVisible();
+
+    // Wait for auto-expanded item
+    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toBeVisible({
+      timeout: 10_000,
+    });
+    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toHaveValue("550000");
+    await expect(drawer.getByRole("combobox", { name: /decision status/i })).toContainText(
+      /considering/i,
+    );
+  });
+
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {
 
     const shortlistData = [

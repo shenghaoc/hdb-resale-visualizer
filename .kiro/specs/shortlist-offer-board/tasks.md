@@ -159,22 +159,22 @@
   item count matching shortlisted items.
   → `npm run test:e2e` passes. (R9.4, R6.1)
 
-- [ ] **T8.2** Add or update Playwright coverage for shortlist field
+- [x] **T8.2** Add or update Playwright coverage for shortlist field
   editing on mobile: fill asking price, change decision status, verify
   persistence after reload.
   → `npm run test:e2e` passes. (R9.4, R4.1)
 
 ## Phase 9 — Verification
 
-- [ ] **T9.1** Run full unit test suite:
+- [x] **T9.1** Run full unit test suite:
   `npm run test -- tests/unit/shortlist*.test.ts tests/unit/ShortlistDrawer.test.tsx`
   — all pass.
 
-- [ ] **T9.2** Run `npm run typecheck` — clean.
+- [x] **T9.2** Run `npm run typecheck` — clean.
 
-- [ ] **T9.3** Run `npm run lint` — clean.
+- [x] **T9.3** Run `npm run lint` — clean.
 
-- [ ] **T9.4** Run `npm run build` — production build succeeds.
+- [x] **T9.4** Run `npm run build` — production build succeeds.
 
-- [ ] **T9.5** Run `npm run test:e2e` — all E2E tests pass, including
+- [x] **T9.5** Run `npm run test:e2e` — all E2E tests pass, including
   mobile regression suite.
