@@ -1,9 +1,9 @@
-import type { FlatTypeLadderEntry } from "@/lib/flat-type-ladder";
-import { formatCompactCurrency } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
-import { localizeFlatType } from "@/lib/i18n/domain";
+import type { FlatTypeLadderEntry } from "@/features/block-detail/flat-type-ladder";
+import { formatCompactCurrency } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
+import { localizeFlatType } from "@/shared/lib/i18n/domain";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type FlatTypePriceLadderProps = {
   entries: FlatTypeLadderEntry[];

@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { comparisonArtifactSchema } from "@/lib/dataSchemas";
-import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
+import { comparisonArtifactSchema } from "@/shared/lib/dataSchemas";
+import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
 
 const FIXTURE_BLOCKS_DIR = join(process.cwd(), "tests/fixtures/public-data/blocks");
 const FIXTURE_COMPARISONS_DIR = join(process.cwd(), "tests/fixtures/public-data/comparisons");

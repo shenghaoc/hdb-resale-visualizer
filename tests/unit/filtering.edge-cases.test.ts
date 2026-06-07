@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import {
   matchesFilter,
   matchesGeographicSearchIntent,
   resetFilteringCachesForTests,
-} from "@/lib/filtering";
+} from "@/shared/lib/filtering";
 import type { BlockSummary, FilterState } from "@/types/data";
 
 const BASE_FILTERS: FilterState = {

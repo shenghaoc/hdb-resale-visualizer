@@ -6,7 +6,7 @@ import {
   isHeatmapLayerPresent,
   removePriceHeatmapLayer,
   setHeatmapOpacity,
-} from "@/lib/priceHeatmap";
+} from "@/features/map-explorer/priceHeatmap";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 

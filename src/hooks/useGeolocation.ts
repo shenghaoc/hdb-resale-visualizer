@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { Coordinates } from "@/types/data";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 export function useGeolocation({ t }: { t: Translator }) {
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);

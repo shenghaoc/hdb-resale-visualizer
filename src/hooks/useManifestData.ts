@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchManifest } from "@/lib/data";
+import { fetchManifest } from "@/shared/lib/data";
 import type { Manifest } from "@/types/data";
 
 export function useManifestData() {

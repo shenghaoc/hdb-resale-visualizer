@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { AskingPriceCheck } from "@/components/AskingPriceCheck";
-import { I18nProvider } from "@/lib/i18n";
-import { formatNumber } from "@/lib/format";
+import { I18nProvider } from "@/shared/lib/i18n";
+import { formatNumber } from "@/shared/lib/format";
 import {
   assessAskingPrice,
   findComparableTransactions,

@@ -3,7 +3,7 @@ import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { LeftTab } from "@/hooks/usePanelState";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 type DesktopTabBarProps = {
   leftTab: LeftTab;

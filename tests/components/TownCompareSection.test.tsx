@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { TownCompareSection } from "@/components/TownCompareSection";
-import { I18nProvider } from "@/lib/i18n";
+import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 
 const PRIMARY_BLOCKS: BlockSummary[] = [

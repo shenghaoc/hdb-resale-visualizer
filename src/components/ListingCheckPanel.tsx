@@ -11,9 +11,9 @@ import {
   Scale,
   Sparkles,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 import {
   assessAskingPrice,
   type AskingPriceAssessment,
@@ -27,7 +27,7 @@ import {
   generateCaveats,
   type Caveat,
 } from "../../shared/caveat-codes";
-import { fetchAddressDetail } from "@/lib/data";
+import { fetchAddressDetail } from "@/shared/lib/data";
 import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
 import type { ListingComparableSet, ComparableTransaction } from "../../shared/comparable-engine";
 import type { TimeAdjustedComparable } from "../../shared/data-types";

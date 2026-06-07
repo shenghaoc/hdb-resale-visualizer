@@ -5,7 +5,7 @@ import {
   loadSearchProfileWizardDismissed,
   saveSearchProfile,
   saveSearchProfileWizardDismissed,
-} from "@/lib/searchProfile";
+} from "@/features/search-profile/searchProfile";
 import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
 export function useSearchProfile() {

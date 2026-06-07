@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { useI18n } from "@/lib/i18n/useI18n";
-import { I18nProvider } from "@/lib/i18n/provider";
-import { I18nContext, type I18nContextValue } from "@/lib/i18n/context";
+import { useI18n } from "@/shared/lib/i18n/useI18n";
+import { I18nProvider } from "@/shared/lib/i18n/provider";
+import { I18nContext, type I18nContextValue } from "@/shared/lib/i18n/context";
 
 describe("useI18n", () => {
   it("should return the context value when used inside I18nProvider", () => {

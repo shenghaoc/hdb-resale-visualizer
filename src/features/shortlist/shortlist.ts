@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "../../lib/constants";
+import {
+  MAX_SHORTLIST_ITEMS,
+  MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH,
+  SHORTLIST_STORAGE_KEY,
+} from "../../shared/lib/constants";
 import { MAX_ADDRESS_KEY_LENGTH, MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import type { ShortlistItem } from "@/types/data";
 

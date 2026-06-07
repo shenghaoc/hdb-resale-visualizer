@@ -1,6 +1,6 @@
 import { startTransition, useCallback, useEffect, useRef, useState } from "react";
-import { DEFAULT_FILTERS } from "@/lib/constants";
-import { parseFilters, serializeFilters } from "@/lib/queryState";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
+import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
 import type { FilterState } from "@/types/data";
 
 export function useUrlFilters() {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cn, townFilenameToCanonical, townToFilename } from "../../src/lib/utils";
+import { cn, townFilenameToCanonical, townToFilename } from "../../src/shared/lib/utils";
 
 describe("utils", () => {
   describe("cn", () => {

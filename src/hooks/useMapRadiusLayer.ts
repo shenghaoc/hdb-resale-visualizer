@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import { isGeoJsonDataSourceLike } from "@/types/map";
-import type { GeographicSearchIntent } from "@/lib/filtering";
+import type { GeographicSearchIntent } from "@/shared/lib/filtering";
 
 function createCircleGeoJson(center: Coordinates, radiusKm: number): GeoJSON.Feature<GeoJSON.Polygon> {
   const points = 64;

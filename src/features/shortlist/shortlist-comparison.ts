@@ -1,5 +1,5 @@
-import { MAX_LEASE_DURATION, getCurrentYear } from "../../lib/constants";
-import { getDataConfidenceLabelKey, type DataConfidenceLabelKey } from "../../lib/confidence";
+import { MAX_LEASE_DURATION, getCurrentYear } from "../../shared/lib/constants";
+import { getDataConfidenceLabelKey, type DataConfidenceLabelKey } from "@/features/listing-check/confidence";
 import type {
   AddressDetailSummary,
   BlockSummary,

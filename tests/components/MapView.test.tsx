@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { MapView } from "@/components/MapView";
-import { toGeoJson } from "@/lib/map";
+import { toGeoJson } from "@/features/map-explorer/map";
 import type { BlockSummary } from "@/types/data";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 const mapHooks = vi.hoisted(() => ({
   useMapInitialization: vi.fn(),

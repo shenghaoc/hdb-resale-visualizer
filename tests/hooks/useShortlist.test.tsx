@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useShortlist } from "@/hooks/useShortlist";
-import { MAX_SHORTLIST_ITEMS, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_ITEMS, SHORTLIST_STORAGE_KEY } from "@/shared/lib/constants";
 
 // Control localStorage through the jsdom environment directly
 function clearStorage() {

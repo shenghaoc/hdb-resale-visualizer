@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { isGeoJsonDataSourceLike } from "@/types/map";
-import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
+import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/shared/lib/constants";
 
 function areLayersAlreadyBeforeTarget(
   map: MapLibreMap,

@@ -8,9 +8,9 @@ import {
   Scale,
   Sparkles,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 import {
   assessAskingPrice,
   findComparableTransactions,
@@ -370,7 +370,7 @@ function DeltaCell({
   pct: number;
   reference: number;
   referenceLabel: string;
-  locale?: import("@/lib/i18n").Locale;
+  locale?: import("@/shared/lib/i18n").Locale;
 }) {
   const isPositive = amount > 0;
   const colorClass = isPositive

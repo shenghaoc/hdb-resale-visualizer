@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { Sparkles } from "lucide-react";
-import { formatCompactCurrency, formatNumber } from "@/lib/format";
-import type { Locale, Translator } from "@/lib/i18n";
-import { localizeTownName } from "@/lib/i18n/domain";
-import type { TownRecommendation } from "@/lib/town-recommendations";
+import { formatCompactCurrency, formatNumber } from "@/shared/lib/format";
+import type { Locale, Translator } from "@/shared/lib/i18n";
+import { localizeTownName } from "@/shared/lib/i18n/domain";
+import type { TownRecommendation } from "@/entities/town/town-recommendations";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

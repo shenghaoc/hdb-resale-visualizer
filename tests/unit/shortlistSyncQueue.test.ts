@@ -5,7 +5,7 @@ import {
   enqueuePendingShortlistPush,
   hasPendingShortlistPush,
   readPendingShortlistPush,
-} from "@/lib/shortlistSyncQueue";
+} from "@/features/shortlist/shortlistSyncQueue";
 
 function validItem(addressKey: string) {
   return { addressKey, notes: "", targetPrice: null, addedAt: "2026-04-20T00:00:00.000Z" };

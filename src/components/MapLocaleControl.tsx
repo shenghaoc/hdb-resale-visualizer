@@ -1,5 +1,5 @@
 import { LocaleSelector } from "@/components/LocaleSelector";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type MapLocaleControlProps = {
   isDesktop: boolean;

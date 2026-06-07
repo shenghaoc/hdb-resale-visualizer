@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { toGeoJson } from "../../src/lib/map";
+import { toGeoJson } from "../../src/features/map-explorer/map";
 import type { BlockSummary } from "../../src/types/data";
 
 function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {

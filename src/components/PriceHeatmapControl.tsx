@@ -1,8 +1,8 @@
 import { type CSSProperties, useId } from "react";
 import { Flame } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
-import type { Translator } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import type { Translator } from "@/shared/lib/i18n";
 import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type PriceHeatmapControlProps = {

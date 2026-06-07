@@ -4,7 +4,7 @@ import {
   buildTownCompareSnapshot,
   computeMetricDelta,
   type TownCompareSnapshot,
-} from "@/lib/town-compare";
+} from "@/entities/town/town-compare";
 
 function blockStub(
   p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey">,

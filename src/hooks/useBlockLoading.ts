@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchBlockSummaries, fetchBlocksBySearch, fetchBlocksByTown, townToFilename } from "@/lib/data";
+import { fetchBlockSummaries, fetchBlocksBySearch, fetchBlocksByTown, townToFilename } from "@/shared/lib/data";
 import type { BlockSummary, Manifest } from "@/types/data";
 
 type UseBlockLoadingArgs = {

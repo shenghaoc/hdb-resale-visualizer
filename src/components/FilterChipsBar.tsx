@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link2, SlidersHorizontal, X } from "lucide-react";
-import type { Translator } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+import type { Translator } from "@/shared/lib/i18n";
+import { cn } from "@/shared/lib/utils";
 
 export type FilterChip = {
   key: string;

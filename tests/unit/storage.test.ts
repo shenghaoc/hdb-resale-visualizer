@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { safeStorage } from "../../src/lib/storage";
+import { safeStorage } from "../../src/shared/lib/storage";
 
 function installLocalStorageMock(
   overrides: Partial<Pick<Storage, "getItem" | "setItem" | "removeItem">> = {},

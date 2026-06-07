@@ -7,7 +7,7 @@ import {
   ONEMAP_DEFAULT_TILE_URL,
   ONEMAP_NIGHT_TILE_URL,
   SINGAPORE_BOUNDS,
-} from "@/lib/constants";
+} from "@/shared/lib/constants";
 
 type UseMapInitializationProps = {
   containerRef: React.RefObject<HTMLDivElement | null>;

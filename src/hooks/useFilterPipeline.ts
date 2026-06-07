@@ -3,20 +3,20 @@ import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
   getDefaultTransactionStartMonth,
   NEAR_ME_SEARCH_QUERY,
-} from "@/lib/constants";
+} from "@/shared/lib/constants";
 import {
   matchesFilter,
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
-} from "@/lib/filtering";
-import { getFuseMatchedKeys } from "@/lib/searchFuse";
-import { applyProfileVisibility } from "@/lib/matchProfile";
-import { hasCompletedSearchProfile } from "@/lib/searchProfile";
+} from "@/shared/lib/filtering";
+import { getFuseMatchedKeys } from "@/features/search-profile/searchFuse";
+import { applyProfileVisibility } from "@/features/search-profile/matchProfile";
+import { hasCompletedSearchProfile } from "@/features/search-profile/searchProfile";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
 import type { BlockSummary, Coordinates, FilterState, Manifest } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 type UseFilterPipelineOptions = {
   manifest: Manifest | null;

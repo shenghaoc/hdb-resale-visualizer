@@ -1,12 +1,12 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useShortlist } from "@/hooks/useShortlist";
-import { SyncRateLimitedError, pullShortlist, pushShortlist } from "@/lib/cloudSync";
-import { SYNC_CODE_STORAGE_KEY } from "@/lib/constants";
-import { SHORTLIST_SYNC_QUEUE_KEY } from "@/lib/shortlistSyncQueue";
+import { SyncRateLimitedError, pullShortlist, pushShortlist } from "@/features/shortlist/cloudSync";
+import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
+import { SHORTLIST_SYNC_QUEUE_KEY } from "@/features/shortlist/shortlistSyncQueue";
 
-vi.mock("@/lib/cloudSync", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@/lib/cloudSync")>();
+vi.mock("@/features/shortlist/cloudSync", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/features/shortlist/cloudSync")>();
   return {
     ...actual,
     pullShortlist: vi.fn(),

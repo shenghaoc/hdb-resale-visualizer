@@ -9,11 +9,11 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
-import { formatCompactCurrency } from "@/lib/format";
+import { formatCompactCurrency } from "@/shared/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
-import type { Translator } from "@/lib/i18n/types";
+import type { Translator } from "@/shared/lib/i18n/types";
 import { useTheme } from "@/hooks/useTheme";
-import { PRIMARY_BLUE } from "@/lib/constants";
+import { PRIMARY_BLUE } from "@/shared/lib/constants";
 
 type TrendChartProps = {
   points: AddressTrendPoint[];

@@ -1,6 +1,6 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { MAP_GLYPHS_URL } from "@/lib/constants";
+import { MAP_GLYPHS_URL } from "@/shared/lib/constants";
 import { useMapInitialization } from "@/hooks/useMapInitialization";
 
 const maplibreMocks = vi.hoisted(() => {

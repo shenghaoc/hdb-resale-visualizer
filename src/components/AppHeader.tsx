@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
-import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
-import type { Locale, Translator } from "@/lib/i18n";
+import { formatDateTime, formatMonth, formatNumber } from "@/shared/lib/format";
+import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { Manifest } from "@/types/data";
-import { cn } from "@/lib/utils";
-import { deriveDataQualityState } from "@/lib/dataQuality";
+import { cn } from "@/shared/lib/utils";
+import { deriveDataQualityState } from "@/shared/lib/dataQuality";
 
 type AppHeaderProps = {
   manifest: Manifest;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { safeStorage } from "@/lib/storage";
+import { safeStorage } from "@/shared/lib/storage";
 
 const THEME_STORAGE_KEY = "hdb-resale-theme";
 

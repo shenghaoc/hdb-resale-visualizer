@@ -10,8 +10,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
-import { DEFAULT_FILTERS } from "@/lib/constants";
-import { I18nProvider } from "@/lib/i18n/provider";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
+import { I18nProvider } from "@/shared/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
 const mockBlock: BlockSummary = {

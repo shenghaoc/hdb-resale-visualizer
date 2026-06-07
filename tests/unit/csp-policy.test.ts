@@ -4,7 +4,7 @@ import {
   MAP_GLYPHS_URL,
   ONEMAP_DEFAULT_TILE_URL,
   ONEMAP_NIGHT_TILE_URL,
-} from "@/lib/constants";
+} from "@/shared/lib/constants";
 
 function parseContentSecurityPolicy(headersFile: string): Map<string, string[]> {
   const cspLine = headersFile

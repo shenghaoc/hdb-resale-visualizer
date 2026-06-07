@@ -1,4 +1,4 @@
-import { median } from "@/lib/utils";
+import { median } from "@/shared/lib/utils";
 import type { BlockSummary } from "@/types/data";
 
 export type ComparableRange = {

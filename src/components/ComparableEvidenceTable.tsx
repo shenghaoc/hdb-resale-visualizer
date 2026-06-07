@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, ArrowUpDown, ChevronDown, ChevronUp, Info } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 import { LOW_SAMPLE_THRESHOLD, type ComparableTransaction } from "../../shared/comparable-engine";
 import {
   Table,

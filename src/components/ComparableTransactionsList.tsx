@@ -1,8 +1,8 @@
 import { type CSSProperties } from "react";
 import { ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatCurrency, formatMonth } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCurrency, formatMonth } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 import type { AddressDetailTransaction } from "@/types/data";
 import type { AdjustmentLabel } from "../../shared/data-types";
 import { Badge } from "@/components/ui/badge";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shouldShowAmenityLayer, getAmenityMinZoom } from "@/lib/amenity-visibility";
+import { shouldShowAmenityLayer, getAmenityMinZoom } from "@/features/map-explorer/amenity-visibility";
 
 describe("amenity-visibility", () => {
   it("prevents clutter by hiding at low zoom", () => {

@@ -3,8 +3,8 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import type { Translator } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import type { Translator } from "@/shared/lib/i18n";
 import guideContent from "../../docs/guide/user-guide.md?raw";
 
 type GuideDialogProps = {

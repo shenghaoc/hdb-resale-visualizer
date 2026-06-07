@@ -1,7 +1,7 @@
 import { DesktopTabBar } from "@/components/DesktopTabBar";
 import { MobileTabBar } from "@/components/MobileTabBar";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 type AppTabBarsProps = {
   isDesktop: boolean;

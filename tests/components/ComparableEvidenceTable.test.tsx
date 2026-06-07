@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
-import { I18nProvider } from "@/lib/i18n";
+import { I18nProvider } from "@/shared/lib/i18n";
 import type { ComparableTransaction } from "../../shared/comparable-engine";
 
 function makeTx(overrides: Partial<ComparableTransaction> & { transactionId: string }): ComparableTransaction {

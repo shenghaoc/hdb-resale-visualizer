@@ -1,12 +1,12 @@
 import { useId } from "react";
 import { PanelLeftClose, RefreshCw } from "lucide-react";
-import { formatMonth } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
-import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
-import { isAffordabilityProfileComplete } from "@/lib/affordability";
+import { formatMonth } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
+import { isAffordabilityProfileComplete } from "@/shared/lib/affordability";
 import type { AffordabilityMode, FilterOptions, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";

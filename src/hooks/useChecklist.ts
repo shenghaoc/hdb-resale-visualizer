@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { loadChecklistState, saveChecklistState, toggleChecklistItem, type ChecklistState, type ChecklistItemId } from "@/lib/checklist";
-import { safeStorage } from "@/lib/storage";
-import { CHECKLIST_STORAGE_KEY } from "@/lib/constants";
+import { loadChecklistState, saveChecklistState, toggleChecklistItem, type ChecklistState, type ChecklistItemId } from "@/features/listing-check/checklist";
+import { safeStorage } from "@/shared/lib/storage";
+import { CHECKLIST_STORAGE_KEY } from "@/shared/lib/constants";
 
 export function useChecklist() {
   const [state, setState] = useState<ChecklistState>(() => loadChecklistState(safeStorage));

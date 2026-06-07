@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { mergeShortlists } from "@/features/shortlist/shortlist";
-import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
+import { MAX_SHORTLIST_ITEMS } from "@/shared/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 
 function item(addressKey: string, addedAt: string, notes = ""): ShortlistItem {

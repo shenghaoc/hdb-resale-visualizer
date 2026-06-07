@@ -2,10 +2,10 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { LocationSearchInput } from "@/components/LocationSearchInput";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { fetchSuggestions } from "@/lib/data";
-import type { Translator } from "@/lib/i18n";
+import { fetchSuggestions } from "@/shared/lib/data";
+import type { Translator } from "@/shared/lib/i18n";
 import type { Suggestion, SuggestionGroup } from "@/types/data";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 const SUGGEST_DEBOUNCE_MS = 200;
 const SUGGEST_GROUPS: SuggestionGroup[] = ["town", "street", "block", "mrt", "postal"];
