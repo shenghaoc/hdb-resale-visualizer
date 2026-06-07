@@ -110,6 +110,12 @@ The tool returns a **verdict** — whether the asking price is well below, aroun
 - The transaction range (lowest to highest recent price)
 - Number of comparable transactions used
 
+### Confidence and caveats
+
+Each result shows a **confidence badge** (High / Medium / Low) indicating how reliable the assessment is. Confidence is based on four signals: sample size, data recency, geographic proximity, and match quality (flat type, floor area, storey).
+
+Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
+
 ### Time-adjusted prices
 
 Toggle **"Show time-adjusted prices"** to see what older comparable transactions would roughly correspond to at the latest market period. This is **not a price forecast** — it is a mechanical restatement of observed historical data.
