@@ -164,15 +164,16 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   // --- Lease mismatch ---
   if (leaseCommenceYear != null && comparableLeaseYears.length > 0) {
     const validLeaseYears = comparableLeaseYears.filter((y) => !Number.isNaN(y));
-    if (validLeaseYears.length === 0) return caveats;
-    const sorted = [...validLeaseYears].sort((a, b) => a - b);
-    const medianLeaseYear = sorted[Math.floor(sorted.length / 2)];
-    if (Math.abs(leaseCommenceYear - medianLeaseYear) > 10) {
-      add(
-        "LEASE_MISMATCH",
-        "warning",
-        `Your flat's lease began in ${leaseCommenceYear}, but most comparable transactions have leases starting around ${medianLeaseYear} (>10 year difference). The historical median may overstate or understate fair value for this specific flat.`,
-      );
+    if (validLeaseYears.length > 0) {
+      const sorted = [...validLeaseYears].sort((a, b) => a - b);
+      const medianLeaseYear = sorted[Math.floor(sorted.length / 2)];
+      if (Math.abs(leaseCommenceYear - medianLeaseYear) > 10) {
+        add(
+          "LEASE_MISMATCH",
+          "warning",
+          `Your flat's lease began in ${leaseCommenceYear}, but most comparable transactions have leases starting around ${medianLeaseYear} (>10 year difference). The historical median may overstate or understate fair value for this specific flat.`,
+        );
+      }
     }
   }
 

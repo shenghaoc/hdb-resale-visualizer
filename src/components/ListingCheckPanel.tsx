@@ -457,7 +457,8 @@ export function ListingCheckPanel({
     if (
       !comparableSet ||
       comparableSet.comparables.length === 0 ||
-      resolvedAskingPrice == null
+      resolvedAskingPrice == null ||
+      !detail
     ) {
       return null;
     }
@@ -486,9 +487,15 @@ export function ListingCheckPanel({
 
     const confidenceInput: ConfidenceInput = {
       comparableCount: comparableSet.comparables.length,
-      sameBlockCount: comparableSet.sameBlockCount,
-      sameStreetCount: comparableSet.sameStreetCount,
-      sameTownCount: comparableSet.sameTownCount,
+      sameBlockCount: comparableSet.comparables.filter(
+        (c) => c.block === detail.summary.block && c.town === detail.summary.town,
+      ).length,
+      sameStreetCount: comparableSet.comparables.filter(
+        (c) => c.streetName === detail.summary.streetName,
+      ).length,
+      sameTownCount: comparableSet.comparables.filter(
+        (c) => c.town === detail.summary.town,
+      ).length,
       newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
       flatTypeMatchCount: comparableSet.comparables
         .filter((c) => c.matchReasons?.includes("Same flat type")).length,
@@ -523,7 +530,7 @@ export function ListingCheckPanel({
       confidence,
       caveats,
     };
-  }, [comparableSet, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
+  }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
 
   const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
 
