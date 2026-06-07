@@ -26,6 +26,7 @@ import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
 import { ScopePrompt } from "@/components/ScopePrompt";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
+import { GuideDialog } from "@/components/GuideDialog";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
@@ -63,6 +64,7 @@ function App() {
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
   const searchProfile = useSearchProfile();
+  const [guideOpen, setGuideOpen] = useState(false);
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
   const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
@@ -725,7 +727,10 @@ function App() {
         onMobileCheckClick={handleMobileCheckClick}
         onMobileSavedClick={handleMobileSavedClick}
         onToggleTheme={toggleTheme}
+        onOpenGuide={() => setGuideOpen(true)}
       />
+
+      <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} />
     </>
   );
 }

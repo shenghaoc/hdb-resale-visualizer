@@ -21,6 +21,7 @@ type AppTabBarsProps = {
   onMobileCheckClick: () => void;
   onMobileSavedClick: () => void;
   onToggleTheme: () => void;
+  onOpenGuide: () => void;
 };
 
 export function AppTabBars({
@@ -41,6 +42,7 @@ export function AppTabBars({
   onMobileCheckClick,
   onMobileSavedClick,
   onToggleTheme,
+  onOpenGuide,
 }: AppTabBarsProps) {
   if (isDesktop) {
     return (
@@ -56,6 +58,7 @@ export function AppTabBars({
         onCheckClick={onDesktopCheckClick}
         onSavedClick={onDesktopSavedClick}
         onToggleTheme={onToggleTheme}
+        onOpenGuide={onOpenGuide}
       />
     );
   }
@@ -71,6 +74,7 @@ export function AppTabBars({
       onCheckClick={onMobileCheckClick}
       onSavedClick={onMobileSavedClick}
       onToggleTheme={onToggleTheme}
+      onOpenGuide={onOpenGuide}
     />
   );
 }

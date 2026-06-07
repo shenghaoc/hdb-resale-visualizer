@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Bookmark, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
+import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { LeftTab } from "@/hooks/usePanelState";
@@ -17,6 +17,7 @@ type DesktopTabBarProps = {
   onCheckClick: () => void;
   onSavedClick: () => void;
   onToggleTheme: () => void;
+  onOpenGuide: () => void;
 };
 
 export function DesktopTabBar({
@@ -31,6 +32,7 @@ export function DesktopTabBar({
   onCheckClick,
   onSavedClick,
   onToggleTheme,
+  onOpenGuide,
 }: DesktopTabBarProps) {
   const filtersActive = leftTab === "filters" && isLeftPanelOpen;
   const resultsActive = leftTab === "results" && isLeftPanelOpen;
@@ -188,6 +190,23 @@ export function DesktopTabBar({
         ) : (
           <Sun data-icon className="size-4" />
         )}
+      </Button>
+      <Button
+        ref={(node) => {
+          itemRefs.current[5] = node;
+        }}
+        type="button"
+        size="icon"
+        variant="ghost"
+        className="desktop-tab-bar-icon-btn"
+        tabIndex={focusedIndex === 5 ? 0 : -1}
+        onClick={onOpenGuide}
+        onKeyDown={(e) => handleKeyDown(e, 5)}
+        onFocus={() => setFocusedIndex(5)}
+        aria-label={t("app.openGuide")}
+        title={t("app.openGuide")}
+      >
+        <CircleHelp data-icon className="size-4" />
       </Button>
     </nav>
   );
