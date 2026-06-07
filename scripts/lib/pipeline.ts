@@ -293,7 +293,7 @@ function findNearestSchools(
 
   for (const school of schools) {
     const thresholdDist = nearest.length === limit ? nearest[nearest.length - 1].distanceMeters : Infinity;
-    const threshold = thresholdDist / 110_000;
+    const threshold = thresholdDist === Infinity ? Infinity : (thresholdDist + 1) / 110_000;
 
     if (
       Math.abs(school.lat - blockCoords.lat) > threshold ||
