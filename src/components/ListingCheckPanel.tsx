@@ -321,19 +321,6 @@ export function ListingCheckPanel({
     leaseCommenceYear != null ? String(leaseCommenceYear) : "",
   );
 
-  // Sync props to local input state when they change externally (e.g. deep linking / URL load)
-  useEffect(() => {
-    setAskingPriceInput(askingPrice != null ? String(askingPrice) : "");
-  }, [askingPrice]);
-
-  useEffect(() => {
-    setFloorAreaInput(floorAreaSqm != null ? String(floorAreaSqm) : "");
-  }, [floorAreaSqm]);
-
-  useEffect(() => {
-    setLeaseYearInput(leaseCommenceYear != null ? String(leaseCommenceYear) : "");
-  }, [leaseCommenceYear]);
-
   const verdictRef = useRef<HTMLDivElement>(null);
 
   const handleCheckClick = useCallback(() => {
@@ -341,16 +328,6 @@ export function ListingCheckPanel({
       verdictRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
   }, []);
-
-  // ── Reset detail state when the selected address changes/clears ───────────
-  useEffect(() => {
-    setDetail(null);
-    setDetailError(false);
-    setDetailLoading(false);
-    if (!selectedAddressKey) {
-      setSearchValue("");
-    }
-  }, [selectedAddressKey]);
 
   // ── Fetch address detail when selection changes ───────────────────────────
   useEffect(() => {

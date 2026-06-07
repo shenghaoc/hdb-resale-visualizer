@@ -625,6 +625,7 @@ function App() {
   const checkContent = (
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
       <ListingCheckPanel
+        key={checkAddressKey ?? '__none__'}
         selectedAddressKey={checkAddressKey}
         askingPrice={checkAskingPrice}
         floorAreaSqm={checkFloorAreaSqm}

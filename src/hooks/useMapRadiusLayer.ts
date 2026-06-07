@@ -65,8 +65,8 @@ export function useMapRadiusLayer(
       source.setData({
         type: "FeatureCollection",
         features: [
-          createCircleGeoJson(selectedBlock.coordinates, 1),
-          createCircleGeoJson(selectedBlock.coordinates, 2),
+          createCircleGeoJson(selectedBlock!.coordinates, 1),
+          createCircleGeoJson(selectedBlock!.coordinates, 2),
         ],
       });
       radiusSignatureRef.current = selectedSignature;

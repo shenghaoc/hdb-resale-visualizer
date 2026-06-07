@@ -26,14 +26,17 @@ function createMapStub({
   const onceHandlers = new Map<string, EventHandler[]>();
   const currentLayerOrder = [...layerOrder];
 
-  const blocksSource = { setData: vi.fn() };
-  const schoolSource = { setData: vi.fn() };
+  const blocksSetData = vi.fn();
+  const schoolSetData = vi.fn();
 
   const stub = {
     isStyleLoaded: vi.fn(() => styleLoaded),
     getSource: vi.fn((id: string) => {
-      if (id === "blocks" && hasBothSources) return blocksSource;
-      if (id === "primary-schools" && hasBothSources) return schoolSource;
+      // Return a fresh object each call to match MapLibre's behavior of
+      // returning new source instances after style changes, enabling
+      // identity-based change detection in hooks.
+      if (id === "blocks" && hasBothSources) return { setData: blocksSetData };
+      if (id === "primary-schools" && hasBothSources) return { setData: schoolSetData };
       return undefined;
     }),
     getLayer: vi.fn((id: string) => (currentLayerOrder.includes(id) ? {} : undefined)),
@@ -43,6 +46,7 @@ function createMapStub({
       layers: currentLayerOrder.map((id) => ({ id })),
     })),
     setLayoutProperty: vi.fn(),
+    getLayoutProperty: vi.fn(() => undefined),
     moveLayer: vi.fn((id: string, before?: string) => {
       const currentIndex = currentLayerOrder.indexOf(id);
       if (currentIndex === -1) return;
@@ -72,8 +76,8 @@ function createMapStub({
         for (const onceH of onceList) onceH(...args);
       }
     },
-    blocksSource,
-    schoolSource,
+    blocksSetData,
+    schoolSetData,
     currentLayerOrder,
     _handlers: handlers,
   };
@@ -100,7 +104,7 @@ describe("useMapDataSync", () => {
       useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
-    expect(map.blocksSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.blocksSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("defers setData to load event when style is not yet loaded", () => {
@@ -110,12 +114,12 @@ describe("useMapDataSync", () => {
       useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
-    expect(map.blocksSource.setData).not.toHaveBeenCalled();
+    expect(map.blocksSetData).not.toHaveBeenCalled();
 
     (map.isStyleLoaded as ReturnType<typeof vi.fn>).mockReturnValue(true);
     map.emit("load");
 
-    expect(map.blocksSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.blocksSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("calls setData again on styledata events", () => {
@@ -129,7 +133,7 @@ describe("useMapDataSync", () => {
     map.emit("styledata");
 
     // Once on mount + twice from styledata
-    expect(map.blocksSource.setData).toHaveBeenCalledTimes(3);
+    expect(map.blocksSetData).toHaveBeenCalledTimes(3);
   });
 
   it("does not call setData on blocks source when source does not exist", () => {
@@ -139,7 +143,7 @@ describe("useMapDataSync", () => {
       useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
     );
 
-    expect(map.blocksSource.setData).not.toHaveBeenCalled();
+    expect(map.blocksSetData).not.toHaveBeenCalled();
   });
 
   it("removes event listeners on unmount", () => {
@@ -164,11 +168,11 @@ describe("useMapDataSync", () => {
       { initialProps: { geoJson: EMPTY_GEOJSON } },
     );
 
-    expect(map.blocksSource.setData).toHaveBeenCalledWith(EMPTY_GEOJSON);
+    expect(map.blocksSetData).toHaveBeenCalledWith(EMPTY_GEOJSON);
 
     rerender({ geoJson: POPULATED_GEOJSON });
 
-    expect(map.blocksSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.blocksSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("syncs primary school overlay data and visibility", () => {
@@ -193,7 +197,7 @@ describe("useMapDataSync", () => {
       }),
     );
 
-    expect(map.schoolSource.setData).toHaveBeenCalledWith(schoolsGeoJson);
+    expect(map.schoolSetData).toHaveBeenCalledWith(schoolsGeoJson);
     expect(map.setLayoutProperty).toHaveBeenCalledWith(
       "primary-school-markers",
       "visibility",

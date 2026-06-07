@@ -36,12 +36,15 @@ function createMapStub({
   const handlers = new Map<string, EventHandler[]>();
   const onceHandlers = new Map<string, EventHandler[]>();
 
-  const heatmapSource = { setData: vi.fn() };
+  const heatmapSetData = vi.fn();
 
   const stub = {
     isStyleLoaded: vi.fn(() => styleLoaded),
     getSource: vi.fn((id: string) => {
-      if (id === HEATMAP_SOURCE_ID && hasHeatmapSource) return heatmapSource;
+      // Return a fresh object each call to match MapLibre's behavior of
+      // returning new source instances after style changes, enabling
+      // identity-based change detection in hooks.
+      if (id === HEATMAP_SOURCE_ID && hasHeatmapSource) return { setData: heatmapSetData };
       return undefined;
     }),
     on: vi.fn((event: string, handler: EventHandler) => {
@@ -65,7 +68,7 @@ function createMapStub({
         for (const onceH of onceList) onceH(...args);
       }
     },
-    heatmapSource,
+    heatmapSetData,
     _handlers: handlers,
   };
 
@@ -90,7 +93,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
       useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
     );
 
-    expect(map.heatmapSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.heatmapSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("does not call setData when priceHeatmapEnabled is false", () => {
@@ -105,7 +108,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
       }),
     );
 
-    expect(map.heatmapSource.setData).not.toHaveBeenCalled();
+    expect(map.heatmapSetData).not.toHaveBeenCalled();
   });
 
   it("defers setData to load event when style is not yet loaded", () => {
@@ -115,12 +118,12 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
       useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
     );
 
-    expect(map.heatmapSource.setData).not.toHaveBeenCalled();
+    expect(map.heatmapSetData).not.toHaveBeenCalled();
 
     (map.isStyleLoaded as ReturnType<typeof vi.fn>).mockReturnValue(true);
     map.emit("load");
 
-    expect(map.heatmapSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.heatmapSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("re-syncs data on styledata events", () => {
@@ -134,7 +137,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
     map.emit("styledata");
 
     // Once on mount + twice from styledata
-    expect(map.heatmapSource.setData).toHaveBeenCalledTimes(3);
+    expect(map.heatmapSetData).toHaveBeenCalledTimes(3);
   });
 
   it("does not call setData when heatmap source does not exist", () => {
@@ -176,9 +179,9 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
     expect(map.off).toHaveBeenCalledWith("styledata", expect.any(Function));
 
     // further styledata events should not trigger setData
-    map.heatmapSource.setData.mockClear();
+    map.heatmapSetData.mockClear();
     map.emit("styledata");
-    expect(map.heatmapSource.setData).not.toHaveBeenCalled();
+    expect(map.heatmapSetData).not.toHaveBeenCalled();
   });
 
   it("re-syncs data when geoJson changes while enabled", () => {
@@ -190,11 +193,11 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
       { initialProps: { geoJson: EMPTY_GEOJSON } },
     );
 
-    expect(map.heatmapSource.setData).toHaveBeenCalledWith(EMPTY_GEOJSON);
+    expect(map.heatmapSetData).toHaveBeenCalledWith(EMPTY_GEOJSON);
 
     rerender({ geoJson: POPULATED_GEOJSON });
 
-    expect(map.heatmapSource.setData).toHaveBeenCalledWith(POPULATED_GEOJSON);
+    expect(map.heatmapSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
 
   it("routes opacity-only changes through setHeatmapOpacity, not layer recreation", async () => {
