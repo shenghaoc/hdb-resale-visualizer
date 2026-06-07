@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildShortlistComparisonRows } from "@/lib/shortlist-comparison";
+import { buildShortlistComparisonRows } from "@/features/shortlist/shortlist-comparison";
 import { MAX_LEASE_DURATION } from "@/lib/constants";
 import type {
   AddressDetailSummary,

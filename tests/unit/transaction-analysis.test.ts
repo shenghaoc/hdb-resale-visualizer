@@ -7,7 +7,7 @@ import {
   parseStoreyMidpoint,
   sliceTrendByRange,
   summarizeComparables,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import type {
   AddressDetailTransaction,
   AddressTrendPoint,

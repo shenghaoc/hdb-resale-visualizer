@@ -1,5 +1,5 @@
 import { API_BASE_PATH } from "@/lib/constants";
-import { parseShortlist } from "@/lib/shortlist";
+import { parseShortlist } from "@/features/shortlist/shortlist";
 import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "@shared/shortlist-limits";
 import type { ShortlistItem } from "@/types/data";
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mergeShortlists } from "@/lib/shortlist";
+import { mergeShortlists } from "@/features/shortlist/shortlist";
 import { MAX_SHORTLIST_ITEMS } from "@/lib/constants";
 import type { ShortlistItem } from "@/types/data";
 

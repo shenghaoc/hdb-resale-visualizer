@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeComparableRange } from "@/lib/comparable-range";
+import { computeComparableRange } from "@/entities/transaction/comparable-range";
 import type { BlockSummary } from "@/types/data";
 
 function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): BlockSummary {

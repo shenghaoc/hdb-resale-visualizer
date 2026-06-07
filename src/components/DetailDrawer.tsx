@@ -41,7 +41,7 @@ import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import { rankSimilarBlocks } from "@/lib/similar-blocks";
-import { computeComparableRange } from "@/lib/comparable-range";
+import { computeComparableRange } from "@/entities/transaction/comparable-range";
 import { computeAffordabilityVerdict } from "@/lib/affordability";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -66,7 +66,7 @@ import {
   type RecentTransactionOutlier,
   sliceTrendByRange,
   type TrendRangeKey,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/lib/lease-financing";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";

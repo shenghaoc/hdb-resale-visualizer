@@ -8,7 +8,7 @@ import {
   assessAskingPrice,
   findComparableTransactions,
   parseStoreyMidpoint,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
 
 function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransaction {

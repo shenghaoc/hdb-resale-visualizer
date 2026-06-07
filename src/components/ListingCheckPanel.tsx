@@ -17,7 +17,7 @@ import { useI18n } from "@/lib/i18n";
 import {
   assessAskingPrice,
   type AskingPriceAssessment,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import {
   computeConfidence,
   type ConfidenceAssessment,

@@ -1,4 +1,4 @@
-import type { AskingPriceAssessment } from "@/lib/transaction-analysis";
+import type { AskingPriceAssessment } from "@/entities/transaction/transaction-analysis";
 import { formatCompactCurrency } from "@/lib/format";
 
 export type DistributionBarProps = {

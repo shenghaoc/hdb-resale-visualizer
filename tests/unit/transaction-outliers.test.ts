@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   detectRecentTransactionOutliers,
   RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import type { AddressDetailTransaction } from "@/types/data";
 
 function makeTransaction(

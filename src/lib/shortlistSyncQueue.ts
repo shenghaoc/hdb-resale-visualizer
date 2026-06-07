@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { parseShortlist } from "@/lib/shortlist";
+import { parseShortlist } from "@/features/shortlist/shortlist";
 import { safeStorage } from "@/lib/storage";
 import type { ShortlistItem } from "@/types/data";
 

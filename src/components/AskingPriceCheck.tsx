@@ -16,7 +16,7 @@ import {
   findComparableTransactions,
   parseStoreyMidpoint,
   type AskingPriceAssessment,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
 import type { AddressDetail } from "@/types/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

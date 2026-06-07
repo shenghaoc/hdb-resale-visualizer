@@ -38,7 +38,7 @@ import {
   formatNumber,
   formatRemainingLease,
 } from "@/lib/format";
-import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
+import { rankShortlistRows, type CompareMode } from "@/features/shortlist/shortlist-ranking";
 import {
   ninetyNineCoUrl,
   propertyGuruUrl,
@@ -47,8 +47,8 @@ import {
 import {
   buildShortlistComparisonRows,
   type ShortlistComparisonRow,
-} from "@/lib/shortlist-comparison";
-import { encodeShortlistForUrl } from "@/lib/shortlist";
+} from "@/features/shortlist/shortlist-comparison";
+import { encodeShortlistForUrl } from "@/features/shortlist/shortlist";
 import { buildShortlistShareUrl } from "@/lib/shareUrls";
 import { buildShortlistCsvContent } from "@/lib/export";
 import { ShareButton } from "@/components/ShareButton";

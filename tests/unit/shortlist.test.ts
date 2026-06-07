@@ -8,7 +8,7 @@ import {
   mergeImportedShortlistItems,
   saveShortlist,
   toggleShortlistItem,
-} from "@/lib/shortlist";
+} from "@/features/shortlist/shortlist";
 
 describe("shortlist storage", () => {
   it("loads and saves shortlist entries", () => {

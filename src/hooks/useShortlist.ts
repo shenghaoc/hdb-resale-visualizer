@@ -7,7 +7,7 @@ import {
   mergeShortlists,
   saveShortlist,
   toggleShortlistItem,
-} from "@/lib/shortlist";
+} from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,

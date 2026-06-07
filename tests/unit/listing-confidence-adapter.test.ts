@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeConfidence } from "@/lib/listing-confidence";
+import { computeConfidence } from "@/entities/transaction/listing-confidence";
 import { computeConfidence as computeConfidenceV2 } from "../../shared/confidence-system";
 import type { AddressDetailTransaction } from "@/types/data";
 import type { ConfidenceInput } from "../../shared/confidence-system";
