@@ -1,4 +1,5 @@
 import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
+import { getDataConfidenceLabelKey, type DataConfidenceLabelKey } from "./confidence";
 import type {
   AddressDetailSummary,
   BlockSummary,
@@ -12,7 +13,20 @@ import type {
  * fetched the deep `comparison` artifact yet.
  */
 export type ShortlistComparisonInputRow = {
-  item: Pick<ShortlistItem, "addressKey" | "notes" | "targetPrice">;
+  item: Pick<
+    ShortlistItem,
+    | "addressKey"
+    | "notes"
+    | "buyerNotes"
+    | "targetPrice"
+    | "askingPrice"
+    | "fairRangeLow"
+    | "fairRangeMedian"
+    | "fairRangeHigh"
+    | "suggestedOfferCeiling"
+    | "buyerOpeningOffer"
+    | "decisionStatus"
+  >;
   block: BlockSummary;
   detailSummary:
     | Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian">
@@ -25,6 +39,11 @@ export type ShortlistComparisonGap = {
   amount: number;
   tone: ShortlistComparisonGapTone;
 };
+
+export type ShortlistComparisonCaveatKey =
+  | "shortlist.compare.caveat.noFairRange"
+  | "shortlist.compare.caveat.noMrt"
+  | "shortlist.compare.caveat.lowConfidence";
 
 export type ShortlistComparisonRow = {
   addressKey: string;
@@ -41,6 +60,16 @@ export type ShortlistComparisonRow = {
   targetPrice: number | null;
   targetGap: ShortlistComparisonGap | null;
   notes: string;
+  buyerNotes: string;
+  askingPrice: number | null;
+  fairRangeLow: number | null;
+  fairRangeMedian: number | null;
+  fairRangeHigh: number | null;
+  suggestedOfferCeiling: number | null;
+  decisionStatus?: ShortlistItem["decisionStatus"];
+  deltaVsFairMedian: ShortlistComparisonGap | null;
+  confidenceLevelLabel: DataConfidenceLabelKey;
+  caveatKeys: ShortlistComparisonCaveatKey[];
 };
 
 export type BuildShortlistComparisonRowsOptions = {
@@ -71,6 +100,42 @@ function computeTargetGap(
 
 function clampNonNegative(value: number): number {
   return value < 0 ? 0 : value;
+}
+
+function isFiniteNumber(value: number | null | undefined): value is number {
+  return Number.isFinite(value);
+}
+
+function computeDeltaVsReference(
+  reference: number | null,
+  candidate: number | null,
+): ShortlistComparisonGap | null {
+  if (reference === null || candidate === null) {
+    return null;
+  }
+
+  if (reference === candidate) {
+    return { amount: 0, tone: "match" };
+  }
+
+  const amount = Math.abs(candidate - reference);
+  return candidate > reference
+    ? { amount, tone: "above" }
+    : { amount, tone: "below" };
+}
+
+function buildCaveats(item: ShortlistComparisonInputRow["item"], nearestMrt: NearestMrt | null, recentTransactionCount: number): ShortlistComparisonCaveatKey[] {
+  const caveats: ShortlistComparisonCaveatKey[] = [];
+  if (item.fairRangeLow == null || item.fairRangeMedian == null || item.fairRangeHigh == null) {
+    caveats.push("shortlist.compare.caveat.noFairRange");
+  }
+  if (nearestMrt === null) {
+    caveats.push("shortlist.compare.caveat.noMrt");
+  }
+  if (getDataConfidenceLabelKey(recentTransactionCount) === "confidence.low.label") {
+    caveats.push("shortlist.compare.caveat.lowConfidence");
+  }
+  return caveats;
 }
 
 /**
@@ -118,6 +183,18 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
       targetPrice: item.targetPrice,
       targetGap: computeTargetGap(item.targetPrice, block.medianPrice),
       notes: item.notes ?? "",
+      buyerNotes: item.buyerNotes ?? item.notes ?? "",
+      askingPrice: isFiniteNumber(item.askingPrice) ? item.askingPrice : null,
+      fairRangeLow: isFiniteNumber(item.fairRangeLow) ? item.fairRangeLow : null,
+      fairRangeMedian: isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null,
+      fairRangeHigh: isFiniteNumber(item.fairRangeHigh) ? item.fairRangeHigh : null,
+      suggestedOfferCeiling: isFiniteNumber(item.suggestedOfferCeiling)
+        ? item.suggestedOfferCeiling
+        : null,
+      decisionStatus: item.decisionStatus,
+      deltaVsFairMedian: computeDeltaVsReference(isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null, block.medianPrice),
+      confidenceLevelLabel: getDataConfidenceLabelKey(block.transactionCount),
+      caveatKeys: buildCaveats(item, block.nearestMrt ?? null, block.transactionCount),
     };
   });
 }

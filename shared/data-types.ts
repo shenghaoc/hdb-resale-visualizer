@@ -140,12 +140,31 @@ export type FilterState = {
 export type ShortlistItem = {
   addressKey: string;
   notes: string;
+  askingPrice?: number;
+  fairRangeLow?: number;
+  fairRangeMedian?: number;
+  fairRangeHigh?: number;
+  suggestedOfferCeiling?: number;
+  buyerOpeningOffer?: number;
+  valuationReceived?: number;
+  estimatedCov?: number;
+  viewingDate?: string;
+  decisionStatus?:
+    | "considering"
+    | "viewing booked"
+    | "offered"
+    | "rejected"
+    | "kiv"
+    | "dropped";
   pros?: string;
   cons?: string;
   renovation?: string;
   noise?: string;
   transport?: string;
   offerCeiling?: number;
+  noiseNotes?: string;
+  transportNotes?: string;
+  buyerNotes?: string;
   agentRemarks?: string;
   targetPrice: number | null;
   addedAt: string;

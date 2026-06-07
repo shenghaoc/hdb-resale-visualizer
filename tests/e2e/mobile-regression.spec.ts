@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { mockComparisonArtifacts } from "./fixtures";
 
 test.describe.configure({
@@ -15,15 +15,6 @@ function firstResultCard(page: Page) {
   return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
 }
 
-async function expectHorizontalOverflow(locator: Locator) {
-  await expect(locator).toBeVisible({ timeout: 10_000 });
-  await expect
-    .poll(async () => locator.evaluate((element) => element.scrollWidth > element.clientWidth))
-    .toBe(true);
-  await expect
-    .poll(async () => locator.evaluate((element) => getComputedStyle(element).overflowX))
-    .toMatch(/auto|scroll/);
-}
 
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
@@ -162,7 +153,7 @@ test.describe("Mobile Regression: Recent Features", () => {
     });
   });
 
-  test("shortlist comparison table scrolls horizontally on mobile", async ({ page }) => {
+  test("shortlist comparison renders card layout on mobile", async ({ page }) => {
     await mockComparisonArtifacts(page);
 
     // Pre-seed two shortlist items using real fixture address keys
@@ -201,11 +192,60 @@ test.describe("Mobile Regression: Recent Features", () => {
     await viewToggle.getByRole("button", { name: /comparison table/i }).click();
 
     const comparisonTable = page.getByTestId("shortlist-comparison-table");
-    const comparisonScroller = comparisonTable.locator("[data-slot='table-container']");
     await expect(comparisonTable).toBeVisible();
-    await expectHorizontalOverflow(comparisonScroller);
-    await expect(comparisonTable.getByRole("table", { name: /saved blocks comparison/i })).toBeVisible();
-    await expect(comparisonTable.getByTestId("shortlist-comparison-row")).toHaveCount(2);
+    // Mobile renders card layout instead of a scrollable table
+    await expect(comparisonTable.getByTestId("shortlist-comparison-card")).toHaveCount(2);
+  });
+
+  test("shortlist offer board fields editable on mobile", async ({ page }) => {
+    const shortlistData = [
+      {
+        addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
+        notes: "",
+        targetPrice: null,
+        addedAt: new Date().toISOString(),
+      },
+    ];
+
+    await page.goto("/");
+    await page.evaluate(
+      ({ data }) => localStorage.setItem("hdb_resale_shortlist_v1", JSON.stringify(data)),
+      { data: shortlistData },
+    );
+    await page.reload();
+
+    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
+    const drawer = page.getByTestId("shortlist-drawer");
+    await expect(drawer).toBeVisible();
+
+    // Single item auto-expands; wait for the asking price field to be visible
+    const askingInput = page.getByRole("spinbutton", { name: /asking price/i });
+    await expect(askingInput).toBeVisible({ timeout: 10_000 });
+
+    // Fill asking price
+    await askingInput.fill("550000");
+    await expect(askingInput).toHaveValue("550000");
+
+    // Change decision status
+    const statusSelect = drawer.getByRole("combobox", { name: /decision status/i });
+    await statusSelect.scrollIntoViewIfNeeded();
+    await statusSelect.click();
+    await page.getByRole("option", { name: /considering/i }).click();
+    await expect(statusSelect).toContainText(/considering/i);
+
+    // Verify persistence after reload
+    await page.reload();
+    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
+    await expect(drawer).toBeVisible();
+
+    // Wait for auto-expanded item
+    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toBeVisible({
+      timeout: 10_000,
+    });
+    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toHaveValue("550000");
+    await expect(drawer.getByRole("combobox", { name: /decision status/i })).toContainText(
+      /considering/i,
+    );
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {

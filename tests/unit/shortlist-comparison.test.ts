@@ -193,4 +193,59 @@ describe("buildShortlistComparisonRows", () => {
 
     expect(JSON.stringify(input)).toBe(snapshot);
   });
+
+  it("computes deltaVsFairMedian from fairRangeMedian vs block medianPrice", () => {
+    const [row] = buildShortlistComparisonRows([
+      makeRow({
+        item: {
+          askingPrice: 500000,
+          suggestedOfferCeiling: 520000,
+          buyerOpeningOffer: 495000,
+          fairRangeMedian: 500000,
+        },
+        block: { medianPrice: 470000 },
+      }),
+    ]);
+
+    expect(row.deltaVsFairMedian).toEqual({ amount: 30000, tone: "below" });
+    expect(row.askingPrice).toBe(500000);
+    expect(row.suggestedOfferCeiling).toBe(520000);
+  });
+
+  it("computes deltaVsFairMedian from fairRangeMedian vs block medianPrice", () => {
+    const [row] = buildShortlistComparisonRows([
+      makeRow({
+        item: {
+          targetPrice: 460000,
+          fairRangeMedian: 480000,
+        },
+        block: { medianPrice: 500000 },
+      }),
+    ]);
+
+    expect(row.deltaVsFairMedian).toEqual({ amount: 20000, tone: "above" });
+  });
+
+  it("builds confidence and caveat metadata", () => {
+    const [row] = buildShortlistComparisonRows([
+      makeRow({
+        item: {
+          fairRangeLow: undefined,
+          fairRangeMedian: undefined,
+          fairRangeHigh: undefined,
+        },
+        block: {
+          nearestMrt: null,
+          transactionCount: 2,
+        },
+      }),
+    ]);
+
+    expect(row.confidenceLevelLabel).toBe("confidence.low.label");
+    expect(row.caveatKeys).toEqual([
+      "shortlist.compare.caveat.noFairRange",
+      "shortlist.compare.caveat.noMrt",
+      "shortlist.compare.caveat.lowConfidence",
+    ]);
+  });
 });

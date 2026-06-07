@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import {
   decodeShortlistFromUrl,
   encodeShortlistForUrl,
@@ -40,7 +41,56 @@ describe("shortlist storage", () => {
     ];
 
     const encoded = encodeShortlistForUrl(items);
-    expect(decodeShortlistFromUrl(encoded)).toEqual(items);
+    const decoded = decodeShortlistFromUrl(encoded);
+    expect(decoded).toHaveLength(1);
+    expect(decoded[0]).toMatchObject({
+      addressKey: items[0]?.addressKey,
+      notes: items[0]?.notes,
+      targetPrice: 800000,
+      addedAt: items[0]?.addedAt,
+      buyerNotes: items[0]?.notes,
+    });
+    expect(decoded[0]?.askingPrice).toBeUndefined();
+    expect(decoded[0]?.buyerOpeningOffer).toBeUndefined();
+    expect(decoded[0]?.suggestedOfferCeiling).toBeUndefined();
+  });
+
+  it("round-trips mixed legacy and migrated payloads through share links", () => {
+    const items = [
+      {
+        addressKey: "legacy-1",
+        notes: "Legacy format",
+        targetPrice: 800000,
+        addedAt: "2026-06-01T00:00:00.000Z",
+        offerCeiling: 820000,
+      },
+      {
+        addressKey: "new-2",
+        notes: "Modern format",
+        targetPrice: 760000,
+        askingPrice: 770000,
+        fairRangeLow: 700000,
+        fairRangeMedian: 740000,
+        fairRangeHigh: 780000,
+        suggestedOfferCeiling: 785000,
+        buyerOpeningOffer: 775000,
+        valuationReceived: 745000,
+        estimatedCov: 680000,
+        viewingDate: "2026-05-20",
+        decisionStatus: "offered" as const,
+        buyerNotes: "Great offer already sent",
+        addedAt: "2026-06-01T00:00:00.000Z",
+      },
+    ];
+
+    const encoded = encodeShortlistForUrl(items);
+    const decoded = decodeShortlistFromUrl(encoded);
+
+    expect(decoded).toHaveLength(2);
+    expect(decoded[0]?.askingPrice).toBeUndefined();
+    expect(decoded[0]?.suggestedOfferCeiling).toBe(820000);
+    expect(decoded[1]?.buyerOpeningOffer).toBe(775000);
+    expect(decoded[1]?.fairRangeMedian).toBe(740000);
   });
 
   it("rejects oversized shortlist share payloads", () => {
@@ -125,19 +175,113 @@ describe("shortlist storage", () => {
     const loaded = loadShortlist(shim);
     expect(loaded).toHaveLength(2);
 
-    // Old item should be normalized with undefined for new fields
-    expect(loaded[0]).toEqual({
+    expect(loaded[0]).toMatchObject({
       ...oldFormatItem,
-      pros: undefined,
-      cons: undefined,
-      renovation: undefined,
-      noise: undefined,
-      transport: undefined,
-      offerCeiling: undefined,
-      agentRemarks: undefined,
+      buyerNotes: oldFormatItem.notes,
     });
+    expect(loaded[0].askingPrice).toBeUndefined();
+    expect(loaded[0].fairRangeLow).toBeUndefined();
+    expect(loaded[0].fairRangeMedian).toBeUndefined();
+    expect(loaded[0].fairRangeHigh).toBeUndefined();
+    expect(loaded[0].suggestedOfferCeiling).toBeUndefined();
+    expect(loaded[0].buyerOpeningOffer).toBeUndefined();
+    expect(loaded[0].valuationReceived).toBeUndefined();
+    expect(loaded[0].estimatedCov).toBeUndefined();
+    expect(loaded[0].viewingDate).toBeUndefined();
+    expect(loaded[0].decisionStatus).toBeUndefined();
+    expect(loaded[0].pros).toBeUndefined();
+    expect(loaded[0].cons).toBeUndefined();
+    expect(loaded[0].renovation).toBeUndefined();
+    expect(loaded[0].noise).toBeUndefined();
+    expect(loaded[0].transport).toBeUndefined();
+    expect(loaded[0].offerCeiling).toBeUndefined();
+    expect(loaded[0].noiseNotes).toBeUndefined();
+    expect(loaded[0].transportNotes).toBeUndefined();
+    expect(loaded[0].agentRemarks).toBeUndefined();
 
     // New item should retain its fields
-    expect(loaded[1]).toEqual(newFormatItem);
+    expect(loaded[1]).toMatchObject({
+      ...newFormatItem,
+      buyerNotes: newFormatItem.notes,
+      noiseNotes: newFormatItem.noise,
+      transportNotes: newFormatItem.transport,
+    });
+  });
+
+  it("migrates legacy offer fields into the offer-board model", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    const legacyItem = {
+      addressKey: "legacy-offer",
+      notes: "Legacy shortlist",
+      offerCeiling: 820000,
+      targetPrice: 800000,
+      addedAt: "2026-05-16T00:00:00.000Z",
+    };
+
+    storage.set(SHORTLIST_STORAGE_KEY, JSON.stringify([legacyItem]));
+    const [loaded] = loadShortlist(shim);
+
+    expect(loaded?.askingPrice).toBeUndefined();
+    expect(loaded?.suggestedOfferCeiling).toBe(820000);
+    expect(loaded?.buyerOpeningOffer).toBeUndefined();
+    expect(loaded?.buyerNotes).toBe("Legacy shortlist");
+  });
+
+  it("drops malformed shortlist entries but keeps valid legacy/new items", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    storage.set(
+      SHORTLIST_STORAGE_KEY,
+      JSON.stringify([
+        { addressKey: "", targetPrice: 800000, addedAt: "2026-05-16T00:00:00.000Z" },
+        {
+          addressKey: "good-old",
+          notes: "Good legacy",
+          targetPrice: 780000,
+          addedAt: "2026-05-16T00:00:00.000Z",
+        },
+      ]),
+    );
+
+    const loaded = loadShortlist(shim);
+    expect(loaded).toHaveLength(1);
+    expect(loaded[0]?.addressKey).toBe("good-old");
+    expect(loaded[0]?.buyerOpeningOffer).toBeUndefined();
+  });
+
+  it("truncates oversized notes instead of erasing them", () => {
+    const storage = new Map<string, string>();
+    const shim = {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    };
+
+    const longNote = "x".repeat(MAX_NOTE_LENGTH + 500);
+    storage.set(
+      SHORTLIST_STORAGE_KEY,
+      JSON.stringify([
+        {
+          addressKey: "long-note",
+          notes: longNote,
+          buyerNotes: longNote,
+          targetPrice: null,
+          addedAt: "2026-06-01T00:00:00.000Z",
+        },
+      ]),
+    );
+
+    const loaded = loadShortlist(shim);
+    expect(loaded).toHaveLength(1);
+    expect(loaded[0]?.notes).toHaveLength(MAX_NOTE_LENGTH);
+    expect(loaded[0]?.buyerNotes).toHaveLength(MAX_NOTE_LENGTH);
   });
 });

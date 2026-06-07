@@ -1,8 +1,9 @@
-export type CompareMode = "median" | "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
+export type CompareMode = "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
 
 type SortableShortlistRow = {
   item: {
     targetPrice: number | null;
+    decisionStatus?: "considering" | "viewing booked" | "offered" | "rejected" | "kiv" | "dropped";
   };
   block: {
     medianPrice: number;
@@ -14,7 +15,7 @@ type SortableShortlistRow = {
 };
 
 function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareMode) {
-  if (compareMode === "median" || compareMode === "median-asc") {
+  if (compareMode === "median-asc") {
     return row.block.medianPrice;
   }
 
@@ -33,6 +34,21 @@ function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareM
   return row.item.targetPrice === null
     ? Number.POSITIVE_INFINITY
     : Math.abs(row.item.targetPrice - row.block.medianPrice);
+}
+
+const decisionStatusPriority: Record<string, number> = {
+  considering: 0,
+  "viewing booked": 1,
+  offered: 2,
+  kiv: 3,
+  rejected: 4,
+  dropped: 5,
+};
+
+const NO_STATUS_PRIORITY = 9;
+
+function getDecisionStatusPriority(status?: SortableShortlistRow["item"]["decisionStatus"]) {
+  return status === undefined ? NO_STATUS_PRIORITY : decisionStatusPriority[status];
 }
 
 function comparePrimaryValues(left: number, right: number) {
@@ -65,6 +81,11 @@ export function rankShortlistRows<T extends SortableShortlistRow>(
     );
     if (primary !== 0) {
       return primary;
+    }
+
+    const statusPriority = getDecisionStatusPriority(left.item.decisionStatus) - getDecisionStatusPriority(right.item.decisionStatus);
+    if (statusPriority !== 0) {
+      return statusPriority;
     }
 
     const byMedian = left.block.medianPrice - right.block.medianPrice;

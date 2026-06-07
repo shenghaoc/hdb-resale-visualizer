@@ -134,4 +134,36 @@ describe("shortlist ranking", () => {
     const ranked = rankShortlistRows(rowsWithoutMrt, "mrt");
     expect(ranked.map((row) => row.block.medianPrice)).toEqual([590000, 610000]);
   });
+
+  it("breaks ties on decisionStatus when the primary sort dimension is equal", () => {
+    const rows = [
+      {
+        item: { targetPrice: 500000, decisionStatus: "kiv" as const },
+        block: {
+          medianPrice: 500000,
+          leaseCommenceRange: [2000, 2000] as [number, number],
+          nearestMrt: { distanceMeters: 300 },
+        },
+      },
+      {
+        item: { targetPrice: 500000, decisionStatus: "offered" as const },
+        block: {
+          medianPrice: 500000,
+          leaseCommenceRange: [2000, 2000] as [number, number],
+          nearestMrt: { distanceMeters: 300 },
+        },
+      },
+      {
+        item: { targetPrice: 500000, decisionStatus: undefined },
+        block: {
+          medianPrice: 500000,
+          leaseCommenceRange: [2000, 2000] as [number, number],
+          nearestMrt: { distanceMeters: 300 },
+        },
+      },
+    ];
+
+    const ranked = rankShortlistRows(rows, "target-gap");
+    expect(ranked.map((r) => r.item.decisionStatus)).toEqual(["offered", "kiv", undefined]);
+  });
 });

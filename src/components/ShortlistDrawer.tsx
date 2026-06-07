@@ -138,11 +138,37 @@ type GapInfo = {
 
 const compareModeLabels: Record<CompareMode, string> = {
   "target-gap": "shortlist.compare.targetFit",
-  median: "shortlist.compare.priceLow",
   "median-asc": "shortlist.compare.priceLow",
   "median-desc": "shortlist.compare.priceHigh",
   lease: "shortlist.compare.lease",
   mrt: "shortlist.compare.mrt",
+};
+
+type DecisionStatusValue = "unknown" | NonNullable<ShortlistItem["decisionStatus"]>;
+
+const decisionStatusOptions: Array<{
+  value: DecisionStatusValue;
+  labelKey: string;
+}> = [
+  { value: "unknown", labelKey: "shortlist.decisionStatus.unknown" },
+  { value: "considering", labelKey: "shortlist.decisionStatus.considering" },
+  { value: "viewing booked", labelKey: "shortlist.decisionStatus.viewingBooked" },
+  { value: "offered", labelKey: "shortlist.decisionStatus.offered" },
+  { value: "kiv", labelKey: "shortlist.decisionStatus.kiv" },
+  { value: "rejected", labelKey: "shortlist.decisionStatus.rejected" },
+  { value: "dropped", labelKey: "shortlist.decisionStatus.dropped" },
+];
+
+const decisionStatusLabelKeys: Record<
+  NonNullable<ShortlistItem["decisionStatus"]>,
+  string
+> = {
+  considering: "shortlist.decisionStatus.considering",
+  "viewing booked": "shortlist.decisionStatus.viewingBooked",
+  offered: "shortlist.decisionStatus.offered",
+  kiv: "shortlist.decisionStatus.kiv",
+  rejected: "shortlist.decisionStatus.rejected",
+  dropped: "shortlist.decisionStatus.dropped",
 };
 
 function ShortlistComparisonTable({
@@ -175,150 +201,311 @@ function ShortlistComparisonTable({
     return { text, tone: gap.tone };
   };
 
+  const formatDelta = (gap: ShortlistComparisonRow["deltaVsFairMedian"]) => {
+    if (gap === null) {
+      return t("shortlist.compare.cellEmpty");
+    }
+    if (gap.tone === "match") {
+      return t("shortlist.compare.gapMatch");
+    }
+    const value = formatCompactCurrency(gap.amount, locale);
+    return gap.tone === "below" ? t("shortlist.compare.fairDeltaBelow", { value }) : t("shortlist.compare.fairDeltaAbove", { value });
+  };
+
+  const formatFairRange = (row: ShortlistComparisonRow) => {
+    const low = row.fairRangeLow !== null ? formatCompactCurrency(row.fairRangeLow, locale) : "—";
+    const median = row.fairRangeMedian !== null ? formatCompactCurrency(row.fairRangeMedian, locale) : "—";
+    const high = row.fairRangeHigh !== null ? formatCompactCurrency(row.fairRangeHigh, locale) : "—";
+    if (low === "—" && median === "—" && high === "—") {
+      return t("shortlist.compare.cellEmpty");
+    }
+    return `${low} — ${median} — ${high}`;
+  };
+
+  const formatCaveats = (row: ShortlistComparisonRow) => {
+    if (row.caveatKeys.length === 0) {
+      return t("shortlist.compare.caveats.none");
+    }
+    return row.caveatKeys.map((key) => t(key)).join("; ");
+  };
+
+  const formatDecision = (row: ShortlistComparisonRow) => {
+    if (!row.decisionStatus) {
+      return t("shortlist.decisionStatus.unknown");
+    }
+    return t(decisionStatusLabelKeys[row.decisionStatus]);
+  };
+
   return (
     <div
-      className="rounded-xl border border-border/40 bg-card/50 overflow-x-auto v2-scrollbar"
+      className="rounded-xl border border-border/40 bg-card/50 v2-scrollbar"
       data-testid="shortlist-comparison-table"
     >
-      <Table
-        aria-label={t("shortlist.compare.tableLabel")}
-        className="min-w-[48rem] text-xs"
-      >
-        <TableHeader>
-          <TableRow className="bg-muted/30 hover:bg-muted/30">
-            <TableHead className="h-9 w-8 px-2 text-right">
-              {t("shortlist.compare.col.rank")}
-            </TableHead>
-            <TableHead className="h-9 px-2">
-              {t("shortlist.compare.col.address")}
-            </TableHead>
-            <TableHead className="h-9 px-2">
-              {t("shortlist.compare.col.town")}
-            </TableHead>
-            <TableHead className="h-9 px-2 text-right">
-              {t("shortlist.compare.col.medianPrice")}
-            </TableHead>
-            <TableHead className="h-9 px-2 text-right">
-              {t("shortlist.compare.col.medianPerSqm")}
-            </TableHead>
-            <TableHead className="h-9 px-2 text-right">
-              {t("shortlist.compare.col.txns")}
-            </TableHead>
-            <TableHead className="h-9 px-2">
-              {t("shortlist.compare.col.lease")}
-            </TableHead>
-            <TableHead className="h-9 px-2">
-              {t("shortlist.compare.col.mrt")}
-            </TableHead>
-            <TableHead className="h-9 px-2 text-right">
-              {t("shortlist.compare.col.targetPrice")}
-            </TableHead>
-            <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
-              {t("shortlist.compare.col.notes")}
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {comparisonRows.map((row, index) => {
-            const gap = formatGap(row.targetGap);
-            return (
-              <TableRow
-                key={row.addressKey}
-                data-testid="shortlist-comparison-row"
-              >
-                <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
-                  {index + 1}
-                </TableCell>
-                <TableCell className="px-2 py-2">
-                  <button
-                    type="button"
-                    className="block rounded-sm text-left font-extrabold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                    onClick={() => onSelectAddress(row.addressKey)}
-                    aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
-                  >
-                    {row.address}
-                  </button>
-                  {row.flatTypeLabel ? (
-                    <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
-                      {row.flatTypeLabel}
-                    </span>
-                  ) : null}
-                </TableCell>
-                <TableCell className="px-2 py-2 font-medium text-muted-foreground">
-                  {localizeTownName(row.town, locale)}
-                </TableCell>
-                <TableCell className="px-2 py-2 text-right">
-                  <span className="block font-extrabold tabular-nums text-foreground">
-                    {formatCompactCurrency(row.medianPrice, locale)}
-                  </span>
-                  <BudgetMatchBadge
-                    medianPrice={row.medianPrice}
-                    budgetMin={budgetMin ?? null}
-                    budgetMax={budgetMax ?? null}
-                    t={t}
-                    locale={locale}
-                    variant="compact"
-                    className="block text-[0.6rem] font-bold tabular-nums"
-                  />
-                  {gap ? (
-                    <span
-                      className={cn(
-                        "block text-[0.6rem] font-bold tabular-nums",
-                        gap.tone === "below" && "text-success",
-                        gap.tone === "above" && "text-destructive",
-                        gap.tone === "match" && "text-primary",
-                      )}
+      <div className="hidden md:block overflow-x-auto">
+        <Table
+          aria-label={t("shortlist.compare.tableLabel")}
+          className="min-w-[60rem] text-xs"
+        >
+          <TableHeader>
+            <TableRow className="bg-muted/30 hover:bg-muted/30">
+              <TableHead className="h-9 w-8 px-2 text-right">
+                {t("shortlist.compare.col.rank")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.address")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.town")}
+              </TableHead>
+              <TableHead className="h-9 px-2 text-right">
+                {t("shortlist.compare.col.medianPrice")}
+              </TableHead>
+              <TableHead className="h-9 px-2 text-right">
+                {t("shortlist.compare.col.medianPerSqm")}
+              </TableHead>
+              <TableHead className="h-9 px-2 text-right">
+                {t("shortlist.compare.col.askingPrice")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.fairRange")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.deltaVsFairMedian")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.confidence")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.lease")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.mrt")}
+              </TableHead>
+              <TableHead className="h-9 px-2">
+                {t("shortlist.compare.col.decision")}
+              </TableHead>
+              <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
+                {t("shortlist.compare.col.caveats")}
+              </TableHead>
+              <TableHead className="h-9 px-2 text-right">
+                {t("shortlist.compare.col.targetPrice")}
+              </TableHead>
+              <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
+                {t("shortlist.compare.col.notes")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {comparisonRows.map((row, index) => {
+              const gap = formatGap(row.targetGap);
+              return (
+                <TableRow
+                  key={row.addressKey}
+                  data-testid="shortlist-comparison-row"
+                >
+                  <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell className="px-2 py-2">
+                    <button
+                      type="button"
+                      className="block rounded-sm text-left font-extrabold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                      onClick={() => onSelectAddress(row.addressKey)}
+                      aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
                     >
-                      {gap.text}
+                      {row.address}
+                    </button>
+                    {row.flatTypeLabel ? (
+                      <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                        {row.flatTypeLabel}
+                      </span>
+                    ) : null}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 font-medium text-muted-foreground">
+                    {localizeTownName(row.town, locale)}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right">
+                    <span className="block font-extrabold tabular-nums text-foreground">
+                      {formatCompactCurrency(row.medianPrice, locale)}
                     </span>
-                  ) : null}
-                </TableCell>
-                <TableCell className="px-2 py-2 text-right tabular-nums">
+                    <BudgetMatchBadge
+                      medianPrice={row.medianPrice}
+                      budgetMin={budgetMin ?? null}
+                      budgetMax={budgetMax ?? null}
+                      t={t}
+                      locale={locale}
+                      variant="compact"
+                      className="block text-[0.6rem] font-bold tabular-nums"
+                    />
+                    {gap ? (
+                      <span
+                        className={cn(
+                          "block text-[0.6rem] font-bold tabular-nums",
+                          gap.tone === "below" && "text-success",
+                          gap.tone === "above" && "text-destructive",
+                          gap.tone === "match" && "text-primary",
+                        )}
+                      >
+                        {gap.text}
+                      </span>
+                    ) : null}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right tabular-nums">
+                    {row.medianPricePerSqm !== null
+                      ? formatCurrency(Math.round(row.medianPricePerSqm), locale)
+                      : t("shortlist.compare.cellEmpty")}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right tabular-nums">
+                    {row.askingPrice !== null
+                      ? formatCompactCurrency(row.askingPrice, locale)
+                      : t("shortlist.compare.cellEmpty")}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right text-[0.63rem] leading-relaxed">
+                    {formatFairRange(row)}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right tabular-nums">
+                    {formatDelta(row.deltaVsFairMedian)}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-[0.63rem]">
+                    <span className="inline-block rounded-full border border-border/40 px-2 py-0.5 text-[0.6rem] font-bold">
+                      {t(row.confidenceLevelLabel)}
+                    </span>
+                  </TableCell>
+                  <TableCell className="px-2 py-2 tabular-nums">
+                    {formatRemainingLease(row.leaseCommenceRange, t)}
+                  </TableCell>
+                  <TableCell className="px-2 py-2">
+                    {row.nearestMrt ? (
+                      <>
+                        <span className="block font-semibold text-foreground">
+                          {row.nearestMrt.stationName}
+                        </span>
+                        <span
+                          className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground"
+                          title={formatMeters(row.nearestMrt.distanceMeters, t, locale)}
+                          aria-label={`${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`}
+                        >
+                          {formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground">
+                        {t("shortlist.compare.cellEmpty")}
+                      </span>
+                    )}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-[0.63rem]">
+                    {formatDecision(row)}
+                  </TableCell>
+                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[0.64rem]">
+                    {formatCaveats(row)}
+                  </TableCell>
+                  <TableCell className="px-2 py-2 text-right tabular-nums">
+                    {row.targetPrice !== null
+                      ? formatCompactCurrency(row.targetPrice, locale)
+                      : t("shortlist.compare.cellEmpty")}
+                  </TableCell>
+                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground">
+                    {row.buyerNotes.trim().length > 0
+                      ? row.buyerNotes
+                      : t("shortlist.compare.cellEmpty")}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="grid gap-2 px-2 py-3 md:hidden">
+        {comparisonRows.map((row, index) => (
+          <div
+            key={`mobile-${row.addressKey}`}
+            data-testid="shortlist-comparison-card"
+            className="rounded-lg border border-border/40 bg-card/70 p-2.5"
+          >
+            <div className="flex items-start gap-2">
+              <span className="mt-0.5 w-6 shrink-0 text-center text-xs font-extrabold tabular-nums text-muted-foreground">
+                {index + 1}
+              </span>
+              <div className="min-w-0">
+                <button
+                  type="button"
+                  className="block rounded-sm text-left font-extrabold leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                  onClick={() => onSelectAddress(row.addressKey)}
+                  aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
+                >
+                  {row.address}
+                </button>
+                {row.flatTypeLabel ? (
+                  <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                    {row.flatTypeLabel}
+                  </span>
+                ) : null}
+                <div className="mt-1 flex flex-wrap gap-1.5 text-[0.6rem]">
+                  <Badge variant="outline" className="font-bold">
+                    {t("shortlist.compare.col.medianPrice")}: {formatCompactCurrency(row.medianPrice, locale)}
+                  </Badge>
+                  <Badge variant="outline" className="font-bold">
+                    {t(row.confidenceLevelLabel)}
+                  </Badge>
+                  <Badge className="font-bold" variant="secondary">
+                    {formatDecision(row)}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[0.63rem]">
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.askingPrice")}:{" "}
+                <strong className="text-foreground">
+                  {row.askingPrice !== null
+                    ? formatCompactCurrency(row.askingPrice, locale)
+                    : t("shortlist.compare.cellEmpty")}
+                </strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.medianPerSqm")}:{" "}
+                <strong className="text-foreground">
                   {row.medianPricePerSqm !== null
                     ? formatCurrency(Math.round(row.medianPricePerSqm), locale)
                     : t("shortlist.compare.cellEmpty")}
-                </TableCell>
-                <TableCell className="px-2 py-2 text-right tabular-nums">
-                  {formatNumber(row.recentTransactionCount, 0, locale)}
-                </TableCell>
-                <TableCell className="px-2 py-2 tabular-nums">
-                  {formatRemainingLease(row.leaseCommenceRange, t)}
-                </TableCell>
-                <TableCell className="px-2 py-2">
-                  {row.nearestMrt ? (
-                    <>
-                      <span className="block font-semibold text-foreground">
-                        {row.nearestMrt.stationName}
-                      </span>
-                      <span
-                        className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground"
-                        title={formatMeters(row.nearestMrt.distanceMeters, t, locale)}
-                        aria-label={`${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`}
-                      >
-                        {formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground">
-                      {t("shortlist.compare.cellEmpty")}
-                    </span>
-                  )}
-                </TableCell>
-                <TableCell className="px-2 py-2 text-right tabular-nums">
+                </strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.targetPrice")}:{" "}
+                <strong className="text-foreground">
                   {row.targetPrice !== null
                     ? formatCompactCurrency(row.targetPrice, locale)
                     : t("shortlist.compare.cellEmpty")}
-                </TableCell>
-                <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground">
-                  {row.notes.trim().length > 0
-                    ? row.notes
+                </strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.fairRange")}:{" "}
+                <strong className="text-foreground">{formatFairRange(row)}</strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.deltaVsFairMedian")}:{" "}
+                <strong className="text-foreground">{formatDelta(row.deltaVsFairMedian)}</strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.lease")}:{" "}
+                <strong className="text-foreground">{formatRemainingLease(row.leaseCommenceRange, t)}</strong>
+              </span>
+              <span className="text-muted-foreground">
+                {t("shortlist.compare.col.mrt")}:{" "}
+                <strong className="text-foreground">
+                  {row.nearestMrt
+                    ? formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)
                     : t("shortlist.compare.cellEmpty")}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+                </strong>
+              </span>
+            </div>
+            <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
+              {formatCaveats(row)}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -547,6 +734,40 @@ function NotesEditor({
   );
 }
 
+function DateEditor({
+  id,
+  label,
+  value,
+  placeholder,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Field>
+      <FieldContent>
+        <FieldLabel htmlFor={id} className="v2-section-title">
+          {label}
+        </FieldLabel>
+        <InputGroup>
+          <InputGroupInput
+            id={id}
+            type="date"
+            value={value}
+            placeholder={placeholder}
+            className="rounded-lg border border-border/40 bg-muted/10 text-sm"
+            onChange={(event) => onChange(event.target.value)}
+          />
+        </InputGroup>
+      </FieldContent>
+    </Field>
+  );
+}
+
 function ShortlistRowEditor({
   item,
   gapInfo,
@@ -565,6 +786,35 @@ function ShortlistRowEditor({
   return (
     <>
       <div className="grid gap-3 sm:grid-cols-2">
+        <Field>
+          <FieldContent>
+            <FieldLabel htmlFor={`status-${item.addressKey}`} className="v2-section-title">
+              {t("shortlist.decisionStatus.label")}
+            </FieldLabel>
+            <Select
+              value={item.decisionStatus ?? "unknown"}
+              onValueChange={(value) =>
+                onUpdate(item.addressKey, {
+                  decisionStatus: value === "unknown" ? undefined : (value as ShortlistItem["decisionStatus"]),
+                })
+              }
+            >
+              <SelectTrigger id={`status-${item.addressKey}`} className="h-9">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {decisionStatusOptions.map((option) => (
+                  <SelectItem
+                    key={`${item.addressKey}-${option.value}`}
+                    value={option.value}
+                  >
+                    {t(option.labelKey)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FieldContent>
+        </Field>
         <CurrencyEditor
           id={`target-${item.addressKey}`}
           label={t("shortlist.yourTargetPrice")}
@@ -606,23 +856,113 @@ function ShortlistRowEditor({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <CurrencyEditor
-          id={`offer-${item.addressKey}`}
-          label={t("shortlist.offerCeiling")}
-          value={item.offerCeiling ?? null}
-          placeholder={t("shortlist.offerCeilingPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { offerCeiling: val ?? undefined })}
+          id={`asking-${item.addressKey}`}
+          label={t("shortlist.askingPrice")}
+          value={item.askingPrice ?? null}
+          placeholder={t("shortlist.askingPricePlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { askingPrice: val ?? undefined })}
           t={t}
         />
-        <NotesEditor
-          id={`agent-${item.addressKey}`}
-          label={t("shortlist.agentRemarks")}
-          value={item.agentRemarks ?? ""}
-          placeholder={t("shortlist.agentRemarksPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { agentRemarks: val })}
+        <CurrencyEditor
+          id={`suggested-offer-${item.addressKey}`}
+          label={t("shortlist.suggestedOfferCeiling")}
+          value={item.suggestedOfferCeiling ?? null}
+          placeholder={t("shortlist.suggestedOfferCeilingPlaceholder")}
+          onChange={(val) =>
+            onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })
+          }
+          t={t}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <CurrencyEditor
+          id={`fair-low-${item.addressKey}`}
+          label={t("shortlist.fairRangeLow")}
+          value={item.fairRangeLow ?? null}
+          placeholder={t("shortlist.fairRangeLowPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { fairRangeLow: val ?? undefined })}
+          t={t}
+        />
+        <CurrencyEditor
+          id={`fair-median-${item.addressKey}`}
+          label={t("shortlist.fairRangeMedian")}
+          value={item.fairRangeMedian ?? null}
+          placeholder={t("shortlist.fairRangeMedianPlaceholder")}
+          onChange={(val) =>
+            onUpdate(item.addressKey, { fairRangeMedian: val ?? undefined })
+          }
+          t={t}
+        />
+        <CurrencyEditor
+          id={`fair-high-${item.addressKey}`}
+          label={t("shortlist.fairRangeHigh")}
+          value={item.fairRangeHigh ?? null}
+          placeholder={t("shortlist.fairRangeHighPlaceholder")}
+          onChange={(val) =>
+            onUpdate(item.addressKey, { fairRangeHigh: val ?? undefined })
+          }
+          t={t}
         />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
+        <CurrencyEditor
+          id={`buyer-open-${item.addressKey}`}
+          label={t("shortlist.buyerOpeningOffer")}
+          value={item.buyerOpeningOffer ?? null}
+          placeholder={t("shortlist.buyerOpeningOfferPlaceholder")}
+          onChange={(val) =>
+            onUpdate(item.addressKey, { buyerOpeningOffer: val ?? undefined })
+          }
+          t={t}
+        />
+        <CurrencyEditor
+          id={`valuation-${item.addressKey}`}
+          label={t("shortlist.valuationReceived")}
+          value={item.valuationReceived ?? null}
+          placeholder={t("shortlist.valuationReceivedPlaceholder")}
+          onChange={(val) =>
+            onUpdate(item.addressKey, { valuationReceived: val ?? undefined })
+          }
+          t={t}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <CurrencyEditor
+          id={`estimated-cov-${item.addressKey}`}
+          label={t("shortlist.estimatedCov")}
+          value={item.estimatedCov ?? null}
+          placeholder={t("shortlist.estimatedCovPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { estimatedCov: val ?? undefined })}
+          t={t}
+        />
+        <DateEditor
+          id={`viewing-date-${item.addressKey}`}
+          label={t("shortlist.viewingDate")}
+          value={item.viewingDate ?? ""}
+          placeholder={t("shortlist.viewingDatePlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { viewingDate: val || undefined })}
+        />
+        <CurrencyEditor
+          id={`offer-${item.addressKey}`}
+          label={t("shortlist.offerCeiling")}
+          value={item.suggestedOfferCeiling ?? null}
+          placeholder={t("shortlist.offerCeilingPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })}
+          t={t}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <NotesEditor
+          id={`buyer-notes-${item.addressKey}`}
+          label={t("shortlist.buyerNotes")}
+          value={item.buyerNotes ?? ""}
+          placeholder={t("shortlist.buyerNotesPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { buyerNotes: val })}
+        />
         <NotesEditor
           id={`pros-${item.addressKey}`}
           label={t("shortlist.pros")}
@@ -649,17 +989,34 @@ function ShortlistRowEditor({
         />
         <NotesEditor
           id={`noise-${item.addressKey}`}
-          label={t("shortlist.noise")}
-          value={item.noise ?? ""}
-          placeholder={t("shortlist.noisePlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { noise: val })}
+          label={t("shortlist.noiseNotes")}
+          value={item.noiseNotes ?? item.noise ?? ""}
+          placeholder={t("shortlist.noiseNotesPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { noiseNotes: val })}
         />
         <NotesEditor
           id={`transport-${item.addressKey}`}
-          label={t("shortlist.transport")}
-          value={item.transport ?? ""}
-          placeholder={t("shortlist.transportPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { transport: val })}
+          label={t("shortlist.transportNotes")}
+          value={item.transportNotes ?? item.transport ?? ""}
+          placeholder={t("shortlist.transportNotesPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { transportNotes: val })}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <NotesEditor
+          id={`agent-${item.addressKey}`}
+          label={t("shortlist.agentRemarks")}
+          value={item.agentRemarks ?? ""}
+          placeholder={t("shortlist.agentRemarksPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { agentRemarks: val })}
+        />
+        <NotesEditor
+          id={`notes-${item.addressKey}`}
+          label={t("shortlist.notes")}
+          value={item.notes}
+          placeholder={t("shortlist.notesPlaceholder")}
+          onChange={(val) => onUpdate(item.addressKey, { notes: val })}
         />
       </div>
 
@@ -668,14 +1025,6 @@ function ShortlistRowEditor({
         checkedItems={checkedItems}
         onToggle={onToggleChecklist}
         t={t}
-      />
-
-      <NotesEditor
-        id={`notes-${item.addressKey}`}
-        label={t("shortlist.notes")}
-        value={item.notes}
-        placeholder={t("shortlist.notesPlaceholder")}
-        onChange={(val) => onUpdate(item.addressKey, { notes: val })}
       />
     </>
   );
@@ -763,7 +1112,7 @@ export function ShortlistDrawer({
       });
     }
 
-    if (compareMode === "median" || compareMode === "median-asc" || compareMode === "median-desc") {
+    if (compareMode === "median-asc" || compareMode === "median-desc") {
       return t("shortlist.compare.metric.price.value", {
         value: formatCurrency(row.block.medianPrice, locale),
       });
@@ -807,6 +1156,23 @@ export function ShortlistDrawer({
           [
             t("shortlist.export.address"),
             t("shortlist.export.medianPrice"),
+            t("shortlist.export.askingPrice"),
+            t("shortlist.export.fairRangeLow"),
+            t("shortlist.export.fairRangeMedian"),
+            t("shortlist.export.fairRangeHigh"),
+            t("shortlist.export.suggestedOfferCeiling"),
+            t("shortlist.export.buyerOpeningOffer"),
+            t("shortlist.export.valuationReceived"),
+            t("shortlist.export.estimatedCov"),
+            t("shortlist.export.viewingDate"),
+            t("shortlist.export.decisionStatus"),
+            t("shortlist.export.buyerNotes"),
+            t("shortlist.export.pros"),
+            t("shortlist.export.cons"),
+            t("shortlist.export.renovation"),
+            t("shortlist.export.noiseNotes"),
+            t("shortlist.export.transportNotes"),
+            t("shortlist.export.agentRemarks"),
             t("shortlist.export.targetPrice"),
             t("shortlist.export.schools1km"),
             t("shortlist.export.hawkers1km"),
@@ -818,6 +1184,23 @@ export function ShortlistDrawer({
           rankedRows.map((row) => ({
             address: `${row.block.block} ${row.block.streetName}`,
             medianPrice: row.block.medianPrice,
+            askingPrice: row.item.askingPrice ?? null,
+            fairRangeLow: row.item.fairRangeLow ?? null,
+            fairRangeMedian: row.item.fairRangeMedian ?? null,
+            fairRangeHigh: row.item.fairRangeHigh ?? null,
+            suggestedOfferCeiling: row.item.suggestedOfferCeiling ?? null,
+            buyerOpeningOffer: row.item.buyerOpeningOffer ?? null,
+            valuationReceived: row.item.valuationReceived ?? null,
+            estimatedCov: row.item.estimatedCov ?? null,
+            viewingDate: row.item.viewingDate ?? "",
+            decisionStatus: row.item.decisionStatus ?? "",
+            buyerNotes: row.item.buyerNotes ?? "",
+            pros: row.item.pros ?? "",
+            cons: row.item.cons ?? "",
+            renovation: row.item.renovation ?? "",
+            noiseNotes: row.item.noiseNotes ?? row.item.noise ?? "",
+            transportNotes: row.item.transportNotes ?? row.item.transport ?? "",
+            agentRemarks: row.item.agentRemarks ?? "",
             targetPrice: row.item.targetPrice,
             schools1km: row.comparison?.amenities.primarySchoolsWithin1km ?? "",
             hawkers1km: row.comparison?.amenities.hawkerCentresWithin1km ?? "",

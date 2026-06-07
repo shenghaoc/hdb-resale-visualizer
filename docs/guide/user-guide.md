@@ -152,11 +152,21 @@ The **Saved** tab holds blocks you have bookmarked. You can save up to 50 blocks
 ### Features
 
 - **Side-by-side comparison** — view all saved blocks with their key metrics in a table
-- **Notes** — add personal notes to any saved block
-- **Target price** — set a target price for tracking
-- **Sort and rank** — order saved blocks by your preferred metric
-- **Export** — download your shortlist as CSV or JSON
-- **Share** — generate a URL to share your shortlist
+- **Decision board** — capture richer shortlist context per block:
+  - asking price
+  - fair value range (low/median/high)
+  - suggested offer ceiling
+  - buyer opening offer
+  - valuation, estimated COV, and viewing date
+  - decision status (`considering`, `viewing booked`, `offered`, `kiv`, `rejected`, `dropped`)
+  - pros, cons, renovation notes, noise notes, transport notes, agent remarks, and buyer notes
+- **Comparative decision view** — the compare mode now includes the shortlist’s ask price, fair range, delta vs fair median, remaining lease, MRT context, confidence, caveats, and monthly payment placeholder when available.
+- **Notes and legacy compatibility** — old saved shortlist entries still load with data preserved.
+  Existing `notes` continue to display and are mirrored into the new board where needed.
+- **Sort and rank** — order saved blocks by your preferred metric; decision status is included as a tie-break in ranking.
+- **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes.
+- **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits).
+- **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping.
 
 ### Cloud sync
 

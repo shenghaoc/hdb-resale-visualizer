@@ -1,28 +1,100 @@
 import { z } from "zod";
 import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "./constants";
+import { MAX_ADDRESS_KEY_LENGTH, MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import type { ShortlistItem } from "../types/data";
 
 export { mergeShortlists } from "@shared/shortlist-merge";
 
+const shortlistDecisionStatuses = [
+  "considering",
+  "viewing booked",
+  "offered",
+  "rejected",
+  "kiv",
+  "dropped",
+] as const;
+
+const note = z.string().transform((s) => s.slice(0, MAX_NOTE_LENGTH));
+
 const shortlistItemSchema = z.object({
-  addressKey: z.string(),
-  notes: z.string().catch(""),
-  pros: z.string().optional().catch(undefined),
-  cons: z.string().optional().catch(undefined),
-  renovation: z.string().optional().catch(undefined),
-  noise: z.string().optional().catch(undefined),
-  transport: z.string().optional().catch(undefined),
-  offerCeiling: z.number().optional().catch(undefined),
-  agentRemarks: z.string().optional().catch(undefined),
-  targetPrice: z.number().nullable().catch(null),
-  addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
+    addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
+    notes: note.catch(""),
+    pros: note.optional().catch(undefined),
+    cons: note.optional().catch(undefined),
+    renovation: note.optional().catch(undefined),
+    noise: note.optional().catch(undefined),
+    transport: note.optional().catch(undefined),
+    offerCeiling: z.number().finite().optional().catch(undefined),
+    suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
+    askingPrice: z.number().finite().optional().catch(undefined),
+    fairRangeLow: z.number().finite().optional().catch(undefined),
+    fairRangeMedian: z.number().finite().optional().catch(undefined),
+    fairRangeHigh: z.number().finite().optional().catch(undefined),
+    buyerOpeningOffer: z.number().finite().optional().catch(undefined),
+    valuationReceived: z.number().finite().optional().catch(undefined),
+    estimatedCov: z.number().finite().optional().catch(undefined),
+    viewingDate: z.string().optional().catch(undefined),
+    decisionStatus: z
+      .enum(shortlistDecisionStatuses)
+      .optional()
+      .catch(undefined),
+    noiseNotes: note.optional().catch(undefined),
+    transportNotes: note.optional().catch(undefined),
+    buyerNotes: note.optional().catch(undefined),
+    agentRemarks: note.optional().catch(undefined),
+    targetPrice: z.number().finite().nullable().catch(null),
+    addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
 });
+
+function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
+  if (Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof fallback === "number" && Number.isFinite(fallback)) {
+    return fallback;
+  }
+  return undefined;
+}
+
+function normalizeDecisionStatus(
+  value: string | undefined,
+): (typeof shortlistDecisionStatuses)[number] | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const lower = value.toLowerCase();
+  for (const status of shortlistDecisionStatuses) {
+    if (status === lower) {
+      return status;
+    }
+  }
+  return undefined;
+}
+
+function normalizeShortlistItem(raw: z.infer<typeof shortlistItemSchema>): ShortlistItem {
+  const notes = raw.notes ?? "";
+  const suggestedOfferCeiling = normalizeNumber(raw.suggestedOfferCeiling, raw.offerCeiling);
+  const buyerNotes = raw.buyerNotes ?? notes;
+  const noiseNotes = raw.noiseNotes ?? raw.noise;
+  const transportNotes = raw.transportNotes ?? raw.transport;
+
+  return {
+    ...raw,
+    notes,
+    suggestedOfferCeiling,
+    buyerNotes,
+    noiseNotes,
+    transportNotes,
+    decisionStatus: normalizeDecisionStatus(raw.decisionStatus),
+  };
+}
 
 const shortlistSchema = z.array(z.unknown()).transform((arr) => {
   return arr
     .map((item) => {
       const parsed = shortlistItemSchema.safeParse(item);
-      return parsed.success ? parsed.data : null;
+      return parsed.success ? normalizeShortlistItem(parsed.data) : null;
     })
     .filter((item): item is ShortlistItem => item !== null);
 });

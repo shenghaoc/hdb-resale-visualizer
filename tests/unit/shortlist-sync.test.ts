@@ -68,12 +68,12 @@ describe("shortlistPushSchema", () => {
     expect(shortlistPushSchema.safeParse({ items }).success).toBe(false);
   });
 
-  it("catches an oversized note instead of rejecting the item", () => {
+  it("truncates an oversized note instead of rejecting the item", () => {
     const items = [{ ...validItem("a"), notes: "x".repeat(MAX_NOTE_LENGTH + 1) }];
     const parsed = shortlistPushSchema.safeParse({ items });
     expect(parsed.success).toBe(true);
     if (parsed.success) {
-      expect(parsed.data.items[0].notes).toBe("");
+      expect(parsed.data.items[0].notes).toHaveLength(MAX_NOTE_LENGTH);
     }
   });
 
@@ -101,5 +101,21 @@ describe("parseStoredItems", () => {
       Array.from({ length: MAX_SHORTLIST_ITEMS + 3 }, (_, i) => validItem(`k${i}`)),
     );
     expect(parseStoredItems(json)).toHaveLength(MAX_SHORTLIST_ITEMS);
+  });
+
+  it("migrates legacy offer-ceiling fields when parsing synced payloads", () => {
+    const payload = {
+      ...validItem("legacy-offer"),
+      offerCeiling: 840000,
+      targetPrice: 810000,
+      notes: "legacy note",
+    };
+
+    const parsed = parseStoredItems(JSON.stringify([payload]));
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0]?.askingPrice).toBeUndefined();
+    expect(parsed[0]?.suggestedOfferCeiling).toBe(840000);
+    expect(parsed[0]?.buyerOpeningOffer).toBeUndefined();
+    expect(parsed[0]?.buyerNotes).toBe("legacy note");
   });
 });

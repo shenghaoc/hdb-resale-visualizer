@@ -57,6 +57,23 @@ export function downloadCsv(filename: string, content: string): void {
 export type ShortlistCsvRowInput = {
   address: string;
   medianPrice: number;
+  askingPrice: number | null;
+  fairRangeLow: number | null;
+  fairRangeMedian: number | null;
+  fairRangeHigh: number | null;
+  suggestedOfferCeiling: number | null;
+  buyerOpeningOffer: number | null;
+  valuationReceived: number | null;
+  estimatedCov: number | null;
+  viewingDate: string;
+  decisionStatus: string;
+  buyerNotes: string;
+  pros: string;
+  cons: string;
+  renovation: string;
+  noiseNotes: string;
+  transportNotes: string;
+  agentRemarks: string;
   targetPrice: number | null;
   schools1km: number | string;
   hawkers1km: number | string;
@@ -73,6 +90,23 @@ export function buildShortlistCsvContent(
   const dataRows = rows.map((row) => [
     row.address,
     row.medianPrice,
+    row.askingPrice ?? "",
+    row.fairRangeLow ?? "",
+    row.fairRangeMedian ?? "",
+    row.fairRangeHigh ?? "",
+    row.suggestedOfferCeiling ?? "",
+    row.buyerOpeningOffer ?? "",
+    row.valuationReceived ?? "",
+    row.estimatedCov ?? "",
+    row.viewingDate || "",
+    row.decisionStatus || "",
+    row.buyerNotes || "",
+    row.pros || "",
+    row.cons || "",
+    row.renovation || "",
+    row.noiseNotes || "",
+    row.transportNotes || "",
+    row.agentRemarks || "",
     row.targetPrice ?? "",
     row.schools1km,
     row.hawkers1km,
