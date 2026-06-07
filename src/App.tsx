@@ -203,16 +203,24 @@ function App() {
   if (checkStoreyRange !== prevCheckStoreyRange) setPrevCheckStoreyRange(checkStoreyRange);
   if (checkLeaseYear !== prevCheckLeaseYear) setPrevCheckLeaseYear(checkLeaseYear);
 
+  const FALLBACK_SAMPLE = useMemo(() => ({
+    addressKey: "406-ANG MO KIO AVE 10",
+    medianPrice: 450000,
+    floorAreaRange: [68, 68] as [number, number],
+    leaseCommenceRange: [1980, 1980] as [number, number],
+    flatTypes: ["4 ROOM"],
+  }), []);
+
   const sampleCheckBlock = useMemo(() => {
     if (pipeline.blocks.length === 0) {
-      return null;
+      return FALLBACK_SAMPLE;
     }
     const candidates = pipeline.blocks.filter((block) => block.medianPrice > 0 && block.transactionCount > 0);
-    if (candidates.length === 0) return null;
+    if (candidates.length === 0) return FALLBACK_SAMPLE;
     return candidates
       .slice()
       .sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
-  }, [pipeline.blocks]);
+  }, [pipeline.blocks, FALLBACK_SAMPLE]);
 
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
     setCheckAddressKey(addressKey);
@@ -257,13 +265,14 @@ function App() {
   ]);
 
   const handleOpenCandidates = useCallback(() => {
+    const tab = pipeline.hasResultScope ? "results" : "filters";
     if (panel.isDesktop) {
-      panel.setLeftTab("results");
+      panel.setLeftTab(tab);
       panel.setIsLeftPanelOpen(true);
       return;
     }
-    panel.setMobileTab("results");
-  }, [panel]);
+    panel.setMobileTab(tab);
+  }, [panel, pipeline.hasResultScope]);
 
   const handleOpenShortlist = useCallback(() => {
     if (panel.isDesktop) {
@@ -682,6 +691,7 @@ function App() {
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}
             mobileTab={panel.mobileTab}
+            onClearMobileTab={() => panel.setMobileTab(null)}
           />
         ) : null}
 
@@ -765,6 +775,14 @@ function App() {
           t={t}
           onUseCurrentLocation={handleUseCurrentLocation}
           onChooseTown={() => handleChooseTown()}
+          onCheckListing={() => {
+            if (panel.isDesktop) {
+              panel.setLeftTab("check");
+              panel.setIsLeftPanelOpen(true);
+            } else {
+              panel.setMobileTab("check");
+            }
+          }}
         />
 
         <AppPanelShell
