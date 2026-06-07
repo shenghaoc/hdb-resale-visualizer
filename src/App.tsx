@@ -211,8 +211,7 @@ function App() {
     if (candidates.length === 0) return null;
     return candidates
       .slice()
-      .sort((a, b) => a.addressKey.localeCompare(b.addressKey))
-      .at(0);
+      .sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
   }, [pipeline.blocks]);
 
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
@@ -222,9 +221,9 @@ function App() {
 
   const handleUseSampleCheck = useCallback(() => {
     if (!sampleCheckBlock) return;
-    const [minArea, maxArea] = sampleCheckBlock.floorAreaRange;
-    const [minLease, maxLease] = sampleCheckBlock.leaseCommenceRange;
-    const fallbackFlatType = sampleCheckBlock.flatTypes.length
+    const [minArea, maxArea] = sampleCheckBlock.floorAreaRange ?? [];
+    const [minLease, maxLease] = sampleCheckBlock.leaseCommenceRange ?? [];
+    const fallbackFlatType = sampleCheckBlock.flatTypes?.length
       ? [...sampleCheckBlock.flatTypes].sort((a, b) => a.localeCompare(b))[0]
       : null;
     const floorAreaSqm = minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
@@ -640,7 +639,7 @@ function App() {
 
   // ── Derived layout flags ─────────────────────────────────────────────────
 
-  const showFloatingHeader = panel.isDesktop ? header.isHeaderVisible : panel.mobileTab === null;
+  const showFloatingHeader = header.isHeaderVisible;
   const showScopePrompt = Boolean(
     !pipeline.hasResultScope &&
       (panel.isDesktop

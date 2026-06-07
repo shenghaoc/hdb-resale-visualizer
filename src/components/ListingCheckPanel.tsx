@@ -68,10 +68,14 @@ type ListingCheckPanelProps = {
   onFlatTypeChange: (flatType: string | null) => void;
   onStoreyRangeChange: (storeyRange: string | null) => void;
   onLeaseYearChange: (year: number | null) => void;
+  onUseSampleCheck: () => void;
+  onOpenCandidates: () => void;
+  onOpenShortlist: () => void;
   onSaveToShortlist: () => void;
   onShare: () => void;
   savedToShortlist: boolean;
   referenceMonth?: string;
+  hasSampleCheck: boolean;
 };
 
 // ── Verdict themes ──────────────────────────────────────────────────────────
