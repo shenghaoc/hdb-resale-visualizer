@@ -80,3 +80,7 @@
 ## 2026-05-30 - Single-Pass Aggregation over Native Array Iterators
 **Learning:** Calling sequential array operations like `.reduce()` then `.find()` inside a data aggregation pipeline (such as inside `rollupTownFlatTypeGroup`) iterates the exact same array multiple times and induces function-call and loop overhead penalties.
 **Action:** Always consolidate multiple array traversals into a single `for` loop. When searching for the latest item and concurrently accumulating a sum over a group, perform the sum (`volume += p.transactionCount`) within the same loop that tests the condition (`p.month > latestMonth`).
+
+## 2024-06-07 - Dynamic Bounding Boxes Require Infinity Initialization
+**Learning:** When implementing branch-and-bound style spatial pre-filtering for top-K nearest neighbor searches, using an arbitrary initial threshold (like `5000m` assuming K items exist within that range) is unsafe. If the region is sparse and items are beyond that threshold, the logic will early-exit and return empty arrays, causing a functional regression in otherwise correct bounding box checks.
+**Action:** Always initialize the dynamic threshold for bounding boxes to `Infinity` until the target count (`limit`) has been accumulated, after which the threshold can be safely clamped to the K-th furthest item's distance.
