@@ -9,7 +9,6 @@ export type ConfidenceInput = {
   flatTypeMatchCount: number;
   floorAreaMatchCount: number;
   storeyMatchCount: number;
-  widenedSearch: boolean;
   timeAdjustmentApplied: boolean;
   trendSampleSize: number | null;
 };
@@ -58,6 +57,7 @@ export function computeRecencySignal(ageMonths: number | null): number {
   return clamp01(1 - ageMonths / RECENCY_DECAY_MONTHS);
 }
 
+/** Counts are cumulative: block ⊆ street ⊆ town (a same-block tx also counts as same-street and same-town). */
 export function computeScopeSignal(
   sameBlockCount: number,
   sameStreetCount: number,

@@ -49,7 +49,6 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
     flatTypeMatchCount: confidence.comparableCount,
     floorAreaMatchCount: confidence.comparableCount,
     storeyMatchCount: confidence.comparableCount,
-    widenedSearch: false,
     timeAdjustmentApplied: false,
     trendSampleSize: null,
   };

@@ -503,7 +503,6 @@ export function ListingCheckPanel({
         .filter((c) => c.matchReasons?.some((r) => r.startsWith("Similar floor area"))).length,
       storeyMatchCount: comparableSet.comparables
         .filter((c) => c.matchReasons?.includes("Similar storey")).length,
-      widenedSearch: comparableSet.widenedSearch,
       timeAdjustmentApplied: adjustmentMeta?.adjustmentApplied ?? false,
       trendSampleSize: null,
     };
@@ -890,9 +889,9 @@ export function ListingCheckPanel({
                   {t("check.caveatsTitle")}
                 </h4>
                 <ul className="flex flex-col gap-1.5">
-                  {result.caveats.map((caveat: Caveat, index: number) => (
+                  {result.caveats.map((caveat: Caveat) => (
                     <li
-                      key={index}
+                      key={caveat.code}
                       className={cn(
                         "flex items-start gap-2 rounded px-2 py-1 text-xs",
                         caveat.severity === "critical" && "bg-destructive/10 text-destructive",

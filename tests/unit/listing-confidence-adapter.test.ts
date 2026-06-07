@@ -51,7 +51,6 @@ describe("listing-confidence adapter", () => {
       flatTypeMatchCount: 8,
       floorAreaMatchCount: 8,
       storeyMatchCount: 8,
-      widenedSearch: false,
       timeAdjustmentApplied: false,
       trendSampleSize: null,
     };

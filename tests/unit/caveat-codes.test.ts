@@ -19,7 +19,6 @@ function input(overrides: Partial<ConfidenceInput> = {}): ConfidenceInput {
     flatTypeMatchCount: 12,
     floorAreaMatchCount: 10,
     storeyMatchCount: 8,
-    widenedSearch: false,
     timeAdjustmentApplied: false,
     trendSampleSize: null,
     ...overrides,

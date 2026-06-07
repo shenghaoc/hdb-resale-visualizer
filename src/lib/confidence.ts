@@ -23,7 +23,6 @@ export function getDataConfidenceLevel(recentTransactionCount: number): DataConf
     flatTypeMatchCount: recentTransactionCount,
     floorAreaMatchCount: recentTransactionCount,
     storeyMatchCount: recentTransactionCount,
-    widenedSearch: false,
     timeAdjustmentApplied: false,
     trendSampleSize: null,
   };

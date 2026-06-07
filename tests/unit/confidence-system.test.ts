@@ -18,7 +18,6 @@ function input(overrides: Partial<ConfidenceInput> = {}): ConfidenceInput {
     flatTypeMatchCount: 12,
     floorAreaMatchCount: 10,
     storeyMatchCount: 8,
-    widenedSearch: false,
     timeAdjustmentApplied: false,
     trendSampleSize: null,
     ...overrides,
@@ -262,7 +261,6 @@ describe("integration cases", () => {
         flatTypeMatchCount: 2,
         floorAreaMatchCount: 1,
         storeyMatchCount: 1,
-        widenedSearch: true,
       }),
     );
     expect(result.level).toBe("low");

@@ -58,7 +58,6 @@ export function computeConfidence(
     flatTypeMatchCount: count,
     floorAreaMatchCount: count,
     storeyMatchCount: count,
-    widenedSearch: false,
     timeAdjustmentApplied: false,
     trendSampleSize: null,
   };
