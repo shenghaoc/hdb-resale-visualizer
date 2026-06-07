@@ -39,17 +39,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DistributionBar } from "@/components/DistributionBar";
-import {
-  ComparableTransactionsList,
-  type AdjustmentInfo,
-} from "@/components/ComparableTransactionsList";
+import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
+import type { AdjustmentInfo } from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
 
@@ -171,12 +168,11 @@ export function ListingCheckPanel({
   const [detail, setDetail] = useState<AddressDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState(false);
-  const [comparablesExpanded, setComparablesExpanded] = useState(false);
   const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
   /** Whether time-adjusted prices are shown (toggle state). */
-  const [adjustmentEnabled, setAdjustmentEnabled] = useState(false);
+  const [adjustmentEnabled] = useState(false);
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
@@ -911,48 +907,6 @@ export function ListingCheckPanel({
               </div>
             )}
 
-            {/* Time adjustment toggle */}
-            {comparables.length > 0 && (
-              <div className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2">
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-xs font-semibold">
-                    {t("check.adjustmentToggle")}
-                  </span>
-                  <span className="text-[0.65rem] text-muted-foreground">
-                    {t("check.adjustmentToggleDescription")}
-                  </span>
-                </div>
-                <Switch
-                  checked={adjustmentEnabled}
-                  onCheckedChange={setAdjustmentEnabled}
-                  aria-label={t("check.adjustmentToggle")}
-                />
-              </div>
-            )}
-
-            {/* Comparable transactions list */}
-            {comparables.length > 0 && (
-              <ComparableTransactionsList
-                transactions={comparables.map((tx) => ({
-                  id: tx.transactionId,
-                  month: tx.month,
-                  flatType: tx.flatType,
-                  storeyRange: tx.storeyRange,
-                  floorAreaSqm: tx.floorAreaSqm,
-                  flatModel: "",
-                  leaseCommenceDate: tx.leaseCommenceDate ?? 0,
-                  remainingLease: "",
-                  resalePrice: tx.resalePrice,
-                  pricePerSqm: tx.pricePerSqm,
-                  pricePerSqft: null,
-                }))}
-                expanded={comparablesExpanded}
-                onToggle={() => setComparablesExpanded((prev) => !prev)}
-                adjustmentMap={adjustmentMeta?.adjustmentMap ?? undefined}
-                showAdjusted={adjustmentEnabled}
-              />
-            )}
-
             {/* Action buttons */}
             <div className="flex gap-2">
               <Button
@@ -977,6 +931,16 @@ export function ListingCheckPanel({
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* ── Evidence table ─────────────────────────────────────────────── */}
+      {comparableSet && !comparableSetLoading && !comparableSetError && (
+        <ComparableEvidenceTable
+          comparables={comparables}
+          referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
+          widenedSearch={comparableSet.widenedSearch}
+          caveats={comparableSet.caveats}
+        />
       )}
     </section>
   );
