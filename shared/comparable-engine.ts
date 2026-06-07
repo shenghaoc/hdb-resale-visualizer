@@ -346,6 +346,9 @@ function computeNewestAge(
  * Pass 1: same block + same flat type
  * Pass 2: same street + same flat type (triggered when pass 1 < MIN_COMPARABLES)
  * Pass 3: same town + same flat type (triggered when pass 2 < MIN_COMPARABLES)
+ *
+ * When no pass reaches MIN_COMPARABLES but some passes have data, the
+ * narrowest pass with any data is used (even if below threshold).
  */
 export function buildComparableSet(
   params: BuildComparableSetParams,
@@ -363,6 +366,12 @@ export function buildComparableSet(
   // Pass 1 — same block
   if (sameBlockRows.length >= MIN_COMPARABLES) {
     comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
+  } else if (sameBlockRows.length === 0 && sameStreetRows.length === 0 && sameTownRows.length === 0) {
+    // No data at all — return empty
+    caveats.push("No comparable transactions found for this listing.");
+  } else if (sameBlockRows.length > 0 && sameStreetRows.length < MIN_COMPARABLES && sameTownRows.length === 0) {
+    // All passes below threshold and no town data — use narrowest available
+    comparables = scoreAndRank(candidate, sameBlockRows, MAX_COMPARABLES);
   } else {
     // Pass 2 — same street
     widenedSearch = true;
@@ -371,6 +380,9 @@ export function buildComparableSet(
     );
 
     if (sameStreetRows.length >= MIN_COMPARABLES) {
+      comparables = scoreAndRank(candidate, sameStreetRows, MAX_COMPARABLES);
+    } else if (sameStreetRows.length > 0 && sameTownRows.length === 0) {
+      // Street has data but below threshold, and no town fallback available
       comparables = scoreAndRank(candidate, sameStreetRows, MAX_COMPARABLES);
     } else {
       // Pass 3 — same town
