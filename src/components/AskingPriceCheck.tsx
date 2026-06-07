@@ -14,9 +14,9 @@ import { useI18n } from "@/lib/i18n";
 import {
   assessAskingPrice,
   findComparableTransactions,
-  parseStoreyMidpoint,
   type AskingPriceAssessment,
 } from "@/entities/transaction/transaction-analysis";
+import { parseStoreyMidpoint } from "@shared/comparable-engine";
 import type { AddressDetail } from "@/types/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

@@ -5,7 +5,7 @@ import type {
 
 // Moved to shared/comparable-engine.ts so the sync pipeline can use it
 // without importing from src/. Re-export for backwards compatibility.
-import { parseStoreyMidpoint } from "../../shared/comparable-engine";
+import { parseStoreyMidpoint } from "@shared/comparable-engine";
 export { parseStoreyMidpoint };
 
 export type TrendRangeKey = "2y" | "5y" | "10y" | "max";

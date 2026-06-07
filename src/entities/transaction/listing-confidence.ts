@@ -3,7 +3,7 @@ import {
   computeConfidence as computeConfidenceV2,
   type ConfidenceLevel,
   type ConfidenceInput,
-} from "../../shared/confidence-system";
+} from "@shared/confidence-system";
 
 export type { ConfidenceLevel };
 

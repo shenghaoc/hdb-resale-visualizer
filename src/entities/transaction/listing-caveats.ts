@@ -3,10 +3,10 @@ import type { ConfidenceResult } from "./listing-confidence";
 import {
   computeConfidence as computeConfidenceV2,
   type ConfidenceInput,
-} from "../../shared/confidence-system";
+} from "@shared/confidence-system";
 import {
   generateCaveats as generateCaveatsV2,
-} from "../../shared/caveat-codes";
+} from "@shared/caveat-codes";
 
 export type Caveat = {
   severity: "info" | "warning";
