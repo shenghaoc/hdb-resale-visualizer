@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
@@ -173,7 +172,7 @@ export function ListingCheckPanel({
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
   /** Whether time-adjusted prices are shown (toggle state). */
-  const [adjustmentEnabled, setAdjustmentEnabled] = useState(false);
+  const [adjustmentEnabled] = useState(false);
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
