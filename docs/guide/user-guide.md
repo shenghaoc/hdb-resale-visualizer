@@ -110,6 +110,22 @@ The tool returns a **verdict** — whether the asking price is well below, aroun
 - The transaction range (lowest to highest recent price)
 - Number of comparable transactions used
 
+### Time-adjusted prices
+
+Toggle **"Show time-adjusted prices"** to see what older comparable transactions would roughly correspond to at the latest market period. This is **not a price forecast** — it is a mechanical restatement of observed historical data.
+
+When enabled, each comparable shows:
+- The original transaction price (strikethrough)
+- The adjusted price (bold), computed from town × flat type monthly median prices per square metre
+- An adjustment label (e.g. "Adjusted from 2022-03 median")
+
+If trend data is unavailable for a particular comparable, the row shows **"No adjustment data"** instead.
+
+The adjustment is calculated by dividing the latest available town × flat type median price per square metre by the transaction month's median:
+`adjustedPrice = rawPrice × (latestMedian ÷ txMonthMedian)`
+
+This helps you understand how an older transaction compares to the latest market period without making a prediction. The default view is raw prices — adjust only when comparing transactions from different years.
+
 You can **save the check to your shortlist** or **share it via URL**.
 
 ## Shortlist (Saved)
