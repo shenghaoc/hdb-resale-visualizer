@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { MAX_SHORTLIST_ITEMS, MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "./constants";
+import { MAX_ADDRESS_KEY_LENGTH } from "@shared/shortlist-limits";
 import type { ShortlistItem } from "../types/data";
 
 export { mergeShortlists } from "@shared/shortlist-merge";
@@ -16,7 +17,7 @@ const shortlistDecisionStatuses = [
 const note = z.string();
 
 const shortlistItemSchema = z.object({
-    addressKey: z.string().min(1),
+    addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
     notes: note.catch(""),
     pros: note.optional().catch(undefined),
     cons: note.optional().catch(undefined),

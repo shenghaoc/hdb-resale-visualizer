@@ -1,4 +1,4 @@
-export type CompareMode = "median" | "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
+export type CompareMode = "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
 
 type SortableShortlistRow = {
   item: {
@@ -15,7 +15,7 @@ type SortableShortlistRow = {
 };
 
 function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareMode) {
-  if (compareMode === "median" || compareMode === "median-asc") {
+  if (compareMode === "median-asc") {
     return row.block.medianPrice;
   }
 

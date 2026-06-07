@@ -138,7 +138,6 @@ type GapInfo = {
 
 const compareModeLabels: Record<CompareMode, string> = {
   "target-gap": "shortlist.compare.targetFit",
-  median: "shortlist.compare.priceLow",
   "median-asc": "shortlist.compare.priceLow",
   "median-desc": "shortlist.compare.priceHigh",
   lease: "shortlist.compare.lease",
@@ -214,13 +213,13 @@ function ShortlistComparisonTable({
   };
 
   const formatFairRange = (row: ShortlistComparisonRow) => {
-    if (row.fairRangeLow === null || row.fairRangeMedian === null || row.fairRangeHigh === null) {
+    const low = row.fairRangeLow !== null ? formatCompactCurrency(row.fairRangeLow, locale) : "—";
+    const median = row.fairRangeMedian !== null ? formatCompactCurrency(row.fairRangeMedian, locale) : "—";
+    const high = row.fairRangeHigh !== null ? formatCompactCurrency(row.fairRangeHigh, locale) : "—";
+    if (low === "—" && median === "—" && high === "—") {
       return t("shortlist.compare.cellEmpty");
     }
-    return `${formatCompactCurrency(row.fairRangeLow, locale)} — ${formatCompactCurrency(row.fairRangeMedian, locale)} — ${formatCompactCurrency(
-      row.fairRangeHigh,
-      locale,
-    )}`;
+    return `${low} — ${median} — ${high}`;
   };
 
   const formatCaveats = (row: ShortlistComparisonRow) => {
@@ -1113,7 +1112,7 @@ export function ShortlistDrawer({
       });
     }
 
-    if (compareMode === "median" || compareMode === "median-asc" || compareMode === "median-desc") {
+    if (compareMode === "median-asc" || compareMode === "median-desc") {
       return t("shortlist.compare.metric.price.value", {
         value: formatCurrency(row.block.medianPrice, locale),
       });

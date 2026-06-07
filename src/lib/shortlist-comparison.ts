@@ -127,7 +127,7 @@ function computeDeltaVsReference(
 
 function buildCaveats(item: ShortlistComparisonInputRow["item"], nearestMrt: NearestMrt | null, recentTransactionCount: number): ShortlistComparisonCaveatKey[] {
   const caveats: ShortlistComparisonCaveatKey[] = [];
-  if (item.fairRangeLow === undefined || item.fairRangeMedian === undefined || item.fairRangeHigh === undefined) {
+  if (item.fairRangeLow == null || item.fairRangeMedian == null || item.fairRangeHigh == null) {
     caveats.push("shortlist.compare.caveat.noFairRange");
   }
   if (nearestMrt === null) {
