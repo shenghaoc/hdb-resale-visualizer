@@ -4,12 +4,13 @@ import { cn } from "@/lib/utils";
 import { formatCurrency, formatMonth } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import type { AddressDetailTransaction } from "@/types/data";
+import type { AdjustmentLabel } from "../../shared/data-types";
 import { Badge } from "@/components/ui/badge";
 
 export type AdjustmentInfo = {
   adjustedResalePrice: number | null;
   adjustedPricePerSqm: number | null;
-  adjustmentLabel: string | null;
+  adjustmentLabel: AdjustmentLabel | null;
 };
 
 export type ComparableTransactionsListProps = {
@@ -101,7 +102,9 @@ export function ComparableTransactionsList({
                   {t("unit.sqmShort")}
                   {hasAdjusted && adj?.adjustmentLabel && (
                     <span className="ml-1 text-primary/70">
-                      · {adj.adjustmentLabel}
+                      · {adj.adjustmentLabel.type === "at_latest"
+                        ? t("check.adjustmentLabel.atLatest")
+                        : t("check.adjustmentLabel.adjustedFrom", { month: adj.adjustmentLabel.month })}
                     </span>
                   )}
                 </span>

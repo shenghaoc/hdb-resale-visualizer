@@ -250,6 +250,12 @@ export type TransactionRow = {
   flatModel: string;
 };
 
+/** Structured label for a time-adjusted comparable. Resolved to a translated
+ *  string on the client so both en-SG and zh-SG users see their language. */
+export type AdjustmentLabel =
+  | { type: "at_latest" }
+  | { type: "adjusted_from"; month: string };
+
 /** Extended comparable with time adjustment fields.
  *  Populated by the comparable-transactions API when ?adjust=time is used. */
 export type TimeAdjustedComparable = {
@@ -263,6 +269,6 @@ export type TimeAdjustedComparable = {
   adjustedPricePerSqm: number | null;
   /** The computed adjustment factor, or null. */
   adjustmentFactor: number | null;
-  /** Human-readable label, e.g. "Adjusted from 2022-03 median", or null. */
-  adjustmentLabel: string | null;
+  /** Structured label for translation, or null if adjustment unavailable. */
+  adjustmentLabel: AdjustmentLabel | null;
 };

@@ -12,6 +12,8 @@
  * restatement of observed historical data.
  */
 
+import type { AdjustmentLabel, TimeAdjustedComparable } from "./data-types";
+
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -50,27 +52,8 @@ export type TimeAdjustmentResult = {
   adjustedPricePerSqm: number | null;
   /** The computed adjustment factor, or null if unavailable. */
   adjustmentFactor: number | null;
-  /** Human-readable label explaining the adjustment, or null. */
-  adjustmentLabel: string | null;
-};
-
-/**
- * Extended comparable transaction with time adjustment fields.
- * Includes both raw and adjusted price representations.
- */
-export type TimeAdjustedComparable = {
-  /** Original resale price (always present). */
-  rawResalePrice: number;
-  /** Original price per sqm (always present). */
-  rawPricePerSqm: number;
-  /** Time-adjusted resale price, or null if adjustment unavailable. */
-  adjustedResalePrice: number | null;
-  /** Time-adjusted price per sqm, or null if adjustment unavailable. */
-  adjustedPricePerSqm: number | null;
-  /** The computed adjustment factor, or null. */
-  adjustmentFactor: number | null;
-  /** Human-readable label, e.g. "Adjusted from 2022-03 median", or null. */
-  adjustmentLabel: string | null;
+  /** Structured label for client-side translation, or null. */
+  adjustmentLabel: AdjustmentLabel | null;
 };
 
 /**
@@ -262,13 +245,11 @@ export function computeTimeAdjustment(
     (rawPricePerSqm * adjustmentFactor).toFixed(2),
   );
 
-  // Generate label.
-  let adjustmentLabel: string;
-  if (txPoint.month === latestPoint.month) {
-    adjustmentLabel = "Already at latest period";
-  } else {
-    adjustmentLabel = `Adjusted from ${txPoint.month} median`;
-  }
+  // Generate label as a structured object so the client can translate it.
+  const adjustmentLabel: AdjustmentLabel =
+    txPoint.month === latestPoint.month
+      ? { type: "at_latest" }
+      : { type: "adjusted_from", month: txPoint.month };
 
   return {
     rawPrice,

@@ -167,7 +167,7 @@ describe("computeTimeAdjustment", () => {
     expect(result.adjustedPricePerSqm).toBeCloseTo(5000 * expectedFactor, 2);
     expect(result.rawPrice).toBe(450000);
     expect(result.rawPricePerSqm).toBe(5000);
-    expect(result.adjustmentLabel).toBe("Adjusted from 2022-01 median");
+    expect(result.adjustmentLabel).toEqual({ type: "adjusted_from", month: "2022-01" });
   });
 
   it("walks back to a qualifying latest month when the newest has low samples", () => {
@@ -187,7 +187,7 @@ describe("computeTimeAdjustment", () => {
     // Re-check: MIN_TREND_SAMPLE_SIZE is 5, so 7 qualifies. Latest qualifying is 2025-01.
     const expectedFactor = 5100 / 4500;
     expect(result.adjustmentFactor).toBeCloseTo(expectedFactor, 4);
-    expect(result.adjustmentLabel).toContain("2022-01 median");
+    expect(result.adjustmentLabel).toEqual({ type: "adjusted_from", month: "2022-01" });
   });
 });
 
@@ -243,7 +243,7 @@ describe("computeTimeAdjustment edge cases", () => {
     // Adjustment is available (tx month is its own latest), factor ≈ 1.0
     expect(result.adjustedPrice).toBe(450000);
     expect(result.adjustmentFactor).toBeCloseTo(1.0, 8);
-    expect(result.adjustmentLabel).toBe("Already at latest period");
+    expect(result.adjustmentLabel).toEqual({ type: "at_latest" });
   });
 
   it("returns adjustment with factor ~1.0 when tx month equals latest month", () => {
@@ -252,7 +252,7 @@ describe("computeTimeAdjustment edge cases", () => {
       "ANG MO KIO", "4 ROOM", "2026-01", 500000, 5300, lookup,
     );
     expect(result.adjustmentFactor).toBeCloseTo(1.0, 8);
-    expect(result.adjustmentLabel).toBe("Already at latest period");
+    expect(result.adjustmentLabel).toEqual({ type: "at_latest" });
     expect(result.adjustedPrice).toBe(500000);
     expect(result.adjustedPricePerSqm).toBe(5300);
   });

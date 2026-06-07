@@ -18,9 +18,9 @@ import {
 import {
   buildTrendLookup,
   computeTimeAdjustments,
-  type TimeAdjustedComparable,
 } from "../../shared/time-adjustment";
 import type { AdjustmentMeta } from "../../shared/time-adjustment";
+import type { TimeAdjustedComparable } from "../../shared/data-types";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -156,6 +156,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // 0. Parse query parameter for optional time adjustment
   const url = new URL(request.url);
   const adjustParam = url.searchParams.get("adjust");
+  if (adjustParam !== null && adjustParam.length > 20) {
+    return privateJsonResponse(
+      { error: "Invalid ?adjust value — exceeds maximum length." },
+      { status: 400 },
+    );
+  }
   if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
     return privateJsonResponse(
       { error: `Invalid ?adjust value. Expected "time", got "${adjustParam}".` },
