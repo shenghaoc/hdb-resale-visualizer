@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import {
-  findComparableTransactions,
   parseStoreyMidpoint,
   type AskingPriceAssessment,
 } from "@/lib/transaction-analysis";
@@ -327,15 +326,8 @@ export function ListingCheckPanel({
     referenceMonth,
   ]);
 
-  // ── Compute comparables for the list (same query as the check) ─────────────
-  const comparables = useMemo(() => {
-    if (!detail) return [];
-    return findComparableTransactions(detail.recentTransactions, {
-      flatType: flatType || null,
-      storeyMidpoint,
-      floorAreaSqm: resolvedFloorAreaSqm,
-    });
-  }, [detail, flatType, storeyMidpoint, resolvedFloorAreaSqm]);
+  // ── Compute comparables from result (avoids duplicate findComparableTransactions) ────
+  const comparables = result?.comparables ?? [];
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
   const theme = result ? VERDICT_THEMES[result.assessment.verdict] : null;
@@ -589,7 +581,9 @@ export function ListingCheckPanel({
                     count: result.assessment.comparableCount,
                   })}
                   {result.assessment.summary.latestMonth
-                    ? ` · ${formatMonth(result.assessment.summary.latestMonth, locale)}`
+                    ? ` · ${t("askingCheck.latest", {
+                        month: formatMonth(result.assessment.summary.latestMonth, locale),
+                      })}`
                     : ""}
                 </div>
               </div>

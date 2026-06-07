@@ -225,7 +225,7 @@ function App() {
     setCheckSavedToShortlist(true);
   }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, shortlist]);
 
-  const handleCheckShare = useCallback(() => {
+  const handleCheckShare = useCallback(async () => {
     const url = buildCheckShareUrl({
       selectedAddressKey: checkAddressKey,
       askingPrice: checkAskingPrice,
@@ -234,8 +234,12 @@ function App() {
       storeyRange: checkStoreyRange,
       leaseCommenceYear: checkLeaseYear,
     });
-    void navigator.clipboard.writeText(url);
-  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear]);
+    try {
+      return await shareViaNavigator(url, t("app.title"));
+    } catch {
+      return null;
+    }
+  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, t]);
 
   // Reset saved-to-shortlist flag when form inputs change
   if (checkAskingPrice !== prevCheckAskingPrice
@@ -265,7 +269,7 @@ function App() {
     syncToUrl({
       selectedAddressKey: checkAddressKey,
       askingPrice: checkAskingPrice,
-      floorAreaSqm: checkFlatType ? checkFloorAreaSqm : null,
+      floorAreaSqm: checkFloorAreaSqm,
       flatType: checkFlatType,
       storeyRange: checkStoreyRange,
       leaseCommenceYear: checkLeaseYear,
@@ -548,7 +552,7 @@ function App() {
       onStoreyRangeChange={setCheckStoreyRange}
       onLeaseYearChange={setCheckLeaseYear}
       onSaveToShortlist={handleCheckSaveToShortlist}
-      onShare={handleCheckShare}
+      onShare={() => { void handleCheckShare(); }}
       savedToShortlist={checkSavedToShortlist}
       referenceMonth={manifest?.dataWindow.maxMonth}
     />

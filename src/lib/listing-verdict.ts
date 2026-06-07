@@ -14,6 +14,7 @@ export type ListingCheckResult = {
   assessment: AskingPriceAssessment;
   confidence: ConfidenceResult;
   caveats: Caveat[];
+  comparables: ReadonlyArray<AddressDetailTransaction>;
 };
 
 export type ListingCheckParams = {
@@ -78,5 +79,5 @@ export function performListingCheck(
     referenceMonth,
   });
 
-  return { assessment, confidence, caveats };
+  return { assessment, confidence, caveats, comparables };
 }
