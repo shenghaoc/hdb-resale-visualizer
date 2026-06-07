@@ -116,21 +116,32 @@ Each result shows a **confidence badge** (High / Medium / Low) indicating how re
 
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
 
-### Time-adjusted prices
+### Comparable evidence table
 
-Toggle **"Show time-adjusted prices"** to see what older comparable transactions would roughly correspond to at the latest market period. This is **not a price forecast** — it is a mechanical restatement of observed historical data.
+Below the verdict, a **comparable evidence table** shows every transaction used to reach the verdict. Each row includes:
 
-When enabled, each comparable shows:
-- The original transaction price (strikethrough)
-- The adjusted price (bold), computed from town × flat type monthly median prices per square metre
-- An adjustment label (e.g. "Adjusted from 2022-03 median")
+| Column | Description |
+|--------|-------------|
+| **Month** | Transaction month |
+| **Block / Street** | Location of the comparable unit |
+| **Flat Type** | e.g. 4 ROOM, 5 ROOM |
+| **Storey** | Storey range of the unit |
+| **Area** | Floor area in square metres |
+| **Lease** | Lease commencement year |
+| **Price** | Resale price |
+| **$/sqm** | Price per square metre |
+| **Similarity** | How closely the transaction matches your listing (percentage bar) |
+| **Match Reasons** | Why this transaction was selected (e.g. "Same block", "Same flat type") |
 
-If trend data is unavailable for a particular comparable, the row shows **"No adjustment data"** instead.
+Click any sortable column header to re-order the table. The default sort is **similarity descending** — the closest match appears first. Clicking the same header again toggles between ascending and descending.
 
-The adjustment is calculated by dividing the latest available town × flat type median price per square metre by the transaction month's median:
-`adjustedPrice = rawPrice × (latestMedian ÷ txMonthMedian)`
+On **mobile**, transactions appear as cards instead of a table. Pill-shaped sort buttons at the top let you change the sort order by tapping.
 
-This helps you understand how an older transaction compares to the latest market period without making a prediction. The default view is raw prices — adjust only when comparing transactions from different years.
+#### "Why these comparables?"
+
+Expand this section to see how comparables were selected. The engine picks the most similar recent transactions in the same block. If too few are found, the search widens to the same street or town — the explainer notes this when it happens. Price is never used to select comparables, only to display them.
+
+When fewer than five comparables are available, a low-sample warning appears advising you to treat the assessment as directional only.
 
 You can **save the check to your shortlist** or **share it via URL**.
 
