@@ -46,10 +46,10 @@ describe("computeConfidence", () => {
     expect(result.comparableCount).toBe(5);
   });
 
-  it("returns low for 4 comparables", () => {
+  it("returns medium for 4 same-block well-matched comparables", () => {
     const comparables = makeComparables(4, { month: "2024-06" });
     const result = computeConfidence(comparables, "2025-01");
-    expect(result.level).toBe("low");
+    expect(result.level).toBe("medium");
     expect(result.comparableCount).toBe(4);
   });
 
@@ -67,32 +67,33 @@ describe("computeConfidence", () => {
     expect(result.newestComparableMonth).toBeNull();
   });
 
-  it("downgrades high → medium when newest comparable is >12 months old", () => {
+  it("caps at medium when newest comparable is >18 months old", () => {
     const comparables = makeComparables(12, { month: "2023-05" });
     const result = computeConfidence(comparables, "2025-01");
-    // 2023-05 to 2025-01 = 20 months > 12 → downgrade
+    // 2023-05 to 2025-01 = 20 months > 18 → capped at medium
     expect(result.level).toBe("medium");
     expect(result.comparableCount).toBe(12);
   });
 
-  it("downgrades medium → low when newest comparable is >12 months old", () => {
+  it("keeps medium when stale data with 5 comparables", () => {
     const comparables = makeComparables(5, { month: "2023-05" });
     const result = computeConfidence(comparables, "2025-01");
-    // 2023-05 to 2025-01 = 20 months > 12 → downgrade
-    expect(result.level).toBe("low");
+    // 2023-05 to 2025-01 = 20 months, capped at medium
+    expect(result.level).toBe("medium");
     expect(result.comparableCount).toBe(5);
   });
 
-  it("keeps low as low even when stale", () => {
+  it("caps at medium for 3 stale comparables", () => {
     const comparables = makeComparables(3, { month: "2023-05" });
     const result = computeConfidence(comparables, "2025-01");
-    expect(result.level).toBe("low");
+    // age > 18 → capped at medium; score also naturally medium
+    expect(result.level).toBe("medium");
   });
 
   it("does not apply recency downgrade when referenceMonth is omitted", () => {
     const comparables = makeComparables(12, { month: "2023-05" });
     const result = computeConfidence(comparables);
-    // No referenceMonth → no downgrade, so stays "high"
+    // No referenceMonth → age is null → no staleness penalty
     expect(result.level).toBe("high");
     expect(result.comparableCount).toBe(12);
   });
@@ -100,7 +101,6 @@ describe("computeConfidence", () => {
   it("returns high for exactly 12 comparables all within 12 months", () => {
     const comparables = makeComparables(12, { month: "2025-01" });
     const result = computeConfidence(comparables, "2025-01");
-    // 0 months difference → still high
     expect(result.level).toBe("high");
   });
 
@@ -110,7 +110,7 @@ describe("computeConfidence", () => {
     expect(result.level).toBe("medium");
   });
 
-  it("sets newestComparableMonth and reason correctly", () => {
+  it("sets newestComparableMonth and summary correctly", () => {
     const comparables = [
       tx({ id: "a", month: "2024-03" }),
       tx({ id: "b", month: "2024-09" }),
@@ -118,12 +118,14 @@ describe("computeConfidence", () => {
     ];
     const result = computeConfidence(comparables, "2025-02");
     expect(result.newestComparableMonth).toBe("2024-09");
-    expect(result.reason).toBe("3 comparable transactions with recent data");
+    expect(result.reason).toContain("3 comparables");
+    expect(result.reason).toContain("same-block");
   });
 
-  it("sets reason to note stale data when newest comparable is >12 months old", () => {
+  it("includes age in summary when data is stale", () => {
     const comparables = makeComparables(5, { month: "2023-05" });
     const result = computeConfidence(comparables, "2025-03");
-    expect(result.reason).toBe("5 comparable transactions with no recent data");
+    expect(result.reason).toContain("5 comparables");
+    expect(result.reason).toContain("months ago");
   });
 });

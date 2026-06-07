@@ -3,18 +3,6 @@ import { generateCaveats } from "@/lib/listing-caveats";
 import type { AskingPriceAssessment } from "@/lib/transaction-analysis";
 import type { ConfidenceResult } from "@/lib/listing-confidence";
 
-/**
- * Returns a YYYY-MM month string that is guaranteed to be within the last
- * 6 months from now — avoids accidentally triggering the "stale data"
- * caveat in tests that don't test staleness.
- */
-function recentMonth(): string {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, "0");
-  return `${y}-${m}`;
-}
-
 function makeAssessment(
   overrides: Partial<AskingPriceAssessment> = {},
 ): AskingPriceAssessment {
@@ -28,7 +16,7 @@ function makeAssessment(
       p75Price: overrides.summary?.p75Price ?? 650000,
       minPrice: overrides.summary?.minPrice ?? 480000,
       maxPrice: overrides.summary?.maxPrice ?? 720000,
-      latestMonth: overrides.summary?.latestMonth ?? recentMonth(),
+      latestMonth: overrides.summary?.latestMonth ?? "2025-06",
     },
     deltaVsMedian: overrides.deltaVsMedian ?? 0,
     deltaVsMedianPct: overrides.deltaVsMedianPct ?? 0,
@@ -55,8 +43,8 @@ function makeConfidence(
     comparableCount: overrides.comparableCount ?? 12,
     newestComparableMonth: hasNewest
       ? overrides.newestComparableMonth!
-      : recentMonth(),
-    reason: overrides.reason ?? "12 comparable transactions with recent data",
+      : "2025-06",
+    reason: overrides.reason ?? "High confidence — 12 comparables",
   };
 }
 
@@ -149,6 +137,7 @@ describe("generateCaveats", () => {
       assessment,
       confidence,
       comparableLeaseYears: [],
+      referenceMonth: "2025-06",
     });
 
     const staleCaveat = caveats.find((c) => c.message.includes("last 12 months"));
@@ -203,6 +192,7 @@ describe("generateCaveats", () => {
       confidence,
       leaseCommenceYear: 1985,
       comparableLeaseYears,
+      referenceMonth: "2025-06",
     });
 
     // Low sample + stale data + lease mismatch + extreme outlier = 4 distinct caveats
@@ -222,7 +212,6 @@ describe("generateCaveats", () => {
       assessment,
       confidence,
       comparableLeaseYears,
-      // leaseCommenceYear intentionally omitted
     });
 
     const leaseCaveat = caveats.find((c) => c.message.includes("lease"));
@@ -239,6 +228,7 @@ describe("generateCaveats", () => {
       assessment,
       confidence,
       comparableLeaseYears: [],
+      referenceMonth: "2025-06",
     });
 
     const staleCaveat = caveats.find((c) => c.message.includes("last 12 months"));

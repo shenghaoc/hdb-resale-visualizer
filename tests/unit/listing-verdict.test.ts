@@ -45,7 +45,7 @@ describe("performListingCheck", () => {
     expect(result!.assessment.verdict).toBe("fair");
     expect(result!.assessment.comparableCount).toBe(4);
     expect(result!.assessment.percentileAmongComparables).toBe(50);
-    expect(result!.confidence.level).toBe("low"); // 4 < 5 → low
+    expect(result!.confidence.level).toBe("medium"); // 4 same-block well-matched → medium
     expect(result!.confidence.comparableCount).toBe(4);
     expect(result!.confidence.newestComparableMonth).toBe("2024-06");
     expect(result!.caveats.length).toBeGreaterThanOrEqual(1);
@@ -163,8 +163,9 @@ describe("performListingCheck", () => {
     });
 
     expect(result).not.toBeNull();
-    expect(result!.confidence.level).toBe("low");
-    expect(result!.confidence.reason).toContain("no recent data");
+    // 6 same-block comparables, age=24 → capped at medium by staleness override
+    expect(result!.confidence.level).toBe("medium");
+    expect(result!.confidence.reason).toContain("months ago");
   });
 
   it("keeps confidence high when referenceMonth is close to newest comparable", () => {
@@ -188,7 +189,7 @@ describe("performListingCheck", () => {
     expect(result).not.toBeNull();
     // 12 comparables → high; reference 1 month ahead → no downgrade
     expect(result!.confidence.level).toBe("high");
-    expect(result!.confidence.reason).toContain("recent data");
+    expect(result!.confidence.reason).toContain("same-block");
   });
 
   it("computes askingPricePerSqm when floor area is provided", () => {
@@ -286,7 +287,7 @@ describe("performListingCheck", () => {
     ).toBe(true);
 
     // Confidence reason should match the level
-    expect(result!.confidence.reason).toContain("2 comparable transactions");
+    expect(result!.confidence.reason).toContain("2 comparables");
   });
 
   it("accepts a query with custom tolerances", () => {

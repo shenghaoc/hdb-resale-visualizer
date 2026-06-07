@@ -26,7 +26,8 @@ Reusable agent skill packs live in [`.kiro/skills/`](.kiro/skills/). Each skill 
 ## 📈 Specs
 Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirements → Tasks** workflow (feature specs) or **Bugfix → Design → Tasks** workflow (bugfix specs). Each spec directory contains a `design.md`, `requirements.md` (or `bugfix.md`), and `tasks.md`. Kiro-generated specs also include a `.config.kiro` metadata file.
 
-**Active:** _(none)_
+**Active:**
+- [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 
 **Completed:**
 - [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
