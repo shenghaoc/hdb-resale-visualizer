@@ -14,8 +14,10 @@
 - [ ] **T1.2** Implement `scoreSimilarity(candidate, transaction)`:
   computes weighted similarity score from block, street, town, flat type,
   floor area, storey, lease, and recency components. Resale price is never
-  read. Returns `{ similarity, matchReasons }`.
-  → `npm run typecheck` passes. (R3.2, R3.3, R3.4)
+  read. When either lease is null, the lease component is excluded and
+  remaining weights are re-scaled to sum to 1.0. Returns
+  `{ similarity, matchReasons }`.
+  → `npm run typecheck` passes. (R3.2, R3.3, R3.4, R3.6)
 
 - [ ] **T1.3** Implement `buildComparableSet(params)`: orchestrates the
   three widening passes given pre-filtered transaction arrays for each
@@ -68,9 +70,10 @@
 
 - [ ] **T4.1** Add `functions/api/comparable-transactions.ts`: POST handler
   that validates the request body with Zod (`CandidateListing` schema),
-  queries the `transactions` D1 table with the three widening passes,
-  scores results with the shared engine, and returns `ListingComparableSet`.
-  → `npm run typecheck` passes. (R5.1, R5.2, R5.3)
+  runs parallel `SELECT COUNT(*)` queries for all three scopes, then
+  executes the narrowest winning pass for data + scoring, and returns
+  `ListingComparableSet` with all three scope counts populated.
+  → `npm run typecheck` passes. (R5.1, R5.2, R5.3, R5.5)
 
 - [ ] **T4.2** Add `shared/comparable-engine.ts` Zod schemas for
   `CandidateListing` (request validation) and `ListingComparableSet`
@@ -114,12 +117,17 @@
 - [ ] **T6.1** Add `tests/unit/comparable-engine.test.ts`:
   - `scoreSimilarity` returns 1.0 for identical candidate and transaction
   - Block match: same block → 0.25 contribution; different block → 0
-  - Street match: same street (different block) → 0.10; different → 0
+  - Street match: same street → 0.10; different → 0 (same-block
+    transactions also receive street match = 1, allowing max score of 1.0)
   - Town match: same town → 0.05; different → 0
   - Flat type match: exact → 0.20; different → 0
-  - Floor area: identical → 0.15; 10 sqm diff → scaled; 200+ sqm diff → 0
+  - Floor area: identical → 0.15; 10 sqm diff → scaled; 50+ sqm diff on a
+    50 sqm flat → approaches 0 (denominator floored at max(sqm, 50))
   - Storey: identical midpoint → 0.10; 25+ floor diff → 0
-  - Lease: identical year → 0.10; 50+ year diff → 0; null → 0
+  - Lease: identical year → 0.10; 50+ year diff → 0; null lease → component
+    excluded, remaining weights re-scaled to sum to 1.0
+  - Null lease: score reaches 1.0 when all other components match
+    (identical transaction but missing lease year)
   - Recency: same month → 0.05; 60+ months old → 0
   - Weight sum equals 1.0
   - Resale price change does not affect similarity (change price field,

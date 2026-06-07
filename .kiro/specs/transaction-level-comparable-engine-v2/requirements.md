@@ -40,6 +40,11 @@
 - **R3.5** The module also exports `buildComparableSet(params):
   ListingComparableSet` which orchestrates the widening passes and returns
   the final ranked set.
+- **R3.6** When either the candidate or the comparable transaction has a null
+  `leaseCommenceYear`, the lease component is excluded from the similarity
+  score and the remaining weights are dynamically re-scaled to sum to 1.0
+  (each weight divided by 0.90). This prevents historical transactions with
+  missing lease data from being unfairly penalised.
 
 ## R4 — Widening / fallback logic
 - **R4.1** Pass 1 queries same block + same flat type. If ≥ 8 results, returns
@@ -67,7 +72,11 @@
   `ListingComparableSet` JSON response.
 - **R5.4** The endpoint sets appropriate CORS headers (reuses existing
   CORS middleware / patterns from other API routes).
-- **R5.5** No external API calls, no AI, no runtime geocoding.
+- **R5.5** The handler runs lightweight `SELECT COUNT(*)` queries for all
+  three scopes in parallel before the scoring pass, so `sameBlockCount`,
+  `sameStreetCount`, and `sameTownCount` are always populated regardless of
+  which pass wins.
+- **R5.6** No external API calls, no AI, no runtime geocoding.
 
 ## R6 — Frontend integration
 - **R6.1** `ListingCheckPanel.tsx` calls `POST /api/comparable-transactions`

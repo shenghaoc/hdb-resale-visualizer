@@ -162,12 +162,12 @@ similarity = w_block * blockMatch
 | Component | Weight | Formula |
 |-----------|--------|---------|
 | `blockMatch` | 0.25 | 1 if same block, 0 otherwise |
-| `streetMatch` | 0.10 | 1 if same street (different block), 0 otherwise |
+| `streetMatch` | 0.10 | 1 if same street, 0 otherwise |
 | `townMatch` | 0.05 | 1 if same town, 0 otherwise |
 | `flatTypeMatch` | 0.20 | 1 if exact flat type match, 0 otherwise |
-| `floorAreaSimilarity` | 0.15 | `1 - clamp(|diff| / max(candidate.sqm, 200), 0, 1)` — cap at 200 sqm so small flats aren't penalised disproportionately |
+| `floorAreaSimilarity` | 0.15 | `1 - clamp(|diff| / max(candidate.sqm, 50), 0, 1)` — floor at 50 sqm so very small flats aren't penalised disproportionately |
 | `storeySimilarity` | 0.10 | `1 - clamp(|diff| / 25, 0, 1)` — 25 floors as max range |
-| `leaseSimilarity` | 0.10 | `1 - clamp(|diff| / 50, 0, 1)` — 50 years as max range; 0 if either lease is null |
+| `leaseSimilarity` | 0.10 | `1 - clamp(|diff| / 50, 0, 1)` — 50 years as max range. When either lease is null, the lease component is excluded and the remaining weights are dynamically re-scaled to sum to 1.0 (e.g. each weight divided by 0.90). |
 | `recencyScore` | 0.05 | `1 - clamp(ageInMonths / 60, 0, 1)` — decays linearly over 5 years |
 
 Weights sum to 1.0. All components are [0, 1]. The final similarity is [0, 1].
@@ -214,6 +214,15 @@ for this listing."]`.
   widened to the entire town."`
 - Count < `LOW_SAMPLE_THRESHOLD` (5): `"Only N comparable transactions found
   — this assessment is directional only."`
+
+**Obtaining scope counts without full queries:** To populate
+`sameBlockCount`, `sameStreetCount`, and `sameTownCount` (R4.5) without
+defeating the sequential query optimization, the handler runs lightweight
+`SELECT COUNT(*)` queries for all three scopes in parallel before the
+scoring passes begin. `COUNT(*)` with `WHERE` on indexed columns is an
+index-only operation that returns a single integer — it does not scan row
+data. The full data fetch + scoring is only executed for the narrowest pass
+that meets `MIN_COMPARABLES`.
 
 ### 3. New API Endpoint: `POST /api/comparable-transactions`
 
@@ -408,10 +417,11 @@ engine's public API).
   JSON adds a step to the sync pipeline. The extraction logic must handle
   missing fields gracefully (some historical transactions may lack lease
   commence year or floor area).
-- **API latency**: Three sequential D1 queries (one per widening pass) in
-  the worst case. Each is an indexed scan returning < 500 rows. Total
-  latency < 500ms in practice. If this becomes a concern, the three passes
-  can be combined into a single query with a UNION + computed scope column.
+- **API latency**: Three lightweight `COUNT(*)` queries run in parallel
+  (index-only, < 10ms each), followed by up to one full data query for the
+  winning pass (< 500 rows, < 300ms). Total latency < 400ms in practice. If
+  this becomes a concern, the counts and scoring pass can be combined into a
+  single query with a UNION + computed scope column.
 - **Weight tuning**: The similarity weights are initial estimates. They
   should be reviewed after real-world usage and adjusted based on user
   feedback. The weight constants should be named exports so they can be
