@@ -26,7 +26,6 @@ import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
 import { ScopePrompt } from "@/components/ScopePrompt";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
-import { GuideDialog } from "@/components/GuideDialog";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
@@ -41,6 +40,9 @@ import {
   buildCheckShareUrl,
 } from "@/hooks/useListingCheckUrlState";
 
+const GuideDialog = lazy(() =>
+  import("@/components/GuideDialog").then((m) => ({ default: m.GuideDialog })),
+);
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
@@ -730,7 +732,11 @@ function App() {
         onOpenGuide={() => setGuideOpen(true)}
       />
 
-      <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} t={t} />
+      {guideOpen && (
+        <Suspense fallback={null}>
+          <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} t={t} />
+        </Suspense>
+      )}
     </>
   );
 }
