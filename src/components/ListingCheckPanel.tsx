@@ -890,7 +890,7 @@ export function ListingCheckPanel({
                   </TooltipContent>
                 </Tooltip>
                 <p
-                  className="text-[0.62rem] leading-snug text-muted-foreground"
+                  className="text-[0.62rem] leading-snug text-muted-foreground sm:hidden"
                   data-testid="listing-check-confidence-summary"
                 >
                   {result.confidence.summary}
