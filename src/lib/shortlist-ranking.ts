@@ -45,8 +45,10 @@ const decisionStatusPriority: Record<string, number> = {
   dropped: 5,
 };
 
+const NO_STATUS_PRIORITY = 9;
+
 function getDecisionStatusPriority(status?: SortableShortlistRow["item"]["decisionStatus"]) {
-  return status === undefined ? 9 : decisionStatusPriority[status];
+  return status === undefined ? NO_STATUS_PRIORITY : decisionStatusPriority[status];
 }
 
 function comparePrimaryValues(left: number, right: number) {

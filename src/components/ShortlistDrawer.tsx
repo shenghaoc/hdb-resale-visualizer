@@ -283,9 +283,6 @@ function ShortlistComparisonTable({
                 {t("shortlist.compare.col.mrt")}
               </TableHead>
               <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.monthlyPayment")}
-              </TableHead>
-              <TableHead className="h-9 px-2">
                 {t("shortlist.compare.col.decision")}
               </TableHead>
               <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
@@ -398,11 +395,6 @@ function ShortlistComparisonTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-right tabular-nums">
-                    {row.monthlyPaymentEstimate === null
-                      ? t("shortlist.compare.cellEmpty")
-                      : formatCompactCurrency(row.monthlyPaymentEstimate, locale)}
-                  </TableCell>
                   <TableCell className="px-2 py-2 text-[0.63rem]">
                     {formatDecision(row)}
                   </TableCell>
@@ -506,14 +498,6 @@ function ShortlistComparisonTable({
                   {row.nearestMrt
                     ? formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)
                     : t("shortlist.compare.cellEmpty")}
-                </strong>
-              </span>
-              <span className="text-muted-foreground">
-                {t("shortlist.compare.col.monthlyPayment")}:{" "}
-                <strong className="text-foreground">
-                  {row.monthlyPaymentEstimate === null
-                    ? t("shortlist.compare.cellEmpty")
-                    : formatCompactCurrency(row.monthlyPaymentEstimate, locale)}
                 </strong>
               </span>
             </div>
@@ -960,7 +944,7 @@ function ShortlistRowEditor({
           label={t("shortlist.viewingDate")}
           value={item.viewingDate ?? ""}
           placeholder={t("shortlist.viewingDatePlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { viewingDate: val })}
+          onChange={(val) => onUpdate(item.addressKey, { viewingDate: val || undefined })}
         />
         <CurrencyEditor
           id={`offer-${item.addressKey}`}
