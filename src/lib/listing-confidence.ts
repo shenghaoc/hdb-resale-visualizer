@@ -65,7 +65,7 @@ export function computeConfidence(
 }
 
 function buildConfidenceReason(
-  level: ConfidenceLevel,
+  _level: ConfidenceLevel,
   count: number,
   newestMonth: string | null,
   referenceMonth?: string,

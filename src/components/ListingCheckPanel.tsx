@@ -383,7 +383,7 @@ export function ListingCheckPanel({
               {detail.summary.town}
             </span>
             <span className="mx-1.5 text-muted-foreground">·</span>
-            <span className="text-muted-foreground">{detail.summary.addressLine}</span>
+            <span className="text-muted-foreground">{detail.summary.block} {detail.summary.streetName}</span>
           </div>
         )}
 

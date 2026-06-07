@@ -12,6 +12,7 @@ export type PanelTab = "filters" | "results" | "check" | "saved";
 export const LEFT_PANEL_WIDTHS: Record<LeftTab, string> = {
   filters: "min(30rem,34vw)",
   results: "min(34rem,38vw)",
+  check: "min(30rem,34vw)",
 };
 
 /**
