@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/lib/constants";
@@ -60,6 +60,12 @@ export function useMapDataSync({
   primarySchoolsGeoJson,
   schoolOverlayEnabled = false,
 }: UseMapDataSyncProps) {
+  const blocksSourceRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const blocksLayerSourceRef = useRef<unknown>(null);
+  const schoolsSourceRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const schoolsLayerSourceRef = useRef<unknown>(null);
+  const schoolsVisibilityRef = useRef<string | null>(null);
+
   // Sync main blocks source
   useEffect(() => {
     if (!map) return;
@@ -67,8 +73,12 @@ export function useMapDataSync({
     const updateData = () => {
       if (!map.isStyleLoaded()) return;
       const source = map.getSource("blocks");
-      if (isGeoJsonDataSourceLike(source)) {
+      if (!isGeoJsonDataSourceLike(source)) return;
+
+      if (source !== blocksLayerSourceRef.current || geoJson !== blocksSourceRef.current) {
         source.setData(geoJson);
+        blocksLayerSourceRef.current = source;
+        blocksSourceRef.current = geoJson;
       }
     };
 
@@ -93,21 +103,37 @@ export function useMapDataSync({
     const applyPrimarySchools = (e?: { dataType?: string }) => {
       if (!isActive || !map.isStyleLoaded()) return;
       const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
-      if (primarySchoolsGeoJson && isGeoJsonDataSourceLike(source)) {
+      const shouldSetSchoolData =
+        primarySchoolsGeoJson != null &&
+        isGeoJsonDataSourceLike(source) &&
+        (source !== schoolsLayerSourceRef.current ||
+          primarySchoolsGeoJson !== schoolsSourceRef.current);
+      if (shouldSetSchoolData) {
         source.setData(primarySchoolsGeoJson);
+        schoolsLayerSourceRef.current = source;
+        schoolsSourceRef.current = primarySchoolsGeoJson;
       }
 
       const hasSchoolFeatures = (primarySchoolsGeoJson?.features.length ?? 0) > 0;
       const schoolVisibility =
         schoolOverlayEnabled && hasSchoolFeatures ? "visible" : "none";
+      const visibilityChanged = schoolsVisibilityRef.current !== schoolVisibility;
+
+      if (!visibilityChanged && !shouldSetSchoolData && !e) {
+        return;
+      }
 
       for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
         if (!map.getLayer(layerId)) continue;
-        map.setLayoutProperty(layerId, "visibility", schoolVisibility);
+        if (visibilityChanged || map.getLayoutProperty(layerId, "visibility") !== schoolVisibility) {
+          map.setLayoutProperty(layerId, "visibility", schoolVisibility);
+        }
       }
 
+      schoolsVisibilityRef.current = schoolVisibility;
+
       if (schoolVisibility === "visible") {
-        if (!e || e.dataType !== "source") {
+        if (!e || e.dataType !== "source" || shouldSetSchoolData) {
           moveLayersBeforeTargetIfNeeded(
             map,
             PRIMARY_SCHOOL_LAYER_IDS,

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import { isGeoJsonDataSourceLike } from "@/types/map";
@@ -26,6 +26,8 @@ export function useMapRadiusLayer(
   selectedAddressKey: string | null,
   blocksByKey: Map<string, BlockSummary>,
 ) {
+  const radiusSignatureRef = useRef<string | null>(null);
+
   useEffect(() => {
     if (!map) return;
 
@@ -34,25 +36,40 @@ export function useMapRadiusLayer(
       const source = map.getSource("radius");
       if (!isGeoJsonDataSourceLike(source)) return;
 
+      const selectedBlock = selectedAddressKey ? blocksByKey.get(selectedAddressKey) : null;
+      const selectedSignature =
+        geographicIntent?.type === "coordinates"
+          ? `coords:${geographicIntent.coordinates.lat.toFixed(6)},${geographicIntent.coordinates.lng.toFixed(6)},${geographicIntent.radiusMeters}`
+          : selectedBlock
+            ? `addr:${selectedAddressKey}:${selectedBlock.coordinates.lat.toFixed(6)},${selectedBlock.coordinates.lng.toFixed(6)}`
+            : "none";
+
+      if (selectedSignature === radiusSignatureRef.current) return;
+
+      if (selectedSignature === "none") {
+        source.setData({ type: "FeatureCollection", features: [] });
+        radiusSignatureRef.current = selectedSignature;
+        return;
+      }
+
       if (geographicIntent?.type === "coordinates") {
         const radiusKm = geographicIntent.radiusMeters / 1000;
         source.setData({
           type: "FeatureCollection",
           features: [createCircleGeoJson(geographicIntent.coordinates, radiusKm)],
         });
-        return;
-      }
-
-      const selectedBlock = selectedAddressKey ? blocksByKey.get(selectedAddressKey) : null;
-      if (!selectedBlock) {
-        source.setData({ type: "FeatureCollection", features: [] });
+        radiusSignatureRef.current = selectedSignature;
         return;
       }
 
       source.setData({
         type: "FeatureCollection",
-        features: [createCircleGeoJson(selectedBlock.coordinates, 1), createCircleGeoJson(selectedBlock.coordinates, 2)],
+        features: [
+          createCircleGeoJson(selectedBlock.coordinates, 1),
+          createCircleGeoJson(selectedBlock.coordinates, 2),
+        ],
       });
+      radiusSignatureRef.current = selectedSignature;
     };
 
     if (map.isStyleLoaded()) updateRadius();

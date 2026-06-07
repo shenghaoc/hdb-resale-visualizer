@@ -184,24 +184,6 @@ export function useFilterPipeline({
     ],
   );
 
-  // Shared single-pass filter function for both the results pane and map pane.
-  const filterScopedBlocks = useCallback(
-    (
-      scopeBlocks: BlockSummary[],
-      scopeFilters: FilterState & { selectedAddressKey: null },
-      scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
-    ) => {
-      const fuseMatchedKeys = scopeFilters.search
-        ? getFuseMatchedKeys(blocks, scopeFilters.search)
-        : null;
-      return scopeBlocks.filter((block) => {
-        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile, fuseMatchedKeys)) return false;
-        return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
-      });
-    },
-    [affordabilityProfile, blocks],
-  );
-
   const stableFilters = useMemo(
     () => ({ ...effectiveFilters, search: resolvedSearch, selectedAddressKey: null }),
     // Intentional: list filter fields explicitly to avoid reference churn when
@@ -227,6 +209,32 @@ export function useFilterPipeline({
   const mapFilters = useMemo(
     () => ({ ...stableFilters, search: debouncedSearch }),
     [debouncedSearch, stableFilters],
+  );
+
+  // Shared single-pass filter function for both the results pane and map pane.
+  const filterScopedBlocks = useCallback(
+    (
+      scopeBlocks: BlockSummary[],
+      scopeFilters: FilterState & { selectedAddressKey: null },
+      scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
+      scopeFuseMatchedKeys: ReadonlySet<string> | null,
+    ) => {
+      return scopeBlocks.filter((block) => {
+        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile, scopeFuseMatchedKeys)) return false;
+        return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
+      });
+    },
+    [affordabilityProfile],
+  );
+
+  const resultsFuseMatchedKeys = useMemo(
+    () => getFuseMatchedKeys(blocks, stableFilters.search),
+    [blocks, stableFilters.search],
+  );
+
+  const mapFuseMatchedKeys = useMemo(
+    () => getFuseMatchedKeys(blocks, mapFilters.search),
+    [blocks, mapFilters.search],
   );
 
   const geographicIntent = useMemo(
@@ -273,16 +281,34 @@ export function useFilterPipeline({
 
   const filteredBlocks = useMemo(() => {
     if (!resultsVisible) return [];
-    const scoped = filterScopedBlocks(blocks, stableFilters, geographicIntent);
+    const scoped = filterScopedBlocks(
+      blocks,
+      stableFilters,
+      geographicIntent,
+      resultsFuseMatchedKeys,
+    );
     return applyProfileVisibility(scoped, searchProfile);
-  }, [blocks, filterScopedBlocks, geographicIntent, resultsVisible, searchProfile, stableFilters]);
+  }, [
+    blocks,
+    filterScopedBlocks,
+    geographicIntent,
+    resultsVisible,
+    searchProfile,
+    stableFilters,
+    resultsFuseMatchedKeys,
+  ]);
 
   const selectedAddressKey = rawFilters.selectedAddressKey;
 
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
       ? applyProfileVisibility(
-          filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent),
+          filterScopedBlocks(
+            blocks,
+            mapFilters,
+            effectiveMapGeographicIntent,
+            mapFuseMatchedKeys,
+          ),
           searchProfile,
         )
       : [];
@@ -304,6 +330,7 @@ export function useFilterPipeline({
     mapFilters,
     searchProfile,
     selectedAddressKey,
+    mapFuseMatchedKeys,
   ]);
 
   return useMemo(() => ({

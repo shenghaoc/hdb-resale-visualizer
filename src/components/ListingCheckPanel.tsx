@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, type ChangeEvent, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
@@ -148,6 +148,122 @@ function confidenceBadgeVariant(level: ConfidenceAssessment["level"]): "default"
   }
 }
 
+type ComparablePayload = {
+  comparableTransactions: AddressDetailTransaction[];
+  sameBlockCount: number;
+  sameStreetCount: number;
+  sameTownCount: number;
+  flatTypeMatchCount: number;
+  floorAreaMatchCount: number;
+  storeyMatchCount: number;
+  comparableLeaseYears: number[];
+};
+
+function buildComparablePayload(
+  comparableSet: ListingComparableSet,
+  detail: AddressDetail,
+  adjustmentMap?: ReadonlyMap<string, AdjustmentInfo> | null,
+): ComparablePayload {
+  let sameBlockCount = 0;
+  let sameStreetCount = 0;
+  let sameTownCount = 0;
+  let flatTypeMatchCount = 0;
+  let floorAreaMatchCount = 0;
+  let storeyMatchCount = 0;
+
+  const comparableTransactions: AddressDetailTransaction[] = [];
+  const comparableLeaseYears: number[] = [];
+
+  for (const tx of comparableSet.comparables) {
+    // When time-adjustment was applied, build the assessment transactions from
+    // the adjusted prices so the verdict/median/percentiles match the
+    // "time-adjusted" caveat the UI surfaces.
+    const adjusted = adjustmentMap?.get(tx.transactionId);
+    comparableTransactions.push({
+      id: tx.transactionId,
+      month: tx.month,
+      flatType: tx.flatType,
+      storeyRange: tx.storeyRange,
+      floorAreaSqm: tx.floorAreaSqm,
+      flatModel: "",
+      leaseCommenceDate: tx.leaseCommenceDate ?? 0,
+      remainingLease: "",
+      resalePrice: adjusted?.adjustedResalePrice ?? tx.resalePrice,
+      pricePerSqm: adjusted?.adjustedPricePerSqm ?? tx.pricePerSqm,
+      pricePerSqft: null,
+    });
+
+    if (tx.block === detail.summary.block && tx.town === detail.summary.town) {
+      sameBlockCount += 1;
+    }
+    if (tx.streetName === detail.summary.streetName) {
+      sameStreetCount += 1;
+    }
+    if (tx.town === detail.summary.town) {
+      sameTownCount += 1;
+    }
+    if (tx.matchReasons.includes("Same flat type")) {
+      flatTypeMatchCount += 1;
+    }
+    if (tx.matchReasons.some((reason) => reason.startsWith("Similar floor area"))) {
+      floorAreaMatchCount += 1;
+    }
+    if (tx.matchReasons.includes("Similar storey")) {
+      storeyMatchCount += 1;
+    }
+
+    if (tx.leaseCommenceDate != null) {
+      comparableLeaseYears.push(tx.leaseCommenceDate);
+    }
+  }
+
+  return {
+    comparableTransactions,
+    sameBlockCount,
+    sameStreetCount,
+    sameTownCount,
+    flatTypeMatchCount,
+    floorAreaMatchCount,
+    storeyMatchCount,
+    comparableLeaseYears,
+  };
+}
+
+function buildAdjustmentMetaFromResponse(
+  response: ListingComparableSet & {
+    comparables?: Array<ComparableTransaction & Partial<TimeAdjustedComparable>>;
+    adjustmentApplied?: boolean;
+    adjustmentCaveats?: string[];
+  },
+): {
+  adjustmentApplied: boolean;
+  adjustmentCaveats: string[];
+  adjustmentMap: Map<string, AdjustmentInfo>;
+} | null {
+  const comparables = response.comparables ?? [];
+  if (comparables.length === 0) {
+    return null;
+  }
+
+  const adjustmentMap = new Map<string, AdjustmentInfo>();
+
+  for (const c of comparables) {
+    if (c.transactionId && (c as TimeAdjustedComparable).adjustedResalePrice !== undefined) {
+      adjustmentMap.set(c.transactionId, {
+        adjustedResalePrice: (c as TimeAdjustedComparable).adjustedResalePrice,
+        adjustedPricePerSqm: (c as TimeAdjustedComparable).adjustedPricePerSqm,
+        adjustmentLabel: (c as TimeAdjustedComparable).adjustmentLabel,
+      });
+    }
+  }
+
+  return {
+    adjustmentApplied: response.adjustmentApplied ?? false,
+    adjustmentCaveats: response.adjustmentCaveats ?? [],
+    adjustmentMap,
+  };
+}
+
 // ── Component ───────────────────────────────────────────────────────────────
 
 export function ListingCheckPanel({
@@ -206,23 +322,17 @@ export function ListingCheckPanel({
   );
 
   // Sync props to local input state when they change externally (e.g. deep linking / URL load)
-  const [prevAskingPrice, setPrevAskingPrice] = useState(askingPrice);
-  if (askingPrice !== prevAskingPrice) {
-    setPrevAskingPrice(askingPrice);
+  useEffect(() => {
     setAskingPriceInput(askingPrice != null ? String(askingPrice) : "");
-  }
+  }, [askingPrice]);
 
-  const [prevFloorAreaSqm, setPrevFloorAreaSqm] = useState(floorAreaSqm);
-  if (floorAreaSqm !== prevFloorAreaSqm) {
-    setPrevFloorAreaSqm(floorAreaSqm);
+  useEffect(() => {
     setFloorAreaInput(floorAreaSqm != null ? String(floorAreaSqm) : "");
-  }
+  }, [floorAreaSqm]);
 
-  const [prevLeaseCommenceYear, setPrevLeaseCommenceYear] = useState(leaseCommenceYear);
-  if (leaseCommenceYear !== prevLeaseCommenceYear) {
-    setPrevLeaseCommenceYear(leaseCommenceYear);
+  useEffect(() => {
     setLeaseYearInput(leaseCommenceYear != null ? String(leaseCommenceYear) : "");
-  }
+  }, [leaseCommenceYear]);
 
   const verdictRef = useRef<HTMLDivElement>(null);
 
@@ -232,25 +342,15 @@ export function ListingCheckPanel({
     }, 50);
   }, []);
 
-  // ── Reset detail state during render when addressKey clears ──────────────
-  // Following React's "You Might Not Need an Effect" pattern: adjust state on
-  // prop change during render rather than in a cascading effect.
-  if (!selectedAddressKey && (detail !== null || detailError || detailLoading || searchValue !== "")) {
+  // ── Reset detail state when the selected address changes/clears ───────────
+  useEffect(() => {
     setDetail(null);
     setDetailError(false);
     setDetailLoading(false);
-    setSearchValue("");
-  }
-
-  // Clear stale detail when the selected address changes
-  const [prevSelectedAddressKey, setPrevSelectedAddressKey] = useState(selectedAddressKey);
-  if (selectedAddressKey !== prevSelectedAddressKey) {
-    setPrevSelectedAddressKey(selectedAddressKey);
-    if (selectedAddressKey) {
-      setDetail(null);
-      setDetailError(false);
+    if (!selectedAddressKey) {
+      setSearchValue("");
     }
-  }
+  }, [selectedAddressKey]);
 
   // ── Fetch address detail when selection changes ───────────────────────────
   useEffect(() => {
@@ -412,26 +512,7 @@ export function ListingCheckPanel({
         if (!cancelled) {
           setComparableSet(data);
           setComparableSetLoading(false);
-          // Extract adjustment data if present
-          if (adjustmentEnabled && data.comparables && data.adjustmentApplied !== undefined) {
-            const adjustmentMap = new Map<string, AdjustmentInfo>();
-            for (const c of data.comparables) {
-              if (c.transactionId && (c as TimeAdjustedComparable).adjustedResalePrice !== undefined) {
-                adjustmentMap.set(c.transactionId, {
-                  adjustedResalePrice: (c as TimeAdjustedComparable).adjustedResalePrice,
-                  adjustedPricePerSqm: (c as TimeAdjustedComparable).adjustedPricePerSqm,
-                  adjustmentLabel: (c as TimeAdjustedComparable).adjustmentLabel,
-                });
-              }
-            }
-            setAdjustmentMeta({
-              adjustmentApplied: data.adjustmentApplied ?? false,
-              adjustmentCaveats: data.adjustmentCaveats ?? [],
-              adjustmentMap,
-            });
-          } else {
-            setAdjustmentMeta(null);
-          }
+          setAdjustmentMeta(adjustmentEnabled ? buildAdjustmentMetaFromResponse(data) : null);
         }
       })
       .catch(() => {
@@ -456,6 +537,12 @@ export function ListingCheckPanel({
     adjustmentEnabled,
   ]);
 
+  const comparablePayload = useMemo(() => {
+    if (!comparableSet || !detail) return null;
+    const adjustmentMap = adjustmentMeta?.adjustmentApplied ? adjustmentMeta.adjustmentMap : null;
+    return buildComparablePayload(comparableSet, detail, adjustmentMap);
+  }, [comparableSet, detail, adjustmentMeta]);
+
   // ── Compute result from comparable set ────────────────────────────────────
   type LocalResult = {
     assessment: AskingPriceAssessment;
@@ -468,77 +555,40 @@ export function ListingCheckPanel({
       !comparableSet ||
       comparableSet.comparables.length === 0 ||
       resolvedAskingPrice == null ||
-      !detail
+      !detail ||
+      !comparablePayload
     ) {
       return null;
     }
 
-    // When time-adjustment was applied, assess against the adjusted prices so the
-    // verdict/median/percentiles match the "time-adjusted" caveat the UI surfaces.
-    const adjustmentApplied = adjustmentMeta?.adjustmentApplied ?? false;
-    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => {
-      const adjusted = adjustmentApplied
-        ? adjustmentMeta?.adjustmentMap.get(tx.transactionId)
-        : undefined;
-      return {
-      id: tx.transactionId,
-      month: tx.month,
-      flatType: tx.flatType,
-      storeyRange: tx.storeyRange,
-      floorAreaSqm: tx.floorAreaSqm,
-      flatModel: "",
-      leaseCommenceDate: tx.leaseCommenceDate ?? 0,
-      remainingLease: "",
-      resalePrice: adjusted?.adjustedResalePrice ?? tx.resalePrice,
-      pricePerSqm: adjusted?.adjustedPricePerSqm ?? tx.pricePerSqm,
-      pricePerSqft: null,
-      };
-    });
-
     const assessment = assessAskingPrice({
       askingPrice: resolvedAskingPrice,
       floorAreaSqm: resolvedFloorAreaSqm,
-      comparables: txs,
+      comparables: comparablePayload.comparableTransactions,
     });
 
     if (!assessment) return null;
 
     const confidenceInput: ConfidenceInput = {
       comparableCount: comparableSet.comparables.length,
-      sameBlockCount: comparableSet.comparables.filter(
-        (c) => c.block === detail.summary.block && c.town === detail.summary.town,
-      ).length,
-      sameStreetCount: comparableSet.comparables.filter(
-        (c) => c.streetName === detail.summary.streetName,
-      ).length,
-      sameTownCount: comparableSet.comparables.filter(
-        (c) => c.town === detail.summary.town,
-      ).length,
+      sameBlockCount: comparablePayload.sameBlockCount,
+      sameStreetCount: comparablePayload.sameStreetCount,
+      sameTownCount: comparablePayload.sameTownCount,
       newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
-      flatTypeMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons?.includes("Same flat type")).length,
-      floorAreaMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons?.some((r) => r.startsWith("Similar floor area"))).length,
-      storeyMatchCount: comparableSet.comparables
-        .filter((c) => c.matchReasons?.includes("Similar storey")).length,
+      flatTypeMatchCount: comparablePayload.flatTypeMatchCount,
+      floorAreaMatchCount: comparablePayload.floorAreaMatchCount,
+      storeyMatchCount: comparablePayload.storeyMatchCount,
       timeAdjustmentApplied: adjustmentMeta?.adjustmentApplied ?? false,
       trendSampleSize: null,
     };
 
     const confidence = computeConfidence(confidenceInput);
 
-    const comparableLeaseYears: number[] = [];
-    for (const tx of comparableSet.comparables) {
-      if (tx.leaseCommenceDate != null) {
-        comparableLeaseYears.push(tx.leaseCommenceDate);
-      }
-    }
-
     const caveats = generateCaveats({
       confidence,
       percentileAmongComparables: assessment.percentileAmongComparables,
       leaseCommenceYear: resolvedLeaseYear ?? undefined,
-      comparableLeaseYears,
+      comparableLeaseYears: comparablePayload.comparableLeaseYears,
       apiCaveats: [
         ...comparableSet.caveats,
         ...(adjustmentMeta?.adjustmentCaveats ?? []),
@@ -550,7 +600,15 @@ export function ListingCheckPanel({
       confidence,
       caveats,
     };
-  }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
+  }, [
+    comparablePayload,
+    comparableSet,
+    detail,
+    resolvedAskingPrice,
+    resolvedFloorAreaSqm,
+    resolvedLeaseYear,
+    adjustmentMeta,
+  ]);
 
   // Mirror the time-adjusted prices into the evidence table when adjustment was
   // applied, so the displayed comparables match the assessment and caveat.
@@ -608,7 +666,7 @@ export function ListingCheckPanel({
 
   // ── Input change handlers (delegate to parent when prop-driven) ───────────
   const handleAskingPriceChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setAskingPriceInput(raw);
       const cleaned = raw.replace(/[^\d.]/g, "");
@@ -619,7 +677,7 @@ export function ListingCheckPanel({
   );
 
   const handleFloorAreaChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setFloorAreaInput(raw);
       const cleaned = raw.replace(/[^\d.]/g, "");
@@ -630,7 +688,7 @@ export function ListingCheckPanel({
   );
 
   const handleLeaseYearChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
       const n = Number(raw);
