@@ -784,7 +784,11 @@ export function ListingCheckPanel({
 
       {/* ── Verdict card ───────────────────────────────────────────────── */}
       {result && theme && resolvedAskingPrice != null && (
-        <Card ref={verdictRef} className={cn("border-2 shadow-none", styles.border, styles.bg)}>
+        <Card
+          ref={verdictRef}
+          className={cn("border-2 shadow-none", styles.border, styles.bg)}
+          data-testid="listing-check-verdict"
+        >
           <CardContent className="flex flex-col gap-4 p-4">
             {/* Verdict badge + confidence */}
             <div className="flex items-center gap-3">
@@ -806,18 +810,30 @@ export function ListingCheckPanel({
                     : ""}
                 </div>
               </div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Badge variant={confidenceBadgeVariant(result.confidence.level)} className="h-5 font-mono text-[0.6rem]">
-                    {t("check.confidence.label", {
-                      level: t(`check.confidence.${result.confidence.level}`),
-                    })}
-                  </Badge>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="max-w-60 text-xs">
+              <div className="flex min-w-0 flex-col gap-1.5">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge
+                      variant={confidenceBadgeVariant(result.confidence.level)}
+                      className="h-5 w-fit font-mono text-[0.6rem]"
+                      data-testid="listing-check-confidence-badge"
+                    >
+                      {t("check.confidence.label", {
+                        level: t(`check.confidence.${result.confidence.level}`),
+                      })}
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="max-w-60 text-xs">
+                    {result.confidence.summary}
+                  </TooltipContent>
+                </Tooltip>
+                <p
+                  className="text-[0.62rem] leading-snug text-muted-foreground"
+                  data-testid="listing-check-confidence-summary"
+                >
                   {result.confidence.summary}
-                </TooltipContent>
-              </Tooltip>
+                </p>
+              </div>
             </div>
 
             {/* Stats grid */}
@@ -935,12 +951,14 @@ export function ListingCheckPanel({
 
       {/* ── Evidence table ─────────────────────────────────────────────── */}
       {comparableSet && !comparableSetLoading && !comparableSetError && (
-        <ComparableEvidenceTable
-          comparables={comparables}
-          referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
-          widenedSearch={comparableSet.widenedSearch}
-          caveats={comparableSet.caveats}
-        />
+        <div data-testid="listing-check-evidence">
+          <ComparableEvidenceTable
+            comparables={comparables}
+            referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
+            widenedSearch={comparableSet.widenedSearch}
+            caveats={comparableSet.caveats}
+          />
+        </div>
       )}
     </section>
   );

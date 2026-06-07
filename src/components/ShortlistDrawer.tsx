@@ -158,23 +158,6 @@ function ShortlistComparisonTable({
 }) {
   const { locale, t } = useI18n();
 
-  const formatGap = (gap: ShortlistComparisonRow["targetGap"]) => {
-    if (gap === null) {
-      return null;
-    }
-
-    if (gap.tone === "match") {
-      return { text: t("shortlist.compare.gapMatch"), tone: "match" as const };
-    }
-
-    const value = formatCompactCurrency(gap.amount, locale);
-    const text =
-      gap.tone === "below"
-        ? t("shortlist.compare.gapBelow", { value })
-        : t("shortlist.compare.gapAbove", { value });
-    return { text, tone: gap.tone };
-  };
-
   return (
     <div
       className="rounded-xl border border-border/40 bg-card/50 overflow-x-auto v2-scrollbar"
@@ -220,7 +203,7 @@ function ShortlistComparisonTable({
         </TableHeader>
         <TableBody>
           {comparisonRows.map((row, index) => {
-            const gap = formatGap(row.targetGap);
+            const gap = formatComparisonGap(row.targetGap, t, locale);
             return (
               <TableRow
                 key={row.addressKey}
@@ -319,6 +302,154 @@ function ShortlistComparisonTable({
           })}
         </TableBody>
       </Table>
+    </div>
+  );
+}
+
+function formatComparisonGap(
+  gap: ShortlistComparisonRow["targetGap"],
+  t: Translator,
+  locale?: string,
+): { text: string; tone: "below" | "above" | "match" } | null {
+  if (gap === null) {
+    return null;
+  }
+
+  if (gap.tone === "match") {
+    return { text: t("shortlist.compare.gapMatch"), tone: "match" as const };
+  }
+
+  const value = formatCompactCurrency(gap.amount, locale);
+  const text =
+    gap.tone === "below" ? t("shortlist.compare.gapBelow", { value }) : t("shortlist.compare.gapAbove", { value });
+  return { text, tone: gap.tone };
+}
+
+function ShortlistComparisonCards({
+  comparisonRows,
+  onSelectAddress,
+  budgetMin,
+  budgetMax,
+}: {
+  comparisonRows: ShortlistComparisonRow[];
+  onSelectAddress: (addressKey: string) => void;
+  budgetMin?: number | null;
+  budgetMax?: number | null;
+}) {
+  const { locale, t } = useI18n();
+
+  return (
+    <div className="flex flex-col gap-3 sm:hidden" data-testid="shortlist-comparison-cards">
+      {comparisonRows.map((row, index) => {
+        const gap = formatComparisonGap(row.targetGap, t, locale);
+
+        return (
+          <Card
+            key={row.addressKey}
+            data-testid="shortlist-comparison-mobile-row"
+            className="v2-card gap-0 rounded-xl py-0"
+          >
+            <CardHeader className="gap-2 px-3 py-3">
+              <div className="flex items-start gap-2">
+                <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-muted/30 text-xs font-extrabold text-muted-foreground">
+                  {index + 1}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <button
+                    type="button"
+                    onClick={() => onSelectAddress(row.addressKey)}
+                    className="w-full rounded-md text-left text-sm font-extrabold leading-tight tracking-tight text-foreground"
+                    aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
+                  >
+                    {row.address}
+                  </button>
+                  <span className="block text-[0.58rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    {localizeTownName(row.town, locale)}
+                    {row.flatTypeLabel ? ` • ${row.flatTypeLabel}` : ""}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <strong className="block text-sm font-extrabold tracking-tight v2-tabular">
+                    {formatCompactCurrency(row.medianPrice, locale)}
+                  </strong>
+                  <BudgetMatchBadge
+                    medianPrice={row.medianPrice}
+                    budgetMin={budgetMin ?? null}
+                    budgetMax={budgetMax ?? null}
+                    t={t}
+                    locale={locale}
+                    variant="compact"
+                    className="block text-[0.55rem] font-bold"
+                  />
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="flex flex-col gap-2 border-t border-border/40 px-3 py-3">
+              <div className="grid gap-1.5 text-[0.62rem]">
+                <div className="flex justify-between gap-2">
+                  <span className="text-muted-foreground">{t("shortlist.compare.col.medianPerSqm")}</span>
+                  <span className="font-medium">
+                    {row.medianPricePerSqm != null ? formatNumber(row.medianPricePerSqm, 0, locale) : t("shortlist.na")}
+                  </span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-muted-foreground">{t("shortlist.compare.col.txns")}</span>
+                  <span className="font-medium">{formatNumber(row.recentTransactionCount, 0, locale)}</span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-muted-foreground">{t("shortlist.compare.col.lease")}</span>
+                  <span className="font-medium">{formatRemainingLease(row.leaseCommenceRange, t)}</span>
+                </div>
+                <div className="flex justify-between gap-2">
+                  <span className="text-muted-foreground">{t("shortlist.compare.col.mrt")}</span>
+                  <span className="font-medium">
+                    {row.nearestMrt != null
+                      ? formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)
+                      : t("shortlist.compare.cellEmpty")}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                <Badge variant="outline" className="h-5 text-[0.6rem] font-extrabold uppercase tracking-[0.08em]">
+                  {t("shortlist.gapVsTarget")}
+                </Badge>
+                <span
+                  className={cn(
+                    "text-[0.72rem] font-extrabold",
+                    gap?.tone === "below" && "text-success",
+                    gap?.tone === "above" && "text-destructive",
+                    gap?.tone === "match" && "text-primary",
+                    !gap && "text-muted-foreground",
+                  )}
+                >
+                  {gap
+                    ? gap.text
+                    : t("shortlist.noTargetSet")}
+                </span>
+              </div>
+
+              {row.notes ? (
+                <p className="text-[0.65rem] text-muted-foreground">{row.notes}</p>
+              ) : (
+                <p className="text-[0.65rem] text-muted-foreground">{t("shortlist.compare.cellEmpty")}</p>
+              )}
+
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="mt-1 rounded-lg"
+                onClick={() => onSelectAddress(row.addressKey)}
+              >
+                <MapPin data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                {t("shortlist.viewOnMap")}
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
   );
 }
@@ -1209,12 +1340,25 @@ export function ShortlistDrawer({
                   ) : null}
 
                   {viewMode === "compare" ? (
-                    <ShortlistComparisonTable
-                      comparisonRows={comparisonViewRows}
-                      onSelectAddress={onSelectAddress}
-                      budgetMin={budgetMin}
-                      budgetMax={budgetMax}
-                    />
+                    <div className="sm:hidden">
+                      <ShortlistComparisonCards
+                        comparisonRows={comparisonViewRows}
+                        onSelectAddress={onSelectAddress}
+                        budgetMin={budgetMin}
+                        budgetMax={budgetMax}
+                      />
+                    </div>
+                  ) : null}
+
+                  {viewMode === "compare" ? (
+                    <div className="hidden sm:block">
+                      <ShortlistComparisonTable
+                        comparisonRows={comparisonViewRows}
+                        onSelectAddress={onSelectAddress}
+                        budgetMin={budgetMin}
+                        budgetMax={budgetMax}
+                      />
+                    </div>
                   ) : null}
 
                   {viewMode === "list" ? (

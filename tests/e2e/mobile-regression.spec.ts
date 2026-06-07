@@ -6,6 +6,7 @@ test.describe.configure({
 });
 
 const MOBILE_VIEWPORT = { width: 390, height: 844 };
+const MOBILE_VIEWPORT_COMPACT = { width: 360, height: 640 };
 
 function mobileTabBar(page: Page) {
   return page.getByTestId("mobile-tab-bar");
@@ -15,15 +16,128 @@ function firstResultCard(page: Page) {
   return page.locator("[data-testid='results-pane'] [data-slot='item']").first();
 }
 
-async function expectHorizontalOverflow(locator: Locator) {
+async function expectNoHorizontalOverflow(locator: Locator) {
   await expect(locator).toBeVisible({ timeout: 10_000 });
   await expect
-    .poll(async () => locator.evaluate((element) => element.scrollWidth > element.clientWidth))
+    .poll(async () => locator.evaluate((element) => element.scrollWidth <= element.clientWidth))
     .toBe(true);
-  await expect
-    .poll(async () => locator.evaluate((element) => getComputedStyle(element).overflowX))
-    .toMatch(/auto|scroll/);
 }
+
+async function runMobileListingCheckFlow(page: Page) {
+  await page.goto("/?search=BEDOK");
+
+  // Keep map visible, but use dedicated workflow to ensure the user does
+  // not need explicit map interaction to complete a check.
+  await expect(page.getByTestId("map-view")).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId("mobile-tab-bar")).toBeVisible();
+
+  await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+  await expect(page.getByTestId("results-pane")).toBeVisible();
+
+  const firstResult = firstResultCard(page);
+  await expect(firstResult).toBeVisible({ timeout: 10_000 });
+  await firstResult.click();
+
+  const detailDrawer = page.getByTestId("detail-drawer");
+  await expect(detailDrawer).toBeVisible();
+  await detailDrawer.getByRole("tab", { name: /negotiate/i }).click();
+  await expect(detailDrawer.getByText(/Asking Price Reality Check/i)).toBeVisible();
+
+  const askingPriceInput = detailDrawer.getByLabelText(/asking price/i);
+  const floorAreaInput = detailDrawer.getByLabelText(/floor area/i);
+  await askingPriceInput.fill("500000");
+  await floorAreaInput.fill("90");
+
+  const checkButton = detailDrawer.getByRole("button", { name: /check/i }).first();
+  await expect(checkButton).toBeEnabled();
+  await checkButton.click();
+
+  const verdict = detailDrawer.getByTestId("listing-check-verdict");
+  const verdictSummary = detailDrawer.getByTestId("listing-check-confidence-summary");
+  const evidence = detailDrawer.getByTestId("listing-check-evidence");
+
+  await expect(verdict).toBeVisible({ timeout: 25_000 });
+  await expect(verdictSummary).toBeVisible();
+  await expect(evidence).toBeVisible({ timeout: 25_000 });
+
+  await expectNoHorizontalOverflow(verdict);
+  await expectNoHorizontalOverflow(verdictSummary);
+  await expectNoHorizontalOverflow(evidence);
+
+  const verdictTop = await verdict.evaluate((element) => element.getBoundingClientRect().top);
+  const evidenceTop = await evidence.evaluate((element) => element.getBoundingClientRect().top);
+  expect(verdictTop).toBeLessThan(evidenceTop);
+
+  const saveButton = detailDrawer.getByRole("button", { name: /save to shortlist/i });
+  await expect(saveButton).toBeVisible();
+  await saveButton.click();
+  await expect(detailDrawer.getByRole("button", { name: /saved/i })).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(detailDrawer).toHaveCount(0);
+
+  await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
+  const shortlistDrawer = page.getByTestId("shortlist-drawer");
+  await expect(shortlistDrawer).toBeVisible();
+
+  const savedRowToggle = shortlistDrawer.getByRole("button", { name: /expand/i }).first();
+  await savedRowToggle.click();
+
+  const offerCeilingInput = shortlistDrawer.getByLabelText(/offer ceiling/i);
+  const notesInput = shortlistDrawer.getByLabelText(/notes/i);
+  await offerCeilingInput.fill("490000");
+  await notesInput.fill("Mobile shortlist note");
+  await expect(offerCeilingInput).toHaveValue("490000");
+  await expect(notesInput).toHaveValue("Mobile shortlist note");
+}
+
+async function runShortlistMobileComparisonFlow(page: Page) {
+  await mockComparisonArtifacts(page);
+
+  const shortlistData = [
+    {
+      addressKey: "bedok-10d-bedok-sth-ave-2",
+      notes: "",
+      targetPrice: null,
+      addedAt: new Date().toISOString(),
+    },
+    {
+      addressKey: "bedok-106-lengkong-tiga",
+      notes: "",
+      targetPrice: null,
+      addedAt: new Date(Date.now() - 60000).toISOString(),
+    },
+  ];
+
+  await page.goto("/");
+  await page.evaluate(
+    ({ data }) => localStorage.setItem("hdb_resale_shortlist_v1", JSON.stringify(data)),
+    { data: shortlistData },
+  );
+  await page.reload();
+
+  // Navigate to saved tab
+  const mobileTabBar = page.getByTestId("mobile-tab-bar");
+  await mobileTabBar.getByRole("button", { name: /saved/i }).click();
+  await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
+
+  // Shortlist items should be visible (street names from fixture data)
+  await expect(
+    page.getByTestId("shortlist-drawer").getByText(/BEDOK STH AVE 2/i).first(),
+  ).toBeVisible({ timeout: 10_000 });
+
+  const viewToggle = page.getByTestId("shortlist-view-toggle");
+  await viewToggle.getByRole("button", { name: /comparison table/i }).click();
+
+  const comparisonCards = page.getByTestId("shortlist-comparison-cards");
+  const comparisonTable = page.getByTestId("shortlist-comparison-table");
+
+  await expectNoHorizontalOverflow(comparisonCards);
+  await expect(comparisonCards).toBeVisible();
+  await expect(comparisonCards.getByTestId("shortlist-comparison-mobile-row")).toHaveCount(2);
+  await expect(comparisonTable).toBeHidden();
+}
+
 
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
@@ -162,54 +276,37 @@ test.describe("Mobile Regression: Recent Features", () => {
     });
   });
 
-  test("shortlist comparison table scrolls horizontally on mobile", async ({ page }) => {
-    await mockComparisonArtifacts(page);
+  test("shortlist comparison uses mobile cards", async ({ page }) => {
+    await runShortlistMobileComparisonFlow(page);
+  });
 
-    // Pre-seed two shortlist items using real fixture address keys
-    const shortlistData = [
-      {
-        addressKey: "bedok-10d-bedok-sth-ave-2",
-        notes: "",
-        targetPrice: null,
-        addedAt: new Date().toISOString(),
-      },
-      {
-        addressKey: "bedok-106-lengkong-tiga",
-        notes: "",
-        targetPrice: null,
-        addedAt: new Date(Date.now() - 60000).toISOString(),
-      },
-    ];
+  test("mobile listing check works without opening map and is editable in shortlist", async ({ page }) => {
+    await runMobileListingCheckFlow(page);
+  });
 
+  test("mobile filter panel opens and budget inputs work", async ({ page }) => {
     await page.goto("/");
-    await page.evaluate(
-      ({ data }) => localStorage.setItem("hdb_resale_shortlist_v1", JSON.stringify(data)),
-      { data: shortlistData },
-    );
-    await page.reload();
 
-    // Navigate to saved tab
-    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
-    await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
+    // Open filters
+    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await expect(page.getByTestId("filters-panel")).toBeVisible();
 
-    // Shortlist items should be visible (street names from fixture data)
-    await expect(
-      page.getByTestId("shortlist-drawer").getByText(/BEDOK STH AVE 2/i).first(),
-    ).toBeVisible({ timeout: 10_000 });
+    // Budget inputs should be accessible
+    const budgetMin = page.getByRole("spinbutton", { name: /minimum budget/i });
+    const budgetMax = page.getByRole("spinbutton", { name: /maximum budget/i });
+    await expect(budgetMin).toBeVisible();
+    await expect(budgetMax).toBeVisible();
 
-    const viewToggle = page.getByTestId("shortlist-view-toggle");
-    await viewToggle.getByRole("button", { name: /comparison table/i }).click();
+    // Fill budget values
+    await budgetMin.fill("300000");
+    await budgetMax.fill("600000");
 
-    const comparisonTable = page.getByTestId("shortlist-comparison-table");
-    const comparisonScroller = comparisonTable.locator("[data-slot='table-container']");
-    await expect(comparisonTable).toBeVisible();
-    await expectHorizontalOverflow(comparisonScroller);
-    await expect(comparisonTable.getByRole("table", { name: /saved blocks comparison/i })).toBeVisible();
-    await expect(comparisonTable.getByTestId("shortlist-comparison-row")).toHaveCount(2);
+    // Values should persist
+    await expect(budgetMin).toHaveValue("300000");
+    await expect(budgetMax).toHaveValue("600000");
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {
-
     const shortlistData = [
       {
         addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
@@ -260,26 +357,16 @@ test.describe("Mobile Regression: Recent Features", () => {
     await expect(page.getByRole("listbox").getByRole("option")).toHaveCount(2);
     await page.keyboard.press("Escape");
   });
+});
 
-  test("mobile filter panel opens and budget inputs work", async ({ page }) => {
-    await page.goto("/");
+test.describe("Mobile Regression: Compact Phone Viewport", () => {
+  test.use({ viewport: MOBILE_VIEWPORT_COMPACT });
 
-    // Open filters
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
-    await expect(page.getByTestId("filters-panel")).toBeVisible();
+  test("shortlist comparison uses mobile cards on compact width", async ({ page }) => {
+    await runShortlistMobileComparisonFlow(page);
+  });
 
-    // Budget inputs should be accessible
-    const budgetMin = page.getByRole("spinbutton", { name: /minimum budget/i });
-    const budgetMax = page.getByRole("spinbutton", { name: /maximum budget/i });
-    await expect(budgetMin).toBeVisible();
-    await expect(budgetMax).toBeVisible();
-
-    // Fill budget values
-    await budgetMin.fill("300000");
-    await budgetMax.fill("600000");
-
-    // Values should persist
-    await expect(budgetMin).toHaveValue("300000");
-    await expect(budgetMax).toHaveValue("600000");
+  test("mobile listing check and shortlist edit works at compact width", async ({ page }) => {
+    await runMobileListingCheckFlow(page);
   });
 });
