@@ -10,6 +10,7 @@
 import type { BlockSummary } from "../../../shared/data-types";
 import type { D1Client } from "./d1";
 import type { GeneratedArtifacts, MrtStationFeatureCollection } from "../pipeline";
+import type { TransactionRow } from "../schemas";
 
 type MrtExitsGeoJson = { type: "FeatureCollection"; features: unknown[] };
 
@@ -156,6 +157,11 @@ export async function writeArtifactsToD1(
     ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
   );
 
+  // Transactions — full normalized table for the comparable engine v2.
+  if (artifacts.transactions && artifacts.transactions.length > 0) {
+    await insertTransactions(db, artifacts.transactions);
+  }
+
   // Manifest — written last so a matching timestamp implies a successful sync.
   await db.execute(
     "INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)",
@@ -163,7 +169,7 @@ export async function writeArtifactsToD1(
   );
 
   console.log(
-    `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points.`,
+    `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points, ${artifacts.transactions?.length ?? 0} transactions.`,
   );
 }
 
@@ -180,4 +186,60 @@ export async function readManifestUpdatedAt(db: D1Client): Promise<string | null
   } catch {
     return null;
   }
+}
+
+const TX_COLUMNS = [
+  "id",
+  "month",
+  "town",
+  "block",
+  "street_name",
+  "address_key",
+  "flat_type",
+  "storey_range",
+  "storey_midpoint",
+  "floor_area_sqm",
+  "lease_commence_year",
+  "resale_price",
+  "price_per_sqm",
+  "flat_model",
+];
+
+function mapTxRow(row: TransactionRow): unknown[] {
+  return [
+    row.id,
+    row.month,
+    row.town,
+    row.block,
+    row.street_name,
+    row.address_key,
+    row.flat_type,
+    row.storey_range,
+    row.storey_midpoint,
+    row.floor_area_sqm,
+    row.lease_commence_year,
+    row.resale_price,
+    row.price_per_sqm,
+    row.flat_model,
+  ];
+}
+
+/**
+ * Truncate and re-insert the full transactions table. Called during sync after
+ * all block details are built, using the *full* sorted transaction array (not
+ * the 20-row capped slice stored in block_details).
+ */
+export async function insertTransactions(
+  db: D1Client,
+  transactions: TransactionRow[],
+): Promise<void> {
+  console.log(`Writing ${transactions.length} transactions to D1...`);
+  await db.batchInsert<TransactionRow>({
+    table: "transactions",
+    columns: TX_COLUMNS,
+    rows: transactions,
+    mapRow: mapTxRow,
+    preDelete: true,
+  });
+  console.log("Transactions write complete.");
 }
