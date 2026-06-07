@@ -203,6 +203,9 @@ function App() {
   if (checkStoreyRange !== prevCheckStoreyRange) setPrevCheckStoreyRange(checkStoreyRange);
   if (checkLeaseYear !== prevCheckLeaseYear) setPrevCheckLeaseYear(checkLeaseYear);
 
+  // Hardcoded sample for the "Try sample listing check" CTA at cold start.
+  // This address key must exist in the D1 dataset; if it's ever dropped during
+  // a data refresh, the detail fetch will gracefully return an error state.
   const FALLBACK_SAMPLE = useMemo(() => ({
     addressKey: "406-ANG MO KIO AVE 10",
     medianPrice: 450000,
