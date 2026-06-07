@@ -1,4 +1,5 @@
 import type { AskingPriceAssessment } from "./transaction-analysis";
+import { monthDiff } from "./transaction-analysis";
 import type { ConfidenceResult } from "./listing-confidence";
 import {
   computeConfidence as computeConfidenceV2,
@@ -20,17 +21,6 @@ export type GenerateCaveatsParams = {
   comparableLeaseYears: number[];
   referenceMonth?: string;
 };
-
-function monthDiff(
-  txMonth: string,
-  referenceMonth: string,
-): number {
-  const txYear = Number(txMonth.slice(0, 4));
-  const txMon = Number(txMonth.slice(5, 7));
-  const refYear = Number(referenceMonth.slice(0, 4));
-  const refMon = Number(referenceMonth.slice(5, 7));
-  return (refYear - txYear) * 12 + (refMon - txMon);
-}
 
 export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   const { assessment, confidence, leaseCommenceYear, comparableLeaseYears, referenceMonth } = params;

@@ -154,7 +154,7 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
 
   return rows.map((row) => {
     const { item, block, detailSummary } = row;
-    const [commenceMin, commenceMax] = block.leaseCommenceRange;
+    const [commenceMin, commenceMax] = block.leaseCommenceRange ?? [0, 0];
 
     // commenceMin is the oldest commence year => fewest remaining lease years.
     // commenceMax is the most recent commence year => most remaining lease years.

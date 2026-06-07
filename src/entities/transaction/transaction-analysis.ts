@@ -8,6 +8,17 @@ import type {
 import { parseStoreyMidpoint } from "@shared/comparable-engine";
 export { parseStoreyMidpoint };
 
+export function monthDiff(
+  txMonth: string,
+  referenceMonth: string,
+): number {
+  const txYear = Number(txMonth.slice(0, 4));
+  const txMon = Number(txMonth.slice(5, 7));
+  const refYear = Number(referenceMonth.slice(0, 4));
+  const refMon = Number(referenceMonth.slice(5, 7));
+  return (refYear - txYear) * 12 + (refMon - txMon);
+}
+
 export type TrendRangeKey = "2y" | "5y" | "10y" | "max";
 
 const TREND_RANGE_MONTHS: Record<TrendRangeKey, number | null> = {
@@ -261,10 +272,15 @@ export function computeBlockTrajectory(
   const latest = sorted[sorted.length - 1];
   if (!latest || !Number.isFinite(latest.medianPrice)) return null;
 
-  let peak = sorted[0];
+  let peak: AddressTrendPoint | undefined;
   for (const point of sorted) {
-    if (point.medianPrice > peak.medianPrice) peak = point;
+    if (Number.isFinite(point.medianPrice)) {
+      if (!peak || point.medianPrice > peak.medianPrice) {
+        peak = point;
+      }
+    }
   }
+  if (!peak) return null;
 
   // Robust YoY: Find the point closest to exactly 12 months ago
   // within a window of [8, 16] months ago.

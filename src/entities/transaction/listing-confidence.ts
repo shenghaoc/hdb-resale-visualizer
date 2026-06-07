@@ -4,6 +4,7 @@ import {
   type ConfidenceLevel,
   type ConfidenceInput,
 } from "@shared/confidence-system";
+import { monthDiff } from "./transaction-analysis";
 
 export type { ConfidenceLevel };
 
@@ -24,17 +25,6 @@ function findNewestMonth(
     }
   }
   return newest;
-}
-
-function monthDiff(
-  txMonth: string,
-  referenceMonth: string,
-): number {
-  const txYear = Number(txMonth.slice(0, 4));
-  const txMon = Number(txMonth.slice(5, 7));
-  const refYear = Number(referenceMonth.slice(0, 4));
-  const refMon = Number(referenceMonth.slice(5, 7));
-  return (refYear - txYear) * 12 + (refMon - txMon);
 }
 
 export function computeConfidence(

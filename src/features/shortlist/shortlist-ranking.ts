@@ -24,7 +24,7 @@ function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareM
   }
 
   if (compareMode === "lease") {
-    return -row.block.leaseCommenceRange[1];
+    return -(row.block.leaseCommenceRange?.[1] ?? 0);
   }
 
   if (compareMode === "mrt") {
@@ -93,6 +93,6 @@ export function rankShortlistRows<T extends SortableShortlistRow>(
       return byMedian;
     }
 
-    return right.block.leaseCommenceRange[1] - left.block.leaseCommenceRange[1];
+    return (right.block.leaseCommenceRange?.[1] ?? 0) - (left.block.leaseCommenceRange?.[1] ?? 0);
   });
 }
