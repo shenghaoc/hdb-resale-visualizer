@@ -15,6 +15,7 @@ import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-station
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
+import { onRequestPost as comparableTransactionsHandler } from "../functions/api/comparable-transactions";
 import { onRequestPost as shortlistCreateHandler } from "../functions/api/shortlist/index";
 import { onRequestGet as shortlistGetHandler } from "../functions/api/shortlist/[syncCode]";
 import { handleBlockOg, handleCompareOg } from "./og";
@@ -33,6 +34,7 @@ const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
   "mrt-exits": mrtExitsHandler,
   "trends-town-flat-type": trendsHandler,
   search: searchHandler,
+  "comparable-transactions": comparableTransactionsHandler,
   "shortlist-create": shortlistCreateHandler,
   "shortlist-get": shortlistGetHandler,
 };

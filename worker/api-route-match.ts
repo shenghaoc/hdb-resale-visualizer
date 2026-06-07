@@ -17,6 +17,7 @@ export type ApiRouteId =
   | "mrt-exits"
   | "trends-town-flat-type"
   | "search"
+  | "comparable-transactions"
   | "shortlist-create"
   | "shortlist-get";
 
@@ -37,6 +38,7 @@ export const apiRouteDefinitions: ApiRouteDefinition[] = [
   { id: "mrt-exits", pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }) },
   { id: "trends-town-flat-type", pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }) },
   { id: "search", pattern: new URLPattern({ pathname: "/api/search{/}?" }) },
+  { id: "comparable-transactions", pattern: new URLPattern({ pathname: "/api/comparable-transactions{/}?" }), method: "POST" },
   { id: "shortlist-create", pattern: new URLPattern({ pathname: "/api/shortlist{/}?" }), method: "POST" },
   { id: "shortlist-get", pattern: new URLPattern({ pathname: "/api/shortlist/:syncCode{/}?" }) },
 ];

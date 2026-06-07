@@ -8,7 +8,9 @@ import type {
   TownFlatTypeTrendPoint,
 } from "../../shared/data-types";
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
+import { parseStoreyMidpoint } from "../../shared/comparable-engine";
 import { getStationDetails } from "./mrt";
+import type { TransactionRow } from "./schemas";
 
 export type ResaleTransaction = {
   id: string;
@@ -115,6 +117,8 @@ export type GeneratedArtifacts = {
   details: Record<string, AddressDetail>;
   townFlatTypeTrend: TownFlatTypeTrendPoint[];
   comparisons?: Record<string, ComparisonArtifact>;
+  /** Full transaction rows for the comparable engine v2 (all rows, not capped). */
+  transactions?: import("./schemas").TransactionRow[];
 };
 
 type ComparisonBlockMetric = {
@@ -591,8 +595,36 @@ export function buildArtifacts({
     townFlatTypeGroups.set(key, list);
   }
 
+  // Collect full transaction rows for the comparable engine v2 (all rows,
+  // not capped). storeyMidpoint is pre-computed here so the API doesn't
+  // need to parse storeyRange strings at query time.
+  const allTransactions: TransactionRow[] = [];
+
   for (const [addressKey, blockTransactions] of grouped.entries()) {
     const sortedTransactions = sortTransactionsByLatest(blockTransactions);
+
+    // Map ALL sorted transactions (before the 20-row cap) to D1 rows.
+    for (const tx of sortedTransactions) {
+      const midpoint = parseStoreyMidpoint(tx.storeyRange);
+      if (midpoint == null) continue; // skip unparseable storey ranges
+      allTransactions.push({
+        id: tx.id,
+        month: tx.month,
+        town: tx.town,
+        block: tx.block,
+        street_name: tx.streetName,
+        address_key: tx.addressKey,
+        flat_type: tx.flatType,
+        storey_range: tx.storeyRange,
+        storey_midpoint: midpoint,
+        floor_area_sqm: tx.floorAreaSqm,
+        lease_commence_year: tx.leaseCommenceDate || null,
+        resale_price: tx.resalePrice,
+        price_per_sqm: tx.pricePerSqm,
+        flat_model: tx.flatModel,
+      });
+    }
+
     const summaryWindow = sortedTransactions.filter(
       (transaction) => transaction.month >= recentThreshold,
     );
@@ -938,5 +970,6 @@ export function buildArtifacts({
     details,
     townFlatTypeTrend,
     comparisons: Object.keys(comparisons).length > 0 ? comparisons : undefined,
+    transactions: allTransactions.length > 0 ? allTransactions : undefined,
   };
 }

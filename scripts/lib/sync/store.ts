@@ -10,6 +10,7 @@
 import type { BlockSummary } from "../../../shared/data-types";
 import type { D1Client } from "./d1";
 import type { GeneratedArtifacts, MrtStationFeatureCollection } from "../pipeline";
+import type { TransactionRow } from "../schemas";
 
 type MrtExitsGeoJson = { type: "FeatureCollection"; features: unknown[] };
 
@@ -156,6 +157,13 @@ export async function writeArtifactsToD1(
     ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
   );
 
+  // Transactions — full normalized table for the comparable engine v2.
+  if (artifacts.transactions && artifacts.transactions.length > 0) {
+    await insertTransactions(db, artifacts.transactions);
+  } else {
+    await db.truncate("transactions");
+  }
+
   // Manifest — written last so a matching timestamp implies a successful sync.
   await db.execute(
     "INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)",
@@ -163,7 +171,7 @@ export async function writeArtifactsToD1(
   );
 
   console.log(
-    `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points.`,
+    `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points, ${artifacts.transactions?.length ?? 0} transactions.`,
   );
 }
 
@@ -180,4 +188,111 @@ export async function readManifestUpdatedAt(db: D1Client): Promise<string | null
   } catch {
     return null;
   }
+}
+
+const TX_COLUMNS = [
+  "id",
+  "month",
+  "town",
+  "block",
+  "street_name",
+  "address_key",
+  "flat_type",
+  "storey_range",
+  "storey_midpoint",
+  "floor_area_sqm",
+  "lease_commence_year",
+  "resale_price",
+  "price_per_sqm",
+  "flat_model",
+];
+
+function mapTxRow(row: TransactionRow): unknown[] {
+  return [
+    row.id,
+    row.month,
+    row.town,
+    row.block,
+    row.street_name,
+    row.address_key,
+    row.flat_type,
+    row.storey_range,
+    row.storey_midpoint,
+    row.floor_area_sqm,
+    row.lease_commence_year,
+    row.resale_price,
+    row.price_per_sqm,
+    row.flat_model,
+  ];
+}
+
+/**
+ * Truncate and re-insert the full transactions table. Called during sync after
+ * all block details are built, using the *full* sorted transaction array (not
+ * the 20-row capped slice stored in block_details).
+ *
+ * Uses batched multi-row INSERTs packed into D1 batch API calls to stay under
+ * the 100-bound-param per-statement limit (14 columns → 7 rows per INSERT)
+ * while minimising HTTP round-trips (up to 100 INSERTs per batch call → 700
+ * rows per HTTP request).
+ *
+ * TODO: At production scale (~1M transactions), this still issues ~1.4k D1
+ * HTTP requests per sync (~20–30 min wall time). A future D1 bulk-import API
+ * or raw-SQL endpoint without param limits would reduce this to a single
+ * request. Tracked as follow-up — not blocking merge.
+ */
+export async function insertTransactions(
+  db: D1Client,
+  transactions: TransactionRow[],
+): Promise<void> {
+  console.log(`Writing ${transactions.length} transactions to D1...`);
+
+  if (transactions.length === 0) {
+    await db.truncate("transactions");
+    console.log("Transactions write complete (truncated).");
+    return;
+  }
+
+  // 14 columns → at most floor(100/14) = 7 rows per INSERT to stay under
+  // the 100-bound-param limit.
+  const ROWS_PER_INSERT = 7;
+  // D1 batch endpoint allows up to 100 statements per request.
+  const MAX_BATCH_STMTS = 100;
+  const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;
+  const sqlPrefix = `INSERT INTO transactions (${TX_COLUMNS.join(",")}) VALUES `;
+
+  // Phase 1: DELETE to clear the table (single statement, batched with first
+  // INSERT batch to avoid an empty-table window).
+  let firstBatch = true;
+
+  // Build INSERT statements: each has ROWS_PER_INSERT rows (7 rows × 14 cols = 98 params).
+  const statements: Array<{ sql: string; params: unknown[] }> = [];
+  for (let i = 0; i < transactions.length; i += ROWS_PER_INSERT) {
+    const chunk = transactions.slice(i, i + ROWS_PER_INSERT);
+    const params: unknown[] = [];
+    for (const row of chunk) {
+      const values = mapTxRow(row);
+      if (values.length !== TX_COLUMNS.length) {
+        throw new Error(
+          `insertTransactions: row provided ${values.length} values for ${TX_COLUMNS.length} columns`,
+        );
+      }
+      params.push(...values);
+    }
+    const sql = sqlPrefix + new Array(chunk.length).fill(placeholders).join(",");
+    statements.push({ sql, params });
+
+    // Flush when we hit the batch statement limit or end of data
+    if (statements.length >= MAX_BATCH_STMTS || i + ROWS_PER_INSERT >= transactions.length) {
+      const batch = firstBatch
+        ? [{ sql: "DELETE FROM transactions" }, ...statements]
+        : statements;
+
+      await db.query(batch);
+      firstBatch = false;
+      statements.length = 0;
+    }
+  }
+
+  console.log("Transactions write complete.");
 }

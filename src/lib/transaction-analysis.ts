@@ -3,6 +3,11 @@ import type {
   AddressTrendPoint,
 } from "../types/data";
 
+// Moved to shared/comparable-engine.ts so the sync pipeline can use it
+// without importing from src/. Re-export for backwards compatibility.
+import { parseStoreyMidpoint } from "../../shared/comparable-engine";
+export { parseStoreyMidpoint };
+
 export type TrendRangeKey = "2y" | "5y" | "10y" | "max";
 
 const TREND_RANGE_MONTHS: Record<TrendRangeKey, number | null> = {
@@ -11,19 +16,6 @@ const TREND_RANGE_MONTHS: Record<TrendRangeKey, number | null> = {
   "10y": 120,
   max: null,
 };
-
-export function parseStoreyMidpoint(storeyRange: string): number | null {
-  const match = storeyRange.match(/(\d+)\s*(?:TO|-)\s*(\d+)/i);
-  if (match) {
-    const low = Number(match[1]);
-    const high = Number(match[2]);
-    if (Number.isFinite(low) && Number.isFinite(high)) {
-      return (low + high) / 2;
-    }
-  }
-  const single = storeyRange.match(/\d+/);
-  return single ? Number(single[0]) : null;
-}
 
 export type ComparableTolerances = {
   storey: number;
