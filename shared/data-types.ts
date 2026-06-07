@@ -230,3 +230,22 @@ export type Suggestion =
 export type SuggestResponse = {
   suggestions: Suggestion[];
 };
+
+/** Normalized transaction row matching the `transactions` D1 table.
+ *  Populated by sync-data, consumed by the comparable engine API. */
+export type TransactionRow = {
+  id: string;
+  month: string;
+  town: string;
+  block: string;
+  streetName: string;
+  addressKey: string;
+  flatType: string;
+  storeyRange: string;
+  storeyMidpoint: number;
+  floorAreaSqm: number;
+  leaseCommenceDate: number | null;
+  resalePrice: number;
+  pricePerSqm: number;
+  flatModel: string;
+};
