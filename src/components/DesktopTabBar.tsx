@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Bookmark, List, Moon, SlidersHorizontal, Sun } from "lucide-react";
+import { Bookmark, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { LeftTab } from "@/hooks/usePanelState";
@@ -14,6 +14,7 @@ type DesktopTabBarProps = {
   t: Translator;
   onFiltersClick: () => void;
   onResultsClick: () => void;
+  onCheckClick: () => void;
   onSavedClick: () => void;
   onToggleTheme: () => void;
 };
@@ -27,11 +28,13 @@ export function DesktopTabBar({
   t,
   onFiltersClick,
   onResultsClick,
+  onCheckClick,
   onSavedClick,
   onToggleTheme,
 }: DesktopTabBarProps) {
   const filtersActive = leftTab === "filters" && isLeftPanelOpen;
   const resultsActive = leftTab === "results" && isLeftPanelOpen;
+  const checkActive = leftTab === "check" && isLeftPanelOpen;
 
   // Roving arrow-key navigation across all toolbar elements.
   const [focusedIndex, setFocusedIndex] = useState(0);
@@ -71,6 +74,7 @@ export function DesktopTabBar({
 
   const filtersLabel = t("tab.filters");
   const resultsLabel = t("tab.results");
+  const checkLabel = t("tab.check");
   const savedLabel = t("tab.saved");
 
   return (
@@ -118,10 +122,29 @@ export function DesktopTabBar({
         <List data-icon="inline-start" />
         <span>{resultsLabel}</span>
       </Button>
-      <span className="desktop-tab-bar-divider" aria-hidden="true" />
       <Button
         ref={(node) => {
           itemRefs.current[2] = node;
+        }}
+        type="button"
+        variant={checkActive ? "secondary" : "ghost"}
+        size="sm"
+        data-active={checkActive}
+        aria-pressed={checkActive}
+        aria-controls="desktop-check-content"
+        title={checkLabel}
+        tabIndex={focusedIndex === 2 ? 0 : -1}
+        onClick={onCheckClick}
+        onKeyDown={(e) => handleKeyDown(e, 2)}
+        onFocus={() => setFocusedIndex(2)}
+      >
+        <Scale data-icon="inline-start" />
+        <span>{checkLabel}</span>
+      </Button>
+      <span className="desktop-tab-bar-divider" aria-hidden="true" />
+      <Button
+        ref={(node) => {
+          itemRefs.current[3] = node;
         }}
         type="button"
         variant={isSavedPanelOpen ? "secondary" : "ghost"}
@@ -130,10 +153,10 @@ export function DesktopTabBar({
         aria-pressed={isSavedPanelOpen}
         aria-controls="desktop-saved-content"
         title={savedLabel}
-        tabIndex={focusedIndex === 2 ? 0 : -1}
+        tabIndex={focusedIndex === 3 ? 0 : -1}
         onClick={onSavedClick}
-        onKeyDown={(e) => handleKeyDown(e, 2)}
-        onFocus={() => setFocusedIndex(2)}
+        onKeyDown={(e) => handleKeyDown(e, 3)}
+        onFocus={() => setFocusedIndex(3)}
       >
         <Bookmark data-icon="inline-start" className={isSavedPanelOpen ? "fill-current" : ""} />
         <span>{savedLabel}</span>
@@ -146,16 +169,16 @@ export function DesktopTabBar({
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
       <Button
         ref={(node) => {
-          itemRefs.current[3] = node;
+          itemRefs.current[4] = node;
         }}
         type="button"
         size="icon"
         variant="ghost"
         className="desktop-tab-bar-icon-btn"
-        tabIndex={focusedIndex === 3 ? 0 : -1}
+        tabIndex={focusedIndex === 4 ? 0 : -1}
         onClick={onToggleTheme}
-        onKeyDown={(e) => handleKeyDown(e, 3)}
-        onFocus={() => setFocusedIndex(3)}
+        onKeyDown={(e) => handleKeyDown(e, 4)}
+        onFocus={() => setFocusedIndex(4)}
         aria-label={t("app.toggleTheme")}
         aria-pressed={theme === "dark"}
         title={t("app.toggleTheme")}
