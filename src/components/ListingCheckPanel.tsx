@@ -15,8 +15,15 @@ import {
   assessAskingPrice,
   type AskingPriceAssessment,
 } from "@/lib/transaction-analysis";
-import { computeConfidence, type ConfidenceResult } from "@/lib/listing-confidence";
-import { generateCaveats, type Caveat } from "@/lib/listing-caveats";
+import {
+  computeConfidence,
+  type ConfidenceAssessment,
+  type ConfidenceInput,
+} from "../../shared/confidence-system";
+import {
+  generateCaveats,
+  type Caveat,
+} from "../../shared/caveat-codes";
 import { fetchAddressDetail } from "@/lib/data";
 import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
 import type { ListingComparableSet, ComparableTransaction } from "../../shared/comparable-engine";
@@ -33,6 +40,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { DistributionBar } from "@/components/DistributionBar";
 import {
   ComparableTransactionsList,
@@ -121,7 +133,7 @@ function formatSignedPct(value: number) {
   return `${sign}${Math.abs(value).toFixed(1)}%`;
 }
 
-function confidenceBadgeVariant(level: ConfidenceResult["level"]): "default" | "secondary" | "destructive" | "outline" {
+function confidenceBadgeVariant(level: ConfidenceAssessment["level"]): "default" | "secondary" | "destructive" | "outline" {
   switch (level) {
     case "high":
       return "default";
@@ -435,11 +447,9 @@ export function ListingCheckPanel({
   ]);
 
   // ── Compute result from comparable set ────────────────────────────────────
-  // ComparableTransaction is mapped to AddressDetailTransaction for compatibility
-  // with the existing assessAskingPrice, computeConfidence, and generateCaveats.
   type LocalResult = {
     assessment: AskingPriceAssessment;
-    confidence: ConfidenceResult;
+    confidence: ConfidenceAssessment;
     caveats: Caveat[];
   };
 
@@ -447,7 +457,8 @@ export function ListingCheckPanel({
     if (
       !comparableSet ||
       comparableSet.comparables.length === 0 ||
-      resolvedAskingPrice == null
+      resolvedAskingPrice == null ||
+      !detail
     ) {
       return null;
     }
@@ -474,7 +485,29 @@ export function ListingCheckPanel({
 
     if (!assessment) return null;
 
-    const confidence = computeConfidence(txs, referenceMonth);
+    const confidenceInput: ConfidenceInput = {
+      comparableCount: comparableSet.comparables.length,
+      sameBlockCount: comparableSet.comparables.filter(
+        (c) => c.block === detail.summary.block && c.town === detail.summary.town,
+      ).length,
+      sameStreetCount: comparableSet.comparables.filter(
+        (c) => c.streetName === detail.summary.streetName,
+      ).length,
+      sameTownCount: comparableSet.comparables.filter(
+        (c) => c.town === detail.summary.town,
+      ).length,
+      newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
+      flatTypeMatchCount: comparableSet.comparables
+        .filter((c) => c.matchReasons?.includes("Same flat type")).length,
+      floorAreaMatchCount: comparableSet.comparables
+        .filter((c) => c.matchReasons?.some((r) => r.startsWith("Similar floor area"))).length,
+      storeyMatchCount: comparableSet.comparables
+        .filter((c) => c.matchReasons?.includes("Similar storey")).length,
+      timeAdjustmentApplied: adjustmentMeta?.adjustmentApplied ?? false,
+      trendSampleSize: null,
+    };
+
+    const confidence = computeConfidence(confidenceInput);
 
     const comparableLeaseYears: number[] = [];
     for (const tx of comparableSet.comparables) {
@@ -483,32 +516,20 @@ export function ListingCheckPanel({
       }
     }
 
-    const localCaveats = generateCaveats({
-      assessment,
+    const caveats = generateCaveats({
       confidence,
+      percentileAmongComparables: assessment.percentileAmongComparables,
       leaseCommenceYear: resolvedLeaseYear ?? undefined,
       comparableLeaseYears,
-      referenceMonth,
+      apiCaveats: comparableSet.caveats,
     });
-
-    // Merge API caveats (widening, low sample) with generated caveats
-    const mergedCaveats: Caveat[] = [
-      ...comparableSet.caveats.map((msg) => ({ severity: "warning" as const, message: msg })),
-      ...localCaveats,
-    ];
-    // Add adjustment caveats if present
-    if (adjustmentMeta?.adjustmentCaveats) {
-      for (const msg of adjustmentMeta.adjustmentCaveats) {
-        mergedCaveats.push({ severity: "info" as const, message: msg });
-      }
-    }
 
     return {
       assessment,
       confidence,
-      caveats: mergedCaveats,
+      caveats,
     };
-  }, [comparableSet, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, referenceMonth, adjustmentMeta]);
+  }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
 
   const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
 
@@ -789,11 +810,18 @@ export function ListingCheckPanel({
                     : ""}
                 </div>
               </div>
-              <Badge variant={confidenceBadgeVariant(result.confidence.level)} className="h-5 font-mono text-[0.6rem]">
-                {t("check.confidence.label", {
-                  level: t(`check.confidence.${result.confidence.level}`),
-                })}
-              </Badge>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Badge variant={confidenceBadgeVariant(result.confidence.level)} className="h-5 font-mono text-[0.6rem]">
+                    {t("check.confidence.label", {
+                      level: t(`check.confidence.${result.confidence.level}`),
+                    })}
+                  </Badge>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="max-w-60 text-xs">
+                  {result.confidence.summary}
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             {/* Stats grid */}
@@ -861,16 +889,17 @@ export function ListingCheckPanel({
                   {t("check.caveatsTitle")}
                 </h4>
                 <ul className="flex flex-col gap-1.5">
-                  {result.caveats.map((caveat: Caveat, index: number) => (
+                  {result.caveats.map((caveat: Caveat) => (
                     <li
-                      key={index}
+                      key={caveat.code}
                       className={cn(
                         "flex items-start gap-2 rounded px-2 py-1 text-xs",
+                        caveat.severity === "critical" && "bg-destructive/10 text-destructive",
                         caveat.severity === "warning" && "bg-warning/5 text-warning",
                         caveat.severity === "info" && "bg-muted/30 text-muted-foreground",
                       )}
                     >
-                      {caveat.severity === "warning" ? (
+                      {caveat.severity === "critical" || caveat.severity === "warning" ? (
                         <AlertTriangle data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
                       ) : (
                         <Info data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />

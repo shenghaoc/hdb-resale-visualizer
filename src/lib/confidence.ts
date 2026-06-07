@@ -1,9 +1,11 @@
-export type DataConfidenceLevel = "high" | "medium" | "low";
-export type DataConfidenceLabelKey = `confidence.${DataConfidenceLevel}.label`;
+import {
+  computeConfidence,
+  type ConfidenceLevel,
+  type ConfidenceInput,
+} from "../../shared/confidence-system";
 
-// The 4/8 bands keep confidence coarse for the current recent-transaction window.
-const HIGH_CONFIDENCE_MIN_TXNS = 8;
-const MEDIUM_CONFIDENCE_MIN_TXNS = 4;
+export type DataConfidenceLevel = ConfidenceLevel;
+export type DataConfidenceLabelKey = `confidence.${DataConfidenceLevel}.label`;
 
 const DATA_CONFIDENCE_LABEL_KEYS = {
   high: "confidence.high.label",
@@ -12,15 +14,20 @@ const DATA_CONFIDENCE_LABEL_KEYS = {
 } as const satisfies Record<DataConfidenceLevel, DataConfidenceLabelKey>;
 
 export function getDataConfidenceLevel(recentTransactionCount: number): DataConfidenceLevel {
-  if (recentTransactionCount >= HIGH_CONFIDENCE_MIN_TXNS) {
-    return "high";
-  }
+  const input: ConfidenceInput = {
+    comparableCount: recentTransactionCount,
+    sameBlockCount: recentTransactionCount,
+    sameStreetCount: 0,
+    sameTownCount: 0,
+    newestComparableAgeMonths: null,
+    flatTypeMatchCount: recentTransactionCount,
+    floorAreaMatchCount: recentTransactionCount,
+    storeyMatchCount: recentTransactionCount,
+    timeAdjustmentApplied: false,
+    trendSampleSize: null,
+  };
 
-  if (recentTransactionCount >= MEDIUM_CONFIDENCE_MIN_TXNS) {
-    return "medium";
-  }
-
-  return "low";
+  return computeConfidence(input).level;
 }
 
 export function getDataConfidenceLabelKey(recentTransactionCount: number): DataConfidenceLabelKey {
