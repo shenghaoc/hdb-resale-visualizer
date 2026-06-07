@@ -192,12 +192,21 @@ export function useAppShellController({
     setIsSavedPanelOpen((current) => !current);
   }, [setIsSavedPanelOpen]);
 
+  const handleDesktopCheckClick = useCallback(() => {
+    setLeftTab("check");
+    setIsLeftPanelOpen((current) => (leftTab === "check" ? !current : true));
+  }, [setLeftTab, setIsLeftPanelOpen, leftTab]);
+
   const handleMobileFiltersClick = useCallback(() => {
     setMobileTab((current) => (current === "filters" ? null : "filters"));
   }, [setMobileTab]);
 
   const handleMobileResultsClick = useCallback(() => {
     setMobileTab((current) => (current === "results" ? null : "results"));
+  }, [setMobileTab]);
+
+  const handleMobileCheckClick = useCallback(() => {
+    setMobileTab((current) => (current === "check" ? null : "check"));
   }, [setMobileTab]);
 
   const handleMobileSavedClick = useCallback(() => {
@@ -217,9 +226,11 @@ export function useAppShellController({
     handleOpenFilters,
     handleDesktopFiltersClick,
     handleDesktopResultsClick,
+    handleDesktopCheckClick,
     handleDesktopSavedClick,
     handleMobileFiltersClick,
     handleMobileResultsClick,
+    handleMobileCheckClick,
     handleMobileSavedClick,
   };
 }

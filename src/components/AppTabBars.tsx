@@ -14,9 +14,11 @@ type AppTabBarsProps = {
   t: Translator;
   onDesktopFiltersClick: () => void;
   onDesktopResultsClick: () => void;
+  onDesktopCheckClick: () => void;
   onDesktopSavedClick: () => void;
   onMobileFiltersClick: () => void;
   onMobileResultsClick: () => void;
+  onMobileCheckClick: () => void;
   onMobileSavedClick: () => void;
   onToggleTheme: () => void;
 };
@@ -32,9 +34,11 @@ export function AppTabBars({
   t,
   onDesktopFiltersClick,
   onDesktopResultsClick,
+  onDesktopCheckClick,
   onDesktopSavedClick,
   onMobileFiltersClick,
   onMobileResultsClick,
+  onMobileCheckClick,
   onMobileSavedClick,
   onToggleTheme,
 }: AppTabBarsProps) {
@@ -49,6 +53,7 @@ export function AppTabBars({
         t={t}
         onFiltersClick={onDesktopFiltersClick}
         onResultsClick={onDesktopResultsClick}
+        onCheckClick={onDesktopCheckClick}
         onSavedClick={onDesktopSavedClick}
         onToggleTheme={onToggleTheme}
       />
@@ -63,6 +68,7 @@ export function AppTabBars({
       t={t}
       onFiltersClick={onMobileFiltersClick}
       onResultsClick={onMobileResultsClick}
+      onCheckClick={onMobileCheckClick}
       onSavedClick={onMobileSavedClick}
       onToggleTheme={onToggleTheme}
     />

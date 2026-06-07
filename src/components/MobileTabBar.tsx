@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Bookmark, List, Moon, SlidersHorizontal, Sun } from "lucide-react";
+import { Bookmark, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { PanelTab } from "@/hooks/usePanelState";
@@ -12,6 +12,7 @@ type MobileTabBarProps = {
   t: Translator;
   onFiltersClick: () => void;
   onResultsClick: () => void;
+  onCheckClick: () => void;
   onSavedClick: () => void;
   onToggleTheme: () => void;
 };
@@ -23,6 +24,7 @@ export function MobileTabBar({
   t,
   onFiltersClick,
   onResultsClick,
+  onCheckClick,
   onSavedClick,
   onToggleTheme,
 }: MobileTabBarProps) {
@@ -64,6 +66,7 @@ export function MobileTabBar({
 
   const filtersLabel = t("tab.filters");
   const resultsLabel = t("tab.results");
+  const checkLabel = t("tab.check");
   const savedLabel = t("tab.saved");
 
   return (
@@ -140,6 +143,26 @@ export function MobileTabBar({
           itemRefs.current[3] = node;
         }}
         type="button"
+        variant={mobileTab === "check" ? "secondary" : "ghost"}
+        size="sm"
+        className="mobile-tab-button"
+        data-active={mobileTab === "check"}
+        aria-pressed={mobileTab === "check"}
+        aria-controls={mobileTab === "check" ? "mobile-check-content" : undefined}
+        title={checkLabel}
+        tabIndex={focusedIndex === 3 ? 0 : -1}
+        onClick={onCheckClick}
+        onKeyDown={(e) => handleKeyDown(e, 3)}
+        onFocus={() => setFocusedIndex(3)}
+      >
+        <Scale data-icon="inline-start" />
+        <span>{checkLabel}</span>
+      </Button>
+      <Button
+        ref={(node) => {
+          itemRefs.current[4] = node;
+        }}
+        type="button"
         variant={mobileTab === "saved" ? "secondary" : "ghost"}
         size="sm"
         className="mobile-tab-button"
@@ -147,10 +170,10 @@ export function MobileTabBar({
         aria-pressed={mobileTab === "saved"}
         aria-controls={mobileTab === "saved" ? "mobile-saved-content" : undefined}
         title={savedLabel}
-        tabIndex={focusedIndex === 3 ? 0 : -1}
+        tabIndex={focusedIndex === 4 ? 0 : -1}
         onClick={onSavedClick}
-        onKeyDown={(e) => handleKeyDown(e, 3)}
-        onFocus={() => setFocusedIndex(3)}
+        onKeyDown={(e) => handleKeyDown(e, 4)}
+        onFocus={() => setFocusedIndex(4)}
       >
         <Bookmark data-icon="inline-start" className={mobileTab === "saved" ? "fill-current" : ""} />
         <span>{savedLabel}</span>

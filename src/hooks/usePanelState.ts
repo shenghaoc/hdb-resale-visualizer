@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-export type LeftTab = "filters" | "results";
-export type PanelTab = "filters" | "results" | "saved";
+export type LeftTab = "filters" | "results" | "check";
+export type PanelTab = "filters" | "results" | "check" | "saved";
 
 /**
  * Width expressions for the desktop left panel, keyed by the active tab.

@@ -1,16 +1,15 @@
-import { type CSSProperties, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
   ArrowUp,
   CheckCircle2,
-  ChevronDown,
   Info,
   Scale,
   Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatCurrency, formatMonth, formatNumber } from "@/lib/format";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
 import { useI18n } from "@/lib/i18n";
 import {
   assessAskingPrice,
@@ -19,7 +18,6 @@ import {
   type AskingPriceAssessment,
 } from "@/lib/transaction-analysis";
 import type { AddressDetail } from "@/types/data";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,6 +27,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DistributionBar } from "@/components/DistributionBar";
+import { ComparableTransactionsList } from "@/components/ComparableTransactionsList";
 
 type AskingPriceCheckProps = {
   detail: AddressDetail;
@@ -340,57 +340,11 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
       )}
 
       {comparables.length > 0 && (
-        <section>
-          <button
-            type="button"
-            className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:bg-muted/40"
-            aria-expanded={comparablesExpanded}
-            onClick={() => setComparablesExpanded((expanded) => !expanded)}
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span className="truncate">{t("askingCheck.comparablesTitle")}</span>
-              <Badge variant="outline" className="h-5 shrink-0 font-mono text-[0.6rem]">
-                {comparables.length}
-              </Badge>
-            </span>
-            <ChevronDown
-              data-icon
-              className={cn("size-4 shrink-0 transition-transform", comparablesExpanded && "rotate-180")}
-              aria-hidden="true"
-            />
-            <span className="sr-only">
-              {comparablesExpanded
-                ? t("askingCheck.toggleComparablesHide")
-                : t("askingCheck.toggleComparablesShow")}
-            </span>
-          </button>
-          {comparablesExpanded ? (
-            <ul
-              className="flex max-h-56 flex-col gap-1.5 overflow-y-auto pr-1 v2-scrollbar"
-              style={{ "--cv-intrinsic-height": "56px" } as CSSProperties}
-            >
-              {comparables.slice(0, 8).map((tx) => (
-                <li
-                  key={tx.id}
-                  className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
-                >
-                  <div className="flex min-w-0 flex-col gap-0.5">
-                    <span className="font-bold tabular-nums">
-                      {formatCurrency(tx.resalePrice, locale)}
-                    </span>
-                    <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                      {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
-                      {t("unit.sqmShort")}
-                    </span>
-                  </div>
-                  <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
-                    {formatMonth(tx.month, locale)}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </section>
+        <ComparableTransactionsList
+          transactions={comparables}
+          expanded={comparablesExpanded}
+          onToggle={() => setComparablesExpanded((expanded) => !expanded)}
+        />
       )}
     </section>
   );
@@ -456,60 +410,6 @@ function DataRow({
       >
         {value}
       </span>
-    </div>
-  );
-}
-
-function DistributionBar({
-  assessment,
-  askingPrice,
-}: {
-  assessment: AskingPriceAssessment;
-  askingPrice: number;
-}) {
-  const { summary } = assessment;
-  const min = Math.min(summary.minPrice, askingPrice);
-  const max = Math.max(summary.maxPrice, askingPrice);
-  const span = Math.max(max - min, 1);
-  const pct = (value: number) => ((value - min) / span) * 100;
-
-  const askingPctRaw = pct(askingPrice);
-  const askingPct = Math.max(0, Math.min(100, askingPctRaw));
-  const p25Pct = pct(summary.p25Price);
-  const p75Pct = pct(summary.p75Price);
-  const medianPct = pct(summary.medianPrice);
-
-  const askingPositionStyle = { left: `${askingPct}%` };
-  const iqrStyle = {
-    left: `${p25Pct}%`,
-    width: `${Math.max(p75Pct - p25Pct, 1)}%`,
-  };
-  const medianStyle = { left: `${medianPct}%` };
-
-  return (
-    <div className="px-1 pt-2">
-      <div className="relative h-7">
-        <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-muted" />
-        <div
-          className="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-primary/30"
-          style={iqrStyle}
-        />
-        <div
-          className="absolute top-1/2 h-3 w-px -translate-y-1/2 bg-primary"
-          style={medianStyle}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute top-0 flex h-full -translate-x-1/2 flex-col items-center"
-          style={askingPositionStyle}
-        >
-          <div className="size-3 rotate-45 rounded-sm bg-foreground shadow" aria-hidden="true" />
-        </div>
-      </div>
-      <div className="mt-1 flex justify-between text-[0.55rem] font-mono uppercase tracking-wider text-muted-foreground">
-        <span>{formatCompactCurrency(min)}</span>
-        <span>{formatCompactCurrency(max)}</span>
-      </div>
     </div>
   );
 }

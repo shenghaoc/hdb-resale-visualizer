@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -34,6 +34,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
 import { buildFilterShareUrl, shareViaNavigator } from "@/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
+import { ListingCheckPanel } from "@/components/ListingCheckPanel";
+import {
+  useListingCheckUrlState,
+  buildCheckShareUrl,
+} from "@/hooks/useListingCheckUrlState";
 
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -159,6 +164,77 @@ function App() {
   const townRecommendationsLoading =
     Boolean(manifest) && searchProfile.completed && !pipeline.hasResultScope && !hasAllBlocksLoaded;
 
+  // ── Listing check state ──────────────────────────────────────────────────
+  const { initialCheckState, syncToUrl } = useListingCheckUrlState();
+
+  const [checkAddressKey, setCheckAddressKey] = useState<string | null>(
+    () => initialCheckState.selectedAddressKey,
+  );
+  const [checkAskingPrice, setCheckAskingPrice] = useState<number | null>(
+    () => initialCheckState.askingPrice,
+  );
+  const [checkFloorAreaSqm, setCheckFloorAreaSqm] = useState<number | null>(
+    () => initialCheckState.floorAreaSqm,
+  );
+  const [checkFlatType, setCheckFlatType] = useState<string | null>(
+    () => initialCheckState.flatType,
+  );
+  const [checkStoreyRange, setCheckStoreyRange] = useState<string | null>(
+    () => initialCheckState.storeyRange,
+  );
+  const [checkLeaseYear, setCheckLeaseYear] = useState<number | null>(
+    () => initialCheckState.leaseCommenceYear,
+  );
+  const [checkSavedToShortlist, setCheckSavedToShortlist] = useState(false);
+
+  const handleCheckAddressSelect = useCallback((addressKey: string) => {
+    setCheckAddressKey(addressKey);
+    setCheckSavedToShortlist(false);
+  }, []);
+
+  const handleCheckSaveToShortlist = useCallback(() => {
+    if (!checkAddressKey || checkAskingPrice == null) return;
+    const notesPayload = {
+      type: "listingCheck",
+      askingPrice: checkAskingPrice,
+      floorAreaSqm: checkFloorAreaSqm,
+      flatType: checkFlatType,
+      storeyRange: checkStoreyRange,
+      leaseCommenceYear: checkLeaseYear,
+      timestamp: new Date().toISOString(),
+    };
+    shortlist.toggle(checkAddressKey);
+    shortlist.update(checkAddressKey, {
+      notes: JSON.stringify(notesPayload),
+      targetPrice: checkAskingPrice,
+    });
+    setCheckSavedToShortlist(true);
+  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, shortlist]);
+
+  const handleCheckShare = useCallback(() => {
+    const url = buildCheckShareUrl({
+      selectedAddressKey: checkAddressKey,
+      askingPrice: checkAskingPrice,
+      floorAreaSqm: checkFloorAreaSqm,
+      flatType: checkFlatType,
+      storeyRange: checkStoreyRange,
+      leaseCommenceYear: checkLeaseYear,
+    });
+    void navigator.clipboard.writeText(url);
+  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear]);
+
+  // Sync check state to URL
+  useEffect(() => {
+    syncToUrl({
+      selectedAddressKey: checkAddressKey,
+      askingPrice: checkAskingPrice,
+      floorAreaSqm: checkFlatType ? checkFloorAreaSqm : null,
+      flatType: checkFlatType,
+      storeyRange: checkStoreyRange,
+      leaseCommenceYear: checkLeaseYear,
+    });
+  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, syncToUrl]);
+
   const {
     patchUserFilters,
     handleSelectSuggestion,
@@ -172,9 +248,11 @@ function App() {
     handleOpenFilters,
     handleDesktopFiltersClick,
     handleDesktopResultsClick,
+    handleDesktopCheckClick,
     handleDesktopSavedClick,
     handleMobileFiltersClick,
     handleMobileResultsClick,
+    handleMobileCheckClick,
     handleMobileSavedClick,
   } = useAppShellController({
     filters,
@@ -418,6 +496,27 @@ function App() {
     </ErrorBoundary>
   ) : null;
 
+  const checkContent = (
+    <ListingCheckPanel
+      selectedAddressKey={checkAddressKey}
+      askingPrice={checkAskingPrice}
+      floorAreaSqm={checkFloorAreaSqm}
+      flatType={checkFlatType}
+      storeyRange={checkStoreyRange}
+      leaseCommenceYear={checkLeaseYear}
+      onAddressSelect={handleCheckAddressSelect}
+      onAskingPriceChange={setCheckAskingPrice}
+      onFloorAreaChange={setCheckFloorAreaSqm}
+      onFlatTypeChange={setCheckFlatType}
+      onStoreyRangeChange={setCheckStoreyRange}
+      onLeaseYearChange={setCheckLeaseYear}
+      onSaveToShortlist={handleCheckSaveToShortlist}
+      onShare={handleCheckShare}
+      savedToShortlist={checkSavedToShortlist}
+      referenceMonth={manifest?.dataWindow.maxMonth}
+    />
+  );
+
   // ── Derived layout flags ─────────────────────────────────────────────────
 
   const showFloatingHeader = panel.isDesktop ? header.isHeaderVisible : panel.mobileTab === null;
@@ -559,6 +658,7 @@ function App() {
           detailLoading={detailLoading}
           filterContent={filterContent}
           resultsPaneContent={resultsPaneContent}
+          checkContent={checkContent}
           selectedDetailContent={selectedDetailContent}
           savedContent={savedContent}
           onShowHeader={() => header.setIsHeaderVisible(true)}
@@ -577,9 +677,11 @@ function App() {
         t={t}
         onDesktopFiltersClick={handleDesktopFiltersClick}
         onDesktopResultsClick={handleDesktopResultsClick}
+        onDesktopCheckClick={handleDesktopCheckClick}
         onDesktopSavedClick={handleDesktopSavedClick}
         onMobileFiltersClick={handleMobileFiltersClick}
         onMobileResultsClick={handleMobileResultsClick}
+        onMobileCheckClick={handleMobileCheckClick}
         onMobileSavedClick={handleMobileSavedClick}
         onToggleTheme={toggleTheme}
       />

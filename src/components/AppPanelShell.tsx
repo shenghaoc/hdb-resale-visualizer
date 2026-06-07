@@ -15,6 +15,7 @@ type AppPanelShellProps = {
   detailLoading: boolean;
   filterContent: ReactNode;
   resultsPaneContent: ReactNode;
+  checkContent: ReactNode;
   selectedDetailContent: ReactNode;
   savedContent: ReactNode;
   onShowHeader: () => void;
@@ -33,6 +34,7 @@ export function AppPanelShell({
   detailLoading,
   filterContent,
   resultsPaneContent,
+  checkContent,
   selectedDetailContent,
   savedContent,
   onShowHeader,
@@ -105,6 +107,13 @@ export function AppPanelShell({
                 >
                   {selectedDetailContent}
                 </div>
+              </div>
+              <div
+                id="desktop-check-content"
+                aria-hidden={leftTab !== "check"}
+                className={cn("h-full overflow-y-auto p-3 pb-8", leftTab === "check" ? "block" : "hidden")}
+              >
+                {checkContent}
               </div>
             </div>
           </aside>
@@ -181,6 +190,15 @@ export function AppPanelShell({
                 >
                   {selectedDetailContent}
                 </div>
+              </div>
+              <div
+                id="mobile-check-content"
+                className={cn(
+                  "h-full overflow-y-auto p-3 pb-12",
+                  mobileTab === "check" ? "block" : "hidden",
+                )}
+              >
+                {checkContent}
               </div>
               <div
                 id="mobile-saved-content"
