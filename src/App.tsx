@@ -730,7 +730,7 @@ function App() {
         onOpenGuide={() => setGuideOpen(true)}
       />
 
-      <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} />
+      <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} t={t} />
     </>
   );
 }
