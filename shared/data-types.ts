@@ -249,3 +249,20 @@ export type TransactionRow = {
   pricePerSqm: number;
   flatModel: string;
 };
+
+/** Extended comparable with time adjustment fields.
+ *  Populated by the comparable-transactions API when ?adjust=time is used. */
+export type TimeAdjustedComparable = {
+  /** Original resale price (always present). */
+  rawResalePrice: number;
+  /** Original price per sqm (always present). */
+  rawPricePerSqm: number;
+  /** Time-adjusted resale price, or null if adjustment unavailable. */
+  adjustedResalePrice: number | null;
+  /** Time-adjusted price per sqm, or null if adjustment unavailable. */
+  adjustedPricePerSqm: number | null;
+  /** The computed adjustment factor, or null. */
+  adjustmentFactor: number | null;
+  /** Human-readable label, e.g. "Adjusted from 2022-03 median", or null. */
+  adjustmentLabel: string | null;
+};

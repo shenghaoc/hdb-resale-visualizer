@@ -15,6 +15,12 @@ import {
   type TransactionRow,
   buildComparableSet,
 } from "../../shared/comparable-engine";
+import {
+  buildTrendLookup,
+  computeTimeAdjustments,
+  type TimeAdjustedComparable,
+} from "../../shared/time-adjustment";
+import type { AdjustmentMeta } from "../../shared/time-adjustment";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -136,10 +142,28 @@ async function queryRows(
 }
 
 // ---------------------------------------------------------------------------
+// Time adjustment
+// ---------------------------------------------------------------------------
+
+/** Valid values for the ?adjust query parameter. */
+const VALID_ADJUST_VALUES = new Set(["time"]);
+
+// ---------------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------------
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  // 0. Parse query parameter for optional time adjustment
+  const url = new URL(request.url);
+  const adjustParam = url.searchParams.get("adjust");
+  if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
+    return privateJsonResponse(
+      { error: `Invalid ?adjust value. Expected "time", got "${adjustParam}".` },
+      { status: 400 },
+    );
+  }
+  const applyAdjustment = adjustParam === "time";
+
   // 1. Read and validate body
   const bodyText = await readBodyWithLimit(request);
   if (bodyText instanceof Response) return bodyText;
@@ -202,13 +226,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // If all counts are 0, dataRows stays empty → buildComparableSet handles it.
 
   // 4. Score and build the result
-  // buildComparableSet needs all three row arrays for counts, but we only
-  // have the winning pass's data. Pass empty arrays for non-winning scopes
-  // since we already have the counts from the parallel queries above.
-  //
-  // Actually, buildComparableSet computes counts from the passed arrays.
-  // To avoid re-querying, we pass the data rows and use the pre-computed
-  // counts to construct the result directly.
   const result = buildComparableSet({
     candidate: parsed,
     sameBlockRows: dataRows.filter(
@@ -220,14 +237,69 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     sameTownRows: dataRows,
   });
 
-  // Override counts with the pre-computed values from COUNT(*) queries,
-  // which are accurate for the full dataset (not just the winning pass).
-  const response: ListingComparableSet = {
+  // 5. Apply time adjustment if requested (after scoring, before response)
+  let adjustmentMeta: AdjustmentMeta | null = null;
+  let adjustedComparables: TimeAdjustedComparable[] | null = null;
+
+  if (applyAdjustment && result.comparables.length > 0) {
+    try {
+      const trendRows = await env.DB.prepare(
+        "SELECT town, flat_type, month, median_price_per_sqm, transaction_count " +
+          "FROM town_flat_type_trends",
+      ).all<{
+        town: string;
+        flat_type: string;
+        month: string;
+        median_price_per_sqm: number;
+        transaction_count: number;
+      }>();
+      const trendLookup = buildTrendLookup(trendRows.results ?? []);
+      const adjustmentResult = computeTimeAdjustments(
+        result.comparables.map((c) => ({
+          town: c.town,
+          flatType: c.flatType,
+          month: c.month,
+          resalePrice: c.resalePrice,
+          pricePerSqm: c.pricePerSqm,
+        })),
+        trendLookup,
+      );
+      adjustmentMeta = adjustmentResult.meta;
+      adjustedComparables = adjustmentResult.adjustedComparables;
+    } catch {
+      // If the trends query fails, fall back to raw prices.
+      adjustmentMeta = {
+        adjustmentApplied: false,
+        adjustmentCaveats: [
+          "Time adjustment could not be applied — trend data query failed.",
+        ],
+      };
+      adjustedComparables = null;
+    }
+  }
+
+  // Build the final response. When adjustment is applied, each comparable
+  // is annotated with raw + adjusted prices. When not applied, the response
+  // shape matches the existing contract (no adjustment fields).
+  const baseResponse: ListingComparableSet = {
     ...result,
     sameBlockCount,
     sameStreetCount,
     sameTownCount,
   };
 
-  return privateJsonResponse(response);
+  if (applyAdjustment && adjustedComparables && adjustmentMeta) {
+    const comparablesWithAdjustment = result.comparables.map((c, i) => ({
+      ...c,
+      ...adjustedComparables![i],
+    }));
+    return privateJsonResponse({
+      ...baseResponse,
+      comparables: comparablesWithAdjustment,
+      adjustmentApplied: adjustmentMeta.adjustmentApplied,
+      adjustmentCaveats: adjustmentMeta.adjustmentCaveats,
+    });
+  }
+
+  return privateJsonResponse(baseResponse);
 };

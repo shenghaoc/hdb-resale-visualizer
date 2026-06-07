@@ -6,11 +6,22 @@ import { useI18n } from "@/lib/i18n";
 import type { AddressDetailTransaction } from "@/types/data";
 import { Badge } from "@/components/ui/badge";
 
+export type AdjustmentInfo = {
+  adjustedResalePrice: number | null;
+  adjustedPricePerSqm: number | null;
+  adjustmentLabel: string | null;
+};
+
 export type ComparableTransactionsListProps = {
   transactions: ReadonlyArray<AddressDetailTransaction>;
   expanded: boolean;
   onToggle: () => void;
   maxItems?: number;
+  /** Optional map from transaction ID → adjustment metadata.
+   *  When provided, adjusted prices are shown alongside raw prices. */
+  adjustmentMap?: ReadonlyMap<string, AdjustmentInfo>;
+  /** Whether the adjustment toggle is active (controls visibility). */
+  showAdjusted?: boolean;
 };
 
 export function ComparableTransactionsList({
@@ -18,6 +29,8 @@ export function ComparableTransactionsList({
   expanded,
   onToggle,
   maxItems = 8,
+  adjustmentMap,
+  showAdjusted = false,
 }: ComparableTransactionsListProps) {
   const { locale, t } = useI18n();
 
@@ -53,25 +66,45 @@ export function ComparableTransactionsList({
           className="flex max-h-56 flex-col gap-1.5 overflow-y-auto pr-1 v2-scrollbar"
           style={{ "--cv-intrinsic-height": "56px" } as CSSProperties}
         >
-          {transactions.slice(0, maxItems).map((tx) => (
+          {transactions.slice(0, maxItems).map((tx) => {
+            const adj = adjustmentMap?.get(tx.id);
+            const adjustedPrice = showAdjusted ? adj?.adjustedResalePrice ?? null : null;
+            const hasAdjusted = adjustedPrice != null;
+            return (
             <li
               key={tx.id}
               className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
             >
               <div className="flex min-w-0 flex-col gap-0.5">
-                <span className="font-bold tabular-nums">
-                  {formatCurrency(tx.resalePrice, locale)}
-                </span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className={cn(
+                    "font-bold tabular-nums",
+                    hasAdjusted && "text-muted-foreground line-through text-[0.65rem]",
+                  )}>
+                    {formatCurrency(tx.resalePrice, locale)}
+                  </span>
+                  {hasAdjusted && (
+                    <span className="font-bold tabular-nums text-primary">
+                      {formatCurrency(adjustedPrice, locale)}
+                    </span>
+                  )}
+                </div>
                 <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
                   {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
                   {t("unit.sqmShort")}
+                  {hasAdjusted && adj?.adjustmentLabel && (
+                    <span className="ml-1 text-primary/70">
+                      · {adj.adjustmentLabel}
+                    </span>
+                  )}
                 </span>
               </div>
               <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
                 {formatMonth(tx.month, locale)}
               </Badge>
             </li>
-          ))}
+            );
+          })}
         </ul>
       ) : null}
     </section>
