@@ -313,9 +313,13 @@ export function ListingCheckPanel({
   // ── Perform listing check via v2 comparable engine API ────────────────────
   // Replaces the v1 client-side findComparableTransactions with a cross-block
   // transaction search backed by the new /api/comparable-transactions endpoint.
+  //
+  // NOTE: resolvedAskingPrice is deliberately excluded from this effect's
+  // dependencies — the comparable set does not depend on the asking price.
+  // The verdict card recomputes locally from the existing set when the price
+  // changes, avoiding redundant API calls on every keystroke.
   useEffect(() => {
     if (
-      resolvedAskingPrice == null ||
       !detail ||
       !selectedAddressKey ||
       !flatType ||
@@ -420,7 +424,6 @@ export function ListingCheckPanel({
       cancelled = true;
     };
   }, [
-    resolvedAskingPrice,
     resolvedFloorAreaSqm,
     resolvedLeaseYear,
     selectedAddressKey,

@@ -304,6 +304,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // Build the final response. When adjustment is applied, each comparable
   // is annotated with raw + adjusted prices. When not applied, the response
   // shape matches the existing contract (no adjustment fields).
+  //
+  // Importantly: when ?adjust=time was requested but the adjustment could not
+  // be applied (e.g. trend query failure, missing data), we still surface the
+  // adjustmentApplied flag and caveats so the UI can tell the user what happened.
   const baseResponse: ListingComparableSet = {
     ...result,
     sameBlockCount,
@@ -311,16 +315,32 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     sameTownCount,
   };
 
-  if (applyAdjustment && adjustedComparables && adjustmentMeta) {
-    const comparablesWithAdjustment = result.comparables.map((c, i) => ({
-      ...c,
-      ...adjustedComparables![i],
-    }));
+  if (applyAdjustment) {
+    const effectiveMeta = adjustmentMeta ?? {
+      adjustmentApplied: false,
+      adjustmentCaveats: [
+        "Time adjustment could not be applied — trend data query failed.",
+      ],
+    };
+    if (adjustedComparables) {
+      const comparablesWithAdjustment = result.comparables.map((c, i) => ({
+        ...c,
+        ...adjustedComparables[i],
+      }));
+      return privateJsonResponse({
+        ...baseResponse,
+        comparables: comparablesWithAdjustment,
+        adjustmentApplied: effectiveMeta.adjustmentApplied,
+        adjustmentCaveats: effectiveMeta.adjustmentCaveats,
+      });
+    }
+    // Adjustment was requested but no adjusted data could be computed
+    // (e.g. trend query failed, or all comparables lacked trend data).
+    // Still include the meta so the client can show the failure reason.
     return privateJsonResponse({
       ...baseResponse,
-      comparables: comparablesWithAdjustment,
-      adjustmentApplied: adjustmentMeta.adjustmentApplied,
-      adjustmentCaveats: adjustmentMeta.adjustmentCaveats,
+      adjustmentApplied: effectiveMeta.adjustmentApplied,
+      adjustmentCaveats: effectiveMeta.adjustmentCaveats,
     });
   }
 

@@ -70,6 +70,7 @@ export function ComparableTransactionsList({
             const adj = adjustmentMap?.get(tx.id);
             const adjustedPrice = showAdjusted ? adj?.adjustedResalePrice ?? null : null;
             const hasAdjusted = adjustedPrice != null;
+            const showMissingIndicator = showAdjusted && !hasAdjusted;
             return (
             <li
               key={tx.id}
@@ -79,13 +80,19 @@ export function ComparableTransactionsList({
                 <div className="flex items-baseline gap-1.5">
                   <span className={cn(
                     "font-bold tabular-nums",
-                    hasAdjusted && "text-muted-foreground line-through text-[0.65rem]",
+                    (hasAdjusted || showMissingIndicator) && "text-muted-foreground text-[0.65rem]",
+                    hasAdjusted && "line-through",
                   )}>
                     {formatCurrency(tx.resalePrice, locale)}
                   </span>
                   {hasAdjusted && (
                     <span className="font-bold tabular-nums text-primary">
                       {formatCurrency(adjustedPrice, locale)}
+                    </span>
+                  )}
+                  {showMissingIndicator && (
+                    <span className="font-normal text-[0.6rem] italic text-muted-foreground/60">
+                      {t("check.noAdjustmentData")}
                     </span>
                   )}
                 </div>
