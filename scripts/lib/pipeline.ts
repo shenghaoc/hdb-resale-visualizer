@@ -232,10 +232,24 @@ function countAmenitiesWithinDistance(
   blockCoords: { lat: number; lng: number },
   distanceMeters: number,
 ): number {
-  return amenities.filter((amenity) => {
+  let count = 0;
+  // ⚡ Bolt: Fast bounding box check to short-circuit expensive haversine calc.
+  // 1 degree is roughly 110,000 meters.
+  const threshold = distanceMeters / 110_000;
+
+  for (const amenity of amenities) {
+    if (
+      Math.abs(amenity.lat - blockCoords.lat) > threshold ||
+      Math.abs(amenity.lng - blockCoords.lng) > threshold
+    ) {
+      continue;
+    }
     const distance = haversineDistanceMeters(blockCoords, { lat: amenity.lat, lng: amenity.lng });
-    return distance <= distanceMeters;
-  }).length;
+    if (distance <= distanceMeters) {
+      count++;
+    }
+  }
+  return count;
 }
 
 function findNearestAmenity(
@@ -248,6 +262,13 @@ function findNearestAmenity(
 
   let minDistance = Infinity;
   for (const amenity of amenities) {
+    const threshold = minDistance / 110_000;
+    if (
+      Math.abs(amenity.lat - blockCoords.lat) > threshold ||
+      Math.abs(amenity.lng - blockCoords.lng) > threshold
+    ) {
+      continue;
+    }
     const distance = haversineDistanceMeters(blockCoords, { lat: amenity.lat, lng: amenity.lng });
     if (distance < minDistance) {
       minDistance = distance;
@@ -257,27 +278,53 @@ function findNearestAmenity(
   return minDistance === Infinity ? null : Math.round(minDistance);
 }
 
+export type NearestSchool = {
+  name: string;
+  distanceMeters: number;
+  coordinates: { lat: number; lng: number };
+};
+
 function findNearestSchools(
   schools: SchoolLocation[],
   blockCoords: { lat: number; lng: number },
   limit = 3,
-) {
-  return schools
-    .map((school) => ({
-      name: school.name,
-      distanceMeters: Math.round(
-        haversineDistanceMeters(blockCoords, { lat: school.lat, lng: school.lng }),
-      ),
-      coordinates: { lat: school.lat, lng: school.lng },
-    }))
-    .sort((left, right) => {
-      if (left.distanceMeters !== right.distanceMeters) {
-        return left.distanceMeters - right.distanceMeters;
-      }
+): NearestSchool[] {
+  const nearest: NearestSchool[] = [];
 
-      return left.name.localeCompare(right.name);
-    })
-    .slice(0, limit);
+  for (const school of schools) {
+    const thresholdDist = nearest.length === limit ? nearest[nearest.length - 1].distanceMeters : Infinity;
+    const threshold = thresholdDist === Infinity ? Infinity : (thresholdDist + 1) / 110_000;
+
+    if (
+      Math.abs(school.lat - blockCoords.lat) > threshold ||
+      Math.abs(school.lng - blockCoords.lng) > threshold
+    ) {
+      continue;
+    }
+
+    const distanceMeters = Math.round(
+      haversineDistanceMeters(blockCoords, { lat: school.lat, lng: school.lng }),
+    );
+
+    if (nearest.length < limit || distanceMeters <= nearest[nearest.length - 1].distanceMeters) {
+      nearest.push({
+        name: school.name,
+        distanceMeters,
+        coordinates: { lat: school.lat, lng: school.lng }
+      });
+      nearest.sort((left, right) => {
+        if (left.distanceMeters !== right.distanceMeters) {
+          return left.distanceMeters - right.distanceMeters;
+        }
+        return left.name.localeCompare(right.name);
+      });
+      if (nearest.length > limit) {
+        nearest.pop();
+      }
+    }
+  }
+
+  return nearest;
 }
 
 /**
@@ -323,6 +370,13 @@ function findNearestMrtDistanceMeters(
 
   let minMrtDistance = Number.POSITIVE_INFINITY;
   for (const exit of mrtExits) {
+    const threshold = minMrtDistance / 110_000;
+    if (
+      Math.abs(exit.lat - geocode.lat) > threshold ||
+      Math.abs(exit.lng - geocode.lng) > threshold
+    ) {
+      continue;
+    }
     const distance = haversineDistanceMeters(
       { lat: geocode.lat, lng: geocode.lng },
       { lat: exit.lat, lng: exit.lng },
