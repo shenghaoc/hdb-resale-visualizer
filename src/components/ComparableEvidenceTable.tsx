@@ -16,8 +16,6 @@ import { Badge } from "@/components/ui/badge";
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
-export const VIRTUALIZATION_THRESHOLD = 50;
-
 // ── Sort types ─────────────────────────────────────────────────────────────
 
 type SortKey = "month" | "floorAreaSqm" | "resalePrice" | "pricePerSqm" | "similarity";
@@ -113,10 +111,24 @@ export function ComparableEvidenceTable({
   // ── Empty state ──────────────────────────────────────────────────────────
   if (comparables.length === 0) {
     return (
-      <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-        <Info data-icon className="mt-0.5 size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
-        <span>{t("evidence.empty")}</span>
-      </div>
+      <section className="flex flex-col gap-3">
+        {caveats.length > 0 && (
+          <div className="rounded-md bg-warning/5 p-3">
+            <ul className="flex flex-col gap-1.5">
+              {caveats.map((caveat, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-warning">
+                  <AlertTriangle data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
+                  <span>{caveat}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <Info data-icon className="mt-0.5 size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
+          <span>{t("evidence.empty")}</span>
+        </div>
+      </section>
     );
   }
 
@@ -317,7 +329,7 @@ export function ComparableEvidenceTable({
                 {formatCompactCurrency(tx.resalePrice, locale)}
               </span>
               <span className="text-xs tabular-nums text-muted-foreground">
-                {Math.round(tx.floorAreaSqm)}{t("unit.sqmShort")} · {formatNumber(tx.pricePerSqm, 0, locale)}/sqm
+                {Math.round(tx.floorAreaSqm)}{t("unit.sqmShort")} · {t("unit.sqmCurrency", { value: formatNumber(tx.pricePerSqm, 0, locale) })}
               </span>
             </div>
             <div className="mt-1 truncate text-xs text-muted-foreground">
@@ -369,7 +381,9 @@ function SortableHead({
     ? sortDirection === "asc"
       ? ChevronUp
       : ChevronDown
-    : ChevronDown;
+    : DEFAULT_SORT_DIRECTIONS[sortKey] === "asc"
+      ? ChevronUp
+      : ChevronDown;
 
   return (
     <TableHead aria-sort={ariaSortValue} className={cn(align === "right" && "text-right")}>
