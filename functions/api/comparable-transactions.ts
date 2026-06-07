@@ -15,6 +15,12 @@ import {
   type TransactionRow,
   buildComparableSet,
 } from "../../shared/comparable-engine";
+import {
+  buildTrendLookup,
+  computeTimeAdjustments,
+} from "../../shared/time-adjustment";
+import type { AdjustmentMeta } from "../../shared/time-adjustment";
+import type { TimeAdjustedComparable } from "../../shared/data-types";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -136,10 +142,34 @@ async function queryRows(
 }
 
 // ---------------------------------------------------------------------------
+// Time adjustment
+// ---------------------------------------------------------------------------
+
+/** Valid values for the ?adjust query parameter. */
+const VALID_ADJUST_VALUES = new Set(["time"]);
+
+// ---------------------------------------------------------------------------
 // Handler
 // ---------------------------------------------------------------------------
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  // 0. Parse query parameter for optional time adjustment
+  const url = new URL(request.url);
+  const adjustParam = url.searchParams.get("adjust");
+  if (adjustParam !== null && adjustParam.length > 20) {
+    return privateJsonResponse(
+      { error: "Invalid ?adjust value — exceeds maximum length." },
+      { status: 400 },
+    );
+  }
+  if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
+    return privateJsonResponse(
+      { error: `Invalid ?adjust value. Expected "time", got "${adjustParam}".` },
+      { status: 400 },
+    );
+  }
+  const applyAdjustment = adjustParam === "time";
+
   // 1. Read and validate body
   const bodyText = await readBodyWithLimit(request);
   if (bodyText instanceof Response) return bodyText;
@@ -202,13 +232,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // If all counts are 0, dataRows stays empty → buildComparableSet handles it.
 
   // 4. Score and build the result
-  // buildComparableSet needs all three row arrays for counts, but we only
-  // have the winning pass's data. Pass empty arrays for non-winning scopes
-  // since we already have the counts from the parallel queries above.
-  //
-  // Actually, buildComparableSet computes counts from the passed arrays.
-  // To avoid re-querying, we pass the data rows and use the pre-computed
-  // counts to construct the result directly.
   const result = buildComparableSet({
     candidate: parsed,
     sameBlockRows: dataRows.filter(
@@ -220,14 +243,112 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     sameTownRows: dataRows,
   });
 
-  // Override counts with the pre-computed values from COUNT(*) queries,
-  // which are accurate for the full dataset (not just the winning pass).
-  const response: ListingComparableSet = {
+  // 5. Apply time adjustment if requested (after scoring, before response)
+  let adjustmentMeta: AdjustmentMeta | null = null;
+  let adjustedComparables: TimeAdjustedComparable[] | null = null;
+
+  if (applyAdjustment && result.comparables.length > 0) {
+    try {
+      // Collect unique town × flat type pairs from the comparables so we
+      // only query the subset of trend data we actually need.
+      const uniquePairs = new Map<string, { town: string; flatType: string }>();
+      for (const c of result.comparables) {
+        const key = `${c.town}__${c.flatType}`;
+        if (!uniquePairs.has(key)) {
+          uniquePairs.set(key, { town: c.town, flatType: c.flatType });
+        }
+      }
+
+      // Build a parameterized IN clause: WHERE (town, flat_type) IN ((?1,?2), (?3,?4), ...)
+      const placeholders: string[] = [];
+      const params: string[] = [];
+      let idx = 0;
+      for (const pair of uniquePairs.values()) {
+        placeholders.push(`(?${idx + 1},?${idx + 2})`);
+        params.push(pair.town, pair.flatType);
+        idx += 2;
+      }
+
+      const trendRows = await env.DB.prepare(
+        `SELECT town, flat_type, month, median_price_per_sqm, transaction_count
+         FROM town_flat_type_trends
+         WHERE (town, flat_type) IN (${placeholders.join(", ")})`,
+      )
+        .bind(...params)
+        .all<{
+          town: string;
+          flat_type: string;
+          month: string;
+          median_price_per_sqm: number;
+          transaction_count: number;
+        }>();
+      const trendLookup = buildTrendLookup(trendRows.results ?? []);
+      const adjustmentResult = computeTimeAdjustments(
+        result.comparables.map((c) => ({
+          town: c.town,
+          flatType: c.flatType,
+          month: c.month,
+          resalePrice: c.resalePrice,
+          pricePerSqm: c.pricePerSqm,
+        })),
+        trendLookup,
+      );
+      adjustmentMeta = adjustmentResult.meta;
+      adjustedComparables = adjustmentResult.adjustedComparables;
+    } catch {
+      // If the trends query fails, fall back to raw prices.
+      adjustmentMeta = {
+        adjustmentApplied: false,
+        adjustmentCaveats: [
+          "Time adjustment could not be applied — trend data query failed.",
+        ],
+      };
+      adjustedComparables = null;
+    }
+  }
+
+  // Build the final response. When adjustment is applied, each comparable
+  // is annotated with raw + adjusted prices. When not applied, the response
+  // shape matches the existing contract (no adjustment fields).
+  //
+  // Importantly: when ?adjust=time was requested but the adjustment could not
+  // be applied (e.g. trend query failure, missing data), we still surface the
+  // adjustmentApplied flag and caveats so the UI can tell the user what happened.
+  const baseResponse: ListingComparableSet = {
     ...result,
     sameBlockCount,
     sameStreetCount,
     sameTownCount,
   };
 
-  return privateJsonResponse(response);
+  if (applyAdjustment) {
+    const effectiveMeta = adjustmentMeta ?? {
+      adjustmentApplied: false,
+      adjustmentCaveats: [
+        "Time adjustment could not be applied — trend data query failed.",
+      ],
+    };
+    if (adjustedComparables) {
+      const comparablesWithAdjustment = result.comparables.map((c, i) => ({
+        ...c,
+        ...adjustedComparables[i],
+      }));
+      return privateJsonResponse({
+        ...baseResponse,
+        comparables: comparablesWithAdjustment,
+        adjustmentApplied: effectiveMeta.adjustmentApplied,
+        adjustmentCaveats: effectiveMeta.adjustmentCaveats,
+      });
+    }
+    // Adjustment was requested but no adjusted data could be computed
+    // (e.g. trend query failed, or all comparables lacked trend data).
+    // Still include the meta so the client can show the failure reason.
+    return privateJsonResponse({
+      ...baseResponse,
+      adjustmentApplied: effectiveMeta.adjustmentApplied,
+      adjustmentCaveats: effectiveMeta.adjustmentCaveats,
+    });
+  }
+
+  return privateJsonResponse(baseResponse);
 };

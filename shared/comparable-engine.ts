@@ -372,6 +372,7 @@ export function buildComparableSet(
   let widenedSearch = false;
   let comparables: ComparableTransaction[] = [];
 
+
   if (!hasBlockData && !hasStreetData && !hasTownData) {
     // No data at all
     caveats.push("No comparable transactions found for this listing.");

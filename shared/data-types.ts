@@ -249,3 +249,26 @@ export type TransactionRow = {
   pricePerSqm: number;
   flatModel: string;
 };
+
+/** Structured label for a time-adjusted comparable. Resolved to a translated
+ *  string on the client so both en-SG and zh-SG users see their language. */
+export type AdjustmentLabel =
+  | { type: "at_latest" }
+  | { type: "adjusted_from"; month: string };
+
+/** Extended comparable with time adjustment fields.
+ *  Populated by the comparable-transactions API when ?adjust=time is used. */
+export type TimeAdjustedComparable = {
+  /** Original resale price (always present). */
+  rawResalePrice: number;
+  /** Original price per sqm (always present). */
+  rawPricePerSqm: number;
+  /** Time-adjusted resale price, or null if adjustment unavailable. */
+  adjustedResalePrice: number | null;
+  /** Time-adjusted price per sqm, or null if adjustment unavailable. */
+  adjustedPricePerSqm: number | null;
+  /** The computed adjustment factor, or null. */
+  adjustmentFactor: number | null;
+  /** Structured label for translation, or null if adjustment unavailable. */
+  adjustmentLabel: AdjustmentLabel | null;
+};

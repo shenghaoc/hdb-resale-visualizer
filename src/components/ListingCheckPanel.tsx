@@ -20,6 +20,7 @@ import { generateCaveats, type Caveat } from "@/lib/listing-caveats";
 import { fetchAddressDetail } from "@/lib/data";
 import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
 import type { ListingComparableSet, ComparableTransaction } from "../../shared/comparable-engine";
+import type { TimeAdjustedComparable } from "../../shared/data-types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -31,8 +32,12 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { DistributionBar } from "@/components/DistributionBar";
-import { ComparableTransactionsList } from "@/components/ComparableTransactionsList";
+import {
+  ComparableTransactionsList,
+  type AdjustmentInfo,
+} from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
 
@@ -158,6 +163,14 @@ export function ListingCheckPanel({
   const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
+  /** Whether time-adjusted prices are shown (toggle state). */
+  const [adjustmentEnabled, setAdjustmentEnabled] = useState(false);
+  /** Adjustment metadata from the last API response when ?adjust=time was used. */
+  const [adjustmentMeta, setAdjustmentMeta] = useState<{
+    adjustmentApplied: boolean;
+    adjustmentCaveats: string[];
+    adjustmentMap: Map<string, AdjustmentInfo>;
+  } | null>(null);
 
   // ── Local input state (numbers typed as strings) ───────────────────────────
   const [askingPriceInput, setAskingPriceInput] = useState(() =>
@@ -300,9 +313,13 @@ export function ListingCheckPanel({
   // ── Perform listing check via v2 comparable engine API ────────────────────
   // Replaces the v1 client-side findComparableTransactions with a cross-block
   // transaction search backed by the new /api/comparable-transactions endpoint.
+  //
+  // NOTE: resolvedAskingPrice is deliberately excluded from this effect's
+  // dependencies — the comparable set does not depend on the asking price.
+  // The verdict card recomputes locally from the existing set when the price
+  // changes, avoiding redundant API calls on every keystroke.
   useEffect(() => {
     if (
-      resolvedAskingPrice == null ||
       !detail ||
       !selectedAddressKey ||
       !flatType ||
@@ -318,6 +335,9 @@ export function ListingCheckPanel({
     let cancelled = false;
     setComparableSetLoading(true);
     setComparableSetError(false);
+    // Clear stale results while loading so UI doesn't show mismatched verdict.
+    setComparableSet(null);
+    setAdjustmentMeta(null);
 
     // Use the block's median floor area as fallback (midpoint of recorded
     // range) rather than the max, to avoid skewing comparables toward
@@ -350,7 +370,11 @@ export function ListingCheckPanel({
       referenceMonth: effectiveReferenceMonth,
     });
 
-    fetch("/api/comparable-transactions", {
+    const url = adjustmentEnabled
+      ? "/api/comparable-transactions?adjust=time"
+      : "/api/comparable-transactions";
+
+    fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body,
@@ -358,10 +382,34 @@ export function ListingCheckPanel({
       .then(async (res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`);
         const json: unknown = await res.json();
-        const data = json as ListingComparableSet;
+        const data = json as ListingComparableSet & {
+          adjustmentApplied?: boolean;
+          adjustmentCaveats?: string[];
+          comparables?: Array<ComparableTransaction & Partial<TimeAdjustedComparable>>;
+        };
         if (!cancelled) {
           setComparableSet(data);
           setComparableSetLoading(false);
+          // Extract adjustment data if present
+          if (adjustmentEnabled && data.comparables && data.adjustmentApplied !== undefined) {
+            const adjustmentMap = new Map<string, AdjustmentInfo>();
+            for (const c of data.comparables) {
+              if (c.transactionId && (c as TimeAdjustedComparable).adjustedResalePrice !== undefined) {
+                adjustmentMap.set(c.transactionId, {
+                  adjustedResalePrice: (c as TimeAdjustedComparable).adjustedResalePrice,
+                  adjustedPricePerSqm: (c as TimeAdjustedComparable).adjustedPricePerSqm,
+                  adjustmentLabel: (c as TimeAdjustedComparable).adjustmentLabel,
+                });
+              }
+            }
+            setAdjustmentMeta({
+              adjustmentApplied: data.adjustmentApplied ?? false,
+              adjustmentCaveats: data.adjustmentCaveats ?? [],
+              adjustmentMap,
+            });
+          } else {
+            setAdjustmentMeta(null);
+          }
         }
       })
       .catch(() => {
@@ -376,7 +424,6 @@ export function ListingCheckPanel({
       cancelled = true;
     };
   }, [
-    resolvedAskingPrice,
     resolvedFloorAreaSqm,
     resolvedLeaseYear,
     selectedAddressKey,
@@ -384,6 +431,7 @@ export function ListingCheckPanel({
     storeyRange,
     detail,
     referenceMonth,
+    adjustmentEnabled,
   ]);
 
   // ── Compute result from comparable set ────────────────────────────────────
@@ -448,13 +496,19 @@ export function ListingCheckPanel({
       ...comparableSet.caveats.map((msg) => ({ severity: "warning" as const, message: msg })),
       ...localCaveats,
     ];
+    // Add adjustment caveats if present
+    if (adjustmentMeta?.adjustmentCaveats) {
+      for (const msg of adjustmentMeta.adjustmentCaveats) {
+        mergedCaveats.push({ severity: "info" as const, message: msg });
+      }
+    }
 
     return {
       assessment,
       confidence,
       caveats: mergedCaveats,
     };
-  }, [comparableSet, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, referenceMonth]);
+  }, [comparableSet, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, referenceMonth, adjustmentMeta]);
 
   const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
 
@@ -828,6 +882,25 @@ export function ListingCheckPanel({
               </div>
             )}
 
+            {/* Time adjustment toggle */}
+            {comparables.length > 0 && (
+              <div className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-semibold">
+                    {t("check.adjustmentToggle")}
+                  </span>
+                  <span className="text-[0.65rem] text-muted-foreground">
+                    {t("check.adjustmentToggleDescription")}
+                  </span>
+                </div>
+                <Switch
+                  checked={adjustmentEnabled}
+                  onCheckedChange={setAdjustmentEnabled}
+                  aria-label={t("check.adjustmentToggle")}
+                />
+              </div>
+            )}
+
             {/* Comparable transactions list */}
             {comparables.length > 0 && (
               <ComparableTransactionsList
@@ -846,6 +919,8 @@ export function ListingCheckPanel({
                 }))}
                 expanded={comparablesExpanded}
                 onToggle={() => setComparablesExpanded((prev) => !prev)}
+                adjustmentMap={adjustmentMeta?.adjustmentMap ?? undefined}
+                showAdjusted={adjustmentEnabled}
               />
             )}
 
