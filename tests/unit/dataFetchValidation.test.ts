@@ -57,11 +57,10 @@ describe("artifact fetch validation", () => {
       ),
     );
 
-    await expect(fetchManifest()).resolves.toMatchObject({
-      schemaVersion: "2.0.0",
-      generatedAt: undefined,
-      sources: {},
-    });
+    const manifest = await fetchManifest();
+    expect(manifest.schemaVersion).toBe("2.0.0");
+    expect(manifest.generatedAt).toBeUndefined();
+    expect(manifest.sources).toEqual({});
   });
 
   it("parses manifest when source metadata is partial", async () => {

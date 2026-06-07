@@ -221,6 +221,7 @@ const BlockCard = memo(function BlockCard({
   budgetMin,
   budgetMax,
   searchProfile,
+  profileDataWindow = null,
   t,
   locale,
 }: {
@@ -234,6 +235,7 @@ const BlockCard = memo(function BlockCard({
   budgetMin: number | null;
   budgetMax: number | null;
   searchProfile?: SearchProfile | null;
+  profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   t: Translator;
   locale: Locale;
 }) {
@@ -1256,6 +1258,7 @@ export function ResultsPane({
                           budgetMin={budgetMin ?? null}
                           budgetMax={budgetMax ?? null}
                           searchProfile={searchProfile ?? null}
+                          profileDataWindow={profileDataWindow}
                           t={t}
                           locale={locale}
                         />
