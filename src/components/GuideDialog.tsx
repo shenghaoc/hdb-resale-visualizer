@@ -31,6 +31,7 @@ export function GuideDialog({ open, onClose, t }: GuideDialogProps) {
     <dialog
       ref={dialogRef}
       onClose={onClose}
+      aria-labelledby="guide-dialog-title"
       className={cn(
         "fixed inset-0 z-50 m-0 h-full w-full max-w-none border-0 bg-transparent p-0",
         "backdrop:bg-background/60 backdrop:backdrop-blur-sm",
@@ -40,7 +41,7 @@ export function GuideDialog({ open, onClose, t }: GuideDialogProps) {
       {open && (
         <div className="relative mx-auto flex h-[min(90vh,56rem)] w-[min(90vw,48rem)] flex-col overflow-hidden rounded-xl border bg-background shadow-2xl">
           <header className="flex shrink-0 items-center justify-between border-b px-6 py-4">
-            <h2 className="text-sm font-bold uppercase tracking-widest">
+            <h2 id="guide-dialog-title" className="text-sm font-bold uppercase tracking-widest">
               {t("guide.title")}
             </h2>
             <Button

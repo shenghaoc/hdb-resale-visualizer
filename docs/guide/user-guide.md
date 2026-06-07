@@ -133,7 +133,7 @@ Your shortlist is stored locally in the browser by default. To sync across devic
 2. Generate a **sync code** (a short anonymous code — no account needed)
 3. Enter the same code on another device to sync
 
-No personal information is stored — the sync code is the only identifier.
+No account, email, or password is required — the sync code is the only identifier. Note that any notes you add to shortlisted blocks are included in the synced data.
 
 ## Search profile
 
