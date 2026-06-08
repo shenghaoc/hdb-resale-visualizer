@@ -164,13 +164,16 @@ test.describe("mobile", () => {
     await expect(check.getByText(/in line with market/i)).toBeVisible({ timeout: 15_000 });
     await expect(check.getByText(/8 comparable transactions/i)).toBeVisible();
 
-    // Comparable evidence renders as cards on mobile.
-    await expect(check.getByText("Same flat type").first()).toBeVisible();
-
-    // R7.2: at phone width the comparable evidence renders as cards and the
-    // desktop table is hidden (not merely absent from view).
+    // R7.2: at phone width the comparable evidence renders as cards (with the
+    // match reasons) and the desktop table is hidden — not merely absent. Scope
+    // the match-reason check to the visible card so it can't resolve to the
+    // CSS-hidden desktop-table badge, which is first in DOM order.
     const evidence = check.getByTestId("listing-check-evidence");
-    await expect(evidence.getByRole("article").first()).toBeVisible();
+    const evidenceCard = evidence
+      .getByRole("article")
+      .filter({ hasText: "Same flat type" })
+      .first();
+    await expect(evidenceCard).toBeVisible();
     await expect(evidence.getByRole("table")).toBeHidden();
 
     // The main flow must not introduce horizontal scrolling (1px tolerance for
