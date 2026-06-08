@@ -98,6 +98,28 @@ test.describe("performance traces", () => {
       expect(elapsed).toBeLessThan(2000);
     }
   });
+
+  test("filter latency remains stable across repeated queries", async ({ page }) => {
+    await openResultsTab(page);
+
+    // Queries must all resolve to ≥1 block in the e2e fixture (BEDOK / ANG MO KIO
+    // towns only), otherwise the wait for a result item hangs.
+    const latencies: number[] = [];
+    for (const query of ["BEDOK", "ANG MO KIO", "LENGKONG TIGA"]) {
+      const latency = await measureFilterLatency(page, query);
+      latencies.push(latency);
+    }
+
+    // No single query should take more than 5s (generous for CI)
+    for (const latency of latencies) {
+      expect(latency).toBeLessThan(5000);
+    }
+
+    // Variance between queries should be reasonable (no query > 3x the fastest)
+    const min = Math.min(...latencies);
+    const max = Math.max(...latencies);
+    expect(max).toBeLessThan(min * 3 + 500);
+  });
 });
 
 async function measureFilterLatency(
@@ -114,32 +136,3 @@ async function measureFilterLatency(
   return Date.now() - start;
 }
 
-test("filter latency remains stable across repeated queries", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await expect(page.getByTestId("global-header")).toBeVisible({ timeout: 15_000 });
-  await expect(
-    page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
-  ).toBeVisible({ timeout: 20_000 });
-
-  await openResultsTab(page);
-
-  // Queries must all resolve to ≥1 block in the e2e fixture (BEDOK / ANG MO KIO
-  // towns only), otherwise the wait for a result item hangs.
-  const latencies: number[] = [];
-  for (const query of ["BEDOK", "ANG MO KIO", "LENGKONG TIGA"]) {
-    const latency = await measureFilterLatency(page, query);
-    latencies.push(latency);
-  }
-
-  // No single query should take more than 5s (generous for CI)
-  for (const latency of latencies) {
-    expect(latency).toBeLessThan(5000);
-  }
-
-  // Variance between queries should be reasonable (no query > 3x the fastest)
-  const min = Math.min(...latencies);
-  const max = Math.max(...latencies);
-  expect(max).toBeLessThan(min * 3 + 500);
-});

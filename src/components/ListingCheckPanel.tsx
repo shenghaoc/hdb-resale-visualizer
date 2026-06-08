@@ -343,6 +343,9 @@ export function ListingCheckPanel({
   }
 
   // ── Render-phase detail reset when address clears ─────────────────────────
+  // Forward guard: today the panel is remounted via `key={checkAddressKey}` in
+  // App, so this branch is normally redundant — it keeps detail state correct if
+  // that key prop is ever removed.
   const [prevSelectedAddressKey, setPrevSelectedAddressKey] = useState(selectedAddressKey);
   if (selectedAddressKey !== prevSelectedAddressKey) {
     setPrevSelectedAddressKey(selectedAddressKey);
