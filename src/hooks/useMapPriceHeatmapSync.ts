@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import {
   addPriceHeatmapLayer,
@@ -25,15 +25,66 @@ export function useMapPriceHeatmapSync({
   priceHeatmapOpacity,
   heatmapMode,
 }: UseMapPriceHeatmapSyncProps) {
+  // Opacity is intentionally excluded: it is owned by a dedicated lightweight
+  // effect (setHeatmapOpacity) and must not trigger layer recreation here.
+  const configuredLayerRef = useRef<{
+    enabled: boolean;
+    mode: HeatmapMode;
+  } | null>(null);
+  const heatmapSourceRef = useRef<unknown>(null);
+  const heatmapDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const heatmapOpacityRef = useRef<number | null>(null);
+
   useEffect(() => {
     if (!map) return;
 
     const apply = () => {
       if (!map.isStyleLoaded()) return;
+      const source = map.getSource(HEATMAP_SOURCE_ID);
+      const sourceIsHeatmapReady = isGeoJsonDataSourceLike(source);
+      const desiredConfig = {
+        enabled: priceHeatmapEnabled,
+        mode: heatmapMode,
+        opacity: priceHeatmapOpacity,
+      };
+      const layerIsPresent = isHeatmapLayerPresent(map);
+      const config = configuredLayerRef.current;
+      const configChanged =
+        !config ||
+        config.enabled !== desiredConfig.enabled ||
+        config.mode !== desiredConfig.mode ||
+        !layerIsPresent;
+
+      if (!configChanged && layerIsPresent && sourceIsHeatmapReady) {
+        return;
+      }
+
       if (priceHeatmapEnabled) {
-        addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson, heatmapMode);
+        if (!layerIsPresent || configChanged) {
+          addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson, heatmapMode);
+          configuredLayerRef.current = desiredConfig;
+          heatmapDataRef.current = geoJson;
+          heatmapSourceRef.current = map.getSource(HEATMAP_SOURCE_ID);
+          return;
+        }
+
+        if (!sourceIsHeatmapReady) {
+          addPriceHeatmapLayer(map, priceHeatmapOpacity, geoJson, heatmapMode);
+          configuredLayerRef.current = desiredConfig;
+          heatmapDataRef.current = geoJson;
+          heatmapSourceRef.current = map.getSource(HEATMAP_SOURCE_ID);
+        }
       } else {
-        removePriceHeatmapLayer(map);
+        if (isHeatmapLayerPresent(map)) {
+          removePriceHeatmapLayer(map);
+          configuredLayerRef.current = desiredConfig;
+          heatmapDataRef.current = null;
+          heatmapSourceRef.current = null;
+        }
+      }
+
+      if (!priceHeatmapEnabled) {
+        configuredLayerRef.current = desiredConfig;
       }
     };
 
@@ -61,8 +112,13 @@ export function useMapPriceHeatmapSync({
     const syncData = () => {
       if (!map.isStyleLoaded()) return;
       const source = map.getSource(HEATMAP_SOURCE_ID);
-      if (isGeoJsonDataSourceLike(source)) {
+      if (
+        isGeoJsonDataSourceLike(source) &&
+        (source !== heatmapSourceRef.current || geoJson !== heatmapDataRef.current)
+      ) {
         source.setData(geoJson);
+        heatmapSourceRef.current = source;
+        heatmapDataRef.current = geoJson;
       }
     };
 
@@ -84,8 +140,9 @@ export function useMapPriceHeatmapSync({
 
     const applyOpacity = () => {
       if (!map.isStyleLoaded()) return;
-      if (isHeatmapLayerPresent(map)) {
+      if (isHeatmapLayerPresent(map) && heatmapOpacityRef.current !== priceHeatmapOpacity) {
         setHeatmapOpacity(map, priceHeatmapOpacity);
+        heatmapOpacityRef.current = priceHeatmapOpacity;
       }
     };
 
