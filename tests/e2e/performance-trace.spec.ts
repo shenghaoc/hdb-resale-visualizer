@@ -4,6 +4,14 @@ test.describe.configure({
   timeout: 90_000,
 });
 
+// In the buyer-first homepage, the results list lives on the Results tab of the
+// desktop left panel — it is hidden until that tab is opened. Reveal it after
+// driving the header search so the filtered list (and its items) are present.
+async function openResultsTab(page: Page) {
+  await page.locator(".desktop-tab-bar").getByRole("button", { name: /results/i }).click();
+  await expect(page.getByTestId("results-pane")).toBeVisible({ timeout: 5_000 });
+}
+
 test.describe("performance traces", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
@@ -20,7 +28,7 @@ test.describe("performance traces", () => {
     const start = Date.now();
     await searchInput.fill("BEDOK");
 
-    await expect(page.getByTestId("results-pane")).toBeVisible({ timeout: 5_000 });
+    await openResultsTab(page);
     await expect(
       page.locator("[data-testid='results-pane'] [data-slot='item']").first(),
     ).toBeVisible({ timeout: 5_000 });
@@ -36,7 +44,7 @@ test.describe("performance traces", () => {
     });
 
     await page.getByTestId("header-search-input").fill("ANG MO KIO");
-    await expect(page.getByTestId("results-pane")).toBeVisible({ timeout: 5_000 });
+    await openResultsTab(page);
 
     // Pan the map while filter is active
     const box = await mapContainer.boundingBox();
@@ -64,6 +72,7 @@ test.describe("performance traces", () => {
   }) => {
     // Navigate to a block and trigger listing check
     await page.getByTestId("header-search-input").fill("BEDOK");
+    await openResultsTab(page);
     await expect(
       page.locator("[data-testid='results-pane'] [data-slot='item']").first(),
     ).toBeVisible({ timeout: 10_000 });
@@ -114,8 +123,12 @@ test("filter latency remains stable across repeated queries", async ({
     page.getByRole("application", { name: /interactive map of singapore hdb resale blocks/i }),
   ).toBeVisible({ timeout: 20_000 });
 
+  await openResultsTab(page);
+
+  // Queries must all resolve to ≥1 block in the e2e fixture (BEDOK / ANG MO KIO
+  // towns only), otherwise the wait for a result item hangs.
   const latencies: number[] = [];
-  for (const query of ["BEDOK", "TAMPINES", "ANG MO KIO"]) {
+  for (const query of ["BEDOK", "ANG MO KIO", "LENGKONG TIGA"]) {
     const latency = await measureFilterLatency(page, query);
     latencies.push(latency);
   }
