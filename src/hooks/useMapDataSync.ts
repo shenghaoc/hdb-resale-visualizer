@@ -103,17 +103,21 @@ export function useMapDataSync({
     const applyPrimarySchools = (e?: { dataType?: string }) => {
       if (!isActive || !map.isStyleLoaded()) return;
       const source = map.getSource(PRIMARY_SCHOOL_SOURCE_ID);
+      // Normalise undefined → null once so the ref comparison below doesn't read
+      // `undefined !== null` (always true) and trigger a redundant setData on
+      // every styledata event when the overlay prop is omitted.
+      const normalisedSchoolGeoJson = primarySchoolsGeoJson ?? null;
       const shouldSetSchoolData =
         isGeoJsonDataSourceLike(source) &&
         (source !== schoolsLayerSourceRef.current ||
-          primarySchoolsGeoJson !== schoolsSourceRef.current);
+          normalisedSchoolGeoJson !== schoolsSourceRef.current);
       if (shouldSetSchoolData) {
-        source.setData(primarySchoolsGeoJson ?? { type: "FeatureCollection", features: [] });
+        source.setData(normalisedSchoolGeoJson ?? { type: "FeatureCollection", features: [] });
         schoolsLayerSourceRef.current = source;
-        schoolsSourceRef.current = primarySchoolsGeoJson ?? null;
+        schoolsSourceRef.current = normalisedSchoolGeoJson;
       }
 
-      const hasSchoolFeatures = (primarySchoolsGeoJson?.features.length ?? 0) > 0;
+      const hasSchoolFeatures = (normalisedSchoolGeoJson?.features.length ?? 0) > 0;
       const schoolVisibility =
         schoolOverlayEnabled && hasSchoolFeatures ? "visible" : "none";
       const visibilityChanged = schoolsVisibilityRef.current !== schoolVisibility;

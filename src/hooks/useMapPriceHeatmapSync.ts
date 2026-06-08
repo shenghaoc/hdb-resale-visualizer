@@ -25,10 +25,11 @@ export function useMapPriceHeatmapSync({
   priceHeatmapOpacity,
   heatmapMode,
 }: UseMapPriceHeatmapSyncProps) {
+  // Opacity is intentionally excluded: it is owned by a dedicated lightweight
+  // effect (setHeatmapOpacity) and must not trigger layer recreation here.
   const configuredLayerRef = useRef<{
     enabled: boolean;
     mode: HeatmapMode;
-    opacity: number;
   } | null>(null);
   const heatmapSourceRef = useRef<unknown>(null);
   const heatmapDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
