@@ -234,14 +234,19 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
       </div>
 
       {assessment && theme ? (
-        <Card className={cn("border-2 shadow-none", styles.border, styles.bg)}>
+        <Card
+          className={cn("border-2 shadow-none", styles.border, styles.bg)}
+          data-testid="listing-check-verdict"
+        >
           <CardContent className="flex flex-col gap-4 p-4">
             <div className="flex items-center gap-3">
               <div className={cn("rounded-md p-2", styles.bg)}>
                 <VerdictIcon data-icon className={cn("size-5", styles.text)} aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <div className={cn("text-sm font-extrabold uppercase tracking-wider", styles.text)}>
+                <div
+                  className={cn("text-sm font-extrabold uppercase tracking-wider", styles.text)}
+                >
                   {t(theme.i18nKey)}
                 </div>
                 <div className="text-xs text-muted-foreground">
@@ -340,11 +345,13 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
       )}
 
       {comparables.length > 0 && (
-        <ComparableTransactionsList
-          transactions={comparables}
-          expanded={comparablesExpanded}
-          onToggle={() => setComparablesExpanded((expanded) => !expanded)}
-        />
+        <div data-testid="listing-check-evidence">
+          <ComparableTransactionsList
+            transactions={comparables}
+            expanded={comparablesExpanded}
+            onToggle={() => setComparablesExpanded((expanded) => !expanded)}
+          />
+        </div>
       )}
     </section>
   );

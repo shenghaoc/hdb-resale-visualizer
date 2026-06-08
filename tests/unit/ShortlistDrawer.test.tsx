@@ -286,6 +286,36 @@ describe("ShortlistDrawer", () => {
     expect(screen.queryByTestId("shortlist-comparison-table")).not.toBeInTheDocument();
   });
 
+  it("shows the nearest MRT station name and buyer notes in the mobile comparison card", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          isOpen={true}
+          rows={[mockRow, mockRowTwo]}
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show saved blocks as a comparison table" }),
+    );
+
+    // The compare view renders both the desktop table and a stacked mobile card
+    // per row (the table is CSS-hidden below `md`). The mobile card must show the
+    // MRT station name alongside walking time — not the walking time alone — and
+    // the buyer notes, matching the desktop table's information density.
+    const cards = screen.getAllByTestId("shortlist-comparison-card");
+    expect(cards).toHaveLength(2);
+    expect(cards[0]).toHaveTextContent(/Ang Mo Kio\s*·/); // station name + separator
+    expect(cards[0]).toHaveTextContent("Test notes"); // buyer notes
+  });
+
   it("keeps a valid card expanded when shortlist rows change", () => {
     const { rerender } = render(
       <I18nProvider>
