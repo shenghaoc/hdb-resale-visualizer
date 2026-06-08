@@ -246,7 +246,6 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               <div className="flex-1">
                 <div
                   className={cn("text-sm font-extrabold uppercase tracking-wider", styles.text)}
-                  data-testid="listing-check-confidence-summary"
                 >
                   {t(theme.i18nKey)}
                 </div>

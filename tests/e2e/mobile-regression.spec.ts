@@ -59,13 +59,13 @@ async function runMobileListingCheckFlow(page: Page) {
     .catch(() => false);
 
   if (hasVerdict) {
-    const verdictSummary = detailDrawer.getByTestId("listing-check-confidence-summary");
+    // AskingPriceCheck (detail drawer) uses the v1 engine which does not
+    // compute confidence — only the main ListingCheckPanel shows the
+    // confidence badge and summary. Assert verdict and evidence only.
     const evidence = detailDrawer.getByTestId("listing-check-evidence");
-    await expect(verdictSummary).toBeVisible();
     await expect(evidence).toBeVisible({ timeout: 25_000 });
 
     await expectNoHorizontalOverflow(verdict);
-    await expectNoHorizontalOverflow(verdictSummary);
     await expectNoHorizontalOverflow(evidence);
 
     const verdictTop = await verdict.evaluate((element) => element.getBoundingClientRect().top);
