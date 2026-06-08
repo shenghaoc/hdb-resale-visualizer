@@ -38,7 +38,7 @@ export type GenerateCaveatsParams = {
 const WIDENED_STREET_PATTERN = /widened to the same street/i;
 const WIDENED_TOWN_PATTERN = /widened to the entire town/i;
 const ADJUSTMENT_UNAVAILABLE_PATTERN =
-  /time adjustment could not be applied|could not be time-adjusted|insufficient trend data/i;
+  /time adjustment could not be applied|could not be time-adjusted|insufficient trend data|no trend data available/i;
 
 function mapApiCaveat(msg: string): CaveatCode | null {
   if (WIDENED_STREET_PATTERN.test(msg)) return "WIDENED_TO_STREET";
