@@ -71,7 +71,7 @@ import { buildLeaseSignals } from "@/lib/leaseSignals";
 import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/lib/lease-financing";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
 import { buildBlockShareUrl } from "@/lib/shareUrls";
-import { getBlockDataQualityTag } from "@/lib/listing-quality";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
@@ -599,10 +599,10 @@ export function DetailDrawer({
                         return (
                           <>
                             <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                              {t(`quality.${qualityTag}`)}
+                              {t(QUALITY_LABEL_KEYS[qualityTag])}
                             </Badge>
                             <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
-                              {t(`quality.hint.${qualityTag}`)}
+                              {t(QUALITY_HINT_KEYS[qualityTag])}
                             </div>
                           </>
                         );

@@ -60,7 +60,7 @@ import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
 import type { ChecklistItemId } from "@/lib/checklist";
-import { getBlockDataQualityTag } from "@/lib/listing-quality";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -1718,10 +1718,10 @@ export function ShortlistDrawer({
                                     return (
                                       <>
                                         <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                                          {t(`quality.${qualityTag}`)}
+                                          {t(QUALITY_LABEL_KEYS[qualityTag])}
                                         </Badge>
                                         <span className="text-[0.58rem] font-semibold uppercase tracking-[0.08em]">
-                                          {t(`quality.hint.${qualityTag}`)}
+                                          {t(QUALITY_HINT_KEYS[qualityTag])}
                                         </span>
                                       </>
                                     );

@@ -52,7 +52,7 @@ import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
 import type { AdjustmentInfo } from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
-import { getComparableSetQualityTag } from "@/lib/listing-quality";
+import { getComparableSetQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -948,11 +948,11 @@ export function ListingCheckPanel({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Badge variant="outline" className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]">
-                        {t(`quality.${qualityTag}`)}
+                        {t(QUALITY_LABEL_KEYS[qualityTag])}
                       </Badge>
                     </TooltipTrigger>
                     <TooltipContent side="bottom" className="max-w-60 text-xs">
-                      {t(`quality.hint.${qualityTag}`)}
+                      {t(QUALITY_HINT_KEYS[qualityTag])}
                     </TooltipContent>
                   </Tooltip>
                 ) : null}

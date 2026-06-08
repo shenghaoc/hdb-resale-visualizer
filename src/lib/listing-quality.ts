@@ -5,6 +5,24 @@ import { monthsBetween } from "@/lib/dataQuality";
 
 export type ComparableQualityTag = "strong" | "weak" | "widened" | "stale";
 
+/**
+ * Explicit i18n keys for each quality tag, so adding a new tag forces a matching
+ * message entry at compile time instead of failing silently at runtime.
+ */
+export const QUALITY_LABEL_KEYS: Record<ComparableQualityTag, string> = {
+  strong: "quality.strong",
+  weak: "quality.weak",
+  widened: "quality.widened",
+  stale: "quality.stale",
+};
+
+export const QUALITY_HINT_KEYS: Record<ComparableQualityTag, string> = {
+  strong: "quality.hint.strong",
+  weak: "quality.hint.weak",
+  widened: "quality.hint.widened",
+  stale: "quality.hint.stale",
+};
+
 type ComparableSetQualityInput = {
   confidence: ConfidenceAssessment;
   widenedSearch: boolean;
