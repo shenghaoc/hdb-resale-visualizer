@@ -83,7 +83,9 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
   );
 
   const check = desktopCheckPanel(page);
-  await expect(check.getByText(/106 LENGKONG TIGA/i)).toBeVisible({ timeout: 15_000 });
+  // The block name also appears in the comparable-evidence rows, so scope to the
+  // first match (the selected-block header).
+  await expect(check.getByText(/106 LENGKONG TIGA/i).first()).toBeVisible({ timeout: 15_000 });
 
   // (2) Listing facts are captured and editable; the entered floor area shows.
   await expect(check.getByRole("spinbutton", { name: /floor area/i })).toHaveValue("150");
@@ -92,10 +94,10 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
   await check.getByRole("spinbutton", { name: /asking price/i }).fill("1200000");
 
   // (3) Verdict, confidence, fair range, and comparable count are all surfaced.
-  await expect(check.getByText(/in line with market/i)).toBeVisible({ timeout: 10_000 });
-  await expect(check.getByText(/confidence:/i)).toBeVisible();
-  await expect(check.getByText(/fair range/i)).toBeVisible();
-  await expect(check.getByText(/8 comparable transactions/i)).toBeVisible();
+  await expect(check.getByText(/in line with market/i).first()).toBeVisible({ timeout: 10_000 });
+  await expect(check.getByText(/confidence:/i).first()).toBeVisible();
+  await expect(check.getByText(/fair range/i).first()).toBeVisible();
+  await expect(check.getByText(/8 comparable transactions/i).first()).toBeVisible();
 
   // (4) Comparable evidence shows the actual transaction rows.
   await expect(check.getByText(/why these comparables/i)).toBeVisible();
@@ -113,7 +115,7 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
   await desktopSavedTab(page).click();
   const drawer = page.getByTestId("shortlist-drawer");
   await expect(drawer).toBeVisible();
-  await expect(drawer.getByText(/106 LENGKONG TIGA/i)).toBeVisible({ timeout: 10_000 });
+  await expect(drawer.getByText(/106 LENGKONG TIGA/i).first()).toBeVisible({ timeout: 10_000 });
   await expect(drawer.locator(`#target-${CHECK_ADDRESS_KEY}`)).toHaveValue("1200000");
 });
 
@@ -135,9 +137,12 @@ test("a buyer sees a low-confidence verdict and a caveat when only a few compara
   );
 
   const check = desktopCheckPanel(page);
-  await expect(check.getByText(/2 comparable transactions/i)).toBeVisible({ timeout: 15_000 });
-  await expect(check.getByText(/confidence: low/i)).toBeVisible();
-  await expect(check.getByText(/directional only/i).first()).toBeVisible();
+  // The count also appears inside the "Only N comparable transactions" caveat
+  // (rendered in both the verdict and the evidence banner), so scope to first.
+  await expect(check.getByText(/2 comparable transactions/i).first()).toBeVisible({ timeout: 15_000 });
+  await expect(check.getByText(/confidence: low/i).first()).toBeVisible();
+  // The low-sample caveat copy is standardised by the data-quality system.
+  await expect(check.getByText(/this assessment is unreliable/i).first()).toBeVisible();
 });
 
 // ── 8. Mobile listing-check flow without horizontal scroll ───────────────────
@@ -161,8 +166,8 @@ test.describe("mobile", () => {
     );
 
     const check = page.locator("#mobile-check-content");
-    await expect(check.getByText(/in line with market/i)).toBeVisible({ timeout: 15_000 });
-    await expect(check.getByText(/8 comparable transactions/i)).toBeVisible();
+    await expect(check.getByText(/in line with market/i).first()).toBeVisible({ timeout: 15_000 });
+    await expect(check.getByText(/8 comparable transactions/i).first()).toBeVisible();
 
     // R7.2: at phone width the comparable evidence renders as cards (with the
     // match reasons) and the desktop table is hidden — not merely absent. Scope
