@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 import { formatCompactCurrency, formatNumber } from "@/shared/lib/format";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { localizeTownName } from "@/shared/lib/i18n/domain";
-import type { TownRecommendation } from "@/entities/town/town-recommendations";
+import type { TownRecommendation } from "@/features/search-profile/town-recommendations";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

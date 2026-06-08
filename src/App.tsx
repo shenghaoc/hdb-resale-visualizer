@@ -15,7 +15,7 @@ import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
 import { getSearchProfileChipDescriptors } from "@/features/search-profile/searchProfileChips";
-import { buildTownRecommendations } from "@/entities/town/town-recommendations";
+import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { MapLocaleControl } from "@/components/MapLocaleControl";

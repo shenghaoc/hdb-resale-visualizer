@@ -71,6 +71,9 @@ jobs:
               - 'src/components/**'
               - 'src/hooks/**'
               - 'src/lib/**'
+              - 'src/entities/**'
+              - 'src/features/**'
+              - 'src/shared/**'
               - 'src/types/**'
               # Shared domain logic that drives listing-check results
               - 'shared/**'

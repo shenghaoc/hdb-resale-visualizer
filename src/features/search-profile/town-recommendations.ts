@@ -1,5 +1,5 @@
 import { getCurrentYear } from "@/shared/lib/constants";
-import { evaluateBlockForProfile, type MatchTier } from "@/features/search-profile/matchProfile";
+import { evaluateBlockForProfile, type MatchTier } from "./matchProfile";
 import { median } from "@/shared/lib/utils";
 import type { BlockSummary } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";

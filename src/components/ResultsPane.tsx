@@ -32,7 +32,7 @@ import type { Locale, Translator } from "@/shared/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
 import { TownCompareSection } from "@/components/TownCompareSection";
 import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
-import type { TownRecommendation } from "@/entities/town/town-recommendations";
+import type { TownRecommendation } from "@/features/search-profile/town-recommendations";
 import {
   buildLeaseCommencementHistogram,
   pickBlocksBelowTownMedian,
