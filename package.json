@@ -27,6 +27,7 @@
     "test": "NODE_OPTIONS=--no-experimental-webstorage vitest run",
     "test:watch": "NODE_OPTIONS=--no-experimental-webstorage vitest",
     "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test tests/e2e/production-bootstrap.spec.ts tests/e2e/app.spec.ts tests/e2e/accessibility.spec.ts",
     "test:e2e:reuse": "E2E_REUSE_SERVER=1 playwright test",
     "sync-data": "tsx scripts/sync-data.ts"
   },
@@ -53,7 +54,7 @@
     "@cloudflare/workers-types": "^4.20260604.1",
     "@eslint/js": "^10.0.1",
     "@maplibre/maplibre-gl-style-spec": "^24.8.5",
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "1.60.0",
     "@tailwindcss/vite": "^4.3.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
