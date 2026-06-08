@@ -153,13 +153,13 @@ export function AppHeader({
                 </span>
               ) : null}
               {dataQuality.syncState === "partial" ? (
-                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                <span className="text-[0.6rem] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataPartial")}
                 </span>
               ) : null}
               {dataQuality.syncState === "missing" ? (
-                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                <span className="text-[0.6rem] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataUnavailable")}
                 </span>
