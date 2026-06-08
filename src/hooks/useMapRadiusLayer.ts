@@ -27,6 +27,7 @@ export function useMapRadiusLayer(
   blocksByKey: Map<string, BlockSummary>,
 ) {
   const radiusSignatureRef = useRef<string | null>(null);
+  const radiusSourceRef = useRef<unknown>(null);
 
   useEffect(() => {
     if (!map) return;
@@ -44,11 +45,15 @@ export function useMapRadiusLayer(
             ? `addr:${selectedAddressKey}:${selectedBlock.coordinates.lat.toFixed(6)},${selectedBlock.coordinates.lng.toFixed(6)}`
             : "none";
 
-      if (selectedSignature === radiusSignatureRef.current) return;
+      // Re-sync if either the data intent changed OR the source was replaced
+      // (e.g. after a style reload that recreates map sources).
+      const sourceChanged = source !== radiusSourceRef.current;
+      if (selectedSignature === radiusSignatureRef.current && !sourceChanged) return;
 
       if (selectedSignature === "none") {
         source.setData({ type: "FeatureCollection", features: [] });
         radiusSignatureRef.current = selectedSignature;
+        radiusSourceRef.current = source;
         return;
       }
 
@@ -59,6 +64,7 @@ export function useMapRadiusLayer(
           features: [createCircleGeoJson(geographicIntent.coordinates, radiusKm)],
         });
         radiusSignatureRef.current = selectedSignature;
+        radiusSourceRef.current = source;
         return;
       }
 
@@ -70,6 +76,7 @@ export function useMapRadiusLayer(
         ],
       });
       radiusSignatureRef.current = selectedSignature;
+      radiusSourceRef.current = source;
     };
 
     if (map.isStyleLoaded()) updateRadius();
