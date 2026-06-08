@@ -47,6 +47,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ── Paths filter ────────────────────────────────────────────────────────────
   changes:
     runs-on: ubuntu-latest
     permissions:
@@ -89,7 +90,8 @@ jobs:
               - 'vite.config.*'
               - '.github/workflows/ci.yml'
 
-  quality:
+  # ── Quality gates (all parallel, all merge-required) ────────────────────────
+  typecheck:
     runs-on: ubuntu-latest
 
     steps:
@@ -106,16 +108,8 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Unit and integration tests
-        run: npm run test
-
-  e2e-smoke:
+  lint:
     runs-on: ubuntu-latest
-    needs: [changes, quality]
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.run_e2e == 'true'
 
     steps:
       - uses: actions/checkout@v6
@@ -128,21 +122,116 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Get Playwright version
-        id: playwright-version
-        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> $GITHUB_OUTPUT
+      - name: Lint
+        run: npm run lint
 
-      - name: Cache Playwright binaries
-        uses: actions/cache@v5
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
         with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+          node-version: 26
+          cache: npm
 
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps webkit
+      - name: Install dependencies
+        run: npm ci
 
-      - name: End-to-end smoke (incl. axe WCAG gate)
+      - name: Unit and integration tests
+        run: npm run test
+
+  # ── Build (also gates merge; artifact consumed by e2e-smoke) ────────────────
+  #
+  # Runs when either build or e2e paths changed, so e2e-smoke always has an
+  # artifact to download even when only test files (not src) changed.
+  build:
+    runs-on: ubuntu-latest
+    needs: [changes]
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      needs.changes.outputs.run_build == 'true' ||
+      needs.changes.outputs.run_e2e == 'true'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Fixtures must be staged before vite build so they are copied into dist/
+      # and served by vite preview without a second staging step in e2e-smoke.
+      - name: Stage E2E fixtures into public/api
+        run: npm run setup:fixtures
+
+      - name: Production build
+        run: npm run build:deploy
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # ── E2E smoke (depends only on build artifact, not on lint/typecheck/unit) ──
+  #
+  # Uses the official Playwright Docker image so browser binaries and system
+  # dependencies for WebKit are pre-installed; no `playwright install` step
+  # needed.  The @playwright/test version is pinned exactly to 1.60.0 in
+  # package.json to match the mcr.microsoft.com/playwright:v1.60.0-noble image.
+  #
+  # On PR / push: runs the smoke subset (production-bootstrap + app + a11y).
+  # On workflow_dispatch: runs the full suite.
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    needs: [changes, build]
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      needs.changes.outputs.run_e2e == 'true'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # Install Node 26 inside the Playwright Docker container (which ships a
+      # lower LTS version) so the project's engines requirement is satisfied.
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          # Browsers are already in the Docker image; skip the post-install
+          # download that @playwright/test would otherwise trigger.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: dist
+          path: dist
+
+      - name: End-to-end smoke (PR / push)
+        if: github.event_name != 'workflow_dispatch'
+        run: npm run test:e2e:smoke
+        env:
+          E2E_DIST_PREBUILT: "1"
+
+      - name: End-to-end full suite (workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
         run: npm run test:e2e
+        env:
+          E2E_DIST_PREBUILT: "1"
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v7
@@ -152,25 +241,7 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-  build-verify:
-    runs-on: ubuntu-latest
-    needs: [changes, quality]
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.run_build == 'true'
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Production build verification
-        run: npm run build:deploy
-
+  # ── Docs freshness reminder (PR only, not a merge gate) ─────────────────────
   docs-check:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
