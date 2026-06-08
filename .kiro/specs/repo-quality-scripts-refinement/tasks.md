@@ -51,7 +51,8 @@
 - [x] **T4.1** Update the README `## Scripts` block with
   `test:listing-check`, `test:comparables`, `test:buyer-workflow`, `check`,
   and `check:pr`, plus a note that targeted scripts reuse the Vitest config and
-  that CI calls the same `check:pr`.
+  that CI runs the same underlying scripts as separate parallel jobs rather
+  than invoking `check:pr` directly.
   → README lists the commands accurately. (R7.1, R7.3, R8.4)
 
 - [x] **T4.2** Update the AGENTS.md `Useful local commands` block with the same

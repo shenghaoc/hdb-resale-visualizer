@@ -135,7 +135,8 @@ gate, not a build.
 - README `## Scripts` block gains `test:listing-check`, `test:comparables`,
   `test:buyer-workflow`, `check`, and `check:pr` entries plus a short note that
   the targeted scripts reuse the Vitest config and that `check:pr` is the
-  pre-PR command CI also calls.
+  single pre-PR command, while CI runs the same underlying scripts as separate
+  parallel jobs rather than invoking `check:pr` directly.
 - AGENTS.md `Useful local commands` gains the same entries and note.
 - AGENTS.md spec router lists this spec under **Active**.
 
