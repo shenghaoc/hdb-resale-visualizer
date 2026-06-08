@@ -283,47 +283,7 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("shortlist comparison renders card layout on mobile", async ({ page }) => {
-    await mockComparisonArtifacts(page);
-
-    // Pre-seed two shortlist items using real fixture address keys
-    const shortlistData = [
-      {
-        addressKey: "bedok-10d-bedok-sth-ave-2",
-        notes: "",
-        targetPrice: null,
-        addedAt: new Date().toISOString(),
-      },
-      {
-        addressKey: "bedok-106-lengkong-tiga",
-        notes: "",
-        targetPrice: null,
-        addedAt: new Date(Date.now() - 60000).toISOString(),
-      },
-    ];
-
-    await page.goto("/");
-    await page.evaluate(
-      ({ data }) => localStorage.setItem("hdb_resale_shortlist_v1", JSON.stringify(data)),
-      { data: shortlistData },
-    );
-    await page.reload();
-
-    // Navigate to saved tab
-    await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
-    await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
-
-    // Shortlist items should be visible (street names from fixture data)
-    await expect(
-      page.getByTestId("shortlist-drawer").getByText(/BEDOK STH AVE 2/i).first(),
-    ).toBeVisible({ timeout: 10_000 });
-
-    const viewToggle = page.getByTestId("shortlist-view-toggle");
-    await viewToggle.getByRole("button", { name: /comparison table/i }).click();
-
-    const comparisonTable = page.getByTestId("shortlist-comparison-table");
-    await expect(comparisonTable).toBeVisible();
-    // Mobile renders card layout instead of a scrollable table
-    await expect(comparisonTable.getByTestId("shortlist-comparison-card")).toHaveCount(2);
+    await runShortlistMobileComparisonFlow(page);
   });
 
   test("shortlist offer board fields editable on mobile", async ({ page }) => {

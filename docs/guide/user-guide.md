@@ -183,7 +183,7 @@ The **Saved** tab holds blocks you have bookmarked. You can save up to 50 blocks
 - **Sort and rank** — order saved blocks by your preferred metric; decision status is included as a tie-break in ranking.
 - **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes.
 - **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits).
-- **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping.
+- **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping, including the nearest MRT station name with walking time and any buyer notes you have recorded.
 
 ### Cloud sync
 

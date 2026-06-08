@@ -495,7 +495,7 @@ function ShortlistComparisonTable({
                 {t("shortlist.compare.col.mrt")}:{" "}
                 <strong className="text-foreground">
                   {row.nearestMrt
-                    ? formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)
+                    ? `${row.nearestMrt.stationName} · ${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)}`
                     : t("shortlist.compare.cellEmpty")}
                 </strong>
               </span>
@@ -503,6 +503,12 @@ function ShortlistComparisonTable({
             <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
               {formatCaveats(row)}
             </div>
+            {row.buyerNotes.trim().length > 0 ? (
+              <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
+                <span className="font-semibold">{t("shortlist.compare.col.notes")}:</span>{" "}
+                {row.buyerNotes}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
