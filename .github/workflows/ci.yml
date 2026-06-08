@@ -2,10 +2,12 @@ name: CI
 
 on:
   pull_request:
-    paths:
+    paths: &ci_paths
       - 'src/**'
       - 'functions/**'
+      - 'worker/**'
       - 'scripts/**'
+      - 'shared/**'
       - 'tests/**'
       - 'public/**'
       - '.github/workflows/**'
@@ -15,28 +17,15 @@ on:
       - 'types/**'
       - 'tsconfig*.json'
       - 'vite.config.*'
+      - 'vitest.config.*'
       - 'playwright.config.*'
       - 'eslint.config.*'
-      - 'vitest.config.*'
+      - 'wrangler.*'
   push:
     branches:
       - main
       - master
-    paths:
-      - 'src/**'
-      - 'scripts/**'
-      - 'tests/**'
-      - 'public/**'
-      - '.github/workflows/**'
-      - 'index.html'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'types/**'
-      - 'tsconfig*.json'
-      - 'vite.config.*'
-      - 'playwright.config.*'
-      - 'eslint.config.*'
-      - 'vitest.config.*'
+    paths: *ci_paths
   workflow_dispatch:
 
 permissions:
@@ -66,28 +55,44 @@ jobs:
           token: ${{ github.token }}
           filters: |
             e2e:
+              # App shell / entry points
               - 'src/App.tsx'
               - 'src/main.tsx'
               - 'src/styles.css'
+              # Feature-first buyer workflows (target architecture)
+              - 'src/features/listing-check/**'
+              - 'src/features/shortlist/**'
+              - 'src/features/search-profile/**'
+              - 'src/features/map-explorer/**'
+              - 'src/entities/**'
+              - 'src/shared-ui/**'
+              - 'src/shared/**'
+              # Legacy layout (still present during the restructure)
               - 'src/components/**'
               - 'src/hooks/**'
               - 'src/lib/**'
               - 'src/types/**'
-              - 'tests/e2e/**'
-              - 'tests/fixtures/public-data/**'
+              # Shared domain logic that drives listing-check results
               - 'shared/**'
+              # E2E harness, fixtures, and workflow self-change
+              # (functions/** omitted on purpose: E2E mocks /api/*)
+              - 'tests/e2e/**'
+              - 'tests/fixtures/**'
               - 'playwright.config.*'
               - '.github/workflows/ci.yml'
             build:
               - 'src/**'
-              - 'scripts/**'
               - 'shared/**'
+              - 'functions/**'
+              - 'worker/**'
+              - 'scripts/**'
               - 'public/**'
               - 'index.html'
               - 'package.json'
               - 'package-lock.json'
               - 'tsconfig*.json'
               - 'vite.config.*'
+              - 'wrangler.*'
               - '.github/workflows/ci.yml'
 
   # ── Quality gates (all parallel, all merge-required) ────────────────────────
