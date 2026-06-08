@@ -76,8 +76,9 @@
   and `check:pr` commands with one-line descriptions.
 - **R7.2** The AGENTS.md `Useful local commands` section lists the same new
   commands.
-- **R7.3** Documentation states that `check:pr` is the single pre-PR command
-  and that CI calls the identical script.
+- **R7.3** Documentation states that `check:pr` is the single pre-PR command,
+  and accurately describes its relationship to CI (CI runs the same underlying
+  scripts as separate parallel jobs rather than invoking `check:pr` directly).
 - **R7.4** Documentation edits are additive — they do not remove or contradict
   existing command descriptions.
 

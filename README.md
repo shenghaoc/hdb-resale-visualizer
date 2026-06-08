@@ -120,8 +120,10 @@ npm run db:migrate:remote
 The targeted `test:*` scripts reuse the existing Vitest config and filter by
 filename — they are fast feedback loops for buyer-critical listing-check and
 comparable-engine work. Run `npm run check:pr` once before opening a pull
-request; it is a plain npm script with no Kiro-specific behaviour, so CI calls
-the same command.
+request; it is a plain npm script with no Kiro-specific behaviour. CI does not
+invoke `check:pr` directly — it runs the same underlying scripts (`typecheck`,
+`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
+parallel jobs — so the local gate is a superset of the per-PR CI checks.
 
 
 ## Build and runtime guardrails

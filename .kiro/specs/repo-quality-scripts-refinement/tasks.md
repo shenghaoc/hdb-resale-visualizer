@@ -31,7 +31,7 @@
   passes. (R2.1, R2.2, R2.3)
 
 - [x] **T2.2** Add `test:comparables` with filters
-  `comparable time-adjustment transaction`.
+  `comparable time-adjustment transaction-`.
   → `npm run test:comparables` runs the 7 comparable/time-adjustment/
   transaction files and passes. (R3.1, R3.2, R3.3)
 

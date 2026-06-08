@@ -62,8 +62,10 @@ npm run build         # Production build
 The targeted `test:*` scripts reuse the existing Vitest config (filename
 filters, no new runner) for fast feedback on buyer-critical listing-check and
 comparable-engine work. `check:pr` is the single documented pre-PR command and
-is a plain npm script — CI invokes it the same way, with no Kiro-specific
-behaviour.
+is a plain npm script with no Kiro-specific behaviour. CI does not call
+`check:pr` directly — it runs the same underlying scripts (`typecheck`,
+`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
+parallel jobs — but any of these scripts can be invoked identically in CI.
 
 ## 🏗️ Architectural Boundary
 1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
