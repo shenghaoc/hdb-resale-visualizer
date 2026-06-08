@@ -106,11 +106,24 @@ npm run typecheck
 npm run lint
 npm run lint:fast
 npm run test
+npm run test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
+npm run test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
+npm run test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
 npm run test:e2e
-npm run sync-data         # remote D1 sync (requires CF credentials)
+npm run check               # pre-commit gate: boundaries + typecheck + lint + unit tests
+npm run check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
+npm run sync-data           # remote D1 sync (requires CF credentials)
 npm run db:migrate:local
 npm run db:migrate:remote
 ```
+
+The targeted `test:*` scripts reuse the existing Vitest config and filter by
+filename — they are fast feedback loops for buyer-critical listing-check and
+comparable-engine work. Run `npm run check:pr` once before opening a pull
+request; it is a plain npm script with no Kiro-specific behaviour. CI does not
+invoke `check:pr` directly — it runs the same underlying scripts (`typecheck`,
+`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
+parallel jobs — so the local gate is a superset of the per-PR CI checks.
 
 
 ## Build and runtime guardrails

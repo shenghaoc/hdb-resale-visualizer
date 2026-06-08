@@ -30,6 +30,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
+- [**Repo Quality Scripts Refinement**](.kiro/specs/repo-quality-scripts-refinement/tasks.md) — Targeted Vitest scripts + a single pre-PR command, refining existing npm scripts (no parallel runner).
 
 **Completed:**
 - [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
@@ -49,9 +50,22 @@ npm run typecheck     # Strict TypeScript verification
 npm run lint          # ESLint with type-aware rules (default)
 npm run lint:fast     # ESLint syntax-focused pass (faster local fallback)
 npm run test          # Run Vitest unit/integration tests
+npm run test:listing-check  # Targeted Vitest: listing verdict/confidence/caveats/portal + AskingPriceCheck
+npm run test:comparables    # Targeted Vitest: comparable engine, time-adjustment, transaction analysis
+npm run test:buyer-workflow # Targeted Vitest: shortlist + buyer-first homepage flows
 npm run test:e2e      # Run Playwright end-to-end tests
+npm run check         # Pre-commit gate: boundaries + typecheck + lint + unit tests
+npm run check:pr      # Pre-PR gate: everything in `check` plus the Playwright E2E suite
 npm run build         # Production build
 ```
+
+The targeted `test:*` scripts reuse the existing Vitest config (filename
+filters, no new runner) for fast feedback on buyer-critical listing-check and
+comparable-engine work. `check:pr` is the single documented pre-PR command and
+is a plain npm script with no Kiro-specific behaviour. CI does not call
+`check:pr` directly — it runs the same underlying scripts (`typecheck`,
+`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
+parallel jobs — but any of these scripts can be invoked identically in CI.
 
 ## 🏗️ Architectural Boundary
 1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
