@@ -62,6 +62,29 @@ describe("ComparableEvidenceTable", () => {
     expect(within(table).getByText("Match Reasons")).toBeInTheDocument();
   });
 
+  // ── Mobile card branch (R3.1 / R3.2) ──────────────────────────────────────
+
+  it("renders comparable evidence as mobile cards with the required fields", () => {
+    renderTable();
+    // The mobile layout renders one <article> card per comparable (the desktop
+    // <table> is hidden below the `sm` breakpoint via CSS).
+    const cards = screen.getAllByRole("article");
+    expect(cards).toHaveLength(FIXTURES.length);
+
+    // Cards follow the same default sort as the table (similarity desc), so the
+    // first card is tx-1. Assert the minimum interpretation fields are present:
+    // month, area, block/street, flat type, storey, lease, and match reasons.
+    const first = cards[0];
+    expect(first).toHaveTextContent("2025"); // month
+    expect(first).toHaveTextContent("123A"); // block
+    expect(first).toHaveTextContent("ANG MO KIO AVE 1"); // street
+    expect(first).toHaveTextContent("4 ROOM"); // flat type
+    expect(first).toHaveTextContent("07 TO 09"); // storey
+    expect(first).toHaveTextContent("93"); // floor area (sqm)
+    expect(first).toHaveTextContent("1990"); // lease commence year
+    expect(first).toHaveTextContent("Same flat type"); // match reason
+  });
+
   // ── Row count ───────────────────────────────────────────────────────────
 
   it("renders correct number of rows", () => {

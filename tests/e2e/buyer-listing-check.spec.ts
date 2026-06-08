@@ -167,6 +167,12 @@ test.describe("mobile", () => {
     // Comparable evidence renders as cards on mobile.
     await expect(check.getByText("Same flat type").first()).toBeVisible();
 
+    // R7.2: at phone width the comparable evidence renders as cards and the
+    // desktop table is hidden (not merely absent from view).
+    const evidence = check.getByTestId("listing-check-evidence");
+    await expect(evidence.getByRole("article").first()).toBeVisible();
+    await expect(evidence.getByRole("table")).toBeHidden();
+
     // The main flow must not introduce horizontal scrolling (1px tolerance for
     // sub-pixel rounding).
     expect(await horizontalOverflow(page)).toBeLessThanOrEqual(1);
