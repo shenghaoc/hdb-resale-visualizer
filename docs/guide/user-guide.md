@@ -131,7 +131,20 @@ The tool returns a **verdict** — whether the asking price is well below, aroun
 
 Each result shows a **confidence badge** (High / Medium / Low) indicating how reliable the assessment is. Confidence is based on four signals: sample size, data recency, geographic proximity, and match quality (flat type, floor area, storey).
 
+A **data quality badge** appears alongside the confidence badge to summarise the comparable set:
+
+| Badge | Meaning |
+|-------|---------|
+| **Strong data** | Recent block-level evidence with a good sample size |
+| **Weak data** | Low sample size or low confidence |
+| **Widened comparables** | Search was expanded beyond the block to the street or town |
+| **Stale data** | The most recent comparable is over 12 months old |
+
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
+
+Comparable prices are **time-adjusted** to the latest data month by default so older transactions are compared on a like-for-like basis. A caveat notes when the adjustment was applied, and — when a town/flat type has no usable price trend — a caveat tells you raw (unadjusted) prices are shown instead.
+
+The header bar shows the latest transaction month in the dataset and, when available, the sync timestamp and data source attribution (including the data.gov.sg collection identifier). When provenance metadata is missing or only partially present, the header says so explicitly rather than showing nothing.
 
 ### Comparable evidence table
 

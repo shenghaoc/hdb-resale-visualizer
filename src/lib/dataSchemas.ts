@@ -97,19 +97,19 @@ export const townFlatTypeTrendPointSchema = z.object({
 export const manifestSchema = z
   .object({
     schemaVersion: z.string(),
-    generatedAt: z.string(),
+    generatedAt: z.string().optional(),
     dataWindow: z.object({ minMonth: monthSchema, maxMonth: monthSchema }),
     sources: z.object({
-      resaleCollectionId: z.string(),
-      resaleDatasetIds: z.array(z.string()),
-      propertyDatasetId: z.string(),
-      mrtDatasetId: z.string(),
+      resaleCollectionId: z.string().optional(),
+      resaleDatasetIds: z.array(z.string()).optional(),
+      propertyDatasetId: z.string().optional(),
+      mrtDatasetId: z.string().optional(),
       moeSchoolDatasetId: z.string().optional(),
       neaHawkerDatasetId: z.string().optional(),
       sfaSupermarketDatasetId: z.string().optional(),
       nparksParksDatasetId: z.string().optional(),
-      lastUpdatedAt: z.string(),
-    }),
+      lastUpdatedAt: z.string().optional(),
+    }).default({}),
     filterOptions: z.object({
       towns: z.array(z.string()),
       flatTypes: z.array(z.string()),

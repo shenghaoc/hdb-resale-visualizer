@@ -9,6 +9,7 @@ import { formatDateTime, formatMonth, formatNumber } from "@/lib/format";
 import type { Locale, Translator } from "@/lib/i18n";
 import type { Manifest } from "@/types/data";
 import { cn } from "@/lib/utils";
+import { deriveDataQualityState } from "@/lib/dataQuality";
 
 type AppHeaderProps = {
   manifest: Manifest;
@@ -42,6 +43,13 @@ export function AppHeader({
   mobileTab,
   onClearMobileTab,
 }: AppHeaderProps) {
+  const dataQuality = deriveDataQualityState(manifest);
+  const baseSourceLabel = dataQuality.sourceLabels.join(" + ");
+  // Surface the resale collection identifier (verifiable provenance, R3.1) when
+  // the manifest carries it.
+  const sourceLabel = dataQuality.resaleCollectionId
+    ? `${baseSourceLabel} (${dataQuality.resaleCollectionId})`
+    : baseSourceLabel;
   const headerSearchId = useId();
   const overlaySearchId = useId();
   const overlayContainerId = useId();
@@ -132,6 +140,30 @@ export function AppHeader({
                   count: formatNumber(manifest.counts.transactions, 0, locale),
                 })}
               </span>
+              {dataQuality.lastSyncedAt ? (
+                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                  {" "}
+                  · {t("stats.synced", { date: formatDateTime(dataQuality.lastSyncedAt, locale) })}
+                </span>
+              ) : null}
+              {sourceLabel ? (
+                <span className="hidden text-[0.6rem] font-medium text-muted-foreground xl:inline">
+                  {" "}
+                  · {t("stats.sources", { sources: sourceLabel })}
+                </span>
+              ) : null}
+              {dataQuality.syncState === "partial" ? (
+                <span className="text-[0.6rem] font-medium text-muted-foreground">
+                  {" "}
+                  · {t("stats.metadataPartial")}
+                </span>
+              ) : null}
+              {dataQuality.syncState === "missing" ? (
+                <span className="text-[0.6rem] font-medium text-muted-foreground">
+                  {" "}
+                  · {t("stats.metadataUnavailable")}
+                </span>
+              ) : null}
             </>
           ) : (
             <span className="flex min-w-0 flex-col gap-1">
@@ -155,9 +187,16 @@ export function AppHeader({
               <span className="text-[0.6rem] font-medium text-muted-foreground">
                 {t("stats.transactions", {
                   count: formatNumber(manifest.counts.transactions, 0, locale),
-                })}{" "}
-                · {t("stats.built", { date: formatDateTime(manifest.generatedAt, locale) })} ·
-                OneMap
+                })}
+                {dataQuality.generatedAt
+                  ? ` · ${t("stats.built", { date: formatDateTime(dataQuality.generatedAt, locale) })}`
+                  : ""}
+                {dataQuality.lastSyncedAt
+                  ? ` · ${t("stats.synced", { date: formatDateTime(dataQuality.lastSyncedAt, locale) })}`
+                  : ""}
+                {sourceLabel ? ` · ${t("stats.sources", { sources: sourceLabel })}` : ""}
+                {dataQuality.syncState === "partial" ? ` · ${t("stats.metadataPartial")}` : ""}
+                {dataQuality.syncState === "missing" ? ` · ${t("stats.metadataUnavailable")}` : ""}
               </span>
             </span>
           )}

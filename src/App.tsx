@@ -538,6 +538,7 @@ function App() {
           isComparisonLoading={comparisonLoading}
           isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
           remainingLeaseMin={filters.remainingLeaseMin}
+          referenceMonth={manifest.dataWindow.maxMonth}
           searchProfile={searchProfile.profile}
           onClose={() => patchFilters({ selectedAddressKey: null })}
           onToggleShortlist={() => {
@@ -614,6 +615,7 @@ function App() {
           remainingLeaseMin={filters.remainingLeaseMin}
           budgetMin={filters.budgetMin}
           budgetMax={filters.budgetMax}
+          referenceMonth={manifest.dataWindow.maxMonth}
           sync={shortlist.sync}
         />
       </Suspense>

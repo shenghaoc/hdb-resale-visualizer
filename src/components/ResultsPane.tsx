@@ -15,7 +15,6 @@ import {
 import { useI18n } from "@/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
 import { cn } from "@/lib/utils";
-import { getDataConfidenceLabelKey } from "@/lib/confidence";
 import { getStationDetails } from "@/lib/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
@@ -43,6 +42,7 @@ import {
   sumRollupVolume,
   volumeWeightedMeanLatestMedianPricePerSqm,
 } from "@/lib/town-profile";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -221,6 +221,7 @@ const BlockCard = memo(function BlockCard({
   budgetMin,
   budgetMax,
   searchProfile,
+  profileDataWindow = null,
   t,
   locale,
 }: {
@@ -234,6 +235,7 @@ const BlockCard = memo(function BlockCard({
   budgetMin: number | null;
   budgetMax: number | null;
   searchProfile?: SearchProfile | null;
+  profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   t: Translator;
   locale: Locale;
 }) {
@@ -427,9 +429,23 @@ const BlockCard = memo(function BlockCard({
           <strong className="font-heading text-2xl font-extrabold v2-tabular">
             {formatCompactCurrency(block.medianPrice, locale)}
           </strong>
-          <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-            {t(getDataConfidenceLabelKey(block.transactionCount))}
-          </Badge>
+          {(() => {
+            const qualityTag = getBlockDataQualityTag({
+              transactionCount: block.transactionCount,
+              latestMonth: block.latestMonth,
+              referenceMonth: profileDataWindow?.maxMonth ?? null,
+            });
+            return (
+              <>
+                <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+                  {t(QUALITY_LABEL_KEYS[qualityTag])}
+                </Badge>
+                <span className="text-[0.62rem] font-semibold text-muted-foreground">
+                  {t(QUALITY_HINT_KEYS[qualityTag])}
+                </span>
+              </>
+            );
+          })()}
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(
@@ -1241,6 +1257,7 @@ export function ResultsPane({
                           budgetMin={budgetMin ?? null}
                           budgetMax={budgetMax ?? null}
                           searchProfile={searchProfile ?? null}
+                          profileDataWindow={profileDataWindow}
                           t={t}
                           locale={locale}
                         />

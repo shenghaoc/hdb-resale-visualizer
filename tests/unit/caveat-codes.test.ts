@@ -319,6 +319,29 @@ describe("time adjustment caveats", () => {
     });
     expect(codes(result)).not.toContain("SMALL_TREND_SAMPLE");
   });
+
+  it("emits TIME_ADJUSTMENT_UNAVAILABLE when trend data is missing", () => {
+    const result = generateCaveats({
+      confidence: assess({ timeAdjustmentApplied: true }),
+      comparableLeaseYears: [],
+      apiCaveats: [
+        "3 of 8 comparable transactions could not be time-adjusted due to insufficient trend data.",
+      ],
+    });
+    expect(codes(result)).toContain("TIME_ADJUSTMENT_UNAVAILABLE");
+    expect(codes(result)).not.toContain("TIME_ADJUSTMENT_APPLIED");
+  });
+
+  it("emits TIME_ADJUSTMENT_UNAVAILABLE when no trend data exists for town × flat type", () => {
+    const result = generateCaveats({
+      confidence: assess({ timeAdjustmentApplied: false }),
+      comparableLeaseYears: [],
+      apiCaveats: [
+        "No trend data available for this town and flat type — showing raw prices only.",
+      ],
+    });
+    expect(codes(result)).toContain("TIME_ADJUSTMENT_UNAVAILABLE");
+  });
 });
 
 describe("deduplication", () => {

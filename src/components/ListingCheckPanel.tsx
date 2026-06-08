@@ -52,6 +52,7 @@ import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
 import type { AdjustmentInfo } from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
+import { getComparableSetQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -183,8 +184,9 @@ export function ListingCheckPanel({
   const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
-  /** Whether time-adjusted prices are shown (toggle state). */
-  const [adjustmentEnabled] = useState(false);
+  // Always request time-adjustment metadata so the UI can surface when the
+  // adjustment succeeded, widened partially, or could not be applied.
+  const [adjustmentEnabled] = useState(true);
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
@@ -471,7 +473,14 @@ export function ListingCheckPanel({
       return null;
     }
 
-    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => ({
+    // When time-adjustment was applied, assess against the adjusted prices so the
+    // verdict/median/percentiles match the "time-adjusted" caveat the UI surfaces.
+    const adjustmentApplied = adjustmentMeta?.adjustmentApplied ?? false;
+    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => {
+      const adjusted = adjustmentApplied
+        ? adjustmentMeta?.adjustmentMap.get(tx.transactionId)
+        : undefined;
+      return {
       id: tx.transactionId,
       month: tx.month,
       flatType: tx.flatType,
@@ -480,10 +489,11 @@ export function ListingCheckPanel({
       flatModel: "",
       leaseCommenceDate: tx.leaseCommenceDate ?? 0,
       remainingLease: "",
-      resalePrice: tx.resalePrice,
-      pricePerSqm: tx.pricePerSqm,
+      resalePrice: adjusted?.adjustedResalePrice ?? tx.resalePrice,
+      pricePerSqm: adjusted?.adjustedPricePerSqm ?? tx.pricePerSqm,
       pricePerSqft: null,
-    }));
+      };
+    });
 
     const assessment = assessAskingPrice({
       askingPrice: resolvedAskingPrice,
@@ -529,7 +539,10 @@ export function ListingCheckPanel({
       percentileAmongComparables: assessment.percentileAmongComparables,
       leaseCommenceYear: resolvedLeaseYear ?? undefined,
       comparableLeaseYears,
-      apiCaveats: comparableSet.caveats,
+      apiCaveats: [
+        ...comparableSet.caveats,
+        ...(adjustmentMeta?.adjustmentCaveats ?? []),
+      ],
     });
 
     return {
@@ -539,7 +552,43 @@ export function ListingCheckPanel({
     };
   }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
 
-  const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
+  // Mirror the time-adjusted prices into the evidence table when adjustment was
+  // applied, so the displayed comparables match the assessment and caveat.
+  const comparables: ComparableTransaction[] = useMemo(() => {
+    const raw = comparableSet?.comparables ?? [];
+    if (!adjustmentMeta?.adjustmentApplied) return raw;
+    return raw.map((c) => {
+      const adjusted = adjustmentMeta.adjustmentMap.get(c.transactionId);
+      if (!adjusted || adjusted.adjustedResalePrice == null) return c;
+      return {
+        ...c,
+        resalePrice: adjusted.adjustedResalePrice,
+        pricePerSqm: adjusted.adjustedPricePerSqm ?? c.pricePerSqm,
+      };
+    });
+  }, [comparableSet, adjustmentMeta]);
+  const qualityTag = useMemo(() => {
+    if (!result || !comparableSet) {
+      return null;
+    }
+    return getComparableSetQualityTag({
+      confidence: result.confidence,
+      widenedSearch: comparableSet.widenedSearch,
+      newestComparableAgeMonths: comparableSet.newestComparableAgeMonths,
+      caveatCodes: result.caveats.map((c) => c.code),
+    });
+  }, [comparableSet, result]);
+  const evidenceCaveats = useMemo(() => {
+    if (result) {
+      return result.caveats.map((c) => c.message);
+    }
+    return Array.from(
+      new Set([
+        ...(comparableSet?.caveats ?? []),
+        ...(adjustmentMeta?.adjustmentCaveats ?? []),
+      ]),
+    );
+  }, [adjustmentMeta, comparableSet, result]);
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
   const theme = result ? VERDICT_THEMES[result.assessment.verdict] : null;
@@ -895,6 +944,18 @@ export function ListingCheckPanel({
                 >
                   {result.confidence.summary}
                 </p>
+                {qualityTag ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="outline" className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]">
+                        {t(QUALITY_LABEL_KEYS[qualityTag])}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-60 text-xs">
+                      {t(QUALITY_HINT_KEYS[qualityTag])}
+                    </TooltipContent>
+                  </Tooltip>
+                ) : null}
               </div>
             </div>
 
@@ -1018,7 +1079,7 @@ export function ListingCheckPanel({
             comparables={comparables}
             referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
             widenedSearch={comparableSet.widenedSearch}
-            caveats={comparableSet.caveats}
+            caveats={evidenceCaveats}
           />
         </div>
       )}
