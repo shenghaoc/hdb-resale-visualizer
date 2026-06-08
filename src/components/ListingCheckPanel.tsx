@@ -202,13 +202,13 @@ function buildComparablePayload(
     if (tx.town === detail.summary.town) {
       sameTownCount += 1;
     }
-    if (tx.matchReasons.includes("Same flat type")) {
+    if (tx.matchReasons?.includes("Same flat type")) {
       flatTypeMatchCount += 1;
     }
-    if (tx.matchReasons.some((reason) => reason.startsWith("Similar floor area"))) {
+    if (tx.matchReasons?.some((reason) => reason.startsWith("Similar floor area"))) {
       floorAreaMatchCount += 1;
     }
-    if (tx.matchReasons.includes("Similar storey")) {
+    if (tx.matchReasons?.includes("Similar storey")) {
       storeyMatchCount += 1;
     }
 
