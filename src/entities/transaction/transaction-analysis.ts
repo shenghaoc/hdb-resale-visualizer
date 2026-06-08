@@ -9,13 +9,19 @@ import { parseStoreyMidpoint } from "@shared/comparable-engine";
 export { parseStoreyMidpoint };
 
 export function monthDiff(
-  txMonth: string,
-  referenceMonth: string,
+  txMonth: string | undefined | null,
+  referenceMonth: string | undefined | null,
 ): number {
+  if (!txMonth || !referenceMonth || txMonth.length < 7 || referenceMonth.length < 7) {
+    return 0;
+  }
   const txYear = Number(txMonth.slice(0, 4));
   const txMon = Number(txMonth.slice(5, 7));
   const refYear = Number(referenceMonth.slice(0, 4));
   const refMon = Number(referenceMonth.slice(5, 7));
+  if (Number.isNaN(txYear) || Number.isNaN(txMon) || Number.isNaN(refYear) || Number.isNaN(refMon)) {
+    return 0;
+  }
   return (refYear - txYear) * 12 + (refMon - txMon);
 }
 

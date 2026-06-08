@@ -154,16 +154,19 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
 
   return rows.map((row) => {
     const { item, block, detailSummary } = row;
-    const [commenceMin, commenceMax] = block.leaseCommenceRange ?? [0, 0];
+    const [commenceMin, commenceMax] = block.leaseCommenceRange ?? [];
 
     // commenceMin is the oldest commence year => fewest remaining lease years.
     // commenceMax is the most recent commence year => most remaining lease years.
-    const remainingMinYears = clampNonNegative(
-      MAX_LEASE_DURATION - (currentYear - commenceMin),
-    );
-    const remainingMaxYears = clampNonNegative(
-      MAX_LEASE_DURATION - (currentYear - commenceMax),
-    );
+    // Missing lease data yields 0 remaining years rather than an absurd value.
+    const remainingMinYears =
+      commenceMin != null
+        ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMin))
+        : 0;
+    const remainingMaxYears =
+      commenceMax != null
+        ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMax))
+        : 0;
 
     return {
       addressKey: item.addressKey,
@@ -174,7 +177,7 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
       medianPricePerSqm: detailSummary?.pricePerSqmMedian ?? null,
       medianPricePerSqft: detailSummary?.pricePerSqftMedian ?? null,
       recentTransactionCount: block.transactionCount,
-      leaseCommenceRange: [commenceMin, commenceMax],
+      leaseCommenceRange: [commenceMin ?? 0, commenceMax ?? 0],
       remainingLeaseYears: {
         min: Math.min(remainingMinYears, remainingMaxYears),
         max: Math.max(remainingMinYears, remainingMaxYears),
