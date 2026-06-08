@@ -27,7 +27,6 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
-import { getDataConfidenceLabelKey } from "@/features/listing-check/confidence";
 import {
   formatCurrency,
   formatMeters,

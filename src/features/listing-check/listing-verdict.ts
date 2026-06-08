@@ -45,7 +45,7 @@ export function performListingCheck(
     referenceMonth,
   } = params;
 
-  // Find comparable transactions using the same logic as AskingPriceCheck
+  // Find comparable transactions matching the listing facts.
   const comparables = findComparableTransactions(transactions, comparableQuery);
 
   // Assess the asking price against comparables

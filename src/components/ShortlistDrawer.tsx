@@ -44,7 +44,6 @@ import {
   propertyGuruUrl,
   srxUrl,
 } from "@/features/listing-check/listingPortalLinks";
-import { getDataConfidenceLabelKey } from "@/features/listing-check/confidence";
 import {
   buildShortlistComparisonRows,
   type ShortlistComparisonRow,

@@ -1,7 +1,7 @@
-import { LOW_SAMPLE_THRESHOLD } from "../../shared/comparable-engine";
-import type { CaveatCode } from "../../shared/caveat-codes";
-import type { ConfidenceAssessment } from "../../shared/confidence-system";
-import { monthsBetween } from "@/lib/dataQuality";
+import { LOW_SAMPLE_THRESHOLD } from "@shared/comparable-engine";
+import type { CaveatCode } from "@shared/caveat-codes";
+import type { ConfidenceAssessment } from "@shared/confidence-system";
+import { monthsBetween } from "@/shared/lib/dataQuality";
 
 export type ComparableQualityTag = "strong" | "weak" | "widened" | "stale";
 

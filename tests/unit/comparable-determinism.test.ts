@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assessAskingPrice } from "@/lib/transaction-analysis";
+import { assessAskingPrice } from "@/entities/transaction/transaction-analysis";
 import { computeConfidence } from "../../shared/confidence-system";
 import { generateCaveats } from "../../shared/caveat-codes";
 import type { AddressDetailTransaction } from "@/types/data";
