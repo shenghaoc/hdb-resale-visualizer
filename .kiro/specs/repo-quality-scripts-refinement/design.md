@@ -64,7 +64,7 @@ tests (shortlist storage, etc.) behave identically.
 // package.json "scripts"
 "check:pr": "npm run check && npm run test:e2e",
 "test:listing-check": "NODE_OPTIONS=--no-experimental-webstorage vitest run listing AskingPriceCheck",
-"test:comparables":   "NODE_OPTIONS=--no-experimental-webstorage vitest run comparable time-adjustment transaction-",
+"test:comparables":   "NODE_OPTIONS=--no-experimental-webstorage vitest run comparable time-adjustment transaction-analysis transaction-outliers",
 "test:buyer-workflow":"NODE_OPTIONS=--no-experimental-webstorage vitest run shortlist buyer-first",
 ```
 
@@ -83,7 +83,7 @@ The `listing` substring is case-insensitive and catches every `listing*` file
 including `listingPortalLinks`. `AskingPriceCheck` is added explicitly because
 its filename does not contain "listing" but it is the listing price-check UI.
 
-#### `test:comparables` → patterns `comparable`, `time-adjustment`, `transaction-`
+#### `test:comparables` → patterns `comparable`, `time-adjustment`, `transaction-analysis`, `transaction-outliers`
 
 Resolves to:
 
@@ -96,13 +96,14 @@ Resolves to:
 - `tests/unit/transaction-outliers.test.ts`
 
 `comparable` (case-insensitive) catches the engine plus the
-`ComparableEvidenceTable` component. `time-adjustment` and `transaction-` are
-included because the v2 comparable engine relies on time-adjusted prices and
-transaction-level analysis/outlier handling to produce the evidence a buyer
-sees. The trailing hyphen on `transaction-` scopes the filter to the existing
-`transaction-analysis` / `transaction-outliers` files and avoids accidentally
-matching future generic `transaction*` tests (e.g. DB or API transaction
-middleware).
+`ComparableEvidenceTable` component. `time-adjustment`, `transaction-analysis`,
+and `transaction-outliers` are included because the v2 comparable engine relies
+on time-adjusted prices and transaction-level analysis/outlier handling to
+produce the evidence a buyer sees. The transaction patterns are spelled out as
+explicit filenames rather than a broad `transaction-` prefix so the filter
+never sweeps in unrelated future `transaction*` tests — notably the
+"transaction history" block-detail feature (see README), whose tests could be
+named `transaction-history.test.ts`.
 
 #### `test:buyer-workflow` → patterns `shortlist`, `buyer-first`
 
@@ -146,11 +147,14 @@ gate, not a build.
   spec; new buyer-critical tests should either follow the naming convention or
   the pattern list is extended. The full `npm run test` / `check` remains the
   authoritative complete run, so nothing is silently skipped in CI.
-- **`transaction-` breadth** — the filter is scoped with a trailing hyphen so
-  it matches the existing `transaction-analysis` / `transaction-outliers`
-  files (which belong to the comparable/transaction domain) without sweeping in
-  future unrelated `transaction*` tests. New comparable-domain transaction
-  tests should keep the `transaction-` prefix to stay in scope.
+- **Transaction filter precision** — the filter names the two existing
+  comparable-domain files explicitly (`transaction-analysis`,
+  `transaction-outliers`) instead of a broad `transaction-` prefix. This
+  guarantees no unrelated future `transaction*` test (e.g. the
+  "transaction history" block-detail feature) is accidentally pulled into the
+  comparable run. The trade-off: a genuinely new comparable-domain transaction
+  test must be added to the pattern list explicitly — caught by the same
+  filename convention this spec documents.
 - **No E2E in the targeted scripts** — intentional; targeted scripts are fast
   unit loops. E2E is covered by `check:pr` and `test:e2e`.
 

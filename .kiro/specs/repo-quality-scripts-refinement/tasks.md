@@ -18,8 +18,9 @@
 - [x] **T1.2** Map the buyer-critical test files to Vitest filename-filter
   patterns and verify with `vitest list --filesOnly <patterns>` that each
   pattern selects exactly the intended files and nothing extraneous.
-  → `listing AskingPriceCheck`, `comparable time-adjustment transaction`, and
-  `shortlist buyer-first` resolve to the documented file sets. (R2.2, R3.2,
+  → `listing AskingPriceCheck`, `comparable time-adjustment transaction-analysis
+  transaction-outliers`, and `shortlist buyer-first` resolve to the documented
+  file sets. (R2.2, R3.2,
   R4.2)
 
 ## Phase 2 — Targeted test scripts
@@ -31,7 +32,7 @@
   passes. (R2.1, R2.2, R2.3)
 
 - [x] **T2.2** Add `test:comparables` with filters
-  `comparable time-adjustment transaction-`.
+  `comparable time-adjustment transaction-analysis transaction-outliers`.
   → `npm run test:comparables` runs the 7 comparable/time-adjustment/
   transaction files and passes. (R3.1, R3.2, R3.3)
 
