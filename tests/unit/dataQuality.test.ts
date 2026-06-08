@@ -29,6 +29,9 @@ describe("deriveDataQualityState", () => {
 
     expect(state.syncState).toBe("fresh");
     expect(state.sourceLabels).toEqual(["data.gov.sg", "OneMap"]);
+    // Provenance identifiers are preserved for the source-transparency surface.
+    expect(state.resaleCollectionId).toBe("resale");
+    expect(state.resaleDatasetCount).toBe(1);
   });
 
   it("marks old latest-month metadata as stale", () => {

@@ -7,6 +7,10 @@ export type DataQualityState = {
   generatedAt: string | null;
   lastSyncedAt: string | null;
   sourceLabels: string[];
+  /** data.gov.sg resale collection identifier, when present (provenance). */
+  resaleCollectionId: string | null;
+  /** Number of data.gov.sg resale dataset identifiers, for provenance. */
+  resaleDatasetCount: number;
   syncState: DataSyncState;
 };
 
@@ -46,11 +50,14 @@ export function deriveDataQualityState(
   const rawLastUpdatedAt = manifest?.sources?.lastUpdatedAt;
   const lastSyncedAt = isIsoDateTime(rawLastUpdatedAt) ? rawLastUpdatedAt : null;
 
+  const resaleCollectionId =
+    typeof manifest?.sources?.resaleCollectionId === "string"
+      ? manifest.sources.resaleCollectionId
+      : null;
+  const resaleDatasetCount = manifest?.sources?.resaleDatasetIds?.length ?? 0;
+
   const sourceLabels: string[] = [];
-  if (
-    manifest?.sources?.resaleCollectionId ||
-    (manifest?.sources?.resaleDatasetIds?.length ?? 0) > 0
-  ) {
+  if (resaleCollectionId || resaleDatasetCount > 0) {
     sourceLabels.push("data.gov.sg");
   }
   if (manifest?.sources?.propertyDatasetId || manifest?.sources?.mrtDatasetId) {
@@ -89,6 +96,8 @@ export function deriveDataQualityState(
     generatedAt,
     lastSyncedAt,
     sourceLabels,
+    resaleCollectionId,
+    resaleDatasetCount,
     syncState,
   };
 }

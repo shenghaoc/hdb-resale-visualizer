@@ -473,7 +473,14 @@ export function ListingCheckPanel({
       return null;
     }
 
-    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => ({
+    // When time-adjustment was applied, assess against the adjusted prices so the
+    // verdict/median/percentiles match the "time-adjusted" caveat the UI surfaces.
+    const adjustmentApplied = adjustmentMeta?.adjustmentApplied ?? false;
+    const txs: AddressDetailTransaction[] = comparableSet.comparables.map((tx) => {
+      const adjusted = adjustmentApplied
+        ? adjustmentMeta?.adjustmentMap.get(tx.transactionId)
+        : undefined;
+      return {
       id: tx.transactionId,
       month: tx.month,
       flatType: tx.flatType,
@@ -482,10 +489,11 @@ export function ListingCheckPanel({
       flatModel: "",
       leaseCommenceDate: tx.leaseCommenceDate ?? 0,
       remainingLease: "",
-      resalePrice: tx.resalePrice,
-      pricePerSqm: tx.pricePerSqm,
+      resalePrice: adjusted?.adjustedResalePrice ?? tx.resalePrice,
+      pricePerSqm: adjusted?.adjustedPricePerSqm ?? tx.pricePerSqm,
       pricePerSqft: null,
-    }));
+      };
+    });
 
     const assessment = assessAskingPrice({
       askingPrice: resolvedAskingPrice,
@@ -544,7 +552,21 @@ export function ListingCheckPanel({
     };
   }, [comparableSet, detail, resolvedAskingPrice, resolvedFloorAreaSqm, resolvedLeaseYear, adjustmentMeta]);
 
-  const comparables: ComparableTransaction[] = comparableSet?.comparables ?? [];
+  // Mirror the time-adjusted prices into the evidence table when adjustment was
+  // applied, so the displayed comparables match the assessment and caveat.
+  const comparables: ComparableTransaction[] = useMemo(() => {
+    const raw = comparableSet?.comparables ?? [];
+    if (!adjustmentMeta?.adjustmentApplied) return raw;
+    return raw.map((c) => {
+      const adjusted = adjustmentMeta.adjustmentMap.get(c.transactionId);
+      if (!adjusted || adjusted.adjustedResalePrice == null) return c;
+      return {
+        ...c,
+        resalePrice: adjusted.adjustedResalePrice,
+        pricePerSqm: adjusted.adjustedPricePerSqm ?? c.pricePerSqm,
+      };
+    });
+  }, [comparableSet, adjustmentMeta]);
   const qualityTag = useMemo(() => {
     if (!result || !comparableSet) {
       return null;

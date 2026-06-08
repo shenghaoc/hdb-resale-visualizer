@@ -49,7 +49,9 @@ export function getComparableSetQualityTag({
   ) {
     return "widened";
   }
-  if (confidence.level !== "high" || hasLowSampleSignal(confidence, caveatCodes)) {
+  // Weak means low confidence or a low-sample signal — medium confidence with
+  // adequate evidence still counts as strong, matching the feature design/copy.
+  if (confidence.level === "low" || hasLowSampleSignal(confidence, caveatCodes)) {
     return "weak";
   }
   return "strong";

@@ -44,7 +44,12 @@ export function AppHeader({
   onClearMobileTab,
 }: AppHeaderProps) {
   const dataQuality = deriveDataQualityState(manifest);
-  const sourceLabel = dataQuality.sourceLabels.join(" + ");
+  const baseSourceLabel = dataQuality.sourceLabels.join(" + ");
+  // Surface the resale collection identifier (verifiable provenance, R3.1) when
+  // the manifest carries it.
+  const sourceLabel = dataQuality.resaleCollectionId
+    ? `${baseSourceLabel} (${dataQuality.resaleCollectionId})`
+    : baseSourceLabel;
   const headerSearchId = useId();
   const overlaySearchId = useId();
   const overlayContainerId = useId();
@@ -145,6 +150,18 @@ export function AppHeader({
                 <span className="hidden text-[0.6rem] font-medium text-muted-foreground xl:inline">
                   {" "}
                   · {t("stats.sources", { sources: sourceLabel })}
+                </span>
+              ) : null}
+              {dataQuality.syncState === "partial" ? (
+                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                  {" "}
+                  · {t("stats.metadataPartial")}
+                </span>
+              ) : null}
+              {dataQuality.syncState === "missing" ? (
+                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                  {" "}
+                  · {t("stats.metadataUnavailable")}
                 </span>
               ) : null}
             </>

@@ -103,14 +103,15 @@ describe("getComparableSetQualityTag", () => {
     expect(tag).toBe("weak");
   });
 
-  it("returns 'weak' when confidence is medium (not high)", () => {
+  it("returns 'strong' when confidence is medium with adequate evidence", () => {
     const tag = getComparableSetQualityTag({
       confidence: makeConfidence({ level: "medium" }),
       widenedSearch: false,
       newestComparableAgeMonths: 2,
     });
 
-    expect(tag).toBe("weak");
+    // Medium confidence (without a low-sample signal) is strong, not weak.
+    expect(tag).toBe("strong");
   });
 
   it("returns 'weak' when LOW_SAMPLE caveat is present", () => {
