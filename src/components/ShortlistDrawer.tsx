@@ -493,7 +493,15 @@ function ShortlistComparisonTable({
               </span>
               <span className="text-muted-foreground">
                 {t("shortlist.compare.col.mrt")}:{" "}
-                <strong className="text-foreground">
+                <strong
+                  className="text-foreground"
+                  title={row.nearestMrt ? formatMeters(row.nearestMrt.distanceMeters, t, locale) : undefined}
+                  aria-label={
+                    row.nearestMrt
+                      ? `${row.nearestMrt.stationName} · ${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`
+                      : undefined
+                  }
+                >
                   {row.nearestMrt
                     ? `${row.nearestMrt.stationName} · ${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)}`
                     : t("shortlist.compare.cellEmpty")}
