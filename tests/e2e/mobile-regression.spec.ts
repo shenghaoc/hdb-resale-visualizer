@@ -68,9 +68,11 @@ async function runMobileListingCheckFlow(page: Page) {
     await expectNoHorizontalOverflow(verdict);
     await expectNoHorizontalOverflow(evidence);
 
-    const verdictTop = await verdict.evaluate((element) => element.getBoundingClientRect().top);
-    const evidenceTop = await evidence.evaluate((element) => element.getBoundingClientRect().top);
-    expect(verdictTop).toBeLessThan(evidenceTop);
+    const verdictBox = await verdict.boundingBox();
+    const evidenceBox = await evidence.boundingBox();
+    expect(verdictBox).not.toBeNull();
+    expect(evidenceBox).not.toBeNull();
+    expect(verdictBox!.y).toBeLessThan(evidenceBox!.y);
   } else {
     // No verdict means no comparables — the hint should be visible as confirmation
     await expect(noComparablesHint).toBeVisible({ timeout: 10_000 });
