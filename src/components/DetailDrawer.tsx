@@ -590,28 +590,23 @@ export function DetailDrawer({
                           ? formatCurrency(currentSummary.medianPrice, locale)
                           : "…"}
                       </div>
-                      {currentSummary ? (
-                        <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                          {t(
-                            `quality.${getBlockDataQualityTag({
-                              transactionCount: currentSummary.transactionCount,
-                              latestMonth: currentSummary.latestMonth,
-                              referenceMonth,
-                            })}`,
-                          )}
-                        </Badge>
-                      ) : null}
-                      {currentSummary ? (
-                        <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
-                          {t(
-                            `quality.hint.${getBlockDataQualityTag({
-                              transactionCount: currentSummary.transactionCount,
-                              latestMonth: currentSummary.latestMonth,
-                              referenceMonth,
-                            })}`,
-                          )}
-                        </div>
-                      ) : null}
+                      {currentSummary ? (() => {
+                        const qualityTag = getBlockDataQualityTag({
+                          transactionCount: currentSummary.transactionCount,
+                          latestMonth: currentSummary.latestMonth,
+                          referenceMonth,
+                        });
+                        return (
+                          <>
+                            <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+                              {t(`quality.${qualityTag}`)}
+                            </Badge>
+                            <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
+                              {t(`quality.hint.${qualityTag}`)}
+                            </div>
+                          </>
+                        );
+                      })() : null}
                       {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
                         <BudgetMatchBadge
                           medianPrice={currentSummary.medianPrice}

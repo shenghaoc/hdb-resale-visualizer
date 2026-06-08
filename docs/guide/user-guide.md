@@ -142,6 +142,8 @@ A **data quality badge** appears alongside the confidence badge to summarise the
 
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
 
+Comparable prices are **time-adjusted** to the latest data month by default so older transactions are compared on a like-for-like basis. A caveat notes when the adjustment was applied, and — when a town/flat type has no usable price trend — a caveat tells you raw (unadjusted) prices are shown instead.
+
 The header bar shows the latest transaction month in the dataset and, when available, the sync timestamp and data source attribution.
 
 ### Comparable evidence table
