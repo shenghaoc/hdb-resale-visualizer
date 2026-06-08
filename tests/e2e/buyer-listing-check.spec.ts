@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import {
+  CHECK_ADDRESS_KEY,
   checkDeepLink,
   highConfidenceSet,
   lowSampleSet,
@@ -106,14 +107,14 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
   await expect(check.getByRole("button", { name: /saved/i })).toBeVisible();
 
   // (7) The saved shortlist item is present and preserves the asking price as
-  // the buyer's target price (the single item auto-expands the offer editor).
+  // the buyer's target price. Scope the target-price field to this block's
+  // offer editor (stable `id`) so the assertion is independent of how many
+  // other items are in the shortlist or which one is expanded.
   await desktopSavedTab(page).click();
   const drawer = page.getByTestId("shortlist-drawer");
   await expect(drawer).toBeVisible();
   await expect(drawer.getByText(/106 LENGKONG TIGA/i)).toBeVisible({ timeout: 10_000 });
-  await expect(drawer.getByRole("spinbutton", { name: /your target price/i })).toHaveValue(
-    "1200000",
-  );
+  await expect(drawer.locator(`#target-${CHECK_ADDRESS_KEY}`)).toHaveValue("1200000");
 });
 
 // ── Low-confidence / low-sample state ────────────────────────────────────────
