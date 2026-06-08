@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { DEFAULT_FILTERS } from "@/lib/constants";
-import { parseFilters } from "@/lib/queryState";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
+import { parseFilters } from "@/shared/lib/queryState";
 import {
   getFilterOptions,
   matchesFilter,
@@ -8,7 +8,7 @@ import {
   resetFilteringCachesForTests,
   resolveGeographicSearchIntent,
   type GeographicSearchIntent,
-} from "@/lib/filtering";
+} from "@/shared/lib/filtering";
 import type { BlockSummary } from "@/types/data";
 import { buildFixtureArtifacts } from "../fixtures/pipeline";
 

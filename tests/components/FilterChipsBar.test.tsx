@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { FilterChipsBar, type FilterChip } from "@/components/FilterChipsBar";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 const t: Translator = (key, vars) => {
   if (key === "filters.title") return "Filters";

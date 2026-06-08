@@ -1,7 +1,7 @@
 import { CalendarClock, ShieldAlert, ShieldCheck, ShieldX } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { Translator } from "@/lib/i18n";
-import { TYPICAL_HOLD_YEARS, type LeaseFinancingAssessment } from "@/lib/lease-financing";
+import { cn } from "@/shared/lib/utils";
+import type { Translator } from "@/shared/lib/i18n";
+import { TYPICAL_HOLD_YEARS, type LeaseFinancingAssessment } from "@/features/block-detail/lease-financing";
 
 type Props = {
   assessment: LeaseFinancingAssessment;

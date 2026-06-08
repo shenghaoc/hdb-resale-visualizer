@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { generateCaveats } from "@/lib/listing-caveats";
-import type { AskingPriceAssessment } from "@/lib/transaction-analysis";
-import type { ConfidenceResult } from "@/lib/listing-confidence";
+import { generateCaveats } from "@/entities/transaction/listing-caveats";
+import type { AskingPriceAssessment } from "@/entities/transaction/transaction-analysis";
+import type { ConfidenceResult } from "@/entities/transaction/listing-confidence";
 
 function makeAssessment(
   overrides: Partial<AskingPriceAssessment> = {},

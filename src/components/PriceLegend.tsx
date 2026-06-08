@@ -2,9 +2,9 @@ import {
   MEDIAN_PRICE_LEGEND_GRADIENT,
   PRICE_PER_SQM_COLOR_STOPS,
   PRICE_PER_SQM_LEGEND_GRADIENT,
-} from "@/lib/constants";
-import type { Translator } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+} from "@/shared/lib/constants";
+import type { Translator } from "@/shared/lib/i18n";
+import { cn } from "@/shared/lib/utils";
 import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type PriceLegendProps = {

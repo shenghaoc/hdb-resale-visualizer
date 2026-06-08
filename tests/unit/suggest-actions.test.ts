@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterPatchForSuggestion, stationNameToNearMrtSearch } from "@/lib/suggestActions";
+import { filterPatchForSuggestion, stationNameToNearMrtSearch } from "@/features/search-profile/suggestActions";
 
 describe("suggestActions", () => {
   it("maps town selection to town filter", () => {

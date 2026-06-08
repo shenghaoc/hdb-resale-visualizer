@@ -2,18 +2,18 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ResultsPane } from "@/components/ResultsPane";
-import { I18nProvider } from "@/lib/i18n";
+import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
   fetchTownFlatTypeTrends: vi.fn<() => Promise<TownFlatTypeTrendPoint[]>>(),
 }));
 
-vi.mock("@/lib/data", () => ({
+vi.mock("@/shared/lib/data", () => ({
   fetchTownFlatTypeTrends: dataMocks.fetchTownFlatTypeTrends,
 }));
 
-vi.mock("@/lib/storage", () => ({
+vi.mock("@/shared/lib/storage", () => ({
   safeStorage: {
     getItem: (key: string) => (key === "hdb-resale-locale" ? "zh-SG" : null),
     setItem: () => {},

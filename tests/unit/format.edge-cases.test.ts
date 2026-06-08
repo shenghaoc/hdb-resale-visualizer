@@ -8,9 +8,9 @@ import {
   formatMonth,
   formatRemainingLease,
   resetFormatCachesForTests,
-} from "@/lib/format";
-import * as constants from "@/lib/constants";
-import type { Translator } from "@/lib/i18n/types";
+} from "@/shared/lib/format";
+import * as constants from "@/shared/lib/constants";
+import type { Translator } from "@/shared/lib/i18n/types";
 
 const t: Translator = (key, vars) => {
   if (key === "unit.km") return `${String(vars?.value)} km`;

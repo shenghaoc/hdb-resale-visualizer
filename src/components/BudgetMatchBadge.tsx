@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
-import { formatCurrency } from "@/lib/format";
-import { getBudgetMatchSignal } from "@/lib/budget-signals";
-import type { Locale, Translator } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCurrency } from "@/shared/lib/format";
+import { getBudgetMatchSignal } from "@/features/listing-check/budget-signals";
+import type { Locale, Translator } from "@/shared/lib/i18n";
 
 type BudgetMatchBadgeProps = {
   medianPrice: number;

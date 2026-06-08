@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MAX_SHORTLIST_ITEMS, SYNC_CODE_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_ITEMS, SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
 import {
   decodeShortlistFromUrl,
   loadShortlist,
@@ -7,22 +7,22 @@ import {
   mergeShortlists,
   saveShortlist,
   toggleShortlistItem,
-} from "@/lib/shortlist";
+} from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,
   SyncRateLimitedError,
   pullShortlist,
   pushShortlist,
-} from "@/lib/cloudSync";
+} from "@/features/shortlist/cloudSync";
 import {
   clearPendingShortlistPush,
   enqueuePendingShortlistPush,
   hasPendingShortlistPush,
   readPendingShortlistPush,
-} from "@/lib/shortlistSyncQueue";
+} from "@/features/shortlist/shortlistSyncQueue";
 import type { ShortlistItem } from "@/types/data";
-import { safeStorage } from "@/lib/storage";
+import { safeStorage } from "@/shared/lib/storage";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 
 const SYNC_DEBOUNCE_MS = 1000;

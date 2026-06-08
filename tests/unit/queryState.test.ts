@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseFilters, serializeFilters } from "@/lib/queryState";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 
 describe("queryState", () => {
   it("round-trips filters to a query string", () => {

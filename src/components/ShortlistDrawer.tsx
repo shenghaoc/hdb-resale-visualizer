@@ -24,10 +24,10 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, PRIMARY_BLUE, getCurrentYear } from "@/lib/constants";
-import { cn } from "@/lib/utils";
-import { useI18n, type Translator } from "@/lib/i18n";
-import { localizeTownName } from "@/lib/i18n/domain";
+import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, PRIMARY_BLUE, getCurrentYear } from "@/shared/lib/constants";
+import { cn } from "@/shared/lib/utils";
+import { useI18n, type Translator } from "@/shared/lib/i18n";
+import { localizeTownName } from "@/shared/lib/i18n/domain";
 import { useTheme } from "@/hooks/useTheme";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 import {
@@ -37,30 +37,30 @@ import {
   formatMinutesWalk,
   formatNumber,
   formatRemainingLease,
-} from "@/lib/format";
-import { rankShortlistRows, type CompareMode } from "@/lib/shortlist-ranking";
+} from "@/shared/lib/format";
+import { rankShortlistRows, type CompareMode } from "@/features/shortlist/shortlist-ranking";
 import {
   ninetyNineCoUrl,
   propertyGuruUrl,
   srxUrl,
-} from "@/lib/listingPortalLinks";
+} from "@/features/listing-check/listingPortalLinks";
 import {
   buildShortlistComparisonRows,
   type ShortlistComparisonRow,
-} from "@/lib/shortlist-comparison";
-import { encodeShortlistForUrl } from "@/lib/shortlist";
-import { buildShortlistShareUrl } from "@/lib/shareUrls";
-import { buildShortlistCsvContent } from "@/lib/export";
+} from "@/features/shortlist/shortlist-comparison";
+import { encodeShortlistForUrl } from "@/features/shortlist/shortlist";
+import { buildShortlistShareUrl } from "@/shared/lib/shareUrls";
+import { buildShortlistCsvContent } from "@/shared/lib/export";
 import { ShareButton } from "@/components/ShareButton";
-import { buildLeaseSignals } from "@/lib/leaseSignals";
+import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
-import type { ChecklistItemId } from "@/lib/checklist";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
+import type { ChecklistItemId } from "@/features/listing-check/checklist";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,

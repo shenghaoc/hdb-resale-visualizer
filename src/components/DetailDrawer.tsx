@@ -26,7 +26,7 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import {
   formatCurrency,
   formatMeters,
@@ -34,15 +34,15 @@ import {
   formatMonth,
   formatNumber,
   formatRemainingLease,
-} from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
-import type { Locale, Translator } from "@/lib/i18n";
-import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
+} from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
+import type { Locale, Translator } from "@/shared/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import { rankSimilarBlocks } from "@/lib/similar-blocks";
-import { computeComparableRange } from "@/lib/comparable-range";
-import { computeAffordabilityVerdict } from "@/lib/affordability";
+import { rankSimilarBlocks } from "@/entities/block/similar-blocks";
+import { computeComparableRange } from "@/entities/transaction/comparable-range";
+import { computeAffordabilityVerdict } from "@/shared/lib/affordability";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,19 +66,19 @@ import {
   type RecentTransactionOutlier,
   sliceTrendByRange,
   type TrendRangeKey,
-} from "@/lib/transaction-analysis";
-import { buildLeaseSignals } from "@/lib/leaseSignals";
-import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/lib/lease-financing";
-import { DEFAULT_FILTERS, getCurrentYear } from "@/lib/constants";
-import { buildBlockShareUrl } from "@/lib/shareUrls";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
+} from "@/entities/transaction/transaction-analysis";
+import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
+import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/features/block-detail/lease-financing";
+import { DEFAULT_FILTERS, getCurrentYear } from "@/shared/lib/constants";
+import { buildBlockShareUrl } from "@/shared/lib/shareUrls";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
-import { classifyPrimarySchoolDistance } from "@/lib/school-proximity";
-import { buildBlockExplanation } from "@/lib/block-explanation";
-import { deriveFlatTypePriceLadder } from "@/lib/flat-type-ladder";
+import { classifyPrimarySchoolDistance } from "@/features/map-explorer/school-proximity";
+import { buildBlockExplanation } from "@/entities/block/block-explanation";
+import { deriveFlatTypePriceLadder } from "@/features/block-detail/flat-type-ladder";
 import { FlatTypePriceLadder } from "@/components/FlatTypePriceLadder";
 import { ShareButton } from "@/components/ShareButton";
 

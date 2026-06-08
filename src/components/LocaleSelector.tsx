@@ -6,8 +6,8 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { LOCALE_OPTIONS, useI18n } from "@/lib/i18n";
-import type { Locale } from "@/lib/i18n";
+import { LOCALE_OPTIONS, useI18n } from "@/shared/lib/i18n";
+import type { Locale } from "@/shared/lib/i18n";
 
 /**
  * Language dropdown for the floating map locale control.

@@ -8,15 +8,15 @@ import {
   Scale,
   Sparkles,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { cn } from "@/shared/lib/utils";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 import {
   assessAskingPrice,
   findComparableTransactions,
-  parseStoreyMidpoint,
   type AskingPriceAssessment,
-} from "@/lib/transaction-analysis";
+} from "@/entities/transaction/transaction-analysis";
+import { parseStoreyMidpoint } from "@shared/comparable-engine";
 import type { AddressDetail } from "@/types/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -370,7 +370,7 @@ function DeltaCell({
   pct: number;
   reference: number;
   referenceLabel: string;
-  locale?: import("@/lib/i18n").Locale;
+  locale?: import("@/shared/lib/i18n").Locale;
 }) {
   const isPositive = amount > 0;
   const colorClass = isPositive

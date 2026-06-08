@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, Download, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { downloadCsv } from "@/lib/export";
-import { cn } from "@/lib/utils";
-import { shareViaNavigator } from "@/lib/shareUrls";
+import { downloadCsv } from "@/shared/lib/export";
+import { cn } from "@/shared/lib/utils";
+import { shareViaNavigator } from "@/shared/lib/shareUrls";
 
 export type CsvExportConfig = {
   filename: string;

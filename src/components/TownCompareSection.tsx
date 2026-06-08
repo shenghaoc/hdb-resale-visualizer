@@ -1,18 +1,18 @@
 import { useMemo } from "react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Minus } from "lucide-react";
 import { ShareButton } from "@/components/ShareButton";
-import { buildCompareShareUrl } from "@/lib/shareUrls";
+import { buildCompareShareUrl } from "@/shared/lib/shareUrls";
 import {
   formatCompactCurrency,
   formatMinutesWalk,
   formatMonth,
   formatNumber,
-} from "@/lib/format";
-import { localizeTownName } from "@/lib/i18n/domain";
-import { isSameTown } from "@/lib/queryState";
-import type { Locale, Translator } from "@/lib/i18n/types";
-import { cn } from "@/lib/utils";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+} from "@/shared/lib/format";
+import { localizeTownName } from "@/shared/lib/i18n/domain";
+import { isSameTown } from "@/shared/lib/queryState";
+import type { Locale, Translator } from "@/shared/lib/i18n/types";
+import { cn } from "@/shared/lib/utils";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import {
   buildTownCompareSnapshot,
   computeMetricDelta,
@@ -20,8 +20,8 @@ import {
   type DeltaTone,
   type MetricDelta,
   type TownCompareSnapshot,
-} from "@/lib/town-compare";
-import type { TrendMonthRange } from "@/lib/town-profile";
+} from "@/entities/town/town-compare";
+import type { TrendMonthRange } from "@/entities/town/town-profile";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import {
   Select,

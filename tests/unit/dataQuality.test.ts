@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveDataQualityState } from "@/lib/dataQuality";
+import { deriveDataQualityState } from "@/shared/lib/dataQuality";
 import type { Manifest } from "@/types/data";
 
 function makeManifest(overrides: Partial<Manifest> = {}): Manifest {

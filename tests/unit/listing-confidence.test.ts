@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeConfidence } from "@/lib/listing-confidence";
+import { computeConfidence } from "@/entities/transaction/listing-confidence";
 import type { AddressDetailTransaction } from "@/types/data";
 
 function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransaction {

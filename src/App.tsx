@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useI18n } from "@/lib/i18n";
+import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useShortlist } from "@/hooks/useShortlist";
@@ -13,9 +13,9 @@ import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
-import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { getSearchProfileChipDescriptors } from "@/lib/searchProfileChips";
-import { buildTownRecommendations } from "@/lib/town-recommendations";
+import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
+import { getSearchProfileChipDescriptors } from "@/features/search-profile/searchProfileChips";
+import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { MapLocaleControl } from "@/components/MapLocaleControl";
@@ -31,8 +31,8 @@ import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPrimarySchoolsForOverlay } from "@/lib/school-proximity";
-import { buildFilterShareUrl, shareViaNavigator } from "@/lib/shareUrls";
+import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
+import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
 import {
   useListingCheckUrlState,

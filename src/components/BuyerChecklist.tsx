@@ -1,8 +1,8 @@
 import { useId } from "react";
 import { CheckSquare } from "lucide-react";
-import { CHECKLIST_ITEMS, type ChecklistItemId } from "@/lib/checklist";
-import type { Translator } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+import { CHECKLIST_ITEMS, type ChecklistItemId } from "@/features/listing-check/checklist";
+import type { Translator } from "@/shared/lib/i18n";
+import { cn } from "@/shared/lib/utils";
 
 type BuyerChecklistProps = {
   addressKey: string;

@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "@/App";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SEARCH_PROFILE_STORAGE_KEY } from "@/lib/constants";
-import { I18nProvider } from "@/lib/i18n";
+import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
+import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
@@ -41,7 +41,7 @@ const shortlistMocks = vi.hoisted(() => {
   return { state, setItems, reset };
 });
 
-vi.mock("@/lib/data", () => ({
+vi.mock("@/shared/lib/data", () => ({
   fetchManifest: dataMocks.fetchManifest,
   fetchBlockSummaries: dataMocks.fetchBlockSummaries,
   fetchBlocksByTown: dataMocks.fetchBlocksByTown,

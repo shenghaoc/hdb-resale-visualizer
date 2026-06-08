@@ -1,7 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { reportBoundaryError } from "@/lib/errorReporter";
-import { cn } from "@/lib/utils";
+import { reportBoundaryError } from "@/shared/lib/errorReporter";
+import { cn } from "@/shared/lib/utils";
 
 export const ERROR_BOUNDARY_FALLBACK_TEXT = "Something went wrong";
 export const ERROR_BOUNDARY_ACTION_TEXT = "Reload";

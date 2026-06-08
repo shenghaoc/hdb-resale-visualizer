@@ -6,7 +6,7 @@ import {
   isHeatmapLayerPresent,
   HEATMAP_LAYER_ID,
   HEATMAP_SOURCE_ID,
-} from "../../src/lib/priceHeatmap";
+} from "../../src/features/map-explorer/priceHeatmap";
 
 function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasClusters?: boolean; hasRadiusFill?: boolean } = {}) {
   const { hasLayer = false, hasSource = false, hasClusters = true, hasRadiusFill = false } = options;

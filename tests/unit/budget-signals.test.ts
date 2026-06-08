@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getBudgetMatchSignal } from "@/lib/budget-signals";
+import { getBudgetMatchSignal } from "@/features/listing-check/budget-signals";
 
 describe("budget signals", () => {
   it("returns no-budget when no filters are set", () => {

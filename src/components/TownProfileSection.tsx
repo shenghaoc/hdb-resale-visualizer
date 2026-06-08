@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import type { BlockSummary } from "@/types/data";
-import type { Translator } from "@/lib/i18n/types";
-import { formatCompactCurrency, formatMonth, formatNumber } from "@/lib/format";
-import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
+import type { Translator } from "@/shared/lib/i18n/types";
+import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
+import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import type {
   LeaseCommenceDecadeBucket,
   TownFlatTypeRollup,
   TrendMonthRange,
-} from "@/lib/town-profile";
+} from "@/entities/town/town-profile";
 
 type TownProfileSectionProps = {
-  locale: import("@/lib/i18n/types").Locale;
+  locale: import("@/shared/lib/i18n/types").Locale;
   t: Translator;
   townName: string;
   monthRange: TrendMonthRange;
@@ -32,7 +32,7 @@ function BlockMicroRow({
   onSelect,
 }: {
   block: BlockSummary;
-  locale: import("@/lib/i18n/types").Locale;
+  locale: import("@/shared/lib/i18n/types").Locale;
   subtitle: string;
   onSelect: () => void;
 }) {

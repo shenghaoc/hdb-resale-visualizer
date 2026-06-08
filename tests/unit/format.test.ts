@@ -9,9 +9,9 @@ import {
   formatRemainingLease,
   formatDateTime,
   resetFormatCachesForTests,
-} from "../../src/lib/format";
-import * as constants from "../../src/lib/constants";
-import type { Translator } from "../../src/lib/i18n/types";
+} from "../../src/shared/lib/format";
+import * as constants from "../../src/shared/lib/constants";
+import type { Translator } from "../../src/shared/lib/i18n/types";
 
 describe("format functions", () => {
   beforeEach(() => {

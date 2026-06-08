@@ -6,9 +6,9 @@ import type {
   MapMouseEvent,
   Popup,
 } from "maplibre-gl";
-import { formatCompactCurrency } from "@/lib/format";
-import { localizeTownName } from "@/lib/i18n/domain";
-import type { Locale, Translator } from "@/lib/i18n";
+import { formatCompactCurrency } from "@/shared/lib/format";
+import { localizeTownName } from "@/shared/lib/i18n/domain";
+import type { Locale, Translator } from "@/shared/lib/i18n";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 
 type UseMapInteractionsProps = {

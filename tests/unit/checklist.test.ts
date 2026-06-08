@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { CHECKLIST_STORAGE_KEY } from "@/lib/constants";
+import { CHECKLIST_STORAGE_KEY } from "@/shared/lib/constants";
 import {
   loadChecklistState,
   saveChecklistState,
   toggleChecklistItem,
   parseChecklistState,
-} from "@/lib/checklist";
+} from "@/features/listing-check/checklist";
 
 describe("checklist storage", () => {
   it("loads and saves checklist entries", () => {

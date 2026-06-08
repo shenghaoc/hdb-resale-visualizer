@@ -6,9 +6,9 @@ import "@fontsource/ibm-plex-sans/600.css";
 import "@fontsource/ibm-plex-sans/700.css";
 import App from "./App";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { initErrorReporting } from "@/lib/errorReporter";
-import { I18nProvider } from "@/lib/i18n";
-import { initPerformanceReporting } from "@/lib/performance";
+import { initErrorReporting } from "@/shared/lib/errorReporter";
+import { I18nProvider } from "@/shared/lib/i18n";
+import { initPerformanceReporting } from "@/shared/lib/performance";
 import "./styles.css";
 
 initErrorReporting();

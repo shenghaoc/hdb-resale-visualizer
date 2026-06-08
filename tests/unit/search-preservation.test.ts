@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { matchesFilter } from "@/lib/filtering";
-import { DEFAULT_FILTERS } from "@/lib/constants";
+import { matchesFilter } from "@/shared/lib/filtering";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import type { BlockSummary } from "@/types/data";
 
 const EMPTY_FILTERS = {

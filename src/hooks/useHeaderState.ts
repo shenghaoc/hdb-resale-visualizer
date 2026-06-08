@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { HEADER_DISMISSED_STORAGE_KEY } from "@/lib/constants";
-import { safeStorage } from "@/lib/storage";
+import { HEADER_DISMISSED_STORAGE_KEY } from "@/shared/lib/constants";
+import { safeStorage } from "@/shared/lib/storage";
 
 export function useHeaderState() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);

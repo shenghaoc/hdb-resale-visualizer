@@ -4,9 +4,9 @@ import {
   computeRemainingLeaseYears,
   evaluateBlockForProfile,
   isProfileVisibilityActive,
-} from "@/lib/matchProfile";
-import { DEFAULT_SEARCH_PROFILE } from "@/lib/searchProfile";
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
+} from "@/features/search-profile/matchProfile";
+import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
+import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
 import type { BlockSummary } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 

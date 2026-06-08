@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAddressDetail, fetchComparisonArtifact } from "@/lib/data";
+import { fetchAddressDetail, fetchComparisonArtifact } from "@/shared/lib/data";
 import type { AddressDetail, ComparisonArtifact } from "@/types/data";
 
 type LoadedDetail = { addressKey: string; data: AddressDetail | null };

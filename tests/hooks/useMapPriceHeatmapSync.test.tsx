@@ -2,10 +2,10 @@ import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { HEATMAP_SOURCE_ID } from "@/lib/priceHeatmap";
+import { HEATMAP_SOURCE_ID } from "@/features/map-explorer/priceHeatmap";
 
-vi.mock("@/lib/priceHeatmap", async (importOriginal) => {
-  const mod = await importOriginal<typeof import("@/lib/priceHeatmap")>();
+vi.mock("@/features/map-explorer/priceHeatmap", async (importOriginal) => {
+  const mod = await importOriginal<typeof import("@/features/map-explorer/priceHeatmap")>();
   return {
     ...mod,
     addPriceHeatmapLayer: vi.fn(),
@@ -201,7 +201,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   });
 
   it("routes opacity-only changes through setHeatmapOpacity, not layer recreation", async () => {
-    const { setHeatmapOpacity, isHeatmapLayerPresent } = await import("@/lib/priceHeatmap");
+    const { setHeatmapOpacity, isHeatmapLayerPresent } = await import("@/features/map-explorer/priceHeatmap");
     (isHeatmapLayerPresent as ReturnType<typeof vi.fn>).mockReturnValue(true);
     const map = createMapStub({ styleLoaded: true });
 

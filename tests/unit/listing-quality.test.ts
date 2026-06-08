@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   getComparableSetQualityTag,
   getBlockDataQualityTag,
-} from "@/lib/listing-quality";
+} from "@/shared/lib/listing-quality";
 import type { ConfidenceAssessment } from "../../shared/confidence-system";
 
 function makeConfidence(

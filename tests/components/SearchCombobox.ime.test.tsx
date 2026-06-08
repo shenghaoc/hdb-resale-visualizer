@@ -4,9 +4,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { SearchCombobox } from "@/components/SearchCombobox";
-import { I18nProvider } from "@/lib/i18n/provider";
+import { I18nProvider } from "@/shared/lib/i18n/provider";
 
-vi.mock("@/lib/data", () => ({
+vi.mock("@/shared/lib/data", () => ({
   fetchSuggestions: vi.fn(() => Promise.resolve([])),
 }));
 

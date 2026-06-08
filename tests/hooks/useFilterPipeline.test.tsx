@@ -2,9 +2,9 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
-import { DEFAULT_SEARCH_PROFILE } from "@/lib/searchProfile";
+import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import type { Manifest, FilterState, BlockSummary } from "@/types/data";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 vi.mock("@/hooks/useBlockLoading", () => ({
   useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null, searchTruncated: false })),

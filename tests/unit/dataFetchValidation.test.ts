@@ -7,7 +7,7 @@ import {
   resetFetchRetrySettingsForTests,
   resetTownFlatTypeTrendsCacheForTests,
   setFetchRetryDelayForTests,
-} from "@/lib/data";
+} from "@/shared/lib/data";
 
 function mockJsonResponse(payload: unknown, ok = true, status = 200): Response {
   return { ok, status, json: vi.fn().mockResolvedValue(payload) } as unknown as Response;

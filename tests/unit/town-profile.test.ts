@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
-import { townFlatTypeTrendPointSchema } from "@/lib/dataSchemas";
+import { townFlatTypeTrendPointSchema } from "@/shared/lib/dataSchemas";
 import {
   buildLeaseCommencementHistogram,
   clampMonthToDataWindow,
@@ -14,7 +14,7 @@ import {
   rollupTownFlatTypesInRange,
   sumRollupVolume,
   volumeWeightedMeanLatestMedianPricePerSqm,
-} from "@/lib/town-profile";
+} from "@/entities/town/town-profile";
 
 const DW = { minMonth: "2020-01", maxMonth: "2026-03" };
 

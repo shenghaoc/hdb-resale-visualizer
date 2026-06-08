@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 const t: Translator = (key) => key;
 

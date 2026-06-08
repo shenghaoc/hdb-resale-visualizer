@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildBlockExplanation } from "@/lib/block-explanation";
+import { buildBlockExplanation } from "@/entities/block/block-explanation";
 import type { BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 
 const baseBlock: BlockSummary = {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { API_BASE_PATH } from "@/lib/constants";
-import { getStationDetails } from "@/lib/mrt-station-details";
+import { API_BASE_PATH } from "@/shared/lib/constants";
+import { getStationDetails } from "@shared/mrt-station-details";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 
 function enrichMrtFeaturesWithLineColors(

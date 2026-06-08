@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getCurrentYear, getDefaultTransactionStartMonth } from "../../src/lib/constants";
+import { getCurrentYear, getDefaultTransactionStartMonth } from "../../src/shared/lib/constants";
 
 describe("constants", () => {
   describe("getCurrentYear", () => {

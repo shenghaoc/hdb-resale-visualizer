@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { getActiveFilterChipDescriptors } from "@/lib/filterChips";
-import { dictionaries } from "@/lib/i18n/messages";
-import type { Locale, Translator } from "@/lib/i18n/types";
+import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
+import { dictionaries } from "@/shared/lib/i18n/messages";
+import type { Locale, Translator } from "@/shared/lib/i18n/types";
 import type { FilterState } from "@/types/data";
 
 function createTranslator(locale: Locale): Translator {

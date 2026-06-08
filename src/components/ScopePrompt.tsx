@@ -1,7 +1,7 @@
 import { Loader2, LocateFixed, Scale, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Translator } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+import type { Translator } from "@/shared/lib/i18n";
+import { cn } from "@/shared/lib/utils";
 
 type ScopePromptProps = {
   showScopePrompt: boolean;

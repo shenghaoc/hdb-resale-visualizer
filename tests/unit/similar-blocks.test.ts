@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { rankSimilarBlocks, scoreSimilarity } from "@/lib/similar-blocks";
+import { rankSimilarBlocks, scoreSimilarity } from "@/entities/block/similar-blocks";
 import type { BlockSummary } from "@/types/data";
 
 function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): BlockSummary {

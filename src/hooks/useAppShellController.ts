@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { NEAR_ME_SEARCH_QUERY } from "@/lib/constants";
-import { filterPatchForSuggestion } from "@/lib/suggestActions";
+import { NEAR_ME_SEARCH_QUERY } from "@/shared/lib/constants";
+import { filterPatchForSuggestion } from "@/features/search-profile/suggestActions";
 import type { FilterState, Suggestion } from "@/types/data";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
 import type { Coordinates } from "@/types/data";

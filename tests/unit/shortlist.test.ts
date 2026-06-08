@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/lib/constants";
+import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/shared/lib/constants";
 import { MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import {
   decodeShortlistFromUrl,
@@ -8,7 +8,7 @@ import {
   mergeImportedShortlistItems,
   saveShortlist,
   toggleShortlistItem,
-} from "@/lib/shortlist";
+} from "@/features/shortlist/shortlist";
 
 describe("shortlist storage", () => {
   it("loads and saves shortlist entries", () => {

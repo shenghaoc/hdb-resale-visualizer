@@ -1,7 +1,7 @@
 import { useIMEComposition } from "@/hooks/useIMEComposition";
-import { MAX_SEARCH_QUERY_LENGTH } from "@/lib/constants";
+import { MAX_SEARCH_QUERY_LENGTH } from "@/shared/lib/constants";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type LocationSearchInputProps = Omit<
   React.ComponentProps<typeof Input>,

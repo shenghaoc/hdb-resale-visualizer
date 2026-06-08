@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { Translator } from "@/lib/i18n";
+import type { Translator } from "@/shared/lib/i18n";
 
 const t: Translator = (key) => {
   const messages: Record<string, string> = {

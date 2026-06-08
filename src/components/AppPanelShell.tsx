@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { LEFT_PANEL_WIDTHS, DESKTOP_PANEL_LAYOUT, type LeftTab, type PanelTab } from "@/hooks/usePanelState";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type AppPanelShellProps = {
   isDesktop: boolean;

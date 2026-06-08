@@ -3,7 +3,7 @@ import {
   ninetyNineCoUrl,
   propertyGuruUrl,
   srxUrl,
-} from "@/lib/listingPortalLinks";
+} from "@/features/listing-check/listingPortalLinks";
 import type { BlockSummary } from "@/types/data";
 
 const block: BlockSummary = {

@@ -1,14 +1,14 @@
 import * as React from "react"
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/shared/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useI18n } from "@/lib/i18n"
-import { formatMonth } from "@/lib/format"
+import { useI18n } from "@/shared/lib/i18n"
+import { formatMonth } from "@/shared/lib/format"
 
 interface MonthPickerProps {
   value: string | null // "YYYY-MM"

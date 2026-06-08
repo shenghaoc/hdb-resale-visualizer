@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpDown, Bookmark, Building2, Clock3, Coins, LayoutGrid, TrainFront, WalletCards } from "lucide-react";
-import { MAX_LEASE_DURATION, getCurrentYear } from "@/lib/constants";
-import { buildResultsCsvContent } from "@/lib/export";
+import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
+import { buildResultsCsvContent } from "@/shared/lib/export";
 import { ShareButton } from "@/components/ShareButton";
 import {
   formatCompactCurrency,
@@ -11,11 +11,11 @@ import {
   formatNumber,
   formatRemainingLease,
   formatSqm,
-} from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
-import { localizeFlatType, localizeTownName } from "@/lib/i18n/domain";
-import { cn } from "@/lib/utils";
-import { getStationDetails } from "@/lib/mrt-station-details";
+} from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
+import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
+import { cn } from "@/shared/lib/utils";
+import { getStationDetails } from "@shared/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import {
@@ -23,16 +23,16 @@ import {
   computeAffordabilityVerdict,
   isAffordabilityProfileComplete,
   maxAffordablePrice,
-} from "@/lib/affordability";
-import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/lib/data";
-import { isSameTown } from "@/lib/queryState";
+} from "@/shared/lib/affordability";
+import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/shared/lib/data";
+import { isSameTown } from "@/shared/lib/queryState";
 import type { AffordabilityMode, BlockSortMode, BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import type { Locale, Translator } from "@/lib/i18n";
+import type { Locale, Translator } from "@/shared/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
 import { TownCompareSection } from "@/components/TownCompareSection";
 import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
-import type { TownRecommendation } from "@/lib/town-recommendations";
+import type { TownRecommendation } from "@/features/search-profile/town-recommendations";
 import {
   buildLeaseCommencementHistogram,
   pickBlocksBelowTownMedian,
@@ -41,8 +41,8 @@ import {
   rollupTownFlatTypesInRange,
   sumRollupVolume,
   volumeWeightedMeanLatestMedianPricePerSqm,
-} from "@/lib/town-profile";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/lib/listing-quality";
+} from "@/entities/town/town-profile";
+import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";

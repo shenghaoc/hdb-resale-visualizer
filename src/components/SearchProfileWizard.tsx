@@ -7,12 +7,12 @@ import {
   SEARCH_PROFILE_MAX_APPLICANT_AGE,
   SEARCH_PROFILE_MAX_MONETARY_VALUE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
-} from "@/lib/constants";
-import { maxAffordablePrice } from "@/lib/affordability";
-import { formatCurrency, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
-import { getKnownMrtStationNames } from "@/lib/mrt-station-details";
-import { cn } from "@/lib/utils";
+} from "@/shared/lib/constants";
+import { maxAffordablePrice } from "@/shared/lib/affordability";
+import { formatCurrency, formatNumber } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
+import { getKnownMrtStationNames } from "@shared/mrt-station-details";
+import { cn } from "@/shared/lib/utils";
 import type { FilterOptions } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 

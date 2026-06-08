@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildLeaseSignals } from "../../src/lib/leaseSignals";
+import { buildLeaseSignals } from "../../src/features/block-detail/leaseSignals";
 
 // currentYear = 2026 throughout these tests
 

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { fetchSuggestions, resetSuggestCacheForTests } from "@/lib/data";
+import { fetchSuggestions, resetSuggestCacheForTests } from "@/shared/lib/data";
 
 describe("fetchSuggestions", () => {
   beforeEach(() => {

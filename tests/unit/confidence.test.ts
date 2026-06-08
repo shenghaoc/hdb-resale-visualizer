@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getDataConfidenceLabelKey, getDataConfidenceLevel } from "@/lib/confidence";
+import { getDataConfidenceLabelKey, getDataConfidenceLevel } from "@/features/listing-check/confidence";
 
 describe("getDataConfidenceLevel", () => {
   it("returns low for very few recent transactions", () => {

@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useMapFitBounds } from "@/hooks/useMapFitBounds";
-import { SINGAPORE_BOUNDS } from "@/lib/constants";
+import { SINGAPORE_BOUNDS } from "@/shared/lib/constants";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary } from "@/types/data";
 

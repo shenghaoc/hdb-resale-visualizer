@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
-import { I18nProvider } from "@/lib/i18n/provider";
-import { SyncCodeNotFoundError } from "@/lib/cloudSync";
+import { I18nProvider } from "@/shared/lib/i18n/provider";
+import { SyncCodeNotFoundError } from "@/features/shortlist/cloudSync";
 import type { ShortlistSync } from "@/hooks/useShortlist";
 
 function makeSync(overrides: Partial<ShortlistSync> = {}): ShortlistSync {

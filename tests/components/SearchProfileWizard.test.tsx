@@ -2,10 +2,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
-import { I18nProvider } from "@/lib/i18n";
-import { maxAffordablePrice } from "@/lib/affordability";
-import { formatCurrency } from "@/lib/format";
-import { SEARCH_PROFILE_MAX_MONETARY_VALUE } from "@/lib/constants";
+import { I18nProvider } from "@/shared/lib/i18n";
+import { maxAffordablePrice } from "@/shared/lib/affordability";
+import { formatCurrency } from "@/shared/lib/format";
+import { SEARCH_PROFILE_MAX_MONETARY_VALUE } from "@/shared/lib/constants";
 import type { FilterOptions } from "@/types/data";
 
 const options: FilterOptions = {

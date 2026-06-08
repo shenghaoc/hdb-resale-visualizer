@@ -8,9 +8,9 @@ import {
   SCHOOL_MARKER_COLOR,
   PRIMARY_SCHOOL_LAYER_IDS,
   PRIMARY_SCHOOL_SOURCE_ID,
-} from "@/lib/constants";
-import { getAmenityMinZoom } from "@/lib/amenity-visibility";
-import { MRT_LINE_FALLBACK_COLOR } from "@/lib/mrt-colors";
+} from "@/shared/lib/constants";
+import { getAmenityMinZoom } from "@/features/map-explorer/amenity-visibility";
+import { MRT_LINE_FALLBACK_COLOR } from "@shared/mrt-colors";
 
 export function useMapLayers(map: MapLibreMap | null) {
   useEffect(() => {

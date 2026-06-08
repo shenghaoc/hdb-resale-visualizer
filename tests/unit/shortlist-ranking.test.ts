@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { rankShortlistRows } from "@/lib/shortlist-ranking";
+import { rankShortlistRows } from "@/features/shortlist/shortlist-ranking";
 
 const sampleRows = [
   {

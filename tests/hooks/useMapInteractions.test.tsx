@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Locale, Translator } from "@/lib/i18n";
+import type { Locale, Translator } from "@/shared/lib/i18n";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
 import type { Map as MapLibreMap, Popup } from "maplibre-gl";
 

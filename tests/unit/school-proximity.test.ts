@@ -3,7 +3,7 @@ import {
   classifyPrimarySchoolDistance,
   getPrimarySchoolsForOverlay,
   primarySchoolsToGeoJson,
-} from "@/lib/school-proximity";
+} from "@/features/map-explorer/school-proximity";
 
 describe("school proximity logic", () => {
   it("classifies primary school distance bands at the 1km and 2km boundaries", () => {

@@ -5,12 +5,12 @@ import {
   hasCompletedSearchProfile,
   monetarySchema,
   parseSearchProfile,
-} from "@/lib/searchProfile";
+} from "@/features/search-profile/searchProfile";
 import {
   SEARCH_PROFILE_MAX_APPLICANT_AGE,
   SEARCH_PROFILE_MAX_MONETARY_VALUE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
-} from "@/lib/constants";
+} from "@/shared/lib/constants";
 
 describe("search profile", () => {
   it("falls back to defaults for invalid payload", () => {

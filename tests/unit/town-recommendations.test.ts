@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildTownRecommendations } from "@/lib/town-recommendations";
-import { DEFAULT_SEARCH_PROFILE } from "@/lib/searchProfile";
+import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
+import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import type { BlockSummary } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 

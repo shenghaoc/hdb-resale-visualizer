@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { parseFilters } from "@/lib/queryState";
+import { parseFilters } from "@/shared/lib/queryState";
 import type { BlockSummary } from "@/types/data";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
 

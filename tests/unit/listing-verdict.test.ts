@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { performListingCheck } from "@/lib/listing-verdict";
+import { performListingCheck } from "@/features/listing-check/listing-verdict";
 import type { AddressDetailTransaction } from "@/types/data";
-import type { ComparableQuery } from "@/lib/transaction-analysis";
+import type { ComparableQuery } from "@/entities/transaction/transaction-analysis";
 
 function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransaction {
   return {

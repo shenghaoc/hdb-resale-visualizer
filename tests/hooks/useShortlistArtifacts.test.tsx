@@ -8,7 +8,7 @@ const dataMocks = vi.hoisted(() => ({
   fetchComparisonArtifact: vi.fn<(key: string) => Promise<ComparisonArtifact | null>>(),
 }));
 
-vi.mock("@/lib/data", () => ({
+vi.mock("@/shared/lib/data", () => ({
   fetchAddressDetail: dataMocks.fetchAddressDetail,
   fetchComparisonArtifact: dataMocks.fetchComparisonArtifact,
 }));

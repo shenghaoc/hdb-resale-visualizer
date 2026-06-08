@@ -1,11 +1,11 @@
-import { getStationDetails } from "@/lib/mrt-station-details";
+import { getStationDetails } from "@shared/mrt-station-details";
 import {
   LRT_LINE_COLOR,
   MRT_LINE_COLORS,
   MRT_LINE_FALLBACK_COLOR,
   type RailLineCode,
-} from "@/lib/mrt-colors";
-import { cn } from "@/lib/utils";
+} from "@shared/mrt-colors";
+import { cn } from "@/shared/lib/utils";
 
 type MrtLineDotsProps = {
   stationName: string;

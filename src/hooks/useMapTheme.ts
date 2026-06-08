@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/lib/constants";
+import { ONEMAP_DEFAULT_TILE_URL, ONEMAP_NIGHT_TILE_URL } from "@/shared/lib/constants";
 
 type RasterSourceLike = { setTiles(tiles: string[]): void };
 

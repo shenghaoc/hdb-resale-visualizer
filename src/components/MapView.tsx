@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { toGeoJson } from "@/lib/map";
+import { toGeoJson } from "@/features/map-explorer/map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useMapTheme } from "@/hooks/useMapTheme";
 import { useMapRadiusLayer } from "@/hooks/useMapRadiusLayer";
@@ -14,10 +14,10 @@ import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
 import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
 import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
-import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "@/lib/school-proximity";
+import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "@/features/map-explorer/school-proximity";
 import type { BlockSummary, Coordinates } from "@/types/data";
-import type { Locale, Translator } from "@/lib/i18n";
-import type { GeographicSearchIntent } from "@/lib/filtering";
+import type { Locale, Translator } from "@/shared/lib/i18n";
+import type { GeographicSearchIntent } from "@/shared/lib/filtering";
 
 type MapViewProps = {
   blocks: BlockSummary[];

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { LRT_LINE_COLOR } from "@/lib/mrt-colors";
-import { clearStationDetailsCache, getStationDetails } from "@/lib/mrt-station-details";
+import { LRT_LINE_COLOR } from "@shared/mrt-colors";
+import { clearStationDetailsCache, getStationDetails } from "@shared/mrt-station-details";
 
 describe("getStationDetails", () => {
   beforeEach(() => {

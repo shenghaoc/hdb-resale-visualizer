@@ -4,7 +4,7 @@ import {
   fetchComparisonArtifact,
   resetFetchRetrySettingsForTests,
   setFetchRetryDelayForTests,
-} from '@/lib/data';
+} from '@/shared/lib/data';
 
 // Mock fetch globally
 const mockFetch = vi.fn();
