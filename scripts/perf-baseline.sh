@@ -25,8 +25,8 @@ echo "  Build: ${BUILD_MS}ms" >&2
 
 # Bundle check (extract preload metrics from output)
 BUNDLE_OUTPUT=$(npm run check:bundle 2>&1)
-PRELOAD_COUNT=$(echo "$BUNDLE_OUTPUT" | grep -oP '\d+ modulepreloads' | grep -oP '^\d+' || echo "0")
-PRELOAD_GZIP=$(echo "$BUNDLE_OUTPUT" | grep -oP '\d+ B gzip total' | grep -oP '^\d+' || echo "0")
+PRELOAD_COUNT=$(echo "$BUNDLE_OUTPUT" | grep -oE '[0-9]+ modulepreloads' | grep -oE '^[0-9]+' || echo "0")
+PRELOAD_GZIP=$(echo "$BUNDLE_OUTPUT" | grep -oE '[0-9]+ B gzip total' | grep -oE '^[0-9]+' || echo "0")
 
 echo "  Bundle: ${PRELOAD_COUNT} preloads, ${PRELOAD_GZIP}B gzip" >&2
 
@@ -35,8 +35,8 @@ TEST_START=$(get_time_ms)
 TEST_OUTPUT=$(npm run test -- --run 2>&1)
 TEST_END=$(get_time_ms)
 TEST_MS=$(( (TEST_END - TEST_START) ))
-TEST_COUNT=$(echo "$TEST_OUTPUT" | grep -oP '\d+ passed' | tail -1 | grep -oP '^\d+' || echo "0")
-TEST_FILES=$(echo "$TEST_OUTPUT" | grep -oP 'Test Files\s+\d+ passed' | grep -oP '\d+' || echo "0")
+TEST_COUNT=$(echo "$TEST_OUTPUT" | grep -oE '[0-9]+ passed' | tail -1 | grep -oE '^[0-9]+' || echo "0")
+TEST_FILES=$(echo "$TEST_OUTPUT" | grep -oE 'Test Files[[:space:]]+[0-9]+ passed' | grep -oE '[0-9]+' || echo "0")
 
 echo "  Tests: ${TEST_COUNT} passed in ${TEST_MS}ms (${TEST_FILES} files)" >&2
 
