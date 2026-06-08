@@ -132,15 +132,70 @@ export const lowSampleSet: ComparableSet = {
   caveats: [LOW_SAMPLE_CAVEAT],
 };
 
+const REFERENCE_MONTH_RE = /^\d{4}-\d{2}$/;
+
 /**
- * Intercept the POST `/api/comparable-transactions` request (with or without
- * the `?adjust=time` query) and fulfill it with the supplied comparable set.
+ * Mirror the server-side `CandidateListing` contract
+ * (`functions/api/comparable-transactions.ts`). If the panel ever stops sending
+ * the listing facts the scoring engine needs, the mock returns 400 like the
+ * real function would, so the dependent verdict/evidence assertions fail loudly
+ * instead of passing against a stale-but-valid response.
+ */
+function isValidCandidateListing(body: unknown): boolean {
+  if (typeof body !== "object" || body === null) return false;
+  const b = body as Record<string, unknown>;
+  const nonEmpty = (v: unknown): boolean => typeof v === "string" && v.length > 0;
+  return (
+    nonEmpty(b.town) &&
+    nonEmpty(b.block) &&
+    nonEmpty(b.streetName) &&
+    nonEmpty(b.flatType) &&
+    nonEmpty(b.storeyRange) &&
+    typeof b.floorAreaSqm === "number" &&
+    b.floorAreaSqm > 0 &&
+    (b.leaseCommenceYear === null || typeof b.leaseCommenceYear === "number") &&
+    typeof b.referenceMonth === "string" &&
+    REFERENCE_MONTH_RE.test(b.referenceMonth)
+  );
+}
+
+/**
+ * Intercept the `/api/comparable-transactions` request (with or without the
+ * `?adjust=time` query) and fulfill it with the supplied comparable set.
+ *
+ * The real endpoint is exposed only as `onRequestPost`, so:
+ * - non-POST methods are passed through (`route.continue()`) — a regression to
+ *   GET would hit the static server (404) and fail the test rather than be
+ *   masked by the mock;
+ * - POST bodies that don't satisfy the `CandidateListing` contract get a 400,
+ *   so dropping a listing fact is caught.
  */
 export async function mockComparableTransactions(
   page: Page,
   set: ComparableSet,
 ): Promise<void> {
   await page.route("**/api/comparable-transactions**", async (route) => {
+    const request = route.request();
+    if (request.method() !== "POST") {
+      await route.continue();
+      return;
+    }
+
+    let payload: unknown;
+    try {
+      payload = request.postDataJSON();
+    } catch {
+      payload = undefined;
+    }
+    if (!isValidCandidateListing(payload)) {
+      await route.fulfill({
+        status: 400,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "Invalid request body" }),
+      });
+      return;
+    }
+
     await route.fulfill({
       status: 200,
       contentType: "application/json",

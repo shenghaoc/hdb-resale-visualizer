@@ -47,6 +47,15 @@ with `page.route("**/api/comparable-transactions**", …)` and fulfills a
 controlled `ListingComparableSet`. The GET `/api/details/…` is served by the
 existing staged fixtures. No live D1, no external `fetch`.
 
+The mock mirrors the real contract so it cannot mask a regression:
+- the real endpoint is `onRequestPost` only, so non-POST methods are passed
+  through (`route.continue()`) — a regression to GET would hit the static
+  server (404) and fail the test;
+- the POST body is validated against the `CandidateListing` shape (town, block,
+  street, flat type, storey, positive floor area, `YYYY-MM` reference month,
+  numeric-or-null lease year); an invalid body returns 400, so dropping a
+  listing fact fails the dependent verdict assertions.
+
 Two deterministic data sets (`listing-check.fixtures.ts`):
 
 - **`highConfidenceSet`** — 8 same-block, recent comparables; median resale

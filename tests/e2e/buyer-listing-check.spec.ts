@@ -29,6 +29,22 @@ function desktopSavedTab(page: Page) {
   return page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
 }
 
+/**
+ * Worst-case horizontal overflow in CSS pixels. Checks both the root element
+ * and the body, since the scroll container can live on either depending on the
+ * layout, and returns the larger of the two.
+ */
+async function horizontalOverflow(page: Page): Promise<number> {
+  return page.evaluate(() => {
+    const html = document.documentElement;
+    const { body } = document;
+    return Math.max(
+      html.scrollWidth - html.clientWidth,
+      body.scrollWidth - body.clientWidth,
+    );
+  });
+}
+
 // ── 1. Start a listing check without using the map ───────────────────────────
 
 test("a first-time buyer can start a listing price check from the Check tab without using the map", async ({
@@ -152,18 +168,12 @@ test.describe("mobile", () => {
 
     // The main flow must not introduce horizontal scrolling (1px tolerance for
     // sub-pixel rounding).
-    const overflowBefore = await page.evaluate(
-      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    );
-    expect(overflowBefore).toBeLessThanOrEqual(1);
+    expect(await horizontalOverflow(page)).toBeLessThanOrEqual(1);
 
     // Save to shortlist completes the flow on mobile.
     await check.getByRole("button", { name: /save to shortlist/i }).click();
     await expect(check.getByRole("button", { name: /saved/i })).toBeVisible();
 
-    const overflowAfter = await page.evaluate(
-      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    );
-    expect(overflowAfter).toBeLessThanOrEqual(1);
+    expect(await horizontalOverflow(page)).toBeLessThanOrEqual(1);
   });
 });
