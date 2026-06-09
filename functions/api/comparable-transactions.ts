@@ -55,7 +55,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
   const floorAreaSqm = row.floor_area_sqm as number;
   const resalePrice = row.resale_price as number;
   return {
-    id: String(row.id),
+    id: String(row.id ?? ""),
     month: row.month as string,
     town: row.town as string,
     block: row.block as string,
@@ -69,7 +69,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     floorAreaSqm,
     leaseCommenceDate: (row.lease_commence_year as number) ?? null,
     resalePrice,
-    pricePerSqm: floorAreaSqm > 0 ? Number((resalePrice / floorAreaSqm).toFixed(2)) : 0,
+    pricePerSqm: floorAreaSqm > 0 ? Math.round((resalePrice / floorAreaSqm) * 100) / 100 : 0,
     flatModel: (row.flat_model as string) ?? "",
   };
 }
