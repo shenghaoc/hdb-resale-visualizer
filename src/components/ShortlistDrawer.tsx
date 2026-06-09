@@ -1340,7 +1340,7 @@ export function ShortlistDrawer({
       priceMaps.push(priceMap);
     }
 
-    const months = Array.from(monthSet).sort((left, right) => left.localeCompare(right));
+    const months = [...monthSet].sort();
 
     let maxPrice = 0;
     const data = months.map((month) => {
