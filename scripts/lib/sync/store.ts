@@ -249,7 +249,7 @@ export async function insertTransactions(
 
   // Dynamically calculate the max rows per INSERT to stay under the
   // 100-bound-param limit. Adapts automatically if columns are added/removed.
-  const ROWS_PER_INSERT = Math.floor(100 / TX_COLUMNS.length);
+  const ROWS_PER_INSERT = Math.max(1, Math.floor(100 / TX_COLUMNS.length));
   // D1 batch endpoint allows up to 100 statements per request.
   const MAX_BATCH_STMTS = 100;
   const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;

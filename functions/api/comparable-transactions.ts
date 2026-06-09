@@ -69,7 +69,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     floorAreaSqm,
     leaseCommenceDate: (row.lease_commence_year as number) ?? null,
     resalePrice,
-    pricePerSqm: floorAreaSqm > 0 ? resalePrice / floorAreaSqm : 0,
+    pricePerSqm: floorAreaSqm > 0 ? Number((resalePrice / floorAreaSqm).toFixed(2)) : 0,
     flatModel: (row.flat_model as string) ?? "",
   };
 }
