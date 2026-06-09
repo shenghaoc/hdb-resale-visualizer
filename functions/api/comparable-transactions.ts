@@ -14,6 +14,7 @@ import {
   type ListingComparableSet,
   type TransactionRow,
   buildComparableSet,
+  parseStoreyMidpoint,
 } from "../../shared/comparable-engine";
 import {
   buildTrendLookup,
@@ -46,22 +47,29 @@ const MAX_BODY_BYTES = 8192;
 // D1 ↔ TS mapping
 // ---------------------------------------------------------------------------
 
-/** Map a snake_case D1 row to a camelCase TransactionRow. */
+/** Map a snake_case D1 row to a camelCase TransactionRow.
+ *  `storey_midpoint` and `price_per_sqm` are no longer stored in D1 —
+ *  they are derived here at read time to save ~374 MB of index storage. */
 function mapD1Row(row: Record<string, unknown>): TransactionRow {
+  const storeyRange = (row.storey_range as string) ?? "";
+  const floorAreaSqm = (row.floor_area_sqm as number) ?? 0;
+  const resalePrice = (row.resale_price as number) ?? 0;
   return {
-    id: row.id as string,
+    id: String(row.id ?? ""),
     month: row.month as string,
     town: row.town as string,
     block: row.block as string,
     streetName: row.street_name as string,
     addressKey: row.address_key as string,
     flatType: row.flat_type as string,
-    storeyRange: row.storey_range as string,
-    storeyMidpoint: row.storey_midpoint as number,
-    floorAreaSqm: row.floor_area_sqm as number,
+    storeyRange,
+    // Fallback to 0 is defensive only — pipeline.ts filters out rows whose
+    // storey_range cannot be parsed, so every row reaching D1 has a valid range.
+    storeyMidpoint: parseStoreyMidpoint(storeyRange) ?? 0,
+    floorAreaSqm,
     leaseCommenceDate: (row.lease_commence_year as number) ?? null,
-    resalePrice: row.resale_price as number,
-    pricePerSqm: row.price_per_sqm as number,
+    resalePrice,
+    pricePerSqm: floorAreaSqm > 0 ? Math.round((resalePrice / floorAreaSqm) * 100) / 100 : 0,
     flatModel: (row.flat_model as string) ?? "",
   };
 }

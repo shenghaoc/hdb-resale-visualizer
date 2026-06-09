@@ -191,7 +191,6 @@ export async function readManifestUpdatedAt(db: D1Client): Promise<string | null
 }
 
 const TX_COLUMNS = [
-  "id",
   "month",
   "town",
   "block",
@@ -199,17 +198,14 @@ const TX_COLUMNS = [
   "address_key",
   "flat_type",
   "storey_range",
-  "storey_midpoint",
   "floor_area_sqm",
   "lease_commence_year",
   "resale_price",
-  "price_per_sqm",
   "flat_model",
 ];
 
 function mapTxRow(row: TransactionRow): unknown[] {
   return [
-    row.id,
     row.month,
     row.town,
     row.block,
@@ -217,11 +213,9 @@ function mapTxRow(row: TransactionRow): unknown[] {
     row.address_key,
     row.flat_type,
     row.storey_range,
-    row.storey_midpoint,
     row.floor_area_sqm,
     row.lease_commence_year,
     row.resale_price,
-    row.price_per_sqm,
     row.flat_model,
   ];
 }
@@ -232,9 +226,9 @@ function mapTxRow(row: TransactionRow): unknown[] {
  * the 20-row capped slice stored in block_details).
  *
  * Uses batched multi-row INSERTs packed into D1 batch API calls to stay under
- * the 100-bound-param per-statement limit (14 columns → 7 rows per INSERT)
- * while minimising HTTP round-trips (up to 100 INSERTs per batch call → 700
- * rows per HTTP request).
+ * the 100-bound-param per-statement limit (ROWS_PER_INSERT is computed
+ * dynamically from the column count) while minimising HTTP round-trips (up
+ * to 100 INSERTs per batch call).
  *
  * TODO: At production scale (~1M transactions), this still issues ~1.4k D1
  * HTTP requests per sync (~20–30 min wall time). A future D1 bulk-import API
@@ -253,9 +247,9 @@ export async function insertTransactions(
     return;
   }
 
-  // 14 columns → at most floor(100/14) = 7 rows per INSERT to stay under
-  // the 100-bound-param limit.
-  const ROWS_PER_INSERT = 7;
+  // Dynamically calculate the max rows per INSERT to stay under the
+  // 100-bound-param limit. Adapts automatically if columns are added/removed.
+  const ROWS_PER_INSERT = Math.max(1, Math.floor(100 / TX_COLUMNS.length));
   // D1 batch endpoint allows up to 100 statements per request.
   const MAX_BATCH_STMTS = 100;
   const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;
@@ -265,7 +259,7 @@ export async function insertTransactions(
   // INSERT batch to avoid an empty-table window).
   let firstBatch = true;
 
-  // Build INSERT statements: each has ROWS_PER_INSERT rows (7 rows × 14 cols = 98 params).
+  // Build INSERT statements: each has ROWS_PER_INSERT rows.
   const statements: Array<{ sql: string; params: unknown[] }> = [];
   for (let i = 0; i < transactions.length; i += ROWS_PER_INSERT) {
     const chunk = transactions.slice(i, i + ROWS_PER_INSERT);

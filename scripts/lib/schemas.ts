@@ -123,9 +123,10 @@ export const oneMapTokenResponseSchema = z.object({
   expiry_timestamp: z.union([z.string(), z.number()]).optional(),
 });
 
-/** Normalized transaction row matching the `transactions` D1 table. */
+/** Normalized transaction row matching the `transactions` D1 table.
+ *  `id` is an auto-increment INTEGER PRIMARY KEY (omitted on INSERT).
+ *  `storey_midpoint` and `price_per_sqm` are derived at read time. */
 export const transactionRowSchema = z.object({
-  id: z.string(),
   month: z.string(),
   town: z.string(),
   block: z.string(),
@@ -133,11 +134,9 @@ export const transactionRowSchema = z.object({
   address_key: z.string(),
   flat_type: z.string(),
   storey_range: z.string(),
-  storey_midpoint: z.number(),
   floor_area_sqm: z.number(),
   lease_commence_year: z.number().nullable(),
   resale_price: z.number().int(),
-  price_per_sqm: z.number(),
   flat_model: z.string(),
 });
 
