@@ -99,7 +99,7 @@ Sort by:
 - **Price** (low → high or high → low)
 - **Remaining lease**
 - **MRT proximity**
-- **Recent activity** (blocks with the most recent transactions first)
+- **Most recent activity** (blocks with the most recent transactions first)
 - **Affordability score** (when a search profile is active)
 
 ### Town profile
@@ -217,7 +217,7 @@ Profile chips appear alongside filter chips. Remove any chip to disable that par
 ## Keyboard shortcuts
 
 - **Escape** — close the current drawer, overlay, or search suggestion dropdown
-- **Arrow keys** — navigate search suggestions in the typeahead dropdown; toggle heatmap mode
+- **Arrow keys** — navigate search suggestions in the typeahead; switch between price/$/sqm in the heatmap toggle (when focused)
 - **Tab** — move focus between interactive elements (standard browser behaviour)
 
 ## Data and privacy
