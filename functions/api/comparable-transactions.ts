@@ -51,9 +51,9 @@ const MAX_BODY_BYTES = 8192;
  *  `storey_midpoint` and `price_per_sqm` are no longer stored in D1 —
  *  they are derived here at read time to save ~374 MB of index storage. */
 function mapD1Row(row: Record<string, unknown>): TransactionRow {
-  const storeyRange = row.storey_range as string;
-  const floorAreaSqm = row.floor_area_sqm as number;
-  const resalePrice = row.resale_price as number;
+  const storeyRange = (row.storey_range as string) ?? "";
+  const floorAreaSqm = (row.floor_area_sqm as number) ?? 0;
+  const resalePrice = (row.resale_price as number) ?? 0;
   return {
     id: String(row.id ?? ""),
     month: row.month as string,

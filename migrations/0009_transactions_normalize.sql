@@ -28,10 +28,12 @@ CREATE TABLE IF NOT EXISTS transactions (
   flat_model TEXT
 );
 
--- Recreate all indexes from 0007 + 0008 (minus the three that 0008 dropped).
+-- Recreate indexes from 0007 + 0008 (minus the three that 0008 dropped).
 -- With INTEGER PK each index entry is ~44 bytes smaller.
+-- Note: idx_tx_town is omitted — it is redundant because the composite
+-- indexes idx_tx_town_flat_month and idx_tx_block_flat_month both have
+-- `town` as their leftmost column. See 0010 for the production cleanup.
 
-CREATE INDEX IF NOT EXISTS idx_tx_town ON transactions(town);
 CREATE INDEX IF NOT EXISTS idx_tx_flat_type ON transactions(flat_type);
 CREATE INDEX IF NOT EXISTS idx_tx_month ON transactions(month);
 CREATE INDEX IF NOT EXISTS idx_tx_lease ON transactions(lease_commence_year);
