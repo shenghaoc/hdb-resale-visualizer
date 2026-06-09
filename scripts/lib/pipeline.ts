@@ -604,11 +604,10 @@ export function buildArtifacts({
     const sortedTransactions = sortTransactionsByLatest(blockTransactions);
 
     // Map ALL sorted transactions (before the 20-row cap) to D1 rows.
+    // storey_midpoint and price_per_sqm are derived at read time in the API.
     for (const tx of sortedTransactions) {
-      const midpoint = parseStoreyMidpoint(tx.storeyRange);
-      if (midpoint == null) continue; // skip unparseable storey ranges
+      if (parseStoreyMidpoint(tx.storeyRange) == null) continue; // skip unparseable storey ranges
       allTransactions.push({
-        id: tx.id,
         month: tx.month,
         town: tx.town,
         block: tx.block,
@@ -616,11 +615,9 @@ export function buildArtifacts({
         address_key: tx.addressKey,
         flat_type: tx.flatType,
         storey_range: tx.storeyRange,
-        storey_midpoint: midpoint,
         floor_area_sqm: tx.floorAreaSqm,
         lease_commence_year: tx.leaseCommenceDate || null,
         resale_price: tx.resalePrice,
-        price_per_sqm: tx.pricePerSqm,
         flat_model: tx.flatModel,
       });
     }

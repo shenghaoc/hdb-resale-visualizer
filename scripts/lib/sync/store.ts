@@ -191,7 +191,6 @@ export async function readManifestUpdatedAt(db: D1Client): Promise<string | null
 }
 
 const TX_COLUMNS = [
-  "id",
   "month",
   "town",
   "block",
@@ -199,17 +198,14 @@ const TX_COLUMNS = [
   "address_key",
   "flat_type",
   "storey_range",
-  "storey_midpoint",
   "floor_area_sqm",
   "lease_commence_year",
   "resale_price",
-  "price_per_sqm",
   "flat_model",
 ];
 
 function mapTxRow(row: TransactionRow): unknown[] {
   return [
-    row.id,
     row.month,
     row.town,
     row.block,
@@ -217,11 +213,9 @@ function mapTxRow(row: TransactionRow): unknown[] {
     row.address_key,
     row.flat_type,
     row.storey_range,
-    row.storey_midpoint,
     row.floor_area_sqm,
     row.lease_commence_year,
     row.resale_price,
-    row.price_per_sqm,
     row.flat_model,
   ];
 }
@@ -253,9 +247,9 @@ export async function insertTransactions(
     return;
   }
 
-  // 14 columns → at most floor(100/14) = 7 rows per INSERT to stay under
+  // 11 columns → at most floor(100/11) = 9 rows per INSERT to stay under
   // the 100-bound-param limit.
-  const ROWS_PER_INSERT = 7;
+  const ROWS_PER_INSERT = 9;
   // D1 batch endpoint allows up to 100 statements per request.
   const MAX_BATCH_STMTS = 100;
   const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;
