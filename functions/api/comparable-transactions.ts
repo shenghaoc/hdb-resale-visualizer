@@ -63,6 +63,8 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     addressKey: row.address_key as string,
     flatType: row.flat_type as string,
     storeyRange,
+    // Fallback to 0 is defensive only — pipeline.ts filters out rows whose
+    // storey_range cannot be parsed, so every row reaching D1 has a valid range.
     storeyMidpoint: parseStoreyMidpoint(storeyRange) ?? 0,
     floorAreaSqm,
     leaseCommenceDate: (row.lease_commence_year as number) ?? null,

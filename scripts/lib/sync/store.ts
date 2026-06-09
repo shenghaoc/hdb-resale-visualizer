@@ -226,9 +226,9 @@ function mapTxRow(row: TransactionRow): unknown[] {
  * the 20-row capped slice stored in block_details).
  *
  * Uses batched multi-row INSERTs packed into D1 batch API calls to stay under
- * the 100-bound-param per-statement limit (14 columns → 7 rows per INSERT)
- * while minimising HTTP round-trips (up to 100 INSERTs per batch call → 700
- * rows per HTTP request).
+ * the 100-bound-param per-statement limit (ROWS_PER_INSERT is computed
+ * dynamically from the column count) while minimising HTTP round-trips (up
+ * to 100 INSERTs per batch call).
  *
  * TODO: At production scale (~1M transactions), this still issues ~1.4k D1
  * HTTP requests per sync (~20–30 min wall time). A future D1 bulk-import API
