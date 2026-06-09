@@ -122,7 +122,7 @@ describe("ShortlistDrawer — compareChart aggregation", () => {
     expect(screen.getByRole("img", { name: "Price trend overlay" })).toBeInTheDocument();
   });
 
-  it("sorts months in ascending YYYY-MM order across rows", () => {
+  it("renders the chart when trend rows have months provided out of order", () => {
     const rows = [
       {
         item: makeItem("blk-a"),

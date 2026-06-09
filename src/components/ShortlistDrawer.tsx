@@ -1322,8 +1322,6 @@ export function ShortlistDrawer({
       return null;
     }
 
-    // ⚡ Bolt: Single pass aggregation to avoid allocating multiple intermediate
-    // arrays like .flatMap().map() which causes GC pressure in the useMemo loop.
     const monthSet = new Set<string>();
     const seriesKeys: string[] = [];
     const priceMaps: Map<string, number>[] = [];
@@ -1347,7 +1345,7 @@ export function ShortlistDrawer({
       const row: Record<string, string | number | undefined> = { month };
       for (let i = 0; i < seriesKeys.length; i++) {
         const price = priceMaps[i].get(month);
-        if (price != null && !Number.isNaN(price)) {
+        if (price != null) {
           row[seriesKeys[i]] = price;
           if (price > maxPrice) maxPrice = price;
         } else {
