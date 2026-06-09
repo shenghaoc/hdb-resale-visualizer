@@ -26,7 +26,7 @@ On **mobile** a bottom tab bar switches between Filters, Results, Check, Saved, 
 
 ### Quick search
 
-Type an address, block number, or street name into the **search bar** in the header. The typeahead suggests matching blocks and streets — select one to jump straight there.
+Type an address, block number, street name, town, MRT station, or postal code into the **search bar** in the header. The typeahead suggests matching results across all of these categories — select one to jump straight there.
 
 ### Filter panel
 
@@ -36,10 +36,13 @@ Open **Filters** to narrow results by:
 |--------|-------------|
 | **Town** | Restrict to a single town (e.g. Tampines, Clementi) |
 | **Flat type** | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc. |
+| **Affordability** | Toggle between all blocks, affordable-comfortable, or affordable-stretch (requires a search profile) |
 | **Budget** | Set a minimum and/or maximum resale price |
 | **Remaining lease** | Only show blocks with at least N years of lease left |
 | **MRT proximity** | Filter by walking distance to the nearest MRT station |
 | **Date range** | Limit transactions to a specific month window |
+| **Flat model** | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS) |
+| **Floor area** | Set a minimum and/or maximum floor area in square metres |
 
 All filters combine — setting Town to "Tampines" and Flat type to "4-Room" shows only 4-Room blocks in Tampines.
 
@@ -96,6 +99,7 @@ Sort by:
 - **Price** (low → high or high → low)
 - **Remaining lease**
 - **MRT proximity**
+- **Recent activity** (blocks with the most recent transactions first)
 - **Affordability score** (when a search profile is active)
 
 ### Town profile
@@ -129,7 +133,7 @@ The tool returns a **verdict** — whether the asking price is well below, aroun
 
 ### Confidence and caveats
 
-Each result shows a **confidence badge** (High / Medium / Low) indicating how reliable the assessment is. Confidence is based on four signals: sample size, data recency, geographic proximity, and match quality (flat type, floor area, storey).
+Each result shows a **confidence badge** (High / Medium / Low) indicating how reliable the assessment is. Confidence is based on four signals: sample size, data recency, geographic scope (proportion of comparables from the same block, street, or town), and match quality (flat type, floor area, storey).
 
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
 
@@ -140,13 +144,14 @@ Below the verdict, a **comparable evidence table** shows every transaction used 
 | Column | Description |
 |--------|-------------|
 | **Month** | Transaction month |
-| **Block / Street** | Location of the comparable unit |
+| **Block / Street** | Block and street of the comparable unit |
 | **Flat Type** | e.g. 4 ROOM, 5 ROOM |
 | **Storey** | Storey range of the unit |
 | **Area** | Floor area in square metres |
 | **Lease** | Lease commencement year |
 | **Price** | Resale price |
 | **$/sqm** | Price per square metre |
+| **Adj. Price** | Time-adjusted price (shown when adjustment data is available) |
 | **Similarity** | How closely the transaction matches your listing (percentage bar) |
 | **Match Reasons** | Why this transaction was selected (e.g. "Same block", "Same flat type") |
 
@@ -164,7 +169,7 @@ You can **save the check to your shortlist** or **share it via URL**.
 
 ## Shortlist (Saved)
 
-The **Saved** tab holds blocks you have bookmarked. You can save up to 50 blocks.
+The **Saved** tab holds blocks you have bookmarked. You can save up to 20 blocks.
 
 ### Features
 
@@ -211,9 +216,9 @@ Profile chips appear alongside filter chips. Remove any chip to disable that par
 
 ## Keyboard shortcuts
 
-- **Escape** — close the current drawer or overlay
-- **Arrow keys** — navigate within tab bars and lists
-- **Tab** — move focus between interactive elements
+- **Escape** — close the current drawer, overlay, or search suggestion dropdown
+- **Arrow keys** — navigate search suggestions in the typeahead dropdown; toggle heatmap mode
+- **Tab** — move focus between interactive elements (standard browser behaviour)
 
 ## Data and privacy
 
