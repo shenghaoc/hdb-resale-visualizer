@@ -247,9 +247,9 @@ export async function insertTransactions(
     return;
   }
 
-  // 11 columns → at most floor(100/11) = 9 rows per INSERT to stay under
-  // the 100-bound-param limit.
-  const ROWS_PER_INSERT = 9;
+  // Dynamically calculate the max rows per INSERT to stay under the
+  // 100-bound-param limit. Adapts automatically if columns are added/removed.
+  const ROWS_PER_INSERT = Math.floor(100 / TX_COLUMNS.length);
   // D1 batch endpoint allows up to 100 statements per request.
   const MAX_BATCH_STMTS = 100;
   const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;
@@ -259,7 +259,7 @@ export async function insertTransactions(
   // INSERT batch to avoid an empty-table window).
   let firstBatch = true;
 
-  // Build INSERT statements: each has ROWS_PER_INSERT rows (7 rows × 14 cols = 98 params).
+  // Build INSERT statements: each has ROWS_PER_INSERT rows.
   const statements: Array<{ sql: string; params: unknown[] }> = [];
   for (let i = 0; i < transactions.length; i += ROWS_PER_INSERT) {
     const chunk = transactions.slice(i, i + ROWS_PER_INSERT);
