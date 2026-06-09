@@ -135,6 +135,11 @@ The following structured format applies to the overall PR review summary comment
 - Break existing deployment assumptions or map attribution requirements
 - Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
 
+### Review priorities
+
+P1 (must fix before merge):
+- Missing or outdated user-facing documentation in `docs/guide/` for user-visible changes.
+
 ### Platform-Specific Review Tooling
 - **Claude**: triggered via `@claude review` PR comment.
 - **Kiro**: review hooks configured in `.kiro/`.
