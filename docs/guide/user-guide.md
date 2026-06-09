@@ -40,9 +40,9 @@ Open **Filters** to narrow results by:
 | **Budget** | Set a minimum and/or maximum resale price |
 | **Remaining lease** | Only show blocks with at least N years of lease left |
 | **MRT proximity** | Filter by walking distance to the nearest MRT station |
-| **Date range** | Limit transactions to a specific month window |
 | **Flat model** | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS) |
 | **Floor area** | Set a minimum and/or maximum floor area in square metres |
+| **Date range** | Limit transactions to a specific month window |
 
 All filters combine — setting Town to "Tampines" and Flat type to "4-Room" shows only 4-Room blocks in Tampines.
 
