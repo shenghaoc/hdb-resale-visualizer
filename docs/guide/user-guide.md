@@ -36,7 +36,7 @@ Open **Filters** to narrow results by:
 |--------|-------------|
 | **Town** | Restrict to a single town (e.g. Tampines, Clementi) |
 | **Flat type** | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc. |
-| **Affordability** | Toggle between all blocks, affordable-comfortable, or affordable-stretch (requires a search profile) |
+| **Affordability** | Toggle between "All blocks", "Affordable: comfortable", or "Affordable: comfortable + stretch" (requires a search profile) |
 | **Budget** | Set a minimum and/or maximum resale price |
 | **Remaining lease** | Only show blocks with at least N years of lease left |
 | **MRT proximity** | Filter by walking distance to the nearest MRT station |
