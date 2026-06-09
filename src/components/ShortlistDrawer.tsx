@@ -1322,13 +1322,24 @@ export function ShortlistDrawer({
       return null;
     }
 
-    const months = [...new Set(trendChartRows.flatMap((row) => row.monthlyTrend.map((point) => point.month)))].sort(
-      (left, right) => left.localeCompare(right),
-    );
-    const seriesKeys = trendChartRows.map((row) => `${row.block.block} ${row.block.streetName}`);
-    const priceMaps = trendChartRows.map((row) =>
-      new Map(row.monthlyTrend.map((point) => [point.month, point.medianPrice])),
-    );
+    // Single pass to avoid GC pressure from intermediate arrays (.flatMap().map())
+    const monthSet = new Set<string>();
+    const seriesKeys: string[] = [];
+    const priceMaps: Map<string, number>[] = [];
+
+    for (const row of trendChartRows) {
+      seriesKeys.push(`${row.block.block} ${row.block.streetName}`);
+      const priceMap = new Map<string, number>();
+      for (const point of row.monthlyTrend) {
+        monthSet.add(point.month);
+        if (point.medianPrice != null && !Number.isNaN(point.medianPrice)) {
+          priceMap.set(point.month, point.medianPrice);
+        }
+      }
+      priceMaps.push(priceMap);
+    }
+
+    const months = Array.from(monthSet).sort((left, right) => left.localeCompare(right));
     let maxPrice = 0;
     const data = months.map((month) => {
       const row: Record<string, string | number | undefined> = { month };
