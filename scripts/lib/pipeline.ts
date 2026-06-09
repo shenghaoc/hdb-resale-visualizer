@@ -596,8 +596,8 @@ export function buildArtifacts({
   }
 
   // Collect full transaction rows for the comparable engine v2 (all rows,
-  // not capped). storeyMidpoint is pre-computed here so the API doesn't
-  // need to parse storeyRange strings at query time.
+  // not capped). Rows with unparseable storey ranges are filtered out here;
+  // storey_midpoint and price_per_sqm are derived at read time in the API.
   const allTransactions: TransactionRow[] = [];
 
   for (const [addressKey, blockTransactions] of grouped.entries()) {
