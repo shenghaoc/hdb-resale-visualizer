@@ -217,7 +217,7 @@ Profile chips appear alongside filter chips. Remove any chip to disable that par
 ## Keyboard shortcuts
 
 - **Escape** — close the current drawer, overlay, or search suggestion dropdown
-- **Arrow keys** — navigate search suggestions in the typeahead; switch between price/$/sqm in the heatmap toggle (when focused)
+- **Arrow keys** — navigate search suggestions in the typeahead; switch between price and $/sqm in the heatmap toggle (when focused)
 - **Tab** — move focus between interactive elements (standard browser behaviour)
 
 ## Data and privacy
