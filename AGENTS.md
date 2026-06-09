@@ -165,3 +165,8 @@ All lint/test/build/typecheck commands are listed in the "Useful local commands"
 ```bash
 npx playwright install --with-deps webkit 
 ```
+
+## Review priorities
+
+P1 (must fix before merge):
+- Missing or outdated user-facing documentation in `docs/guide/` for user-visible changes.
