@@ -84,3 +84,7 @@
 ## 2024-06-07 - Dynamic Bounding Boxes Require Infinity Initialization
 **Learning:** When implementing branch-and-bound style spatial pre-filtering for top-K nearest neighbor searches, using an arbitrary initial threshold (like `5000m` assuming K items exist within that range) is unsafe. If the region is sparse and items are beyond that threshold, the logic will early-exit and return empty arrays, causing a functional regression in otherwise correct bounding box checks.
 **Action:** Always initialize the dynamic threshold for bounding boxes to `Infinity` until the target count (`limit`) has been accumulated, after which the threshold can be safely clamped to the K-th furthest item's distance.
+
+## 2026-06-09 - Single-pass array operations inside useMemo
+**Learning:** Chaining array operations like `.flatMap().map()` inside `useMemo` hooks (e.g., when aggregating chart data points) creates multiple intermediate arrays. In heavily rendered views like `ShortlistDrawer`, this causes significant memory allocations and GC pressure, leading to UI stutter.
+**Action:** Combine multi-step data extraction operations into a single-pass `for...of` loop, directly appending to pre-allocated sets or arrays.
