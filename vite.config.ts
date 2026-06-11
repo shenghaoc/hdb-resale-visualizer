@@ -130,8 +130,8 @@ export default defineConfig({
       {
         files: ["**/*.{ts,tsx}"],
         rules: {
-          "react/rules-of-hooks": "error",
-          "react/exhaustive-deps": "warn",
+          "react-hooks/rules-of-hooks": "error",
+          "react-hooks/exhaustive-deps": "warn",
           "react/only-export-components": [
             "warn",
             {
