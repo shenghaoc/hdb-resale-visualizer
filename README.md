@@ -11,7 +11,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - ECharts for block-level trend charts
-- Node.js 26 + npm for package management, scripts, and CI
+- Node.js 26 + pnpm for package management, scripts, and CI
 
 ## Kiro workflow and repository docs
 
@@ -26,16 +26,16 @@ Top-level Markdown keeps one canonical instruction source ([`AGENTS.md`](AGENTS.
 
 ## Screenshots
 
-| Overview | Filtered by town |
-|---|---|
+| Overview                                      | Filtered by town                                      |
+| --------------------------------------------- | ----------------------------------------------------- |
 | ![Overview](docs/screenshots/01-overview.png) | ![Filter panel](docs/screenshots/02-filter-panel.png) |
 
-| Mobile view | Results list |
-|---|---|
+| Mobile view                               | Results list                                     |
+| ----------------------------------------- | ------------------------------------------------ |
 | ![Mobile](docs/screenshots/03-mobile.png) | ![Results](docs/screenshots/04-results-pane.png) |
 
-| Block detail | Shortlist |
-|---|---|
+| Block detail                                          | Shortlist                                   |
+| ----------------------------------------------------- | ------------------------------------------- |
 | ![Block detail](docs/screenshots/05-block-detail.png) | ![Shortlist](docs/screenshots/06-saved.png) |
 
 ## User guide
@@ -56,7 +56,7 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 
 ## Official data sources
 
-- [Resale Flat Prices collection 189](https://data.gov.sg/datasets?agencies=Housing+%26+Development+Board+(HDB)&resultId=189)
+- [Resale Flat Prices collection 189](<https://data.gov.sg/datasets?agencies=Housing+%26+Development+Board+(HDB)&resultId=189>)
 - [HDB Property Information](https://data.gov.sg/datasets/d_17f5382f26140b1fdae0ba2ef6239d2f/view)
 - [LTA MRT Station Exit (GEOJSON)](https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view)
 - [MOE School Directory](https://data.gov.sg/datasets/d_688b934f82c1059ed0a6993d2a829089/view)
@@ -71,13 +71,13 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 For pure UI iteration that does not require live data, start Vite:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 because no Pages Functions are running — wire mock data per spec or use the full local stack below.
@@ -85,52 +85,51 @@ This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 becau
 For a full local stack (UI + Pages Functions + local D1 emulator):
 
 ```bash
-npm run db:migrate:local     # one-time: create the local D1 schema
-npm run dev:functions        # runs `wrangler pages dev` against the local D1
+pnpm db:migrate:local     # one-time: create the local D1 schema
+pnpm dev:functions        # runs `wrangler pages dev` against the local D1
 ```
 
 You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
 
-Run `npm run sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
+Run `pnpm sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
 
 ## Scripts
 
 ```bash
-npm run dev               # Vite dev server (UI-only)
-npm run dev:functions     # Wrangler Pages dev (UI + /api/* + local D1)
-npm run check:boundaries  # script/runtime import boundary check
-npm run build             # production build (no D1 dependency)
-npm run build:full        # build + remote D1 sync (maintainers only)
-npm run preview           # vite preview of the built bundle
-npm run typecheck
-npm run lint
-npm run lint:fast
-npm run test
-npm run test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
-npm run test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
-npm run test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
-npm run test:e2e
-npm run check               # pre-commit gate: boundaries + typecheck + lint + unit tests
-npm run check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
-npm run sync-data           # remote D1 sync (requires CF credentials)
-npm run db:migrate:local
-npm run db:migrate:remote
+pnpm dev               # Vite dev server (UI-only)
+pnpm dev:functions     # Wrangler Pages dev (UI + /api/* + local D1)
+pnpm check:boundaries  # script/runtime import boundary check
+pnpm build             # production build (no D1 dependency)
+pnpm build:full        # build + remote D1 sync (maintainers only)
+pnpm preview           # vite preview of the built bundle
+pnpm typecheck
+pnpm lint
+pnpm lint:fast
+pnpm test
+pnpm test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
+pnpm test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
+pnpm test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
+pnpm test:e2e
+pnpm check               # pre-commit gate: boundaries + typecheck + lint + unit tests
+pnpm check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
+pnpm sync-data           # remote D1 sync (requires CF credentials)
+pnpm db:migrate:local
+pnpm db:migrate:remote
 ```
 
 The targeted `test:*` scripts reuse the existing Vitest config and filter by
 filename — they are fast feedback loops for buyer-critical listing-check and
-comparable-engine work. Run `npm run check:pr` once before opening a pull
+comparable-engine work. Run `pnpm check:pr` once before opening a pull
 request; it is a plain npm script with no Kiro-specific behaviour. CI does not
 invoke `check:pr` directly — it runs the same underlying scripts (`typecheck`,
 `lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
 parallel jobs — so the local gate is a superset of the per-PR CI checks.
 
-
 ## Build and runtime guardrails
 
-- `npm run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
-- `npm run build` is the default production build (`check:boundaries` + typecheck + compile + bundle budget check). It has no dependency on D1 — the static UI bundle is rebuilt from source only.
-- `npm run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
+- `pnpm check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
+- `pnpm build` is the default production build (`check:boundaries` + typecheck + compile + bundle budget check). It has no dependency on D1 — the static UI bundle is rebuilt from source only.
+- `pnpm build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
 
 ## Data pipeline
 
@@ -167,9 +166,9 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 ## Deployment
 
-- **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `npm run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
+- **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `pnpm build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
 - **CI** (`.github/workflows/ci.yml`): typecheck, typed lint, unit/integration tests, e2e smoke (fixtures staged to `public/api/` for preview only), and production build verification. No data artifact caching — runtime reads from D1.
-- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `npm run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
+- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `pnpm sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes
 
@@ -179,10 +178,10 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 ## Troubleshooting
 
-### `npm run build` fails on the boundary check
+### `pnpm build` fails on the boundary check
 
-Run `npm run check:boundaries` to see script/runtime import violations. Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
+Run `pnpm check:boundaries` to see script/runtime import violations. Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
 
 ### `/api/*` returns 404 locally
 
-You are running `npm run dev` (Vite only). Switch to `npm run dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.
+You are running `pnpm dev` (Vite only). Switch to `pnpm dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.

@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import {
   checkShortlistWriteRateLimit,
   shortlistWriteRateLimitKey,
@@ -35,7 +35,9 @@ describe("checkShortlistWriteRateLimit", () => {
 
     const response = await checkShortlistWriteRateLimit(request, limiter);
     expect(response?.status).toBe(429);
-    expect(response?.headers.get("Retry-After")).toBe(String(SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC));
+    expect(response?.headers.get("Retry-After")).toBe(
+      String(SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC),
+    );
     await expect(response?.json()).resolves.toEqual({ error: "Too Many Requests" });
     expect(limiter.limit).toHaveBeenCalledWith({ key: "203.0.113.10" });
   });
@@ -48,7 +50,9 @@ describe("checkShortlistWriteRateLimit", () => {
 
   it("fails open (returns null) when the limiter throws", async () => {
     const request = new Request("https://example.com/api/shortlist", { method: "POST" });
-    const limiter: ShortlistWriteRateLimiter = { limit: vi.fn().mockRejectedValue(new Error("UNKNOWN")) };
+    const limiter: ShortlistWriteRateLimiter = {
+      limit: vi.fn().mockRejectedValue(new Error("UNKNOWN")),
+    };
     await expect(checkShortlistWriteRateLimit(request, limiter)).resolves.toBeNull();
   });
 });

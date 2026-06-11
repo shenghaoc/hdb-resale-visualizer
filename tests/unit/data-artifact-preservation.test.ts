@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import type { AddressDetail, BlockSummary, Manifest } from "@/types/data";
 
 function parseJson<T>(content: string): T {
@@ -54,17 +54,13 @@ describe("Data Artifact Schema Preservation", () => {
 
   it("keeps block summaries aligned with the manifest block count", () => {
     const manifest = parseJson<Manifest>(readFileSync(manifestPath, "utf-8"));
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
 
     expect(blockSummaries.length).toBe(manifest.counts.blocks);
   });
 
   it("keeps required BlockSummary fields available", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
     const firstBlock = blockSummaries[0];
 
     expect(firstBlock.addressKey).toBeDefined();
@@ -82,9 +78,7 @@ describe("Data Artifact Schema Preservation", () => {
   });
 
   it("keeps block coordinates within Singapore bounds", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
 
     for (const block of blockSummaries.slice(0, 10)) {
       expect(block.coordinates.lat).toBeGreaterThan(1.0);
@@ -95,9 +89,7 @@ describe("Data Artifact Schema Preservation", () => {
   });
 
   it("keeps nearestMrt structured correctly when present", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
     const sampleBlock = blockSummaries.find((block) => block.nearestMrt !== null);
 
     expect(sampleBlock).toBeTruthy();
@@ -107,9 +99,7 @@ describe("Data Artifact Schema Preservation", () => {
   });
 
   it("keeps detail summary metrics available outside the startup summary artifact", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
     const firstBlock = blockSummaries[0];
     const detailPath = join(
       process.cwd(),

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { computeComparableRange } from "@/entities/transaction/comparable-range";
 import type { BlockSummary } from "@/types/data";
 

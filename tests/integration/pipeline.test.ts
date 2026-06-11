@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { buildMrtStationsGeoJson, haversineDistanceMeters, makeAddressKey } from "../../scripts/lib/pipeline";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  buildMrtStationsGeoJson,
+  haversineDistanceMeters,
+  makeAddressKey,
+} from "../../scripts/lib/pipeline";
 import { buildFixtureArtifacts, fixtureGeocodes, fixtureMrtExits } from "../fixtures/pipeline";
 
 describe("pipeline artifacts", () => {
@@ -18,17 +22,27 @@ describe("pipeline artifacts", () => {
     );
     expect(artifacts.blockSummaries[0]?.displayName).toBe("BEDOK NORTH GREEN");
     expect("priceIqr" in (artifacts.blockSummaries[0] ?? {})).toBe(false);
-    expect(artifacts.blockSummaries.find((block) => block.addressKey === makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10"))?.pricePerSqmMedian).toBeCloseTo(5611.94, 2);
     expect(
-      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.displayName,
+      artifacts.blockSummaries.find(
+        (block) => block.addressKey === makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10"),
+      )?.pricePerSqmMedian,
+    ).toBeCloseTo(5611.94, 2);
+    expect(
+      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary
+        .displayName,
     ).toBeNull();
-    expect(artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]).toBeTruthy();
+    expect(
+      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")],
+    ).toBeTruthy();
     expect(artifacts.townFlatTypeTrend).toHaveLength(3);
   });
 
   it("computes station distance in meters", () => {
     const distance = haversineDistanceMeters(
-      { lat: fixtureGeocodes["ang-mo-kio-406-ang-mo-kio-ave-10"].lat, lng: fixtureGeocodes["ang-mo-kio-406-ang-mo-kio-ave-10"].lng },
+      {
+        lat: fixtureGeocodes["ang-mo-kio-406-ang-mo-kio-ave-10"].lat,
+        lng: fixtureGeocodes["ang-mo-kio-406-ang-mo-kio-ave-10"].lng,
+      },
       { lat: 1.3691, lng: 103.8491 },
     );
 
@@ -42,7 +56,8 @@ describe("pipeline artifacts", () => {
     );
     const artifacts = buildFixtureArtifacts();
     const nearestMrt =
-      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary.nearestMrt;
+      artifacts.details[makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10")]?.summary
+        .nearestMrt;
 
     expect(stations.features).toHaveLength(2);
     expect(angMoKioStation?.geometry.coordinates[0]).toBeCloseTo(103.84985, 5);

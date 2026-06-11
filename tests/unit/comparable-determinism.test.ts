@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { assessAskingPrice } from "@/entities/transaction/transaction-analysis";
 import { computeConfidence } from "../../shared/confidence-system";
 import { generateCaveats } from "../../shared/caveat-codes";

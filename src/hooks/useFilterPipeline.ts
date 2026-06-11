@@ -87,8 +87,7 @@ export function useFilterPipeline({
   // "near me" is a sentinel that requires userLocation to resolve. Without a
   // location it must not run as a literal text search against blocks.
   const resolvedSearch = useMemo(
-    () =>
-      rawFilters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : rawFilters.search,
+    () => (rawFilters.search === NEAR_ME_SEARCH_QUERY && !userLocation ? "" : rawFilters.search),
     [rawFilters.search, userLocation],
   );
 
@@ -107,7 +106,7 @@ export function useFilterPipeline({
   //       geographicIntent which depends on blocks loaded by useBlockLoading below.
   const hasInitialScope = Boolean(
     resultsVisible &&
-      (effectiveFilters.town || resolvedSearch.trim() || rawFilters.selectedAddressKey),
+    (effectiveFilters.town || resolvedSearch.trim() || rawFilters.selectedAddressKey),
   );
 
   const profileReadyForRecommendations =
@@ -188,7 +187,7 @@ export function useFilterPipeline({
     () => ({ ...effectiveFilters, search: resolvedSearch, selectedAddressKey: null }),
     // Intentional: list filter fields explicitly to avoid reference churn when
     // effectiveFilters is recreated without a meaningful filter value change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
     [
       resolvedSearch,
       effectiveFilters.town,
@@ -220,7 +219,16 @@ export function useFilterPipeline({
       scopeFuseMatchedKeys: ReadonlySet<string> | null,
     ) => {
       return scopeBlocks.filter((block) => {
-        if (!matchesFilter(block, scopeFilters, scopeIntent, affordabilityProfile, scopeFuseMatchedKeys)) return false;
+        if (
+          !matchesFilter(
+            block,
+            scopeFilters,
+            scopeIntent,
+            affordabilityProfile,
+            scopeFuseMatchedKeys,
+          )
+        )
+          return false;
         return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
       });
     },
@@ -228,12 +236,12 @@ export function useFilterPipeline({
   );
 
   const resultsFuseMatchedKeys = useMemo(
-    () => stableFilters.search ? getFuseMatchedKeys(blocks, stableFilters.search) : null,
+    () => (stableFilters.search ? getFuseMatchedKeys(blocks, stableFilters.search) : null),
     [blocks, stableFilters.search],
   );
 
   const mapFuseMatchedKeys = useMemo(
-    () => mapFilters.search ? getFuseMatchedKeys(blocks, mapFilters.search) : null,
+    () => (mapFilters.search ? getFuseMatchedKeys(blocks, mapFilters.search) : null),
     [blocks, mapFilters.search],
   );
 
@@ -270,9 +278,9 @@ export function useFilterPipeline({
   // Determine if there is any active filter/search/selection state, independent of which panel is visible.
   const hasResultScope = Boolean(
     effectiveFilters.town ||
-      resolvedSearch.trim() ||
-      geographicIntent ||
-      rawFilters.selectedAddressKey,
+    resolvedSearch.trim() ||
+    geographicIntent ||
+    rawFilters.selectedAddressKey,
   );
 
   // selectedAddressKey is intentionally excluded: a single-block selection has
@@ -305,12 +313,7 @@ export function useFilterPipeline({
   const mapFilteredBlocks = useMemo(() => {
     const scopedBlocks = hasMapMarkerScope
       ? applyProfileVisibility(
-          filterScopedBlocks(
-            blocks,
-            mapFilters,
-            effectiveMapGeographicIntent,
-            mapFuseMatchedKeys,
-          ),
+          filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent, mapFuseMatchedKeys),
           searchProfile,
         )
       : [];
@@ -335,44 +338,47 @@ export function useFilterPipeline({
     mapFuseMatchedKeys,
   ]);
 
-  return useMemo(() => ({
-    useDefaultStartMonth,
-    setUseDefaultStartMonth,
-    effectiveFilters,
-    filterPanelFilters,
-    resolvedSearch,
-    debouncedSearch,
-    sortedTowns,
-    stableFilters,
-    mapFilters,
-    geographicIntent,
-    effectiveMapGeographicIntent,
-    hasResultScope,
-    hasMapMarkerScope,
-    blocks,
-    loadError,
-    searchTruncated,
-    filteredBlocks,
-    mapFilteredBlocks,
-    blocksByKey,
-  }), [
-    useDefaultStartMonth,
-    effectiveFilters,
-    filterPanelFilters,
-    resolvedSearch,
-    debouncedSearch,
-    sortedTowns,
-    stableFilters,
-    mapFilters,
-    geographicIntent,
-    effectiveMapGeographicIntent,
-    hasResultScope,
-    hasMapMarkerScope,
-    blocks,
-    loadError,
-    searchTruncated,
-    filteredBlocks,
-    mapFilteredBlocks,
-    blocksByKey,
-  ]);
+  return useMemo(
+    () => ({
+      useDefaultStartMonth,
+      setUseDefaultStartMonth,
+      effectiveFilters,
+      filterPanelFilters,
+      resolvedSearch,
+      debouncedSearch,
+      sortedTowns,
+      stableFilters,
+      mapFilters,
+      geographicIntent,
+      effectiveMapGeographicIntent,
+      hasResultScope,
+      hasMapMarkerScope,
+      blocks,
+      loadError,
+      searchTruncated,
+      filteredBlocks,
+      mapFilteredBlocks,
+      blocksByKey,
+    }),
+    [
+      useDefaultStartMonth,
+      effectiveFilters,
+      filterPanelFilters,
+      resolvedSearch,
+      debouncedSearch,
+      sortedTowns,
+      stableFilters,
+      mapFilters,
+      geographicIntent,
+      effectiveMapGeographicIntent,
+      hasResultScope,
+      hasMapMarkerScope,
+      blocks,
+      loadError,
+      searchTruncated,
+      filteredBlocks,
+      mapFilteredBlocks,
+      blocksByKey,
+    ],
+  );
 }

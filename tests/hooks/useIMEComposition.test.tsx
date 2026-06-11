@@ -9,18 +9,25 @@
  *
  * _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.2, 3.3_
  */
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { renderHook, act } from "@testing-library/react";
 import { useIMEComposition } from "@/hooks/useIMEComposition";
 
 /** Helper to create a minimal ChangeEvent-like object */
 function makeChangeEvent(value: string) {
-  return { target: { value }, currentTarget: { value } } as unknown as React.ChangeEvent<HTMLInputElement>;
+  return {
+    target: { value },
+    currentTarget: { value },
+  } as unknown as React.ChangeEvent<HTMLInputElement>;
 }
 
 /** Helper to create a minimal CompositionEvent-like object */
 function makeCompositionEvent(value: string) {
-  return { target: { value }, currentTarget: { value }, data: value } as unknown as React.CompositionEvent<HTMLInputElement>;
+  return {
+    target: { value },
+    currentTarget: { value },
+    data: value,
+  } as unknown as React.CompositionEvent<HTMLInputElement>;
 }
 
 describe("useIMEComposition — sequential composition sessions", () => {
@@ -162,10 +169,9 @@ describe("useIMEComposition — stable handler references (useCallback)", () => 
     const callback1 = vi.fn();
     const callback2 = vi.fn();
 
-    const { result, rerender } = renderHook(
-      ({ cb }) => useIMEComposition(cb),
-      { initialProps: { cb: callback1 } },
-    );
+    const { result, rerender } = renderHook(({ cb }) => useIMEComposition(cb), {
+      initialProps: { cb: callback1 },
+    });
 
     const firstOnCompositionStart = result.current.onCompositionStart;
     const firstOnCompositionEnd = result.current.onCompositionEnd;

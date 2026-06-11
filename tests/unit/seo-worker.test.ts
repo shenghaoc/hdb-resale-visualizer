@@ -1,5 +1,10 @@
-import { describe, expect, it } from "vitest";
-import { buildSeoMeta, canonicalUrlForRoute, serializeJsonLdForScript, sitemapXml } from "../../worker/seo";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  buildSeoMeta,
+  canonicalUrlForRoute,
+  serializeJsonLdForScript,
+  sitemapXml,
+} from "../../worker/seo";
 
 describe("seo worker helpers", () => {
   it("normalizes canonical route urls", () => {
@@ -14,7 +19,9 @@ describe("seo worker helpers", () => {
     const sameTownCompare = canonicalUrlForRoute("https://example.com", "BEDOK", null, "bedok");
     expect(sameTownCompare).not.toContain("compareTown");
 
-    expect(canonicalUrlForRoute("https://example.com", null, null, null)).toBe("https://example.com/");
+    expect(canonicalUrlForRoute("https://example.com", null, null, null)).toBe(
+      "https://example.com/",
+    );
 
     const selectedOnly = canonicalUrlForRoute("https://example.com", null, "BK-1", null);
     expect(selectedOnly).toContain("selected=BK-1");
@@ -47,7 +54,10 @@ describe("seo worker helpers", () => {
   });
 
   it("builds town and block seo metadata", () => {
-    const town = buildSeoMeta({ town: "BEDOK", manifest: { availableDateRange: ["2017-01", "2026-04"] } });
+    const town = buildSeoMeta({
+      town: "BEDOK",
+      manifest: { availableDateRange: ["2017-01", "2026-04"] },
+    });
     expect(town?.title).toBe("BEDOK HDB resale prices");
 
     const block = buildSeoMeta({

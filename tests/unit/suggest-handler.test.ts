@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 import { onRequestGet } from "../../functions/api/suggest";
 import { resetStationNamesCacheForTests } from "../../functions/_lib/suggest";
 

@@ -2,7 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vite-plus/test";
 
 const ROOT_DIR = process.cwd();
 const CHECK_BOUNDARIES_SCRIPT = path.join(ROOT_DIR, "scripts/check-boundaries.ts");
@@ -25,15 +25,11 @@ function makeWorkspace(files: Record<string, string>): string {
 }
 
 function runBoundaryCheck(workspace: string) {
-  return spawnSync(
-    NODE_BIN,
-    ["--import", TSX_IMPORT, CHECK_BOUNDARIES_SCRIPT],
-    {
-      cwd: workspace,
-      encoding: "utf8",
-      env: { ...process.env, FORCE_COLOR: "0", NODE_NO_WARNINGS: "1" },
-    },
-  );
+  return spawnSync(NODE_BIN, ["--import", TSX_IMPORT, CHECK_BOUNDARIES_SCRIPT], {
+    cwd: workspace,
+    encoding: "utf8",
+    env: { ...process.env, FORCE_COLOR: "0", NODE_NO_WARNINGS: "1" },
+  });
 }
 
 afterEach(() => {

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildBlockExplanation } from "@/entities/block/block-explanation";
 import type { BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 

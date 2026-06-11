@@ -1,11 +1,16 @@
-import { describe, expect, it } from "vitest";
-import { filterPatchForSuggestion, stationNameToNearMrtSearch } from "@/features/search-profile/suggestActions";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  filterPatchForSuggestion,
+  stationNameToNearMrtSearch,
+} from "@/features/search-profile/suggestActions";
 
 describe("suggestActions", () => {
   it("maps town selection to town filter", () => {
-    expect(
-      filterPatchForSuggestion({ group: "town", label: "Bedok", town: "BEDOK" }),
-    ).toEqual({ town: "BEDOK", search: "", selectedAddressKey: null });
+    expect(filterPatchForSuggestion({ group: "town", label: "Bedok", town: "BEDOK" })).toEqual({
+      town: "BEDOK",
+      search: "",
+      selectedAddressKey: null,
+    });
   });
 
   it("maps MRT selection to near-station search text", () => {

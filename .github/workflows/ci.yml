@@ -3,24 +3,24 @@ name: CI
 on:
   pull_request:
     paths: &ci_paths
-      - 'src/**'
-      - 'functions/**'
-      - 'worker/**'
-      - 'scripts/**'
-      - 'shared/**'
-      - 'tests/**'
-      - 'public/**'
-      - '.github/workflows/**'
-      - 'index.html'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'types/**'
-      - 'tsconfig*.json'
-      - 'vite.config.*'
-      - 'vitest.config.*'
-      - 'playwright.config.*'
-      - 'eslint.config.*'
-      - 'wrangler.*'
+      - "src/**"
+      - "functions/**"
+      - "worker/**"
+      - "scripts/**"
+      - "shared/**"
+      - "tests/**"
+      - "public/**"
+      - ".github/workflows/**"
+      - "index.html"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "types/**"
+      - "tsconfig*.json"
+      - "vite.config.*"
+      - "vitest.config.*"
+      - "playwright.config.*"
+      - "eslint.config.*"
+      - "wrangler.*"
   push:
     branches:
       - main
@@ -101,13 +101,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: npm run typecheck
+        run: pnpm typecheck
 
   lint:
     runs-on: ubuntu-latest
@@ -118,13 +121,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -135,13 +141,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Unit and integration tests
-        run: npm run test
+        run: pnpm test
 
   # ── Build (also gates merge; artifact consumed by e2e-smoke) ────────────────
   #
@@ -161,18 +170,21 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # Fixtures must be staged before vite build so they are copied into dist/
       # and served by vite preview without a second staging step in e2e-smoke.
       - name: Stage E2E fixtures into public/api
-        run: npm run setup:fixtures
+        run: pnpm setup:fixtures
 
       - name: Production build
-        run: npm run build:deploy
+        run: pnpm build:deploy
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v7
@@ -207,10 +219,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         env:
           # Browsers are already in the Docker image; skip the post-install
           # download that @playwright/test would otherwise trigger.
@@ -224,13 +239,13 @@ jobs:
 
       - name: End-to-end smoke (PR / push)
         if: github.event_name != 'workflow_dispatch'
-        run: npm run test:e2e:smoke
+        run: pnpm test:e2e:smoke
         env:
           E2E_DIST_PREBUILT: "1"
 
       - name: End-to-end full suite (workflow_dispatch)
         if: github.event_name == 'workflow_dispatch'
-        run: npm run test:e2e
+        run: pnpm test:e2e
         env:
           E2E_DIST_PREBUILT: "1"
 

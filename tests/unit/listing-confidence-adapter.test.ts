@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { computeConfidence } from "@/entities/transaction/listing-confidence";
 import { computeConfidence as computeConfidenceV2 } from "../../shared/confidence-system";
 import type { AddressDetailTransaction } from "@/types/data";

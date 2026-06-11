@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   buildBlockShareUrl,
   buildCompareShareUrl,
@@ -140,9 +140,11 @@ describe("buildShortlistShareUrl", () => {
   });
 });
 
-describe('OG image URL builders', () => {
+describe("OG image URL builders", () => {
   it("builds block OG route", () => {
-    expect(buildBlockOgImageUrl("bedok-123", BASE_URL)).toBe("https://example.com/og/block/bedok-123.png");
+    expect(buildBlockOgImageUrl("bedok-123", BASE_URL)).toBe(
+      "https://example.com/og/block/bedok-123.png",
+    );
   });
 
   it("builds compare OG route from canonical town names", () => {

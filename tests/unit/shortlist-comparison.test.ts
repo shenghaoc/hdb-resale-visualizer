@@ -1,11 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildShortlistComparisonRows } from "@/features/shortlist/shortlist-comparison";
 import { MAX_LEASE_DURATION } from "@/shared/lib/constants";
-import type {
-  AddressDetailSummary,
-  BlockSummary,
-  ShortlistItem,
-} from "@/types/data";
+import type { AddressDetailSummary, BlockSummary, ShortlistItem } from "@/types/data";
 
 const baseBlock: BlockSummary = {
   addressKey: "test-block",
@@ -32,21 +28,20 @@ const baseItem: ShortlistItem = {
   addedAt: "2024-01-01T00:00:00Z",
 };
 
-const baseDetailSummary: Pick<
-  AddressDetailSummary,
-  "pricePerSqmMedian" | "pricePerSqftMedian"
-> = {
+const baseDetailSummary: Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian"> = {
   pricePerSqmMedian: 6_250,
   pricePerSqftMedian: 580,
 };
 
-function makeRow(overrides: {
-  block?: Partial<BlockSummary>;
-  item?: Partial<ShortlistItem>;
-  detailSummary?:
-    | Partial<Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian">>
-    | null;
-} = {}) {
+function makeRow(
+  overrides: {
+    block?: Partial<BlockSummary>;
+    item?: Partial<ShortlistItem>;
+    detailSummary?: Partial<
+      Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian">
+    > | null;
+  } = {},
+) {
   return {
     item: { ...baseItem, ...overrides.item },
     block: { ...baseBlock, ...overrides.block },
@@ -136,18 +131,14 @@ describe("buildShortlistComparisonRows", () => {
   });
 
   it("returns a null target gap when no target price is set", () => {
-    const [row] = buildShortlistComparisonRows([
-      makeRow({ item: { targetPrice: null } }),
-    ]);
+    const [row] = buildShortlistComparisonRows([makeRow({ item: { targetPrice: null } })]);
 
     expect(row.targetGap).toBeNull();
     expect(row.targetPrice).toBeNull();
   });
 
   it("treats non-finite target prices as missing", () => {
-    const [row] = buildShortlistComparisonRows([
-      makeRow({ item: { targetPrice: Number.NaN } }),
-    ]);
+    const [row] = buildShortlistComparisonRows([makeRow({ item: { targetPrice: Number.NaN } })]);
 
     expect(row.targetGap).toBeNull();
   });
@@ -170,7 +161,8 @@ describe("buildShortlistComparisonRows", () => {
 
     expect(withMrt.nearestMrt).toEqual({
       stationName: "Ang Mo Kio",
-      distanceMeters: 500, walkingTimeSeconds: 400
+      distanceMeters: 500,
+      walkingTimeSeconds: 400,
     });
     expect(withoutMrt.nearestMrt).toBeNull();
   });

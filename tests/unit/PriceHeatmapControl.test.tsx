@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
@@ -35,7 +35,9 @@ describe("PriceHeatmapControl — hasScope=false", () => {
 
   it("does not call onToggle when clicked via keyboard", async () => {
     const onToggle = vi.fn();
-    renderWithProviders(<PriceHeatmapControl {...baseProps} hasScope={false} onToggle={onToggle} />);
+    renderWithProviders(
+      <PriceHeatmapControl {...baseProps} hasScope={false} onToggle={onToggle} />,
+    );
     await userEvent.click(screen.getByRole("switch"));
     expect(onToggle).not.toHaveBeenCalled();
   });

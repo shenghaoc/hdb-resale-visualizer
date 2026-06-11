@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vite-plus/test";
 import { safeStorage } from "../../src/shared/lib/storage";
 
 function installLocalStorageMock(

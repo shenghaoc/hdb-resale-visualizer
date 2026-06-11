@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { DEFAULT_FILTERS, MAX_SHORTLIST_ITEMS } from "@/shared/lib/constants";
@@ -22,7 +22,8 @@ const mockBlock: BlockSummary = {
   flatModels: ["Model A"],
   nearestMrt: {
     stationName: "Ang Mo Kio",
-    distanceMeters: 500, walkingTimeSeconds: 400
+    distanceMeters: 500,
+    walkingTimeSeconds: 400,
   },
 };
 
@@ -109,7 +110,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that primary schools data is displayed
@@ -150,15 +151,15 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Should not show loading state - comparison data sections are simply omitted
     expect(screen.queryByText("Loading comparison data…")).not.toBeInTheDocument();
-    
+
     // Basic block info should still be displayed (address in title)
     expect(screen.getAllByText(/101 Ang Mo Kio Ave 3/i).length).toBeGreaterThan(0);
-    
+
     // Compact v2 card should still expose the map action and target controls.
     expect(screen.getByText("View on map")).toBeInTheDocument();
     expect(screen.getByLabelText("Your target price")).toBeInTheDocument();
@@ -177,10 +178,12 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
-    expect(screen.getByText(`Save up to ${MAX_SHORTLIST_ITEMS} blocks to compare.`)).toBeInTheDocument();
+    expect(
+      screen.getByText(`Save up to ${MAX_SHORTLIST_ITEMS} blocks to compare.`),
+    ).toBeInTheDocument();
   });
 
   it("edits target price and can select a saved block on the map", () => {
@@ -199,7 +202,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={onUpdate}
           onSelectAddress={onSelectAddress}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     fireEvent.change(screen.getByLabelText("Your target price"), {
@@ -229,7 +232,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     expect(screen.getAllByText("On target").length).toBeGreaterThan(0);
@@ -251,7 +254,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={onSelectAddress}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     expect(screen.queryByTestId("shortlist-comparison-table")).not.toBeInTheDocument();
@@ -278,13 +281,13 @@ describe("ShortlistDrawer", () => {
     expect(tableRows[1]).toHaveTextContent("Test notes");
 
     const compareTable = within(table).getByRole("table", { name: "Saved blocks comparison" });
-    const compareButton = within(compareTable).getByRole("button", { name: "View 101 Ang Mo Kio Ave 3" });
+    const compareButton = within(compareTable).getByRole("button", {
+      name: "View 101 Ang Mo Kio Ave 3",
+    });
     fireEvent.click(compareButton);
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
 
-    fireEvent.click(
-      screen.getByRole("button", { name: "Show saved blocks as cards" }),
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Show saved blocks as cards" }));
     expect(screen.queryByTestId("shortlist-comparison-table")).not.toBeInTheDocument();
   });
 
@@ -331,7 +334,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     rerender(
@@ -346,7 +349,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     const firstCardButton = screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i });
@@ -364,7 +367,7 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i }));
@@ -381,9 +384,12 @@ describe("ShortlistDrawer", () => {
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
-    expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute(
+      "aria-expanded",
+      "true",
+    );
   });
 });

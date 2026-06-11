@@ -1,5 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import type { AddressDetail, ComparisonArtifact } from "@/types/data";
 

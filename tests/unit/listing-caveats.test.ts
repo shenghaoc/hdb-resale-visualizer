@@ -1,15 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { generateCaveats } from "@/entities/transaction/listing-caveats";
 import type { AskingPriceAssessment } from "@/entities/transaction/transaction-analysis";
 import type { ConfidenceResult } from "@/entities/transaction/listing-confidence";
 
-function makeAssessment(
-  overrides: Partial<AskingPriceAssessment> = {},
-): AskingPriceAssessment {
+function makeAssessment(overrides: Partial<AskingPriceAssessment> = {}): AskingPriceAssessment {
   return {
     comparableCount: overrides.comparableCount ?? 12,
     summary: {
-      count: overrides.summary?.count ?? (overrides.comparableCount ?? 12),
+      count: overrides.summary?.count ?? overrides.comparableCount ?? 12,
       medianPrice: overrides.summary?.medianPrice ?? 600000,
       medianPricePerSqm: overrides.summary?.medianPricePerSqm ?? 6500,
       p25Price: overrides.summary?.p25Price ?? 550000,
@@ -31,19 +29,12 @@ function makeAssessment(
   };
 }
 
-function makeConfidence(
-  overrides: Partial<ConfidenceResult> = {},
-): ConfidenceResult {
-  const hasNewest = Object.prototype.hasOwnProperty.call(
-    overrides,
-    "newestComparableMonth",
-  );
+function makeConfidence(overrides: Partial<ConfidenceResult> = {}): ConfidenceResult {
+  const hasNewest = Object.prototype.hasOwnProperty.call(overrides, "newestComparableMonth");
   return {
     level: overrides.level ?? "high",
     comparableCount: overrides.comparableCount ?? 12,
-    newestComparableMonth: hasNewest
-      ? overrides.newestComparableMonth!
-      : "2025-06",
+    newestComparableMonth: hasNewest ? overrides.newestComparableMonth! : "2025-06",
     reason: overrides.reason ?? "High confidence — 12 comparables",
   };
 }

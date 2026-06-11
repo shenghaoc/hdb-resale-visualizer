@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { AmenityLayersControl } from "@/components/AmenityLayersControl";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Translator } from "@/shared/lib/i18n";
@@ -17,33 +17,32 @@ const t: Translator = (key) => {
     "schoolOverlay.enable": "Show nearby primary school markers",
     "schoolOverlay.disable": "Hide nearby primary school markers",
     "schoolOverlay.unavailable": "Select a block to show nearby primary school markers.",
-    "schoolOverlay.noSchoolsNearby": "No primary schools within 2km with map coordinates for this block.",
+    "schoolOverlay.noSchoolsNearby":
+      "No primary schools within 2km with map coordinates for this block.",
   };
   return messages[key] ?? key;
 };
 
-function renderControl(
-  overrides: Partial<ComponentProps<typeof AmenityLayersControl>> = {},
-) {
+function renderControl(overrides: Partial<ComponentProps<typeof AmenityLayersControl>> = {}) {
   const onToggleMrtStations = vi.fn();
   const onToggleMrtExits = vi.fn();
   const onToggleSchoolOverlay = vi.fn();
 
   const result = render(
     <TooltipProvider>
-    <AmenityLayersControl
-      mrtStationsEnabled={false}
-      mrtExitsEnabled={false}
-      schoolOverlayEnabled={false}
-      schoolOverlayAvailable={true}
-      schoolOverlayLoading={false}
-      hasBlockSelection={true}
-      onToggleMrtStations={onToggleMrtStations}
-      onToggleMrtExits={onToggleMrtExits}
-      onToggleSchoolOverlay={onToggleSchoolOverlay}
-      t={t}
-      {...overrides}
-    />
+      <AmenityLayersControl
+        mrtStationsEnabled={false}
+        mrtExitsEnabled={false}
+        schoolOverlayEnabled={false}
+        schoolOverlayAvailable={true}
+        schoolOverlayLoading={false}
+        hasBlockSelection={true}
+        onToggleMrtStations={onToggleMrtStations}
+        onToggleMrtExits={onToggleMrtExits}
+        onToggleSchoolOverlay={onToggleSchoolOverlay}
+        t={t}
+        {...overrides}
+      />
     </TooltipProvider>,
   );
 

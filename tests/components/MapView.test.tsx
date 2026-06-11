@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vite-plus/test";
 import { MapView } from "@/components/MapView";
 import { toGeoJson } from "@/features/map-explorer/map";
 import type { BlockSummary } from "@/types/data";

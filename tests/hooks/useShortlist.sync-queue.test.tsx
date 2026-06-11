@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useShortlist } from "@/hooks/useShortlist";
 import { SyncRateLimitedError, pullShortlist, pushShortlist } from "@/features/shortlist/cloudSync";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
@@ -104,7 +104,10 @@ describe("useShortlist offline sync queue", () => {
     const NEW_CODE = "NEW123abc123ABCD";
     // Default absorbs the reconcile push the debounced effect fires once the
     // freshly minted code activates; the first two calls are scripted below.
-    vi.mocked(pushShortlist).mockResolvedValue({ syncCode: NEW_CODE, items: [validItem("local-1")] });
+    vi.mocked(pushShortlist).mockResolvedValue({
+      syncCode: NEW_CODE,
+      items: [validItem("local-1")],
+    });
     vi.mocked(pushShortlist)
       .mockRejectedValueOnce(new TypeError("Failed to fetch"))
       .mockResolvedValueOnce({ syncCode: NEW_CODE, items: [validItem("local-1")] });

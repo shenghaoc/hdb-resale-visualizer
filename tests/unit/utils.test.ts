@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 import { cn, townFilenameToCanonical, townToFilename } from "../../src/shared/lib/utils";
 
 describe("utils", () => {
@@ -32,8 +32,8 @@ describe("utils", () => {
           "base-class",
           { "bg-red-500": false, "bg-blue-500": true },
           ["text-sm", "font-bold"],
-          "text-lg" // should override text-sm
-        )
+          "text-lg", // should override text-sm
+        ),
       ).toBe("base-class bg-blue-500 font-bold text-lg");
     });
   });

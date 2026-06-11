@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { rankSimilarBlocks, scoreSimilarity } from "@/entities/block/similar-blocks";
 import type { BlockSummary } from "@/types/data";
 
@@ -130,10 +130,7 @@ describe("scoreSimilarity", () => {
 
 describe("rankSimilarBlocks", () => {
   it("excludes the source block itself", () => {
-    const candidates = [
-      SOURCE,
-      makeBlock({ addressKey: "other", flatTypes: ["4 ROOM"] }),
-    ];
+    const candidates = [SOURCE, makeBlock({ addressKey: "other", flatTypes: ["4 ROOM"] })];
     const results = rankSimilarBlocks(SOURCE, candidates);
     expect(results.every((b) => b.addressKey !== SOURCE.addressKey)).toBe(true);
   });
@@ -151,7 +148,12 @@ describe("rankSimilarBlocks", () => {
   it("returns results in descending similarity order", () => {
     const candidates = [
       makeBlock({ addressKey: "cheap", flatTypes: ["4 ROOM"], medianPrice: 300_000 }),
-      makeBlock({ addressKey: "veryClose", flatTypes: ["4 ROOM"], medianPrice: 605_000, town: "BEDOK" }),
+      makeBlock({
+        addressKey: "veryClose",
+        flatTypes: ["4 ROOM"],
+        medianPrice: 605_000,
+        town: "BEDOK",
+      }),
       makeBlock({ addressKey: "ok", flatTypes: ["4 ROOM"], medianPrice: 680_000 }),
     ];
     const results = rankSimilarBlocks(SOURCE, candidates);
@@ -187,7 +189,11 @@ describe("rankSimilarBlocks", () => {
 
   it("is deterministic — same output for same input", () => {
     const candidates = Array.from({ length: 10 }, (_, i) =>
-      makeBlock({ addressKey: `block-${i}`, flatTypes: ["4 ROOM"], medianPrice: 600_000 + i * 1000 }),
+      makeBlock({
+        addressKey: `block-${i}`,
+        flatTypes: ["4 ROOM"],
+        medianPrice: 600_000 + i * 1000,
+      }),
     );
     const first = rankSimilarBlocks(SOURCE, candidates);
     const second = rankSimilarBlocks(SOURCE, candidates);

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useShortlist } from "@/hooks/useShortlist";
 import { MAX_SHORTLIST_ITEMS, SHORTLIST_STORAGE_KEY } from "@/shared/lib/constants";
 
@@ -209,7 +209,9 @@ describe("useShortlist", () => {
     expect(result.current.items.map((item) => item.addressKey)).toEqual(["addr-local", "addr-url"]);
     expect(result.current.items[0]?.notes).toBe("keep my notes");
 
-    const persisted = JSON.parse(window.localStorage.getItem(SHORTLIST_STORAGE_KEY) ?? "[]") as Array<{
+    const persisted = JSON.parse(
+      window.localStorage.getItem(SHORTLIST_STORAGE_KEY) ?? "[]",
+    ) as Array<{
       addressKey: string;
       notes: string;
     }>;

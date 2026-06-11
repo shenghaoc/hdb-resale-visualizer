@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vite-plus/test";
 import {
   affordabilityHeadroom,
   affordabilityProfileFingerprint,
@@ -45,12 +45,14 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
   };
 }
 
-function makeProfile(overrides: {
-  monthlyIncome?: number | null;
-  cpfOABalance?: number | null;
-  age?: number | null;
-  coApplicantAge?: number | null;
-} = {}) {
+function makeProfile(
+  overrides: {
+    monthlyIncome?: number | null;
+    cpfOABalance?: number | null;
+    age?: number | null;
+    coApplicantAge?: number | null;
+  } = {},
+) {
   return {
     monthlyIncome: null as number | null,
     cpfOABalance: null as number | null,
@@ -131,11 +133,13 @@ describe("maxAffordablePrice", () => {
     // Total funds constraint = 513,082 + 100,000 = 613,082
     // Downpayment constraint = 100k / 0.25 = $400,000
     // Downpayment constraint is tighter → $400,000
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: 100000,
-      age: 35,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: 100000,
+        age: 35,
+      }),
+    );
     expect(price).toBe(400000);
   });
 
@@ -145,75 +149,91 @@ describe("maxAffordablePrice", () => {
     // totalFundsConstraint = 384,811 + 500,000 = 884,811
     // downpaymentConstraint = 500k / 0.25 = 2,000,000
     // Total funds constraint is tighter
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: 6000,
-      cpfOABalance: 500000,
-      age: 30,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 6000,
+        cpfOABalance: 500000,
+        age: 30,
+      }),
+    );
     const expectedTotalFunds = Math.floor(maxLoanFor(6000) + 500000);
     expect(price).toBe(expectedTotalFunds);
   });
 
   it("returns 0 when CPF is 0", () => {
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: 0,
-      age: 35,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: 0,
+        age: 35,
+      }),
+    );
     expect(price).toBe(0);
   });
 
   it("returns 0 when CPF is null (treated as 0)", () => {
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: null,
-      age: 35,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: null,
+        age: 35,
+      }),
+    );
     expect(price).toBe(0);
   });
 
   it("CPF-only when income is missing (no loan eligibility)", () => {
     // No income → maxLoan is 0 → returns CPF balance directly
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: null,
-      cpfOABalance: 100000,
-      age: 35,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: null,
+        cpfOABalance: 100000,
+        age: 35,
+      }),
+    );
     expect(price).toBe(100000);
   });
 
   it("returns 0 when both income and CPF are missing", () => {
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: null,
-      cpfOABalance: null,
-      age: 35,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: null,
+        cpfOABalance: null,
+        age: 35,
+      }),
+    );
     expect(price).toBe(0);
   });
 
   it("age > 65 results in zero loan → max price is CPF only", () => {
     // Age 70, CPF 200k, income 8k — no HDB loan available.
     // Max price is CPF balance since buyer must pay entirely from own funds.
-    const price = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: 200000,
-      age: 70,
-    }));
+    const price = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: 200000,
+        age: 70,
+      }),
+    );
     expect(price).toBe(200000);
   });
 
   it("shorter tenure from older age reduces loan capacity", () => {
     // Age 55 → tenure = 10 years → maxLoan smaller → lower price ceiling
-    const price55 = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: 100000,
-      age: 55,
-    }));
-    const price35 = maxAffordablePrice(makeProfile({
-      monthlyIncome: 8000,
-      cpfOABalance: 100000,
-      age: 35,
-    }));
+    const price55 = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: 100000,
+        age: 55,
+      }),
+    );
+    const price35 = maxAffordablePrice(
+      makeProfile({
+        monthlyIncome: 8000,
+        cpfOABalance: 100000,
+        age: 35,
+      }),
+    );
     expect(price55).toBeLessThan(price35);
     expect(price55).toBeGreaterThan(0);
   });
@@ -470,9 +490,7 @@ describe("isAffordabilityProfileComplete", () => {
 
   it("treats explicit zero values as set, not missing", () => {
     expect(
-      isAffordabilityProfileComplete(
-        makeProfile({ monthlyIncome: 0, cpfOABalance: 0, age: 35 }),
-      ),
+      isAffordabilityProfileComplete(makeProfile({ monthlyIncome: 0, cpfOABalance: 0, age: 35 })),
     ).toBe(true);
   });
 });
@@ -562,13 +580,22 @@ describe("affordabilityHeadroom", () => {
   it("returns null when the profile is incomplete (not 0)", () => {
     const block = makeBlock({ medianPrice: 400000 });
     expect(
-      affordabilityHeadroom(block, makeProfile({ monthlyIncome: null, cpfOABalance: 100000, age: 35 })),
+      affordabilityHeadroom(
+        block,
+        makeProfile({ monthlyIncome: null, cpfOABalance: 100000, age: 35 }),
+      ),
     ).toBeNull();
     expect(
-      affordabilityHeadroom(block, makeProfile({ monthlyIncome: 8000, cpfOABalance: null, age: 35 })),
+      affordabilityHeadroom(
+        block,
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: null, age: 35 }),
+      ),
     ).toBeNull();
     expect(
-      affordabilityHeadroom(block, makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: null })),
+      affordabilityHeadroom(
+        block,
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: 100000, age: null }),
+      ),
     ).toBeNull();
   });
 

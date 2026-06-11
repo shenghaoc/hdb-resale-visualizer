@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   scoreSimilarity,
   parseStoreyMidpoint,
@@ -20,9 +20,7 @@ import {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeCandidate(
-  overrides: Partial<CandidateListing> = {},
-): CandidateListing {
+function makeCandidate(overrides: Partial<CandidateListing> = {}): CandidateListing {
   return {
     town: "ANG MO KIO",
     block: "123A",

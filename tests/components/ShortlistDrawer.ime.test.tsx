@@ -7,7 +7,7 @@
  *
  * _Requirements: 2.2, 2.3, 3.2, 3.3_
  */
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
@@ -31,7 +31,8 @@ const mockBlock: BlockSummary = {
   flatModels: ["Model A"],
   nearestMrt: {
     stationName: "Ang Mo Kio",
-    distanceMeters: 500, walkingTimeSeconds: 400
+    distanceMeters: 500,
+    walkingTimeSeconds: 400,
   },
 };
 
@@ -50,9 +51,7 @@ const mockComparison: ComparisonArtifact = {
     primarySchoolsWithin1km: 2,
     primarySchoolsWithin2km: 5,
     nearestPrimarySchoolMeters: 300,
-    nearestPrimarySchools: [
-      { name: "ANG MO KIO PRIMARY SCHOOL", distanceMeters: 300 },
-    ],
+    nearestPrimarySchools: [{ name: "ANG MO KIO PRIMARY SCHOOL", distanceMeters: 300 }],
     hawkerCentresWithin1km: 1,
     nearestHawkerCentreMeters: 400,
     supermarketsWithin1km: 3,

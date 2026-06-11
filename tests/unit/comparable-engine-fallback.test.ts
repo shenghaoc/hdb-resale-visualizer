@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   buildComparableSet,
   MIN_COMPARABLES,
@@ -11,9 +11,7 @@ import {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function makeCandidate(
-  overrides: Partial<CandidateListing> = {},
-): CandidateListing {
+function makeCandidate(overrides: Partial<CandidateListing> = {}): CandidateListing {
   return {
     town: "ANG MO KIO",
     block: "123A",
@@ -143,9 +141,7 @@ describe("buildComparableSet", () => {
     });
 
     expect(result.comparables).toHaveLength(0);
-    expect(result.caveats).toContain(
-      "No comparable transactions found for this listing.",
-    );
+    expect(result.caveats).toContain("No comparable transactions found for this listing.");
     expect(result.widenedSearch).toBe(false);
   });
 
@@ -192,7 +188,17 @@ describe("buildComparableSet", () => {
     const candidate = makeCandidate();
     // Create rows with varying similarity: one identical, one very different
     const rows: TransactionRow[] = [
-      makeRow({ id: "tx-diff", block: "999Z", streetName: "OTHER ST", town: "BEDOK", flatType: "5 ROOM", floorAreaSqm: 200, storeyMidpoint: 40, leaseCommenceDate: 1960, month: "2019-01" }),
+      makeRow({
+        id: "tx-diff",
+        block: "999Z",
+        streetName: "OTHER ST",
+        town: "BEDOK",
+        flatType: "5 ROOM",
+        floorAreaSqm: 200,
+        storeyMidpoint: 40,
+        leaseCommenceDate: 1960,
+        month: "2019-01",
+      }),
       makeRow({ id: "tx-same", block: "123A" }),
       makeRow({ id: "tx-sim", block: "124B", streetName: "ANG MO KIO AVE 1" }),
     ];

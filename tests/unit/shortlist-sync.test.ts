@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   generateSyncCode,
   hashSyncCode,
@@ -51,7 +51,8 @@ describe("shortlistPushSchema", () => {
   it("accepts a valid payload with and without a sync code", () => {
     expect(shortlistPushSchema.safeParse({ items: [validItem("a")] }).success).toBe(true);
     expect(
-      shortlistPushSchema.safeParse({ syncCode: generateSyncCode(), items: [validItem("a")] }).success,
+      shortlistPushSchema.safeParse({ syncCode: generateSyncCode(), items: [validItem("a")] })
+        .success,
     ).toBe(true);
   });
 

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import {
   formatCurrency,
   formatCompactCurrency,
@@ -139,9 +139,18 @@ describe("format edge cases", () => {
 
   describe("formatMonth — all valid months", () => {
     const validMonths = [
-      "2024-01", "2024-02", "2024-03", "2024-04",
-      "2024-05", "2024-06", "2024-07", "2024-08",
-      "2024-09", "2024-10", "2024-11", "2024-12",
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
     ];
 
     it.each(validMonths)("formats %s without returning the raw string", (month) => {

@@ -1,5 +1,8 @@
-import { describe, expect, it } from "vitest";
-import { resolveOneMapSearchEndpoint, validateGeneratedArtifacts } from "../../scripts/lib/syncGuards";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  resolveOneMapSearchEndpoint,
+  validateGeneratedArtifacts,
+} from "../../scripts/lib/syncGuards";
 
 describe("sync guards", () => {
   it("falls back to the default OneMap endpoint when the env var is blank", () => {

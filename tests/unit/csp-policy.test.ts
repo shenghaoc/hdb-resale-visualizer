@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vite-plus/test";
 import {
   MAP_GLYPHS_URL,
   ONEMAP_DEFAULT_TILE_URL,

@@ -23,10 +23,7 @@ import {
   type ConfidenceAssessment,
   type ConfidenceInput,
 } from "../../shared/confidence-system";
-import {
-  generateCaveats,
-  type Caveat,
-} from "../../shared/caveat-codes";
+import { generateCaveats, type Caveat } from "../../shared/caveat-codes";
 import { fetchAddressDetail } from "@/shared/lib/data";
 import type { AddressDetail, AddressDetailTransaction } from "@/types/data";
 import type { ListingComparableSet, ComparableTransaction } from "../../shared/comparable-engine";
@@ -42,17 +39,17 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DistributionBar } from "@/components/DistributionBar";
 import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
 import type { AdjustmentInfo } from "@/components/ComparableTransactionsList";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
-import { getComparableSetQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
+import {
+  getComparableSetQualityTag,
+  QUALITY_LABEL_KEYS,
+  QUALITY_HINT_KEYS,
+} from "@/shared/lib/listing-quality";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -91,7 +88,11 @@ const VERDICT_THEMES: Record<AskingPriceAssessment["verdict"], VerdictTheme> = {
   below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.below" },
   fair: { tone: "muted", icon: CheckCircle2, i18nKey: "askingCheck.verdict.fair" },
   above: { tone: "warning", icon: ArrowUp, i18nKey: "askingCheck.verdict.above" },
-  well_above: { tone: "destructive", icon: AlertTriangle, i18nKey: "askingCheck.verdict.wellAbove" },
+  well_above: {
+    tone: "destructive",
+    icon: AlertTriangle,
+    i18nKey: "askingCheck.verdict.wellAbove",
+  },
 };
 
 function toneStyles(tone: VerdictTheme["tone"]) {
@@ -137,7 +138,9 @@ function formatSignedPct(value: number) {
   return `${sign}${Math.abs(value).toFixed(1)}%`;
 }
 
-function confidenceBadgeVariant(level: ConfidenceAssessment["level"]): "default" | "secondary" | "destructive" | "outline" {
+function confidenceBadgeVariant(
+  level: ConfidenceAssessment["level"],
+): "default" | "secondary" | "destructive" | "outline" {
   switch (level) {
     case "high":
       return "default";
@@ -412,14 +415,14 @@ export function ListingCheckPanel({
       onFlatTypeChange(flatTypeOptions[0] ?? null);
     }
     // Only auto-select on first load, not on every flatType external change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [flatTypeOptions]);
 
   useEffect(() => {
     if (storeyOptions.length > 0 && !storeyOptions.includes(storeyRange ?? "")) {
       onStoreyRangeChange(storeyOptions[0] ?? null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [storeyOptions]);
 
   // ── Parse numeric inputs from parent props ────────────────────────────────
@@ -452,12 +455,7 @@ export function ListingCheckPanel({
   // The verdict card recomputes locally from the existing set when the price
   // changes, avoiding redundant API calls on every keystroke.
   useEffect(() => {
-    if (
-      !detail ||
-      !selectedAddressKey ||
-      !flatType ||
-      !storeyRange
-    ) {
+    if (!detail || !selectedAddressKey || !flatType || !storeyRange) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale state when inputs become invalid
       setComparableSet(null);
       setComparableSetLoading(false);
@@ -476,8 +474,7 @@ export function ListingCheckPanel({
     // range) rather than the max, to avoid skewing comparables toward
     // larger units when the user hasn't entered a specific value.
     const fallbackFloorArea =
-      detail.summary.floorAreaRange[0] != null &&
-      detail.summary.floorAreaRange[1] != null
+      detail.summary.floorAreaRange[0] != null && detail.summary.floorAreaRange[1] != null
         ? (detail.summary.floorAreaRange[0] + detail.summary.floorAreaRange[1]) / 2
         : null;
 
@@ -600,10 +597,7 @@ export function ListingCheckPanel({
       percentileAmongComparables: assessment.percentileAmongComparables,
       leaseCommenceYear: resolvedLeaseYear ?? undefined,
       comparableLeaseYears: comparablePayload.comparableLeaseYears,
-      apiCaveats: [
-        ...comparableSet.caveats,
-        ...(adjustmentMeta?.adjustmentCaveats ?? []),
-      ],
+      apiCaveats: [...comparableSet.caveats, ...(adjustmentMeta?.adjustmentCaveats ?? [])],
     });
 
     return {
@@ -652,10 +646,7 @@ export function ListingCheckPanel({
       return result.caveats.map((c) => c.message);
     }
     return Array.from(
-      new Set([
-        ...(comparableSet?.caveats ?? []),
-        ...(adjustmentMeta?.adjustmentCaveats ?? []),
-      ]),
+      new Set([...(comparableSet?.caveats ?? []), ...(adjustmentMeta?.adjustmentCaveats ?? [])]),
     );
   }, [adjustmentMeta, comparableSet, result]);
 
@@ -737,7 +728,9 @@ export function ListingCheckPanel({
           <div className="flex-1">
             <h3 className="text-sm font-bold tracking-tight">{t("check.primaryAction")}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{t("check.valueStatement")}</p>
-            <p className="mt-1 text-[0.62rem] font-medium text-success">{t("check.trustStatement")}</p>
+            <p className="mt-1 text-[0.62rem] font-medium text-success">
+              {t("check.trustStatement")}
+            </p>
           </div>
         </div>
 
@@ -788,18 +781,21 @@ export function ListingCheckPanel({
         {/* ── Block info ───────────────────────────────────────────────── */}
         {selectedAddressKey && detail && (
           <div className="mb-4 rounded-md bg-muted/20 px-3 py-2 text-xs">
-            <span className="font-semibold text-foreground">
-              {detail.summary.town}
-            </span>
+            <span className="font-semibold text-foreground">{detail.summary.town}</span>
             <span className="mx-1.5 text-muted-foreground">·</span>
-            <span className="text-muted-foreground">{detail.summary.block} {detail.summary.streetName}</span>
+            <span className="text-muted-foreground">
+              {detail.summary.block} {detail.summary.streetName}
+            </span>
           </div>
         )}
 
         {/* ── Loading / error states ────────────────────────────────────── */}
         {selectedAddressKey && detailLoading && (
           <div className="mb-4 flex items-center gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
-            <div className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" />
+            <div
+              className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
+              aria-hidden="true"
+            />
             <span>{t("filters.suggestLoading")}</span>
           </div>
         )}
@@ -809,12 +805,20 @@ export function ListingCheckPanel({
             <span>{t("check.noDetail")}</span>
           </div>
         )}
-        {selectedAddressKey && !detailLoading && !detailError && detail && detail.recentTransactions.length === 0 && (
-          <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-            <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
-            <span>{t("check.noDetail")}</span>
-          </div>
-        )}
+        {selectedAddressKey &&
+          !detailLoading &&
+          !detailError &&
+          detail &&
+          detail.recentTransactions.length === 0 && (
+            <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+              <Info
+                data-icon
+                className="size-4 shrink-0 text-muted-foreground/70"
+                aria-hidden="true"
+              />
+              <span>{t("check.noDetail")}</span>
+            </div>
+          )}
 
         {/* ── Listing form ─────────────────────────────────────────────── */}
         {detail && detail.recentTransactions.length > 0 && (
@@ -933,7 +937,10 @@ export function ListingCheckPanel({
       {/* ── API loading state ──────────────────────────────────────────── */}
       {comparableSetLoading && (
         <div className="flex items-center gap-2 rounded-md bg-muted/20 p-3 text-xs text-muted-foreground">
-          <div className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary" aria-hidden="true" />
+          <div
+            className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
+            aria-hidden="true"
+          />
           <span>{t("check.analyzingComparables")}</span>
         </div>
       )}
@@ -941,7 +948,11 @@ export function ListingCheckPanel({
       {/* ── API error state ────────────────────────────────────────────── */}
       {comparableSetError && !comparableSetLoading && (
         <div className="flex items-start gap-3 rounded-md border border-destructive/30 bg-destructive/5 p-3 text-xs">
-          <AlertTriangle data-icon className="size-4 shrink-0 text-destructive" aria-hidden="true" />
+          <AlertTriangle
+            data-icon
+            className="size-4 shrink-0 text-destructive"
+            aria-hidden="true"
+          />
           <div className="flex flex-col gap-1">
             <span className="font-semibold text-destructive">{t("check.apiError")}</span>
             <span className="text-muted-foreground">{t("check.apiErrorDetail")}</span>
@@ -953,10 +964,20 @@ export function ListingCheckPanel({
       {!selectedAddressKey && (
         <div className="flex flex-col gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <div className="flex items-start gap-3">
-            <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
+            <Info
+              data-icon
+              className="size-4 shrink-0 text-muted-foreground/70"
+              aria-hidden="true"
+            />
             <span>{t("check.selectBlockHint")}</span>
           </div>
-          <Button type="button" variant="outline" size="sm" className="w-full" onClick={onUseSampleCheck}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={onUseSampleCheck}
+          >
             {t("check.sampleListingCheck")}
           </Button>
         </div>
@@ -1016,7 +1037,10 @@ export function ListingCheckPanel({
                 {qualityTag ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Badge variant="outline" className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]">
+                      <Badge
+                        variant="outline"
+                        className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]"
+                      >
                         {t(QUALITY_LABEL_KEYS[qualityTag])}
                       </Badge>
                     </TooltipTrigger>
@@ -1104,7 +1128,11 @@ export function ListingCheckPanel({
                       )}
                     >
                       {caveat.severity === "critical" || caveat.severity === "warning" ? (
-                        <AlertTriangle data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
+                        <AlertTriangle
+                          data-icon
+                          className="mt-0.5 size-3 shrink-0"
+                          aria-hidden="true"
+                        />
                       ) : (
                         <Info data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
                       )}

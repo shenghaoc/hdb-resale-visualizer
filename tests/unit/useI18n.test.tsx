@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { useI18n } from "@/shared/lib/i18n/useI18n";
 import { I18nProvider } from "@/shared/lib/i18n/provider";
 import { I18nContext, type I18nContextValue } from "@/shared/lib/i18n/context";
@@ -25,9 +25,7 @@ describe("useI18n", () => {
     };
 
     const wrapper = ({ children }: { children: ReactNode }) => (
-      <I18nContext.Provider value={mockContextValue}>
-        {children}
-      </I18nContext.Provider>
+      <I18nContext.Provider value={mockContextValue}>{children}</I18nContext.Provider>
     );
 
     const { result } = renderHook(() => useI18n(), { wrapper });
@@ -42,9 +40,7 @@ describe("useI18n", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     try {
-      expect(() => renderHook(() => useI18n())).toThrow(
-        "useI18n must be used inside I18nProvider"
-      );
+      expect(() => renderHook(() => useI18n())).toThrow("useI18n must be used inside I18nProvider");
     } finally {
       consoleSpy.mockRestore();
     }

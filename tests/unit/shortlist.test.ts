@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/shared/lib/constants";
 import { MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import {
@@ -110,7 +110,9 @@ describe("shortlist storage", () => {
     // Case 1: JSON length exceeds limit
     expect(encodeShortlistForUrl(createItems(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH))).toBe("");
     // Case 2: Encoded length exceeds limit (but JSON length is under)
-    expect(encodeShortlistForUrl(createItems(Math.floor(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH * 0.8)))).toBe("");
+    expect(
+      encodeShortlistForUrl(createItems(Math.floor(MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH * 0.8))),
+    ).toBe("");
   });
 
   it("returns empty array for invalid payloads", () => {
@@ -127,9 +129,24 @@ describe("shortlist storage", () => {
       addedAt: "2026-01-01T00:00:00.000Z",
     }));
     const imported = [
-      { addressKey: "saved-0", notes: "duplicate", targetPrice: null, addedAt: "2026-01-02T00:00:00.000Z" },
-      { addressKey: "imported-1", notes: "", targetPrice: null, addedAt: "2026-01-03T00:00:00.000Z" },
-      { addressKey: "imported-2", notes: "", targetPrice: null, addedAt: "2026-01-04T00:00:00.000Z" },
+      {
+        addressKey: "saved-0",
+        notes: "duplicate",
+        targetPrice: null,
+        addedAt: "2026-01-02T00:00:00.000Z",
+      },
+      {
+        addressKey: "imported-1",
+        notes: "",
+        targetPrice: null,
+        addedAt: "2026-01-03T00:00:00.000Z",
+      },
+      {
+        addressKey: "imported-2",
+        notes: "",
+        targetPrice: null,
+        addedAt: "2026-01-04T00:00:00.000Z",
+      },
     ];
 
     const merged = mergeImportedShortlistItems(existing, imported);

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   canonicalFlatType,
   normalizeFlatModel,
@@ -62,12 +62,7 @@ describe("sortFlatTypes", () => {
 
   it("sorts unknown types at the end alphabetically", () => {
     const input = ["STUDIO", "1 ROOM", "JUMBO", "3 ROOM"];
-    expect(sortFlatTypes(input)).toEqual([
-      "1 ROOM",
-      "3 ROOM",
-      "JUMBO",
-      "STUDIO",
-    ]);
+    expect(sortFlatTypes(input)).toEqual(["1 ROOM", "3 ROOM", "JUMBO", "STUDIO"]);
   });
 
   it("sorts purely unknown types alphabetically", () => {

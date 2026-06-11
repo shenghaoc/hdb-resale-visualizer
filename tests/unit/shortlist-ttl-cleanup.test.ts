@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   purgeStaleShortlists,
   shortlistRetentionCutoff,
@@ -81,7 +81,9 @@ describe("purgeStaleShortlists", () => {
     expect(rows.has("stale")).toBe(false);
     expect(rows.has("fresh")).toBe(true);
     expect(deleteCalls).toHaveLength(1);
-    expect(deleteCalls[0]?.sql).toBe("DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)");
+    expect(deleteCalls[0]?.sql).toBe(
+      "DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)",
+    );
     expect(deleteCalls[0]?.args).toEqual([shortlistRetentionCutoff(now), 1000]);
   });
 

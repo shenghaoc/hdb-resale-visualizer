@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
 
 type EventHandler = (...args: unknown[]) => void;
@@ -32,7 +32,10 @@ function createMapStub() {
 
 describe("useAmenityGeoSync", () => {
   beforeEach(() => {
-    vi.stubGlobal("fetch", vi.fn(() => new Promise(() => {})));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => new Promise(() => {})),
+    );
   });
 
   afterEach(() => {
@@ -51,8 +54,16 @@ describe("useAmenityGeoSync", () => {
       }),
     );
 
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "visible");
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "visible");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith(
+      "mrt-stations-points",
+      "visibility",
+      "visible",
+    );
+    expect(map.setLayoutProperty).toHaveBeenCalledWith(
+      "mrt-stations-labels",
+      "visibility",
+      "visible",
+    );
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "visible");
     expect(map.getZoom).not.toHaveBeenCalled();
   });
@@ -84,8 +95,16 @@ describe("useAmenityGeoSync", () => {
       }),
     );
 
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "visible");
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "visible");
+    expect(map.setLayoutProperty).toHaveBeenCalledWith(
+      "mrt-stations-points",
+      "visibility",
+      "visible",
+    );
+    expect(map.setLayoutProperty).toHaveBeenCalledWith(
+      "mrt-stations-labels",
+      "visibility",
+      "visible",
+    );
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
   });
 

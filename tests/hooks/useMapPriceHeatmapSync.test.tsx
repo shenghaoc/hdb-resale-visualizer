@@ -1,5 +1,6 @@
 import { renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import type { FeatureCollection } from "geojson";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { HEATMAP_SOURCE_ID } from "@/features/map-explorer/priceHeatmap";
@@ -17,8 +18,8 @@ vi.mock("@/features/map-explorer/priceHeatmap", async (importOriginal) => {
 
 type EventHandler = (...args: unknown[]) => void;
 
-const EMPTY_GEOJSON: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
-const POPULATED_GEOJSON: GeoJSON.FeatureCollection = {
+const EMPTY_GEOJSON: FeatureCollection = { type: "FeatureCollection", features: [] };
+const POPULATED_GEOJSON: FeatureCollection = {
   type: "FeatureCollection",
   features: [
     {
@@ -89,9 +90,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   it("calls setData immediately when heatmap is enabled and style is loaded", () => {
     const map = createMapStub({ styleLoaded: true });
 
-    renderHook(() =>
-      useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
-    );
+    renderHook(() => useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }));
 
     expect(map.heatmapSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
@@ -114,9 +113,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   it("defers setData to load event when style is not yet loaded", () => {
     const map = createMapStub({ styleLoaded: false });
 
-    renderHook(() =>
-      useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
-    );
+    renderHook(() => useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }));
 
     expect(map.heatmapSetData).not.toHaveBeenCalled();
 
@@ -129,9 +126,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   it("re-syncs data on styledata events", () => {
     const map = createMapStub({ styleLoaded: true });
 
-    renderHook(() =>
-      useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
-    );
+    renderHook(() => useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }));
 
     map.emit("styledata");
     map.emit("styledata");
@@ -143,9 +138,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   it("does not call setData when heatmap source does not exist", () => {
     const map = createMapStub({ styleLoaded: true, hasHeatmapSource: false });
 
-    renderHook(() =>
-      useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }),
-    );
+    renderHook(() => useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS }));
 
     // heatmapSource.setData is never reached because getSource returns undefined
     expect(map.getSource(HEATMAP_SOURCE_ID)).toBeUndefined();
@@ -169,7 +162,12 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
 
     const { rerender } = renderHook(
       ({ enabled }: { enabled: boolean }) =>
-        useMapPriceHeatmapSync({ map, geoJson: EMPTY_GEOJSON, ...DEFAULT_PROPS, priceHeatmapEnabled: enabled }),
+        useMapPriceHeatmapSync({
+          map,
+          geoJson: EMPTY_GEOJSON,
+          ...DEFAULT_PROPS,
+          priceHeatmapEnabled: enabled,
+        }),
       { initialProps: { enabled: true } },
     );
 
@@ -188,7 +186,7 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
     const map = createMapStub({ styleLoaded: true });
 
     const { rerender } = renderHook(
-      ({ geoJson }: { geoJson: GeoJSON.FeatureCollection }) =>
+      ({ geoJson }: { geoJson: FeatureCollection }) =>
         useMapPriceHeatmapSync({ map, geoJson, ...DEFAULT_PROPS }),
       { initialProps: { geoJson: EMPTY_GEOJSON } },
     );
@@ -201,13 +199,19 @@ describe("useMapPriceHeatmapSync — heatmap data sync", () => {
   });
 
   it("routes opacity-only changes through setHeatmapOpacity, not layer recreation", async () => {
-    const { setHeatmapOpacity, isHeatmapLayerPresent } = await import("@/features/map-explorer/priceHeatmap");
+    const { setHeatmapOpacity, isHeatmapLayerPresent } =
+      await import("@/features/map-explorer/priceHeatmap");
     (isHeatmapLayerPresent as ReturnType<typeof vi.fn>).mockReturnValue(true);
     const map = createMapStub({ styleLoaded: true });
 
     const { rerender } = renderHook(
       ({ opacity }: { opacity: number }) =>
-        useMapPriceHeatmapSync({ map, geoJson: POPULATED_GEOJSON, ...DEFAULT_PROPS, priceHeatmapOpacity: opacity }),
+        useMapPriceHeatmapSync({
+          map,
+          geoJson: POPULATED_GEOJSON,
+          ...DEFAULT_PROPS,
+          priceHeatmapOpacity: opacity,
+        }),
       { initialProps: { opacity: 0.6 } },
     );
 

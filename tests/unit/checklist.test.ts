@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { CHECKLIST_STORAGE_KEY } from "@/shared/lib/constants";
 import {
   loadChecklistState,
@@ -42,7 +42,7 @@ describe("checklist storage", () => {
       parseChecklistState({
         "block-1": ["noise", "remainingLease"],
         "block-2": ["nearbyAmenities"],
-      })
+      }),
     ).toEqual({
       "block-1": ["noise", "remainingLease"],
       "block-2": ["nearbyAmenities"],
@@ -52,7 +52,7 @@ describe("checklist storage", () => {
     expect(
       parseChecklistState({
         "block-1": ["noise", "invalid-item", "remainingLease"],
-      })
+      }),
     ).toEqual({
       "block-1": ["noise", "remainingLease"],
     });
@@ -62,7 +62,7 @@ describe("checklist storage", () => {
       parseChecklistState({
         "block-1": ["noise"],
         "block-2": 42,
-      })
+      }),
     ).toEqual({
       "block-1": ["noise"],
     });

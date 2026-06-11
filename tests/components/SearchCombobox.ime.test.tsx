@@ -1,7 +1,7 @@
 /**
  * SearchCombobox IME composition — built on LocationSearchInput / useIMEComposition.
  */
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import { I18nProvider } from "@/shared/lib/i18n/provider";

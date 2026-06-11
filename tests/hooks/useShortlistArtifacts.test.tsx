@@ -1,5 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
@@ -86,9 +86,7 @@ describe("useShortlistArtifacts", () => {
     dataMocks.fetchAddressDetail.mockResolvedValue(null);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
 
-    renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items, isShortlistOpen: false }),
-    );
+    renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items, isShortlistOpen: false }));
 
     expect(dataMocks.fetchAddressDetail).not.toHaveBeenCalled();
     expect(dataMocks.fetchComparisonArtifact).not.toHaveBeenCalled();
@@ -100,9 +98,7 @@ describe("useShortlistArtifacts", () => {
     dataMocks.fetchAddressDetail.mockResolvedValue(makeDetail("addr-a"));
     dataMocks.fetchComparisonArtifact.mockResolvedValue(makeComparison("addr-a"));
 
-    const { result } = renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items }),
-    );
+    const { result } = renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items }));
 
     await waitFor(() => {
       expect(result.current.shortlistRows).toHaveLength(1);
@@ -120,9 +116,7 @@ describe("useShortlistArtifacts", () => {
     dataMocks.fetchAddressDetail.mockRejectedValue(new Error("network error"));
     dataMocks.fetchComparisonArtifact.mockRejectedValue(new Error("network error"));
 
-    const { result } = renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items }),
-    );
+    const { result } = renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items }));
 
     await waitFor(() => {
       // row still appears (block exists), but detailSummary and comparison are null
@@ -139,9 +133,7 @@ describe("useShortlistArtifacts", () => {
     dataMocks.fetchAddressDetail.mockResolvedValue(makeDetail("addr-a"));
     dataMocks.fetchComparisonArtifact.mockResolvedValue(makeComparison("addr-a"));
 
-    const { rerender } = renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items }),
-    );
+    const { rerender } = renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items }));
 
     await waitFor(() => {
       expect(dataMocks.fetchAddressDetail).toHaveBeenCalledTimes(1);
@@ -187,9 +179,7 @@ describe("useShortlistArtifacts", () => {
     dataMocks.fetchAddressDetail.mockResolvedValue(null);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
 
-    const { result } = renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items }),
-    );
+    const { result } = renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items }));
 
     expect(result.current.shortlistRows.map((r) => r.item.addressKey)).toEqual(["addr-a"]);
   });
@@ -202,16 +192,24 @@ describe("useShortlistArtifacts", () => {
     ];
     const items: ShortlistItem[] = [
       { addressKey: "addr-far", notes: "", targetPrice: 600_000, addedAt: "2026-01-01T00:00:00Z" },
-      { addressKey: "addr-close", notes: "", targetPrice: 510_000, addedAt: "2026-01-02T00:00:00Z" },
-      { addressKey: "addr-no-target", notes: "", targetPrice: null, addedAt: "2026-01-03T00:00:00Z" },
+      {
+        addressKey: "addr-close",
+        notes: "",
+        targetPrice: 510_000,
+        addedAt: "2026-01-02T00:00:00Z",
+      },
+      {
+        addressKey: "addr-no-target",
+        notes: "",
+        targetPrice: null,
+        addedAt: "2026-01-03T00:00:00Z",
+      },
     ];
 
     dataMocks.fetchAddressDetail.mockResolvedValue(null);
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
 
-    const { result } = renderHook(() =>
-      useShortlistArtifacts({ ...baseArgs, blocks, items }),
-    );
+    const { result } = renderHook(() => useShortlistArtifacts({ ...baseArgs, blocks, items }));
 
     // Sorted: addr-close gap=10k, addr-far gap=100k, addr-no-target gap=Infinity
     const keys = result.current.shortlistRows.map((r) => r.item.addressKey);
@@ -238,7 +236,9 @@ describe("useShortlistArtifacts", () => {
 
     let resolveDetail!: (d: AddressDetail | null) => void;
     dataMocks.fetchAddressDetail.mockReturnValue(
-      new Promise<AddressDetail | null>((res) => { resolveDetail = res; }),
+      new Promise<AddressDetail | null>((res) => {
+        resolveDetail = res;
+      }),
     );
     dataMocks.fetchComparisonArtifact.mockResolvedValue(null);
 

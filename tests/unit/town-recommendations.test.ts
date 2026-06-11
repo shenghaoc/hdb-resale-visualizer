@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
 import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import type { BlockSummary } from "@/types/data";
@@ -50,9 +50,24 @@ describe("buildTownRecommendations", () => {
       makeBlock({ addressKey: "b3", town: "BEDOK", medianPrice: 640_000 }),
     ];
     const queenstownBlocks = [
-      makeBlock({ addressKey: "q1", town: "QUEENSTOWN", medianPrice: 1_200_000, flatTypes: ["3 ROOM"] }),
-      makeBlock({ addressKey: "q2", town: "QUEENSTOWN", medianPrice: 1_300_000, flatTypes: ["3 ROOM"] }),
-      makeBlock({ addressKey: "q3", town: "QUEENSTOWN", medianPrice: 1_400_000, flatTypes: ["3 ROOM"] }),
+      makeBlock({
+        addressKey: "q1",
+        town: "QUEENSTOWN",
+        medianPrice: 1_200_000,
+        flatTypes: ["3 ROOM"],
+      }),
+      makeBlock({
+        addressKey: "q2",
+        town: "QUEENSTOWN",
+        medianPrice: 1_300_000,
+        flatTypes: ["3 ROOM"],
+      }),
+      makeBlock({
+        addressKey: "q3",
+        town: "QUEENSTOWN",
+        medianPrice: 1_400_000,
+        flatTypes: ["3 ROOM"],
+      }),
     ];
 
     const recs = buildTownRecommendations(PROFILE, [...bedokBlocks, ...queenstownBlocks]);

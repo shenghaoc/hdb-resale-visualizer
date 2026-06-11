@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { matchesFilter } from "@/shared/lib/filtering";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import type { BlockSummary } from "@/types/data";
@@ -28,7 +28,8 @@ const createAngMoKioBlock = (): BlockSummary => ({
   flatModels: ["IMPROVED", "MODEL A"],
   nearestMrt: {
     stationName: "ANG MO KIO MRT STATION",
-    distanceMeters: 500, walkingTimeSeconds: 400
+    distanceMeters: 500,
+    walkingTimeSeconds: 400,
   },
   postalCode: "560101",
 });
