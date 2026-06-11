@@ -54,8 +54,8 @@ pnpm install           # Install dependencies
 pnpm dev               # Start development server (localhost:5173)
 pnpm sync-data         # Refresh precomputed artifacts (public/data/)
 pnpm typecheck         # Strict TypeScript verification
-pnpm lint              # ESLint with type-aware rules (default)
-pnpm lint:fast         # ESLint syntax-focused pass (faster local fallback)
+pnpm lint              # Oxlint with type-aware rules (default)
+pnpm lint:fast         # Oxlint syntax-focused pass (faster local fallback)
 pnpm test              # Run Vitest unit/integration tests
 pnpm test:e2e          # Run Playwright end-to-end tests
 pnpm build             # Production build
@@ -73,7 +73,7 @@ parallel jobs — but any of these scripts can be invoked identically in CI.
 
 1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
 2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
-3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `npm run db:migrate:remote` (prod) or `npm run db:migrate:local` (Wrangler emulator).
+3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `pnpm db:migrate:remote` (prod) or `pnpm db:migrate:local` (Wrangler emulator).
 4. **Persistence**: User state is browser-local (`localStorage`) by default and works fully offline. The shortlist additionally supports **opt-in** cloud sync via an anonymous sync code (no account, no PII), persisted in the `shortlists` D1 table and written at runtime by `functions/api/shortlist/*`. This is the _only_ runtime D1 write path; every other D1 write stays build-time (`scripts/sync-data.ts`).
 5. **Agent Context**: Agents MUST NOT read, glob, index, summarize, or load `public/data/` into context unless explicitly asked. Respect `.gitignore` by default. Use `tests/fixtures/public-data/` if data schema analysis is required.
 
@@ -144,7 +144,7 @@ The following structured format applies to the overall PR review summary comment
 - Bypass D1 by hand-editing static data files or hosting JSON elsewhere
 - Modify `migrations/*.sql` files retroactively — add a new numbered migration instead
 - Break existing deployment assumptions or map attribution requirements
-- Include `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` (Node 26 + npm-only project)
+- Include `bun.lock`, `yarn.lock`, or `package-lock.json` (Node 26 + pnpm project)
 
 ### Review priorities
 

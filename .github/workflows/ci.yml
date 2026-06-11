@@ -17,9 +17,7 @@ on:
       - "types/**"
       - "tsconfig*.json"
       - "vite.config.*"
-      - "vitest.config.*"
       - "playwright.config.*"
-      - "eslint.config.*"
       - "wrangler.*"
   push:
     branches:
