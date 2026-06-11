@@ -1,9 +1,12 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import type { BlockSummary } from "@/types/data";
 
-const mockBlock = { addressKey: "bedok-10d-bedok-sth-ave-2", pricePerSqmMedian: 6000 } as BlockSummary;
+const mockBlock = {
+  addressKey: "bedok-10d-bedok-sth-ave-2",
+  pricePerSqmMedian: 6000,
+} as BlockSummary;
 
 describe("useDeepLinkPanelInit", () => {
   afterEach(() => {

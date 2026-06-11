@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { computeConfidence } from "@/entities/transaction/listing-confidence";
 import type { AddressDetailTransaction } from "@/types/data";
 
@@ -18,10 +18,7 @@ function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransact
   };
 }
 
-function makeComparables(
-  count: number,
-  opts?: { month?: string },
-): AddressDetailTransaction[] {
+function makeComparables(count: number, opts?: { month?: string }): AddressDetailTransaction[] {
   return Array.from({ length: count }, (_, i) =>
     tx({
       id: `tx-${i}`,

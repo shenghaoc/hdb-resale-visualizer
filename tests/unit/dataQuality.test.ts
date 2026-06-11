@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { deriveDataQualityState } from "@/shared/lib/dataQuality";
 import type { Manifest } from "@/types/data";
 
@@ -22,10 +22,7 @@ function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
 
 describe("deriveDataQualityState", () => {
   it("marks complete recent metadata as fresh", () => {
-    const state = deriveDataQualityState(
-      makeManifest(),
-      new Date("2026-06-15T00:00:00Z"),
-    );
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15T00:00:00Z"));
 
     expect(state.syncState).toBe("fresh");
     expect(state.sourceLabels).toEqual(["data.gov.sg", "OneMap"]);
@@ -96,19 +93,13 @@ describe("deriveDataQualityState", () => {
   });
 
   it("returns latestMonthUsed from dataWindow.maxMonth", () => {
-    const state = deriveDataQualityState(
-      makeManifest(),
-      new Date("2026-06-15T00:00:00Z"),
-    );
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15T00:00:00Z"));
 
     expect(state.latestMonthUsed).toBe("2026-05");
   });
 
   it("returns generatedAt and lastSyncedAt from manifest", () => {
-    const state = deriveDataQualityState(
-      makeManifest(),
-      new Date("2026-06-15T00:00:00Z"),
-    );
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15T00:00:00Z"));
 
     expect(state.generatedAt).toBe("2026-06-01T00:00:00Z");
     expect(state.lastSyncedAt).toBe("2026-05-31T00:00:00Z");

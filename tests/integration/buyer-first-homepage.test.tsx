@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import App from "@/App";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
@@ -11,7 +11,8 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
-  fetchBlocksBySearch: vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
+  fetchBlocksBySearch:
+    vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
   townToFilename: (town: string) =>

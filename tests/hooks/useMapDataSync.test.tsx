@@ -1,12 +1,13 @@
 import { renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import type { FeatureCollection } from "geojson";
 import { useMapDataSync } from "@/hooks/useMapDataSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 type EventHandler = (...args: unknown[]) => void;
 
-const EMPTY_GEOJSON: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
-const POPULATED_GEOJSON: GeoJSON.FeatureCollection = {
+const EMPTY_GEOJSON: FeatureCollection = { type: "FeatureCollection", features: [] };
+const POPULATED_GEOJSON: FeatureCollection = {
   type: "FeatureCollection",
   features: [
     {
@@ -92,17 +93,13 @@ describe("useMapDataSync", () => {
 
   it("does nothing when map is null", () => {
     // Should not throw
-    renderHook(() =>
-      useMapDataSync({ map: null, geoJson: EMPTY_GEOJSON }),
-    );
+    renderHook(() => useMapDataSync({ map: null, geoJson: EMPTY_GEOJSON }));
   });
 
   it("calls setData on blocks source immediately when style is loaded", () => {
     const map = createMapStub({ styleLoaded: true });
 
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
-    );
+    renderHook(() => useMapDataSync({ map, geoJson: POPULATED_GEOJSON }));
 
     expect(map.blocksSetData).toHaveBeenCalledWith(POPULATED_GEOJSON);
   });
@@ -110,9 +107,7 @@ describe("useMapDataSync", () => {
   it("defers setData to load event when style is not yet loaded", () => {
     const map = createMapStub({ styleLoaded: false });
 
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
-    );
+    renderHook(() => useMapDataSync({ map, geoJson: POPULATED_GEOJSON }));
 
     expect(map.blocksSetData).not.toHaveBeenCalled();
 
@@ -125,9 +120,7 @@ describe("useMapDataSync", () => {
   it("calls setData again on styledata events", () => {
     const map = createMapStub({ styleLoaded: true });
 
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
-    );
+    renderHook(() => useMapDataSync({ map, geoJson: POPULATED_GEOJSON }));
 
     map.emit("styledata");
     map.emit("styledata");
@@ -139,9 +132,7 @@ describe("useMapDataSync", () => {
   it("does not call setData on blocks source when source does not exist", () => {
     const map = createMapStub({ styleLoaded: true, hasBothSources: false });
 
-    renderHook(() =>
-      useMapDataSync({ map, geoJson: POPULATED_GEOJSON }),
-    );
+    renderHook(() => useMapDataSync({ map, geoJson: POPULATED_GEOJSON }));
 
     expect(map.blocksSetData).not.toHaveBeenCalled();
   });
@@ -149,9 +140,7 @@ describe("useMapDataSync", () => {
   it("removes event listeners on unmount", () => {
     const map = createMapStub({ styleLoaded: true });
 
-    const { unmount } = renderHook(() =>
-      useMapDataSync({ map, geoJson: EMPTY_GEOJSON }),
-    );
+    const { unmount } = renderHook(() => useMapDataSync({ map, geoJson: EMPTY_GEOJSON }));
 
     unmount();
 
@@ -163,8 +152,7 @@ describe("useMapDataSync", () => {
     const map = createMapStub({ styleLoaded: true });
 
     const { rerender } = renderHook(
-      ({ geoJson }: { geoJson: GeoJSON.FeatureCollection }) =>
-        useMapDataSync({ map, geoJson }),
+      ({ geoJson }: { geoJson: FeatureCollection }) => useMapDataSync({ map, geoJson }),
       { initialProps: { geoJson: EMPTY_GEOJSON } },
     );
 
@@ -177,7 +165,7 @@ describe("useMapDataSync", () => {
 
   it("syncs primary school overlay data and visibility", () => {
     const map = createMapStub({ styleLoaded: true });
-    const schoolsGeoJson: GeoJSON.FeatureCollection = {
+    const schoolsGeoJson: FeatureCollection = {
       type: "FeatureCollection",
       features: [
         {
@@ -216,7 +204,7 @@ describe("useMapDataSync", () => {
       styleLoaded: true,
       layerOrder: ["selected-point", "primary-school-labels", "primary-school-markers"],
     });
-    const schoolsGeoJson: GeoJSON.FeatureCollection = {
+    const schoolsGeoJson: FeatureCollection = {
       type: "FeatureCollection",
       features: [
         {

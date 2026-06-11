@@ -6,6 +6,7 @@ import type {
   MapMouseEvent,
   Popup,
 } from "maplibre-gl";
+import type { Point, Geometry } from "geojson";
 import { formatCompactCurrency } from "@/shared/lib/format";
 import { localizeTownName } from "@/shared/lib/i18n/domain";
 import type { Locale, Translator } from "@/shared/lib/i18n";
@@ -23,7 +24,7 @@ type UseMapInteractionsProps = {
 
 const SELECTABLE_LAYER_IDS = ["unclustered-point", "clusters"] as const;
 
-function isPointGeometry(geometry: GeoJSON.Geometry): geometry is GeoJSON.Point {
+function isPointGeometry(geometry: Geometry): geometry is Point {
   return geometry.type === "Point";
 }
 
@@ -155,7 +156,10 @@ export function useMapInteractions({
       }
 
       const townEl = document.createElement("p");
-      townEl.textContent = localizeTownName(readStringProperty(props, "town") ?? "", localeRef.current);
+      townEl.textContent = localizeTownName(
+        readStringProperty(props, "town") ?? "",
+        localeRef.current,
+      );
       container.appendChild(townEl);
 
       const infoEl = document.createElement("p");
@@ -164,7 +168,10 @@ export function useMapInteractions({
       infoEl.textContent = `${tRef.current("map.median", { value: formatCompactCurrency(medianPrice) })} · ${tRef.current("map.txns", { count: transactionCount })}`;
       container.appendChild(infoEl);
 
-      popup.setLngLat(feature.geometry.coordinates as [number, number]).setDOMContent(container).addTo(map);
+      popup
+        .setLngLat(feature.geometry.coordinates as [number, number])
+        .setDOMContent(container)
+        .addTo(map);
     };
 
     const handleMouseLeaveUnclustered = () => {

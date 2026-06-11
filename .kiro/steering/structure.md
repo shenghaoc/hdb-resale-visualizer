@@ -5,6 +5,7 @@ inclusion: always
 # Repository Structure
 
 ## Current Layout
+
 - `.kiro/steering/`: persistent project rules.
 - `.kiro/specs/`: Kiro feature and bugfix specs.
 - `.kiro/skills/`: reusable agent skills.
@@ -22,6 +23,7 @@ inclusion: always
 - `docs/`: screenshots and architecture reference material.
 
 ## Desired Frontend Organization
+
 Move new and meaningfully touched frontend code toward a feature-first layout:
 
 ```text
@@ -38,6 +40,7 @@ src/shared-ui
 Use this target structure for new modules when the change is not a narrow bugfix in existing files. Do not churn unrelated files just to migrate structure.
 
 ## Feature Boundaries
+
 - `src/features/listing-check`: asking price checks, comparable ranges, affordability fit, lease financing panels, buyer checklist, negotiation prep, and confidence explanations.
 - `src/features/shortlist`: saved blocks, notes, target prices, shortlist ranking/comparison, local persistence, cloud sync UI, and sync conflict handling.
 - `src/features/map-explorer`: MapLibre shell, map layers, amenity overlays, heatmap controls, marker visibility, map selection, and mobile/desktop map navigation.
@@ -48,14 +51,16 @@ Use this target structure for new modules when the change is not a narrow bugfix
 - `src/shared-ui`: reusable presentation components, shadcn wrappers, icons, layout primitives, loading states, and UI-only helpers that do not know HDB domain concepts.
 
 ## Dependency Direction
+
 - Features may import entities, `src/shared-ui`, shared frontend utilities, and `shared/*`.
 - Entities must stay domain-focused and must not import from features.
 - `src/shared-ui` must not import HDB domain logic, D1/API helpers, or feature modules.
 - Cross-runtime code used by scripts, Worker/API, and frontend belongs in `shared/`, not `src/`.
-- Node-executed scripts must not import from `src/`; `npm run check:boundaries` enforces this.
+- Node-executed scripts must not import from `src/`; `pnpm check:boundaries` enforces this.
 - Runtime API modules under `functions/` should not import React UI code or browser-only modules.
 
 ## Migration Guidance
+
 - For narrow fixes, edit the existing module in place.
 - For new buyer workflows, create a feature folder and colocate component, hook, lib, and tests around the workflow.
 - When extracting from `src/lib`, move domain-specific logic into the relevant entity or feature. Keep truly generic utilities in `src/lib` until there is a clearer shared home.
@@ -63,6 +68,7 @@ Use this target structure for new modules when the change is not a narrow bugfix
 - Keep tests close in naming and ownership: feature tests should exercise the feature API, entity tests should exercise pure domain logic, and E2E should cover cross-feature buyer journeys.
 
 ## Naming Conventions
+
 - Components: `PascalCase.tsx`.
 - Hooks: `useCamelCase.ts`.
 - Lib and utilities: `camelCase.ts`.
@@ -73,6 +79,7 @@ Use this target structure for new modules when the change is not a narrow bugfix
 - Migrations: `NNNN_snake_case_description.sql`.
 
 ## Tooling Policy
+
 - Do not vendor generic shadcn or design-system agent bundles into the repo.
 - Use `.kiro/settings/mcp.json` only for workspace-relevant MCP integrations.
 - Agent-local config such as `.agents/` stays out of repository history unless explicitly requested.

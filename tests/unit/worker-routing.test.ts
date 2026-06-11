@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { apiRouteDefinitions, matchApiRoute, methodNotAllowedResponse } from "../../worker/api-route-match";
+import { describe, expect, it } from "vite-plus/test";
+import {
+  apiRouteDefinitions,
+  matchApiRoute,
+  methodNotAllowedResponse,
+} from "../../worker/api-route-match";
 
 describe("matchApiRoute", () => {
   it("returns method_not_allowed for POST /api/manifest with Allow: GET", () => {
@@ -23,12 +27,16 @@ describe("matchApiRoute", () => {
     expect(matchApiRoute(new URL("https://example.com/?town=BEDOK"), "GET").kind).toBe("no_match");
     expect(matchApiRoute(new URL("https://example.com/robots.txt"), "GET").kind).toBe("no_match");
     expect(matchApiRoute(new URL("https://example.com/sitemap.xml"), "GET").kind).toBe("no_match");
-    expect(matchApiRoute(new URL("https://example.com/og/block/foo.png"), "GET").kind).toBe("no_match");
+    expect(matchApiRoute(new URL("https://example.com/og/block/foo.png"), "GET").kind).toBe(
+      "no_match",
+    );
   });
 
   it("still matches valid API method/path pairs", () => {
     expect(matchApiRoute(new URL("https://example.com/api/manifest"), "GET").kind).toBe("handler");
-    expect(matchApiRoute(new URL("https://example.com/api/shortlist"), "POST").kind).toBe("handler");
+    expect(matchApiRoute(new URL("https://example.com/api/shortlist"), "POST").kind).toBe(
+      "handler",
+    );
     expect(
       matchApiRoute(new URL("https://example.com/api/shortlist/abc123abc123abc1"), "GET").kind,
     ).toBe("handler");

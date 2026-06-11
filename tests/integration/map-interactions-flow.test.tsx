@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
 import { useMapLayers } from "@/hooks/useMapLayers";
@@ -24,7 +24,9 @@ function createComposableMapStub() {
         maybeHandler?: (event: unknown) => void,
       ) => {
         if (eventName === "click" && typeof layerOrHandler !== "string") {
-          handlers.mapClick = layerOrHandler as (event: { point: { x: number; y: number } }) => void;
+          handlers.mapClick = layerOrHandler as (event: {
+            point: { x: number; y: number };
+          }) => void;
         }
         if (eventName === "click" && typeof layerOrHandler === "string" && maybeHandler) {
           return mapStub;
@@ -43,7 +45,9 @@ function createComposableMapStub() {
       existingLayers.add(layer.id);
       return mapStub;
     }),
-    getLayer: vi.fn((layerId: string) => (existingLayers.has(layerId) ? { id: layerId } : undefined)),
+    getLayer: vi.fn((layerId: string) =>
+      existingLayers.has(layerId) ? { id: layerId } : undefined,
+    ),
     queryRenderedFeatures: vi.fn<() => unknown[]>(() => []),
     getCanvas: vi.fn(() => ({ style: { cursor: "" } })),
     getSource: vi.fn(() => undefined),

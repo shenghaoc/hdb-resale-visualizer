@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   ninetyNineCoUrl,
   propertyGuruUrl,
@@ -38,8 +38,6 @@ describe("listingPortalLinks", () => {
   });
 
   it("builds an SRX search URL with the block and street name in the path", () => {
-    expect(srxUrl(block)).toBe(
-      "https://www.srx.com.sg/search/sale/hdb/123+BEDOK+STH+AVE+2",
-    );
+    expect(srxUrl(block)).toBe("https://www.srx.com.sg/search/sale/hdb/123+BEDOK+STH+AVE+2");
   });
 });

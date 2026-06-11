@@ -1,9 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile } from "../../scripts/lib/pipeline";
-import {
-  fetchAmenityData,
-  geocodeMissingAddresses,
-} from "../../scripts/sync-data";
+import { fetchAmenityData, geocodeMissingAddresses } from "../../scripts/sync-data";
 
 function makeGeocodeCache(): GeocodeCacheFile {
   return {

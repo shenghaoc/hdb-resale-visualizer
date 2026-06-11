@@ -1,5 +1,14 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpDown, Bookmark, Building2, Clock3, Coins, LayoutGrid, TrainFront, WalletCards } from "lucide-react";
+import {
+  ArrowUpDown,
+  Bookmark,
+  Building2,
+  Clock3,
+  Coins,
+  LayoutGrid,
+  TrainFront,
+  WalletCards,
+} from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
 import { buildResultsCsvContent } from "@/shared/lib/export";
 import { ShareButton } from "@/components/ShareButton";
@@ -26,7 +35,12 @@ import {
 } from "@/shared/lib/affordability";
 import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/shared/lib/data";
 import { isSameTown } from "@/shared/lib/queryState";
-import type { AffordabilityMode, BlockSortMode, BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
+import type {
+  AffordabilityMode,
+  BlockSortMode,
+  BlockSummary,
+  TownFlatTypeTrendPoint,
+} from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { TownProfileSection } from "@/components/TownProfileSection";
@@ -42,7 +56,11 @@ import {
   sumRollupVolume,
   volumeWeightedMeanLatestMedianPricePerSqm,
 } from "@/entities/town/town-profile";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
+import {
+  getBlockDataQualityTag,
+  QUALITY_LABEL_KEYS,
+  QUALITY_HINT_KEYS,
+} from "@/shared/lib/listing-quality";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -67,7 +85,15 @@ import {
 
 const EMPTY_ARRAY: never[] = [];
 
-function LeaseBar({ years, color = "currentColor", height = 3 }: { years: number; color?: string; height?: number }) {
+function LeaseBar({
+  years,
+  color = "currentColor",
+  height = 3,
+}: {
+  years: number;
+  color?: string;
+  height?: number;
+}) {
   const pct = Math.max(0, Math.min(1, years / MAX_LEASE_DURATION)) * 100;
   return (
     <div
@@ -249,8 +275,13 @@ const BlockCard = memo(function BlockCard({
       },
       block.medianPrice,
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
-  }, [searchProfile?.monthlyIncome, searchProfile?.cpfOABalance, searchProfile?.age, block.medianPrice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
+  }, [
+    searchProfile?.monthlyIncome,
+    searchProfile?.cpfOABalance,
+    searchProfile?.age,
+    block.medianPrice,
+  ]);
 
   if (isCompact) {
     const currentYear = getCurrentYear();
@@ -285,12 +316,14 @@ const BlockCard = memo(function BlockCard({
       >
         <div className="flex w-full min-w-0 items-start gap-2">
           <div className="min-w-0 flex-1">
-              <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
+            <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
               {block.block} {block.streetName}
             </strong>
             <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
               {localizeTownName(block.town, locale)}
-              {block.flatTypes.length > 0 ? ` · ${localizeFlatType(block.flatTypes[0], locale)}` : ""}
+              {block.flatTypes.length > 0
+                ? ` · ${localizeFlatType(block.flatTypes[0], locale)}`
+                : ""}
             </span>
           </div>
           <div className="flex shrink-0 items-start gap-2">
@@ -299,14 +332,14 @@ const BlockCard = memo(function BlockCard({
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
-                  <BudgetMatchBadge
-                    medianPrice={block.medianPrice}
-                    budgetMin={budgetMin ?? null}
-                    budgetMax={budgetMax ?? null}
-                    t={t}
-                    locale={locale}
-                    className="scale-90 origin-right"
-                  />
+                <BudgetMatchBadge
+                  medianPrice={block.medianPrice}
+                  budgetMin={budgetMin ?? null}
+                  budgetMax={budgetMax ?? null}
+                  t={t}
+                  locale={locale}
+                  className="scale-90 origin-right"
+                />
                 {affordVerdict && affordVerdict.status !== "unknown" ? (
                   <span
                     className={cn(
@@ -341,7 +374,11 @@ const BlockCard = memo(function BlockCard({
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
-              <Bookmark data-icon className={cn("size-3.5", isSaved && "fill-current")} aria-hidden="true" />
+              <Bookmark
+                data-icon
+                className={cn("size-3.5", isSaved && "fill-current")}
+                aria-hidden="true"
+              />
             </Button>
           </div>
         </div>
@@ -364,7 +401,11 @@ const BlockCard = memo(function BlockCard({
         </div>
 
         <div className="mt-1.5 w-full">
-          <LeaseBar years={leaseYears > 0 ? leaseYears : 0} color="var(--color-primary)" height={2.5} />
+          <LeaseBar
+            years={leaseYears > 0 ? leaseYears : 0}
+            color="var(--color-primary)"
+            height={2.5}
+          />
         </div>
       </Item>
     );
@@ -437,7 +478,10 @@ const BlockCard = memo(function BlockCard({
             });
             return (
               <>
-                <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
+                <Badge
+                  variant="outline"
+                  className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                >
                   {t(QUALITY_LABEL_KEYS[qualityTag])}
                 </Badge>
                 <span className="text-[0.62rem] font-semibold text-muted-foreground">
@@ -450,12 +494,9 @@ const BlockCard = memo(function BlockCard({
             <span
               className={cn(
                 "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
-                affordVerdict.status === "comfortable" &&
-                  "bg-success/10 text-success",
-                affordVerdict.status === "stretch" &&
-                  "bg-warning/10 text-warning",
-                affordVerdict.status === "over" &&
-                  "bg-destructive/10 text-destructive",
+                affordVerdict.status === "comfortable" && "bg-success/10 text-success",
+                affordVerdict.status === "stretch" && "bg-warning/10 text-warning",
+                affordVerdict.status === "over" && "bg-destructive/10 text-destructive",
               )}
             >
               <span
@@ -482,10 +523,15 @@ const BlockCard = memo(function BlockCard({
           {nearbyStations.length > 0 ? (
             <ul className="flex flex-col gap-0.5">
               {nearbyStations.map((station) => (
-                <li key={`${station.stationName}-${station.distanceMeters}`} className="flex items-center justify-between gap-2 text-sm">
+                <li
+                  key={`${station.stationName}-${station.distanceMeters}`}
+                  className="flex items-center justify-between gap-2 text-sm"
+                >
                   <div className="flex items-center gap-1.5 min-w-0">
                     <MrtLineDots stationName={station.stationName} />
-                    <span className="truncate font-semibold uppercase tracking-[0.08em]">{station.stationName}</span>
+                    <span className="truncate font-semibold uppercase tracking-[0.08em]">
+                      {station.stationName}
+                    </span>
                   </div>
                   <span
                     className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground"
@@ -603,7 +649,10 @@ export function ResultsPane({
             medianPrice: block.medianPrice,
             pricePerSqm: block.pricePerSqmMedian,
             transactionCount: block.transactionCount,
-            remainingLeaseYears: Math.max(0, MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1])),
+            remainingLeaseYears: Math.max(
+              0,
+              MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]),
+            ),
             mrtDistanceMeters: block.nearestMrt?.distanceMeters ?? "",
             flatTypes: block.flatTypes.join("; "),
           })),
@@ -753,14 +802,20 @@ export function ResultsPane({
   );
   const townTrendLoading =
     showTownProfile &&
-    (trendSnap.status === "idle" || (trendSnap.status === "failed" && trendSnap.requestedTown !== profileTown));
-  const townTrendFailed = showTownProfile && trendSnap.status === "failed" && trendSnap.requestedTown === profileTown;
+    (trendSnap.status === "idle" ||
+      (trendSnap.status === "failed" && trendSnap.requestedTown !== profileTown));
+  const townTrendFailed =
+    showTownProfile && trendSnap.status === "failed" && trendSnap.requestedTown === profileTown;
 
   const townTrendRange = useMemo(() => {
     if (!profileDataWindow) {
       return null;
     }
-    return resolveTrendMonthRange(profileDataWindow, profileStartMonth ?? null, profileEndMonth ?? null);
+    return resolveTrendMonthRange(
+      profileDataWindow,
+      profileStartMonth ?? null,
+      profileEndMonth ?? null,
+    );
   }, [profileDataWindow, profileEndMonth, profileStartMonth]);
 
   const townRollups = useMemo(() => {
@@ -771,7 +826,10 @@ export function ResultsPane({
   }, [profileTown, showTownProfile, townTrendRange, townTrendRows]);
 
   const townTotalVol = useMemo(() => sumRollupVolume(townRollups), [townRollups]);
-  const townWeightedSqm = useMemo(() => volumeWeightedMeanLatestMedianPricePerSqm(townRollups), [townRollups]);
+  const townWeightedSqm = useMemo(
+    () => volumeWeightedMeanLatestMedianPricePerSqm(townRollups),
+    [townRollups],
+  );
 
   const townLeaseBuckets = useMemo(
     () => buildLeaseCommencementHistogram(profileTownBlocks ?? []),
@@ -783,7 +841,10 @@ export function ResultsPane({
     [profileTownBlocks],
   );
 
-  const townBelowMedianPack = useMemo(() => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5), [profileTownBlocks]);
+  const townBelowMedianPack = useMemo(
+    () => pickBlocksBelowTownMedian(profileTownBlocks ?? [], 5),
+    [profileTownBlocks],
+  );
 
   const compareTownBlocks = useMemo(() => {
     if (
@@ -799,8 +860,7 @@ export function ResultsPane({
   const compareBlocksLoading =
     showTownCompare &&
     Boolean(activeCompareTown) &&
-    (compareBlocksSnap.status === "idle" ||
-      compareBlocksSnap.requestedTown !== activeCompareTown);
+    (compareBlocksSnap.status === "idle" || compareBlocksSnap.requestedTown !== activeCompareTown);
   const compareBlocksFailed =
     showTownCompare &&
     compareBlocksSnap.status === "failed" &&
@@ -866,8 +926,10 @@ export function ResultsPane({
       });
     } else if (sortMode === "affordability" && affordabilityHeadroomByKey) {
       return sorted.sort((left, right) => {
-        const leftHeadroom = affordabilityHeadroomByKey.get(left.addressKey) ?? Number.NEGATIVE_INFINITY;
-        const rightHeadroom = affordabilityHeadroomByKey.get(right.addressKey) ?? Number.NEGATIVE_INFINITY;
+        const leftHeadroom =
+          affordabilityHeadroomByKey.get(left.addressKey) ?? Number.NEGATIVE_INFINITY;
+        const rightHeadroom =
+          affordabilityHeadroomByKey.get(right.addressKey) ?? Number.NEGATIVE_INFINITY;
         return rightHeadroom - leftHeadroom;
       });
     }
@@ -945,11 +1007,7 @@ export function ResultsPane({
     () => sortedBlocks.slice((visiblePage - 1) * itemsPerPage, visiblePage * itemsPerPage),
     [sortedBlocks, visiblePage, itemsPerPage],
   );
-  const {
-    virtualBlocks,
-    virtualTopPadding,
-    virtualBottomPadding,
-  } = useMemo(() => {
+  const { virtualBlocks, virtualTopPadding, virtualBottomPadding } = useMemo(() => {
     if (!isCompact || resultsView !== "blocks") {
       return {
         virtualBlocks: EMPTY_ARRAY,
@@ -999,7 +1057,11 @@ export function ResultsPane({
             >
               1
             </Button>
-            {startPage > 2 && <span className="px-1 text-muted-foreground" aria-hidden="true">…</span>}
+            {startPage > 2 && (
+              <span className="px-1 text-muted-foreground" aria-hidden="true">
+                …
+              </span>
+            )}
           </>
         )}
         {pages.map((p) => (
@@ -1020,7 +1082,11 @@ export function ResultsPane({
         ))}
         {endPage < totalPages && (
           <>
-            {endPage < totalPages - 1 && <span className="px-1 text-muted-foreground" aria-hidden="true">…</span>}
+            {endPage < totalPages - 1 && (
+              <span className="px-1 text-muted-foreground" aria-hidden="true">
+                …
+              </span>
+            )}
             <Button
               variant="outline"
               size="sm"
@@ -1089,7 +1155,9 @@ export function ResultsPane({
             className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"
             data-testid="results-view-toolbar"
           >
-            <div className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-wrap")}>
+            <div
+              className={cn("flex min-w-0 items-center gap-2", townProfileAvailable && "flex-wrap")}
+            >
               {townProfileAvailable ? (
                 <ButtonGroup
                   aria-label={t("results.view.label")}
@@ -1131,7 +1199,11 @@ export function ResultsPane({
                     setSortMode(value);
                     setCurrentPage(1);
                   }}
-                  className={townProfileAvailable ? "flex-1 basis-full sm:basis-auto sm:flex-none" : undefined}
+                  className={
+                    townProfileAvailable
+                      ? "flex-1 basis-full sm:basis-auto sm:flex-none"
+                      : undefined
+                  }
                 />
               ) : null}
             </div>
@@ -1228,10 +1300,7 @@ export function ResultsPane({
                 </div>
               ) : resultsView === "blocks" ? (
                 <div className="flex min-h-[8rem] flex-1 flex-col gap-4">
-                  <div
-                    ref={listContainerRef}
-                    className="min-h-0 flex-1 pr-2"
-                  >
+                  <div ref={listContainerRef} className="min-h-0 flex-1 pr-2">
                     <ItemGroup
                       role="listbox"
                       className={cn("flex flex-col", isCompact ? "gap-2" : "gap-4")}

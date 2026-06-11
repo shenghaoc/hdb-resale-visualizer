@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { comparisonArtifactSchema } from "@/shared/lib/dataSchemas";
 import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
 
@@ -22,7 +22,9 @@ describe("fixture comparison artifacts", () => {
     for (const addressKey of addressKeys) {
       const raw = readFileSync(join(FIXTURE_COMPARISONS_DIR, `${addressKey}.json`), "utf8");
       const comparison = comparisonArtifactSchema.parse(JSON.parse(raw));
-      const overlaySchools = getPrimarySchoolsForOverlay(comparison.amenities.nearestPrimarySchools);
+      const overlaySchools = getPrimarySchoolsForOverlay(
+        comparison.amenities.nearestPrimarySchools,
+      );
       expect(overlaySchools.length, addressKey).toBeGreaterThan(0);
     }
   });

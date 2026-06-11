@@ -16,10 +16,7 @@ import {
   buildComparableSet,
   parseStoreyMidpoint,
 } from "../../shared/comparable-engine";
-import {
-  buildTrendLookup,
-  computeTimeAdjustments,
-} from "../../shared/time-adjustment";
+import { buildTrendLookup, computeTimeAdjustments } from "../../shared/time-adjustment";
 import type { AdjustmentMeta } from "../../shared/time-adjustment";
 import type { TimeAdjustedComparable } from "../../shared/data-types";
 import { z } from "zod";
@@ -47,6 +44,12 @@ const MAX_BODY_BYTES = 8192;
 // D1 ↔ TS mapping
 // ---------------------------------------------------------------------------
 
+function normalizeComparableId(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  return "";
+}
+
 /** Map a snake_case D1 row to a camelCase TransactionRow.
  *  `storey_midpoint` and `price_per_sqm` are no longer stored in D1 —
  *  they are derived here at read time to save ~374 MB of index storage. */
@@ -55,7 +58,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
   const floorAreaSqm = (row.floor_area_sqm as number) ?? 0;
   const resalePrice = (row.resale_price as number) ?? 0;
   return {
-    id: String(row.id ?? ""),
+    id: normalizeComparableId(row.id),
     month: row.month as string,
     town: row.town as string,
     block: row.block as string,
@@ -101,7 +104,11 @@ async function readBodyWithLimit(request: Request): Promise<string | Response> {
       if (done) break;
       totalBytes += value.length;
       if (totalBytes > MAX_BODY_BYTES) {
-        try { await reader.cancel(); } catch { /* ignore */ }
+        try {
+          await reader.cancel();
+        } catch {
+          /* ignore */
+        }
         return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
       }
       chunks.push(value);
@@ -123,11 +130,7 @@ async function readBodyWithLimit(request: Request): Promise<string | Response> {
 // D1 queries
 // ---------------------------------------------------------------------------
 
-async function queryCount(
-  db: D1Database,
-  sql: string,
-  ...params: unknown[]
-): Promise<number> {
+async function queryCount(db: D1Database, sql: string, ...params: unknown[]): Promise<number> {
   let stmt = db.prepare(sql);
   if (params.length > 0) {
     stmt = stmt.bind(...params);
@@ -201,17 +204,21 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     queryCount(
       env.DB,
       "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3",
-      parsed.town, parsed.block, parsed.flatType,
+      parsed.town,
+      parsed.block,
+      parsed.flatType,
     ),
     queryCount(
       env.DB,
       "SELECT COUNT(*) AS cnt FROM transactions WHERE street_name = ?1 AND flat_type = ?2",
-      parsed.streetName, parsed.flatType,
+      parsed.streetName,
+      parsed.flatType,
     ),
     queryCount(
       env.DB,
       "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND flat_type = ?2",
-      parsed.town, parsed.flatType,
+      parsed.town,
+      parsed.flatType,
     ),
   ]);
 
@@ -222,19 +229,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     dataRows = await queryRows(
       env.DB,
       "SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3 ORDER BY month DESC LIMIT 150",
-      parsed.town, parsed.block, parsed.flatType,
+      parsed.town,
+      parsed.block,
+      parsed.flatType,
     );
   } else if (sameStreetCount >= 8) {
     dataRows = await queryRows(
       env.DB,
       "SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
-      parsed.streetName, parsed.flatType,
+      parsed.streetName,
+      parsed.flatType,
     );
   } else if (sameTownCount > 0) {
     dataRows = await queryRows(
       env.DB,
       "SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
-      parsed.town, parsed.flatType,
+      parsed.town,
+      parsed.flatType,
     );
   }
   // If all counts are 0, dataRows stays empty → buildComparableSet handles it.
@@ -242,12 +253,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // 4. Score and build the result
   const result = buildComparableSet({
     candidate: parsed,
-    sameBlockRows: dataRows.filter(
-      (r) => r.block === parsed.block && r.town === parsed.town,
-    ),
-    sameStreetRows: dataRows.filter(
-      (r) => r.streetName === parsed.streetName,
-    ),
+    sameBlockRows: dataRows.filter((r) => r.block === parsed.block && r.town === parsed.town),
+    sameStreetRows: dataRows.filter((r) => r.streetName === parsed.streetName),
     sameTownRows: dataRows,
   });
 
@@ -307,9 +314,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       // If the trends query fails, fall back to raw prices.
       adjustmentMeta = {
         adjustmentApplied: false,
-        adjustmentCaveats: [
-          "Time adjustment could not be applied — trend data query failed.",
-        ],
+        adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
       };
       adjustedComparables = null;
     }
@@ -332,9 +337,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (applyAdjustment) {
     const effectiveMeta = adjustmentMeta ?? {
       adjustmentApplied: false,
-      adjustmentCaveats: [
-        "Time adjustment could not be applied — trend data query failed.",
-      ],
+      adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
     };
     if (adjustedComparables) {
       const comparablesWithAdjustment = result.comparables.map((c, i) => ({

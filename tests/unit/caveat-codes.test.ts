@@ -1,13 +1,6 @@
-import { describe, expect, it } from "vitest";
-import {
-  generateCaveats,
-  type Caveat,
-  type CaveatCode,
-} from "../../shared/caveat-codes";
-import {
-  computeConfidence,
-  type ConfidenceInput,
-} from "../../shared/confidence-system";
+import { describe, expect, it } from "vite-plus/test";
+import { generateCaveats, type Caveat, type CaveatCode } from "../../shared/caveat-codes";
+import { computeConfidence, type ConfidenceInput } from "../../shared/confidence-system";
 
 function input(overrides: Partial<ConfidenceInput> = {}): ConfidenceInput {
   return {
@@ -55,7 +48,13 @@ describe("sample size caveats", () => {
 
   it("emits VERY_LOW_SAMPLE for count < 3", () => {
     const result = generateCaveats({
-      confidence: assess({ comparableCount: 2, sameBlockCount: 2, flatTypeMatchCount: 2, floorAreaMatchCount: 2, storeyMatchCount: 2 }),
+      confidence: assess({
+        comparableCount: 2,
+        sameBlockCount: 2,
+        flatTypeMatchCount: 2,
+        floorAreaMatchCount: 2,
+        storeyMatchCount: 2,
+      }),
       comparableLeaseYears: [],
     });
     expect(codes(result)).toContain("VERY_LOW_SAMPLE");
@@ -65,7 +64,13 @@ describe("sample size caveats", () => {
 
   it("emits LOW_SAMPLE for count 3-4", () => {
     const result = generateCaveats({
-      confidence: assess({ comparableCount: 4, sameBlockCount: 4, flatTypeMatchCount: 4, floorAreaMatchCount: 4, storeyMatchCount: 4 }),
+      confidence: assess({
+        comparableCount: 4,
+        sameBlockCount: 4,
+        flatTypeMatchCount: 4,
+        floorAreaMatchCount: 4,
+        storeyMatchCount: 4,
+      }),
       comparableLeaseYears: [],
     });
     expect(codes(result)).toContain("LOW_SAMPLE");
@@ -74,7 +79,13 @@ describe("sample size caveats", () => {
 
   it("does not emit sample caveats when count >= 5", () => {
     const result = generateCaveats({
-      confidence: assess({ comparableCount: 5, sameBlockCount: 5, flatTypeMatchCount: 5, floorAreaMatchCount: 5, storeyMatchCount: 5 }),
+      confidence: assess({
+        comparableCount: 5,
+        sameBlockCount: 5,
+        flatTypeMatchCount: 5,
+        floorAreaMatchCount: 5,
+        storeyMatchCount: 5,
+      }),
       comparableLeaseYears: [],
     });
     expect(codes(result)).not.toContain("LOW_SAMPLE");
@@ -140,8 +151,14 @@ describe("scope proximity caveats", () => {
   it("does not emit scope caveats when count is 0", () => {
     const result = generateCaveats({
       confidence: assess({
-        comparableCount: 0, sameBlockCount: 0, sameStreetCount: 0, sameTownCount: 0,
-        flatTypeMatchCount: 0, floorAreaMatchCount: 0, storeyMatchCount: 0, newestComparableAgeMonths: null,
+        comparableCount: 0,
+        sameBlockCount: 0,
+        sameStreetCount: 0,
+        sameTownCount: 0,
+        flatTypeMatchCount: 0,
+        floorAreaMatchCount: 0,
+        storeyMatchCount: 0,
+        newestComparableAgeMonths: null,
       }),
       comparableLeaseYears: [],
     });
@@ -387,8 +404,36 @@ describe("clean input", () => {
 describe("critical severity", () => {
   it("only NO_COMPARABLES uses critical severity", () => {
     const scenarios = [
-      { overrides: { comparableCount: 0, sameBlockCount: 0, sameStreetCount: 0, sameTownCount: 0, flatTypeMatchCount: 0, floorAreaMatchCount: 0, storeyMatchCount: 0, newestComparableAgeMonths: null as number | null }, extra: {} },
-      { overrides: { comparableCount: 2, sameBlockCount: 0, sameStreetCount: 0, sameTownCount: 2, flatTypeMatchCount: 0, floorAreaMatchCount: 0, storeyMatchCount: 0, newestComparableAgeMonths: 20 }, extra: { percentileAmongComparables: 0, leaseCommenceYear: 2020, comparableLeaseYears: [1990] } },
+      {
+        overrides: {
+          comparableCount: 0,
+          sameBlockCount: 0,
+          sameStreetCount: 0,
+          sameTownCount: 0,
+          flatTypeMatchCount: 0,
+          floorAreaMatchCount: 0,
+          storeyMatchCount: 0,
+          newestComparableAgeMonths: null as number | null,
+        },
+        extra: {},
+      },
+      {
+        overrides: {
+          comparableCount: 2,
+          sameBlockCount: 0,
+          sameStreetCount: 0,
+          sameTownCount: 2,
+          flatTypeMatchCount: 0,
+          floorAreaMatchCount: 0,
+          storeyMatchCount: 0,
+          newestComparableAgeMonths: 20,
+        },
+        extra: {
+          percentileAmongComparables: 0,
+          leaseCommenceYear: 2020,
+          comparableLeaseYears: [1990],
+        },
+      },
     ];
 
     for (const { overrides, extra } of scenarios) {

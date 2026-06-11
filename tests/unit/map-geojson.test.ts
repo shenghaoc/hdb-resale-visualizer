@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { toGeoJson } from "../../src/features/map-explorer/map";
 import type { BlockSummary } from "../../src/types/data";
 
@@ -30,7 +30,9 @@ describe("toGeoJson", () => {
       pricePerSqmMedian: 7_500,
       floorAreaRange: [60, 120],
     });
-    const midAreaProxy = Number((block.medianPrice / ((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2)).toFixed(2));
+    const midAreaProxy = Number(
+      (block.medianPrice / ((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2)).toFixed(2),
+    );
 
     expect(midAreaProxy).toBe(6666.67);
     expect(toGeoJson([block]).features[0]?.properties.price_per_sqm_median).toBe(7500);

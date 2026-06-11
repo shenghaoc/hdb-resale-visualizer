@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { DetailDrawer } from "@/components/DetailDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
@@ -23,7 +23,8 @@ const mockBlock: BlockSummary = {
   flatModels: ["MODEL A"],
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
-    distanceMeters: 400, walkingTimeSeconds: 320
+    distanceMeters: 400,
+    walkingTimeSeconds: 320,
   },
   nearbyMrts: [
     { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
@@ -114,7 +115,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that amenity sections are rendered
@@ -125,13 +126,13 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("BEDOK PRIMARY SCHOOL")).toBeInTheDocument();
     expect(screen.getAllByText("Within 1km").length).toBeGreaterThan(0);
     expect(screen.getByText("250 m")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Hawkers")).toBeInTheDocument();
     expect(screen.getByText("2 within 1km")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Supermarkets")).toBeInTheDocument();
     expect(screen.getByText("1 within 1km")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Parks")).toBeInTheDocument();
     expect(screen.getByText("4 within 1km")).toBeInTheDocument();
   });
@@ -152,7 +153,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that MRT connectivity card is rendered (label is inside the card)
@@ -183,7 +184,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     expect(screen.getByText("Weak data")).toBeInTheDocument();
@@ -206,7 +207,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that all 3 schools are displayed with their distances
@@ -234,26 +235,26 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that percentile sections are rendered
     expect(screen.getByText("Market Percentiles")).toBeInTheDocument();
     expect(screen.getByText("Price Rank")).toBeInTheDocument();
     expect(screen.getByText("65%")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Price/sqm Rank")).toBeInTheDocument();
     expect(screen.getByText("70%")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Lease Rank")).toBeInTheDocument();
     expect(screen.getByText("45%")).toBeInTheDocument();
-    
+
     expect(screen.getByText("MRT Access Rank")).toBeInTheDocument();
     expect(screen.getByText("80%")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Liquidity Rank")).toBeInTheDocument();
     expect(screen.getByText("55%")).toBeInTheDocument();
-    
+
     expect(screen.getByText("Recency Rank")).toBeInTheDocument();
     expect(screen.getByText("90%")).toBeInTheDocument();
   });
@@ -274,17 +275,17 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that loading skeletons are shown
     expect(screen.getByText("Nearby Amenities")).toBeInTheDocument();
     expect(screen.getByText("Market Percentiles")).toBeInTheDocument();
-    
+
     // Should show loading skeletons (animated divs)
-    const loadingSkeletons = screen.getAllByRole("generic").filter(el => 
-      el.className.includes("animate-pulse")
-    );
+    const loadingSkeletons = screen
+      .getAllByRole("generic")
+      .filter((el) => el.className.includes("animate-pulse"));
     expect(loadingSkeletons.length).toBeGreaterThan(0);
   });
 
@@ -305,7 +306,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     expect(screen.getByTestId("detail-drawer")).toBeInTheDocument();
@@ -328,7 +329,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     // Check that fallback messages are shown
@@ -352,12 +353,14 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     expect(screen.getByText("Similar Blocks")).toBeInTheDocument();
     expect(
-      screen.getByText("Nearby or comparable alternatives based on flat type, price, lease, and MRT access."),
+      screen.getByText(
+        "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
+      ),
     ).toBeInTheDocument();
     expect(screen.getByText("No similar blocks found.")).toBeInTheDocument();
   });
@@ -380,7 +383,7 @@ describe("DetailDrawer", () => {
           allBlocks={[mockBlock, similarBlock]}
           onSelectBlock={onSelectBlock}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     fireEvent.click(screen.getByRole("button", { name: "View block 102 BEDOK NTH AVE 4" }));
@@ -403,7 +406,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     const copyButton = screen.getByRole("button", { name: "Copy address to clipboard" });
@@ -413,16 +416,12 @@ describe("DetailDrawer", () => {
     await act(async () => {
       await Promise.resolve();
     });
-    expect(
-      screen.getByRole("button", { name: "Address copied to clipboard" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Address copied to clipboard" })).toBeInTheDocument();
 
     act(() => {
       vi.advanceTimersByTime(2000);
     });
-    expect(
-      screen.getByRole("button", { name: "Copy address to clipboard" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Copy address to clipboard" })).toBeInTheDocument();
   });
 
   it("keeps copy feedback hidden when clipboard write fails", async () => {
@@ -443,7 +442,7 @@ describe("DetailDrawer", () => {
           allBlocks={[]}
           onSelectBlock={() => {}}
         />
-      </I18nProvider>
+      </I18nProvider>,
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Copy address to clipboard" }));
@@ -453,10 +452,8 @@ describe("DetailDrawer", () => {
     });
     expect(writeText).toHaveBeenCalledWith("101 BEDOK NTH AVE 4 Singapore");
     expect(
-      screen.queryByRole("button", { name: "Address copied to clipboard" })
+      screen.queryByRole("button", { name: "Address copied to clipboard" }),
     ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Copy address to clipboard" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Copy address to clipboard" })).toBeInTheDocument();
   });
 });

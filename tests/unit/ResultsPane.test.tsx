@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { ResultsPane } from "@/components/ResultsPane";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
@@ -39,7 +39,8 @@ const block: BlockSummary = {
   flatModels: ["MODEL A"],
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
-    distanceMeters: 400, walkingTimeSeconds: 320
+    distanceMeters: 400,
+    walkingTimeSeconds: 320,
   },
   nearbyMrts: [
     { stationName: "BEDOK NORTH MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },

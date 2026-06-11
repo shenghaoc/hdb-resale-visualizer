@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 import { LRT_LINE_COLOR } from "@shared/mrt-colors";
 import { clearStationDetailsCache, getStationDetails } from "@shared/mrt-station-details";
 

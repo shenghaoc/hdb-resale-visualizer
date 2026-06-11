@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { rankShortlistRows } from "@/features/shortlist/shortlist-ranking";
 
 const sampleRows = [
@@ -75,16 +75,12 @@ describe("shortlist ranking", () => {
   });
 
   it("supports explicit ascending and descending median price modes", () => {
-    expect(rankShortlistRows(sampleRows, "median-asc").map((row) => row.block.medianPrice)).toEqual([
-      510000,
-      550000,
-      650000,
-    ]);
-    expect(rankShortlistRows(sampleRows, "median-desc").map((row) => row.block.medianPrice)).toEqual([
-      650000,
-      550000,
-      510000,
-    ]);
+    expect(rankShortlistRows(sampleRows, "median-asc").map((row) => row.block.medianPrice)).toEqual(
+      [510000, 550000, 650000],
+    );
+    expect(
+      rankShortlistRows(sampleRows, "median-desc").map((row) => row.block.medianPrice),
+    ).toEqual([650000, 550000, 510000]);
   });
 
   it("falls back to deterministic tie-breakers when target gaps are unavailable", () => {

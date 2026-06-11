@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   computeTimeAdjustment,
   computeTimeAdjustments,
@@ -14,9 +14,7 @@ import {
 // ---------------------------------------------------------------------------
 
 /** Build a TrendPoint with defaults. */
-function tp(
-  overrides: Partial<TrendPoint> & { month: string },
-): TrendPoint {
+function tp(overrides: Partial<TrendPoint> & { month: string }): TrendPoint {
   return {
     medianPricePerSqm: 5000,
     transactionCount: 10,
@@ -37,7 +35,10 @@ function makeTrendLookup(
   ],
 ): TrendLookup {
   const map: TrendLookup = new Map();
-  map.set("ANG MO KIO__4 ROOM", [...points].sort((a, b) => a.month.localeCompare(b.month)));
+  map.set(
+    "ANG MO KIO__4 ROOM",
+    [...points].sort((a, b) => a.month.localeCompare(b.month)),
+  );
   return map;
 }
 
@@ -48,9 +49,27 @@ function makeTrendLookup(
 describe("buildTrendLookup", () => {
   it("groups rows by town__flat_type and sorts by month", () => {
     const rows = [
-      { town: "BEDOK", flat_type: "5 ROOM", month: "2024-06", median_price_per_sqm: 5000, transaction_count: 8 },
-      { town: "BEDOK", flat_type: "5 ROOM", month: "2024-01", median_price_per_sqm: 4800, transaction_count: 10 },
-      { town: "BEDOK", flat_type: "5 ROOM", month: "2024-03", median_price_per_sqm: 4900, transaction_count: 12 },
+      {
+        town: "BEDOK",
+        flat_type: "5 ROOM",
+        month: "2024-06",
+        median_price_per_sqm: 5000,
+        transaction_count: 8,
+      },
+      {
+        town: "BEDOK",
+        flat_type: "5 ROOM",
+        month: "2024-01",
+        median_price_per_sqm: 4800,
+        transaction_count: 10,
+      },
+      {
+        town: "BEDOK",
+        flat_type: "5 ROOM",
+        month: "2024-03",
+        median_price_per_sqm: 4900,
+        transaction_count: 12,
+      },
     ];
     const lookup = buildTrendLookup(rows);
     const points = lookup.get("BEDOK__5 ROOM");
@@ -69,9 +88,27 @@ describe("buildTrendLookup", () => {
 
   it("groups multiple town × flat type combinations", () => {
     const rows = [
-      { town: "BEDOK", flat_type: "4 ROOM", month: "2024-01", median_price_per_sqm: 4000, transaction_count: 10 },
-      { town: "BEDOK", flat_type: "5 ROOM", month: "2024-01", median_price_per_sqm: 5000, transaction_count: 10 },
-      { town: "ANG MO KIO", flat_type: "4 ROOM", month: "2024-01", median_price_per_sqm: 4500, transaction_count: 10 },
+      {
+        town: "BEDOK",
+        flat_type: "4 ROOM",
+        month: "2024-01",
+        median_price_per_sqm: 4000,
+        transaction_count: 10,
+      },
+      {
+        town: "BEDOK",
+        flat_type: "5 ROOM",
+        month: "2024-01",
+        median_price_per_sqm: 5000,
+        transaction_count: 10,
+      },
+      {
+        town: "ANG MO KIO",
+        flat_type: "4 ROOM",
+        month: "2024-01",
+        median_price_per_sqm: 4500,
+        transaction_count: 10,
+      },
     ];
     const lookup = buildTrendLookup(rows);
     expect(lookup.size).toBe(3);
@@ -122,11 +159,7 @@ describe("findLatestQualifyingMonth", () => {
 // ---------------------------------------------------------------------------
 
 describe("findMonthPoint", () => {
-  const points = [
-    tp({ month: "2024-01" }),
-    tp({ month: "2024-06" }),
-    tp({ month: "2025-01" }),
-  ];
+  const points = [tp({ month: "2024-01" }), tp({ month: "2024-06" }), tp({ month: "2025-01" })];
 
   it("finds an existing month", () => {
     const result = findMonthPoint(points, "2024-06");
@@ -150,14 +183,7 @@ describe("findMonthPoint", () => {
 describe("computeTimeAdjustment", () => {
   it("computes correct adjustment for a typical older transaction", () => {
     const lookup = makeTrendLookup();
-    const result = computeTimeAdjustment(
-      "ANG MO KIO",
-      "4 ROOM",
-      "2022-01",
-      450000,
-      5000,
-      lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup);
 
     // Latest qualifying month: 2026-01 (medianPpsm=5300), tx month: 2022-01 (medianPpsm=4500)
     // adjustmentFactor = 5300 / 4500 ≈ 1.1778
@@ -177,9 +203,7 @@ describe("computeTimeAdjustment", () => {
       tp({ month: "2025-01", medianPricePerSqm: 5100, transactionCount: 7 }),
       tp({ month: "2026-01", medianPricePerSqm: 5300, transactionCount: 1 }),
     ]);
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup);
     expect(result.adjustmentFactor).not.toBeNull();
     // Latest qualifying should be 2022-01 itself (since 2025-01 has count 7 >= 5 but wait,
     // no — 2025-01 has transactionCount=7 which IS >= MIN_TREND_SAMPLE_SIZE=5. But 2026-01
@@ -198,9 +222,7 @@ describe("computeTimeAdjustment", () => {
 describe("computeTimeAdjustment edge cases", () => {
   it("returns null adjustment when no trend data exists for town × flat type", () => {
     const lookup = makeTrendLookup(); // Only has ANG MO KIO__4 ROOM
-    const result = computeTimeAdjustment(
-      "BEDOK", "3 ROOM", "2024-01", 400000, 4500, lookup,
-    );
+    const result = computeTimeAdjustment("BEDOK", "3 ROOM", "2024-01", 400000, 4500, lookup);
     expect(result.adjustedPrice).toBeNull();
     expect(result.adjustedPricePerSqm).toBeNull();
     expect(result.adjustmentFactor).toBeNull();
@@ -209,9 +231,7 @@ describe("computeTimeAdjustment edge cases", () => {
 
   it("returns null adjustment when transaction month is missing", () => {
     const lookup = makeTrendLookup();
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2019-06", 450000, 5000, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2019-06", 450000, 5000, lookup);
     expect(result.adjustedPrice).toBeNull();
     expect(result.adjustmentFactor).toBeNull();
     expect(result.adjustmentLabel).toBeNull();
@@ -223,9 +243,7 @@ describe("computeTimeAdjustment edge cases", () => {
       tp({ month: "2022-01", medianPricePerSqm: 4500, transactionCount: 4 }),
       tp({ month: "2026-01", medianPricePerSqm: 5300, transactionCount: 10 }),
     ]);
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup);
     expect(result.adjustedPrice).toBeNull();
     expect(result.adjustmentFactor).toBeNull();
   });
@@ -237,9 +255,7 @@ describe("computeTimeAdjustment edge cases", () => {
       tp({ month: "2022-01", medianPricePerSqm: 4500, transactionCount: 10 }),
       tp({ month: "2025-01", medianPricePerSqm: 5100, transactionCount: 3 }),
     ]);
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup);
     // Adjustment is available (tx month is its own latest), factor ≈ 1.0
     expect(result.adjustedPrice).toBe(450000);
     expect(result.adjustmentFactor).toBeCloseTo(1.0, 8);
@@ -248,9 +264,7 @@ describe("computeTimeAdjustment edge cases", () => {
 
   it("returns adjustment with factor ~1.0 when tx month equals latest month", () => {
     const lookup = makeTrendLookup();
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2026-01", 500000, 5300, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2026-01", 500000, 5300, lookup);
     expect(result.adjustmentFactor).toBeCloseTo(1.0, 8);
     expect(result.adjustmentLabel).toEqual({ type: "at_latest" });
     expect(result.adjustedPrice).toBe(500000);
@@ -262,16 +276,19 @@ describe("computeTimeAdjustment edge cases", () => {
       tp({ month: "2022-01", medianPricePerSqm: 0, transactionCount: 10 }),
       tp({ month: "2026-01", medianPricePerSqm: 5300, transactionCount: 10 }),
     ]);
-    const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup,
-    );
+    const result = computeTimeAdjustment("ANG MO KIO", "4 ROOM", "2022-01", 450000, 5000, lookup);
     expect(result.adjustedPrice).toBeNull();
     expect(result.adjustmentFactor).toBeNull();
   });
 
   it("handles empty TrendLookup", () => {
     const result = computeTimeAdjustment(
-      "ANG MO KIO", "4 ROOM", "2024-01", 450000, 5000, new Map(),
+      "ANG MO KIO",
+      "4 ROOM",
+      "2024-01",
+      450000,
+      5000,
+      new Map(),
     );
     expect(result.adjustedPrice).toBeNull();
   });
@@ -285,8 +302,20 @@ describe("computeTimeAdjustments", () => {
   it("adjusts all comparables and returns correct meta when all succeed", () => {
     const lookup = makeTrendLookup();
     const comparables = [
-      { town: "ANG MO KIO", flatType: "4 ROOM", month: "2022-01", resalePrice: 450000, pricePerSqm: 5000 },
-      { town: "ANG MO KIO", flatType: "4 ROOM", month: "2021-01", resalePrice: 420000, pricePerSqm: 4200 },
+      {
+        town: "ANG MO KIO",
+        flatType: "4 ROOM",
+        month: "2022-01",
+        resalePrice: 450000,
+        pricePerSqm: 5000,
+      },
+      {
+        town: "ANG MO KIO",
+        flatType: "4 ROOM",
+        month: "2021-01",
+        resalePrice: 420000,
+        pricePerSqm: 4200,
+      },
     ];
     const { adjustedComparables, meta } = computeTimeAdjustments(comparables, lookup);
 
@@ -301,8 +330,20 @@ describe("computeTimeAdjustments", () => {
     // Only has data for ANG MO KIO 4 ROOM
     const lookup = makeTrendLookup();
     const comparables = [
-      { town: "ANG MO KIO", flatType: "4 ROOM", month: "2022-01", resalePrice: 450000, pricePerSqm: 5000 },
-      { town: "BEDOK", flatType: "3 ROOM", month: "2024-01", resalePrice: 400000, pricePerSqm: 4500 },
+      {
+        town: "ANG MO KIO",
+        flatType: "4 ROOM",
+        month: "2022-01",
+        resalePrice: 450000,
+        pricePerSqm: 5000,
+      },
+      {
+        town: "BEDOK",
+        flatType: "3 ROOM",
+        month: "2024-01",
+        resalePrice: 400000,
+        pricePerSqm: 4500,
+      },
     ];
     const { adjustedComparables, meta } = computeTimeAdjustments(comparables, lookup);
 
@@ -317,7 +358,13 @@ describe("computeTimeAdjustments", () => {
   it("returns adjustmentApplied false when no comparables could be adjusted", () => {
     const lookup = makeTrendLookup(); // ANG MO KIO only
     const comparables = [
-      { town: "BEDOK", flatType: "3 ROOM", month: "2024-01", resalePrice: 400000, pricePerSqm: 4500 },
+      {
+        town: "BEDOK",
+        flatType: "3 ROOM",
+        month: "2024-01",
+        resalePrice: 400000,
+        pricePerSqm: 4500,
+      },
     ];
     const { adjustedComparables, meta } = computeTimeAdjustments(comparables, lookup);
 

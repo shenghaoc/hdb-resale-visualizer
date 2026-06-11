@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import type { BlockSummary } from "@/types/data";
 import { haversineDistanceMeters } from "../../scripts/lib/pipeline";
 
@@ -32,9 +32,7 @@ describe("MRT Distance Calculation Preservation", () => {
   });
 
   it("keeps distanceMeters stored as integers in summaries", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
 
     for (const block of blockSummaries.filter((b) => b.nearestMrt !== null).slice(0, 100)) {
       expect(Number.isInteger(block.nearestMrt?.distanceMeters)).toBe(true);
@@ -42,17 +40,13 @@ describe("MRT Distance Calculation Preservation", () => {
   });
 
   it("keeps nearestMrt non-null for at least some blocks", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
 
     expect(blockSummaries.some((b) => b.nearestMrt !== null)).toBe(true);
   });
 
   it("keeps nearestMrt structure stable when present", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
     const sampleBlock = blockSummaries.find((b) => b.nearestMrt !== null);
 
     expect(sampleBlock?.nearestMrt?.stationName).toBeTruthy();
@@ -60,9 +54,7 @@ describe("MRT Distance Calculation Preservation", () => {
   });
 
   it("keeps MRT station names and distances reasonable for Singapore", () => {
-    const blockSummaries = parseJson<BlockSummary[]>(
-      readFileSync(blockSummariesPath, "utf-8"),
-    );
+    const blockSummaries = parseJson<BlockSummary[]>(readFileSync(blockSummariesPath, "utf-8"));
 
     for (const block of blockSummaries.filter((b) => b.nearestMrt !== null).slice(0, 100)) {
       expect(block.nearestMrt?.stationName.length).toBeGreaterThan(0);

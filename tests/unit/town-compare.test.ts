@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 import {
   buildTownCompareSnapshot,
@@ -6,9 +6,7 @@ import {
   type TownCompareSnapshot,
 } from "@/entities/town/town-compare";
 
-function blockStub(
-  p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey">,
-): BlockSummary {
+function blockStub(p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey">): BlockSummary {
   return {
     town: "TOWN",
     block: "1",
@@ -30,10 +28,38 @@ function blockStub(
 }
 
 const TRENDS: TownFlatTypeTrendPoint[] = [
-  { town: "BEDOK", flatType: "4 ROOM", month: "2023-01", medianPrice: 550_000, medianPricePerSqm: 5800, transactionCount: 10 },
-  { town: "BEDOK", flatType: "4 ROOM", month: "2024-01", medianPrice: 600_000, medianPricePerSqm: 6300, transactionCount: 15 },
-  { town: "BEDOK", flatType: "3 ROOM", month: "2024-01", medianPrice: 450_000, medianPricePerSqm: 5700, transactionCount: 5 },
-  { town: "ANG MO KIO", flatType: "4 ROOM", month: "2024-01", medianPrice: 700_000, medianPricePerSqm: 7400, transactionCount: 8 },
+  {
+    town: "BEDOK",
+    flatType: "4 ROOM",
+    month: "2023-01",
+    medianPrice: 550_000,
+    medianPricePerSqm: 5800,
+    transactionCount: 10,
+  },
+  {
+    town: "BEDOK",
+    flatType: "4 ROOM",
+    month: "2024-01",
+    medianPrice: 600_000,
+    medianPricePerSqm: 6300,
+    transactionCount: 15,
+  },
+  {
+    town: "BEDOK",
+    flatType: "3 ROOM",
+    month: "2024-01",
+    medianPrice: 450_000,
+    medianPricePerSqm: 5700,
+    transactionCount: 5,
+  },
+  {
+    town: "ANG MO KIO",
+    flatType: "4 ROOM",
+    month: "2024-01",
+    medianPrice: 700_000,
+    medianPricePerSqm: 7400,
+    transactionCount: 8,
+  },
 ];
 
 const RANGE = { start: "2023-01", end: "2024-01" };
@@ -61,9 +87,25 @@ describe("buildTownCompareSnapshot", () => {
 
   it("rolls up block-level medians and modal lease decade", () => {
     const blocks: BlockSummary[] = [
-      blockStub({ addressKey: "a", medianPrice: 500_000, pricePerSqmMedian: 5500, leaseCommenceRange: [1990, 1990] }),
-      blockStub({ addressKey: "b", medianPrice: 600_000, pricePerSqmMedian: 6300, leaseCommenceRange: [1992, 1992] }),
-      blockStub({ addressKey: "c", medianPrice: 700_000, pricePerSqmMedian: 7000, leaseCommenceRange: [1980, 1980], nearestMrt: null }),
+      blockStub({
+        addressKey: "a",
+        medianPrice: 500_000,
+        pricePerSqmMedian: 5500,
+        leaseCommenceRange: [1990, 1990],
+      }),
+      blockStub({
+        addressKey: "b",
+        medianPrice: 600_000,
+        pricePerSqmMedian: 6300,
+        leaseCommenceRange: [1992, 1992],
+      }),
+      blockStub({
+        addressKey: "c",
+        medianPrice: 700_000,
+        pricePerSqmMedian: 7000,
+        leaseCommenceRange: [1980, 1980],
+        nearestMrt: null,
+      }),
     ];
     const snap = buildTownCompareSnapshot({
       town: "BEDOK",
@@ -123,7 +165,7 @@ describe("computeMetricDelta", () => {
     const result = computeMetricDelta("medianPrice", 600_000, 500_000);
     expect(result).not.toBeNull();
     expect(result!.delta).toBe(-100_000);
-    expect(result!.pct).toBeCloseTo(-100_000 / 600_000 * 100);
+    expect(result!.pct).toBeCloseTo((-100_000 / 600_000) * 100);
     expect(result!.tone).toBe("better");
   });
 
@@ -176,7 +218,11 @@ describe("computeMetricDelta — same-town guard parity", () => {
       currentYear: CURRENT_YEAR,
     });
 
-    expect(computeMetricDelta("medianPrice", snap.medianPrice, snap.medianPrice)!.tone).toBe("neutral");
-    expect(computeMetricDelta("medianWalkSeconds", snap.medianWalkSeconds, snap.medianWalkSeconds)!.tone).toBe("neutral");
+    expect(computeMetricDelta("medianPrice", snap.medianPrice, snap.medianPrice)!.tone).toBe(
+      "neutral",
+    );
+    expect(
+      computeMetricDelta("medianWalkSeconds", snap.medianWalkSeconds, snap.medianWalkSeconds)!.tone,
+    ).toBe("neutral");
   });
 });

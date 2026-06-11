@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { render, screen } from "@testing-library/react";
 import { ShortlistDrawer } from "@/components/ShortlistDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
@@ -29,9 +29,7 @@ function makeItem(addressKey: string): ShortlistItem {
   return { addressKey, notes: "", targetPrice: null, addedAt: "2024-01-01T00:00:00Z" };
 }
 
-function renderDrawer(
-  rows: Parameters<typeof ShortlistDrawer>[0]["rows"],
-) {
+function renderDrawer(rows: Parameters<typeof ShortlistDrawer>[0]["rows"]) {
   return render(
     <I18nProvider>
       <ShortlistDrawer

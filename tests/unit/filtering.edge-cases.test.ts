@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import {
   matchesFilter,
@@ -51,13 +51,25 @@ describe("matchesFilter — null/missing nearestMrt", () => {
   });
 
   it("includes block where nearestMrt distance is within mrtMax", () => {
-    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300, walkingTimeSeconds: 240 } });
+    const block = makeBlock({
+      nearestMrt: {
+        stationName: "BEDOK MRT STATION",
+        distanceMeters: 300,
+        walkingTimeSeconds: 240,
+      },
+    });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, mrtMax: 400 })).toBe(true);
   });
 
   it("excludes block where nearestMrt distance exceeds mrtMax", () => {
-    const block = makeBlock({ nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 } });
+    const block = makeBlock({
+      nearestMrt: {
+        stationName: "BEDOK MRT STATION",
+        distanceMeters: 800,
+        walkingTimeSeconds: 640,
+      },
+    });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, mrtMax: 500 })).toBe(false);
   });
@@ -136,33 +148,47 @@ describe("matchesFilter — budget boundaries", () => {
   it("includes block where medianPrice exactly equals budgetMin", () => {
     const block = makeBlock({ medianPrice: 500_000 });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: null })).toBe(true);
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: null })).toBe(
+      true,
+    );
   });
 
   it("excludes block where medianPrice is below budgetMin", () => {
     const block = makeBlock({ medianPrice: 499_999 });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: null })).toBe(false);
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: null })).toBe(
+      false,
+    );
   });
 
   it("includes block where medianPrice exactly equals budgetMax", () => {
     const block = makeBlock({ medianPrice: 800_000 });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: null, budgetMax: 800_000 })).toBe(true);
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: null, budgetMax: 800_000 })).toBe(
+      true,
+    );
   });
 
   it("excludes block where medianPrice exceeds budgetMax", () => {
     const block = makeBlock({ medianPrice: 800_001 });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: null, budgetMax: 800_000 })).toBe(false);
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: null, budgetMax: 800_000 })).toBe(
+      false,
+    );
   });
 
   it("handles budgetMin and budgetMax together (range filter)", () => {
     const block = makeBlock({ medianPrice: 600_000 });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: 700_000 })).toBe(true);
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 650_000, budgetMax: 700_000 })).toBe(false);
-    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: 550_000 })).toBe(false);
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: 700_000 })).toBe(
+      true,
+    );
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 650_000, budgetMax: 700_000 })).toBe(
+      false,
+    );
+    expect(matchesFilter(block, { ...BASE_FILTERS, budgetMin: 500_000, budgetMax: 550_000 })).toBe(
+      false,
+    );
   });
 });
 
@@ -172,25 +198,33 @@ describe("matchesFilter — date range", () => {
   it("excludes block whose latestTransaction is before startMonth", () => {
     const block = makeBlock({ availableDateRange: ["2020-01", "2021-06"] });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(false);
+    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(
+      false,
+    );
   });
 
   it("includes block whose latestTransaction is on or after startMonth", () => {
     const block = makeBlock({ availableDateRange: ["2020-01", "2022-01"] });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(true);
+    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(
+      true,
+    );
   });
 
   it("excludes block whose earliestTransaction is after endMonth", () => {
     const block = makeBlock({ availableDateRange: ["2023-01", "2024-12"] });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(false);
+    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(
+      false,
+    );
   });
 
   it("includes block whose earliestTransaction is on or before endMonth", () => {
     const block = makeBlock({ availableDateRange: ["2022-12", "2024-12"] });
 
-    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(true);
+    expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(
+      true,
+    );
   });
 });
 
@@ -244,7 +278,11 @@ describe("matchesFilter — combined filters short-circuit", () => {
       floorAreaRange: [85, 100],
       flatTypes: ["4 ROOM"],
       flatModels: ["MODEL A"],
-      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 300, walkingTimeSeconds: 240 },
+      nearestMrt: {
+        stationName: "BEDOK MRT STATION",
+        distanceMeters: 300,
+        walkingTimeSeconds: 240,
+      },
     });
 
     expect(
@@ -278,7 +316,11 @@ describe("matchesGeographicSearchIntent — null nearestMrt on station intent", 
 
   it("returns false for station intent when block nearestMrt is too far", () => {
     const block = makeBlock({
-      nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 1200, walkingTimeSeconds: 960 },
+      nearestMrt: {
+        stationName: "BEDOK MRT STATION",
+        distanceMeters: 1200,
+        walkingTimeSeconds: 960,
+      },
     });
 
     expect(
@@ -293,7 +335,9 @@ describe("matchesGeographicSearchIntent — null nearestMrt on station intent", 
   it("returns true for station intent when nearbyMrts contains the target within radius", () => {
     const block = makeBlock({
       nearestMrt: null,
-      nearbyMrts: [{ stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 }],
+      nearbyMrts: [
+        { stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 },
+      ],
     });
 
     expect(

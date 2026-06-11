@@ -38,40 +38,40 @@ const shortlistDecisionStatuses = [
 ] as const;
 
 const shortlistItemSchema = z.object({
-    addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
-    notes: note.catch(""),
-    pros: note.optional().catch(undefined),
-    cons: note.optional().catch(undefined),
-    renovation: note.optional().catch(undefined),
-    noise: note.optional().catch(undefined),
-    transport: note.optional().catch(undefined),
-    offerCeiling: z.number().finite().optional().catch(undefined),
-    suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
-    askingPrice: z.number().finite().optional().catch(undefined),
-    fairRangeLow: z.number().finite().optional().catch(undefined),
-    fairRangeMedian: z.number().finite().optional().catch(undefined),
-    fairRangeHigh: z.number().finite().optional().catch(undefined),
-    buyerOpeningOffer: z.number().finite().optional().catch(undefined),
-    valuationReceived: z.number().finite().optional().catch(undefined),
-    estimatedCov: z.number().finite().optional().catch(undefined),
-    viewingDate: z.string().optional().catch(undefined),
-    decisionStatus: z
-      .enum(shortlistDecisionStatuses)
-      .optional()
-      .catch(undefined),
-    noiseNotes: note.optional().catch(undefined),
-    transportNotes: note.optional().catch(undefined),
-    buyerNotes: note.optional().catch(undefined),
-    agentRemarks: note.optional().catch(undefined),
-    targetPrice: z.number().finite().nullable().catch(null),
-    addedAt: z
-      .string()
-      .datetime({ offset: true })
-      .max(MAX_ADDED_AT_LENGTH)
-      .catch(() => new Date().toISOString()),
+  addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
+  notes: note.catch(""),
+  pros: note.optional().catch(undefined),
+  cons: note.optional().catch(undefined),
+  renovation: note.optional().catch(undefined),
+  noise: note.optional().catch(undefined),
+  transport: note.optional().catch(undefined),
+  offerCeiling: z.number().finite().optional().catch(undefined),
+  suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
+  askingPrice: z.number().finite().optional().catch(undefined),
+  fairRangeLow: z.number().finite().optional().catch(undefined),
+  fairRangeMedian: z.number().finite().optional().catch(undefined),
+  fairRangeHigh: z.number().finite().optional().catch(undefined),
+  buyerOpeningOffer: z.number().finite().optional().catch(undefined),
+  valuationReceived: z.number().finite().optional().catch(undefined),
+  estimatedCov: z.number().finite().optional().catch(undefined),
+  viewingDate: z.string().optional().catch(undefined),
+  decisionStatus: z.enum(shortlistDecisionStatuses).optional().catch(undefined),
+  noiseNotes: note.optional().catch(undefined),
+  transportNotes: note.optional().catch(undefined),
+  buyerNotes: note.optional().catch(undefined),
+  agentRemarks: note.optional().catch(undefined),
+  targetPrice: z.number().finite().nullable().catch(null),
+  addedAt: z
+    .string()
+    .datetime({ offset: true })
+    .max(MAX_ADDED_AT_LENGTH)
+    .catch(() => new Date().toISOString()),
 });
 
-function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
+function normalizeNumber(
+  value: number | undefined,
+  fallback: number | null | undefined,
+): number | undefined {
   if (Number.isFinite(value)) {
     return value;
   }
@@ -179,7 +179,7 @@ export function parseStoredItems(itemsJson: string): ShortlistItem[] {
 type SyncStatement = {
   bind: (...args: unknown[]) => SyncStatement;
   first: <T>() => Promise<T | null>;
-  run: () => Promise<{ meta?: { changes?: number } } | unknown>;
+  run: () => Promise<{ meta?: { changes?: number } }>;
 };
 export type SyncDB = { prepare: (sql: string) => SyncStatement };
 
@@ -214,7 +214,9 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
       const syncCode = generateSyncCode();
       const codeHash = await hashSyncCode(syncCode);
       await db
-        .prepare("INSERT INTO shortlists (code_hash, items_json, updated_at, created_at) VALUES (?, ?, ?, ?)")
+        .prepare(
+          "INSERT INTO shortlists (code_hash, items_json, updated_at, created_at) VALUES (?, ?, ?, ?)",
+        )
         .bind(codeHash, JSON.stringify(items), now, now)
         .run();
       return { status: 200, body: { syncCode, items } };
@@ -248,7 +250,10 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
  * Core logic for `GET /api/shortlist/:syncCode`. A malformed code and a
  * valid-but-missing code both return 404 to avoid leaking which is which.
  */
-export async function handleShortlistGet(db: SyncDB, code: string | undefined): Promise<SyncResult> {
+export async function handleShortlistGet(
+  db: SyncDB,
+  code: string | undefined,
+): Promise<SyncResult> {
   if (!code || !isValidSyncCode(code)) {
     return { status: 404, body: { error: "Unknown sync code" } };
   }
@@ -285,10 +290,13 @@ export async function purgeStaleShortlists(db: SyncDB, now: Date = new Date()): 
   let total = 0;
   while (true) {
     const result = await db
-      .prepare("DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)")
+      .prepare(
+        "DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)",
+      )
       .bind(cutoff, pageSize)
       .run();
-    const changes = (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes ?? 0;
+    const changes =
+      (result as { meta?: { changes?: number } } | null | undefined)?.meta?.changes ?? 0;
     total += changes;
     if (changes < pageSize) break;
   }

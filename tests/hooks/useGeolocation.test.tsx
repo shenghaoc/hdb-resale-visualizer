@@ -1,17 +1,23 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vite-plus/test";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import type { Translator } from "@/shared/lib/i18n";
 
 describe("useGeolocation", () => {
   const t = vi.fn((key: string) => key) as unknown as Translator;
+  type SuccessCallback = (position: { coords: { latitude: number; longitude: number } }) => void;
+  type ErrorCallback = () => void;
+  const getCurrentPosition = vi.fn(
+    (_success: SuccessCallback, _error?: ErrorCallback | null) => {},
+  );
 
   beforeEach(() => {
     vi.useFakeTimers();
-    // @ts-expect-error - mock geolocation
-    global.navigator.geolocation = {
-      getCurrentPosition: vi.fn(),
-    };
+    getCurrentPosition.mockReset();
+    Object.defineProperty(window.navigator, "geolocation", {
+      configurable: true,
+      value: { getCurrentPosition },
+    });
   });
 
   afterEach(() => {
@@ -29,9 +35,8 @@ describe("useGeolocation", () => {
   it("should set user location on success", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
     const coords = { latitude: 1.23, longitude: 103.81 };
-    
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator.geolocation.getCurrentPosition as any).mockImplementationOnce((success: any) => {
+
+    getCurrentPosition.mockImplementationOnce((success) => {
       success({ coords });
     });
 
@@ -47,10 +52,11 @@ describe("useGeolocation", () => {
 
   it("should handle geolocation error", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
-    
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator.geolocation.getCurrentPosition as any).mockImplementationOnce((_success: any, error: any) => {
-      error();
+
+    getCurrentPosition.mockImplementationOnce((_success, error) => {
+      if (error) {
+        error();
+      }
     });
 
     const onCannotLocate = vi.fn();
@@ -65,11 +71,9 @@ describe("useGeolocation", () => {
 
   it("should prevent multiple concurrent locate calls", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let successCallback: any;
-    
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator.geolocation.getCurrentPosition as any).mockImplementationOnce((success: any) => {
+    let successCallback: (pos: { coords: { latitude: number; longitude: number } }) => void;
+
+    getCurrentPosition.mockImplementationOnce((success: typeof successCallback) => {
       successCallback = success;
     });
 
@@ -78,13 +82,13 @@ describe("useGeolocation", () => {
     });
 
     expect(result.current.isLocating).toBe(true);
-    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
 
     act(() => {
       result.current.locate(vi.fn());
     });
 
-    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
 
     act(() => {
       successCallback({ coords: { latitude: 1, longitude: 103 } });
@@ -95,11 +99,9 @@ describe("useGeolocation", () => {
 
   it("should cancel pending request and ignore its resolution", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let successCallback: any;
-    
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (navigator.geolocation.getCurrentPosition as any).mockImplementationOnce((success: any) => {
+    let successCallback: (pos: { coords: { latitude: number; longitude: number } }) => void;
+
+    getCurrentPosition.mockImplementationOnce((success: typeof successCallback) => {
       successCallback = success;
     });
 

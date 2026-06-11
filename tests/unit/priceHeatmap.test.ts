@@ -1,4 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
+import type { FeatureCollection } from "geojson";
 import {
   addPriceHeatmapLayer,
   removePriceHeatmapLayer,
@@ -8,8 +9,20 @@ import {
   HEATMAP_SOURCE_ID,
 } from "../../src/features/map-explorer/priceHeatmap";
 
-function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasClusters?: boolean; hasRadiusFill?: boolean } = {}) {
-  const { hasLayer = false, hasSource = false, hasClusters = true, hasRadiusFill = false } = options;
+function createMockMap(
+  options: {
+    hasLayer?: boolean;
+    hasSource?: boolean;
+    hasClusters?: boolean;
+    hasRadiusFill?: boolean;
+  } = {},
+) {
+  const {
+    hasLayer = false,
+    hasSource = false,
+    hasClusters = true,
+    hasRadiusFill = false,
+  } = options;
   return {
     getLayer: vi.fn((id: string) => {
       if (id === HEATMAP_LAYER_ID) return hasLayer ? {} : undefined;
@@ -31,7 +44,7 @@ function createMockMap(options: { hasLayer?: boolean; hasSource?: boolean; hasCl
 
 type MockMap = ReturnType<typeof createMockMap>;
 
-const EMPTY_FC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
 
 describe("priceHeatmap", () => {
   let mockMap: MockMap;
@@ -74,18 +87,15 @@ describe("priceHeatmap", () => {
 
       expect(map.addSource).not.toHaveBeenCalled();
       expect(map.addLayer).not.toHaveBeenCalled();
-      expect(map.setPaintProperty).toHaveBeenNthCalledWith(
+      expect(map.setPaintProperty).toHaveBeenNthCalledWith(1, HEATMAP_LAYER_ID, "heatmap-weight", [
+        "interpolate",
+        ["linear"],
+        ["get", "price_per_sqm_median"],
+        4000,
+        0,
+        13000,
         1,
-        HEATMAP_LAYER_ID,
-        "heatmap-weight",
-        [
-          "interpolate",
-          ["linear"],
-          ["get", "price_per_sqm_median"],
-          4000, 0,
-          13000, 1,
-        ],
-      );
+      ]);
       expect(map.setPaintProperty).toHaveBeenNthCalledWith(
         2,
         HEATMAP_LAYER_ID,

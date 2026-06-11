@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   buildSuggestions,
   MAX_SUGGEST_QUERY_LENGTH,
@@ -57,8 +57,8 @@ describe("suggest lib", () => {
   it("escapes LIKE special characters in queries", async () => {
     const db = mockDb({
       "DISTINCT town": async () => ({ results: [] }),
-      "street_name": async () => ({ results: [] }),
-      "address_key": async () => ({ results: [] }),
+      street_name: async () => ({ results: [] }),
+      address_key: async () => ({ results: [] }),
     });
     // Queries containing % and _ should not crash or match everything
     const suggestions = await buildSuggestions(db, "50% test_value", []);
@@ -68,8 +68,8 @@ describe("suggest lib", () => {
   it("escapes backslash in LIKE patterns", async () => {
     const db = mockDb({
       "DISTINCT town": async () => ({ results: [] }),
-      "street_name": async () => ({ results: [] }),
-      "address_key": async () => ({ results: [] }),
+      street_name: async () => ({ results: [] }),
+      address_key: async () => ({ results: [] }),
     });
     const suggestions = await buildSuggestions(db, "test\\path", []);
     expect(suggestions).toEqual([]);
@@ -77,7 +77,7 @@ describe("suggest lib", () => {
 
   it("includes postal suggestions for numeric queries", async () => {
     const db = mockDb({
-      "postal_code": async () => ({
+      postal_code: async () => ({
         results: [{ postal_code: "460108" }],
       }),
     });
@@ -89,8 +89,8 @@ describe("suggest lib", () => {
     const manyTowns = Array.from({ length: 20 }, (_, i) => ({ town: `TOWN ${i}` }));
     const db = mockDb({
       "DISTINCT town": async () => ({ results: manyTowns }),
-      "street_name": async () => ({ results: [] }),
-      "address_key": async () => ({ results: [] }),
+      street_name: async () => ({ results: [] }),
+      address_key: async () => ({ results: [] }),
     });
     const suggestions = await buildSuggestions(db, "town", []);
     expect(suggestions.length).toBeLessThanOrEqual(10);

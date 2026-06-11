@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { mergeShortlists } from "@/features/shortlist/shortlist";
 import { MAX_SHORTLIST_ITEMS } from "@/shared/lib/constants";
 import type { ShortlistItem } from "@/types/data";

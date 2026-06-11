@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { TownCompareSection } from "@/components/TownCompareSection";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";

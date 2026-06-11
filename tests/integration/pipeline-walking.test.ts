@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   buildArtifacts,
   estimateWalkingTimeSeconds,
@@ -72,7 +72,10 @@ describe("walking-time fallback", () => {
 
   it("pickNearestStations returns the closest exit per station up to the requested limit", () => {
     const picks = pickNearestStations(
-      { lat: fixtureGeocodes[`ang-mo-kio-406-ang-mo-kio-ave-10`].lat, lng: fixtureGeocodes[`ang-mo-kio-406-ang-mo-kio-ave-10`].lng },
+      {
+        lat: fixtureGeocodes[`ang-mo-kio-406-ang-mo-kio-ave-10`].lat,
+        lng: fixtureGeocodes[`ang-mo-kio-406-ang-mo-kio-ave-10`].lng,
+      },
       fixtureMrtExits,
       3,
     );

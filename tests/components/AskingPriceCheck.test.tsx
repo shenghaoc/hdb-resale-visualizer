@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { AskingPriceCheck } from "@/components/AskingPriceCheck";
 import { I18nProvider } from "@/shared/lib/i18n";
 import { formatNumber } from "@/shared/lib/format";
@@ -61,9 +61,7 @@ describe("AskingPriceCheck", () => {
   it("prompts for an asking price when the input is empty", () => {
     renderCheck();
     expect(
-      screen.getByText(
-        /enter the seller's asking price above to see how it compares/i,
-      ),
+      screen.getByText(/enter the seller's asking price above to see how it compares/i),
     ).toBeInTheDocument();
     expect(screen.queryByText(/in line with market/i)).not.toBeInTheDocument();
   });
@@ -94,16 +92,13 @@ describe("AskingPriceCheck", () => {
 
     expect(screen.getByText(/in line with market/i)).toBeInTheDocument();
     expect(
-      screen.getByText(
-        `$${formatNumber(expected!.askingPricePerSqm!, 0, LOCALE)}/sqm`,
-      ),
+      screen.getByText(`$${formatNumber(expected!.askingPricePerSqm!, 0, LOCALE)}/sqm`),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        `$${formatNumber(expected!.summary.medianPricePerSqm, 0, LOCALE)}/sqm`,
-      ),
+      screen.getByText(`$${formatNumber(expected!.summary.medianPricePerSqm, 0, LOCALE)}/sqm`),
     ).toBeInTheDocument();
-    const deltaSign = expected!.pricePerSqmDeltaPct! > 0 ? "+" : expected!.pricePerSqmDeltaPct! < 0 ? "−" : "";
+    const deltaSign =
+      expected!.pricePerSqmDeltaPct! > 0 ? "+" : expected!.pricePerSqmDeltaPct! < 0 ? "−" : "";
     expect(
       screen.getByText(`${deltaSign}${Math.abs(expected!.pricePerSqmDeltaPct!).toFixed(1)}%`),
     ).toBeInTheDocument();

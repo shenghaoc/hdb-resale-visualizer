@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   detectRecentTransactionOutliers,
   RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,

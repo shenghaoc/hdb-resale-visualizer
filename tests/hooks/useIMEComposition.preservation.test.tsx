@@ -10,7 +10,7 @@
  *
  * Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5
  */
-import { describe, expect, it, vi, afterEach } from "vitest";
+import { describe, expect, it, vi, afterEach } from "vite-plus/test";
 import { render, fireEvent, cleanup } from "@testing-library/react";
 import * as fc from "fast-check";
 
@@ -134,9 +134,7 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
       fc.property(fc.string({ minLength: 1 }), (value) => {
         cleanup();
         const callback = vi.fn();
-        const { getByTestId } = render(
-          <BareSearchInput onChange={callback} />
-        );
+        const { getByTestId } = render(<BareSearchInput onChange={callback} />);
         const input = getByTestId("search-input");
 
         fireEvent.change(input, { target: { value } });
@@ -144,7 +142,7 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
         expect(callback).toHaveBeenCalledTimes(1);
         expect(callback).toHaveBeenCalledWith(value);
       }),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -158,22 +156,22 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
   it("search input: callback receives exact value for any unicode string", () => {
     fc.assert(
       fc.property(
-        fc.stringMatching(/^[\u4e00-\u9fff\u3040-\u309f\uac00-\ud7af\u00c0-\u00ff\u0100-\u024f]{1,20}$/),
+        fc.stringMatching(
+          /^[\u4e00-\u9fff\u3040-\u309f\uac00-\ud7af\u00c0-\u00ff\u0100-\u024f]{1,20}$/,
+        ),
         (value) => {
           cleanup();
           const callback = vi.fn();
-          const { getByTestId } = render(
-            <BareSearchInput onChange={callback} />
-          );
+          const { getByTestId } = render(<BareSearchInput onChange={callback} />);
           const input = getByTestId("search-input");
 
           fireEvent.change(input, { target: { value } });
 
           expect(callback).toHaveBeenCalledTimes(1);
           expect(callback).toHaveBeenCalledWith(value);
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -189,9 +187,7 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
       fc.property(fc.string({ minLength: 1 }), (value) => {
         cleanup();
         const onUpdate = vi.fn();
-        const { getByTestId } = render(
-          <BareTextarea onUpdate={onUpdate} />
-        );
+        const { getByTestId } = render(<BareTextarea onUpdate={onUpdate} />);
         const textarea = getByTestId("notes-textarea");
 
         fireEvent.change(textarea, { target: { value } });
@@ -199,7 +195,7 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
         expect(onUpdate).toHaveBeenCalledTimes(1);
         expect(onUpdate).toHaveBeenCalledWith(value);
       }),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -212,23 +208,18 @@ describe("Preservation: Property — Non-composing onChange invokes callback wit
    */
   it("number input: callback receives exact string value for any numeric string", () => {
     fc.assert(
-      fc.property(
-        fc.stringMatching(/^[0-9]{1,10}$/),
-        (value) => {
-          cleanup();
-          const onUpdate = vi.fn();
-          const { getByTestId } = render(
-            <BareNumberInput onUpdate={onUpdate} />
-          );
-          const input = getByTestId("price-input");
+      fc.property(fc.stringMatching(/^[0-9]{1,10}$/), (value) => {
+        cleanup();
+        const onUpdate = vi.fn();
+        const { getByTestId } = render(<BareNumberInput onUpdate={onUpdate} />);
+        const input = getByTestId("price-input");
 
-          fireEvent.change(input, { target: { value } });
+        fireEvent.change(input, { target: { value } });
 
-          expect(onUpdate).toHaveBeenCalledTimes(1);
-          expect(onUpdate).toHaveBeenCalledWith(value);
-        }
-      ),
-      { numRuns: 100 }
+        expect(onUpdate).toHaveBeenCalledTimes(1);
+        expect(onUpdate).toHaveBeenCalledWith(value);
+      }),
+      { numRuns: 100 },
     );
   });
 });
@@ -247,9 +238,7 @@ describe("Preservation: Property — Callback count equals event count for seque
         (values) => {
           cleanup();
           const callback = vi.fn();
-          const { getByTestId } = render(
-            <BareSearchInput onChange={callback} />
-          );
+          const { getByTestId } = render(<BareSearchInput onChange={callback} />);
           const input = getByTestId("search-input");
 
           for (const value of values) {
@@ -259,18 +248,16 @@ describe("Preservation: Property — Callback count equals event count for seque
           // Consecutive duplicate values are deduplicated by the DOM —
           // fireEvent.change with the same value the input already holds
           // does not trigger onChange. Filter to distinct-from-previous.
-          const distinctValues = values.filter(
-            (v, i) => i === 0 || v !== values[i - 1]
-          );
+          const distinctValues = values.filter((v, i) => i === 0 || v !== values[i - 1]);
 
           expect(callback).toHaveBeenCalledTimes(distinctValues.length);
 
           for (let i = 0; i < distinctValues.length; i++) {
             expect(callback).toHaveBeenNthCalledWith(i + 1, distinctValues[i]);
           }
-        }
+        },
       ),
-      { numRuns: 50 }
+      { numRuns: 50 },
     );
   });
 
@@ -287,9 +274,7 @@ describe("Preservation: Property — Callback count equals event count for seque
         (values) => {
           cleanup();
           const onUpdate = vi.fn();
-          const { getByTestId } = render(
-            <BareTextarea onUpdate={onUpdate} />
-          );
+          const { getByTestId } = render(<BareTextarea onUpdate={onUpdate} />);
           const textarea = getByTestId("notes-textarea");
 
           for (const value of values) {
@@ -297,21 +282,16 @@ describe("Preservation: Property — Callback count equals event count for seque
           }
 
           // Consecutive duplicate values are deduplicated by the DOM.
-          const distinctValues = values.filter(
-            (v, i) => i === 0 || v !== values[i - 1]
-          );
+          const distinctValues = values.filter((v, i) => i === 0 || v !== values[i - 1]);
 
           expect(onUpdate).toHaveBeenCalledTimes(distinctValues.length);
 
           for (let i = 0; i < distinctValues.length; i++) {
-            expect(onUpdate).toHaveBeenNthCalledWith(
-              i + 1,
-              distinctValues[i]
-            );
+            expect(onUpdate).toHaveBeenNthCalledWith(i + 1, distinctValues[i]);
           }
-        }
+        },
       ),
-      { numRuns: 50 }
+      { numRuns: 50 },
     );
   });
 
@@ -324,16 +304,11 @@ describe("Preservation: Property — Callback count equals event count for seque
   it("number input: callback count matches event count for any sequence of numeric changes", () => {
     fc.assert(
       fc.property(
-        fc.array(
-          fc.stringMatching(/^[0-9]{1,10}$/),
-          { minLength: 1, maxLength: 20 }
-        ),
+        fc.array(fc.stringMatching(/^[0-9]{1,10}$/), { minLength: 1, maxLength: 20 }),
         (values) => {
           cleanup();
           const onUpdate = vi.fn();
-          const { getByTestId } = render(
-            <BareNumberInput onUpdate={onUpdate} />
-          );
+          const { getByTestId } = render(<BareNumberInput onUpdate={onUpdate} />);
           const input = getByTestId("price-input");
 
           for (const value of values) {
@@ -341,21 +316,16 @@ describe("Preservation: Property — Callback count equals event count for seque
           }
 
           // Consecutive duplicate values are deduplicated by the DOM.
-          const distinctValues = values.filter(
-            (v, i) => i === 0 || v !== values[i - 1]
-          );
+          const distinctValues = values.filter((v, i) => i === 0 || v !== values[i - 1]);
 
           expect(onUpdate).toHaveBeenCalledTimes(distinctValues.length);
 
           for (let i = 0; i < distinctValues.length; i++) {
-            expect(onUpdate).toHaveBeenNthCalledWith(
-              i + 1,
-              distinctValues[i]
-            );
+            expect(onUpdate).toHaveBeenNthCalledWith(i + 1, distinctValues[i]);
           }
-        }
+        },
       ),
-      { numRuns: 50 }
+      { numRuns: 50 },
     );
   });
 });

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import {
   DATA_FETCH_USER_ERROR_MESSAGE,
   fetchBlockSummaries,
@@ -88,14 +88,18 @@ describe("artifact fetch validation", () => {
   });
 
   it("throws precise artifact-contract error for invalid block summaries", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(mockJsonResponse([{ addressKey: "only-one-field" }])));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(mockJsonResponse([{ addressKey: "only-one-field" }])),
+    );
 
     await expect(fetchBlockSummaries()).rejects.toThrow(/Artifact contract violation/);
   });
 
   it("recovers from transient 500 with automatic retry", async () => {
     setFetchRetryDelayForTests(0);
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(mockJsonResponse([], false, 500))
       .mockResolvedValueOnce(
         mockJsonResponse({
@@ -133,7 +137,8 @@ describe("artifact fetch validation", () => {
 
   it("retries town flat-type trends after a transient failure", async () => {
     setFetchRetryDelayForTests(0);
-    const fetchMock = vi.fn()
+    const fetchMock = vi
+      .fn()
       .mockResolvedValueOnce(mockJsonResponse([], false, 503))
       .mockResolvedValueOnce(
         mockJsonResponse([

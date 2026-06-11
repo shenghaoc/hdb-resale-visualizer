@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 import {
   SHORTLIST_SYNC_QUEUE_KEY,
   clearPendingShortlistPush,

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import type { FeatureCollection } from "geojson";
 import { API_BASE_PATH } from "@/shared/lib/constants";
 import { getStationDetails } from "@shared/mrt-station-details";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 
 function enrichMrtFeaturesWithLineColors(
-  collection: GeoJSON.FeatureCollection,
+  collection: FeatureCollection,
   stationNameProperty: "stationName" | "STATION_NA",
-): GeoJSON.FeatureCollection {
+): FeatureCollection {
   return {
     ...collection,
     features: collection.features.map((feature) => {
@@ -35,8 +36,8 @@ export function useAmenityGeoSync({
   mrtStationsEnabled: boolean;
   mrtExitsEnabled: boolean;
 }) {
-  const [stationsGeoJson, setStationsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
-  const [exitsGeoJson, setExitsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
+  const [stationsGeoJson, setStationsGeoJson] = useState<FeatureCollection | null>(null);
+  const [exitsGeoJson, setExitsGeoJson] = useState<FeatureCollection | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -46,10 +47,12 @@ export function useAmenityGeoSync({
           if (!r.ok) throw new Error(`Failed to load stations: ${r.status}`);
           return r.json();
         })
-        .then((data: GeoJSON.FeatureCollection) =>
+        .then((data: FeatureCollection) =>
           setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName")),
         )
-        .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT stations"));
+        .catch((e: unknown) =>
+          setError(e instanceof Error ? e.message : "Failed to load MRT stations"),
+        );
     }
   }, [mrtStationsEnabled, stationsGeoJson]);
 
@@ -60,10 +63,12 @@ export function useAmenityGeoSync({
           if (!r.ok) throw new Error(`Failed to load exits: ${r.status}`);
           return r.json();
         })
-        .then((data: GeoJSON.FeatureCollection) =>
+        .then((data: FeatureCollection) =>
           setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA")),
         )
-        .catch((e: unknown) => setError(e instanceof Error ? e.message : "Failed to load MRT exits"));
+        .catch((e: unknown) =>
+          setError(e instanceof Error ? e.message : "Failed to load MRT exits"),
+        );
     }
   }, [mrtExitsEnabled, exitsGeoJson]);
 

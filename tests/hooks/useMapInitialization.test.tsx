@@ -1,5 +1,5 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { MAP_GLYPHS_URL } from "@/shared/lib/constants";
 import { useMapInitialization } from "@/hooks/useMapInitialization";
 
@@ -148,9 +148,7 @@ describe("useMapInitialization", () => {
       errorHandler?.({ error: new Error("Could not compile fragment shader") });
     });
 
-    await waitFor(() =>
-      expect(result.current.mapError).toBe("Could not compile fragment shader"),
-    );
+    await waitFor(() => expect(result.current.mapError).toBe("Could not compile fragment shader"));
 
     expect(result.current.mapInstance).toBeNull();
     expect(mapStub.off).toHaveBeenCalledWith("error", errorHandler);

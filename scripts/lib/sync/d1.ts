@@ -77,8 +77,14 @@ export class D1Client {
     if (!response.ok && !response.headers.get("content-type")?.includes("application/json")) {
       // The response is not JSON — try to read the body as text for diagnostics.
       let bodyText = "";
-      try { bodyText = await response.text(); } catch { /* ignore */ }
-      throw new Error(`D1: HTTP ${response.status} ${response.statusText}${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
+      try {
+        bodyText = await response.text();
+      } catch {
+        /* ignore */
+      }
+      throw new Error(
+        `D1: HTTP ${response.status} ${response.statusText}${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`,
+      );
     }
     let payload: D1QueryResult<TRow>;
     try {
@@ -86,7 +92,11 @@ export class D1Client {
     } catch {
       // Response claimed JSON but parse failed — read raw text for diagnostics.
       let bodyText = "";
-      try { bodyText = await response.clone().text(); } catch { /* ignore */ }
+      try {
+        bodyText = await response.clone().text();
+      } catch {
+        /* ignore */
+      }
       throw new Error(`D1: invalid JSON response${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
     }
     if (!payload.success) {
@@ -149,14 +159,11 @@ export class D1Client {
         }
         params.push(...values);
       }
-      const sql = sqlPrefix + new Array(chunk.length).fill(placeholders).join(",");
+      const sql = sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",");
 
       // First chunk with preDelete: batch DELETE + INSERT into one request.
       if (i === 0 && options.preDelete) {
-        await this.query([
-          { sql: `DELETE FROM ${table}` },
-          { sql, params },
-        ]);
+        await this.query([{ sql: `DELETE FROM ${table}` }, { sql, params }]);
       } else {
         await this.execute(sql, params);
       }

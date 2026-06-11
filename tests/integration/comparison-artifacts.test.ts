@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { buildArtifacts, makeAddressKey } from "../../scripts/lib/pipeline";
 import type { AmenityLocation, SchoolLocation } from "../../scripts/lib/pipeline";
 
@@ -112,8 +112,8 @@ describe("comparison artifacts", () => {
   const schools: SchoolLocation[] = [
     {
       name: "ANG MO KIO PRIMARY SCHOOL",
-      lat: 1.3700,
-      lng: 103.8500,
+      lat: 1.37,
+      lng: 103.85,
       mainLevelCode: "PRIMARY",
     },
     {
@@ -124,8 +124,8 @@ describe("comparison artifacts", () => {
     },
     {
       name: "BEDOK PRIMARY SCHOOL",
-      lat: 1.3340,
-      lng: 103.9380,
+      lat: 1.334,
+      lng: 103.938,
       mainLevelCode: "PRIMARY",
     },
   ];
@@ -141,16 +141,16 @@ describe("comparison artifacts", () => {
   const supermarkets: AmenityLocation[] = [
     {
       name: "NTUC FAIRPRICE ANG MO KIO",
-      lat: 1.3690,
-      lng: 103.8490,
+      lat: 1.369,
+      lng: 103.849,
     },
   ];
 
   const parks: AmenityLocation[] = [
     {
       name: "ANG MO KIO PARK",
-      lat: 1.3700,
-      lng: 103.8500,
+      lat: 1.37,
+      lng: 103.85,
     },
   ];
 

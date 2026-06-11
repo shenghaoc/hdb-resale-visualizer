@@ -1,13 +1,8 @@
-import { describe, expect, it } from "vitest";
-import {
-  getComparableSetQualityTag,
-  getBlockDataQualityTag,
-} from "@/shared/lib/listing-quality";
+import { describe, expect, it } from "vite-plus/test";
+import { getComparableSetQualityTag, getBlockDataQualityTag } from "@/shared/lib/listing-quality";
 import type { ConfidenceAssessment } from "../../shared/confidence-system";
 
-function makeConfidence(
-  overrides: Partial<ConfidenceAssessment> = {},
-): ConfidenceAssessment {
+function makeConfidence(overrides: Partial<ConfidenceAssessment> = {}): ConfidenceAssessment {
   return {
     level: "high",
     score: 0.85,

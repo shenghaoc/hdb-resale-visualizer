@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
 import { DEFAULT_FILTERS } from "../constants";
 import {
   getEffectiveMedianPrice,
@@ -279,7 +279,12 @@ describe("budget filter × affordability filter layering", () => {
     // ceiling = 100k from CPF alone (no income). Block at 600k would be "over"
     // — but a missing profile must disable the filter, not silently filter.
     const block = makeBlock({ medianPrice: 600000 });
-    const incompleteProfile = { monthlyIncome: null, cpfOABalance: 100000, age: 35, coApplicantAge: null };
+    const incompleteProfile = {
+      monthlyIncome: null,
+      cpfOABalance: 100000,
+      age: 35,
+      coApplicantAge: null,
+    };
     expect(
       matchesFilter(
         block,
@@ -298,14 +303,23 @@ describe("filter consistency under rapid state toggles", () => {
 
   const blocks = [
     makeBlock({ addressKey: "bedok-100", town: "BEDOK", medianPrice: 500000 }),
-    makeBlock({ addressKey: "tampines-200", town: "TAMPINES", block: "200", streetName: "TAMPINES ST 21", medianPrice: 700000, coordinates: { lat: 1.35, lng: 103.95 } }),
+    makeBlock({
+      addressKey: "tampines-200",
+      town: "TAMPINES",
+      block: "200",
+      streetName: "TAMPINES ST 21",
+      medianPrice: 700000,
+      coordinates: { lat: 1.35, lng: 103.95 },
+    }),
     makeBlock({ addressKey: "bedok-101", town: "BEDOK", block: "101", medianPrice: 400000 }),
   ];
 
   it("toggling town filter back and forth produces identical results", () => {
     const withTown = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, town: "BEDOK" }));
     const withoutTown = blocks.filter((b) => matchesFilter(b, DEFAULT_FILTERS));
-    const withTownAgain = blocks.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, town: "BEDOK" }));
+    const withTownAgain = blocks.filter((b) =>
+      matchesFilter(b, { ...DEFAULT_FILTERS, town: "BEDOK" }),
+    );
 
     expect(withTown).toHaveLength(2);
     expect(withoutTown).toHaveLength(3);
@@ -319,9 +333,15 @@ describe("filter consistency under rapid state toggles", () => {
       makeBlock({ addressKey: "c", flatTypes: ["3 ROOM"] }),
     ];
 
-    const pass1 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }));
-    const pass2 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "5 ROOM" }));
-    const pass3 = blocksWithTypes.filter((b) => matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }));
+    const pass1 = blocksWithTypes.filter((b) =>
+      matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }),
+    );
+    const pass2 = blocksWithTypes.filter((b) =>
+      matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "5 ROOM" }),
+    );
+    const pass3 = blocksWithTypes.filter((b) =>
+      matchesFilter(b, { ...DEFAULT_FILTERS, flatType: "3 ROOM" }),
+    );
 
     expect(pass1).toHaveLength(2);
     expect(pass2).toHaveLength(1);
@@ -352,4 +372,3 @@ describe("filter consistency under rapid state toggles", () => {
     expect(pass3).toEqual(pass1);
   });
 });
-

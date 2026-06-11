@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import type { FeatureCollection } from "geojson";
 import {
   addPriceHeatmapLayer,
   HEATMAP_SOURCE_ID,
@@ -12,7 +13,7 @@ import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
 
 type UseMapPriceHeatmapSyncProps = {
   map: MapLibreMap | null;
-  geoJson: GeoJSON.FeatureCollection;
+  geoJson: FeatureCollection;
   priceHeatmapEnabled: boolean;
   priceHeatmapOpacity: number;
   heatmapMode: HeatmapMode;
@@ -32,7 +33,7 @@ export function useMapPriceHeatmapSync({
     mode: HeatmapMode;
   } | null>(null);
   const heatmapSourceRef = useRef<unknown>(null);
-  const heatmapDataRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const heatmapDataRef = useRef<FeatureCollection | null>(null);
   const heatmapOpacityRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -99,8 +100,8 @@ export function useMapPriceHeatmapSync({
       map.off("load", apply);
       map.off("styledata", apply);
     };
-  // priceHeatmapOpacity is included here only for initial layer creation; ongoing opacity
-  // updates are owned exclusively by the second effect via setHeatmapOpacity.
+    // priceHeatmapOpacity is included here only for initial layer creation; ongoing opacity
+    // updates are owned exclusively by the second effect via setHeatmapOpacity.
   }, [map, priceHeatmapEnabled, geoJson, priceHeatmapOpacity, heatmapMode]);
 
   // Sync heatmap source data when geoJson changes while the heatmap is active.

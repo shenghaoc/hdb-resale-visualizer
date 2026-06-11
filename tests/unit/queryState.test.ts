@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 
@@ -111,7 +111,7 @@ describe("queryState", () => {
   it("truncates string filters that exceed MAX_SEARCH_QUERY_LENGTH", () => {
     const longString = "a".repeat(300);
     const parsed = parseFilters(
-      `?search=${longString}&town=${longString}&flatType=${longString}&flatModel=${longString}&selected=${longString}&startMonth=${longString}&endMonth=${longString}&compareTown=${longString}`
+      `?search=${longString}&town=${longString}&flatType=${longString}&flatModel=${longString}&selected=${longString}&startMonth=${longString}&endMonth=${longString}&compareTown=${longString}`,
     );
 
     expect(parsed.search).toBe("a".repeat(256));

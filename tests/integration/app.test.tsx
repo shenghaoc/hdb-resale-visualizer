@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import App from "@/App";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
@@ -11,7 +11,8 @@ const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
   fetchBlockSummaries: vi.fn<() => Promise<BlockSummary[]>>(),
   fetchBlocksByTown: vi.fn<() => Promise<BlockSummary[]>>(),
-  fetchBlocksBySearch: vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
+  fetchBlocksBySearch:
+    vi.fn<() => Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }>>(),
   fetchAddressDetail: vi.fn(),
   fetchComparisonArtifact: vi.fn(),
   townToFilename: (town: string) =>
@@ -200,7 +201,8 @@ const blocks: BlockSummary[] = [
     flatModels: ["MODEL A"],
     nearestMrt: {
       stationName: "BEDOK NORTH MRT STATION",
-      distanceMeters: 400, walkingTimeSeconds: 320
+      distanceMeters: 400,
+      walkingTimeSeconds: 320,
     },
   },
 ];
@@ -372,8 +374,8 @@ describe("App detail loading", () => {
   it("shows feedback when browser geolocation fails and clears it after manual scope selection", async () => {
     Object.defineProperty(navigator, "geolocation", {
       value: {
-        getCurrentPosition: vi.fn(
-          (_success: PositionCallback, error: PositionErrorCallback) => error({} as GeolocationPositionError),
+        getCurrentPosition: vi.fn((_success: PositionCallback, error: PositionErrorCallback) =>
+          error({} as GeolocationPositionError),
         ),
       },
       configurable: true,
@@ -508,8 +510,12 @@ describe("App detail loading", () => {
       const resolvedDetailCalls = dataMocks.fetchAddressDetail.mock.calls.map((call) =>
         String(call[0]),
       );
-      expect(resolvedDetailCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
-      expect(resolvedDetailCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+      expect(
+        resolvedDetailCalls.filter((addressKey) => addressKey === firstAddressKey),
+      ).toHaveLength(1);
+      expect(
+        resolvedDetailCalls.filter((addressKey) => addressKey === secondAddressKey),
+      ).toHaveLength(1);
     });
   });
 
@@ -564,8 +570,12 @@ describe("App detail loading", () => {
       const resolvedComparisonCalls = dataMocks.fetchComparisonArtifact.mock.calls.map((call) =>
         String(call[0]),
       );
-      expect(resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey)).toHaveLength(1);
-      expect(resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey)).toHaveLength(1);
+      expect(
+        resolvedComparisonCalls.filter((addressKey) => addressKey === firstAddressKey),
+      ).toHaveLength(1);
+      expect(
+        resolvedComparisonCalls.filter((addressKey) => addressKey === secondAddressKey),
+      ).toHaveLength(1);
     });
   });
 

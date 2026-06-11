@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   assessAskingPrice,
   buildTrendEnvelope,
@@ -8,10 +8,7 @@ import {
   sliceTrendByRange,
   summarizeComparables,
 } from "@/entities/transaction/transaction-analysis";
-import type {
-  AddressDetailTransaction,
-  AddressTrendPoint,
-} from "@/types/data";
+import type { AddressDetailTransaction, AddressTrendPoint } from "@/types/data";
 
 function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransaction {
   return {
@@ -47,11 +44,41 @@ describe("parseStoreyMidpoint", () => {
 
 describe("findComparableTransactions", () => {
   const transactions = [
-    tx({ id: "a", storeyRange: "10 TO 12", floorAreaSqm: 93, flatType: "4 ROOM", resalePrice: 600000 }),
-    tx({ id: "b", storeyRange: "13 TO 15", floorAreaSqm: 93, flatType: "4 ROOM", resalePrice: 620000 }),
-    tx({ id: "c", storeyRange: "01 TO 03", floorAreaSqm: 93, flatType: "4 ROOM", resalePrice: 540000 }),
-    tx({ id: "d", storeyRange: "10 TO 12", floorAreaSqm: 110, flatType: "4 ROOM", resalePrice: 720000 }),
-    tx({ id: "e", storeyRange: "10 TO 12", floorAreaSqm: 93, flatType: "5 ROOM", resalePrice: 800000 }),
+    tx({
+      id: "a",
+      storeyRange: "10 TO 12",
+      floorAreaSqm: 93,
+      flatType: "4 ROOM",
+      resalePrice: 600000,
+    }),
+    tx({
+      id: "b",
+      storeyRange: "13 TO 15",
+      floorAreaSqm: 93,
+      flatType: "4 ROOM",
+      resalePrice: 620000,
+    }),
+    tx({
+      id: "c",
+      storeyRange: "01 TO 03",
+      floorAreaSqm: 93,
+      flatType: "4 ROOM",
+      resalePrice: 540000,
+    }),
+    tx({
+      id: "d",
+      storeyRange: "10 TO 12",
+      floorAreaSqm: 110,
+      flatType: "4 ROOM",
+      resalePrice: 720000,
+    }),
+    tx({
+      id: "e",
+      storeyRange: "10 TO 12",
+      floorAreaSqm: 93,
+      flatType: "5 ROOM",
+      resalePrice: 800000,
+    }),
   ];
 
   it("filters by flat type", () => {
@@ -290,7 +317,9 @@ describe("buildTrendEnvelope", () => {
   });
 
   it("skips NaN prices when computing envelope", () => {
-    const trend = [{ month: "2024-06", medianPrice: 600000, transactionCount: 1, medianPricePerSqm: 6000 }];
+    const trend = [
+      { month: "2024-06", medianPrice: 600000, transactionCount: 1, medianPricePerSqm: 6000 },
+    ];
     const transactions = [
       tx({ month: "2024-06", resalePrice: NaN }),
       tx({ month: "2024-06", resalePrice: 700000 }),

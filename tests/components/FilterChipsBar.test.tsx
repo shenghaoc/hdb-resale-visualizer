@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { FilterChipsBar, type FilterChip } from "@/components/FilterChipsBar";
 import type { Translator } from "@/shared/lib/i18n";
 
@@ -67,7 +67,13 @@ describe("FilterChipsBar", () => {
       { key: "flatType", label: "4 ROOM", onRemove: vi.fn() },
     ];
     const { rerender } = render(
-      <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={false} />,
+      <FilterChipsBar
+        chips={chips}
+        isDesktop={true}
+        t={t}
+        onOpenFilters={vi.fn()}
+        hidden={false}
+      />,
     );
     const secondChip = screen.getByRole("button", { name: "Remove filter: 4 ROOM" });
     secondChip.focus();
@@ -79,7 +85,13 @@ describe("FilterChipsBar", () => {
       <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={true} />,
     );
     rerender(
-      <FilterChipsBar chips={chips} isDesktop={true} t={t} onOpenFilters={vi.fn()} hidden={false} />,
+      <FilterChipsBar
+        chips={chips}
+        isDesktop={true}
+        t={t}
+        onOpenFilters={vi.fn()}
+        hidden={false}
+      />,
     );
     expect(secondChip).toHaveAttribute("tabindex", "0");
   });

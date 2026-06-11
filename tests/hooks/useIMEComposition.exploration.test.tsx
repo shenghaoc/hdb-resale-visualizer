@@ -13,7 +13,7 @@
  *
  * Validates: Requirements 1.1, 1.2, 1.3, 1.4, 2.1, 2.2, 2.3
  */
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { render, fireEvent } from "@testing-library/react";
 
 // ---------------------------------------------------------------------------

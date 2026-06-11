@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { FilterPanel } from "@/components/FilterPanel";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { FilterOptions, FilterState } from "@/types/data";

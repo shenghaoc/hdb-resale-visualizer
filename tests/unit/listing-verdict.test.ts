@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { performListingCheck } from "@/features/listing-check/listing-verdict";
 import type { AddressDetailTransaction } from "@/types/data";
 import type { ComparableQuery } from "@/entities/transaction/transaction-analysis";
@@ -64,9 +64,7 @@ describe("performListingCheck", () => {
   });
 
   it("returns null when no transactions match the comparable query", () => {
-    const transactions = [
-      tx({ id: "a", flatType: "5 ROOM", resalePrice: 800000 }),
-    ];
+    const transactions = [tx({ id: "a", flatType: "5 ROOM", resalePrice: 800000 })];
 
     const result = performListingCheck({
       askingPrice: 600_000,
@@ -99,7 +97,9 @@ describe("performListingCheck", () => {
     expect(result!.assessment.deltaVsMedian).toBeGreaterThan(0);
     expect(result!.assessment.deltaVsMax).toBeGreaterThan(0);
     // Exceeds-all caveat
-    expect(result!.caveats.some((c) => c.message.includes("exceeds all comparable transactions"))).toBe(true);
+    expect(
+      result!.caveats.some((c) => c.message.includes("exceeds all comparable transactions")),
+    ).toBe(true);
   });
 
   it("generates lease mismatch caveat when leaseCommenceYear differs significantly", () => {
@@ -231,10 +231,21 @@ describe("performListingCheck", () => {
   it("filters comparables by flat type and storey from the query", () => {
     const transactions = [
       tx({ id: "match-4rm-mid", flatType: "4 ROOM", storeyRange: "10 TO 12", resalePrice: 600000 }),
-      tx({ id: "match-4rm-mid2", flatType: "4 ROOM", storeyRange: "13 TO 15", resalePrice: 620000 }),
+      tx({
+        id: "match-4rm-mid2",
+        flatType: "4 ROOM",
+        storeyRange: "13 TO 15",
+        resalePrice: 620000,
+      }),
       tx({ id: "skip-5rm", flatType: "5 ROOM", storeyRange: "10 TO 12", resalePrice: 800000 }),
       tx({ id: "skip-low", flatType: "4 ROOM", storeyRange: "01 TO 03", resalePrice: 540000 }),
-      tx({ id: "skip-big", flatType: "4 ROOM", storeyRange: "10 TO 12", floorAreaSqm: 110, resalePrice: 720000 }),
+      tx({
+        id: "skip-big",
+        flatType: "4 ROOM",
+        storeyRange: "10 TO 12",
+        floorAreaSqm: 110,
+        resalePrice: 720000,
+      }),
     ];
 
     const result = performListingCheck({
@@ -281,9 +292,7 @@ describe("performListingCheck", () => {
 
     // Well above asking → exceeds-all caveat
     expect(
-      result!.caveats.some(
-        (c) => c.message.includes("exceeds all comparable transactions"),
-      ),
+      result!.caveats.some((c) => c.message.includes("exceeds all comparable transactions")),
     ).toBe(true);
 
     // Confidence reason should match the level

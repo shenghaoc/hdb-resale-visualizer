@@ -1,11 +1,13 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { ComparableTransaction } from "../../shared/comparable-engine";
 
-function makeTx(overrides: Partial<ComparableTransaction> & { transactionId: string }): ComparableTransaction {
+function makeTx(
+  overrides: Partial<ComparableTransaction> & { transactionId: string },
+): ComparableTransaction {
   return {
     transactionId: overrides.transactionId,
     month: overrides.month ?? "2025-01",
@@ -24,11 +26,49 @@ function makeTx(overrides: Partial<ComparableTransaction> & { transactionId: str
 }
 
 const FIXTURES: ComparableTransaction[] = [
-  makeTx({ transactionId: "tx-1", similarity: 0.95, resalePrice: 550000, pricePerSqm: 5914, month: "2025-03", floorAreaSqm: 93, matchReasons: ["Same block", "Same flat type"] }),
-  makeTx({ transactionId: "tx-2", similarity: 0.87, resalePrice: 480000, pricePerSqm: 5161, month: "2025-01", floorAreaSqm: 90 }),
-  makeTx({ transactionId: "tx-3", similarity: 0.72, resalePrice: 620000, pricePerSqm: 6667, month: "2024-11", floorAreaSqm: 95, matchReasons: ["Same street", "Similar floor area (±2 sqm)"] }),
-  makeTx({ transactionId: "tx-4", similarity: 0.65, resalePrice: 450000, pricePerSqm: 4839, month: "2024-08", floorAreaSqm: 88 }),
-  makeTx({ transactionId: "tx-5", similarity: 0.50, resalePrice: 700000, pricePerSqm: 7527, month: "2024-05", floorAreaSqm: 100, matchReasons: ["Same town"] }),
+  makeTx({
+    transactionId: "tx-1",
+    similarity: 0.95,
+    resalePrice: 550000,
+    pricePerSqm: 5914,
+    month: "2025-03",
+    floorAreaSqm: 93,
+    matchReasons: ["Same block", "Same flat type"],
+  }),
+  makeTx({
+    transactionId: "tx-2",
+    similarity: 0.87,
+    resalePrice: 480000,
+    pricePerSqm: 5161,
+    month: "2025-01",
+    floorAreaSqm: 90,
+  }),
+  makeTx({
+    transactionId: "tx-3",
+    similarity: 0.72,
+    resalePrice: 620000,
+    pricePerSqm: 6667,
+    month: "2024-11",
+    floorAreaSqm: 95,
+    matchReasons: ["Same street", "Similar floor area (±2 sqm)"],
+  }),
+  makeTx({
+    transactionId: "tx-4",
+    similarity: 0.65,
+    resalePrice: 450000,
+    pricePerSqm: 4839,
+    month: "2024-08",
+    floorAreaSqm: 88,
+  }),
+  makeTx({
+    transactionId: "tx-5",
+    similarity: 0.5,
+    resalePrice: 700000,
+    pricePerSqm: 7527,
+    month: "2024-05",
+    floorAreaSqm: 100,
+    matchReasons: ["Same town"],
+  }),
 ];
 
 function renderTable(props?: Partial<Parameters<typeof ComparableEvidenceTable>[0]>) {
@@ -160,7 +200,9 @@ describe("ComparableEvidenceTable", () => {
   // ── Caveats ─────────────────────────────────────────────────────────────
 
   it("shows caveat banner when caveats are non-empty", () => {
-    renderTable({ caveats: ["Only 3 comparable transactions found — this assessment is directional only."] });
+    renderTable({
+      caveats: ["Only 3 comparable transactions found — this assessment is directional only."],
+    });
     expect(screen.getByText(/only 3 comparable/i)).toBeInTheDocument();
   });
 
@@ -194,7 +236,9 @@ describe("ComparableEvidenceTable", () => {
     const whyButton = screen.getByRole("button", { name: /why these comparables/i });
     await user.click(whyButton);
 
-    expect(screen.getByText(/most similar recent transactions in the same block/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/most similar recent transactions in the same block/i),
+    ).toBeInTheDocument();
   });
 
   it("shows widened explainer when widenedSearch is true", async () => {
@@ -257,9 +301,12 @@ describe("ComparableEvidenceTable", () => {
     renderTable();
 
     // Find the mobile Price sort button (aria-pressed)
-    const pricePills = screen.getAllByRole("button").filter(
-      (b) => b.textContent?.toLowerCase().includes("price") && b.getAttribute("aria-pressed") !== null,
-    );
+    const pricePills = screen
+      .getAllByRole("button")
+      .filter(
+        (b) =>
+          b.textContent?.toLowerCase().includes("price") && b.getAttribute("aria-pressed") !== null,
+      );
     expect(pricePills.length).toBeGreaterThanOrEqual(1);
     await user.click(pricePills[0]);
 

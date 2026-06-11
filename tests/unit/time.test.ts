@@ -1,13 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vite-plus/test";
 
 describe("Temporal PlainYearMonth month distance", () => {
   function monthDistance(earlierMonth: string, laterMonth: string): number {
     return Math.max(
       0,
-      Temporal.PlainYearMonth.from(earlierMonth).until(
-        Temporal.PlainYearMonth.from(laterMonth),
-        { largestUnit: "months" },
-      ).months,
+      Temporal.PlainYearMonth.from(earlierMonth).until(Temporal.PlainYearMonth.from(laterMonth), {
+        largestUnit: "months",
+      }).months,
     );
   }
 

@@ -6,24 +6,24 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "dist",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
   },
   // Workers Builds / `wrangler deploy` must produce `dist/` before uploading assets.
   // Dashboard build_command can stay empty when deploy runs `npx wrangler deploy`.
   "build": {
-    "command": "npm run build:deploy"
+    "command": "pnpm build:deploy",
   },
   "rules": [
     { "type": "Data", "globs": ["**/*.ttf"] },
-    { "type": "CompiledWasm", "globs": ["**/*.wasm"] }
+    { "type": "CompiledWasm", "globs": ["**/*.wasm"] },
   ],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "hdb-resale",
       "database_id": "df06858c-8fd3-4cf5-9080-dbd9a9f49250",
-      "migrations_dir": "migrations"
-    }
+      "migrations_dir": "migrations",
+    },
   ],
   "ratelimits": [
     {
@@ -31,11 +31,11 @@
       "namespace_id": "1002",
       "simple": {
         "limit": 10,
-        "period": 60
-      }
-    }
+        "period": 60,
+      },
+    },
   ],
   "triggers": {
-    "crons": ["0 3 * * *"]
-  }
+    "crons": ["0 3 * * *"],
+  },
 }

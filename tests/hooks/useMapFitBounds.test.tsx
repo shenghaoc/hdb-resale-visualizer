@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useMapFitBounds } from "@/hooks/useMapFitBounds";
 import { SINGAPORE_BOUNDS } from "@/shared/lib/constants";
 import type { Map as MapLibreMap } from "maplibre-gl";
@@ -100,9 +100,9 @@ describe("useMapFitBounds", () => {
     const bounds = call![0] as [[number, number], [number, number]];
     // [sw, ne] = [[minLng, minLat], [maxLng, maxLat]]
     expect(bounds[0][0]).toBeCloseTo(103.85); // minLng
-    expect(bounds[0][1]).toBeCloseTo(1.33);   // minLat
+    expect(bounds[0][1]).toBeCloseTo(1.33); // minLat
     expect(bounds[1][0]).toBeCloseTo(103.92); // maxLng
-    expect(bounds[1][1]).toBeCloseTo(1.37);   // maxLat
+    expect(bounds[1][1]).toBeCloseTo(1.37); // maxLat
   });
 
   it("fits to block bounds when autoFitKey is set", () => {

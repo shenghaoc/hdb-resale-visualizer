@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   assertModulePreloadBudget,
   DEFAULT_MODULEPRELOAD_GZIP_SINGLE_MAX,
@@ -101,7 +101,9 @@ describe("measureModulePreloads", () => {
   it("rejects path traversal in href", () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), "bundle-budget-"));
     try {
-      expect(() => measureModulePreloads(dir, ["/../etc/passwd"])).toThrow(/suspicious modulepreload href/);
+      expect(() => measureModulePreloads(dir, ["/../etc/passwd"])).toThrow(
+        /suspicious modulepreload href/,
+      );
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }

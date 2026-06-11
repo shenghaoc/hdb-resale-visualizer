@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import type { Point } from "geojson";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { useMapInteractions } from "@/hooks/useMapInteractions";
 import type { Map as MapLibreMap, Popup } from "maplibre-gl";
@@ -8,7 +9,7 @@ type RegisteredHandlers = {
   mapClick?: (event: { point: { x: number; y: number } }) => void;
   clusterClick?: (event: {
     features?: Array<{
-      geometry: GeoJSON.Point;
+      geometry: Point;
       properties: { cluster_id: number };
     }>;
   }) => void;
@@ -35,7 +36,9 @@ function createMapStub() {
         maybeHandler?: (event: unknown) => void,
       ) => {
         if (eventName === "click" && typeof layerOrHandler !== "string") {
-          handlers.mapClick = layerOrHandler as (event: { point: { x: number; y: number } }) => void;
+          handlers.mapClick = layerOrHandler as (event: {
+            point: { x: number; y: number };
+          }) => void;
         }
         if (eventName === "click" && layerOrHandler === "clusters" && maybeHandler) {
           handlers.clusterClick = maybeHandler as RegisteredHandlers["clusterClick"];
@@ -47,7 +50,9 @@ function createMapStub() {
       },
     ),
     off: vi.fn(),
-    getLayer: vi.fn((layerId: string) => (existingLayers.has(layerId) ? { id: layerId } : undefined)),
+    getLayer: vi.fn((layerId: string) =>
+      existingLayers.has(layerId) ? { id: layerId } : undefined,
+    ),
     queryRenderedFeatures: vi.fn<() => unknown[]>(() => []),
     getCanvas: vi.fn(() => ({ style: { cursor: "" } })),
     getContainer: vi.fn(() => container),

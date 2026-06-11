@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   applyProfileVisibility,
   computeRemainingLeaseYears,
@@ -144,7 +144,11 @@ describe("evaluateBlockForProfile", () => {
   it("passes commute when the anchor MRT is in nearbyMrts and within the threshold", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
+      nearestMrt: {
+        stationName: "OTHER MRT STATION",
+        distanceMeters: 5000,
+        walkingTimeSeconds: 4000,
+      },
       nearbyMrts: [
         { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
         { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
@@ -160,8 +164,14 @@ describe("evaluateBlockForProfile", () => {
   it("fails commute when anchor MRT is not in nearbyMrts", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "OTHER MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
-      nearbyMrts: [{ stationName: "OTHER MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 }],
+      nearestMrt: {
+        stationName: "OTHER MRT STATION",
+        distanceMeters: 400,
+        walkingTimeSeconds: 320,
+      },
+      nearbyMrts: [
+        { stationName: "OTHER MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+      ],
     });
     const profile = makeProfile({
       maxComfortableCommuteMinutes: 30,
@@ -173,8 +183,14 @@ describe("evaluateBlockForProfile", () => {
   it("falls back to nearestMrt distance when commuteAnchorMrt is null", () => {
     const block = makeBlock({
       addressKey: "x",
-      nearestMrt: { stationName: "NEARBY MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
-      nearbyMrts: [{ stationName: "NEARBY MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 }],
+      nearestMrt: {
+        stationName: "NEARBY MRT STATION",
+        distanceMeters: 400,
+        walkingTimeSeconds: 320,
+      },
+      nearbyMrts: [
+        { stationName: "NEARBY MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+      ],
     });
     const profile = makeProfile({
       maxComfortableCommuteMinutes: 30,

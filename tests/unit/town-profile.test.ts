@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
@@ -18,7 +18,9 @@ import {
 
 const DW = { minMonth: "2020-01", maxMonth: "2026-03" };
 
-function blockStub(p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey" | "medianPrice" | "transactionCount">): BlockSummary {
+function blockStub(
+  p: Partial<BlockSummary> & Pick<BlockSummary, "addressKey" | "medianPrice" | "transactionCount">,
+): BlockSummary {
   return {
     town: "TOWN",
     block: "1",
@@ -45,7 +47,10 @@ describe("town-profile month helpers", () => {
   });
 
   it("resolves an inclusive window and falls back when start is after end", () => {
-    expect(resolveTrendMonthRange(DW, null, null)).toEqual({ start: DW.minMonth, end: DW.maxMonth });
+    expect(resolveTrendMonthRange(DW, null, null)).toEqual({
+      start: DW.minMonth,
+      end: DW.maxMonth,
+    });
     expect(resolveTrendMonthRange(DW, "2025-06", null)).toEqual({
       start: "2025-06",
       end: "2026-03",
@@ -124,7 +129,9 @@ describe("town-profile trend rollups", () => {
 
   it("computes weighted mean $/sqm using window volume × latest median $/sqm", () => {
     const rollups = rollupTownFlatTypesInRange(trends, "X", { start: "2024-01", end: "2024-02" });
-    expect(volumeWeightedMeanLatestMedianPricePerSqm(rollups)).toBeCloseTo((4200 * 12 + 6000 * 2) / 14);
+    expect(volumeWeightedMeanLatestMedianPricePerSqm(rollups)).toBeCloseTo(
+      (4200 * 12 + 6000 * 2) / 14,
+    );
   });
 
   it("returns null weighted mean when no usable rows", () => {
@@ -170,7 +177,10 @@ describe("town-profile block selections", () => {
 
   it("picks busiest blocks using deterministic ties", () => {
     expect(pickTopBlocksByTransactionCount(blocks, 1).map((b) => b.addressKey)).toEqual(["z-b"]);
-    expect(pickTopBlocksByTransactionCount(blocks, 2).map((b) => b.addressKey)).toEqual(["z-b", "z-c"]);
+    expect(pickTopBlocksByTransactionCount(blocks, 2).map((b) => b.addressKey)).toEqual([
+      "z-b",
+      "z-c",
+    ]);
   });
 
   it("picks cheapest blocks strictly below median of block medians", () => {
@@ -188,7 +198,12 @@ describe("town-profile block selections", () => {
 
 describe("town-profile fixture parity", () => {
   it("validates fixtures/public-data/trends/town-flat-type.json against the artifact schema", () => {
-    const rawJson = JSON.parse(readFileSync(join(process.cwd(), "tests/fixtures/public-data/trends/town-flat-type.json"), "utf8"));
+    const rawJson = JSON.parse(
+      readFileSync(
+        join(process.cwd(), "tests/fixtures/public-data/trends/town-flat-type.json"),
+        "utf8",
+      ),
+    );
     expect(townFlatTypeTrendPointSchema.array().safeParse(rawJson).success).toBe(true);
   });
 });

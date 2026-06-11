@@ -1,8 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import { deriveFlatTypePriceLadder, median } from "@/features/block-detail/flat-type-ladder";
 import type { AddressDetailTransaction } from "@/types/data";
 
-function tx(flatType: string, resalePrice: number): Pick<AddressDetailTransaction, "flatType" | "resalePrice"> {
+function tx(
+  flatType: string,
+  resalePrice: number,
+): Pick<AddressDetailTransaction, "flatType" | "resalePrice"> {
   return { flatType, resalePrice };
 }
 
@@ -23,10 +26,22 @@ describe("deriveFlatTypePriceLadder", () => {
     const transactions = [tx("3 ROOM", 400000), tx("3 ROOM", 420000), tx("5 ROOM", 650000)];
     const ladder = deriveFlatTypePriceLadder(available, transactions);
     expect(ladder.map((e) => e.flatType)).toEqual(["3 ROOM", "4 ROOM", "5 ROOM", "EXECUTIVE"]);
-    expect(ladder[0]).toMatchObject({ flatType: "3 ROOM", medianPrice: 410000, transactionCount: 2 });
+    expect(ladder[0]).toMatchObject({
+      flatType: "3 ROOM",
+      medianPrice: 410000,
+      transactionCount: 2,
+    });
     expect(ladder[1]).toMatchObject({ flatType: "4 ROOM", medianPrice: null, transactionCount: 0 });
-    expect(ladder[2]).toMatchObject({ flatType: "5 ROOM", medianPrice: 650000, transactionCount: 1 });
-    expect(ladder[3]).toMatchObject({ flatType: "EXECUTIVE", medianPrice: null, transactionCount: 0 });
+    expect(ladder[2]).toMatchObject({
+      flatType: "5 ROOM",
+      medianPrice: 650000,
+      transactionCount: 1,
+    });
+    expect(ladder[3]).toMatchObject({
+      flatType: "EXECUTIVE",
+      medianPrice: null,
+      transactionCount: 0,
+    });
   });
 
   it("handles extra non-standard flat types by appending sorted", () => {

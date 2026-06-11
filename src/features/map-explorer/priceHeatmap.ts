@@ -1,3 +1,4 @@
+import type { FeatureCollection } from "geojson";
 import type { HeatmapMode } from "../../hooks/usePriceHeatmap";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
@@ -32,7 +33,7 @@ export function isHeatmapLayerPresent(map: MapLibreMap): boolean {
 export function addPriceHeatmapLayer(
   map: MapLibreMap,
   opacity: number,
-  data: GeoJSON.FeatureCollection,
+  data: FeatureCollection,
   mode: HeatmapMode,
 ): void {
   // If layer exists, check if mode changed by inspecting its properties
@@ -42,20 +43,8 @@ export function addPriceHeatmapLayer(
       HEATMAP_LAYER_ID,
       "heatmap-weight",
       mode === "perSqm"
-        ? [
-            "interpolate",
-            ["linear"],
-            ["get", "price_per_sqm_median"],
-            4000, 0,
-            13000, 1,
-          ]
-        : [
-            "interpolate",
-            ["linear"],
-            ["get", "median_price"],
-            400_000, 0,
-            1_500_000, 1,
-          ]
+        ? ["interpolate", ["linear"], ["get", "price_per_sqm_median"], 4000, 0, 13000, 1]
+        : ["interpolate", ["linear"], ["get", "median_price"], 400_000, 0, 1_500_000, 1],
     );
     map.setPaintProperty(HEATMAP_LAYER_ID, "heatmap-opacity", opacity);
     return;
@@ -77,51 +66,34 @@ export function addPriceHeatmapLayer(
       source: HEATMAP_SOURCE_ID,
       maxzoom: 17,
       paint: {
-        "heatmap-weight": mode === "perSqm"
-          ? [
-              "interpolate",
-              ["linear"],
-              ["get", "price_per_sqm_median"],
-              4000, 0,
-              13000, 1,
-            ]
-          : [
-              "interpolate",
-              ["linear"],
-              ["get", "median_price"],
-              400_000, 0,
-              1_500_000, 1,
-            ],
+        "heatmap-weight":
+          mode === "perSqm"
+            ? ["interpolate", ["linear"], ["get", "price_per_sqm_median"], 4000, 0, 13000, 1]
+            : ["interpolate", ["linear"], ["get", "median_price"], 400_000, 0, 1_500_000, 1],
         // Intensity ramps up as you zoom in so the heat field stays legible.
-        "heatmap-intensity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          9, 0.6,
-          15, 2,
-        ],
+        "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 9, 0.6, 15, 2],
         "heatmap-color": [
           "interpolate",
           ["linear"],
           ["heatmap-density"],
-          0,   "rgba(0,0,0,0)",
-          0.1, "rgba(58,138,111,0)",
-          0.2, "rgba(58,138,111,0.4)",
-          0.4, "rgba(155,179,104,0.7)",
-          0.6, "rgba(212,164,78,0.8)",
-          0.8, "rgba(217,119,87,0.9)",
-          1,   "rgba(168,50,50,1)",
+          0,
+          "rgba(0,0,0,0)",
+          0.1,
+          "rgba(58,138,111,0)",
+          0.2,
+          "rgba(58,138,111,0.4)",
+          0.4,
+          "rgba(155,179,104,0.7)",
+          0.6,
+          "rgba(212,164,78,0.8)",
+          0.8,
+          "rgba(217,119,87,0.9)",
+          1,
+          "rgba(168,50,50,1)",
         ],
         // Radius shrinks with lower zoom levels so it doesn't bleed over
         // the entire island when zoomed out.
-        "heatmap-radius": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          9,  20,
-          13, 35,
-          15, 50,
-        ],
+        "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 9, 20, 13, 35, 15, 50],
         "heatmap-opacity": opacity,
       },
     },

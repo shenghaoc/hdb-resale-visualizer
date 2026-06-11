@@ -2,7 +2,7 @@
  * Handler-logic tests for the opt-in shortlist sync API. Uses a minimal
  * in-memory fake of the D1 `prepare().bind().first()/run()` surface.
  */
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 import {
   handleShortlistGet,
   handleShortlistPush,
@@ -27,14 +27,20 @@ function makeFakeDB(): { db: SyncDB; rows: Map<string, Row> } {
         const row = rows.get(codeHash);
         return Promise.resolve((row ? { items_json: row.items_json } : null) as T | null);
       },
-      run(): Promise<unknown> {
+      run(): Promise<{ meta?: { changes?: number } }> {
         if (sql.startsWith("INSERT")) {
-          rows.set(args[0] as string, { items_json: args[1] as string, updated_at: args[2] as string });
+          rows.set(args[0] as string, {
+            items_json: args[1] as string,
+            updated_at: args[2] as string,
+          });
         } else if (sql.startsWith("UPDATE")) {
           // bind order: items_json, updated_at, code_hash
-          rows.set(args[2] as string, { items_json: args[0] as string, updated_at: args[1] as string });
+          rows.set(args[2] as string, {
+            items_json: args[0] as string,
+            updated_at: args[1] as string,
+          });
         }
-        return Promise.resolve({ success: true });
+        return Promise.resolve({ meta: { changes: 1 } });
       },
     };
     return stmt;
@@ -61,8 +67,12 @@ describe("handleShortlistPush", () => {
 
   it("stores the incoming items directly on a known code (no server-side merge)", async () => {
     const { db } = makeFakeDB();
-    const minted = (await handleShortlistPush(db, JSON.stringify({ items: [item("a", "2026-04-20T00:00:00.000Z")] })))
-      .body as { syncCode: string };
+    const minted = (
+      await handleShortlistPush(
+        db,
+        JSON.stringify({ items: [item("a", "2026-04-20T00:00:00.000Z")] }),
+      )
+    ).body as { syncCode: string };
 
     const res = await handleShortlistPush(
       db,
@@ -79,14 +89,20 @@ describe("handleShortlistPush", () => {
 
   it("rejects an unknown (well-formed) code with 404", async () => {
     const { db } = makeFakeDB();
-    const res = await handleShortlistPush(db, JSON.stringify({ syncCode: "AAAAAAAAAAAAAAAA", items: [item("a")] }));
+    const res = await handleShortlistPush(
+      db,
+      JSON.stringify({ syncCode: "AAAAAAAAAAAAAAAA", items: [item("a")] }),
+    );
     expect(res.status).toBe(404);
   });
 
   it("rejects an oversized body with 413", async () => {
     const { db } = makeFakeDB();
     const huge = "x".repeat(MAX_SYNC_BODY_BYTES + 1);
-    const res = await handleShortlistPush(db, JSON.stringify({ items: [item("a", undefined, huge)] }));
+    const res = await handleShortlistPush(
+      db,
+      JSON.stringify({ items: [item("a", undefined, huge)] }),
+    );
     expect(res.status).toBe(413);
   });
 

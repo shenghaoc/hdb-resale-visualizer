@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vite-plus/test";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import { parseFilters } from "@/shared/lib/queryState";
 import {
@@ -105,7 +105,9 @@ describe("matchesFilter", () => {
   });
 
   it("normalizes duplicate flat type labels in menu options", () => {
-    const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
+    const mutated = JSON.parse(
+      JSON.stringify(artifact.blockSummaries),
+    ) as typeof artifact.blockSummaries;
     if (mutated[0]) {
       mutated[0].flatTypes = ["MULTI GENERATION", "4 ROOM"];
     }
@@ -118,7 +120,9 @@ describe("matchesFilter", () => {
   });
 
   it("drops blank and placeholder flat model values from menu options", () => {
-    const mutated = JSON.parse(JSON.stringify(artifact.blockSummaries)) as typeof artifact.blockSummaries;
+    const mutated = JSON.parse(
+      JSON.stringify(artifact.blockSummaries),
+    ) as typeof artifact.blockSummaries;
     if (mutated[0]) {
       mutated[0].flatModels = ["", "MODEL A", "MAX FLOOR 12"];
     }
@@ -163,7 +167,7 @@ describe("matchesFilter", () => {
         search: "alpha",
       }),
     ).toBe(false);
-      expect(
+    expect(
       matchesFilter(updatedBlock, {
         ...DEFAULT_FILTERS,
         budgetMin: null, // Reset to null for test
@@ -187,7 +191,19 @@ describe("matchesFilter", () => {
     });
 
     // matchesFilter should return true because intent is provided, bypassing the text search for "near"
-    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, budgetMin: null, budgetMax: null, remainingLeaseMin: null, search: query }, intent)).toBe(true);
+    expect(
+      matchesFilter(
+        alpha!,
+        {
+          ...DEFAULT_FILTERS,
+          budgetMin: null,
+          budgetMax: null,
+          remainingLeaseMin: null,
+          search: query,
+        },
+        intent,
+      ),
+    ).toBe(true);
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
@@ -231,7 +247,19 @@ describe("matchesFilter", () => {
     });
 
     // matchesFilter should return true because intent is provided, bypassing text search for coordinates
-    expect(matchesFilter(alpha!, { ...DEFAULT_FILTERS, budgetMin: null, budgetMax: null, remainingLeaseMin: null, search: query }, intent)).toBe(true);
+    expect(
+      matchesFilter(
+        alpha!,
+        {
+          ...DEFAULT_FILTERS,
+          budgetMin: null,
+          budgetMax: null,
+          remainingLeaseMin: null,
+          search: query,
+        },
+        intent,
+      ),
+    ).toBe(true);
     expect(matchesGeographicSearchIntent(alpha!, intent!)).toBe(true);
     expect(matchesGeographicSearchIntent(beta!, intent!)).toBe(false);
   });
@@ -242,7 +270,13 @@ describe("matchesFilter", () => {
 
     const userLocation = { lat: 1.3339, lng: 103.9372 }; // Bedok block coordinates
     const query = "Near me";
-    const intent = resolveGeographicSearchIntent(query, artifact.blockSummaries, 1200, userLocation, "Near me");
+    const intent = resolveGeographicSearchIntent(
+      query,
+      artifact.blockSummaries,
+      1200,
+      userLocation,
+      "Near me",
+    );
 
     expect(intent).toEqual({
       type: "coordinates",
@@ -286,12 +320,14 @@ describe("matchesFilter", () => {
       streetName: "CHOA CHU KANG STREET 62",
       nearestMrt: {
         stationName: "CHOA CHU KANG MRT STATION",
-        distanceMeters: 300, walkingTimeSeconds: 240
+        distanceMeters: 300,
+        walkingTimeSeconds: 240,
       },
       nearbyMrts: [
         {
           stationName: "CHOA CHU KANG MRT STATION",
-          distanceMeters: 300, walkingTimeSeconds: 240
+          distanceMeters: 300,
+          walkingTimeSeconds: 240,
         },
       ],
     };
@@ -312,12 +348,14 @@ describe("matchesFilter", () => {
       streetName: "CHOA CHU KANG STREET 62",
       nearestMrt: {
         stationName: "CHOA CHU KANG MRT STATION",
-        distanceMeters: 300, walkingTimeSeconds: 240
+        distanceMeters: 300,
+        walkingTimeSeconds: 240,
       },
       nearbyMrts: [
         {
           stationName: "CHOA CHU KANG MRT STATION",
-          distanceMeters: 300, walkingTimeSeconds: 240
+          distanceMeters: 300,
+          walkingTimeSeconds: 240,
         },
       ],
     };
@@ -336,7 +374,11 @@ describe("matchesFilter", () => {
     const emptyIntent = resolveGeographicSearchIntent("near ang mo kio mrt", [], 800);
     expect(emptyIntent).toBeNull();
 
-    const intent = resolveGeographicSearchIntent("near ang mo kio mrt", artifact.blockSummaries, 800);
+    const intent = resolveGeographicSearchIntent(
+      "near ang mo kio mrt",
+      artifact.blockSummaries,
+      800,
+    );
     expect(intent).toEqual({
       type: "station",
       stationName: "ANG MO KIO MRT STATION",
@@ -374,12 +416,14 @@ describe("matchesFilter", () => {
         ...alpha!,
         nearestMrt: {
           stationName: "JURONG EAST MRT STATION",
-          distanceMeters: 1000, walkingTimeSeconds: 800
+          distanceMeters: 1000,
+          walkingTimeSeconds: 800,
         },
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 400, walkingTimeSeconds: 320
+            distanceMeters: 400,
+            walkingTimeSeconds: 320,
           },
         ],
       };
@@ -401,7 +445,8 @@ describe("matchesFilter", () => {
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 400, walkingTimeSeconds: 320
+            distanceMeters: 400,
+            walkingTimeSeconds: 320,
           },
         ],
       };
@@ -421,12 +466,14 @@ describe("matchesFilter", () => {
         ...alpha!,
         nearestMrt: {
           stationName: stationName,
-          distanceMeters: 600, walkingTimeSeconds: 480
+          distanceMeters: 600,
+          walkingTimeSeconds: 480,
         },
         nearbyMrts: [
           {
             stationName: stationName,
-            distanceMeters: 450, walkingTimeSeconds: 360
+            distanceMeters: 450,
+            walkingTimeSeconds: 360,
           },
         ],
       };
@@ -437,8 +484,14 @@ describe("matchesFilter", () => {
     it("fails if nearest is wrong and nearby is out of bounds", () => {
       const block: BlockSummary = {
         ...alpha!,
-        nearestMrt: { stationName: "JURONG EAST MRT STATION", distanceMeters: 100, walkingTimeSeconds: 80 },
-        nearbyMrts: [{ stationName: "LAKESIDE MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 }],
+        nearestMrt: {
+          stationName: "JURONG EAST MRT STATION",
+          distanceMeters: 100,
+          walkingTimeSeconds: 80,
+        },
+        nearbyMrts: [
+          { stationName: "LAKESIDE MRT STATION", distanceMeters: 800, walkingTimeSeconds: 640 },
+        ],
       };
       expect(
         matchesGeographicSearchIntent(block, {
