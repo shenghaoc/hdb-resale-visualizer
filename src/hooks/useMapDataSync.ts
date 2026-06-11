@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import type { FeatureCollection } from "geojson";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import { PRIMARY_SCHOOL_LAYER_IDS, PRIMARY_SCHOOL_SOURCE_ID } from "@/shared/lib/constants";
 
@@ -49,8 +50,8 @@ function moveLayersBeforeTargetIfNeeded(
 
 type UseMapDataSyncProps = {
   map: MapLibreMap | null;
-  geoJson: GeoJSON.FeatureCollection;
-  primarySchoolsGeoJson?: GeoJSON.FeatureCollection;
+  geoJson: FeatureCollection;
+  primarySchoolsGeoJson?: FeatureCollection;
   schoolOverlayEnabled?: boolean;
 };
 
@@ -60,9 +61,9 @@ export function useMapDataSync({
   primarySchoolsGeoJson,
   schoolOverlayEnabled = false,
 }: UseMapDataSyncProps) {
-  const blocksSourceRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const blocksSourceRef = useRef<FeatureCollection | null>(null);
   const blocksLayerSourceRef = useRef<unknown>(null);
-  const schoolsSourceRef = useRef<GeoJSON.FeatureCollection | null>(null);
+  const schoolsSourceRef = useRef<FeatureCollection | null>(null);
   const schoolsLayerSourceRef = useRef<unknown>(null);
   const schoolsVisibilityRef = useRef<string | null>(null);
 
@@ -118,8 +119,7 @@ export function useMapDataSync({
       }
 
       const hasSchoolFeatures = (normalisedSchoolGeoJson?.features.length ?? 0) > 0;
-      const schoolVisibility =
-        schoolOverlayEnabled && hasSchoolFeatures ? "visible" : "none";
+      const schoolVisibility = schoolOverlayEnabled && hasSchoolFeatures ? "visible" : "none";
       const visibilityChanged = schoolsVisibilityRef.current !== schoolVisibility;
 
       if (!visibilityChanged && !shouldSetSchoolData && !e) {
@@ -128,7 +128,10 @@ export function useMapDataSync({
 
       for (const layerId of PRIMARY_SCHOOL_LAYER_IDS) {
         if (!map.getLayer(layerId)) continue;
-        if (visibilityChanged || map.getLayoutProperty(layerId, "visibility") !== schoolVisibility) {
+        if (
+          visibilityChanged ||
+          map.getLayoutProperty(layerId, "visibility") !== schoolVisibility
+        ) {
           map.setLayoutProperty(layerId, "visibility", schoolVisibility);
         }
       }

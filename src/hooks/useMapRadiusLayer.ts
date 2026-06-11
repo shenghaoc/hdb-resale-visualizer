@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import type { Feature, Polygon } from "geojson";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 import type { GeographicSearchIntent } from "@/shared/lib/filtering";
 
-function createCircleGeoJson(center: Coordinates, radiusKm: number): GeoJSON.Feature<GeoJSON.Polygon> {
+function createCircleGeoJson(center: Coordinates, radiusKm: number): Feature<Polygon> {
   const points = 64;
   const coords = [];
   const kmPerDegreeLat = 111.32;
@@ -17,7 +18,11 @@ function createCircleGeoJson(center: Coordinates, radiusKm: number): GeoJSON.Fea
       center.lat + (radiusKm * Math.sin(rad)) / kmPerDegreeLat,
     ]);
   }
-  return { type: "Feature", geometry: { type: "Polygon", coordinates: [coords] }, properties: { radius: radiusKm } };
+  return {
+    type: "Feature",
+    geometry: { type: "Polygon", coordinates: [coords] },
+    properties: { radius: radiusKm },
+  };
 }
 
 export function useMapRadiusLayer(

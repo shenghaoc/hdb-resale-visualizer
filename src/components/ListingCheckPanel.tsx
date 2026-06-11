@@ -415,14 +415,14 @@ export function ListingCheckPanel({
       onFlatTypeChange(flatTypeOptions[0] ?? null);
     }
     // Only auto-select on first load, not on every flatType external change
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flatTypeOptions]);
 
   useEffect(() => {
     if (storeyOptions.length > 0 && !storeyOptions.includes(storeyRange ?? "")) {
       onStoreyRangeChange(storeyOptions[0] ?? null);
     }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storeyOptions]);
 
   // ── Parse numeric inputs from parent props ────────────────────────────────

@@ -51,7 +51,6 @@ describe("useGeolocation", () => {
   it("should handle geolocation error", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
 
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     (
       navigator.geolocation.getCurrentPosition as unknown as ReturnType<typeof vi.fn>
     ).mockImplementationOnce((_success: unknown, error: () => void) => {

@@ -30,6 +30,7 @@ export default defineConfig({
       "docs/archive",
       "public/data",
       "public/temporal-polyfill.js",
+      "tests/e2e/**",
     ],
     overrides: [
       {

@@ -39,9 +39,9 @@ describe("useFilterPipeline", () => {
   it("should inject default start month if not in URL", () => {
     // Mock window.location.search to be empty
     const originalLocation = window.location;
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (window as any).location;
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.location = { ...originalLocation, search: "" } as any;
 
     const { result } = renderHook(() =>
@@ -60,15 +60,15 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-12");
     expect(result.current.useDefaultStartMonth).toBe(true);
 
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.location = originalLocation as any;
   });
 
   it("should NOT inject default start month if already in URL", () => {
     const originalLocation = window.location;
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (window as any).location;
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.location = { ...originalLocation, search: "?startMonth=2021-01" } as any;
 
     const { result } = renderHook(() =>
@@ -86,7 +86,7 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-01");
     expect(result.current.useDefaultStartMonth).toBe(false);
 
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     window.location = originalLocation as any;
   });
 

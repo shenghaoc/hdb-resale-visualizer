@@ -1,3 +1,4 @@
+import type { FeatureCollection, Point } from "geojson";
 import type { Coordinates, NearbySchool } from "../../types/data";
 
 const PRIMARY_SCHOOL_1KM_METERS = 1_000;
@@ -48,7 +49,7 @@ export function getPrimarySchoolsForOverlay(
 
 export function primarySchoolsToGeoJson(
   schools: PrimarySchoolWithBand[],
-): GeoJSON.FeatureCollection<GeoJSON.Point> {
+): FeatureCollection<Point> {
   return {
     type: "FeatureCollection",
     features: schools.map((school) => ({

@@ -126,7 +126,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
 - D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
-- `bun.lock`, `yarn.lock`, or `pnpm-lock.yaml` present — Node 26 + npm only
+- `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 26 + pnpm
 
 ### Output Format
 

@@ -275,7 +275,7 @@ const BlockCard = memo(function BlockCard({
       },
       block.medianPrice,
     );
-    // oxlint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
   }, [
     searchProfile?.monthlyIncome,
     searchProfile?.cpfOABalance,
@@ -897,7 +897,7 @@ export function ResultsPane({
       map.set(block.addressKey, ceiling - block.medianPrice);
     }
     return map;
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint]);
 
   const sortedBlocks = useMemo(() => {

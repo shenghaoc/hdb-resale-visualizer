@@ -187,7 +187,7 @@ export function useFilterPipeline({
     () => ({ ...effectiveFilters, search: resolvedSearch, selectedAddressKey: null }),
     // Intentional: list filter fields explicitly to avoid reference churn when
     // effectiveFilters is recreated without a meaningful filter value change.
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       resolvedSearch,
       effectiveFilters.town,

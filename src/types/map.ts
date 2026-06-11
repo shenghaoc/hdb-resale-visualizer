@@ -1,5 +1,7 @@
+import type { FeatureCollection, Feature } from "geojson";
+
 export type GeoJsonDataSourceLike = {
-  setData(data: GeoJSON.FeatureCollection | GeoJSON.Feature): void;
+  setData(data: FeatureCollection | Feature): void;
 };
 
 export function isGeoJsonDataSourceLike(source: unknown): source is GeoJsonDataSourceLike {
