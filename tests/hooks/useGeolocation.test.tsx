@@ -5,13 +5,19 @@ import type { Translator } from "@/shared/lib/i18n";
 
 describe("useGeolocation", () => {
   const t = vi.fn((key: string) => key) as unknown as Translator;
+  type SuccessCallback = (position: { coords: { latitude: number; longitude: number } }) => void;
+  type ErrorCallback = () => void;
+  const getCurrentPosition = vi.fn(
+    (_success: SuccessCallback, _error?: ErrorCallback | null) => {},
+  );
 
   beforeEach(() => {
     vi.useFakeTimers();
-    // @ts-expect-error - mock geolocation
-    global.navigator.geolocation = {
-      getCurrentPosition: vi.fn(),
-    };
+    getCurrentPosition.mockReset();
+    Object.defineProperty(window.navigator, "geolocation", {
+      configurable: true,
+      value: { getCurrentPosition },
+    });
   });
 
   afterEach(() => {
@@ -30,13 +36,9 @@ describe("useGeolocation", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
     const coords = { latitude: 1.23, longitude: 103.81 };
 
-    (
-      navigator.geolocation.getCurrentPosition as unknown as ReturnType<typeof vi.fn>
-    ).mockImplementationOnce(
-      (success: (pos: { coords: { latitude: number; longitude: number } }) => void) => {
-        success({ coords });
-      },
-    );
+    getCurrentPosition.mockImplementationOnce((success) => {
+      success({ coords });
+    });
 
     const onSuccess = vi.fn();
     act(() => {
@@ -51,10 +53,10 @@ describe("useGeolocation", () => {
   it("should handle geolocation error", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
 
-    (
-      navigator.geolocation.getCurrentPosition as unknown as ReturnType<typeof vi.fn>
-    ).mockImplementationOnce((_success: unknown, error: () => void) => {
-      error();
+    getCurrentPosition.mockImplementationOnce((_success, error) => {
+      if (error) {
+        error();
+      }
     });
 
     const onCannotLocate = vi.fn();
@@ -71,9 +73,7 @@ describe("useGeolocation", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
     let successCallback: (pos: { coords: { latitude: number; longitude: number } }) => void;
 
-    (
-      navigator.geolocation.getCurrentPosition as unknown as ReturnType<typeof vi.fn>
-    ).mockImplementationOnce((success: typeof successCallback) => {
+    getCurrentPosition.mockImplementationOnce((success: typeof successCallback) => {
       successCallback = success;
     });
 
@@ -82,13 +82,13 @@ describe("useGeolocation", () => {
     });
 
     expect(result.current.isLocating).toBe(true);
-    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
 
     act(() => {
       result.current.locate(vi.fn());
     });
 
-    expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
 
     act(() => {
       successCallback({ coords: { latitude: 1, longitude: 103 } });
@@ -101,9 +101,7 @@ describe("useGeolocation", () => {
     const { result } = renderHook(() => useGeolocation({ t }));
     let successCallback: (pos: { coords: { latitude: number; longitude: number } }) => void;
 
-    (
-      navigator.geolocation.getCurrentPosition as unknown as ReturnType<typeof vi.fn>
-    ).mockImplementationOnce((success: typeof successCallback) => {
+    getCurrentPosition.mockImplementationOnce((success: typeof successCallback) => {
       successCallback = success;
     });
 

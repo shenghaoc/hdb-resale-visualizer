@@ -37,11 +37,11 @@ type ErrorBoundaryProps = {
 
 type ErrorBoundaryState = {
   hasError: boolean;
-  recoveryAttempts: number;
 };
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false, recoveryAttempts: 0 };
+  state: ErrorBoundaryState = { hasError: false };
+  private recoveryAttempts = 0;
 
   static getDerivedStateFromError(): Partial<ErrorBoundaryState> {
     return { hasError: true };
@@ -53,11 +53,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidUpdate(_prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState): void {
-    // The subtree recovered (errored → rendered children without re-throwing):
-    // restore the full local-retry budget so a later, unrelated error isn't
-    // shortchanged by attempts spent on the previous one.
-    if (prevState.hasError && !this.state.hasError && this.state.recoveryAttempts > 0) {
-      this.setState({ recoveryAttempts: 0 });
+    if (prevState.hasError && !this.state.hasError && this.recoveryAttempts > 0) {
+      this.recoveryAttempts = 0;
     }
   }
 
@@ -65,13 +62,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.props.onReset?.();
 
     const { reloadOnRecovery = true } = this.props;
-    const localRecoveryExhausted = this.state.recoveryAttempts >= MAX_LOCAL_RECOVERY_ATTEMPTS;
+    const localRecoveryExhausted = this.recoveryAttempts >= MAX_LOCAL_RECOVERY_ATTEMPTS;
     if (reloadOnRecovery || localRecoveryExhausted) {
       window.location.reload();
       return;
     }
 
-    this.setState((prev) => ({ hasError: false, recoveryAttempts: prev.recoveryAttempts + 1 }));
+    this.recoveryAttempts += 1;
+    this.setState({ hasError: false });
   };
 
   render(): ReactNode {

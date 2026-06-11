@@ -48,9 +48,10 @@ describe("ErrorBoundary", () => {
   it("reloads the page when recovery defaults to reload (root boundary)", async () => {
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     const reload = vi.fn();
+    const originalLocation = window.location;
     Object.defineProperty(window, "location", {
       configurable: true,
-      value: { ...window.location, reload },
+      value: { reload },
     });
 
     const user = userEvent.setup();
@@ -64,14 +65,19 @@ describe("ErrorBoundary", () => {
     expect(reload).toHaveBeenCalledTimes(1);
 
     consoleError.mockRestore();
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("recovers the failed subtree locally without reloading when reloadOnRecovery is false", async () => {
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     const reload = vi.fn();
+    const originalLocation = window.location;
     Object.defineProperty(window, "location", {
       configurable: true,
-      value: { ...window.location, reload },
+      value: { reload },
     });
 
     // Throws on first render, succeeds once the underlying condition clears.
@@ -98,14 +104,19 @@ describe("ErrorBoundary", () => {
     expect(reload).not.toHaveBeenCalled();
 
     consoleError.mockRestore();
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("falls back to a full reload once local recovery is exhausted", async () => {
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     const reload = vi.fn();
+    const originalLocation = window.location;
     Object.defineProperty(window, "location", {
       configurable: true,
-      value: { ...window.location, reload },
+      value: { reload },
     });
 
     const user = userEvent.setup();
@@ -128,6 +139,10 @@ describe("ErrorBoundary", () => {
     expect(reload).toHaveBeenCalledTimes(1);
 
     consoleError.mockRestore();
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("renders custom fallback and action text", () => {

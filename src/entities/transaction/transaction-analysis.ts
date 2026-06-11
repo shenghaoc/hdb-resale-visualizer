@@ -1,7 +1,4 @@
-import type {
-  AddressDetailTransaction,
-  AddressTrendPoint,
-} from "@/types/data";
+import type { AddressDetailTransaction, AddressTrendPoint } from "@/types/data";
 
 // Moved to shared/comparable-engine.ts so the sync pipeline can use it
 // without importing from src/. Re-export for backwards compatibility.
@@ -19,7 +16,12 @@ export function monthDiff(
   const txMon = Number(txMonth.slice(5, 7));
   const refYear = Number(referenceMonth.slice(0, 4));
   const refMon = Number(referenceMonth.slice(5, 7));
-  if (Number.isNaN(txYear) || Number.isNaN(txMon) || Number.isNaN(refYear) || Number.isNaN(refMon)) {
+  if (
+    Number.isNaN(txYear) ||
+    Number.isNaN(txMon) ||
+    Number.isNaN(refYear) ||
+    Number.isNaN(refMon)
+  ) {
     return 0;
   }
   return (refYear - txYear) * 12 + (refMon - txMon);
@@ -158,8 +160,8 @@ export function summarizeComparables(
   comparables: ReadonlyArray<AddressDetailTransaction>,
 ): ComparableSummary | null {
   if (comparables.length === 0) return null;
-  const prices = new Array<number>(comparables.length);
-  const psm = new Array<number>(comparables.length);
+  const prices = Array.from<number>({ length: comparables.length });
+  const psm = Array.from<number>({ length: comparables.length });
   let latestMonth: string | null = null;
 
   for (let i = 0; i < comparables.length; i++) {
@@ -227,9 +229,7 @@ export function assessAskingPrice(params: {
       : null;
   const pricePerSqmDeltaPct =
     askingPricePerSqm != null && summary.medianPricePerSqm > 0
-      ? ((askingPricePerSqm - summary.medianPricePerSqm) /
-          summary.medianPricePerSqm) *
-        100
+      ? ((askingPricePerSqm - summary.medianPricePerSqm) / summary.medianPricePerSqm) * 100
       : null;
 
   const pctVsMedian = (deltaVsMedian / summary.medianPrice) * 100;
@@ -313,14 +313,10 @@ export function computeBlockTrajectory(
 
   const yoyDelta = yoyAnchor ? latest.medianPrice - yoyAnchor.medianPrice : null;
   const yoyDeltaPct =
-    yoyAnchor && yoyAnchor.medianPrice > 0
-      ? (yoyDelta! / yoyAnchor.medianPrice) * 100
-      : null;
+    yoyAnchor && yoyAnchor.medianPrice > 0 ? (yoyDelta! / yoyAnchor.medianPrice) * 100 : null;
 
   const peakToCurrentPct =
-    peak.medianPrice > 0
-      ? ((latest.medianPrice - peak.medianPrice) / peak.medianPrice) * 100
-      : 0;
+    peak.medianPrice > 0 ? ((latest.medianPrice - peak.medianPrice) / peak.medianPrice) * 100 : 0;
 
   let direction: BlockTrajectory["direction"] = "flat";
   if (yoyDeltaPct != null) {

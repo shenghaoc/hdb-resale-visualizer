@@ -134,7 +134,14 @@ export async function writeArtifactsToD1(
   // Town × flat-type trends — normalized rows.
   await db.batchInsert({
     table: "town_flat_type_trends",
-    columns: ["town", "flat_type", "month", "median_price", "median_price_per_sqm", "transaction_count"],
+    columns: [
+      "town",
+      "flat_type",
+      "month",
+      "median_price",
+      "median_price_per_sqm",
+      "transaction_count",
+    ],
     rows: artifacts.townFlatTypeTrend,
     mapRow: (point) => [
       point.town,
@@ -148,14 +155,16 @@ export async function writeArtifactsToD1(
   });
 
   // MRT GeoJSON — two rows keyed by kind.
-  await db.execute(
-    "INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)",
-    ["exits", JSON.stringify(mrtExitsGeoJson), updatedAt],
-  );
-  await db.execute(
-    "INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)",
-    ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
-  );
+  await db.execute("INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)", [
+    "exits",
+    JSON.stringify(mrtExitsGeoJson),
+    updatedAt,
+  ]);
+  await db.execute("INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)", [
+    "stations",
+    JSON.stringify(mrtStationsGeoJson),
+    updatedAt,
+  ]);
 
   // Transactions — full normalized table for the comparable engine v2.
   if (artifacts.transactions && artifacts.transactions.length > 0) {
@@ -165,10 +174,10 @@ export async function writeArtifactsToD1(
   }
 
   // Manifest — written last so a matching timestamp implies a successful sync.
-  await db.execute(
-    "INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)",
-    [JSON.stringify(artifacts.manifest), updatedAt],
-  );
+  await db.execute("INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)", [
+    JSON.stringify(artifacts.manifest),
+    updatedAt,
+  ]);
 
   console.log(
     `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points, ${artifacts.transactions?.length ?? 0} transactions.`,
@@ -273,14 +282,12 @@ export async function insertTransactions(
       }
       params.push(...values);
     }
-    const sql = sqlPrefix + new Array(chunk.length).fill(placeholders).join(",");
+    const sql = sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",");
     statements.push({ sql, params });
 
     // Flush when we hit the batch statement limit or end of data
     if (statements.length >= MAX_BATCH_STMTS || i + ROWS_PER_INSERT >= transactions.length) {
-      const batch = firstBatch
-        ? [{ sql: "DELETE FROM transactions" }, ...statements]
-        : statements;
+      const batch = firstBatch ? [{ sql: "DELETE FROM transactions" }, ...statements] : statements;
 
       await db.query(batch);
       firstBatch = false;

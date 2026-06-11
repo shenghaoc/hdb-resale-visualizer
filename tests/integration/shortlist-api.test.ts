@@ -27,7 +27,7 @@ function makeFakeDB(): { db: SyncDB; rows: Map<string, Row> } {
         const row = rows.get(codeHash);
         return Promise.resolve((row ? { items_json: row.items_json } : null) as T | null);
       },
-      run(): Promise<unknown> {
+      run(): Promise<{ meta?: { changes?: number } }> {
         if (sql.startsWith("INSERT")) {
           rows.set(args[0] as string, {
             items_json: args[1] as string,
@@ -40,7 +40,7 @@ function makeFakeDB(): { db: SyncDB; rows: Map<string, Row> } {
             updated_at: args[1] as string,
           });
         }
-        return Promise.resolve({ success: true });
+        return Promise.resolve({ meta: { changes: 1 } });
       },
     };
     return stmt;

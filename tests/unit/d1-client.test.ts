@@ -7,6 +7,14 @@ const config = {
   apiToken: "token",
 };
 
+function parseRequestBody(init?: RequestInit): unknown {
+  const body = init?.body;
+  if (typeof body !== "string") {
+    throw new Error("Expected JSON request body string");
+  }
+  return JSON.parse(body);
+}
+
 describe("D1Client", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -14,7 +22,7 @@ describe("D1Client", () => {
 
   it("sends a single statement as { sql, params }", async () => {
     const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => {
-      expect(JSON.parse(String(init?.body))).toEqual({
+      expect(parseRequestBody(init)).toEqual({
         sql: "SELECT json FROM manifest WHERE id = 1",
       });
       return new Response(
@@ -38,7 +46,7 @@ describe("D1Client", () => {
 
   it("sends multiple statements as { batch: [...] }", async () => {
     const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => {
-      expect(JSON.parse(String(init?.body))).toEqual({
+      expect(parseRequestBody(init)).toEqual({
         batch: [
           { sql: "DELETE FROM blocks" },
           { sql: "INSERT INTO blocks (address_key) VALUES (?)", params: ["abc"] },
@@ -69,7 +77,7 @@ describe("D1Client", () => {
 
   it("caps batch insert chunk size to D1 100-bound-param limit", async () => {
     const fetchMock = vi.fn(async (_url: string, init?: RequestInit) => {
-      const body = JSON.parse(String(init?.body)) as { sql: string; params: unknown[] };
+      const body = parseRequestBody(init) as { sql: string; params: unknown[] };
       const rowCount = (body.sql.match(/\(\?/g) ?? []).length;
       expect(rowCount).toBeLessThanOrEqual(4);
       return new Response(

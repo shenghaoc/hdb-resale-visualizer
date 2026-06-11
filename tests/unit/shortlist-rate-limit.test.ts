@@ -7,7 +7,12 @@ import {
 import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "../../shared/shortlist-limits";
 
 function makeLimiter(outcome: { success: boolean }): ShortlistWriteRateLimiter {
-  return { limit: vi.fn().mockResolvedValue(outcome) };
+  const limit: (this: void, _input: { key: string }) => Promise<{ success: boolean }> = async () =>
+    outcome;
+  const limitMock = vi.fn(limit);
+  return {
+    limit: limitMock,
+  };
 }
 
 describe("shortlistWriteRateLimitKey", () => {
@@ -39,7 +44,8 @@ describe("checkShortlistWriteRateLimit", () => {
       String(SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC),
     );
     await expect(response?.json()).resolves.toEqual({ error: "Too Many Requests" });
-    expect(limiter.limit).toHaveBeenCalledWith({ key: "203.0.113.10" });
+    const limit = vi.spyOn(limiter, "limit");
+    expect(limit).toHaveBeenCalledWith({ key: "203.0.113.10" });
   });
 
   it("returns null when the limiter accepts the key", async () => {

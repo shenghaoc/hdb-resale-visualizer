@@ -15,10 +15,27 @@ const CACHE_HEADERS = {
   "content-type": "application/json; charset=utf-8",
 };
 
+function headersToRecord(headers?: HeadersInit): Record<string, string> {
+  if (!headers) {
+    return {};
+  }
+  if (headers instanceof Headers) {
+    return Object.fromEntries(headers.entries()) as Record<string, string>;
+  }
+  if (Array.isArray(headers)) {
+    const entries: Record<string, string> = {};
+    for (const [key, value] of headers) {
+      entries[key] = value;
+    }
+    return entries;
+  }
+  return headers as Record<string, string>;
+}
+
 export function jsonResponse(body: JsonValue, init: ResponseInit = {}): Response {
   return new Response(JSON.stringify(body), {
     ...init,
-    headers: { ...CACHE_HEADERS, ...(init.headers ?? {}) },
+    headers: { ...CACHE_HEADERS, ...headersToRecord(init.headers) },
   });
 }
 

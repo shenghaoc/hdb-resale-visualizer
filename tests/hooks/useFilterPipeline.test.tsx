@@ -39,10 +39,10 @@ describe("useFilterPipeline", () => {
   it("should inject default start month if not in URL", () => {
     // Mock window.location.search to be empty
     const originalLocation = window.location;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    delete (window as any).location;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.location = { ...originalLocation, search: "" } as any;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: { search: "" },
+    });
 
     const { result } = renderHook(() =>
       useFilterPipeline({
@@ -60,16 +60,18 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-12");
     expect(result.current.useDefaultStartMonth).toBe(true);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.location = originalLocation as any;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("should NOT inject default start month if already in URL", () => {
     const originalLocation = window.location;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    delete (window as any).location;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.location = { ...originalLocation, search: "?startMonth=2021-01" } as any;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: { search: "?startMonth=2021-01" },
+    });
 
     const { result } = renderHook(() =>
       useFilterPipeline({
@@ -86,8 +88,10 @@ describe("useFilterPipeline", () => {
     expect(result.current.effectiveFilters.startMonth).toBe("2021-01");
     expect(result.current.useDefaultStartMonth).toBe(false);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    window.location = originalLocation as any;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 
   it("should compute hasResultScope correctly", () => {
