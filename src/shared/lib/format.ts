@@ -184,7 +184,12 @@ export function formatDateTime(value: string, locale?: Locale): string {
     timeStyle: "short",
   });
 
-  cached = formatter.format(new Date(value));
+  const date = new Date(value);
+  if (isNaN(date.getTime())) {
+    return value;
+  }
+
+  cached = formatter.format(date);
 
   evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedDateTimeCache.set(cacheKey, cached);
