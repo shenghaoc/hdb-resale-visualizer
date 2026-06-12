@@ -35,7 +35,7 @@ export function DocsPage() {
   }, [slug]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-screen overflow-y-auto bg-background text-foreground">
       <a
         href="#docs-content"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded-lg focus-visible:bg-primary focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-bold focus-visible:text-primary-foreground focus-visible:shadow-lg"
