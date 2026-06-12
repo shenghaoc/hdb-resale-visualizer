@@ -22,7 +22,12 @@ export function BuyerChecklist({
   const headingId = useId();
 
   return (
-    <div className={cn("flex flex-col gap-2 rounded-lg border border-border/40 bg-muted/10 p-3", className)}>
+    <div
+      className={cn(
+        "flex flex-col gap-2 rounded-lg border border-border/40 bg-muted/10 p-3",
+        className,
+      )}
+    >
       <div className="flex items-center gap-1.5 text-muted-foreground" id={headingId}>
         <CheckSquare data-icon className="size-3.5" aria-hidden="true" />
         <span className="v2-section-title !mb-0">{t("shortlist.checklist.title")}</span>
@@ -38,7 +43,7 @@ export function BuyerChecklist({
               htmlFor={inputId}
               className={cn(
                 "flex cursor-pointer items-center gap-2 rounded p-1 text-sm hover:bg-muted/50",
-                isChecked && "text-muted-foreground line-through"
+                isChecked && "text-muted-foreground line-through",
               )}
             >
               <input

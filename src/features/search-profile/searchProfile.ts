@@ -15,11 +15,7 @@ export const applicantAgeSchema = z
   .min(SEARCH_PROFILE_MIN_APPLICANT_AGE)
   .max(SEARCH_PROFILE_MAX_APPLICANT_AGE)
   .nullable();
-export const monetarySchema = z
-  .number()
-  .min(0)
-  .max(SEARCH_PROFILE_MAX_MONETARY_VALUE)
-  .nullable();
+export const monetarySchema = z.number().min(0).max(SEARCH_PROFILE_MAX_MONETARY_VALUE).nullable();
 
 const searchProfileSchema = z.object({
   version: z.literal(1).catch(1),
@@ -90,9 +86,9 @@ export function saveSearchProfileWizardDismissed(isDismissed: boolean): void {
 export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
   return Boolean(
     profile.mainFlatType.trim() &&
-      profile.commuteAnchorLabel.trim() &&
-      profile.commuteAnchorMrt?.trim() &&
-      profile.maxComfortableCommuteMinutes !== null &&
-      profile.minimumRemainingLeaseYears !== null,
+    profile.commuteAnchorLabel.trim() &&
+    profile.commuteAnchorMrt?.trim() &&
+    profile.maxComfortableCommuteMinutes !== null &&
+    profile.minimumRemainingLeaseYears !== null,
   );
 }

@@ -1,5 +1,8 @@
 import { privateJsonResponse } from "../../_lib/d1";
-import { checkShortlistWriteRateLimit, type ShortlistWriteRateLimiter } from "../../_lib/shortlist-rate-limit";
+import {
+  checkShortlistWriteRateLimit,
+  type ShortlistWriteRateLimiter,
+} from "../../_lib/shortlist-rate-limit";
 import { handleShortlistPush } from "../../_lib/shortlist";
 import { MAX_SYNC_BODY_BYTES } from "../../../shared/shortlist-limits";
 
@@ -31,7 +34,11 @@ async function readBodyWithLimit(request: Request): Promise<string | Response> {
     return privateJsonResponse({ error: "Length Required" }, { status: 411 });
   }
   const declaredLength = Number(contentLengthHeader);
-  if (!Number.isInteger(declaredLength) || declaredLength < 0 || declaredLength > MAX_SYNC_BODY_BYTES) {
+  if (
+    !Number.isInteger(declaredLength) ||
+    declaredLength < 0 ||
+    declaredLength > MAX_SYNC_BODY_BYTES
+  ) {
     return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
   }
 
@@ -48,7 +55,11 @@ async function readBodyWithLimit(request: Request): Promise<string | Response> {
       if (done) break;
       totalBytes += value.length;
       if (totalBytes > MAX_SYNC_BODY_BYTES) {
-        try { await reader.cancel(); } catch { /* stream already closed */ }
+        try {
+          await reader.cancel();
+        } catch {
+          /* stream already closed */
+        }
         return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
       }
       chunks.push(value);

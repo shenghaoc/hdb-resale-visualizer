@@ -69,50 +69,56 @@ export function ComparableTransactionsList({
         >
           {transactions.slice(0, maxItems).map((tx) => {
             const adj = adjustmentMap?.get(tx.id);
-            const adjustedPrice = showAdjusted ? adj?.adjustedResalePrice ?? null : null;
+            const adjustedPrice = showAdjusted ? (adj?.adjustedResalePrice ?? null) : null;
             const hasAdjusted = adjustedPrice != null;
             const showMissingIndicator = showAdjusted && !hasAdjusted;
             return (
-            <li
-              key={tx.id}
-              className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
-            >
-              <div className="flex min-w-0 flex-col gap-0.5">
-                <div className="flex items-baseline gap-1.5">
-                  <span className={cn(
-                    "font-bold tabular-nums",
-                    (hasAdjusted || showMissingIndicator) && "text-muted-foreground text-[0.65rem]",
-                    hasAdjusted && "line-through",
-                  )}>
-                    {formatCurrency(tx.resalePrice, locale)}
+              <li
+                key={tx.id}
+                className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
+              >
+                <div className="flex min-w-0 flex-col gap-0.5">
+                  <div className="flex items-baseline gap-1.5">
+                    <span
+                      className={cn(
+                        "font-bold tabular-nums",
+                        (hasAdjusted || showMissingIndicator) &&
+                          "text-muted-foreground text-[0.65rem]",
+                        hasAdjusted && "line-through",
+                      )}
+                    >
+                      {formatCurrency(tx.resalePrice, locale)}
+                    </span>
+                    {hasAdjusted && (
+                      <span className="font-bold tabular-nums text-primary">
+                        {formatCurrency(adjustedPrice, locale)}
+                      </span>
+                    )}
+                    {showMissingIndicator && (
+                      <span className="font-normal text-[0.6rem] italic text-muted-foreground/60">
+                        {t("check.noAdjustmentData")}
+                      </span>
+                    )}
+                  </div>
+                  <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                    {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
+                    {t("unit.sqmShort")}
+                    {hasAdjusted && adj?.adjustmentLabel && (
+                      <span className="ml-1 text-primary/70">
+                        ·{" "}
+                        {adj.adjustmentLabel.type === "at_latest"
+                          ? t("check.adjustmentLabel.atLatest")
+                          : t("check.adjustmentLabel.adjustedFrom", {
+                              month: adj.adjustmentLabel.month,
+                            })}
+                      </span>
+                    )}
                   </span>
-                  {hasAdjusted && (
-                    <span className="font-bold tabular-nums text-primary">
-                      {formatCurrency(adjustedPrice, locale)}
-                    </span>
-                  )}
-                  {showMissingIndicator && (
-                    <span className="font-normal text-[0.6rem] italic text-muted-foreground/60">
-                      {t("check.noAdjustmentData")}
-                    </span>
-                  )}
                 </div>
-                <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                  {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
-                  {t("unit.sqmShort")}
-                  {hasAdjusted && adj?.adjustmentLabel && (
-                    <span className="ml-1 text-primary/70">
-                      · {adj.adjustmentLabel.type === "at_latest"
-                        ? t("check.adjustmentLabel.atLatest")
-                        : t("check.adjustmentLabel.adjustedFrom", { month: adj.adjustmentLabel.month })}
-                    </span>
-                  )}
-                </span>
-              </div>
-              <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
-                {formatMonth(tx.month, locale)}
-              </Badge>
-            </li>
+                <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
+                  {formatMonth(tx.month, locale)}
+                </Badge>
+              </li>
             );
           })}
         </ul>

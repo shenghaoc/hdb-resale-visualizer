@@ -26,15 +26,18 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const run = useCallback((action: () => Promise<void>, notFoundKey: string) => {
-    setError(null);
-    setBusy(true);
-    void action()
-      .catch((err: unknown) => {
-        setError(err instanceof SyncCodeNotFoundError ? t(notFoundKey) : t("sync.error.generic"));
-      })
-      .finally(() => setBusy(false));
-  }, [t]);
+  const run = useCallback(
+    (action: () => Promise<void>, notFoundKey: string) => {
+      setError(null);
+      setBusy(true);
+      void action()
+        .catch((err: unknown) => {
+          setError(err instanceof SyncCodeNotFoundError ? t(notFoundKey) : t("sync.error.generic"));
+        })
+        .finally(() => setBusy(false));
+    },
+    [t],
+  );
 
   const handleCopy = useCallback(() => {
     if (!sync.code || !navigator.clipboard) return;
@@ -131,7 +134,12 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
                 spellCheck={false}
                 className="flex-1"
               />
-              <Button type="submit" size="sm" variant="outline" disabled={busy || codeInput.trim() === ""}>
+              <Button
+                type="submit"
+                size="sm"
+                variant="outline"
+                disabled={busy || codeInput.trim() === ""}
+              >
                 {t("sync.link")}
               </Button>
             </div>

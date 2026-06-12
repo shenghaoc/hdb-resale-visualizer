@@ -9,12 +9,15 @@ export function usePriceHeatmap() {
 
   const togglePriceHeatmap = useCallback(() => setPriceHeatmapEnabled((v) => !v), []);
 
-  return useMemo(() => ({
-    priceHeatmapEnabled,
-    priceHeatmapOpacity,
-    togglePriceHeatmap,
-    setPriceHeatmapOpacity,
-    heatmapMode,
-    setHeatmapMode,
-  }), [priceHeatmapEnabled, priceHeatmapOpacity, togglePriceHeatmap, heatmapMode]);
+  return useMemo(
+    () => ({
+      priceHeatmapEnabled,
+      priceHeatmapOpacity,
+      togglePriceHeatmap,
+      setPriceHeatmapOpacity,
+      heatmapMode,
+      setHeatmapMode,
+    }),
+    [priceHeatmapEnabled, priceHeatmapOpacity, togglePriceHeatmap, heatmapMode],
+  );
 }

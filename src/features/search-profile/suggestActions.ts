@@ -1,7 +1,10 @@
 import type { FilterState, Suggestion } from "@/types/data";
 
 export function stationNameToNearMrtSearch(stationName: string): string {
-  const base = stationName.replace(/\s+mrt\s+station$/i, "").trim().toLowerCase();
+  const base = stationName
+    .replace(/\s+mrt\s+station$/i, "")
+    .trim()
+    .toLowerCase();
   return `near ${base} mrt`;
 }
 

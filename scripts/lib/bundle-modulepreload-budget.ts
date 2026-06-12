@@ -70,7 +70,10 @@ function hrefToDistPath(distDir: string, href: string): string {
   return path.join(distDir, relative);
 }
 
-export function measureModulePreloads(distDir: string, hrefs: readonly string[]): ModulePreloadEntry[] {
+export function measureModulePreloads(
+  distDir: string,
+  hrefs: readonly string[],
+): ModulePreloadEntry[] {
   return hrefs.map((href) => {
     const resolvedPath = hrefToDistPath(distDir, href);
     try {
@@ -84,9 +87,12 @@ export function measureModulePreloads(distDir: string, hrefs: readonly string[])
       };
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      throw new Error(`Failed to read or gzip modulepreload ${href} (${resolvedPath}): ${message}`, {
-        cause: err,
-      });
+      throw new Error(
+        `Failed to read or gzip modulepreload ${href} (${resolvedPath}): ${message}`,
+        {
+          cause: err,
+        },
+      );
     }
   });
 }

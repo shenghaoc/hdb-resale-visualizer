@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
-import { LEFT_PANEL_WIDTHS, DESKTOP_PANEL_LAYOUT, type LeftTab, type PanelTab } from "@/hooks/usePanelState";
+import {
+  LEFT_PANEL_WIDTHS,
+  DESKTOP_PANEL_LAYOUT,
+  type LeftTab,
+  type PanelTab,
+} from "@/hooks/usePanelState";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
@@ -79,7 +84,10 @@ export function AppPanelShell({
               <div
                 id="desktop-filters-content"
                 aria-hidden={leftTab !== "filters"}
-                className={cn("h-full overflow-y-auto p-3 pb-8", leftTab === "filters" ? "block" : "hidden")}
+                className={cn(
+                  "h-full overflow-y-auto p-3 pb-8",
+                  leftTab === "filters" ? "block" : "hidden",
+                )}
               >
                 {filterContent}
               </div>
@@ -111,7 +119,10 @@ export function AppPanelShell({
               <div
                 id="desktop-check-content"
                 aria-hidden={leftTab !== "check"}
-                className={cn("h-full overflow-y-auto p-3 pb-8", leftTab === "check" ? "block" : "hidden")}
+                className={cn(
+                  "h-full overflow-y-auto p-3 pb-8",
+                  leftTab === "check" ? "block" : "hidden",
+                )}
               >
                 {checkContent}
               </div>

@@ -37,7 +37,13 @@ const SORT_KEY_I18N: Record<SortKey, string> = {
   floorAreaSqm: "evidence.col.area",
 };
 
-const SORT_KEY_ORDER: SortKey[] = ["similarity", "month", "resalePrice", "pricePerSqm", "floorAreaSqm"];
+const SORT_KEY_ORDER: SortKey[] = [
+  "similarity",
+  "month",
+  "resalePrice",
+  "pricePerSqm",
+  "floorAreaSqm",
+];
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
@@ -90,7 +96,11 @@ export function ComparableEvidenceTable({
   );
 
   const hasAdjustedPrice = useMemo(
-    () => comparables.some((tx) => "timeAdjustedPrice" in tx && (tx as Record<string, unknown>).timeAdjustedPrice != null),
+    () =>
+      comparables.some(
+        (tx) =>
+          "timeAdjustedPrice" in tx && (tx as Record<string, unknown>).timeAdjustedPrice != null,
+      ),
     [comparables],
   );
 
@@ -125,7 +135,11 @@ export function ComparableEvidenceTable({
           </div>
         )}
         <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-          <Info data-icon className="mt-0.5 size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
+          <Info
+            data-icon
+            className="mt-0.5 size-4 shrink-0 text-muted-foreground/70"
+            aria-hidden="true"
+          />
           <span>{t("evidence.empty")}</span>
         </div>
       </section>
@@ -165,16 +179,12 @@ export function ComparableEvidenceTable({
           />
         </button>
         {explainerOpen && (
-          <div id="why-comparables-explainer" className="px-3 pb-3 text-xs leading-relaxed text-muted-foreground">
-            {widenedSearch
-              ? t("evidence.whyWidened")
-              : t("evidence.whyNormal")}
-            {comparables.length < LOW_SAMPLE_THRESHOLD && (
-              <>
-                {" "}
-                {t("evidence.whyLowSample")}
-              </>
-            )}
+          <div
+            id="why-comparables-explainer"
+            className="px-3 pb-3 text-xs leading-relaxed text-muted-foreground"
+          >
+            {widenedSearch ? t("evidence.whyWidened") : t("evidence.whyNormal")}
+            {comparables.length < LOW_SAMPLE_THRESHOLD && <> {t("evidence.whyLowSample")}</>}
             {referenceMonth && (
               <span className="mt-1 block text-[0.65rem] text-muted-foreground/70">
                 {t("evidence.referenceDate", { month: formatMonth(referenceMonth, locale) })}
@@ -265,7 +275,8 @@ export function ComparableEvidenceTable({
                 <TableCell className="text-xs">{tx.flatType}</TableCell>
                 <TableCell className="text-xs">{tx.storeyRange}</TableCell>
                 <TableCell className="text-xs tabular-nums">
-                  {Math.round(tx.floorAreaSqm)}{t("unit.sqmShort")}
+                  {Math.round(tx.floorAreaSqm)}
+                  {t("unit.sqmShort")}
                 </TableCell>
                 <TableCell className="text-xs tabular-nums">
                   {tx.leaseCommenceDate != null ? tx.leaseCommenceDate : "—"}
@@ -278,8 +289,12 @@ export function ComparableEvidenceTable({
                 </TableCell>
                 {hasAdjustedPrice && (
                   <TableCell className="text-right text-xs tabular-nums">
-                    {"timeAdjustedPrice" in tx && (tx as Record<string, unknown>).timeAdjustedPrice != null
-                      ? formatCompactCurrency((tx as Record<string, unknown>).timeAdjustedPrice as number, locale)
+                    {"timeAdjustedPrice" in tx &&
+                    (tx as Record<string, unknown>).timeAdjustedPrice != null
+                      ? formatCompactCurrency(
+                          (tx as Record<string, unknown>).timeAdjustedPrice as number,
+                          locale,
+                        )
                       : "—"}
                   </TableCell>
                 )}
@@ -299,7 +314,11 @@ export function ComparableEvidenceTable({
       <div className="flex flex-col gap-2 sm:hidden">
         {/* Mobile sort controls */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-          <ArrowUpDown data-icon className="size-3 shrink-0 text-muted-foreground" aria-hidden="true" />
+          <ArrowUpDown
+            data-icon
+            className="size-3 shrink-0 text-muted-foreground"
+            aria-hidden="true"
+          />
           {SORT_KEY_ORDER.map((key) => (
             <button
               key={key}
@@ -329,7 +348,9 @@ export function ComparableEvidenceTable({
                 {formatCompactCurrency(tx.resalePrice, locale)}
               </span>
               <span className="text-xs tabular-nums text-muted-foreground">
-                {Math.round(tx.floorAreaSqm)}{t("unit.sqmShort")} · {t("unit.sqmCurrency", { value: formatNumber(tx.pricePerSqm, 0, locale) })}
+                {Math.round(tx.floorAreaSqm)}
+                {t("unit.sqmShort")} ·{" "}
+                {t("unit.sqmCurrency", { value: formatNumber(tx.pricePerSqm, 0, locale) })}
               </span>
             </div>
             <div className="mt-1 truncate text-xs text-muted-foreground">
@@ -337,7 +358,8 @@ export function ComparableEvidenceTable({
             </div>
             <div className="mt-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
               {tx.flatType} · {tx.storeyRange}
-              {tx.leaseCommenceDate != null && ` · ${t("evidence.leasePrefix")}${tx.leaseCommenceDate}`}
+              {tx.leaseCommenceDate != null &&
+                ` · ${t("evidence.leasePrefix")}${tx.leaseCommenceDate}`}
             </div>
             <div className="mt-1 flex items-center justify-between gap-2">
               <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
@@ -413,14 +435,9 @@ function SimilarityBar({ similarity }: { similarity: number }) {
   return (
     <div className="flex items-center gap-1.5">
       <div className="h-1 w-12 rounded-full bg-muted/40">
-        <div
-          className="h-full rounded-full bg-primary"
-          style={{ width: `${pct}%` }}
-        />
+        <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
       </div>
-      <span className="text-[0.6rem] font-mono tabular-nums text-muted-foreground">
-        {pct}%
-      </span>
+      <span className="text-[0.6rem] font-mono tabular-nums text-muted-foreground">{pct}%</span>
     </div>
   );
 }

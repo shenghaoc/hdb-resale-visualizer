@@ -66,7 +66,7 @@ export function maxAffordablePrice(profile: {
   const income = profile.monthlyIncome ?? 0;
   const tenureYears = computeLoanTenureYears(profile.age);
 
-  const maxLoan = (income > 0 && tenureYears > 0) ? maxLoanFor(income, tenureYears * 12) : 0;
+  const maxLoan = income > 0 && tenureYears > 0 ? maxLoanFor(income, tenureYears * 12) : 0;
 
   if (maxLoan <= 0) {
     // No loan eligibility: Max price is limited to CPF balance (assuming no cash data).
@@ -222,11 +222,7 @@ export function isBlockAgeEligible(block: BlockSummary, age: number): boolean {
  * block as "over").
  */
 export function isAffordabilityProfileComplete(profile: AffordabilityProfile): boolean {
-  return (
-    profile.monthlyIncome !== null &&
-    profile.cpfOABalance !== null &&
-    profile.age !== null
-  );
+  return profile.monthlyIncome !== null && profile.cpfOABalance !== null && profile.age !== null;
 }
 
 /**

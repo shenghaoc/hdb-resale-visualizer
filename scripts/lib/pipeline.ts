@@ -210,7 +210,9 @@ function quantile(values: number[], percentile: number) {
 
 function getModeYear(values: number[]) {
   if (values.length === 0) {
-    throw new Error("getModeYear called with empty array — no transactions to derive lease year from");
+    throw new Error(
+      "getModeYear called with empty array — no transactions to derive lease year from",
+    );
   }
 
   const counts = new Map<number, number>();
@@ -296,7 +298,8 @@ function findNearestSchools(
   const nearest: NearestSchool[] = [];
 
   for (const school of schools) {
-    const thresholdDist = nearest.length === limit ? nearest[nearest.length - 1].distanceMeters : Infinity;
+    const thresholdDist =
+      nearest.length === limit ? nearest[nearest.length - 1].distanceMeters : Infinity;
     const threshold = thresholdDist === Infinity ? Infinity : (thresholdDist + 1) / 110_000;
 
     if (
@@ -314,7 +317,7 @@ function findNearestSchools(
       nearest.push({
         name: school.name,
         distanceMeters,
-        coordinates: { lat: school.lat, lng: school.lng }
+        coordinates: { lat: school.lat, lng: school.lng },
       });
       nearest.sort((left, right) => {
         if (left.distanceMeters !== right.distanceMeters) {
@@ -426,8 +429,9 @@ export function pickNearestStations(
   }
 
   return [...closestExitByStation.entries()]
-    .sort(([nameL, left], [nameR, right]) =>
-      left.distance - right.distance || nameL.localeCompare(nameR),
+    .sort(
+      ([nameL, left], [nameR, right]) =>
+        left.distance - right.distance || nameL.localeCompare(nameR),
     )
     .slice(0, limit)
     .map(([stationName, info]) => ({
@@ -644,8 +648,12 @@ export function buildArtifacts({
     let maxFloorArea = -Infinity;
     for (const transaction of sortedTransactions) {
       const area = transaction.floorAreaSqm;
-      if (area < minFloorArea) { minFloorArea = area; }
-      if (area > maxFloorArea) { maxFloorArea = area; }
+      if (area < minFloorArea) {
+        minFloorArea = area;
+      }
+      if (area > maxFloorArea) {
+        maxFloorArea = area;
+      }
     }
 
     const leaseYears = sortedTransactions.map((transaction) => transaction.leaseCommenceDate);
@@ -679,7 +687,10 @@ export function buildArtifacts({
       ft.ppsmValues.push(transaction.pricePerSqm);
       transactionsByFlatType.set(transaction.flatType, ft);
     }
-    for (const [flatType, { prices: ftPrices, ppsmValues: ftPpsm }] of transactionsByFlatType.entries()) {
+    for (const [
+      flatType,
+      { prices: ftPrices, ppsmValues: ftPpsm },
+    ] of transactionsByFlatType.entries()) {
       const key = canonicalFlatType(flatType);
       medianPriceByFlatType[key] = Math.round(median(ftPrices));
       medianPricePerSqmByFlatType[key] = Number(median(ftPpsm).toFixed(2));
@@ -703,7 +714,9 @@ export function buildArtifacts({
         sortedTransactions[0].month,
       ],
       flatTypes: [...new Set(sortedTransactions.map((transaction) => transaction.flatType))].sort(),
-      flatModels: [...new Set(sortedTransactions.map((transaction) => transaction.flatModel))].sort(),
+      flatModels: [
+        ...new Set(sortedTransactions.map((transaction) => transaction.flatModel)),
+      ].sort(),
       medianPriceByFlatType,
       medianPricePerSqmByFlatType,
       nearestMrt,
@@ -728,7 +741,9 @@ export function buildArtifacts({
       .sort(([left], [right]) => left.localeCompare(right))
       .map(([month, monthTransactions]) => ({
         month,
-        medianPrice: Math.round(median(monthTransactions.map((transaction) => transaction.resalePrice))),
+        medianPrice: Math.round(
+          median(monthTransactions.map((transaction) => transaction.resalePrice)),
+        ),
         transactionCount: monthTransactions.length,
         medianPricePerSqm: Number(
           median(monthTransactions.map((transaction) => transaction.pricePerSqm)).toFixed(2),
@@ -772,7 +787,9 @@ export function buildArtifacts({
         town,
         flatType,
         month,
-        medianPrice: Math.round(median(groupTransactions.map((transaction) => transaction.resalePrice))),
+        medianPrice: Math.round(
+          median(groupTransactions.map((transaction) => transaction.resalePrice)),
+        ),
         medianPricePerSqm: Number(
           median(groupTransactions.map((transaction) => transaction.pricePerSqm)).toFixed(2),
         ),
@@ -832,7 +849,8 @@ export function buildArtifacts({
       }
 
       const cohortTransactions = sortedTransactions.filter(
-        (transaction) => transaction.town === cohort.town && transaction.flatType === cohort.flatType,
+        (transaction) =>
+          transaction.town === cohort.town && transaction.flatType === cohort.flatType,
       );
       const summaryWindow = cohortTransactions.filter(
         (transaction) => transaction.month >= recentThreshold,
@@ -848,16 +866,14 @@ export function buildArtifacts({
         medianPrice: median(sourceWindow.map((transaction) => transaction.resalePrice)),
         medianPricePerSqm: median(sourceWindow.map((transaction) => transaction.pricePerSqm)),
         leaseYear: resolveLeaseCommenceYear(
-          cohortTransactions.map((transaction) => transaction.leaseCommenceDate)
+          cohortTransactions.map((transaction) => transaction.leaseCommenceDate),
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
         monthsSinceLatestTransaction: Math.max(
           0,
-          Temporal.PlainYearMonth.from(cohort.month).until(
-            maxMonthYM,
-            { largestUnit: "months" },
-          ).months,
+          Temporal.PlainYearMonth.from(cohort.month).until(maxMonthYM, { largestUnit: "months" })
+            .months,
         ),
       });
     }
@@ -921,14 +937,19 @@ export function buildArtifacts({
 
       const percentileRanks = {
         pricePercentile: calculatePercentileSorted(metric.medianPrice, metrics.prices),
-        pricePerSqmPercentile: calculatePercentileSorted(metric.medianPricePerSqm, metrics.pricesPerSqm),
-        leasePercentile: calculatePercentileSorted(metric.leaseYear, metrics.leases),
-        mrtDistancePercentile: 100 - calculatePercentileSorted(metric.mrtDistanceMeters, metrics.mrtDistances),
-        transactionCountPercentile: calculatePercentileSorted(metric.transactionCount, metrics.transactionCounts),
-        recencyPercentile: 100 - calculatePercentileSorted(
-          metric.monthsSinceLatestTransaction,
-          metrics.recencies,
+        pricePerSqmPercentile: calculatePercentileSorted(
+          metric.medianPricePerSqm,
+          metrics.pricesPerSqm,
         ),
+        leasePercentile: calculatePercentileSorted(metric.leaseYear, metrics.leases),
+        mrtDistancePercentile:
+          100 - calculatePercentileSorted(metric.mrtDistanceMeters, metrics.mrtDistances),
+        transactionCountPercentile: calculatePercentileSorted(
+          metric.transactionCount,
+          metrics.transactionCounts,
+        ),
+        recencyPercentile:
+          100 - calculatePercentileSorted(metric.monthsSinceLatestTransaction, metrics.recencies),
       };
 
       comparisons[metric.addressKey] = {

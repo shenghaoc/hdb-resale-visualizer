@@ -36,8 +36,13 @@ export const WEIGHTS_WITHOUT_LEASE = {
 } as const;
 
 export const LEASE_WEIGHT_SUM_EXCLUDING_LEASE =
-  BLOCK_WEIGHT + STREET_WEIGHT + TOWN_WEIGHT + FLAT_TYPE_WEIGHT +
-  FLOOR_AREA_WEIGHT + STOREY_WEIGHT + RECENCY_WEIGHT;
+  BLOCK_WEIGHT +
+  STREET_WEIGHT +
+  TOWN_WEIGHT +
+  FLAT_TYPE_WEIGHT +
+  FLOOR_AREA_WEIGHT +
+  STOREY_WEIGHT +
+  RECENCY_WEIGHT;
 // Should equal 0.90
 
 // ---------------------------------------------------------------------------
@@ -151,10 +156,7 @@ function clamp(value: number, min: number, max: number): number {
 
 /** Compute the age in months between two "YYYY-MM" strings.
  *  Returns a positive number if `referenceMonth` is later than `txMonth`. */
-export function monthsBetween(
-  txMonth: string,
-  referenceMonth: string,
-): number {
+export function monthsBetween(txMonth: string, referenceMonth: string): number {
   const txYear = Number(txMonth.slice(0, 4));
   const txMon = Number(txMonth.slice(5, 7));
   const refYear = Number(referenceMonth.slice(0, 4));
@@ -171,13 +173,9 @@ export function monthsBetween(
  * transaction. Resale price and price per sqm are never read — the
  * ScoringInput type enforces this at compile time.
  */
-export function scoreSimilarity(
-  candidate: CandidateListing,
-  tx: ScoringInput,
-): SimilarityResult {
+export function scoreSimilarity(candidate: CandidateListing, tx: ScoringInput): SimilarityResult {
   const candidateMidpoint = parseStoreyMidpoint(candidate.storeyRange);
-  const hasLease =
-    candidate.leaseCommenceYear != null && tx.leaseCommenceDate != null;
+  const hasLease = candidate.leaseCommenceYear != null && tx.leaseCommenceDate != null;
 
   // ---- Component scores ----
   const blockScore = tx.block === candidate.block ? 1 : 0;
@@ -197,9 +195,7 @@ export function scoreSimilarity(
 
   let leaseScore = 0;
   if (hasLease) {
-    const diff = Math.abs(
-      tx.leaseCommenceDate! - candidate.leaseCommenceYear!,
-    );
+    const diff = Math.abs(tx.leaseCommenceDate! - candidate.leaseCommenceYear!);
     leaseScore = 1 - clamp(diff / LEASE_MAX_RANGE_YEARS, 0, 1);
   }
 
@@ -297,10 +293,7 @@ function scoreAndRank(
   limit: number,
 ): ComparableTransaction[] {
   const scored = rows.map((row) => {
-    const { similarity, matchReasons } = scoreSimilarity(
-      candidate,
-      toScoringInput(row),
-    );
+    const { similarity, matchReasons } = scoreSimilarity(candidate, toScoringInput(row));
     const result: ComparableTransaction = {
       transactionId: row.id,
       month: row.month,
@@ -350,9 +343,7 @@ function computeNewestAge(
  * When no pass reaches MIN_COMPARABLES but some passes have data, the
  * narrowest pass with any data is used (even if below threshold).
  */
-export function buildComparableSet(
-  params: BuildComparableSetParams,
-): ListingComparableSet {
+export function buildComparableSet(params: BuildComparableSetParams): ListingComparableSet {
   const { candidate, sameBlockRows, sameStreetRows, sameTownRows } = params;
 
   const sameBlockCount = sameBlockRows.length;
@@ -371,7 +362,6 @@ export function buildComparableSet(
   const caveats: string[] = [];
   let widenedSearch = false;
   let comparables: ComparableTransaction[] = [];
-
 
   if (!hasBlockData && !hasStreetData && !hasTownData) {
     // No data at all
@@ -421,10 +411,7 @@ export function buildComparableSet(
     );
   }
 
-  const newestComparableAgeMonths = computeNewestAge(
-    comparables,
-    candidate.referenceMonth,
-  );
+  const newestComparableAgeMonths = computeNewestAge(comparables, candidate.referenceMonth);
 
   return {
     comparables,

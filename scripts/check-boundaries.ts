@@ -55,7 +55,10 @@ function resolveSourceFile(fromFile: string, specifier: string): string | null {
     ...INDEX_FILENAMES.map((fileName) => path.join(basePath, fileName)),
   ];
 
-  return candidates.find((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile()) ?? null;
+  return (
+    candidates.find((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile()) ??
+    null
+  );
 }
 
 function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
@@ -124,12 +127,7 @@ function visitSourceFile(file: string): void {
   }
 
   const sourceText = fs.readFileSync(normalizedFile, "utf8");
-  const sourceFile = ts.createSourceFile(
-    normalizedFile,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true,
-  );
+  const sourceFile = ts.createSourceFile(normalizedFile, sourceText, ts.ScriptTarget.Latest, true);
 
   for (const specifier of getModuleSpecifiers(sourceFile)) {
     const forbiddenAlias = FORBIDDEN_RUNTIME_ALIASES.find((alias) => specifier.startsWith(alias));

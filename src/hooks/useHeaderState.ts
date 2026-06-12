@@ -25,12 +25,15 @@ export function useHeaderState() {
     safeStorage.setItem(HEADER_DISMISSED_STORAGE_KEY, isHeaderVisible ? "0" : "1");
   }, [hasLoadedPreference, isHeaderVisible]);
 
-  return useMemo(() => ({
-    isHeaderVisible,
-    setIsHeaderVisible,
-    hasInteractedWithMap,
-    setHasInteractedWithMap,
-    isMobileHeaderOpen,
-    setIsMobileHeaderOpen,
-  }), [isHeaderVisible, hasInteractedWithMap, isMobileHeaderOpen]);
+  return useMemo(
+    () => ({
+      isHeaderVisible,
+      setIsHeaderVisible,
+      hasInteractedWithMap,
+      setHasInteractedWithMap,
+      isMobileHeaderOpen,
+      setIsMobileHeaderOpen,
+    }),
+    [isHeaderVisible, hasInteractedWithMap, isMobileHeaderOpen],
+  );
 }

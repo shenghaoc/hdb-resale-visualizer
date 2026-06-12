@@ -2,13 +2,13 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 
 /**
  * Bug Condition Exploration Test for Header Blocks Map Controls
- * 
+ *
  * **Validates: Requirements 1.1, 1.2, 1.3, 2.1, 2.2, 2.3**
- * 
+ *
  * This test MUST FAIL on unfixed code - failure confirms the bug exists.
  * The test encodes the expected behavior: map controls should remain interactive
  * when the GlobalHeader is visible and positioned over them.
- * 
+ *
  * When this test passes after the fix, it confirms the bug is resolved.
  */
 
@@ -22,7 +22,7 @@ async function waitForMapLoad(page: Page) {
 async function ensureHeaderVisible(page: Page) {
   const header = page.getByTestId("global-header");
   await expect(header).toBeVisible();
-  
+
   // If header was dismissed, show it again
   const showHeaderButton = page.getByRole("button", { name: /show header/i });
   if (await showHeaderButton.isVisible()) {
@@ -35,26 +35,23 @@ async function getMapControlsInfo(page: Page) {
   // Get map controls container
   const controlsContainer = page.locator(".maplibregl-ctrl-top-right");
   await expect(controlsContainer).toBeVisible();
-  
+
   // Get individual control buttons
   const zoomInButton = controlsContainer.getByRole("button", { name: "Zoom in" });
   const zoomOutButton = controlsContainer.getByRole("button", { name: "Zoom out" });
   const compassButton = controlsContainer.locator(".maplibregl-ctrl-compass");
   const geolocateButton = controlsContainer.locator(".maplibregl-ctrl-geolocate");
-  
+
   return {
     container: controlsContainer,
     zoomIn: zoomInButton,
     zoomOut: zoomOutButton,
     compass: compassButton,
-    geolocate: geolocateButton
+    geolocate: geolocateButton,
   };
 }
 
-async function expectControlReceivesPointer(
-  control: Locator,
-  label: string,
-) {
+async function expectControlReceivesPointer(control: Locator, label: string) {
   await expect(control).toBeVisible();
 
   const hitInfo = await control.evaluate((element) => {
@@ -83,37 +80,39 @@ async function expectControlReceivesPointer(
 async function checkControlsOverlapWithHeader(page: Page) {
   const header = page.getByTestId("global-header");
   const controlsContainer = page.locator(".maplibregl-ctrl-top-right");
-  
+
   const headerBox = await header.boundingBox();
   const controlsBox = await controlsContainer.boundingBox();
-  
+
   if (!headerBox || !controlsBox) {
     throw new Error("Could not get bounding boxes for header or controls");
   }
-  
+
   // Check if header overlaps with controls (2D axis-aligned bounding box)
   const overlaps =
     headerBox.x + headerBox.width > controlsBox.x &&
     headerBox.x < controlsBox.x + controlsBox.width &&
     headerBox.y < controlsBox.y + controlsBox.height &&
     headerBox.y + headerBox.height > controlsBox.y;
-  
+
   return {
     overlaps,
     headerBox,
-    controlsBox
+    controlsBox,
   };
 }
 
 test.describe("Bug Condition: Map Controls Blocked by Header", () => {
-  test("Desktop - Map controls should receive pointer events when header is visible", async ({ page }) => {
+  test("Desktop - Map controls should receive pointer events when header is visible", async ({
+    page,
+  }) => {
     // Set desktop viewport
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
-    
+
     await waitForMapLoad(page);
     await ensureHeaderVisible(page);
-    
+
     const controls = await getMapControlsInfo(page);
     // Overlap is informational only — the fixed layout may separate header and controls.
     await checkControlsOverlapWithHeader(page);
@@ -129,17 +128,19 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
 
     await expectControlReceivesPointer(controls.geolocate, "Desktop geolocate");
   });
-  
-  test("Mobile - Map controls should receive pointer events without a header overlay", async ({ page }) => {
+
+  test("Mobile - Map controls should receive pointer events without a header overlay", async ({
+    page,
+  }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
-    
+
     await waitForMapLoad(page);
     await expect(page.getByTestId("global-header")).toBeVisible();
-    
+
     const controls = await getMapControlsInfo(page);
-    
+
     await expectControlReceivesPointer(controls.zoomIn, "Mobile zoom in");
     await controls.zoomIn.click({ force: false });
 
@@ -151,14 +152,16 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
 
     await expectControlReceivesPointer(controls.geolocate, "Mobile geolocate");
   });
-  
-  test("Header & tab bar controls should remain functional (preservation check)", async ({ page }) => {
+
+  test("Header & tab bar controls should remain functional (preservation check)", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
-    
+
     await waitForMapLoad(page);
     await ensureHeaderVisible(page);
-    
+
     const header = page.getByTestId("global-header");
     const tabBar = page.getByTestId("desktop-tab-bar");
     await expect(tabBar).toBeVisible();
@@ -174,24 +177,24 @@ test.describe("Bug Condition: Map Controls Blocked by Header", () => {
       .getByRole("combobox", { name: /language/i });
     await expect(languageSelect).toBeVisible();
     await languageSelect.click();
-    
+
     // Should show language options
     await expect(page.getByRole("option")).toHaveCount(2);
-    
+
     // Close the select
     await page.keyboard.press("Escape");
-    
+
     // Dismiss button remains in the header.
     const dismissButton = header.getByRole("button", { name: /dismiss header/i });
     await expect(dismissButton).toBeVisible();
     await dismissButton.click();
-    
+
     // Header should be hidden
     await expect(header).not.toBeVisible();
 
     // Language selector remains available on the map.
     await expect(languageSelect).toBeVisible();
-    
+
     // Show header button should appear
     await expect(page.getByRole("button", { name: /show header/i })).toBeVisible();
   });

@@ -49,7 +49,11 @@ const RANK_ORDER: Record<MatchRank, number> = {
 };
 
 export function normalizeSuggestQuery(value: string): string {
-  let resolved = value.toLowerCase().replace(RE_NON_ALPHANUMERIC, " ").replace(RE_WHITESPACE, " ").trim();
+  let resolved = value
+    .toLowerCase()
+    .replace(RE_NON_ALPHANUMERIC, " ")
+    .replace(RE_WHITESPACE, " ")
+    .trim();
   for (const [aliasRegex, canonical] of SEARCH_ALIAS_REPLACEMENTS) {
     resolved = resolved.replace(aliasRegex, canonical);
   }
@@ -220,9 +224,7 @@ function buildMrtSuggestions(stationNames: string[], normalizedQuery: string): S
 
 async function queryDistinctTowns(db: SuggestDb, prefixPattern: string, containsPattern: string) {
   const prefix = await db
-    .prepare(
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20",
-    )
+    .prepare("SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20")
     .bind(prefixPattern)
     .all();
   const prefixRows = (prefix.results ?? []) as { town: string }[];
@@ -296,10 +298,16 @@ async function queryPostalCodes(db: SuggestDb, prefixPattern: string) {
 }
 
 function escapeLikePattern(value: string): string {
-  return value.replace(/\\/g, () => "\\\\").replace(/%/g, "\\%").replace(/_/g, "\\_");
+  return value
+    .replace(/\\/g, () => "\\\\")
+    .replace(/%/g, "\\%")
+    .replace(/_/g, "\\_");
 }
 
-function buildLikePatterns(normalizedQuery: string): { prefixPattern: string; containsPattern: string } {
+function buildLikePatterns(normalizedQuery: string): {
+  prefixPattern: string;
+  containsPattern: string;
+} {
   const escaped = escapeLikePattern(normalizedQuery);
   return {
     prefixPattern: `${escaped}%`,
@@ -323,7 +331,10 @@ async function loadStationNames(db: SuggestDb): Promise<string[]> {
   }
   cachedStationNamesPromise = (async () => {
     try {
-      const result = await db.prepare("SELECT json FROM mrt_geojson WHERE kind = ?").bind("stations").all();
+      const result = await db
+        .prepare("SELECT json FROM mrt_geojson WHERE kind = ?")
+        .bind("stations")
+        .all();
       const row = (result.results ?? [])[0] as { json?: string } | undefined;
       if (!row?.json) {
         return [];
@@ -357,9 +368,15 @@ export async function buildSuggestions(
   const [townRows, streetRows, blockRows, postalRows, mrtNames] = await Promise.all([
     isNumeric ? Promise.resolve([]) : queryDistinctTowns(db, prefixPattern, containsPattern),
     isNumeric ? Promise.resolve([]) : queryDistinctStreets(db, prefixPattern, containsPattern),
-    (isNumeric && normalizedQuery.length >= 5) ? Promise.resolve([]) : queryBlocks(db, prefixPattern, containsPattern),
+    isNumeric && normalizedQuery.length >= 5
+      ? Promise.resolve([])
+      : queryBlocks(db, prefixPattern, containsPattern),
     isNumeric ? queryPostalCodes(db, prefixPattern) : Promise.resolve([]),
-    isNumeric ? Promise.resolve([]) : (stationNames ? Promise.resolve(stationNames) : loadStationNames(db)),
+    isNumeric
+      ? Promise.resolve([])
+      : stationNames
+        ? Promise.resolve(stationNames)
+        : loadStationNames(db),
   ]);
 
   const grouped: Suggestion[] = [

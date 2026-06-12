@@ -53,9 +53,7 @@ test.describe("Global header location search", () => {
     await expect(page).not.toHaveURL(/search=/);
   });
 
-  test("desktop: typeahead keyboard navigation selects highlighted town", async ({
-    page,
-  }) => {
+  test("desktop: typeahead keyboard navigation selects highlighted town", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);

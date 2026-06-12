@@ -50,18 +50,15 @@ export function useIMEComposition(callback: (value: string) => void) {
     [],
   );
 
-  const onChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value = e.currentTarget.value;
-      if (composingRef.current) {
-        setLocalValue(value);
-      } else {
-        setLocalValue(null);
-        callbackRef.current(value);
-      }
-    },
-    [],
-  );
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.currentTarget.value;
+    if (composingRef.current) {
+      setLocalValue(value);
+    } else {
+      setLocalValue(null);
+      callbackRef.current(value);
+    }
+  }, []);
 
   return { onCompositionStart, onCompositionEnd, onChange, localValue };
 }

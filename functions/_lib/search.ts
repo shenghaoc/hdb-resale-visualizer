@@ -91,7 +91,11 @@ export function parseSearchRequest(url: URL): ParsedSearchRequest {
     endMonth,
   };
 
-  if (request.budgetMin !== null && request.budgetMax !== null && request.budgetMin > request.budgetMax) {
+  if (
+    request.budgetMin !== null &&
+    request.budgetMax !== null &&
+    request.budgetMin > request.budgetMax
+  ) {
     [request.budgetMin, request.budgetMax] = [request.budgetMax, request.budgetMin];
   }
   if (request.areaMin !== null && request.areaMax !== null && request.areaMin > request.areaMax) {
@@ -118,7 +122,8 @@ export function validateSearchRequest(request: SearchRequest): string | null {
   ) {
     return "invalid remainingLeaseMin";
   }
-  if (request.startMonth && !YEAR_MONTH_PATTERN.test(request.startMonth)) return "invalid startMonth";
+  if (request.startMonth && !YEAR_MONTH_PATTERN.test(request.startMonth))
+    return "invalid startMonth";
   if (request.endMonth && !YEAR_MONTH_PATTERN.test(request.endMonth)) return "invalid endMonth";
   return null;
 }
@@ -164,7 +169,9 @@ export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
   }
 
   if (request.flatModel) {
-    where.push("EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ? COLLATE NOCASE)");
+    where.push(
+      "EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ? COLLATE NOCASE)",
+    );
     bindings.push(request.flatModel);
   }
   if (request.areaMin !== null) {

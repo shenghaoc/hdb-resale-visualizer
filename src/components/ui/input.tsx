@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from '@/shared/lib/utils'
+import { cn } from "@/shared/lib/utils";
 
 function Input({ className, type, ref, ...props }: React.ComponentProps<"input">) {
   return (
@@ -17,4 +17,4 @@ function Input({ className, type, ref, ...props }: React.ComponentProps<"input">
   );
 }
 
-export { Input }
+export { Input };

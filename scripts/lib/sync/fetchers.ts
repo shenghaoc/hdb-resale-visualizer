@@ -1,9 +1,5 @@
 import Papa from "papaparse";
-import {
-  classifyUpstreamService,
-  sleep,
-  waitForUpstreamSlot,
-} from "./rate-limits";
+import { classifyUpstreamService, sleep, waitForUpstreamSlot } from "./rate-limits";
 
 function getHeaders(): Record<string, string> {
   const apiKey = process.env.DATA_GOV_API_KEY;
@@ -49,7 +45,12 @@ export async function fetchWithRetry(
     if (!shouldRetryStatus(response.status)) {
       // Try to read D1 error body for diagnostics before throwing.
       let detail = "";
-      try { const b = await response.json() as Record<string, unknown>; detail = ": " + JSON.stringify(b); } catch { /* ignore */ }
+      try {
+        const b = (await response.json()) as Record<string, unknown>;
+        detail = ": " + JSON.stringify(b);
+      } catch {
+        /* ignore */
+      }
       throw new Error(`Request failed for ${url}: ${response.status}${detail}`);
     }
 
@@ -74,7 +75,9 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> 
   const ct = response.headers.get("content-type") ?? "";
   if (!ct.includes("application/json") && !ct.includes("text/plain")) {
     const preview = await response.text().catch(() => "");
-    throw new Error(`Expected JSON from ${url} but got ${ct}${preview ? ` — ${preview.slice(0, 200)}` : ""}`);
+    throw new Error(
+      `Expected JSON from ${url} but got ${ct}${preview ? ` — ${preview.slice(0, 200)}` : ""}`,
+    );
   }
   return (await response.json()) as T;
 }
@@ -91,7 +94,9 @@ async function getDatasetDownloadUrl(datasetId: string) {
     // initiation.  Log non-404 errors so we can distinguish "expected skip"
     // from genuine upstream failures.
     if (err instanceof Error && !err.message.includes("404")) {
-      console.warn(`initiate-download for ${datasetId} failed (attempting poll-download): ${err.message}`);
+      console.warn(
+        `initiate-download for ${datasetId} failed (attempting poll-download): ${err.message}`,
+      );
     }
   }
   for (let attempt = 0; attempt < 8; attempt += 1) {
@@ -109,7 +114,8 @@ export async function fetchCsvRows(datasetId: string) {
   const response = await fetchWithRetry(downloadUrl);
   const csv = await response.text();
   const parsed = Papa.parse<Record<string, string>>(csv, { header: true, skipEmptyLines: true });
-  if (parsed.errors.length > 0) throw new Error(`CSV parse error for ${datasetId}: ${parsed.errors[0]?.message ?? "unknown"}`);
+  if (parsed.errors.length > 0)
+    throw new Error(`CSV parse error for ${datasetId}: ${parsed.errors[0]?.message ?? "unknown"}`);
   return parsed.data;
 }
 

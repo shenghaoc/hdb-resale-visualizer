@@ -36,8 +36,8 @@ const MATCH_WEIGHT = 0.15;
 const SAMPLE_SATURATION = 12;
 const RECENCY_DECAY_MONTHS = 24;
 
-const HIGH_THRESHOLD = 0.70;
-const MEDIUM_THRESHOLD = 0.40;
+const HIGH_THRESHOLD = 0.7;
+const MEDIUM_THRESHOLD = 0.4;
 
 const OVERRIDE_MIN_COUNT = 3;
 const OVERRIDE_MAX_AGE_MONTHS = 18;
@@ -66,9 +66,7 @@ export function computeScopeSignal(
 ): number {
   const denom = Math.max(totalCount, 1);
   return (
-    (sameBlockCount / denom) * 0.5 +
-    (sameStreetCount / denom) * 0.3 +
-    (sameTownCount / denom) * 0.2
+    (sameBlockCount / denom) * 0.5 + (sameStreetCount / denom) * 0.3 + (sameTownCount / denom) * 0.2
   );
 }
 
@@ -97,10 +95,7 @@ function scoreToTier(score: number): ConfidenceLevel {
   return "low";
 }
 
-function applyOverrides(
-  tier: ConfidenceLevel,
-  input: ConfidenceInput,
-): ConfidenceLevel {
+function applyOverrides(tier: ConfidenceLevel, input: ConfidenceInput): ConfidenceLevel {
   const tierRank: Record<ConfidenceLevel, number> = { low: 0, medium: 1, high: 2 };
 
   let cap: ConfidenceLevel = "high";
@@ -123,10 +118,7 @@ function applyOverrides(
   return tierRank[tier] <= tierRank[cap] ? tier : cap;
 }
 
-function buildSummary(
-  level: ConfidenceLevel,
-  input: ConfidenceInput,
-): string {
+function buildSummary(level: ConfidenceLevel, input: ConfidenceInput): string {
   const label = level.charAt(0).toUpperCase() + level.slice(1);
 
   if (input.comparableCount === 0) {

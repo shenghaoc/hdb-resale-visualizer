@@ -74,7 +74,9 @@ test.describe("Search Profile Wizard", () => {
     await expect(title).not.toBeVisible();
 
     // Verify local storage was populated correctly
-    const profileJson = await page.evaluate(() => localStorage.getItem("hdb_resale_search_profile_v1"));
+    const profileJson = await page.evaluate(() =>
+      localStorage.getItem("hdb_resale_search_profile_v1"),
+    );
     expect(profileJson).not.toBeNull();
     const profile = JSON.parse(profileJson!);
     expect(profile.mainFlatType).toBe("4 ROOM");
@@ -88,7 +90,9 @@ test.describe("Search Profile Wizard", () => {
     expect(profile.cpfOABalance).toBe(120000);
     expect(profile.monthlyIncome).toBe(9500);
 
-    const dismissed = await page.evaluate(() => localStorage.getItem("hdb_resale_search_profile_wizard_dismissed_v1"));
+    const dismissed = await page.evaluate(() =>
+      localStorage.getItem("hdb_resale_search_profile_wizard_dismissed_v1"),
+    );
     expect(dismissed).toBe("1");
   });
 });

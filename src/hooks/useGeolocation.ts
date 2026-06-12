@@ -60,13 +60,16 @@ export function useGeolocation({ t }: { t: Translator }) {
     [t],
   );
 
-  return useMemo(() => ({
-    userLocation,
-    setUserLocation,
-    isLocating,
-    geolocationError,
-    clearError,
-    cancelPendingRequest,
-    locate,
-  }), [userLocation, isLocating, geolocationError, clearError, cancelPendingRequest, locate]);
+  return useMemo(
+    () => ({
+      userLocation,
+      setUserLocation,
+      isLocating,
+      geolocationError,
+      clearError,
+      cancelPendingRequest,
+      locate,
+    }),
+    [userLocation, isLocating, geolocationError, clearError, cancelPendingRequest, locate],
+  );
 }

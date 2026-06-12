@@ -31,7 +31,9 @@ async function runMobileListingCheckFlow(page: Page) {
   await expect(page.getByTestId("map-view")).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("mobile-tab-bar")).toBeVisible();
 
-  await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+  await mobileTabBar(page)
+    .getByRole("button", { name: /results/i })
+    .click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
   const firstResult = firstResultCard(page);
@@ -134,7 +136,10 @@ async function runShortlistMobileComparisonFlow(page: Page) {
 
   // Shortlist items should be visible (street names from fixture data)
   await expect(
-    page.getByTestId("shortlist-drawer").getByText(/BEDOK STH AVE 2/i).first(),
+    page
+      .getByTestId("shortlist-drawer")
+      .getByText(/BEDOK STH AVE 2/i)
+      .first(),
   ).toBeVisible({ timeout: 10_000 });
 
   const viewToggle = page.getByTestId("shortlist-view-toggle");
@@ -148,7 +153,6 @@ async function runShortlistMobileComparisonFlow(page: Page) {
   await expect(comparisonTable.getByTestId("shortlist-comparison-card")).toHaveCount(2);
 }
 
-
 test.describe("Mobile Regression: Recent Features", () => {
   test.use({ viewport: MOBILE_VIEWPORT });
 
@@ -156,13 +160,17 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.goto("/");
 
     // Open filters, set town filter explicitly (required for view toggle)
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /filters/i })
+      .click();
     const townSelect = page.getByTestId("filters-panel").getByRole("combobox", { name: /town/i });
     await townSelect.click();
     await page.getByRole("option", { name: "BEDOK" }).click();
 
     // Switch to results
-    await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /results/i })
+      .click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
 
     // Results view toolbar should be visible
@@ -182,12 +190,16 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.goto("/");
 
     // Set town filter and open results
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /filters/i })
+      .click();
     const townSelect = page.getByTestId("filters-panel").getByRole("combobox", { name: /town/i });
     await townSelect.click();
     await page.getByRole("option", { name: "BEDOK" }).click();
 
-    await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /results/i })
+      .click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
 
     // Select a block
@@ -218,14 +230,18 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.goto("/");
 
     // Open filters, set town and budget (fixture blocks are ~$1.2M)
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /filters/i })
+      .click();
     const townSelect = page.getByTestId("filters-panel").getByRole("combobox", { name: /town/i });
     await townSelect.click();
     await page.getByRole("option", { name: "BEDOK" }).click();
     await page.locator("#budget-max").fill("1300000");
 
     // Switch to results
-    await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /results/i })
+      .click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
 
     // Result cards should render the budget-match badge with budget set
@@ -238,13 +254,17 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.goto("/");
 
     // Set town filter explicitly (required for town profile)
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /filters/i })
+      .click();
     const townSelect = page.getByTestId("filters-panel").getByRole("combobox", { name: /town/i });
     await townSelect.click();
     await page.getByRole("option", { name: "BEDOK" }).click();
 
     // Switch to results — town profile view toggle should appear
-    await mobileTabBar(page).getByRole("button", { name: /results/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /results/i })
+      .click();
     await expect(page.getByTestId("results-pane")).toBeVisible();
 
     // Switch to town view
@@ -258,7 +278,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("buyer checklist accessible from mobile saved tab", async ({ page }) => {
-
     // Pre-seed a shortlist item
     const shortlistData = [
       {
@@ -342,7 +361,6 @@ test.describe("Mobile Regression: Recent Features", () => {
   });
 
   test("mobile tab bar shows shortlist count badge", async ({ page }) => {
-
     const shortlistData = [
       {
         addressKey: "ang-mo-kio-104a-ang-mo-kio-st-11",
@@ -398,7 +416,9 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.goto("/");
 
     // Open filters
-    await mobileTabBar(page).getByRole("button", { name: /filters/i }).click();
+    await mobileTabBar(page)
+      .getByRole("button", { name: /filters/i })
+      .click();
     await expect(page.getByTestId("filters-panel")).toBeVisible();
 
     // Budget inputs should be accessible
@@ -416,7 +436,9 @@ test.describe("Mobile Regression: Recent Features", () => {
     await expect(budgetMax).toHaveValue("600000");
   });
 
-  test("mobile listing check works without opening map and is editable in shortlist", async ({ page }) => {
+  test("mobile listing check works without opening map and is editable in shortlist", async ({
+    page,
+  }) => {
     await runMobileListingCheckFlow(page);
   });
 });

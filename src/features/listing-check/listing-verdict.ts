@@ -5,7 +5,10 @@ import {
   type AskingPriceAssessment,
   type ComparableQuery,
 } from "@/entities/transaction/transaction-analysis";
-import { computeConfidence, type ConfidenceResult } from "@/entities/transaction/listing-confidence";
+import {
+  computeConfidence,
+  type ConfidenceResult,
+} from "@/entities/transaction/listing-confidence";
 import { generateCaveats, type Caveat } from "@/entities/transaction/listing-caveats";
 
 export type { AskingPriceAssessment, ConfidenceResult, Caveat };
@@ -33,9 +36,7 @@ export type ListingCheckParams = {
  * All computation is deterministic and client-side only. No AI, no
  * predictions, no external API calls.
  */
-export function performListingCheck(
-  params: ListingCheckParams,
-): ListingCheckResult | null {
+export function performListingCheck(params: ListingCheckParams): ListingCheckResult | null {
   const {
     askingPrice,
     floorAreaSqm,

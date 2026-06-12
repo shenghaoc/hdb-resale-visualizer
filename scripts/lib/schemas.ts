@@ -141,4 +141,3 @@ export const transactionRowSchema = z.object({
 });
 
 export type TransactionRow = z.infer<typeof transactionRowSchema>;
-

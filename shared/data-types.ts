@@ -149,13 +149,7 @@ export type ShortlistItem = {
   valuationReceived?: number;
   estimatedCov?: number;
   viewingDate?: string;
-  decisionStatus?:
-    | "considering"
-    | "viewing booked"
-    | "offered"
-    | "rejected"
-    | "kiv"
-    | "dropped";
+  decisionStatus?: "considering" | "viewing booked" | "offered" | "rejected" | "kiv" | "dropped";
   pros?: string;
   cons?: string;
   renovation?: string;
@@ -271,9 +265,7 @@ export type TransactionRow = {
 
 /** Structured label for a time-adjusted comparable. Resolved to a translated
  *  string on the client so both en-SG and zh-SG users see their language. */
-export type AdjustmentLabel =
-  | { type: "at_latest" }
-  | { type: "adjusted_from"; month: string };
+export type AdjustmentLabel = { type: "at_latest" } | { type: "adjusted_from"; month: string };
 
 /** Extended comparable with time adjustment fields.
  *  Populated by the comparable-transactions API when ?adjust=time is used. */

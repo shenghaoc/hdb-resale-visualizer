@@ -125,7 +125,14 @@ export function useAppShellController({
         setIsLeftPanelOpen(true);
       }
     },
-    [setUserLocation, clearGeolocationError, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen],
+    [
+      setUserLocation,
+      clearGeolocationError,
+      patchFilters,
+      isDesktop,
+      setLeftTab,
+      setIsLeftPanelOpen,
+    ],
   );
 
   const handleUseCurrentLocation = useCallback(() => {

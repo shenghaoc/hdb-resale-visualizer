@@ -18,7 +18,11 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
   }
 
   return (
-    <ul role="list" className={cn("flex flex-wrap items-center gap-2 text-[0.7rem]", className)} aria-label={t("detail.priceLadder")}>
+    <ul
+      role="list"
+      className={cn("flex flex-wrap items-center gap-2 text-[0.7rem]", className)}
+      aria-label={t("detail.priceLadder")}
+    >
       {entries.map((entry, idx) => (
         <li key={entry.flatType} className="flex items-center gap-1.5">
           <div
@@ -29,13 +33,17 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
                 : "border-border/30 bg-background",
             )}
           >
-            <div className="font-semibold tracking-tight">{localizeFlatType(entry.flatType, locale)}</div>
+            <div className="font-semibold tracking-tight">
+              {localizeFlatType(entry.flatType, locale)}
+            </div>
             {entry.medianPrice !== null ? (
               <div className="v2-tabular font-extrabold tabular-nums text-foreground">
                 {formatCompactCurrency(entry.medianPrice, locale)}
               </div>
             ) : (
-              <div className="text-[0.58rem] font-medium uppercase tracking-[0.1em]">{t("detail.unavailable")}</div>
+              <div className="text-[0.58rem] font-medium uppercase tracking-[0.1em]">
+                {t("detail.unavailable")}
+              </div>
             )}
             {entry.transactionCount > 0 && (
               <div className="text-[0.55rem] text-muted-foreground">
@@ -43,7 +51,9 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
               </div>
             )}
           </div>
-          {idx < entries.length - 1 && <ArrowRight className="size-3 text-muted-foreground/60" aria-hidden />}
+          {idx < entries.length - 1 && (
+            <ArrowRight className="size-3 text-muted-foreground/60" aria-hidden />
+          )}
         </li>
       ))}
     </ul>

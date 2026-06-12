@@ -38,25 +38,57 @@ const isOptionalIntegerInRange = (value: string, min: number, max: number) =>
 
 const WIZARD_ICONS = {
   welcome: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
       <circle cx="11" cy="11" r="7.5" />
       <path d="M16.5 16.5 21 21" strokeLinecap="round" />
     </svg>
   ),
   flatType: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M3 9.5 12 3l9 6.5V20A1.5 1.5 0 0 1 19.5 21.5h-15A1.5 1.5 0 0 1 3 20V9.5Z" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
+      <path
+        d="M3 9.5 12 3l9 6.5V20A1.5 1.5 0 0 1 19.5 21.5h-15A1.5 1.5 0 0 1 3 20V9.5Z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path d="M9 21.5V14h6v7.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   budget: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
       <circle cx="12" cy="12" r="9.5" />
-      <path d="M12 6.5v11M15 9.5c0-1.1-1.34-2-3-2s-3 .9-3 2 1.34 2 3 2 3 .9 3 2-1.34 2-3 2-3-.9-3-2" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M12 6.5v11M15 9.5c0-1.1-1.34-2-3-2s-3 .9-3 2 1.34 2 3 2 3 .9 3 2-1.34 2-3 2-3-.9-3-2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
   commute: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
       <rect x="5" y="2.5" width="14" height="16" rx="3" />
       <path d="M5 12.5h14M12 2.5v10" strokeLinecap="round" />
       <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
@@ -65,26 +97,37 @@ const WIZARD_ICONS = {
     </svg>
   ),
   lease: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
       <rect x="3" y="4.5" width="18" height="17" rx="2" />
       <path d="M16 2.5v4M8 2.5v4M3 9.5h18" strokeLinecap="round" />
       <path d="M8 13.5h2v2H8z" fill="currentColor" stroke="none" />
     </svg>
   ),
   affordability: (
-    <svg viewBox="0 0 24 24" className="size-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M4 7h16v12.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V7Z" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 24 24"
+      className="size-10"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
+      <path
+        d="M4 7h16v12.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V7Z"
+        strokeLinejoin="round"
+      />
       <path d="M4 7V5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V7" strokeLinejoin="round" />
       <path d="M9 13h6M9 16.5h4" strokeLinecap="round" />
     </svg>
   ),
 } as const;
 
-function WizardIcon({
-  stepKey,
-}: {
-  stepKey: keyof typeof WIZARD_ICONS;
-}) {
+function WizardIcon({ stepKey }: { stepKey: keyof typeof WIZARD_ICONS }) {
   return WIZARD_ICONS[stepKey] || WIZARD_ICONS.welcome;
 }
 
@@ -119,12 +162,25 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     if (step === 0) return true;
     if (step === 1) return mainFlatType.length > 0;
     if (step === 2) return isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE);
-    if (step === 3) return commuteAnchorLabel.trim().length > 0 && commuteAnchorMrt.length > 0 && Number(maxCommute) > 0;
+    if (step === 3)
+      return (
+        commuteAnchorLabel.trim().length > 0 &&
+        commuteAnchorMrt.length > 0 &&
+        Number(maxCommute) > 0
+      );
     if (step === 4) return Number(minLease) > 0;
     if (step === 5) {
       return (
-        isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
-        isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+        isOptionalIntegerInRange(
+          age,
+          SEARCH_PROFILE_MIN_APPLICANT_AGE,
+          SEARCH_PROFILE_MAX_APPLICANT_AGE,
+        ) &&
+        isOptionalIntegerInRange(
+          coApplicantAge,
+          SEARCH_PROFILE_MIN_APPLICANT_AGE,
+          SEARCH_PROFILE_MAX_APPLICANT_AGE,
+        ) &&
         isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
         isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
       );
@@ -163,8 +219,16 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
       commuteAnchorMrt.length > 0 &&
       Number(maxCommute) > 0 &&
       Number(minLease) > 0 &&
-      isOptionalIntegerInRange(age, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
-      isOptionalIntegerInRange(coApplicantAge, SEARCH_PROFILE_MIN_APPLICANT_AGE, SEARCH_PROFILE_MAX_APPLICANT_AGE) &&
+      isOptionalIntegerInRange(
+        age,
+        SEARCH_PROFILE_MIN_APPLICANT_AGE,
+        SEARCH_PROFILE_MAX_APPLICANT_AGE,
+      ) &&
+      isOptionalIntegerInRange(
+        coApplicantAge,
+        SEARCH_PROFILE_MIN_APPLICANT_AGE,
+        SEARCH_PROFILE_MAX_APPLICANT_AGE,
+      ) &&
       isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
       isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
     );
@@ -244,9 +308,11 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <div
               key={step}
               className="wizard-step-anim"
-              style={{
-                "--wizard-x": direction > 0 ? "20px" : "-20px",
-              } as CSSProperties}
+              style={
+                {
+                  "--wizard-x": direction > 0 ? "20px" : "-20px",
+                } as CSSProperties
+              }
             >
               {step === 0 ? (
                 <div className="pt-2 text-center">
@@ -349,7 +415,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
                           )}
                         >
-                          {preset >= 1000000 ? `S$${(preset / 1000000).toFixed(1)}M` : `S$${Math.round(preset / 1000)}K`}
+                          {preset >= 1000000
+                            ? `S$${(preset / 1000000).toFixed(1)}M`
+                            : `S$${Math.round(preset / 1000)}K`}
                         </button>
                       );
                     })}
@@ -396,10 +464,19 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             type="button"
                             className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                           >
-                            <span className={commuteAnchorMrt ? "text-foreground" : "text-muted-foreground"}>
-                              {commuteAnchorMrt ? formatStationLabel(commuteAnchorMrt) : t("searchProfile.selectMrtStation")}
+                            <span
+                              className={
+                                commuteAnchorMrt ? "text-foreground" : "text-muted-foreground"
+                              }
+                            >
+                              {commuteAnchorMrt
+                                ? formatStationLabel(commuteAnchorMrt)
+                                : t("searchProfile.selectMrtStation")}
                             </span>
-                            <ChevronDown className="size-4 text-muted-foreground transition-transform data-[open=true]:rotate-180" data-open={stationPickerOpen} />
+                            <ChevronDown
+                              className="size-4 text-muted-foreground transition-transform data-[open=true]:rotate-180"
+                              data-open={stationPickerOpen}
+                            />
                           </button>
                         </PopoverTrigger>
                         <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl">
@@ -417,11 +494,19 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             </div>
                           </div>
                           {filteredStations.length === 0 ? (
-                            <div className="max-h-56 overflow-y-auto py-4 text-center text-sm text-muted-foreground" role="status" aria-live="polite">
+                            <div
+                              className="max-h-56 overflow-y-auto py-4 text-center text-sm text-muted-foreground"
+                              role="status"
+                              aria-live="polite"
+                            >
                               {t("searchProfile.noMrtStationFound")}
                             </div>
                           ) : (
-                            <div className="max-h-56 overflow-y-auto py-1" role="listbox" aria-label="MRT stations">
+                            <div
+                              className="max-h-56 overflow-y-auto py-1"
+                              role="listbox"
+                              aria-label="MRT stations"
+                            >
                               {filteredStations.slice(0, 40).map((station) => (
                                 <button
                                   key={station}
@@ -438,7 +523,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                                   )}
                                 >
                                   <span>{formatStationLabel(station)}</span>
-                                  {commuteAnchorMrt === station ? <Check className="size-4" /> : null}
+                                  {commuteAnchorMrt === station ? (
+                                    <Check className="size-4" />
+                                  ) : null}
                                 </button>
                               ))}
                             </div>
@@ -674,19 +761,25 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     ) : null}
                     {cpfOABalance ? (
                       <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
-                        {t("searchProfile.chip.cpfOABalance", { amount: formatNumber(Number(cpfOABalance), 0, locale) })}
+                        {t("searchProfile.chip.cpfOABalance", {
+                          amount: formatNumber(Number(cpfOABalance), 0, locale),
+                        })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
                       <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
-                        {t("searchProfile.chip.monthlyIncome", { amount: formatNumber(Number(monthlyIncome), 0, locale) })}
+                        {t("searchProfile.chip.monthlyIncome", {
+                          amount: formatNumber(Number(monthlyIncome), 0, locale),
+                        })}
                       </div>
                     ) : null}
                   </div>
                   {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
                     <div className="mt-5 rounded-[0.65rem] border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
                       <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-success">
-                        {t("affordability.ceiling", { price: formatCurrency(affordabilityCeiling, locale) })}
+                        {t("affordability.ceiling", {
+                          price: formatCurrency(affordabilityCeiling, locale),
+                        })}
                       </p>
                       {monthlyIncome.trim() ? (
                         <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-muted-foreground">

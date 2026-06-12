@@ -111,9 +111,7 @@ export function buildTrendLookup(
  * Walks backwards from the end, skipping months with transaction count
  * below MIN_TREND_SAMPLE_SIZE. Returns null if no qualifying month exists.
  */
-export function findLatestQualifyingMonth(
-  points: TrendPoint[],
-): TrendPoint | null {
+export function findLatestQualifyingMonth(points: TrendPoint[]): TrendPoint | null {
   for (let i = points.length - 1; i >= 0; i--) {
     if (points[i].transactionCount >= MIN_TREND_SAMPLE_SIZE) {
       return points[i];
@@ -127,10 +125,7 @@ export function findLatestQualifyingMonth(
  * Uses binary search for O(log n) lookup.
  * Returns null if the month is not found.
  */
-export function findMonthPoint(
-  points: TrendPoint[],
-  targetMonth: string,
-): TrendPoint | null {
+export function findMonthPoint(points: TrendPoint[], targetMonth: string): TrendPoint | null {
   let lo = 0;
   let hi = points.length - 1;
   while (lo <= hi) {
@@ -241,9 +236,7 @@ export function computeTimeAdjustment(
   const adjustmentFactor = latestPoint.medianPricePerSqm / txPoint.medianPricePerSqm;
 
   const adjustedPrice = Math.round(rawPrice * adjustmentFactor);
-  const adjustedPricePerSqm = Number(
-    (rawPricePerSqm * adjustmentFactor).toFixed(2),
-  );
+  const adjustedPricePerSqm = Number((rawPricePerSqm * adjustmentFactor).toFixed(2));
 
   // Generate label as a structured object so the client can translate it.
   const adjustmentLabel: AdjustmentLabel =

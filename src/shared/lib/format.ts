@@ -59,7 +59,7 @@ export function formatCurrency(value: number, locale?: Locale): string {
   cached = getNumberFormat(resolvedLocale, {
     style: "currency",
     currency: "SGD",
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(value);
 
   evictCacheIfNeeded(formattedCurrencyCache, FORMATTED_STRING_CACHE_LIMIT);
@@ -78,7 +78,7 @@ export function formatCompactCurrency(value: number, locale?: Locale): string {
     style: "currency",
     currency: "SGD",
     notation: "compact",
-    maximumFractionDigits: 1
+    maximumFractionDigits: 1,
   }).format(value);
 
   evictCacheIfNeeded(formattedCompactCurrencyCache, FORMATTED_STRING_CACHE_LIMIT);
@@ -133,7 +133,7 @@ export function formatMonth(month: string, locale?: Locale): string {
 
   cached = ym.toPlainDate({ day: 1 }).toLocaleString(resolvedLocale, {
     month: "short",
-    year: "numeric"
+    year: "numeric",
   });
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
@@ -155,6 +155,6 @@ export function formatRemainingLease(leaseCommenceRange: [number, number], t: Tr
 export function formatDateTime(value: string, locale?: Locale): string {
   return Temporal.Instant.from(value).toLocaleString(resolveLocale(locale), {
     dateStyle: "medium",
-    timeStyle: "short"
+    timeStyle: "short",
   });
 }

@@ -9,9 +9,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
   const addressKey = slug.replace(/\.json$/, "");
 
   try {
-    const row = await env.DB.prepare(
-      "SELECT json FROM comparisons WHERE address_key = ?",
-    )
+    const row = await env.DB.prepare("SELECT json FROM comparisons WHERE address_key = ?")
       .bind(addressKey)
       .first<{ json: string }>();
     if (!row) {

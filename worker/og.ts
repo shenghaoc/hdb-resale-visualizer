@@ -31,17 +31,19 @@ const MAX_OG_ADDRESS_KEY_LENGTH = 128;
 const MAX_OG_TOWN_SLUG_LENGTH = 64;
 const MANIFEST_CACHE_TTL_MS = 5 * 60 * 1000;
 
-let manifestCache:
-  | { expiresAt: number; version: string; dataWindow: DataWindow }
-  | null = null;
+let manifestCache: { expiresAt: number; version: string; dataWindow: DataWindow } | null = null;
 
-async function readManifestMetadata(env: Env): Promise<{ version: string; dataWindow: DataWindow }> {
+async function readManifestMetadata(
+  env: Env,
+): Promise<{ version: string; dataWindow: DataWindow }> {
   const now = Date.now();
   if (manifestCache && manifestCache.expiresAt > now) {
     return { version: manifestCache.version, dataWindow: manifestCache.dataWindow };
   }
 
-  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{ json: string }>();
+  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{
+    json: string;
+  }>();
   const parsed: ManifestJson = {};
   if (row) {
     try {
@@ -175,7 +177,9 @@ export async function handleBlockOg(
   const cached = await readCache(cacheKey);
   if (cached) return cached;
 
-  const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?").bind(addressKey).first<BlockRow>();
+  const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?")
+    .bind(addressKey)
+    .first<BlockRow>();
   if (!row) return fallbackCard(request);
 
   await resvgReady;
@@ -201,12 +205,18 @@ export async function handleCompareOg(
   const canonicalB = townFilenameToCanonical(townB);
 
   const { version } = await readManifestMetadata(env);
-  const cacheKey = buildCacheKey(request, `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`, version);
+  const cacheKey = buildCacheKey(
+    request,
+    `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`,
+    version,
+  );
 
   const cached = await readCache(cacheKey);
   if (cached) return cached;
 
-  const rows = await env.DB.prepare("SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)")
+  const rows = await env.DB.prepare(
+    "SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)",
+  )
     .bind(canonicalA, canonicalB)
     .all<TownAggregateRow>();
 

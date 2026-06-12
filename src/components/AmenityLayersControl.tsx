@@ -154,7 +154,12 @@ export function AmenityLayersControl({
               schoolOverlayEnabled && schoolCanToggle ? "text-primary" : "text-muted-foreground",
             )}
           />
-          <span className={cn("flex-1", schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground/60")}>
+          <span
+            className={cn(
+              "flex-1",
+              schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground/60",
+            )}
+          >
             {t("amenity.schools")}
             {!hasBlockSelection && (
               <span className="ml-1 text-[0.5rem] italic opacity-60">

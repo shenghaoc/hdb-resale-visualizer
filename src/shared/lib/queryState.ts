@@ -103,8 +103,7 @@ export function serializeFilters(filters: FilterState): string {
 
   for (const [key, value] of Object.entries(filters)) {
     const defaultValue = DEFAULT_FILTERS[key as keyof FilterState];
-    const normalizedValue =
-      key === "compareTown" ? effectiveCompareTown : (value ?? "");
+    const normalizedValue = key === "compareTown" ? effectiveCompareTown : (value ?? "");
     if (normalizedValue === (defaultValue ?? "")) {
       continue;
     }

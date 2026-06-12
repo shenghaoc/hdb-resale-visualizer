@@ -38,7 +38,8 @@ export function buildBlockExplanation({
 
   if (filters.remainingLeaseMin != null) {
     const resolvedYear = currentYear ?? getCurrentYear();
-    const maxRemainingLeaseYears = MAX_LEASE_DURATION - (resolvedYear - block.leaseCommenceRange[1]);
+    const maxRemainingLeaseYears =
+      MAX_LEASE_DURATION - (resolvedYear - block.leaseCommenceRange[1]);
     if (maxRemainingLeaseYears >= filters.remainingLeaseMin) {
       explanations.push("above-lease-threshold");
     }

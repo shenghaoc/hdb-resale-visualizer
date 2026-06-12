@@ -8,12 +8,7 @@ import {
   type SetStateAction,
 } from "react";
 import { fetchAddressDetail, fetchComparisonArtifact } from "@/shared/lib/data";
-import type {
-  AddressDetail,
-  BlockSummary,
-  ComparisonArtifact,
-  ShortlistItem,
-} from "@/types/data";
+import type { AddressDetail, BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
 type ShortlistRowsArgs = {
   blocks: BlockSummary[];
@@ -24,7 +19,11 @@ type ShortlistRowsArgs = {
   isShortlistOpen: boolean;
 };
 
-async function processWithConcurrency<T>(items: T[], concurrency: number, fn: (item: T) => Promise<void>) {
+async function processWithConcurrency<T>(
+  items: T[],
+  concurrency: number,
+  fn: (item: T) => Promise<void>,
+) {
   let index = 0;
   const worker = async () => {
     while (index < items.length) {
@@ -32,7 +31,9 @@ async function processWithConcurrency<T>(items: T[], concurrency: number, fn: (i
       await fn(next);
     }
   };
-  await Promise.all(Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, worker));
+  await Promise.all(
+    Array.from({ length: Math.max(1, Math.min(concurrency, items.length)) }, worker),
+  );
 }
 
 function useMissingArtifactLoader<T>(
@@ -77,8 +78,12 @@ export function useShortlistArtifacts({
   selectedComparison,
   isShortlistOpen,
 }: ShortlistRowsArgs) {
-  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>({});
-  const [shortlistComparisons, setShortlistComparisons] = useState<Record<string, ComparisonArtifact | null>>({});
+  const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
+    {},
+  );
+  const [shortlistComparisons, setShortlistComparisons] = useState<
+    Record<string, ComparisonArtifact | null>
+  >({});
   const detailsRef = useRef(shortlistDetails);
   const comparisonsRef = useRef(shortlistComparisons);
   const detailsInFlightRef = useRef<Set<string>>(new Set());
@@ -131,10 +136,14 @@ export function useShortlistArtifacts({
           block,
           detailSummary:
             shortlistDetails[item.addressKey]?.summary ??
-            (selectedDetail?.summary.addressKey === item.addressKey ? selectedDetail.summary : null),
+            (selectedDetail?.summary.addressKey === item.addressKey
+              ? selectedDetail.summary
+              : null),
           monthlyTrend:
             shortlistDetails[item.addressKey]?.monthlyTrend ??
-            (selectedDetail?.summary.addressKey === item.addressKey ? selectedDetail.monthlyTrend : []),
+            (selectedDetail?.summary.addressKey === item.addressKey
+              ? selectedDetail.monthlyTrend
+              : []),
           comparison:
             shortlistComparisons[item.addressKey] ??
             (selectedComparison?.addressKey === item.addressKey ? selectedComparison : null),
@@ -142,12 +151,26 @@ export function useShortlistArtifacts({
       })
       .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
       .sort((left, right) => {
-        const leftGap = left.item.targetPrice !== null ? Math.abs(left.item.targetPrice - left.block.medianPrice) : Number.POSITIVE_INFINITY;
-        const rightGap = right.item.targetPrice !== null ? Math.abs(right.item.targetPrice - right.block.medianPrice) : Number.POSITIVE_INFINITY;
+        const leftGap =
+          left.item.targetPrice !== null
+            ? Math.abs(left.item.targetPrice - left.block.medianPrice)
+            : Number.POSITIVE_INFINITY;
+        const rightGap =
+          right.item.targetPrice !== null
+            ? Math.abs(right.item.targetPrice - right.block.medianPrice)
+            : Number.POSITIVE_INFINITY;
         if (leftGap !== rightGap) return leftGap - rightGap;
         return left.item.addedAt.localeCompare(right.item.addedAt);
       });
-  }, [savedVisible, items, blocksByKey, shortlistDetails, shortlistComparisons, selectedDetail, selectedComparison]);
+  }, [
+    savedVisible,
+    items,
+    blocksByKey,
+    shortlistDetails,
+    shortlistComparisons,
+    selectedDetail,
+    selectedComparison,
+  ]);
 
   return { shortlistRows };
 }

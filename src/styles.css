@@ -131,8 +131,8 @@
   --chart-3: light-dark(#f59e0b, #fb923c);
   --chart-4: light-dark(#10b981, #4ade80);
   --chart-5: light-dark(#ec4899, #f472b6);
-  --panel: light-dark(oklch(0.99 0.005 210 / 0.92), oklch(0.09 0.040 232 / 0.92));
-  --panel-border: light-dark(oklch(0.65 0.09 210 / 0.5), oklch(0.50 0.10 196 / 0.30));
+  --panel: light-dark(oklch(0.99 0.005 210 / 0.92), oklch(0.09 0.04 232 / 0.92));
+  --panel-border: light-dark(oklch(0.65 0.09 210 / 0.5), oklch(0.5 0.1 196 / 0.3));
   --radius: 0.5rem;
   --sidebar: light-dark(#f1f5f9, #060c18);
   --sidebar-foreground: var(--foreground);
@@ -171,7 +171,12 @@
     background: var(--background);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     text-wrap: balance;
   }
 
@@ -210,8 +215,7 @@
 
 .dark .v2-panel {
   --shadow-panel:
-    0 0 0 1px color-mix(in oklab, var(--primary) 7%, transparent),
-    0 12px 48px rgba(4, 12, 24, 0.8);
+    0 0 0 1px color-mix(in oklab, var(--primary) 7%, transparent), 0 12px 48px rgba(4, 12, 24, 0.8);
 }
 
 .v2-card {
@@ -224,8 +228,7 @@
 
 .dark .v2-card {
   --shadow-card:
-    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent),
-    0 2px 16px rgba(4, 12, 24, 0.55);
+    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 2px 16px rgba(4, 12, 24, 0.55);
 }
 
 .v2-kicker,
@@ -280,8 +283,14 @@
 /* Wizard step transitions share a single keyframe; the consumer sets
    --wizard-x to flip slide direction (+20px forward / -20px back). */
 @keyframes wizard-step-enter {
-  from { opacity: 0; transform: translateX(var(--wizard-x, 20px)); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(var(--wizard-x, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .wizard-step-anim {
@@ -340,10 +349,7 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.625rem;
   line-height: 1.2;
-  color: light-dark(
-    var(--foreground),
-    color-mix(in oklab, var(--foreground) 70%, transparent)
-  );
+  color: light-dark(var(--foreground), color-mix(in oklab, var(--foreground) 70%, transparent));
   text-decoration: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -399,8 +405,7 @@
 
 .dark .mobile-tab-bar {
   --shadow-mobile-tab:
-    0 -1px 0 color-mix(in oklab, var(--primary) 6%, transparent),
-    0 -8px 32px rgba(4, 12, 24, 0.65);
+    0 -1px 0 color-mix(in oklab, var(--primary) 6%, transparent), 0 -8px 32px rgba(4, 12, 24, 0.65);
 }
 
 /* Shared base for every "tab-bar / mode" trigger button. Per-element rules
@@ -415,7 +420,9 @@
   color: var(--muted-foreground);
   font-weight: 700;
   text-transform: uppercase;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
 }
@@ -486,8 +493,7 @@
 
 .dark .desktop-tab-bar {
   --shadow-desktop-tab:
-    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent),
-    0 8px 32px rgba(4, 12, 24, 0.65);
+    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 8px 32px rgba(4, 12, 24, 0.65);
 }
 
 .desktop-tab-bar-divider {
@@ -543,9 +549,15 @@
 }
 
 @keyframes filterChipPop {
-  0% { transform: scale(0.94); }
-  60% { transform: scale(1.04); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0.94);
+  }
+  60% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -616,10 +628,7 @@
   background: var(--popover);
   color: var(--popover-foreground);
   border-radius: var(--radius-md);
-  border: 1px solid light-dark(
-    var(--border),
-    color-mix(in oklab, var(--primary) 15%, transparent)
-  );
+  border: 1px solid light-dark(var(--border), color-mix(in oklab, var(--primary) 15%, transparent));
   padding: 0.85rem 1rem;
   box-shadow: var(--shadow-popup);
   min-width: 14rem;
@@ -628,8 +637,7 @@
 
 .dark .map-popup .maplibregl-popup-content {
   --shadow-popup:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
-    0 16px 40px rgba(4, 12, 24, 0.85);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 16px 40px rgba(4, 12, 24, 0.85);
 }
 
 .map-popup .maplibregl-popup-content strong {
@@ -653,10 +661,7 @@
 .maplibregl-ctrl-group {
   overflow: hidden;
   border-radius: 0 !important;
-  border: 1px solid light-dark(
-    var(--border),
-    color-mix(in oklab, var(--primary) 10%, transparent)
-  ) !important;
+  border: 1px solid light-dark(var(--border), color-mix(in oklab, var(--primary) 10%, transparent)) !important;
   box-shadow: none !important;
 }
 
@@ -682,7 +687,9 @@
   padding: 0;
   color: var(--muted-foreground);
   cursor: pointer;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
 }
 
 .map-locale-trigger:hover,

@@ -45,7 +45,11 @@ const VERDICT_THEMES: Record<AskingPriceAssessment["verdict"], VerdictTheme> = {
   below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.below" },
   fair: { tone: "muted", icon: CheckCircle2, i18nKey: "askingCheck.verdict.fair" },
   above: { tone: "warning", icon: ArrowUp, i18nKey: "askingCheck.verdict.above" },
-  well_above: { tone: "destructive", icon: AlertTriangle, i18nKey: "askingCheck.verdict.wellAbove" },
+  well_above: {
+    tone: "destructive",
+    icon: AlertTriangle,
+    i18nKey: "askingCheck.verdict.wellAbove",
+  },
 };
 
 function toneStyles(tone: VerdictTheme["tone"]) {
@@ -150,12 +154,8 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
             <Scale data-icon className="size-4" aria-hidden="true" />
           </div>
           <div className="flex-1">
-            <h3 className="text-sm font-bold tracking-tight">
-              {t("askingCheck.title")}
-            </h3>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {t("askingCheck.description")}
-            </p>
+            <h3 className="text-sm font-bold tracking-tight">{t("askingCheck.title")}</h3>
+            <p className="mt-0.5 text-xs text-muted-foreground">{t("askingCheck.description")}</p>
           </div>
         </div>
 
@@ -244,9 +244,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
                 <VerdictIcon data-icon className={cn("size-5", styles.text)} aria-hidden="true" />
               </div>
               <div className="flex-1">
-                <div
-                  className={cn("text-sm font-extrabold uppercase tracking-wider", styles.text)}
-                >
+                <div className={cn("text-sm font-extrabold uppercase tracking-wider", styles.text)}>
                   {t(theme.i18nKey)}
                 </div>
                 <div className="text-xs text-muted-foreground">
@@ -386,9 +384,7 @@ function DeltaCell({
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
         {formatSignedCurrency(amount)}
       </div>
-      <div className={cn("text-xs font-bold tabular-nums", colorClass)}>
-        {formatSignedPct(pct)}
-      </div>
+      <div className={cn("text-xs font-bold tabular-nums", colorClass)}>{formatSignedPct(pct)}</div>
       <div className="mt-1 truncate text-[0.6rem] text-muted-foreground">
         {referenceLabel}: {formatCompactCurrency(reference, locale)}
       </div>

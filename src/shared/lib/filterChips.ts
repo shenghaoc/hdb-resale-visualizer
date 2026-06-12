@@ -71,8 +71,10 @@ export function getActiveFilterChipDescriptors(
   }
 
   if (filters.budgetMin !== null || filters.budgetMax !== null) {
-    const lo = filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale, t) : "";
-    const hi = filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale, t) : "";
+    const lo =
+      filters.budgetMin !== null ? formatBudgetChipCurrency(filters.budgetMin, locale, t) : "";
+    const hi =
+      filters.budgetMax !== null ? formatBudgetChipCurrency(filters.budgetMax, locale, t) : "";
     chips.push({
       key: "budget",
       label: lo && hi ? `${lo}–${hi}` : lo || hi,
@@ -81,8 +83,14 @@ export function getActiveFilterChipDescriptors(
   }
 
   if (filters.areaMin !== null || filters.areaMax !== null) {
-    const lo = filters.areaMin !== null ? t("unit.sqm", { value: formatNumber(filters.areaMin, 0, locale) }) : "";
-    const hi = filters.areaMax !== null ? t("unit.sqm", { value: formatNumber(filters.areaMax, 0, locale) }) : "";
+    const lo =
+      filters.areaMin !== null
+        ? t("unit.sqm", { value: formatNumber(filters.areaMin, 0, locale) })
+        : "";
+    const hi =
+      filters.areaMax !== null
+        ? t("unit.sqm", { value: formatNumber(filters.areaMax, 0, locale) })
+        : "";
     chips.push({
       key: "area",
       label: lo && hi ? `${lo}–${hi}` : lo || hi,

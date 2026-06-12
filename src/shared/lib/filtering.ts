@@ -1,5 +1,5 @@
 import type { BlockSummary, Coordinates, FilterState } from "../../types/data";
-import { getCurrentYear, MAX_LEASE_DURATION } from './constants';
+import { getCurrentYear, MAX_LEASE_DURATION } from "./constants";
 import { buildFilterOptions, canonicalFlatType } from "../../../shared/filter-options";
 import { resolveMultilingualSearchAliases } from "./i18n/domain";
 import { passesAffordabilityMode, type AffordabilityProfile } from "./affordability";
@@ -382,8 +382,11 @@ function matchStationName(
   let bestMatch: { stationName: string; score: number } | null = null;
 
   for (const stationName of stationNames) {
-    const { tokens: stationTokens, normalized: normalizedStation, tokenSet: stationTokenSet } =
-      getStationTokensAndNormalized(stationName);
+    const {
+      tokens: stationTokens,
+      normalized: normalizedStation,
+      tokenSet: stationTokenSet,
+    } = getStationTokensAndNormalized(stationName);
     if (stationTokens.length === 0) {
       continue;
     }
@@ -406,23 +409,26 @@ function matchStationName(
       continue;
     }
 
-    const score = queryTokens.reduce((total, queryToken) => {
-      if (stationTokenSet.has(queryToken)) {
-        return total + 4;
-      }
-      if (stationTokens.some((stationToken) => stationToken.startsWith(queryToken))) {
-        return total + 3;
-      }
-      if (
-        stationTokens.some(
-          (stationToken) =>
-            stationToken.includes(queryToken) || queryToken.includes(stationToken),
-        )
-      ) {
-        return total + 2;
-      }
-      return total + 1;
-    }, exactStationMatch ? 8 : 0);
+    const score = queryTokens.reduce(
+      (total, queryToken) => {
+        if (stationTokenSet.has(queryToken)) {
+          return total + 4;
+        }
+        if (stationTokens.some((stationToken) => stationToken.startsWith(queryToken))) {
+          return total + 3;
+        }
+        if (
+          stationTokens.some(
+            (stationToken) =>
+              stationToken.includes(queryToken) || queryToken.includes(stationToken),
+          )
+        ) {
+          return total + 2;
+        }
+        return total + 1;
+      },
+      exactStationMatch ? 8 : 0,
+    );
 
     if (!bestMatch || score > bestMatch.score) {
       bestMatch = { stationName, score };
@@ -460,10 +466,7 @@ function computeDistanceMeters(left: Coordinates, right: Coordinates): number {
   const rightLat = toRadians(right.lat);
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(leftLat) *
-      Math.cos(rightLat) *
-      Math.sin(deltaLng / 2) *
-      Math.sin(deltaLng / 2);
+    Math.cos(leftLat) * Math.cos(rightLat) * Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return earthRadiusMeters * c;
 }
@@ -651,7 +654,8 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const maxRemainingLease = MAX_LEASE_DURATION - (getCachedCurrentYear() - block.leaseCommenceRange[1]);
+    const maxRemainingLease =
+      MAX_LEASE_DURATION - (getCachedCurrentYear() - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }

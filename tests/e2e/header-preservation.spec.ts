@@ -23,14 +23,14 @@ async function waitForAppLoad(page: Page) {
 
 async function ensureHeaderVisible(page: Page) {
   const header = page.getByTestId("global-header");
-  
+
   // If header was dismissed, show it again
   const showHeaderButton = page.getByRole("button", { name: /show header/i });
   if (await showHeaderButton.isVisible()) {
     await showHeaderButton.click();
     await expect(header).toBeVisible();
   }
-  
+
   await expect(header).toBeVisible();
 }
 
@@ -52,23 +52,26 @@ async function getControlElements(page: Page) {
   };
 }
 
-async function getCurrentTheme(page: Page): Promise<'light' | 'dark'> {
-  return await page.evaluate(() => (document.documentElement.classList.contains('dark') ? 'dark' : 'light'));
+async function getCurrentTheme(page: Page): Promise<"light" | "dark"> {
+  return await page.evaluate(() =>
+    document.documentElement.classList.contains("dark") ? "dark" : "light",
+  );
 }
 
 async function getHeaderContent(page: Page) {
   const header = page.getByTestId("global-header");
-  const titleLocator = header.locator("[data-testid='header-title'], [data-slot='card-title'], h1, h2, h3").first();
-  
+  const titleLocator = header
+    .locator("[data-testid='header-title'], [data-slot='card-title'], h1, h2, h3")
+    .first();
+
   return {
     title: await titleLocator.textContent(),
     badges: await header.locator("[data-slot='badge'], .badge").allTextContents(),
-    metadata: await header.locator("p").allTextContents()
+    metadata: await header.locator("p").allTextContents(),
   };
 }
 
 test.describe("Preservation: Header & Tab Bar Controls Continue to Function", () => {
-  
   test("Property: Theme toggle switches between light and dark modes", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
@@ -99,7 +102,7 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
       await expect(page.locator("html")).toHaveClass(/dark/);
     }
   });
-  
+
   test("Property: Language selector switches between available languages", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
@@ -111,24 +114,24 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     // Test language selector functionality - just verify it opens and has options
     await expect(elements.languageSelect).toBeVisible();
     await elements.languageSelect.click();
-    
+
     // Should show language options
     const options = page.getByRole("option");
     await expect(options).toHaveCount(2); // English and Chinese
-    
+
     // Get all option texts
     const optionTexts = await options.allTextContents();
     // PRESERVATION ASSERTION: Should have both English and Chinese options
     expect(optionTexts).toContain("English");
     expect(optionTexts).toContain("中文");
-    
+
     // Close the select without changing language to avoid potential page reload
     await page.keyboard.press("Escape");
-    
+
     // PRESERVATION ASSERTION: Language selector should remain visible after interaction
     await expect(elements.languageSelect).toBeVisible();
   });
-  
+
   test("Property: Dismiss button hides the header", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
@@ -140,22 +143,22 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     // Test dismiss button functionality
     await expect(elements.dismissButton).toBeVisible();
     await elements.dismissButton.click();
-    
+
     // PRESERVATION ASSERTION: Header should be hidden
     await expect(elements.header).not.toBeVisible();
 
     // Language selector stays on the map after header dismissal.
     await expect(elements.languageSelect).toBeVisible();
-    
+
     // Show header button should appear
     const showHeaderButton = page.getByRole("button", { name: /show header/i });
     await expect(showHeaderButton).toBeVisible();
-    
+
     // Test that we can show the header again
     await showHeaderButton.click();
     await expect(elements.header).toBeVisible();
   });
-  
+
   test("Property: Mobile map view shows compact header with search toggle", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
@@ -168,13 +171,15 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     await expect(page.getByTestId("map-locale-control")).toBeVisible();
     await expect(page.locator(".maplibregl-ctrl-top-right")).toBeVisible();
   });
-  
-  test("Property: Visual styling (backdrop blur, transparency, shadows) renders correctly", async ({ page }) => {
+
+  test("Property: Visual styling (backdrop blur, transparency, shadows) renders correctly", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
-    
+
     // PRESERVATION ASSERTIONS: Visual styles should be present on the floating header pill.
     // The pill is a nested button element inside the header landmark, so probe the button.
     const headerPill = page.getByTestId("global-header").locator("button").first();
@@ -212,13 +217,15 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     expect(stylesAfterThemeToggle.backdropFilter).toBeTruthy();
     expect(stylesAfterThemeToggle.boxShadow).toBeTruthy();
   });
-  
-  test("Property: Content display (title, badges, metadata) appears correctly", async ({ page }) => {
+
+  test("Property: Content display (title, badges, metadata) appears correctly", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
     await waitForAppLoad(page);
     await ensureHeaderVisible(page);
-    
+
     const content = await getHeaderContent(page);
     // PRESERVATION ASSERTIONS: Content should be present
     expect(content.title).toBeTruthy(); // Should have a title
@@ -230,13 +237,11 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
 
     const options = page.getByRole("option");
     const optionCount = await options.count();
-    
+
     if (optionCount > 0) {
       const switchingToChinese =
         (await page.getByRole("option", { name: "中文", selected: true }).count()) === 0;
-      await page
-        .getByRole("option", { name: switchingToChinese ? "中文" : "English" })
-        .click();
+      await page.getByRole("option", { name: switchingToChinese ? "中文" : "English" }).click();
       await expect(page.getByTestId("global-header")).toContainText(
         switchingToChinese ? "笔交易" : "transactions",
       );
@@ -265,9 +270,10 @@ const mobileViewports = [
 ] as const;
 
 test.describe("Property-Based Preservation Tests", () => {
-
   for (const viewport of desktopViewports) {
-    test(`Property: Header controls work at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({ page }) => {
+    test(`Property: Header controls work at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto("/");
       await waitForAppLoad(page);
@@ -298,7 +304,9 @@ test.describe("Property-Based Preservation Tests", () => {
   }
 
   for (const viewport of mobileViewports) {
-    test(`Property: Compact header visible at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({ page }) => {
+    test(`Property: Compact header visible at ${viewport.label} (${viewport.width}x${viewport.height})`, async ({
+      page,
+    }) => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto("/");
       await waitForAppLoad(page);

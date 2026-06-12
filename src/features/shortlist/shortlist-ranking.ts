@@ -83,7 +83,9 @@ export function rankShortlistRows<T extends SortableShortlistRow>(
       return primary;
     }
 
-    const statusPriority = getDecisionStatusPriority(left.item.decisionStatus) - getDecisionStatusPriority(right.item.decisionStatus);
+    const statusPriority =
+      getDecisionStatusPriority(left.item.decisionStatus) -
+      getDecisionStatusPriority(right.item.decisionStatus);
     if (statusPriority !== 0) {
       return statusPriority;
     }

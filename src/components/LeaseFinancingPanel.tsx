@@ -1,7 +1,10 @@
 import { CalendarClock, ShieldAlert, ShieldCheck, ShieldX } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import type { Translator } from "@/shared/lib/i18n";
-import { TYPICAL_HOLD_YEARS, type LeaseFinancingAssessment } from "@/features/block-detail/lease-financing";
+import {
+  TYPICAL_HOLD_YEARS,
+  type LeaseFinancingAssessment,
+} from "@/features/block-detail/lease-financing";
 
 type Props = {
   assessment: LeaseFinancingAssessment;
@@ -90,12 +93,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         {t("leaseFinancing.title")}
       </div>
 
-      <div
-        className={cn(
-          "flex items-start gap-2 rounded-lg px-3 py-2",
-          meta.banner,
-        )}
-      >
+      <div className={cn("flex items-start gap-2 rounded-lg px-3 py-2", meta.banner)}>
         <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
         <div className="flex flex-col gap-0.5">
           <span className="text-xs font-bold leading-snug">{headline}</span>

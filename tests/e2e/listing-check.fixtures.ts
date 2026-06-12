@@ -170,10 +170,7 @@ function isValidCandidateListing(body: unknown): boolean {
  * - POST bodies that don't satisfy the `CandidateListing` contract get a 400,
  *   so dropping a listing fact is caught.
  */
-export async function mockComparableTransactions(
-  page: Page,
-  set: ComparableSet,
-): Promise<void> {
+export async function mockComparableTransactions(page: Page, set: ComparableSet): Promise<void> {
   await page.route("**/api/comparable-transactions**", async (route) => {
     const request = route.request();
     if (request.method() !== "POST") {

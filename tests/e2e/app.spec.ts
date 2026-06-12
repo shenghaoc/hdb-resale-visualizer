@@ -46,7 +46,10 @@ test("keeps selection in results and only shows shortlisted blocks in saved", as
   await expect(page.getByTestId("detail-drawer")).toContainText(rowAddress ?? "");
   await expect(page.getByTestId("shortlist-drawer")).toHaveCount(0);
 
-  await page.getByTestId("detail-drawer").getByRole("button", { name: /Add to shortlist/i }).click();
+  await page
+    .getByTestId("detail-drawer")
+    .getByRole("button", { name: /Add to shortlist/i })
+    .click();
 
   await savedTab.click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText(rowAddress ?? "");
@@ -75,12 +78,17 @@ test("mobile selection stays in results until the user opens saved", async ({ pa
   await expect(savedButton).toHaveAttribute("data-active", "false");
   await expect(page.getByTestId("detail-drawer")).toContainText(rowAddress ?? "");
 
-  await page.getByTestId("detail-drawer").getByRole("button", { name: /Add to shortlist/i }).click();
+  await page
+    .getByTestId("detail-drawer")
+    .getByRole("button", { name: /Add to shortlist/i })
+    .click();
   await savedButton.click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText(rowAddress ?? "");
 });
 
-test("mobile saved tab preserves autodetected dark theme and exposes display controls", async ({ page }) => {
+test("mobile saved tab preserves autodetected dark theme and exposes display controls", async ({
+  page,
+}) => {
   await page.addInitScript(() => {
     Object.defineProperty(window, "matchMedia", {
       writable: true,
@@ -160,7 +168,10 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(detailDrawer).toContainText("MRT Access Rank");
   await expect(detailDrawer).toContainText("80%");
 
-  await page.getByTestId("detail-drawer").getByRole("button", { name: /Add to shortlist/i }).click();
+  await page
+    .getByTestId("detail-drawer")
+    .getByRole("button", { name: /Add to shortlist/i })
+    .click();
 
   await savedTab.click();
   await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
@@ -179,7 +190,9 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(shortlistDrawer).toContainText("MRT: 80th • Lease: 45th");
 });
 
-test("shortlist items from prior sessions are visible without adding a new one", async ({ page }) => {
+test("shortlist items from prior sessions are visible without adding a new one", async ({
+  page,
+}) => {
   const shortlistKey = "hdb_resale_shortlist_v1";
   const shortlistData = [
     {

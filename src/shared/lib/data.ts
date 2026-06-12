@@ -22,8 +22,11 @@ import type { z } from "zod";
 let blockSummariesPromise: Promise<BlockSummary[]> | null = null;
 let townFlatTrendsPromise: Promise<TownFlatTypeTrendPoint[]> | null = null;
 const blocksByTownPromises = new Map<string, Promise<BlockSummary[]>>();
-let blocksBySearchPromise: Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> | null =
-  null;
+let blocksBySearchPromise: Promise<{
+  blocks: BlockSummary[];
+  truncated: boolean;
+  limit: number;
+}> | null = null;
 let blocksBySearchKey = "";
 let blocksBySearchSequence = 0;
 
@@ -131,7 +134,11 @@ async function fetchJsonOnce<TSchema extends z.ZodTypeAny>(
 
   const parsed = schema.safeParse(await response.json());
   if (!parsed.success) {
-    throw createArtifactContractError(path, parsed.error.issues.map((i) => i.path.join(".") + ": " + i.message).join(", ") || "invalid JSON shape");
+    throw createArtifactContractError(
+      path,
+      parsed.error.issues.map((i) => i.path.join(".") + ": " + i.message).join(", ") ||
+        "invalid JSON shape",
+    );
   }
 
   return parsed.data;
@@ -227,7 +234,9 @@ export function fetchAddressDetail(addressKey: string): Promise<AddressDetail> {
   return fetchJson(`${API_BASE_PATH}/details/${addressKey}`, addressDetailSchema);
 }
 
-export async function fetchComparisonArtifact(addressKey: string): Promise<ComparisonArtifact | null> {
+export async function fetchComparisonArtifact(
+  addressKey: string,
+): Promise<ComparisonArtifact | null> {
   try {
     return await fetchJson(`${API_BASE_PATH}/comparisons/${addressKey}`, comparisonArtifactSchema);
   } catch (error) {
@@ -237,7 +246,6 @@ export async function fetchComparisonArtifact(addressKey: string): Promise<Compa
     throw error;
   }
 }
-
 
 export type CoarseSearchParams = {
   town: string;
@@ -341,14 +349,18 @@ export function fetchSuggestions(query: string, signal?: AbortSignal): Promise<S
   }
 
   if (signal.aborted) {
-    return Promise.reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+    return Promise.reject(
+      signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"),
+    );
   }
 
   // Wrap so that aborting this caller's signal doesn't cancel the shared fetch.
   return new Promise((resolve, reject) => {
     const onAbort = () => {
       signal.removeEventListener("abort", onAbort);
-      reject(signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
+      reject(
+        signal.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"),
+      );
     };
     signal.addEventListener("abort", onAbort);
     shared.then(

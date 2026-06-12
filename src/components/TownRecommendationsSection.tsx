@@ -88,7 +88,10 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
                     <span className="font-heading text-sm font-extrabold v2-tabular">
                       {formatCompactCurrency(rec.medianPrice, locale)}
                     </span>
-                    <Badge variant="outline" className="text-[0.55rem] font-bold uppercase tracking-[0.08em]">
+                    <Badge
+                      variant="outline"
+                      className="text-[0.55rem] font-bold uppercase tracking-[0.08em]"
+                    >
                       {t("townRecommendations.townMedian")}
                     </Badge>
                   </div>

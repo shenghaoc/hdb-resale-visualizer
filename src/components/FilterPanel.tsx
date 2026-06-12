@@ -34,12 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type FilterPanelDesktopToggle = {
   isOpen: boolean;
@@ -128,12 +123,7 @@ type AffordabilityFilterFieldProps = {
   t: ReturnType<typeof useI18n>["t"];
 };
 
-function AffordabilityFilterField({
-  value,
-  onChange,
-  disabled,
-  t,
-}: AffordabilityFilterFieldProps) {
+function AffordabilityFilterField({ value, onChange, disabled, t }: AffordabilityFilterFieldProps) {
   const legendId = useId();
   const buttonClass =
     "h-7 w-full justify-start rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-50";
@@ -217,7 +207,8 @@ function AffordabilityFilterField({
 }
 
 export function FilterPanel(props: FilterPanelProps) {
-  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle, searchProfile } = props;
+  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle, searchProfile } =
+    props;
   const { locale, t } = useI18n();
 
   const affordabilityEnabled = searchProfile
@@ -247,7 +238,11 @@ export function FilterPanel(props: FilterPanelProps) {
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
               >
-                <PanelLeftClose data-icon="inline-start" className="size-3.5 shrink-0" aria-hidden="true" />
+                <PanelLeftClose
+                  data-icon="inline-start"
+                  className="size-3.5 shrink-0"
+                  aria-hidden="true"
+                />
                 {t("filters.hidePanel")}
               </Button>
             ) : null}
@@ -258,7 +253,11 @@ export function FilterPanel(props: FilterPanelProps) {
                 variant="ghost"
                 className={cn("h-7", FILTER_INLINE_ACTION_CLASS)}
               >
-                <RefreshCw data-icon="inline-start" className="size-3 shrink-0" aria-hidden="true" />
+                <RefreshCw
+                  data-icon="inline-start"
+                  className="size-3 shrink-0"
+                  aria-hidden="true"
+                />
                 {t("filters.reset")}
               </Button>
             </CardAction>
@@ -356,7 +355,9 @@ export function FilterPanel(props: FilterPanelProps) {
               <div className="grid gap-4 lg:grid-cols-2">
                 <Field>
                   <FieldContent>
-                    <FieldLabel htmlFor="remaining-lease">{t("filters.remainingLeaseMin")}</FieldLabel>
+                    <FieldLabel htmlFor="remaining-lease">
+                      {t("filters.remainingLeaseMin")}
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupInput
                         id="remaining-lease"
@@ -369,7 +370,9 @@ export function FilterPanel(props: FilterPanelProps) {
                         type="number"
                         value={filters.remainingLeaseMin ?? ""}
                         onChange={(event) =>
-                          onChange({ remainingLeaseMin: parseOptionalNumberValue(event.target.value) })
+                          onChange({
+                            remainingLeaseMin: parseOptionalNumberValue(event.target.value),
+                          })
                         }
                         aria-description={t("filters.a11y.remainingLeaseMin")}
                       />
@@ -407,7 +410,9 @@ export function FilterPanel(props: FilterPanelProps) {
             </FieldSet>
 
             <FieldSet className="gap-4">
-              <FieldLegend className="v2-section-title">{t("filters.advancedRefinements")}</FieldLegend>
+              <FieldLegend className="v2-section-title">
+                {t("filters.advancedRefinements")}
+              </FieldLegend>
               <SelectField
                 allLabel={t("filters.allModels")}
                 label={t("filters.flatModel")}
@@ -417,7 +422,9 @@ export function FilterPanel(props: FilterPanelProps) {
               />
 
               <FieldSet className="gap-3">
-                <FieldLegend className="v2-section-title">{t("filters.floorAreaRange")}</FieldLegend>
+                <FieldLegend className="v2-section-title">
+                  {t("filters.floorAreaRange")}
+                </FieldLegend>
                 <div className="grid gap-4 lg:grid-cols-2">
                   <Field>
                     <FieldContent>

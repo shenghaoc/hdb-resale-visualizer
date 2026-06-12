@@ -27,7 +27,7 @@ if (typeof URLPattern === "undefined") {
     exec(input: { pathname: string }) {
       const match = this._match(input.pathname);
       if (match) {
-         return { pathname: { groups: match } };
+        return { pathname: { groups: match } };
       }
       return null;
     }

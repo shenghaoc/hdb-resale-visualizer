@@ -19,7 +19,10 @@ export type LeaseCommenceDecadeBucket = {
   blockCount: number;
 };
 
-export function clampMonthToDataWindow(month: string, dataWindow: { minMonth: string; maxMonth: string }): string {
+export function clampMonthToDataWindow(
+  month: string,
+  dataWindow: { minMonth: string; maxMonth: string },
+): string {
   if (month < dataWindow.minMonth) return dataWindow.minMonth;
   if (month > dataWindow.maxMonth) return dataWindow.maxMonth;
   return month;
@@ -70,7 +73,9 @@ export function filterTownFlatTrendsInRange(
   return rows;
 }
 
-function groupTownFlatTrendsByFlatType(points: readonly TownFlatTypeTrendPoint[]): Map<string, TownFlatTypeTrendPoint[]> {
+function groupTownFlatTrendsByFlatType(
+  points: readonly TownFlatTypeTrendPoint[],
+): Map<string, TownFlatTypeTrendPoint[]> {
   const byType = new Map<string, TownFlatTypeTrendPoint[]>();
   for (const row of points) {
     const list = byType.get(row.flatType) ?? [];
@@ -121,7 +126,9 @@ export function sumRollupVolume(rollups: readonly TownFlatTypeRollup[]): number 
 }
 
 /** Volume-weighted mean of latest monthly median $/sqm (one value per flat type). */
-export function volumeWeightedMeanLatestMedianPricePerSqm(rollups: readonly TownFlatTypeRollup[]): number | null {
+export function volumeWeightedMeanLatestMedianPricePerSqm(
+  rollups: readonly TownFlatTypeRollup[],
+): number | null {
   let weight = 0;
   let sum = 0;
   for (const row of rollups) {
@@ -154,7 +161,10 @@ export function buildLeaseCommencementHistogram(
     }));
 }
 
-export function pickTopBlocksByTransactionCount(blocks: readonly BlockSummary[], limit: number): BlockSummary[] {
+export function pickTopBlocksByTransactionCount(
+  blocks: readonly BlockSummary[],
+  limit: number,
+): BlockSummary[] {
   if (limit <= 0) return [];
   return [...blocks]
     .sort((a, b) => {
@@ -164,7 +174,10 @@ export function pickTopBlocksByTransactionCount(blocks: readonly BlockSummary[],
     .slice(0, limit);
 }
 
-export function pickBlocksBelowTownMedian(blocks: readonly BlockSummary[], limit: number): { townMedian: number | null; blocks: BlockSummary[] } {
+export function pickBlocksBelowTownMedian(
+  blocks: readonly BlockSummary[],
+  limit: number,
+): { townMedian: number | null; blocks: BlockSummary[] } {
   if (blocks.length === 0) {
     return { townMedian: null, blocks: [] };
   }
