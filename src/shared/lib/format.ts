@@ -19,6 +19,8 @@ const formattedCurrencyCache = new Map<string, string>();
 const formattedCompactCurrencyCache = new Map<string, string>();
 const formattedNumberCache = new Map<string, string>();
 const formattedMonthCache = new Map<string, string>();
+const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
+const formattedDateTimeCache = new Map<string, string>();
 
 function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
   if (cache.size < limit) {
@@ -42,12 +44,25 @@ function getNumberFormat(locale: Locale, options: Intl.NumberFormatOptions): Int
   return formatter;
 }
 
+function getDateTimeFormat(locale: Locale, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
+  const key = `${locale}-${JSON.stringify(options)}`;
+  let formatter = dateTimeFormatCache.get(key);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, options);
+    evictCacheIfNeeded(dateTimeFormatCache, FORMATTER_CACHE_LIMIT);
+    dateTimeFormatCache.set(key, formatter);
+  }
+  return formatter;
+}
+
 export function resetFormatCachesForTests(): void {
   numberFormatCache.clear();
+  dateTimeFormatCache.clear();
   formattedCurrencyCache.clear();
   formattedCompactCurrencyCache.clear();
   formattedNumberCache.clear();
   formattedMonthCache.clear();
+  formattedDateTimeCache.clear();
 }
 
 export function formatCurrency(value: number, locale?: Locale): string {
@@ -129,12 +144,15 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const ym = Temporal.PlainYearMonth.from(month);
-
-  cached = ym.toPlainDate({ day: 1 }).toLocaleString(resolvedLocale, {
+  const [year, m] = month.split('-');
+  const date = new Date(Date.UTC(parseInt(year, 10), parseInt(m, 10) - 1, 1));
+  const formatter = getDateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
+    timeZone: "UTC",
   });
+
+  cached = formatter.format(date);
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -153,8 +171,20 @@ export function formatRemainingLease(leaseCommenceRange: [number, number], t: Tr
 }
 
 export function formatDateTime(value: string, locale?: Locale): string {
-  return Temporal.Instant.from(value).toLocaleString(resolveLocale(locale), {
+  const resolvedLocale = resolveLocale(locale);
+  const cacheKey = `${value}-${resolvedLocale}`;
+  let cached = formattedDateTimeCache.get(cacheKey);
+  if (cached !== undefined) return cached;
+
+  const formatter = getDateTimeFormat(resolvedLocale, {
     dateStyle: "medium",
     timeStyle: "short",
   });
+
+  cached = formatter.format(new Date(value));
+
+  evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
+  formattedDateTimeCache.set(cacheKey, cached);
+
+  return cached;
 }
